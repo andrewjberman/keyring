@@ -22,11 +22,11 @@ Carried open from REMEDIATION_v1.md: W2-S2.
     "owner": "1.0.0_SA_CTO",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v6"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-S7",
@@ -43,11 +43,11 @@ Carried open from REMEDIATION_v1.md: W2-S2.
     "owner": "2.0.0_SA_COO~G",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~G",
       "round": "v6"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-S8",

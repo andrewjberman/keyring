@@ -5014,3 +5014,213 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Remedy for the issuer to choose: a close form that takes an ANDREW_DIRECT record as the ruling and skips the cross-box route, or a withdraw verb for a duplicate row. Until then a ruled call reads OPEN and can be re-carded to Andrew, the exact failure the skill warns against."
 }
 ```
+
+## NFRA_CTLPLN-W38-S1 -- The ldo_event line's result field is the runtime's own return (ok / duplicate / deleted / 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:00:00Z",
+  "one_line": "The ldo_event line's result field is the runtime's own return (ok / duplicate / deleted / redelivered-outbox), not tenant.on_chat_messages' texted / updated / no-reply-wanted / paused / nothing-to-answer / answered-by-hand; the tenant result is a separate line with no object hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: before the post-drain real run, either cut a cell that logs the tenant result with the object hash, or read texted_chats=0 and results=ok as a reader limit, not as 'nothing was texted'",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py@b44b5d76df:272-293 handle() returns duplicate / redelivered-outbox / deleted / ok and ignores on_event's return value; :319 logs that as result=",
+      "data/transcripts/scripts/teams_chat/tenant.py@b44b5d76df:798-804 dispatch() logs a.log('tenant', kind=..., result=result) with no object field"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face: for kind teams.messages the ldo_event result is one of texted, updated, no-reply-wanted, paused, nothing-to-answer, answered-by-hand.",
+  "world_is": "Built as written (count_day counts the result field of ldo_event lines; AC1 runs on fakes shaped as the face says). Against real logs every teams.messages event would count as result=ok, so texted_chats would read 0 and the per-result counts would not separate texted from dropped; received, events, unexplained, failed and sms_sent are unaffected. Not repaired or widened here.",
+  "notes": "The tenant line carries the real result but no object hash, so it cannot be attributed to a chat from the log alone."
+}
+```
+
+## NFRA_CTLPLN-W38-S2 -- The log's object hash is of the chat id (ldo.send is called with chat['chat_id']) but the 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:00:00Z",
+  "one_line": "The log's object hash is of the chat id (ldo.send is called with chat['chat_id']) but the S3 path holds only assist.chat_key(chat_id), a lossy map, so the reader reconstructs the chat id by a heuristic (first '-' to ':', last '-' to '@').",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/assist.py@b44b5d76df:228-234 chat_key replaces [^A-Za-z0-9._-] with '-'; bronze_key stores only the key",
+      "data/transcripts/scripts/teams_chat/tenant.py@b44b5d76df:832 ldo.send(chat['chat_id'], ...); ldo.py:319 object=_h(oid)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face: events are ldo_event lines of kind teams.messages for that chat's object hash, the chat reached from assist.chat_key(chat_id).",
+  "world_is": "chat_id_of() in inbound_count.py inverts the key for ids shaped 19:<id>@<domain>; an id with another ':' / '@' / '-' pattern would hash differently, its events would not attach, and the chat would read UNEXPLAINED. The AC1 fakes use the id shape the heuristic handles. The issuer's post-drain real run is the first measurement of how many real chat keys round-trip.",
+  "notes": "Not measured against a real key (no AWS call allowed in this cell)."
+}
+```
+
+## NFRA_CTLPLN-W38-S3 -- disarm record for W38-S1: AMENDMENT 1 reads outcomes from the tenant line; the reader no longer reads ldo_event.result
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:30:00Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-W38-S1: per AMENDMENT 1 of TO-CT-i-10 the reader takes results only from tenant lines of kind teams.messages, attributes a line to a chat only when it carries object, and counts object-less lines in the totals and a new unattributed total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-i-10.received-vs-texted-count.md AMENDMENT 1 @dd6deef902: outcomes from the tenant line; object-less lines count in totals and unattributed; ldo_event.result no longer read",
+      "python data/transcripts/scripts/tests/test_inbound_count.py, last line: INBOUND-COUNT-TEST ok=True arms=7/7 (texted arm uses an attributed tenant line; unattributed arm: two object-less tenant lines -> unattributed=2, no chat result; every other arm kept)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: row W38-S1 is disarmed by an appended line naming this amendment.",
+  "world_is": "S1 keeps ARMED in its own bytes (append-only; a worker may not edit it). The reader now takes outcomes from tenant lines, so ldo_event.result=ok no longer hides texted/updated. Lines logged before the issuer adds object at the merge read as unattributed, so texted_chats stays 0 for them while the totals texted= and updated= are complete; the post-drain real run is the first measurement against real lines.",
+  "notes": "Cites NFRA_CTLPLN-W38-S1. Proposed disposition for the CVO: S1 resolved by AMENDMENT 1 (the issuer's own recut). The worker does not set it."
+}
+```
+
+## NFRA_CTLPLN-S33 -- a refused End of Day redraft fails silently; Andrew hears 'redrafting' and then nothing
+
+```json
+{
+  "id": "NFRA_CTLPLN-S33",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-08T21:05:58Z",
+  "one_line": "An End of Day redraft the post-format check refuses fails the event silently: Andrew is told 'redrafting', then nothing; the queue retries hourly (3 tries) and dead-letters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: the first cell of INBOUND round 7 (restore the link line deterministically; text Andrew the reason on any refusal and keep the previous draft open), deployed under its own pair. Andrew informed through 0.0.0_AB_MSTR (msg re 107296) the same turn.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/teams-global-chat-assist-handler-lambda 2026-10-08: 20:14:57Z tenant eod.sprint_ready texted (E1008); 20:20:57Z owner.text applied; 20:22:16Z ldo_event_failed kind sms.reply object 792eb59e6d0d RuntimeError 'End of Day draft refused: first line is not the sprint link'.",
+      "data/transcripts/scripts/teams_chat/tenant.py:237-249 _eod_draft raises RuntimeError on any check_post problem; daily_reports/eod/post_format.py:117-120 the first-line check.",
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py:311-318 a raising handler reports the record failed; SQS teams-global-chat-assist-queue.fifo VisibilityTimeout 3600, maxReceiveCount 3 -> teams-global-chat-assist-dlq.fifo (read ~21:0xZ: 1 visible, 1 in flight)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct (relayed 0.0.0_AB_MSTR msg 107296): 'It responded to the redraft request, it just never sent a redraft back'. A redraft request ends in a redraft or a reason.",
+  "world_is": "A model rewrite that drops the sprint link line is refused by check_post; the refusal raises, nothing is texted, and the End of Day object's FIFO group waits on hourly retries of a stochastic model call.",
+  "notes": "Found on Andrew's report while round 6 drains; not a round-6 cell. Today's sprint is covered by 0.0.0_AB_MSTR's own run."
+}
+```
+
+## NFRA_CTLPLN-W39-S1 -- the consent-filter's caller map for /hx/teams does not list the two scopes the new list routes need
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T20:40:00Z",
+  "one_line": "CT-i-11: graph_scope_map.CALLER_GRAPH_SCOPES['teams_route'] (lines 98-99) omits Team.ReadBasic.All and Channel.ReadBasic.All, which GET /me/joinedTeams and GET /teams/{id}/channels need; if MS_INGEST_IDENTITY is a scoped identity, token_broker.py:223 cuts those two scopes from the token request.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/graph_scope_map.py:92-99 (teams_route caller set) and :33,:35 (list_teams / list_channels map to the two scopes)",
+      "infra/aws/ec2/opal-gateway/app/token_broker.py:219-223 (scopes = [s for s in scopes if s in consented] or ['User.Read']) and app/identity_scope.py:121-143 (consent_scopes unions CALLER_GRAPH_SCOPES)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~39/CHANNEL_READ_SCOPES_MEASURED.md section 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the order's step 1: state which needed scopes the requested list does not carry. The base lists (config.py:66, :101) carry all three.",
+  "world_is": "The base lists carry all three scopes. The caller map the consent filter unions does not list two of them. Whether the filter applies depends on whether MS_INGEST_IDENTITY is in the identity-scope overlay, which a worker cannot read. graph_scope_map.py is outside this order's paths and was not edited.",
+  "notes": "If the identity is unscoped, nothing changes. If scoped, the two list routes return a Graph refusal until the map names the two scopes."
+}
+```
+
+## NFRA_CTLPLN-W39-S2 -- two existing test assertions held a path that this cell makes live
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T20:40:01Z",
+  "one_line": "CT-i-11: with the three routes added, two of the 14 existing cases in tests/test_teams_route.py fail as written (a 404 on /channels/{team}/{channel}/messages, and a PathRefused on GET /teams/{id}/channels/{id}/messages); I changed those two list entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_teams_route.py test_methods_and_unknown_routes and test_graph_allowlist_fails_closed_per_verb at the base (HEAD 311d55e652)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the order: the 14 existing cases pass; change no existing route's behaviour beyond the additive mentions key.",
+  "world_is": "Both entries named exactly the paths the order asks to be served. I replaced the 404 entry with /teams/{id} , /teams/{id}/members and /channels/{team}/{channel} (still 404), and the refused GET entry with /teams/{id}/channels/{id}/messages/{message_id} (still refused). No existing route's behaviour changed; the other 12 cases are untouched except the added mentions key in MSG_KEYS and the three new URLs in READ_URLS.",
+  "notes": "The issuer's dry run counted 14 passing at the base; the base file passes, the changed file passes 20 of 20."
+}
+```
+
+## NFRA_CTLPLN-W39-S3 -- the contract's page_size becomes $top on two Graph list calls that may not take it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T20:40:02Z",
+  "one_line": "CT-i-11: the contract says same page_size and page_token rules, and _page always sends $top; whether Graph accepts $top on /me/joinedTeams and /teams/{id}/channels is not measured (offline, no Graph call), and the existing tools.py calls to both send only $select.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/teams_route.py _page (sends $top on every call)",
+      "infra/aws/ec2/opal-gateway/app/tools.py:1121-1122 and :1129-1130 (the same two paths, $select only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the contract: all three routes take page_size 1 to 50 and an opaque page_token.",
+  "world_is": "Built as the contract states, through _page. The offline tests stub Graph, so they cannot show the live answer; a first live call to either list route would. Unverified, not claimed either way.",
+  "notes": "If Graph refuses $top there, the fix is one parameter in the endpoint branch, which is the issuer's to order."
+}
+```
+
+## NFRA_CTLPLN-W39-S4 -- AMENDMENT 1 made one existing assertion in test_teams_and_channels_listing_shapes false as written
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T21:30:00Z",
+  "one_line": "CT-i-11 AMENDMENT 1: test_teams_and_channels_listing_shapes (a case this cell added) pinned the /me/joinedTeams Graph params to include $top=50; with $top no longer forwarded on that path it failed, so I changed that one expected dict to {$select} only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_teams_route.py test_teams_and_channels_listing_shapes at 863e37d1f9; app/teams_route.py _page top flag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: add one case; the criteria are unchanged. It does not name the case-1 assertion that encoded the earlier behaviour.",
+  "world_is": "The assertion encoded the behaviour the amendment reverses, so it had to change for AC1 to pass; the new case test_list_paths_carry_no_top_and_channel_messages_do carries the $top contract for all three paths. Suite: 21 passed.",
+  "notes": "No other existing assertion changed."
+}
+```
