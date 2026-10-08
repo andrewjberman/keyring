@@ -32,9 +32,11 @@ a ruling, for a reviewer to judge.
 
 ## When to invoke
 
-- **Andrew discretion only.** `/govern` is NOT auto-armed at session start (Andrew
-  direct 2026-06-03, superseding the LD-0124 startup-arm clause). MSTR does not load
-  a `/govern` loop at load; whether to run it — and at what cadence — is Andrew's call.
+- **Armed at instantiation, every 30 minutes.** Every fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`) arms
+  `/govern 30m` at load, after `/watcher`, `/agentbus` and `/integrate`. Andrew-direct 2026-10-08 ~17:4xZ, VERBATIM: "MSTR
+  agents should have /govern on a 30m loop at instantiation." (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`; it
+  supersedes the 2026-06-03 "not auto-armed" word). A different cadence is still Andrew's call.
 - When Andrew invokes `/govern`, it initiates the loop at the 1-hour default (or the
   interval Andrew gives).
 - Never invoked by any agent other than a fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`).

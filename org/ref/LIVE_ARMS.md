@@ -19,6 +19,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
+- Every fabric manager (`0.0.0_AB_MSTR`, `~Z`, `~DELL1`, `~DELL2`) `/govern 30m` at instantiation, DIRECTED. Andrew at the laptop
+  `1.0.0_SA_CTO` terminal ~17:4xZ 2026-10-08, VERBATIM: "MSTR agents should have /govern on a 30m loop at instantiation." Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`. Supersedes
+  the 60m interval in the `~DELL1` and `~DELL2` rows below. Stop: his stand-down. Landed by 1.0.0_SA_CTO.
+
 - `0.0.0_AB_MSTR~DELL1` `/govern 60m` DIRECTED (Andrew at the dell1 terminal ~07:08Z 2026-10-07, as relayed by `0.0.0_AB_MSTR` msg 106029 from bus
   4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
   to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
