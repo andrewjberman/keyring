@@ -9,7 +9,12 @@ Reads, ConsistentRead and paginated:
 - the AI listing for today exists and its count equals the number of classified_by=model rows.
 Prints  AI-LEG-VERIFY act=<e32|e49> ok=<bool> planned=<n> landed=<n> unresolved=<n> problems=<n> ...
 ok needs the WHOLE plan accounted for: landed + refused == planned (row S66, CTO round-12 addendum 1 @e5befb00f1). A partial
-leg reads ok=False; landed>0 alone caught only an empty act. refused counts nothing until the runner records a refusal list.
+leg reads ok=False; landed>0 alone caught only an empty act.
+  --unresolved-log <run log> [...]   the executor's stdout ("UNRESOLVED <key>: <why>"); the LAST reason per key wins. A still-absent planned
+  key counts as refused only when its reason is a FINAL, model-stated refusal (TO-AI-e32 amendment 7): a model reply with no class,
+  a class outside the six, no sub-class, a sub-class the table does not carry, or KIMI_VOCAB_VIOLATION. A transport or vendor failure
+  (refused: KIMI_TIMEOUT / KIMI_ERROR / KIMI_HTTP_* / KIMI_MALFORMED / KIMI_EMPTY / KIMI_BADJSON / KIMI_SCHEMA_INVALID /
+  KIMI_LENGTH_STARVED) is NOT final: the key stays unresolved and is re-planned.
 """
 import csv
 import glob
@@ -47,6 +52,32 @@ def scan_all(table):
         kw["ExclusiveStartKey"] = page["LastEvaluatedKey"]
 
 
+TRANSPORT_CODES = ("KIMI_TIMEOUT", "KIMI_ERROR", "KIMI_HTTP_", "KIMI_MALFORMED", "KIMI_EMPTY", "KIMI_BADJSON",
+                   "KIMI_SCHEMA_INVALID", "KIMI_LENGTH_STARVED")
+
+
+def is_final_refusal(why):
+    """A model-stated refusal the next resume would not change; any transport or vendor failure is not final."""
+    why = why or ""
+    if "KIMI_VOCAB_VIOLATION" in why:
+        return True
+    if "refused:" in why and any(c in why for c in TRANSPORT_CODES):
+        return False
+    if why.startswith("no class (refused:"):
+        return False
+    return why.startswith(("no class (", "class ", "no sub-class", "sub-class "))
+
+
+def read_unresolved(paths):
+    last = {}
+    for p in paths:
+        for line in Path(p).read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.startswith("UNRESOLVED ") and ": " in line:
+                key, why = line[len("UNRESOLVED "):].split(": ", 1)
+                last[key.strip()] = why.strip()
+    return last
+
+
 def grade(planned_n, landed, refused, problems, gone, multi_asset, listing_count, model_rows):
     """The verdict, as a pure function so a test can feed it a run's numbers."""
     return (planned_n > 0 and landed + refused == planned_n and problems == 0 and gone == 0 and multi_asset == 0
@@ -54,7 +85,12 @@ def grade(planned_n, landed, refused, problems, gone, multi_asset, listing_count
 
 
 def main():
-    act, snap_path = sys.argv[1], Path(sys.argv[2])
+    argv = sys.argv[1:]
+    logs = []
+    if "--unresolved-log" in argv:
+        i = argv.index("--unresolved-log")
+        logs, argv = argv[i + 1:], argv[:i]
+    act, snap_path = argv[0], Path(argv[1])
     if not snap_path.exists():
         print(f"AI-LEG-VERIFY act={act} ok=False missing_snapshot={snap_path.name}")
         return 1
@@ -89,8 +125,13 @@ def main():
     if newest:
         listing = json.loads(s3.get_object(Bucket="opal-data-mdpf", Key=newest)["Body"].read())
         lcount = listing.get("count", len(listing.get("securities", listing.get("rows", []))))
-    ok = grade(len(keys), landed, 0, len(probs), gone, ma, lcount, model_rows)
-    print(f"AI-LEG-VERIFY act={act} ok={ok} planned={len(keys)} landed={landed} unresolved={unresolved} problems={len(probs)} "
+    reasons = read_unresolved(logs) if logs else {}
+    absent = [k for k in keys if k not in live]
+    refused = sum(1 for k in absent if is_final_refusal(reasons.get(k)))
+    transport = sum(1 for k in absent if k in reasons and not is_final_refusal(reasons.get(k)))
+    ok = grade(len(keys), landed, refused, len(probs), gone, ma, lcount, model_rows)
+    print(f"AI-LEG-VERIFY act={act} ok={ok} planned={len(keys)} landed={landed} refused_final={refused} "
+          f"refused_transport={transport} unresolved={unresolved} problems={len(probs)} "
           f"first={probs[:3]} snapshot_keys_gone={gone} multi_asset={ma} model_rows={model_rows} listing_count={lcount} listing={newest}")
     return 0 if ok else 1
 

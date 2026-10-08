@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ai_leg_verify import grade  # noqa: E402
+from ai_leg_verify import grade, is_final_refusal, read_unresolved  # noqa: E402
 
 PLANNED, LANDED, UNRESOLVED = 2291, 187, 2104
 
@@ -32,3 +32,28 @@ def test_refused_keys_account_for_the_rest():
 
 def test_empty_plan_is_not_ok():
     assert grade(0, 0, 0, 0, 0, 0, 200, 200) is False
+
+
+def test_transport_refusals_are_not_final():
+    for why in ("no class (refused: KIMI_TIMEOUT)", "no class (refused: KIMI_HTTP_429)",
+                "no class (refused: KIMI_ERROR: [Errno 104] Connection reset)", "no class (refused: KIMI_MALFORMED)",
+                "no class (refused: KIMI_LENGTH_STARVED)", None, ""):
+        assert is_final_refusal(why) is False, why
+
+
+def test_model_stated_refusals_are_final():
+    for why in ("no class (a private placement with no public listing)", "class 'other' is not one of the six",
+                "no sub-class for equity", "sub-class 'Micro Cap' is not carried by the table for equity",
+                "no class (refused: KIMI_VOCAB_VIOLATION: asset_class='real_estate' reason='REIT')"):
+        assert is_final_refusal(why) is True, why
+
+
+def test_last_reason_per_key_wins(tmp_path):
+    a = tmp_path / "run_a.log"
+    b = tmp_path / "run_b.log"
+    a.write_text("AI chunk 0-25: keys_sent=25\nUNRESOLVED ABC: no class (refused: KIMI_TIMEOUT)\n", encoding="utf-8")
+    b.write_text("UNRESOLVED ABC: no sub-class for equity\nUNRESOLVED XYZ: no class (refused: KIMI_HTTP_429)\n",
+                 encoding="utf-8")
+    got = read_unresolved([a, b])
+    assert got == {"ABC": "no sub-class for equity", "XYZ": "no class (refused: KIMI_HTTP_429)"}
+    assert is_final_refusal(got["ABC"]) and not is_final_refusal(got["XYZ"])
