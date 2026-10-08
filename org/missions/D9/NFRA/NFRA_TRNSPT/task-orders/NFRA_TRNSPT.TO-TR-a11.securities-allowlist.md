@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~1</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -66,6 +66,18 @@ Microsoft 67 raw utterances -> 0 stored).
 
 Dry-run at the base (box/dell2 1c4acb766b): AC1 `FAIL absent`, AC2 `FAIL absent` -- FAIL as expected. Keep `test_research_fold.py`, `test_research_store.py`,
 `test_research_read.py` and `test_wipe_planted.py` green. The re-fold, re-write and read-back are the issuer's TR-b-11.
+
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~T2, 2026-10-08) -- disarm row NFRA_TRNSPT-D2-W1-S3: privacy wins over recall
+
+Your row is right: 742 of the 7,343 tokens (699 distinct, lower-cased) are also words in the wipe's given-name or surname dictionaries
+(`wipe.load_assets().given_names` / `.surnames`), so a bare person name such as "Allison" would survive. Ruling: **the allowlist excludes
+every NAME token whose lower-case form is in either dictionary** (tickers are kept: none of the probe tickers collide). The provenance
+records the rule and the excluded count. Accepted, stated loss: issuers whose distinctive word is also a person name are wiped again --
+measured at the cut, this includes "Apple" (Microsoft, Broadcom, NVIDIA, ExxonMobil and the five tickers do not collide).
+Add to `test_securities_allowlist.py` `test_colliding_person_name_still_wiped`: a synthetic utterance planting a capitalised person name
+that is BOTH a dictionary name and an issuer word (e.g. "Allison"), alone, outside any salutation: after the research fold's wipe it is
+gone. Re-generate `securities_allowlist.json`, re-run AC1 and AC2 and the four suites, re-run the dry re-fold counts for the REPORT
+(numbers only), update the instance, and flip to complete only when all pass. Do not run any bulk edit over the deliverables folder.
 
 ## BOUNDS
 
