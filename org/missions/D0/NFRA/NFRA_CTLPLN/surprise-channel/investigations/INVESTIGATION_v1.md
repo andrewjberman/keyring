@@ -4610,3 +4610,112 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
 }
 ```
+
+## NFRA_CTLPLN-W14-S19 -- CTa1-AC5 reads dell_write_refused=8/10, not 10/10: with the resource-policy Allow applied the two Dell users can kms:PutKeyPolicy the transcripts key, so the criterion cannot be met as written
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S19",
+  "one_line": "CTa1-AC5 (check_transcripts_dell_decrypt.py) expects dell_write_refused=10/10 and reads 8/10 on the unchanged tree: both Dell users' LIVE policies now allow kms:PutKeyPolicy on the transcripts key (the resource-policy Allow applied in step C); the test was not weakened and the order stays open on this criterion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py run from the worktree root BEFORE any edit of this pass (HEAD d613ff4526): 'ARM cloudops-dell1-agent-user kms:PutKeyPolicy raw_doc=allowed raw_pre_edit_doc=allowed named_statements_only=implicitDeny own_policies=allowed KMS_RULE=allowed' and the same line for cloudops-dell2-agent-user; last line 'TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False'",
+      "infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py:237 simulates the LIVE user (iam simulate-principal-policy, PolicySourceArn=user ARN) for the own_policies column; the KMS_RULE column is 'named statements, or root delegation AND the user's own live policy'",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json: kms:PutKeyPolicy is in_allow true since AMENDMENT 10 (freed block reads allowed for both users); order AMENDMENT 14 records the Allow applied 2026-10-08 under NFRA_CTLPLN.TO-APPLY-13; order AMENDMENT 12 lists 'a key policy, the transcripts key' among the four ACCEPTED routes",
+      "the proof instance of the previous pass (AMENDMENT 14, HEAD e0507c1d26) recorded 10/10 for this criterion, taken before the Allow was live"
+    ]
+  },
+  "spec_asserts": "CTa1-AC5: TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True (the Dell users decrypt the transcripts key and write nothing to it).",
+  "world_is": "The two arms that read allowed are kms:PutKeyPolicy for dell1 and for dell2. The transcripts key policy gives the account root administration without use (RootAdministersTheKeyAndCannotUseIt), which KMS reads as delegation to IAM, and the Dell users' live identity policies now allow kms:PutKeyPolicy on any key (the resource-policy Allow, which the CTO and Andrew widened and which the order lists the transcripts key's policy under as an accepted route). The criterion was true while that Allow was unapplied and cannot be true with it applied, independent of this pass's edits (the baseline above predates them). kms:ScheduleKeyDeletion, Encrypt, GenerateDataKey and ReEncryptFrom still read refused (8 of 10).",
+  "notes": "Not fixed here, by design: making it 10/10 means either a Deny for the two Dell users on kms:PutKeyPolicy in the transcripts key policy (an edit and an apply of the transcripts root that contradicts the accepted route) or changing the criterion's expected value (weakening a test); both are the issuer's or the CTO's call. The grant of AMENDMENT 16 neither causes nor changes this reading."
+}
+```
+
+## NFRA_CTLPLN-W14-S20 -- AMENDMENT 16 grants the PLATFORM-KEY class, so the table's 'doubt resolves to PLATFORM-KEY' rule now grants doubtful secrets; the Secrets Manager resource-policy exclusion keeps its reason text
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S20",
+  "one_line": "The classification table was written so that doubt between PLATFORM-KEY and anything else resolved to PLATFORM-KEY, which kept a doubtful secret out of the grant; with PLATFORM-KEY granted that rule now puts doubtful secrets IN (gateway/principals/rosters, opal/auth/origin-verify are two named by doubt among the 28); and secretsmanager:PutResourcePolicy/DeleteResourcePolicy stay out of the Allow on a reason that now covers 20 secrets, not 48.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py CLASSIFICATION rows 'gateway/principals/rosters' (reason ends 'doubt resolves to PLATFORM-KEY') and 'opal/auth/origin-verify' (reason: 'AMENDMENT 9 lists an origin-verify value under OTHER; the issuer's dispatch says PLATFORM-KEY and the doubt rule agrees')",
+      "tests/derive_vendor_secrets.py --from-file tests/vendor_secrets_census.json: 'CLASS PLATFORM-KEY n=28 (granted)', 'DECISIONS {BLOCKED-BY-KEY: 1, GRANTED: 94, OTHER: 19}'",
+      "dell_respol_policy.json: secretsmanager:DeleteResourcePolicy and secretsmanager:PutResourcePolicy in_allow false, reason 'would undo the secrets carve-out of this plan (issuer; CTO to confirm)'; simulation FREED-EXCLUDED lines read implicitDeny for both users"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 16 item 1: PLATFORM-KEY becomes a granted class; OTHER (19) and BLOCKED-BY-KEY stay out; only the rule that grants the class changes.",
+  "world_is": "The 28 platform keys are the table's rows as AMENDMENT 9 placed them, and Andrew's word names 'the 28 platform keys', so the grant is what was ruled. The two rows placed by doubt are in it for that reason. Nothing was reclassified. The 19 OTHER (including the two one-time-code relays and the GitHub tokens) and schwab/sdd/session remain unreadable; a Dell cannot rewrite their access through a secret resource policy because those two actions are not in the Allow.",
+  "notes": "For the CTO to confirm: (a) the doubt rule's new effect on the two named rows; (b) the issuer's exclusion (d) of AMENDMENT 10 still stands for the 20 withheld secrets and its stored reason text still reads correctly, so it was left as is."
+}
+```
+
+## NFRA_CTLPLN-W14-S21 -- DenyCloudTrailWrites is now an explicit list for Put and Delete: a future CloudTrail action that begins Put or Delete is no longer denied by a wildcard
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S21",
+  "one_line": "To free cloudtrail:PutResourcePolicy and cloudtrail:DeleteResourcePolicy the Deny's cloudtrail:Put* and cloudtrail:Delete* wildcards were replaced by the seven explicit names of the current service model; a CloudTrail action AWS adds later under those two prefixes is not denied until someone adds it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json DenyCloudTrailWrites: Stop*, Update*, DeleteChannel, DeleteDashboard, DeleteEventDataStore, DeleteTrail, PutEventConfiguration, PutEventSelectors, PutInsightSelectors",
+      "botocore 1.43.0 cloudtrail service model: 60 operations; prefixes Stop 3, Delete 5, Update 4, Put 4 (16); tests/simulate_policy.py UNDO-STILL-SHAPE: DenyCloudTrailWrites covers 14 of 16, the 2 others are the freed pair",
+      "IAM wildcards have no 'except' form and a Deny cannot be written as NotAction for this purpose without a Condition on the action; the order allowed 'write it explicitly'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 16 item 2: rewrite DenyCloudTrailWrites so it no longer denies the two actions and still denies every other CloudTrail Stop/Delete/Update/Put action, writing the list explicitly from the service reference or the simulator.",
+  "world_is": "Stop* and Update* kept their wildcards (no member of either family is freed, so they are equal and future-proof). Put and Delete are explicit. The action names were read from the installed botocore service model (operation names are the IAM action names for CloudTrail); the AWS service authorization reference was not fetched (no web access in this pass).",
+  "notes": "If a seat wants wildcard coverage back, the only wildcard form that still frees the two is a narrower prefix set (for example cloudtrail:PutE*, cloudtrail:PutI*, cloudtrail:DeleteC*, DeleteD*, DeleteE*, DeleteT*), which is also a guess about future names; left to the CTO."
+}
+```
+
+## NFRA_CTLPLN-W14-S22 -- AMENDMENT 16 item 1: the split into 'one managed policy per granted class' would be 3 policies and 8 of 10, not the 7 the order expects; built as two parts, and the existing secrets policy does not change
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S22",
+  "one_line": "The order names one policy per granted class as the split rule and expects 7 of 10 and 'the secrets policy changed in place'; the rule gives 3 secrets policies (8 of 10), so the grant is split in two by class set and the existing policy is byte-identical, which a plan shows as no change.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "order AMENDMENT 16 item 1 and item 9: 'SPLIT by a stable rule (one managed policy per granted class ...)', 'expected 7 of 10', 'the deploy, create and resource-policy Allow policies and the secrets policy changed in place; one new secrets policy and its attachment created'",
+      "tests/check_identity.py: 'policy vendor-secrets part one chars_no_whitespace=5968', 'policy platform-secrets part two chars_no_whitespace=2707', 'group managed-policy attachments=7 quota=10'; 35 + 31 + 28 granted per class",
+      "IAM: a description change on aws_iam_policy forces replacement (provider behaviour, read from the provider's schema from memory, not run), which is why the existing policy's description is left as it is and still true of its content"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 16 item 1: one managed policy per granted class; keep the existing policy's name and address for one of the parts so it updates in place; group expected 7 of 10.",
+  "world_is": "Part one (VENDOR-CREDENTIAL and CLIENT-SESSION, 66 ARNs, 5,968 characters) is unchanged in name, address, description and document; part two (PLATFORM-KEY, 28 ARNs, 2,707) is new. The expected plan is 2 to add, 3 to change (deploy, create, resource-policy Allow), 0 to destroy; the secrets policy is not among the changes.",
+  "notes": "Section G of the plan note says this in the plan table. If the issuer wanted three policies, or wanted the existing one rewritten, that is a recut; the two forms grant the same 94 secrets."
+}
+```
