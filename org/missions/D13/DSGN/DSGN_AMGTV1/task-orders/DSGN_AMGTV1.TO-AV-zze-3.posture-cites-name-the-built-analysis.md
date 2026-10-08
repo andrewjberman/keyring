@@ -80,7 +80,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **Direct-act path:** one cell, one file, 4 strings and 3 comments, `<risk>LOCAL</risk>`; no L2, no L4-R, no L8-L10; its close is the
   issuer's one real run.
 
-<status>pending</status>
+<status>complete</status>
 <round>53</round>
 <to_id>DSGN_AMGTV1.TO-AV-zze-3</to_id>
 <slot>~117</slot>
