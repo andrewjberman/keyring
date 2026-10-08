@@ -21653,3 +21653,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It answers with a different public reason code: release 2 raises the coded InputAccessDenied where release 1 raised a bare PermissionError. No write occurs on either, so no exposure; the code moves from UNEXPECTED to NOT_AUTHORIZED. Recorded as read 7 FAIL because 'as before' was not met to the letter."
 }
 ```
+
+## IRPT_BCKEND-D2-W159-S1 -- The branch-A recorder writes a CHANGELOG.json path outside the order's <paths>; only the source-map half was recorded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W159-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~159",
+  "surfaced_at": "2026-10-08T21:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The branch-A recorder record-terraform-deploy.sh stages infra/aws/terraform/investor-reporting/CHANGELOG.json, a path the order's <paths> does not name, so its own commit is refused; the source-map half was committed alone and the CHANGELOG half is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --function irpt-ycharts-generate --version investor-reporting-irpt-ycg-release3 --author <serial> at 21:35Z: safe-commit refused, 'VIOLATION: infra/aws/terraform/investor-reporting/CHANGELOG.json -- lane=IRPT_COMPLETION_P ... no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'",
+      "The order's <paths> names infra/aws/lambda/ci/CHANGELOG.md and lambda-source-map.json (the lambda/ci pair), not terraform/investor-reporting/CHANGELOG.json, which the recorder writes (entry 'investor-reporting-irpt-ycg-release3', deployed_commit 6f758dd807)",
+      "Handled: CHANGELOG.json unstaged and restored from HEAD (git show, no checkout); lambda-source-map.json (last_deployed_commit 5d3eed8904.., at 21:35:15Z) committed alone at 63181c2c27",
+      "Round 67's worker (~158) did not run this recorder, so no earlier run exercised the path"
+    ]
+  },
+  "spec_asserts": "Step 10: 'In branch A only, run record-terraform-deploy.sh', with <paths> carrying infra/aws/lambda/ci/CHANGELOG.md and lambda-source-map.json.",
+  "world_is": "The recorder for pipeline investor-reporting writes terraform/investor-reporting/CHANGELOG.json, which the grant omits and which lane IRPT_COMPLETION_P owns, so a worker cannot complete it. The deploy itself and the ledger are unaffected; only the CHANGELOG entry is unrecorded. Issuer: add that path to the next order's <paths> or run the recorder at the drain."
+}
+```
