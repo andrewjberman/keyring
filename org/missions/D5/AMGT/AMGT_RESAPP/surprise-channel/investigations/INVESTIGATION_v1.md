@@ -21991,6 +21991,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Filed on AMGT_RESAPP's channel on 1.0.0_SA_CTO~Z's ruling (msg 31533) because the pool is this project's. ARMED while a holding in a book resolves to no security: disarmed when the pool resolves the holding entry to one key and the kept key carries a name. AMGT_HARVST changes nothing on its side."
+},
+{
+  "id": "AMGT_RESAPP-Z-S370",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-08T07:40:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The Lambda source map's entry for opal-amgt-scoped-api still carries an _artifact_note reading 'NOT YET UPLOADED. No artifact exists at the key above and no terraform apply has been run', while that artifact has now been uploaded and applied twice -- round 77 (AMGT-ba-20) and round 78 (AMGT-bb-18, this act).",
+  "spec_asserts": "Deployment Rule 4 (cloud-ops skill, THE DEPLOYMENT RULES): every Lambda carries an entry in infra/aws/lambda/ci/lambda-source-map.json, and the entry describes that function. The entry's own prose is read by a human deciding whether a deploy has happened; AMGT-rf-2 wrote the note truthfully at a time when it was a source-plane cell that took no world act.",
+  "world_is": "Read 2026-10-08 ~07:36Z. infra/aws/lambda/ci/lambda-source-map.json, entry opal-amgt-scoped-api, field _artifact_note: 'NOT YET UPLOADED. No artifact exists at the key above and no terraform apply has been run: AMGT-rf-2 is a source-plane cell and its issuer ruled explicitly that no world act is to be taken.' Measured against the world the same session: s3api head-object on opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip returns VersionId 5EzlvQKaRhlENyrD6osK7pRdpfUkDTxi, ContentLength 42,001,525, content-sha256 +s6R0/rcpQ6lJgYsX2JtxfgoFoCmiaozTtMreyyymTQ=, and the prior version VHwcuot4i70V2evVL44EBgQc0BcAtScd (round 77) is still stored; lambda get-function-configuration reads CodeSha256 +s6R0/rcpQ6..., LastModified 2026-10-08T07:19:32Z, and a terraform apply in infra/aws/terraform/harvest reported 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed'. So BOTH clauses of the note are false of the world, and have been since round 77's close at 0fabcf4f0f. The other six fields of the entry (source_dir, source, tf_file, tf_resource, artifact_s3_key, iam_role) are correct and are what the deploy workflow and comp-iam actually read. NOT measured: whether any other entry in the map carries a note that its own function's world state has since falsified -- this is one entry read because this act deployed it, not a census of the 214 entries.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json, entry opal-amgt-scoped-api, field _artifact_note, read at HEAD 2026-10-08 ~07:36Z.",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/round78-bb18/APPLY_20261008T0719Z.txt: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.'",
+      "The same deliverables dir's REPLAN_ZERO_DIFF_20261008T0720Z.txt: 'No changes. Your infrastructure matches the configuration.'",
+      "Round 77's close commit 0fabcf4f0f, whose subject records CodeSha256 MkM9Kf37 landing from base OVpDhfwD -- an apply that predates this one by a round."
+    ]
+  },
+  "notes": "FILED, NOT FIXED: infra/aws/lambda/ci/lambda-source-map.json is NOT in AMGT-bb-18's <paths> (which hold infra/aws/terraform/harvest/, the two change_management surfaces, this lane's deliverables dir and this channel), so editing it is outside this cell's write surface and owned-paths would refuse it. Hazard INERT and not ARMED: no served route, gate or tool reads _artifact_note -- the six machine-read keys of the entry are correct, and comp-iam reads 'source' while the deploy workflow reads 'source_dir'. The cost is to a reader: anyone checking whether this function has ever been deployed is told by the map that it has not. A one-line edit of that field by a seat holding infra/aws/lambda/ is the whole remedy; it does not move the map's schema or any other entry."
 }
 ]
 ```
