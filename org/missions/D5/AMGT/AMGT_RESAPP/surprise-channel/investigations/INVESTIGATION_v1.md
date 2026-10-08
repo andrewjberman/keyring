@@ -22083,6 +22083,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Round 77 recorded the BA ledger as not drawn in any of its three runs (row AMGT_RESAPP-Z-W286-S2); this arm's wait is the difference in method. GET only; guard unchanged."
+},
+{
+  "id": "AMGT_RESAPP-Z-S372",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T09:08:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "class": "OBSERVATION",
+  "one_line": "For BP/ LN the function serves the chief executive first and the page draws the chief financial officer first: the Security Analysis page does not draw the officers in the order served.",
+  "spec_asserts": "AMGT-bb-3 and CTO round-77 ruling 9: the served officer list is ranked chief executive, then chief financial officer, then as served; the page shows that order.",
+  "world_is": "Measured 2026-10-08 on the live function +s6R0/rcpQ6 (applied 07:19:32Z) and on the DEV build at portal d1b21c97. SERVER, one GET-shaped direct invoke of /thesis for BP/_LN_Equity by this seat at ~09:1xZ: management.officers begins Marguerite Eileen O'Neill 'Meg' (Chief Executive Officer), Katherine Anne Thomson 'Kate' (Chief Financial Officer), Sonya Adams (Exec VP:People & Culture). PAGE, the walk bb-19 (WALK_ROUND78.md, OFFICERS; captures 021 and 022): the management list for BP/ LN is drawn from the Bloomberg officer list, 10 officers, in the order Katherine Anne Thomson (CFO), Marguerite Eileen O'Neill (CEO), Sonya Adams. On BA and HD, whose lists come from the filing roster, the page's first two rows are the chief executive then the chief financial officer. So the mismatch was seen on the one name whose list is the Bloomberg fallback; whether the page re-sorts that table, or reads the list from another field of the answer, was NOT read from the portal source. NOT measured: any other fallback name on the page (NG/ LN serves its chief executive first on the server).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This seat's direct invoke of /thesis for BP/_LN_Equity, 2026-10-08: the first three served officers, as quoted; also round78/reads/BB18_ISSUER_HAND_READS_20261008.txt section 2 (BP/ LN 10 officers, chief executive first).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/WALK_ROUND78.md, section OFFICERS, the BP/ LN line: 'On BP the chief financial officer is drawn before the chief executive.'"
+    ]
+  },
+  "notes": "The page is DSGN_AMGTV1's. Surfaced, not chased; no code edited. It goes to the CVO's L9 read of the walk and to DSGN's next page round."
 }
 ]
 ```

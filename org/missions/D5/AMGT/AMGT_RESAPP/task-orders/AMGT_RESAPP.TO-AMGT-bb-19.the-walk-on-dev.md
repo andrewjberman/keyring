@@ -117,3 +117,4 @@ round 77's ba-24 (the account reads disarmed).
 - Gate limb: GATE (viii) on a modify (`<placeholders>` NONE).
 
 <status>pending</status>
+<status>complete -- drained @d508b0d687 (worker HEAD a557d5ba61); proof VALID rc=0 on the worker's checker; AC1 (23 captures of a floor of 8, six act tokens named) and AC2 (the walker reads disarmed) re-run by the issuer on the shared tree, exit 0; port 5174 reads 0 listeners; AC3 is the CVO's L9 read of deliverables/0.9.0_WK_AMGT_RESAPP~303/WALK_ROUND78.md; the walk's findings (two statements of inputs that disagree, the coverage sentence served and not drawn, BP/ LN officers drawn CFO first) are page findings for DSGN_AMGTV1, rows Z-W303-S1 and Z-S372</status>
