@@ -1197,3 +1197,54 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The match is exact on a repository path, and a path is not a stable identity: a move by any project silently un-matches the row and the name prints as a hole again. The registry's lane wrote the path while the file was at the old place in its tree; the move arrived on the laptop in the level-set of ~05:00Z. Asked of 4.0.0_SA_CRO: correct the path (msg sent). Not decided here: whether declared_in should match on something a move does not break (the file's name within the root's source folder, or the declaring function), or whether a check should refuse a declared_in path that does not exist."
 }
 ```
+
+## LGIC_BLANKFIX-S7 -- the key reader's own test is red on the trunk: it types the path of a file another project moved
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T06:24:39Z",
+  "one_line": "lib/tests/test_opal_naming_keyfill.py prints ok=False on the trunk at the round's last merge: one REAL FILE case types a source path that IRPT_BCKEND moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_keyfill.py on the trunk after merge 0d9d0abb47: FAIL line and KEYFILL-TEST ok=False cases=86",
+      "lib/tests/test_opal_naming_keyfill.py:464",
+      "git log: 8d66fb03da IB-pr-360 move backfill tool to export/tools/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ROUND_ANALYSIS.round1.md ruling 3, restated for round 4: no test that passed at the base fails. Round-5 order context: a test asserts relations and the rows it needs by name, never a typed total.",
+  "world_is": "The case at lib/tests/test_opal_naming_keyfill.py:464 names investor-reporting/export/backfill_covered_account_ids.py; the file is at export/tools/ since commit 8d66fb03da (0.9.0_WK_IRPT_BCKEND~168), which reached the laptop's shared tree in the ~05:00Z level-set, after BF-s-2 built the case and passed (86 of 86 in its tree). On the trunk now: 'FAIL: REAL FILE: firms/ ... unreadable: FileNotFoundError', KEYFILL-TEST ok=False cases=86. python -m pytest lib/tests passes (194): the plain script is not collected by it. Same cause as row S6, in a test instead of a registry row: a typed repository path is not a stable identity. Not fixed at the drain (a red at the drain is a row, not a silent re-cut): it is the first item for the next round, and the fix is to find the file by name under the root's source folder, not to retype the path."
+}
+```
+
+## LGIC_BLANKFIX-S8 -- the saved all-roots run and a second seat's run differ by one unmapped root's name count
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T06:24:39Z",
+  "one_line": "The exercise's check compares the whole live output with the saved file; on the trunk it reads repeat=DIFFERS because an UNMAPPED root gained a name between the two runs. The totals over the mapped roots are identical.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/ALL_ROOTS_round5.txt against org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/ALL_ROOTS_round5_second_seat.txt: diff is one line (49)",
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py on the trunk: ALL-ROOTS-R5 ok=False ... repeat=DIFFERS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.2 FWD-9 ACCEPT: one person runs the check once and reads its totals; a different person runs it and gets the same.",
+  "world_is": "The worker's saved run and the issuer's second-seat run print the same last line (ALL-ROOTS ok=True roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=248 not_asked=32 pattern=8 carded=0 refused=0 hole=0 carded_class_holes=0 source_bucket_holes=0 event_rule_holes=0 unknown_word_holes=0 other_holes=0). One line differs between the two whole outputs: 'UNMAPPED infra/aws/terraform/nfra-ctlpln-identity names=10' against 'names=11' -- another project committed a name in a root the map does not cover. So 'the same totals' holds for everything the check reads, and the estate moved under the part it does not. The check script (a worker's deliverable) fails on the whole-output compare; the criterion BS9-AC1 passed in the worker's tree at its run. For the grader: whether FWD-9's repeat is the mapped totals, or the whole output on a pinned commit."
+}
+```
