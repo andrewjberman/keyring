@@ -31,10 +31,26 @@ push-hold to manufacture equality is refused unless a real consumer asked for a 
 
 ## Step 1 -- the pull, and why it is a merge
 
+**DRAIN IN A LINKED WORKTREE, THEN FAST-FORWARD THE SHARED TREE** (GitOps F1; `1.0.0_SA_CTO`
+`FAST_FIX_RULINGS_20261008_162xZ.md` item 6, Andrew-direct 2026-10-08 ~16:0xZ). `MERGE_HEAD` and the commit lock are
+per WORKTREE, so a long merge grade in a linked worktree refuses no seat's commit in the shared tree.
+
 ```bash
-git fetch origin
-git merge --no-ff origin/CLOUD        # never --rebase, never pull --rebase (NEVER#7, hook-enforced)
+TS=$(date -u +%Y%m%dT%H%M%SZ); BOX=$(bash .tools/agentbus-sqs.sh device | sed -n 's/^device: //p')
+WT=<scratch>/drain-$TS                                  # the name MUST start drain- : the GC reaper never targets it
+git worktree add "$WT" -b drain/$BOX/$TS CLOUD          # 1. drain worktree on a drain branch
+git -C "$WT" fetch origin
+(cd "$WT" && bash .tools/safe-merge.sh origin/CLOUD)    # 2. the long grade runs here; never --rebase (NEVER#7)
+#    2b. TREE-DROP CHECK in the worktree, BEFORE anything moves (the Parents-and-tree bullet below), on its merge commit
+(cd "$WT" && bash .tools/safe-merge.sh CLOUD)           # 3. catch-up: the minutes of local commits made during the grade
+git merge --ff-only drain/$BOX/$TS                      # 4. shared tree: a fast-forward, no MERGE_HEAD, no hook, seconds
+#    4 refused because CLOUD moved again -> repeat 3, then 4
+#    5. push from the shared tree (Step 2), then: git worktree remove "$WT"; git branch -d drain/$BOX/$TS
 ```
+- Step 4 fails safe: git refuses a fast-forward that would overwrite a local modification. If the drain path fails,
+  fall back to a merge in the shared tree under the merge-window control below.
+- A `drain-*` worktree is live integration state for as long as it exists. No reaper, `/cleanup` or `/kill` run
+  removes one; the integrator that made it removes it after the push.
 - **Overlap is still the whole job**, just measured against the trunk instead of a sibling branch:
   `git merge-tree --write-tree --name-only HEAD origin/CLOUD` before the merge tells you the conflict set without
   touching the tree. Andrew's separate-projects premise keeps it near zero; when it is not, that is a coordination
