@@ -46,4 +46,4 @@ seat did not see it). The scope below carries it.
 
 ## Stops
 
-(none yet)
+- **SUPERSEDED 2026-10-08 ~17:2xZ** by Andrew's word at the `1.0.0_SA_CTO~DELL2` terminal, VERBATIM: "Create a /self-drive loop that covers all the projects on this fabric, 30m interval." The new record is `ANDREW_DIRECT_20261008_172xZ_SELF_DRIVE_30M_DELL2_ALL_FABRIC_PROJECTS.md`. This record's 60m cron (bbc6284c) is deleted, and none of its five projects is dropped: all five sit inside the new scope.

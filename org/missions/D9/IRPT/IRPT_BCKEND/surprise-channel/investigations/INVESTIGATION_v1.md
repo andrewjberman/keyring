@@ -20809,3 +20809,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The class change reached 1 of 5 tabled securities; the served run did not apply the CUSIP row where the local r2 precheck did. Disarm: the CTO rules hold-or-rollback; the root cause (served run vs the local build) routes to MDPF_SECCLASS dell1 2.0.0_SA_COO~M1."
 }
 ```
+
+## IRPT_BCKEND-D2-W156-S1 -- IB-yr-651 release 2 stopped before the admit read and rolled back: the dell2 operator credential cannot read, verify or delete irpt-requests (KMS decrypt denied), so after-read 1 and the upload-key deletes could not be met
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W156-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~156",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order needs to read back, and delete, the upload record the admit creates in irpt-requests; the credential this seat runs under (cloudops-dell2-agent-user) is denied kms:Decrypt on that table's CMK, so the admit read was not run, release 2 was rolled back to ZspX0qD2.., and the test profile row was deleted and read NOT FOUND.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb query and get-item on irpt-requests as cloudops-dell2-agent-user: AccessDeniedException, kms:Decrypt denied on key 7f4d3042-10d8-49a7-b55e-3c963cea8111 (describe-table SSEType KMS), 2026-10-08 ~17:41Z",
+      "intake/uploads.py create(): the admit writes an UPLOAD# row via DynamoReportIndex (irpt-requests, key tenant+request_revision) and an S3 object via artifacts.put; y65_cells.py AC2 reads the same keys with the same default credentials",
+      "ledger org/critical_paths/change_management/20261008T1732Z_irpt-ycg-release2-20261008_deploy_completion.md: L1-L3 closed; release 2 applied 17:37:00Z (798Lgqw2.., re-plan 0 changes, census failed={}), rolled back 17:44:54Z to ZspX0qD2.. (census failed={}, re-plan 0 changes)",
+      "rollback mechanism: the module reads the CURRENT S3 version, so the old version 4Pvl.mN3tY9bIQDDVVnGYFiNoKbrUSTh was re-promoted by one s3api copy-object (metadata COPY) to new versionId QBeNB.XXjTccRAbSADmCh_Wv7R0brx6q, content-sha256 ZspX0qD2..; then a targeted plan (0/1/0) and safe-apply. That copy-object is a live write the order's Grant did not list."
+    ]
+  },
+  "spec_asserts": "Order steps 6-7 and AC2: the admit read creates records the worker reads back and deletes, and the checker reads each key NOT FOUND; the grant lists exactly the live writes.",
+  "world_is": "The only credential on this device cannot decrypt irpt-requests, so an admit would leave a record this seat can neither read nor delete and AC2 could not grade; the worker stopped before after-read 1 (reads 2-5 not run), deleted the test row, rolled back with an extra copy-object, and filed this row. Disarm: nothing is armed (live is release 1, no test data exists); to run release 2 the issuer must grant a credential or an executing seat that can decrypt irpt-requests, or re-scope AC2 to the keys this seat can read."
+}
+```
+
+## IRPT_BCKEND-D2-W156-S2 -- Reading the live route: the admit may not reach the on-behalf branch at all, because the guarded owner for an internal subject is built from the subject itself
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W156-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~156",
+  "surfaced_at": "2026-10-08T17:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "By reading the code (not run live), on POST /api/scoped/investor-reporting/analysis/inputs an internal subject's owner is access.prospect_owner(), whose principal_id is the subject, so uploads.py create() sees principal_id == owner.principal_id and never takes the on-behalf branch; after-read 1's acting_principal_id would not be written and read 2 could admit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:905-922 (_handle_prospect): for verified_internal_subject, resolve_owner = access.prospect_owner() and the owner passed to the compute is that value",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:123-137 prospect_owner(): owner = current() minus fingerprint/allowedFirmIds, so owner.principal_id == subject",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:243-248: on_behalf requires principal_id != owner.principal_id; the unit tests (test_uploads_on_behalf.py, test_upload_door_reads_allowed_firms.py) pass an advisor-derived owner separately, which the live guard never builds for an internal subject",
+      "served.py:1010-1024: a non-service internal subject may already select any registered tenant via selected_tenant; only x-user-type service is held to allowedFirmIds, at the boundary with FIRM_BINDING"
+    ]
+  },
+  "spec_asserts": "Pair after-reads 1-2: an OPAL_GLOBAL filer whose allowedFirmIds names the firm is admitted with acting_principal_id = the filer and owner.firm_id = the firm; an unlisted firm is refused with the existing UPLOAD_* code.",
+  "world_is": "Inferred from source only; no live read was run (see IRPT_BCKEND-D2-W156-S1). If it holds, the live route admits an internal subject for a selected firm as before, records no acting_principal_id, and refuses an unlisted firm (service type) with FIRM_BINDING, not the upload code, so after-reads 1-2 as written cannot pass over this route; the offline suites pass because they supply the owner themselves."
+}
+```

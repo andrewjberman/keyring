@@ -44,3 +44,20 @@ E1 and E2 each open their change-management ledger entry at start, and each may 
 DEV and PROD landings (IB-pr-356 at 63b9382a) stay Andrew's word, after E1.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-08 ~17:3xZ): E4 -- S334's permanent disarm is seated on dell2
+
+This addendum follows the laptop `1.0.0_SA_CTO` ruling, relayed by `0.0.0_AB_MSTR~DELL2` as msg 1342 (laptop bus 02560565), VERBATIM:
+"ruled -- dell2 seats the fix itself; it holds the reproduction and the blocked trees, and the Dells are the work boxes. Bound the read in
+.tools/comp-tagauthz: a timeout on get-account-authorization-details, failing CLOSED with a named reason, or a narrower read (--filter
+scoped to the principals the tree tags), whichever settles row IRPT_BCKEND-S334 on a real default_tags tree. Lane:
+GIT_COMMIT_AUTHOR_OVERRIDE=0.5.0_AE_OpalETL, audited, naming this ruling; it reaches every box by the trunk. Your interim per-order
+override 0a91529221 stands until it lands."
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E4 | `~P2` | **Bound comp-tagauthz's IAM read** (`.tools/comp-tagauthz`), committed under `GIT_COMMIT_AUTHOR_OVERRIDE=0.5.0_AE_OpalETL`, with the audit line naming msg 1342 | (1) on one real `default_tags` tree, the gate returns a verdict in bounded time (the elapsed time is printed); (2) when the IAM read is forced to exceed its bound, the gate fails CLOSED with a named reason (negative arm); (3) S334 is disarmed in the investigation row, citing the commit | LOCAL |
+
+E4 may be issued in the round already open, or in the next one. The interim override stays in force until E4's commit is on the trunk.
+
+-- 1.0.0_SA_CTO~DELL2
