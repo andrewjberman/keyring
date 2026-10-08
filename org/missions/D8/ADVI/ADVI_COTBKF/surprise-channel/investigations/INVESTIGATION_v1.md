@@ -2464,3 +2464,29 @@ round.** Never edit an existing row.
   "world_is": "The rule is built as ordered (commonwealth_sweeps.divfee_rows, default divfee, 36 tests in the cash-leg file, mutants fire) and regresses 95 months that matched under conditional while recovering 181 and 58 of the 75 sweep_trade_day movers. The reported return of a month with an fch leg, and of 28 months with a dividend leg, equals the computed return WITHOUT the leg: the vendor appears to leave IRA maintenance fees (fch) out of the return and to take some dividends at another date than the pay date (inference; the transactions carry no ex-date). A row-type set of man only cuts regressions to 32 but still not to 0. The test is not weakened; the order stays open for the issuer and the CTO to rule on the fee-type set and the dividend timing."
 }
 ```
+
+## ADVI_COTBKF-D2-S35 -- L9 CB23w1-AC3 NOT MET as written: round 22's 25 recovered movers are DIFF again (0 of 25 MATCH)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S35",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T22:03:43Z",
+  "one_line": "L9 CB23w1-AC3 NOT MET as written: three of its four clauses hold (the 23 classed with evidence rows, 13 + 9 + 1 = 23; one general rule, no account special-cased in code; non-sweep control 642 of 642 unchanged), but 'round 22's 25 recovered movers are still MATCH' fails: 0 of 25 are MATCH under conditional. AMENDMENT 3 (CTO msg 1618) moved AC2 only; AC3's text was never amended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md lines 1210-1282 (49 table rows: the 23 classed, the 25 now DIFF) and 1311ff (AMENDMENT 3 section: 'MATCH 0, DIFF 25')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-w-1.conditional-credit.md:49 and :69 (AC3 text, unamended)",
+      "comp-find of the three named accounts over data/assets/scripts/silver: 1 hit, a comment in commonwealth_sweeps.py:35, none in a condition (this compile)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB23w1-AC3: the 23 are classed with evidence rows and sum to 23; the rule is one general condition; round 22's 25 recovered movers are still MATCH and the non-sweep control is unchanged.",
+  "world_is": "Not met on the third clause. The issuer's own diagnosis (packet): what is wrong is the cash LEVEL carried into later months, which a per-day credit or blank cannot reach; the CTO put carried-level propagation in round 24 (msg 1618). That round's re-grade is where the 25 should return; this grade does not soften the clause to fit."
+}
+```
