@@ -5077,3 +5077,28 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Grade is re-run at e32's close. Id form: the TO named MDPF_SECCLASS-W62-S<k>; the surprise-row-gate requires the dell1 coordinate, so the id is MDPF_SECCLASS-D1-W62-S1. The 17 fixed_income/Cash rows are counted, not hidden; whether they are legacy rows the V3 set re-plans or rows outside it was not measured here."
 }
 ```
+## MDPF_SECCLASS-W59-S1 -- the identifier_namespace backfill's planned set is empty: every CUSIP: and NAME:: row already carries it
+
+```json
+{
+  "id": "MDPF_SECCLASS-W59-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~59",
+  "surfaced_at": "2026-10-08T03:04Z",
+  "one_line": "The e69 backfill's planned set is EMPTY: all 425 CUSIP: and 4,375 NAME:: rows of etf-classifications already carry identifier_namespace (626 BBG: carry BLOOMBERG), so the cell's conditional backfill would make 0 updates; the writer change is the live part of the cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/namespace_backfill.py -> NAMESPACE-BACKFILL-DRY-RUN rows=9155 missing_cusip=0 missing_name=0 puts=0 (2 scan pages, ConsistentRead)",
+      "census by key form and stored value, same scan: (CUSIP, CUSIP) 425; (NAME, NAME) 4375; (BBG, BLOOMBERG) 626; (bare, absent) 3729; 0 mutating calls",
+      "comp-find 'NamespaceTable' infra/aws/lambda/v2_portal -> 0 hits across 311 files: the wrapper the cell names as in the two executors was not found under that path (not searched elsewhere)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e69 / CTO round-12 analysis section 3 item 3: 'a conditional backfill of rows that have none (count printed)'; the cell is framed as rows lacking a namespace needing a backfill.",
+  "world_is": "Live table 2026-10-08: no CUSIP: or NAME:: row lacks the attribute, so the backfill is a standing guard for rows landed by a writer that omits it (the AI runner before this change) and a --write today would make 0 updates. The half request states the empty set and the 0 count; whether a half is still wanted for an empty set is the issuer's and the CTO's call. Bare rows (3,729) lack the attribute by design and read TICKER."
+}
+```
