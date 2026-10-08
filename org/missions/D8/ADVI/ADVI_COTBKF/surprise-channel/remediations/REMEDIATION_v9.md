@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~21:0xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~C2",
   "round": "v17",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v17"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-S27",
@@ -42,11 +42,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~21:0xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~C2",
   "round": "v17",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v17"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-S26",
@@ -63,7 +63,7 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~21:0xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~C2",
   "round": "v17",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v17"
   },
