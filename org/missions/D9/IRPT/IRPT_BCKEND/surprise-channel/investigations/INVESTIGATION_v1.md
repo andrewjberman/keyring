@@ -20496,3 +20496,108 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two cells land the two halves of the route's declaration. In a tree carrying both, the extra-in-table reason disappears; the pdf-route reason remains and is not this cell's. Merge order between ~164 and ~165 is not constrained by this."
 }
 ```
+
+## IRPT_BCKEND-S386 -- S382 ruled: IB-pr-349 new-export after-reads OPEN-BY-DESIGN (AMENDMENT 1 @b883510cd9)
+
+```json
+{
+  "id": "IRPT_BCKEND-S386",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T22:42:38Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S382: ruled by the issuer's AMENDMENT 1 @b883510cd9 (CTO REC msg 757). The exposure arms were proven on the deployed bytes; the new/performance/analysis READY legs are OPEN-BY-DESIGN because no authenticated Opal principal exists without an auth-plane write the order forbids. IB68-1-AC1 PASS under the amended criterion; IB-pr-349 complete @8cfdf2a38c.",
+  "one_line": "IB-pr-349's legs 4-5 (a new export READY plus its admitted-read line) stay open by design; they are discharged by the first real Opal export (Andrew's or an Opal user's) read with its irpt_export_read_admitted line, which the issuer records.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 @b883510cd9 (p68_cells.py OPEN-BY-DESIGN keys; IB-pr-349 and IB-pr-350 faces)",
+      "IB-pr-349 flipped complete @8cfdf2a38c after the issuer re-ran IB68-1-AC1 PASS and proof VALID"
+    ]
+  },
+  "spec_asserts": "S382: after-reads 4-5 need an authenticated Opal principal that the order forbids minting.",
+  "world_is": "Graded on the deployed-bytes controls; the open legs await the first real Opal export."
+}
+```
+
+## IRPT_BCKEND-S387 -- S384 fixed: p68_cells.py resolves Git Bash instead of bare bash
+
+```json
+{
+  "id": "IRPT_BCKEND-S387",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T22:42:38Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S384: the issuer's own check defect. p68_cells.py called subprocess.run([\"bash\", .tools/aws, ...]); a python-spawned bare bash resolves on Windows to the System32 WSL stub, so the live CodeSha256 read failed on the laptop. It now uses .tools/git_bash_resolver.bash_argv, per CLAUDE.md's python-to-bash rule; IB68-1-AC1 re-run PASS at dell2 HEAD.",
+  "one_line": "checks/r68/p68_cells.py read the live CodeSha256 through bare bash, which fails on any box where python resolves bash to the WSL stub; fixed to use git_bash_resolver.bash_argv.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-S384 (0.7.0_AE_CloudOps~I): 'live CodeSha256 unreadable rc 1' on the laptop",
+      "issuer re-run after the fix: p68_cells.py . IB68-1-AC1 -> PASS"
+    ]
+  },
+  "spec_asserts": "S384: IB68-1-AC1's live read works on every applier box.",
+  "world_is": "It does after the fix; later checks resolve bash the same way."
+}
+```
+
+## IRPT_BCKEND-W167-S1 -- gen-wire.ts generate() throws on routes.json's custody-report-read row (no response_schema key), so iv-e-26 (I
+
+```json
+{
+  "id": "IRPT_BCKEND-W167-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~167",
+  "surfaced_at": "2026-10-07T23:22:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "gen-wire.ts generate() throws on routes.json's custody-report-read row (no response_schema key), so iv-e-26 (IVE26-AC3) fails before it compares any file; with the tests writing to a temp dir the failure writes nothing tracked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun --no-install test over the four generator tests at portal 63b9382a: 6 pass, 1 fail; IVE26-AC3 error: ENOENT open 'docs/contracts/investor-reporting/v1/undefined' at fe-s-13/gen-wire.ts:469 (renderResponses) via generate()",
+      "docs/contracts/investor-reporting/v1/routes.json (22 routes): the one route lacking a response_schema key is 'GET /api/scoped/investor-reporting/custody-report/{reportId}' (operation custody-report-read, cell IB-pr-355, commit cf6839fe38); renderResponses skips only response_schema === null, so undefined reaches readFileSync",
+      "git status --porcelain portal/src/pages/InvestorReporting/contracts/wire after the run is empty; IB73-1-AC1 PASS"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-359: after the generator is pointed at a temp dir, output that still differs from the committed wire files is named in a row as an observation; the base failure of IVE26-AC3 was read as drift in the content-pin arm.",
+  "world_is": "The generator cannot complete against the committed routes.json: no wire file (committed or temp) is compared, so the drift of the 4 AnalysisReport-related files measured at base is not observable until routes.json declares response_schema: null (or a schema) for custody-report-read, or renderResponses skips undefined. The failing test is dsgn-irptv1/iv-e-26.wire-regen.test.ts (IVE26-AC3). Not fixed here: the order forbids fixing the drift and editing contracts/wire or routes.json is outside the grant."
+}
+```
+
+## IRPT_BCKEND-S388 -- portal wire drift: gen-wire output differs from 4 committed AnalysisReport-related contracts/wire files
+
+```json
+{
+  "id": "IRPT_BCKEND-S388",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T00:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Regenerating the portal wire types (portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts) yields 4 files that differ from the committed portal/src/pages/InvestorReporting/contracts/wire/ copies, the AnalysisReport v2 types among them. The drift was measured at portal b3fedfea before round 73. It was hidden while generate() crashed on the custody route row's missing response_schema (fixed @60f7d8f4c8); with the generator running, its comparison tests report it (3 of 7 fail, IVE26-AC3 among them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer dry-run in worktree ~167 at portal b3fedfea: one run of the four generator tests rewrote 25 tracked contracts/wire files, git diff --numstat non-empty on 4",
+      "after @60f7d8f4c8, in worktree ~167: p73_cells.py IB73-1-AC1 PASS with 'tests 2 pass, 3 fail (reported, not graded)'",
+      "1.0.0_SA_CTO~DELL2 msg 1173: file the drift as a row with an owner; do not regenerate it as a rider"
+    ]
+  },
+  "spec_asserts": "The committed contracts/wire types are the generator's output from docs/contracts/investor-reporting/v1 (IVE26-AC3: idempotent regeneration, content pin 17 of 17).",
+  "world_is": "4 committed files differ from the regenerated output. Either the schemas or the committed types moved without the other. The owner is ~P2 until a cell traces which side is right; this round regenerated nothing."
+}
+```

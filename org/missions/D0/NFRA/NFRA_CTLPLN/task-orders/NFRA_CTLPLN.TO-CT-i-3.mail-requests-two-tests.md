@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~31</issued_to>
 <issued_by>2.0.0_SA_COO~R</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -33,6 +33,18 @@ The gateway is the only sanctioned read of his mailbox. The existing mail code i
 (`gateway_mail.py` is the caller of the gateway's headless route; `pull.py` and `criterion.py` read mail for one other
 purpose). The Teams agent is `data/transcripts/scripts/teams_chat/` (`tenant.py`, `assist.py`); after `CT-i-1` it has
 `assist.work_request(...)` and a text that says `WORK REQUESTED by ...` with a recommendation.
+
+### AMENDMENT 1 (issuer; do this FIRST, before the build below)
+
+Rows NFRA_CTLPLN-W31-S1 and S2 (ARMED, disarm owner the issuer) name three cases of
+`data/transcripts/scripts/tests/test_teams_chat_jobs.py` that pin the contract `CT-i-1` changed:
+`test_open_offers_to_every_device_and_sets_the_award_alarm`, `test_both_bids_award_at_once_to_the_lighter_box` and
+`test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat`. That file is now in your `<paths>`. Bring those
+three cases to the new contract: the offer goes to every box of `NAMES["bus_devices"]` (derive the count, type no box
+name the file does not already use), the early award needs a bid from every offered box, and a completion carries `coo`
+and a PASS `grade` by a `3.0.0_SA_CVO` serial. Remove no case and weaken no assertion that still holds; touch no other
+case. Commit that repair as its own commit. In your final report give the exact command you used to run the seven
+teams-chat and End of Day test files and its last line, which must show 0 failed; rows S1 and S2 are disarmed by it.
 
 ### BUILD, IN THIS ORDER
 
@@ -89,8 +101,13 @@ purpose). The Teams agent is `data/transcripts/scripts/teams_chat/` (`tenant.py`
 <criterion id="CTi3-AC1" cell_refs="CT-i-3"><invocation>python data/transcripts/scripts/tests/test_inbound_mail.py</invocation><expect>INBOUND-MAIL-TEST ok=True</expect></criterion>
 `CTi3-AC1` -- the two tests with their difference control: a message failing either reaches no model; one passing both and asking for work becomes one text.
 
-<criterion id="CTi3-AC2" cell_refs="CT-i-3"><invocation>python data/transcripts/scripts/teams_chat/mail_requests.py --check-domains</invocation><expect>MAIL-DOMAINS ok=True</expect></criterion>
+<criterion id="CTi3-AC2" cell_refs="CT-i-3"><invocation>python data/transcripts/scripts/teams_chat/mail_requests.py --check-domains --expect-missing 2</invocation><expect>MAIL-DOMAINS ok=True</expect></criterion>
 `CTi3-AC2` -- the seam with the real neighbour: the five firms' domains load from the estate's real records and none is typed. If you filed BLOCKING rows for firms with no recorded domain, record the run with `--expect-missing <n>` beside this one in your report and leave this criterion FAIL: the issuer rules it.
+`CTi3-AC2`, AMENDMENT 2 (issuer ruling on rows W31-S4 and W31-S5): Alongside and Opal have no mail domain in the estate's firm
+records, measured by the cell; no domain is typed to fill the gap. The criterion is run with `--expect-missing 2`: the three
+recorded firms load, the two unrecorded ones are named and their mail is NOT considered until the firm records carry them. The
+two record rows are asked of `1.0.0_SA_CTO` by the issuer. Re-run it, record the new output in the instance as PASS,
+re-validate, and flip `<status>` to `complete`.
 </proof_of_spec>
 
 <expected_criteria>CTi3-AC1,CTi3-AC2</expected_criteria>
@@ -108,6 +125,7 @@ every criterion passes and the instance is VALID.
 <paths>
 data/transcripts/scripts/teams_chat/mail_requests.py
 data/transcripts/scripts/tests/test_inbound_mail.py
+data/transcripts/scripts/tests/test_teams_chat_jobs.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
