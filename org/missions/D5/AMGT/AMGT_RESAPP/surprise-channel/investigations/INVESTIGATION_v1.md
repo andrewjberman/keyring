@@ -22126,6 +22126,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A page finding for DSGN_AMGTV1, beside rows Z-W303-S1 and Z-S372. Not chased."
+},
+{
+  "id": "AMGT_RESAPP-Z-W309-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~309",
+  "surfaced_at": "2026-10-08T11:58:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "lib/research/api/tests/test_harvest_prefixes.py::test_ii_registry_hash_matches fails at this worktree: the stored registry hash differs from the generator's scoped hash.",
+  "spec_asserts": "The order asks for the last line of the lib/research/api/tests folder run; it excuses only a test that reads a portal file absent at the portal ref.",
+  "world_is": "Measured in worktree C:/tmp/r79-309 at b2fd93edbf: the folder run reads 1 failed, 843 passed. The failure is test_harvest_prefixes.py line 68: hp.REGISTRY_HASH begins 0b67ab695620 and the generator's scoped_registry_hash() begins fff9a273a59b. The test reads infra/aws/terraform/harvest/gen_harvest_prefixes.py, not a portal file, and does not import segment_served; this cell changed neither side. Not read: which side moved, or whether the shared tree reads the same.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q lib/research/api/tests/ in C:/tmp/r79-309: 1 failed, 843 passed in 35.10s; the assertion line quoted above."
+    ]
+  },
+  "notes": "Surfaced, not chased. The issuer grades the suite on the shared tree."
 }
 ]
 ```
