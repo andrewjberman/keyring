@@ -7645,6 +7645,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T02:05:00Z",
+      "one_line": "HVST-bh-3: 8 of the 39 good CSL pairs carry no name or brand of CSL Limited beside the bare form (only the ADR ticker CSLLY), so the rule keeps 31 of 39, not 39; CENSUS FAIL returned to the issuer.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-bh-3 section 1.6: the 39 good pairs are all kept by anchors that are the company's names or brands; if they cannot be, print CENSUS FAIL, list each unanchored good pair, and report it as a finding the issuer takes back.",
+      "world_is": "bh3_census.out (19049 silver articles, 242 securities): anchors CSL Limited, CSL Seqirus, Seqirus, CSL Behring keep 31 of 39 good pairs and drop 3 of 3 Carlisle pairs, 0 ungraded pairs dropped, 0 of 242 other securities changed. The 8 unkept good pairs (sa:4113375, sa:4116212, sa:4124103, sa:4387844, sa:4392855, sa:4405179, sa:4414058, sa:4422985) each carry 'CSL ( OTCQX:CSLLY )' in a bird-flu vaccine-maker list and no other CSL name, brand or product word. The only second anchor in them is CSLLY, the ADR ticker, which is not a name or brand and was not added. ARMED because the committed ticker_anchors entry, if drained and a gold rebuild run, would drop those 8 good pairs; the issuer decides whether CSLLY (another ticker form of the same company) may anchor, or the entry is held. The universe_securities validator also treats an entry whose security is absent from the universe as not-in-universe (summary ticker_anchors_not_in_universe), not as an error, because existing tests build the real rule over small fixture universes without CSL.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh3_census.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh3_census.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
