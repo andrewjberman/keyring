@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~32</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>issued</status>
+<status>superseded; IRPT_DASHBD.TO-DB-b-53.fee-census.md (re-cut in place) -- 1.0.0_SA_CTO~DELL2 ruling on row IRPT_DASHBD-S35, msg 1660 (2026-10-08 21:21Z): Opal is gross by design and the gap was the tie-out's additive add-back; worker ~32 stopped by the issuer, its branch wk-IRPT_DASHBD-32 not drained</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
