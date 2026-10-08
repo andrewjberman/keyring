@@ -2196,3 +2196,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "The response schema is outside this order's paths and the served OPAL route is not this cell's; recorded so the response contract is read against the OPAL form before anyone serves it through this route."
 }
 ```
+
+## IRPT_YCDGEN-D2-W6-S1 -- With gen-wire.ts reading AnalysisReport from the v2 schema, the generated body is not identical to the committed AnalysisReport.ts: the committed file
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W6-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T17:20:00Z",
+  "one_line": "With gen-wire.ts reading AnalysisReport from the v2 schema, the generated body is not identical to the committed AnalysisReport.ts: the committed file is hand-edited (annotation, optional provider, three hand-added OPAL types), the generator emits one union type.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-u-6 section 2 R19 (recut): the generated AnalysisReport.ts body equals the committed one (header excluded); section 1: the OPAL_ENGINE form is carried by the generated type.",
+  "world_is": "u6_checks.py regen (bun --no-install from portal/, schemaFilePath('AnalysisReport') = the v2 file, source header cites infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json): generated body 134 lines, committed body 139 lines; FIRST DIFFERING BODY LINE 2: generated '  readonly provider: 'YCHARTS'' vs committed '  /** v2 discriminator (IRPT_BCKEND PRD v0.28 item 29). ... */' followed by 'readonly provider?: 'YCHARTS''. The generator renders the schema's top-level oneOf as `export type AnalysisReportWire = {...YCHARTS...} | {...OPAL_ENGINE...}` (inline, provider required on both). The committed file keeps `export interface AnalysisReportWire` (YCHARTS members only, provider optional) and appends hand-added AnalysisSectionNotAvailableReason (template-literal union for reason), AnalysisReportOpalSectionWire, AnalysisReportOpalWire (request_ref and disclosures and release as indexed access into AnalysisReportWire) and AnalysisReportAnyWire. Last change to the committed file: portal 81bbeba2 (YCD-u-6-adjacent YCD-e-6, Analysis tab reads the OPAL_ENGINE form), whose in-file comment says 'Hand-added beside the generated v1 interface'. The generator edit itself is correct and complete for this cell (v1 byte-frozen, every other contract unchanged); equality cannot be reached without editing a schema (reason as a pattern, provider optional) or the committed type or the generator's union rendering, none of which this cell may do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py regen output 'FIRST DIFFERING BODY LINE 2' and 'DIFF: 33 lines only in generated, 38 only in committed'",
+      "portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts lines 92-149 at d1b21c97 (hand-added OPAL types)",
+      "consistent with row IRPT_YCDGEN-W6-S1 (measured on the v1-edit attempt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Consumers that index AnalysisReportWire['request_ref'] and the three OPAL names depend on the committed shape, so replacing the committed file with the generated union would break them. A next cell has to choose one of: teach the generator to emit the interface-plus-OPAL-types form from the v2 schema, or drop the hand-added block and migrate the consumers to the union. AC2 is recorded FAIL, not forced."
+}
+```
+
+## IRPT_YCDGEN-D2-W6-S2 -- Three python tests among the readers of the AnalysisReport schemas fail in this worktree for reasons that do not touch either schema: a routes.json co
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W6-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T17:21:00Z",
+  "one_line": "Three python tests among the readers of the AnalysisReport schemas fail in this worktree for reasons that do not touch either schema: a routes.json count of 19 where the test expects 20 (two tests), and an absent brand asset (one test).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-u-6 AC3: every reader of either AnalysisReport schema is named and its tests pass.",
+  "world_is": "u6_checks.py census runs 20 python tests (33 outer readers outside org/, found by searches A and C; 6 portal readers named, not run): 17 pass; test_owned_request_contracts.py::test_public_routes_are_declared_against_the_installed_status_handler and test_upload_contract.py::test_route_denominators_are_measured_and_upload_is_declared_against_generate both fail 'assert 19 == 20' on the length of a route list; ycharts/research/tests/test_opal_producer.py::test_the_real_layout_renders_the_pdf_with_the_not_in_this_version_line fails 'LayoutRefused: brand asset absent in 2 root(s): deck_generation/brand_spec/brand.json (set IRPT_BRAND_SPEC)'. test_upload_contract.py fails identically when run from the main checkout C:/dev/ajb_workspace, and deck_generation/brand_spec/ is absent from the main checkout and untracked in this worktree. v1 is byte-equal to its merge-base copy and the only portal edit is gen-wire.ts, which no python test reads, so none of the three can be caused by this cell. Consistent with the 19-vs-20 route count carried to the CTO's analysis in row IRPT_BCKEND-S391 (stale api/routes.json).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py census output 'TESTS: 20 run, 3 failed [...]'",
+      "pytest E lines: 'assert 19 == 20' (x2) and 'LayoutRefused: brand asset absent in 2 root(s)'",
+      "pytest of test_upload_contract.py from C:/dev/ajb_workspace: 1 failed, 7 passed (same test)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC3 is recorded FAIL by the criterion's own wording (every test passes). The census names the three so the issuer can rule them out of the reader set or fix them in their owning cell."
+}
+```
