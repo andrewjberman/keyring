@@ -4993,3 +4993,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "HAZARD, and why it is INERT rather than ARMED: .tools/aws.cmd's own header records that under --quiet this same failure is a SILENT NO-OP -- 'infra/aws/lambda/ci/build-and-upload.sh reported a successful upload while S3 kept the OLD zip. Caught only by the upload-verify gate.' build-and-upload.sh is step 4 of MDPF_SECCLASS.TO-DEPLOY-e57e61, the next order in this seat's queue, so running it here before the shim resolves risks an apply whose artifact was never uploaded -- and neither a 0/1/0 source_code_hash plan nor AC1 would catch it (MDPF_SECCLASS-D1-S1 records why AC1 cannot). DISARMED SAME TURN by the disarm_owner: 2.0.0_SA_COO~M1 msg 733 HOLDS both TO-DEPLOY-e65b and TO-DEPLOY-e57e61 until the fix lands, ruled the fix 0.0.0_AB_MSTR~DELL1's as shared infrastructure, asked for a DERIVED lookup rather than a fourth hardcoded path, and directed that aws.cmd be proven to resolve the CLI first on retry, that the 8 keys be re-read, and that for e57e61 the uploaded zip's ETag be confirmed changed before the apply. So nothing will run the hazardous path on this device. The DEFECT remains open, which is why the class is BLOCKING and the disposition UNDER_INVESTIGATION. This seat did NOT edit .tools/aws.cmd: it is outside TO-DEPLOY-e65b's <paths> and the ruling is explicit. e65b's ledger entry secclass-e65b-namekey-deploy-s-20261007 stays OPEN across the retry, per that ruling, with all four legs OPEN and the world untouched."
 }
 ```
+
+## MDPF_SECCLASS-S68 -- safe-deploy's CROSSBOX gate predicted STOP for dell1 and proceeded in WARN mode; e65b half-landed and was rolled back
+
+```json
+{
+  "id": "MDPF_SECCLASS-S68",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T01:53Z",
+  "one_line": "TO-DEPLOY-e65b's retry on dell1 0.7.0_AE_CloudOps~SD ran ONE safe-deploy over two buckets. safe-deploy's own seat gate printed CROSSBOX-DEPLOY device=dell1 verdict=STOP for both roots but proceeded because its mode is WARN. The bd mover uploaded (3f1e6be8 -> 40ffa3fa), then s3:PutObject on opal-data-cot hit an EXPLICIT deny (policy cloudops-dell-agent-routes-host-policy), leaving the two firm copies split. ~SD rolled the bd key back by VersionId in-session; exposure 01:47:59Z-01:49:54Z (115 s), no gold run consumed it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~SD msg 736: action s3:PutObject, resource arn:aws:s3:::opal-data-cot/code/gold/lib/_shared/etf_classifications_dynamodb.py, principal cloudops-dell1-agent-user, explicit deny in arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy",
+      "~SD msg 736: safe-deploy printed CROSSBOX-DEPLOY device=dell1 verdict=STOP for both roots, mode=WARN; the rollback restored bd from VersionId 0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu, and both buckets read 3f1e6be8 by independent head-object",
+      "issuer read at 01:46Z: both keys ETag 3f1e6be8 before the retry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy whose own gate predicts a refusal for one of its targets does not start. A two-bucket act lands in both or neither (NEVER-2).",
+  "world_is": "The cross-box seat gate is advisory (WARN), so a predicted-STOP deploy started and half-landed. The NEVER-2 rollback contained it.",
+  "notes": "e65b is HELD until Andrew's item 2 (the dell1 firm-data limits) is applied, which lifts the cot deny; it is not moved back to a laptop seat (laptop CTO rule 1). Proposed remedy for the gate's owner: a CROSSBOX verdict=STOP fails closed before the first PUT, at least for a multi-bucket act."
+}
+```
