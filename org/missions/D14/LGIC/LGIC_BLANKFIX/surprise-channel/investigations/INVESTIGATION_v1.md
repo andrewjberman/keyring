@@ -1314,3 +1314,54 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "11 of the 24 names=0 roots declare named resources (ECR, IAM, CodeBuild, Lambda, SQS, KMS alias, DynamoDB, EventBridge rules, schedules) that opal_naming_scope.root_items does not enumerate, because the name is built in a local, through a module the enumeration does not follow, or in a generated .json file. Five further roots (transcripts, modules/served-guard, served-guard-inf, mdpf-secclass/sector-writer, investor-reporting/reporting-read) print only the names written as literals; transcripts and the served-guard module declare a bucket and an EVENT_RULE that the census does not list. If any of these roots is mapped, the check still grades only the names the enumeration returns, so a wrong name in the missing set is never on the list (FWD-2). Entered as 'none' on the zero, the root would be mis-entered. The ruling file MAP_ENTRIES_FOR_RULING_round6.md gives each of the 11 a verdict DECLARES-NAMES and a drafted ordinary entry; the enumeration gap itself is lib/opal_naming_scope.py's and is not touched by this cell."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S15 -- TO BF-u-6 says the commit-time naming gate is WARN today; the repository has it ENFORCING
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S15",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T18:23:39Z",
+  "one_line": "TO BF-u-6 (and CLAUDE.md rule 30) call the commit-time naming gate 'WARN today'; org/mcp/naming-gate.enforce exists, so the gate refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/naming-gate.enforce -- present in this worktree (test -e, rc 0).",
+      ".tools/naming-gate.py module docstring: 'ENFORCE is on with --enforce, env NAMING_GATE_ENFORCE=1, or a present org/mcp/naming-gate.enforce: a REFUSE then exits 1.'",
+      "python .tools/naming-gate.py --diff <a diff adding schedule irpt-directory-newjob to infra/aws/terraform/investor-reporting/directory/schedule.tf> (run in the worktree): 'NAMING-GATE: REFUSE 1 graded', rc=1.",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRE_WRITE_REFUSAL_PATTERNS_20261008.md row 16 and pattern 4 already record the same drift (ENFORCE since 2026-09-17)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-u-6 THE CELL: 'the commit-time naming gate already in the tree (CLAUDE.md rule 30, WARN today)'.",
+  "world_is": "The gate is in ENFORCE mode and refused the wrong-name arm of the design's measurement with rc=1. The design (FWD6_DESIGN_round6.md) is written against ENFORCE. No criterion is blocked."
+}
+```
+
+## LGIC_BLANKFIX-W1-S16 -- TO BF-u-6 gives the PRD's FWD-6 as lines 66-71; the ACCEPT's last clause is at line 72
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S16",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T18:23:39Z",
+  "one_line": "The order names PRD lines 66-71 for FWD-6; the block is lines 67-73 (line 66 is blank; the ACCEPT's closing clause 'longer than it was the last time anyone ran the check' is line 72).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md lines 66-73 printed with sed -n 66,73p at trunk 41361dfefe: 66 blank, 67 'FWD-6 Whoever creates a name...', 68-69 DONE WHEN, 70-72 ACCEPT, 73 SOURCE."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-u-6 THE CELL: 'The PRD's FWD-6 is ...LGIC_BLANKFIX_PRD.md lines 66-71: its ACCEPT has two halves'; BU6-AC2: 'FWD-6's ACCEPT (PRD lines 66-71)'.",
+  "world_is": "Lines 66-71 end mid-sentence in the ACCEPT; the second half of the ACCEPT (the list of unplaceable names no longer than before) is on line 72. The design quotes lines 67-73. Nothing is blocked; the CVO's reading at BU6-AC2 should take lines 67-73."
+}
+```
