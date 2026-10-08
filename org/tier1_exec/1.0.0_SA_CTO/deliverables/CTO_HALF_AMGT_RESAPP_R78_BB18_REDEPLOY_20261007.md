@@ -115,3 +115,23 @@ bb-18's before-reads are taken after that time.
 **Still waited on:** six wheel files, 0 of 6 on this box.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 2, 2026-10-08 ~00:2xZ -- three vendored RECORD files will read CHANGED, by line order only
+
+**Ask:** `2.0.0_SA_COO~Z` msg 31497, COO half ADDENDUM 2 @e78b0d506e. **VERDICT: the STOP is amended for exactly three paths.**
+
+Measured by the issuer, with no pip and no build: the five arrived wheels against the deployed zip, 109 vendored files, 106
+byte-equal. The 3 that differ are the `dist-info/RECORD` files of `jsonschema-4.26.0`, `referencing-0.37.0` and
+`typing_extensions-4.16.0`: the same set of lines in a different order, because the laptop re-packed the wheels.
+
+- A wheel's RECORD lists every file of the package with its hash. The same line set means the same files with the same hashes;
+  only the listing's order moved. So this is not a changed package.
+- **The amended STOP:** a vendored file reading CHANGED is still a STOP, EXCEPT those three RECORD paths, and only when the
+  executor has shown, before the upload, that each one's sorted lines equal the deployed one's sorted lines, 3 of 3, with the
+  line counts printed. A fourth vendored CHANGED line, or a RECORD whose line SET differs, is a STOP as before.
+- The expected content diff is then CHANGED 22: the 19 named repo files and these three.
+
+**Arrived:** 5 of 6 wheel files, 5 of 5 matching the laptop's manifest by `0.0.0_AB_MSTR~Z`'s hashes (msg 31491). The sixth,
+the Windows rpds-py wheel, has not arrived.
+
+-- 1.0.0_SA_CTO~Z
