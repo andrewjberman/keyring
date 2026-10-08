@@ -36,3 +36,14 @@ failed 6 tests; appending passes all).
 - Retains nothing: `ReportRepository.persist` still reserves under irpt-x10-v1 until E9 (`~P2`) lands; with E9 and this row PENDING,
   a CUSTODY_REPORT is still refused (not writable).
 - Flips nothing ACTIVE. The ACTIVE flip (40-hex enforcement_ref) is a later act, after E9 is installed (ADDENDUM 6 order).
+
+## ACTIVE flip (2026-10-08 ~20:1xZ, 2.0.0_SA_COO~M2; CTO msg 1537, E9 CTO half NEVER_WIDEN_IB_pr_370_E9_CTO_HALF.md @c086ec4c2b)
+
+Ruled: "E8 flips to ACTIVE in the registry before E10's pin is cut"; the ACTIVE row reaches the host inside E10's pair.
+- Two lines in the custody row only: `state ACTIVE`, `enforcement_ref 0a57f3c0e9ef89059827bbf888ecc9d5d61673e6` = the full hash of
+  IB-pr-370's pin 0a57f3c0e9 (E9, the per-family retention revision map that enforces this row; `git rev-parse`, ancestor of box/dell2).
+- Rows 1-3 byte-equal; the custody row equal except those two keys; irpt-x10-v1 sha256 still `e0046398...` (= ACTIVE_ROW_SHA).
+- `reporting_policy('irpt-custody-x10-v1')`: ACTIVE, policy_sha256 `11db343844ea393d...`; `reporting_destination` now grants
+  `opal-data-irpt` / `irpt/<firm>/platinum/custody_reports/<RPT-id>/<sha256>.json`.
+- Tests: lib/tests/test_irpt_destination.py 73 passed; reports/tests 125 passed; export/tests 259 passed, 2 skipped.
+- Deploys nothing; the live function keeps the registry packaged at its own pin until E10 releases.

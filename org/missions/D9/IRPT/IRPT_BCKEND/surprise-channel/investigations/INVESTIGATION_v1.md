@@ -21469,3 +21469,134 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does again."
 }
 ```
+
+## IRPT_BCKEND-D2-W178-S1 -- The repin set is four rows, not three: the packaged lib/opal_naming.py (c4fedd31c5) refuses the registry that
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W178-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~178",
+  "surfaced_at": "2026-10-08T19:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The repin set is four rows, not three: the packaged lib/opal_naming.py (c4fedd31c5) refuses the registry that carries E8's row, so lib/opal_naming.py was repinned to b77e2af4d5 as well.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Offline probe of a staging tree built from the source map with reporting_policies.json at 8530114ff9 and lib/opal_naming.py left at c4fedd31c5: reporting_policy('irpt-x10-v1'), ('irpt-custody-x10-v1') and reporting_destination(...) all raise ValueError 'reporting family metadata has an invalid field set' (the c4fedd31c5 validator admits no 'object' family key; SERVED_SERIES, CLIENT_SUMMARY and SERVED_MANIFEST carry one since b77e2af4d5).",
+      "Same tree with lib/opal_naming.py at b77e2af4d5 (diff c4fedd31c5..b77e2af4d5 is reporting validation only): irpt-x10-v1 ACTIVE sha e0046398e239 (unchanged), irpt-custody-x10-v1 PENDING_ENFORCEMENT sha 0550a37a722c, irpt-ycdgen-research-v1 ACTIVE; reporting_destination for PERFORMANCE unchanged.",
+      "Release pin P 0a57f3c0e9ef89059827bbf888ecc9d5d61673e6 carries the fourth row; the census at P lists lib/opal_naming.py with owner b77e2af4d5."
+    ]
+  },
+  "spec_asserts": "The order expects the minimal repin set to be repository.py, composition.py and the registry row past fdc0a92a21.",
+  "world_is": "A registry-only repin would make every reporting_policy() call in the function raise ValueError, so PERFORMANCE and ANALYSIS retention would be refused too (and submit_installed.retained_reports would swallow the ValueError and drop the custody revision silently). The fourth member removes that; the hazard is closed inside P, so INERT."
+}
+```
+
+## IRPT_BCKEND-D2-W178-S2 -- P does not make a CUSTODY_REPORT retainable: E8's row is PENDING_ENFORCEMENT and the packaged retention admits
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W178-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~178",
+  "surfaced_at": "2026-10-08T19:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "P does not make a CUSTODY_REPORT retainable: E8's row is PENDING_ENFORCEMENT and the packaged retention admits only an ACTIVE row; the flip to ACTIVE is a registry change that needs its own repin and release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (order the PENDING -> ACTIVE registry row, its repin and release before ~K2's E2 retains a report and before the two after-reads)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/retention.py _registered(): refuses unless policy['state'] == 'ACTIVE'; _policy() also needs enforcement_ref to be 40 hex and policy_sha256 to equal the canonical digest.",
+      "Offline replay at the built zip (deliverables/0.9.0_WK_IRPT_BCKEND~178/replay/built_run.json, custody.pending_persist): ReportRepository.persist of a CUSTODY_REPORT against the packaged row (state PENDING_ENFORCEMENT, enforcement_ref null) raises 'RetentionRefused: registered enforced policy required'; no custody blob and no custody index row written.",
+      "Same run, custody.simulated_active (an in-memory ACTIVE copy of the row, not a release): persist and get succeed, the retention row records irpt-custody-x10-v1, ANALYSIS and PERFORMANCE stay on irpt-x10-v1 and still read, another firm's get raises ReportDenied (OBJECT_NOT_COVERED at the route)."
+    ]
+  },
+  "spec_asserts": "The order asks for a packaged function that retains and reads a CUSTODY_REPORT under irpt-custody-x10-v1.",
+  "world_is": "At P the function composes the custody revision and routes custody-report-read, but a CUSTODY_REPORT write or read is refused (RetentionRefused) until the registry row is ACTIVE with an enforcement_ref; ACTIVE changes the row bytes and so its policy_sha256, hence another staged-row repin of reporting_policies.json and another release. The two after-reads cannot pass on P alone."
+}
+```
+
+## IRPT_BCKEND-D2-W178-S3 -- The order names the census file IB83-1_e9_repin_census.json but the order's check p83_cells.py reads IB83-1_re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W178-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~178",
+  "surfaced_at": "2026-10-08T19:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order names the census file IB83-1_e9_repin_census.json but the order's check p83_cells.py reads IB83-1_repository_repin_census.json; the census is written under both names, byte-identical.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Task order item 5: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~178/IB83-1_e9_repin_census.json",
+      "checks/r83/p83_cells.py line 'C = D + \"IB83-1_repository_repin_census.json\"' (read in the worktree at e1ed355884)",
+      "The check is outside the worker's paths and unedited; a second copy of the file under the check's name is inside the deliverables folder."
+    ]
+  },
+  "spec_asserts": "The census file the order asks for is the file IB83-1-AC1 and AC2 read.",
+  "world_is": "Two names. With only the order's name, AC1 and AC2 FAIL with 'no census file'. Both names are written with identical bytes; the check is not weakened. Issuer may align the check or the order's name."
+}
+```
+
+## IRPT_BCKEND-D2-S8 -- D2-W178-S2 ruled (fail-closed sequencing, carried to the CTO with the E9 pair) and D2-W178-S3 (the issuer's file-name defect, no effect)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T20:05:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W178-S2 and IRPT_BCKEND-D2-W178-S3. S2: the packaged retention admits only an ACTIVE policy row, so with E8 PENDING the E9 release (pin 0a57f3c0e9) keeps every CUSTODY_REPORT persist and read refused (RetentionRefused) while PERFORMANCE/ANALYSIS are unchanged (replay, identical result_sha256). That is fail closed, never exposure; it is a sequencing fact, not a live hazard. The ACTIVE row reaches the function only by a further repin of the reporting_policies.json staged row plus a release; the issuer carries that to 1.0.0_SA_CTO~DELL2 with the E9 pair (recommendation: release E9 now; the ACTIVE repin rides E10's pair, which must release before IRPT_CUSTDY E2a anyway). S3: the issuer's order named the census file IB83-1_e9_repin_census.json while the check reads IB83-1_repository_repin_census.json; the worker wrote both, byte-identical; no grading effect.",
+  "one_line": "E9 releases with custody still closed; the ACTIVE flip needs one more repin, routed to the CTO with the pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W178-S2 (RetentionPolicy._registered refuses a PENDING_ENFORCEMENT row: 'registered enforced policy required')",
+      "IB-pr-370 packet NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-370.md (blob 1d5120c14b), drained @a1f2d9f43c"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: the ACTIVE repin is carried with the E9 pair to the CTO; custody stays fail-closed meanwhile."
+}
+```
+
+## IRPT_BCKEND-D2-W179-S1 -- the worktree carries no .tools/terraform.exe (gitignored), so the plan could not run until the binary was copied in
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W179-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~179",
+  "surfaced_at": "2026-10-08T20:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order says plan with .tools/terraform.exe, but a fresh worktree has none (the pattern .tools/*.exe is gitignored) and none on PATH; the worker copied the base checkout's binary into the worktree's ignored .tools/ and ran terraform init in the export root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls .tools/terraform* in the worktree: no such file; git check-ignore -v .tools/terraform.exe: .gitignore:193:.tools/*.exe",
+      "the first plan attempt: rc=127 '.tools/terraform.exe: No such file or directory'; terraform v1.15.8 from the copied binary, init succeeded, plan 0 to add, 1 to change, 0 to destroy",
+      "git status --porcelain stayed empty after the copy and the init (both ignored)"
+    ]
+  },
+  "spec_asserts": "Plan infra/aws/terraform/investor-reporting/export with the worktree's .tools/terraform.exe to a planfile.",
+  "world_is": "A new worktree is not provisioned with terraform.exe; the binary and .terraform/ were added as ignored untracked files. The same copy will be needed by every release worker. No tracked file, state or served object differed from the order's expectation."
+}
+```
