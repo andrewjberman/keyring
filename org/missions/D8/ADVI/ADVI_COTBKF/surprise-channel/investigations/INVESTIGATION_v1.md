@@ -2170,3 +2170,28 @@ round.** Never edit an existing row.
   "world_is": "The pin was over-coupled to the module's current-list name. The honest assertion is ARM_LISTS['v1'] == (RULE_LIST, sw.SWEEP_LIST_V1_VERSION). Not edited here: the file is outside the CB-t-2 grant. The CB-t-1 proof (AC1: 9 passed at 101fb91b59) was true at that commit. The issuer can widen the grant by one line or fold the one-line fix into a later order."
 }
 ```
+
+## ADVI_COTBKF-D2-W41-S3 -- CB-t-2: remediation of ADVI_COTBKF-D2-W41-S2 (arm test re-pinned to SWEEP_LIST_V1_VERSION)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:45:00Z",
+  "one_line": "Corrects ADVI_COTBKF-D2-W41-S2: after the issuer ruling (amendment c6e1cae6d3) the test now asserts against sw.SWEEP_LIST_V1_VERSION; S2 is REMEDIATED by this commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py: 9 passed",
+      "python -m pytest -q data/assets/scripts/silver/tests: 514 passed, 11 skipped"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_COTBKF-D2-W41-S2 was UNDER_INVESTIGATION: the CB-t-1 arm test pinned ARM_LISTS['v1'] to the current list version and failed once v2 landed.",
+  "world_is": "Fixed at line 113 of test_commonwealth_mover_classes.py (SWEEP_LIST_VERSION -> SWEEP_LIST_V1_VERSION) in the same commit as this row. The row gate bars in-place mutation of S2, so its disposition is closed by this new row citing the old id; S2 itself is unedited."
+}
+```
