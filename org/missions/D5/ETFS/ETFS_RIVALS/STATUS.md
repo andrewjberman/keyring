@@ -1,11 +1,35 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-26 at CLOUD 0576fb051f; the mis-dated 2026-09-29 price object is never read; ledgers r22 and r26 wait on the 2026-10-08 11:00Z and 13:00Z runs)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-26 at CLOUD 0576fb051f; round 27 built: two cells merged, the writer cell held on its branch until the 2026-10-08 11:00Z run is read; ledgers r22 and r26 wait on the 11:00Z and 13:00Z runs)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
 ruled by `1.0.0_SA_CTO~Z`.
 
-As of 2026-10-08 ~02:0xZ. The drive logs are the hour-by-hour record:
+As of 2026-10-08 ~07:1xZ. The drive logs are the hour-by-hour record:
 `org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12,13,14}Z_opal_bloomberg.md`.
+
+## Round 27 (FWD-24, the vendor request OFF) -- where it stands
+
+Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `deliverables/2.0.0_SA_COO~RV/round27/L8_PACKET_ROUND27.md`
+@09e99a3532. CVO slug @f78a9b6cb1 (ADJUDICATION_v35.Z): ho-1 J1 MET, rk-1 J1 MET, tw-1 J1 owed (C-S80).
+
+| cell | state | what is next |
+|---|---|---|
+| RIV-ho-1 (`history_owed.py`, new) | MERGED aca932cd3f. Live read 2026-10-08: 742 securities, 184,600 units owed over 251 dates | nothing; it is called only when the switch is on |
+| RIV-rk-1 (reader: a close only on its own trading date) | MERGED d99155c49a. From the branch: 0 moved rows of 6,066 and 1,406; 13 of 13 charts as served. NOT deployed to the Lambdas | a never-widen pair, then the Lambda deploy, AFTER the 11:00Z run (ledger r26 L4 reads the round-26 package) |
+| RIV-tw-1 (the daily leg's top-up writer) | complete on branch `wk-ETFS_RIVALS-19` @de25db03ea (worktree `C:/tmp/wk-riv-r27-19`), NOT merged. Pair WHOLE: COO half `round27/NEVER_WIDEN_HALF_COO_R27_TW1_MERGE.md`, CTO half msg 31588 @d969c62f46 | merge AFTER the 2026-10-08 11:00Z vehicle run is read (ruling msg 31584); the first scheduled run after the merge is the pair's read and tw-1's J1 |
+
+- The switch is the environment variable `RIVALFUNDS_HISTORY_OWED`: OFF unless exactly `print` or `ask`; set nowhere on this
+  box. `print` needs a one-line ask to 1.0.0_SA_CTO~Z naming where it would be set; `ask` waits on Andrew's recorded answer
+  relayed by the CTO, and (CTO half C2) on the writer storing a currency and each close's trading date, and on a ruled cap.
+- Standing term (ruling msg 31596, row Z-S75): before ANY merge to site-Z CLOUD, list the merged paths against
+  `round27/vehicle_load_set.json` (18 modules the vehicle's two working-tree legs load); a merge touching one carries a
+  pair or a stated reason it needs none. The rk-1 merge touched one (`gold_holding_contribution.py`) unpaired: left in
+  place by that ruling; the 11:00Z log read grades it (ImportError or a new top-level failure = revert the same hour).
+- For the round-28 list: top-up rows carry no currency; the leg passes the report date as the owed window's end;
+  `HISTORY_OWED_CAP` 5,000 is unruled; row Z-S73 and the day-early 2026-09-29 pull are untraced; two cell ids (rk-1, cu-1)
+  each name two orders (row Z-S74) -- list existing ids before naming a cell.
+
+**Sections below this one were written before round 23 and are history where they disagree with the title line and this section.**
 
 ## Pins
 
