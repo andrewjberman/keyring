@@ -21886,3 +21886,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The order's criteria cite the earlier cell (IB-pr-371, copied from the predecessor order), so no criterion discharges the owned cell. A worker may not amend criteria or weaken a check, and the flip is gated on a VALID instance, so the order stays <status>pending</status>. Remedy owned by the issuer 2.0.0_SA_COO~P2: amend both cell_refs to IB-pr-374 (a criteria amendment the issuer may make itself) and re-run proof-of-spec-check on the committed instance, then flip. Nothing served is affected."
 }
 ```
+
+## IRPT_BCKEND-D2-S10 -- round 87 rows ruled: W182-S2 resolved by the issuer's amendment; W182-S1 tooling; W183-S1/S2 carried to the CTO with the round packet
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T22:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W182-S2, D2-W182-S1, D2-W183-S1 and D2-W183-S2. W182-S2: IB-pr-374's criteria carried cell_refs IB-pr-371 (the issuer derived the order from IB-pr-371's text); AMENDMENT 1 @ef0d4b9afc set them to IB-pr-374, the worker's proof re-validated VALID, and the issuer flipped the order complete after re-running IB87-1-AC1 (live rNjtTwcm) and AC2. W182-S1: a fresh worktree lacks the gitignored terraform binary; tooling only, no served effect. W183-S1 (custody-report-read returns only the document, so an HTTP reader does not see persisted_by) and W183-S2 (the content binding is the declared composition hash verified against the stored artifact, not a recomputation; every producer must now post it): both are carried to 1.0.0_SA_CTO~DELL2 in the round-87 packet against its condition 1 (persisted_by + binding before any firm read).",
+  "one_line": "Round 87's rows each have a resolution or an owner; the writer function is live, its route still waits for the laptop IAM leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check on IB-pr-374's instance after AMENDMENT 1 -> VALID (rc=0); live irpt-export-render CodeSha256 rNjtTwcm... (issuer re-read)",
+      "IB87-2-AC1/AC2 PASS on the issuer run (persisted_by 5, content_bound 5, whole file 54)"
+    ]
+  },
+  "spec_asserts": "Each open finding has a resolution or an owner.",
+  "world_is": "It does."
+}
+```
+
+## IRPT_BCKEND-D2-S11 -- the terraform bring-up kit landed on dell2 and both halves of the CTO's named read-back now pass, so S364's binary blocker is gone; coverage, write capability and the directory root's own prohibition are NOT covered by that
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S11",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T22:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Row IRPT_BCKEND-S364 records that dell2 has no terraform binary so safe-apply exits 5, blocking the signed r61 directory release and every dell2 apply after it; the bring-up kit the CTO ruled for (msg 385) has since landed, and BOTH halves of the read-back that ruling named -- one terraform version and one plan of a no-op root on dell2 -- now pass, with the installed binary byte-identical to the kit manifest and registry egress excluded by the CLI config.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/tfkit-in/kit-terraform-pack-20261007/MANIFEST.json: kind=terraform-filesystem-mirror, platform windows_amd64, binary version 1.15.8 sha256 6eb0a1cb89344c97ccf2928ddc2d7a6cb71a1837b7ecccfd5991466b6d751e03; providers hashicorp/aws 5.100.0 (matches_lock true), hashicorp/aws 6.67.0, hashicorp/archive 2.8.1",
+      "sha256sum .tools/terraform.exe = 6eb0a1cb89344c97ccf2928ddc2d7a6cb71a1837b7ecccfd5991466b6d751e03 -- byte-identical to the manifest's declared binary, so the installed terraform is the kit's by CONTENT, not by filename (CLAUDE.md rule 22a CODE layer)",
+      "C:/Users/Test/AppData/Roaming/terraform.rc: provider_installation { filesystem_mirror { path = \"C:/tmp/tfkit-in/kit-terraform-pack-20261007\" include = [\"registry.terraform.io/*/*\"] } direct { exclude = [\"registry.terraform.io/*/*\"] } } -- the CTO's 'no registry download on dell2' is enforced by config, not by convention",
+      ".tools/terraform.exe version -> 'Terraform v1.15.8 on windows_amd64' (first half of the read-back msg 386 named)",
+      ".tools/terraform.exe plan -lock=false -no-color in infra/aws/terraform/ticket-center at HEAD 71b72d7a3e -> 'No changes. Your infrastructure matches the configuration.'; 22 resources refreshed against live AWS and 3 data sources read, provider served from the mirror (second half of the read-back)",
+      "aws sts get-caller-identity -> arn:aws:iam::313476888478:user/cloudops-dell2-agent-user -- dell2 reads remote S3 state and live AWS under its own identity, not laptop hands",
+      "infra/aws/terraform/ticket-center/.terraform.lock.hcl: aws 5.100.0 hash h1:H3mU/7URhP0uCRGK8jeQRKxx2XFzEqLiOq/L2Bbiaxs=, equal to the manifest's matches_lock entry; .terraform/providers populated 2026-10-07 14:43 local, i.e. install-from-mirror already succeeded on this box once before this read"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S364 @aff002122a, relayed as msg 386 (2026-10-07T10:53:57Z): 'dell2 has no terraform binary, so safe-apply exits 5 ... no dell2 apply can run ... This blocks IRPT_BCKEND's signed r61 directory release, and every dell2 apply after it.' The CTO ruling msg 385 chose (b) -- no laptop apply -- and named the acceptance: the kit carries the laptop's terraform binary and provider plugin cache pinned to the versions the roots lock, 'read back by one `terraform version` and one plan of a no-op root on dell2'.",
+  "world_is": "The kit landed and both named reads pass (evidence 4 and 5), so the binary half of S364 is MET and dell2 can plan against live AWS under its own identity. THE CLAIM IS SCOPED TO WHAT WAS EXERCISED and does not extend to: (a) coverage -- the mirror holds only aws 5.100.0, aws 6.67.0 and archive 2.8.1 for windows_amd64, and 1 of 71 roots under infra/aws/terraform/ is initialized, so a root whose constraint needs any other provider is UNTESTED and would have no legal install path (direct is excluded); (b) write capability -- plan is read-only, and the Andrew-direct of 2026-10-08 ~22:0xZ still records IAM as a surface the Dells cannot write, so an apply order touching IAM stays with the laptop applier; (c) the r61 target itself -- infra/aws/terraform/investor-reporting/directory/main.tf carries an in-file prohibition ('SKELETON ONLY ... NOT INITIALISED, NOT PLANNED, NOT APPLIED: terraform init here would pin this backend before the owning cell exists'), so that root was deliberately NOT the root planned here and its release needs the owning cell, not just a working toolchain. Disposition left UNDER_INVESTIGATION: this row reports a measured readiness delta, it does not grade S364 closed."
+}
+```

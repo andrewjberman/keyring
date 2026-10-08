@@ -1058,6 +1058,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "AMENDMENT 1: the allowlist excludes every dictionary-colliding name token, Apple is the stated loss; AC1 expects R11-A11-LIST-OK, whose checker requires apple among the tokens.",
     "world_is": "Both cannot hold. The worker followed the amendment and did not re-add Apple; the issuer owns the checker's NEED set (outside the worker's paths).",
     "notes": "Counts only. Disarm/resolution owner: 2.0.0_SA_COO~T2 (drop apple from NEED, or rule otherwise)."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T22:40:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-e12 needs account_type, themes, holdings category weights and household from the retained composition, but request_composition.py and the browser/resolved shape name none of them; the contract marks all four 'unknown -- producer to confirm' and entry.py reads them from an optional commentary_basis (null/[]/{} when absent). Also unconfirmed: that stream ref.request_ref equals the composition's request id.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/request_composition.py:1-260 read in full: keys used are browser.{comparison_keys,input_id,account_ids,client_id,snapshot_id,report_title,prepared_for,variant} and resolved.{owner,profile,comparison_catalog,input_ref,document,holdings.snapshot_id}; no account_type, themes, category weights or household",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/H1_READY_PRODUCER_FACTS_20261008.md @6061d0e274: stream item hands over tenant, ref.{report_id,revision,report_kind,request_ref}, blob; owner withheld"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-e12: the abstract request carries account_type, themes and holdings category weights read from the retained composition by request id.",
+    "world_is": "The retained composition is not measured to carry those fields; the producer (IRPT_BCKEND ~P2) must say where they live or add them. Until then the abstract request emits account_type null, themes [] and holdings_categories {}, so the slicer ranks on variant and comparison_keys only.",
+    "notes": "Built to the order; no source invented. Owner of the answer: 2.0.0_SA_COO~P2 via the contract agreement."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T22:55:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "FWD-10 thread seam H4 -> H6 breaks: the drafter's output carries no generated_at, which ~V2's ticket-write contract v0.1 section 2 requires in draft_commentary, so write_draft_ticket dead-letters every draft (action dead_letter, error missing required value: 'generated_at').",
+    "disarm_owner": "2.0.0_SA_COO~T2 (round 13's first cell: the drafter stamps generated_at, ISO-8601 UTC, at the model call)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R12_THREAD_TRACE.json: H2 OK, H4 (simulated gate, fake model) DRAFT, H6 against the section-5 stub ok=false action=dead_letter",
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md section 2: draft_commentary {text, model, generated_at, status}",
+        "data/transcripts/scripts/commentary/drafter.py draft() output keys: request_id, draft_text, provenance, status (no generated_at)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition round 12: the close trace strings H2 -> H3 -> H4 -> H6 as one journey; the ticket write follows the agreed contract.",
+    "world_is": "Each cell passes its own tests, but the drafter and the ticket client disagree on one required field, so the journey stops at H6.",
+    "notes": "Found by the issuer's end-to-end trace, not by any cell's criteria (each cell built against its own fake)."
   }
 ]
 ```
