@@ -121,7 +121,7 @@ Shell: Git Bash default utilities only. PowerShell: Windows PowerShell 5.1 synta
 ### ACCEPTANCE
 
 <proof_of_spec>
-<criterion id="CTs2-AC1" cell_refs="CT-s-2"><invocation>python .tools/seat-rules-check.py exercise</invocation><expect>pairs_covered=24/24</expect></criterion>
+<criterion id="CTs2-AC1" cell_refs="CT-s-2"><invocation>python .tools/seat-rules-check.py exercise</invocation><expect>pairs_covered=24/24 probes_pass=[0-9]+ probes_pending=0 probes_fail=0 probes_unread=0 needs_andrew=3 ok=True</expect></criterion>
 `CTs2-AC1` -- every seat kind has a rule in each of the three areas, and every probe of an existing gate passes: the same line must read `probes_fail=0 ... ok=True`.
 
 <criterion id="CTs2-AC2" cell_refs="CT-s-2"><invocation>python .tools/tests/test_seat_rules_check.py</invocation><expect>SEAT-RULES-TEST cases=</expect></criterion>
@@ -161,3 +161,37 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: Andrew-direct 2026-10-07 ~16:3xZ (record above), ~18:3xZ item 7, ~18:5xZ, ~19:0xZ, and ~21:1xZ at this seat's terminal
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_211xZ_COO_C_MAKE_SURE_GITOPS_AWSOPS_AGENT_WORKFLOW_DEMANDS_ARE_MET_AND_SAY_LINE_FOR_LINE.md`);
 PRD `prd/NFRA_CTLPLN_PRD.md` v0.19 @b44686cebc (ADMITTED), FWD-21 to FWD-25, contract C-SEATS clauses 1 to 7; CTO msg 106584 (the split).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-08 ~11:2xZ) -- REOPENED, SHORT: a probe that TIMES OUT is not a probe that FAILED
+
+The cell is merged and all eight cells of the workstream are in, so no probe is pending. But the issuer's runs of
+`python .tools/seat-rules-check.py exercise` on the merged trunk read, three times: `probes_fail=5`, `probes_fail=4`,
+`probes_fail=4`, `ok=False`, every failure the same shape: `PROBE R-GITOPS-3|4|5 or R-AWSDEVOPS-1  FAIL  <serial>  timeout
+after 60s`. All are probes of ONE hook, `.tools/hooks/never-rules-gate.sh`, on a machine at about 77% processor load; the same
+probes passed earlier in the night, and your own row NFRA_CTLPLN-W8-S11 measured that hook at 13 to 34 s per run. A timeout
+says nothing about whether the rule refused, yet it prints as FAIL, which is the word for "the gate let it through". Gate
+limb: none graded this modification.
+
+1. **A third outcome, UNREAD.** A probe whose command does not finish reads `UNREAD` with the bound it hit, never `FAIL`.
+   `FAIL` means only: the command finished and its output did not show the refusal (or showed the forbidden text). The last
+   line gains `probes_unread=<u>` after `probes_fail=`; `ok=True` requires `probes_fail=0 AND probes_unread=0 AND
+   probes_pending=0` (an unread probe is not a pass).
+2. **Make the slow hook's probes finish.** Find why they take more than 60 s here: are several heavy probes run at once
+   (your first pass moved to parallel runs to fit the bound), so they contend? Measure one `never-rules-gate.sh` probe alone,
+   then the set as the tool runs it, and report both times. Then: run the probes of one hook SEQUENTIALLY (parallelism only
+   across different mechanisms), give a per-probe bound that fits the measured cost with margin (state it; it may be per
+   mechanism), and on a timeout retry that probe ONCE alone before calling it UNREAD. The whole `exercise` must still finish
+   under 170 s on this machine when idle; say what it took.
+3. If, measured alone, a probe of that hook really does not finish, that is a finding about the HOOK, not something to paper
+   over: report it with the hook's own slow step named, file a row, and leave the probe UNREAD.
+4. Tests in `.tools/tests/test_seat_rules_check.py`: a probe command that sleeps past its bound reads UNREAD and `ok=False`;
+   a probe that finishes without the refusal reads FAIL; the retry runs once; the last line carries the new field.
+5. Run `exercise` three times in a row on this machine and report the three last lines and the load you observed.
+
+**ACCEPTANCE.** `CTs2-AC1`'s expectation is restated by this amendment to
+`pairs_covered=24/24 probes_pass=[0-9]+ probes_pending=0 probes_fail=0 probes_unread=0 needs_andrew=3 ok=True` if the order's
+present `<expect>` names `probes_pending=13` or any count that is no longer true; write the proof row's `expect` equal to the
+order's text as you find it after this amendment. `CTs2-AC2` unchanged. Rewrite the proof instance, validate, flip to
+`complete` only if the exercise really reads `ok=True`; if it reads UNREAD under real load after the retry, do NOT flip:
+report.
+
