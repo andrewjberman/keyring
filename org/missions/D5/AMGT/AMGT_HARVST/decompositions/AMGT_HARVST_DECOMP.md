@@ -3548,3 +3548,23 @@ deploy to whatever the driver runs next. The order stays open until then.
 - `bo-1` AC1 (`pytest test_bo1_query_override.py`) base: FAIL as expected (the test is absent).
 - `bo-1` AC2 (`cat bo1_query_table.out`) base: FAIL as expected (no such file).
 - `bo-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (count in the issuance commit).
+
+## 85. ROUND 71 -- a malformed override and the stored label, before the pointer ever moves (CTO half @d6ea0eff2f, condition C2; msg 31679), 2026-10-08 ~11:1xZ
+
+Round 70's `bo-1` is BUILT on branch `wk-AMGT_HARVST-122-r70` @419dc9b1fc and its never-widen pair is complete (COO half
+@ca5cb29676, CTO half @d6ea0eff2f); the merge waits on the live Seeking Alpha leg ending. The CTO half's C2 names two things
+owed before the collector is ever pointed at the new identity file.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bp`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell, stacked on `bo-1`'s branch because it edits the same functions).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bp-1` | `bp-1` | **Which jobs a malformed query override stops, shown by test on the code as found, then contained to exactly one job with a named status and no fallback; and one helper so an overridden security's stored listing label reads the query that was searched** (row Z-W122-S1). `slug_queries` stays the one writer of the queries; the 242-name table re-read. | SERVED | worker ~123 |
+
+**The merge is HELD** like `bo-1`'s, and this cell's commits are not covered by `bo-1`'s pair.
+
+**Checks dry-run at the base (branch `wk-AMGT_HARVST-122-r70`) before the cut:**
+- `bp-1` AC1 (`pytest test_bp1_malformed_override.py`) base: FAIL as expected (the test is absent).
+- `bp-1` AC2 (`cat bp1_query_table_rerun.out`) base: FAIL as expected (no such file).
+- `bp-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (778 passed, 3 skipped on that head).
