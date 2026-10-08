@@ -513,6 +513,27 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "PRD/decomp ROUND 2 HG-t-5: moving the daily fire to cron(45 12 * * ? *) changes one schedule under its own pair with served delta 0; round-1 exercise halves: an induced 06:00Z failure healed by 11:32Z reaches every served reader by its floor.",
     "world_is": "The satellites producer reads same-day bronze at 07:00Z with no re-attempt, so any day the runner lands after 07:00Z serves a one-day-stale registry. Today is such a day (stale now). Held by 2.0.0_SA_COO~G1: HG-t-5 is NOT applied (act 2 split; the age change HG-t-4 alone may proceed). Disarm owner 1.0.0_SA_CTO~DELL1 rules (a) the same-day re-run of the producer (a served write off its clock; never-widen pair, owner 0.6.2_AE_PartnerETL) and (b) the FWD-5 design: move the satellites trigger with the runner, chain it to the stamp, or withdraw HG-t-5."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S8",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T16:08:00Z",
+    "one_line": "D1-S7 ruling (a) executed, branch A: the same-day re-run at 16:07:33Z rewrote registry.json and holdings.json as_of 2026-10-08; the served gap is closed. D1-S7 stays ARMED until ruling (b), the stamp chain, is cut as a PRD addendum at L10 (CTO 51c9c0e64a section 3).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ledger org/critical_paths/change_management/20261008T1607Z_healgap-satellites-rerun-20261008_deploy_completion.md CLOSED, 2 of 2 legs proven.",
+        "head_object 16:08Z: registry.json 16:07:36Z version vXnGqZ.W7ab8xIhkZT5ZKttXNHMQS.bS as_of 2026-10-08 books 9; holdings.json 16:07:37Z version 3QEozK4gibtzby_gvIuHUz9uqWNxAMOx.",
+        "A correction to D1-S7: its surfaced_at reads 16:05Z; the actual time was ~15:43Z (broker send 20261008T154308Z). The row is append-only and left as written."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S7: the served satellites registry reads as_of 2026-10-07 on 2026-10-08.",
+    "world_is": "Served keys read as_of 2026-10-08 from 16:07:36Z. The structural cause (a 07:00Z cron coupled to the runner's fire time) remains until the stamp chain lands."
   }
 ]
 ```
