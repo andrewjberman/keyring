@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.17",
+ "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -582,6 +582,12 @@ are authoritative for each finding's full observation, cause and design rule.
 | SAUX-34 | FWD-27 | COO~D (this PRD) | Three market caps for one name show on one page with no reconciliation: USD 156B (Price modal), 159,623 (USD mm, Peers, as of September 24th) and '... | Each market-cap figure prints its as-of date beside it, or the page reads one vintage. |
 | SAUX-35 | FWD-27 | COO~D (this PRD) | The avatar's Settings / Log Out menu stays open after Escape and across later steps; while it was open the walker's tab presses failed. | Escape closes the account menu, and with the menu open a click on a tab still switches the tab. |
 | SAUX-36 | FWD-27 | COO~D (this PRD) | The Price face's Details disclosure prints 'generation 20261002T111010Z-a89fcf3c5f42 / state COMPLETE / 94 row(s) committed / coverage vintage bloo... | The Details disclosure states the price list's date and source in words, with no generation id or system state token. |
+| SAUX-37 | FWD-12 | COO~D (this PRD) | The page states its inputs in two places and the two disagree on Seeking Alpha (AMGT_RESAPP row Z-W303-S1, walk of 2026-10-08). | The page carries ONE statement of inputs, the one the function serves on /thesis, drawn once; no second statement is computed in the page. |
+| SAUX-38 | FWD-27 | COO~D (this PRD) | BP/ LN's officers are drawn chief financial officer first while the function serves the chief executive first (row Z-S372). | Officers are drawn in the served order on every listing; the page applies no sort of its own (this completes SAUX-32). |
+| SAUX-39 | FWD-27 | COO~D (this PRD) | The served sentence 'We do not cover this company yet' is not drawn on MSFT, while ten other absence lines are. | Every absence sentence the function serves is drawn where its value would be; none is dropped. |
+| SAUX-40 | FWD-27 | COO~D (this PRD) | On AMD one screen says 'the research pack built for this name ... Worked' and 'no research pack for this security' (row Z-S373): two different packs under one phrase. | The research team's pack and the page's own build are named with two different phrases, each used for one thing only. |
+| SAUX-41 | FWD-27 | COO~D (this PRD), after COO~Z serves it (AMGT_RESAPP round 79) | The Seeking Alpha column prints 'Not collected' for every state that is not 'read', so a name checked with nothing new and a name with no record read the same. | The column draws the three served states apart, in the served words: read (with its date), checked with nothing new (with its date), and no record. 'No record' is never drawn as stale. |
+| SAUX-42 | FWD-4 | COO~D (this PRD), after COO~Z serves them (AMGT_RESAPP round 79) | Five research-dossier fields are stored and reach no page: positives, negatives, special items, why we own, company description (AMGT_CORPUS msg 31621). | Each of the five has one named place on the Security page, drawn with its citation opener like the pillars; a field absent for a name draws its served reason. Where each sits is this project's L5 decision, recorded in the decomposition. |
 
 ## PATHS (the write surface)
 
@@ -600,6 +606,13 @@ hits on the touched surfaces; every extraction ships before/after renders of its
 criteria at L9 on the PNGs, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.18 (2026-10-08 ~10:4xZ, `1.0.0_SA_CTO~Z`), on the AMGT_RESAPP round-78 analysis R3
+  (`org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round78.md` @1a67e26433) and rulings in msgs 31622 and 31672:
+  - The ENRICHMENT BACKLOG gains SAUX-37 to SAUX-42 (six rows; the register reads 42).
+  - SAUX-41 and SAUX-42 each wait on AMGT_RESAPP serving the value first; the page draws only what is served
+    (C-PRESENTATION-ONLY).
+  - No ENDPOINT change and no CONTRACT change: every row sits under an existing outcome. No half re-opens.
 
 - v0.9 (2026-10-02 ~18:4xZ, `1.0.0_SA_CTO~Z`), on Andrew-direct ~17:33Z (the Security Analysis UI/UX walk; CRO~Z brief
   @3d25203d5a; fold record `CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`):
