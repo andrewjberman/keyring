@@ -276,7 +276,14 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
     # with `$null = ...` (tried once, 2026-09-17) swallows ALL of it, not just a trailing return
     # value -- the fix was removing the `return @{...}` this function used to end with, not the
     # capture. Do not reintroduce either half.
-    git fetch origin *> $null
+    # The fetch runs under cmd so its stderr never reaches PowerShell: under 5.1 with
+    # $ErrorActionPreference = 'Stop', a native command's stderr line (git prints every new ref
+    # there) raises NativeCommandError even when redirected with *>, and the engine exits before
+    # any pool runs. The exit code is the verdict. A failed fetch is a WARN, not a stop: the
+    # merged/unmerged split then reads the last fetched origin, which can only keep a worktree
+    # (it under-counts what is merged), never remove one wrongly.
+    & cmd /c "git fetch origin >nul 2>&1"
+    if ($LASTEXITCODE -ne 0) { Write-Output "WARN: git fetch origin exited $LASTEXITCODE; the worktree split reads the last fetched origin" }
     $wt = Get-WorktreeTable | Where-Object { $_.Path.Replace('\', '/').TrimEnd('/') -ne $RepoRoot.Replace('\', '/').TrimEnd('/') }
     $merged = @(); $unmerged = @(); $live = @(); $gone = @()
     foreach ($row in $wt) {

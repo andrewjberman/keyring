@@ -820,8 +820,17 @@ Two Andrew-direct words at the `1.0.0_SA_CTO` terminal, recorded verbatim at
    branch only when asked. MEASURED: the push gate already admitted `0.0.0_AB_MSTR~DELL1` and `~DELL2`; dell1 pushed twice on
    2026-10-08 (`5cbb530eb6`, `bfa7299c23`).
 4. **Standing class.** An access refusal a Dell seat meets is reported by action and resource name the same hour, and granted
-   the same day when it is inside clause 2's "NOT changed" lines.
+   the same day UNLESS it is one of clause 2's "NOT changed" lines (IAM creation, routes, downloads), which stay refused
+   (corrected on `3.0.0_SA_CVO` msg 106701: the first wording read inverted).
 5. **Reported to this seat, not approved by it** (his 19:0xZ word of 2026-10-07): a Dell's push, deploy or resource-policy change
    is told to the laptop; the laptop steps in on an open call, an overlap between boxes, or a deploy that could upset another box.
+
+6. **A Dell's push never deploys another box's change** (`3.0.0_SA_CVO` msg 106701). The pre-push deploy gate reads every
+   commit in the push, including commits another box wrote. A Dell's fabric manager pushes with a deploy ceiling of zero
+   unless every deploy-scope file in the push belongs to an order of its own box, under that order's own pair. A deploy-scope
+   file from another box in the push is published and not deployed; its deploy is its own box's order.
+7. **Interim, stated as such:** clause 2's carve-out of signing keys, seeds and bearer tokens is narrower than item 1 as he
+   lifted it, and the full grant to dell1 adds a write reach where item 2 was worded as a read. Both were told to him in those
+   words the same hour; neither is widened or narrowed by a seat until he answers.
 
 Contracts change and no outcome does: the ratified-text half re-opens for `3.0.0_SA_CVO` on the CONTRACTS section.
