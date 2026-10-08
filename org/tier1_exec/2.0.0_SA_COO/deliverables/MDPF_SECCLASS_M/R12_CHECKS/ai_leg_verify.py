@@ -8,6 +8,8 @@ Reads, ConsistentRead and paginated:
 - 0 multi_asset rows in the table;
 - the AI listing for today exists and its count equals the number of classified_by=model rows.
 Prints  AI-LEG-VERIFY act=<e32|e49> ok=<bool> planned=<n> landed=<n> unresolved=<n> problems=<n> ...
+ok needs the WHOLE plan accounted for: landed + refused == planned (row S66, CTO round-12 addendum 1 @e5befb00f1). A partial
+leg reads ok=False; landed>0 alone caught only an empty act. refused counts nothing until the runner records a refusal list.
 """
 import csv
 import glob
@@ -43,6 +45,12 @@ def scan_all(table):
         if "LastEvaluatedKey" not in page:
             return out
         kw["ExclusiveStartKey"] = page["LastEvaluatedKey"]
+
+
+def grade(planned_n, landed, refused, problems, gone, multi_asset, listing_count, model_rows):
+    """The verdict, as a pure function so a test can feed it a run's numbers."""
+    return (planned_n > 0 and landed + refused == planned_n and problems == 0 and gone == 0 and multi_asset == 0
+            and listing_count == model_rows)
 
 
 def main():
@@ -81,7 +89,7 @@ def main():
     if newest:
         listing = json.loads(s3.get_object(Bucket="opal-data-mdpf", Key=newest)["Body"].read())
         lcount = listing.get("count", len(listing.get("securities", listing.get("rows", []))))
-    ok = not probs and gone == 0 and ma == 0 and landed > 0 and lcount == model_rows
+    ok = grade(len(keys), landed, 0, len(probs), gone, ma, lcount, model_rows)
     print(f"AI-LEG-VERIFY act={act} ok={ok} planned={len(keys)} landed={landed} unresolved={unresolved} problems={len(probs)} "
           f"first={probs[:3]} snapshot_keys_gone={gone} multi_asset={ma} model_rows={model_rows} listing_count={lcount} listing={newest}")
     return 0 if ok else 1
