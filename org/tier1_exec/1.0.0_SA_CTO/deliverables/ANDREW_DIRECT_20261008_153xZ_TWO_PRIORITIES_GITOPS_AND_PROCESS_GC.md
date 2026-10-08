@@ -179,3 +179,16 @@ Verbatim, laptop terminal to 1.0.0_SA_CTO, after being told site Z's merge waite
 Placement: this is the word for site Z to drain the fast-fix set now (origin CLOUD, which holds a92d59d74f), the
 drain-worktree way, then the one-time kill-maint sweep and /govern 30m. Two-phase safe-commit follows when the laptop's
 first read is clean; that read is pulled forward from ~18:45Z to ~18:15Z.
+
+## Addendum ~18:3xZ -- two carried calls answered
+
+Cards put at ~18:2xZ: (1) restart this seat's hourly /self-drive over the laptop directives now, at the :17 slot, with GitOps,
+GC and graph coherence ranked first each tick; (2) delete the 159 old `origin/q/*` branches once per-box branches have run
+clean -- only those already in the trunk, after all four boxes run a full day on their own branches, the other 10 listed for
+their owners first. Verbatim answer:
+
+> "1.) Yes. 2.) YEs."
+
+Placement: (1) this seat re-arms `/self-drive` at `17 * * * *` off the arming record
+`ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`, the three priorities first. (2) B8 of
+`PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md` is authorized on those terms; 0.0.0_AB_MSTR deletes when the condition reads true.
