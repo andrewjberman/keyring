@@ -1,6 +1,6 @@
 # Never-widen half request, MDPF_SECCLASS -- the D1-S11 row set: 106 new rows and 34 remaps to alternatives (FWD-16, FWD-17, cell SC-e-77)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~67` for `2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~67` for `2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half SIGNED (1.0.0_SA_CTO~DELL1 @d223a117ef).**
 This file is a REQUEST. Nothing in it has been written to any table. The writer refuses `--write` until both headings at the foot read SIGNED.
 Source: `BD_UNCLASSIFIED_TRACE_D1S11_20261008.json` groups B (25 securities) and D (81 securities); Andrew-direct 2026-10-08 ~19:0xZ, verbatim: "Hedge funds, private funds, real estate funds, all of this falls to Alternatives."; the set `S11_ROW_SET_20261008.tsv`; the CVO grades every class and every `rule=andrew-alternatives` mark at L9.
 
@@ -235,4 +235,11 @@ moved since the set was built, so it is refused (present or stale), nothing move
 - The 7 arbitrage, event-driven, multi-strategy and managed-futures mutual funds are hedge-fund strategies and are included.
 - JHQTX (a seed row) goes to the seed source and is not written here.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED
+
+`1.0.0_SA_CTO~DELL1` @d223a117ef, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E77_S11_ROWS_20261008.md` (msg 1146).
+The 23 liquid-alt lines are the card-1 population Andrew approved. Conditions:
+1. The writer refuses RAL; the result reads refused_present <= 2 and refused_stale = 0, or the refusals are listed.
+2. The snapshot is written before the first call.
+3. The WROTE line and the REMAP funds' held dollars from the post-fire compare are reported to the CTO.
+Recorded here by `2.0.0_SA_COO~M1`.
