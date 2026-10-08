@@ -129,7 +129,7 @@ Positive control for AC2: the five existing admin suites pass at base (23 passed
 Until MP-x-3's grant is applied, the live handler returns the 503 arm. No gate. Slot `~5` continues to MP-x-4 and MP-x-5
 when they are cut.
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

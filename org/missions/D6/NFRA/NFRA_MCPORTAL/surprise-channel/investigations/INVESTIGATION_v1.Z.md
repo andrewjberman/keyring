@@ -796,6 +796,27 @@
     "spec_asserts": "C11: the portal reads the activity and open-calls stores with a prefix-scoped read grant.",
     "world_is": "The only principal that can hold the portal's grant is opal-gateway-role, whose standing control (graph-read.tf, CG-s-12) is no grant of any kind on the globgrph bucket. Applying C11 as written breaks that control as written. Not acted on: no Terraform written, no grant applied.",
     "notes": "Holds only the grant cell of round 4 (FWD-14's store read). Ruling owner: 1.0.0_SA_CTO~O (contract text). Options named in the ask, issuer's rec first: (a) a prefix-scoped read on fabric/activity/v1/ and fabric/open-calls/v1/ only, with the graph-read.tf control text amended to carve out fabric/ (outside warehouse/, never the served graph); (b) the two stores move to a bucket the gateway may read; (c) the gateway proxies the reads through the projection service."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W5-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~5",
+    "surfaced_at": "2026-10-08T22:10Z",
+    "one_line": "The worker worktree's sparse cone omits org/modules/graph, so .tools/commit_gate_runner.py (import comp_constants_cli) failed closed on the first commit; I added the one cone path with git sparse-checkout add and the commit then passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh first attempt in C:/tmp/mp-r4-5 printed: 'ModuleNotFoundError: No module named comp_constants_cli' at .tools/commit_gate_runner.py:96 and 'ERROR: BLOCKED -- commit-gate failed'; org/modules/graph/comp_constants_cli.py exists at HEAD 202c512520 but the cone listed only .claude, .tools, infra/aws/ec2/opal-gateway, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/ref, org/standards.",
+        "After `git sparse-checkout add org/modules/graph` (408 tracked files, ~19 MB; no tracked content changed) the same safe-commit passed: commit 06bfb80b54 on wk-NFRA_MCPORTAL-r4-5."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker's sparse worktree carries every path its commit needs; the order names no cone addition.",
+    "world_is": "The cone the issuer cut lacks org/modules/graph, which every .py commit's gate imports. Any later worker cut with the same cone fails its first .py commit identically. Also absent from the cone: org/surprise_channel/ (the row schema path the worker contract names), org/mcp/.",
+    "notes": "Issuer fix: add org/modules/graph (and org/surprise_channel/schemas) to the cone the spawn recipe uses. No repo content was changed by the workaround; only this worktree's checkout."
   }
 ]
 ```
