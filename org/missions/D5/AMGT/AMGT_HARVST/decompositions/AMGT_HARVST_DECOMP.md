@@ -3464,3 +3464,24 @@ THINNED days go to `1.0.0_SA_CTO~Z`. The rebuild that carries `bk-2` is its own 
 - `bk-2` AC1 (`pytest test_bk2_capitalised_headline.py`) base: FAIL as expected (the test is absent); AC2 (`cat bk2_census.out`)
   base: FAIL as expected (no such file); AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`)
   base: PASS as expected (498 passed).
+
+## 81. ROUND 67 -- two READ cells before the second walk: the never-collected set, and what AIG's empty jobs asked for (`1.0.0_SA_CTO~Z` msg 31631, R18), 2026-10-08 ~08:3xZ
+
+Round 66's `bk-1` is terminal (@0ae995ac2b): no source thinned; the collection is a one-security backfill with no daily
+sweep. The CVO graded it a collection gap (@e84dcdce42) with two causes: Caterpillar and CSL have NO job at all; AIG has six
+jobs that returned nothing. R18 adds two read cells, before the second walk. The ruling names them as additions to round
+66's issuance; they are cut as ROUND 67, its own issuance, because the L6 gate admits one issuance per round and round 66's
+was committed @e739de56ec. `bk-2` is executing and `bk-3` stays held.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bl`**.
+- **Fan-out:** 1 of 2 chains, cap 8 (two read cells on one worker, in order: the second reuses the first's reading of the two
+  run-record stores, and the box already holds one live worker worktree).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bl-1` | `bl-1` | **The covered list (242) less the securities that ever had a collection job, on the union of the S3 run records and this device's, the two counts reconciled first.** Per source too; every never-collected security with its served pair count. No job run. | LOCAL | worker ~119 (first) |
+| `HVST-bl-2` | `bl-2` | **What AIG's six empty jobs asked for, beside Nokia's productive jobs:** the request each sent, read from its record; the identity each was given; what the records show and what they cannot tell apart. No job run. | LOCAL | worker ~119 (second) |
+
+**Checks dry-run at the base before the cut:**
+- `bl-1` AC1 (`cat bl1_never_collected.out`) base: FAIL as expected (no such file).
+- `bl-2` AC1 (`cat bl2_aig_requests.out`) base: FAIL as expected (no such file).
