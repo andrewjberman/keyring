@@ -70,3 +70,8 @@ specification error, the same class as e66's condition 3.
 
 A miss on (b) or (c) is a same-day rollback from the snapshot. The 49 Financial side is graded at the a07/d06 chain after 12:45Z, by
 the same (b)-(c) shape.
+
+## AMENDMENT 4 (2026-10-08 ~11:5xZ, msg 875) -- the 49F side of condition 3
+
+There is no 49F served mix while the d06 twin is unpublished. The 49F side of condition 3 is therefore the a07 dim's `CASH` row reading
+`cash` on the 09:47Z run, which M1 measured. That limb is closed. The Cottonwood side stands as in amendment 3.
