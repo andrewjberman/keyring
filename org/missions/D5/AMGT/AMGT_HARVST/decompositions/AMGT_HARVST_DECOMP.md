@@ -3438,3 +3438,29 @@ Issuer `2.0.0_SA_COO~H`. Series **`bj`**.
 
 **Checks dry-run at the base before the cut:**
 - `bj-1` AC1 (`cat bj1_feed_walk.out`) base: FAIL as expected (no such file).
+
+## 80. ROUND 66 -- when each source thinned, the capitalised headline, and a second feed walk (`1.0.0_SA_CTO~Z` msg 31613, ADDENDUM 3 @f7ad546af4), 2026-10-08 ~07:5xZ
+
+Rounds 64 and 65 are terminal (rebuild #9 DONE; `bi-1`, `bj-1` merged). The CVO graded the first feed walk (@96206b0d29) and
+filed two rows: Z-S103 (silver holds 714 articles published in the 30-day window, 5 of them FT, and none naming Caterpillar,
+CSL or AIG) and Z-S102 ("25 BP Rate Increase" on BP's feed). ADDENDUM 3 rules R14 (a collection gap, read first, from what is
+held only) and R15 (a capitalised headline does not pair on the exact-case form alone), then a second feed walk.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bk`**.
+- **Fan-out:** 2 of 3 chains, cap 8 (`bk-1` and `bk-2` run now on disjoint write sets; `bk-3` is issued and HELD until a newer
+  gold part is served, which needs the rebuild that carries `bk-2`'s rule under its own pair).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bk-1` | `bk-1` | **Articles collected per source per day over 90 days, from silver, bronze and the collector's run records only; the day each source thinned.** Read-only; three tables and one mechanical THINNED line per source; no publisher called. JUDGMENT: the CVO reads whether it is a collection gap. | LOCAL | worker ~116 |
+| `HVST-bk-2` | `bk-2` | **In a headline capitalised throughout, the exact-case form alone does not pair; it needs a second anchor.** One matcher rule for every security; plants with the "25 BP Rate Increase" title as negative control and the mutant; a census printing the pairs it removes per security, every removed pair for a reviewer, pairs added 0. No rebuild. | LOCAL | worker ~117 |
+| `HVST-bk-3` | `bk-3` | **The second walk of the page's feed, the same twelve securities, beside the first walk.** Held until a newer part is served. JUDGMENT: the CVO reads the packet. | LOCAL | worker-light ~118 (held) |
+
+**The close run (issuer):** read both censuses; `bk-2`'s removed pairs go to `3.0.0_SA_CVO~Z`; the count it moves and `bk-1`'s
+THINNED days go to `1.0.0_SA_CTO~Z`. The rebuild that carries `bk-2` is its own never-widen pair, naming every removed pair.
+
+**Checks dry-run at the base before the cut:**
+- `bk-1` AC1, `bk-3` AC1 (`cat` of an output file) base: FAIL as expected (no such file).
+- `bk-2` AC1 (`pytest test_bk2_capitalised_headline.py`) base: FAIL as expected (the test is absent); AC2 (`cat bk2_census.out`)
+  base: FAIL as expected (no such file); AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`)
+  base: PASS as expected (498 passed).
