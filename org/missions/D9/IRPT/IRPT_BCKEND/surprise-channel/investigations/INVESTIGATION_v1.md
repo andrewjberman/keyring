@@ -20806,3 +20806,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both applies ran before the amendment arrived; the gate did not refuse on either root (it passed), so tagauthz_override_used is []. The plan text files are the applied planfiles rendered after the apply, not before it. The CTO may want to know S334 did not fire on these two roots."
 }
 ```
+
+## IRPT_BCKEND-D2-W172-S2 -- record-terraform-deploy.sh needs a CHANGELOG.json path the order does not grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, which the order's <paths> does not name; the lane gate refused, so the source map was committed alone and the changelog entry is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: owned-paths violation on infra/aws/terraform/investor-reporting/CHANGELOG.json, lane IRPT_COMPLETION_P, 'no NON-TERMINAL task order names this path in its paths block'",
+      "record-terraform-deploy.sh PATHSPEC adds infra/aws/terraform/${PIPELINE}/CHANGELOG.json whenever the changelog writer ran",
+      "recorder's would-be CHANGELOG entry kept at worktree .scratch/CHANGELOG.recorder_output.json (not committed)"
+    ]
+  },
+  "spec_asserts": "Order BOUNDS: the source map moves only through the build and record-terraform-deploy.sh; paths grant lists lambda-source-map.json and lambda/ci/CHANGELOG.md but not the terraform root CHANGELOG.json.",
+  "world_is": "The recorder cannot commit under this grant. The source map carries artifact_sha256 03p2eIEKU9... and last_deployed_at 2026-10-08T17:30:56Z (committed alone). The investor-reporting CHANGELOG.json has no entry for this deploy; the issuer decides whether a later order records it. Nothing served is affected."
+}
+```
