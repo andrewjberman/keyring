@@ -65,10 +65,13 @@ word names it "the multi-device graph coherence project" (record
                     laptop change does, so that no box is a second-class source
          SOURCE     brief O5 (lines 81-84); Andrew's call 3, "They should be able to"
 
-  FWD-7  Andrew decides what the shared graph runs on, knowing the current engine is no longer maintained
+  FWD-7  Andrew decides what the shared graph runs on, knowing the engine's makers publish no new versions
          DONE WHEN  APPLIED -- the decision is written down with Andrew's word on it
-         ACCEPT     the record says which choice Andrew made, says plainly that the current engine's makers have stopped
-                    updating it, and says what each choice would cost the other outcomes here
+         ACCEPT     the record says which choice Andrew made, says plainly that the engine's makers publish no new
+                    versions while the graph's facts stay current every night, and says what each choice would cost
+                    the other outcomes here
+         NOTE       Andrew-direct ~17:4xZ: "A for now, also i dont think its actually frozen youre just not accounting
+                    for the stitch functions." Stay on the current engine for now.
          SOURCE     brief O6 (lines 86-91)
 ```
 
