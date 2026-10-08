@@ -469,6 +469,27 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-HG-t7 BOUNDS: worker surprise rows are minted MDPF_HEALGAP-W6-S<k> with fabric dell1.",
     "world_is": "On fabric dell1 the gate accepts only MDPF_HEALGAP-D1-W6-S<k>. This worker's rows are therefore MDPF_HEALGAP-D1-W6-S1, -S2 and this one (-S3); the proof instance cites the D1 form."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S6",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T15:30:00Z",
+    "one_line": "Disarms MDPF_HEALGAP-D1-W6-S1 (disarm owner 2.0.0_SA_COO~G1): the four exposed session-dependent pulls (bd-asset-dim-trigger, two Schwab SDD masters, the ASTN FT leg) pre-date this project and change nothing it builds; they are routed by name to the round-2 drain-end read as FWD-6 residuals for the CTO's round-2 analysis, never left as a silent census footnote.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_MDPF_HEALGAP~6/FWD6_SESSION_DEPENDENT_PULLS_CENSUS.md section 'Exposed, neither answer is true' (drained @a0ee7928f1); CENSUS-OK rows=23 denominator=162 re-run by the issuer.",
+        "PRD v0.2 FWD-6 ACCEPT: each pull marked RECOVERS or NOT-EXPOSED because ...; a pull left without an answer fails the outcome. C-FIX-NOT-NOTIFY: no outcome becomes a monitor or alert.",
+        "None of the four is touched by any round-2 write set (decomposition ROUND 2, write sets)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-W6-S1: ARMED -- four pulls depend on a login that lapses and is not re-minted before they run, with neither answer true.",
+    "world_is": "The exposure is real and pre-existing (not caused or widened by MDPF_HEALGAP). Disarmed for this project by routing: the round-2 drain-end read carries the four by name as FWD-6 NOT YET REALIZED residuals, each with its recovery today, so the CTO's round-2 analysis decides whether each becomes a round-3 cell (heal it the way FWD-1 did) or a ruled NOT-EXPOSED with a new reason. No monitor or notification is built (C-FIX-NOT-NOTIFY). Owner of the routing: 2.0.0_SA_COO~G1; owner of the decision: 1.0.0_SA_CTO~DELL1 at L10."
   }
 ]
 ```
