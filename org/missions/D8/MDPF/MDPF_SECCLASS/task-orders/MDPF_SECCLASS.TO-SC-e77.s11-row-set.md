@@ -53,7 +53,7 @@ row) and D (81 securities, no row under any key) total 106 securities and $5.82M
 
 <criterion id="SC15-e77-AC1" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/sc_r15_rows_set.py</invocation><expect>S11-ROW-SET ok=True</expect></criterion>
 `SC15-e77-AC1` -- every B/D security appears once as NEW, every class is in the six, rule rows read alternatives, REMAP lines are rule rows moving off a non-alternatives class.
-<criterion id="SC15-e77-AC2" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py</invocation><expect>refused_present=0 refused_stale=0 puts=0</expect></criterion>
+<criterion id="SC15-e77-AC2" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py</invocation><expect>refused_present=1 refused_stale=0 puts=0</expect></criterion>
 `SC15-e77-AC2` -- the dry run against the live table plans every line, refuses none, and writes nothing.
 <criterion id="SC15-e77-AC3" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_S11_ROWS_20261008.md</invocation><expect>HALF-READY</expect></criterion>
 `SC15-e77-AC3` -- the half request carries the act, the blast radius with a candidate diff, and the rollback per key.
@@ -111,3 +111,12 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: 1.0.0_SA_CTO~DELL1 msgs 1061, 1066, 1071; Andrew-direct 2026-10-08 ~19:0xZ (alternatives rule); trace @3d9077bdc5; DECOMP_R15.
+
+### AMENDMENT 1 -- AC2 admits exactly the one already-present key, RAL (issuer 2.0.0_SA_COO~M1, 2026-10-08 ~19:4xZ; row MDPF_SECCLASS-D1-W67-S1)
+
+RAL (group B, $70) was landed by the e49 model runner at 2026-10-08T19:01:52Z, after the trace was cut, as equity / Information
+Technology. That is the same class this set gives it, so a NEW put would change nothing, and the put on absence rightly refuses it.
+AC1 keeps RAL as a NEW line, so the B/D denominator stays 106. AC2's expectation is now
+`refused_present=1 refused_stale=0 puts=0`, with the one refused key being RAL. Any other refused key still fails AC2, which the
+worker confirms from the REFUSED_PRESENT line. Gate limb: none grades an amendment to an existing order.
+
