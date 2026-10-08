@@ -44,6 +44,22 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
   SCHY holding's weight against its Bloomberg bronze object; (4) once, on 2026-10-08 only -- a re-pull landing on a
   later day republishes nothing for today without a new ask.
 
+## 2026-10-08 12:20Z to 13:08Z -- recovery, the writer's merge, the sweep
+
+- 0.0.3_BG_BBGTerminal re-ran both rivalfunds legs (logs `bbg_recovery_rivalfunds_20261008_122034Z.log`,
+  `..._collector_20261008_122319Z.log`): enrichment OK (581 market rows for 2026-10-07, 578 closes; names step ran on
+  the merged reader; no HISTORY OWED line), collector OK. Enrichment ran before the collector: it reads G1
+  canonical_shape, which only the Lambda chain builds, so the order did not change what it read.
+- RIV-tw-1 MERGED @93264049f6 under its whole pair (CTO ruling msg 31740). All three round-27 cells are on site-Z CLOUD:
+  suite 910 passed, 3 skipped; 39 of 39 check files PASS. No round-27 worktree remains. The switch is unset. tw-1's J1
+  and the pair's read: the first scheduled vehicle run that pulls (2026-10-09 11:00Z).
+- The 13:00Z sweep (486.4 s, 1,002 MB) published 2026-10-08 at 13:08:17Z: 13 of 13 funds updated, 2,252 of 2,252 fund
+  sections, 6 of 6 checks PASS, AI account in 13 of 13 panels, 0 naming a to-date period. The one manual republish
+  ruled in msg 31697 was NOT used: the sweep is the scheduled product and did it. Ledger r22 CLOSED 5 of 5; r26 CLOSED.
+  No rivalfunds ledger entry is open.
+- NEXT: the ONE round-27 Lambda deploy (the packager stages the whole rivalfunds folder, so all three cells go at one
+  pin) under a never-widen pair; before and after from a real run of 2026-10-08 on the round-27 code.
+
 **Sections below this one were written before round 23 and are history where they disagree with the title line and this section.**
 
 ## Pins
