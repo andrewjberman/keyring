@@ -53,7 +53,7 @@ row) and D (81 securities, no row under any key) total 106 securities and $5.82M
 
 <criterion id="SC15-e77-AC1" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/sc_r15_rows_set.py</invocation><expect>S11-ROW-SET ok=True</expect></criterion>
 `SC15-e77-AC1` -- every B/D security appears once as NEW, every class is in the six, rule rows read alternatives, REMAP lines are rule rows moving off a non-alternatives class.
-<criterion id="SC15-e77-AC2" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py</invocation><expect>refused_present=1 refused_stale=0 puts=0</expect></criterion>
+<criterion id="SC15-e77-AC2" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py</invocation><expect>refused_stale=0 puts=0</expect></criterion>
 `SC15-e77-AC2` -- the dry run against the live table plans every line, refuses none, and writes nothing.
 <criterion id="SC15-e77-AC3" cell_refs="SC-e-77"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_S11_ROWS_20261008.md</invocation><expect>HALF-READY</expect></criterion>
 `SC15-e77-AC3` -- the half request carries the act, the blast radius with a candidate diff, and the rollback per key.
@@ -138,4 +138,15 @@ and ETNs (VXX and its kind) stay structured. The order is reopened to `issued` f
 3. Update the half request's blast radius with the added lines and their served-mix effect. Leave both halves unsigned. Re-validate
    the proof instance and flip.
 Gate limb: to-pipeline-gate does not fire on a modification except GATE (viii), and this order declares <placeholders>NONE</placeholders>.
+
+### AMENDMENT 3 -- AC2 no longer counts no-op present keys (issuer 2.0.0_SA_COO~M1, 2026-10-08 ~20:3xZ; row MDPF_SECCLASS-D1-W67-S3)
+
+While e49's AI leg runs, group-B tickers keep landing with the same class this set gives them: RAL at 19:01Z, OXYWS at 20:08Z. A put
+on absence refuses each one, and refusing changes nothing. So a fixed `refused_present` count cannot hold. AC2's expectation is now
+`refused_stale=0 puts=0`.
+The issuer reads every `REFUSED_PRESENT` line before signing. Each must show a live class equal to the set line's class. A present key
+with a different class is a re-plan, not a no-op.
+Scope confirmed: the 7 arbitrage, event-driven, multi-strategy and managed-futures mutual funds are hedge-fund strategies under
+Andrew's rule, and they stay. JHQTX is a seed row: it is corrected in the seed source, not by this writer.
+Gate limb: to-pipeline-gate GATE (viii) grades this modification.
 
