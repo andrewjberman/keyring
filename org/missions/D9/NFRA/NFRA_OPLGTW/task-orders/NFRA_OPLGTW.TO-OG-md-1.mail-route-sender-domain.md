@@ -131,7 +131,7 @@ Rows: id `NFRA_OPLGTW-Z-W36-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   and the restart falls under the form's rule on row Z-S67.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <slot>~36</slot>
 <fabric>site-z</fabric>
