@@ -4963,3 +4963,275 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Scope beyond this order: the pin/declaration pair, not the pin's recency, is what every staged_from build verifies, so any Lambda family using staged_from can ship pre-port shared modules silently after a port lands. Remedy for THIS act (issuer's, 2.0.0_SA_COO~M1): re-pin the four staged_from entries to the merged e57e61 commit with fresh sha256 values -- a write to infra/aws/lambda/ci/lambda-source-map.json, outside TO-DEPLOY-e57e61's <paths>. Candidate general remedy, NOT proposed as built: the builder prints, per staged member, whether its pin is an ancestor of HEAD AND whether the blob at HEAD differs from the blob at the pin, so staleness is visible beside drift. Nothing was built, uploaded or applied under this finding; the ledger entry secclass-e57e61-fwd10-apply-s-20261007 records the STOP with the world untouched."
 }
 ```
+
+## MDPF_SECCLASS-D1-S2 -- .tools/aws.cmd resolves no AWS CLI on dell1: the bash half of the shim pair works, the Windows half is dead, and under --quiet it is a silent no-op
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T01:37Z",
+  "one_line": ".tools/aws.cmd -- the Windows-shell companion every NATIVE-PYTHON caller reaches via shutil.which -> ~/bin/aws.cmd -> the tracked .tools/aws.cmd -- hardcodes THREE absolute AWS CLI paths and none exists on dell1, where the CLI is %LOCALAPPDATA%\\Programs\\Amazon\\AWSCLIV2\\aws.exe (NOT candidate 2, %LOCALAPPDATA%\\Programs\\AWSCLIV2\\Amazon\\AWSCLIV2\\aws.exe, a different nesting). The bash shim .tools/aws resolves correctly, so every hand-run read reads HEALTHY while native-Python callers fail. This is the THIRD device on which this one file's hardcoded list has broken, and its OWN header documents the class ('a device-specific absolute path in a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume') after the same break on site Z.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-DEPLOY-e65b step 5: .tools/safe-deploy.sh over the two gold carriers enumerated the expected 8 destinations then failed on the FIRST upload: 'ERROR UPLOAD_FAIL [shipped] .../etf_classifications_dynamodb.py -> s3://opal-data-bd/...  aws.cmd: FATAL -- no AWS CLI found. Checked %LOCALAPPDATA%\\Programs\\Python\\Python312\\Scripts\\aws.cmd, %LOCALAPPDATA%\\Programs\\AWSCLIV2\\Amazon\\AWSCLIV2\\aws.exe, %ProgramFiles%\\Amazon\\AWSCLIV2\\aws.exe'.",
+      "Direct reproduction independent of safe-deploy: invoking .tools/aws.cmd --version through cmd prints the same FATAL line.",
+      "The real CLI exists: /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws.exe, 9448160 B, dated 2026-10-02. AWS_SHIM_DEBUG=1 .tools/aws sts get-caller-identity prints 'aws-shim real-entry: /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws'; python shutil.which('aws.cmd') returns C:/Users/Test/bin/aws.cmd, whose generated body delegates to the tracked .tools/aws.cmd by absolute path.",
+      "Denominator 3: all three candidate paths tested absent on this device with test -f.",
+      "POST-FAILURE STATE, measured: all 8 keys the deploy would touch carry BOTH the same ETag AND the same VersionId as before the attempt. A byte-identical PUT to a versioned bucket still mints a NEW VersionId, so unchanged VersionIds prove ZERO PUTs occurred -- the attempt failed CLOSED with nothing half-landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Git section: 'AWS via the .tools/aws shim (+aws.cmd, both or neither)' -- the pair is meant to give bash and Windows shells an equally working aws. CLAUDE.md NEVER: never write device-specific logic into ajb_workspace -- DERIVE, do not hardcode. .tools/aws.cmd's own header: 'A device-specific absolute path in a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume.'",
+  "world_is": "The pair is NOT 'both or neither' on dell1: the bash half works and the Windows half is dead, so reachability reads healthy from every probe an agent runs by hand while the deploy and build paths fail. The 2026-07-30 site-Z remedy added two more hardcoded candidates instead of resolving, so the same break recurs once per new device.",
+  "notes": "HAZARD, and why it is INERT rather than ARMED: .tools/aws.cmd's own header records that under --quiet this same failure is a SILENT NO-OP -- 'infra/aws/lambda/ci/build-and-upload.sh reported a successful upload while S3 kept the OLD zip. Caught only by the upload-verify gate.' build-and-upload.sh is step 4 of MDPF_SECCLASS.TO-DEPLOY-e57e61, the next order in this seat's queue, so running it here before the shim resolves risks an apply whose artifact was never uploaded -- and neither a 0/1/0 source_code_hash plan nor AC1 would catch it (MDPF_SECCLASS-D1-S1 records why AC1 cannot). DISARMED SAME TURN by the disarm_owner: 2.0.0_SA_COO~M1 msg 733 HOLDS both TO-DEPLOY-e65b and TO-DEPLOY-e57e61 until the fix lands, ruled the fix 0.0.0_AB_MSTR~DELL1's as shared infrastructure, asked for a DERIVED lookup rather than a fourth hardcoded path, and directed that aws.cmd be proven to resolve the CLI first on retry, that the 8 keys be re-read, and that for e57e61 the uploaded zip's ETag be confirmed changed before the apply. So nothing will run the hazardous path on this device. The DEFECT remains open, which is why the class is BLOCKING and the disposition UNDER_INVESTIGATION. This seat did NOT edit .tools/aws.cmd: it is outside TO-DEPLOY-e65b's <paths> and the ruling is explicit. e65b's ledger entry secclass-e65b-namekey-deploy-s-20261007 stays OPEN across the retry, per that ruling, with all four legs OPEN and the world untouched."
+}
+```
+
+## MDPF_SECCLASS-S68 -- safe-deploy's CROSSBOX gate predicted STOP for dell1 and proceeded in WARN mode; e65b half-landed and was rolled back
+
+```json
+{
+  "id": "MDPF_SECCLASS-S68",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T01:53Z",
+  "one_line": "TO-DEPLOY-e65b's retry on dell1 0.7.0_AE_CloudOps~SD ran ONE safe-deploy over two buckets. safe-deploy's own seat gate printed CROSSBOX-DEPLOY device=dell1 verdict=STOP for both roots but proceeded because its mode is WARN. The bd mover uploaded (3f1e6be8 -> 40ffa3fa), then s3:PutObject on opal-data-cot hit an EXPLICIT deny (policy cloudops-dell-agent-routes-host-policy), leaving the two firm copies split. ~SD rolled the bd key back by VersionId in-session; exposure 01:47:59Z-01:49:54Z (115 s), no gold run consumed it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~SD msg 736: action s3:PutObject, resource arn:aws:s3:::opal-data-cot/code/gold/lib/_shared/etf_classifications_dynamodb.py, principal cloudops-dell1-agent-user, explicit deny in arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy",
+      "~SD msg 736: safe-deploy printed CROSSBOX-DEPLOY device=dell1 verdict=STOP for both roots, mode=WARN; the rollback restored bd from VersionId 0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu, and both buckets read 3f1e6be8 by independent head-object",
+      "issuer read at 01:46Z: both keys ETag 3f1e6be8 before the retry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy whose own gate predicts a refusal for one of its targets does not start. A two-bucket act lands in both or neither (NEVER-2).",
+  "world_is": "The cross-box seat gate is advisory (WARN), so a predicted-STOP deploy started and half-landed. The NEVER-2 rollback contained it.",
+  "notes": "e65b is HELD until Andrew's item 2 (the dell1 firm-data limits) is applied, which lifts the cot deny; it is not moved back to a laptop seat (laptop CTO rule 1). Proposed remedy for the gate's owner: a CROSSBOX verdict=STOP fails closed before the first PUT, at least for a multi-bucket act."
+}
+```
+
+## MDPF_SECCLASS-D1-S3 -- deploy_ledger.py regenerates a ledger entry and silently deletes prose a seat appended to it, including a committed NEVER-2 STOP record
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T02:30Z",
+  "one_line": ".tools/deploy_ledger.py REGENERATES a change_management entry from its own structured state on every close-leg / hold / close, and SILENTLY DISCARDS any free prose a seat appended to that entry by hand. Measured: closing leg L1 of secclass-e57e61-fwd10-apply-s-20261007 deleted a 43-line '## STOP BEFORE THE BUILD' section this seat had written and COMMITTED at f9c38b6165 -- the close reported '6 insertions(+), 49 deletions(-)' with no warning that it had removed a prior author's committed record. The NEVER-2 law tells a seat to record a STOP and escalate loud; the entry is the obvious place to write it; and the contract tool for that entry destroys it at the next leg close.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "f9c38b6165 'ledger(0.7.0_AE_CloudOps~SD): STOP before the build ...' reported '1 file changed, 46 insertions(+)' and that version of the file is 67 lines carrying 2 occurrences of 'STOP BEFORE THE BUILD' (git show f9c38b6165:<path>).",
+      "After `deploy_ledger.py close-leg --leg-id L1` and `hold`, commit 2ec2bd5480 on the same file reported '6 insertions(+), 49 deletions(-)' and the live file now carries 0 occurrences of 'STOP BEFORE THE BUILD'. The deleted lines in that diff include '**Status:** OPEN', both OPEN manifest rows, and the '- 20261008T010626Z STOP BEFORE THE BUILD ...' log line.",
+      "The loss is SILENT: close-leg printed only 'OK: leg L1 closed. Remaining open: [L2, L3]'. No warning, no backup path, no refusal.",
+      "SCOPE, measured on the sibling entry: secclass-e65b-namekey-deploy-s-20261007 still carries its two hand-appended sections ('ATTEMPT 1 FAILED CLOSED' x1, 'ATTEMPT 2 -- HALF-LANDED' x1) at commit 27302e4624 ONLY because no deploy_ledger verb has run on it since; its next close-leg/hold/close will discard them the same way. That entry's content includes the e65b half-landed deploy and its rollback -- the NEVER-2 record itself.",
+      "Not a formatting quirk: the tool's own open output states the entry is its artifact ('REQUIRED COMMIT PATHSPEC ... the sentinel is the gate's only input'), so regeneration is by design; what is undeclared is that regeneration DELETES committed third-party content rather than preserving or refusing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: 'NEVER leave a confirmed deploy half-landed -- finish in-session or roll back + escalate loud; ledger entry in org/critical_paths/change_management/ opened at start, closed at completion.' The ledger entry is the named carrier of a deploy's record, and a STOP or a rollback is exactly what it exists to carry. deploy_ledger.py's own docstring: 'every multi-leg deploy OPENS a change_management ledger entry at deploy-START declaring its COMPLETE manifest, CLOSES only when every leg carries verification proof'.",
+  "world_is": "The entry is a GENERATED file, not an append-only record. Its structured fields (legs, proofs, status, log lines the tool writes itself) survive; anything a human or agent adds around them does not. So the carrier the NEVER law names is the one place a STOP narrative cannot safely live, and the deletion is invisible at the moment it happens -- it shows up only as an unexplained deletion count in a later commit.",
+  "notes": "This seat lost nothing permanently: the section was recovered from f9c38b6165 and both narratives (e57e61's STOP and e65b's half-landed/rollback) are preserved in org/tier2_senior/0.7.0_AE_CloudOps~SD/deliverables/MDPF_SECCLASS_E57E61_PROOF_INSTANCE_AND_ACT_NARRATIVE_20261008.md, which no tool regenerates. WORKING RULE this seat now follows, offered to others: put structured state in the ledger via the tool's own verbs (open/close-leg/hold/close and their --proof text, which DO survive because the tool writes them), and put narrative in a deliverable the ledger points at. The long --proof strings on L1 and L2 of the e57e61 entry are deliberately written that way. Candidate remedies for the tool's owner, NEITHER proposed as built: (a) preserve any content below a sentinel marker across regeneration; or (b) refuse to regenerate when the file carries bytes the tool did not write, naming them, so the loss is loud instead of silent. Remedy (b) matches the fail-closed posture the rest of the deploy toolchain takes -- safe-deploy's upload verify and safe-apply's 'a gate that cannot evaluate must not pass' both refuse rather than proceed quietly."
+}
+```
+
+## MDPF_SECCLASS-D1-W62-S1 -- SC-e-72 cash grade: V3 plans 328 unique cash keys not 316; 17 legacy fixed_income/Cash rows
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W62-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~62",
+  "surfaced_at": "2026-10-08T03:00Z",
+  "one_line": "SC-e-72 cash grade: the V3 set plans 328 unique cash keys (331 DIRECT cash rows), not the 316 the cell cites, and the live table already holds all 328 at plan; 17 legacy fixed_income/Cash rows make ok=False.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/cash_grade.py -> CASH-GRADE ok=False cash_rows=329 by_classified_by={'scheduled': 328, 'model': 1} v3_planned=328 v3_present_at_plan=328 fixed_income_Cash=17 by_sub_asset_class={'Cash': 310, 'T-Bill': 10, 'Money Market': 9} v3_absent=0 v3_present_wrong=0 cash_case_variants=0 table_rows=9155 scan_pages=2 v3_tsv_rows=10965",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/OLD_LIST_RECLASSIFY_SET_V3_20261007.tsv: DIRECT cash rows = Cash 313 + Money Market 9 + T-Bill 9 = 331; unique shared_key = 328 (read at e6f1fdfc1f)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-72 / CTO round-12 analysis section 3 item 6: count cash rows by classified_by 'against the 316 the V3 set planned'; ok means v3_present_at_plan equals the planned keys AND fixed_income_Cash is 0.",
+  "world_is": "The V3 TSV plans 328 unique cash keys, not 316, and all 328 are already present at their planned sub-class (e32's cash legs, or earlier writes, have landed; classified_by scheduled=328, model=1). ok is False only because 17 rows sit at asset_class fixed_income / sub_asset_class Cash. The script grades against the TSV's own 328 and prints the measured values; the 316 figure was not reproduced and not forced.",
+  "notes": "Grade is re-run at e32's close. Id form: the TO named MDPF_SECCLASS-W62-S<k>; the surprise-row-gate requires the dell1 coordinate, so the id is MDPF_SECCLASS-D1-W62-S1. The 17 fixed_income/Cash rows are counted, not hidden; whether they are legacy rows the V3 set re-plans or rows outside it was not measured here."
+}
+```
+## MDPF_SECCLASS-W59-S1 -- the identifier_namespace backfill's planned set is empty: every CUSIP: and NAME:: row already carries it
+
+```json
+{
+  "id": "MDPF_SECCLASS-W59-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~59",
+  "surfaced_at": "2026-10-08T03:04Z",
+  "one_line": "The e69 backfill's planned set is EMPTY: all 425 CUSIP: and 4,375 NAME:: rows of etf-classifications already carry identifier_namespace (626 BBG: carry BLOOMBERG), so the cell's conditional backfill would make 0 updates; the writer change is the live part of the cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/namespace_backfill.py -> NAMESPACE-BACKFILL-DRY-RUN rows=9155 missing_cusip=0 missing_name=0 puts=0 (2 scan pages, ConsistentRead)",
+      "census by key form and stored value, same scan: (CUSIP, CUSIP) 425; (NAME, NAME) 4375; (BBG, BLOOMBERG) 626; (bare, absent) 3729; 0 mutating calls",
+      "comp-find 'NamespaceTable' infra/aws/lambda/v2_portal -> 0 hits across 311 files: the wrapper the cell names as in the two executors was not found under that path (not searched elsewhere)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e69 / CTO round-12 analysis section 3 item 3: 'a conditional backfill of rows that have none (count printed)'; the cell is framed as rows lacking a namespace needing a backfill.",
+  "world_is": "Live table 2026-10-08: no CUSIP: or NAME:: row lacks the attribute, so the backfill is a standing guard for rows landed by a writer that omits it (the AI runner before this change) and a --write today would make 0 updates. The half request states the empty set and the 0 count; whether a half is still wanted for an empty set is the issuer's and the CTO's call. Bare rows (3,729) lack the attribute by design and read TICKER."
+}
+```
+
+## MDPF_SECCLASS-D1-S4 -- deploy_ledger check grades a foreign device's entry against the local fetch, so PAST-WINDOW on another box's ledger can be a vintage artifact rather than an overrun
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T06:37Z",
+  "one_line": "deploy_ledger.py check computes age / window / PAST-WINDOW / HELD-STALE from THIS DEVICE'S CHECKOUT, so for an entry authored on another device it grades the vintage of the local fetch, not the live state. On dell1 at 06:31Z it printed two AMGT_CORPUS entries as PAST-WINDOW (13.4h and 14.2h against a 4.0h window) when both are OPEN ON PURPOSE -- each waits on a later act and its author will set the window to that act -- and they read past-window here only because site Z had not pushed since about 19:3xZ. The verdict word PAST-WINDOW carries no scope qualifier, so a foreign entry's staleness is indistinguishable from a real overrun.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deploy_ledger.py check on dell1, 2026-10-08T06:31Z: 'OPEN: amgt-corpus-r40-ap10d age=13.4h window=4.0h [PAST-WINDOW] stranded=[Lw, Lv] author=2.0.0_SA_COO~X' and 'OPEN: amgt-corpus-r40-ap10m age=14.2h window=4.0h [PAST-WINDOW] stranded=[Lv] author=2.0.0_SA_COO~X'.",
+      "0.0.0_AB_MSTR~DELL1 msg 812, relayed by 2.0.0_SA_COO~M1 msg 813: both AMGT_CORPUS entries are open on purpose -- ap10m waits on today's 13:00Z fire, ap10d on the bb-18 redeploy -- their site-Z author will set each entry's window to its act, and 'Dell1 sees them as past-window only because site Z hasn't pushed since about 19:3xZ'.",
+      "SAME CLASS, MEASURED EARLIER THIS SESSION IN THE OPPOSITE DIRECTION: at 00:4xZ the e65 ledger secclass-e65-cash-token-deploy-s-20261007 read '**Status:** HELD-SOVEREIGN-GATED' with its sentinel still tracked at the local HEAD, while at origin/CLOUD the same entry read 'CLOSED -- nothing stranded -- closed 20261008T004506Z' with the sentinel ABSENT. The local read was stale by one unpushed laptop commit (3b6f5c9a45).",
+      "The union read that makes the locality explicit: 31 worktrees scanned for the e65 sentinel, tracked-open in 5 and closed in none -- which proves only that THIS DEVICE saw no completion, exactly as CLAUDE.md NEVER-2 states."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: 'An entry a device left OPEN proves only that THIS device saw no completion: before acting on any open/--red entry, measure the ARTIFACT (rev-parse + describe + is-ancestor with a positive control); world-done -> close SUPERSEDED, never re-execute.' deploy_ledger.py's own contract: an entry left OPEN past its window BLARES (RED inbox delivery to COO), and enforcement rides COO /drive chaining `check --red` each cycle.",
+  "world_is": "NEVER-2 states the locality rule for the OPEN/CLOSED bit, and this row records that the same locality governs the DERIVED verdicts -- age, window, PAST-WINDOW, HELD-STALE -- which are computed against a local mtime/checkout and so inherit the fetch vintage. A cross-device RED is therefore a claim about this device's view, and a seat reading `check --red` on a box that is not the author's can manufacture an alarm that does not exist, which is what happened here: a correct-looking RED consumed two COO round-trips and one MSTR relay before it resolved to nothing owed.",
+  "notes": "NOTHING WAS MEASURED ABOUT THE FOUR ACTS THEMSELVES and nothing is claimed about them; the finding is about the instrument's scope, not their state. Also recorded, because it is the same trap wearing a different word: 'stranded=[...]' in that output names legs carrying no proof, NOT stranded world state -- this seat's own e65b entry reads stranded=[L1,L2,L3,L4] while all eight of its keys sit at pre-act content with parity restored and verified. WORKING RULE this seat now follows: treat `check` as self-scoped; before quoting age/window/PAST-WINDOW/HELD-STALE on an entry whose author= is a foreign device, fetch first and say the vintage, and read a foreign RED as 'unresolved on this device' rather than 'overrun'. Candidate remedy for the tool's owner, NOT proposed as built: print the entry's author DEVICE beside the verdict and qualify a foreign-authored verdict with the local fetch time, so the output cannot be read as an authoritative overrun. Disposition owed by 2.0.0_SA_COO~M1 per msgs 811 and 813, which ruled: leave all four in check --red, nothing owed by dell1 or by this seat."
+}
+```
+
+### D1-S4 ADDENDUM -- the row's prediction CONFIRMED in the world, with the persistence named (0.7.0_AE_CloudOps~SD, 2026-10-08T06:4xZ)
+
+Site-Z `2.0.0_SA_COO~X` measured BOTH AMGT_CORPUS entries at 06:35-06:40Z and re-held each on
+its act at commit `170d418cd7`, **with nothing re-executed** -- which is NEVER-2's prescribed
+handling of an open entry (measure the artifact; world-done closes or re-holds, never
+re-execute). Relayed by `0.0.0_AB_MSTR~DELL1` msg 814 via `2.0.0_SA_COO~M1` msg 815.
+
+The line that confirms this row, verbatim from msg 815: *"That commit is still local on site Z,
+so `check --red` on dell1 keeps printing them PAST-WINDOW until site Z pushes."*
+
+So the false verdict is not a transient that self-heals on its own clock -- it PERSISTS until an
+unrelated device pushes, while the entries are already correctly re-held. Two consequences a
+future reader should take rather than re-derive:
+
+1. A foreign-authored `PAST-WINDOW` on this box must NOT be re-surfaced on a later sweep merely
+   because it is still printing. This seat will not re-raise these two; doing so would spend the
+   same two COO round-trips and one MSTR relay a second time on an entry already dispositioned.
+2. The discriminator between "stale view" and "real overrun" is the AUTHOR'S device, never the
+   reading device's clock. Ask the author (or fetch and re-read), do not escalate on the verdict.
+
+Nothing about the four acts was measured by this seat at any point, and nothing is claimed about
+them. Rulings 811, 813 and 815 all land the same way: leave them in `check --red`, nothing owed
+by dell1 or by this seat.
+## MDPF_SECCLASS-D1-S5 -- 52 COT-held keys (USD 6.06M) absent from the canonical table and from FWD-15's UNPLACED census
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T07:00Z",
+  "one_line": "52 COT-held keys (USD 6,055,734.38) written to bd-securities on 09-26 are absent from etf-classifications AND absent from FWD-15's 99-key UNPLACED census, so the census domain is narrower than the COT holdings it claims to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/A07_DELTA_COT_NEW_20260926.json: changed keys with firm cot = 122 (per_firm.cot usd 62,603,923.90)",
+      "etf-classifications ConsistentRead scan 2026-10-08T06:5xZ, 9,155 rows: of the 122, 51 match the 09-26 'after' class, 10 differ (later model/scheduled reclass: INIYX, CSHI, LNGX, PFL, ISVDT, ANGIX, GENIX, BRW, ARKB, TOIXX), 61 absent by bare key; 3 more resolve under a CUSIP:/NAME::/BLOOMBERG: prefix or suffix; 58 absent, USD 49,174,203.65",
+      "UNPLACED_KEY_CENSUS_20261008.json (e70): of the 58 absent, 6 appear in the census (e.g. 4175_VOYA, CXMANUAL_HOME, CXMANUAL_LIMITEDLIABILITYCOMPANY); 52 do not, USD 6,055,734.38 -- largest 4175_GGHC 2,350,519.32, CXMANUAL_BROKERAGE 953,620.36, CXMANUAL_INVESTMENTPROPERTY 386,872.00, CSQ 227,321.64, FFC 179,322.60, ETHA 44,322.60"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-15 / TO-SC-e70: the 99 UNPLACED-KEY entries are the census of keys the canonical table does not place, by firm and id pattern (99/99 in 13 groups).",
+  "world_is": "COT holds at least 52 more keys the canonical table does not carry, including plain listed tickers (CSQ, FFC, ETHA, ETH) and 4175_/CXMANUAL_ manual-entry keys, that the 99-key census never saw. The census's source set (FWD15_AI_PLAN_<firm>_20261007.json route UNPLACED-KEY) is narrower than the population of firm-held keys. Whether COT's served mix shows these as other/unclassified, or via a fallback, was not measured here.",
+  "notes": "Found while measuring laptop ~M's ledger bd-securities-cot-new-p1-m-20260926 leg R1 (owner now 2.0.0_SA_COO~M1). For the round-13 analysis: FWD-15's domain should be the firm-held key population, not the AI plan's UNPLACED route. Not a regression: these keys were never in the canonical table."
+}
+```
+
+## MDPF_SECCLASS-D1-W63-S1 -- SC-e-70b: cottonwood's served holdings snapshot is in opal-data-cottonwood (irpt/cottonwood/gold/holdings/), n
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W63-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~63",
+  "surfaced_at": "2026-10-08T07:18Z",
+  "one_line": "SC-e-70b: cottonwood's served holdings snapshot is in opal-data-cottonwood (irpt/cottonwood/gold/holdings/), not opal-data-cot; opal-data-cot has 0 irpt holdings objects and an empty gold/holdings_lots/; the route rule also needs a bd-securities scan the order's AWS grant does not list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 list_objects_v2 opal-data-cot prefix irpt/cottonwood/gold/holdings/ -> KeyCount 0; prefix gold/holdings_lots/ -> KeyCount 0; gold/positions_cube/2026-10-06.parquet in opal-data-cot has columns account_id, asset_name, units only (no key, no amount)",
+      "boto3 list_objects_v2 opal-data-cottonwood prefix irpt/cottonwood/gold/holdings/ -> 13 parquet objects, newest date=2026-10-06, VersionId xqKVI6RQHUAmgTeOTLGsHNpRJULlCGy., LastModified 2026-10-07T14:18:07Z (same irpt/<firm>/gold/holdings/ shape as the 49financial and inflection snapshots; org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/missing_list.py held_securities() reads this shape)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/fwd15_ai_plan.py main(): the route rule's DIRECT test calls classify_asset_class with a bd-securities lookup built from a consistent scan of bd-securities (10,965 rows read 2026-10-08)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-70 amendment 1 step 1: cottonwood's served holdings sit in opal-data-cot (BD-family gold B_01.holdings_lots.py writes COT's); BOUNDS: AWS reads are s3 on the three firm buckets and dynamodb scan on etf-classifications.",
+  "world_is": "The cottonwood served holdings snapshot is the opal-data-cottonwood irpt object, and the script reads it there (the output JSON prints the opal-data-cot probe beside it). The route rule's DIRECT branch needs bd-securities, so the script also does a read-only consistent scan of bd-securities, the same read fwd15_ai_plan.py did on 2026-10-07; no write, invoke or model call.",
+  "notes": "Both departures are read-only and are the only way to meet SC12-e70b-AC1 as written (same rule, served bytes, cottonwood from its own firm's artifact). If the CTO prefers opal-data-cot as cottonwood's served home, the order's bucket name is the one to correct."
+}
+```
+
+## MDPF_SECCLASS-D1-W63-S2 -- SC-e-70b: 62 of the first census's 99 UNPLACED-KEY entries are now matched by a NAME:: row, and 36 of the 61 C
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W63-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~63",
+  "surfaced_at": "2026-10-08T07:19Z",
+  "one_line": "SC-e-70b: 62 of the first census's 99 UNPLACED-KEY entries are now matched by a NAME:: row, and 36 of the 61 COT keys D1-S5 found bare-absent (ETHA, CXMANUAL_BROKERAGE ...) are not in the served cottonwood holdings snapshot at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/firm_held_unplaced_census.py -> FIRM-HELD-CENSUS ok=True firms=3 held=1270/1828/1601 absent=65/380/464 usd=71540299.00/4385210.72/584829.98 e70_still_absent=37 missing_from_widened=0 (firm order cottonwood/49financial/inflection)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FIRM_HELD_UNPLACED_CENSUS_20261008.json control: first_census_entries 99, e70_now_present_by_first_matching_form {'NAME': 62}; e.g. cottonwood BA- FIDELITY.4005 -> table row NAME::FID GR CO POOL CL 3, updated_by mdpf-secclass-old-list-reclassify, last_updated 2026-10-07T19:03:32Z",
+      "A07_DELTA_COT_NEW_20260926.json (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/): 122 cot changed keys, 61 absent by bare key in the 9,155-row table; 23 are in the widened cottonwood absent set; of the other 38, 2 are held and match a NAME:: row (FFC is one) and 36 are not held by symbol or CUSIP in the 2026-10-06 served snapshot (ETHA, CXMANUAL_BROKERAGE, CXMANUAL_SAVINGS, LNEHV4*, PRU0*); ETHA and CXMANUAL_BROKERAGE are also absent from the 2026-09-28 and 2026-10-02 snapshots"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-70 amendment 1: e70_still_absent counts the first census's 99 entries still absent AND still held; D1-S5: 52 COT-held keys absent from the table and from the 99-key census.",
+  "world_is": "By the order's four match forms (ticker, CUSIP:, NAME::, BLOOMBERG:), 62 of the 99 are PRESENT today through a NAME:: row written 2026-10-07T19:03Z, so e70_still_absent is 37 (all 37 in the widened set, missing_from_widened=0). A key-form consumer (symbol or CUSIP) would still see those 62 as unplaced. Separately, D1-S5's bare-absent COT keys came from bd-securities writes, and 36 of them are not positions of the served cottonwood snapshot, so the served-held domain is smaller than the BD key population D1-S5 counted.",
+  "notes": "Not a regression and not fixed here. Whether a NAME::-only placement satisfies FWD-15 for a security that has a symbol or CUSIP is a CTO call; the JSON carries every absent key with its route so either reading can be graded."
+}
+```

@@ -9,7 +9,7 @@ receiving tool's own (--no-index --no-deps --target <temporary dir>) on the synt
 antivirus answer and the signer are stand-ins reached through the tools' own environment variables (OPAL_INTAKE_ROOT,
 OPAL_INTAKE_RECORDS, OPAL_INTAKE_SITE, OPAL_INTAKE_AV_JSON, OPAL_INTAKE_SIGNER_DIR) and AGENTBUS_DEVICE. No argument; the
 repository root is derived from this file's own location. Standard library only.
-LAST line: INTAKE-SEAM-TEST stages=<n> negative_arms=<k>/3 index_requests=<r> ok=<True|False>"""
+LAST line: INTAKE-SEAM-TEST stages=<n> negative_arms=<k>/4 index_requests=<r> ok=<True|False>"""
 import base64
 import hashlib
 import http.server
@@ -109,7 +109,8 @@ def build_stand_ins(tmp):
     approved = tmp / "approved.txt"
     approved.write_text("%s==%s\n" % (NAME, VER), encoding="ascii")
     signed = signer / "BATCH_SIGNED.md"
-    signed.write_text("batch %s\nfile %s\nsigned for the seam run only\n" % (BATCH, FN), encoding="ascii")
+    signed.write_text("batch %s\nfile %s\nCHECK 8 SIGNED -- %s -- signed for the seam run only\n" % (BATCH, FN, FN),
+                      encoding="ascii")
     env = dict(os.environ)
     env.update({"OPAL_INTAKE_ROOT": str(tmp / "intake-root"), "OPAL_INTAKE_RECORDS": str(tmp / "records"),
                 "OPAL_INTAKE_SITE": str(site), "OPAL_INTAKE_AV_JSON": str(av), "OPAL_INTAKE_SIGNER_DIR": str(signer),
@@ -176,7 +177,26 @@ def run_negative_arms(tmp, env, good_pack):
         good = proc.returncode != 0 and "ok=False" in last
         refused += 1 if good else 0
         print("arm %-28s rc=%s %s | %s" % (label, proc.returncode, "REFUSED" if good else "NOT REFUSED", last[:200]))
+    refused += unsigned_signature_arm(tmp, env)
     return refused
+
+
+def unsigned_signature_arm(tmp, env):
+    """Negative arm 4: the released wheel is put back in holding (temporary root) and checked against a signature file WITHOUT
+    a signing line; check 8 must fail and the verdict must not read checked. Returns 1 when refused, else 0."""
+    root = pathlib.Path(env["OPAL_INTAKE_ROOT"])
+    hold = root / "holding" / BATCH
+    hold.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(str(root / "release" / BATCH / FN), str(hold / FN))
+    bad = pathlib.Path(env["OPAL_INTAKE_SIGNER_DIR"]) / "NO_SIGNING_LINE.md"
+    bad.write_text("batch %s\nfile %s\nsigned for the seam run only\n" % (BATCH, FN), encoding="ascii")
+    proc = run_tool(env, "intake_check.py", ["check", "--batch", BATCH, "--file", FN, "--approved-by", str(tmp / "approved.txt"),
+                                             "--signed-by", str(bad), "--scan-wait-seconds", "1"])
+    last = last_line(proc)
+    good = "c8=failed" in last and "verdict=not_checked" in last and "verdict=checked" not in last
+    print("arm %-28s rc=%s %s | %s" % ("signature_without_signing_line", proc.returncode, "REFUSED" if good else "NOT REFUSED",
+                                       last[:200]))
+    return 1 if good else 0
 
 
 def main():
@@ -202,9 +222,9 @@ def main():
     cleaned = not tmp.exists()
     if not cleaned:
         print("WARN: temporary folder not removed: %s" % tmp)
-    ok = stages_ok == 6 and refused == 3 and requests == EXPECTED_REQUESTS and cleaned
+    ok = stages_ok == 6 and refused == 4 and requests == EXPECTED_REQUESTS and cleaned
     print("index requests seen on 127.0.0.1:", requests, HITS)
-    print("INTAKE-SEAM-TEST stages=%d negative_arms=%d/3 index_requests=%d ok=%s" % (stages_ok, refused, requests, ok))
+    print("INTAKE-SEAM-TEST stages=%d negative_arms=%d/4 index_requests=%d ok=%s" % (stages_ok, refused, requests, ok))
     return 0 if ok else 1
 
 

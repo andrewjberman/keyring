@@ -22,3 +22,4 @@
 - 20261007T225615Z OPENED by 2.0.0_SA_COO~Y2 with 4 leg(s)
 - 20261007T232118Z LEG L1 closed: three-plane baseline equal ~23:05Z: live CodeSha256 uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ= (LastModified 2026-10-0
 - 20261007T233356Z LEG L2 closed: build-and-upload.sh investor-reporting irpt-ycharts-generate rc=0: import-closure OK (63 .py), SHA256 ZspX0qD2bCkFVoi3X8
+- 20261008T0418Z NOTE by 2.0.0_SA_COO~Y2 (0.0.0_AB_MSTR~DELL2 msg 1197): PAST-WINDOW with NOTHING HALF-LIVE. Live irpt-ycharts-generate and its tfstate are still on uFTONal.. / S3 objver w031eAfDs6mh..; L2 only added S3 version 4Pvl.mN3tY9.. (ZspX0qD2..), which nothing points at. L3 waits on the dell2 grant ssm:GetParameter (AL2023 AMI public parameter), which is with laptop 1.0.0_SA_CTO / 2.0.0_SA_COO~C (Andrew 106648: Dell runs wait on the GRANT, no laptop reroute). Left OPEN by instruction.

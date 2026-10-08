@@ -134,6 +134,7 @@ org/devices/intake/intake_check.py
 org/devices/intake/test_intake_check.py
 docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
+org/devices/intake/test_intake_seam.py
 </paths>
 
 ---
@@ -217,4 +218,77 @@ not a substring of that line (row `NFRA_CTLPLN-W6-S13`; the worker followed the 
 bend the tool). The expectation is now `INTAKE-AV products=[0-9]+ active=`. Nothing in the tool or its tests changes. Gate limb:
 none graded this modification. The worker re-runs the three criteria, rewrites the `CT5e3-AC3` proof row from that run (its
 `expect` equal to the new expectation), validates the instance, and flips the order to `complete` when all three pass.
+
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-08 ~05:1xZ) -- REOPENED, PRIORITY: three defects the first real batch found
+
+The first real batch (`intake-20261008-a`, records under `org/devices/intake/records/intake-20261008-a/`) ran the tool on two
+real files and found three defects. A box at another site is waiting on a file this blocks. Gate limb: none graded this
+modification. The issuer reopens its own order; the slot is re-seated in a fresh worktree. NO REQUEST LEAVES THIS MACHINE in
+this pass: every test uses fixtures; you do not fetch, and you do not touch the real batch's holding folder or records.
+
+1. **CHECK 6 COUNTED MISSING FILES AS DIFFERENT.** For `click-8.3.1-py3-none-any.whl` the tool read `c3 passed` (an installed
+   distribution `click-8.3.1.dist-info` exists) and then `c6 failed: 17 of 17 .py files differ from the installed copy`. The
+   installed copy is an EDITABLE install: its `direct_url.json` reads `{"dir_info": {"editable": true}, "url": "file:///...click-src"}`
+   and that source folder no longer exists, so there were no installed files to compare; the reading says nothing about the
+   fetched file. Repair: (a) check 3 reads the distribution's `direct_url.json`; an editable install is NOT "an installed copy
+   of this version" for the purpose of checks 3 and 6: check 3 reads `not_applicable` with the reason "the installed
+   distribution is an editable install (source at <url>), not a copy of the published files", and check 6 follows as
+   `not_applicable`; (b) independently, in check 6, a `.py` file of the wheel that has NO counterpart on disk is counted as
+   `missing`, never as `differ`; if EVERY file is missing the check reads `not_applicable` with the reason "no installed file
+   to compare (0 of N present)"; if some are present, the check compares those, reports `compared=<k> missing=<m>
+   differ=<d>`, and is `failed` only when `differ > 0`. A real difference in a present file still fails: keep that case.
+2. **CHECK 8 WOULD ACCEPT THE APPROVAL-TO-FETCH FILE AS A SIGNATURE** (`1.0.0_SA_CTO` msg 106738: "my approval-to-fetch file
+   names the batch and both file names, so check_8 as written would accept it as a signature for either file. It is not one.
+   The check should refuse a signature file that is also the --approved-by file, or require a word the approval cannot
+   contain."). Repair, both: (a) `--signed-by` resolving to the same file as `--approved-by` (compare resolved paths AND
+   content hashes) is `c8 failed` with the reason; (b) a signature file must contain the exact phrase `CHECK 8 SIGNED` on a
+   line that also names the file, or the batch-and-file pair as today PLUS that phrase anywhere: choose the stricter form the
+   CTO's real signature file satisfies -- read
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_RPDS_PY_ONLY.md` (it must still
+   pass for `rpds_py-2026.6.3-cp314-cp314-win_amd64.whl`) and
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_BATCH_20261008_A.md` (it must now be
+   REFUSED as a signature for either file, including when passed alone as `--signed-by` with a different `--approved-by`:
+   note it says of itself "It is NOT check 8", so do not key on a phrase that sentence contains). Say which rule you chose and
+   show both files' results in a test that copies them to a temporary directory.
+3. **PACK REFUSED A RELEASED FILE BECAUSE ANOTHER FILE OF THE BATCH IS STILL HELD** (`INTAKE-PACK REFUSED ... reasons=files
+   remain in holding/intake-20261008-a/: click-8.3.1-py3-none-any.whl`). One held file must not stop a released one from
+   travelling. Repair: `pack --batch <b> --out <dir> --released-only` packs exactly the files that are released and
+   `verdict=checked`, and writes into the pack's manifest a `held_back` list naming each file of the batch NOT in the pack
+   with its current verdict and failing check; without the flag the behaviour is unchanged (refuse). The manifest shape must
+   stay readable by `org/devices/intake/intake_receive.py` as merged (read how `verify` parses the manifest; an added key it
+   refuses is a defect of this change, so either it already ignores unknown keys in that position or you put `held_back` in a
+   separate sidecar file `HELD_BACK.json` in the pack that `verify` does not read; say which and show `intake_receive.py
+   verify --from <pack>` passing on a pack made with the flag, in a test with temporary roots via the tool's environment
+   variables). You do not edit `intake_receive.py`.
+4. Tests in `org/devices/intake/test_intake_check.py` for each of the above, including: editable install -> c3 and c6
+   not_applicable; all files missing -> not_applicable; one present file differing -> failed; approval file as signature ->
+   c8 failed (both ways); the real signature file's text -> c8 passed; `--released-only` with one released and one held file
+   -> a pack holding one file and naming the other as held back; without the flag -> refused as before. Every earlier case
+   still passes. Run `python org/devices/intake/test_intake_seam.py` too if it is on the trunk and report its last line.
+
+**ACCEPTANCE (same three ids, expectations unchanged; the case count in the test line moves):** `CT5e3-AC1`, `CT5e3-AC2`,
+`CT5e3-AC3`. Rewrite the proof instance's rows from your runs, validate, and flip the order to `complete`.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-08 ~06:0xZ) -- REOPENED, SHORT: disarm row W6-S17 (an extra file must fail check 6) and repair the seam test (row W6-S16)
+
+AMENDMENT 3's pass is accepted except for two things its own report named. The branch is NOT merged until both are fixed.
+Gate limb: none graded this modification. One path is added to `<paths>`: `org/devices/intake/test_intake_seam.py`.
+
+1. **Row NFRA_CTLPLN-W6-S17 (ARMED, owner this issuer): an EXTRA module in a wheel now passes check 6 against a complete
+   installed copy.** That is the one case check 6 exists for: a file the published wheel should not contain. Repair, by the
+   installed copy's own `RECORD` file (in its `.dist-info`): a wheel `.py` whose path the installed `RECORD` LISTS but which is
+   absent on disk is `missing` (as now); a wheel `.py` whose path the installed `RECORD` does NOT list is `extra`, and
+   `extra > 0` is `failed` with the files named. If the installed copy has no readable `RECORD`, a `.py` with no counterpart on
+   disk is `extra` (fail) unless EVERY `.py` is absent, which stays `not_applicable` ("no installed file to compare"). The
+   evidence line becomes `compared=<k> missing=<m> extra=<e> differ=<d>`. Restore a test asserting that an extra module fails
+   (the one AMENDMENT 3 replaced), and keep the missing-file and editable cases passing.
+2. **Row NFRA_CTLPLN-W6-S16: the seam test's stand-in signature has no signing line**, so check 8 now refuses it and
+   `test_intake_seam.py` reads `ok=False`. In that file, change ONLY the stand-in signature text so it carries a line beginning
+   `CHECK 8 SIGNED` naming the file, as the new rule requires; and keep, or add if absent, one negative arm in which a
+   signature WITHOUT a signing line is refused. `python org/devices/intake/test_intake_seam.py` must end
+   `INTAKE-SEAM-TEST stages=6 negative_arms=<a>/<a> index_requests=4 ok=True` (the negative-arm count may rise by one).
+3. Re-run the three criteria and the seam test; rewrite the proof instance; validate; flip to `complete`. Rows S16 and S17 are
+   resolved by this amendment: say so in your report (rows are immutable).
+
+**ACCEPTANCE:** `CT5e3-AC1`, `CT5e3-AC2`, `CT5e3-AC3`, expectations unchanged.
 

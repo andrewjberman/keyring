@@ -215,6 +215,214 @@ but a NAMED WAIT with its own clock: the first scheduled `advi-49f-gold-floor` c
 `A07_SWITCH_BEFORE_AFTER_20261007.json` are read. The entry's 30h window from 13:40Z on 10-07 covers
 it with margin.
 
+## Addendum 01:10Z -- the e42 L2 gate is MEASURED, and reading it on the wrong plane returns a false DELETED
+
+The issuer confirmed at 01:06Z (msg 106681) that `secclass-e42-a07-deploy-s-20261007` **stays with this
+lane** for now, because its 12:45Z read is on `opal-data-49financial`, a bucket that still refuses
+dell1; if dell1's firm-data admission applies before 12:45Z the entry moves to a dell1 seat by
+amendment. So the gate was measured rather than left inherited -- and the measurement turned up a trap
+worth naming:
+
+```
+aws events describe-rule --name advi-49f-gold-floor
+  -> An error occurred (ResourceNotFoundException) ... Rule advi-49f-gold-floor does not exist on EventBus default
+```
+
+**That error is byte-identical to a deleted trigger, and the trigger is not deleted.** A census of the
+EventBridge **Rules** plane -- 152 rules on `default`, the only bus -- returns ZERO rules naming `advi`
+and ZERO with a `cron(45 12 ...)` expression, which reads as a clean absence and is the wrong
+denominator: the question's plane was never Rules. `advi-49f-gold-floor` is an **EventBridge
+Scheduler** schedule, and the pointer to that was in the target Lambda's own resource policy
+(`aws lambda get-policy --function-name advi-49f-gold-dispatch` -> Sid
+`SchedulerAdvi49fGoldFloor`, principal `scheduler.amazonaws.com`, SourceArn
+`arn:aws:scheduler:us-east-1:313476888478:schedule/default/advi-49f-gold-floor`). On the correct
+plane it reads:
+
+```
+aws scheduler get-schedule --name advi-49f-gold-floor
+  advi-49f-gold-floor  ENABLED  cron(45 12 * * ? *)  UTC
+  arn:aws:lambda:us-east-1:313476888478:function:advi-49f-gold-dispatch   FlexibleTimeWindow OFF
+```
+
+(34 schedules on that plane.) So the gate is REAL: ENABLED, UTC, flexible-time-window OFF, so it fires
+at 12:45Z rather than jittered inside a window, and 2026-10-08 is a Thursday, so the fire is not a
+calendar question either. The entry's 30h window from 13:40Z on 10-07 covers the read with margin.
+
+**The generalizable bit, because this ledger's own text does not carry it:** the entry names the
+trigger as "advi-49f-gold-floor cron(45 12 * * ? *) UTC" with no plane, and `events` and `scheduler`
+are two different services whose "not found" answers are indistinguishable from a real deletion. The
+second trigger on the same Lambda is `S3InvokeAdvi49fSilverAccelerator` from `opal-data-assets`, which
+is the order's "or an earlier `advi.49f.silver-accelerator` fire on a qualified Schwab closure" arm --
+so L2 has TWO possible firing paths and only one of them is a clock.
+
+## Addendum 02:25Z -- e42 L2 prep, and a parity alarm I raised and then retired by reading the half
+
+Idle-tick prep so the 12:45Z read is a read and not a hunt. Three results, one of them a correction to
+my own first reaction.
+
+**The move-set baseline is scoped and readable.**
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/A07_SWITCH_BEFORE_AFTER_20261007.json`:
+`as_of 2026-10-07`, `denominator 4136`, `changed 164`, and `changed_by_class_move` carrying 9 distinct
+moves that sum to exactly 164 (`equity -> fixed_income` alone is 118). `rows` holds all 4,136 with
+`before_class`/`after_class`/`before_source`/`after_source`/`changed`/`usd_by_firm` per key. The order
+calls this "the 164-key list" (line 27), so the L2 comparison is the run's class moves against those
+164 -- an unlisted MOVE is the rollback trigger, not a dollar delta.
+
+**A VALUE CARRYING ITS CLAIM, and the claim is not `measured`.** The JSON's own `held_claim` field
+reads **`inferred`**, and the COO half says the same in words ("inferred held set"). So the per-key and
+per-firm dollars (49F $35.67M, Cottonwood $34.59M, Inflection $2.95M) are an inferred population. A
+dollar mismatch at 12:45Z is therefore an inference artifact to report, NOT a rollback; the rollback
+condition is narrower than the JSON is wide, and reading the claim field is what separates them.
+
+**THE ALARM I RAISED, AND WHY IT IS NOT ONE.** The JSON's `parity_after` block reads
+`exit: PARITY FAIL: the port reclassifies -- a rebuild in disguise`, `switch_deltas 447`,
+`changed_set_equals_before_after: False`, `only_in_parity: 283`, `only_in_before_after: 0`. My first
+reading was that a known 283-key discrepancy would make the L2 criterion fire a rollback on
+pre-existing state, under a window closing ~19:40Z -- worth settling before 12:45Z rather than at it.
+**Reading the COO half retired it.** Its "Parity control, stated honestly" section (lines 64-67) has
+the answer already: `--parity-control` diffs the port against `lib/etf_classifier.py`, which since
+SC-t-1 (`206b90e359`) is a canonical-TICKER-ONLY reader, so the control reported 1,690 mismatches with
+the switch OFF -- it "was dead before this edit" (row `MDPF_SECCLASS-W32-S1`). The 447 `canonical-*`
+deltas contain all 164 changed keys **and 283 more whose before and after class AGREE**; the
+ticker-only lib answers UNCLASSIFIED-LOUD for all 283, 273 of them resolved by a `CUSIP:` row that lib
+never reads. **Keys whose class does not move cannot appear as unlisted class moves**, so the 283
+cannot trip the L2 trigger. The half also records that it did NOT loosen the parity code to a pass --
+the failing control was kept with the deltas printed beside it. No surprise row and no escalation is
+owed; the half had already placed this.
+
+**Stale note in this lane's own ledger, corrected forward.** The e42 entry's L1 note records the CTO
+half as "attested SIGNED @b3092be6d2, bytes UNREACHABLE from this device". That was accurate when
+written at 13:49Z; it is no longer. The bytes read clean now BOTH at `b3092be6d2` and on
+`origin/CLOUD`
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e42_A07_CANONICAL_FIRST_20261007.md`,
+author `1.0.0_SA_CTO~DELL1` under laptop ruling 106047(1)). The leg is closed and its proof text stays
+as the historical record; whoever takes L2 should read the half directly rather than rely on the
+attestation.
+
+**So the 12:45Z read is now fully specified:** the run id, the dim's `A5-A07-SOURCE-CENSUS` line with
+`canonical-*` labels present, the d06/d08 mix totals still summing to each firm's value, and the run's
+class moves against the 164.
+
+## Addendum 03:15Z -- the e42 L2 instruments located, with the pre-switch baseline and two corrected oracles
+
+The 12:45Z read is now a read, not a hunt. What was found, and the two places this changed the plan.
+
+**The chain, measured.** `advi-49f-gold-dispatch` takes two sources: `advi.49f.scheduled-floor` (the
+12:45Z Scheduler fire, event `{"run_class": "production", "source": "advi.49f.scheduled-floor"}`) and
+`advi.49f.silver-accelerator` (an S3 marker on `opal-data-assets`, which dispatches ONLY on a qualified
+closure -- yesterday's 09:46Z marker SKIPped on `closure.status=incomplete`). It runs on
+`i-01003b035d2988dfb`, the SAME host as the BD gold chain, under ensure-running duty, dispatching SSM
+document `advi-49f-chain-dispatch`. **The run id L2 owes the issuer is that dispatch's `command_id`.**
+
+**THE FULL LOG IS DURABLE IN S3, which is the only reason the census line is readable at all.** The
+document ends `aws s3 cp ${LOG} s3://opal-data-49financial/gold/advi/_logs/chain_${SUFFIX}.log`, one
+uniquely-named object per run -- no truncation, no append-only problem, no on-instance read. In
+practice the prefix holds 765 objects and yesterday's 12:45Z fire is
+`gold/advi/_logs/chain_20261007T124542Z.log`, uploaded 12:48:20Z at 13,024 B. **The dispatch Lambda
+itself labels the alternative as unusable** -- it logs `stdout context: len=24000 (not the grading
+input)`, the same SSM truncation that cost a call on the asset-dim nightly tonight, already named by
+the pipeline's own authors. So: read the S3 log, never `get-command-invocation`. One failure mode to
+carry: the upload is `|| echo 'WARN: chain log upload failed'`, so it cannot fail the run, and the box
+self-halts `shutdown -h +2` -- if the S3 object is absent there is no second copy.
+
+**THE PRE-SWITCH BASELINE, read from yesterday's log (which predates the 13:44Z a07 upload):**
+
+```
+A5-A07-COVERAGE: classified 3885 of 4136 held securities (93.93%); UNCLASSIFIED-LOUD 251 (0 silent nulls)
+A5-A07-SOURCE-CENSUS: {'dynamodb-ticker': 2420, 'regex-name': 908, 'dynamodb-alias': 554, 'unclassified': 251, 'dynamodb-alias-variant': 3}
+WROTE: dim_asset_classification rows=4136 ... date=2026-10-06
+STAGE OK a07_asset_class_pair rc=0 ; STAGE OK a07_upload files=4 ; CHAIN OK wall=155.4s (18 stages)
+```
+
+The census sums to 4,136 and carries **no `canonical-*` label**, which is exactly what condition (4)
+says must appear after the switch. The chain's 18 stages are a00-a07, b00-b03, c00-c02,
+`insurance_nav_current`, `c04_validation`, `perfrp_projection`.
+
+**ORACLE CORRECTION 1 -- do not use `_classifier_vintage`.** I had intended the determinism/vintage
+digest as the "did the switch take effect" control. The COO half forecloses it at line 62: "The
+classifier vintage digest does not cover the canonical substrate (row `MDPF_SECCLASS-W32-S3`): a
+canonical-only change would NOT move `_classifier_vintage`; the class changes above do show in the
+dim's own rows." So the oracle is the dim's rows and the census labels; a vintage that does not move
+proves nothing either way.
+
+**ORACLE CORRECTION 2 -- the ready-made mix check reads the WRONG population.** `d06` and `d08` are
+not advi chain stages and no file in the repo is named `d06*` (a measured zero over 236,938 files).
+They are artifacts: `data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py` serves
+`platinum/firm/mix_summary` with `CLASS_ORDER` equity / fixed_income / alternatives / unclassified, and
+`d08_firm_ownership_map.py` is its sibling in the same `runners_49f/` directory. There IS a
+purpose-built check, `R11_CHECKS/d06_mix_sum_check.py` -- **and running it at 12:45Z would answer the
+wrong question.** Its own docstring says it reads the newest `D06_MIX_DRY_RUN_<yyyymmdd>.json`, "the
+payload the D_06 emitter wrote with `--out` from a LOCAL run against the live canonical inputs, NEVER
+UPLOADED". That is a round-9 dry-run payload, not today's served bytes. Its four ASSERTIONS are the
+right ones to apply -- mix keys exactly those four; `sum(pct)` within 1e-5 of 1.0; `sum(market_value)`
+equal to `mix_periods[0].total_aua` within 0.01; and the control that `mix.unclassified.market_value`
+equals `composition.unclassified.market_value` so the line is the real residual and not a plug -- but
+they must be applied to the SERVED mix artifacts. The half agrees on which population is authoritative:
+the held set is "`inferred`, not the served mix bytes" (line 33).
+
+**CORRECTION to the d08 mapping above -- the ambiguity resolved, and the first answer was WRONG.** A
+wider name sweep (840 hits across 226,665 files) settles it: the COT mix emitter is
+**`data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py`**, in the COT runner family. So:
+
+| the half's label | the actual producer |
+|---|---|
+| d06 (49F) | `data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py` |
+| d08 (COT) | `data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py` |
+
+`runners_49f/d08_firm_ownership_map.py` -- which this log named a paragraph earlier as the d08
+candidate -- **is not the d08 mix artifact at all.** It is an ownership map read at request time by
+`data/assets/scripts/gold/irpt_custody/advisor_client_list.py`, and it merely shares the ordinal.
+**THE d0N NUMBERS ARE PER-RUNNER-FAMILY ORDINALS, NOT GLOBAL IDS**, and the two families disagree on
+every one of them: COT's own d06 is `runners_cot/d06_cot_filters_dimensions.py`, filters and
+dimensions, nothing to do with a mix. Reading the ordinal as global is what produced the wrong answer,
+and at 12:45Z it would have meant measuring the 49F ownership map and reporting it as the Cottonwood
+mix total -- a confident wrong read, not a visible failure.
+
+One more note from the same sweep, on why this leg sits with a laptop seat at all:
+`org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e55.d06-unclassified-line.md:123`
+says the check is run by "a laptop seat the bucket admits" -- the same `opal-data-49financial`
+admission that keeps e42 here rather than on a Dell.
+
+## Addendum 07:35Z -- scope split on e42/e68, and a07's IsLatest has moved since this ledger recorded it
+
+**SCOPE, per two amendments verified at the orders themselves (origin CLOUD `5fc385ef22`), not from the
+relay.** `TO-VERIFY-e68` amendment 2: SUPERSEDED -- dell1's firm-bucket READ applied at 05:17:17Z, so
+dell1 takes the ~11:36Z AFTER read and this lane stands down; the two polls armed at 03:50Z were
+stopped. `TO-DEPLOY-e42` amendment 1: dell1 takes the 12:45Z L2 read, but THIS LANE KEEPS (a) the
+`<status>` flip once the read lands and (b) **the ROLLBACK if the read finds a move the JSON does not
+list**, because limit item 5 still bars dell1 from writing a code prefix. So e42 did not hand off; it
+SPLIT, and the half this lane kept is the write half.
+
+Committing the e68 interim before the stand-down paid off in a way not foreseen: dell1's first exercise
+of its new admission read `opal-data-cot platinum/firm/mix_summary.json` at **the same VersionId this
+lane had captured as the before-read**, so that section is the baseline its AFTER read is graded
+against.
+
+**THE ROLLBACK HANDLE IS LIVE, AND THE KEY IT WOULD REPLACE IS NOT THE ONE THIS LEDGER NAMED.** Verified
+because the retained act depends on it:
+
+| | VersionId | LastModified | ETag | Size |
+|---|---|---|---|---|
+| rollback target (live) | `72tSRnxMSKkBdtgAJZtqQcHeebqACIl1` | 2026-09-01T14:12:21Z | `9202d701c552d4fb38a40f975f0eae9e` | 34,289 |
+| **current IsLatest** | `7wzSt1JzOCzNiPpAiEF1Tqqbrcwq4elj` | **2026-10-07T16:31:18Z** | `4092c5b80469ab780040a842eebe13cb` | 39,316 |
+| what L1 recorded as IsLatest | `CQXT.gVFAKyhpUWVt3Vwt48F3IiIER3x` | 2026-10-07T13:44:30Z | `4092c5b80469ab780040a842eebe13cb` | 39,316 |
+
+The ETag and size are IDENTICAL across the last two, so **the 16:31:18Z event moved a VERSION and not
+CONTENT** -- a byte-identical PUT to a versioned bucket still mints a VersionId, the same mechanism the
+e65 ledger's leg L3 documented for its six re-uploads. Beside it,
+`_code/tests/test_a07_canonical_first.py` is NEW at 16:31:23Z with a SINGLE version (`3IPTlGM9...`), and
+this lane's upload plan was "the ONE key" with `second_targets_for []`, so that test is another seat's
+ship and the carrier rode along byte-identically. Denominator: 86 keys under `_code/` now (84 at this
+lane's sweep), of which 4 carry a 10-07 stamp after 16:25Z -- that pair, plus `d06_firm_mix_summary.py`
+and its test at 17:59Z.
+
+**Why this is worth writing down rather than shrugging at.** Nothing is broken and no rollback is owed
+by it. But dell1 sweeps `_code/` at 12:45Z under CTO condition 2, where "ANY other key moving is a
+STOP", and two keys carry a 16:31Z stamp that the e42 ledger does not account for. Unexplained, that
+reads as a STOP on a legitimate deploy. Relayed to `1.0.0_SA_CTO` at 07:34Z. L1's recorded VersionId was
+true when written and stays as the historical record; what changed is which version a rollback would be
+replacing, not which version it restores.
+
 ## Next Steps
 
 1. **[`0.0.0_AB_MSTR`]** Push the three commits above; `origin/CLOUD` read `c7cbd4c8a1` at 00:52Z and

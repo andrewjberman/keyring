@@ -1,0 +1,167 @@
+{
+  "schema": "intake-check/1",
+  "batch": "intake-20261008-a",
+  "file_name": "click-8.3.1-py3-none-any.whl",
+  "held_sha256": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+  "checks": [
+    {
+      "n": 1,
+      "name": "sha256 equals the digest the index publishes",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "re-read from disk now: sha256 and size equal the index's published values",
+        "computed_sha256": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+        "published_sha256": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+        "computed_size": 108274,
+        "published_size": 108274,
+        "record_held_sha256_matches_disk": true
+      },
+      "rules_out": "a file altered in transit or served by an impostor",
+      "leaves": "anything the real project published"
+    },
+    {
+      "n": 2,
+      "name": "name, version and tags are exactly the approved line",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "file name, METADATA, WHEEL tags and the approved list all say click==8.3.1",
+        "parsed_file_name": {
+          "dist": "click",
+          "version": "8.3.1",
+          "build": "",
+          "python_tag": "py3",
+          "abi_tag": "none",
+          "platform_tag": "any"
+        },
+        "metadata_name": "click",
+        "metadata_version": "8.3.1",
+        "wheel_tags": [
+          "py3-none-any"
+        ],
+        "approved_line_sought": "click==8.3.1",
+        "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_BATCH_20261008_A.md",
+        "on_approved_list": true
+      },
+      "rules_out": "a near-name package; a resolver substituting another version or pulling an unlisted package",
+      "leaves": "a wrong approval"
+    },
+    {
+      "n": 3,
+      "name": "the version is one this machine already runs",
+      "verdict": "not_applicable",
+      "evidence": {
+        "summary": "the installed distribution is an editable install (source at file:///C:/Users/AndrewBerman/Desktop/worktrees/comp-learns/task-002/ds-b/click-src), not a copy of the published files",
+        "reason": "the installed distribution is an editable install (source at file:///C:/Users/AndrewBerman/Desktop/worktrees/comp-learns/task-002/ds-b/click-src), not a copy of the published files",
+        "installed_versions": [
+          "8.3.1"
+        ],
+        "editable_installs": [
+          "click-8.3.1.dist-info"
+        ]
+      },
+      "rules_out": "a brand-new release nobody has used",
+      "leaves": "a build for Python 3.14 that differs from the 3.12 build of the same version"
+    },
+    {
+      "n": 4,
+      "name": "the release's age and the project's earlier releases",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "release 326.43 days old (min 14); 64 earlier releases (min 3)",
+        "this_release_at": "2025-11-15T20:45:41.139301Z",
+        "first_release_at": "2014-04-28T11:22:51.341948Z",
+        "release_count": 65,
+        "earlier_releases": 64,
+        "age_days": 326.43,
+        "min_release_age_days": 14,
+        "min_earlier_releases": 3,
+        "yanked": false
+      },
+      "rules_out": "a package or release published days ago",
+      "leaves": "an old compromise not yet found"
+    },
+    {
+      "n": 5,
+      "name": "build attestation present or absent",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "the index shows a build attestation for this file",
+        "attestation": "present",
+        "url": "https://pypi.org/integrity/click/8.3.1/click-8.3.1-py3-none-any.whl/provenance"
+      },
+      "rules_out": "where present: a file uploaded by hand from a stolen account",
+      "leaves": "where absent: nothing; many projects publish none"
+    },
+    {
+      "n": 6,
+      "name": "the archive opened and listed, never installed",
+      "verdict": "not_applicable",
+      "evidence": {
+        "summary": "check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files",
+        "reason": "check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files"
+      },
+      "rules_out": "code added outside the compiled files",
+      "leaves": "code inside the compiled files"
+    },
+    {
+      "n": 7,
+      "name": "Windows' own malware scan of the file",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "on-access scan by Little Dog Tech Managed Antivirus Antimalware, state enabled and current; file present and unchanged after 20 s; no on-demand verdict available",
+        "decoding": "productState is read as six hex digits 0xAABBCC: BB is real-time protection (0x10 or 0x11 on; 0x00 or 0x01 off; any other byte unknown); CC is the definitions (0x00 current; 0x10 out of date; any other byte unknown); unknown is never treated as on or current. Worked examples: 393472 = 0x060100 -> off; 266240 = 0x041000 -> on, definitions current.",
+        "scan_wait_seconds": 20,
+        "limit": "No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected it.",
+        "products": [
+          {
+            "display_name": "Windows Defender",
+            "name_non_ascii_replaced": false,
+            "state": 393472,
+            "hex": "0x060100",
+            "realtime": "off",
+            "definitions": "current"
+          },
+          {
+            "display_name": "Little Dog Tech Managed Antivirus Antimalware",
+            "name_non_ascii_replaced": false,
+            "state": 266240,
+            "hex": "0x041000",
+            "realtime": "on",
+            "definitions": "current"
+          }
+        ],
+        "products_count": 2,
+        "active": [
+          "Little Dog Tech Managed Antivirus Antimalware"
+        ],
+        "copy_name": "click-8.3.1-py3-none-any.whl.scan-copy",
+        "stale_copy_removed": false,
+        "problems": [],
+        "held_after": "unchanged",
+        "copy_after": "unchanged",
+        "copy_cleanup": "removed",
+        "held_sha256_before": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+        "copy_sha256_readback": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6"
+      },
+      "rules_out": "known malware",
+      "leaves": "anything new or targeted"
+    },
+    {
+      "n": 8,
+      "name": "a person reads the result of 1 to 7 and signs the batch",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "signature file names the batch and the file and carries the signing line",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_CLICK_ONLY.md",
+        "signature_file_sha256": "b41ea9dbfe8d85c53a5c0a572eebce668a891cdf8829e737c7381bf05b626389",
+        "signature_file_git_author": "1.0.0_SA_CTO"
+      },
+      "rules_out": "a tool's silent failure being read as a pass",
+      "leaves": "what none of 1 to 7 can see"
+    }
+  ],
+  "verdict": "checked",
+  "checked_by": "2.0.0_SA_COO~C",
+  "at": "2026-10-08T07:06:50Z"
+}

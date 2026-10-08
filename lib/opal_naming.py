@@ -2994,6 +2994,8 @@ def main(argv=None):
                                          "graded (R-29, AMENDMENT 1) -- a RAISE on one of these does not stop the run")
     c.add_argument("--root", help="one Terraform root folder: one line per name of that root (LGIC_BLANKFIX FWD-1)")
     c.add_argument("--map", help="with --root: the root map file (default: the registry's root_map.json)")
+    c.add_argument("--all-roots", action="store_true",
+                   help="every root the root map covers, with the count of roots it does not (LGIC_BLANKFIX FWD-9)")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -3034,6 +3036,9 @@ def main(argv=None):
     if a.cmd == "targets":
         return cmd_targets(a.extra_target)
     if a.cmd == "census":
+        if a.all_roots:
+            import opal_naming_rootcheck  # imported only on this path
+            return opal_naming_rootcheck.main(["all", "--map", a.map or os.path.join(REGISTRY_DIR, "root_map.json")])
         if a.root:
             import opal_naming_rootcheck  # the root check composes this module; imported only on this path
             return opal_naming_rootcheck.check_root(a.root, a.map or os.path.join(REGISTRY_DIR, "root_map.json"))

@@ -43,8 +43,10 @@ python .tools/sequence-check.py --flags             # flagged projects only
 - **Flags:** `WAITING` (a waits_on gate unmet), `HELD` (under a hold, within its cap), `OUT-OF-SEQUENCE` (past a hold's cap:
   Andrew's card the same turn), `NEEDS-SLOT` (next step is a COO's, no lane), `LANE-DARK` (its lane is not live on this box),
   `DRIFT` / `UNREADABLE` (a source disagrees or could not be read -- raised to the owning CTO, never a pass), `IDLE`.
-- **Capacity** is the laptop's 3-COO cap (Andrew-direct 2026-09-14); the next slot goes to the first project in
-  `next_slot_order`.
+- **Capacity** is the cap in the device register's `seat_limit` (`org/devices/DEVICES.json`, read through `lib/devices.py`) for the
+  box this runs on, not a number typed here; the next slot goes to the first project in `next_slot_order`.
+- **This is one box's view.** For what each COO on every box is doing, run `python .tools/seat-list.py show --all`; each box's list is
+  printed with the age of its file, and a box whose file is absent or old is named as such.
 
 ## The compiled block dirties the tree
 

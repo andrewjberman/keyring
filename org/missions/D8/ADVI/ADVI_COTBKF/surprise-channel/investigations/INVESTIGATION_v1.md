@@ -2015,3 +2015,54 @@ round.** Never edit an existing row.
   "world_is": "The end rule blanks only value_(t-1) == 0, so an account whose prior-day value is negative (an overdrawn cash line, a short position) gets a computed return under end (flat -498.20 reads 0.0) and a blank under start. The two conventions are the same formula on a no-flow day, so the gap is the base rule, not the timing. The script compares the months graded under BOTH (control_same=True over 2,676 months) and states the 624 excluded months in flow_timing.md; whether a negative base should be blank under end too (which would move the round 16 grade, 4,237 months, by about 624) is a ruling for the CTO, not made here. The default FLOW_TIMING stays end."
 }
 ```
+
+## ADVI_COTBKF-D2-W39-S1 -- largest DIFF flow class lo/over 10%: value falls by twice the withdrawal (lo of CFNCASH paired with sl of the FDIC sweep)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W39-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~39",
+  "surfaced_at": "2026-10-08T03:32Z",
+  "one_line": "In the largest DIFF flow class (lo/over 10%, 252 months) the account value falls by TWICE the withdrawal on the flow day in 74 of 106 single-lo months (once in 2), because the lo row (CFNCASH) is paired with an sl row of the FDIC sweep for the same amount",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FLOW-DIFF-CLASSES diff_flow_months=857 classes=8 largest=lo/over 10% largest_months=252 examples=3 (deliverables/0.9.0_WK_ADVI_COTBKF~39/flow_diff_classes.md)",
+      "single-lo months of the class with a computed flow day: 106; value drop == 2 x |flow| (within 1% + 0.05): 74; == 1 x |flow|: 2",
+      "0QF879352 2023-07-14: lo 455.68 CFNCASH qty 455.68 and sl 455.68 FDIC66606 qty 455.68; value 1395.47 -> 484.11, drop 911.36 = 2 x 455.68; day return -0.326542 vs reported month -0.18"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-r-3 item 1: the DIFF flow months are explained by flow type and size; the holdings chain values the withdrawal once (the lo takes value out, the paired sl is internal).",
+  "world_is": "A withdrawal of cash is booked as lo of CFNCASH plus an sl of the FDIC sweep for the same quantity. The holdings fall by both legs (the sl removes the sweep and the lo removes cash that the sl never credited), so the value falls by twice the flow while the return subtracts the flow once. This is the holdings side (commonwealth_signs / daily_holdings), not the flow rule; no fix made here."
+}
+```
+
+## ADVI_COTBKF-D2-W39-S2 -- order's 937 / 242 flow-month population differs from the grade's 1,173 / 316
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W39-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~39",
+  "surfaced_at": "2026-10-08T03:49Z",
+  "one_line": "The order's flow-month population (937 fully priced flow months, 242 MATCH) is not reproducible from the committed chain: months graded MATCH or DIFF that carry an external-flow row are 1,173 (316 MATCH, 857 DIFF); with a nonzero daily flow 1,145 (297 MATCH, 848 DIFF)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MONTHLY-GRADE months=82593 match=1973 diff=2264 ungradable=78356 tolerance_pct=0.05 reproduced exactly from the three chain scripts at defaults",
+      "flow_diff_classes.md: Months graded MATCH with a flow: 316; DIFF flow months 857; daily_returns flow != 0 months graded: MATCH 297, DIFF 848, UNGRADABLE 22,869; 28 classed months carry a flow row but no nonzero daily flow (net zero or off the value span)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-r-3 cell text: on the fully priced months, months with an external flow MATCH 242 of 937 (median |diff| of the DIFFs 6.3 points).",
+  "world_is": "No definition of 'fully priced flow month' over the committed grade gives 937 / 242; this script's denominator is every graded (MATCH or DIFF) month with at least one external-flow row, stated in flow_diff_classes.md. The class ranking does not depend on the gap."
+}
+```

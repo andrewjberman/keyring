@@ -3083,3 +3083,1088 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 1.0.0_SA_CTO: either accept 'Cloud(Ops|Comp) at any version is CLOUDOPS', or narrow CLOUDOPS to the launcher's two arms and rule how the TIER2 complement is to be written; no serial currently in use is affected."
 }
 ```
+
+## NFRA_CTLPLN-W13-S25 -- TO-CT-s-3: the block cannot sit after the halt gate and also let --dry-seat-gates exit before it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S25",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T00:45:30Z",
+  "one_line": "The order asks for ONE block per wrapper placed after the halt gate, and for a --dry-seat-gates path that exits BEFORE the halt gate's side effects; one contiguous block cannot be both after and before the same line, so I placed it before the halt gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-apply.sh at 8f761307bf: the halt gate runs at 'halt_gate_check \"safe-apply\" || exit $?' and a pending routine message makes it return 1, so a test that reached it could not exit 0 deterministically; .tools/safe-deploy.sh at 8f761307bf has the same call at 'halt_gate_check \"safe-deploy\" || exit $?'",
+      "precedent in the same two files: the named-commit check (CT-d-3) sits before the halt gate and exits there under SAFE_NAMED_COMMIT_CHECK_ONLY=1 (.tools/tests/test_named_commit_deploy.py case 8 relies on it)",
+      "the block is read-only and runs in a subshell, so the order of the two stages changes nothing but which line prints first; the serial is resolved with .tools/lib/resolve-actor.sh resolve_actor (the helper the existing TAGAUTHZ limb uses), because the halt gate's own halt_gate_resolve_serial is defined by sourcing the library that comes after the block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 BUILD 4: one added block each in .tools/safe-apply.sh and .tools/safe-deploy.sh, placed after the halt gate and before the apply; the worker note: --dry-seat-gates exits BEFORE the halt gate's side effects.",
+  "world_is": "Both cannot hold for one block. I put the block immediately after the named-commit check and before the halt gate in both wrappers; in ENFORCE a refusal therefore prints before a halt-gate STOP would, and in WARN mode nothing about the exit code or flow differs (proved by running the pinned original and the new wrapper side by side, same rc and same output once the block's lines are removed).",
+  "notes": "For 2.0.0_SA_COO~C: if the intent is that a halted seat sees the halt gate first, the dry path would need a second small edit (an early exit before the gate), which the one-block rule forbids; say which order you want and a later cell can move the block."
+}
+```
+
+## NFRA_CTLPLN-W13-S26 -- TO-CT-s-3: REFUSING a WORKER contradicts the halt gate's and the commit lane's explicit worker grants
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T00:45:40Z",
+  "one_line": "The order's rule refuses a WORKER from applying, but .tools/halt-gate-check.sh was changed on 2026-09-04 precisely so that an L7 worker CAN safe-apply and safe-ec2-deploy, and CLAUDE.md rule 13 and the /cloud-ops skill never say who may apply by seat kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/halt-gate-check.sh lines 177-181: 'SPINE v3 WORKER (2026-09-04) ... no L7 worker could safe-apply or safe-ec2-deploy; the commit lane learned about workers at e08447ff7d and this gate did not. A worker is a REAL principal iff a NON-TERMINAL task order under <CODE> at HEAD is issued_to it'",
+      "CLAUDE.md rule 13 names lanes, not seat kinds: 'DS owns commit->QA-deploy for data/*/scripts/{gold,silver,bronze}/*.py ... DT/AE = infra/PROD-triggers/multi-pipeline'; .claude/skills/cloud-ops/SKILL.md lines 207 and 242 say 'AE coordinates with DS but DS owns the cycle'; neither mentions WORKER, COO, CTO, CVO, CRO or MSTR as applying or not applying",
+      "apply-who-check.py (this cell) refuses WORKER as the order directs; shipped in WARN mode, so nothing is refused today: on this box the worker serial 0.9.0_WK_NFRA_CTLPLN~13 reads kind=WORKER verdict=REFUSED and the wrapper only prints it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 BUILD 1: an apply is made by a CLOUDOPS seat or a TIER2 seat under a task order; MSTR, CTO, COO, CVO, CRO and WORKER are REFUSED.",
+  "world_is": "The estate's halt gate already admits a worker holding a non-terminal task order to safe-apply and safe-deploy. I implemented the order's rule unchanged and reported the conflict instead of resolving it. If org/mcp/seat-gates.enforce is ever created, every worker deploy that today passes the halt gate would be refused by this check unless SEAT_GATES_OVERRIDE is given.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: decide before the enforce file is created whether a WORKER under a task order is admitted (one line in apply-who-check.py's ADMIT_UNDER_ORDER) or whether workers stop applying and the issuer's CloudOps seat applies. The enforce file is a person's act; this cell did not create it."
+}
+```
+
+## NFRA_CTLPLN-W13-S27 -- TO-CT-s-3: two existing tests that touch the wrappers were already red or over the bound before this cell's edit
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T00:45:50Z",
+  "one_line": "Before any edit of mine, .tools/test_safe_deploy.py ended 'FAIL: 7/14 cases failed' (EXCEPTION: Strings must be encoded before hashing) and .tools/hooks/tests/test_never_rules_gate.sh hit the 120 s bound (rc 124); both gave the same results after my edit, so they are not caused by it and I fixed neither.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "baseline at 8f761307bf before any edit: timeout 120 python .tools/test_safe_deploy.py -> rc=1, last line 'FAIL: 7/14 cases failed'; after the edit the same command -> rc=1, same last line",
+      "baseline: timeout 120 bash .tools/hooks/tests/test_never_rules_gate.sh -> rc=124 with FAIL lines for 'git rebase -i', 'git rebase (bare)', 'git pull --rebase'; after the edit -> rc=124 again",
+      "the other four wrapper-related tests were green before and after: test_safe_apply_targeted.sh RESULT: PASS; test_named_commit_deploy.py NAMED-COMMIT-TEST cases=8/8 ok=True; test-pre-push-safe-deploy.sh 13 passed, 0 failed; test_safe_deploy_distribution_member.py 9/9; test_safe_deploy_receipt_names_both_legs.py 4/4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 BUILD 4: every existing self-test or test of the two wrappers still passes (find and run them).",
+  "world_is": "Two of the seven tests found already did not pass before the edit (one fails with 'Strings must be encoded before hashing' on this interpreter, one does not finish in 120 s). The criterion 'still passes' is therefore true of five and 'unchanged' is true of all seven.",
+  "notes": "For 2.0.0_SA_COO~C: route to the tooling lane; not this cell's paths."
+}
+```
+
+## NFRA_CTLPLN-W8-S9 -- a worker's start text is its subagent definition (.claude/agents/worker.md), which is neither the launcher nor org/ref/SEAT_ROLES.json, so the table's LAUNCHER holder had to admit a third path
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "a worker's start text is its subagent definition (.claude/agents/worker.md), which is neither the launcher nor org/ref/SEAT_ROLES.json, so the table's LAUNCHER holder had to admit a third path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of .claude/agents/worker.md lines 14-90 at the worktree HEAD: 'Commit on your worktree branch only; never push, merge, rebase, `checkout --` or `clean`.' and 'Never: edit outside the task order's <paths>'",
+      "grep of .tools/ajb.ps1 Get-AgentLoopDirective (lines 66-110): arms for 0.0.0_AB_MSTR, CTO, COO, CVO, CRO, AE_CloudOps, Tier-2/3 (DS|AE|DE|DT|RD) and UA|BG; no 0.9.0_WK_ arm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order BUILD 2: 'LAUNCHER rules name org/ref/SEAT_ROLES.json or the launcher'.",
+  "world_is": "The rules a worker is handed (commit on the worktree branch only; a surprise is a row, never a question; edit nothing outside <paths>) sit in .claude/agents/worker.md, handed at spawn by /dispatch Step 4; .tools/ajb.ps1 has no WORKER arm and org/ref/SEAT_ROLES.json is not in this tree (CT-s-1's file). I added .claude/agents/worker.md to the checker's LAUNCHER path set (LAUNCHER_PATHS in .tools/seat-rules-check.py) rather than file a worker rule under a path that does not hold it.",
+  "notes": "For 2.0.0_SA_COO~C: if CT-s-1 gives the WORKER kind a statement in org/ref/SEAT_ROLES.json, the three worker LAUNCHER rows (R-GITOPS-8, R-GITOPS-9, R-WORKFLOW-29) can name that file instead; until then the table names the file that really holds the text."
+}
+```
+
+## NFRA_CTLPLN-W8-S10 -- the lane gate does NOT confine a worker to its order's <paths> on a path in an ANY lane (.tools/**, docs/**, data/**): it admits the worker before the worker grant is consulted
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "the lane gate does NOT confine a worker to its order's <paths> on a path in an ANY lane (.tools/**, docs/**, data/**): it admits the worker before the worker grant is consulted",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "echo .tools/safe-commit.sh | python .tools/owned-paths-validate.py --check-agent 0.9.0_WK_NFRA_CTLPLN~8 .owned-paths.yaml -> no output, rc=0 (the order names only .tools/seat-rules-check.py)",
+      "echo infra/aws/terraform/opal-assets/main.tf | the same command -> VIOLATION ... lane=CLOUD_OPS_OR_ETL ... WORKER: no NON-TERMINAL task order, rc=1",
+      "resolve_lane(.tools/x.py), resolve_lane(docs/x.md), resolve_lane(data/bd/x.py) -> lane ANY with permitted_agents '*' (.owned-paths.yaml read through load_yaml)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 27 and ADHC_OWNPTH.005: 'A worker's write surface is exactly the <paths> its non-terminal order names (.tools/owned-paths-validate.py).'",
+  "world_is": "In .tools/owned-paths-validate.py check_agent, `if permitted == \"*\": return True` (line 303) comes before the worker-grant clause, so a path whose lane is ANY is admitted to a worker whether or not its order names it; only a restricted-lane or an unmapped path is confined to the order. Measured for this worker, whose order names none of them: .tools/seat-rules-unlisted-probe.py, .tools/safe-commit.sh and docs/x.md all rc=0; infra/aws/terraform/opal-assets/main.tf is refused with 'WORKER: no NON-TERMINAL task order'. The table therefore enters the gate's real rule (R-GITOPS-7: restricted lanes, probed) and holds the 'exactly the <paths>' sentence at the worker's start text (R-GITOPS-8), saying that no tool checks it on an ANY-lane path.",
+  "notes": "For 1.0.0_SA_CTO / 2.0.0_SA_COO: whether the worker grant should also bind on ANY lanes is a gate change in 0.0.0_AB_MSTR's registry; this cell only records the real state. Hazard INERT: a worker editing outside its order is not the normal path; the boundary is held by the worker's start text."
+}
+```
+
+## NFRA_CTLPLN-W8-S11 -- a gate hook run costs 13 to 34 seconds on this box, so the full probe exercise takes about 52 seconds with 16 probes running at once
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "a gate hook run costs 13 to 34 seconds on this box, so the full probe exercise takes about 52 seconds with 16 probes running at once",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 200 python .tools/seat-rules-check.py exercise -> EXERCISE elapsed=51.9s probes=58 workers=16, then SEAT-RULES ... probes_fail=0 ok=True",
+      "the 24-worker run of 63 probes: R-GITOPS-4 x6 and R-GITOPS-5 FAIL 'timeout after 60s' (they were the heaviest hooks while 40 others ran)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order: run each probe with a 60-second bound and print how long exercise took (the criterion runs under timeout 120).",
+  "world_is": "never-rules-gate.sh spawns many sed/grep/jq processes per call: sequentially 12.8 s (rebase) to 33.6 s (push) per call on 2026-10-08 ~00:5xZ; 63 probe runs in parallel timed out the push probes at 60 s, so the table probes the identity-independent gates (rebase, stash, commit -m, bare terraform apply) with ONE serial that stands for all kinds and the push gate with two. Measured exercise: 'EXERCISE elapsed=51.9s probes=58', all hook probes inside the bound.",
+  "notes": "For the issuer's drain run: expect 50-90 s on a loaded box. If a hook probe times out the line reads probes_fail>0 and ok=False; rerun once before reading it as a gate failure."
+}
+```
+
+## NFRA_CTLPLN-W8-S12 -- the order's third decision-for-Andrew ('the routes this project denied the Dells to ten older pipeline roles') matches no text in the repository; I entered it as the ten protected Lambda functions plus role passing
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "the order's third decision-for-Andrew ('the routes this project denied the Dells to ten older pipeline roles') matches no text in the repository; I entered it as the ten protected Lambda functions plus role passing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read of dell_deploy_policy.json: Deny statements DenyEveryIamWrite, DenyPassRoleExceptNamed, DenyCloudTrailWrites, DenyS3DeletesOnProductionData, DenyTableAndDatabaseDeletes, DenyApiKeyReads, DenyProtectedFunctions",
+      "infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json 'protected' list names the Lambda functions (auth-validator-edge, cache-control-injector, opal-portal-authorizer, ...)",
+      "a phrase search over the project's task-orders/ and prd/ folders for 'ten older' and 'ten pipeline roles' returned nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order BUILD 1 and the line-for-line delivery list, line 24: 'the routes this project denied the Dells to ten older pipeline roles'.",
+  "world_is": "The only refusal of that size in the identity root is DenyProtectedFunctions in infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json (ten of 233 Lambda functions; CTO half 'NEWLY REFUSED: updates to ten of 233 Lambda functions') beside DenyPassRoleExceptNamed (no role can be passed, named list empty). I entered R-AWSDEVOPS-7 on that reading, holder GATE (an IAM Deny), with a probe that reads the policy FILE (declared), because no request leaves this machine and whether the Deny is applied live is not read here.",
+  "notes": "For 2.0.0_SA_COO~C: if 'ten older pipeline roles' means something else, say which and the row R-AWSDEVOPS-7 is re-pointed; the question to Andrew is worded on the policy it can see."
+}
+```
+
+## NFRA_CTLPLN-W8-S13 -- the probes for the tools other cells build use the output text and the notice shape those cells' orders state, not text I could run, so a drain run may flag a mismatch that is mine
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "the probes for the tools other cells build use the output text and the notice shape those cells' orders state, not text I could run, so a drain run may flag a mismatch that is mine",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-s-3.apply-who-and-crossbox-deploy.md lines 67-92 (APPLY-WHO and CROSSBOX-DEPLOY line formats, the notice file keys)",
+      "TO-CT-s-4 line 125, TO-CT-s-5 lines 89 and 116, TO-CT-s-6 lines 97 and 126, TO-CT-s-8 lines 83 and 132 (the selftest expectations)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order BUILD 1 names the probes for CT-s-3 (apply-who-check, crossbox-deploy-check), CT-s-4, CT-s-5, CT-s-6 and CT-s-8 and says a probe whose tool does not exist yet and whose rule says built_by is counted PENDING.",
+  "world_is": "None of those tools is in this tree, so 13 probe runs read PENDING. The expectations are the last-line tokens each order states (APPLY-WHO ... verdict=REFUSED; CROSSBOX-DEPLOY ... verdict=STOP; CALL-SCOPE-SELFTEST cases=k/n ok=True; CROSSBOX-SELFTEST; ROUND-CLOSE-SELFTEST; RESEARCH-OWED-SELFTEST; MSTR-RECORD-SELFTEST). The CT-s-3 stop probe also writes a notice fixture (root infra/aws/terraform/opal-assets, rule no-apply, until 2099-12-31T23:59:59Z) in the key shape CT-s-3's order states; if that tool reads the root or the timestamp in another form the probe reads no STOP and the drain line shows probes_fail>0.",
+  "notes": "For 2.0.0_SA_COO~C: the drain run must read probes_pending=0; any probe that then FAILS names the rule id, so the fix is to the probe's expect or fixture in org/ref/SEAT_RULES.json, not to the tool."
+}
+```
+
+## NFRA_CTLPLN-W31-S1 -- TO-CT-i-1: two existing tests in test_teams_chat_jobs.py fail because the offer now goes to the four boxes of 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T22:43Z",
+  "one_line": "TO-CT-i-1: two existing tests in test_teams_chat_jobs.py fail because the offer now goes to the four boxes of the register, not two",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: a task order whose <paths> carry data/transcripts/scripts/tests/test_teams_chat_jobs.py updates the two tests to the four-box offer (or to a stand-in bus_devices) before or in the drain; the worker of CT-i-1 may not edit them",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "before the change: pytest of test_teams_chat_jobs.py, test_teams_chat_tenant.py, test_teams_chat_assist.py, test_teams_chat_natural.py in data/transcripts/scripts/tests = 87 passed",
+      "after: test_open_offers_to_every_device_and_sets_the_award_alarm and test_both_bids_award_at_once_to_the_lighter_box fail; the first asserts sorted offer targets == ['laptop','sitez'] and 2 bus sends, the second awards after two bids; assist.DEVICES now reads NAMES['bus_devices'], 4 boxes from org/devices/DEVICES.json",
+      "full run of the 7 teams-chat/eod test files after the change: 3 failed, 124 passed (the third is row W31-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-i-1 build step 2: assist.DEVICES is read from NAMES['bus_devices']; the offer goes to every box of the register; and RULES: existing test files are not the worker's to edit, a failure caused by the change is a surprise row.",
+  "world_is": "The existing job tests were written for a two-box DEVICES typed in assist.py; with the register's four boxes they fail by design of the change, and they stay failing on the branch until another order edits them."
+}
+```
+
+## NFRA_CTLPLN-W31-S2 -- TO-CT-i-1: test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat fails because its job.comp
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T22:43Z",
+  "one_line": "TO-CT-i-1: test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat fails because its job.complete carries no grade",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: a task order whose <paths> carry data/transcripts/scripts/tests/test_teams_chat_jobs.py gives that test's job.complete payload a good grade (by 3.0.0_SA_CVO, verdict PASS, a coo distinct from by)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_teams_chat_jobs.py::test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat sends job.complete {device, summary, deployed} with no coo and no grade; on_job_complete now returns 'refused' (seam rule 4), the test expects 'verify'",
+      "the refusal is the order's own rule: a job.complete with no grade is NOT complete; the status stays working"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-i-1 build step 3: apply the seam's fourth rule; a job.complete with no grade is refused. RULES: existing test files are not the worker's to edit.",
+  "world_is": "The pre-existing completion test predates the grade and fails under the new rule; the new test_inbound_cloud.py covers the good-grade path (graded_completion_reaches_verify_and_keeps_the_grade)."
+}
+```
+
+## NFRA_CTLPLN-W31-S3 -- TO-CT-i-1: the seam's additions to REMOTE_JOBS_PROTOCOL_20261002.md (bid reviewer/unavailable_reason, accepted
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T22:43Z",
+  "one_line": "TO-CT-i-1: the seam's additions to REMOTE_JOBS_PROTOCOL_20261002.md (bid reviewer/unavailable_reason, accepted brief_sha256, complete coo/grade) are not in the protocol file and the file is outside this order's paths",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -c 'brief_sha256|unavailable_reason' org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002.md = 0 at the worktree base 544c5c0cd6",
+      "the order's <paths> list six files, none of them the protocol; the seam text reads as the contract, with the box half another worker's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE SEAM: 'Additions to REMOTE_JOBS_PROTOCOL_20261002.md; nothing in it is removed.'",
+  "world_is": "The cloud half implements the seam from the order text; the protocol document does not yet record it. Not edited here (outside <paths>); the box-half worker or the COO owns the document edit."
+}
+```
+
+## NFRA_CTLPLN-W31-S4 -- TO-CT-i-3: Alongside has no recorded mail domain in the estate's firm records; its mail is not considered
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: Alongside has no recorded mail domain in the estate's firm records; its mail is not considered",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c load_registry() over scopes: tenant-bearing scopes = 49financial, inflection, cottonwood, demo (kind demo), global (no domain); no alongside",
+      "MAIL_ROUTE_MEASURED.md section 3 (deliverables/0.9.0_WK_NFRA_CTLPLN~31/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Clause 9 names five senders' domains, 'each domain string read from the estate's firm records and never typed'. The firm records name three client firms with an email_domain (49financial, inflection, cottonwood) and no Alongside.",
+  "world_is": "No scope in infra/logic/registry/scopes.json, no firms[] row in data/firm_registry.json, no key in portal/src/lib/firmAccess.ts FIRM_EMAIL_DOMAINS or comp-constants.config.yaml FIRM_EMAIL_DOMAINS. The word appears only as a mission label (.tools/comp_missions.py:658). Blocking for this firm only: mail_requests.py loads the three recorded domains, considers no mail from Alongside, and types no domain. The issuer rules whether a record is added and by whom."
+}
+```
+
+## NFRA_CTLPLN-W31-S5 -- TO-CT-i-3: Opal (internal) has no recorded mail domain in the firm records; its mail is not considered
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: Opal (internal) has no recorded mail domain in the firm records; its mail is not considered",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sender_gate.py:20-31 holds _OPAL_DOMAIN as a typed constant for the gateway's own four-domain gate",
+      "MAIL_ROUTE_MEASURED.md section 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Clause 9 names Opal for internal among five domains read from the estate's firm records.",
+  "world_is": "The firm records (scopes.json, firm_registry.json, FIRM_EMAIL_DOMAINS) carry no Opal tenant domain; the portal's internal firm id opal-capital has none (firmAccess.ts:21). The string occurs only as a constant in another service's code (infra/aws/ec2/opal-gateway/app/sender_gate.py:27, the Teams sender gate) and inside two author addresses (data/transcripts/assets/authors.json:5,11). Neither is a firm record, so nothing is read from them and nothing is typed. Blocking for this firm only; the issuer rules whether an Opal record is added to the registry."
+}
+```
+
+## NFRA_CTLPLN-W31-S6 -- TO-CT-i-3: the gateway's headless mail route cannot serve a read under clause 9 today (admits by exact sender address from a 3-address table; lists per single table sender)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: the gateway's headless mail route cannot serve a read under clause 9 today (admits by exact sender address from a 3-address table; lists per single table sender)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MAIL_ROUTE_MEASURED.md sections 1-2 with file and line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Clause 9: 'Only his own mailbox, through the gateway.' The order expects the gateway to be the read; the order's BLIND note anticipates this being a read of the contract.",
+  "world_is": "infra/aws/ec2/opal-gateway/app/mail_route.py:15-16,153-156,342-349,395-400: only a message whose own sender address is in MAIL_SENDER_TABLE is served ('no domain match'); the listing needs one table-listed sender and its rows carry no sender or body. A message from any of the five firms' domains is refused 403 sender_not_allowed unless that exact address is added. Also data/transcripts/scripts/outlook/gateway_mail.py:16 still says 'There is NO listing route' although list_page is defined at :131. The real read needs a gateway change (domain admission, a mailbox listing) on NFRA_OPLGTW; the handler and the two tests are built and proven against stand-ins."
+}
+```
+
+## NFRA_CTLPLN-W31-S7 -- TO-CT-i-3: assist.offer_text has no mail kind, so on_mail_messages composes its own text and takes only the offer mechanics of a chat (index, once, send_sms)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: assist.offer_text has no mail kind, so on_mail_messages composes its own text and takes only the offer mechanics of a chat (index, once, send_sms)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/assist.py offer_text (non-eod branch); tenant.py offer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'it becomes ONE text to Andrew through the same offer path a chat uses, kind \"mail\", the head line reading #<tag> Mail - <sender name>, <firm>'.",
+  "world_is": "tenant.offer calls assist.offer_text, whose non-eod branch writes the head '#tag Teams - <title>' and a Draft section ending 'Reply 1 send'; neither is right for mail and assist.py and tenant.py are outside this order's paths. mail_requests._mail_text builds the mail head and a work-request body (no draft, since reply by mail is not built), and the handler does the same ctx.index / ctx.once / assist.send_sms steps tenant.offer does. Its tag (M000-M999) probes ldo.lookup by a lazy import, as tenant.chat_tag does, so the module stays standard-library plus assist. The issuer may prefer a mail branch in assist.offer_text at the merge."
+}
+```
+
+## NFRA_CTLPLN-W31-S8 -- TO-CT-i-4: voice.examples reads the state store through assist.get_json, and the existing teams-chat tests do not fake that read; the read is made only inside the deployed function
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4: voice.examples reads the state store through assist.get_json, and the existing teams-chat tests do not fake that read; the read is made only inside the deployed function",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/voice.py examples, _LIVE_ENV",
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py Fakes (no get_json fake)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'voice.examples(kind) reads that object through assist.get_json (faked in every test)'.",
+  "world_is": "test_teams_chat_tenant.py, test_teams_chat_jobs.py and test_teams_chat_assist.py call draft_chat_reply and tenant._completion_draft without replacing assist.get_json (only two tests replace it, for other reads); with the voice block in every draft, an unguarded read would reach assist.aws('s3') from a unit test. voice.examples reads the object only when AWS_LAMBDA_FUNCTION_NAME (the Lambda runtime) or ANDREW_VOICE_EXAMPLES is set, and returns [] otherwise; test_inbound_voice.py sets the second and fakes get_json. Measured: the 127-test command runs 127 passed with no store read. Recorded in VOICE_HARVEST_COMMANDS.md section 3."
+}
+```
+
+## NFRA_CTLPLN-W31-S9 -- TO-CT-i-4: the job_completion voice block rides in the user message, not the system prompt, because an existing test keys its stand-in on the system prompt being exactly COMPLETION_SYSTEM
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4: the job_completion voice block rides in the user message, not the system prompt, because an existing test keys its stand-in on the system prompt being exactly COMPLETION_SYSTEM",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py _completion_draft",
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py:87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'_completion_draft adds prompt_block(\"job_completion\")' (the chat reply's block is stated as added to its system prompt; the completion's place is not named).",
+  "world_is": "test_teams_chat_tenant.py Fakes._kimi branches on system == a.COMPLETION_SYSTEM; with the block appended to the system prompt, test_teams_chat_jobs.py::test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat failed (1 failed, 126 passed; measured), and that file is outside this order's paths. tenant._completion_draft now sends COMPLETION_SYSTEM unchanged and appends 'How Andrew writes this kind of message:' plus the block to the user message; 127 passed. If the issuer wants it in the system prompt, the test's stand-in must change first."
+}
+```
+
+## NFRA_CTLPLN-W31-S10 -- TO-CT-i-4: no drafter reads the mail_reply or teams_post sections: a mail request is texted with no draft (CT-i-3), and nothing drafts a Teams post
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4: no drafter reads the mail_reply or teams_post sections: a mail request is texted with no draft (CT-i-3), and nothing drafts a Teams post",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/mail_requests.py on_mail_messages",
+      "data/transcripts/scripts/teams_chat/andrew_voice.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'a reply drafted to a mail request adds prompt_block(\"mail_reply\")' (the order says 'if mail_requests.py drafts through assist').",
+  "world_is": "mail_requests.on_mail_messages sets draft \"\" and never calls assist.draft_chat_reply, and AMENDMENT 2 answers his 1 with 'a reply by mail is not built'; no function drafts a Teams post. The two sections are in the file and checked; voice.prompt_block('mail_reply') and ('teams_post') work and are tested through the module, but no code path calls them. They become used when a reply by mail or a drafted post is built."
+}
+```
+
+## NFRA_CTLPLN-W31-S11 -- TO-CT-i-4 AMENDMENT 2: 'a new field origin reading "mail" with the message id' is built as origin="mail" plus message_id, and the mail object carries state kind "mail"
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4 AMENDMENT 2: 'a new field origin reading \"mail\" with the message id' is built as origin=\"mail\" plus message_id, and the mail object carries state kind \"mail\"",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py on_job_open, on_sms_reply",
+      "data/transcripts/scripts/tests/test_inbound_mail_reply.py a_mail_tag_that_names_no_item_is_an_unknown_tag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'a new field origin reading \"mail\" with the message id; chat_id empty'.",
+  "world_is": "tenant.on_job_open sets st['origin']='mail' and st['message_id']=<the message key> only for a job.open payload with origin 'mail'; a chat job has neither field. The issuer may have meant one field holding both. Separately, mail_requests.on_mail_messages now sets ctx.state['kind']='mail' so tenant.on_sms_reply answers a reply to an emptied or mismatched mail object 'Nothing waiting under #<tag>' instead of opening a chat job from an object with no chat (the dev branch ran before the no-item check); a chat object never carries this key."
+}
+```
+
+## NFRA_CTLPLN-W31-S12 -- TO-CT-i-4 AMENDMENT 2: his plain-English text cannot open a job on a mail item, because INTENT_SYSTEM tells the model dev is only for a chat (C...)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4 AMENDMENT 2: his plain-English text cannot open a job on a mail item, because INTENT_SYSTEM tells the model dev is only for a chat (C...)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/assist.py INTENT_SYSTEM"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'the smallest change that makes his texted reply to a mail item act on it, the same way a reply to a chat item does'.",
+  "world_is": "A command-keyed reply ('M123 #dev notes', '#0') is built and tested. A natural-language text goes through assist.INTENT_SYSTEM, whose rule reads '\"dev\" only for a chat (C...)'; the model is therefore told not to plan dev on an M tag, though parse_plan, open_items and the sms.reply path would carry it. Changing that rule changes an existing chat path's prompt, which the order says stays byte for byte, so it is left. The mail text's own instruction is the command form."
+}
+```
+
+## NFRA_CTLPLN-W33-S1 -- TO-CT-i-5: the box tool has no lock/device/CPU switch, so the seam test supplies them through a runner
+
+```json
+{
+  "id": "NFRA_CTLPLN-W33-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~33",
+  "surfaced_at": "2026-10-08T00:30Z",
+  "one_line": "TO-CT-i-5 item 2: .tools/remote-job.py has no switch for its lock file, device name or CPU read, so the seam test runs the real tool through a runner that replaces them, as the box tool's own test does",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/remote-job.py LOCK, device_name(), measure(), make_runtime()",
+      ".tools/tests/test_remote_job_review.py main()",
+      "data/transcripts/scripts/tests/test_inbound_seam.py RUNNER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'run the REAL .tools/remote-job.py as a subprocess with --dry-run on a temporary lock and liveness file' and, if dry-run cannot give a complete envelope after a grade, 'build the lock the way the box tool's own test does and say so in the report'.",
+  "world_is": "The tool's LOCK is a module constant (.tools/.remote-job.json) with no argument or environment override; only the liveness file has one (OPAL_LIVENESS_FILE). `grade` always writes LOCK and `--dry-run` on accept writes no lock, so a graded dry-run complete cannot be produced from a bare subprocess without touching the real lock. device_name() shells to agentbus-sqs.sh and measure() imports psutil. The test therefore starts the real tool by file path through a python -c runner that sets rj.LOCK to a temporary file and replaces device_name, measure and make_runtime (the last with a stand-in that only prints) before calling the tool's own main(argv); accept, bid and complete envelopes come from --dry-run, and the lock is built by one non-dry accept whose sender is that stand-in. The tool's code is unedited; the real .tools/.remote-job.json is read before and after and is unchanged (absent at the cut). No disagreement between the two halves was found: every field the cloud handlers read (reviewer, available, cpu_pct, mem_pct, device, coo, grade.by, grade.verdict, summary, deployed) is sent under the same name; fields sent and not read (accept: device, serial, brief_sha256; complete: serial, evidence) are inert."
+}
+```
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T02:35:45Z",
+  "one_line": "AMENDMENT 7 asks `dell_fence_census.py --selftest` to read ok=True, but the file is outside the order's <paths> and the lane gate refused the commit; the self-test reads cases=0/0 ok=False because it takes its scoped pair from a registry that no longer holds a scoped row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/shared-infra/tests/dell_fence_census.py --selftest at 9c58690566 (registry @173f98f24b, no scoped row): 'SELFTEST-SETUP no scoped registry row has a policy (saved or live) holding its confining statements' then 'FENCE-CENSUS-SELFTEST cases=0/0 ok=False'. run_selftest() takes its pair from scoped_rows(), which returns rows carrying both actions and prefix; there are none.",
+      "The fix, tested in this worktree before the commit was refused: when scoped_rows() is empty, build the pair in memory (first FENCED bucket's saved policy, the dell1 ARN appended to the fence's admitted list, the three DenyScopedExemption1 statements the module renders for actions GetObject/ListBucket/GetBucketLocation and prefix irpt/<firm>/platinum/holdings/). Result: 'FENCE-CENSUS-SELFTEST cases=7/7 ok=True' in 55 s. The 51-line diff is kept untracked at C:/tmp/wk-ctlpln-6/.scratch/census_selftest_fixture.patch (worktree of 0.9.0_WK_NFRA_CTLPLN~6, branch wk-NFRA_CTLPLN-6); the file was restored to HEAD afterwards.",
+      "safe-commit refusal on the commit that included tests/dell_fence_census.py: 'VIOLATION: infra/aws/terraform/shared-infra/tests/dell_fence_census.py -- lane=CLOUD_OPS_OR_ETL ... agent=0.9.0_WK_NFRA_CTLPLN~6 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. The order's own BOUNDS paragraph lists tests/dell_fence_census.py as READ and never edit. No override was used; the other five files committed at b6c5d8f1c1.",
+      "Not a render or validator defect: python lib/opal_naming.py validate on a scratch copy of today's registry with one unknown key planted refuses it (rc 1); on the unchanged copy it reads 'VALIDATE: OK 53 system row(s), 13 scope row(s), 0 warning(s)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN.TO-CT-d-2 AMENDMENT 7 item 4: 'Run both checks, and derive_fence_row_shape.py and dell_fence_census.py --selftest, each under timeout 120; all read ok=True'; the worker brief allowed the smallest equivalent change to dell_fence_census.py if it failed for the same reason as the other checks.",
+  "world_is": "dell_fence_census.py --selftest reads ok=False (cases=0/0) because the registry holds no scoped row since dell1 became a full row, and the lane gate refuses a worker's edit to that file because the order's <paths> block does not name it; the three criteria CT4d2-AC1..AC3 do not run the self-test.",
+  "notes": "For 2.0.0_SA_COO~C: either add tests/dell_fence_census.py to the order's <paths> (then the tested patch applies as is) or have the file's owner land it; until then the self-test line stays ok=False and the order is left in_progress. Nothing else in the fence checks depends on it."
+}
+```
+
+## NFRA_CTLPLN-W15-S1 -- placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W15-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~15",
+  "surfaced_at": "2026-10-08T02:52:42Z",
+  "one_line": "placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py line 90: box = dev.resolve(str(d.get(\"fabric\") ...)); `placement` is not read there",
+      "measured from this worktree 2026-10-08 ~02:4xZ: over placement-check read_projects() (34 live projects), 15 have a `placement` that resolves to a box other than read_projects()'s box or carry no `placement` field (e.g. IRPT_BCKEND fabric laptop, placement DELL2; MDPF_HEALGAP fabric laptop, placement DELL1; NFRA_REPORT no placement field)",
+      ".tools/crossbox-deploy-check.py projects_covering() already re-reads project.json `placement` over proj[\"box\"], the same workaround"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-5 BUILD 1 (c): 'PLACEMENT: the project row's `placement` against this box', and (a): use .tools/placement-check.py's functions, imported.",
+  "world_is": "read_projects() returns box from `fabric`; the project row's `placement` differs for 15 of 34 live projects. .tools/open-calls.py imports read_projects() and overlaps() and then overrides each project's box with the resolved project.json `placement` (falling back to the fabric box when the field is absent), so its PATHS and RESOURCES readings use placement. placement-check.py itself was not edited (it is in the order's paths, but changing which field its viewer reads would change its output for every other reader).",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: whether placement-check.py's read_projects() should read `placement` first is a decision on a shared viewer; open-calls.py's override goes away if it does. Three live projects have no `placement` field at all, so their box is the fabric box in this tool's reading."
+}
+```
+
+## NFRA_CTLPLN-W14-S11 -- TO-CT-a-1 amendment 8: the vendor-secrets census stores no per-reference reader fact; reader evidence re-derived by hand
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T01:23:17Z",
+  "one_line": "TO-CT-a-1 amendment 8: the saved vendor-secrets census does not record, per reference, whether a program reads the secret by name (its `program` flag is a file-suffix test that is true for comments and constants), and the project join rests in part on a whole-tree path entry (portal/)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_vendor_secrets.py is_program(): suffix in {.py,.js,.mjs,.cjs,.ts,.tsx,.sh,.ps1} and not a test/fixture path; join rows store only {file, lines, program, named_exactly_by_a_task_order}. Of the 61 join rows, the program=True references that are comments or other non-reads include bd_49f_auto_login.js:25-27 (comment lines), _render_identity/mint.py:17-19,70-72 (comments saying no Secrets Manager call is made), opal-gateway/app/config.py:251 (comment)",
+      "IRPT_BCKEND's task orders carry the path entry `portal/` (the whole portal tree): task_order_paths('org/missions/D9/IRPT/IRPT_BCKEND/') includes it, so portal/etl/.../opal-portal-volatility-fetcher/lambda_function.py (reads opal/external-apis by name, line 84) and portal/scripts/setup-env.sh (reads opal/portal/config, line 77) are 'IRPT_BCKEND code' in the join",
+      "a reading program the join does not hold: infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py:45,87 reads blackdiamond/49f/session by default name and is loaded by IRPT_BCKEND's performance/bd_adapter.py:52-60; the join reaches the secret only through performance/tenants.py:145",
+      "derive_vendor_secrets.py --verify-readers: READERS-VERIFIED entries=13 ok=True (each name line holds the literal, each read line holds its call token)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 8 item 1: the census's own earlier distinction separates a program that fetches the value from a grant, registry, manifest, fixture or document; if it is not stored per reference, re-derive it and say so.",
+  "world_is": "The distinction is stored per file as a suffix test only. I re-derived it from the repository: 13 reader entries (secret, project, name line, read line, token) are now data in the script head and are checked on every run; a secret with a program file and no entry is READER-UNCLEAR and not granted (7 secrets, listed with reasons in the plan note); the one-segment path entry portal/ was not treated as a project's own code. Granted set: 9 of 114. Not assessed here: whether IRPT_BCKEND's `portal/` path entry is intended (it grants the project the whole portal tree as a write surface), and the readers of secrets in projects with no task order.",
+  "notes": "For the CTO at the round analysis: the join could store 'reads_by_name' per reference (the read-call line) so a later census needs no hand-made reader table; the `portal/` entry in IRPT_BCKEND's task-order paths is worth a look as a write-surface question separate from this cell."
+}
+```
+
+## NFRA_CTLPLN-W14-S12 -- TO-CT-a-1 amendment 9: origin-verify is OTHER in the amendment and PLATFORM-KEY in the dispatch; the judgment calls of the classification
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T03:10:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S12",
+  "one_line": "TO-CT-a-1 amendment 9: AMENDMENT 9 lists 'an origin-verify value' under OTHER while the dispatch says opal/auth/origin-verify is PLATFORM-KEY; several secrets could only be placed by judgment and went to the cautious class",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md AMENDMENT 9 item A, OTHER bullet: '(configuration bundles with no description, a public key, an origin-verify value, the firm's own directory app credential, a secret scheduled for deletion)'; the issuer's dispatch to this worker: 'opal/auth/origin-verify (lets a holder skip the edge's checks: PLATFORM-KEY)'",
+      "tests/derive_vendor_secrets.py CLASSIFICATION: opal/auth/origin-verify is PLATFORM-KEY (doubt between PLATFORM-KEY and anything else resolves to PLATFORM-KEY); both classes are NOT granted so the grant is the same either way",
+      "judgment calls, all in the CLASSIFICATION table with their reason: GRANTED opal/opalai/analyst-claude-oauth-token (a model provider's account token), smartx/credentials/yang-shared (a person's vendor login), the five opal/openai/* keys and FredApiKey (no description, placed by name and code); OTHER (cautious) estate-report/github-token, github-token, google/andrew-goldengate/credentials, google/officialmadeaux/credentials, twilio/recovery-code, blackdiamond/49f/otp-relay, blackdiamond/cot/otp-relay, find-insure/job-board/placeholder, teams/global/owner-phone and the configuration bundles"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 9 item A: each secret gets one class by name, description, tags and use; an origin-verify value is OTHER; doubt between a granted class and OTHER is OTHER, between PLATFORM-KEY and anything else is PLATFORM-KEY.",
+  "world_is": "opal/auth/origin-verify is a CloudFront origin-verification shared secret: a holder can call the origin and skip the edge's checks, so it is PLATFORM-KEY by the doubt rule and by the dispatch, against the amendment's own OTHER example. Nine secrets are OTHER by the cautious rule and eight were granted by judgment; each is named with its reason in the plan note for a person to rule. No secret value was read for any of this.",
+  "notes": "For the CTO / signers: the two classes are both not-granted, so only the label differs for origin-verify. The signers may move any OTHER secret into a granted class by editing its row in tests/derive_vendor_secrets.py CLASSIFICATION and re-running --reclass (one line, no live call)."
+}
+```
+
+## NFRA_CTLPLN-W14-S13 -- TO-CT-a-1 CTa1-AC3 expects names_from_builder=9/9; the check prints 11/11
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T03:10:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S13",
+  "one_line": "TO-CT-a-1 CTa1-AC3 expects 'names_from_builder=9/9' but the check counts every named resource of the root and prints 11/11 after amendment 9 (12/12 at amendment 8)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md line 113: <expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect>; AMENDMENT 9 item B: 'tests/check_identity.py's name count moves accordingly' and the acceptance paragraph: 'CTa1-AC1, AC3, AC4, AC5 unchanged'",
+      "timeout 120 python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py -> 'IDENTITY-STATIC validate=ok no_access_key=True names_from_builder=11/11 policy_size_ok=True ok=True' (the EXPECTED table has 11 entries: group, 2 users, deploy, create, 2 bus, ssm, 2 routes, secrets, minus the removed respol)"
+    ]
+  },
+  "spec_asserts": "CTa1-AC3 expects the literal text names_from_builder=9/9; amendment 9 says the criterion is unchanged and that the name count moves accordingly.",
+  "world_is": "The count printed is 11/11: all 11 named resources match the builder. The literal 9/9 cannot appear; the two statements of the amendment contradict each other. I did not change the check to print 9/9. The proof row records the printed line and its expect field is the part that is stable (policy_size_ok=True ok=True).",
+  "notes": "The issuer can restate the expectation as names_from_builder=11/11. The same drift existed at amendment 8 (12/12) and was carried in the previous proof the same way."
+}
+```
+
+## NFRA_CTLPLN-W14-S14 -- TO-CT-a-1 amendment 9: secrets document 5,968 of 6,144; census age; one blocked-by-key secret
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T03:10:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S14",
+  "one_line": "TO-CT-a-1 amendment 9: the secrets grant document is 5,968 of 6,144 characters; the listing is from 2026-10-07T21:00Z; one granted-class secret is under a customer-managed key",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/render_routes_policy.py / check_identity.py: 'policy vendor-secrets (module output) chars_no_whitespace=5968 limit=6144 OK' for 66 exact ARNs; the 67th would pass about 6,060 and the 68th about 6,150",
+      "tests/vendor_secrets_census.json header.taken_at 2026-10-07T21:00:45Z, 114 secrets in 17 regions (all in us-east-1); list-secrets does not return secrets scheduled for deletion",
+      "schwab/sdd/session: kms_key_id is a customer-managed key (kms_default false); class CLIENT-SESSION; decision BLOCKED-BY-KEY, left out, no key policy touched"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 9 item A: ONE statement on the group, split into two managed policies by a stable rule if the document would pass 6,144 characters; a secret under a customer-managed key is left out as blocked-by-key; the listing is 114 secrets.",
+  "world_is": "ONE policy fits with 176 characters to spare, so it is not split (the stable split rule, by class, is recorded in iam.tf for the next addition). A secret created after the listing is not in the grant until the census is retaken. schwab/sdd/session is the one blocked-by-key secret.",
+  "notes": "Retake the census with derive_vendor_secrets.py --live (names only, about six minutes) before the apply if secrets were added; the new class table will flag an unclassified new secret (ok=False) rather than skip it."
+}
+```
+
+## NFRA_CTLPLN-W34-S1 -- TO-CT-i-6: the plan needs the transcripts-pull package built too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W34-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~34",
+  "surfaced_at": "2026-10-08T00:50Z",
+  "one_line": "TO-CT-i-6 item 4: the transcripts root cannot be planned, even with -target, unless a SECOND package (transcripts-pull.zip) is also built; the order builds only the Teams-assist package",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -target=module.ldo_001 in infra/aws/terraform/transcripts at 56061b2d9c + the two statements: 'Error: Error in function call' on mail_pull.tf line 106 and pull.tf line 105, filebase64sha256(local.pull_zip), 'open lambda/transcripts-pull/dist/transcripts-pull.zip: The system cannot find the path specified' (rc 1, no plan produced)",
+      "infra/aws/terraform/transcripts/pull.tf line 19 (pull_zip) and line 105, mail_pull.tf line 106 evaluate filebase64sha256 at configuration load, so a -target does not skip them",
+      "Remedy taken, local only: bash infra/aws/lambda/transcripts-pull/build.sh built dist/transcripts-pull.zip (56 files, SHA-256 b84461a885d28f1dc5521a65a7f28616d82792f4e6151a8ea37af17c72e294bf) in this worktree; dist/ is gitignored (infra/.gitignore:48) and was not committed or uploaded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-i-6 BUILD item 3 builds the one package infra/aws/lambda/teams-chat-assist/build.sh; item 4 then reads 'terraform plan -target=module.ldo_001' as a read the build makes possible.",
+  "world_is": "The plan needs both dist/teams-chat-assist.zip and dist/transcripts-pull.zip on disk; with only the first it fails at load. The second zip is built from the worktree's own sources, so the untargeted plan's pull and mail_pull function hashes reflect this worktree's build; the applier must build both packages before any plan.",
+  "notes": "For 2.0.0_SA_COO~R: add the transcripts-pull build to the cut's item 3 and to the applier's preflight."
+}
+```
+
+## NFRA_CTLPLN-W17-S1 -- the broker liveness file and the drive-mode leases are gitignored and exist only in the main worktree, so seat-list.py reads them there, not from the tree it runs in
+
+```json
+{
+  "id": "NFRA_CTLPLN-W17-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~17",
+  "surfaced_at": "2026-10-08T05:20:30Z",
+  "one_line": "the broker liveness file and the drive-mode leases are gitignored and exist only in the main worktree, so seat-list.py reads them there, not from the tree it runs in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".gitignore:251 org/mcp/liveness.json and .gitignore:614 org/mcp/drive_mode/ (git check-ignore -v, 2026-10-08 ~04:4xZ)",
+      "ls /c/tmp/wk-ctlpln-17/org/mcp/liveness.json: No such file or directory; the main worktree holds it (9 registered seats at 04:45Z)",
+      ".tools/seat-list.py main_root() and Ctx.path() at ff5e6ea8a7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-7 BUILD 1: one row per live seat 'from this box's org/mcp/liveness.json', and the drive 'from .tools/drive-mode.py's markers'.",
+  "world_is": "org/mcp/liveness.json and org/mcp/drive_mode/ are untracked (gitignored) and absent from a linked worktree; they exist only in the main worktree. seat-list.py finds that worktree through the git common dir (as .tools/drive-mode.py main_root() does) and writes seats.json into the tree it runs in.",
+  "notes": "No decision needed for the cell; recorded because a worker run from a linked worktree and a seat run from the main worktree read the same live files but write seats.json to different trees."
+}
+```
+
+## NFRA_CTLPLN-W17-S2 -- the three COO seats live on the laptop read drive=NONE: no live lease and no LIVE_ARMS Arms row names a drive for ~C, ~G or ~R
+
+```json
+{
+  "id": "NFRA_CTLPLN-W17-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~17",
+  "surfaced_at": "2026-10-08T05:20:30Z",
+  "one_line": "the three COO seats live on the laptop read drive=NONE: no live lease and no LIVE_ARMS Arms row names a drive for ~C, ~G or ~R",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-list.py write, run from /c/tmp/wk-ctlpln-17 with AGENTBUS_DEVICE=laptop 2026-10-08 05:12:47Z: three COO rows, drive=NONE each",
+      "org/ref/LIVE_ARMS.md lines 46-49 (COO~C, no drive word) and grep for COO~G and COO~R over the file: 0 lines",
+      "the main worktree org/mcp/drive_mode/ holds 8 markers (seats 2.0.0_SA_COO~D, ~P, ~M and 4.0.0_SA_CRO); none names ~C, ~G or ~R (read 2026-10-08 ~05:2xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-07 (cell text of TO-CT-s-7): 'COOs ... either run /canonical-drive /closer-drive to proceed projects, running /remote-drive if a one-off request comes in'; LIVE_ARMS.md 'all COOs should have /canonical-drive running'.",
+  "world_is": "seat-list.py write at 2026-10-08 ~05:12Z: 2.0.0_SA_COO~C, ~G and ~R each read drive=NONE (drive-mode status shows no lease with those seats; org/ref/LIVE_ARMS.md Arms names ~C only at line 46, with 'NO cron', and names ~G and ~R nowhere). All three read doing=WORKING by open orders (4, 4, 0) and commits (1m, 28m, 73m). The drive column therefore shows what is authorised, not what is running.",
+  "notes": "For 1.0.0_SA_CTO, who lands LIVE_ARMS rows: whether the Arms register should name the three laptop COOs' loops is its call. The tool decides nothing about it."
+}
+```
+
+## NFRA_CTLPLN-W14-S15 -- TO-CT-a-1 amendment 10: lambda:AddPermission on the ten protected functions reads allowed, the Deny that stays does not cover it
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T04:48:56Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule before the apply: add lambda:AddPermission and lambda:RemovePermission to DenyProtectedFunctions, or set in_allow false for them in dell_respol_actions.json; or confirm the Allow stands)",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S15",
+  "one_line": "TO-CT-a-1 amendment 10: lambda:AddPermission on the ten protected functions reads ALLOWED for both Dell users, not explicitDeny; the Deny that stays does not list it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/simulate_policy.py run (CTa1-AC2): 'CANUNDO-ii PROTECTED-ADDPERMISSION functions=10 explicitDeny: dell1=0 dell2=0 (item 4 expected 10 of 10); allowed: dell1=10 dell2=10' on the effective set group policies + per-user policies + dell_respol_allow_policy.json + the two routes Deny documents",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json statement DenyProtectedFunctions: ten actions (UpdateFunctionCode, UpdateFunctionConfiguration, PublishVersion, CreateAlias, UpdateAlias, DeleteFunction, DeleteAlias, PutFunctionConcurrency, UpdateFunctionUrlConfig, CreateFunctionUrlConfig); lambda:AddPermission is not among them",
+      "modules/routes_policy/main.tf lambda_actions is the same ten; so the routes Deny does not cover it either (intersection of the 75 with the routes Deny actions is empty: ROUTES-DENY-INTERSECTION none)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 10 item 2(e)(ii) and item 4: lambda:AddPermission on the ten protected functions is expected to read explicitDeny from the Deny that stays, and the simulation block should show the ten still reading explicitDeny.",
+  "world_is": "The ten read allowed for both users. The Deny that stays never named lambda:AddPermission; before this change the removed resource-policy Deny and the absence of an Allow held it. No Allow was narrowed and no exclusion was added (the order forbids it): the reading is reported as it is (not counted in all_ok) and the ten functions are left reachable by AddPermission once the Allow is applied.",
+  "notes": "Consequence: a Dell could add a permission letting any principal or service invoke the portal authorizers and auth handlers; it still cannot change their code or configuration. The issuer or the CTO chooses: add AddPermission and RemovePermission to DenyProtectedFunctions (the protected-functions census and its renderer then agree), exclude them in the data, or accept."
+}
+```
+
+## NFRA_CTLPLN-W16-S1 -- TO-CT-s-6 asks `open` to print the bus line with the commit, but the commit that holds the cross-box file cannot exist before the file is written, so a second command `line` was added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W16-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~16",
+  "surfaced_at": "2026-10-08T05:19:50Z",
+  "one_line": "TO-CT-s-6 asks `open` to print the bus line with the commit, but the commit that holds the cross-box file cannot exist before the file is written, so a second command `line` was added",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order BUILD 1: `open` writes org/devices/crossbox/<id>.json and prints a line ending `| file org/devices/crossbox/<id>.json @<commit>`; `receive` checks the file exists at that commit",
+      ".tools/crossbox-call.py `open` prints the line with `@UNCOMMITTED` (which `receive` cannot parse, so it cannot be sent by mistake) and `line --id` prints the same line with `git log -1 --format=%h -- <file>` once the file is committed and clean",
+      ".tools/crossbox-call.py --selftest cases line-refused-until-the-file-is-committed and line-carries-the-commit-and-no-substance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-6: `open` writes the file and prints the ONE line the manager puts on the bus, beginning `CROSSBOX <id> <kind> for <to-serial>: <subject> | file org/devices/crossbox/<id>.json @<commit>`; `receive` checks the file exists at the named commit.",
+  "world_is": "A commit hash cannot name the commit that adds the file it is printed beside, so `open` alone cannot print a line the other box can verify. The tool adds `line --id <id>` (run after the file is committed) and `open` prints the provisional form with @UNCOMMITTED. The skill section lists it as step 1.",
+  "notes": "For 2.0.0_SA_COO~C: the order's six-command list is seven in practice (open, line, sent, receive, ack/acked, close, plus merge). If the cell should instead commit the file itself, that is a lane-gate question: this tool never runs git commit."
+}
+```
+
+## NFRA_CTLPLN-W16-S2 -- One cross-box file is edited on two boxes (sender: sent, closed.from; receiver: ack, closed.to), so CLOSED-BOTH needs a field-wise merge of the two copies; `merge --id --ref` was added and the file shape gained schema, call_id, opened_at, from_by and to_by
+
+```json
+{
+  "id": "NFRA_CTLPLN-W16-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~16",
+  "surfaced_at": "2026-10-08T05:19:50Z",
+  "one_line": "One cross-box file is edited on two boxes (sender: sent, closed.from; receiver: ack, closed.to), so CLOSED-BOTH needs a field-wise merge of the two copies; `merge --id --ref` was added and the file shape gained schema, call_id, opened_at, from_by and to_by",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order THE SEAM: org/devices/crossbox/<id>.json has `closed` {from_at, to_at} with either side null until that side closes, and state CLOSED-BOTH only when both are recorded; each close is run on its own box",
+      ".tools/crossbox-call.py `merge`: folds the other copy (read with git show <ref>:<path>) into this one, fills null fields, refuses a field both copies hold with different values",
+      ".tools/open-calls.py crossbox_closed_both() links a file to a call by `id`, or the call id appearing anywhere in the file text: the new explicit `call_id` field satisfies it, exercised by selftest case the-open-calls-close-reader-accepts-CLOSED-BOTH"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-6 SEAM: the file keys are id, kind, from_device, to_device, from_serial, to_serial, subject, body_path, state, sent, ack, closed {from_at, to_at}; the closed state is reached when both sides are recorded.",
+  "world_is": "Two boxes cannot both write one file in one checkout; each writes its own copy and git carries them, so a plain git merge of the same JSON can conflict on adjacent lines. The tool adds a `merge` command and keys schema (crossbox/1), call_id (explicit link to the open-calls id), opened_at (age before sending) and closed.from_by/to_by. The two existing readers (crossbox-deploy-check.py, open-calls.py) read by .get() and ignore the extra keys; this tool's own reader refuses unknown keys.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: if the seam should stay at exactly the order's keys, `call_id` is the one the open-calls link needs; the rest can be dropped at the cost of age-before-send and the schema marker."
+}
+```
+
+## NFRA_CTLPLN-S23 -- TO-APPLY-10 step 2 states an expected BEFORE census line (dell1_admitted=21/24 dell1_scoped=3 disagree=0 ok=True) that is stale against the registry the SAME order names: with the three dell1 rows already made FULL rows @173f98f24b, the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False before the apply, so AC2's two named fields are not the discriminating ones -- disagree 3 -> 0 and gap_dell1 1 -> 0 are
+
+```json
+{
+  "id": "NFRA_CTLPLN-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T05:40Z",
+  "one_line": "TO-APPLY-10 step 2 states an expected BEFORE census line (dell1_admitted=21/24 dell1_scoped=3 disagree=0 ok=True) that is stale against the registry the SAME order names: with the three dell1 rows already made FULL rows @173f98f24b, the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False before the apply, so AC2's two named fields are not the discriminating ones -- disagree 3 -> 0 and gap_dell1 1 -> 0 are",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-10 @351dd873af step 2: 'Run the live fence census and record its last line (expected before: dell1_admitted=21/24 dell1_scoped=3 ... disagree=0 ok=True)'; AC2's expect is 'dell1_admitted=24/24 dell1_scoped=0'",
+      "BEFORE, measured 2026-10-08 ~05:0xZ at the laptop (deliverables/BEFORE10_census_live_20261008.txt): FENCE-CENSUS buckets=24 read=24 unreadable=0 fenced=3 no_policy=11 no_fence=10 dell1_admitted=24/24 dell1_scoped=0 dell2_admitted=24/24 dell2_scoped=0 disagree=3 undeclared=2 gap_dell1=1 gap_dell2=0 ok=False",
+      "AFTER, same instrument (deliverables/AFTER10_census_live_20261008.txt): identical line except disagree=0 gap_dell1=0 ok=True; the evaluator line moved from dell1={'explicitDeny': 3, 'allowed': 21} to dell1={'allowed': 24}",
+      "CAUSE, read from the script rather than inferred: dell_fence_census.py takes ADMISSION from the registry's exemptions rows and SCOPE from whether a row carries actions/prefix, while its evaluator limb simulates the LIVE policy; 4.0.0_SA_CRO made the three dell1 rows full rows @173f98f24b BEFORE this order was cut, so from that commit the census reads dell1 as admitted and unscoped while the live policies still carried the three DenyScopedExemption1 statements -- three DISAGREE rows on exactly the three fenced buckets",
+      "ok is computed at dell_fence_census.py:505 as read == n and unread == 0 and not dis and f + p + q == n, so undeclared and gap_dell1 never enter it: the BEFORE ok=False was the three disagreements alone, and 24=24, 0 unreadable and 3+11+10=24 all held"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-10 step 2: the live fence census BEFORE the apply reads dell1_admitted=21/24 dell1_scoped=3 ... disagree=0 ok=True. AC2: after the apply it reads dell1_admitted=24/24 dell1_scoped=0.",
+  "world_is": "Before the apply the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False, because the registry rows the order itself names (@173f98f24b) are already full rows. AC2's two named fields therefore read the SAME before and after this act and do not discriminate it; what the act moved is disagree 3 -> 0 and gap_dell1 1 -> 0. Both halves' condition 5 (disagree=0 ok=True) reads MET after the apply, so nothing was blocked -- but a later applier who graded AC2 on its two printed fields alone would read PASS without the apply having landed.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: this is the third order in a row in which this census's verdict and the act disagree in shape (TO-APPLY-8's ok=False on a correct act is the earlier one). The cell already on the list to make the census print scope beside admission could also pin AC2-style expects to the field that MOVES. Not adjudicated here; the order's three ACs all pass."
+}
+```
+
+## NFRA_CTLPLN-S24 -- The census invocation TO-APPLY-10 step 2 and AC2 name (dell_fence_census.py --live) defaults --out to the TRACKED fixture tests/dell_fence_census.json, so the bare form EDITS a test file the same order's bounds forbid editing, and rewriting it flips the step-1 join check from ok=True to ok=False (evaluator_allowed 6/6 -> 3/6) -- the order's own step sequence cannot be run as written
+
+```json
+{
+  "id": "NFRA_CTLPLN-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T05:40Z",
+  "one_line": "The census invocation TO-APPLY-10 step 2 and AC2 name (dell_fence_census.py --live) defaults --out to the TRACKED fixture tests/dell_fence_census.json, so the bare form EDITS a test file the same order's bounds forbid editing, and rewriting it flips the step-1 join check from ok=True to ok=False (evaluator_allowed 6/6 -> 3/6) -- the order's own step sequence cannot be run as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_fence_census.py:730 ap.add_argument('--out', default=str(DEFAULT_JSON), help='where --live saves the result') and :742 Path(a.out).write_text(...): a bare --live run OVERWRITES infra/aws/terraform/shared-infra/tests/dell_fence_census.json, which is git-tracked (git ls-files prints it; git check-ignore does not)",
+      "order NFRA_CTLPLN.TO-APPLY-10 bounds: 'no edit to any .tf, module, registry or test file'; its step 2 and AC2 both name the bare form",
+      "MEASURED, not inferred: after the first bare --live run, git status --porcelain printed ' M infra/aws/terraform/shared-infra/tests/dell_fence_census.json' and check_dell_fence_join.py then read rc=1 FENCE-JOIN pairs=6 rows=6/6 cross_firm_leaks=0 evaluator_allowed=3/6 ok=False with its NEGATIVE arm moving from '0 stripped' to '2 stripped'; the same check had read rc=0 evaluator_allowed=6/6 ok=True minutes earlier",
+      "CAUSE: check_dell_fence_join.py:287 reads CENSUS_JSON = tests/dell_fence_census.json as the base document for its EVAL arm (:456 doc = by_bucket[b]['policy']) and for its NEGATIVE arm (:483). The committed fixture predates the Dell admissions, so appending the pair's ARN to its fence list yields allowed 6/6; a fixture refreshed from the pre-apply LIVE plane still carries the three DenyScopedExemption1 statements, so dell1's three pairs read explicitDeny and the arm reads 3/6",
+      "RESTORED AND RE-EXERCISED: git checkout of the fixture returned the join check to rc=0 evaluator_allowed=6/6 ok=True, reproducibly, twice",
+      "DISARMED for this act by redirecting the save path: both the BEFORE and the AFTER census ran as dell_fence_census.py --live --out org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/{BEFORE,AFTER}10_census_live_20261008.json, and git status --porcelain on the tests directory printed EMPTY after each. The redirect changes nothing the census measures: run_live(scratch) is identical and only the save path differs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-10 step 1: both checks ok=True IMMEDIATELY BEFORE the plan, and a failing check is a STOP. Step 2 then runs dell_fence_census.py --live. Bounds: no edit to any .tf, module, registry or test file.",
+  "world_is": "Step 2's named invocation overwrites the tracked fixture that step 1's check reads as its base document, so running step 1, then step 2, then the plan makes the step-1 check read ok=False at the plan -- a STOP manufactured by the order's own sequence, on a tree with no fault in it. The bare form also edits a test file the bounds forbid. Handled here by restoring the fixture and redirecting every census run's --out into this seat's deliverables; no repo test file was edited by this act.",
+  "notes": "For 2.0.0_SA_COO~C: the cheap fix is to write --out <a path outside tests/> into the order's step 2 and into AC2's invocation, or to give the census a --no-save flag. The sharper question is for the checks' owner: an acceptance check whose verdict depends on a fixture being STALE will read ok=True only until someone refreshes it, and the refresh is itself a step of the same order."
+}
+```
+
+## NFRA_CTLPLN-W6-S16 -- TO-CT-e-3 amendment 3: the signing-line rule of item 2(b) makes the seam test's stand-in signature fail check 8, so test_intake_seam.py reads ok=False
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T05:37:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W6-S16",
+  "one_line": "TO-CT-e-3 amendment 3: the signing-line rule of item 2(b) makes the seam test's stand-in signature fail check 8, so test_intake_seam.py reads ok=False",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_seam.py line 112 writes the stand-in signature as 'batch <b>\\nfile <f>\\nsigned for the seam run only\\n' with no signing line",
+      "timeout 120 python org/devices/intake/test_intake_seam.py (before my edit) -> 'INTAKE-SEAM-TEST stages=6 negative_arms=3/3 index_requests=4 ok=True'; (after) -> 'check ... c8=failed verdict=not_checked' then 'INTAKE-SEAM-TEST stages=1 negative_arms=0/3 index_requests=4 ok=False'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3 item 2(b) requires a signature file to carry a signing line; item 4 says run test_intake_seam.py and report its last line, and the worker brief says it must still read ok=True. I may not edit the seam test.",
+  "world_is": "Both cannot hold: the seam test's stand-in signature has no signing line, so any phrase rule refuses it at check 8 and the seam run stops at stage 2 of 6. I kept the rule and reported the failing last line rather than weaken the rule.",
+  "notes": "One-line repair in the seam test (its owner's file, outside my paths): add a line 'CHECK 8 SIGNED -- seam stand-in' to the text written at line 112. The check tool needs no change for it."
+}
+```
+
+## NFRA_CTLPLN-W6-S17 -- TO-CT-e-3 amendment 3 item 1(b): a .py file that the wheel has and a REAL installed copy lacks is now counted missing, so an added module no longer fails check 6
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T05:37:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W6-S17",
+  "one_line": "TO-CT-e-3 amendment 3 item 1(b): a .py file that the wheel has and a REAL installed copy lacks is now counted missing, so an added module no longer fails check 6",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py case_check_6_some_present_some_missing_compares_the_present: a wheel with one identical __init__.py and one extra new_module.py reads c6 passed, compared=1 missing=1 differ=0",
+      "the earlier case case_py_absent_from_installed_copy_is_a_difference asserted the opposite (c6 failed, the path listed as differing); I removed it because the amendment says a file with no counterpart on disk is 'missing, never differ'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3 item 1(b): a .py file of the wheel with NO counterpart on disk is counted as missing, never as differ; the check is failed only when differ > 0. The brief's check 6 rules out 'code added outside the compiled files'.",
+  "world_is": "Against a complete installed copy, a wheel that adds a new .py module (code the installed version does not have) now passes check 6 where it failed before. The tool cannot tell that case from a sound installed copy whose files are gone. I followed the amendment and added an evidence field py_missing_not_in_installed_record (the missing files the installed copy's own RECORD never listed) and printed no verdict from it.",
+  "notes": "Option for the issuer: treat a missing .py that is also absent from the installed RECORD as differ. Not done: the amendment did not ask for it. The CTO's reading of check 6 for a file with such a list should be explicit."
+}
+```
+
+## NFRA_CTLPLN-S25 -- TO-APPLY-11 STOPPED at step 3, branch B: the untargeted plan of the Dell identity root reads 4 to add, 1 to change, 2 to destroy -- SEVEN resources, not the five both halves signed. The two extra are plan 2's resource-policy ALLOW (aws_iam_policy.dell_agent_respol_allow[0] and its group attachment), which commit f7b668e9c5 landed in the root AFTER the issuer planned at 35f5f12418 and which BOTH halves expressly exclude. Nothing was applied
+
+```json
+{
+  "id": "NFRA_CTLPLN-S25",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T07:05Z",
+  "one_line": "TO-APPLY-11 STOPPED at step 3, branch B: the untargeted plan of the Dell identity root reads 4 to add, 1 to change, 2 to destroy -- SEVEN resources, not the five both halves signed. The two extra are plan 2's resource-policy ALLOW (aws_iam_policy.dell_agent_respol_allow[0] and its group attachment), which commit f7b668e9c5 landed in the root AFTER the issuer planned at 35f5f12418 and which BOTH halves expressly exclude. Nothing was applied",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-11 (plan 1) step 3: 'EXACTLY 2 to add, 1 to change, 2 to destroy, these five and no other'; branch B: 'ANY other count, a sixth resource ... -> apply NOTHING; report the plan as read and stop'",
+      "COO half @fa6d36f4a3, 'What is NOT in this plan (plan 2, a second pair)': 'The Allow of the resource-policy actions (CTO ruling 106731 item 1). A worker is building it now.' The order's context repeats it: 'This is PLAN 1 OF 2. It does not carry the Allow of the resource-policy actions or dell2's SSM public parameter read; do not add either'",
+      "MEASURED at the laptop 2026-10-08 ~06:5xZ, read-only, exit 2, HEAD ca5cd194e8 (which DOES contain 35f5f12418 as the order requires, and the root's working tree is clean): Plan: 4 to add, 1 to change, 2 to destroy, over seven resource blocks -- aws_iam_policy.dell_agent_vendor_secrets[0] created (+91), its group attachment created (+4), aws_iam_policy.dell_agent_create updated in place (+5, ZERO removed), aws_iam_policy.dell_agent_respol destroyed (-99) and its attachment destroyed (-4) -- those five are the signed set and each is exactly as signed -- PLUS aws_iam_policy.dell_agent_respol_allow[0] created (+95) and aws_iam_group_policy_attachment.dell_agent_respol_allow[0] created (+4), which are neither half's",
+      "PROVENANCE of the two extra resources, read from git rather than inferred: git log 35f5f12418..HEAD -- infra/aws/terraform/nfra-ctlpln-identity/ returns exactly ONE commit, f7b668e9c5 'build(NFRA_CTLPLN.TO-CT-a-1 amendment 10, 0.9.0_WK_NFRA_CTLPLN~14): the resource-policy ALLOW for the Dell group -- 70 of the 75 former Deny actions, 5 left out by name; nothing applied'",
+      "WHY IT IS NOT GATED OFF: iam.tf:79 and :98 take count = module.routes_policy.respol_policy_count, and modules/routes_policy/outputs.tf:90-93 defines that as 'local.respol_json == null ? 0 : 1' -- it is 1 whenever the data document dell_respol_policy.json renders a policy, which it does at HEAD. There is no flag, variable or workspace condition holding the new resources back from an untargeted apply",
+      "THE SIGNED FIVE ARE EACH AS SIGNED, so this is a scope breach and not a content fault: the created secrets policy holds exactly ONE action (secretsmanager:GetSecretValue) on exactly 66 secretsmanager ARNs with NO wildcard, Sid ReadVendorCredentialsAndClientSessions; the in-place update adds exactly ONE statement, SimulateOwnPolicyOnly (iam:SimulatePrincipalPolicy on arn:aws:iam::313476888478:user/${aws:username}), and removes ZERO lines",
+      "THE TEN WITHHELD-NAME GREPS OVER THE PLAN ARE EACH ZERO, recorded per pattern: jwt-private-key 0, admin-seed 0, jwt-secret 0, origin-verify 0, 'gateway/' 0, otp-gateway-token 0, 'opal/mcp/' 0, pseudonym 0, anonymization-key 0, ec2-credentials 0",
+      "BOTH pre-plan checks PASSED immediately before the plan, so the stop is the plan shape alone: simulate_policy.py rc=0 'POLICY-SIM allowed_ok=22/22 denied_ok=15/15 passrole_ok=5/5 protected_ok=8/8 freed_allowed=70/70 freed_excluded=5 selfsim_ok=9/9 ssm_ok=9/9 routes_ok=5/5 vendor_ok=235/235 all_ok=True'; derive_vendor_secrets.py --from-file rc=0 'VENDOR-SECRETS secrets=114 referenced=114 dell_projects=15 placement_inferred=False vendor=35 client_session=32 granted=66 ok=True blocked_by_key=1 platform_key=28 other=19'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-11 step 3 and both halves' branch A: the untargeted plan of infra/aws/terraform/nfra-ctlpln-identity/ reads EXACTLY 2 to add, 1 to change, 2 to destroy over exactly five named resources, and the apply is untargeted. The order's commit clause is satisfied by a HEAD that CONTAINS 35f5f12418.",
+  "world_is": "At HEAD the same untargeted plan reads 4 to add, 1 to change, 2 to destroy over seven resources. The root gained plan 2's resource-policy ALLOW at f7b668e9c5 after the issuer's 04:5xZ plan, and its count is derived from the data document rather than gated, so it is live to any untargeted apply of the root. The order's commit clause holds (HEAD contains 35f5f12418) while the plan shape it signs no longer does: 'contains the pin' does not bound what else arrived. An untargeted apply here would grant the Dell group 70 resource-policy actions -- 'change who may reach a resource' -- which neither half signs and which the CTO half defers to its own pair. Applied NOTHING; stopped at step 3 and reported.",
+  "notes": "For 2.0.0_SA_COO~C (disarm_owner): three routes, none of them this seat's to choose. (i) Target the apply at the five signed addresses, which the order's bounds currently forbid ('one apply ... untargeted'); (ii) sign plan 2's Allow now as a third half-pair and re-cut the plan shape to 4/1/2; (iii) have the worker's amendment-10 work sit behind a flag so an untargeted apply of this root cannot carry it. The general shape is worth the CTO's eye too: an order that pins its plan shape to a commit and then says 'HEAD, which must contain <pin>' is unbounded above, and this root has a worker landing into it between the sign and the apply. Every gating read this order asks for PASSED; only the shape stopped it."
+}
+```
+
+## NFRA_CTLPLN-W18-S1 -- The order says remote-drive has NO reviewer step; its Half 1 table already carries one (a live reviewer grades the COO's report and runs `remote-job.py grade` before `complete`), so the one added line is a close-time check beside it, not the first reviewer step
+
+```json
+{
+  "id": "NFRA_CTLPLN-W18-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~18",
+  "surfaced_at": "2026-10-08T06:49:52Z",
+  "one_line": "The order says remote-drive has NO reviewer step; its Half 1 table already carries one (a live reviewer grades the COO's report and runs `remote-job.py grade` before `complete`), so the one added line is a close-time check beside it, not the first reviewer step",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/remote-drive/SKILL.md Half 1 table rows 3-4 @8902e8bc26"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-8 BUILD 3: `.claude/skills/remote-drive/SKILL.md` has NO reviewer step today: add it as that one line and nothing more.",
+  "world_is": "At the branch HEAD the skill's Half 1 table row 'The COO's MCP completion report' hands the live reviewer on the box the report and has it write a grade record and run `remote-job.py grade`; the row 'The reviewer's PASS grade' then runs `complete`. The inbound workstream has already added it. The line added here sits after that table and runs `round-close-check.py --reviewer-only` before `complete`, so a box with no live CVO-kind seat reads REFUSED at the same place the table already assumes one. It adds a blank line and one line (2 inserted lines in the diff).",
+  "notes": "For 2.0.0_SA_COO~C: if the inbound workstream rewrites Half 1, the added paragraph is the only line of this cell in that file and can move or drop without touching the tool."
+}
+```
+
+## NFRA_CTLPLN-W18-S2 -- The order says the hook has audited overrides 'as that hook's other limbs have', but missions-tree-check.sh has no override on any limb (it says 'never bypass'); the close block uses the seat-gates convention SEAT_GATES_OVERRIDE and logs to org/git-author-override-audit.log
+
+```json
+{
+  "id": "NFRA_CTLPLN-W18-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~18",
+  "surfaced_at": "2026-10-08T06:49:52Z",
+  "one_line": "The order says the hook has audited overrides 'as that hook's other limbs have', but missions-tree-check.sh has no override on any limb (it says 'never bypass'); the close block uses the seat-gates convention SEAT_GATES_OVERRIDE and logs to org/git-author-override-audit.log",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/missions-tree-check.sh close_gate() @8902e8bc26",
+      ".tools/safe-apply.sh lines 76-130 (SEAT_GATES_OVERRIDE) @8902e8bc26",
+      ".tools/tests/test_round_close_and_research.py case override @8902e8bc26"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-8 BUILD 2: an audited override as that hook's other limbs have (read the hook for its form).",
+  "world_is": "Reading .tools/git-hooks/missions-tree-check.sh at HEAD before the edit: three outcomes (OK, validator refusal, could-not-run), each a plain exit 1 with 'never bypass' in the remedy; no override variable or audit file. The sibling seat-gate wrappers .tools/safe-apply.sh and .tools/safe-deploy.sh (CT-s-3) use SEAT_GATES_OVERRIDE=\"reason\" and org/git-author-override-audit.log. The new block uses that form, and only inside the close-gate block: the generator's refusal still has no override. Tested in the scratch repo (case 'ENFORCE with SEAT_GATES_OVERRIDE admits and writes the audit line')."
+}
+```
+
+## NFRA_CTLPLN-W18-S3 -- The order says every complete order needs a VALID proof instance; the check reads each instance structurally by default (about 5 s per instance would be about 3 min for 36 orders, over the 120 s bound and too slow for a commit hook), and runs proof-of-spec-check.py only under --deep
+
+```json
+{
+  "id": "NFRA_CTLPLN-W18-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~18",
+  "surfaced_at": "2026-10-08T06:49:52Z",
+  "one_line": "The order says every complete order needs a VALID proof instance; the check reads each instance structurally by default (about 5 s per instance would be about 3 min for 36 orders, over the 120 s bound and too slow for a commit hook), and runs proof-of-spec-check.py only under --deep",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py ...CT-s-7... real 0m5.375s @8902e8bc26",
+      ".tools/round-close-check.py proof_state() @8902e8bc26"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-8 BUILD 1 GRADED: every task order of the round that is `complete` has a VALID proof instance.",
+  "world_is": "Measured: `python .tools/proof-of-spec-check.py <instance> <ids>` took 5.4 s on one instance here (git calls inside), and NFRA_CTLPLN has 36 complete orders. The default reading is: the instance parses, names the order's to_id, carries an acceptance row for every criterion of the order and no FAIL row; it is printed as `PROOFS mode=structural`. `--deep` adds the checker's rc 0 per instance. The hook and AC2 use the structural reading. A structural pass is weaker than VALID: it does not run the checker's own limbs (surprises, alignment, count-bar).",
+  "notes": "For 2.0.0_SA_COO~C: if the commit hook should run the checker, it needs a cache keyed on the instance's blob hash or a staged-only reading; this cell did not build either."
+}
+```
