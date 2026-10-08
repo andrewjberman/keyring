@@ -357,7 +357,7 @@ fi
 # `sleep 1` as the fallback. Harness: extract this block (LOCK_DIR= .. LOCK_ACQUIRED=1) and source it.
 LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$(git rev-parse --absolute-git-dir 2>/dev/null)/commit-queue.lock}"
 LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-300}"
-LOCK_STALE_SEC="${SAFE_COMMIT_LOCK_STALE_SEC:-600}"
+LOCK_STALE_SEC="${SAFE_COMMIT_LOCK_STALE_SEC:-240}"   # 240 < the 300 s give-up, so (c) can fire (CTO msg 106996)
 LOCK_ACQUIRED=0
 elapsed=0
 _lk_nopid=0
