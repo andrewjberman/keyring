@@ -93,7 +93,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **Superseded:** `round29/checks/tabs/tabwords.cjs` arm 1 grades the page's own re-sort on a reversed list; SAUX-38 removes that
   sort ("this completes SAUX-32"). tabwords.cjs is not in battery29 and is not a criterion here.
 
-<status>pending</status>
+<status>complete</status>
 <round>51</round>
 <slot>~114</slot>
 <fabric>site-z</fabric>
