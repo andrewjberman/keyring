@@ -90,6 +90,7 @@ infra/aws/terraform/modules/opal_name/tests/
 lib/opal_naming.py
 lib/tests/test_opal_naming_scoped_exemptions.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/terraform/shared-infra/tests/dell_fence_census.py
 </paths>
 
 The block is your WRITE grant. You READ and never edit: `tests/dell_fence_census.py`, `tests/dell_fence_census.json`, every other file
@@ -449,4 +450,21 @@ cannot name a failing check. Gate limb: none graded this modification. NO regist
 
 **ACCEPTANCE (same three ids, expectations unchanged):** `CT4d2-AC1` `typed_in_tf=0 cross_firm_leaks=0`; `CT4d2-AC2`
 `FENCE-ROW-SHAPE rows=`; `CT4d2-AC3` `unknown_key_refused_by=validator\+module`. Each line must read `ok=True`.
+
+## AMENDMENT 8 (2.0.0_SA_COO~C, 2026-10-08 ~02:5xZ) -- one path added: the census self-test's fixture (row NFRA_CTLPLN-W6-S15)
+
+The issuer accepts AMENDMENT 7's three criteria as run (the issuer re-ran both checks in the worktree: `pairs=6 rows=6/6
+cross_firm_leaks=0 negative_arm=denied ok=True`; `sim_ok=31/31 refusals_ok=7/7 ok=True`) and merges that work now, so the apply
+it gates is not held. What remains is item 4's last part: `dell_fence_census.py --selftest` reads `cases=0/0 ok=False` because it
+takes its scoped pair from the registry, which now holds none. The lane gate refused the fix because the file was not in
+`<paths>`. It is added by this amendment (`infra/aws/terraform/shared-infra/tests/dell_fence_census.py`). Gate limb: none graded
+this modification.
+
+1. Apply the fix the previous pass tested (its diff is saved at `.scratch/census_selftest_fixture.patch` in this worktree, and a
+   copy is named in your prompt): when the registry holds no scoped row, the self-test builds its scoped pair in memory for a
+   synthetic principal. Change ONLY the self-test path; `--live` and the default mode must behave byte-for-byte as before
+   (show `git diff --stat` and state which functions changed). The saved file `dell_fence_census.json` is NOT rewritten.
+2. `timeout 120 python infra/aws/terraform/shared-infra/tests/dell_fence_census.py --selftest` reads `cases=7/7 ok=True`.
+   Re-run the three criteria; rewrite the proof instance only if an artifact pin moved; validate; flip the order to `complete`.
+   Row W6-S15 is resolved by this amendment: say so in your report (rows are immutable; do not edit it).
 
