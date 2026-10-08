@@ -2843,3 +2843,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S34 -- DB-b-49 recompose control misses on 440 of 2,299: BD's split halves do not chain to BD's own full segment
+
+```json
+{
+  "id": "IRPT_DASHBD-S34",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-08T17:16:48Z",
+  "one_line": "DB-b-49's recompose control does not hold on 440 of 2,299 accounts: BD's two split halves chained do not reproduce BD's own full-segment gross within 0.35 pp (max 724.16 pp), so on those accounts branch B's right-half gap cannot yet be read as Opal-vs-BD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-49 item 3: the recompose control ((1+left)(1+right)-1 against BD's full-segment gross in the round-18 record) shows the two pulls agree with each other.",
+  "world_is": "MEASURED (TIEOUT_SPLIT_E1.json recompose): compared 2,299, within 0.35 pp 1,859, not comparable 0, max abs diff 724.16 pp. Branch B stands on the rule (tied_both 431 of 2,299 vs 1,149.5; left half 2,220 tied, right half 465). The 440 disagreeing accounts and the outlier were not examined; whether they overlap the 1,868 right-half misses is unmeasured. Next-round candidate for 1.0.0_SA_CTO~DELL2's round-28 analysis.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~28/TIEOUT_SPLIT_E1.json recompose",
+      "commit a556d87e79"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
