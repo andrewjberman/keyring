@@ -174,8 +174,8 @@ of client messages to Andrew's phone (point 1, its own project); Alyssa's Schwab
    - the per-call audit lake `opal-mcp-audit`.
    Field reach is stated only for Schwab (44 fields over 4 datasets, accounts aliased by keyed hash), Black Diamond (12
    columns, raw account ids and names) and the catalog's portal rows. Microsoft 365 tools reach whatever the user's
-   mailbox, files and chats hold. Census: the working file behind this brief (session scratchpad, not committed); the
-   counts here are the record.
+   mailbox, files and chats hold. Census, table per channel with file:line evidence:
+   `org/tier1_exec/4.0.0_SA_CRO/deliverables/GATEWAY_CHANNEL_MAP_20261008.md`.
 5. **No sensitivity rating exists anywhere [READ].** The nearest are the write classes per tool (SAFE /
    WRITE_REVERSIBLE / IRREVERSIBLE_SEND) and the catalog's per-row firm and verdict. A PROPOSED five-level scale, for the
    PRD to ratify or replace:
