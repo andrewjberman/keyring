@@ -3675,3 +3675,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: whether placement-check.py's read_projects() should read `placement` first is a decision on a shared viewer; open-calls.py's override goes away if it does. Three live projects have no `placement` field at all, so their box is the fabric box in this tool's reading."
 }
 ```
+
+## NFRA_CTLPLN-W16-S1 -- TO-CT-s-6 asks `open` to print the bus line with the commit, but the commit that holds the cross-box file cannot exist before the file is written, so a second command `line` was added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W16-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~16",
+  "surfaced_at": "2026-10-08T05:19:50Z",
+  "one_line": "TO-CT-s-6 asks `open` to print the bus line with the commit, but the commit that holds the cross-box file cannot exist before the file is written, so a second command `line` was added",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order BUILD 1: `open` writes org/devices/crossbox/<id>.json and prints a line ending `| file org/devices/crossbox/<id>.json @<commit>`; `receive` checks the file exists at that commit",
+      ".tools/crossbox-call.py `open` prints the line with `@UNCOMMITTED` (which `receive` cannot parse, so it cannot be sent by mistake) and `line --id` prints the same line with `git log -1 --format=%h -- <file>` once the file is committed and clean",
+      ".tools/crossbox-call.py --selftest cases line-refused-until-the-file-is-committed and line-carries-the-commit-and-no-substance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-6: `open` writes the file and prints the ONE line the manager puts on the bus, beginning `CROSSBOX <id> <kind> for <to-serial>: <subject> | file org/devices/crossbox/<id>.json @<commit>`; `receive` checks the file exists at the named commit.",
+  "world_is": "A commit hash cannot name the commit that adds the file it is printed beside, so `open` alone cannot print a line the other box can verify. The tool adds `line --id <id>` (run after the file is committed) and `open` prints the provisional form with @UNCOMMITTED. The skill section lists it as step 1.",
+  "notes": "For 2.0.0_SA_COO~C: the order's six-command list is seven in practice (open, line, sent, receive, ack/acked, close, plus merge). If the cell should instead commit the file itself, that is a lane-gate question: this tool never runs git commit."
+}
+```
+
+## NFRA_CTLPLN-W16-S2 -- One cross-box file is edited on two boxes (sender: sent, closed.from; receiver: ack, closed.to), so CLOSED-BOTH needs a field-wise merge of the two copies; `merge --id --ref` was added and the file shape gained schema, call_id, opened_at, from_by and to_by
+
+```json
+{
+  "id": "NFRA_CTLPLN-W16-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~16",
+  "surfaced_at": "2026-10-08T05:19:50Z",
+  "one_line": "One cross-box file is edited on two boxes (sender: sent, closed.from; receiver: ack, closed.to), so CLOSED-BOTH needs a field-wise merge of the two copies; `merge --id --ref` was added and the file shape gained schema, call_id, opened_at, from_by and to_by",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order THE SEAM: org/devices/crossbox/<id>.json has `closed` {from_at, to_at} with either side null until that side closes, and state CLOSED-BOTH only when both are recorded; each close is run on its own box",
+      ".tools/crossbox-call.py `merge`: folds the other copy (read with git show <ref>:<path>) into this one, fills null fields, refuses a field both copies hold with different values",
+      ".tools/open-calls.py crossbox_closed_both() links a file to a call by `id`, or the call id appearing anywhere in the file text: the new explicit `call_id` field satisfies it, exercised by selftest case the-open-calls-close-reader-accepts-CLOSED-BOTH"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-6 SEAM: the file keys are id, kind, from_device, to_device, from_serial, to_serial, subject, body_path, state, sent, ack, closed {from_at, to_at}; the closed state is reached when both sides are recorded.",
+  "world_is": "Two boxes cannot both write one file in one checkout; each writes its own copy and git carries them, so a plain git merge of the same JSON can conflict on adjacent lines. The tool adds a `merge` command and keys schema (crossbox/1), call_id (explicit link to the open-calls id), opened_at (age before sending) and closed.from_by/to_by. The two existing readers (crossbox-deploy-check.py, open-calls.py) read by .get() and ignore the extra keys; this tool's own reader refuses unknown keys.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: if the seam should stay at exactly the order's keys, `call_id` is the one the open-calls link needs; the rest can be dropped at the cost of age-before-send and the schema marker."
+}
+```
