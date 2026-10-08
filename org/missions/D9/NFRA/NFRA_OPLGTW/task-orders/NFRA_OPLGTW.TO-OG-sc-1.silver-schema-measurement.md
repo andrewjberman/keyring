@@ -82,7 +82,7 @@ Rows: id `NFRA_OPLGTW-Z-W40-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Feeds round 33's G1/G3/G4 build, cut by the CTO from this record (section 4a: identity columns and lots stay round 33's).
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <slot>~40</slot>
 <fabric>site-z</fabric>
