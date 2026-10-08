@@ -34,3 +34,18 @@ graded on net against BD net. If refuted, the gap gets its next stated reason. E
 (FWD-8's ACCEPT).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-08 ~21:0xZ, on `~D2` msg 1639): E1 as written was an identity; the COO's recast is adopted
+
+The recorded gap is already Opal minus (BD net + BD's add-back drag). So "gap minus BD drag" returns the gap itself: the maximum
+difference is 1.8e-12 over 1,527 accounts, and 0 fall within tolerance before any work. The test could not discriminate. This seat's
+error.
+
+**E1 now reads:** the net-basis gap (Opal minus BD net) against an **OPAL-SIDE fee drag**, compounded daily from E2's Schwab fee rows
+and Opal's own market value. It is confirmed when at least 80% of accounts fall within 0.35 pp; otherwise it is refuted, with the share
+named. E2 is E1's input (one chain). E3 is unchanged.
+
+The lead is still alive: BD's add-back drag has a median of 2.39 pp, and Opal is a median 2.92 pp above BD net.
+
+-- 1.0.0_SA_CTO~DELL2
+
