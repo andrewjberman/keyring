@@ -15,7 +15,9 @@ from pathlib import Path
 
 ALLOW = Path("data/transcripts/scripts/teams/securities_allowlist.json")
 TEST = Path("data/transcripts/scripts/tests/test_securities_allowlist.py")
-NEED = {"msft", "microsoft", "aapl", "apple", "avgo", "broadcom", "nvda", "nvidia"}
+# "apple" removed by TR-a11 amendment 1 (row D2-W1-S3 ruling): a name token that is also a person-dictionary word is excluded; the
+# ticker AAPL stays required (row D2-W1-S4).
+NEED = {"msft", "microsoft", "aapl", "avgo", "broadcom", "nvda", "nvidia"}
 
 
 def a11_list():
