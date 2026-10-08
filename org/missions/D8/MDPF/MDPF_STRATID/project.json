@@ -24,8 +24,20 @@
   "description": "Andrew-direct 2026-10-08 ~18:3xZ at the 1.0.0_SA_CTO~DELL1 terminal (Cottonwood SMA dollars ADDITIVE to Global; 'we need to make sure we have a system that gets those identified and sent over for counting in the global aggregate'; record @4672605201), restated ~20:1xZ (ETF Strategies are Opal-managed SMA sleeves named after an Opal ETF, by ticker or full name, in SmartX, Rebalancer and Eclipse, aggregated into the SMA taxonomy category under the ETF Strategies drill-down; SMA strategies Tax and Muni under ALT Strategies; record @8e4b5037b4). Feeds MDPF_GLOBAL; any change to Global's served output takes the laptop's never-widen pair (laptop 1.0.0_SA_CTO msg 107101).",
   "brief_ref": "docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_STRATEGY_IDENTIFICATION_INTO_GLOBAL_20261008.md",
-  "prds": [],
-  "prd_lineage": [],
+  "prds": [
+    {
+      "path": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1"
+    }
+  ],
   "decompositions": [],
   "decomposition_lineage": [],
   "leads": {
