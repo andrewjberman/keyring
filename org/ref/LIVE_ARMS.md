@@ -136,8 +136,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST, MDPF_HEALGAP. Paused 2026-10-07 ~22:3xZ on his word;
     RE-ARMED 2026-10-08 ~17:5xZ on Andrew-direct at the dell1 CTO terminal, VERBATIM: "Yes rec approved, please proced" (the card named
     all three projects), record @2a728669cf.
-  - EXTENSION (MDPF_HEALGAP, paired with `2.0.0_SA_COO~G1` `/canonical-drive 10m`): first landed 2026-10-07 ~08:4xZ as
-    AUTHORITY-UNVERIFIED; re-classed DIRECTED on the 2026-10-08 ~17:5xZ word above.
+  - EXTENSION (MDPF_HEALGAP, paired with `2.0.0_SA_COO~G1` `/canonical-drive 60m`): first landed 2026-10-07 ~08:4xZ as
+    AUTHORITY-UNVERIFIED; re-classed DIRECTED on the 2026-10-08 ~17:5xZ word above. Cadence 10m -> 60m on Andrew-direct ~18:5xZ
+    2026-10-08 at the `2.0.0_SA_COO~G1` terminal, VERBATIM: "Ok lets slow that down to 60 min" (class DIRECTED, chooser Andrew; G1
+    msg 1057, cron ae79a828 at :07).
   - `2.0.0_SA_COO~M1` `/canonical-drive MDPF_SECCLASS` and `2.0.0_SA_COO~H1` `/canonical-drive MDPF_SECHIST`. He named no cadence,
     so each uses the skill's 10m DIRECTED own-project default.
   - The `/govern` arms of the two fabric managers are the two DIRECTED rows at the top of this section.
