@@ -360,6 +360,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "MSTR msg 642 (relaying laptop CTO 106564): ~F's HG-d3 timers 'DIED' in the laptop's 20:2xZ out-of-memory kill, neither had fired, so owners (2) and (3) carried the restore.",
     "world_is": "One of ~F's restore mechanisms was an unattended background task that survived both the kill and the seat's close and did the restore correctly inside the window. The restore therefore had an owner the whole time; the defect is the liveness report ('timers died') that called a running task dead. For the next cut: a seat that arms a restore names every mechanism it armed and reads each one's state, rather than inferring death from its own session ending. Follow-up of the killed-but-not-killed gap is the laptop's (MSTR msg 924)."
+  },
+  {
+    "id": "MDPF_HEALGAP-S11",
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-08T13:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Condition 4 of the FWD-1 exercise half sets its service line at 13:30Z, but gold dim_model_portfolio -- the gold layer built from the Cottonwood model silver tables -- lands at 13:30:39Z-13:30:42Z on 9 of the last 10 days, so a condition-4 read widened to gold returns MISSED on a normal day with nothing wrong.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list of blackdiamond/cottonwood/gold/dim_model_portfolio/ at 2026-10-08T13:0xZ: 60 partitions; the newest 10 LastModified in UTC are 2026-10-07 13:30:40Z, 10-06 13:30:40Z, 10-05 13:30:40Z, 10-04 13:30:40Z, 10-03 13:30:39Z, 10-02 13:30:40Z, 10-01 22:08:16Z, 09-30 13:30:42Z, 09-29 13:30:40Z, 09-28 13:30:40Z -- 9 of 10 inside 13:30:39Z-13:30:42Z, the tenth later still",
+        "the writer is data/assets/scripts/gold/build_dim_model_portfolio.py invoked by the EC2 mdpf-daily-runner at infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:554, NOT by the runner's on_success destination opal-assets-silver-blackdiamond, so gold is not on the chain condition 4 names",
+        "129 scheduled EventBridge rules enumerated with aws events list-rules: none carries a 13:30 cron (nearest are opal-assets-silver-blackdiamond-sweep-daily and etf-positioning-producer-daily at cron(0 13 * * ? *)), which corroborates that the 13:30:40Z arrival is the EC2 runner's own cadence and not an Events schedule",
+        "leg L5 of org/critical_paths/.open_deploys/mdpf-healgap-hg-d3-fwd1-exercise-20261008.json: condition 4 graded MET at 13:01:58Z on the instrument the condition names, the on_success chain's newest write for D=2026-10-08 at 11:46:08Z, with the four model silver tables at 11:32:29Z-11:32:33Z"
+      ]
+    },
+    "spec_asserts": "CTO half condition 4, carried as TO-HG-d3 act 4b: whether the date's served Cottonwood figures were in place by 13:30Z is a discriminating read of whether the heal delivered in time.",
+    "world_is": "On the instrument the condition names -- the on_success chain -- D=2026-10-08 read MET by 1h43m, so the heal itself is not in question and this row does not reopen it. But the 13:30Z line sits 39 to 42 seconds INSIDE gold's own daily arrival, so widening 'served' to gold makes the same read return MISSED on nine of the last ten days with no failure present: at that width the line discriminates nothing. FWD-1's own wording is 'by the end of the same day', which both widths satisfy. Owner: 2.0.0_SA_COO~G1, to decide whether condition 4's successor reads silver and keeps 13:30Z, or reads gold and moves the line past the mdpf-daily-runner's arrival.",
+    "notes": "Not fixed here: the half's text and the gold producer's cadence are both outside this order's write grant, and no remedy is proposed as executed. Distinct from MDPF_HEALGAP-D1-S3, which is about the unattributed 06:08:46Z restore, not the 13:30Z line."
   }
 ]
 ```
