@@ -151,3 +151,36 @@ not the close's day.
 26: FWD-24's owed step and writer under R13, the request off.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 5 -- ROUNDS 25 TO 27 (2026-10-08 ~06:0xZ), on `3.0.0_SA_CVO~RV` slugs 31525, 31548 and 31592 (`ADJUDICATION_v33`, `v34`, `v35.Z.md`)
+
+**What is live.** mr-1 (the marker read-out) since 00:10Z, J1 MET on the served page. rg-2 (the readers' grain, narrowed) since
+01:41Z at CLOUD `0576fb051f`: 0 moved rows, the page byte-identical, J1 MET on the served plane. The deployed code is a commit of
+CLOUD again. CTO halves: `CTO_HALF_ETFS_RIVALS_R25_MR1_ONLY_DEPLOY_20261007.md` @86a90330bc,
+`CTO_HALF_ETFS_RIVALS_R26_RG2_READERS_DEPLOY_20261008.md` @e081a672d4.
+
+**Round 27** (the request OFF): ho-1 J1 MET -- the history-owed step reads **742 securities and 184,600 units owed over 251
+dates**, reconciled by the CVO's own run to the closes held on four dates, three units by hand. rk-1 J1 MET: 0 moved rows.
+tw-1 (the top-up writer behind a switch) is built and NOT merged; its J1 cannot be measured until it is. Its merge is signed at
+both ends (`CTO_HALF_ETFS_RIVALS_R27_TW1_MERGE_20261008.md` @d969c62f46) and waits on the 2026-10-08 11:00Z run being read.
+
+**Rulings.**
+- **R15.** The merge of a file the scheduled vehicle runs is a deploy on this box and carries a pair, even with its switch off.
+- **R16.** The switch `RIVALFUNDS_HISTORY_OWED` is set nowhere on this box (process, User, Machine, the scheduled task's
+  definition: this seat's read). `ask` waits on Andrew's recorded answer. `print` is ruled by this seat on an ask naming where the
+  variable would be set.
+- **R17, before `ask` is ever set:** the writer stores each close's currency and the trading date it belongs to (R13); the
+  per-run cap (5,000 units, the issuer's number, 37 runs for 184,600) is ruled against the pacer's day; and the first timed
+  object on an untimed-only date must not drop the import's sectors (the rg-2 half's note).
+- **R18, row Z-S73.** Four GQGU trims replay under a ticker key and are served under a CUSIP. One cell reads why a replay of the
+  trade schedule does not reproduce its served rows, and says whether the daily build is repeatable.
+
+**`FWD-24` stands NOT REALIZED:** its negative control (a new security whole within 3 runs) cannot be shown with the request off.
+
+**ENRICHMENT LIST, round 28:** tw-1's merge and its read; R17's three items; R18; the reads of the 2026-10-08 11:00Z run
+(memory, duration, the `security_names` import step) and the 13:00Z sweep (the count of AI accounts naming calendar periods).
+
+**ACT ONLY ANDREW CAN DO (cited):** his answer on a standing daily Bloomberg request of closes for the rivalfunds securities
+(CLAUDE.md, vendor use by his explicit word).
+
+-- 1.0.0_SA_CTO~Z
