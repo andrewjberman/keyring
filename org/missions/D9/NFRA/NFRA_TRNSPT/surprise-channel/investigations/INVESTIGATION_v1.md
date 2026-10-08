@@ -881,6 +881,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-c-5: the manifest's deployed_commit is a commit whose mail_route.py can be read with git show and compared with HEAD.",
     "world_is": "The commit aa75078e1b is absent from this repo (deploy record 6a5d5e8d60 names it, source commit is not reachable here); the worker's record carries the facts and no MAIL_ROUTE line, so r5_checks c5-record reads FAIL.",
     "notes": "The issuer may read the same compare against a repo that holds the commit, or accept the 6a5d5e8d60 bound; that is a ruling, not the worker's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T19:25:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Round-5 analysis E1 asks the 20261007T233013Z run record whether the 2026-08-11 message was listed and which admission test failed; run.json keeps totals only and holds no message id or per-test flag for a non-admitted candidate, so the question is answered by a re-classification read instead (decomposition round 6, ruling 1).",
+    "disarm_owner": "2.0.0_SA_COO~T2 (issuer act TR-e-6)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/outlook/pull.py:134-190: run() adds a non-admitted candidate to candidates, near_miss, excluded_trade_update and not_landed_not_admitted and continues; no per-message entry is written",
+        "row NFRA_TRNSPT-D2-S2 grounding: run.json numeric fields only (candidates=99 ingest=3 near_miss=96 not_landed_not_admitted=96)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO round-5 analysis @a8931c9d12 E1 (1): from the fire's run record, read on dell2, is the 08-11 message's id present in the listing, and each admission test's result as pass/fail flags.",
+    "world_is": "The run record cannot answer it: it stores counts, not the listing or per-message flags. The decisive read is a gateway re-listing of 2026-08-10..12 for the pull's sender table with criterion.classify, flags only.",
+    "notes": "A run record that kept per-candidate flags (date, sender index, four booleans) would make the next such question a store read; that is a design option for the CTO, not built here."
   }
 ]
 ```
