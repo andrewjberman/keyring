@@ -108,3 +108,4 @@ The `<status>` flip is the issuer's.
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>complete -- drained @b68f3c888b; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads exit 0 and SERVED: YES; the data file must be in the redeploy's closure (issuer reads it at the bb-18 pair)</status>
+<status>complete -- CORRECTION by the issuer (2026-10-07): the note above that the data file must be in the redeploy's closure was the issuer's assumption and is wrong; measured for the bb-18 pair, rot_signal.json is not packaged and no served route opens it (/freshness computes the register in memory); nothing else of the status changes</status>

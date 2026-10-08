@@ -494,7 +494,22 @@ def review_lane_suffix(root, prd_rel, project_doc=None):
     return None
 
 
-def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None, prefer_suffix=None):
+def prior_cvo_signer(result, project_doc=None):
+    """The 3.0.0_SA_CVO LANE whose file is the newest on the ratified-text half (SIGNED, REFUSED or STALE), or None.
+
+    WHY (1.0.0_SA_CTO~Z msg 31399, 2026-10-07): the family proxy in review_lane_suffix() is the PRD's last CTO-lane
+    author. ETFS_RIVALS's PRD is written by 1.0.0_SA_CTO~Z and validated by 3.0.0_SA_CVO~RV, so the proxy read family
+    Z and the v0.19 half went to 3.0.0_SA_CVO~Z, which declined it as misrouted. The lane that already signed or
+    refused this project's ratified-text half is evidence about the PROJECT; the author's suffix is evidence about the
+    author. None when the project row carries an explicit reviewer_lane_suffix (that binding is Andrew's and goes
+    first), when no file exists, or when the newest file is the base's (the base routes to its live lane as before)."""
+    if str((project_doc or {}).get("reviewer_lane_suffix") or "").strip():
+        return None
+    by = str((((result or {}).get("halves") or {}).get("ratified-text") or {}).get("by") or "").strip()
+    return by if ("~" in by and base_serial(by) == "3.0.0_SA_CVO") else None
+
+
+def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None, prefer_suffix=None, prior_signer=None):
     """(serial, reason) -- who is ASKED to sign `half` right now. The ratified-text half always goes to the
     CVO (base or its live lane). The brief half goes to the CRO when a CRO base/lane is live; else, or when the
     CRO is OVERDUE on it, to a live 2.0.0_SA_COO instance that is NOT this project's round holder; else to the
@@ -511,6 +526,12 @@ def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=N
     def live_of(base):
         return sorted([s for s in live if base_serial(s) == base], key=lambda x: (not _in_family(x), x != base, x))
     if half == "ratified-text":
+        # THE PROJECT'S OWN CVO LANE GOES FIRST (prior_cvo_signer). It is addressed even when it is not live: another
+        # CVO lane declines a half that is not its project's, so a live wrong lane is a worse hole than a named one.
+        p = str(prior_signer or "").strip()
+        if p and "~" in p and base_serial(p) == "3.0.0_SA_CVO":
+            return p, ("live; the lane that signed this project's last ratified-text half" if p in live else
+                       "the lane that signed this project's last ratified-text half; no live session, which is a hole until one is; re-offer continues")
         c = live_of("3.0.0_SA_CVO")
         return (c[0] if c else "3.0.0_SA_CVO"), ("live" if c else "no live CVO session; the base is addressed, which is a hole until a session is live; re-offer continues")
     if designated:
@@ -627,6 +648,22 @@ def self_test():
     arm("route FAMILY: an explicit project-row reviewer_lane_suffix beats the author proxy",
         review_lane_suffix(".", "no/such/prd.md", {"reviewer_lane_suffix": "~W"}) == "W")
     arm("route FAMILY: a PRD with no CTO-lane author -> None (the old order)", review_lane_suffix(".", "no/such/prd.md", {}) is None)
+    # PRIOR SIGNER (1.0.0_SA_CTO~Z msg 31399): ETFS_RIVALS's PRD is authored by CTO~Z and validated by CVO~RV.
+    rv = {"3.0.0_SA_CVO~RV", "3.0.0_SA_CVO~Z", "4.0.0_SA_CRO~Z"}
+    refused_rv = {"halves": {"ratified-text": {"state": "REFUSED", "by": "3.0.0_SA_CVO~RV"}}}
+    arm("route PRIOR: negative control -- the family proxy alone sends a Z-authored PRD to CVO~Z",
+        route_half("ratified-text", rv, prefer_suffix="Z")[0] == "3.0.0_SA_CVO~Z")
+    arm("route PRIOR: the lane that signed or refused the project's last ratified-text half goes first",
+        route_half("ratified-text", rv, prefer_suffix="Z", prior_signer=prior_cvo_signer(refused_rv))[0] == "3.0.0_SA_CVO~RV")
+    arm("route PRIOR: that lane is addressed when it is not live, and the hole is named",
+        (lambda t: t[0] == "3.0.0_SA_CVO~RV" and "hole" in t[1])(route_half("ratified-text", rv - {"3.0.0_SA_CVO~RV"}, prefer_suffix="Z", prior_signer="3.0.0_SA_CVO~RV")))
+    arm("route PRIOR: an explicit project-row reviewer_lane_suffix goes before the prior signer",
+        prior_cvo_signer(refused_rv, {"reviewer_lane_suffix": "~Z"}) is None)
+    arm("route PRIOR: a BASE prior signer and a non-CVO one give None (the old routing)",
+        prior_cvo_signer({"halves": {"ratified-text": {"by": "3.0.0_SA_CVO"}}}) is None
+        and prior_cvo_signer({"halves": {"ratified-text": {"by": "2.0.0_SA_COO~B"}}}) is None
+        and prior_cvo_signer({"halves": {"ratified-text": {"by": None}}}) is None)
+    arm("route PRIOR: the brief half ignores it", route_half("brief", rv, prior_signer="3.0.0_SA_CVO~RV")[0] == "4.0.0_SA_CRO~Z")
     # A SIGNATURE IS A COMMITTED FILE (row LGIC_NAMING-S14). The doctored pair runs in a THROWAWAY repo, so no real signoff
     # dir is touched: a committed SIGNED file is read, the same SIGNED content left uncommitted is not, and a worktree edit
     # to a committed file is not read either.

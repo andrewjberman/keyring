@@ -79,6 +79,7 @@ Read-only: the whole repository, in particular `lib/research/corpus/extract.py`,
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py"</invocation><expect>(?m)^ap6 build 6/6 control 3/3$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier.py lib/research/corpus/tests/test_dossier_case_body.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_dossier_heading_only_round40.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^[0-9]+ passed(, [0-9]+ warnings?)? in [0-9.]+s$</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6r_check.py"</invocation><expect>(?m)^ap6r build 3/3 control 6/6$</expect></criterion>
 </proof_of_spec>
 
 - AC1 (the REAL `_resolve_section_field` on four hand-built documents): build -- "Management/Board 80" followed by a bold heading,
@@ -179,6 +180,75 @@ Supporting documentation: Business model" (a page header, a page number and the 
 by their invocations in section 4. Then section 5 again: the proof instance updated, the checker after your final commit, and the
 status tag reading complete appended at the END of this file only if AC1 and AC2 pass.
 
+## 9. AMENDMENT 4 (2026-10-07, the issuer's own; the CVO's read of the gained passages and the CTO's ruling msg 31352)
+
+AMENDMENTS 1 to 3 are merged and are your INHERITED STATE. The 95 dossiers were then WRITTEN at `amgt-corpus-dossier/6` (stored,
+not yet served). `3.0.0_SA_CVO~Z` read the 25 gained values whole
+(`git show 32c6593acf:org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_CORPUS_ROUND40_AP10D_GAINED_PASSAGES_GRADE_20261007.md`, read
+it): two end in a token that is not the section's prose (Nike special items ends "...Jobs Act. 4_7_2026", the source file's date,
+and the served method-5 value is clean, so that one is a REGRESSION; SAP positives ends "...too mission-critical. sec"), and six
+stop mid-sentence (LLY negatives, NU positives and negatives, QXO negatives, UNH negatives, SHOP management). Ruled: a value cut
+mid-sentence is not served as it is.
+
+**Do, and only this, in `dossier.py` (plus tests):**
+1. A served section VALUE ends at its last sentence end. A sentence end is `.`, `!` or `?`, optionally followed by a closing
+   quote or bracket, and then whitespace or the end of the text; a full stop followed by a digit or a letter (a decimal such as
+   `$4.35bn`, an abbreviation inside a word) is NOT one. Everything after the last sentence end is dropped: an unfinished last
+   sentence, a trailing source-file date, a stray token.
+2. The trim looks only at the text AFTER the section's lead line. When that text holds no sentence end at all (a section of
+   bullet lines with no full stop), the value is left exactly as it is. The trim never empties a value and never turns a served
+   value into an absent one.
+3. The citation `passage` (the first `_PASSAGE_CAP` characters) is taken from the TRIMMED value, so a passage never shows text
+   the value no longer has; where the value is longer than the cap the passage is cut by the cap as today.
+4. `--section-recompose-census` already prints every changed field. Add to each changed line that is a TRIM (the new value is a
+   prefix of the served value) the marker `TRIM` and the number of characters dropped, and print a last line
+   `section_recompose_census trims <n> chars_dropped_max <m>`.
+5. Bump `METHOD_VERSION` to `amgt-corpus-dossier/7`; update the pinned literal in the four test files that pin it
+   (`test_dossier_method_bump.py`, `test_dossier_case_body.py`, `test_dossier_case_unit.py`, `test_dossier_case_positional.py`,
+   all in `<paths>`), each with an `AMENDMENT 4 (CRPS-ap-6, round 40):` comment.
+6. Tests in `test_dossier_heading_only_round40.py`: the three build shapes and the three controls of the issuer's check, a value
+   ending in a closing quote after its full stop, and the passage taken from the trimmed value.
+
+The recommendation, risks, pillar and case paths are untouched.
+
+**Prove** AC1, AC2 and AC3 by their invocations in section 4 (AC3 is `ap6r_check.py`: `ap6r build 3/3 control 3/3`), and run
+`test_dossier_case_unit.py` and `test_dossier_case_positional.py` and report the line. Then section 5 again: the proof instance
+updated (AC3 added), the checker after your final commit, and the status tag reading complete appended at the END of this file
+only if AC1, AC2 and AC3 pass.
+
+## 10. AMENDMENT 5 (2026-10-07, the issuer's own; AMENDMENT 4 read on the whole population; the CTO's ruling msg 31382)
+
+AMENDMENT 4 is merged and is your INHERITED STATE: `_trim_to_last_sentence_end` cuts a section value at its last sentence end,
+and `METHOD_VERSION` is `amgt-corpus-dossier/7`. NO dossier was written at `/7`, so do NOT bump the version again.
+
+The issuer ran it read-only against the 95 stored dossiers before any write
+(`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/r40_ap10d2_trim_tails_20261007.txt`, read it whole: every
+dropped tail is printed). It trims 32 fields. About 17 are unfinished sentences or stray tokens. About 14 are COMPLETE bullet
+points that end without a full stop, dropped whole (Shopify's management keeps 59 of 330 characters). One is cut at an
+abbreviation ("U.S."). And the Nike value is unchanged, because its prose is the lead line's own inline text and the date is the
+only item after it, while the trim looks only after the lead line. Both faults are in AMENDMENT 4's text, which the issuer wrote;
+your predecessor built it as written. The rule "end at the last sentence end" is WITHDRAWN by the CTO.
+
+**The rule now, and only this:**
+1. Take the WHOLE value text (the lead line with its inline text, and every item after it). Find its last sentence end (the
+   `_SENTENCE_END` pattern as it stands). If the text after that sentence end is ONE or TWO words (whitespace-separated tokens),
+   drop that fragment. If it is three or more words, or there is no sentence end, the value is left exactly as it is.
+2. So: "...Jobs Act. 4_7_2026" ends "...Jobs Act."; "...mission-critical. sec" ends "...mission-critical."; "...come from. Asdsa"
+   ends "...come from."; and an unfinished sentence of three or more words, a run of bullet points without full stops, and a
+   line with an abbreviation in it are all served as stored.
+3. The trim never empties a value and never turns a served value into an absent one. The citation `passage` is still taken from
+   the trimmed value. The census's `TRIM` marker and its last line stay.
+4. Rename the helper to say what it does (for example `_drop_trailing_fragment`), update its docstring with the rule and the
+   two withdrawn faults, and update the tests in `test_dossier_heading_only_round40.py`: the AMENDMENT 4 tests that assert a long
+   tail is cut now assert it STAYS; add the real Nike shape (inline lead text, then the date as the only item), the Shopify
+   shape, the abbreviation shape, a two-word fragment, and a three-word fragment that stays. Mark edits
+   `AMENDMENT 5 (CRPS-ap-6, round 40):`.
+
+**Prove** AC1, AC2 and AC3 by their invocations in section 4 (AC3 is now `ap6r build 3/3 control 6/6`; on the inherited code it
+reads `build 2/3 control 3/6`), and run `test_dossier_case_unit.py` and `test_dossier_case_positional.py`. Then section 5 again:
+the proof instance updated, the checker after your final commit, and the status tag reading complete appended at the END of this
+file only if AC1, AC2 and AC3 pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 9 + s.4 item 3; row Z-S89. Base: ap6 build 0/2 control 2/2; the three existing files 25 passed. The served census and the dossier re-write are the issuer's CRPS-ap-10.
@@ -187,6 +257,10 @@ status tag reading complete appended at the END of this file only if AC1 and AC2
 <round>40</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
+<status>in_progress</status>
+<status>complete</status>
+<status>in_progress</status>
 <status>complete</status>
 <status>in_progress</status>
 <status>complete</status>

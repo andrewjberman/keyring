@@ -1,0 +1,32 @@
+diff --git a/infra/aws/terraform/opal-assets/CHANGELOG.json b/infra/aws/terraform/opal-assets/CHANGELOG.json
+index e830a5c156..0630cf5373 100644
+--- a/infra/aws/terraform/opal-assets/CHANGELOG.json
++++ b/infra/aws/terraform/opal-assets/CHANGELOG.json
+@@ -2,6 +2,27 @@
+   "_description": "Deployment changelog for opal-assets. Appended by record-terraform-deploy.sh after every terraform apply.",
+   "_pipeline": "opal-assets",
+   "entries": [
++    {
++      "version": "untagged-323874e4",
++      "deployed_at": "2026-10-08T16:21:39Z",
++      "deployed_commit": "323874e43dde38d2fb067848f382182b005d5f5d",
++      "deployed_commit_short": "323874e4",
++      "previous_commit": "7873832592977622b08416154ba6bef18a020200",
++      "branch": "CLOUD",
++      "agent": "devops_technician",
++      "functions_updated": [
++        "cot-rebalancer-runner"
++      ],
++      "functions_with_source_changes": [],
++      "commits": [],
++      "artifacts": [
++        {
++          "function": "cot-rebalancer-runner",
++          "s3_key": "opal-assets/cot-rebalancer-runner.zip",
++          "sha256": "NFG8dbELEHHI34OSdq49kTBNHdtKyeRrUNZ9K0uzMZY="
++        }
++      ]
++    },
+     {
+       "version": "opal-assets-v0.51.0",
+       "deployed_at": "2026-10-07T10:49:42Z",

@@ -4610,3 +4610,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
 }
 ```
+
+## NFRA_CTLPLN-Z-S3 -- the trading calendar's fallback ends at 2027: on 2028-01-01 every staleness read on a function that runs the fallback raises
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T19:49:57Z",
+  "one_line": "lib/trading_calendar.py's hardcoded fallback covers 2010-2027 and now raises CalendarCoverageError outside it; a Lambda packaged without pandas_market_calendars runs on that fallback, so once the frontier date is in 2028 its trading-day reads raise where they answered before.",
+  "spec_asserts": "lib/trading_calendar.py:14-16 and :34 at CLOUD HEAD: the fallback is 2010-2027, an out-of-range year raises CalendarCoverageError, and the module's own header says 'Regenerate NYSE_HOLIDAYS_FALLBACK (lib/tests/gen_nyse_closures.py --write) before 2028.' The change is NFRA_CTLPLN's (commit 4b766e4e2d, 0.9.0_WK_NFRA_CTLPLN~12).",
+  "world_is": "Read 2026-10-07 for the AMGT_RESAPP round-78 redeploy pair (COO half org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/NEVER_WIDEN_HALF_COO_BB18.md @b7530ac2d4; CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_RESAPP_R78_BB18_REDEPLOY_20261007.md @24536e3cbe, condition C4). The deployed opal-amgt-scoped-api package holds 0 members of pandas_market_calendars, so that function runs on the fallback; its next build carries this module. Callers in that function's closure: scoped_amgt._stale_trading_days (three call sites, one unguarded), the top band (wrapped), rolling_windows, harvest/window_tone, freshness/stale_rule._age. Inside 2010-2027 nothing moves: the closure dates for 2024-2027 are equal in the deployed and the new copy (41 and 41), and 302 of 302 rows of the live freshness snapshot answered with 0 raised. The hazard is dated: from 2028-01-01 the frontier itself is outside the range. NOT measured: which other deployed functions package this module without pandas_market_calendars; whether any scheduled regeneration of the fallback exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at CLOUD HEAD, lines 14-16, 34, 48, 111-113, 118-158 (read 2026-10-07): the range, the raise and the 'before 2028' instruction.",
+      "The AMGT_RESAPP bb-18 COO half, section SEVEN FILES FROM OTHER PROJECTS, item 1: 0 pandas_market_calendars members in the deployed zip; 302 of 302 snapshot rows answered.",
+      "The CTO half's C4: 'on 2028-01-01 the frontier itself leaves the range and every staleness read on this function raises ... One surprise row on NFRA_CTLPLN, filed by the issuer, disarm_owner that project's issuer.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "notes": "Filed at the CTO's direction (msg 31336). The disarm is the fallback regenerated to cover 2028 onward and carried by a redeploy of each function that runs it, before 2028-01-01. Surfaced, not chased; no code edited."
+}
+```

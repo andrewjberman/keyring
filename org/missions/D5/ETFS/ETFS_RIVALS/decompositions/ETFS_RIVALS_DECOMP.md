@@ -625,3 +625,282 @@ earlier cell is replaced. Chain `~13`, one cell, file render.py, risk SERVED.
   from this round the issuer's real-run read prints `fund_sections.missing` in the packet.
 - **Organic trigger:** GQGU's panel on the live page; the issuer's real run of the served day reads `fund_sections`
   missing 0 and 0 dialogs with no section.
+
+## ROUND 24 (main workstream) -- APPENDED 2026-10-07, revision 1.14 of this file
+
+One cell, item 1 of the ENRICHMENT LIST of ROUND_ANALYSIS.round22 ADDENDUM 2 @be5cb4f530 (the chart's UI: ADDENDUM 1,
+Andrew-direct 2026-10-07 ~19:0xZ, record @f76452470f). Item 2 (row Z-S57) is withdrawn by CTO ruling msg 31341; items 3
+to 5 are the issuer's reads and acts. Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Chain `~14`, one cell, files
+render.py and page_theme.py, risk SERVED.
+
+### `RIV-cu-1` -- the dialog chart is framed, its x-axis is dated, its hover read-out is bold and focal, and a buy or sell marker has a dramatic tooltip (Andrew-direct 2026-10-07 ~19:0xZ; analysis round 22 ADDENDUM 1 and 2)
+- Measured on the served page (rounds 15 to 23): the chart is a 600 x 200 svg with no border and no x-axis label; the
+  hover read-out is one `<p class="rf-ch-read">` under the chart in the dialog's body type; a marker's hover text is the
+  svg's own `<title>` (a small delayed browser tooltip). Andrew's words: the price/date read-out "should be much more focal,
+  bold, and obvious"; the tooltip, "especially when hovering over a buy/sell moment, should be much more dramatic"; "a box
+  around the chart element itself with clear dates on x-ticks, give it a little more space and make it more of an event".
+  "The mechanics are all there": no change to the data.
+- Interface (all in `render.py` -- `CHART_SCRIPT`, `CHART_CSS` -- and `page_theme.py`; one inline script as today):
+  1. **Dated x-ticks.** A new pure function `window.rfChart.ticks(pl)` takes a plan (`rfChart.plan(s, from, to)`, whose
+     `a` and `b` are the range's first and last day numbers) and returns an array of 4 to 7 objects `{x, label}`: `x` a day
+     number with `pl.a <= x <= pl.b`, strictly increasing; `label` a date a reader can place: day and month ("8 Sep") for a
+     range of 100 days or fewer, month and two-digit year ("Oct 25") for a longer one; no two labels equal. The script's
+     draw writes one svg `text` per tick carrying the attribute `data-tick` with that label as its text, under the plot.
+  2. **The frame and the room.** The chart's svg sits inside an element of class `rf-ch-frame`; `render.CHART_CSS` gives
+     `.rf-ch-frame` a border of at least 1px solid, a border-radius, a padding of at least 10px and a background; the svg's
+     viewBox height is at least 280 (today 200) with the same 600 width.
+  3. **The read-out.** The read-out element (class `rf-ch-read`) is placed BEFORE the svg inside the frame, and
+     `render.CHART_CSS` gives `.rf-ch-read` a `font-size` of at least 20px and a `font-weight` of at least 700 (the dialog's
+     body is 17px, weight 400), stated as plain numbers in px. On a pointer move over the curve it shows the price with
+     its currency and the date, as today; the price and the date are each in their own child element (`data-read="price"`,
+     `data-read="date"`) so the price can be the larger.
+  4. **The marker tooltip.** The script creates ONE element of class `rf-ch-tip` per chart (hidden by default: the
+     attribute `hidden`), inside the frame. On `mouseover` (and `focus`) of a marker it is shown (no `hidden`), carries
+     `data-side="buy"` or `"sell"`, and its text states the side in a word ("Bought" / "Sold"), the dollars, and the date
+     or dates -- the content of `rfChart.words(m)` at least; on `mouseout` (and `blur`) it is hidden again. `CHART_CSS`
+     gives `.rf-ch-tip` a `font-size` of at least 16px, a `font-weight` of at least 600, `position:absolute`, a padding and
+     a coloured background or border that differs by `data-side` (green for buy, red for sell, the script's `G` and `X`
+     colours). Each marker is focusable (`tabindex="0"`). The svg `<title>` of a marker stays.
+- Rulings at the cut (issuer): nodes are built with `createElement` / `createElementNS`, never `innerHTML`. No key is
+  added to the chart object and no gold table, price series, marker or window changes. The audit page is untouched (it
+  has no script). The dialog's static trade list and month strip stay as they are. Everything rounds 15 to 23 built
+  stays: every existing check file under `round15/checks/` still ends `PASS 0 failures`. The page stays under its
+  1,950,000-byte cap; the script may grow by at most 3,000 bytes (today 7,369) and the frame adds no per-dialog markup
+  to the static page (it is built by the script).
+- Rulings on the check drafter's questions (issuer; the check files accept exactly these): a tick's label names the date
+  its own `x` falls on; the 100-day boundary is `pl.b - pl.a`; the price child shows the stored currency code, not a
+  sign; the date child names the same point as the price; the tooltip states "Bought" or "Sold" (never both), the
+  dollars with thousands separators and the date or dates; the tooltip's colour by side is set by `CHART_CSS` rules on
+  `[data-side=buy]` and `[data-side=sell]`, not by inline style; hidden means the attribute `hidden`; a marker is a
+  circle with a `title` child and `data-m`, focusable with `tabindex="0"`; there is exactly one frame, one read-out and
+  one tooltip per chart after every range switch; CSS lengths are in px and the frame's padding is at least 10px on
+  every side; the static page carries no `rf-ch-frame` or `rf-ch-tip` markup.
+- **Organic trigger:** any security dialog on the live page, pointer over the curve and over a buy or sell marker.
+
+## ROUND 25 (main workstream) -- APPENDED 2026-10-07, revision 1.15 of this file
+
+Two cells, by CTO ruling msg 31428 on row ETFS_RIVALS-Z-S69 (BLOCKING) and the round-24 analysis msg 31413: the readers'
+grain of gold security_market (the disarm of Z-S69; PRD v0.19 C-OWED-GRAIN, rulings msgs 31416 and 31432) and the
+marker read-out repair (CVO ADJUDICATION_v28). FWD-24's history-owed step and top-up writer are round 26. Author
+2.0.0_SA_COO~RV. No earlier cell is replaced. Two chains with disjoint files: `~15` RIV-rg-1 (the readers), `~16`
+RIV-mr-1 (render.py). Risk SERVED.
+
+### `RIV-rg-1` -- a date's rows of gold security_market are the union of ALL its objects, one row per security and date by a stated rule (row ETFS_RIVALS-Z-S69, BLOCKING; PRD v0.19 C-OWED-GRAIN, G.4; CTO rulings msgs 31416, 31428)
+- Measured (census `deliverables/2.0.0_SA_COO~RV/round25_prep/READER_CENSUS_SECURITY_MARKET_20261007.md` @33e8bbe318, and
+  the live table): every reader of G4 rows takes ONE object per date, `revision.newest` of the date's uris. For
+  2026-09-29 the partition holds a live pull `market-20260929-53bc393958bd.parquet` (434 securities, 430 with `px_close`,
+  `source` `blp_client.reference_data`) and an import `market-20260929-afcd903ad844.parquet` (172 securities, 0 with
+  `px_close`, 164 with a GICS sector, `source` `import:bbg/2026-09-29/characteristics.parquet`). Neither name carries a
+  capture time and the readers hand `revision.newest` bare uris, so its "an import never outranks a live object" rule
+  cannot apply and the NAME decides: the import wins and all 430 market closes of that day reach no stage (355
+  fund-security chart entries of the served page then draw that day from the fund's own valuation). On 2026-10-02 three
+  objects of 601 rows hold the same securities: the control.
+- Interface (in `data/etfs/scripts/rivalfunds/`; no new module is required, one shared function is):
+  1. ONE function, used by every reader below, returns a date's G4 rows as the union of ALL `.parquet` objects of that
+     date's partition, ONE row per (`security_id`, `date`). Where several objects hold the same (`security_id`, `date`),
+     the rows are ordered: (a) a row whose `as_of_source` is not `"backfill"` before a backfill row; (b) a row whose
+     `source` does not start `import:` before an import row; (c) the later capture time in the object's name
+     (`revision.capture_time`; a name with no time is oldest); (d) the later `as_of` of the row; (e) the object name,
+     descending -- a last tie-break that decides only when (a) to (d) tie. From that order the merged row is built in
+     TWO parts (CTO term, msg 31432). THE PRICE GROUP -- `px_close`, `total_return_index`, `currency`, `as_of`, `source`,
+     `as_of_source` -- travels WHOLE from ONE row: the first row in the order whose `px_close` is not null (if none has
+     a close, the first row in the order). A close is never combined with a currency, a price date or a price source
+     from another object, even when its own currency is null. THE DESCRIPTIVE FIELDS -- every other column (the GICS
+     columns, `security_bloomberg`, `security_parsekey`, a name) -- each take the first non-null value in the order. A
+     column an older object lacks reads as null for its rows.
+  2. Readers moved to it: `gold_holding_contribution._newest_by_date` + `_read` as used for G4 by
+     `gold_holding_contribution.handler_entry`, `gold_buying_trend.handler_entry`, `gold_input_census.build`,
+     `price_series.load` and `publish_page._chart_reads`; `gold_canonical_shape._g4_for` (still ONE date per report date,
+     the greatest at or before it that holds a non-backfill row, but that date's rows are the union); and
+     `gold_trade_schedule.load_parsekeys`. `_newest_by_date` keeps its one-object rule for every OTHER table (G1, G5 and
+     the A1 tables are written whole per revision).
+  3. For 2026-09-29 this keeps the live pull's close for every security it prices (430), the live pull's GICS where it
+     has one and the import's where only the import has one. `drop_backfill` and every other row rule run AFTER the union.
+  4. What a stage RECORDS as the date's G4 revision or location (for example the G4 revision inside a G1 revision in
+     `gold_canonical_shape`, `location` in `gold_input_census`) stays the `revision.newest` object of the date, as today.
+- Rulings at the cut (issuer): nothing is written to or deleted from `gold/security_market`; the writer
+  (`enrichment_bloomberg.py`) is not in this cell. No change to `revision.py`'s ordering contract. The cost of opening
+  every object of a date is accepted (8 objects over 5 dates today). `publish_page._a1_window` returning no window for
+  buying_trend is NOT in this cell.
+- Rulings on the check drafter's questions (issuer; the check files accept exactly these): the ONE shared function is
+  `gold_holding_contribution.g4_rows(s, day)` -- `s` the sink, `day` a `YYYY-MM-DD` string -- returning a pandas
+  DataFrame of that date's merged rows with every column any object of the date carries. It reads `source`, `as_of` and
+  `as_of_source` to order the rows even when a caller's column filter leaves them out; a caller filters columns AFTER.
+  A `px_close` of 0.0 is a close (not null). Backfill-marked rows are handled after the union exactly as today: the
+  price series keeps a backfill-only row, `drop_backfill` drops it for the rankings, `_g4_for` leaves it out.
+  `_newest_by_date(s, prefix, lo, hi)` keeps its signature and its one-object rule for G1, G5 and the A1 tables.
+  Interface item 4 is narrowed: `_g4_for`'s recorded uri and revision stay the `revision.newest` object by its own
+  provenance rule; what the input census records as a price's `location` and what the rankings manifest lists under
+  `g4` may name the newest object or every object read -- say which in the report; neither is graded.
+- **Organic trigger:** the next daily run and any republish; the issuer's real run prints, per fund, the rankings and
+  the 30d / 90d / 365d tables before and after, each moved figure named, and the control on 2026-10-02 reads no change.
+
+### `RIV-mr-1` -- while a marker is pointed at, the read-out names THAT marker's day and price, and the tooltip never covers the read-out (CVO ADJUDICATION_v28; CTO round-24 analysis msg 31413)
+- Measured on the served page (round 24): pointing at a buy or sell marker shows the tooltip for the marker while the
+  read-out above the chart keeps the price and date of the last curve position the pointer crossed, so the two can name
+  different days; and a marker near the top of the plot flips its tooltip to a position that can cover the read-out.
+- Interface (`render.py` `CHART_SCRIPT` / `CHART_CSS` only; one inline script as today):
+  1. On `mouseover` or `focus` of a marker the read-out (`.rf-ch-read`) shows the marker's END date in its
+     `data-read="date"` child and, in its `data-read="price"` child, the price of the priced point the marker is drawn
+     on (the nearest priced point, as the marker's `cy` is computed today) with the stored currency code; a marker
+     with no priced point in the range shows the date and no price. On `mouseout` or `blur` the read-out returns to its
+     idle prompt until the pointer next moves over the curve. A `mousemove` whose target is a marker does not overwrite
+     it (as today: the handler returns for `data-m`).
+  2. The tooltip (`.rf-ch-tip`) is positioned only over the svg's own box: its top edge is never above the svg's top
+     edge inside the frame, so it cannot overlap the read-out, which sits before the svg. It still flips below a marker
+     when there is no room above, and stays inside the frame horizontally.
+  3. Everything round 24 built stays: `cu-1.AC1.py`, `cu-1.AC2.py` and `cu-1.AC3.py` still end `PASS 0 failures`; the
+     script grows by at most 600 bytes (today 9,348).
+- Rulings at the cut (issuer): nodes by `createElement` / `createElementNS`, never `innerHTML`; no key is added to the
+  chart object; no data change.
+- **Organic trigger:** any dialog chart on the live page, pointer on a marker.
+
+## ROUND 26 (main workstream) -- APPENDED 2026-10-08, revision 1.16 of this file
+
+One cell, the re-cut of round 25's readers by CTO rulings msgs 31477 and 31480 on CVO ADJUDICATION_v30 (RIV-rg-1 J1 NOT
+MET) and row ETFS_RIVALS-Z-S71. RIV-mr-1 of round 25 shipped alone (ledger `etfs-rivalfunds-r25-mr1`). FWD-24's history-owed
+step and writer move to round 27. Author 2.0.0_SA_COO~RV. No earlier cell is replaced: RIV-rg-1 stays as built and this
+cell narrows it. Chain `~17`, one cell, the shared reader, risk SERVED.
+
+### `RIV-rg-2` -- the union reads only objects whose name carries a capture time; a date's untimed objects are read as before, one object (row ETFS_RIVALS-Z-S71, BLOCKING; CVO ADJUDICATION_v30, RIV-rg-1 J1 NOT MET; CTO rulings msgs 31477 and 31480)
+- Measured (`deliverables/2.0.0_SA_COO~RV/round25/g4_date_offset_read_20261007.json`; row Z-S71): the live table's object
+  `date=2026-09-29/market-20260929-53bc393958bd.parquet` holds the closes of 2026-09-30, a day early (48 of 58 comparable
+  closes match the funds' 2026-09-30 valuations, 32 match only that day, 0 match only its own date). Its `as_of` column
+  says 2026-09-29, so no column shows it. The four dates written since by the daily leg (names with a capture time,
+  `market-20261002T111038Z-...`) match their own day. The served readers ignore the mis-dated object by a name
+  tie-break; `g4_rows` / `g4_window` as merged in round 25 (RIV-rg-1) would read it. Round 25's readers are merged and
+  NOT deployed.
+- Interface (the shared reader in `gold_holding_contribution.py`, and nothing else unless a caller needs it):
+  1. An object takes part in the union ONLY when `revision.capture_time` of its name is not None (a TIMED object). For a
+     date whose partition holds NO timed object, the reader returns the rows of exactly ONE object, the
+     `revision.newest` of the date's uris -- byte for byte what `_newest_by_date` + `_read` returned before round 25. For
+     a date that holds timed AND untimed objects, the union is over the timed objects only; the untimed ones are not
+     read.
+     `gold_canonical_shape._g4_for` on a date with no timed object ALSO behaves exactly as before round 25: its own pick
+     by provenance records (for 2026-09-29 the live object, from which it joins SECTORS, never closes), the rows of that
+     one object, and that object's uri and revision recorded (`rg-1.AC3.py` arm b pins it).
+  2. Everything else RIV-rg-1 built stands: the order (non-backfill, live over import, later capture time, later
+     `as_of`, name), the price group travelling whole, the descriptive coalesce, one row per security and date,
+     `_newest_by_date` unchanged for the other tables.
+  3. The mis-dated object is NAMED, so the rule does not rest on a name's shape alone (CTO term 1): a package test
+     plants `market-20260929-53bc393958bd.parquet` (closes) beside `market-20260929-afcd903ad844.parquet` (an import with
+     no price) on 2026-09-29 and asserts that no reader returns a close for that date; its docstring says the object
+     holds 2026-09-30's closes and cites row ETFS_RIVALS-Z-S71.
+- Rulings at the cut (issuer): no object is written, moved, renamed or deleted in `gold/security_market`. On the live
+  table this cell changes NO served figure: the only multi-object dates are 2026-09-29 (two untimed objects: read as
+  before) and 2026-10-02 (three timed objects with the same rows: the union equals the newest). The term for future
+  writers (every object a writer adds carries, per close, the trading date it belongs to, and the reader keeps a close
+  only where that date equals the partition date; CTO term 2) is FWD-24's, round 27, and is NOT in this cell.
+- **Organic trigger:** any republish; the issuer's real run reads 0 moved rows of holding_contribution and of
+  buying_trend against the served tables, and chart objects equal to the served ones.
+
+## ROUND 27 (main workstream) -- APPENDED 2026-10-08, revision 1.17 of this file
+
+Three cells for FWD-24 (PRD v0.19 ADDENDUM G: the year of closes kept by the daily sequence), on the ENRICHMENT LIST of
+ROUND_ANALYSIS.round22 ADDENDUM 4 ("FWD-24's owed step and writer under R13, the request off") and CTO rulings R13,
+msgs 31402, 31480, 31514 and 31527. The standing Bloomberg request stays OFF: it waits on Andrew's recorded answer.
+Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Three chains with disjoint files: `~18` RIV-ho-1 (a new module),
+`~19` RIV-tw-1 (enrichment_bloomberg.py), `~20` RIV-rk-1 (the shared reader). RIV-tw-1's checks stub the module of
+RIV-ho-1, so no chain waits on another. Risk SERVED.
+
+### `RIV-ho-1` -- the history-owed set: every (security, trading day) of the last 365 days with no stored close, computed from stored tables alone (FWD-24, PRD v0.19 C-HISTORY-OWED)
+- Measured (the CRO's analysis behind ADDENDUM G; live read by the issuer 2026-10-08): gold `security_universe` holds
+  1,051 securities with `first_seen`, `last_seen` and `funds` (a comma-joined list of fund tickers); gold
+  `security_market` holds closes on 5 trading days. Nothing computes what is owed.
+- Interface (a NEW module `data/etfs/scripts/rivalfunds/history_owed.py`; standard library, pandas and the package's own
+  readers only; NO vendor import and no network call but the sink's):
+  1. `history_owed.owed(s, day, window_days=365)` -> a pandas DataFrame, one row per owed unit, columns `security_id`,
+     `security_bloomberg`, `date` (ISO string), `funds`. A unit is owed when: the security is in the newest
+     `security_universe` object at or before `day` with a non-blank `security_bloomberg`; `date` is a trading day
+     (`lib.trading_calendar`) with `day - window_days <= date <= as_of(day)` where `as_of(day)` is the previous trading
+     day of `day`; `first_seen - window_days <= date` is NOT required (a security held at any time in the window is owed
+     its whole window: the PRD's "every security a tracked fund held in the last 365 days has its year of closes"), but
+     the security's `last_seen` is on or after `day - window_days`; and `hc.g4_window` over the window returns no row for
+     (`security_id`, `date`) whose `px_close` is not null. Rows sorted by `date` descending, then `security_id`.
+  2. `history_owed.summary(df)` -> a dict `{"securities": n, "units": n, "dates": n, "newest": iso, "oldest": iso}`
+     (zeros and None for an empty frame).
+  3. A unit whose only stored close sits in an object the shared reader does not read (an untimed object beside timed
+     ones; the mis-dated 2026-09-29 object) IS owed: the set is defined by what the readers return, not by what S3 holds.
+- Rulings at the cut (issuer): the unit of the budget is this row (one security on one day). Cash lines and securities
+  with no Bloomberg key are not owed (there is nothing to ask). The function writes nothing.
+- Rulings on the check drafter's questions (issuer): `first_seen` is no bound at all -- a security whose `last_seen` is on
+  or after `day - window_days` (inclusive) is owed every trading day of the window through `as_of(day)`, before its
+  `first_seen` and after its `last_seen` included; the window's first day is inclusive; "the newest universe object at
+  or before `day`" includes one dated `day`; `day` is an ISO string and `s` the sink; a blank key includes a
+  whitespace-only one (`hc._blank`); an empty result still carries the four columns; `date` is an ISO string.
+- **Organic trigger:** the issuer's real read prints `summary(owed(s, day))` for the live tables.
+
+### `RIV-tw-1` -- the daily leg asks for owed closes inside the budget and lands each date's top-up as its own object, each close carrying its trading date; the request is OFF by default (FWD-24, C-OWED-GRAIN, C-OWED-IN-THE-LEG, C-OWED-BUDGET; CTO ruling R13)
+- Measured: `enrichment_bloomberg.py` mode `daily` asks for the securities held today and lands ONE object per date;
+  mode `market-range` (the hand-run backfill) skips any date that already holds a `market-*` object
+  (`_held_dates`), checks `bbg_budget.check_points` before any request and records every request sent. The vehicle runs
+  `python -m rivalfunds.enrichment_bloomberg --mode daily` FROM THE WORKING TREE every day at 11:00Z (rows Z-S62, Z-S72):
+  this file's merge is its deploy to that job.
+- Interface (`enrichment_bloomberg.py` only, plus the module of RIV-ho-1 which it imports lazily):
+  1. A switch, environment variable `RIVALFUNDS_HISTORY_OWED`, read once per run: unset, empty or `"0"` = OFF. With it
+     OFF the `daily` run is byte-for-byte what it is today: it does not import `history_owed`, makes no additional sink
+     list or get, sends no additional request, prints no additional line and returns the same result dict. `"print"` =
+     compute the owed set after the daily pull lands and print one line `HISTORY OWED: owed <units> units, <securities>
+     securities, <dates> dates; asked 0 (request off); carried <units>`, send nothing, write nothing. `"ask"` = compute,
+     ask, land, print `HISTORY OWED: owed <o>; asked <a>; landed <l>; carried <c>`.
+  2. With `"ask"`: the units to ask are the first `HISTORY_OWED_CAP` (a named module constant, 5,000) of the owed set in
+     its own order (newest dates first); `bbg_budget.check_points(n)` is called BEFORE any request with the count to
+     ask, and a refusal asks nothing and prints the refusal with `carried <all>`; every request sent is recorded with
+     `bbg_budget.record("history-owed", <points requested>, batch_id)`; what is not asked is carried (counted, never
+     stored: the next run recomputes the owed set).
+  3. Landing: per date, ONE new object in that date's partition, named by `market_target_uri(date, revision)` with a
+     revision that carries the capture time (as `_market_pull` builds it), never overwriting a name and never touching
+     another object. Every row carries, beside the existing columns, **`price_date`**: the ISO trading date the vendor
+     returned for that close. A returned close whose own date is not the partition's date is NOT written (and is
+     counted in the printed line as `misdated <n>`). Rows are marked `as_of_source = "backfill"` and `source` as
+     `market-range` marks them today.
+  4. The result dict of the `daily` run gains a key `history_owed` only when the switch is not OFF.
+  5. The Bloomberg client is reached only through the function `market-range` already uses for a history request; no
+     file under `integrations/` is edited or imported in a new way.
+- Rulings at the cut (issuer): NOTHING in this cell or its checks calls a vendor: every check and test stubs the client
+  hook, as `bf-1.AC1.py` / `bf-1.AC2.py` do. The switch stays OFF in the repository and on the vehicle; turning it on is
+  Andrew's recorded answer relayed by 1.0.0_SA_CTO~Z, never a merge. `market-range` and its `_held_dates` are left as
+  they are.
+- Rulings on the check drafter's questions (issuer): any value of the switch other than exactly `print` or `ask`
+  (case-sensitive) is OFF. ONLY the top-up objects carry `price_date`: they are written with the market schema plus
+  that one string column; the daily pull's object and `market-range`'s objects are written exactly as today.
+  "Misdated" means: a close the vendor returns for a date that is NOT one of the units asked for that security; it is
+  not written and is counted. A close is landed in the partition of its own returned date, with `price_date` equal to
+  it, only when that (security, date) was asked. `landed` may count rows or objects. A refusal's line format is free
+  beyond containing `HISTORY OWED:` and `carried <all>`. `tw-1.AC1.py` compares the switch-OFF run with the module as
+  it is at commit 361b735308, read from git: the OFF path stays identical to that commit's behaviour.
+- **Organic trigger:** none while the switch is OFF; the issuer's read is the 2026-10-08 and later vehicle logs showing
+  the enrichment leg unchanged.
+
+### `RIV-rk-1` -- the reader keeps a close only where its own trading date equals the partition date; an untimed date that gains a timed object keeps its sectors; a backfill close does not cost a security its sector (CTO ruling R13; CTO half @e081a672d4 note; worker row Z-W15-S2)
+- Measured: `gold_holding_contribution.g4_objects` / `_g4_merge` (rounds 25, 26). No stored object carries a per-close
+  date today, so nothing tells the reader that a close belongs to another day (row Z-S71). On a date with untimed
+  objects only (2026-09-29) the reader returns one object, an import with sectors; the first timed top-up landed there
+  would make the union "timed only" and drop those sectors. And a security whose live row has no close while a backfill
+  row has one merges to a backfill-marked row, which `drop_backfill` then removes whole, sector and parsekey included.
+- Interface (`gold_holding_contribution.py`; `gold_canonical_shape.py` only if `_g4_for` needs it):
+  1. THE PRICE DATE. Where a row carries a non-null `price_date`, its price group (`px_close`, `total_return_index`,
+     `currency`, `as_of`, `source`, `as_of_source`, `price_date`) takes part in the merge only when `price_date` equals
+     the partition date; otherwise that row offers no price group (its descriptive fields still coalesce). A row with no
+     `price_date` column, or a null one, is treated as today (every stored object).
+  2. THE UNTIMED DATE THAT GAINS A TIMED OBJECT. On a date holding timed AND untimed objects, the ONE untimed object
+     the pre-round-25 read picks (`revision.newest` of the date's untimed uris) contributes its DESCRIPTIVE fields to
+     the merge, last in the order, and NEVER a price group. Other untimed objects are still not read.
+  3. THE BACKFILL CLOSE. `drop_backfill` no longer removes a merged row whose price group came from a backfill row when
+     any of its descriptive fields came from a non-backfill row: it returns the row with the price group nulled
+     (so the rankings price it as they do today, from the fund's valuation) and the descriptive fields kept. A row
+     whose every contributing object is a backfill object is still dropped. The price series (`price_series.load`)
+     still receives the backfill close.
+  4. Everything rounds 25 and 26 built stands; on the live table NOTHING read today changes (no stored object carries
+     `price_date`; no date mixes timed and untimed objects; no backfill row exists).
+- Rulings at the cut (issuer): the column is named `price_date` in both this cell and RIV-tw-1. No object is written,
+  moved or deleted.
+- Rulings on the check drafter's questions (issuer): `price_date` may arrive as an ISO string or a date; both compare
+  to the partition date. In item 2 a security present ONLY in the picked untimed object, with no non-null descriptive
+  field there, yields NO row (so `rg-2.AC1.py` arm c stands unchanged). Descriptive fields are every column outside
+  the price group. Item 3 also binds `gold_canonical_shape._g4_for`: a merged row whose price group came from a
+  backfill row while a descriptive field came from a non-backfill row stays in its sector join (today it filters the
+  merged frame on `as_of_source`); `rk-1.AC1.py` does not grade that, so the cell's package test does. Item 4 is the
+  issuer's own measurement of the live table on 2026-10-07 and 2026-10-08: 8 objects over 5 dates, the two untimed on
+  2026-09-29 alone, no `price_date` column anywhere, `as_of_source` absent or `pull` on every row.
+- **Organic trigger:** any republish; the issuer's real run reads 0 moved rows and identical charts.
