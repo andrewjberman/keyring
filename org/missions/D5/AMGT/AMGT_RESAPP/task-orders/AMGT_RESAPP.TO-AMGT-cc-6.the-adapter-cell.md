@@ -218,3 +218,4 @@ handler on your tree.
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending -- AMENDMENT 1 (CTO msg 31722): the pack row's served source wording, one string in top_band.py, already in paths; wave 0 drained 5 of 5 (cc-1 @0433c23f27, cc-4 @f6b844fadd, cc-5 @646167b6df, cc-3 @beee52785a, cc-2 @bdd1a55638), every criterion re-run YES on the shared tree</status>
+<status>complete -- drained @63f0605039; proof VALID rc=0 on the worker's checker; AC1 (12 of 12 clauses), AC2 and AC3 (916 passed) re-run by the issuer on the shared tree read SERVED: YES; AMENDMENT 1 landed (top_band.py:36 reads 'the analysis built for this name'); served on the live function only after cc-7</status>
