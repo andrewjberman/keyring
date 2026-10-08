@@ -7766,6 +7766,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W117-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~117",
+      "surfaced_at": "2026-10-08T07:46:00Z",
+      "one_line": "The order's 'capitalised throughout' (EVERY alphabetic word begins upper-case) is false of its own verbatim negative-control title 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase' ('on' is lower case), so plant (i) and the reported pair cannot pass as written.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bk-2 s.1: a title is capitalised throughout when EVERY alphabetic word begins with an upper-case letter; plant (i) and the census 'THE REPORTED PAIR ... removed' use the verbatim title 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase'.",
+      "world_is": "The verbatim title contains the alphabetic word 'on', which begins with a lower-case letter, so the definition as written returns False for it and the rule never fires on the story it was cut for (plant (i) would read 1, the census would read CENSUS FAIL). Done instead, so the order is executable and without tuning to a count: ONE closed list of title-case minor words (a an the and but or nor for so yet as at by in of on to up off per via vs, the AP rule: articles, conjunctions and prepositions of three letters or fewer) may stay lower case; every other word must begin upper-case; the three-alphabetic-word floor counts the minor words. The list is the constant _TITLE_CASE_MINOR_WORDS in lib/research/harvest/publication_gold.py. The census prints, beside the removed count R, how many removed pairs would also be removed under the strict reading (no minor-word allowance), so the issuer and the CTO can read the cost of the choice. The issuer decides whether the allowance stands.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py (_capitalised_throughout, _TITLE_CASE_MINOR_WORDS)",
+          "lib/research/harvest/tests/test_bk2_capitalised_headline.py (test_viii)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~117/bk2_census.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
