@@ -5519,3 +5519,33 @@ by dell1 or by this seat.
   "notes": "Not a remediation and not a disposition: S12's disarm_owner is 2.0.0_SA_COO~M1 and this row only hands that owner the two readings it said were missing. Nothing was written, restored or rolled back under this row -- it is read-only. WHAT THIS DOES NOT COVER, stated so the absence is not over-read: only the ONE key is scanned, only the two windows are scanned, and a read by a principal whose GetObject CloudTrail does not log at all (a VPC-endpoint path with data events off, say) would be invisible to it -- the selector covers the four opal-data-* buckets and nothing was checked outside them. The recurrence matters more than either window: a step that re-ships a bundle on every gold deploy will keep doing this, so the remedy belongs in the tool or in the sign-off's named members, not in a per-incident restore. The deploy lane (0.7.0_AE_CloudOps) owns the tool, as S12 says; this seat has NOT scoped it and does not propose a change here."
 }
 ```
+
+## MDPF_SECCLASS-D1-S14 -- deploy_ledger has no state for an entry opened-but-never-started behind a sovereign gate, so e65b will blare a RED that reads as half-landed
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S14",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T19:25Z",
+  "one_line": "deploy_ledger.py has NO state for an entry that was OPENED, never started, and is now blocked on a sovereign decision BEFORE its first apply -- so such an entry ages into PAST-WINDOW and a RED-to-COO alarm that reads exactly like a half-landed deploy. `hold` REFUSES it by design ('a half-landed deploy cannot be HELD'), because HELD requires every apply/deploy leg closed-with-proof and only verify legs open; `close` refuses any unproven leg. Measured on secclass-e65b-namekey-deploy-s-20261007, whose L1-L4 are ALL unapplied and whose gate is Andrew's limit ITEM 5: at 17.9h of a 24.0h window it will read PAST-WINDOW at about 01:5xZ and BLARE, with nothing half-landed and nothing to roll back.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~SD",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deploy_ledger.py hold --slug secclass-e65b-namekey-deploy-s-20261007 --gate-type sovereign --gate-ref <Andrew limit ITEM 5> --reread-event <...> returns: \"REFUSED: cannot HELD 'secclass-e65b-namekey-deploy-s-20261007' -- open APPLY/DEPLOY leg(s) ['L1', 'L2'] -- a half-landed deploy cannot be HELD (stays RED). A HELD/SOVEREIGN-GATED state requires ALL apply/deploy legs closed-with-proof and ONLY verify legs open.\"",
+      "deploy_ledger.py list: \"OPEN: secclass-e65b-namekey-deploy-s-20261007 age=17.9h window=24.0h [in-window] stranded=['L1', 'L2', 'L3', 'L4'] author=0.7.0_AE_CloudOps~SD\" -- all four legs stranded, i.e. the act never started.",
+      "The contrast that proves the gap is a SHAPE and not this entry's fault: the same seat's secclass-e57e61-fwd10-apply-s-20261007 IS properly HELD-SOVEREIGN-GATED with open-verify=['L3'] and prints 'apply legs proven, only verify open; tracked-not-stranded'. The verb works exactly as designed once the applies have landed; it has no shape for before they do.",
+      "The e65b gate is external and sovereign, not drift: Andrew's limit ITEM 5, the s3:PutObject Deny on opal-data-cot/code/gold/*, which blocks the Cottonwood half of a two-firm shipped-bundle move. Not this seat's to lift.",
+      "THE WORLD IS MEASURED UNTOUCHED, so the RED about to fire would be false rather than merely early: the served object s3://opal-data-bd/code/gold/lib/_shared/etf_classification_scheduled.py reads ETag 3f1e6be8910952f33c88bf100c610ab6 / 35100 bytes, the pre-e65b bytes, and the cot copy reads the same ETag at its 2026-10-07T16:54:13Z version. Rows D1-S12 and D1-S13 cover the one 59 s excursion and its restore, and D1-S13 measured that no consumer read the out-of-turn bytes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: 'NEVER leave a confirmed deploy half-landed -- finish in-session or roll back + escalate loud; ledger entry opened at start, closed at completion', and 'An entry a device left OPEN proves only that THIS device saw no completion: before acting on any open/--red entry, measure the ARTIFACT'. deploy_ledger.py's own header: an entry left OPEN past its window BLARES (RED inbox delivery to COO), and enforcement rides COO /drive and fabric-check chaining `check --red`.",
+  "world_is": "The ledger's state machine has three reachable states for a gated act -- OPEN, HELD, CLOSED -- and a sovereign gate that lands BEFORE the first apply fits none of them. The entry therefore stays OPEN and the alarm that fires carries the half-landed meaning, which is the one thing it is not. The NEVER-2 'measure the ARTIFACT before acting on an open entry' clause is what stops a reader re-executing on it, so the law already anticipates the false positive -- but that clause is human discipline, and the signal itself still says the wrong thing on a /drive tick.",
+  "notes": "ARMED because a RED is scheduled to fire at about 2026-10-08T01:5xZ+24h on an act whose correct reading is 'not started, sovereign-gated'. DISARM, same-turn and in-lane, is a MESSAGE not a code change: this seat has told the issuer and will tell whoever reads the RED that e65b is unapplied and that the served bytes are measured pre-e65b, so nobody re-executes it. NO WORKAROUND WAS TAKEN -- the entry was NOT closed to silence the alarm (close refuses an unproven leg anyway, and closing a never-executed deploy would be a false record), and no new ledger state was invented. CANDIDATE REMEDIES, none proposed as built and none this seat's to land unasked: (i) a NOT-STARTED/PRE-APPLY hold class whose precondition is that ZERO apply legs have landed, which is the mirror of the existing HELD precondition and is decidable from the same leg data; (ii) let `hold` accept an entry with all apply legs OPEN AND no leg ever closed, since 'nothing applied' and 'everything applied' are both coherent hold states while only the middle is RED; (iii) stop opening the entry until the first apply is authorized, which conflicts with NEVER-2's 'opened at start'. Option (iii) is the one that looks cheapest and is probably wrong, which is why it is named rather than omitted. SCOPE BEYOND THIS PROJECT: any act whose half is signed but whose apply waits on an Andrew-class decision has this shape, so the two NEVER-2 clauses -- open at start, and a window that blares -- are in tension for every sovereign-gated deploy in the estate, not just e65b."
+}
+```
