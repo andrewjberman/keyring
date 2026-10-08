@@ -170,14 +170,20 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
             pass
     idle_raw = (now - last) / 3600
     idle_h = round(idle_raw, 2)
-    merged = git(["merge-base", "--is-ancestor", head, trunk], cwd=path).returncode == 0
+    # MERGED = HEAD is contained in the trunk (local or origin) OR in any box branch (local or origin) -- per-box
+    # branches, CTO placement B5 (PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md): a commit already on a box branch is
+    # safe in the repository, so its worktree holds nothing unique. One for-each-ref call answers all refs at once.
+    holders = git(["for-each-ref", "--format=%(refname:short)", "--contains", head,
+                   f"refs/heads/{trunk}", f"refs/remotes/origin/{trunk}", "refs/heads/box/", "refs/remotes/origin/box/"],
+                  cwd=path).stdout.split()
+    merged = bool(holders)
     unmerged = 0 if merged else int((git(["rev-list", "--count", f"{trunk}..{head}"], cwd=path).stdout.strip() or "0"))
     row.update({"idle_h": idle_h, "dirty": len(dirty), "unmerged": unmerged})
     if idle_raw < clean_h:
         row.update({"class": "ACTIVE", "reason": "a modified file was edited within the clean window"})
         return row
     if merged and not dirty and not ignored:
-        row.update({"class": "CLEAN", "reason": f"merged into {trunk}, nothing uncommitted, idle {idle_h} h"})
+        row.update({"class": "CLEAN", "reason": f"merged into {holders[0]}, nothing uncommitted, idle {idle_h} h"})
         return row
     # HELD: find the owner
     owner = ""

@@ -352,8 +352,11 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
         # ONE TRUNK since 2026-09-24 (Andrew-direct "recs approved", card 1 (a), LD-0613): origin/SITEZ is retired
         # (tip = tag archive/SITEZ-20260924), so "fully merged" means an ancestor of origin/CLOUD alone. The old
         # two-ref AND would read every worktree as unmerged once the second ref is gone.
-        & git -C $row.Path merge-base --is-ancestor HEAD origin/CLOUD 2>$null | Out-Null
-        $mergedCloud = ($LASTEXITCODE -eq 0)
+        # PER-BOX BRANCHES (CTO placement B5, PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md): "merged" = HEAD is contained
+        # in origin/CLOUD OR in a box branch (local or origin box/*). A commit on a box branch is safe in the
+        # repository, so the worktree holds nothing unique. One for-each-ref call answers all refs at once.
+        $holders = @(& git -C $row.Path for-each-ref --format='%(refname:short)' --contains HEAD refs/remotes/origin/CLOUD refs/heads/box/ refs/remotes/origin/box/ 2>$null | Where-Object { $_ })
+        $mergedCloud = ($holders.Count -gt 0)
         $aheadCloud = [int](& git -C $row.Path rev-list --count "origin/CLOUD..HEAD" 2>$null)
         $row | Add-Member -NotePropertyName AheadOfCloud -NotePropertyValue $aheadCloud
         $row | Add-Member -NotePropertyName MergedCloud -NotePropertyValue $mergedCloud
