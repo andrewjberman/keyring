@@ -967,6 +967,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "Round-8 analysis @08ff07562f and the TR-w-9 cell: '2,716 residual-flag rows held out'; held_out is TRUE when an utterance drew at least one residual flag.",
     "world_is": "Under the TR-w-9 definition 4555 of 20473 rows are held out (15918 stored and re-wiped); 2716 is residual_flags, a distinct-word count. The writer follows the stated definition, so the issuer's served write holds out 4555 rows.",
     "notes": "Test fixtures show sentence-initial title/common capitalised words (e.g. a leading title or noun) also draw a flag, which is why the row count exceeds the word count. The issuer should expect 4555, not 2716, in the read-back."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T20:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "A second producer writes into opal-data-transcripts: on 2026-10-08, 71 objects under teams/transcripts/bronze/chat_messages/ (00:28Z..20:19Z) and 4 under teams/transcripts/state/chat_assist/ (10:47Z..20:42Z), from the Teams chat-assist code (data/transcripts/scripts/teams_chat/assist.py, infra/aws/terraform/transcripts/chat_assist.tf), not this project's mail pull or transcript pull; its owner is unconfirmed (recent commits by NFRA_CTLPLN workers).",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (confirm the producer's owning project and whether it belongs under NFRA_TRNSPT's store and reader set)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3 list opal-data-transcripts (2,088 objects, 2026-10-08T20:4xZ): teams/transcripts/bronze/chat_messages today=71; teams/transcripts/state/chat_assist today=4; positive control: teams/transcripts/silver/research_meeting today=29 (this project's TR-x-9 write, 20:41Z)",
+        "producer: data/transcripts/scripts/teams_chat/assist.py:56 address('teams','transcripts',tier,table,partition,obj); deploy infra/aws/terraform/transcripts/chat_assist.tf",
+        "git log on those two paths: 9734652dbe (0.9.0_WK_NFRA_CTLPLN~34, 2026-10-08), 377ee45542 and 6975661829 (0.9.0_WK_NFRA_CTLPLN~31, 2026-10-07)",
+        "CTO msg 1567 counted 84 such objects over its own window; this census counts 75 for the UTC day 2026-10-08"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-BUCKET / C-TIERS: opal-data-transcripts is NFRA_TRNSPT's one store, written by this project's pulls; FWD-8 names its readers (CTO msgs 1542, 1567).",
+    "world_is": "Another project's Teams chat-assist Lambda writes chat_messages bronze and chat_assist state into the same bucket under the teams/transcripts prefix, with no NFRA_TRNSPT registry row, decomposition cell or owner on this project's record.",
+    "notes": "Counts and keys only; no object content was read. Not a hazard to the project's own partitions (disjoint prefixes)."
   }
 ]
 ```
