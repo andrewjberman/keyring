@@ -3296,3 +3296,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: the drain run must read probes_pending=0; any probe that then FAILS names the rule id, so the fix is to the probe's expect or fixture in org/ref/SEAT_RULES.json, not to the tool."
 }
 ```
+
+## NFRA_CTLPLN-W15-S1 -- placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W15-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~15",
+  "surfaced_at": "2026-10-08T02:52:42Z",
+  "one_line": "placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py line 90: box = dev.resolve(str(d.get(\"fabric\") ...)); `placement` is not read there",
+      "measured from this worktree 2026-10-08 ~02:4xZ: over placement-check read_projects() (34 live projects), 15 have a `placement` that resolves to a box other than read_projects()'s box or carry no `placement` field (e.g. IRPT_BCKEND fabric laptop, placement DELL2; MDPF_HEALGAP fabric laptop, placement DELL1; NFRA_REPORT no placement field)",
+      ".tools/crossbox-deploy-check.py projects_covering() already re-reads project.json `placement` over proj[\"box\"], the same workaround"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-5 BUILD 1 (c): 'PLACEMENT: the project row's `placement` against this box', and (a): use .tools/placement-check.py's functions, imported.",
+  "world_is": "read_projects() returns box from `fabric`; the project row's `placement` differs for 15 of 34 live projects. .tools/open-calls.py imports read_projects() and overlaps() and then overrides each project's box with the resolved project.json `placement` (falling back to the fabric box when the field is absent), so its PATHS and RESOURCES readings use placement. placement-check.py itself was not edited (it is in the order's paths, but changing which field its viewer reads would change its output for every other reader).",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: whether placement-check.py's read_projects() should read `placement` first is a decision on a shared viewer; open-calls.py's override goes away if it does. Three live projects have no `placement` field at all, so their box is the fabric box in this tool's reading."
+}
+```
