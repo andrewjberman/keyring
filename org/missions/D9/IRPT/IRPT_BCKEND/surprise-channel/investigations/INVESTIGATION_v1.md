@@ -21548,3 +21548,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Two names. With only the order's name, AC1 and AC2 FAIL with 'no census file'. Both names are written with identical bytes; the check is not weakened. Issuer may align the check or the order's name."
 }
 ```
+
+## IRPT_BCKEND-D2-S8 -- D2-W178-S2 ruled (fail-closed sequencing, carried to the CTO with the E9 pair) and D2-W178-S3 (the issuer's file-name defect, no effect)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T20:05:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W178-S2 and IRPT_BCKEND-D2-W178-S3. S2: the packaged retention admits only an ACTIVE policy row, so with E8 PENDING the E9 release (pin 0a57f3c0e9) keeps every CUSTODY_REPORT persist and read refused (RetentionRefused) while PERFORMANCE/ANALYSIS are unchanged (replay, identical result_sha256). That is fail closed, never exposure; it is a sequencing fact, not a live hazard. The ACTIVE row reaches the function only by a further repin of the reporting_policies.json staged row plus a release; the issuer carries that to 1.0.0_SA_CTO~DELL2 with the E9 pair (recommendation: release E9 now; the ACTIVE repin rides E10's pair, which must release before IRPT_CUSTDY E2a anyway). S3: the issuer's order named the census file IB83-1_e9_repin_census.json while the check reads IB83-1_repository_repin_census.json; the worker wrote both, byte-identical; no grading effect.",
+  "one_line": "E9 releases with custody still closed; the ACTIVE flip needs one more repin, routed to the CTO with the pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W178-S2 (RetentionPolicy._registered refuses a PENDING_ENFORCEMENT row: 'registered enforced policy required')",
+      "IB-pr-370 packet NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-370.md (blob 1d5120c14b), drained @a1f2d9f43c"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: the ACTIVE repin is carried with the E9 pair to the CTO; custody stays fail-closed meanwhile."
+}
+```
