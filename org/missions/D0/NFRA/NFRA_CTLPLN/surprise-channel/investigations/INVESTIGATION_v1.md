@@ -5014,3 +5014,82 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Remedy for the issuer to choose: a close form that takes an ANDREW_DIRECT record as the ruling and skips the cross-box route, or a withdraw verb for a duplicate row. Until then a ruled call reads OPEN and can be re-carded to Andrew, the exact failure the skill warns against."
 }
 ```
+
+## NFRA_CTLPLN-W38-S1 -- The ldo_event line's result field is the runtime's own return (ok / duplicate / deleted / 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:00:00Z",
+  "one_line": "The ldo_event line's result field is the runtime's own return (ok / duplicate / deleted / redelivered-outbox), not tenant.on_chat_messages' texted / updated / no-reply-wanted / paused / nothing-to-answer / answered-by-hand; the tenant result is a separate line with no object hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: before the post-drain real run, either cut a cell that logs the tenant result with the object hash, or read texted_chats=0 and results=ok as a reader limit, not as 'nothing was texted'",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py@b44b5d76df:272-293 handle() returns duplicate / redelivered-outbox / deleted / ok and ignores on_event's return value; :319 logs that as result=",
+      "data/transcripts/scripts/teams_chat/tenant.py@b44b5d76df:798-804 dispatch() logs a.log('tenant', kind=..., result=result) with no object field"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face: for kind teams.messages the ldo_event result is one of texted, updated, no-reply-wanted, paused, nothing-to-answer, answered-by-hand.",
+  "world_is": "Built as written (count_day counts the result field of ldo_event lines; AC1 runs on fakes shaped as the face says). Against real logs every teams.messages event would count as result=ok, so texted_chats would read 0 and the per-result counts would not separate texted from dropped; received, events, unexplained, failed and sms_sent are unaffected. Not repaired or widened here.",
+  "notes": "The tenant line carries the real result but no object hash, so it cannot be attributed to a chat from the log alone."
+}
+```
+
+## NFRA_CTLPLN-W38-S2 -- The log's object hash is of the chat id (ldo.send is called with chat['chat_id']) but the 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:00:00Z",
+  "one_line": "The log's object hash is of the chat id (ldo.send is called with chat['chat_id']) but the S3 path holds only assist.chat_key(chat_id), a lossy map, so the reader reconstructs the chat id by a heuristic (first '-' to ':', last '-' to '@').",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/assist.py@b44b5d76df:228-234 chat_key replaces [^A-Za-z0-9._-] with '-'; bronze_key stores only the key",
+      "data/transcripts/scripts/teams_chat/tenant.py@b44b5d76df:832 ldo.send(chat['chat_id'], ...); ldo.py:319 object=_h(oid)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The face: events are ldo_event lines of kind teams.messages for that chat's object hash, the chat reached from assist.chat_key(chat_id).",
+  "world_is": "chat_id_of() in inbound_count.py inverts the key for ids shaped 19:<id>@<domain>; an id with another ':' / '@' / '-' pattern would hash differently, its events would not attach, and the chat would read UNEXPLAINED. The AC1 fakes use the id shape the heuristic handles. The issuer's post-drain real run is the first measurement of how many real chat keys round-trip.",
+  "notes": "Not measured against a real key (no AWS call allowed in this cell)."
+}
+```
+
+## NFRA_CTLPLN-W38-S3 -- disarm record for W38-S1: AMENDMENT 1 reads outcomes from the tenant line; the reader no longer reads ldo_event.result
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:30:00Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-W38-S1: per AMENDMENT 1 of TO-CT-i-10 the reader takes results only from tenant lines of kind teams.messages, attributes a line to a chat only when it carries object, and counts object-less lines in the totals and a new unattributed total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-i-10.received-vs-texted-count.md AMENDMENT 1 @dd6deef902: outcomes from the tenant line; object-less lines count in totals and unattributed; ldo_event.result no longer read",
+      "python data/transcripts/scripts/tests/test_inbound_count.py, last line: INBOUND-COUNT-TEST ok=True arms=7/7 (texted arm uses an attributed tenant line; unattributed arm: two object-less tenant lines -> unattributed=2, no chat result; every other arm kept)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: row W38-S1 is disarmed by an appended line naming this amendment.",
+  "world_is": "S1 keeps ARMED in its own bytes (append-only; a worker may not edit it). The reader now takes outcomes from tenant lines, so ldo_event.result=ok no longer hides texted/updated. Lines logged before the issuer adds object at the merge read as unattributed, so texted_chats stays 0 for them while the totals texted= and updated= are complete; the post-drain real run is the first measurement against real lines.",
+  "notes": "Cites NFRA_CTLPLN-W38-S1. Proposed disposition for the CVO: S1 resolved by AMENDMENT 1 (the issuer's own recut). The worker does not set it."
+}
+```
