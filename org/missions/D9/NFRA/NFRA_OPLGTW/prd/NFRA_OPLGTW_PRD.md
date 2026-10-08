@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.9",
+  "prd_version": "v2.0",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -14,7 +14,11 @@
     "FWD-5",
     "FWD-6",
     "FWD-7",
-    "FWD-8"
+    "FWD-8",
+    "FWD-10",
+    "FWD-11",
+    "FWD-12",
+    "FWD-13"
   ],
   "status": "RATIFIED"
 }
@@ -121,6 +125,46 @@ ACCEPT: An Opal operator can explain a failed connection or denied request, see 
 PROOF: An operator follows the onboarding, troubleshooting, audit-read, and rollback instructions against controlled examples and records the result.
 
 SOURCE: supplied brief lines 149–179, 181–219.
+
+FWD-10  — Opal staff find a client by account number and name (v2.0)
+
+DONE WHEN: EXERCISED — a named staff member looks up a client by account number, then by a name, in Claude.
+
+ACCEPT: Andrew and Alyssa, each under their own grant, see every account's number and every name and title field Schwab records for it, so a sparse field has a fallback. Tax identifiers, mailing addresses, email addresses and phone numbers stay hidden. A principal whose grant does not carry the identity columns sees none of them.
+
+PROOF: One lookup by number and one by name for a known account, read against the source; the same requests under a grant without the identity columns, refused; the audit record of each identity read, holding no value.
+
+SOURCE: Andrew-direct 2026-10-08 ~17:4xZ, answer 2 (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md` @116d52009d); `4.0.0_SA_CRO~Z` assessment @139c8d018e, G1.
+
+FWD-11  — Opal staff read cost basis and realized gains (v2.0)
+
+DONE WHEN: EXERCISED — lot-level cost basis and realized gain/loss for chosen accounts are asked and checked against source.
+
+ACCEPT: For a granted account and date, staff can read open lots (acquired date, quantity, cost basis, unrealized gain/loss) and closed lots (closing date, proceeds, gain/loss, holding term), daily and year-to-date, with transaction flows carrying a readable label. The same scope, date and master rules as every other dataset apply.
+
+PROOF: Independently chosen accounts and dates whose lot totals are recomputed from the silver rows and compared with the answer.
+
+SOURCE: as FWD-10, G3 and G4; Andrew-direct 2026-10-08 ~17:0xZ, "Cost basis data absolutely exists in the aws bucket already".
+
+FWD-12  — Thirteen months of history (v2.0)
+
+DONE WHEN: EXERCISED — a quarter-start and a quarter-end date about a year apart are both answered for one account.
+
+ACCEPT: A grant reaches back 13 months from the latest complete business date. A date in that span with no proven-complete source is reported as unavailable, never guessed.
+
+PROOF: The two-date comparison, plus one deliberately requested date that lacks a completion record.
+
+SOURCE: as FWD-10, answer 3: "13 months for now".
+
+FWD-13  — The Tax SMA master is collected and served (v2.0)
+
+DONE WHEN: EXERCISED — master 08403355's daily files land, convert and answer a question, after a list-only run proves Schwab returns them in the same shape as the two existing masters.
+
+ACCEPT: Tax SMA accounts are collected every business day by the existing puller in the same structure as the other masters, kept as a separate master, and answer questions like SmartX and BlackDiamond. If Schwab returns no files for the master, the outcome reports that and stops.
+
+PROOF: The list-only run beside a control master; then a day's files landed, converted and queried.
+
+SOURCE: as FWD-10, answer 1: "WE should assess if this works and if so, and we get the data in the same shape (via running it exactly same structure), then it needs to be added to the daily job."
 
 ## CONTRACTS
 
@@ -597,3 +641,67 @@ Andrew, who has said that sign-in is his to handle (2026-10-08 ~13:2xZ).
 
 **Sign-off.** CONTRACTS text changes (C7) and ENDPOINT does not. The ratified-text half re-opens for `3.0.0_SA_CVO~O`.
 `prd-signoff` binds the ENDPOINT hash only, so this seat sends the request itself.
+
+### v2.0 addendum (2026-10-08 ~19:3xZ, 1.0.0_SA_CTO~O) -- staff usability: account identity, lots and realized gains, 13 months, the Tax SMA master; refresh answers once sent
+
+Input: Andrew-direct 2026-10-08 ~17:4xZ at the `4.0.0_SA_CRO~Z` terminal, his four answers verbatim in
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md` @116d52009d,
+on the assessment `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/OPLGTW_SCHWAB_USABILITY_AND_TAX_MASTER_ASSESSMENT_20261008.md`
+@139c8d018e (the brief for this addendum). Rulings: `ledger/ROUND_ANALYSIS.round31.md` R50-R55. Endpoint: FWD-10 to FWD-13 above.
+
+**What this reverses, stated plainly.** v1 kept every raw account number and title out of every response (C2 :151,
+`forbidden_field_classes`). From v2.0 those are GRANTABLE columns for named internal principals. Andrew's ground: "There are
+only two mcp users at this time, me and alyssa".
+
+1. **Account identity (C2, FWD-10).** `raw_account_id` and `account_title` leave `forbidden_field_classes` and become the
+   grantable column class `account_identity`. It holds the account number and EVERY name and title field the source records
+   (account title lines, taxpayer first, middle and last name and suffix, taxpayer title, alias, organization name, and any
+   other name or title column the measurement finds); the exact list is round 32 item 4's printed schema, never typed here.
+   - Stay forbidden, as named classes: `tax_identifier`, `mailing_address`, `email_address`, `phone_number`, and the three
+     hidden-operand classes. A column whose class is not decided is forbidden.
+   - `account_ref` stays the join key in every dataset. `account_identity` columns are returned beside it, never in place of it.
+   - Every response that carries an `account_identity` column writes one audit record: principal, dataset, master, the
+     count of accounts returned. No value, number or name is logged (C2's "never log raw IDs" stands for the audit).
+   - **Authorized grants:** Andrew's and Alyssa's principals only, by his answer. Any other principal needs his own word.
+2. **New datasets (C3/C4, FWD-11).** `fact_acc` (as `dim_account`: the account list, `account_identity` columns plus
+   registration, type and date opened, no forbidden class), open lots (`fact_uln`, `fact_ult`), closed lots (`fact_rld`
+   daily, `fact_rly`, `fact_rty` year-to-date). Each dataset's grain, types, units, sign and null semantics are recorded from
+   the measured source as C3 requires; the contract's `fields` lists are written from round 32 item 4, and a column with no
+   measured meaning is not served. C3's closure rule applies: a dataset is served for a date only when the completion
+   record names it.
+3. **Flow labels (C4, FWD-11).** `dim_transaction` carries a `flow_label` derived from `tr_cd`/`sb_cd` by a table in the
+   contract, written from the vendor code list. An unlisted code labels `unclassified`, never guessed.
+4. **History (C3, FWD-12).** A grant may set `calendar_months` (1 to 13) in place of `calendar_days`; exactly one is set.
+   The window is the latest qualified complete business date and every business date on or after the same calendar day 13
+   months earlier (month-end clamped). A date with no qualified completion record is reported unavailable (C3 unchanged).
+   Measured 2026-10-08: master 08335338 holds 27 completion markers, 2026-08-31 to 2026-10-07, so the producer's metadata
+   backfill (C3, surface S4) is the precondition for most of the 13 months; it reconciles against original inputs and
+   repairs no source data. The query and export caps (A14) are not raised by this addendum; a measured run over 13 months
+   decides whether any cap moves, as its own ruling.
+5. **The Tax SMA master (C3, FWD-13).** Master `08403355` joins `masters` only after: (a) one list-only run returns files
+   whose types and vendor filename grammar equal those of a control master over the same window (round 32 item 3); (b) the
+   daily puller, its schedule (at least 30 minutes from the other two), the box's write grant and the silver conversion
+   carry it in the SAME structure as the other two masters; (c) a day lands, converts and qualifies. If (a) returns zero
+   files, the outcome stops there and reports a Schwab-side entitlement. (b) is infrastructure under CLAUDE.md rule 13 and
+   is placed with an AE lane by the issuer's order; it is a never-widen act with halves.
+6. **Refresh and code redemption answer once sent (C1, R50).** C1's "refresh has 30 seconds" now reads: the budget bounds
+   the START of the conditional transaction that consumes a generation or a code. Once that transaction is sent, the handler
+   awaits its result and answers it, even past the budget. A budget that elapses before it is sent answers 503 with nothing
+   consumed. Ground: row Z-W35-S1 (`server.py:367-382`).
+
+**Rules that do not move.** One master per call, never summed across masters or dates; prompt-like text in data stays
+data; no grant mutation from MCP; original Parquet and bronze stay unavailable; FWD-1 to FWD-8 are unchanged.
+
+**Acceptance (added to the matrix).**
+- A21 (FWD-10): number and name lookups under a granted principal; the same under a grant without `account_identity`,
+  refused; a request for a forbidden class, refused; the audit record holds counts only.
+- A22 (FWD-11): lot totals recomputed from silver for independently chosen accounts and dates equal the answer; an
+  unlisted transaction code labels `unclassified`.
+- A23 (FWD-12): two dates a year apart answered; a date with no completion record reported unavailable.
+- A24 (FWD-13): the list-only run beside its control; then one landed, converted, qualified and queried day.
+- A25 (C1 item 6): a rotation slowed past the budget returns the new pair and the family stays live; a deadline before the
+  transaction answers 503 and the stored generation is unchanged; the same two arms for code redemption.
+
+**Sign-off.** ENDPOINT (FWD-10 to FWD-13) and CONTRACTS (C1, C2, C3, C4) change. The ratified-text half re-opens for
+`3.0.0_SA_CVO~Z` (signing for the ~O CVO seat until it is seated, msg 31856). The brief half: the brief is
+`4.0.0_SA_CRO~Z`'s assessment, accepted as written by the CRO (CLAUDE.md rule 27, PROPORTIONATE SIGN-OFF).
