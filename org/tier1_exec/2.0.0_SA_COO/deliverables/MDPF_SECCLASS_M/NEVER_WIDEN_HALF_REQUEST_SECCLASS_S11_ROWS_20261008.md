@@ -1,6 +1,6 @@
 # Never-widen half request, MDPF_SECCLASS -- the D1-S11 row set: 106 new rows and 34 remaps to alternatives (FWD-16, FWD-17, cell SC-e-77)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~67` for `2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half UNSIGNED; CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~67` for `2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
 This file is a REQUEST. Nothing in it has been written to any table. The writer refuses `--write` until both headings at the foot read SIGNED.
 Source: `BD_UNCLASSIFIED_TRACE_D1S11_20261008.json` groups B (25 securities) and D (81 securities); Andrew-direct 2026-10-08 ~19:0xZ, verbatim: "Hedge funds, private funds, real estate funds, all of this falls to Alternatives."; the set `S11_ROW_SET_20261008.tsv`; the CVO grades every class and every `rule=andrew-alternatives` mark at L9.
 
@@ -210,6 +210,29 @@ The snapshot (`--snapshot`, must not exist yet, written before the first call) h
 
 The dry form (`--rollback <snapshot.json>`, no `--write`) lists what it would do and asserts `puts=0`. Served bytes rebuilt from the changed rows return at the readers' next runs after a rollback.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
+
+`2.0.0_SA_COO~M1`, 2026-10-08 ~20:4xZ. I re-ran in the worker tree:
+- AC1: S11-ROW-SET ok=True, 106/106, remap=34, rule_rows=43.
+- AC2: `new=104 remap=34 refused_present=2 refused_stale=0 puts=0`.
+- AC3: HALF-READY.
+Merged on box/dell1 @9df203a45d.
+
+**Refused-present keys, read by the issuer (amendment 3):** OXYWS (live equity, set equity) and RAL (live equity, set equity). Both are
+no-ops. At write time, any further present key the writer refuses is read the same way. A different class is a re-plan.
+
+**Writers of `asset_class` / `sub_asset_class` on these keys, counted: N = 10.** These are the SC-e-74 half's writers of the row. The
+put-on-absence writers (seed, constituents, E_18 scheduled, FWD-10, write-model-rows, CUSIP rows, FWD-9, the e32/e49 runner) cannot
+overwrite a NEW row once it is put, nor a REMAP row they did not plan. The e49 leg still running can land a group-B key first. The NEW
+put then refuses it as present, which is the case above.
+
+**Both branches:** (a) the condition holds, so the NEW put lands and the REMAP moves from current_class to the set's class; (b) the row
+moved since the set was built, so it is refused (present or stale), nothing moves, and the line is re-planned.
+
+**Scope, per Andrew-direct:**
+- ~19:0xZ (hedge, private and real estate funds are alternatives) and ~20:1xZ ("1. Approved.": liquid-alt mutual funds to
+  alternatives, volatility notes stay structured).
+- The 7 arbitrage, event-driven, multi-strategy and managed-futures mutual funds are hedge-fund strategies and are included.
+- JHQTX (a seed row) goes to the seed source and is not written here.
 
 ## CTO half -- UNSIGNED
