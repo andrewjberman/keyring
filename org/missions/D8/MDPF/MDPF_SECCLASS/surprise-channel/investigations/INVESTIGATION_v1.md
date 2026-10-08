@@ -5406,3 +5406,28 @@ by dell1 or by this seat.
   "notes": "Not decided here (issuer's re-point): (i) a C_06 FULL build, which reclassifies every date through the current table; (ii) a targeted rewrite of the 36 envelopes' 3 dated entries; (iii) a D_04 passthrough guard that maps any class outside the six (plus unclassified) at write time, which would also pin the next such case. Any of (i)/(ii) writes served gold/entities/clients/ and platinum/clients/ objects and needs the never-widen pair. COT's twin is out of scope here: 2 opal-data-cot keys (z09305621, z09305679, 1 hit each, last modified 2026-10-08T11:36:56Z) in the cell's evidence file."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W65-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~65",
+  "surfaced_at": "2026-10-08T18:59:51Z",
+  "one_line": "SC-e-75: C_06's retained-entry reclass heals every holding the envelope shows, but 15 of 105 changed dates keep a mix sum below 0.999 because the envelope holds only the top 10 holdings per date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Local run of reclassify_retained (C_06.client_mix_timeseries.py:273) over the 36 hit envelopes gold/entities/clients/{rid}.json named by SERVED_MULTI_ASSET_SPLIT_20261008T1810Z.json (read-only S3 get, live classifier): entries=105 holdings=141 (multi_asset->equity 84, ->fixed_income 57); mix sum after the move on the 105 changed dates: max 1.000001, min 0.952431, 15 of 105 below 0.999.",
+      "z08119861 (3 dates): mix sum 0.963313/0.963298/0.968003 before, 1.0 after; 1291 other dated entries byte-identical.",
+      "C_06.client_mix_timeseries.py:552-554 builds mix over MIX_ASSET_CLASSES, which has no multi_asset key, so multi_asset weight never entered the served mix; :559-566 keeps only TOP_N_CONC=10 holdings per date."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 step 2: recompute the date's mix class totals from the reclassified holdings, so the retained entries come out consistent.",
+  "world_is": "The mix is recomputed from the holdings the envelope holds. A multi_asset position outside a date's top 10 is not in the envelope and its weight was never in the mix, so on 15 of the 105 healed dates the mix stays short of 1.0 by that weight (up to 0.047569). The order's own test and criteria are met; the shortfall is stated in the half request (section Blast radius, 'Known limit'). Only a C_06 FULL build, which reclassifies from the canonical holdings, closes it.",
+  "notes": "Not disarmable and not decided here; the signing seats read the limit. Leg G should count mix sums < 0.999 on the healed dates beside the multi_asset census."
+}
+```
