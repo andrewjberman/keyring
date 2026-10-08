@@ -231,6 +231,29 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "spec_asserts": "A multi-account file is turned back before anyone at Opal sees it (FWD-3).",
     "world_is": "Round 1 does not check it; the door does not either (PRD R8).",
     "notes": "By design for round 1."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-08T22:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S6",
+    "one_line": "FWD-6 says the draft appears on the SAME ticket and the ticket shows who sent the final commentary and when; workstream F10 (CTO scope msg 1789: svc-commentary CREATE-only) puts the draft on a NEW analysis_request ticket and builds no sent-by/sent-at field.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (carried to the CTO in the F10 slug: an append-to-existing-ticket route needs the report to know its ticket, contract O2)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_VNEXT/prd/TCKT_VNEXT_PRD.md:57 (FWD-6 text)",
+        "1.0.0_SA_CTO~DELL2 msg 1789 (scope: CREATE-only on analysis_request, the two fields, the 08-12 read)",
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md section 6 O2"
+      ]
+    },
+    "spec_asserts": "The draft lands on the same ticket as the request, and the ticket records who sent the final commentary and when (FWD-6).",
+    "world_is": "After F10 the draft lands on a new ticket created by svc-commentary; report_ref lives on the ticket only, so the service cannot find the request's own ticket; no sent-by/sent-at field is built.",
+    "notes": "Not built in F10 by scope; FWD-6 grades PARTIAL until a later cell closes both clauses."
   }
 ]
 ```
