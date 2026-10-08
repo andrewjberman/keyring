@@ -4814,6 +4814,126 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
 }
 ```
 
+## MDPF_SECCLASS-S64 -- ai_leg_verify.py's listing limb is coupled to UTC midnight, and the e32 AI leg will cross it
+
+```json
+{
+  "id": "MDPF_SECCLASS-S64",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC",
+  "surfaced_at": "2026-10-07T21:55Z",
+  "one_line": "AC1 (R12_CHECKS/ai_leg_verify.py) reads the AI listing at date=<UTC today AT AC1 RUN TIME> and requires listing_count == model_rows, while the runner rewrites the listing at date=<UTC today AT EACH CHUNK'S END> (index_writer.run_day_of is a plain UTC-midnight boundary); the e32 AI leg started 21:26Z and is pacing ~25 min per 250-key chunk, so 10 chunks finish about 01:3xZ on 2026-10-08 and the act's listing moves from date=2026-10-07 to date=2026-10-08 mid-run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~SC -- runs AC1 in the SAME UTC day as the final chunk's listing write, and before reporting any ok=False reads the other day's key too; stated in ledger entry secclass-e32-ai-leg-i-20261007",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/mdpf-secclass/ai-index/index_writer.py run_day_of(now) = now.astimezone(timezone.utc).strftime('%Y-%m-%d') -- a plain UTC-midnight boundary, no run-day offset; write_listing() calls run_day_of(now) per call and REBUILDS the whole listing from a consistent scan, so each write is a complete snapshot, not an append",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/ai_leg_verify.py: day = datetime.now(timezone.utc).strftime('%Y-%m-%d'); it GETs mdpf/global/gold/ai_classified_securities/date=<day>/index.json, sets lcount=None on NoSuchKey, and ok requires lcount == model_rows",
+      "measured pacing: snapshot E32_AI_SNAPSHOT_20261007.json written 21:26Z (219,994 bytes); at 21:52Z a COUNT scan of etf-classifications read updated_by=mdpf-secclass-model rows=13 with denominator_scanned=8968, i.e. chunk 1 of 10 had not yet put, so a chunk is >=26 min",
+      "the dry run of 21:1xZ printed index_address=s3://opal-data-mdpf/mdpf/global/gold/ai_classified_securities/date=2026-10-07/index.json -- the address named in the halves and the ledger entry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AI-e32 step 4 and the COO half's acceptance item 2 treat AC1's 'the AI listing's count equals the number of classified_by = model rows' as a property of the act's output, and the halves and the ledger name ONE listing address, date=2026-10-07.",
+  "world_is": "The property holds only when AC1's UTC day equals the UTC day of the last chunk's listing write. A run that straddles midnight writes its final full listing to date=2026-10-08 while date=2026-10-07 keeps a stale partial count; AC1 run on the wrong side reads either the stale count or NoSuchKey (lcount=None) and prints ok=False for a correctly landed act -- a false FAIL whose shape is indistinguishable from a genuine listing failure. It fails safe for this run only because the act ends AFTER midnight, so AC1 run immediately after it reads the same day's full rebuild. The e49 AI leg, queued behind this one, inherits the same coupling.",
+  "notes": "No fix attempted: ai_leg_verify.py and index_writer.py are outside this order's <paths>. The durable repair is for AC1 to take the run day as an argument (or read the address the act printed) instead of recomputing it from the wall clock."
+}
+```
+
+## MDPF_SECCLASS-S65 -- TO-AI-e49's context cites a device-and-egress word for a question the RESERVED card asked about population
+
+```json
+{
+  "id": "MDPF_SECCLASS-S65",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC",
+  "surfaced_at": "2026-10-07T21:55Z",
+  "one_line": "TO-AI-e49's <context> names its vendor scope as Andrew's 18:3xZ answer 'The Dell Boxes have vendor egress as needed', but RESERVED_CARD_SC_e49_AI_LEG_VENDOR_WORD_20261007.md asked a different question -- whether the 'full old table' word reaches 1,172 keys drawn from three firms' missing lists rather than from bd-securities -- and the quoted answer speaks to which DEVICES may egress, not to that population; the authorization that actually satisfies COO condition 2 is the signed CTO half's own statement, and this act now runs on the laptop, not on a Dell box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~SC/task_orders/MDPF_SECCLASS.TO-AI-e49.missing-list-ai-leg-laptop.md <context>: 'Vendor word: laptop 1.0.0_SA_CTO msg 106533, on Andrew-direct 2026-10-07 ~18:3xZ item 4 (\"The Dell Boxes have vendor egress as needed\"): the keys are covered, at most 2,344 calls'",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/RESERVED_CARD_SC_e49_AI_LEG_VENDOR_WORD_20261007.md: 'The word names the old table, though, and these keys are not drawn from it. A wider reading is plausible, so the issuer asks instead of ruling.' Its three options are Approve / Cap it / Hold -- all about the population, none about a device",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD15_AI_20261007.md COO condition 2: 'If the CTO half does not state that this run is within that word, the AI leg waits for Andrew's word, put to him sized.'",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e49_FWD15_AI_RUN_20261007.md (@6eab3cda67) states it squarely: 'Vendor word: this run IS within Andrew's word... Round-8 ruling 2.3 already applied the word; this half confirms it at the act's own numbers. No new word is owed.' -- so condition 2 is met on its face by the half, independent of the 18:3xZ line",
+      "the order routes the act to this laptop seat because dell1's principal is denied secretsmanager:GetSecretValue on astn/kimi/api-key; measured here at 21:1xZ, GET-SECRET-VALUE ok=True on the laptop"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AI-e49's <context> presents 'The Dell Boxes have vendor egress as needed' as the vendor word covering this act's 1,061-to-1,172 keys and 2,344-call ceiling.",
+  "world_is": "That sentence answers a device-egress question; the RESERVED card's question was about the population, and the record of it lists no device option. The act's vendor authorization rests on the signed CTO half, which states the run is inside the 2026-10-05 and 2026-10-06 words at the act's own numbers -- which is exactly what COO condition 2 requires, so nothing is blocked. The row exists because a later reader who cites the order's context line would be citing an instrument that does not answer the question, and because the act has since moved to a device the quoted sentence does not name. This seat does not adjudicate the scope either way (CLAUDE.md section 2: relay, never adjudicate wider or narrower); the call belongs to 1.0.0_SA_CTO and 2.0.0_SA_COO~M1.",
+  "notes": "Filed before any e49 vendor call. TO-AI-e32 runs first and is unaffected: its word, 'RUn on the full old table' (2026-10-06 00:03Z), names the population e32 sends."
+}
+```
+
+## MDPF_SECCLASS-S66 -- AC1 (ai_leg_verify.py) reads ok=True on an 8-percent-complete AI leg: landed>0 catches an EMPTY act, never a PARTIAL one
+
+```json
+{
+  "id": "MDPF_SECCLASS-S66",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC",
+  "surfaced_at": "2026-10-07T23:25Z",
+  "one_line": "The e32 AI leg was killed by the harness for system memory pressure after chunk 1 of 10, with 187 of 2,291 planned keys landed; AC1 run exactly as TO-AI-e32 names it then printed 'AI-LEG-VERIFY act=e32 ok=True planned=2291 landed=187 unresolved=2104' with rc=0, because ai_leg_verify.py's ok predicate carries 'landed > 0' and never 'unresolved == 0', so any value from 1 to 2,291 landed reads identically as ok=True and the order's step 4 would have closed a NEVER-2 entry and flipped a WORLD-risk order to complete on 8 percent of the act.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~SC disarmed it for THIS act in-session: step 4 was not executed, no leg is closed, the order stays pending, and the absence of the post-loop RECLASSIFY-WRITE line is recorded as the completeness oracle in org/tier2_senior/0.7.0_AE_CloudOps~SC/deliverables/E32_AI_LEG_RUN1_KILLED_STATE_20261007.md. The DURABLE fix belongs to 2.0.0_SA_COO~M1, which owns R12_CHECKS: AC1 should take the expected key count (or the act's own RECLASSIFY-WRITE line) and fail when landed + unresolved does not account for it, or when unresolved is non-zero without the act having run to completion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ai_leg_verify.py:~95 ok = not probs and gone == 0 and ma == 0 and landed > 0 and lcount == model_rows -- `unresolved` is computed and printed but is absent from the predicate",
+      "measured 23:1xZ on the live partial state: 'AI-LEG-VERIFY act=e32 ok=True planned=2291 landed=187 unresolved=2104 problems=0 first=[] snapshot_keys_gone=0 multi_asset=0 model_rows=200 listing_count=200', AC1 rc=0",
+      "the act's whole stdout is 'DIRECT planned=0 written=0 refused=0', ONE chunk line 'AI chunk 0-250: keys_sent=250 model_calls=251 landed_outside_contract=0 ... written=187', and 63 UNRESOLVED lines; the post-loop RECLASSIFY-WRITE line was never printed",
+      "consistent scan at 23:15Z: SNAPSHOT keys=8968 intact, LANDED of planned=187, STILL-ABSENT=2104, TABLE total=9155 (= 8968 + 187), snapshot keys now missing=0, multi_asset=0, classified_by=model=200",
+      "harness kill notice, verbatim: 'Claude Code stopped it because the system was critically low on memory while the session was idle ... Do not start it again on your own'; 0 old_list_reclassify_write processes remain; box had 3.93 GB free of 31.7 GB",
+      "TO-AI-e32 step 4 as written: 'Prove it (AC1) and close the entry with the RECLASSIFY-WRITE line and AC1's output. Flip this order complete.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AI-e32's preflight names 'an empty success (AC1 needs landed>0 and the listing count equal to the model rows)' as an adversarial case AC1 covers, and step 4 treats AC1 passing plus the RECLASSIFY-WRITE line as what closes the entry and flips the order complete.",
+  "world_is": "AC1's landed>0 term covers the EMPTY case only. On a partial act it returns ok=True with rc=0, and every other limb it checks also passes legitimately, because the partial state is genuinely correct as far as it goes: every put was conditional on absence, 0 snapshot keys are missing, all 187 landed rows are inside contract 0.8.0, and the listing count equals model_rows at 200. So AC1 is a CORRECTNESS oracle, not a COMPLETENESS one, and nothing in the criterion says so. The only completeness signal on this act is the ABSENCE of the RECLASSIFY-WRITE line, which is an absence -- the shape a reader does not notice. Step 4 was therefore not executed and the entry is deliberately left OPEN.",
+  "notes": "No fix attempted: R12_CHECKS/ai_leg_verify.py is outside this order's <paths>. This row does not touch the resume-or-roll-back call on the act itself, which is the issuer's and is put to it with this seat's recommendation (resume: the distinct key set stays 2,291 either way, so the 8,495 vendor ceiling is untouched, and the 187 landed rows and 251 calls are not discarded). The sibling TO-AI-e49 cites the same AC1 script, so it inherits this gap."
+}
+```
+
+## MDPF_SECCLASS-S67 -- S64 MEASURED: AC1 returned opposite verdicts on identical state 63 minutes apart, flipping on the UTC day boundary alone
+
+```json
+{
+  "id": "MDPF_SECCLASS-S67",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC",
+  "surfaced_at": "2026-10-08T00:20Z",
+  "one_line": "Row S64 predicted that ai_leg_verify.py's listing limb is coupled to UTC midnight; it is now measured on the live e32 partial state, and the flip is clean -- at 23:1xZ AC1 printed ok=True rc=0 listing_count=200, and at 00:18Z the SAME invocation against the SAME 187 landed rows printed ok=False rc=1 listing_count=None, with nothing in the table, the listing or the snapshot changed in between; the whole difference is that the wall clock crossed 2026-10-08 and AC1 then asked S3 for a date=2026-10-08 key that no chunk has written yet.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~SC for the e32 act: AC1 is run only AFTER run 2's first chunk rewrites the date=2026-10-08 listing, never before, and any ok=False is re-read against the other day's key before it is reported. The DURABLE fix is 2.0.0_SA_COO~M1's (owner of R12_CHECKS): AC1 should take the run day or the act's printed index_address as an argument instead of recomputing it from datetime.now(), and should distinguish NoSuchKey from a count mismatch rather than folding both into lcount=None.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-07 23:1xZ, act=e32: 'AI-LEG-VERIFY act=e32 ok=True planned=2291 landed=187 unresolved=2104 problems=0 snapshot_keys_gone=0 multi_asset=0 model_rows=200 listing_count=200', AC1 rc=0",
+      "2026-10-08 00:18:44Z, IDENTICAL invocation and identical snapshot argument: 'AI-LEG-VERIFY act=e32 ok=False planned=2291 landed=187 unresolved=2104 problems=0 snapshot_keys_gone=0 multi_asset=0 model_rows=200 listing_count=None', AC1 rc=1",
+      "every other field is byte-identical across the two runs (planned, landed, unresolved, problems, snapshot_keys_gone, multi_asset, model_rows); only listing_count moved, 200 -> None",
+      "direct S3 read at 00:18Z: date=2026-10-07/index.json count=200 PRESENT; date=2026-10-08/index.json ABSENT (NoSuchKey) -- so the 10-07 listing that satisfied AC1 an hour earlier is still there and still correct, and AC1 simply stopped looking at it",
+      "amendment 2's own dry run at 00:1xZ prints index_address=s3://opal-data-mdpf/mdpf/global/gold/ai_classified_securities/date=2026-10-08/index.json, where the 21:1xZ dry run printed date=2026-10-07 -- the address the act writes moved with the clock exactly as S64 said",
+      "no write of any kind occurred between the two AC1 runs: the act process was killed at 23:0xZ and confirmed dead, and the only acts since were read-only (scans, a dry run, S3 gets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof_of_spec gives AC1 one invocation and one expectation, 'AI-LEG-VERIFY act=e32 ok=True', as though its verdict were a function of the act's output alone.",
+  "world_is": "Its verdict is also a function of WHEN it is asked. On one unchanged world state it answers ok=True before 00:00Z and ok=False after, so the criterion as written is not reproducible across a midnight boundary and a grader reading it at the wrong hour grades the wrong thing. Worse, the two failure directions are opposite and both silent: before midnight it was a FALSE PASS (ok=True on an act 8 percent complete, row S66), and after midnight it is a FALSE FAIL (ok=False on 187 rows that are correct, complete-as-far-as-they-go, and inside contract 0.8.0). A reader who trusts rc gets a wrong answer either way, and NoSuchKey is folded into the same lcount=None that a genuine count mismatch would produce, so the output cannot distinguish 'the listing is missing' from 'the listing disagrees'.",
+  "notes": "This row records the measurement for S64, which is append-only and not edited. No fix attempted: R12_CHECKS/ai_leg_verify.py is outside this order's <paths>. The sibling TO-AI-e49 cites the same script with the same single-expectation shape. Amendment 2 clause 5 independently adds a completeness check at close (run 1 sent + run 2 ai_to_model = 2,291), which addresses S66's partial-completeness gap but not this clock coupling."
+}
+```
+
 ## MDPF_SECCLASS-D1-S1 -- the Lambda builder's staged_from guard sees DRIFT but not STALENESS, so a stale pin ships pre-port bytes green
 
 ```json
