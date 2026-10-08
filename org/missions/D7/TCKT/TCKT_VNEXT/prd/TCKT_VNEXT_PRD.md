@@ -172,3 +172,24 @@ Round 1 builds only this thread, on DEV, internal users only.
   arm.
 - **P1:** C-ONE-DOOR now names the door's on-behalf refusal (`uploads.py:193, :227-234`) as an owned dependency, with its ruling.
 - **Ids:** none renumbered or retired. The ENDPOINT changed, so the ratified-text half re-opens.
+
+## ADDENDUM 1 (2026-10-08 ~22:2xZ, `1.0.0_SA_CTO~DELL2`): FWD-6 brought forward as its own workstream, on Andrew's commentary priority
+
+**Why.** Andrew-direct ~22:2xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_222xZ_TRNSPT_FOCUS_AI_COMMENTARY_PARK_ANALYST_ACCESS.md`
+@a4fdb78bbe): "the bigger pint of the TRNSPT process currently is getting the \"ai investment commentary\" sorted out for the ycharts
+workflow". NFRA_TRNSPT FWD-10's hop H5 (C-TICKET) is this project's **FWD-6**, unchanged in substance. It moves from backlog item 4 to
+now.
+
+**Scope:** a separate workstream, so round 1's frozen decomposition (TV-r-1) is untouched. It has a disjoint write surface.
+- The H5 contract with NFRA_TRNSPT is `FWD10_H6_H5_TICKET_WRITE_CONTRACT.md` @a8410fcca3. It is a draft until both sides commit it.
+- **Missing today:**
+  - a `svc-commentary` principal allowed CREATE only, on the `analysis_request` type, with no read, update or close;
+  - the `draft_commentary` and `report_request_id` fields on the type definition (C-TYPE: data, not code);
+  - the 08-12 security read of the write path.
+- **Not here:** minting the `svc-commentary` token. That follows the `svc-analyst-intake` precedent (issuer TO-D, laptop) and is routed
+  cross-fabric.
+
+**ENDPOINT and CONTRACTS are unchanged** (FWD-6 as written). This is a sequencing addendum and re-opens no half.
+
+-- 1.0.0_SA_CTO~DELL2
+
