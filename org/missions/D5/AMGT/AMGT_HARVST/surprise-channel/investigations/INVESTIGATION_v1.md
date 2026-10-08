@@ -7807,6 +7807,66 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T08:47:00Z",
+      "one_line": "The order's crosswalk of 237 records is the 2026-09-29 object; the object the crosswalk loader reads (latest) is 2026-10-07 with 243 records.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bm-1 s.0: the CROSSWALK has 237 records and lib/research/identity/crosswalk.py says where the object lives and how it is loaded.",
+      "world_is": "crosswalk.load_crosswalk() reads the LATEST crosswalk/v1/<date>.json, which is 2026-10-07 with 243 records (sha not pinned in the order); the 237-record object is crosswalk/v1/2026-09-29.json (sha256 68a788347ec2bb9cdbeae19afb784771a74e40f3e5921fd42fbe6751269d5bee), the one the pool universe's own refusal text names. Done instead: the script compares against the latest (243, the loader's read) and prints, on its CROSSWALK OBJECT NOTE line, the 237 object and the six keys the latest adds (ABNB_US_Equity, BE_US_Equity, DG_US_Equity, ED_US_Equity, GEV_US_Equity, MRNA_US_Equity). The region counts are the same for either object except CROSSWALK ONLY (ABNB only under the latest).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.out (CROSSWALK OBJECT NOTE line)",
+          "lib/research/identity/crosswalk.py (load_crosswalk, _read_pool_latest)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T08:47:30Z",
+      "one_line": "Eight keys, not three, are on the gold list and absent from the collector's files; BE, DG, ED, GEV and MRNA are pool holdings with names and no registrations.json entry.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bm-1 s.0: three keys (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity) are known to be on the list and absent from the collector's files; s.1 item 6 expects ADDED of at least 3.",
+      "world_is": "The 242-key gold list less the 234 collector keys is 8 keys: the three named plus BE_US_Equity, DG_US_Equity, ED_US_Equity, GEV_US_Equity, MRNA_US_Equity. The five are pool 'holding' records with a pool name and no entry in lib/research/identity/registrations.json, so round 47's at-5 (registry folders only) could not reach them. Done instead: the order's rule (one entry and one record for each key on the list and absent from the collector) was applied to all 8, the five built from the pool record alone by R2 (sa_symbol DERIVED, not probed); ADDED is 8. CSL_AU_Equity and 6861_JP_Equity come out sa_symbol UNRESOLVED (R3); the gold list carries a ticker_anchor_symbol CSLLY for CSL from the alias rule file, which is not a stored sa_symbol resolution and was not used.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.out (ADDED block)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T09:04:30Z",
+      "one_line": "bm1_three_universes.py regenerates rank_universe_identity_20261008.json from the builder, so re-running it after HVST-bm-2 silently reverts the AIG and KCDMY repairs and still prints RECONCILE OK.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-bm-2 s.1 item 2: the repair is made in the two new files only; bm-1's own AC2 invocation (cat of bm1_three_universes.out) is a read of a stored output, not a re-run.",
+      "world_is": "bm1_three_universes.py line 222 writes NEW_IDENTITY from the builder's rules and compares it to the round-47 file (EXISTING RECORDS CHANGED 0), so a re-run after bm-2 rewrites AIG_US_Equity as 'American International Group I' and KCDMY_US_Equity as 'Kimberly-Clark de Mexico SAB d' and prints RECONCILE OK; bm2_truncated_names.py would then have to be run again, and the 'sha256 48cb40f6...' in bm-1's proof instance no longer matches the file (now f3680024...). Done instead: bm-2 changed nothing in the bm-1 script; run order is bm1 then bm2, and the bm-2 plants (test_bm2_truncated_names.py) fail if the repair is reverted. Not run: bm1 script after bm-2.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.py (lines 197-226)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm2_truncated_names.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
