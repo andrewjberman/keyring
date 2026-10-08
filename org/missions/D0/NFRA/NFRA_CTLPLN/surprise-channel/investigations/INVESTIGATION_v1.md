@@ -3192,3 +3192,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Consequence: a Dell could add a permission letting any principal or service invoke the portal authorizers and auth handlers; it still cannot change their code or configuration. The issuer or the CTO chooses: add AddPermission and RemovePermission to DenyProtectedFunctions (the protected-functions census and its renderer then agree), exclude them in the data, or accept."
 }
 ```
+
+## NFRA_CTLPLN-W14-S16 -- TO-CT-a-1 amendment 12: 11 of 21 listed Deny actions take another resource type; the audit-trail bucket's configuration actions stay allowed by the create policy
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T07:20:13Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule before plan 2 whether DenyAuditTrailBucketPolicy also names the audit bucket's configuration actions listed in notes, or accept them; a CTO ruling then a one-line edit of the statement)",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S16",
+  "one_line": "TO-CT-a-1 amendment 12: 11 of the 21 actions the three new Denies list take another resource type and never fire on the Deny's resource (listed as ordered); and the audit-trail bucket's own configuration actions are allowed to both Dell users by the create policy, outside the ruled list",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/simulate_policy.py run (CTa1-AC2): 'UNDO-INERT-COUNT actions in the three statements that take another resource type=11 of 21 ... the evaluator matches the Deny for 2 of them on the Deny's own resource'; the 11: lambda:AddLayerVersionPermission, lambda:RemoveLayerVersionPermission (resource type layer version, the Deny lists function ARNs) and nine s3 access-point, access-grant and multi-region access-point actions (the Deny lists the bucket ARN); each reads implicitDeny with no statement matched on the function or bucket ARN for both users, before and after",
+      "scratch probe through the same simulator (.scratch/probe12.py, both users, effective set of the run): s3:PutLifecycleConfiguration, s3:PutBucketPublicAccessBlock, s3:PutBucketLogging, s3:PutBucketNotification, s3:PutEncryptionConfiguration, s3:PutBucketOwnershipControls, s3:PutBucketVersioning on arn:aws:s3:::opal-cloudtrail-logs-313476888478 all read allowed, matched statement CreateUpdateTagS3OnOpalBuckets(Allow) in dell_create_policy.json (Resource opal* and opal*/*); s3:DeleteObject reads implicitDeny",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json: the 14 s3 actions of the Allow's data are the ones the new Deny lists; none of the seven configuration actions above is in that data (they are the create policy's, older than this Allow)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 12 items 1 and 2: every lambda: action and every s3 action of the Allow's data document is added to a Deny on the protected function ARNs and on the audit-trail bucket and its objects, and each denied action on each named resource reads explicitDeny with the new statement matched.",
+  "world_is": "The Deny statements list every action as ordered. The evaluator applies them to the actions that take that resource type (lambda:AddPermission, lambda:RemovePermission on the functions; s3 bucket policy, bucket ACL, object ACL actions on the bucket and its objects; all four queue actions) and those arms are counted (undo_denied). The 11 actions of other resource types are printed (UNDO-INERT lines) and not counted: they cannot be authorised against a function or bucket ARN, so the entry is dead on that resource and a layer-version or access-point resource would need its own ARN. Separately, the seven audit-bucket configuration actions in the evidence are allowed by the create policy and are outside the CTO's ruled list (s3:PutBucketPolicy and the Allow's data); nothing was added for them.",
+  "notes": "Consequence of the second part: a Dell can set a lifecycle rule on the audit-trail log bucket that expires its logs, change its logging, notification, encryption, versioning, ownership controls or public access block. Not caused by the Allow (the create policy grants them on every opal* bucket; DenyS3DeletesOnProductionData covers opal-data-* only) and not changed by this pass. The CTO may extend DenyAuditTrailBucketPolicy by those seven actions (the document has headroom: dell_create_policy.json 5,364 of 6,144 characters; seven actions add about 250), or accept. The access-point route to the bucket cannot be read from here: s3:CreateAccessPoint is in no Dell Allow, so no Dell can create an access point to hang a policy on (read from the three group policy documents, not from AWS)."
+}
+```
