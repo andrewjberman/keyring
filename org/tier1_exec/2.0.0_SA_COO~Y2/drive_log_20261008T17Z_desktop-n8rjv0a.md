@@ -11,3 +11,8 @@
 - CTO half GIVEN @6d24511482 (msg 1332): +3 conditions (no login identity; put after equality; live re-read at start). Pair amended for msg 1320 test filer @4adc60e32f, ~P2 half CONFIRMED msg 1322 @2ba110eeab, pin on origin @bf4707adf1.
 - CTO round analysis sweep 17 (msg 1335) E2 -> ONE issuance r65: IB-yr-651 @c450dd6458 (WORLD by gate floor; analysis says SERVED). Checks y65_cells.py AC1-3 base FAIL. Worker ~156 spawned on wk-irpt-bckend-156; terraform from the shared tree's initialized ycharts root.
 ## tick 52 -- 2026-10-08T17:30Z -- NO-OP (worker ~156 on IB-yr-651 spawned this tick, no commit yet; r64 L8 packet READ by CVO 17:12Z; lease FULL)
+## 17:5xZ -- round 65 BRANCH B drained and packeted
+- Worker ~156: release 2 applied 17:37:00Z, stopped before the admit (row D2-W156-S1, irpt-requests KMS decrypt denied), rolled back 17:44:54Z to ZspX0qD2.. (issuer re-read live), test row NOT FOUND, ledger closed 4/4. Drained @3f64c8cd2c; AC1 FAIL by design, AC2/AC3 PASS at base.
+- Row D2-W156-S2 CONFIRMED by issuer reading: live guard owner = prospect_owner() of the actor, so uploads.py's on-behalf branch is unreachable; X-1 does not reach the served path. IB-yr-651 cancelled by issuer ruling; L8 packet @87a95c6fca to CVO; decision (who recuts the guard) to CTO~DELL2.
+- Own defect fixed: a python text-mode rewrite flipped all line endings of the order; restored and redone byte-preserving.
+## tick 53 -- 2026-10-08T17:58Z -- WAITING (r65 packet sent 17:57Z, not yet READ, under one tick; CTO decision on who recuts the X-1 guard pending; no ~Y order open; lease FULL)
