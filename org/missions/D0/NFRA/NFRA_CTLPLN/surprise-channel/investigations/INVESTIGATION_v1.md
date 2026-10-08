@@ -2900,3 +2900,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
 }
 ```
+
+## NFRA_CTLPLN-W6-S14 -- TO-CT-s-1: the launcher's arm order cannot be copied into an exclusive pattern set; CLOUDOPS widens CloudComp to any version
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T23:58:18Z",
+  "one_line": "TO-CT-s-1 asks for serial_pattern values 'derived from the launcher's existing regular expressions', but the launcher's arms are ordered (first match wins) and the file's kinds must be exclusive, so TIER2 needed a hand-built complement of the AE_CloudOps/AE_CloudComp names and CLOUDOPS matches AE_CloudComp at any version",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/ref/SEAT_ROLES.json TIER2 serial_pattern at the TO-CT-s-1 commit: '_AE_' followed by the complement of {CloudOps, CloudComp} spelled out prefix by prefix, because Python re and the PowerShell arms share no lookaround and kind_of must find exactly one kind",
+      ".tools/ajb.ps1 before this order: the CloudComp arm is '^0\\.8\\.0_AE_CloudComp' (version 0.8.0 only); the file's CLOUDOPS pattern is '^0\\.[0-9]+\\.[0-9]+_AE_Cloud(Ops|Comp)$', so a 0.9.0_AE_CloudComp serial is CLOUDOPS in the file but falls to the Tier-2/3 arm in the launcher's operational text",
+      ".tools/tests/test_seat_roles_launcher.py: 116 AE names (every prefix of CloudOps and CloudComp with one character changed, inserted or appended) each resolve to exactly one of CLOUDOPS and TIER2; the run printed 'AE namespace fuzz (116 names, CLOUDOPS xor TIER2): True'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-1 BUILD 1: serial_pattern per kind is derived from the launcher's existing regular expressions, and a serial matches exactly ONE kind.",
+  "world_is": "The launcher resolves overlap by arm order and the file cannot, so the patterns are exclusive by construction and one widens the launcher's CloudComp arm from 0.8.0 to any version; I kept the launcher's CloudComp arm as it was and did not change which operational text any serial receives.",
+  "notes": "For 1.0.0_SA_CTO: either accept 'Cloud(Ops|Comp) at any version is CLOUDOPS', or narrow CLOUDOPS to the launcher's two arms and rule how the TIER2 complement is to be written; no serial currently in use is affected."
+}
+```
