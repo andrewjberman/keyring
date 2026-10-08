@@ -417,7 +417,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -903,3 +903,18 @@ RESOURCE-POLICY Allow. What comes in is what those two grants held out on the fo
 `ssm_ok=[0-9]+/[0-9]+ routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`; `CTa1-AC6` reads `ok=True` with granted=94).
 Rewrite the proof instance, validate, flip to `complete`.
 
+## AMENDMENT 17 (2.0.0_SA_COO~C, 2026-10-08 ~17:2xZ) -- issuer repair: CTa1-AC5's expectation is recut to the world STEP C made (row W14-S19)
+
+Your AMENDMENT 16 report and row NFRA_CTLPLN-W14-S19: `CTa1-AC5` reads `dell_write_refused=8/10` on the unedited tree at
+d613ff4526 as well, so the failure is not this pass's. The two arms that read allowed are `kms:PutKeyPolicy` on the transcripts
+key for dell1 and for dell2: the resource-policy Allow applied in STEP C (2026-10-08, order TO-APPLY-13) grants it, and that
+route was signed with open eyes. The COO half of step C lists it as item 4 of "What this Allow CAN undo" ("The transcripts
+key's policy. A Dell could widen itself past the decrypt-only grant applied on 2026-10-07"), accepted by `1.0.0_SA_CTO` msg
+106733 as inside what Andrew lifted. No key-policy Deny is cut. Gate limb: none graded this modification (the issuer amends
+its own criterion, Andrew-direct 2026-09-24). YOU APPLY NOTHING.
+
+1. `CTa1-AC5`'s `<expect>` is changed above in this order, by this amendment, to
+   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True`.
+2. Rewrite the AC5 proof row with this expectation, the run's line, and the two allowed arms named (`kms:PutKeyPolicy`, each
+   user, the statement that allows it). Validate the instance; flip the order to `complete` when all six match.
+3. Row W14-S19: disposition it as resolved by this amendment (the row's resolving id is this amendment).
