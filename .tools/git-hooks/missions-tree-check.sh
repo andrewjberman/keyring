@@ -65,15 +65,18 @@ OUT="$(cd "$ROOT" && python "$TOOL" check 2>&1)" || RC=$?
 # NFRA_CTLPLN CT-s-8 -- a round is not counted finished without a reviewer on the box and a grade by it. When a staged
 # org/missions/D*/*/<CODE>/project.json moves dep_stage TO ROUND_CLOSE or CLOSED, .tools/round-close-check.py runs for that
 # project; verdict=REFUSED is printed (WARN, the default: the commit goes on) or refuses (ENFORCE, only while
-# org/mcp/seat-gates.enforce exists; OPAL_SEAT_GATES_ENFORCE_FILE points a test elsewhere; nothing here creates it).
+# org/mcp/seat-gates.round-close.missions-tree-check.enforce exists; OPAL_SEAT_GATES_ENFORCE_DIR points a test at another
+# directory, as in safe-apply.sh; the retired org/mcp/seat-gates.enforce turns on nothing; nothing here creates a switch).
 # Audited override: SEAT_GATES_OVERRIDE="reason" (org/git-author-override-audit.log). Any other dep_stage change, and any
 # commit that stages no project.json, never reaches it. Returns 1 only to refuse the commit.
 close_gate() {
-    local p old new code out rc last mode enf worst=0 pj
-    enf="${OPAL_SEAT_GATES_ENFORCE_FILE:-$ROOT/org/mcp/seat-gates.enforce}"
+    local p old new code out rc last mode enf worst=0 pj sgd
+    sgd="${OPAL_SEAT_GATES_ENFORCE_DIR:-$ROOT/org/mcp}"
+    enf="$sgd/seat-gates.round-close.missions-tree-check.enforce"
     mode=WARN; [ -e "$enf" ] && mode=ENFORCE
     pj="$(printf '%s\n' "$HITS" | grep -E '^org/missions/D(0|[1-9][0-9]?)/[^/]+/[^/]+/project\.json$' || true)"
     [ -n "$pj" ] || return 0
+    [ -e "$sgd/seat-gates.enforce" ] && echo "WARN: missions-tree-check close-gate -- org/mcp/seat-gates.enforce is retired and turns on nothing; the close gate's switch is org/mcp/seat-gates.round-close.missions-tree-check.enforce." >&2
     while IFS= read -r p; do
         [ -n "$p" ] || continue
         new="$(MSYS_NO_PATHCONV=1 git -C "$ROOT" show ":$p" | tr -d '\r' | sed -n 's/.*"dep_stage"[[:space:]]*:[[:space:]]*"\([A-Z_]*\)".*/\1/p' | head -1)" || new=""
@@ -99,7 +102,7 @@ close_gate() {
                             "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$code" "$SEAT_GATES_OVERRIDE" >> "$ROOT/org/git-author-override-audit.log"
                         echo "WARN: missions-tree-check close-gate OVERRIDDEN (audited): $SEAT_GATES_OVERRIDE -- $last" >&2
                     else
-                        echo "BLOCKED: missions-tree-check close-gate -- $code dep_stage $old -> $new REFUSED (ENFORCE, org/mcp/seat-gates.enforce present): $last" >&2
+                        echo "BLOCKED: missions-tree-check close-gate -- $code dep_stage $old -> $new REFUSED (ENFORCE, org/mcp/seat-gates.round-close.missions-tree-check.enforce present): $last" >&2
                         echo "  remedy: a CVO-kind reviewer live on the box and a CVO row grading every judgment criterion; override: SEAT_GATES_OVERRIDE=\"reason\"." >&2
                         worst=1
                     fi
