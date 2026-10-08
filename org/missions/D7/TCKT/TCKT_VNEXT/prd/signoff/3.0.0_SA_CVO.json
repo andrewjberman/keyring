@@ -1,12 +1,13 @@
 {
   "prd": "TCKT_VNEXT_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "99eb4053c2a416ceedd5c6bd86be6aafe4304c76",
+  "prd_version": "v0.3",
+  "prd_pin": "201ed553c41be0fa17f3cbf09df6f96d56d68bcb",
   "half": "ratified-text",
-  "half_hash": "41fc95eca7c0adf1da40e35598fa8448d59396db93dad0fee83fe18563892dfb",
-  "endpoint_hash": "cc5be01107eb475a357384e5c0f2b8e19028de9358431dd976e172fe37381733",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.2_RATIFIED_TEXT_REVIEW_20261007.md@8243f30edb",
+  "half_hash": "162bf473e4f182fc70523cba45c0683d9d8ceab527435c19ac56fa9efeed17fe",
+  "endpoint_hash": "8b9842afb06447a4ea5219ae1fe1b022375a4560ce92644f5d675dac927bf2a8",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.3_RATIFIED_TEXT_REVIEW_20261008.md@be33467ebc",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-07T17:24:27Z"
+  "signed_at": "2026-10-08T22:57:02Z",
+  "reason": "C-PACKAGE absent from the CONTRACTS section (only in ADDENDUM 2) and FWD-9 SOURCE names a seat"
 }
