@@ -46,8 +46,12 @@ the service side exactly as written.
      given.
    - 400 on an unknown key, a wrong `status`, over-length text or an empty `request_id`. 400 when ANY other principal (an internal
      human included) sends either field.
-   - Every existing `analysis_request` rule still applies: answers, attachment, and `answers.firm` checked by `_firm_allowed`
-     against the token's `allowedFirmIds`.
+   - Every existing `analysis_request` rule still applies: answers and attachment.
+   - **AMENDMENT 1 (issuer, 22:4xZ) -- the firm check for `svc-commentary`.** The `svc-commentary` token carries NO firm reach.
+     For this principal ONLY, `answers.firm` is checked against a module constant read from the env var
+     `COMMENTARY_ALLOWED_FIRMS` (comma-separated firm ids; unset or empty means every firm is refused). The token's
+     `allowedFirmIds` is NOT consulted, and the value "ALL" in that env var is refused like any unknown id, never treated as a
+     wildcard. Humans keep `_firm_allowed` exactly as today.
 3. **The DL notice.** The email `notify_dl_isolated` sends never carries `draft_commentary` text. Add it to the notice's exclusion
    the way the file already keeps state out (`DL_NOTICE_PROHIBITED`, `:196`); do not restructure the notice.
 4. **The 2026-08-12 finding stays closed on this path.** The finding was that the ticket API stamped the caller's identity and never
@@ -56,7 +60,9 @@ the service side exactly as written.
    - `created_by` is the token subject even when the body claims another;
    - a body `requester_email` never changes the principal class;
    - an event with no authorizer context is denied;
-   - `svc-commentary` sending a firm outside its `allowedFirmIds` gets 400.
+   - `svc-commentary` sending a firm outside `COMMENTARY_ALLOWED_FIRMS` gets 400. Per AMENDMENT 1, the test also covers three
+    more cases: an unset or empty env refuses every firm, "ALL" in the env is not a wildcard, and a token that claims
+    `allowedFirmIds` "ALL" still cannot widen it.
 
 **Measured at the cut (box/dell2 71b72d7a3e):**
 
