@@ -120,3 +120,7 @@ Verbatim, laptop terminal to 1.0.0_SA_CTO:
 Placement: 0.0.0_AB_MSTR spawns `2.0.0_SA_COO~G` to resume LGIC_BLANKFIX round 6 (its handoff @d96bc61aed: round 5
 closed, round 6 drafted, not issued). The laptop is the control plane: no deploy seat is re-seated here to carry other
 boxes' deploys (0.7.0_AE_CloudOps~E and ~F stay down); a deploy for a project placed on another box runs on that box.
+
+Same minute, verbatim: "With that in mind, we do have the codex 0.7.0_AE_CloudOps available and idle as needed for
+deploys on this box". So the laptop's own deploys (e.g. the NFRA_CTLPLN identity-root apply) go to the Codex seat
+`0.7.0_AE_CloudOps`, by task order.
