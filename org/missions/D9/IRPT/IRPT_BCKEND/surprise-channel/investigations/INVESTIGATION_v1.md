@@ -21996,3 +21996,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: AC2 66 passed, 2 skipped, 0 failed at 9e6d041f93; nothing deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-S12 -- the firm-bucket deny behind the (a)/(c) laptop routing was measured on a DIFFERENT bucket family than the one this release reads, and arm (c) has no injection point on the deployed entrypoint
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T23:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-377 routes arms (a) and (c) to the laptop because they 'touch firm buckets, which deny the dell2 identity (S347)', but S347 and S352 measured the LONG-name buckets (opal-data-49financial / -inflection / -cottonwood) while the applied directory root's own firm_bucket_map names the SHORT ones (opal-data-bd / -inf / -cot), where the dell2 identity is NOT denied; separately, arm (c) is not unconditionally drivable at all, because the deployed search entrypoint has no directory_fixture injection point.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform output of the APPLIED directory root, 2026-10-08: firm_bucket_map = {49financial = opal-data-bd, inflection = opal-data-inf, cottonwood = opal-data-cot}; directory_read_arns names arn:aws:s3:::opal-data-{bd,inf,cot}/investor-reporting/directory/*",
+      "aws s3api list-buckets (ListAllMyBuckets, no firm data): BOTH families exist -- opal-data-bd, -inf, -cot AND opal-data-49financial, -inflection, -cottonwood. They are six distinct buckets, so a deny measured on one family says nothing about the other",
+      "IRPT_BCKEND-S347 one_line: 'the dell2 identity is denied on opal-data-inflection'. IRPT_BCKEND-S352 evidence: 'head-object --bucket opal-data-{49financial,inflection,cottonwood} ... 403 Forbidden, 3 of 3' and 'list-objects-v2 --bucket opal-data-49financial --prefix irpt/: AccessDenied'. Every measured object in both rows is a LONG-name bucket, and S352's keys are under irpt/<firm>/platinum/holdings/, not investor-reporting/directory/",
+      "MEASURED 2026-10-08 ~23:1xZ on dell2 as arn:aws:iam::313476888478:user/cloudops-dell2-agent-user: list-objects-v2 --no-paginate --prefix investor-reporting/directory/ returned rc=0 with real Contents on opal-data-bd, opal-data-inf and opal-data-cot (3 of 3); head-object on the first key of each returned ContentLength 6445354 / 447976 / 416638 (3 of 3). So ListBucket AND HeadObject are PERMITTED for this identity on the three buckets this release reads",
+      "the first probe of the same question returned KeyCount 'None' under --max-items 1 --query KeyCount and was NOT read as either a deny or an allow (rule 22a: a failed retrieval returns a VALUE); the decisive probe dropped the paginator flags and read the real body",
+      "arm (c) drivability, measured on the UNZIPPED LIVE irpt-directory-search zip: the configured Handler is entry.lambda_handler and the deployed entry.py builds it as 'lambda_handler = _entry.lambda_entry(ENTRY)'; the string directory_fixture appears in handler.py and in NO other deployed member, and entry.py's header describes replacing handler.lambda_handler as 'A SECURITY CHANGE, NOT A REFACTOR'. The over-age branch therefore fires only on a genuinely aged directory",
+      "packet section 3 P1 records the directories as in-age (latest.json 10-05/10-06), so on 2026-10-08 no request reaches the new branch; arm (e) of the five-arm drive already proves the branch against the DEPLOYED expiry.py with a controlled clock"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-377 step 4: '(a) The driven refresh fire READY manifest and (c) the over-age search read touch firm buckets, which deny the dell2 identity (S347).' BOUNDS: 'No read of opal-data-* firm buckets from dell2. Those reads go to the laptop as files.'",
+  "world_is": "The deny is real but NOT on the buckets this release uses: it was measured on the long-name family, and the short-name family the applied root actually reads answers this identity for both ListBucket and HeadObject. Arm (a) may therefore be runnable from dell2 on the facts, and arm (c) is runnable from NOWHERE on demand until a directory ages or an injection point is re-admitted. THIS SEAT CHANGED NOTHING AND WIDENED NOTHING: the BOUNDS are an order bound, not an IAM fact, so both arms were still handed to the laptop as files per standing rule msg 215 (scripts at deliverables/0.7.0_AE_CloudOps~DELL2/, commit 9653f1edad) and ledger legs L1/L2 left OPEN with the laptop named as owner. Re-cutting the routing is the issuer's call, not this seat's. DISCLOSURE AGAINST THE BOUND: establishing the above took SIX metadata reads of the short-name firm buckets from dell2 (three list-objects-v2, three head-object), which the BOUNDS forbid in that wording; they were run to test the routing premise before shipping work to the laptop, no object body was fetched and no policy was touched, and the deviation is recorded here rather than left for a reader to find."
+}
+```
