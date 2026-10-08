@@ -7867,6 +7867,86 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "AIG's only stored full name is the SEC ticker-to-CIK name quoted inside a reason/evidence sentence, in capitals; every name field holds the 30-character cut or null.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 1: a full name may come, in order, from the pool record's name for that exact key, registrations.json identity.name, the crosswalk record, the older identity file ~94, and last from three agreeing article spans; the stored name becomes the full legal name.",
+      "world_is": "For AIG_US_Equity the pool record (universe/v1/2026-10-06.json) has name null, there is no registrations.json entry, the crosswalk legal_name and the ~94 file hold the cut 'American International Group I', and silver holds 0 spans of the name in 20500 articles. The only full name is 'AMERICAN INTERNATIONAL GROUP, INC.', which the pool record's resolution_reason and the crosswalk record's source_row.bloomberg_ticker.evidence both quote from the SEC ticker-to-CIK table (cik 5272). Done instead: that string is taken as written (not re-cased) as source 1b/3b, the first usable source in the order; the record's company is 'AMERICAN INTERNATIONAL GROUP, INC.' in capitals, which slug_query keeps in capitals ('AMERICAN INTERNATIONAL'). Not done: a name field read, because none holds one; no title-casing, which would be a derivation the order does not name.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.out@a523c06593",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_stored_sources.json@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "ICT_US_Equity's pool/crosswalk evidence carries SEDOL 6455819 with domicile PH, the same SEDOL ICT_PM_Equity's registration holds, though the order says no field shows they are one issuer.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 2: whether ICT_US_Equity and ICT_PM_Equity are one issuer is not shown by any field and is not inferred.",
+      "world_is": "The pool record and crosswalk record for ICT_US_Equity say 'compiled stable_id 6455819_PH (SEDOL 6455819 + domicile PH)'; registrations.json for ICT_PM_Equity holds sedol 6455819 and isin PHY411571011, and the 2026-10-06 pool's key-less 'ICT' holding names both keys as root-equal candidates, NAMED, NOT merged. Whether that is a field that shows the two are one issuer was not judged. Done: nothing from ICT_PM_Equity was used as a source for the US key; ICT_US_Equity stays 'International Container Termin' with verdict NOT REPAIRED (no stored source, 0 article spans in 20500 articles). Not done: no inference of issuer identity either way.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_stored_sources.json@a523c06593",
+          "lib/research/identity/registrations.json (ICT_PM_Equity entry, identity.sedol)@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "No held article carries the AIG or ICT full name in title or body, so the query-match counts are 0 of 0; the silver read held 20500 articles, not about 19,000.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 3: print QUERY MATCHES n of m titles that carry the full name, with five examples; the silver read covers about 19,000 articles.",
+      "world_is": "The silver iterator yielded 20500 articles (barrons 203, bbg 2939, ft 185, sa 16558, wsj 615). Spans beginning with the cut value: American International Group I 0, International Container Termin 0, Grupo Aeroportuario del Centro 7 (in 5 articles, 0 of them in a title that carries the whole name). So QUERY MATCHES reads 0 of 0 for AIG and for both OMAB keys and its five 'carry' examples are empty; the OTHER COMPANIES count is 2 for AIG (American Airlines titles) and 0 for OMAB. Done: the counts are printed as measured with the cause stated beside them, and the stated limit is asserted by plant (ii). Not done: any synthetic title or slug built to make the query 'match'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.out@a523c06593",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_article_scan.json@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "OMAB_MM_Equity was completed from the same article spans as OMAB_US_Equity although the pool refuses a cross-listing link between the two for the SEC CIK.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 1: a last-resort source is the company's name as written in held article text, the same completion in at least three distinct articles; item 2 rules only ICT's two keys 'not inferred' as one issuer.",
+      "world_is": "Both OMAB records store the identical cut string 'Grupo Aeroportuario del Centro'; the completion 'Grupo Aeroportuario del Centro Norte' stands in 4 distinct silver articles (sa:3677299, sa:3957263, sa:3958868, sa:4018738) and is consistent with the registry's own 28-character name 'GRUPO AEROPORTUARIO DEL CENT' for OMAB_MM. The pool's OMAB_MM resolution_reason refuses to link that key to CIK 1378239 as a cross-listing ticker collision. Done instead: the rule was applied to each key on its own stored string, with 'evidenced by article spans only' in each evidence, and no identity between the two keys was inferred; both come out 'Grupo Aeroportuario del Centro Norte'. The issuer may judge that wider than the order intended and revert either record by the one script.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.out@a523c06593",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
