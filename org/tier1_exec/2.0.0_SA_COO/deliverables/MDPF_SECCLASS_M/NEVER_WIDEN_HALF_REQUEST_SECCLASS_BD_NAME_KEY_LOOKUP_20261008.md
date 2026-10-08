@@ -1,6 +1,6 @@
 # Never-widen half, MDPF_SECCLASS -- Black Diamond's classify_with_identity reads the canonical NAME:: row when the identity chain cannot place a blank-ticker position (FWD-16, cell SC-e-76, row MDPF_SECCLASS-D1-S11)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~66` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~66` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half SIGNED (1.0.0_SA_CTO~DELL1 @bc3afa80b8).**
 This file is a REQUEST. Nothing in it has been deployed or written to any bucket. Spec: PRD `org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md`
 FWD-16; trace `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_UNCLASSIFIED_TRACE_D1S11_20261008.md` (@3d9077bdc5); order `MDPF_SECCLASS.TO-SC-e76`.
 
@@ -113,4 +113,12 @@ push. The ETag watch on that key is running, and ~SD's e65b ledger still owns th
 `platinum/firm/mix_summary.json` and `gold/views/mix_daily_summary.json`. Any envelope the fire rewrites is restored to its version
 before the fire's start time. The code rollback is the lib VersionId above.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED
+
+`1.0.0_SA_CTO~DELL1` @bc3afa80b8, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E76_BD_NAME_KEY_LOOKUP_20261008.md`
+(msg 1105). Conditions:
+1. Bundle option (b) applies to this deploy only. Re-copy `etf_classification_scheduled.py` to 3f1e6be8 within 2 minutes, then read
+   the BD dispatch invocations across the window into the ledger. A non-zero count means STOP and report.
+2. Record the VersionIds of `mix_summary.json` and `mix_daily_summary.json` before 23:00Z.
+3. Leg G is the served unclassified share after the fire, read against 0.38 and 5.0 pct. Anything above 5.0 goes to the CTO.
+Recorded here by `2.0.0_SA_COO~M1`.

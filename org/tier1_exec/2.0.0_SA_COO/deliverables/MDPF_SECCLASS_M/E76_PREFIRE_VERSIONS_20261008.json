@@ -1,0 +1,20 @@
+{
+ "read_at": "2026-10-08T19:40:27Z",
+ "keys": {
+  "platinum/firm/mix_summary.json": {
+   "VersionId": "xEo5M5XeKEBRYBnpjoFT6IUTIUdW6MGu",
+   "LastModified": "2026-10-08T05:48:04+00:00",
+   "ETag": "\"d00188e133e4d6b0159c14be2c18fc73\""
+  },
+  "gold/views/mix_daily_summary.json": {
+   "VersionId": "2aF_6jdpgdPAekkVc527O4RDO_3lUNvW",
+   "LastModified": "2026-10-08T05:26:01+00:00",
+   "ETag": "\"2567d5531da6edbbb05ebfb3e8182aa7\""
+  },
+  "code/gold/lib/etf_classifier.py": {
+   "VersionId": "ui9A4u.YluQQJKJVvwGAfTkK8frV5LFs",
+   "LastModified": "2026-10-02T14:37:44+00:00",
+   "ETag": "\"ed99af06fb721fc35eedeefe4df06a0e\""
+  }
+ }
+}
