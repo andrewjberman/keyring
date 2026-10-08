@@ -1,0 +1,46 @@
+{
+  "_run": {
+    "at_utc": "2026-10-08T19:48:59Z",
+    "by": "2.0.0_SA_COO~T2",
+    "content": "counts and recipient DOMAINS only",
+    "criterion_tables": "assets+registry",
+    "encrypted_rule": "decomposition round 7 ruling 3: non-inline .asc/.pgp/.gpg/.p7m or a PGP/PKCS7 content type; encrypted_only = >=1 non-inline and all encrypted",
+    "host": "dell2",
+    "note": "a first run died on a connection reset (WinError 10054) and kept nothing",
+    "senders_source": "criterion.load_tables()[0]; listing via HxMailClient.list_rows (has_attachment), each message and attachment list fetched as the pull does, with retries",
+    "window": [
+      "2026-06-10T00:00:00+00:00",
+      "2026-10-09T00:00:00+00:00"
+    ]
+  },
+  "client_FAIL_recipient_domains": [
+    {
+      "domain": "opalinvest.com",
+      "in_client_domain_table": false,
+      "messages": 368,
+      "opal_internal": true
+    }
+  ],
+  "counts": {
+    "author": 395,
+    "author_encrypted_only": 368,
+    "enc_client_FAIL": 368,
+    "listed": 395
+  },
+  "pair_20260811": [
+    [
+      {
+        "domain": "opalinvest.com",
+        "in_client_domain_table": false,
+        "opal_internal": true
+      }
+    ],
+    [
+      {
+        "domain": "opalinvest.com",
+        "in_client_domain_table": false,
+        "opal_internal": true
+      }
+    ]
+  ]
+}

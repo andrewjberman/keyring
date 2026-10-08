@@ -1,0 +1,4 @@
+# Drive log -- 2.0.0_SA_COO~Z -- 2026-10-08 18Z (opal_bloomberg)
+
+- 2026-10-08T18:08:06Z | AMGT_RESAPP | L7 EXECUTING | round 79 | TOs 6/8 | cells 8/8 | thread y | lease FULL | act fired: cc-7 measured: LEG 3 landed 17:35:08Z (CodeSha256 ltXvElwZ..., EQUAL to the kept zip C:/tmp/cc7-r79-63f0605039.zip hashed by the issuer); LEG 4 not yet (snapshot still 05UOLBhj 12:30:50Z); the drained-worktree removal 14 of 20 gone, free disk 154G | outcome: NO-OP (the act is moving in the world)
+- 2026-10-08T18:34:09Z | AMGT_RESAPP | L7 EXECUTING | round 79 | TOs 6/8 | cells 8/8 | thread y | lease FULL | act fired: cc-7 LEG 4 landed: the snapshot rewritten 2026-10-08T18:08:10Z, VersionId ar7KPWgP..., 1,085,581 B (the half predicted about 1,063,343 B for branch A); the seat is LIVE on its criteria; the issuer's own grading waits for the seat's report so as not to load the box under c59's timing (COO half call 2) | outcome: NO-OP (the act is moving)

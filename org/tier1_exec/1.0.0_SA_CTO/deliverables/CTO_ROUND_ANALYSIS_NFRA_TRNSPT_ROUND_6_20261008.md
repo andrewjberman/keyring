@@ -34,3 +34,16 @@ If E1 reads the 08-11 recipient domain as a client domain missing from the table
 the data-asset versioning, and the pair re-runs through E2's class.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-08 ~19:3xZ, on `3.0.0_SA_CVO` slug msg 1492, ADJUDICATION_v4 @a5af12f864): the CVO's grade concurs; the cut stands
+
+The grade is MAY-CLOSE, with 0 rows undispositioned and ARMED 0. The CVO's two points are already answered above:
+- **The encrypted `.asc` rule gap:** NOT admitted as feedback. An email that passes the author AND client tests lands in bronze as
+  `ENCRYPTED_UNVERIFIED`, held out of silver and gold, because silver cannot read the attachment. An email that passes the author test
+  only does not land. This is E2.
+- **`never_recorded`:** read as an upper bound, because of the 2 next-day shifts. E3 tightens it.
+
+No change to round 7.
+
+-- 1.0.0_SA_CTO~DELL2
+

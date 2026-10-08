@@ -2272,3 +2272,83 @@ round.** Never edit an existing row.
   "world_is": "Met. The two classes partition where the sweep-buy debit without a funding credit moves the month: on no-trade days (a balance carried in) or on the trade days themselves. The W42-S1 repair is the test: if it lands, both classes should collapse together."
 }
 ```
+
+
+## ADVI_COTBKF-D2-W43-S1 -- the sale credit returns 25 of 72 sweep_balance movers and 0 of 75 sweep_trade_day movers; dividends and fees carry the same missing cash leg
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W43-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~43",
+  "surfaced_at": "2026-10-08T19:31:00Z",
+  "one_line": "CB-v-1: the sale-funding credit returns 25 of the 72 sweep_balance movers and 0 of the 75 sweep_trade_day movers to MATCH; the same missing cash leg also sits on dividend rows (credit) and fee rows (debit) that fund or are paid by a sweep trade, and 23 months moved MATCH -> DIFF.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~43/sweep_regrade.md 'The 163 round-19 movers under three verdicts': back to MATCH 25 of 163; neither cause sweep_balance 25 of 72, other:sweep_trade_day 0 of 75; core 0 of 16; BEFORE arm (v1, cash leg r19) reproduces the unrepaired DIFF verdict on 163 of 163",
+      "worker scratch read of the silver transactions (Amount column, S3 read-only) joined to month_grades_after.parquet and mover_causes.parquet: of the 122 `neither` movers still DIFF, 94 carry a non-sweep row on a day the account traded a listed sweep: man only 53, dv only 28, dv+man 7, fch 1, 12b1 with man or dv 3, li with man 2; the other 28 carry an earlier month's unfunded balance and have no such row in the month. No non-sweep sale (sl) falls on a sweep-trade day inside any of the 147 `neither` mover months themselves, so the 25 that returned are carried-balance months: an EARLIER month's sale-funded sweep buy is what the credit repaired",
+      "RGY005018 2024-12 stays DIFF (computed -8.8079, reported -8.02): its two sweep-trade days are a dv of 199.98 on 30231G102 that funds by FDIC66606 199.98 on 2024-12-10, and man -11.84 on CFNCASH paid by sl FDIC66606 11.84 on 2024-12-11; the step -199.98 then -188.14 = -199.98 + 11.84 is an income credit and a fee debit missing, not a sale",
+      "D49141714 2019-02 returns to MATCH (computed 0.0128, reported 0.04): its 2019-01-24 sweep buy 3840.59 = sale of 30306A436 3836.32 + dv 4.27, the credit covers the sale part",
+      "sweep_regrade.md 'Months that moved MATCH -> DIFF between the arms': 23 months, 19 of them in 0QF879130 (2025-05..10) and 0QF879352 (2023-05..2024-11); cause not measured here (0QF879130's 2025-04-07 trade is a 100000 bond sale paying a 102495.34 sweep buy, then a 100000 sweep sale buying 316067107); named in the md, not forced"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-v-1 / row D2-S32: 'The non-sweep sale that funded it credits no cash'; the W42-S1 repair is the test, and if it lands both classes should collapse together.",
+  "world_is": "The sale-funding credit (min of the account-day's non-sweep sale proceeds and its listed-sweep buys, credited to CFNCASH) lands as one general rule and collapses 25 of the 72 sweep_balance months; the sweep_trade_day class does not collapse, because what funds or is paid by its sweep trades is a dividend (cash in) or a fee on CFNCASH (cash out: man, fch are unsigned in the signs table so the sweep sale that pays them credits cash with no matching debit), not a sale. The round-19 cash-leg design is incomplete on all cash receipts and payments of the non-sweep rows, not only sales. This order's grant and item 1 name the sale only, so dividends and fees were not touched. Control: control_same=True, 642 of 642 months."
+}
+```
+
+## ADVI_COTBKF-D2-S33 -- the version check cannot see the day parquet's arms
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S33",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-08T19:40Z",
+  "one_line": "CB-v-2's list-version check reads the version from the persisted month grades only; the day parquet under --data-dir records no list version, so D2-S31's actual case (right grades, stale day values) still passes the check and is caught only by mover_causes' reproduce guard",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~44 report on CB-v-2 (drained @c0f717a5c9): 'The day parquet does not record a list version, so the check reads it from the grades only.'",
+      "D2-S31: on the trunk the grades at deliverables/~41 were the round-19 arms (none -> v1) while the default data-dir held round 20's v1 -> v2 day values"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-21 analysis E2: the mover scripts refuse to run when the arms' sweep-list version differs from the one they expect.",
+  "world_is": "--data-dir is now required (the caller names the folder), and a grade-version mismatch is refused; a day-parquet mismatch is not detectable until the runner stamps the list version (and cash-leg rule) into the day parquet."
+}
+```
+
+## ADVI_COTBKF-D2-S34 -- L9 CB22v1-AC3 MET; the one-cause prediction falsified; a double-credit lead for the 23 regressions
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S34",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T19:42:34Z",
+  "one_line": "L9 CB22v1-AC3 MET: funding_credit_rows is one general rule (per account and trade date with a listed-sweep buy, credit min(non-sweep sale proceeds, sweep buy); no account named in code), the 72 and 75 are counted from the persisted mover grades (25 of 72, 0 of 75), and all 138 movers still DIFF are named (138 distinct account-months). The CVO's round-21 prediction (D2-S32: both classes collapse together) is FALSIFIED: only carried-balance months returned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_sweeps.py funding_credit_rows (this seat's read at HEAD); comp-find of the traced/regressed account ids over data/assets/scripts/silver: 1 hit, a crosswalk test, none in the rule",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~43/sweep_regrade.md lines 711-1207: 163 movers read from mover_classes.parquet; 'Movers left not MATCH ... each named: 138', 138 distinct rows (this seat's count)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_22_L9_GRADE_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB22v1-AC3: one general cash-leg rule, the 72 and 75 counted back from the persisted grades, every month still DIFF named, not forced.",
+  "world_is": "Met. Unmeasured lead for the 23 MATCH -> DIFF regressions (19 in 0QF879130 and 0QF879352): the rule credits cash whenever a non-sweep sale and a sweep buy share a day, so if the vendor already posts a cash leg for some of those sales, the synthetic credit counts it twice. A per-month check for an existing CFNCASH row on the credited days decides it."
+}
+```

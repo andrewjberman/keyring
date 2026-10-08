@@ -21337,3 +21337,135 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Holds for IB-pr-368 (replay); E9's pair must name composition.py."
 }
 ```
+## IRPT_BCKEND-D2-W177-S1 -- submit_installed.compose now opts into irpt-custody-x10-v1, which the base registry does not hold, so a build of this source before the E8 registry row is live raises on every submit (PERFORMANCE and ANALYSIS included).
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "submit_installed.compose now opts into irpt-custody-x10-v1, which the base registry does not hold, so a build of this source before the E8 registry row is live raises on every submit (PERFORMANCE and ANALYSIS included).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (release ordering: the irpt-custody-x10-v1 registry row from 2.0.0_SA_COO~M2 must be in the built registry before export/submit_installed.py is built or deployed)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/composition.py:build_retained_repositories calls reporting_policy(revision) for every additional revision; lib/opal_naming.py:1966-1977 reporting_policy raises ValueError('unknown reporting policy revision') when no row matches",
+      "infra/logic/registry/reporting_policies.json at the worktree base holds no irpt-custody-x10-v1 row (Grep irpt-custody|CUSTODY_REPORT over infra/logic: no match); the row is E8, lane 2.0.0_SA_COO~M2, PENDING_ENFORCEMENT",
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py reports(): additional_policy_revisions=(CUSTODY_POLICY_REVISION,) added by this order's cell IB-pr-369"
+    ]
+  },
+  "spec_asserts": "IB-pr-369: the custody read caller in submit_installed passes the custody revision through build_retained_repositories(..., additional_policy_revisions=...); the release is a later pair after the registry row.",
+  "world_is": "Source and offline tests are correct (a fixture registry holds both rows). A build or deploy of this source against a registry without the custody row would fail the whole submit path, not only custody; ordering is the release pair's, which this order does not do (no AWS, no build)."
+}
+```
+
+## IRPT_BCKEND-D2-W177-S2 -- Two custody callers named in the E8 document are outside this order's paths or absent: ycharts/generate/custody_submission.py builds repositories with no custody revision, and persist_custody_report has no production composition site.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T19:21:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Two custody callers named in the E8 document are outside this order's paths or absent: ycharts/generate/custody_submission.py builds repositories with no custody revision, and persist_custody_report has no production composition site.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py:77 build_retained_repositories(...) with no additional_policy_revisions; it uses stores.artifacts only (NORMALIZED_PORTFOLIO), never stores.reports, and is outside the <paths> grant, so unedited",
+      "Grep persist_custody_report over infra/aws/lambda: only reports/custody_write.py and reports/tests/test_custody_write.py; no production code composes a retained ReportRepository and calls it, so reports/custody_write.py (which receives its repository injected) needed no edit",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E8_CUSTODY_REPORT_FAMILY_SHAPE_20261008.md section 2 lists these callers"
+    ]
+  },
+  "spec_asserts": "IB-pr-369 names submit_installed.py (custody read) and custody_write.py (custody write) as the custody callers that pass the custody revision.",
+  "world_is": "Only submit_installed.py composes a ReportRepository that must read a CUSTODY_REPORT; custody_write.py takes the repository its caller composed. When IRPT_CUSTDY's writer is wired it must compose with additional_policy_revisions=(composition.CUSTODY_POLICY_REVISION,), else its persist refuses 'unregistered retention family' (a fail-closed outcome, pinned by the unregistered_kind_refuses test)."
+}
+```
+
+
+## IRPT_BCKEND-D2-W177-S3 -- S1 resolved: the custody revision is requested only when the registry carries it, so no build before E8 breaks PERFORMANCE/ANALYSIS submits.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T20:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W177-S1: AMENDMENT 1 (a356481e93) was implemented; fix commit 97e679c64f. export/submit_installed.py retained_reports() reads reporting_policy(CUSTODY_POLICY_REVISION) as composition.py does and requests the custody revision only when it resolves (ValueError = unknown revision composes without it). With a registry holding only irpt-x10-v1 the submit composition builds, PERFORMANCE/ANALYSIS read back, CUSTODY_REPORT refuses 'unregistered retention family'. Test x10_composes_without_custody_row passes (5 passed in the file) and fails (ValueError unknown reporting policy revision) against the always-request behaviour. No release ordering is now needed.",
+  "one_line": "S1 resolved: the custody revision is requested only when the registry carries it, so no build before E8 breaks PERFORMANCE/ANALYSIS submits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py retained_reports @97e679c64f",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_repository_family_revisions.py test_x10_composes_without_custody_row @97e679c64f"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: custody revision requested only when the registry carries irpt-custody-x10-v1.",
+  "world_is": "Source composes against a registry with or without the custody row."
+}
+```
+
+
+## IRPT_BCKEND-D2-W177-S4 -- IB82-1-AC2 can never PASS: p82_cells.py line 56 holds a backspace byte (0x08) inside its regex where  was meant, so the amendment arm always fails even when the test passes.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T20:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB82-1-AC2 can never PASS: p82_cells.py line 56 holds a backspace byte (0x08) inside its regex where \b was meant, so the amendment arm always fails even when the test passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (repair the 0x08 byte in checks/r82/p82_cells.py line 56, then re-run IB82-1-AC2)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r82/p82_cells.py line 56: re.search(r\"\b[1-9]\\d* passed\", last2) (bytes read in Python); the same pytest invocation by hand: rc 0, '1 passed, 4 deselected'",
+      "check introduced by a356481e93; outside the worker's paths grant, so unedited"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: IB82-1-AC2 also runs -k x10_composes_without_custody_row and PASSes when it passes.",
+  "world_is": "The check prints 'FAIL: -k x10_composes_without_custody_row rc 0: 1 passed' and IB82-1-AC2 FAIL. Fix is one byte in the COO's check (replace 0x08 with the two characters backslash b); the order stays open until then. disarm_owner is the issuer."
+}
+```
+
+## IRPT_BCKEND-D2-S7 -- D2-W177-S4 disarmed: the issuer's p82 check carried a 0x08 byte for ; repaired, IB82-1-AC2 PASS
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T19:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W177-S4: the issuer's AMENDMENT 1 edit to checks/r82/p82_cells.py (a356481e93) wrote the regex word-boundary as a literal backspace byte (0x08) because the edit script's string escaping collapsed the two-character escape, so the x10_composes_without_custody_row pass-count could never match. The issuer replaced the byte with the two-character escape (0 bytes 0x08 remain) in the commit that carries this row; re-run: IB82-1-AC2 PASS (-k x10_composes_without_custody_row 1 passed; test_repository 24, test_retained_repository 9, test_retention 21 passed). The assertion is unchanged; the defect was the issuer's, not the worker's.",
+  "one_line": "The E9 AC2 check now grades what it asserts; the worker's fix passes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "od -c of line 56 showed \b (0x08) before the fix; byte count 0 after",
+      "p82_cells.py . IB82-1-AC2 -> IB82-1-AC2 PASS"
+    ]
+  },
+  "spec_asserts": "A criterion's check grades the stated assertion.",
+  "world_is": "It does again."
+}
+```

@@ -46,8 +46,6 @@ BUILTIN = (
     ("CLOUDOPS", r"^0\.8\.0_AE_CloudComp$"),
     ("WORKER", r"^0\.9\.0_WK_[A-Za-z0-9_]+$"),
     ("TIER2", r"^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_[A-Za-z0-9_]+$"),
-    ("TIER2", r"^1\.[0-9]+\.[0-9]+_DS_CompLearns$"),
-    ("TIER2", r"^2\.1\.0_SC_CompLearns$"),
 )
 LANE_RE = re.compile(r"~[A-Za-z0-9]+$")
 ISSUED_RE = re.compile(r"<issued_to>\s*([^<\s]+)\s*</issued_to>")

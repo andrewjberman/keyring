@@ -232,3 +232,24 @@ This seat signs the CTO half when the packet arrives.
 5. The owner read and the other-firm refusal run. They close D2-W172-S3 and D2-W175-S1.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-08 ~19:5xZ, on `3.0.0_SA_CVO` slug msg 1510, ADJUDICATION_v38 @a457075a38): round 82 ~P
+
+**State.**
+- MAY-CLOSE. Both ARMED rows are fixed at HEAD and dismissed. ARMED: W165-S2 only.
+- **D2-W177-S2 is OPEN.** Two custody callers sit outside IB-pr-369 (E9):
+  - `ycharts/generate/custody_submission.py` builds its repositories with no custody revision;
+  - `persist_custody_report` has NO production composition site. This is the round-6 IRPT_CUSTDY break (1): no deployed function packages
+    the custody writer.
+
+**Ruling.** The custody chain needs a deployed writer before E2 can retain a real report. Two cells, one per lane, both after E9 is live:
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E10 | `~P2` | **A production composition site for `persist_custody_report`** in the one function that will run IRPT_CUSTDY's producer, named in the packet with its reason, and composing the enforced repository with `irpt-custody-x10-v1` through the registry-gated probe | (1) the release census at the pin lists the writer and its composition as owned members, with no rider; (2) a test through the composed path: a CUSTODY_REPORT is retained under `irpt-custody-x10-v1` and read back, while an unregistered kind refuses | SERVED (own pair) |
+| E11 | `~Y2` | **`custody_submission.py` composes with the custody revision** (the same probe), in the release after E6, never added to E6's signed pair | (1) a test: custody submission repositories carry `irpt-custody-x10-v1`, and PERFORMANCE and ANALYSIS stay on `irpt-x10-v1` | LOCAL, then rides `~Y2`'s next pair |
+
+**Order:** E9 live -> E8 ACTIVE -> E10 released -> IRPT_CUSTDY E2a retains one real custody report through E10's function -> the owner
+read and the other-firm refusal. These close D2-W172-S3, D2-W175-S1 and D2-W177-S2 together.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -982,3 +982,47 @@ modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
 4. Surprise rows: the next free id is `NFRA_CTLPLN-W14-S24`.
 
 **ACCEPTANCE.** The six ids, `CTa1-AC2` as in item 1. Rewrite the proof instance, validate, flip to `complete`.
+
+## AMENDMENT 19 (2.0.0_SA_COO~C, 2026-10-08 ~18:5xZ) -- REOPENED, PRIORITY: cell D2 -- the Dells may SEND the command documents (item 5 whole), and dell2's one time-boxed shell exception
+
+Authority: `1.0.0_SA_CTO` msg 107113 (ruling on row S26: "sending IS in item 5 (Andrew lifted it whole) -- cut cell D2 now:
+Allow ssm:SendCommand on the 12 documents and AWS-RunShellScript for the Dell group ... DeleteDocument stays refused") and msg
+107120 ("dell2's DenyShellDocuments is my 2026-10-07 scoping, not item 5, and it stays as the standing rule. For IRPT_YCDGEN F1
+only: shape D2 so dell2's Deny carries an exception for AWS-RunShellScript on the one F1 host instance (exact ARN), opened and
+closed on the same ledger legs as the svc-irpt window ... hard close 2026-10-09T06:00Z"). The issuer's scoping, accepted there:
+the INSTANCE side of every grant is by exact ARN. Step D (the routes-host Deny removed) is applying now (TO-APPLY-17); this pass
+is built on the trunk that carries its merge. Gate limb: none graded this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST
+THE BACKEND. Rows start at `NFRA_CTLPLN-W14-S27`.
+
+1. **FIND, by reading, and print:** (a) the 12 command documents (the routes-host document's list; it is rendered by the module
+   from the census: read where, do not retype); (b) the instance ARNs those documents run on -- the hosts the role census
+   (`tests/reached_roles_census.json`) ties to the privileged roles whose documents these are (print host id, role, verdict);
+   (c) the F1 host instance for dell2 (`i-0167fd745ad906a66` is the resident host named in this order's cell; confirm from the
+   repository that it is the IRPT_YCDGEN F1 host, or STOP and report what you find).
+2. **THE GROUP ALLOW (permanent).** One managed policy (or a statement in an existing group policy if it fits 6,144), name from
+   the builder, BUILT from the census like the others: Allow `ssm:SendCommand` on exactly the 12 document ARNs, the
+   `AWS-RunShellScript` document ARN (`arn:aws:ssm:us-east-1::document/AWS-RunShellScript`), and the instance ARNs of 1(b). No
+   wildcard. `ssm:DeleteDocument` is NOT granted. Read actions to see a command's result as dell2's `ReadCommandResults` has
+   them, for the group.
+3. **DELL2'S SHELL WINDOW (count-gated, default CLOSED).** A root variable `open_dell2_f1_shell_window` (bool, default
+   `false`). When `true`, dell2 -- and only dell2 -- may `ssm:SendCommand` with `AWS-RunShellScript` against the F1 host only;
+   when `false`, `DenyShellDocuments` reads exactly as today. A plain plan with the default therefore CLOSES the window, which is
+   the safe failure. `SendCommand` is authorised against the document AND the instance as separate resources, so first PROVE
+   with `iam:SimulateCustomPolicy` (both ARNs in one request) which IAM form gives exactly: dell2 + RunShellScript + F1 host =
+   allowed; dell2 + RunShellScript + any other instance in 1(b) = refused; dell1 + RunShellScript + F1 host = as the group Allow
+   reads (report it). If NO IAM form gives the pairing exactly, STOP and report the forms you tried, what each allows, and the
+   narrowest one; the issuer brings it to the CTO before anything is built for item 3.
+4. **SIMULATION.** Two new fields BEFORE `routes_freed` in the POLICY-SIM line: `sendcmd_ok=<a>/<n>` (both users: each of the 12
+   documents and RunShellScript on one 1(b) host allowed; `ssm:DeleteDocument` on a document refused; SendCommand on a document
+   NOT in the 12 against a 1(b) host refused; SendCommand on a 1(b) document against an instance NOT in 1(b) refused) and
+   `shellwin_ok=<a>/<n>` (the item 3 arms, evaluated with the window document rendered OPEN, plus dell2 RunShellScript refused
+   with it CLOSED). Every other field reads as at the base.
+5. **STATIC CHECK** in `tests/check_identity.py`: `shell_window_default_closed=True` read from the `.tf` text.
+6. **PLAN NOTE**, new section H: the expected plan with the default (the group Allow created and attached; dell2's window
+   resources absent) and with `-var open_dell2_f1_shell_window=true` (what is added on top), each by address; what a Dell can
+   newly do in plain words (a shell on the privileged hosts named in 1(b), as the group Allow reads; dell2's exception).
+
+**ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
+`sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+`routes_freed` and `routes_still_refused` may move (the sends now read allowed): report both. Rewrite the proof instance,
+validate, flip to `complete`.

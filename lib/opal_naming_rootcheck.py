@@ -22,6 +22,7 @@ import argparse
 import ast
 import json
 import os
+import posixpath
 import re
 import sys
 
@@ -151,11 +152,29 @@ def named_in_source(item, asked, text=None):
     return sorted(a for a in asked if a in seen)
 
 
+def _where_file(item):
+    return str(item.get("where") or "").replace("\\", "/").rsplit(":", 1)[0]
+
+
+STALE_MARK = "the ruling's declared_in names "
+
+
+def _stale_note(item, row):
+    """"" or the note of a STALE HINT: a declared_in row matched an item whose file is not among its declared_in paths."""
+    if not row or row.get("bucket_per") or not row.get("declared_in"):
+        return ""
+    f = _where_file(item)
+    if f in row["declared_in"]:
+        return ""
+    return "; %s%s; the key is declared in %s" % (STALE_MARK, ", ".join(row["declared_in"]), f)
+
+
 def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     """(row or None, unread reason or None) for a stored-file item. A PER-FIRM row (bucket_per, bucket_from) is matched first:
     its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
-    runtime_bucket). Then a row with `declared_in`: its key equals the item's key AND the file that declares the item (the
-    file part of its `where`) is one of declared_in; no bucket is read. Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
+    runtime_bucket). Then the rows with `declared_in` whose key equals the item's key: ONE such row matches whatever the
+    file (the path is a hint; a file not among its declared_in is a STALE HINT, printed by run_items); several: the one whose
+    declared_in holds the item's file, else the one holding a file of the same base name, else none and the reason. A candidate must also agree on the bucket wherever the item's bucket is known (bucket_of); a bucket not read leaves it open. Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
     reads. An item whose bucket is not read matches no row; the reason says the bucket is chosen at run time and names the
     variable when its file shows one, else says it was not read, but only when some row carries the item's key under a
     bucket (otherwise there is nothing the bucket would have decided)."""
@@ -168,10 +187,26 @@ def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
         if row.get("bucket_per") and k == item["current"] and row["bucket_from"] in names:
             return row, None
-    where_file = str(item.get("where") or "").replace("\\", "/").rsplit(":", 1)[0]
-    for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
-        if row.get("declared_in") and k == item["current"] and where_file in row["declared_in"]:
-            return row, None
+    where_file = _where_file(item)
+    cands = [row for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1])))
+             if row.get("declared_in") and k == item["current"]]
+    if cands:
+        # a candidate must agree on the bucket wherever the item's bucket is known; a bucket not read leaves the field open
+        known, _why = (bucket_reader or opal_naming_keyfill.bucket_of)(item)
+        if known is not None:
+            cands = [r for r in cands if r.get("bucket") in (None, known)]
+    if len(cands) == 1:
+        return cands[0], None
+    if cands:
+        hit = [r for r in cands if where_file in r["declared_in"]]
+        if not hit:
+            base = posixpath.basename(where_file)
+            hit = [r for r in cands if any(posixpath.basename(d) == base for d in r["declared_in"])]
+        if len(hit) == 1:
+            return hit[0], None
+        return None, ("several key rulings carry this key and no hint names this file: %s" % (
+            "; ".join("%s declared_in %s" % (r.get("bucket") or r.get("bucket_from"), ", ".join(r["declared_in"]))
+                      for r in cands),))
     if not rulings:
         return None, None
     bucket, why = (bucket_reader or opal_naming_keyfill.bucket_of)(item)
@@ -434,6 +469,7 @@ def decide(item, ans, fourth=None):
 
 
 _TF_PREFIX = "infra/aws/terraform/"
+NTN_STOP = "the map says nothing to name and the root names %d"
 
 
 def map_key(root):
@@ -459,6 +495,12 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
     doc = opal_naming_rootmap.load_map(map_path)
     name = map_key(opal_naming_scope._norm_root(root))
     entry = (doc.get("roots") or {}).get(name)
+    if opal_naming_rootmap.nothing_to_name(entry):
+        n = len(items)
+        if n:
+            raise ValueError(NTN_STOP % (n,))
+        out("NOTHING-TO-NAME %s why=%s names=0" % (name, entry.get("why")))
+        return 0
     krows = {}
     for r in opal_naming_keyfill.fill_keys(items, entry):
         krows[(r["type"], r["current"], r["where"])] = r
@@ -531,7 +573,8 @@ def run_items(root, items, answer_of, expected_n, out=print, report_only=False, 
         decided[i] = (decided[i][0], "HOLE", detail)
     for (it, kind, detail), ans in zip(decided, anss):
         count[kind] += 1
-        out("%s %s %s -> %s  [%s]" % (kind, it["type"], it["current"], detail, it["where"]))
+        out("%s %s %s -> %s%s  [%s]" % (kind, it["type"], it["current"], detail, _stale_note(it, ans.get("key_ruling")),
+                                         it["where"]))
         if sink is not None:
             sink.append((it, ans, kind, detail))
     n = len(items)
@@ -702,8 +745,23 @@ def all_roots(map_path, out=print, run_one=None):
         out("UNMAPPED %s names=%s" % (r, n))
     done, stopped, tot = 0, 0, dict((k, 0) for k in KINDS)
     cls = dict((c, 0) for c in HOLE_CLASSES)
-    other_lines, items_all = [], 0
+    other_lines, stale_lines, items_all = [], [], 0
     for key in keys:
+        ent = doc["roots"][key]
+        if opal_naming_rootmap.nothing_to_name(ent):
+            # a root the map says has nothing to name: mapped; read against the scope, never skipped
+            try:
+                n = len(opal_naming_scope.root_items(opal_naming_scope._map_key_root(key), map_path)[0])
+                why = None if n == 0 else NTN_STOP % (n,)
+            except Exception as exc:
+                n, why = -1, "%s: %s" % (type(exc).__name__, exc)
+            if why is None:
+                done += 1
+                out("NOTHING-TO-NAME %s why=%s names=%d" % (key, ent.get("why"), n))
+            else:
+                stopped += 1
+                out("ROOT %s | NOTHING-TO-NAME why=%s | STOPPED %s" % (key, ent.get("why"), why))
+            continue
         lines, reason = [], ""
         try:
             run_one(key, map_path, out=lines.append, report_only=True)
@@ -723,6 +781,8 @@ def all_roots(map_path, out=print, run_one=None):
             kind = ln.split(" ", 1)[0]
             if kind in count:
                 count[kind] += 1
+            if STALE_MARK in ln:
+                stale_lines.append("STALE-HINT %s || %s" % (key, ln))
             if kind == "HOLE" and parts is not None:
                 holes.append(parts)
             elif kind == "HOLE":
@@ -746,16 +806,18 @@ def all_roots(map_path, out=print, run_one=None):
     out("HOLE-CLASSES " + " ".join("%s=%d" % (c, cls[c]) for c in HOLE_CLASSES))
     for ln in other_lines:
         out(ln)
+    for ln in stale_lines:
+        out(ln)
     for p in problems:
         out("FAIL: " + p)
     ok = (len(keys) + len(unmapped) == len(all_r) and done + stopped == len(keys) and not problems
           and sum(cls.values()) == tot["HOLE"])
     out("ALL-ROOTS ok=%s roots_total=%d mapped=%d unmapped=%d completed=%d stopped=%d items=%d right=%d fix=%d "
         "not_asked=%d pattern=%d carded=%d refused=%d hole=%d carded_class_holes=%d source_bucket_holes=%d "
-        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d"
+        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d stale_hints=%d"
         % (ok, len(all_r), len(keys), len(unmapped), done, stopped, items_all, tot["RIGHT"], tot["FIX"],
            tot["NOT-ASKED"], tot["PATTERN"], tot["CARDED"], tot["REFUSED"], tot["HOLE"], cls["carded"],
-           cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"]))
+           cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"], len(stale_lines)))
     return 0 if ok else 1
 
 

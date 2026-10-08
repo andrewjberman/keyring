@@ -37,6 +37,20 @@ below apply to it unchanged. Once switched:
   or `integrator`) and removes it at the end. If it exists and the pid in it is alive, this slot is skipped and said
   so in one line. A dead holder's lock is removed and logged.
 
+### THE PROGRAM: `.tools/box-sync.sh` (Andrew-direct ~19:5xZ: "I think this should be programmatic")
+
+The two passes below run as ONE COMMAND each. Neither uses a worktree, and neither opens a merge in any shared tree.
+Each merge is computed with `git merge-tree --write-tree`, graded on a private index pinned to its two parents (only
+what the merge introduces), checked with `safe-merge.sh --verify-merge`, and written with `git commit-tree`.
+- **Box pass** (each box's MSTR, at its slot): `bash .tools/box-sync.sh box`. The only shared-tree act is the land,
+  under safe-commit's own lock: a compare-and-swap of `box/<box>`, plus `git read-tree -m -u` of the paths the trunk
+  changed. It takes about half a second in the fixture. It refuses rather than overwrite a seat's uncommitted edit.
+- **Integrator pass** (`0.0.0_AB_MSTR` only): `bash .tools/box-sync.sh integrate`. It touches no working tree, so it
+  costs the laptop a fetch, the merges and a push. It may run more often than `:00`/`:30`.
+- **Exit 4 = HELD** (a conflict, or a seat's dirty edit on a changed path). Nothing landed; it is logged as a
+  `BOX-SYNC` row. A conflict is resolved by hand with the procedure below. `--dry-run` reports without acting.
+- The manual procedures below stay as the fallback and the conflict path.
+
 ### BOX PASS (every switched box, at its slot): take the trunk FIRST, then push
 
 ```bash

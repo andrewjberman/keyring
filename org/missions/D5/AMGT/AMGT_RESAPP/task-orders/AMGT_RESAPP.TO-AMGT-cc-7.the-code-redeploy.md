@@ -126,3 +126,4 @@ FIRST, and conditions C1 to C3). ONE NEVER-2 entry, FOUR legs recorded apart:
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 <status>staged -- AMENDMENT 1: four legs, the grant first in its own apply (CTO half, msg 31782); the pair is signed by both seats at the pin 63f0605039; no GO yet</status>
+<status>pending -- GO given 2026-10-08T15:14Z (msg to 0.7.0_AE_CloudOps~A): pin 63f0605039, both halves on origin @2d0d4296bf, four legs, the grant first; call 11 read at HEAD 2d0d4296bf (opal_naming.py +12 and exemptions.json only differ from the pin)</status>

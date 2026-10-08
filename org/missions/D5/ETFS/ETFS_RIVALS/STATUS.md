@@ -1,4 +1,4 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-26 at CLOUD 0576fb051f; round 27 built: two cells merged, the writer cell held on its branch until the 2026-10-08 11:00Z run is read; ledgers r22 and r26 wait on the 11:00Z and 13:00Z runs)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-27 at pin 325bd4e0f8, deployed 14:57Z 2026-10-08; the 2026-10-08 page is whole, 13 of 13 funds; ledger r27 L2 and RIV-tw-1's read wait on the 2026-10-09 11:00Z and 13:00Z runs; the history-owed switch is unset)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
@@ -59,6 +59,26 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
   No rivalfunds ledger entry is open.
 - NEXT: the ONE round-27 Lambda deploy (the packager stages the whole rivalfunds folder, so all three cells go at one
   pin) under a never-widen pair; before and after from a real run of 2026-10-08 on the round-27 code.
+
+## 2026-10-08 14:57Z -- round 27 DEPLOYED
+
+- Pin 325bd4e0f8 in the five Lambdas (ledger `etfs-rivalfunds-r27`: L1 CLOSED, L2 OPEN = the 2026-10-09 11:00Z chain and
+  13:00Z sweep). Pair: COO half `round27/NEVER_WIDEN_HALF_COO_R27_DEPLOY.md` @d9f31a4fb0, CTO half @4457ff34cf.
+  Rollback: a plan at pin 0576fb051f. Deploy tree `C:/tmp/rv-r8` is detached at 325bd4e0f8; `C:/tmp/rv_apply27.tfplan` is spent.
+- First run of the package (CTO ruling msg 31818): one publish of 2026-10-08 at 15:07Z, OK, 132.3 s, 930 MB; one
+  input_census object written and nothing else; page byte-equal to the 13:08Z page
+  (`round27/SERVED_READ_2026-10-08.after_r27.md` @0c26726e2b).
+- The seat gate warned that a COO does not apply. CTO: the next apply is the executor seat's (a task order to
+  0.7.0_AE_CloudOps~RV), as the gate says.
+- Site-Z CLOUD was merged with origin and pushed by 0.0.0_AB_MSTR~Z (origin 2d0d4296bf, its read, 15:1xZ). The merge
+  changed `lib/opal_naming.py` (+12, the name-typing checker) and five registry files, which the vehicle and the
+  packager both load; the pin predates it. The NEXT deploy carries them: list them in its half.
+- `.tools/round-close-check.py` returns MAY-CLOSE over 0 orders for round 27 (row Z-S77: it reads the first status
+  tag). Round 27 is not closed: tw-1's J1 is open until the 2026-10-09 11:00Z vehicle run (C-S80).
+- ROUND 28 list so far (the CTO's analysis is not in the ledger yet): R19 the AI accounts say "the last 30 days", never
+  R30 / R90 / R365 (row C-S83); R20 every dollar figure in an account cites a row (`round28_prep/R20_TXUE_GROUNDING_FAIL_READ_20261008.md`);
+  the top-up writer stores a currency and each close's trading date; the owed window ends on the page day; the cap is
+  ruled; rows Z-S73 and the day-early 2026-09-29 pull are read.
 
 **Sections below this one were written before round 23 and are history where they disagree with the title line and this section.**
 

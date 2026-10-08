@@ -11,6 +11,7 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
     python .tools/open-calls.py list [--device <d> | --all] [--cloud] [--include-closed]
     python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
+                                      [--ruled-by andrew|cto]
     python .tools/open-calls.py scope --project <CODE> [--orders <order file> ...] [--roots <dir> ...]
     python .tools/open-calls.py scope --selftest
 
@@ -19,6 +20,9 @@ lib/devices.py, never from a path). Shape (schema "open-calls/1"; every reader r
     {"schema", "device", "written_at", "written_by", "rows": [ {id, project, subject, asked_by, source, orders, roots,
      state (OPEN|CLOSED), opened_at, scope {...the measurement...}, closed (null | {at, by, ruling, crossbox})} ]}
 A file ABSENT is not an EMPTY list: `list --all` names the boxes whose file is absent.
+CLOSING (1.0.0_SA_CTO msg 107148, on dell1's defect relay): a close whose ruling is ANDREW'S WORD (`--ruled-by andrew`,
+ruling file required) closes the row whatever its scope. CLOSED-BOTH binds only a CTO-ruled (`--ruled-by cto`, the
+default) CROSS-BOX call. The closure records `ruled_by`.
 `kind` (optional on a row): `fork` = a decision with options (the default) | `act` = an act only Andrew can do (a delete,
 a signature, a vendor use); Andrew 2026-10-08 ~18:4xZ: "keep that all in open calls". `--project NONE` records a call
 that belongs to no project (no scope measurement is run; its verdict reads NO-PROJECT).
@@ -75,7 +79,8 @@ NO_PROJECT = "NONE"
 CLOUD_BUCKET = "opal-313476888478-globgrph"
 CLOUD_PREFIX = "fabric/open-calls/v1"
 ROW_REQUIRED = {"id", "project", "subject", "asked_by", "source", "state", "opened_at", "scope"}
-CLOSED_KEYS = {"at", "by", "ruling", "crossbox"}
+CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by"}
+RULED_BY = ("cto", "andrew")
 STATES = ("OPEN", "CLOSED")
 RISK_ORDER = ("LOCAL", "SERVED", "WORLD")
 
@@ -791,16 +796,19 @@ def cmd_close(args) -> int:
     if not os.path.isfile(ruling):
         raise Refused("REFUSED: ruling %s is not a file; a closure cites the ruling it rests on" % args.ruling)
     cross = None
-    if row["scope"].get("verdict") == "CROSS-BOX":
+    ruled_by = getattr(args, "ruled_by", "cto") or "cto"
+    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by != "andrew":
         found, lines = crossbox_closed_both(row["id"], args.crossbox)
         if found is None:
             raise Refused("REFUSED: call %s reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (%s). A call that touches "
                           "another box is not settled alone." % (args.id, "; ".join(lines) or "none looked at"))
         cross = os.path.splitext(found)[0]
     row["state"] = "CLOSED"
-    row["closed"] = {"at": now_utc(), "by": args.by, "ruling": rel_to_root(args.ruling, ROOT), "crossbox": cross}
+    row["closed"] = {"at": now_utc(), "by": args.by, "ruling": rel_to_root(args.ruling, ROOT), "crossbox": cross,
+                     "ruled_by": ruled_by}
     write_list(device, doc, writer_serial(args.by))
-    print("CLOSED id=%s by=%s ruling=%s crossbox=%s" % (args.id, args.by, row["closed"]["ruling"], cross or "not required (OWN-BOX)"))
+    why = cross or ("not required (Andrew's ruling)" if ruled_by == "andrew" else "not required (OWN-BOX)")
+    print("CLOSED id=%s by=%s ruled_by=%s ruling=%s crossbox=%s" % (args.id, args.by, ruled_by, row["closed"]["ruling"], why))
     return 0
 
 
@@ -838,6 +846,62 @@ class Scratch:
                 os.rmdir(d)
             except OSError:
                 pass
+
+
+def close_path_cases(device: str) -> list:
+    """The close rule (msg 107148): Andrew's ruling closes a CROSS-BOX row; a CTO ruling needs CLOSED-BOTH."""
+    out = []
+    keep = {k: os.environ.get(k) for k in ("OPAL_STATE_ROOT", "OPAL_CROSSBOX_ROOT")}
+    base = tempfile.mkdtemp(prefix="opalcalls_close_")
+    made = []
+    try:
+        os.environ["OPAL_STATE_ROOT"] = os.path.join(base, "state")
+        os.environ["OPAL_CROSSBOX_ROOT"] = os.path.join(base, "crossbox")
+        ruling = os.path.join(base, "RULING.md")
+        with open(ruling, "w", encoding="utf-8") as fh:
+            fh.write("ruling\n")
+        made.append(ruling)
+
+        def row(cid):
+            return {"id": cid, "project": "P", "subject": "s", "asked_by": "x", "source": "s", "orders": [], "roots": [],
+                    "state": "OPEN", "opened_at": now_utc(), "kind": "fork", "scope": {"verdict": "CROSS-BOX"},
+                    "closed": None}
+        doc = {"schema": SCHEMA, "device": device, "written_at": now_utc(), "written_by": "t",
+               "rows": [row("c-andrew"), row("c-cto")]}
+        made.append(write_list(device, doc, "selftest"))
+
+        class A:
+            pass
+        a = A()
+        a.id, a.by, a.ruling, a.crossbox, a.ruled_by = "c-andrew", "selftest", ruling, None, "andrew"
+        ok = cmd_close(a) == 0 and read_list(device)["rows"][0]["state"] == "CLOSED" and \
+            read_list(device)["rows"][0]["closed"]["ruled_by"] == "andrew"
+        out.append(("an Andrew ruling closes a CROSS-BOX row with no cross-box file", ok))
+        a.id, a.ruled_by = "c-cto", "cto"
+        try:
+            cmd_close(a)
+            refused = False
+        except Refused:
+            refused = True
+        out.append(("a CTO ruling on a CROSS-BOX row is still refused without CLOSED-BOTH",
+                    refused and read_list(device)["rows"][1]["state"] == "OPEN"))
+    finally:
+        for k, v in keep.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+        for f in made:
+            try:
+                os.remove(f)
+            except OSError:
+                pass
+        for d in (os.path.join(base, "state", device), os.path.join(base, "state"), base):
+            try:
+                os.rmdir(d)
+            except OSError:
+                pass
+    return out
 
 
 def selftest() -> int:
@@ -925,6 +989,7 @@ def selftest() -> int:
         cases.append(("the last line has the named shape", bool(re.match(
             r"^CALL-SCOPE project=\S+ device=\S+ paths=(clear|hit) placement=(clear|hit) resources=(clear|hit) "
             r"shared=(clear|hit) risk=(LOCAL|SERVED|WORLD) verdict=(OWN-BOX|CROSS-BOX)$", line))))
+        cases.extend(close_path_cases(here))
     finally:
         sc.cleanup()
     fails = 0
@@ -960,6 +1025,9 @@ def build_parser() -> argparse.ArgumentParser:
     cls.add_argument("--by", required=True)
     cls.add_argument("--ruling", required=True)
     cls.add_argument("--crossbox", help="id of the cross-box file for this call, when its text does not carry the call id")
+    cls.add_argument("--ruled-by", choices=RULED_BY, default="cto",
+                     help="andrew: the ruling is Andrew's word and closes the row whatever its scope; "
+                          "cto (default): a CROSS-BOX row needs a CLOSED-BOTH cross-box file")
     sco = sub.add_parser("scope", help="measure whether a call touches only this box")
     sco.add_argument("--project")
     sco.add_argument("--orders", nargs="+", default=[])

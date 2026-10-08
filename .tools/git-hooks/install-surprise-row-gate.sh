@@ -38,7 +38,13 @@ cat >> "$HOOK" <<'EOF_STAGE'
 # legacy rows across 18 files are never re-graded.
 # FAIL-CLOSED on the sentinel: a staged channel file with the checker missing = DENY.
 if [ -f "$ROOT/.tools/surprise-row-gate.py" ]; then
-    ROOT="$ROOT" STAGED="$STAGED" python "$ROOT/.tools/surprise-row-gate.py" || exit 1
+    if [ -n "${SAFE_MERGE_GRADED_TREE:-}" ] && [ -n "${SAFE_MERGE_GRADED_GATE:-}" ] \
+       && [ "$(git write-tree 2>/dev/null)" = "$SAFE_MERGE_GRADED_TREE" ] \
+       && [ "$(git hash-object "$ROOT/.tools/surprise-row-gate.py" 2>/dev/null)" = "$SAFE_MERGE_GRADED_GATE" ]; then
+        echo "SKIP: row gate -- safe-merge already graded this exact tree ($SAFE_MERGE_GRADED_TREE) with this exact gate (change 2)"
+    else
+        ROOT="$ROOT" STAGED="$STAGED" python "$ROOT/.tools/surprise-row-gate.py" || exit 1
+    fi
 elif git diff --cached --name-only 2>/dev/null | grep -qE '(org/surprise_channel/[^/]+|/surprise-channel/(investigations|adjudications|remediations))/(INVESTIGATION|ADJUDICATION|REMEDIATION)_v'; then
     echo "BLOCKED: a surprise-channel row file is staged but .tools/surprise-row-gate.py is missing." >&2
     exit 1
