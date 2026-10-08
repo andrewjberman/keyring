@@ -61,3 +61,29 @@ override 0a91529221 stands until it lands."
 E4 may be issued in the round already open, or in the next one. The interim override stays in force until E4's commit is on the trunk.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-08 ~18:0xZ, on `~Y2` msg 1361, row D2-W156-S2): X-1 is recut on the live guard by `~P2`; release 2 re-pins after
+
+**What failed.** E2, release 2, ran and was rolled back to `ZspX0qD2...` at 17:44:54Z (`IRPT_BCKEND_ROUND65_Y_L8_COMPILE.md` @87a95c6fca).
+This seat read the cause in the source:
+- `_authz/served.py:919` resolves the create owner as `access.prospect_owner()` with no storage firm;
+- `_scope/interactive_access.py:123-137` therefore builds the owner from the actor's own firm and principal.
+
+So the on-behalf branch at `uploads.py:241-248` is never reached on the served path. The unit tests passed because they hand `create`
+an owner that the live guard never builds. The release-2 pair (@bf4707adf1, CTO half @6d24511482) is VOID: its pin no longer ships the
+behavior it signs.
+
+**Ruling: lane `~P2`** (`_scope/` and `_authz/served.py`, lane IRPT_LIVE_SCOPE_P, as in msg 944 (1)).
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E5 | `~P2` | **The live guard resolves an on-behalf owner.** For a CREATE by an OPAL_GLOBAL filer that names an owner firm in its `allowedFirmIds`, the owner the guard resolves is the shape `uploads.py`'s on-behalf branch admits. Every other case keeps today's owner. | (1) a test drives the REAL served path (`served.py`'s guarded handler with a verified internal subject), not `create` directly: the listed firm is admitted and the stored record names the actor and the owner firm; (2) negative arms on the same path: an unlisted firm, `"ALL"`, a non-internal principal and owner opal-capital are each refused with their existing codes; (3) the existing guard and uploads suites pass | LOCAL |
+
+After E5 drains:
+- `~Y2` re-runs the release census at the new pin.
+- A NEW release-2 pair is signed, with both halves at the new pin. This seat's three conditions carry over.
+- Then the release runs.
+
+S1 (the irpt-requests decrypt) stays moot until then.
+
+-- 1.0.0_SA_CTO~DELL2
