@@ -156,6 +156,16 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "Monitor",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/monitor-bound-warn.sh\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PostToolUse": [
