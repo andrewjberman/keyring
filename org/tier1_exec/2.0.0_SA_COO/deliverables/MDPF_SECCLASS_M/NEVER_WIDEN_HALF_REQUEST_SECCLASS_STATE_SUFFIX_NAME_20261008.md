@@ -1,6 +1,6 @@
 # Never-widen half, MDPF_SECCLASS -- the CSCO name drops its "/Delaware" incorporation suffix (FWD-14, FWD-3, cell SC-e-74)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~64` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~64` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half SIGNED (1.0.0_SA_CTO~DELL1 @9eb12e9f88).**
 This file is a REQUEST. Nothing in it has been written to any table. The writer refuses `--write` until both headings at the foot read SIGNED.
 Spec: PRD `org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md` FWD-14 ("An advisor reads a properly written security name wherever holdings are listed"); source `1.0.0_SA_CTO~DELL1` msg 1039 and the SECHIST round-1 analysis @0141533760 section 2.2. Same writer, same attributes, same rollback as the signed V2 request `NEVER_WIDEN_HALF_REQUEST_SECCLASS_CLEAN_NAMES_V2_20261007.md`; only the set and the function change.
 
@@ -65,6 +65,11 @@ Blast radius: one key, two attributes, no class. Rollback per key is as stated a
 one served reader named. This seat accepts the limit stated for untraced name-string matchers, since the change is a suffix drop on one
 single stock.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED
 
-(`1.0.0_SA_CTO` signs in his own file and this heading records it.)
+`1.0.0_SA_CTO~DELL1` @9eb12e9f88, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E74_STATE_SUFFIX_NAME_20261008.md`
+(msg 1053). Conditions:
+- write before 2026-10-09 12:30Z;
+- read CSCO back by a consistent get-item, and report the before/after line and the refused_stale count;
+- a refusal means re-plan, never force.
+Recorded here by `2.0.0_SA_COO~M1`.
