@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~41</issued_to>
 <issued_by>2.0.0_SA_COO~R</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -82,10 +82,27 @@ he answers `1`, and drafts his End of Day post. Three defects, all measured, all
      is delivered.
    LAST line `SILENT-PATHS ok=<True|False> arms=<passed>/<total> base_texts_second_draft=<n>`.
 
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~R, 2026-10-08 ~21:5xZ, before the spawn, on Andrew's word at the issuer's terminal: "the Kimi agent may need more token budget allotted for reponses and answers ... it sometimes doesnt finish redrafting is if it runs out of budget")
+
+The model call `assist.kimi()` (`assist.py` ~line 377) sends `max_tokens = KIMI_MAX_TOKENS` (8000; kimi-k3 spends a hidden
+reasoning budget first). When an answer is cut off (`finish_reason == "length"`) it retries the SAME payload once, then raises
+`KimiError("KIMI_LENGTH_STARVED")`, and NOTHING is logged for an attempt that was cut off and then recovered. Measured by the
+issuer: in the last 7 days the handler logged 0 `KIMI_LENGTH_STARVED` failures (one `KIMI_TIMEOUT`, one End of Day refusal),
+so a recovered cut-off would be invisible. Build, in `assist.py` only:
+5. **Budget on a cut-off.** When attempt 1 ends `finish_reason == "length"`, attempt 2 sends `max_tokens` doubled, capped at a
+   named constant `KIMI_MAX_TOKENS_CAP = 16000`. Every other retry rule is unchanged. Keep `KIMI_TIMEOUT_S` (240 s; the handler
+   function's own limit is 600 s) and say in a comment why two attempts still fit.
+6. **One log line per attempt**, ids and counts only: `log("kimi_attempt", attempt=<1|2>, max_tokens=<n>, outcome=<ok|length|empty|http_<code>|timeout|error>, completion_tokens=<n or None from the response's usage>)`. Never the prompt or the answer.
+Add one arm to `test_inbound_silent_paths.py`: `kimi_budget` -- a fake send that answers attempt 1 with `finish_reason`
+`length` and attempt 2 with text: the text is returned, attempt 2 carried `max_tokens` 16000, and two `kimi_attempt` lines were
+logged with outcomes `length` then `ok`; a second fake cut off twice raises `KIMI_LENGTH_STARVED` and logs two lines. The LAST
+line's form is unchanged (arms 9 of 9). `assist.py` and `test_teams_chat_assist.py` are added to `<paths>`; keep every
+existing assist case passing (AC2), changing a case only where the new log line or budget requires it, named in your report.
+
 ### RULES FOR THIS CELL
 
 - **Nothing you run leaves this machine**: no S3, gateway, Graph, model, text or queue call. Everything is injected.
-- Edit nothing but the files in `<paths>`. Do not change `ldo.py`, `post_format.py`, `assist.py` or the End of Day or job keys.
+- Edit nothing but the files in `<paths>`. Do not change `ldo.py`, `post_format.py`, or the End of Day or job keys; in `assist.py` change only `kimi()` and its constants (AMENDMENT 1).
 - No real message, person's, client's or firm's name in any file you write. No non-ASCII. Bake no absolute path.
 - Refuse a criterion you cannot satisfy as written and report the refusal with its measurement; do not repair or widen it.
 
@@ -115,6 +132,8 @@ investigation file and keep its existing line endings.
 <paths>
 data/transcripts/scripts/teams_chat/tenant.py
 data/transcripts/scripts/teams_chat/mail_requests.py
+data/transcripts/scripts/teams_chat/assist.py
+data/transcripts/scripts/tests/test_teams_chat_assist.py
 data/transcripts/scripts/tests/test_inbound_silent_paths.py
 data/transcripts/scripts/tests/test_teams_chat_tenant.py
 data/transcripts/scripts/tests/test_teams_chat_stale_eod.py
