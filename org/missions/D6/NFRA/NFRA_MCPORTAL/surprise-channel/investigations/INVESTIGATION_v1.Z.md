@@ -817,6 +817,28 @@
     "spec_asserts": "A worker's sparse worktree carries every path its commit needs; the order names no cone addition.",
     "world_is": "The cone the issuer cut lacks org/modules/graph, which every .py commit's gate imports. Any later worker cut with the same cone fails its first .py commit identically. Also absent from the cone: org/surprise_channel/ (the row schema path the worker contract names), org/mcp/.",
     "notes": "Issuer fix: add org/modules/graph (and org/surprise_channel/schemas) to the cone the spawn recipe uses. No repo content was changed by the workaround; only this worktree's checkout."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W5-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~5",
+    "surfaced_at": "2026-10-08T22:50Z",
+    "one_line": "A cone-mode sparse worktree cannot commit any org/missions path through safe-commit: the surprise-row gate and missions-tree-check read every project's channel, register, PRD and ledger files, and the hook index that git commit --only builds hides the skip-worktree rows the checker's sparse fallback relies on (tree=2 in the hook, tree=46 run by hand).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Four safe-commit refusals at C:/tmp/mp-r4-5, each from a different missing path: surprise-row-gate 'standing corpus pass could not run (FileNotFoundError ... NFRA_CLDGRPH ... INVESTIGATION_v1.md)', then NFRA_CTLPLN, then remediations/REMEDIATION_v1.md; missions-tree-check 'tree=2 project(s) ... 44 violation(s)' (INDEX-ORPHAN), then 'could not run (rc=2) ... org/missions/MACROS.yaml', then four [R6] CLOSED-project refusals (PRD header, ledger/COMPLETION_*.json).",
+        "Same checker run by hand in the same worktree: 'tree=46 project(s) ... 42 valid ... RESULT: 0 violation(s)'. In the hook it printed tree=2. GIT_TRACE shows the hook ran with GIT_INDEX_FILE=.git/worktrees/mp-r4-5/next-index-26912.lock; SAFE_COMMIT_TWO_PHASE=0 changed nothing.",
+        "Workaround that landed commit 7d25a4d8c1 with no override: git sparse-checkout converted to non-cone (MSYS_NO_PATHCONV=1, else every pattern is rewritten to C:/Program Files/Git/...), adding /org/missions/*/*/*/project.json, .../surprise-channel/{investigations,remediations}/*, /org/missions/*.yaml, and the prd/ and ledger/ dirs of NFRA_OPSEC202609, LGIC_NAMING, POSN_AGGFIX, POSN_ASTTAX. The first attempt without MSYS_NO_PATHCONV un-materialised the worktree (tracked files untouched; reversed by the second call)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker whose order names paths under org/missions can commit them from its sparse worktree.",
+    "world_is": "Not without widening the cone by the set above; the cell's own cone (the order's paths) is not enough. The CLOSED-project R6 limb and the channel corpus pass read files that no cone-mode cone of a worker can hold except by listing 41 project directories (836 MB, 20933 files).",
+    "notes": "Issuer fix: cut worker worktrees with the non-cone pattern list above (or one the issuer owns), or give missions-tree-index.py and surprise-row-gate.py the index-read fallback inside the hook environment (the checker already has one at _index_only_projects, which returns [] under the hook's index). The orders' proof step cannot be committed from a bare cone worktree."
   }
 ]
 ```
