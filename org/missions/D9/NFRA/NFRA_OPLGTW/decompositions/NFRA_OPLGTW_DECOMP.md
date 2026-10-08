@@ -1781,3 +1781,36 @@ Label `<round>31</round>`, ONE issuance, one build cell; the release that ships 
 | `OG-rl-15` | 2 | The r29 release carrying it, under CTO + COO + CVO halves that name the domain table's entries. NOT cut in this issuance. | WORLD | -- | worker |
 
 **Chains.** `OG-md-1` -> `OG-rl-15`. **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.30 (2.0.0_SA_COO~O, 2026-10-08 ~21:5xZ) -- round 32, the round-31 analysis list with section 4a (PRD v2.0)
+
+**Source.** `ledger/ROUND_ANALYSIS.round31.md` section 4 @e43ee663be and section 4a @8ca3947b86 (`1.0.0_SA_CTO~O` msgs
+31971, 32018); PRD v2.0 ADMITTED, both L4-R halves signed (ratified-text `3.0.0_SA_CVO~Z` @5924aaedbe, brief
+`4.0.0_SA_CRO~Z` @d91440b591). Andrew-direct ~21:2xZ "asap" on the 13 months and the Tax SMA master (@6233bae5de).
+Round 31 is terminal: OG-md-1 drained @a2c6b9cc65; OG-dr-1 closed undrained (R51).
+
+Label `<round>32</round>`, ONE issuance, eight cells in six chains.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-sf-1` | 1 | `opal_asker_query` into `SAFE_TOOLS`; the census of every `@mcp.tool` in tools.py against the three sets; the test through `_run` (R54). | WORLD | ~37 | worker-light |
+| `OG-rf-1` | 2 | Refresh rotation and code redemption answer once their transaction is sent; a deadline before the send answers 503 with nothing consumed (R50, PRD v2.0 item 6). | WORLD | ~38 | worker |
+| `OG-en-1` | 3 | One `-Mode enumerate` run for 08403355 beside 08335338 over the same window, from a box-side temp copy only; outside both pull windows. | WORLD | ~39 | worker |
+| `OG-tm-1` | 7 | On g5-1's "same shape": the puller, schedule (30+ minutes apart), box grant, silver conversion and the gateway reader roles carry 08403355; one QA day lands, converts and qualifies. Phase A plan + never-widen ask, Phase B after CTO+COO halves. | WORLD | ~39 | worker |
+| `OG-sc-1` | 4 | The exact column lists of `fact_acc`, `fact_uln`, `fact_ult`, `fact_rld`, `fact_rly`, `fact_rty`, `fact_trn`, both masters, newest partition, from the parquet footer only (no statistics). | SERVED | ~40 | worker-light |
+| `OG-cc-1` | 5 (+4's marker clause) | The 13-month closure census per master with the gateway's own record-level qualification; oldest/newest qualified record. | SERVED | ~41 | worker |
+| `OG-bf-1` | 8b | The producer's completion-record backfill over the census's missing dates (OG-c-2's replay path), the 49F accelerator's effect planned per branch. Phase A plan + never-widen ask, Phase B after CTO+COO halves. | WORLD | ~41 | worker |
+| `OG-cm-1` | 8a | The gateway's `calendar_months` (1-13) grant window, exactly one of days/months, month-end clamped; caps unchanged; the contract file and its deploy copy. | WORLD | ~42 | worker |
+| `OG-rl-15` | 6 | The r29 release (R55): OG-md-1, OG-sf-1, OG-rf-1, and (proposed to the CTO) OG-cm-1 with the 13-month grants for Andrew's and Alyssa's principals and tm-1's contract hookup. NOT cut in this issuance: after its build cells drain, and after the `opal-gateway-bbg` move and Andrew's sign-in. | WORLD | -- | worker |
+
+**Chains.** `OG-en-1` -> `OG-tm-1` (slot ~39); `OG-cc-1` -> `OG-bf-1` (slot ~41); `OG-sf-1`, `OG-rf-1`, `OG-cm-1` ->
+`OG-rl-15`; `OG-sc-1` alone (feeds round 33). **fanout:** 6 of 6 chains, cap 8.
+
+**Issuer rulings inside the decomposition.**
+- Item 8 splits into 8a (`OG-cm-1`, the grant mode the 13-month reach needs; the gateway has no per-grant window today)
+  and 8b (`OG-bf-1`, the records).
+- Item 4's marker clause is read by `OG-cc-1` with item 5's instrument, never measured twice.
+- `OG-cm-1` owns `org/standards/NFRA_OPLGTW_CONTRACT.json` this round; `OG-tm-1`'s contract lines are a merge hookup.
+- PRD v2.0 item 5(b) "placed with an AE lane": placed in the issuer's L7 slot ~39 under CTO+COO halves, the puller's
+  owner `0.6.2_AE_PartnerETL` named in the ask.
+- `OG-en-1`'s spawn waits for 23:05Z 2026-10-08 (the box-wide SDD session lock and the 22:15Z pull's deadline).
