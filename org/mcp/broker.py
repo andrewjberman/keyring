@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import os
+import socket
 import sqlite3
 import sys
 import time
@@ -195,23 +196,65 @@ def _log_event(event_type: str, agent: str = "", detail: str = "", conn=None):
 # Stale cleanup (PID check)
 # ---------------------------------------------------------------------------
 
+_K32 = None  # private kernel32 binding (own WinDLL so restype/argtypes never leak to other modules)
+
+
+def _kernel32():
+    global _K32
+    if _K32 is None:
+        import ctypes
+        from ctypes import wintypes
+        k = ctypes.WinDLL("kernel32", use_last_error=True)
+        k.OpenProcess.restype = wintypes.HANDLE
+        k.OpenProcess.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+        k.GetExitCodeProcess.restype = wintypes.BOOL
+        k.GetExitCodeProcess.argtypes = (wintypes.HANDLE, ctypes.POINTER(wintypes.DWORD))
+        k.CloseHandle.restype = wintypes.BOOL
+        k.CloseHandle.argtypes = (wintypes.HANDLE,)
+        _K32 = k
+    return _K32
+
+
 def _pid_alive(pid: int) -> bool:
-    """Check if a process is still running."""
+    """Is a process with this PID actually RUNNING (not merely addressable)?
+
+    A HANDLE IS NOT A RUNNING PROCESS. On Windows a process object outlives the
+    process for as long as anyone holds a handle to it, so OpenProcess() SUCCEEDS on
+    an exited-but-not-reaped pid. The previous version returned True on that handle,
+    so an exited agent (or the watchdog's long-dead launcher) read as alive. Same
+    exit-code check as org/mcp/agent-poller.py _pid_alive (STILL_ACTIVE = 259).
+
+    One deliberate difference from the poller: when the probe CANNOT SEE the process
+    (OpenProcess refused for a reason other than "no such pid", or the exit code is
+    unreadable) this returns True. Here a False deletes an agent row and can end the
+    broker, so a blind probe must never read as dead.
+    """
+    if pid <= 0:
+        return False
     if sys.platform == "win32":
         import ctypes
-        kernel32 = ctypes.windll.kernel32
+        from ctypes import wintypes
+        ERROR_INVALID_PARAMETER = 87   # OpenProcess on a pid that names no process
         PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
-        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
-        if handle:
-            kernel32.CloseHandle(handle)
-            return True
-        return False
-    else:
+        STILL_ACTIVE = 259
+        k = _kernel32()
+        handle = k.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if not handle:
+            return ctypes.get_last_error() != ERROR_INVALID_PARAMETER
         try:
-            os.kill(pid, 0)
-            return True
-        except OSError:
-            return False
+            code = wintypes.DWORD()
+            if not k.GetExitCodeProcess(handle, ctypes.byref(code)):
+                return True
+            return code.value == STILL_ACTIVE
+        finally:
+            k.CloseHandle(handle)
+    try:
+        os.kill(pid, 0)
+        return True
+    except PermissionError:
+        return True
+    except OSError:
+        return False
 
 
 def _clean_stale():
@@ -276,8 +319,8 @@ def _schedule_cleanup():
     # One occurrence of a repeating error means the repeat stopped, which is worse than
     # the error itself.
     #
-    # _parent_watchdog already had this shape ("Watchdog failures must never crash the
-    # broker; log and re-arm"). This brings the sibling timer into line with it.
+    # _idle_watchdog (formerly _parent_watchdog) already had this shape ("Watchdog failures
+    # must never crash the broker; log and re-arm"). This brings the sibling timer into line.
     try:
         _clean_stale()
     except Exception as exc:
@@ -301,57 +344,85 @@ def _schedule_cleanup():
 
 
 # ---------------------------------------------------------------------------
-# Parent-death watchdog (RV-0017 F-004)
+# Last-session-gone watchdog (replaces the RV-0017 F-004 parent-death watchdog)
 # ---------------------------------------------------------------------------
-# Captured at startup. If this PID disappears, the broker has been orphaned and
-# must exit gracefully so it cannot accumulate CPU/state from agents whose
-# sessions outlive its parent. Per RV-0017 incident 2026-05-27 PID 3812 orphan
-# (8158 CPU-sec / 6h45m vs dead parent PID 20276).
+# The RV-0017 watchdog watched os.getppid(). Under server.py's DOUBLE-SPAWN launch
+# (_ensure_broker) that parent is the intermediate launcher, which exits within
+# milliseconds BY DESIGN so a seat's tree-kill cannot reap the broker. The watchdog
+# stayed quiet only because the old _pid_alive read that exited launcher as alive.
+# The orphan the watchdog exists to stop is "a broker nobody uses", so it now keys on
+# the broker's own agents table: when no registered agent's pid is alive for
+# OPAL_BROKER_IDLE_GRACE_S seconds (default 600), the broker exits 0. The next
+# register_agent (server.py _ensure_broker reads ABSENT) relaunches it.
+#
+# OPAL_BROKER_PARENT_PID is kept as an EXPLICIT opt-in only (tests/broker_watchdog_test.py):
+# when set, the broker also exits once that pid is gone. Production no longer captures
+# os.getppid().
 _INITIAL_PARENT_PID = None
 _WATCHDOG_INTERVAL_S = 30.0
+_IDLE_GRACE_DEFAULT_S = 600.0
+try:
+    _IDLE_GRACE_S = float(os.environ.get("OPAL_BROKER_IDLE_GRACE_S", "") or _IDLE_GRACE_DEFAULT_S)
+except ValueError:
+    _IDLE_GRACE_S = _IDLE_GRACE_DEFAULT_S
+_last_live_agent_at = None  # monotonic time a live agent was last seen (broker start until the first)
 
 
-def _parent_alive() -> bool:
-    """True if the broker's launching parent process is still alive.
-
-    Conservative: returns True on any uncertainty. The watchdog only fires
-    on a definitive 'parent gone' signal, never on a transient PID-check
-    failure.
-    """
-    if _INITIAL_PARENT_PID is None:
-        return True
-    return _pid_alive(_INITIAL_PARENT_PID)
+def _live_agent_count(conn) -> int:
+    """Registered agents whose pid is alive (exit-code-correct _pid_alive)."""
+    rows = conn.execute("SELECT pid FROM agents").fetchall()
+    return sum(1 for r in rows if _pid_alive(int(r[0])))
 
 
-def _parent_watchdog():
-    """Re-arming watchdog: exit broker if launching parent process died."""
+def _watchdog_exit(event_type: str, detail: str, conn):
+    _log_event(event_type, "", detail, conn=conn)
+    conn.commit()
+    print(f"[opal-broker] {detail}", file=sys.stderr, flush=True)
+    # os._exit bypasses the HTTPServer's serve_forever() select-loop cleanly without
+    # requiring shutdown() coordination from another thread.
+    os._exit(0)
+
+
+def _idle_watchdog():
+    """Re-arming watchdog: exit when no registered agent has been alive for the grace."""
+    global _last_live_agent_at
+    # Runs on a Timer thread after the first (inline) tick: the module-level `db` is
+    # main-thread-only (check_same_thread), so this tick owns a short-lived connection,
+    # the same shape as _clean_stale.
+    conn = None
     try:
-        if not _parent_alive():
-            _log_event(
-                "broker_orphan_exit",
-                "",
-                f"parent PID {_INITIAL_PARENT_PID} no longer alive -- exiting",
-            )
-            db.commit()
-            print(
-                f"[opal-broker] parent PID {_INITIAL_PARENT_PID} died -- exiting gracefully",
-                file=sys.stderr, flush=True,
-            )
-            # os._exit bypasses the HTTPServer's serve_forever() select-loop
-            # cleanly without requiring shutdown() coordination from another
-            # thread. The Timer thread cannot call server.shutdown() because
-            # serve_forever() must be running on a different thread, which is
-            # not the case in single-thread mode.
-            os._exit(0)
+        conn = sqlite3.connect(str(DB_PATH), timeout=5)
+        conn.execute("PRAGMA busy_timeout = 3000")
+        now = time.monotonic()
+        if _last_live_agent_at is None:
+            _last_live_agent_at = now
+        if _INITIAL_PARENT_PID is not None and not _pid_alive(_INITIAL_PARENT_PID):
+            _watchdog_exit("broker_orphan_exit",
+                           f"parent PID {_INITIAL_PARENT_PID} no longer alive -- exiting", conn)
+        live = _live_agent_count(conn)
+        if live:
+            _last_live_agent_at = now
+        elif now - _last_live_agent_at >= _IDLE_GRACE_S:
+            _watchdog_exit("broker_idle_exit",
+                           f"no live registered agent for {int(now - _last_live_agent_at)}s "
+                           f"(grace {int(_IDLE_GRACE_S)}s) -- exiting; next register_agent relaunches",
+                           conn)
     except Exception as exc:
         # Watchdog failures must never crash the broker; log and re-arm.
         try:
-            _log_event("watchdog_error", "", f"{type(exc).__name__}: {exc}")
-            db.commit()
+            if conn is not None:
+                _log_event("watchdog_error", "", f"{type(exc).__name__}: {exc}", conn=conn)
+                conn.commit()
         except Exception:
             pass
+    finally:
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
-    t = Timer(_WATCHDOG_INTERVAL_S, _parent_watchdog)
+    t = Timer(_WATCHDOG_INTERVAL_S, _idle_watchdog)
     t.daemon = True
     t.start()
 
@@ -814,6 +885,24 @@ class BrokerHandler(BaseHTTPRequestHandler):
 # Startup hygiene: singleton guard + weekly message-archive catch-up
 # ---------------------------------------------------------------------------
 
+class _ExclusiveHTTPServer(HTTPServer):
+    """HTTPServer whose bind IS the singleton mutex.
+
+    Stdlib HTTPServer sets allow_reuse_address=1 (SO_REUSEADDR), which on Windows lets
+    a second socket bind a port a live listener already holds, so two brokers could
+    both "own" the port. Off here, and on Windows SO_EXCLUSIVEADDRUSE is set before the
+    bind, so a second broker's bind fails instead. Off Windows SO_REUSEADDR is kept: there
+    it never admits a second LISTENER, and dropping it would block a relaunch for the
+    TIME_WAIT window after an idle exit.
+    """
+    allow_reuse_address = sys.platform != "win32"
+
+    def server_bind(self):
+        if sys.platform == "win32" and hasattr(socket, "SO_EXCLUSIVEADDRUSE"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
 def _existing_broker_healthy() -> bool:
     """True if a healthy broker already owns the port. Prevents redundant broker
     processes that would hold broker.db + block maintenance VACUUMs (the 3-orphan
@@ -879,33 +968,40 @@ def main():
               file=sys.stderr, flush=True)
         return
 
+    # Exclusive bind BEFORE anything touches broker.db: the bind is the real singleton
+    # mutex (the HTTP probe above misses a broker that is starting or busy). A loser
+    # logs one line and exits 0 without opening the DB -- another broker already serves.
+    try:
+        server = _ExclusiveHTTPServer(("127.0.0.1", PORT), BrokerHandler)
+    except OSError as exc:
+        print(f"[opal-broker] cannot bind 127.0.0.1:{PORT} ({exc}) -- another broker "
+              f"already serves; exiting (singleton)", file=sys.stderr, flush=True)
+        return
+
     # Weekly message-archive catch-up (before the persistent connection opens).
     _maybe_archive_on_startup()
 
     db = _init_db()
 
-    # Capture launching parent PID for the watchdog. Allow override via env
-    # for testing (OPAL_BROKER_PARENT_PID); production captures os.getppid().
+    # Parent watching is opt-in only (OPAL_BROKER_PARENT_PID); see _idle_watchdog.
     parent_env = os.environ.get("OPAL_BROKER_PARENT_PID")
     if parent_env:
         try:
             _INITIAL_PARENT_PID = int(parent_env)
         except ValueError:
-            _INITIAL_PARENT_PID = os.getppid()
-    else:
-        _INITIAL_PARENT_PID = os.getppid()
+            _INITIAL_PARENT_PID = None
 
     _log_event(
         "broker_start", "",
-        f"port={PORT} parent_pid={_INITIAL_PARENT_PID} pid={os.getpid()}",
+        f"port={PORT} parent_pid={_INITIAL_PARENT_PID} pid={os.getpid()} "
+        f"idle_grace_s={int(_IDLE_GRACE_S)}",
     )
     db.commit()
 
     _clean_stale()
     _schedule_cleanup()
-    _parent_watchdog()
+    _idle_watchdog()
 
-    server = HTTPServer(("127.0.0.1", PORT), BrokerHandler)
     print(
         f"[opal-broker] listening on 127.0.0.1:{PORT} (db: {DB_PATH})",
         file=sys.stderr, flush=True,
