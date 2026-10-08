@@ -21912,3 +21912,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does."
 }
 ```
+
+## IRPT_BCKEND-D2-W220-S1 -- E11 probe edit regresses 2 tests in test_custody_retained.py (fixture policy never raises ValueError); AC2 FAIL, order left open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W220-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~220",
+  "surfaced_at": "2026-10-08T23:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After the E11 probe edit, AC2 fails 2 of 68: test_custody_retained.py's installed-factory test uses a reporting_policy that never raises ValueError, so the probe adds irpt-custody-x10-v1 and composition refuses an overlapping family.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 at base af1e1b08b6: 66 passed, 2 skipped. At 128b6f7db1: 2 failed, 64 passed, 2 skipped; failing ids test_installed_custody_factory_runs_guarded_entry_with_actual_sdk_profiles[descriptor-None] and [canonical-sdk-None]",
+      "captured log: ReportRefused 'a retention family belongs to exactly one policy revision' (reports/composition.py line 48), raised from build_retained_repositories inside custody_submission.submit",
+      "test_custody_retained.py passes w.policy.reporting_policy (reports/tests/test_retention.py world) as reporting_policy; it returns the same default-revision document for every revision, so reporting_policy('irpt-custody-x10-v1') succeeds and its families overlap the default's",
+      "test_custody_submission_revision.py (3 passed) fails 2 of 3 against the base custody_submission.py, so the edit is what the new test discriminates"
+    ]
+  },
+  "spec_asserts": "Order: after the edit AC2 shows the same passed count (66) and 0 failed; the export-side probe pattern composes with the neighbouring custody tests.",
+  "world_is": "The neighbouring fixture's policy accessor does not model an unregistered revision, so the same probe that is correct against the real registry (custody row holds only CUSTODY_REPORT) breaks that test. The fix is in test_custody_retained.py or its world (a policy lookup that raises ValueError for an unknown revision, as export/tests/test_custody_writer_composed.py does); both are outside this order's paths, and swallowing ReportRefused in the edit would weaken the probe. The edit stays committed at 128b6f7db1; the order stays pending; issuer 2.0.0_SA_COO~Y2 to amend paths to admit the fixture fix or rule otherwise. Nothing is deployed."
+}
+```
