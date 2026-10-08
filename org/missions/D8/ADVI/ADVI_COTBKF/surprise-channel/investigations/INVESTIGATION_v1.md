@@ -2221,3 +2221,28 @@ round.** Never edit an existing row.
   "world_is": "Under the stated rule no month is `offsetting` (the before-state's value-change and flow-taken-out components are not off in opposite directions). The movers are carried by the sweep balance and by sweep-trade days. In the largest-|s| sweep_balance month the after arm debits cash for a sweep purchase (type LIX on CFNCASH) but the sale of the non-sweep security that paid for it credits nothing, so cash goes negative and cancels the sweep position: the after-arm value is the before-arm value minus the sweep balance. This is a reading of ONE traced account; how many of the 147 share it is not measured here (no fix and no wider census in this order)."
 }
 ```
+
+## ADVI_COTBKF-D2-S31 -- the mover-causes invocation depends on the data-dir's last arms
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S31",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-08T19:00Z",
+  "one_line": "CB21u1-AC2's invocation reads day values from the runner's default --data-dir, so its result depends on which arms ran there last: on the trunk it gave sweep_balance=0 other=147 (all other:unexplained) until the none->v1 arms were rebuilt, then 72/0/75, equal to the worker",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "trunk run 1 after the drain @0aefdc2e8e: MOVER-CAUSES movers=147 sweep_balance=0 offsetting=0 other=147 sum_ok=True core_separate=16; trace reading: 'the arms day values do not reproduce the persisted month grade' (the default data-dir held round 20's v1->v2 arms)",
+      "after commonwealth_sweep_regrade.py --before-list none --after-list v1 on the trunk: SWEEP-REGRADE ... months_before=1685/1931/78977 months_after=2057/1522/79014 control_same=True, then MOVER-CAUSES movers=147 sweep_balance=72 offsetting=0 other=75 sum_ok=True core_separate=16"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-u-1 AC2: the invocation as written classes the 147 movers.",
+  "world_is": "The script's reproduce-guard refuses stale arms honestly (unexplained, never forced), but the invocation is not self-contained: it needs the none->v1 arms in the default data-dir. A repair: the script rebuilds or checks the arms' list versions itself, or the invocation names its own --data-dir."
+}
+```
