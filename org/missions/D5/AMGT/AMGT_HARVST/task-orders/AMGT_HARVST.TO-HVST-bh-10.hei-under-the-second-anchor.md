@@ -59,6 +59,21 @@ that is not one of those is never added, and never because it is absent from the
 
 Change an existing test assertion only where this cell's rule is the reason, and list each in your report.
 
+## AMENDMENT 1 (issuer, 2026-10-08 ~02:5xZ, before any spawn; `1.0.0_SA_CTO~Z` msg 31558; no gate limb graded it)
+
+Two additions to section 1, both data in `whole_brand_aliases.json`:
+- **The existing `CSL_AU_Equity` entry.** Its `symbol_anchors` row for `CSLLY` has a `source` that names only the eight
+  articles it admits. The issuer read three stored sources for the string `CSLLY`: the pool universe
+  (`s3://opal-data-harvest/universe/v1/2026-10-06.json`, 302 records) 0 occurrences; `lib/research/identity/registrations.json`
+  (72 entries) 0 occurrences; the collector's identity record (234 records) 0 occurrences. Append to that row's `source`,
+  word for word: `; evidenced by article spans only -- not in the pool (302 records), the identity registry (72) or the
+  collector's identity record (234), read 2026-10-08`. Change nothing else on that entry.
+- **From here a symbol anchor needs a STORED source or that sentence.** For any `symbol_anchors` row you add for HEI, check
+  the same three sources for the symbol and write either the stored source that carries it or
+  `evidenced by article spans only` with the three counts. The validator in `universe_securities.py` is not changed for this.
+- One more plant in your test file: the `CSL_AU_Equity` entry's `CSLLY` row carries the words `evidenced by article spans
+  only` when read from the real file.
+
 <paths>
 lib/research/harvest/whole_brand_aliases.json
 lib/research/harvest/universe_securities.py
