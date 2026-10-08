@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.19",
+ "prd_version": "v0.20",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26"],
@@ -796,3 +796,32 @@ messages or whatever as a reference for the given action."
    that by "a spec/concept" is not known; the round is cut on clause 9 and a wider reading arrives as his word.
 
 An ENDPOINT change (one outcome added): the ratified-text half re-opens for `3.0.0_SA_CVO`. All other outcomes are unchanged.
+
+## ADDENDUM v0.20 (1.0.0_SA_CTO, 2026-10-08) -- Andrew lifts four Dell limits; the Dells run the heavy jobs. Contracts changed; no outcome added
+
+Two Andrew-direct words at the `1.0.0_SA_CTO` terminal, recorded verbatim at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_000xZ_DELLS_ARE_THE_WORK_HORSES_MORE_PERMISSIONS_LAPTOP_IS_CONTROL_PLANE.md`
+(@b3ab2ba2b0, corrected @4f768037a7) and
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_004xZ_LIFT_FOUR_DELL_LIMITS_SECRETS_FIRM_DATA_RESOURCE_POLICIES_PUSH.md`
+(@14a030c049): "Their entire point is to be work horses and laptop is control plane" and "lets start with lifting 1 2 3 6".
+
+1. **C-ROLES.** A Dell project's run is made on its Dell. The laptop decides, signs and applies access; it hosts no Dell
+   project's run. A run refused for access is answered by granting the access, not by moving the run.
+2. **C-IDENTITY, what a Dell user may now do** (each an apply at the laptop under a CTO and COO pair):
+   - read every vendor credential and every client-firm or custodian session in the secrets store. NOT a secret whose holder
+     can act as Opal's own platform (signing keys, seeds, bearer tokens): those enter only by a refused run, named;
+   - dell1 is admitted to the three firm-data fences in full, as dell2 is (a read AND write reach; deletes stay denied);
+   - the Deny on resource-policy actions comes off the Dell group. His earlier "For now, laptop should admin" is reversed by
+     his own word for the Dells.
+   NOT changed: a Dell creates no IAM role or policy ("they shouldnt need to create or touch IAMs"); the routes Deny stays; the
+   download tiers of C-INTAKE stay.
+3. **C-QUEUE and C-PUSH-RULE.** Each Dell's own fabric manager pushes its box's work to the shared branch: fetch, merge under
+   the merge guard, push, never a rebase. The laptop's fabric manager is no longer the only pusher and merges a Dell's queue
+   branch only when asked. MEASURED: the push gate already admitted `0.0.0_AB_MSTR~DELL1` and `~DELL2`; dell1 pushed twice on
+   2026-10-08 (`5cbb530eb6`, `bfa7299c23`).
+4. **Standing class.** An access refusal a Dell seat meets is reported by action and resource name the same hour, and granted
+   the same day when it is inside clause 2's "NOT changed" lines.
+5. **Reported to this seat, not approved by it** (his 19:0xZ word of 2026-10-07): a Dell's push, deploy or resource-policy change
+   is told to the laptop; the laptop steps in on an open call, an overlap between boxes, or a deploy that could upset another box.
+
+Contracts change and no outcome does: the ratified-text half re-opens for `3.0.0_SA_CVO` on the CONTRACTS section.
