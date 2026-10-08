@@ -5316,3 +5316,33 @@ by dell1 or by this seat.
   "notes": "Cross-fabric: the r4 bundle stays live under the per-fire NO-WORSE rule (dell2). The trace is cut as one diagnosis order in the next MDPF_SECCLASS round; the fix ships under its own never-widen pair."
 }
 ```
+
+## MDPF_SECCLASS-D1-S9 -- BD gold re-emits multi_asset on 36 client concentration files after the switch; COT SGIIX still too; remap ledger leg G blocked
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S9",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T18:15Z",
+  "one_line": "BD gold still emits multi_asset after the six-class switch: 36 opal-data-bd platinum/clients/*/concentration.json written 2026-10-08 00:50-05:51Z serve it (balanced funds ABALX, AMECX, CAIBX and 88 ticker-less entries); COT's 2 SGIIX files (row S60) were rewritten 10-08 11:36Z still multi_asset. Ledger secclass-multi-asset-remap-b-m-20261007 leg G cannot close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R12_CHECKS/served_multi_asset_split.py (read-only, 2026-10-08 ~18:10Z), record MDPF_SECCLASS_M/SERVED_MULTI_ASSET_SPLIT_20261008T1810Z.json: opal-data-bd listed=25265 hit_keys=36 post_switch=36 pre_switch=0; opal-data-cot listed=1153 hit_keys=2 post_switch=2",
+      "the same script on 2026-10-07 ~16:5xZ (row S60): opal-data-bd hit_keys=204 post_switch=0 -- so the 10-07 night BD gold fire re-emitted the class",
+      "get-object over the 38 hit keys (~18:1xZ): BD multi_asset items by ticker ABALX 12, AMECX 9, CAIBX 9, SCGB1 5, KAGIX/FBALX/FKIQX/MDLOX/AAETX/CFIHX 3 each, ticker None 88; data_as_of 2026-10-06 (35) and 2026-10-05 (1); COT SGIIX 2, data_as_of 2026-10-07",
+      "ledger leg S (2026-10-07 ~07:15Z): full scan of etf-classifications reads 0 multi_asset rows -- the class comes from a producer path, not the canonical table",
+      "leg H read clean the same hour: the IRPT holdings publications of all three firms serve 0 multi_asset (LEG_H_SERVED_HOLDINGS_READ_20261008T1805Z.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-07: six classes only; after rule-B remap (ledger secclass-multi-asset-remap-b-m-20261007 leg G) the next Cottonwood and Black Diamond gold runs serve no multi_asset and the firm_composition gaps close.",
+  "world_is": "The canonical table and the IRPT holdings path are clean, but the BD client concentration producer (and COT's, per S60) still assigns multi_asset to balanced funds through a non-canonical classify path. Widens S60 from COT to BD.",
+  "notes": "Trace (which classify site in BD/COT D_04 emits it) is cut as one order in the next round alongside D1-S8. portal composition.ts keeps multi_asset while this and S60 are open, so pages render."
+}
+```
