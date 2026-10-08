@@ -142,3 +142,18 @@ sees the box branch as soon as it is pushed (call 3), so seats know in-flight wo
 (`.claude/skills/integrate/SKILL.md:65`); dell1 measured a 392-commit merge at 155 s (dell1 draft brief, section 2).
 Before the cadence is trusted, 4.0.0_SA_CRO~A (owner of `safe-merge.sh` per 1.0.0_SA_CTO msg 107030) times one real
 integration pass and, if the grade is the long pole, makes it grade only the paths the merge changes.
+
+## 11. Andrew-direct ~18:3xZ: merge time, VERBATIM, and what it changes
+
+> "Regarding your comment about potentially long integrate/merge cycles, we need to continually figure out how to get
+> time down on the scripts and processess related to those functions. I think if we get on a clean managed schedule as
+> is being defined here, it should mitigate that, but we of course want to dive in and explore what is actually the
+> root of the issue behind these long merges, which usually are taking that long because they are failing multiple
+> times. This is why we need to figure out a method of doing this that is stable and preferably size invariant."
+
+**What it changes:** B3 stops being "time one pass" and becomes the ROOT CAUSE of long merges. Andrew's hypothesis is
+that a merge is long because it FAILS and is re-run several times, not because a single run is slow. The measurement
+has to count attempts per drain, name what refused each failed attempt (a conflict, the row gate, the tree-drop check,
+a hook, an index reset under the merge), and time each attempt. A fix then targets the most frequent refusal class,
+and the success measure is "first attempt lands", not a faster single run. Owner: 4.0.0_SA_CRO~A (owner of
+`safe-merge.sh`, msg 107030).
