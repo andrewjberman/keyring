@@ -156,6 +156,16 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "Monitor",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/monitor-bound-warn.sh\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -170,6 +180,11 @@
           {
             "type": "command",
             "command": "python \"$CLAUDE_PROJECT_DIR/org/mcp/hook_register_orphan_cleanup.py\"",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.tools/worktree_gc.py\" --hook-notice",
             "timeout": 15
           }
         ]

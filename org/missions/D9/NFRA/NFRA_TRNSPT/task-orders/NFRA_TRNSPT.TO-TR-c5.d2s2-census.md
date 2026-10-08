@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~2</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -81,6 +81,17 @@ returning no `nextLink`. Otherwise the message was classified out.
 
 Dry-run at the base (CLOUD 1e02ea542a): AC1 `R5-C5-RECORD-FAIL absent`, AC2 `R5-C5-CENSUS-FAIL absent` -- FAIL as expected. Whether the
 verdict is right is read by the issuer at the drain against its own `git show`.
+
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~T2, 2026-10-08) -- AC1's deployed bytes are resolved by CONTENT
+
+The manifest's `deployed_commit` `aa75078e1b...` is a local release branch that never reached this repository or origin, so
+`git show` of it is empty (your row NFRA_TRNSPT-D2-W2-S1). The issuer read the deployed bytes from the release artifact instead:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R5_DEPLOYED_ARTIFACT_READ.md` (artifact ETag `58f375cd...`, 509420 bytes,
+git-ref `aa75078e1b...`; its `app/mail_route.py` sha256 `c7bf6ad9...` equals HEAD's; 0 diff lines; positive control 19 lines).
+Write the MAIL_ROUTE line from that read: `MAIL_ROUTE: deployed@aa75078e1b72a28219e6148d3ec8e9bf705ea111 SAME-AS-HEAD SOURCE:
+infra/aws/ec2/EC2_MANIFEST.json:503`, and add one paragraph saying the verdict is the issuer's content read of the release artifact
+(cite the file above), not a `git show`. Keep your POSITIVE_CONTROL line. Make no AWS call. Then re-run AC1 and AC2 and flip only if
+both PASS. The issuer files the resolution of row D2-W2-S1.
 
 ## BOUNDS
 

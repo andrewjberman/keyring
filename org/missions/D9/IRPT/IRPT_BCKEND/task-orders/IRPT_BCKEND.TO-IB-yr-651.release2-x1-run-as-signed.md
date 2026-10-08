@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~156</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>cancelled -- issuer ruling 2.0.0_SA_COO~Y2 2026-10-08 ~18:1xZ on rows IRPT_BCKEND-D2-W156-S1 and D2-W156-S2: branch B ran as designed (release 2 applied 17:37:00Z, rolled back 17:44:54Z to ZspX0qD2.., re-read live by the issuer; AC2 and AC3 PASS, AC1 FAIL) and the order cannot pass as written -- the seat cannot decrypt irpt-requests (S1), and the live guard builds the owner from the actor, so uploads.py's on-behalf branch is unreachable (S2, confirmed by the issuer reading served.py:905-922, interactive_access.py:123-137, uploads.py:241-248). Re-release waits on a recut X-1 cell; routed to 1.0.0_SA_CTO~DELL2</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

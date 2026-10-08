@@ -1,0 +1,28 @@
+aws_iam_policy.dell_agent_platform_secrets[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-platform-secrets-policy]
+aws_iam_user.dell2: Refreshing state... [id=cloudops-dell2-agent-user]
+aws_iam_policy.dell_agent_respol_allow[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy]
+aws_iam_group.dell_agents: Refreshing state... [id=cloudops-dell-agents-group]
+aws_iam_policy.dell1_bus: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell1-agent-bus-policy]
+aws_iam_policy.dell2_bus: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell2-agent-bus-policy]
+aws_iam_policy.dell_agent_vendor_secrets[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-vendor-secrets-policy]
+aws_iam_policy.dell_agent_deploy: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy]
+aws_iam_policy.dell_agent_routes_fn[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-fn-policy]
+aws_iam_policy.dell2_ssm: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell2-agent-ssm-policy]
+aws_iam_policy.dell_agent_create: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy]
+aws_iam_user.dell1: Refreshing state... [id=cloudops-dell1-agent-user]
+aws_iam_group_policy_attachment.dell_agent_deploy: Refreshing state... [id=cloudops-dell-agents-group-20261007045950669000000002]
+aws_iam_user_policy_attachment.dell2_ssm: Refreshing state... [id=cloudops-dell2-agent-user-20261007131332412200000004]
+aws_iam_user_policy_attachment.dell2_bus: Refreshing state... [id=cloudops-dell2-agent-user-20261007045950669000000003]
+aws_iam_user_policy_attachment.dell1_bus: Refreshing state... [id=cloudops-dell1-agent-user-20261007045950656800000001]
+aws_iam_group_policy_attachment.dell_agent_routes_fn[0]: Refreshing state... [id=cloudops-dell-agents-group-20261007131332305000000001]
+aws_iam_group_membership.dell_agents: Refreshing state... [id=cloudops-dell-agents-membership]
+aws_iam_group_policy_attachment.dell_agent_respol_allow[0]: Refreshing state... [id=cloudops-dell-agents-group-20261008123931336900000001]
+aws_iam_group_policy_attachment.dell_agent_platform_secrets[0]: Refreshing state... [id=cloudops-dell-agents-group-20261008180017632500000001]
+aws_iam_group_policy_attachment.dell_agent_vendor_secrets[0]: Refreshing state... [id=cloudops-dell-agents-group-20261008113346722500000001]
+aws_iam_group_policy_attachment.dell_agent_create: Refreshing state... [id=cloudops-dell-agents-group-20261007081550288100000001]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+exit=0

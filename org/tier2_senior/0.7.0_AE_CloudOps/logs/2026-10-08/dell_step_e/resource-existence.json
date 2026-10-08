@@ -1,0 +1,16 @@
+{
+  "secrets": {
+    "opal/mcp/graph-read-token": "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/graph-read-token-MGAqlV",
+    "schwab/sdd/session": "arn:aws:secretsmanager:us-east-1:313476888478:secret:schwab/sdd/session-u8RHot",
+    "blackdiamond/49f/otp-relay": "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/49f/otp-relay-hDQMS5"
+  },
+  "queues": {
+    "1": "arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell1-queue.fifo",
+    "2": "arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell2-queue.fifo"
+  },
+  "audit_bucket": "opal-cloudtrail-logs-313476888478",
+  "protected_function": "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-rest-authorizer",
+  "audit_trail": "arn:aws:cloudtrail:us-east-1:313476888478:trail/opal-organization-trail",
+  "existing_role_for_create_action_simulation": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+  "cloudtrail_put_resource_policy_scope": "* (action grant only, no resource-policy call)"
+}

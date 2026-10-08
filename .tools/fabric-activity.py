@@ -325,10 +325,16 @@ def fetch(hours):
         rank = (r.get("box_claim") == "measured", r.get("infer_rev") or 0)
         if prev is None or rank > (prev.get("box_claim") == "measured", prev.get("infer_rev") or 0):
             best[r["sha"]] = r
-    trunk = set(git("rev-list", "--since=" + (start - dt.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                    "origin/CLOUD").split())
+    since = "--since=" + (start - dt.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    trunk = set(git("rev-list", since, "origin/CLOUD").split())
+    # per-box branches (PER_BOX_BRANCH_DESIGN_20261008, build row B4): every origin/box/* is read beside CLOUD
+    boxrefs = [ln.strip() for ln in git("for-each-ref", "--format=%(refname)", "refs/remotes/origin/box/").splitlines()
+               if ln.strip()]
+    pushed = set(git("rev-list", since, *boxrefs).split()) if boxrefs else set()
     for r in best.values():
-        r["merged"] = r["sha"] in trunk  # MERGED: the commit is on origin/CLOUD as this box last fetched it
+        # MERGED: on origin/CLOUD; PUSHED: on an origin/box/* branch, not yet integrated; else still only on its box
+        r["merged"] = r["sha"] in trunk
+        r["state"] = "MERGED" if r["merged"] else ("PUSHED" if r["sha"] in pushed else "on-box")
     return sorted(best.values(), key=lambda r: r["when"]), len(keys)
 
 
@@ -442,13 +448,14 @@ def cmd_who(args):
             hits.append((r, files))
     boxes = sorted({r["box"] for r, _ in hits})
     onbox = sorted({r["box"] for r, _ in hits if not r.get("merged")})
+    pushed = sorted({r["box"] for r, _ in hits if r.get("state") == "PUSHED"})
     print("WHO %s  (surface %s, last %dh)  %d commit(s) from %d box(es): %s   [records scanned %d]"
           % (t, tkey, args.hours, len(hits), len(boxes), ", ".join(boxes) or "-", scanned))
-    print("  not yet on origin/CLOUD from: %s   (origin/CLOUD as last fetched here: %s)"
-          % (", ".join(onbox) or "none", trunk_age()))
+    print("  not yet on origin/CLOUD from: %s (of which pushed to a box branch: %s)   (origin/CLOUD as last fetched"
+          " here: %s)" % (", ".join(onbox) or "none", ", ".join(pushed) or "none", trunk_age()))
     for r, files in hits[-args.limit:]:
         print("  %s  %-8s %-9s %-7s %-30s %s  %s" % (r["when"], r["box"], r["box_claim"],
-                                                     "MERGED" if r.get("merged") else "on-box", r["seat"][:30],
+                                                     r.get("state", "on-box"), r["seat"][:30],
                                                      r["sha"][:10], r["subject"][:64]))
     if len(hits) > args.limit:
         print("  ... %d earlier commit(s) not shown (--limit)" % (len(hits) - args.limit))

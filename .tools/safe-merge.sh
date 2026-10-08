@@ -177,7 +177,65 @@ _lock_take() {
   return 1
 }
 _lock_drop() { [ "$_LOCK_MINE" -eq 1 ] && [ "$_KEEP_LOCK" -eq 0 ] && rm -rf "$_LOCK" 2>/dev/null; return 0; }
-trap _lock_drop EXIT
+
+# KILLED MID-MERGE (GC P3 residue item 1, 4.0.0_SA_CRO~B 107108; owner 4.0.0_SA_CRO~A per 1.0.0_SA_CTO 107030). The ONE
+# exception to "a merge already open here is never aborted": the open merge was opened by safe-merge (its lock dir
+# exists), the lock's holder process is gone, and no conflict was handed back (no $STATE). That is a run killed during
+# its grade or commit, not a conflict a seat is resolving, and it blocked this worktree for good. A merge opened any
+# other way has no lock dir and is still refused untouched. Returns 0 only when it aborted that merge.
+_sm_recover_killed() {
+  local _hp=""
+  [ -n "$_LOCK" ] && [ -d "$_LOCK" ] || return 1
+  [ ! -f "$STATE" ] || return 1
+  _hp="$(cat "$_LOCK/pid" 2>/dev/null || echo '')"
+  if [ -n "$_hp" ] && kill -0 "$_hp" 2>/dev/null; then return 1; fi
+  echo "safe-merge: WARN -- the merge open here was opened by a safe-merge run that is gone ($(_lock_who)) and handed back no conflict: a run killed mid-merge. Aborting that merge." >&2
+  if ! git merge --abort 2>/dev/null; then
+    echo "safe-merge: ERROR -- git merge --abort failed; the killed merge is still open. Inspect by hand." >&2
+    return 1
+  fi
+  rm -f "$(git rev-parse --git-path index).safe-merge.${_hp:-x}" 2>/dev/null || true
+  _sm_row "MERGE-KILLED-ABORTED" "holder=${_hp:-?} what=$(cat "$_LOCK/what" 2>/dev/null || echo '?')"
+  rm -rf "$_LOCK" 2>/dev/null || true
+  return 0
+}
+
+# ---------------------------------------------------------------- ONE AUDIT ROW PER ATTEMPT
+# Andrew-direct 2026-10-08 ~18:3xZ: long merges are long "because they are failing multiple times". Until now every
+# refusal here went to stderr only, so how many attempts a drain took, and what refused each, was in no record.
+# Each run now appends one MERGE-ATTEMPT row: rc, seconds, the arguments, and the first refusal/warning line.
+# Owner 4.0.0_SA_CRO~A (1.0.0_SA_CTO msg 107030). rc: 0 merged, 1 refused, 2 usage, 4 conflict handed back, 5 tree drop.
+_SM_T0="${EPOCHREALTIME:-}"
+_SM_ARGS="$*"
+_SM_AUDIT="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)/../org/git-author-override-audit.log"
+_SM_ERR="$(git rev-parse --path-format=absolute --git-path "safe-merge.err.$$" 2>/dev/null || echo '')"
+_sm_row() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $1  ${OPAL_AGENT_SERIAL:-unknown}  $2" >> "$_SM_AUDIT" 2>/dev/null || true; }
+_sm_secs() {
+  local a="${_SM_T0/[.,]/}" b="${EPOCHREALTIME:-}"; b="${b/[.,]/}"
+  [ -n "$a" ] && [ -n "$b" ] || { echo "?"; return 0; }
+  local d=$(( (10#$b - 10#$a) / 10000 )); printf '%d.%02d' $((d / 100)) $((d % 100))
+}
+_sm_on_exit() {
+  local rc=$? cls=""
+  _lock_drop
+  # GC P3 residue item 5: this run's private index never outlives it (a kill -9 still can; the sweep below takes those).
+  [ -n "${_PRIV_IDX:-}" ] && rm -f "$_PRIV_IDX" 2>/dev/null
+  if [ -n "$_SM_ERR" ] && [ -f "$_SM_ERR" ]; then
+    cls="$(grep -m1 -oE '(REFUSED|FAILED|BLOCKED|ERROR|CONFLICT|WARN)[^.]{0,90}' "$_SM_ERR" 2>/dev/null | tr -s ' ' || true)"
+    rm -f "$_SM_ERR" 2>/dev/null
+  fi
+  _sm_row "MERGE-ATTEMPT" "rc=$rc  secs=$(_sm_secs)  args=(${_SM_ARGS})  first=(${cls:-none})"
+  return 0
+}
+trap _sm_on_exit EXIT
+if [ -n "$_SM_ERR" ]; then exec 2> >(tee "$_SM_ERR" >&2); fi
+# Sweep private indexes left by runs that were killed (their pid is gone).
+for _old in "$(git rev-parse --git-path index 2>/dev/null)".safe-merge.*; do
+  [ -f "$_old" ] || continue
+  _op="${_old##*.safe-merge.}"
+  case "$_op" in (*[!0-9]*|"") continue ;; esac
+  if [ "$_op" != "$$" ] && ! kill -0 "$_op" 2>/dev/null; then rm -f "$_old" 2>/dev/null && _sm_row "MERGE-PRIVIDX-SWEPT" "pid=$_op"; fi
+done
 
 # ---------------------------------------------------------------- post-commit TREE check
 # ⛔ 1.0.0_SA_CTO~Z 2026-09-29 (DSGN_AMGTV1 round-2 DRAIN_END_READ s.3 @e724da66a2): under shared-tree
@@ -396,7 +454,7 @@ fi
 # touch nothing -- never abort it. Then take the lock, before the clean-index check, so a second run cannot pass that
 # check in the seconds before this run's `git merge` stages.
 if [ "$_CONTINUING" -eq 0 ]; then
-  if _merge_open; then
+  if _merge_open && ! _sm_recover_killed; then
     echo "safe-merge: REFUSED -- A MERGE IS ALREADY OPEN in this worktree (MERGE_HEAD $(git rev-parse --short -q --verify MERGE_HEAD 2>/dev/null || echo '?')); this run did not open it." >&2
     [ -d "$_LOCK" ] && echo "            Holder: $(_lock_who)." >&2
     echo "            Nothing was touched. Wait for that merge to commit, then re-run; or drain in a linked worktree." >&2

@@ -1,0 +1,27 @@
+cloudops-dell1-agent-user graph_read: allowed; matched=cloudops-dell-agent-platform-secrets-policy/ReadPlatformKeys
+cloudops-dell1-agent-user cloudtrail_resource_policy: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges
+cloudops-dell1-agent-user audit_bucket_policy: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges
+cloudops-dell1-agent-user protected_function_permission: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges
+cloudops-dell1-agent-user queue_attributes: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges, cloudops-dell-agent-create-policy/CreateUpdateTagDataAndMessaging
+cloudops-dell1-agent-user audit_stop: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyCloudTrailWrites
+cloudops-dell1-agent-user audit_lifecycle: explicitDeny; matched=cloudops-dell-agent-create-policy/DenyAuditTrailBucketWrites
+cloudops-dell1-agent-user protected_function_code: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyProtectedFunctions, cloudops-dell-agent-routes-fn-policy/DenyRoutesToPrivilegedRolesFunctions
+cloudops-dell1-agent-user withheld_session: implicitDeny; matched=NONE (implicitDeny: no identity Allow)
+cloudops-dell1-agent-user other_secret: implicitDeny; matched=NONE (implicitDeny: no identity Allow)
+cloudops-dell1-agent-user iam_create: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyEveryIamWrite
+cloudops-dell1-agent-user bus_receive: allowed; matched=cloudops-dell1-agent-bus-policy/ReceiveOwnInboundQueueOnly
+cloudops-dell1-agent-user bus_send: allowed; matched=cloudops-dell-agent-deploy-policy/AgentbusSendToInboundQueues
+cloudops-dell2-agent-user graph_read: allowed; matched=cloudops-dell-agent-platform-secrets-policy/ReadPlatformKeys
+cloudops-dell2-agent-user cloudtrail_resource_policy: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges
+cloudops-dell2-agent-user audit_bucket_policy: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges
+cloudops-dell2-agent-user protected_function_permission: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges
+cloudops-dell2-agent-user queue_attributes: allowed; matched=cloudops-dell-agent-respol-allow-policy/AllowResourcePolicyChanges, cloudops-dell-agent-create-policy/CreateUpdateTagDataAndMessaging
+cloudops-dell2-agent-user audit_stop: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyCloudTrailWrites
+cloudops-dell2-agent-user audit_lifecycle: explicitDeny; matched=cloudops-dell-agent-create-policy/DenyAuditTrailBucketWrites
+cloudops-dell2-agent-user protected_function_code: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyProtectedFunctions, cloudops-dell-agent-routes-fn-policy/DenyRoutesToPrivilegedRolesFunctions
+cloudops-dell2-agent-user withheld_session: implicitDeny; matched=NONE (implicitDeny: no identity Allow)
+cloudops-dell2-agent-user other_secret: implicitDeny; matched=NONE (implicitDeny: no identity Allow)
+cloudops-dell2-agent-user iam_create: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyEveryIamWrite
+cloudops-dell2-agent-user bus_receive: allowed; matched=cloudops-dell2-agent-bus-policy/ReceiveOwnInboundQueueOnly
+cloudops-dell2-agent-user bus_send: allowed; matched=cloudops-dell-agent-deploy-policy/AgentbusSendToInboundQueues
+READBACK arms=26/26 admin_controls=6/6 policy_documents=10/10 group_attachments=7 all_ok=True

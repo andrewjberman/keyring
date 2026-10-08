@@ -1,0 +1,2170 @@
+{
+ "_about": "LGIC_BLANKFIX round 6 E1: 74 root_map entries DRAFTED by 4.0.0_SA_CRO (fork) from org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/MAP_ENTRIES_FOR_RULING_round6.md for 2.0.0_SA_COO~G msg 107061. Not the registry; not committed. Every field cites a file:line in _cite or reads UNDECIDED.",
+ "roots": {
+  "inf-pipeline": {
+   "system": "advi",
+   "scope": "inflection",
+   "source": "orion",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:84-113 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: advi -- the default owner of the Inflection pipeline's names: resources.json places 56 of the 75 rows that cite this root as advi (17 orion, 2 etfs), the way bd-pipeline's 57 placed rows decided its default; Pipeline = \"inf\" is the pipeline tag, System = \"InflectionPipeline\" a spelling not a key SCOPE: inflection -- the root's data bucket is opal-data-inf (a scopes.json alias of the inflection scope) and the root's own cross-firm Deny comment calls it 'inf's OWN bucket' SOURCE: orion -- the ingest side pulls Orion's API with the secret orion/credentials; Eclipse and YCharts are further feeds, listed in the note, but the base feed is Orion NOTE: Three feeds in one root: Orion (the base), Eclipse (br1-eclipse-rehome.tf:7-8 'inf-api-eclipse ... writes bronze/eclipse_qa/*') and YCharts (iam.tf:49-50 ycharts-credentials-read). A source default is wrong for the names of the Eclipse and YCharts feeds; the registry's lane should decide whether fills excludes source for this root (as it does for opal-assets).",
+   "fills": [
+    "system",
+    "scope"
+   ],
+   "exceptions": [
+    {
+     "name": "orion-otp-timeout-alert",
+     "type": "CW_ALARM",
+     "system": "orion",
+     "evidence": "its own first token (canonical form orion-otp-timeout-alert-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:97)",
+     "_cite": "infra/aws/terraform/inf-pipeline/alarms.tf:10"
+    },
+    {
+     "name": "inf-api-eclipse-role",
+     "type": "IAM_ROLE",
+     "system": "eclipse",
+     "evidence": "its own first token (canonical form eclipse-inf-api-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:98)",
+     "_cite": "infra/aws/terraform/inf-pipeline/br1-eclipse-rehome.tf:32"
+    },
+    {
+     "name": "inf-api-eclipse-scoped",
+     "type": "IAM_POLICY",
+     "system": "eclipse",
+     "evidence": "its own first token (canonical form eclipse-inf-api-scoped-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:99)",
+     "_cite": "infra/aws/terraform/inf-pipeline/br1-eclipse-rehome.tf:56"
+    },
+    {
+     "name": "inf-api-eclipse-daily",
+     "type": "EVENT_RULE",
+     "system": "eclipse",
+     "evidence": "its own first token (canonical form eclipse-inf-api-daily) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:100)",
+     "_cite": "infra/aws/terraform/inf-pipeline/br1-eclipse-rehome.tf:119"
+    },
+    {
+     "name": "cross-firm-bucket-deny",
+     "type": "IAM_POLICY",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-cross-firm-bucket-deny-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:101)",
+     "_cite": "infra/aws/terraform/inf-pipeline/cross-firm-deny.tf:72"
+    },
+    {
+     "name": "inf-andrew-otp-write",
+     "type": "IAM_POLICY",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-inf-andrew-otp-write-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:102)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:15"
+    },
+    {
+     "name": "ycharts-credentials-read",
+     "type": "IAM_POLICY",
+     "system": "ycharts",
+     "evidence": "its own first token (canonical form ycharts-credentials-read-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:103)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:49"
+    },
+    {
+     "name": "self-stop",
+     "type": "IAM_POLICY",
+     "system": "cloudops",
+     "evidence": "its own first token (canonical form cloudops-self-stop-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:104)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:264"
+    },
+    {
+     "name": "describe-tags-self",
+     "type": "IAM_POLICY",
+     "system": "cloudops",
+     "evidence": "its own first token (canonical form cloudops-describe-tags-self-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:105)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:290"
+    },
+    {
+     "name": "secrets-manager-orion",
+     "type": "IAM_POLICY",
+     "system": "orion",
+     "evidence": "its own first token (canonical form orion-secrets-manager-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:106)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:547"
+    },
+    {
+     "name": "secrets-manager-orion-jwt",
+     "type": "IAM_POLICY",
+     "system": "orion",
+     "evidence": "its own first token (canonical form orion-secrets-manager-jwt-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:107)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:574"
+    },
+    {
+     "name": "inf-bronze-trigger-lambda-role",
+     "type": "IAM_ROLE",
+     "system": "orion",
+     "evidence": "its own first token (canonical form orion-inf-bronze-trigger-lambda-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:108)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:810"
+    },
+    {
+     "name": "inf-bronze-trigger-policy",
+     "type": "IAM_POLICY",
+     "system": "orion",
+     "evidence": "its own first token (canonical form orion-inf-bronze-trigger-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:109)",
+     "_cite": "infra/aws/terraform/inf-pipeline/iam.tf:828"
+    },
+    {
+     "name": "inf-accounts-v2-daily-role",
+     "type": "IAM_ROLE",
+     "system": "orion",
+     "evidence": "its own first token (canonical form orion-inf-accounts-v2-daily-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:110)",
+     "_cite": "infra/aws/terraform/inf-pipeline/inf-accounts-v2-daily.tf:37"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/inf-pipeline/ec2.tf:64",
+     "infra/aws/terraform/inf-pipeline/main.tf:33"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:87",
+    "scope": [
+     "infra/aws/terraform/inf-pipeline/s3.tf:8",
+     "infra/aws/terraform/inf-pipeline/cross-firm-deny.tf:19"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:90",
+    "source": [
+     "infra/aws/terraform/inf-pipeline/secrets.tf:11",
+     "infra/aws/terraform/inf-pipeline/iam.tf:559"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:93",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:84-113",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:113 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:96 -- PARTIAL: 14 listed, 28 more of the same kind not listed in the source: UNDECIDED"
+   }
+  },
+  "shared-infra": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:115-134 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the root is the estate's shared base: its System tags name SharedInfra, CommitQueue, ETFS and PortalAuth, and the names that place themselves lead with 13 different systems.json keys (measured line above); no one system is true of a majority, and systems.json names only cmtque for a file of this root (cmtque-alarms.tf) SCOPE: UNDECIDED -- the files name opal-data-49financial, -bd, -cot, -inf, -demo, -etfs, -mdpf, -portal-v2, -smartx and others; no one scope is true SOURCE: UNDECIDED -- the 27 secrets belong to aaii, anthropic, conferenceboard, bright-data, openai, msci, fred and others; no one source is true NOTE: Proposal, not a decision: the registry's lane may enter this root with HOME values (as it did opal-assets) and a fills list of [] (nothing fills a blank), so every name prints its partial form. 144 names across 20+ owners are better served by exceptions or a split of the root's files by owner, which is a registry decision.",
+   "fills": [],
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:118",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:123",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:128",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:115-134",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:134 (the worker's proposal for the registry's lane)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:132: not run, the system is UNDECIDED)"
+   }
+  },
+  "smartx-pipeline": {
+   "system": "smartx",
+   "scope": "UNDECIDED",
+   "source": "smartx",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:136-154 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: smartx -- 22 of the names that place themselves lead with smartx (smartx-assets-daily-pull, smartx-rest-pull, smartx/* secrets, /aws/lambda/smartx-* log groups); the System tag is SmartXPipeline; systems.json holds smartx as a VENDOR key. The default decides 0 names today ({system} blanks = 0) SCOPE: UNDECIDED -- the root reads and writes opal-data-smartx-v2, opal-data-portal-v2 (= the global scope's bucket), opal-data-mdpf (= the mdpf scope's bucket), opal-data-assets/smartx/ and opal-data-bd; SmartX has no scope row of its own, so no one scope is true of an item SOURCE: smartx -- every ingestion function holds the SmartX credentials/JWT secrets (smartx/credentials/username, smartx/jwt/current) NOTE: Several Lambda-source S3Keys (exports/, consolidated/smartx_allocations.parquet, json/portfolios/...) read as keys with no source segment; they are not the map's to fill.",
+   "fills": [
+    "system",
+    "source"
+   ],
+   "exceptions": [
+    {
+     "name": "self-shutdown",
+     "type": "IAM_POLICY",
+     "system": "cloudops",
+     "evidence": "its own first token (canonical form cloudops-self-shutdown-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:152)",
+     "_cite": "infra/aws/terraform/smartx-pipeline/iam.tf:248"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/smartx-pipeline/assets-pull-lambda.tf:35",
+     "infra/aws/terraform/smartx-pipeline/ec2.tf:31"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:139",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:142",
+    "source": [
+     "infra/aws/terraform/smartx-pipeline/secrets-credentials.tf:15",
+     "infra/aws/terraform/smartx-pipeline/rest-pull.tf:20"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:148",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:136-154",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:154 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:151"
+   }
+  },
+  "globgrph": {
+   "system": "globgrph",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:156-170 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: globgrph -- 80 of the names that place themselves lead with globgrph (opal-globgrph-*, /aws/ecs/globgrph-*); System = \"GlobalGraph\"; systems.json holds globgrph as a PLATFORM_SUBSYSTEM key SCOPE: global -- the served-json grant is on opal-data-portal-v2/json/*, the global scope's bucket (scopes.json global.bucket); the served-write trail watches opal-data-inf and opal-data-bd together, so the root is firm-less SOURCE: UNDECIDED -- no vendor feed is named in the 22 .tf files read; the one secret path, opal/mcp/ms-ingest-token (item2a.tf:258), is a Microsoft-ingest token, not a data source of the graph. For an internal root the source is the registry's call (opal-assets took its own system, advi) NOTE: Proposal for source: globgrph (its own system key), by the opal-assets precedent.",
+   "fills": [
+    "system",
+    "scope"
+   ],
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/globgrph/main.tf:32",
+     "infra/aws/terraform/globgrph/item2a.tf:438"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:159",
+    "scope": [
+     "infra/aws/terraform/globgrph/item2a.tf:114",
+     "infra/aws/terraform/globgrph/item2e_served_write_trail.tf:9"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:162",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:165",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:156-170",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:170 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:168 (none found by the two measurements)"
+   }
+  },
+  "news-pipeline": {
+   "system": "news",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:172-191 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: news -- systems.json's news row names infra/aws/terraform/news-pipeline/ as the system's tree; 52 of the names that place themselves lead with news; 27 EventBridge rules are named news-api-* SCOPE: global -- the Lambdas write the portal bucket opal-data-portal-v2 (= global.bucket) and read opal-data-news-v2; the root Denies opal-data-bd, -cot and -inf to its role ('reads exactly one bucket'), so no firm scope applies SOURCE: UNDECIDED -- the root pulls NewsAPI (mode newsapi_only), OpenAI (opal/openai/*) and runs FinBERT; several sources in one root, so none is true of an item",
+   "fills": [
+    "system",
+    "scope"
+   ],
+   "exceptions": [
+    {
+     "name": "cross-firm-bucket-read-deny",
+     "type": "IAM_POLICY",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-cross-firm-bucket-read-deny-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:187)",
+     "_cite": "infra/aws/terraform/news-pipeline/cross-firm-bucket-read-deny.tf:72"
+    },
+    {
+     "name": "cross-firm-bucket-write-deny",
+     "type": "IAM_POLICY",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-cross-firm-bucket-write-deny-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:188)",
+     "_cite": "infra/aws/terraform/news-pipeline/cross-firm-bucket-write-deny.tf:42"
+    },
+    {
+     "name": "cross-firm-secret-deny",
+     "type": "IAM_POLICY",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-cross-firm-secret-deny-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:189)",
+     "_cite": "infra/aws/terraform/news-pipeline/cross-firm-secret-deny.tf:45"
+    },
+    {
+     "name": "s3-portal-write",
+     "type": "IAM_POLICY",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-s3-write-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:190)",
+     "_cite": "infra/aws/terraform/news-pipeline/iam.tf:112"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:279",
+     "infra/aws/terraform/news-pipeline/eventbridge.tf:23"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:175",
+    "scope": [
+     "infra/aws/terraform/news-pipeline/iam.tf:122",
+     "infra/aws/terraform/news-pipeline/cross-firm-bucket-read-deny.tf:86-88",
+     "infra/aws/terraform/news-pipeline/cross-firm-bucket-read-deny.tf:14"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:178",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:182",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:172-191",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:191 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:186"
+   }
+  },
+  "yang-pipeline": {
+   "system": "yang",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:193-207 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: yang -- System = \"YangPipeline\"; the role is yang-pipeline-lambda-role; 8 names lead with yang; systems.json holds yang as a PRODUCT key (D9) SCOPE: global -- every Lambda grant is on opal-data-portal-v2 (iam.tf:44-45), the global scope's bucket SOURCE: UNDECIDED -- the root refreshes a FRED cache (module refresh_fred_cache, get_fred_api_key in the iam.tf comment) among 11+ other functions whose feeds live in the Lambda source; no one source is shown to be true of an item NOTE: 26 of the Lambda-source S3Keys read json/... with no source segment; not the map's to fill.",
+   "fills": [
+    "system",
+    "scope"
+   ],
+   "exceptions": [
+    {
+     "name": "etf-classifications",
+     "type": "DYNAMODB_TABLE",
+     "system": "posn",
+     "evidence": "its own first token (canonical form posn-etf-classifications-table) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:205)",
+     "_cite": "infra/aws/terraform/yang-pipeline/etf-classifications.tf:22"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/yang-pipeline/main.tf:35",
+     "infra/aws/terraform/yang-pipeline/iam.tf:6"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:196",
+    "scope": [
+     "infra/aws/terraform/yang-pipeline/iam.tf:44"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:199",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:201",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:193-207",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:207 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:204"
+   }
+  },
+  "mdpf-pipeline": {
+   "system": "mdpf",
+   "scope": "mdpf",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:209-222 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: mdpf -- resources.json places 7 rows citing this root as mdpf (wp5-feeder-schedules.tf:30 and others); 33 of the names that place themselves lead with mdpf; Project = \"mdpf\" SCOPE: mdpf -- the root's home bucket is opal-data-mdpf (= the mdpf scope's bucket); it also reads opal-data-inf and opal-data-bd for its feeders, so scope is a HOME value SOURCE: UNDECIDED -- the feeders read Schwab custody, Eclipse and Black Diamond gold; several vendors, so none is true of an item",
+   "fills": [
+    "system"
+   ],
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/mdpf-pipeline/ec2.tf:61",
+     "infra/aws/terraform/mdpf-pipeline/main.tf:56"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:212",
+    "scope": [
+     "infra/aws/terraform/mdpf-pipeline/main.tf:56",
+     "infra/aws/terraform/mdpf-pipeline/feeder-trigger.tf:130-131"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:215",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:218",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:209-222",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:222 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:221 (none found by the two measurements)"
+   }
+  },
+  "market-overview": {
+   "system": "marketdata",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:224-242 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: marketdata -- systems.json's marketdata row names infra/aws/terraform/market-overview/; System = \"MarketOverview\"; 10 names lead with marketdata SCOPE: global -- the grants are on opal-data-portal-v2/json-tiered/market-overview/* (iam.tf:47), the global scope's bucket SOURCE: UNDECIDED -- the root schedules fear-greed, RSI, volatility and trending-topic functions (eventbridge.tf:20-105, lambdas.tf:126); the feeds those functions call live in the Lambda source, which was not read for vendors",
+   "fills": [
+    "system",
+    "scope"
+   ],
+   "exceptions": [
+    {
+     "name": "cross-firm-secret-deny",
+     "type": "IAM_POLICY",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-cross-firm-secret-deny-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:236)",
+     "_cite": "infra/aws/terraform/market-overview/cross-firm-secret-deny.tf:30"
+    },
+    {
+     "name": "trending-topics-portal-publisher-morning",
+     "type": "EVENT_RULE",
+     "system": "news",
+     "evidence": "its own first token (canonical form news-trending-topics-portal-publisher-morning-{cadence}) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:237)",
+     "_cite": "infra/aws/terraform/market-overview/eventbridge.tf:68"
+    },
+    {
+     "name": "trending-topics-portal-publisher-afternoon",
+     "type": "EVENT_RULE",
+     "system": "news",
+     "evidence": "its own first token (canonical form news-trending-topics-portal-publisher-afternoon-{cadence}) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:238)",
+     "_cite": "infra/aws/terraform/market-overview/eventbridge.tf:82"
+    },
+    {
+     "name": "trending-topics-portal-publisher-daily",
+     "type": "EVENT_RULE",
+     "system": "news",
+     "evidence": "its own first token (canonical form news-trending-topics-portal-publisher-daily) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:239)",
+     "_cite": "infra/aws/terraform/market-overview/eventbridge.tf:105"
+    },
+    {
+     "name": "opal-portal-data-proxy",
+     "type": "LAMBDA",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-data-proxy-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:240)",
+     "_cite": "infra/aws/terraform/market-overview/lambdas.tf:89"
+    },
+    {
+     "name": "opal-portal-volatility-fetcher",
+     "type": "LAMBDA",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-volatility-fetcher-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:241)",
+     "_cite": "infra/aws/terraform/market-overview/lambdas.tf:126"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:287",
+     "infra/aws/terraform/market-overview/lambdas.tf:114"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:227",
+    "scope": [
+     "infra/aws/terraform/market-overview/iam.tf:47"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:230",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:232",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:224-242",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:242 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:235"
+   }
+  },
+  "portal-auth": {
+   "system": "portal",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:244-271 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: portal -- System = \"PortalAuth\" on 29 resources; 10 names lead with portal; systems.json holds portal as a PLATFORM_SUBSYSTEM key SCOPE: global -- the distribution fronts opal-data-portal-v2 (global.bucket) and cross-references the three firm buckets; it serves every firm, so global is the home value SOURCE: UNDECIDED -- the root holds auth secrets, SES and SMS settings; no data feed from a vendor",
+   "fills": [
+    "system"
+   ],
+   "exceptions": [
+    {
+     "name": "FIRMSEP-auth-advisor-scoping-denied",
+     "type": "CW_ALARM",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-auth-advisor-scoping-denied-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:257)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:40"
+    },
+    {
+     "name": "FIRMSEP-auth-tier-denied",
+     "type": "CW_ALARM",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-auth-tier-denied-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:258)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:74"
+    },
+    {
+     "name": "FIRMSEP-auth-ownership-map-fetch-failed",
+     "type": "CW_ALARM",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-auth-ownership-map-fetch-failed-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:259)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:108"
+    },
+    {
+     "name": "FIRMSEP-auth-ownership-map-schema-mismatch",
+     "type": "CW_ALARM",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-auth-ownership-map-schema-mismatch-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:260)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:142"
+    },
+    {
+     "name": "FIRMSEP-shared-advisor-router-denied",
+     "type": "CW_ALARM",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-shared-advisor-router-denied-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:261)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:184"
+    },
+    {
+     "name": "FIRMSEP-s3-direct-access-bypass",
+     "type": "EVENT_RULE",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-s3-direct-access-bypass-{cadence}) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:262)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:225"
+    },
+    {
+     "name": "OPSEC-auth-login-rate-limit-blocked",
+     "type": "CW_ALARM",
+     "system": "secops",
+     "evidence": "its own first token (canonical form secops-opsec-auth-login-rate-limit-blocked-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:263)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:334"
+    },
+    {
+     "name": "OPSEC-auth-throttled",
+     "type": "CW_ALARM",
+     "system": "secops",
+     "evidence": "its own first token (canonical form secops-opsec-auth-throttled-alarm) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:264)",
+     "_cite": "infra/aws/terraform/portal-auth/cloudwatch-alarms.tf:377"
+    },
+    {
+     "name": "cross-firm-secret-deny",
+     "type": "IAM_POLICY",
+     "system": "firmsep",
+     "evidence": "its own first token (canonical form firmsep-cross-firm-secret-deny-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:265)",
+     "_cite": "infra/aws/terraform/portal-auth/cross-firm-secret-deny.tf:86"
+    },
+    {
+     "name": "public-data-router",
+     "type": "LAMBDA",
+     "system": "advi",
+     "evidence": "its own first token (canonical form advi-public-data-router-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:266)",
+     "_cite": "infra/aws/terraform/portal-auth/lambda-edge.tf:204"
+    },
+    {
+     "name": "shared-advisor-router",
+     "type": "LAMBDA",
+     "system": "advi",
+     "evidence": "its own first token (canonical form advi-shared-advisor-router-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:267)",
+     "_cite": "infra/aws/terraform/portal-auth/lambda-edge.tf:268"
+    },
+    {
+     "name": "shared-advisor-router-response",
+     "type": "LAMBDA",
+     "system": "advi",
+     "evidence": "its own first token (canonical form advi-shared-advisor-router-response-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:268)",
+     "_cite": "infra/aws/terraform/portal-auth/lambda-edge.tf:318"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:1000",
+     "infra/aws/terraform/portal-auth/main.tf:35"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:247",
+    "scope": [
+     "infra/aws/terraform/portal-auth/cloudfront-distribution.tf:136",
+     "infra/aws/terraform/portal-auth/firm-bucket-cross-ref.tf:30-38"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:250",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:253",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:244-271",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:271 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:256"
+   }
+  },
+  "trade-pipeline": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:273-285 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- 'trade' is held unresolved in systems.json (unresolved[token=trade]: 'MEASURED FALSE' as the TRADEOPS product); 21 of the 30 names raise 'trade is an unresolved token' and 3 carry a {system} blank, so the default WOULD decide names, and the registry has not named the system. Candidate: tradeops (its row maps data-refresh, security-scanner-pipeline and portfolio-management, not this root) SCOPE: UNDECIDED -- the root's bucket is opal-data-trade-submissions (s3.tf:19), which is no scope row SOURCE: UNDECIDED -- no vendor feed read in the 8 .tf files (users, submissions, SES): none decides it NOTE: Held for the registry's lane: the 'trade' token must be resolved (a systems.json decision) before this root can be entered; entering it with UNDECIDED fields would leave 30 names printing as holes.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:276",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:279",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:282",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:273-285",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:284: not run, the system is UNDECIDED)"
+   }
+  },
+  "opal-gateway": {
+   "system": "gateway",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:287-306 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: gateway -- systems.json's gateway row names infra/aws/terraform/opal-gateway/; System = \"OpalGateway\"; 3 names lead with gateway (the 15 'opal' lead names are the reserved prefix) SCOPE: UNDECIDED -- readers for opal-data-bd, opal-data-assets (Schwab) and the portal bucket opal-data-portal-v2 (daily reports); the gateway serves every firm, so a home value of global (= portal-v2) is a proposal, not a finding SOURCE: UNDECIDED -- the four secrets (opal/mcp/opal-gateway-*) are the gateway's own; several vendors' readers exist (Black Diamond, Schwab, YCharts, rivalfunds)",
+   "fills": [
+    "system"
+   ],
+   "exceptions": [
+    {
+     "name": "mcportal-grant-writer-deps-layer",
+     "type": "LAMBDA_LAYER",
+     "system": "mcportal",
+     "evidence": "its own first token (canonical form mcportal-grant-writer-deps-layer) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:300)",
+     "_cite": "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:61"
+    },
+    {
+     "name": "mcportal-grant-writer-role",
+     "type": "IAM_ROLE",
+     "system": "mcportal",
+     "evidence": "its own first token (canonical form mcportal-grant-writer-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:301)",
+     "_cite": "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:69"
+    },
+    {
+     "name": "mcportal-grant-writer-access-state-policy",
+     "type": "IAM_POLICY",
+     "system": "mcportal",
+     "evidence": "its own first token (canonical form mcportal-grant-writer-access-state-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:302)",
+     "_cite": "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:81"
+    },
+    {
+     "name": "mcportal-grant-writer-lambda",
+     "type": "LAMBDA",
+     "system": "mcportal",
+     "evidence": "its own first token (canonical form mcportal-grant-writer-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:303)",
+     "_cite": "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:127"
+    },
+    {
+     "name": "mcportal-grant-changes-table",
+     "type": "DYNAMODB_TABLE",
+     "system": "mcportal",
+     "evidence": "its own first token (canonical form mcportal-grant-changes-table) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:304)",
+     "_cite": "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf:187"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:190",
+     "infra/aws/terraform/opal-gateway/main.tf:47"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:290",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:293",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:297",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:287-306",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:306 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:299"
+   }
+  },
+  "imo-pipeline": {
+   "system": "prospecting",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:308-321 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: prospecting -- Project = \"FIND_INSURE\" on 14 resources; all 25 names that place themselves lead with prospecting; systems.json's prospecting row says 'data/find/ and FIND_INSURE task orders are the build' SCOPE: UNDECIDED -- the bucket is opal-data-imo (main.tf:52), which Andrew retired by card 9 (systems.json refused_keys.retired_basis); it is no scope row SOURCE: UNDECIDED -- twelve secrets for eight job boards, lusha-ai and bright-data: many sources NOTE: The root's bucket is a retired one; the registry's lane should decide whether the root is mapped or left to retirement.",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/imo-pipeline/dynamodb.tf:64",
+     "infra/logic/registry/systems.json:271"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:311",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:314",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:316",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:308-321",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:320 (none found by the two measurements)"
+   }
+  },
+  "estate-report": {
+   "system": "estate",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:323-335 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: estate -- 20 of the names that place themselves lead with estate (estate-report-orchestrator, estate-report-0900et ...); systems.json holds estate as a PLATFORM_SUBSYSTEM key whose long form is estate-report SCOPE: UNDECIDED -- the root's bucket is opal-estate-report (main.tf:73), no scope row SOURCE: UNDECIDED -- the one secret is estate-report/github-token; GitHub is not a systems.json key",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "outset-drift-publisher-laptop",
+     "type": "IAM_ROLE",
+     "system": "globgrph",
+     "evidence": "its own first token (canonical form globgrph-outset-drift-publisher-laptop-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:334)",
+     "_cite": "infra/aws/terraform/estate-report/iam.tf:585"
+    },
+    {
+     "name": "outset-drift-publisher-laptop",
+     "type": "IAM_POLICY",
+     "system": "globgrph",
+     "evidence": "its own first token (canonical form globgrph-outset-drift-publisher-laptop-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:335)",
+     "_cite": "infra/aws/terraform/estate-report/iam.tf:613"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:217",
+     "infra/aws/terraform/estate-report/orchestrator.tf:15"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:326",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:329",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:331",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:323-335",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:333"
+   }
+  },
+  "fred-pipeline": {
+   "system": "fred",
+   "scope": "global",
+   "source": "fred",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:337-350 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: fred -- 13 of the names that place themselves lead with fred (fred-ingestion-*, fred-macro-ingestion-daily); System = \"FredPipeline\" SCOPE: global -- the Lambdas write opal-data-portal-v2 (iam.tf:36), the global scope's bucket SOURCE: fred -- the ingestion function fred-data-ingestion calls the FRED API (base_url api.stlouisfed.org/fred in its source); fred is a VENDOR key in systems.json",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "yield-curve-artifact-write",
+     "type": "IAM_POLICY",
+     "system": "marketdata",
+     "evidence": "its own first token (canonical form marketdata-yield-curve-artifact-write-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:349)",
+     "_cite": "infra/aws/terraform/fred-pipeline/iam.tf:23"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/fred-pipeline/eventbridge.tf:14",
+     "infra/aws/terraform/fred-pipeline/main.tf:39"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:340",
+    "scope": [
+     "infra/aws/terraform/fred-pipeline/iam.tf:36"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:343",
+    "source": [
+     "infra/aws/terraform/fred-pipeline/lambdas.tf:21",
+     "infra/aws/lambda/fred-data-ingestion/ingest_yield_curve_fred.py:65"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:345",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:337-350",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:348"
+   }
+  },
+  "ycharts-pipeline": {
+   "system": "ycharts",
+   "scope": "UNDECIDED",
+   "source": "ycharts",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:352-363 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: ycharts -- 14 names lead with ycharts; System = \"YChartsPipeline\"; ycharts is a VENDOR key SCOPE: UNDECIDED -- the 8 .tf files name no data bucket (the only opal- bucket is the state bucket); the Lambda source writes to buckets this root does not name SOURCE: ycharts -- the secrets ycharts/session/current and ycharts/credentials",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/ycharts-pipeline/cloudwatch.tf:31",
+     "infra/aws/terraform/ycharts-pipeline/main.tf:43"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:355",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:358",
+    "source": [
+     "infra/aws/terraform/ycharts-pipeline/secrets.tf:21",
+     "infra/aws/terraform/ycharts-pipeline/iam.tf:96"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:360",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:352-363",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:363 (none found by the two measurements)"
+   }
+  },
+  "seeking-alpha": {
+   "system": "seeking-alpha",
+   "scope": "UNDECIDED",
+   "source": "seeking-alpha",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:365-375 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: seeking-alpha -- System = \"NewsScanner\" is a spelling; 6 names lead with seeking and 7 log groups with /aws/lambda/seeking; seeking-alpha is a VENDOR key SCOPE: UNDECIDED -- the data bucket is opal-data-news-av (main.tf:45), no scope row SOURCE: seeking-alpha -- the root's Lambdas are seeking-alpha-analysis-coordinator and its listing parser, and its S3 home is opal-data-news-av/seeking-alpha/analysis/ (main.tf:29); the data comes from Seeking Alpha",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/seeking-alpha/main.tf:122"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:368",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:370",
+    "source": [
+     "infra/aws/terraform/seeking-alpha/main.tf:29",
+     "infra/aws/terraform/seeking-alpha/main.tf:36"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:372",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:365-375",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:375 (none found by the two measurements)"
+   }
+  },
+  "portfolio-management": {
+   "system": "tradeops",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:377-392 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: tradeops -- systems.json's tradeops row records Andrew's confirmation of F13 ('portfolio management export') and names infra/aws/terraform/portfolio-management/; 'portfolio' is a refused generic noun SCOPE: UNDECIDED -- buckets opal-data-portfolio, opal-data-pm and opal-data-portal-v2 (= global.bucket): mixed SOURCE: UNDECIDED -- no vendor feed read in the 3 .tf files",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "portal-v2-autosave-list-policy",
+     "type": "IAM_POLICY",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-v2-autosave-list-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:390)",
+     "_cite": "infra/aws/terraform/portfolio-management/main.tf:345"
+    },
+    {
+     "name": "opal-portal-api",
+     "type": "API_GW",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-api) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:391)",
+     "_cite": "infra/aws/terraform/portfolio-management/rest-api.tf:44"
+    },
+    {
+     "name": "opal-portal-rest-authorizer",
+     "type": "LAMBDA",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-rest-authorizer-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:392)",
+     "_cite": "infra/aws/terraform/portfolio-management/rest-authorizer.tf:49"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:319",
+     "infra/aws/terraform/portfolio-management/main.tf:398"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:380",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:383",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:387",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:377-392",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:389"
+   }
+  },
+  "astn-pipeline": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:394-406 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- 'astn' is held unresolved in systems.json (unresolved[token=astn]: a closed legacy project, ASTN_WSJFT, with no directive); 13 of the 18 names raise 'astn is an unresolved token' SCOPE: UNDECIDED -- the bucket is opal-data-astn (main.tf:46), no scope row SOURCE: UNDECIDED -- secrets for bright-data, FT and Kimi: several sources NOTE: Held for the registry's lane for the same reason as trade-pipeline: the token is unresolved.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:397",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:399",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:401",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:394-406",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:405: not run, the system is UNDECIDED)"
+   }
+  },
+  "etfs-reports": {
+   "system": "etfs",
+   "scope": "etfs",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:408-418 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: etfs -- 13 names lead with etfs; Project = \"ETFS_REPORTS\" SCOPE: etfs -- the reports are written to opal-data-etfs (= the etfs scope's bucket) SOURCE: UNDECIDED -- no vendor secret or feed is named in the 4 .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/etfs-reports/main.tf:38",
+     "infra/aws/terraform/etfs-reports/iam.tf:36"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:411",
+    "scope": [
+     "infra/aws/terraform/etfs-reports/iam.tf:36"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:414",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:416",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:408-418",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:418 (none found by the two measurements)"
+   }
+  },
+  "harvest": {
+   "system": "harvest",
+   "scope": "harvest",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:420-442 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: harvest -- systems.json's harvest row names infra/aws/terraform/harvest/ and quotes main.tf:11-14; 11 names lead with amgt (AMGT_RESAPP tags, Directive D5) and 2 with harvest SCOPE: harvest -- the version store is opal-data-harvest (= the harvest scope's bucket) SOURCE: UNDECIDED -- no vendor secret or feed is named in the 9 .tf files read; the feeds live in the Lambda source (infra/aws/lambda/research), which was not read for vendors NOTE: The default (harvest) disagrees with the leading token of 11 of the root's 13 placed names (amgt); the registry's lane should consider amgt as the default instead.",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "amgt-resapp-chatter-axis-lambda-role",
+     "type": "IAM_ROLE",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-resapp-chatter-axis-lambda-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:431)",
+     "_cite": "infra/aws/terraform/harvest/chatter-axis-schedule.tf:109"
+    },
+    {
+     "name": "amgt-resapp-chatter-axis-lambda-policy",
+     "type": "IAM_POLICY",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-resapp-chatter-axis-lambda-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:432)",
+     "_cite": "infra/aws/terraform/harvest/chatter-axis-schedule.tf:121"
+    },
+    {
+     "name": "amgt-resapp-chatter-axis-scheduler-role",
+     "type": "IAM_ROLE",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-resapp-chatter-axis-scheduler-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:433)",
+     "_cite": "infra/aws/terraform/harvest/chatter-axis-schedule.tf:208"
+    },
+    {
+     "name": "amgt-resapp-chatter-axis-scheduler-invoke",
+     "type": "IAM_POLICY",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-resapp-chatter-axis-scheduler-invoke-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:434)",
+     "_cite": "infra/aws/terraform/harvest/chatter-axis-schedule.tf:220"
+    },
+    {
+     "name": "amgt-resapp-chatter-axis-daily",
+     "type": "SCHEDULE",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-resapp-chatter-axis-daily) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:435)",
+     "_cite": "infra/aws/terraform/harvest/chatter-axis-schedule.tf:234"
+    },
+    {
+     "name": "amgt-global-freshness-snapshot-scheduler-role",
+     "type": "IAM_ROLE",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-global-freshness-snapshot-scheduler-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:436)",
+     "_cite": "infra/aws/terraform/harvest/freshness-snapshot-schedule.tf:61"
+    },
+    {
+     "name": "amgt-global-freshness-snapshot-scheduler-policy",
+     "type": "IAM_POLICY",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-global-freshness-snapshot-scheduler-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:437)",
+     "_cite": "infra/aws/terraform/harvest/freshness-snapshot-schedule.tf:73"
+    },
+    {
+     "name": "amgt-global-freshness-snapshot-daily",
+     "type": "SCHEDULE",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-global-freshness-snapshot-daily) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:438)",
+     "_cite": "infra/aws/terraform/harvest/freshness-snapshot-schedule.tf:100"
+    },
+    {
+     "name": "opal-amgt-print-deps",
+     "type": "LAMBDA_LAYER",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-print-deps-layer) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:439)",
+     "_cite": "infra/aws/terraform/harvest/print-deps-layer.tf:48"
+    },
+    {
+     "name": "opal-amgt-scoped-api-role",
+     "type": "IAM_ROLE",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-scoped-api-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:440)",
+     "_cite": "infra/aws/terraform/harvest/scoped-amgt-api.tf:77"
+    },
+    {
+     "name": "opal-amgt-scoped-api-grants",
+     "type": "IAM_POLICY",
+     "system": "amgt",
+     "evidence": "its own first token (canonical form amgt-scoped-api-grants-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:441)",
+     "_cite": "infra/aws/terraform/harvest/scoped-amgt-api.tf:298"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:262",
+     "infra/aws/terraform/harvest/main.tf:81"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:423",
+    "scope": [
+     "infra/aws/terraform/harvest/s3.tf:24"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:426",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:428",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:420-442",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:430"
+   }
+  },
+  "security-ops": {
+   "system": "secops",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:444-459 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: secops -- systems.json's secops row names infra/aws/terraform/security-ops/; 3 names lead with secops, 3 with cloudops, 3 with schwab SCOPE: UNDECIDED -- one grant on the portal bucket (global.bucket); the anonymizer touches Schwab data (schwab-anonymizer.tf) SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "cost-anomaly-scanner-schedule",
+     "type": "EVENT_RULE",
+     "system": "cloudops",
+     "evidence": "its own first token (canonical form cloudops-cost-anomaly-scanner-schedule-{cadence}) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:454)",
+     "_cite": "infra/aws/terraform/security-ops/events.tf:31"
+    },
+    {
+     "name": "CostAnomalyScannerPolicy",
+     "type": "IAM_POLICY",
+     "system": "cloudops",
+     "evidence": "its own first token (canonical form cloudops-cost-anomaly-scanner-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:455)",
+     "_cite": "infra/aws/terraform/security-ops/iam.tf:74"
+    },
+    {
+     "name": "cost-anomaly-scanner",
+     "type": "LAMBDA",
+     "system": "cloudops",
+     "evidence": "its own first token (canonical form cloudops-cost-anomaly-scanner-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:456)",
+     "_cite": "infra/aws/terraform/security-ops/lambdas.tf:36"
+    },
+    {
+     "name": "schwab-anonymizer",
+     "type": "LAMBDA",
+     "system": "schwab",
+     "evidence": "its own first token (canonical form schwab-anonymizer-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:457)",
+     "_cite": "infra/aws/terraform/security-ops/schwab-anonymizer.tf:19"
+    },
+    {
+     "name": "schwab-anonymizer-lambda-role",
+     "type": "IAM_ROLE",
+     "system": "schwab",
+     "evidence": "its own first token (canonical form schwab-anonymizer-lambda-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:458)",
+     "_cite": "infra/aws/terraform/security-ops/schwab-anonymizer.tf:36"
+    },
+    {
+     "name": "SchwabAnonymizerPolicy",
+     "type": "IAM_POLICY",
+     "system": "schwab",
+     "evidence": "its own first token (canonical form schwab-anonymizer-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:459)",
+     "_cite": "infra/aws/terraform/security-ops/schwab-anonymizer.tf:42"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:303"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:447",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:449",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:451",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:444-459",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:453"
+   }
+  },
+  "opsec": {
+   "system": "secops",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:461-472 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: secops -- systems.json's secops row names infra/aws/terraform/opsec/; System = \"OpSec\" on 14 resources SCOPE: UNDECIDED -- the buckets are opal-data-security and its access logs, no scope row SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:303",
+     "infra/aws/terraform/opsec/main.tf:50"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:464",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:467",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:470",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:461-472",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:472 (none found by the two measurements)"
+   }
+  },
+  "canonical-schwab-ec2": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "schwab",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:474-492 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the 4 secrets lead with schwab (schwab/ec2-credentials ...) but the roles and policies are for a custodial box that reads and writes opal-data-schwab, opal-data-assets, -bd, -cot and -inf; the files say 'this module is the only consumer of the schwab/* namespace' (secrets.tf:8-9) and decide the secrets' owner, not the box's SCOPE: UNDECIDED -- five buckets of four scopes (opal-data-schwab, -assets, -bd, -cot, -inf): no one scope SOURCE: schwab -- every secret is schwab/* (schwab/ec2-credentials, schwab/sdd-credentials, schwab/sdd/session) NOTE: Names by type: IAM_POLICY=4, IAM_ROLE=3, INSTANCE_PROFILE=1, SECRET=4. No bucket, key, table or rule is counted; the 5 buckets above are referenced in policy documents, not declared here.",
+   "fills": [
+    "source"
+   ],
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:477",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:481",
+    "source": [
+     "infra/aws/terraform/canonical-schwab-ec2/secrets.tf:28",
+     "infra/aws/terraform/canonical-schwab-ec2/secrets.tf:43"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:487",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:474-492",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:492 (the worker's proposal for the registry's lane)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:490: not run, the system is UNDECIDED)"
+   }
+  },
+  "exec-summary": {
+   "system": "advi",
+   "scope": "49financial",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:494-505 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: advi -- 5 names lead with advi (exec-summary-*, advisor leaderboard keys advi/{scope}/platinum/...); System = \"ExecSummary\" SCOPE: 49financial -- the Lambda reads and writes opal-data-bd (main.tf:61), the 49financial alias SOURCE: UNDECIDED -- one name leads with anthropic (a model-call secret or policy); no vendor data feed is named in the 4 .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "anthropic-sdk-deps",
+     "type": "LAMBDA_LAYER",
+     "system": "anthropic",
+     "evidence": "its own first token (canonical form anthropic-sdk-deps-layer) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:505)",
+     "_cite": "infra/aws/terraform/exec-summary/main.tf:82"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/exec-summary/iam.tf:29",
+     "infra/aws/terraform/exec-summary/main.tf:52"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:497",
+    "scope": [
+     "infra/aws/terraform/exec-summary/main.tf:61"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:500",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:502",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:494-505",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:504"
+   }
+  },
+  "nfra-ctlpln-identity": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:507-518 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the group is cloudops-dell-agents-group and its users cloudops-dell*-agent-user (iam.tf:16,20,25), so the names that place themselves lead with cloudops; the root's own Project tag is NFRA_CTLPLN. Candidate: cloudops. No file states the owning system; the 9 policies are produced through modules/routes_policy (routes.tf:14), whose names were not read SCOPE: UNDECIDED -- no bucket, table or rule: the root creates identities only SOURCE: UNDECIDED -- no data feed NOTE: Names by type: IAM_POLICY=9, IAM_USER=2. Nothing stored is counted. Proposal: system cloudops (the leading token), scope and source as the registry's home values.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:510",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:513",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:515",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:507-518",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:517: not run, the system is UNDECIDED)"
+   }
+  },
+  "data-refresh": {
+   "system": "tradeops",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:520-531 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: tradeops -- systems.json's tradeops row records Andrew's confirmation of F17 ('data refresh') and names infra/aws/terraform/data-refresh/; 4 names lead with tradeops SCOPE: global -- the Lambda writes opal-data-portal-v2 (main.tf:44), the global scope's bucket SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "portal-time-machine-invoke-downstream",
+     "type": "IAM_POLICY",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-time-machine-invoke-downstream-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:530)",
+     "_cite": "infra/aws/terraform/data-refresh/main.tf:138"
+    },
+    {
+     "name": "portal-time-machine",
+     "type": "LAMBDA",
+     "system": "portal",
+     "evidence": "its own first token (canonical form portal-time-machine-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:531)",
+     "_cite": "infra/aws/lambda/data_refresh/lambda_function.py:62"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:319"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:523",
+    "scope": [
+     "infra/aws/terraform/data-refresh/main.tf:44"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:525",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:527",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:520-531",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:529"
+   }
+  },
+  "consolidation-gold-runner": {
+   "system": "advi",
+   "scope": "49financial",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:533-544 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: advi -- 8 names lead with advi; Project = \"OPAL_CONSOLIDATION\" SCOPE: 49financial -- Purpose = \"49f-consolidation-gold-build\" (runner.tf:29); the runner reads opal-data-assets (main.tf:79) SOURCE: UNDECIDED -- no vendor secret or feed is named in the 4 .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/consolidation-gold-runner/runner.tf:27",
+     "infra/aws/terraform/consolidation-gold-runner/runner.tf:29"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:536",
+    "scope": [
+     "infra/aws/terraform/consolidation-gold-runner/runner.tf:29",
+     "infra/aws/terraform/consolidation-gold-runner/main.tf:79"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:539",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:542",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:533-544",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:544 (none found by the two measurements)"
+   }
+  },
+  "website": {
+   "system": "website",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:546-557 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: website -- systems.json's website row cites infra/aws/terraform/website/main.tf:1-3 (the public WordPress site); the root's own tag is System = \"website\" SCOPE: UNDECIDED -- no bucket, table or rule in the 9 .tf files: nothing stored to scope SOURCE: UNDECIDED -- no data feed: a WordPress host NOTE: Names by type: EC2_INSTANCE=1, IAM_POLICY=3, IAM_ROLE=2, IAM_USER=1, INSTANCE_PROFILE=1, SECURITY_GROUP=1. Nothing stored is counted.",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:414",
+     "infra/aws/terraform/website/variables.tf:67"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:549",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:552",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:554",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:546-557",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:556 (none found by the two measurements)"
+   }
+  },
+  "etfs-netassets": {
+   "system": "etfs",
+   "scope": "etfs",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:559-569 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: etfs -- 4 names lead with etfs; System = \"ETFS_NETASSETS\" SCOPE: etfs -- the output bucket is opal-data-etfs (main.tf:64); it reads opal-data-assets (main.tf:109) SOURCE: UNDECIDED -- no vendor feed named in the 2 .tf files",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/etfs-netassets/main.tf:58",
+     "infra/aws/terraform/etfs-netassets/netassets-lambda.tf:19"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:562",
+    "scope": [
+     "infra/aws/terraform/etfs-netassets/main.tf:64"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:565",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:567",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:559-569",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:569 (none found by the two measurements)"
+   }
+  },
+  "partners-api": {
+   "system": "advi",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:571-580 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: advi -- 2 names lead with advi and the 6 S3Keys read advi/{scope}/platinum/... SCOPE: UNDECIDED -- no bucket in the 4 .tf files; the Lambda source reads firm-scoped keys SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/partners-api/lambdas.tf:6"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:574",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:576",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:578",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:571-580",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:580 (none found by the two measurements)"
+   }
+  },
+  "security-scanner-pipeline": {
+   "system": "tradeops",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:582-593 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: tradeops -- systems.json's tradeops row records Andrew's confirmation of F17 ('security scanner') and names infra/aws/terraform/security-scanner-pipeline/; 'sscn' is a refused noun SCOPE: global -- the Lambda writes opal-data-portal-v2 (iam.tf:39) SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "security-scanner-deps",
+     "type": "LAMBDA_LAYER",
+     "system": "secops",
+     "evidence": "its own first token (canonical form secops-security-scanner-deps-layer) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:593)",
+     "_cite": "infra/aws/terraform/security-scanner-pipeline/lambdas.tf:20"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:319",
+     "infra/aws/terraform/security-scanner-pipeline/main.tf:37"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:585",
+    "scope": [
+     "infra/aws/terraform/security-scanner-pipeline/iam.tf:39"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:588",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:590",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:582-593",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:592"
+   }
+  },
+  "etfs-canon": {
+   "system": "etfs",
+   "scope": "etfs",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:595-606 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: etfs -- 4 names lead with etfs; System = \"ETFS\"; Project = \"ETFS_CANON\" SCOPE: etfs -- the fan-in reads and writes opal-data-etfs (= the etfs scope's bucket) SOURCE: UNDECIDED -- no vendor secret or feed is named in the 3 .tf files read NOTE: One name carries a {system} blank (ddb-write-ownership-daily, an inline policy): the default would place it etfs.",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/etfs-canon/main.tf:32",
+     "infra/aws/terraform/etfs-canon/dynamo.tf:69"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:598",
+    "scope": [
+     "infra/aws/terraform/etfs-canon/fanin-lambda.tf:48"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:601",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:603",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:595-606",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:605 (none found by the two measurements)"
+   }
+  },
+  "inf-value-parity": {
+   "system": "UNDECIDED",
+   "scope": "inflection",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:608-617 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- System = \"CompDiff\" is a spelling; the names lead with opal, firmsep, globgrph; no systems.json key is the compdiff tool SCOPE: inflection -- the parity Lambda reads opal-data-inf (inf_value_parity.tf:36); bd and cot appear only as the other firms' denied buckets (:211, :213) SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:611",
+    "scope": [
+     "infra/aws/terraform/inf-value-parity/inf_value_parity.tf:36"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:613",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:615",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:608-617",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:617: not run, the system is UNDECIDED)"
+   }
+  },
+  "49f-value-parity": {
+   "system": "UNDECIDED",
+   "scope": "49financial",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:619-628 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- same as inf-value-parity: System = \"CompDiff\" SCOPE: 49financial -- the parity Lambda reads opal-data-bd (49f_value_parity.tf:29) SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:622",
+    "scope": [
+     "infra/aws/terraform/49f-value-parity/49f_value_parity.tf:29"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:624",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:626",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:619-628",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:628: not run, the system is UNDECIDED)"
+   }
+  },
+  "cot-value-parity": {
+   "system": "UNDECIDED",
+   "scope": "cottonwood",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:630-639 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- same as inf-value-parity: System = \"CompDiff\" SCOPE: cottonwood -- the parity Lambda reads opal-data-cot (cot_value_parity.tf:31) SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:633",
+    "scope": [
+     "infra/aws/terraform/cot-value-parity/cot_value_parity.tf:31"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:635",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:637",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:630-639",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:639: not run, the system is UNDECIDED)"
+   }
+  },
+  "bd-49f-auto-login": {
+   "system": "advi",
+   "scope": "49financial",
+   "source": "blackdiamond",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:641-659 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: advi -- Project = \"ADVI_BDAPIMIG\" (an advisor-intelligence project code); System = \"BD49F_AutoAuth\" is a spelling SCOPE: 49financial -- the host reads only the bd-firm namespace blackdiamond/49f/* (iam.tf:9) and the 49F credentials secret blackdiamond/49f/credentials (iam.tf:39-40) SOURCE: blackdiamond -- the secrets are Black Diamond's NOTE: Names by type: EC2_INSTANCE=1, IAM_POLICY=1, IAM_ROLE=1, INSTANCE_PROFILE=1, SECURITY_GROUP=1.",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "bd-49f-auto-login-role",
+     "type": "IAM_ROLE",
+     "system": "blackdiamond",
+     "evidence": "its own first token (canonical form blackdiamond-49f-auto-login-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:654)",
+     "_cite": "infra/aws/terraform/bd-49f-auto-login/iam.tf:17"
+    },
+    {
+     "name": "bd-49f-auto-login",
+     "type": "IAM_POLICY",
+     "system": "blackdiamond",
+     "evidence": "its own first token (canonical form blackdiamond-49f-auto-login-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:655)",
+     "_cite": "infra/aws/terraform/bd-49f-auto-login/iam.tf:32"
+    },
+    {
+     "name": "bd-49f-auto-login-profile",
+     "type": "INSTANCE_PROFILE",
+     "system": "blackdiamond",
+     "evidence": "its own first token (canonical form blackdiamond-49f-auto-login-profile) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:656)",
+     "_cite": "infra/aws/terraform/bd-49f-auto-login/iam.tf:103"
+    },
+    {
+     "name": "bd-49f-auto-login-sg",
+     "type": "SECURITY_GROUP",
+     "system": "blackdiamond",
+     "evidence": "its own first token (canonical form blackdiamond-49f-auto-login-sg) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:657)",
+     "_cite": "infra/aws/terraform/bd-49f-auto-login/instance.tf:29"
+    },
+    {
+     "name": "bd-49f-auto-login",
+     "type": "EC2_INSTANCE",
+     "system": "blackdiamond",
+     "evidence": "its own first token (canonical form blackdiamond-49f-auto-login-runner) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:658)",
+     "_cite": "infra/aws/terraform/bd-49f-auto-login/instance.tf:51"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/bd-49f-auto-login/main.tf:45",
+     "infra/aws/terraform/bd-49f-auto-login/main.tf:47"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:644",
+    "scope": [
+     "infra/aws/terraform/bd-49f-auto-login/iam.tf:9",
+     "infra/aws/terraform/bd-49f-auto-login/iam.tf:39-40"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:647",
+    "source": [
+     "infra/aws/terraform/bd-49f-auto-login/iam.tf:9",
+     "infra/aws/terraform/bd-49f-auto-login/iam.tf:39-40"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:650",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:641-659",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:653"
+   }
+  },
+  "deck-generation-pipeline": {
+   "system": "deckgen",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:661-673 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: deckgen -- systems.json's deckgen row names infra/aws/terraform/deck-generation-pipeline/; System = \"DeckGeneration\" SCOPE: UNDECIDED -- the only buckets are the Lambda-artifacts bucket (the slide library and output prefix); no scope row SOURCE: UNDECIDED -- no vendor feed named in the 4 .tf files NOTE: Names by type: IAM_POLICY=1, IAM_ROLE=1, LAMBDA=1, LAMBDA_LAYER=1, LOG_GROUP=1.",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:311",
+     "infra/aws/terraform/deck-generation-pipeline/main.tf:32"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:664",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:667",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:670",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:661-673",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:672 (none found by the two measurements)"
+   }
+  },
+  "github-actions-runner": {
+   "system": "cicd",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:675-686 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: cicd -- systems.json's cicd row names infra/aws/terraform/github-actions-runner/; the tag is System = \"CI\" and Project = \"NFRA_CIRUNNER\" SCOPE: UNDECIDED -- no bucket, table or rule: a runner host SOURCE: UNDECIDED -- no data feed (GitHub itself is not a systems.json key) NOTE: Names by type: EC2_INSTANCE=1, IAM_POLICY=1, IAM_ROLE=1, INSTANCE_PROFILE=1, LOG_GROUP=1.",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:327",
+     "infra/aws/terraform/github-actions-runner/runner.tf:47"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:678",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:681",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:683",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:675-686",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:685 (none found by the two measurements)"
+   }
+  },
+  "mdpf-secclass/sector-writer": {
+   "system": "mdpf",
+   "scope": "etfs",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:688-699 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: mdpf -- every name built through the opal_name module here passes system = \"mdpf\" (the Lambda, role, policy, scheduler role, scheduler policy and schedule: main.tf:104-148); the output prefix is mdpf's (main.tf:96-98) SCOPE: etfs -- the run list lands in the etfs scope's bucket (local.etfs_bucket = scope_by_long[\"etfs\"].bucket) and the Bloomberg input is read from the same bucket (main.tf:83-85) SOURCE: UNDECIDED -- 'No vendor secret, no model' (iam.tf:14); it reads a Bloomberg prefix (local.bbg_prefix) in the etfs bucket (main.tf:83-90) NOTE: Names by type: IAM_POLICY=2, IAM_ROLE=2, SCHEDULE=1. The census misses the Lambda and the buckets: the Lambda name comes from module.name_lambda.name through module yang-lambda (lambda.tf:26-27) and the buckets from locals (main.tf:83-90). A stored name (the etfs bucket and the run-list key) is declared by locals here; see the surprise row for the class.",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/mdpf-secclass/sector-writer/main.tf:104-109",
+     "infra/aws/terraform/mdpf-secclass/sector-writer/main.tf:149"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:691",
+    "scope": [
+     "infra/aws/terraform/mdpf-secclass/sector-writer/main.tf:83-85"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:694",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:696",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:688-699",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:698 (none found by the two measurements)"
+   }
+  },
+  "daily-sprint-generator": {
+   "system": "sprint",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:701-715 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: sprint -- systems.json's sprint row names infra/aws/terraform/daily-sprint-generator/; the 4 names lead with estate (the secret estate-report/github-token it reads), a candidate exception SCOPE: UNDECIDED -- reads opal-data-assets and writes opal-data-portal-v2 (global.bucket) SOURCE: UNDECIDED -- the only secret is estate-report/github-token; GitHub is not a systems.json key",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "daily-sprint-generator-role",
+     "type": "IAM_ROLE",
+     "system": "estate",
+     "evidence": "its own first token (canonical form estate-daily-sprint-generator-role) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:712)",
+     "_cite": "infra/aws/terraform/daily-sprint-generator/main.tf:121"
+    },
+    {
+     "name": "daily-sprint-generator-policy",
+     "type": "IAM_POLICY",
+     "system": "estate",
+     "evidence": "its own first token (canonical form estate-daily-sprint-generator-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:713)",
+     "_cite": "infra/aws/terraform/daily-sprint-generator/main.tf:141"
+    },
+    {
+     "name": "daily-sprint-generator",
+     "type": "LAMBDA",
+     "system": "estate",
+     "evidence": "its own first token (canonical form estate-daily-sprint-generator-lambda) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:714)",
+     "_cite": "infra/aws/terraform/daily-sprint-generator/main.tf:205"
+    },
+    {
+     "name": "daily-sprint-generator-schedule",
+     "type": "EVENT_RULE",
+     "system": "estate",
+     "evidence": "its own first token (canonical form estate-sprint-generator-schedule-daily) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:715)",
+     "_cite": "infra/aws/terraform/daily-sprint-generator/main.tf:244"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/logic/registry/systems.json:464"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:704",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:706",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:709",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:701-715",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:711"
+   }
+  },
+  "etfs-positioning": {
+   "system": "posn",
+   "scope": "etfs",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:717-728 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: posn -- resources.json places 2 rows citing this root as posn (the producer role: 'a positioning job ... not the ETF business'); 2 names lead with posn SCOPE: etfs -- the producer reads opal-data-etfs (main.tf:78); it also writes the portal bucket (main.tf:90) SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [
+    {
+     "name": "s3-rw-etfs-gold-platinum",
+     "type": "IAM_POLICY",
+     "system": "etfs",
+     "evidence": "its own first token (canonical form etfs-s3-rw-gold-platinum-policy) (drafted from MAP_ENTRIES_FOR_RULING_round6.md:728)",
+     "_cite": "infra/aws/terraform/etfs-positioning/producer-lambda.tf:40"
+    }
+   ],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/etfs-positioning/main.tf:69",
+     "infra/aws/terraform/etfs-positioning/producer-lambda.tf:1-6"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:720",
+    "scope": [
+     "infra/aws/terraform/etfs-positioning/main.tf:78"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:723",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:725",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:717-728",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:727"
+   }
+  },
+  "modules/served-guard": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:730-741 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the names are built from var.firm (local.name = \"opal-${var.firm}-served-guard\", main.tf:24): the system and scope belong to the calling root (served-guard-49f, -cot, -inf) SCOPE: UNDECIDED -- var.served_bucket is a caller input; the variable's description names opal-data-bd, -cot and -inf SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read NOTE: Names by type: IAM_POLICY=4 (the inline policies CloudWatchLogs, ServedKeyGuardS3, RecheckQueue, PublishSurfaceAlerts: main.tf:66,81,112,130). The census misses the names this module builds from var.firm: a queue (opal-<firm>-served-guard-recheck, main.tf:54), an IAM role, a Lambda and an EventBridge RULE (opal-<firm>-served-guard-on-write, main.tf:181). The rule is a stored-name type. Proposal: this module is names_from_caller in the CRO's shape, and its three callers (served-guard-49f, -cot, -inf) declare the names.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:733",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:736",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:738",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:730-741",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:740: not run, the system is UNDECIDED)"
+   }
+  },
+  "ticket-center": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:743-752 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- System = \"TicketCenter\" is a spelling; 4 names lead with the reserved opal; no systems.json key SCOPE: UNDECIDED -- one table (opal-tickets), no bucket SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:746",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:748",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:750",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:743-752",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:752: not run, the system is UNDECIDED)"
+   }
+  },
+  "portal-content": {
+   "system": "portal",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:754-764 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: portal -- 3 names lead with portal; System = \"PortalContent\"; the table is opal-portal-content SCOPE: UNDECIDED -- one table, no bucket SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read",
+   "fills": "UNDECIDED",
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/portal-content/main.tf:35",
+     "infra/aws/terraform/portal-content/main.tf:54"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:757",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:760",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:762",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:754-764",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:764 (none found by the two measurements)"
+   }
+  },
+  "bloomberg-tunnel": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "bloomberg",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:766-778 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the names are opal-bloomberg-tunnel-instance-role, opal-bloomberg-site-z and opal-bloomberg-tunnel-caller; they lead with the reserved opal prefix; bloomberg is a VENDOR key, not an owner, and no file states the owning system SCOPE: UNDECIDED -- no bucket, table or rule SOURCE: bloomberg -- the tunnel exists to reach the Bloomberg DAPI on the site-Z workstation (the header, NFRA_BBGMCP) NOTE: Names by type: IAM_POLICY=1, IAM_ROLE=1. The SSM activation (main.tf:153) is not counted.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:769",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:773",
+    "source": [
+     "infra/aws/terraform/bloomberg-tunnel/main.tf:7-10"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:775",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:766-778",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:777: not run, the system is UNDECIDED)"
+   }
+  },
+  "nfra-agentbus-port2": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:780-791 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the queues are agentbus-ajbdev-sitez-to-laptop.fifo and agentbus-ajbdev-laptop-to-sitez.fifo, leading with agentbus (a PLATFORM_SUBSYSTEM key); no file states the owner, and the name has no kind suffix the grammar recognises SCOPE: UNDECIDED -- no bucket, table or rule SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read NOTE: Names by type: SQS_QUEUE=2. The 2 queues are the whole root. Proposal: system agentbus.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:783",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:786",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:788",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:780-791",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:790: not run, the system is UNDECIDED)"
+   }
+  },
+  "partner-etl-ops-alerts": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:793-804 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the topic is opal-partner-etl-ops-alerts and the queue partner-etl-ops-queue; the channel is shared by the INF and Schwab alarms (main.tf:3-5), so no one system owns it SCOPE: UNDECIDED -- no bucket, table or rule SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read NOTE: Names by type: SNS_TOPIC=1, SQS_QUEUE=1.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:796",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:799",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:801",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:793-804",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:803: not run, the system is UNDECIDED)"
+   }
+  },
+  "transcripts": {
+   "system": "UNDECIDED",
+   "scope": "transcripts",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:806-819 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the root's functions are named teams-global-transcripts-pull-lambda and outlook-global-transcripts-pull-lambda (two VENDOR keys, teams and outlook); systems.json has no transcripts system key, and a scope row transcripts (PRODUCT) only SCOPE: transcripts -- the root declares the bucket aws_s3_bucket.transcripts from local.bucket, which is the transcripts scope row's bucket (opal-data-transcripts) SOURCE: UNDECIDED -- two feeds: Teams (pull.tf) and Outlook (mail_pull.tf) NOTE: Names by type: LAMBDA=2. The census misses most of this root: the bucket (main.tf:119-120), the KMS alias (main.tf:115), the secrets (chat_assist.tf:40,45), the log groups, roles, policies and EVENT RULES (pull.tf:121, mail_pull.tf:122) are named through locals. The bucket and the two rules are stored-name types; this root is not 'no stored name' in fact. See the surprise row.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:809",
+    "scope": [
+     "infra/aws/terraform/transcripts/main.tf:72",
+     "infra/aws/terraform/transcripts/main.tf:119-120"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:812",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:815",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:806-819",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:818: not run, the system is UNDECIDED)"
+   }
+  },
+  "investor-reporting/reporting-read": {
+   "system": "irpt",
+   "scope": "UNDECIDED",
+   "source": "irpt",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:821-836 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: irpt -- every name built through the opal_name module here passes system = \"irpt\" (role, policy, scheduler-free: iam.tf:26-43; Lambda and artifact names: lambda.tf:14-26) SCOPE: UNDECIDED -- the firm is derived (local.irpt_rr_firm, locals.tf:37) at plan time from the custody source declaration (local.irpt_rr_firm) and the bucket from scopes.json; no scope is typed in the files, so the files decide it as 'per source', and the sibling irpt roots are entered with scope global and fills [system] SOURCE: irpt -- the sibling irpt roots use irpt as source (investor-reporting/core, export ...); this root's keys read irpt/<firm>/platinum/... (locals.tf:5-6) NOTE: Names by type: IAM_POLICY=1. The census misses the role, Lambda and artifact names built through module opal_name (iam.tf:24-39). Proposal: the entry of its sibling roots (system irpt, scope global, source irpt, fills [system]).",
+   "fills": [
+    "system"
+   ],
+   "exceptions": [],
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/investor-reporting/reporting-read/iam.tf:27",
+     "infra/aws/terraform/investor-reporting/reporting-read/iam.tf:35",
+     "infra/aws/terraform/investor-reporting/reporting-read/lambda.tf:16"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:824",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:828",
+    "source": [
+     "infra/aws/terraform/investor-reporting/reporting-read/iam.tf:27",
+     "infra/aws/terraform/investor-reporting/reporting-read/lambda.tf:16"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:831",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:821-836",
+    "fills": "MAP_ENTRIES_FOR_RULING_round6.md:836 (the worker's proposal for the registry's lane)",
+    "exceptions": "MAP_ENTRIES_FOR_RULING_round6.md:834 (none found by the two measurements)"
+   }
+  },
+  "served-guard-inf": {
+   "system": "UNDECIDED",
+   "scope": "inflection",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:838-849 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- System = \"CompDiff\"; the module call passes firm = \"inf\" (_root.tf:33): the names are built in the module from var.firm SCOPE: inflection -- firm = \"inf\" and served_bucket = \"opal-data-inf\" SOURCE: UNDECIDED -- no vendor secret or feed is named in the .tf files read NOTE: Names by type: IAM_POLICY=1. The census misses what module served-guard builds from var.firm (a queue, a role, a Lambda and an EventBridge rule opal-inf-served-guard-on-write). This root declares them.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:841",
+    "scope": [
+     "infra/aws/terraform/served-guard-inf/_root.tf:33-35"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:844",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:846",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:838-849",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (MAP_ENTRIES_FOR_RULING_round6.md:848: not run, the system is UNDECIDED)"
+   }
+  },
+  "aaii-v2-bucket-lifecycle": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:851-859 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the only resource is aws_s3_bucket_lifecycle_configuration on the literal bucket opal-data-aaii-v2; the header says the bucket is console-created with no Terraform bucket resource anywhere, so the name it attaches to is declared outside the Terraform roots (the console), not by another root. A lifecycle configuration is not a named resource. Same shape as the CRO's example bd-bucket-lifecycle.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:859",
+    "why_reads": [
+     "infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf:1",
+     "infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf:3",
+     "infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf:33",
+     "infra/aws/terraform/aaii-v2-bucket-lifecycle/main.tf:34"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:851-859"
+   }
+  },
+  "bd-bucket-lifecycle": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:861-868 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the only resource is aws_s3_bucket_lifecycle_configuration on opal-data-bd; the bucket is declared by the mapped root bd-pipeline (opal-data-bd.tf:8-9, an aws_s3_bucket adopted by import), so the root attaches to a name declared elsewhere. This root's own header (main.tf:4) still calls the bucket console-created; the declaring file is the later fact. This is the CRO's own named example of the shape.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:868",
+    "why_reads": [
+     "infra/aws/terraform/bd-bucket-lifecycle/main.tf:36",
+     "infra/aws/terraform/bd-bucket-lifecycle/main.tf:37",
+     "infra/aws/terraform/bd-pipeline/opal-data-bd.tf:8-9"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:861-868"
+   }
+  },
+  "c3materialize-b4": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:870-887 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the header names the NFRA_C3MATERIALIZE project and its owner seat 0.7.0_AE_CloudOps~X; the graph-tool producer belongs to globgrph by its purpose, but no file states a system key SCOPE: UNDECIDED -- the job is one-shot and uses the account's own bucket opal-313476888478-globgrph (main.tf:80), which is no scope row; the file says 'never a client bucket' (main.tf:79) SOURCE: UNDECIDED -- no vendor feed: it reads a seed manifest and an oracle",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:881",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:884",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:886",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:870-887",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "canonical-schwab-si2-schedule": {
+   "names": "none",
+   "why": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:889-897 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the file's only blocks are terraform, provider and locals (account_id, region, instance_id): no resource at all, although the header (main.tf:1-2) describes an EventBridge-managed schedule. Neither of the two values fits (it names no caller and attaches to nothing); the shape has no value for an empty root. The only git commit of the file (1c5a9ced13) is the same 57 lines. NOTE: Proposal for the registry's lane: a third why for an empty root, or leave the root unmapped until it declares something.",
+   "_cite": {
+    "why": "UNDECIDED",
+    "why_reads": [
+     "infra/aws/terraform/canonical-schwab-si2-schedule/main.tf:1-2",
+     "infra/aws/terraform/canonical-schwab-si2-schedule/main.tf:32-35",
+     "infra/aws/terraform/canonical-schwab-si2-schedule/main.tf:50-56"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:889-897"
+   }
+  },
+  "etfs-rivalfunds": {
+   "system": "rivalfunds",
+   "scope": "etfs",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:899-919 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: rivalfunds -- the names lead with etfs-rivalfunds- and rivalfunds-; rivalfunds is a PRODUCT key in systems.json (D5); main.tf:2 'ETFS_RIVALS -- rivalfunds' SCOPE: etfs -- the bucket is opal-data-etfs (= the etfs scope's bucket) and this stack is that bucket's one notification owner SOURCE: UNDECIDED -- a Bloomberg-keyed pair of rules exists (rivalfunds-build-silver-bloomberg-on-marker-created); more than one source NOTE: The generated file is regenerated by gen_policies.py; a name read from it is the builder's output, so the names are conformant by construction, but they are still declared names.",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/etfs-rivalfunds/generated.auto.tfvars.json:11",
+     "infra/aws/terraform/etfs-rivalfunds/main.tf:2"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:911",
+    "scope": [
+     "infra/aws/terraform/etfs-rivalfunds/generated.auto.tfvars.json:2",
+     "infra/aws/terraform/etfs-rivalfunds/triggers.tf:6-9"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:914",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:917",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:899-919",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "investor-reporting/api": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:921-929 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the root adds routes and integrations to the EXISTING portal API 7k3ed8px20 under the existing authorizer, and reads the Lambda functions by name (a data source); an aws_apigatewayv2_route and an integration carry no name of the graded types. Declares no named resource of its own.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:929",
+    "why_reads": [
+     "infra/aws/terraform/investor-reporting/api/main.tf:3-4",
+     "infra/aws/terraform/investor-reporting/api/integrations.tf:43-44",
+     "infra/aws/terraform/investor-reporting/api/integrations.tf:50-52",
+     "infra/aws/terraform/investor-reporting/api/routes.tf:3-5"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:921-929"
+   }
+  },
+  "investor-reporting/holdings-performance": {
+   "system": "irpt",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:931-950 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: irpt -- every module call passes system = \"irpt\" SCOPE: UNDECIDED -- two name sets in one root: the first set's scope is one(values(local.irpt_hp_source_firms)) (iam.tf:37; schedule.tf:107 'this schedule is the 49F one'), the inf set's is local.irpt_hp_inf_firm (iam.tf:157); two scopes, both derived at plan time and not typed SOURCE: UNDECIDED -- two feeds in one root: schwab_08335338 and orion",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf:36",
+     "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf:10"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:941",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:944",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:948",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:931-950",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "investor-reporting/reporting-gold": {
+   "system": "irpt",
+   "scope": "UNDECIDED",
+   "source": "irpt",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:952-968 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: irpt -- every module call passes system = \"irpt\" SCOPE: UNDECIDED -- scope = local.irpt_rg_firm, derived at plan time as the one firm of the declared custody source rows (locals.tf:50); the file does not type it SOURCE: irpt -- the sibling irpt roots use irpt as source",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf:26",
+     "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf:28"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:962",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:965",
+    "source": [
+     "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf:28"
+    ],
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:967",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:952-968",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "mdpf-secclass/new-security-classifier": {
+   "system": "mdpf",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:970-986 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: mdpf -- every opal_name call passes system = \"mdpf\" SCOPE: UNDECIDED -- the run list lands in a bucket exposed as output_bucket; the sibling root sector-writer uses the etfs scope's bucket (its main.tf:83-90); this root's output prefix was not decided from a typed value SOURCE: UNDECIDED -- reads a silver prefix (var.silver_prefix); no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/mdpf-secclass/new-security-classifier/main.tf:114",
+     "infra/aws/terraform/mdpf-secclass/new-security-classifier/main.tf:151"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:980",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:983",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:985",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:970-986",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "modules/ldo": {
+   "names": "none",
+   "why": "names_from_caller",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:988-997 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). every name comes from module \"name\" (the opal_name builder) with system = var.system, scope = var.scope, function = var.function: the system, scope and function are the caller's. The kinds it names include a queue, a table, log groups, roles, policies, a Lambda, an EVENT RULE (main.tf:374-376) and an SNS topic, all named from the caller's inputs. NOTE: The module declares an event rule and a table, both stored-name types, but their names are the caller's; the caller (transcripts: chat_assist.tf:49-54) declares them.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:996",
+    "why_reads": [
+     "infra/aws/terraform/modules/ldo/main.tf:87-94",
+     "infra/aws/terraform/modules/ldo/main.tf:99",
+     "infra/aws/terraform/modules/ldo/variables.tf:13",
+     "infra/aws/terraform/modules/ldo/variables.tf:18"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:988-997"
+   }
+  },
+  "modules/opal_name": {
+   "names": "none",
+   "why": "names_from_caller",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:999-1007 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the module declares NO resource: it computes a name from var.system, var.scope, var.function, var.kind and var.qualifier and outputs it (main.tf:32-35). Every name it produces belongs to the calling root, so names_from_caller is the closest of the two values. NOTE: The module is the builder that the DECLARES-NAMES roots below call; the census cannot follow it.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1006",
+    "why_reads": [
+     "infra/aws/terraform/modules/opal_name/main.tf:32",
+     "infra/aws/terraform/modules/opal_name/variables.tf:5",
+     "infra/aws/terraform/modules/opal_name/variables.tf:11"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:999-1007"
+   }
+  },
+  "modules/partner-firm-table": {
+   "names": "none",
+   "why": "names_from_caller",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1009-1016 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the one table is named \"opal-partner-${var.firm_id}\": the name belongs to the calling root (partner-firms), which is listed below as DECLARES-NAMES.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1016",
+    "why_reads": [
+     "infra/aws/terraform/modules/partner-firm-table/main.tf:21",
+     "infra/aws/terraform/modules/partner-firm-table/main.tf:22",
+     "infra/aws/terraform/modules/partner-firm-table/variables.tf:1"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1009-1016"
+   }
+  },
+  "modules/yang-lambda": {
+   "names": "none",
+   "why": "names_from_caller",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1018-1025 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). function_name = var.function_name and the log group is /aws/lambda/${var.function_name}: every name is the caller's. This is the CRO's own named example of names_from_caller.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1025",
+    "why_reads": [
+     "infra/aws/terraform/modules/yang-lambda/main.tf:24",
+     "infra/aws/terraform/modules/yang-lambda/main.tf:77",
+     "infra/aws/terraform/modules/yang-lambda/variables.tf:3"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1018-1025"
+   }
+  },
+  "news-v2-bucket-lifecycle": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1027-1034 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the only resource is aws_s3_bucket_lifecycle_configuration on the literal bucket opal-data-news-v2; no root declares an aws_s3_bucket for that name (measured: a scan of every .tf under infra/aws/terraform for an aws_s3_bucket block naming it found none), so the name is declared outside the roots.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1034",
+    "why_reads": [
+     "infra/aws/terraform/news-v2-bucket-lifecycle/main.tf:1",
+     "infra/aws/terraform/news-v2-bucket-lifecycle/main.tf:33",
+     "infra/aws/terraform/news-v2-bucket-lifecycle/main.tf:34"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1027-1034"
+   }
+  },
+  "nfra-agentbus": {
+   "system": "agentbus",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1036-1054 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: agentbus -- the prefix is agentbus-${var.collaboration_id}; agentbus is a PLATFORM_SUBSYSTEM key SCOPE: UNDECIDED -- var.collaboration_id selects the collaboration; no scope is typed SOURCE: UNDECIDED -- two fleets (fleet_a_name, fleet_b_name); no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/nfra-agentbus/main.tf:57",
+     "infra/aws/terraform/nfra-agentbus/iam.tf:21"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:1047",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:1050",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:1052",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1036-1054",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "nfra-agentbus-alyssa01": {
+   "system": "agentbus",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1056-1071 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: agentbus -- prefix = agentbus-${local.collaboration_id} SCOPE: UNDECIDED -- no scope typed SOURCE: UNDECIDED -- no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/nfra-agentbus-alyssa01/main.tf:66"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:1066",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:1068",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:1070",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1056-1071",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "nfra-ctlpln-agentbus": {
+   "system": "agentbus",
+   "scope": "global",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1073-1086 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: agentbus -- system = \"agentbus\" in the module call SCOPE: global -- scope = \"global\" in the module call SOURCE: UNDECIDED -- no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": [
+     "infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf:20"
+    ],
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:1081",
+    "scope": [
+     "infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf:21"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:1083",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:1085",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1073-1086",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "opal-assets-absence": {
+   "names": "none",
+   "why": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1088-1096 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the file's only blocks are terraform, provider and locals (function_name \"opal-assets-absence-check\", source_dir, monolith_arn, alarm_topic): no resource. The Lambda, role and twin scheduler this header describes were removed by commit c32875f7a5 ('teardown(opal-assets freshness): ... opal-assets-absence-check lambda+role+twin_scheduler (separate root)'), leaving locals that name a function no longer declared. An empty root, as canonical-schwab-si2-schedule. NOTE: Proposal for the registry's lane: as canonical-schwab-si2-schedule.",
+   "_cite": {
+    "why": "UNDECIDED",
+    "why_reads": [
+     "infra/aws/terraform/opal-assets-absence/main.tf:1-2",
+     "infra/aws/terraform/opal-assets-absence/main.tf:35-38",
+     "infra/aws/terraform/opal-assets-absence/main.tf:46-51"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1088-1096"
+   }
+  },
+  "partner-firms": {
+   "system": "UNDECIDED",
+   "scope": "UNDECIDED",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1098-1117 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- the tables grade OUT-OF-PATTERN with canonical forms opal-<firm>-partner-table (reserved opal prefix); no systems.json key owns them SCOPE: UNDECIDED -- one table per firm: four scopes in one root, so scope is per name (firm_id of the module call) SOURCE: UNDECIDED -- no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:1109",
+    "scope": "UNDECIDED",
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:1111",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:1116",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1098-1117",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "portal-notifications": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1119-1127 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the root puts an aws_s3_bucket_notification on opal-data-portal-v2 (a bucket declared by shared-infra/s3-portal-v2-import.tf:22) and two aws_lambda_permission resources on functions declared elsewhere (opal-security-scanner-processor, yang-pipeline-trigger); neither type is a named resource of its own.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1127",
+    "why_reads": [
+     "infra/aws/terraform/portal-notifications/main.tf:50",
+     "infra/aws/terraform/portal-notifications/main.tf:57-60",
+     "infra/aws/terraform/portal-notifications/main.tf:66-69",
+     "infra/aws/terraform/portal-notifications/main.tf:79-80"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1119-1127"
+   }
+  },
+  "served-guard-49f": {
+   "system": "UNDECIDED",
+   "scope": "49financial",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1129-1144 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- System = \"CompDiff\"; no systems.json key is the compdiff tool SCOPE: 49financial -- served_bucket = \"opal-data-bd\" and served_key = \"platinum/firm/header_metrics.json\" SOURCE: UNDECIDED -- no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:1139",
+    "scope": [
+     "infra/aws/terraform/served-guard-49f/_root.tf:38-40"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:1141",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:1143",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1129-1144",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "served-guard-cot": {
+   "system": "UNDECIDED",
+   "scope": "cottonwood",
+   "source": "UNDECIDED",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1146-1161 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). SYSTEM: UNDECIDED -- System = \"CompDiff\"; no systems.json key is the compdiff tool SCOPE: cottonwood -- served_bucket = \"opal-data-cot\" (the cottonwood alias) with firm = \"cot\" SOURCE: UNDECIDED -- no vendor feed",
+   "fills": "UNDECIDED",
+   "exceptions": "UNDECIDED",
+   "_cite": {
+    "system": "UNDECIDED",
+    "system_line": "MAP_ENTRIES_FOR_RULING_round6.md:1156",
+    "scope": [
+     "infra/aws/terraform/served-guard-cot/_root.tf:32-36"
+    ],
+    "scope_line": "MAP_ENTRIES_FOR_RULING_round6.md:1158",
+    "source": "UNDECIDED",
+    "source_line": "MAP_ENTRIES_FOR_RULING_round6.md:1160",
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1146-1161",
+    "fills": "UNDECIDED (the section proposes no fills)",
+    "exceptions": "UNDECIDED (the section lists no exception measurement)"
+   }
+  },
+  "smartx-v2-bucket-lifecycle": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1163-1170 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the only resource is aws_s3_bucket_lifecycle_configuration on the literal bucket opal-data-smartx-v2; no root declares an aws_s3_bucket for that name (same scan as news-v2-bucket-lifecycle: none found).",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1170",
+    "why_reads": [
+     "infra/aws/terraform/smartx-v2-bucket-lifecycle/main.tf:1",
+     "infra/aws/terraform/smartx-v2-bucket-lifecycle/main.tf:33",
+     "infra/aws/terraform/smartx-v2-bucket-lifecycle/main.tf:34"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1163-1170"
+   }
+  },
+  "terraform-state-bucket-lifecycle": {
+   "names": "none",
+   "why": "attaches_to_names_declared_elsewhere",
+   "evidence": "Drafted by 4.0.0_SA_CRO from MAP_ENTRIES_FOR_RULING_round6.md:1172-1179 (0.9.0_WK_LGIC_BLANKFIX~1 @4a4e231eaa, merged @c6cf182bb2). the only resource is aws_s3_bucket_lifecycle_configuration; the file says in a comment that the bucket 'is NOT managed here and is referenced by name deliberately'.",
+   "_cite": {
+    "why": "MAP_ENTRIES_FOR_RULING_round6.md:1179",
+    "why_reads": [
+     "infra/aws/terraform/terraform-state-bucket-lifecycle/main.tf:72",
+     "infra/aws/terraform/terraform-state-bucket-lifecycle/main.tf:73-75",
+     "infra/aws/terraform/terraform-state-bucket-lifecycle/main.tf:77"
+    ],
+    "evidence": "MAP_ENTRIES_FOR_RULING_round6.md:1172-1179"
+   }
+  }
+ }
+}
