@@ -1,19 +1,19 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-24 + RIV-mr-1 at content pin fd633ec4d2; CLOUD HEAD carries round 25's readers and MUST NOT be deployed until RIV-rg-2 is graded; row Z-S71 BLOCKING ARMED)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-26 at CLOUD 0576fb051f; the mis-dated 2026-09-29 price object is never read; ledgers r22 and r26 wait on the 2026-10-08 11:00Z and 13:00Z runs)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
 ruled by `1.0.0_SA_CTO~Z`.
 
-As of 2026-10-08 ~00:3xZ. The drive logs are the hour-by-hour record:
+As of 2026-10-08 ~02:0xZ. The drive logs are the hour-by-hour record:
 `org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12,13,14}Z_opal_bloomberg.md`.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Deployed artifact pin | **Content pin fd633ec4d2** (local branch `rv-deploy-r25mr`): the round-24 pin f9f8334ef6 plus the ONE build commit of RIV-mr-1 (339ba875be). It is NOT a commit of CLOUD's history. 3,008 MB each. Ledger `etfs-rivalfunds-r25-mr1` CLOSED. Ledger `etfs-rivalfunds-r22`: L4, L5 OPEN = the 2026-10-08 11:00Z and 13:00Z REPORT lines. Rollback pins: f9f8334ef6 (r24), 6124b079f3 (r23), beb13d39ff (r15-22) |
-| **DO NOT DEPLOY CLOUD HEAD** | Site-Z CLOUD carries RIV-rg-1's readers (merge 1d2241ca66), which would read the mis-dated 2026-09-29 object. No rivalfunds deploy is built from HEAD until RIV-rg-2's J1 is MET (CTO half @86a90330bc C1). The saved plan `C:/tmp/rv_apply25.tfplan` is of the WITHDRAWN deploy: never apply it |
-| Served page | 2026-10-07 republished 00:10Z 2026-10-08 by RIV-mr-1 alone: index 1,693,709 B; no table object written; 13 of 13 chart objects with data identical to before (`round25/served_grade_2026-10-07.after_mr1.json`). Andrew's look at the round-24 / 25 chart is not yet had |
+| Deployed artifact pin | CLOUD **0576fb051f** in the five rivalfunds Lambdas (rounds 15 to 26: the shared reader of gold security_market, narrowed to timed object names), 3,008 MB each. Ledger `etfs-rivalfunds-r26`: L1 to L3 CLOSED, L4 OPEN = the 2026-10-08 11:00Z daily run (first run of gold_canonical_shape and gold_trade_schedule on the shared reader). Ledger `etfs-rivalfunds-r22`: L4, L5 OPEN = the 11:00Z and 13:00Z REPORT lines. Rollback: content pin fd633ec4d2 on branch `rv-deploy-r25mr` (rounds 15-24 + mr-1), then f9f8334ef6. Deploy tree `C:/tmp/rv-r8` |
+| Withdrawn plan | `C:/tmp/rv_apply25.tfplan` belongs to the WITHDRAWN round-25 deploy (pin acf83a5716, the un-narrowed readers): never apply it. CLOUD HEAD is deployable again as of round 26 |
+| Served page | 2026-10-07; last written 00:11Z 2026-10-08 (RIV-mr-1). The round-26 republish of 01:41Z rebuilt the tables with the new readers and wrote nothing but one input_census object and its state record: the tables' content hash and the page's bytes were unchanged (`round26/served_read_2026-10-07.after_r26.json`). Andrew's look at the round-24 / 25 chart is not yet had |
 | PRD | v0.19 ADMITTED (FWD-24: the year of closes kept by the daily leg; the standing request stays OFF until Andrew's recorded answer). Reader census `round25_prep/READER_CENSUS_SECURITY_MARKET_20261007.md` @33e8bbe318 |
 | pk-1 / al-1 (parsekey join, pin 92cf1f322b) | Ledger `etfs-rivalfunds-pk1-al1` CLOSED 4 of 4 @b74bdc238b on the 2026-10-07 morning pass |
 | Round 14 proof | The 2026-10-07 13:00Z sweep read: four gate items MET (`round14/SWEEP_READ_2026-10-07.md` @93f23ea2f4) |
@@ -90,7 +90,8 @@ The Lambda deploy's never-widen pair goes to 1.0.0_SA_CTO~Z as usual.
 | Z-S57, Z-S61 | OBSERVATION | Repaired in round 20 and SERVED: GQGU's Meta is under one key in both served tables (read 19:4xZ); the 16 remaining same-name pairs are different listings or share classes and stay (CTO ruling msg 31341); the CVO re-reads Z-S57 |
 | Z-S63 | BLOCKING, INERT | The deployed daily Lambda used 864 MB of 1,024 MB; the new stages peak at 1,552 MB on site Z. Ruled: 3,008 MB in the same apply; the first runs' REPORT lines are ledger legs |
 | Z-S65, Z-S66 | OBSERVATION | Repaired by round 23 (RIV-ks-1) and SERVED 19:19Z: 0 missing; ks-1 J1 MET on the real run (CVO ADJUDICATION_v25); disposition is the CVO's |
-| **Z-S71** (replaces Z-S69, Z-S70) | **BLOCKING, ARMED** | The 2026-09-29 live object of gold security_market holds 2026-09-30's closes; the served readers ignore it by a name tie-break (correct by accident); rows Z-S69 / Z-S70 read the fault backwards and the round-25 before / after measured mis-dated data. Disarm: round 26 RIV-rg-2 (the union reads only objects whose name carries a capture time; untimed dates read as before), issued 14d40de902, worker ~17 |
+| Z-S71 (replaces Z-S69, Z-S70) | BLOCKING, disarmed by round 26 | The 2026-09-29 live object of gold security_market holds 2026-09-30's closes. Round 26 RIV-rg-2 is DEPLOYED: the union reads only objects whose name carries a capture time, so that object is never opened by the price readers; rg-2 J1 MET (ADJUDICATION_v33). Disposition is the CVO's. Still true: the rule is a name's shape plus one named object; round 27 carries the per-close trading date |
+| Z-S73 | OBSERVATION | A replay of build-canonical-shape and build-trade-schedule made today does not reproduce the served objects (alike under old and new code); four GQGU trims of 2026-10-01 carry a ticker key in the replay and a CUSIP as served. Read in round 27 |
 | Z-S72 | OBSERVATION | The 11:00Z vehicle's enrichment leg loads the module holding the round-25 reader and calls nothing of it; no revert (CTO msg 31489); the first read of the 2026-10-08 vehicle log states the leg's exit code and its security_names step |
 | Z-S67, Z-S68 | OBSERVATION, ARMED / INERT | bbg_budget's two checks use different units (surfaced by 0.0.3_BG_BBGTerminal); Z-S68 is this seat's disarm statement: the backfill's guard is check_points, points requested bound records returned. Day 1's log gives the measured ratio |
 | Z-S62 | OBSERVATION | The 11:00Z vehicle runs the working tree: round 20's enrichment change first runs 2026-10-08 11:00Z; its log line is owed a read |
