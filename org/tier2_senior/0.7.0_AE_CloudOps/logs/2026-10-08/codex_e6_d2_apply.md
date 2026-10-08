@@ -10,3 +10,5 @@ D2 B GO107249: applied20:49:58Z exact0/1/0; live shell/F1 allowed AllowShellScri
 CTO107277 reports session-only deadline reminder armed05:55Z; it will send hard-close event if noX1. Its session lifetime is a limitation; hard deadline2026-10-09T06:00Z retained here and with COO.
 
 E6 leg2 GO107287 keys f8ce69efe0: one RETENTION row EXISTS (owner projected); ARTIFACT/UPLOAD NOT_FOUND; S3 HEAD404. Three exact DDB deletes then strongly consistent projected reads NOT_FOUND; S3 reHEAD404 and delete skipped. Result Y67-1_laptop_cleanup_result.json; approved single S3 scope39ab7ddd70 never used because absent.
+
+21:07Z issuer107321 requested proof-only recheck after0526f605f6. Bound AC1 checker INVALID(rc1): W174-S3 not resolved as cell in cited pair; owned_cells W174-S3,W156-S1 rejected as non-id text. Reported exact2 violations, no live act.
