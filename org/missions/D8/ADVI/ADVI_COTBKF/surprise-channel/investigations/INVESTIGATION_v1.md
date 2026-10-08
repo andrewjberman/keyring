@@ -2301,3 +2301,28 @@ round.** Never edit an existing row.
   "world_is": "The sale-funding credit (min of the account-day's non-sweep sale proceeds and its listed-sweep buys, credited to CFNCASH) lands as one general rule and collapses 25 of the 72 sweep_balance months; the sweep_trade_day class does not collapse, because what funds or is paid by its sweep trades is a dividend (cash in) or a fee on CFNCASH (cash out: man, fch are unsigned in the signs table so the sweep sale that pays them credits cash with no matching debit), not a sale. The round-19 cash-leg design is incomplete on all cash receipts and payments of the non-sweep rows, not only sales. This order's grant and item 1 name the sale only, so dividends and fees were not touched. Control: control_same=True, 642 of 642 months."
 }
 ```
+
+## ADVI_COTBKF-D2-S33 -- the version check cannot see the day parquet's arms
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S33",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-08T19:40Z",
+  "one_line": "CB-v-2's list-version check reads the version from the persisted month grades only; the day parquet under --data-dir records no list version, so D2-S31's actual case (right grades, stale day values) still passes the check and is caught only by mover_causes' reproduce guard",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~44 report on CB-v-2 (drained @c0f717a5c9): 'The day parquet does not record a list version, so the check reads it from the grades only.'",
+      "D2-S31: on the trunk the grades at deliverables/~41 were the round-19 arms (none -> v1) while the default data-dir held round 20's v1 -> v2 day values"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-21 analysis E2: the mover scripts refuse to run when the arms' sweep-list version differs from the one they expect.",
+  "world_is": "--data-dir is now required (the caller names the folder), and a grade-version mismatch is refused; a day-parquet mismatch is not detectable until the runner stamps the list version (and cash-leg rule) into the day parquet."
+}
+```
