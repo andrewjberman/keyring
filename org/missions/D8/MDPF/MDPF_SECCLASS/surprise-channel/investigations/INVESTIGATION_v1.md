@@ -5346,3 +5346,34 @@ by dell1 or by this seat.
   "notes": "Trace (which classify site in BD/COT D_04 emits it) is cut as one order in the next round alongside D1-S8. portal composition.ts keeps multi_asset while this and S60 are open, so pages render."
 }
 ```
+
+## MDPF_SECCLASS-D1-S10 -- TO-AI-e32 is unflippable: its two owned cells are declared in DECOMP_R8 and DECOMP_R9 while its decomp_ref cites DECOMP_R11, so no single decomp_ref closes the alignment join
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S10",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T18:12Z",
+  "one_line": "TO-AI-e32 cannot be flipped complete: its <owned_cells>SC-e-32, SC-e-50</owned_cells> and its <decomp_ref> name THREE DIFFERENT decomps. SC-e-32 is declared in DECOMP_R8.md, SC-e-50 in DECOMP_R9.md, and the decomp_ref cites DECOMP_R11.md, whose entire cell id space is SC-e-65 and SC-e-66. to-pipeline-gate.py layer 1 half B requires a VALID proof-of-spec instance for a complete flip on a pipeline-registered project, and proof-of-spec-check.py's alignment_check then refuses on three independent limbs: forward-2 (cell_ref SC-e-32 does not exist in the cited decomp), and backward twice (SC-e-32 and SC-e-50 are in a DELIMITED <owned_cells> with no criterion reaching them in that id space). Because the two owned cells live in two different decomps, NO single decomp_ref value can close the join -- this is not a typo that a repoint fixes by itself.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO face at HEAD: <decomp_doc>org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/MDPF_SECCLASS_DECOMP_R11.md</decomp_doc> and <owned_cells>SC-e-32, SC-e-50</owned_cells>; its single criterion AC1 carries cell_refs=\"SC-e-32\".",
+      "comp-read --enumerate 'SC-e-[0-9]+' on DECOMP_R11.md: 15 hit(s) across 81 lines / 15 sections. The id space is SC-e-65 and SC-e-66 (plus mentions of SC-e-45/46/59 as deferred or sequencing). NEITHER SC-e-32 NOR SC-e-50 appears -- denominator printed, scope is the whole file.",
+      "comp-find 'SC-e-32' over org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/: 8 hit(s) across 13 file(s), ALL in MDPF_SECCLASS_DECOMP_R8.md, which declares it at :67 and :118.",
+      "comp-find 'SC-e-50' over the same 13 files: 4 hit(s), ALL in MDPF_SECCLASS_DECOMP_R9.md, declared at :59 and :91.",
+      "to-pipeline-gate.py refusal, measured on a real safe-commit attempt: 'flips to complete on PIPELINE-REGISTERED project MDPF_SECCLASS, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.' FIX line offers the two blocks or '# pipeline-override: <reason>'.",
+      "proof-of-spec-check.py alignment_check:1152-1193 -- forward-2 refuses a cell_ref absent from the decomp's id space; the backward limb ASSERTS (rather than announces) because <owned_cells> is present, i.e. DELIMITED, so an unreached declared cell is a violation and not an 'I cannot tell'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AI-e32 the_act step 4: 'Flip this order complete, with the proof instance in your deliverables.' The <decomp_ref> body itself reads '(round 11), \"Issuer acts\": the release of cells SC-e-32/SC-e-50', and the ROUND TAG amendment (~14:3xZ, from 3.0.0_SA_CVO msg 960) set <round>11</round> on the strength of that same decomp_ref.",
+  "world_is": "The ACT is finished and graded: AC1 reads 'AI-LEG-VERIFY act=e32 ok=True planned=2291 landed=1519 refused_final=772 refused_transport=0 problems=0 snapshot_keys_gone=0 multi_asset=0 listing_count=1532 model_rows=1532', and ledger legs W and V are closed on their proofs. Only the FLIP is blocked, and it is blocked on the order's own face, not on the work. The decomp_ref appears to name the round that RELEASED the two cells as issuer acts rather than the decomp that DECLARES them, which is a coherent thing for a human to write and an incoherent one for the alignment join to read.",
+  "notes": "Not disarmable by this seat: amending <owned_cells>, <decomp_ref> or the criterion set of an order is the issuer's act, and adding '# pipeline-override:' would be this seat implementing its own escape from a gate -- CLAUDE.md section 2 'DO NOT MANUFACTURE FRICTION' clause (a) runs the other way but the same principle bars inventing the exemption. Three shapes the issuer could take, none chosen here: (i) narrow <owned_cells> to SC-e-32 and repoint <decomp_ref> to DECOMP_R8.md, which closes every limb because AC1 already cites only SC-e-32 and SC-e-50 was never discharged by a criterion on this order; (ii) split the cells across two orders; (iii) the audited '# pipeline-override: <reason>' the gate itself offers. SCOPE BEYOND THIS ORDER: any order whose <decomp_ref> cites the round that RELEASED its cells rather than the one that DECLARED them is unflippable the same way, and the failure appears only at the close, after the work is done -- the gate cannot see it at the cut. This seat reverted its own premature 'complete' flip back to 'pending' rather than leave an uncommitted terminal claim in the working tree."
+}
+```
