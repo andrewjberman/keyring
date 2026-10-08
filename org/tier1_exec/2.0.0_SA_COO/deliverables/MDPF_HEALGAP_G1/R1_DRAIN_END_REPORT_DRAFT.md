@@ -29,9 +29,15 @@ diagnostic ambiguity), S8 (pre-rule terraform checkpoint calls). No ARMED row op
 
 ## EXERCISE (2026-10-08) -- to fill
 
-- `hg_fwd1_exercise.py --failed 2026-10-08`: ...
-- restore: `--restored` at ...; fallback used? ...
-- `hg_fwd1_exercise.py --healed 2026-10-08`: ... (stamp time, keys per feed)
+- `hg_fwd1_exercise.py --failed 2026-10-08`: FAILED-OK -- the 06:00Z fire hit the induced auth-lapse (3 INDUCED log lines),
+  0 bronze keys before 11:00Z (read 06:07Z and again 11:45:14Z).
+- restore: `--restored` RESTORED-OK at 06:10:23Z. The input was put back at 06:08:46Z (CloudTrail PutTargets, user/Andrew_Berman,
+  laptop credential, input `{"mode":"pull"}`, inside the 06:05-06:20Z window) by an actor none of the three named owners claims --
+  row D1-S3. Fallback (owner 2) ran 06:10:09Z and the OS task 06:11:01Z: both NOOP-ALREADY-RESTORED.
+- `hg_fwd1_exercise.py --healed 2026-10-08`: HEALED-OK -- stamp_at 11:32:25Z; keys rebalancer_models 1, rebalancer_accounts 5,
+  rebalancer_model_detail 93. Runner log: the re-attempt target fired on cot-bronze-complete, invoked 11:32:06Z, verdict
+  BRONZE-COMPLETE 11:32:24Z (71 models, 992 accounts, 93 model details; 1 of 54 count-reconcile mismatch CARRIED). Branch B
+  (same-day manual re-run) not needed.
 - the reader: `hg_fwd1_reader.py --date 2026-10-08`: ... (baseline 2026-10-07: READER-OK, point 2026-10-06 model measured,
   $205,755,075.09, written 13:50:50Z)
 - 13:30Z floor for D: MET / MISSED (from `0.7.0_AE_CloudOps~F`'s ledger)
