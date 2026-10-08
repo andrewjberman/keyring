@@ -4223,3 +4223,65 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Consequence of the second part: a Dell can set a lifecycle rule on the audit-trail log bucket that expires its logs, change its logging, notification, encryption, versioning, ownership controls or public access block. Not caused by the Allow (the create policy grants them on every opal* bucket; DenyS3DeletesOnProductionData covers opal-data-* only) and not changed by this pass. The CTO may extend DenyAuditTrailBucketPolicy by those seven actions (the document has headroom: dell_create_policy.json 5,364 of 6,144 characters; seven actions add about 250), or accept. The access-point route to the bucket cannot be read from here: s3:CreateAccessPoint is in no Dell Allow, so no Dell can create an access point to hang a policy on (read from the three group policy documents, not from AWS)."
 }
 ```
+
+## NFRA_CTLPLN-S27 -- The teams-chat-assist package hash is NOT a function of the commit on this device -- two packaged registry files sit CRLF in the shared working tree and LF from a fresh checkout -- so the Teams-agent order's CODE ROLLBACK cannot be executed as written: a rebuild at 55cb79f93c yields eXsoJG6SGZQ+TVHu+g5ohw7TFc4sxlitzZi/WPEjwPs=, not the reference IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= the order requires be confirmed BEFORE that rollback applies. A substitute way back was established before the apply by downloading the live deployed bytes
+
+```json
+{
+  "id": "NFRA_CTLPLN-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T08:50Z",
+  "one_line": "The teams-chat-assist package hash is NOT a function of the commit on this device -- two packaged registry files sit CRLF in the shared working tree and LF from a fresh checkout -- so the Teams-agent order's CODE ROLLBACK cannot be executed as written: a rebuild at 55cb79f93c yields eXsoJG6SGZQ+TVHu+g5ohw7TFc4sxlitzZi/WPEjwPs=, not the reference IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= the order requires be confirmed BEFORE that rollback applies. A substitute way back was established before the apply by downloading the live deployed bytes",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-11.teams-agent-inbound-deploy-laptop, ROLLBACK clause: 'Code: check out the packaged paths at 55cb79f93c in a scratch worktree, rebuild there, confirm the rebuilt hash is IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E=, and the same targeted apply.' The COO half repeats it: 'the prior hash ... is the reference a rebuilt package must reproduce before it is applied'",
+      "MEASURED before the apply, 2026-10-08 ~08:0xZ: a fresh detached worktree at 55cb79f93c (C:/tmp/wt-teams-rollback-55cb79f), rebuilt with its own infra/aws/lambda/teams-chat-assist/build.sh, produces base64 eXsoJG6SGZQ+TVHu+g5ohw7TFc4sxlitzZi/WPEjwPs= -- NOT the reference. So the rollback's own pre-condition fails and the gate would refuse the rollback",
+      "THE REFERENCE IS THE DEPLOYED HASH, not a stale note: both functions read CodeSha256 IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= live before the apply (get-function-configuration on teams-global-chat-assist-handler-lambda and teams-global-chat-assist-ingress-lambda, LastModified 2026-10-04T23:04:53Z and 23:04:47Z)",
+      "THE BUILD IS NOT THE VARIABLE: two builds at HEAD in the shared tree produce the byte-identical hash 61858efddc4fc7248fa5a00f9abf8587166d4019e40a12784861a7b6fbef32be, so the builder is deterministic within one tree",
+      "CAUSE, measured by comparing two zips entry by entry (HEAD build vs a build at the cell's own pin ebc8931b3c): 28 entries each, none added or missing, 3 differ -- infra/logic/registry/key_rulings.json (a REAL content change, LF in both, by commits ac99c10b2e and e0f80cc248) and infra/logic/registry/remediations.json and infra/logic/registry/scopes.json, which differ ONLY in line endings: main tree 3277 B with 44 CRLF vs worktree 3233 B with 0 CRLF, and main 18518 B with 345 CRLF vs worktree 18173 B with 0 CRLF. For both, the parsed JSON is IDENTICAL and the bytes are identical after normalising CRLF to LF",
+      "git is NOT doing the conversion: core.autocrlf reads false and git check-attr on scopes.json returns text: unspecified, eol: unspecified. The shared tree's working copies simply carry CRLF on disk while a fresh checkout writes the committed LF bytes",
+      "COROLLARY, which is why the cell's own number could not be reproduced either: a rebuild at the cell's pin ebc8931b3c gives 62c88d0d2ed020c6fd7ab1eb41aef7d903f559d51099d0d9ba4313730e96be28, a THIRD value, neither the cell's recorded c1af3fe33556e895ec97cbf0ad6bd1915596f4daee5c259d1fca55a697d1da32 nor this seat's",
+      "DISARMED BEFORE THE APPLY, which is why this row is INERT: the live deployed bytes were downloaded via lambda get-function's presigned URL and verified to hash to EXACTLY the reference -- C:/tmp/rollback-teams-ldo001-20261008/teams-chat-assist-DEPLOYED-20261004T2304Z.zip, 141456 B, sha256 hex 201aef78d402f996ebcbda478db27b0b55b0e8465bf795d15da16bce23529fa1, base64 IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E=. The code rollback is therefore: copy that zip over infra/aws/lambda/teams-chat-assist/dist/teams-chat-assist.zip and run the same targeted apply"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order and the COO half: the prior package hash IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= is a reference a rebuilt package must REPRODUCE from commit 55cb79f93c before the code rollback is applied; and the new package's hash is expected to equal the cell's c1af3fe3... unless named trunk files changed.",
+  "world_is": "A package hash on this device is a function of (commit, the line-ending state of the working tree it is built in). A fresh worktree at 55cb79f93c cannot reproduce the deployed reference, so the written code rollback is not executable; and a fresh worktree at ebc8931b3c cannot reproduce the cell's recorded hash either, so 'the hash differs from the cell's' can never by itself distinguish a content change from a checkout difference. The deploy went ahead because a byte-exact substitute way back was established first -- the live deployed bytes, downloaded and verified against the reference -- and because the real content delta was independently named from git as one file.",
+  "notes": "For 2.0.0_SA_COO~R and whoever owns the builder: the durable fix is to make the zip byte-reproducible from the commit -- have build.sh normalise line endings on the text members it packs (or read them from git rather than the worktree), which also makes the hash a usable deploy oracle. The cheap fix for the NEXT order is to stop writing a rebuild-reproduces-the-hash gate into a rollback: name the live CodeSha256 and keep the downloaded deployed zip as the reference instead, which is what this entry does. Note the limit of that substitute: the file is device-local and not in git, so it is a reference only while this laptop holds it, and it must be taken BEFORE the apply that replaces the bytes."
+}
+```
+
+## NFRA_CTLPLN-S28 -- CTO condition 3's first-hour read is structurally unobservable for one of the two functions it names: teams-global-chat-assist-handler-lambda is event-driven, has no scheduled tick, and had ZERO invocations and NO CloudWatch datapoint at all after the apply -- so 'zero new error signatures' on it is zero observations, not a clean read, and the order forbids making an invocation to get one
+
+```json
+{
+  "id": "NFRA_CTLPLN-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T08:50Z",
+  "one_line": "CTO condition 3's first-hour read is structurally unobservable for one of the two functions it names: teams-global-chat-assist-handler-lambda is event-driven, has no scheduled tick, and had ZERO invocations and NO CloudWatch datapoint at all after the apply -- so 'zero new error signatures' on it is zero observations, not a clean read, and the order forbids making an invocation to get one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half @e58bcf5d8e condition 3: 'the applier reads both functions' error counts and the newest log lines of one ordinary invocation each (the scheduled tick is enough; no invocation is made for it) and reports zero new error signatures, or the signature'",
+      "MEASURED after the apply (window from 2026-10-08T08:15:35Z): teams-global-chat-assist-ingress-lambda 19 invocations, Errors Sum 0.0, Throttles Sum 0.0, 62 log event lines, 0 error signatures, positive control REPORT|START = 31",
+      "teams-global-chat-assist-handler-lambda: 0 log event lines, positive control on the same filter also 0, and NO CloudWatch datapoint for Invocations, Errors or Throttles over the window -- the metric has no datapoint because the function did not run",
+      "CAUSE, read from the state rather than guessed: the handler's entrypoint is handlers.on_event and it is driven by events the ingress finds; the ingress's own post-deploy ticks all read {\"event\": \"ingress_poll\", \"events\": 0, \"first_run\": false}, so no handler invocation existed to read. The ingress carries the one-minute clock (module.ldo_001's aws_cloudwatch_event_target.clock[0]); the handler carries none",
+      "WHAT THE INGRESS READ DOES COVER: both functions run the SAME package bytes (one package, two families -- both read CodeSha256 YYWO/dxPxySPpaAPmr+FhxZtQBnkChJ4SGGntvvvMr4=), and the ingress imported and ran them 19 times without fault, so the fault class the condition names -- 'an import or address fault from the naming files would show there first' -- is genuinely observed",
+      "WHAT IT DOES NOT COVER: any fault reachable only inside handlers.on_event. That arrives with FWD-20's own exercise, one real request from a person in Teams"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO condition 3: within the first hour the applier reads the newest log lines of ONE ORDINARY INVOCATION of EACH of the two functions, the scheduled tick being enough, and reports zero new error signatures or the signature.",
+  "world_is": "Only one of the two functions has a scheduled tick. The handler cannot produce an ordinary invocation without a real inbound event, and the order forbids manufacturing one, so the condition as written cannot be fully met by any applier -- not on this deploy and not on the next. Reported as a split verdict (ingress PASS on 19 invocations; handler NOT OBSERVED with its reason) rather than as a clean pass on both, because an absent error and an absent invocation read identically.",
+  "notes": "For 1.0.0_SA_CTO: the condition is sound for the ingress and sound in intent for the handler -- the import class it targets IS covered, because the two functions share one package and the ingress exercised it. Wording that would be satisfiable: 'one ordinary invocation of the function that carries the clock, plus both functions' error counts, and the handler's own first invocation reported with FWD-20's exercise.' Until then an applier must either report NOT OBSERVED or invoke the handler, and the bounds forbid the second."
+}
+```
