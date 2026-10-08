@@ -162,6 +162,211 @@ def _bucket_via_uses(tree, parent, node, consts, v):
     return b, "key constant %s (line %d) is used with bucket %s: %s" % (name, node.lineno, b, desc)
 
 
+def _stmt_of(parent, node):
+    """The nearest statement that holds `node` (the node itself when it is one)."""
+    while id(node) in parent and not isinstance(node, ast.stmt):
+        node = parent[id(node)]
+    return node if isinstance(node, ast.stmt) else None
+
+
+def _header_buckets(stmt, consts, v):
+    """[(bucket, line, how)]: the buckets one statement's header names, by a bucket literal or by a name assigned a bucket
+    literal in the same file (a compound statement's body is not its header)."""
+    out = []
+    for h in _header_nodes(stmt):
+        if isinstance(h, ast.Constant) and isinstance(h.value, str):
+            b = h.value if _is_bucket_literal(h.value, v) else _s3_url_bucket(h.value, v)
+            if b is not None:
+                out.append((b, getattr(h, "lineno", stmt.lineno), "literal %r" % (b,)))
+        elif isinstance(h, ast.Name) and h.id in consts:
+            for b in sorted(consts[h.id]):
+                out.append((b, getattr(h, "lineno", stmt.lineno), "%s = %r" % (h.id, b)))
+    return out
+
+
+def _field_of(parent, node):
+    """The constant string field name a key literal is the value of in a dict literal (the key literal itself, or an element
+    of a list, tuple or set that is the value), else None. The climb stops at the statement."""
+    child = node
+    while id(child) in parent and not isinstance(child, ast.stmt):
+        par = parent[id(child)]
+        if isinstance(par, ast.Dict):
+            for k, val in zip(par.keys, par.values):
+                if val is child and isinstance(k, ast.Constant) and isinstance(k.value, str):
+                    return k.value
+            return None
+        if not isinstance(par, (ast.List, ast.Tuple, ast.Set)):
+            return None
+        child = par
+    return None
+
+
+def _bucket_via_field(tree, parent, node, consts, v):
+    """(bucket or None, basis): the key literal is the value of the field F of a dict literal. Every place the same file
+    READS that field (x["F"], x.get("F")) in a statement whose header names a bucket decides it: all such places naming the
+    SAME bucket give it; different buckets return None with a basis starting DIFFERENT; no place naming one returns
+    (None, "") and leaves the question to the container rule."""
+    field = _field_of(parent, node)
+    if field is None:
+        return None, ""
+    named = {}
+    for n in ast.walk(tree):
+        hit = False
+        if isinstance(n, ast.Subscript) and isinstance(n.ctx, ast.Load):
+            sl = n.slice
+            hit = isinstance(sl, ast.Constant) and sl.value == field
+        elif (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr == "get" and n.args
+              and isinstance(n.args[0], ast.Constant) and n.args[0].value == field):
+            hit = True
+        if not hit:
+            continue
+        us = _stmt_of(parent, n)
+        if us is None:
+            continue
+        for b, ln, how in _header_buckets(us, consts, v):
+            named.setdefault(b, []).append((n.lineno, ln, how))
+    if not named:
+        return None, ""
+    desc = "; ".join("%s (read at line %d, %s)" % (b, min(x[0] for x in r), r[0][2]) for b, r in sorted(named.items()))
+    if len(named) > 1:
+        return None, "DIFFERENT buckets where the file reads the field %r the key is the value of: %s" % (field, desc)
+    b = next(iter(named))
+    return b, "the key is the value of field %r (line %d), which the file reads with bucket %s: %s" % (
+        field, node.lineno, b, desc)
+
+
+def _bucket_via_container(parent, node, consts, v):
+    """(bucket or None, basis): the key literal is a keyword argument of a call or a value of a dict literal; the OTHER
+    direct values of that same call or dict that are bucket literals (or names assigned one) are the bucket the file pairs
+    with it. Exactly one distinct bucket decides; none or several return (None, "")."""
+    child = node
+    while id(child) in parent and not isinstance(child, ast.stmt):
+        par = parent[id(child)]
+        sibs, what = None, None
+        if isinstance(par, ast.keyword) and isinstance(parent.get(id(par)), ast.Call):
+            call = parent[id(par)]
+            sibs = [k.value for k in call.keywords if k is not par]
+            what = "call (line %d), where the key is the argument %s" % (call.lineno, par.arg)
+        elif isinstance(par, ast.Dict) and any(val is child for val in par.values):
+            sibs = [val for val in par.values if val is not child]
+            what = "dict (line %d)" % par.lineno
+        if sibs is not None:
+            found = set()
+            for s in sibs:
+                if isinstance(s, ast.Constant) and isinstance(s.value, str):
+                    b = s.value if _is_bucket_literal(s.value, v) else _s3_url_bucket(s.value, v)
+                    if b:
+                        found.add(b)
+                elif isinstance(s, ast.Name) and s.id in consts:
+                    found |= consts[s.id]
+            if len(found) == 1:
+                b = next(iter(found))
+                return b, "bucket %s is in the same %s as the key" % (b, what)
+            return None, ""
+        child = par
+    return None, ""
+
+
+def _params(fn):
+    a = fn.args
+    return [x.arg for x in list(getattr(a, "posonlyargs", [])) + list(a.args) + list(a.kwonlyargs)]
+
+
+def _param_default(fn, pname):
+    a = fn.args
+    pos = list(getattr(a, "posonlyargs", [])) + list(a.args)
+    for i, x in enumerate(pos):
+        if x.arg == pname:
+            j = i - (len(pos) - len(a.defaults))
+            return a.defaults[j] if j >= 0 else None
+    for x, d in zip(a.kwonlyargs, a.kw_defaults):
+        if x.arg == pname:
+            return d
+    return None
+
+
+def _param_sites(tree, parent, fn, pname, consts, v, depth, seen):
+    """(buckets, problems): what every call site in the file passes for parameter `pname` of function `fn`. A site passing a
+    bucket literal, a name assigned one, or a default that is one, names it; a site passing a parameter of its own function
+    is followed (to depth 4); anything else is a problem that says what the site passes."""
+    if (id(fn), pname) in seen or depth > 4:
+        return set(), ["the call chain through %s is circular or deeper than 4" % fn.name]
+    seen = seen | {(id(fn), pname)}
+    in_class = isinstance(parent.get(id(fn)), ast.ClassDef)
+    pos = list(getattr(fn.args, "posonlyargs", [])) + list(fn.args.args)
+    idx = [x.arg for x in pos].index(pname) if pname in [x.arg for x in pos] else None
+    sites = [c for c in ast.walk(tree) if isinstance(c, ast.Call) and (
+        (isinstance(c.func, ast.Name) and c.func.id == fn.name)
+        or (isinstance(c.func, ast.Attribute) and c.func.attr == fn.name))]
+    if not sites:
+        return set(), ["%s(...) is called nowhere in this file, so its parameter %s is set elsewhere" % (fn.name, pname)]
+    found, problems = set(), []
+    for c in sites:
+        arg = None
+        for kw in c.keywords:
+            if kw.arg == pname:
+                arg = kw.value
+        if arg is None and idx is not None:
+            at = idx - (1 if in_class and isinstance(c.func, ast.Attribute) else 0)
+            if 0 <= at < len(c.args) and not isinstance(c.args[at], ast.Starred):
+                arg = c.args[at]
+        if arg is None:
+            arg = _param_default(fn, pname)
+            if arg is None:
+                problems.append("line %d calls %s without %s" % (c.lineno, fn.name, pname))
+                continue
+        shown = ast.unparse(arg) if hasattr(ast, "unparse") else "an expression"
+        owner = c
+        while id(owner) in parent and not isinstance(owner, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            owner = parent[id(owner)]
+        if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+            b = arg.value if _is_bucket_literal(arg.value, v) else _s3_url_bucket(arg.value, v)
+            if b:
+                found.add(b)
+            else:
+                problems.append("line %d passes %s, which is not a bucket name" % (c.lineno, shown))
+        elif (isinstance(arg, ast.Name) and isinstance(owner, (ast.FunctionDef, ast.AsyncFunctionDef))
+              and arg.id in _params(owner)):
+            got, probs = _param_sites(tree, parent, owner, arg.id, consts, v, depth + 1, seen)
+            found |= got
+            problems.extend("line %d passes %s, a parameter of %s; %s" % (c.lineno, shown, owner.name, p) for p in probs)
+        elif isinstance(arg, ast.Name) and arg.id in consts and len(consts[arg.id]) == 1:
+            found |= consts[arg.id]
+        else:
+            problems.append("line %d passes %s, which names no bucket literal in this file" % (c.lineno, shown))
+    return found, problems
+
+
+def _bucket_via_param(tree, parent, node, consts, v):
+    """(bucket or None, basis): the key literal is an argument of a call that also passes Bucket=<NAME>, NAME a parameter of
+    the function holding the call. The call sites of that function in the same file decide it when every one names the same
+    bucket (_param_sites). (None, "") when the key is in no such call; (None, why) when the file does not decide."""
+    call = None
+    child = node
+    while id(child) in parent and not isinstance(child, ast.stmt):
+        child = parent[id(child)]
+        if isinstance(child, ast.Call) and any(k.arg == "Bucket" for k in child.keywords):
+            call = child
+            break
+    if call is None:
+        return None, ""
+    val = [k.value for k in call.keywords if k.arg == "Bucket"][0]
+    fn = call
+    while id(fn) in parent and not isinstance(fn, (ast.FunctionDef, ast.AsyncFunctionDef)):
+        fn = parent[id(fn)]
+    if not (isinstance(val, ast.Name) and isinstance(fn, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and val.id in _params(fn)):
+        return None, ""
+    found, problems = _param_sites(tree, parent, fn, val.id, consts, v, 0, frozenset())
+    head = "the key is used with Bucket=%s (line %d), a parameter of %s" % (val.id, call.lineno, fn.name)
+    if problems:
+        return None, "%s; the file does not decide it: %s" % (head, "; ".join(problems))
+    if len(found) > 1:
+        return None, "DIFFERENT buckets at the call sites of %s: %s" % (fn.name, ", ".join(sorted(found)))
+    b = next(iter(found))
+    return b, "%s; every call site in the file names bucket %s" % (head, b)
+
+
 def _bucket_of_py(tree, line, key, v):
     """(bucket or None, basis) for the key constant on `line` of a parsed Python source."""
     parent = {}
@@ -189,8 +394,14 @@ def _bucket_of_py(tree, line, key, v):
     here = [n for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str)
             and getattr(n, "lineno", 0) == line and id(n) not in docs]
     mine = [n for n in here if n.value == key] or [n for n in here if key and key in n.value]
+    extra = ""
     if mine:
         node = mine[0]
+        fb, fwhy = _bucket_via_field(tree, parent, node, consts, v)
+        if fb is not None:
+            return fb, fwhy
+        if fwhy.startswith("DIFFERENT"):
+            return None, fwhy
         stmt = node
         while id(stmt) in parent and not isinstance(stmt, ast.stmt):
             stmt = parent[id(stmt)]
@@ -213,7 +424,16 @@ def _bucket_of_py(tree, line, key, v):
                 return b, "bucket literal %r in the same statement as the key" % b
             return b, "constant %s = %r, named in the same statement as the key" % (sorted(names)[0], b)
         if len(pooled) > 1:
+            cb, cwhy = _bucket_via_container(parent, node, consts, v)
+            if cb is not None:
+                return cb, cwhy
             return None, "the key's own statement names several buckets, none picked: %s" % ", ".join(sorted(pooled))
+        pb, pwhy = _bucket_via_param(tree, parent, node, consts, v)
+        if pb is not None:
+            return pb, pwhy
+        if pwhy.startswith("DIFFERENT"):
+            return None, pwhy
+        extra = pwhy
     seen = ""
     if mine:
         got, seen = _bucket_via_uses(tree, parent, mine[0], consts, v)
@@ -221,12 +441,15 @@ def _bucket_of_py(tree, line, key, v):
             return got, seen
         if seen.startswith("DIFFERENT"):
             return None, seen
-        seen = "; " + seen if seen else ""
+        direct = isinstance(stmt, (ast.Assign, ast.AnnAssign)) and stmt.value is mine[0]
+        seen = "; " + seen if seen and (direct or allb) else ""
+    if extra:
+        seen = "; " + extra + seen
     if len(allb) == 1:
         b = next(iter(allb))
         return b, "the file's only bucket literal %r (line %d); the key's own statement names none" % (b, allb[b])
     if not allb:
-        return None, "no bucket literal in the file and none in the key's statement"
+        return None, "no bucket literal in the file and none in the key's statement" + seen
     return None, "the file has %d bucket candidates and the key's statement picks none: %s%s" % (
         len(allb), ", ".join("%s (line %d)" % (b, n) for b, n in sorted(allb.items())), seen)
 
@@ -266,11 +489,30 @@ def _string_constants(path, text):
     return []
 
 
+def _called_names(path, text, names):
+    """{name: line} of the asked `names` that a Python source CALLS (f(...) or x.f(...)), first call by line."""
+    if not names or not path.endswith(".py"):
+        return {}
+    try:
+        tree = ast.parse(text)
+    except (SyntaxError, ValueError):
+        return {}
+    out = {}
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Call):
+            f = n.func
+            nm = f.id if isinstance(f, ast.Name) else (f.attr if isinstance(f, ast.Attribute) else None)
+            if nm in names and (nm not in out or n.lineno < out[nm]):
+                out[nm] = n.lineno
+    return out
+
+
 def runtime_bucket(item, text=None, names=()):
-    """([variable names], basis): the per-firm run-time bucket variables the item's source file shows. A variable shows
+    """([variable or function names], basis): the per-firm run-time bucket the item's source file shows. A variable shows
     as a string constant of the file that is an upper-case name ending _BUCKET_MAP (one bucket per firm), or is one of
-    `names` (the variables a registry row asks for). The basis says which line of which file shows each. ([], "") when
-    the file is unreadable or shows none."""
+    `names` (the variables a registry row asks for). A FUNCTION shows as a call in the file to a name in `names` (a
+    registry row's bucket_from that is a function: the code gets the firm's bucket by calling it). The basis says which line
+    of which file shows each. ([], "") when the file is unreadable or shows none."""
     path, src = _item_text(item, text)
     if path is None or src is None:
         return [], ""
@@ -278,12 +520,14 @@ def runtime_bucket(item, text=None, names=()):
     for val, ln in _string_constants(path, src):
         if _PER_FIRM_VAR_RE.match(val) or val in names:
             found.setdefault(val, ln)
-    if not found:
+    calls = dict((k, ln) for k, ln in _called_names(path, src, set(names)).items() if k not in found)
+    if not found and not calls:
         return [], ""
-    basis = "the bucket is chosen at run time: " + "; ".join(
-        "line %d of %s holds the name %s, an environment variable that gives one bucket per firm" % (
-            ln, path.rsplit("/", 1)[-1], name) for name, ln in sorted(found.items()))
-    return sorted(found), basis
+    parts = ["line %d of %s holds the name %s, an environment variable that gives one bucket per firm" % (
+        ln, path.rsplit("/", 1)[-1], name) for name, ln in sorted(found.items())]
+    parts += ["line %d of %s calls the function %s, which gives one bucket per firm" % (
+        ln, path.rsplit("/", 1)[-1], name) for name, ln in sorted(calls.items())]
+    return sorted(set(found) | set(calls)), "the bucket is chosen at run time: " + "; ".join(parts)
 
 
 def bucket_of(item, text=None):

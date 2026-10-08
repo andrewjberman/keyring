@@ -996,3 +996,78 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The registry says a bucket belongs to a FIRM (scopes.json bucket and bucket aliases, v.bucket_firm); it names no source for a bucket as such. The only statement of one-source ownership it carries is a PRODUCT scope row whose key is also a systems.json source (mdpf, etfs, irpt, harvest) with its bucket. The build reads that as the bucket's one source (_bucket_source); a firm bucket and a shared store (opal-data-assets) name none, so no source is refused there. Today no real stored key is refused for a source on that rule: the real sweep prints refused=0. If the CTO wants a different table (for example the source a firm bucket's pipeline tree writes), it is a registry row to add."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S6 -- meta/templates/ was not an unread bucket: the reader read the wrong one (the copy's source bucket)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T04:05:00Z",
+  "one_line": "meta/templates/ was not an unread bucket: the reader read the wrong one (the copy's source bucket)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:157-163 (PROVENANCE_RIDERS row: src_bucket opal-data-cot beside dst_prefix blackdiamond/cottonwood/meta/templates/) and :74, :255, :475 (MONOLITH = opal-data-assets, the bucket dst_prefix is listed in)",
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json before the build: the HOLE for this key carried no 'bucket was not read' text, because bucket_of returned opal-data-cot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 of TO BF-s-2 names meta/templates/ among the keys whose bucket bucket_of could not read, so no ruling row was matched.",
+  "world_is": "bucket_of returned a bucket for it: opal-data-cot, pooled from the src_bucket entry of the same statement. The registry row (key_rulings.json, blackdiamond/cottonwood/meta/templates/) is under opal-data-assets, the monolith the dst_prefix is written to. The hole therefore was a wrong read, not an unread bucket, and its text did not say the bucket was not read. The build reads the field the key is the value of (dst_prefix): every statement of the file that reads row['dst_prefix'] and names a bucket names MONOLITH (opal-data-assets), so that bucket decides, and the row now matches."
+}
+```
+
+## LGIC_BLANKFIX-W3-S7 -- the dict-row and keyword-call keys needed two more same-file rules than the two the amendment lists
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T04:05:00Z",
+  "one_line": "the dict-row and keyword-call keys needed two more same-file rules than the two the amendment lists",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_keyfill.py _bucket_via_field and _bucket_via_container (this build); tests 'FIELD', 'CONTAINER' and their DIFFERENCE CONTROL cases in lib/tests/test_opal_naming_keyfill.py",
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:127-143 (forwardfill_v2/ in the opal-data-cot row of MAP, three rows in one statement) and infra/aws/lambda/investor-reporting/performance/tenants.py:155-165 (forwardfill_v2/ as data_plane_prefix beside data_plane_bucket='opal-data-cot' in one call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 1: extend the reader only by rules that read evidence in the same file, giving as the rules a bucket passed through a local variable or function parameter, and a per-firm choice made by calling a function.",
+  "world_is": "Neither forwardfill_v2/ key is passed through a variable or a function: each sits in a statement that names several buckets (a three-row MAP; a three-route ROUTES dict), so bucket_of returned 'names several buckets, none picked'. Two further rules read the same file: (1) the bucket that shares the key's own call or dict literal (exactly one distinct bucket there decides; none or several read none), and (2) where the key is the value of a dict field F, the buckets named by the statements that read that field in the file (all the same bucket decides; different buckets read none). Rule 2 is tried first because rule 1 alone would give meta/templates/ the dict's src_bucket. Each rule has a DIFFERENCE CONTROL in the test. If the CTO wants only the amendment's two rules, the two functions are the whole extra."
+}
+```
+
+## LGIC_BLANKFIX-W3-S8 -- quarantine/ and firms/ are not decided by their own files: two holes keep saying the bucket was not read, now with the reason
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T04:05:00Z",
+  "one_line": "quarantine/ and firms/ are not decided by their own files: two holes keep saying the bucket was not read, now with the reason",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_keys/keys.py:114 (QUARANTINE_PREFIX = 'quarantine/'; no S3 call and no bucket literal in the file)",
+      "infra/aws/lambda/investor-reporting/export/backfill_covered_account_ids.py:35, :135, :154, :195-207 (the key is listed with Bucket=bucket, a parameter of discover_firms; its call site passes run's parameter bucket; run's call site passes args.bucket, from the argument --bucket whose default is os.environ.get(IRPT_EVIDENCE_BUCKET))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 1 lists quarantine/ and firms/ among the keys to be read; item 3 asks for the count of HOLE lines that say the bucket was not read, before and after.",
+  "world_is": "Neither file names a bucket: keys.py builds key strings and calls S3 nowhere; backfill_covered_account_ids.py takes its bucket from a command-line argument or an environment variable. The row's bucket (opal-data-ycharts) cannot be read from these files without guessing from the folder, which the amendment forbids. The reader returns no bucket and the reason now says what it found: 'key constant QUARANTINE_PREFIX (line 114) is used at lines 548,596,598, none names a bucket', and 'Bucket=bucket (line 135), a parameter of discover_firms ... line 154 passes bucket, a parameter of run; line 207 passes args.bucket, which names no bucket literal in this file'. Both HOLE lines remain and still say the bucket was not read. A way to close them is a registry choice (a row that names the environment variable IRPT_EVIDENCE_BUCKET as bucket_from, or a ruling by key for these two files), not a reader rule."
+}
+```
