@@ -24,11 +24,11 @@ S4 carries the judgment criterion BE8-AC3 (NOT MET). W2-S4 and W2-S2 are calls o
     "owner": "2.0.0_SA_COO~G",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~G",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W7-S1",
