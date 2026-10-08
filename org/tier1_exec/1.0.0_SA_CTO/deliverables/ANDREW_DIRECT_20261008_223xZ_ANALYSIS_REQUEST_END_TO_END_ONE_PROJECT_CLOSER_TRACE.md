@@ -21,6 +21,14 @@ VERBATIM:
 > happen end to end on the backend, then designing a connected frontend on that basis. This should effectively compress the IRPT_BCKEND
 > IRPT_YCDGEN parts of NFRA_TRNSPT TCKT_VNXT and any unaddressed frontend into one project.
 
+Then, ~22:3xZ, VERBATIM: "Send this text to CRO now on your box to have them figure it out" (sent: msg 1792 to `4.0.0_SA_CRO~DELL2`).
+
+Then, ~22:3xZ, VERBATIM:
+
+> I think it is important to think of this whole process as one singular workflow that covers all of these surfaces. Then, frontend work
+> on the actual "Analysis" tab will be completed after the fact, because the manual process should be done there only for unusual cases
+> if it cant be done otherwise for whatever reason (maybe a swap issue, unusual request, etc)
+
 ## The journey he names (recorded, not widened)
 
 1. An advisor or Opal person opens the Ticket Center **Analysis Request** form, a custom form that fits the request:
@@ -37,6 +45,8 @@ VERBATIM:
 
 ## What he directs
 
+- **ONE singular workflow** covering every surface. The Ticket Center form is the primary path.
+- **The "Analysis" tab's frontend comes AFTER**, as the manual path only for unusual cases (a swap issue, an unusual request, and so on).
 - Measure the actual state of each COO workstream involved (IRPT_BCKEND `~P2`/`~Y2`, IRPT_YCDGEN `~G2`, NFRA_TRNSPT `~T2`, TCKT_VNEXT
   `~V2`).
 - Trace, /closer style, what must exist for the journey to run end to end on the backend. Then design the connected frontend on that
