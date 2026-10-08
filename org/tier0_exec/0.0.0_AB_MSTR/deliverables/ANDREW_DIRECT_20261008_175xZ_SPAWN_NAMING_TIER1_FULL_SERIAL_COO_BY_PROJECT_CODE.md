@@ -4,6 +4,11 @@
 spawning them with the following pattern. CTO/CVO/CRO spawned with full serial, e.g. 1.0.0_SA_CTO~DELL2. For COOs, they
 need to be spawned as the project code they are working on, which should always just be one project code, e.g. NFRA_TRNSPT."
 
+**Addendum, same terminal, minutes later, verbatim:** "Also, if there is a tier2 agent being launched, they should also be
+launched with their full serial listed in the tab. If you want guidance for you and DELL2 on  how to do this, ask MSTR on the
+laptop box, as they do it with every session launch, as does SITEZ". Asked of the laptop 0.0.0_AB_MSTR over the bus
+(fe00d74b); its answer is relayed to 0.0.0_AB_MSTR~DELL2.
+
 **Addressed to:** 0.0.0_AB_MSTR~DELL1 and 0.0.0_AB_MSTR~DELL2, about the seats each box's manager spawns.
 
 **Rule as given:**
