@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-02T03:38:46.636313+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / No reader keys a CUSIP: row for Cottonwood until the re-point (NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md) ships; leg R is read on that packet's leg S page walk (held since 2026-10-02T03:41:55.046127+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / its leg R reads with secclass-cot-repoint-m-20261002 leg S (own gate text); 29 of 29 rows measured matching 2026-10-08, deployed etf_classifier.py ETag 2fef39d1 equals HEAD md5 (held since 2026-10-02T03:41:55.046127+00:00)
 **Deploy:** MDPF_SECCLASS Cottonwood CUSIP rows (batch 93 item 2): 29 bank-CD CUSIP: rows in etf-classifications by R7_CHECKS/write_cusip_rows.py --write over COT_CUSIP_ROWS_WRITE_SET_20261002.txt, conditional put only; halves COO @ffe6235c2a (blob 56a1db3d3e) + CTO CTO_HALF_SECCLASS_COT_CUSIP_ROWS_20261002.md (batch 108); rollback a corrected row, no delete
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -20,3 +20,4 @@
 - 20261002T033846Z OPENED by 2.0.0_SA_COO~M with 2 leg(s)
 - 20261002T034154Z LEG W closed: Stops read 03:39Z at CLOUD: writer R7_CHECKS/write_cusip_rows.py blob 6dfcd7fc75, set COT_CUSIP_ROWS_WRITE_SET_20261002.
 - 20261002T034155Z HELD-SOVEREIGN-GATED gate=external/No reader keys a CUSIP: row for Cottonwood until the re-point (NEVER_WIDEN_HALF_
+- 20261008T185130Z HELD-SOVEREIGN-GATED gate=external/its leg R reads with secclass-cot-repoint-m-20261002 leg S (own gate text); 29 o

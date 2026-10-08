@@ -2118,3 +2118,157 @@ round.** Never edit an existing row.
   "world_is": "The list holds the two bank deposit sweeps. A money-market core position that behaves as a sweep for 232 accounts is valued as a priced holding and its buys and sells count as trades; whether it is a sweep vehicle under the ruling is the CTO's call (wider than the packet's 6-month enrichment item 2)."
 }
 ```
+
+## ADVI_COTBKF-D2-W41-S1 -- CB-t-2: no custodian designation of 316067107 as a core position is citable; the (b) entry stays OFF, sweeps-v2 = sweeps-v1 in membership
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:17:38Z",
+  "one_line": "CB-t-2: the ruling lands 316067107 on the list under rule (b) only with the custodian's designation; none exists in the repo or in the silver fields the chain reads, so the entry is off and the 163 movers are unchanged under v2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-t-2.sweeps-v2-core.md (item 1: 'if none can be cited, leave it off, and say so in the report and a row')",
+      "S3 opal-data-assets commonwealth/cottonwood/silver/transactions (read-only, column projection): 316067107 Position_Type CASH 8,761 / DIVIDENDS_BOND_INTEREST_ACCUMULATION 7 of 8,768 rows, but Position_Type is CASH on 1,408,059 of the table's 1,416,497 rows for every security (cash/margin side, not a core flag); Asset_Type 'Cash Equivalent' is shared by all money-market funds; FundCode CTC1260; Transaction_Note carries trade wording only. Silver positions: Position_Type CASH, Account_Status 0.",
+      "repo search by CUSIP and by 'core position' (org/, docs/, data/): the CTO round-19 analysis and the CVO round-19 grade call it core on behavior; org/tier1_exec/1.0.0_SA_CTO/logs/2026-04-20/aua_active_filter_investigation_and_brief.md names it 'Fidelity Phillips Street Trust Govt Cash Resv' as an asset bought, not as a designated core; data/inf/config/ticker_lookup.json maps FDRXX to the name only.",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~41/v2/sweep_regrade.md: SWEEP-REGRADE months_before=2057/1522/79014 months_after=2057/1522/79014 control_same=True; the 163 movers: core 16 / other_mmf 0 / neither 147 all still DIFF"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO ruling: 316067107 goes on sweeps-v2 under (b) with the custodian's own documentation or account data naming it the core position; if no designation can be cited the entry does not land.",
+  "world_is": "No such documentation or field is readable. The behavior census (232 accounts, 8,768 rows, 91.1% same-day paired, dividends in 40 months) is the CVO's measure and informs; it is not a designation. A statement or custodian document held outside the repo, or a vendor field not in the silver tables, would let the entry land by one dict entry (rule b, designation_source set) and a re-run."
+}
+```
+
+## ADVI_COTBKF-D2-W41-S2 -- CB-t-2: sweeps-v2 version bump breaks one CB-t-1 test outside the CB-t-2 write grant
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:17:38Z",
+  "one_line": "test_the_arm_options_default_to_round_19 in test_commonwealth_mover_classes.py (my CB-t-1 test) pins ARM_LISTS['v1'] to the current SWEEP_LIST_VERSION; v2 is now current, so it fails; the file is not in CB-t-2's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests (this worktree, after the CB-t-2 edits): 1 failed, 513 passed, 11 skipped; the one failure is data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py::test_the_arm_options_default_to_round_19",
+      "ARM_LISTS['v1'] is now (rule 'list', sweeps-v1-20261008) as the CB-t-2 order requires (v1 stays reachable); the test asserted it equal to (rule 'list', sw.SWEEP_LIST_VERSION)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-t-1 test: the runner's v1 option reproduces round 19, pinned as equal to the current SWEEP_LIST_VERSION.",
+  "world_is": "The pin was over-coupled to the module's current-list name. The honest assertion is ARM_LISTS['v1'] == (RULE_LIST, sw.SWEEP_LIST_V1_VERSION). Not edited here: the file is outside the CB-t-2 grant. The CB-t-1 proof (AC1: 9 passed at 101fb91b59) was true at that commit. The issuer can widen the grant by one line or fold the one-line fix into a later order."
+}
+```
+
+## ADVI_COTBKF-D2-W41-S3 -- CB-t-2: remediation of ADVI_COTBKF-D2-W41-S2 (arm test re-pinned to SWEEP_LIST_V1_VERSION)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:45:00Z",
+  "one_line": "Corrects ADVI_COTBKF-D2-W41-S2: after the issuer ruling (amendment c6e1cae6d3) the test now asserts against sw.SWEEP_LIST_V1_VERSION; S2 is REMEDIATED by this commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py: 9 passed",
+      "python -m pytest -q data/assets/scripts/silver/tests: 514 passed, 11 skipped"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_COTBKF-D2-W41-S2 was UNDER_INVESTIGATION: the CB-t-1 arm test pinned ARM_LISTS['v1'] to the current list version and failed once v2 landed.",
+  "world_is": "Fixed at line 113 of test_commonwealth_mover_classes.py (SWEEP_LIST_VERSION -> SWEEP_LIST_V1_VERSION) in the same commit as this row. The row gate bars in-place mutation of S2, so its disposition is closed by this new row citing the old id; S2 itself is unedited."
+}
+```
+
+## ADVI_COTBKF-D2-W42-S1 -- CB-u-1: sweep-balance movers carry an unfunded cash debit (a sweep buy funded by a non-sweep sale)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W42-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~42",
+  "surfaced_at": "2026-10-08T18:48:41Z",
+  "one_line": "CB-u-1: the sweep-balance movers carry a cash DEBIT for a sweep buy whose funding sale (a non-sweep security) never credits cash, so the after-arm base shrinks; the fix lies in the chain's cash legs, not in the sweep list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md trace sweep_balance D49141714 2019-02: value before 4061.90 / after 51.04 on every no-trade day, D = -4010.86; reported 0.04 pct, before 0.0416, after 3.3111",
+      "silver transactions of D49141714 (local cache): FDIC66606 buys minus sells on or before 2019-02-28 = 4010.86, equal to -D; the funding of the 2019-01-24 sweep buy of 3840.59 is a SALE of 30306A436 (a non-sweep security, 562 shares), and commonwealth_sweeps.sweep_cash_rows adds cash legs for listed-sweep trades only",
+      "mover_causes.parquet (this deliverable): 106 of 147 `neither` movers have s < 0 (the before arm sat above the after arm), 41 s > 0; 72 sweep_balance, 75 other:sweep_trade_day, offsetting 0 (only 2 of 147 months carry a nonzero flow-component error e_f)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E1 (round-20 analysis): a mover may have matched before only because two errors offset, in which case DIFF is the truer state and the fix lies elsewhere in the chain.",
+  "world_is": "Under the stated rule no month is `offsetting` (the before-state's value-change and flow-taken-out components are not off in opposite directions). The movers are carried by the sweep balance and by sweep-trade days. In the largest-|s| sweep_balance month the after arm debits cash for a sweep purchase (type LIX on CFNCASH) but the sale of the non-sweep security that paid for it credits nothing, so cash goes negative and cancels the sweep position: the after-arm value is the before-arm value minus the sweep balance. This is a reading of ONE traced account; how many of the 147 share it is not measured here (no fix and no wider census in this order)."
+}
+```
+
+## ADVI_COTBKF-D2-S31 -- the mover-causes invocation depends on the data-dir's last arms
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S31",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-08T19:00Z",
+  "one_line": "CB21u1-AC2's invocation reads day values from the runner's default --data-dir, so its result depends on which arms ran there last: on the trunk it gave sweep_balance=0 other=147 (all other:unexplained) until the none->v1 arms were rebuilt, then 72/0/75, equal to the worker",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "trunk run 1 after the drain @0aefdc2e8e: MOVER-CAUSES movers=147 sweep_balance=0 offsetting=0 other=147 sum_ok=True core_separate=16; trace reading: 'the arms day values do not reproduce the persisted month grade' (the default data-dir held round 20's v1->v2 arms)",
+      "after commonwealth_sweep_regrade.py --before-list none --after-list v1 on the trunk: SWEEP-REGRADE ... months_before=1685/1931/78977 months_after=2057/1522/79014 control_same=True, then MOVER-CAUSES movers=147 sweep_balance=72 offsetting=0 other=75 sum_ok=True core_separate=16"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-u-1 AC2: the invocation as written classes the 147 movers.",
+  "world_is": "The script's reproduce-guard refuses stale arms honestly (unexplained, never forced), but the invocation is not self-contained: it needs the none->v1 arms in the default data-dir. A repair: the script rebuilds or checks the arms' list versions itself, or the invocation names its own --data-dir."
+}
+```
+
+## ADVI_COTBKF-D2-S32 -- L9 CB21u1-AC3 MET; both traced classes show W42-S1's missing cash credit
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S32",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T19:02:48Z",
+  "one_line": "L9 CB21u1-AC3 MET: the rule is printed before the counts with fixed constants and an ordered first-fit, ties are never forced, and each class's traced month shows its mechanism in the printed day values (re-derived by this seat). Beyond the criterion: BOTH traces show the same mechanism as W42-S1. The after arm's value steps down by the sweep buy (-4,010.86 carried from before the month; -199.98 then -188.14 on RGY005018's two sweep-trade days) and never steps back, so the 72/75 split is WHERE the missing cash credit lands, not two causes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md lines 5-114 (rule, counts, both traces)",
+      "this seat's re-derivation: D49141714 2019-02-28 after 52.73/51.04-1 = 0.033111, before 4063.59/4061.9-1 = 0.000416; RGY005018 2024-12-10 after 21808.25/21852.77-1 = -0.002037, before 22008.23/21852.77-1 = 0.007114",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_21_L9_GRADE_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB21u1-AC3: each class's traced month shows its named mechanism in the printed day values, and the rule, not the result, decided the class.",
+  "world_is": "Met. The two classes partition where the sweep-buy debit without a funding credit moves the month: on no-trade days (a balance carried in) or on the trade days themselves. The W42-S1 repair is the test: if it lands, both classes should collapse together."
+}
+```

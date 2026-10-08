@@ -267,8 +267,10 @@ function ajb {
     # (claude.exe overwrites runtime titles otherwise).
     $esc = [char]27
     $bel = [char]7
-    [Console]::Write("${esc}]0;${Serial}${bel}")
-    $Host.UI.RawUI.WindowTitle = $Serial
+    # A spawn may set a display title (a COO's project code); registration stays $Serial.
+    $tabTitle = if ($env:OPAL_TAB_TITLE) { $env:OPAL_TAB_TITLE } else { $Serial }
+    [Console]::Write("${esc}]0;${tabTitle}${bel}")
+    $Host.UI.RawUI.WindowTitle = $tabTitle
 
     # Per-process serial -> the PostToolUse telemetry hook attributes this
     # session's tool calls to the right serial even with concurrent agents.

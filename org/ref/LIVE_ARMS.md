@@ -147,11 +147,13 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   /canonical-drive on their projects."). Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md`.
   Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~DELL1. Stop: both projects `status: complete`, HELD-AT-STOP, or his stand-down.
-  - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST.
-  - EXTENSION asked by `1.0.0_SA_CTO~DELL1` (bus d60577bf, relayed by `0.0.0_AB_MSTR` msg 106074), landed by 1.0.0_SA_CTO 2026-10-07 ~08:4xZ as
-    AUTHORITY-UNVERIFIED (transient): MDPF_HEALGAP joins that `/self-drive 60m`, paired with `2.0.0_SA_COO~G1` `/canonical-drive 10m`. The
-    asking seat calls it DIRECTED on a record @7cf0be6c7d that is on dell1 only; this seat has not read it. Andrew held `~G1` at dell1 ~07:52Z
-    until the project's L1 (relay 106059), so the record must show his release. Re-class to DIRECTED when it is on origin and read.
+  - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST, MDPF_HEALGAP. Paused 2026-10-07 ~22:3xZ on his word;
+    RE-ARMED 2026-10-08 ~17:5xZ on Andrew-direct at the dell1 CTO terminal, VERBATIM: "Yes rec approved, please proced" (the card named
+    all three projects), record @2a728669cf.
+  - EXTENSION (MDPF_HEALGAP, paired with `2.0.0_SA_COO~G1` `/canonical-drive 60m`): first landed 2026-10-07 ~08:4xZ as
+    AUTHORITY-UNVERIFIED; re-classed DIRECTED on the 2026-10-08 ~17:5xZ word above. Cadence 10m -> 60m on Andrew-direct ~18:5xZ
+    2026-10-08 at the `2.0.0_SA_COO~G1` terminal, VERBATIM: "Ok lets slow that down to 60 min" (class DIRECTED, chooser Andrew; G1
+    msg 1057, cron ae79a828 at :07).
   - `2.0.0_SA_COO~M1` `/canonical-drive MDPF_SECCLASS` and `2.0.0_SA_COO~H1` `/canonical-drive MDPF_SECHIST`. He named no cadence,
     so each uses the skill's 10m DIRECTED own-project default.
   - The `/govern` arms of the two fabric managers are the two DIRECTED rows at the top of this section.

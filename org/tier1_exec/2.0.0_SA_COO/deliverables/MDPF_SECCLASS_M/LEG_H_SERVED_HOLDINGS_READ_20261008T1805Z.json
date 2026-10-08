@@ -1,0 +1,185 @@
+{
+ "49financial": {
+  "index_version_now": "JtucBrlvOJGxn5bGeDxaZtxjn5bXYFW9",
+  "index_last_modified": "2026-10-08 14:20:48+00:00",
+  "pin": {
+   "index_version": "GtsM8pj9VnTwPZH3n5Bzp.oobsgLaja0",
+   "date": "2026-10-06",
+   "revision": "35ea000850f7"
+  },
+  "publication": {
+   "business_date": "2026-10-07",
+   "revision": "61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/49financial/platinum/holdings/date=2026-10-07/61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5.manifest.json",
+   "manifest_version": "rhncZNedrzimF43VGkEvYwcv8vHo6HPT",
+   "gold_key": "irpt/49financial/gold/holdings/date=2026-10-07/61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5.parquet",
+   "gold_version": "wjv_XCBugO5977y.r1nG8PeKcRgaHZvf",
+   "gold_sha256": "54fc047f7e481946b4e2e49d231108c3070ffe3b994823d8eb6c8692243b3c04",
+   "header_key": "irpt/49financial/platinum/holdings/date=2026-10-07/61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5.header.json",
+   "header_sha256_checked": true
+  },
+  "moved": true,
+  "reconcile": {
+   "difference": 0.0,
+   "reconciled": true,
+   "tolerance": 0.01,
+   "total_after": 1828096113.09,
+   "total_before": 1828096113.09
+  },
+  "security_nodes": 122477,
+  "asset_class_counts": {
+   "equity": 79519,
+   "fixed_income": 36162,
+   "structured": 6536,
+   "commodities": 31,
+   "unclassified": 167,
+   "alternatives": 61,
+   "cash": 1
+  },
+  "asset_class_basis_counts": {
+   "TABLE": 121410,
+   "TICKER_SHAPE": 809,
+   "NAME_PATTERN": 38,
+   "NONE": 167,
+   "NAME_ALIAS": 53
+  },
+  "multi_asset_nodes": 0,
+  "classes_outside_six": [],
+  "unclassified": 167,
+  "unclassified_at_pin": 167,
+  "placed_at_pin_now_unclassified": [],
+  "unclassified_not_held_at_pin": [],
+  "unclassified_count_no_worse": true,
+  "checks": {
+   "reconcile": true,
+   "multi_asset": true,
+   "six_class": true,
+   "no_held_security_lost_class": true
+  },
+  "branch": "A"
+ },
+ "inflection": {
+  "index_version_now": "lwp8BkK2CFBpawCiKOvpcl8j1iG_DJpf",
+  "index_last_modified": "2026-10-08 14:18:56+00:00",
+  "pin": {
+   "index_version": "a6gP7JDBtaKHr_LMKP0vQsNSegtaQQWc",
+   "date": "2026-10-06",
+   "revision": "acd27f407bbc"
+  },
+  "publication": {
+   "business_date": "2026-10-07",
+   "revision": "efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/inflection/platinum/holdings/date=2026-10-07/efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7.manifest.json",
+   "manifest_version": "57O2CTPxMFlfVhTfYZ9AnQQyH_aub28k",
+   "gold_key": "irpt/inflection/gold/holdings/date=2026-10-07/efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7.parquet",
+   "gold_version": "o7rLTWwdAywrrHGLWQS9MaeBnuN2vtWK",
+   "gold_sha256": "4273e03003ada1380f08058c79e0dbda053b42b52379c385763bf2e5c79d43d5",
+   "header_key": "irpt/inflection/platinum/holdings/date=2026-10-07/efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7.header.json",
+   "header_sha256_checked": true
+  },
+  "moved": true,
+  "reconcile": {
+   "difference": 0.0,
+   "reconciled": true,
+   "tolerance": 0.01,
+   "total_after": 207883871.35,
+   "total_before": 207883871.35
+  },
+  "security_nodes": 33790,
+  "asset_class_counts": {
+   "fixed_income": 12064,
+   "equity": 18436,
+   "structured": 567,
+   "alternatives": 1597,
+   "cash": 1105,
+   "commodities": 17,
+   "unclassified": 4
+  },
+  "asset_class_basis_counts": {
+   "TABLE": 29312,
+   "TICKER_SHAPE": 2938,
+   "NAME_ALIAS": 1209,
+   "NAME_PATTERN": 327,
+   "NONE": 4
+  },
+  "multi_asset_nodes": 0,
+  "classes_outside_six": [],
+  "unclassified": 4,
+  "unclassified_at_pin": 4,
+  "placed_at_pin_now_unclassified": [],
+  "unclassified_not_held_at_pin": [],
+  "unclassified_count_no_worse": true,
+  "checks": {
+   "reconcile": true,
+   "multi_asset": true,
+   "six_class": true,
+   "no_held_security_lost_class": true
+  },
+  "branch": "A"
+ },
+ "cottonwood": {
+  "index_version_now": "KQ6K3Hg.C_CWMk3ud2MFMEHJLqEQ1nzZ",
+  "index_last_modified": "2026-10-08 14:18:08+00:00",
+  "pin": {
+   "index_version": "gF3nGvI1eKu_xPEYZXBaRl7iw55fpmnL",
+   "date": "2026-10-06",
+   "revision": "7f69e500c18f"
+  },
+  "publication": {
+   "business_date": "2026-10-07",
+   "revision": "8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/cottonwood/platinum/holdings/date=2026-10-07/8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e.manifest.json",
+   "manifest_version": "1Br9XRcrsNOeDjzAQAUfqvv.a7HoZ.FB",
+   "gold_key": "irpt/cottonwood/gold/holdings/date=2026-10-07/8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e.parquet",
+   "gold_version": "rIqlOsQaEisiaSdcWcBdX.fml3h28ATN",
+   "gold_sha256": "e69e5f5325b890296dc5a1f6be21a80fc900fad16e5947d270e48462cdeaf323",
+   "header_key": "irpt/cottonwood/platinum/holdings/date=2026-10-07/8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e.header.json",
+   "header_sha256_checked": true
+  },
+  "moved": true,
+  "reconcile": {
+   "difference": 0.0,
+   "reconciled": true,
+   "tolerance": 0.01,
+   "total_after": 552361578.24,
+   "total_before": 552361578.24
+  },
+  "security_nodes": 15500,
+  "asset_class_counts": {
+   "alternatives": 131,
+   "fixed_income": 5039,
+   "cash": 1047,
+   "equity": 8101,
+   "structured": 447,
+   "commodities": 661,
+   "unclassified": 74
+  },
+  "asset_class_basis_counts": {
+   "NAME_ALIAS": 722,
+   "TABLE": 13774,
+   "NAME_PATTERN": 917,
+   "NONE": 74,
+   "TICKER_SHAPE": 13
+  },
+  "multi_asset_nodes": 0,
+  "classes_outside_six": [],
+  "unclassified": 74,
+  "unclassified_at_pin": 73,
+  "placed_at_pin_now_unclassified": [],
+  "unclassified_not_held_at_pin": [
+   "('CUSIP', 'BDP6Y61W')"
+  ],
+  "unclassified_count_no_worse": false,
+  "checks": {
+   "reconcile": true,
+   "multi_asset": true,
+   "six_class": true,
+   "no_held_security_lost_class": true
+  },
+  "branch": "A"
+ },
+ "_identity": "arn:aws:iam::313476888478:user/cloudops-dell1-agent-user"
+}

@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-01T06:09:35.109060+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Leg B4 FAILED 2026-10-02 06:1xZ outside the signed blast radius (49F served mix drops structured/commodities/cash/unclassified dollars: firm 09-30 445.7 M of 1,843.1 M in no class line; z08327149 lost VXX 1.10 M since 10-01 07:46Z). C_06, D_03, D_04, lib/etf_classifier.py ROLLED BACK 06:19Z (ledger secclass-bd-thread-r3-rollback-m-20261002); E_18, silver, lib/_shared, SSM v5 stay. Re-landing needs a new half carrying every BD mix producer and reader on every deployed build (batch 99 item 4), decided by 1.0.0_SA_CTO. (held since 2026-10-02T06:20:48.825246+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Andrew: portal PROD promote carrying SC-e-59 26987884 (in origin/DEV, not in PROD b06863fe; site Z promote confirmed by 2.0.0_SA_COO~M1 msg 1009 reply); served data already reads VXX structured/Hedge for z08327149 (measured 2026-10-08) (held since 2026-10-02T06:20:48.825246+00:00)
 **Deploy:** MDPF_SECCLASS BD_THREAD_R3: redeploy the BD thread with the shared classifier client inside code/gold (six files + three shipped modules, then the silver staging document v5); halves COO+CTO SIGNED @8769ffe8d5; supersedes the BD legs B3/B4 of secclass-bd-thread-r2-and-irpt-narrowed-m-20260930, which stays HELD for its IRPT leg H5 only
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -32,3 +32,4 @@
 - 20261002T062048Z HOLD RELEASED -> OPEN
 - 20261002T062048Z LEG A1 closed: Literal requirement met on the 2026-10-02 04:00Z scheduled bd-canonical-prices-daily fire (log gold_incremental_2026-10-
 - 20261002T062048Z HELD-SOVEREIGN-GATED gate=sovereign/Leg B4 FAILED 2026-10-02 06:1xZ outside the signed blast radius (49F served mix 
+- 20261008T185130Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew: portal PROD promote carrying SC-e-59 26987884 (in origin/DEV, not in PRO

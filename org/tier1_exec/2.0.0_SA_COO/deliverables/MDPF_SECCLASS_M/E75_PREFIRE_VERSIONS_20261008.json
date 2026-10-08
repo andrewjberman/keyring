@@ -1,0 +1,547 @@
+{
+ "bucket": "opal-data-bd",
+ "versioning": "Enabled",
+ "read_at": "2026-10-08T19:08:32Z",
+ "keys": {
+  "gold/entities/clients/z08119861.json": {
+   "VersionId": "pUkdGIUqCg0Y_I8tkmOHelaTlNn5U.ar",
+   "LastModified": "2026-10-08T05:24:01+00:00",
+   "ETag": "\"75c59fdbf2dd63dbb64f24aca0a49e8f\""
+  },
+  "gold/client_timeseries/z08119861.json": {
+   "VersionId": "TW3rKA86LS.Gf7PbM6_lIdGxEb02HqdA",
+   "LastModified": "2026-10-08T05:24:01+00:00",
+   "ETag": "\"75c59fdbf2dd63dbb64f24aca0a49e8f\""
+  },
+  "platinum/clients/z08119861/concentration.json": {
+   "VersionId": "k18kicIfHpSp_qVRQScoSWl6qg0IEBnQ",
+   "LastModified": "2026-10-08T05:51:38+00:00",
+   "ETag": "\"99d559bc33e14bb7b8e2ac07630d0bcd\""
+  },
+  "gold/entities/clients/z08124280.json": {
+   "VersionId": "lYoQ4fWajsYUq.pDpMBfyMdnfsr5r6jj",
+   "LastModified": "2026-10-07T05:26:51+00:00",
+   "ETag": "\"1440b58f5d5601b55f5074abfec10a88\""
+  },
+  "gold/client_timeseries/z08124280.json": {
+   "VersionId": "OWw9quKaARrob5SaczoNqA5sbukoj_G7",
+   "LastModified": "2026-10-07T05:26:51+00:00",
+   "ETag": "\"1440b58f5d5601b55f5074abfec10a88\""
+  },
+  "platinum/clients/z08124280/concentration.json": {
+   "VersionId": "9fSMBVXkeYIE80WTT8taXPheKwc8qL7G",
+   "LastModified": "2026-10-08T00:50:41+00:00",
+   "ETag": "\"b906a85d979b245492244bf36b75ddaf\""
+  },
+  "gold/entities/clients/z08125071.json": {
+   "VersionId": "yRQROEMDdUQowwP00qb3lJbGJIL8KYsR",
+   "LastModified": "2026-10-08T05:24:33+00:00",
+   "ETag": "\"58da162a47ab8d3e82ffecc3fa5eb56a\""
+  },
+  "gold/client_timeseries/z08125071.json": {
+   "VersionId": "b5nGfMKMQ44vnLBfw7Gm4fQ1EJqj5ckH",
+   "LastModified": "2026-10-08T05:24:33+00:00",
+   "ETag": "\"58da162a47ab8d3e82ffecc3fa5eb56a\""
+  },
+  "platinum/clients/z08125071/concentration.json": {
+   "VersionId": "gkSWDykdBfp2zKjG4tb7o_LMBZagImmY",
+   "LastModified": "2026-10-08T05:51:48+00:00",
+   "ETag": "\"c45e8bebe94151f618dc554c5f780130\""
+  },
+  "gold/entities/clients/z08219275.json": {
+   "VersionId": "adytYvtRrV57HKjPPPMvqPQ3C3Zxtpnu",
+   "LastModified": "2026-10-08T05:24:48+00:00",
+   "ETag": "\"bff2c14870b351d83abfca54d52ae4f0\""
+  },
+  "gold/client_timeseries/z08219275.json": {
+   "VersionId": "gZACzjw3CsSOyGZ7.NabzeuLIRo0GHCw",
+   "LastModified": "2026-10-08T05:24:49+00:00",
+   "ETag": "\"bff2c14870b351d83abfca54d52ae4f0\""
+  },
+  "platinum/clients/z08219275/concentration.json": {
+   "VersionId": "odgiyw7mlK7BX7UkJvPsCOEM2wfjpDw3",
+   "LastModified": "2026-10-08T05:52:07+00:00",
+   "ETag": "\"3ef0183b799ce19d454e4ea99e9d86d1\""
+  },
+  "gold/entities/clients/z08250779.json": {
+   "VersionId": "9dac9ZKrDaPoxUaFOpIV.lzUaDZhH0Nx",
+   "LastModified": "2026-10-08T05:22:53+00:00",
+   "ETag": "\"ec81e5e43a1949091c24b3f9c36e8d01\""
+  },
+  "gold/client_timeseries/z08250779.json": {
+   "VersionId": "QLqi9Ert4NtyUeRWOlfOYz2c3HGSU7vU",
+   "LastModified": "2026-10-08T05:22:53+00:00",
+   "ETag": "\"ec81e5e43a1949091c24b3f9c36e8d01\""
+  },
+  "platinum/clients/z08250779/concentration.json": {
+   "VersionId": "sfSIQGmwg5_9s9fVftDw.0gGiEfpfpDS",
+   "LastModified": "2026-10-08T05:51:37+00:00",
+   "ETag": "\"0c14536555823f83c9ae5ec8b4a7431b\""
+  },
+  "gold/entities/clients/z08294888.json": {
+   "VersionId": "3IdpTSbyy5Jpb0Yup5ATdMKzVdGgVTKI",
+   "LastModified": "2026-10-08T05:24:57+00:00",
+   "ETag": "\"fec4d52e7a6c558923f1665ac0668791\""
+  },
+  "gold/client_timeseries/z08294888.json": {
+   "VersionId": "7puLy4_HbmR7NUD3TgTbpZ20iI7PwjCC",
+   "LastModified": "2026-10-08T05:24:57+00:00",
+   "ETag": "\"fec4d52e7a6c558923f1665ac0668791\""
+  },
+  "platinum/clients/z08294888/concentration.json": {
+   "VersionId": "7_w0W1rZptWOC7UQXjOqF6DGucodPQjs",
+   "LastModified": "2026-10-08T05:51:57+00:00",
+   "ETag": "\"8106c95cfaf777e3ac709f4ffa18d5f3\""
+  },
+  "gold/entities/clients/z08296293.json": {
+   "VersionId": "yE.iLXM2eG4J1nlnJG0c9432SFOMf1wy",
+   "LastModified": "2026-10-08T05:25:02+00:00",
+   "ETag": "\"299d5bfea73a7e573f33e5f30c0ce32c\""
+  },
+  "gold/client_timeseries/z08296293.json": {
+   "VersionId": "iUvjiCqIb2NV_fYuNySw9zkfK6zFO2Sa",
+   "LastModified": "2026-10-08T05:25:02+00:00",
+   "ETag": "\"299d5bfea73a7e573f33e5f30c0ce32c\""
+  },
+  "platinum/clients/z08296293/concentration.json": {
+   "VersionId": "CiiP8JbR1Qfh46v8oijkfO1tOkZzim_M",
+   "LastModified": "2026-10-08T05:52:41+00:00",
+   "ETag": "\"53be509a23c08f872d6e92880f6870f9\""
+  },
+  "gold/entities/clients/z08306218.json": {
+   "VersionId": "xIM3m7rGSrhREap0JVGr6emO6_Jr2BsQ",
+   "LastModified": "2026-10-08T05:25:10+00:00",
+   "ETag": "\"d4bfa09203b6ce7387a0a362cba0ff8f\""
+  },
+  "gold/client_timeseries/z08306218.json": {
+   "VersionId": "0wZkg.rxLDKi_Q5hOgJ3cu8uM.1HnJc4",
+   "LastModified": "2026-10-08T05:25:10+00:00",
+   "ETag": "\"d4bfa09203b6ce7387a0a362cba0ff8f\""
+  },
+  "platinum/clients/z08306218/concentration.json": {
+   "VersionId": "8s7rmD8sHFb.XPitJOMNSCPgut8Adjw9",
+   "LastModified": "2026-10-08T05:51:52+00:00",
+   "ETag": "\"0b91714a93f853f30e3a2df3dcd10302\""
+  },
+  "gold/entities/clients/z08319161.json": {
+   "VersionId": "kiPOQyg8WF17BOUwStqmU8bWsqQISa2g",
+   "LastModified": "2026-10-08T05:25:14+00:00",
+   "ETag": "\"99add8893cad9d9cec1ff6ffdb3583be\""
+  },
+  "gold/client_timeseries/z08319161.json": {
+   "VersionId": "o6yHs1ZWB1uPiDfn9v.JZS0dK1CIdJoV",
+   "LastModified": "2026-10-08T05:25:14+00:00",
+   "ETag": "\"99add8893cad9d9cec1ff6ffdb3583be\""
+  },
+  "platinum/clients/z08319161/concentration.json": {
+   "VersionId": "MXW9hcCQBkZ7LZxPBsYW4kL.xOltN_eM",
+   "LastModified": "2026-10-08T05:52:09+00:00",
+   "ETag": "\"7db424d133d98c52c5c0fe4304aff78a\""
+  },
+  "gold/entities/clients/z08320620.json": {
+   "VersionId": "hveHvVF8qRpMgJFyl1GGtS8p8NMorzac",
+   "LastModified": "2026-10-08T05:25:17+00:00",
+   "ETag": "\"385a66c8ea1bfbbeeece85d9d52ac6e8\""
+  },
+  "gold/client_timeseries/z08320620.json": {
+   "VersionId": "jl0tK8rSAqkx9Zo.1GvloECZNqWVZpJE",
+   "LastModified": "2026-10-08T05:25:17+00:00",
+   "ETag": "\"385a66c8ea1bfbbeeece85d9d52ac6e8\""
+  },
+  "platinum/clients/z08320620/concentration.json": {
+   "VersionId": "984QUNwzHDkdPKZJ8gdLPtpqhudyzUf6",
+   "LastModified": "2026-10-08T05:51:41+00:00",
+   "ETag": "\"f214c94fb71c4087e4d58316e9ca9faf\""
+  },
+  "gold/entities/clients/z08320621.json": {
+   "VersionId": "Rjr2RUhrTaivCPOTrJe_fsE0jn_kdKLy",
+   "LastModified": "2026-10-08T05:25:17+00:00",
+   "ETag": "\"45a427011ea804804d289399f0e1a178\""
+  },
+  "gold/client_timeseries/z08320621.json": {
+   "VersionId": "q7aO_qrwuLpKGeH55ZN0S.8Vf7KOp_DD",
+   "LastModified": "2026-10-08T05:25:17+00:00",
+   "ETag": "\"45a427011ea804804d289399f0e1a178\""
+  },
+  "platinum/clients/z08320621/concentration.json": {
+   "VersionId": "uGq3D3kGAb9lFwYLSi1gEgFtiGpUOrFW",
+   "LastModified": "2026-10-08T05:51:39+00:00",
+   "ETag": "\"730822c59ad7c18019d63f0cf566ee17\""
+  },
+  "gold/entities/clients/z08325329.json": {
+   "VersionId": "5bBqjC.0DsGnWcEszkW_1GvrIwYyMLv4",
+   "LastModified": "2026-10-08T05:25:18+00:00",
+   "ETag": "\"6943bb01108ef7edb67a7a667df02974\""
+  },
+  "gold/client_timeseries/z08325329.json": {
+   "VersionId": "SiYufhXcpgbGRyNUBhSv.sRYOf.w8o2i",
+   "LastModified": "2026-10-08T05:25:18+00:00",
+   "ETag": "\"6943bb01108ef7edb67a7a667df02974\""
+  },
+  "platinum/clients/z08325329/concentration.json": {
+   "VersionId": "DR_TuAEkP1vPNXeYH6F7pcXF3WfpEAjN",
+   "LastModified": "2026-10-08T05:51:55+00:00",
+   "ETag": "\"a90bcad591a309c44757aa132120f579\""
+  },
+  "gold/entities/clients/z08326151.json": {
+   "VersionId": "xxt9PRV2A4ZbZtXV4Y2_D4VTP5h8lROJ",
+   "LastModified": "2026-10-08T05:25:18+00:00",
+   "ETag": "\"1b4c4afabc8bc739adb0c5484e212ae7\""
+  },
+  "gold/client_timeseries/z08326151.json": {
+   "VersionId": "w4WXB048JVsvw1XEzs1q5wtdZclrYQzR",
+   "LastModified": "2026-10-08T05:25:18+00:00",
+   "ETag": "\"1b4c4afabc8bc739adb0c5484e212ae7\""
+  },
+  "platinum/clients/z08326151/concentration.json": {
+   "VersionId": "vH_sNM4frGRGw31LaLBNMf__PezlSQSA",
+   "LastModified": "2026-10-08T05:52:01+00:00",
+   "ETag": "\"678bb954d7f235f79d0f136b686b9dcb\""
+  },
+  "gold/entities/clients/z08326911.json": {
+   "VersionId": "Go21KHa2Mj_KM.36qDP9_RuJ0zRvznfe",
+   "LastModified": "2026-10-08T05:25:21+00:00",
+   "ETag": "\"920ee6ffa621b7bbc555e8b58624a7ab\""
+  },
+  "gold/client_timeseries/z08326911.json": {
+   "VersionId": "48WHJXXkFVTtsgUvWCHdLKI7HndfszR9",
+   "LastModified": "2026-10-08T05:25:21+00:00",
+   "ETag": "\"920ee6ffa621b7bbc555e8b58624a7ab\""
+  },
+  "platinum/clients/z08326911/concentration.json": {
+   "VersionId": "z5aRSHBg3uZpRYSLnfzWteyDFePuplyk",
+   "LastModified": "2026-10-08T05:51:43+00:00",
+   "ETag": "\"d82d35524fe13f8cb2357de98ed3f85d\""
+  },
+  "gold/entities/clients/z08331413.json": {
+   "VersionId": "b8kFX_f1_O7AFcnTmE1v3zYMz5e5lhLq",
+   "LastModified": "2026-10-08T05:25:25+00:00",
+   "ETag": "\"17b4a7e89ece1931da287f3489cee376\""
+  },
+  "gold/client_timeseries/z08331413.json": {
+   "VersionId": "eFc3D8VeH.0V6uFco62Orph1gsYrcQRQ",
+   "LastModified": "2026-10-08T05:25:25+00:00",
+   "ETag": "\"17b4a7e89ece1931da287f3489cee376\""
+  },
+  "platinum/clients/z08331413/concentration.json": {
+   "VersionId": "yxQ93seNbXwiKBqJeD2D_VXqx77QBJOs",
+   "LastModified": "2026-10-08T05:52:46+00:00",
+   "ETag": "\"a13a573a187ba6e1048eefc7a14b8910\""
+  },
+  "gold/entities/clients/z08348207.json": {
+   "VersionId": "ixQMkrMCHA.RR1FXq_4K4JJsvpQ.8q8p",
+   "LastModified": "2026-10-08T05:25:33+00:00",
+   "ETag": "\"aa6019eda17a83332450ec3de5e154b0\""
+  },
+  "gold/client_timeseries/z08348207.json": {
+   "VersionId": "O_hxwZ1C78wZvgitPoZKODHjron5dLmD",
+   "LastModified": "2026-10-08T05:25:33+00:00",
+   "ETag": "\"aa6019eda17a83332450ec3de5e154b0\""
+  },
+  "platinum/clients/z08348207/concentration.json": {
+   "VersionId": "_YwSdjqLEPnWI1fNkLAKoWpziFgmcBsI",
+   "LastModified": "2026-10-08T05:51:47+00:00",
+   "ETag": "\"61897edc523e31bd83842c79a5b63d23\""
+  },
+  "gold/entities/clients/z08361603.json": {
+   "VersionId": "sl_gJmyx3Z24qhEnTDDyVOBtt2aTGaru",
+   "LastModified": "2026-10-08T05:25:44+00:00",
+   "ETag": "\"24fbce887c4ad105b1cf944c1f647361\""
+  },
+  "gold/client_timeseries/z08361603.json": {
+   "VersionId": "OpADAYv1Fuh_t3FEl_JN6cIXlb0aY3kQ",
+   "LastModified": "2026-10-08T05:25:44+00:00",
+   "ETag": "\"24fbce887c4ad105b1cf944c1f647361\""
+  },
+  "platinum/clients/z08361603/concentration.json": {
+   "VersionId": ".JS1ez7tdbRSdC_NGlxJ6Gxxa5NJays4",
+   "LastModified": "2026-10-08T05:52:47+00:00",
+   "ETag": "\"a31c3c35dab7f1dfec5facf81023ae37\""
+  },
+  "gold/entities/clients/z08367003.json": {
+   "VersionId": "XKpfazmbKfHDqGnCfrq.UnIbx5zQ61IX",
+   "LastModified": "2026-10-08T05:25:51+00:00",
+   "ETag": "\"f0843ba353f389e09a92d473ef4c1b10\""
+  },
+  "gold/client_timeseries/z08367003.json": {
+   "VersionId": "nhuIVWtXGSNqTRVn7xhhhkax2TWHj6jW",
+   "LastModified": "2026-10-08T05:25:51+00:00",
+   "ETag": "\"f0843ba353f389e09a92d473ef4c1b10\""
+  },
+  "platinum/clients/z08367003/concentration.json": {
+   "VersionId": "APJoli_ppGIK.3bvEkvkvBAlZeirPBcO",
+   "LastModified": "2026-10-08T05:52:32+00:00",
+   "ETag": "\"dd14e8df54c24caa03909b175f1bf80f\""
+  },
+  "gold/entities/clients/z08367108.json": {
+   "VersionId": "JuBwyHKkfk2Ce6Djq.u5N_hs9o3L8bBF",
+   "LastModified": "2026-10-08T05:25:48+00:00",
+   "ETag": "\"44c1f513dd8ea2d111116d8c0aa43f9b\""
+  },
+  "gold/client_timeseries/z08367108.json": {
+   "VersionId": "Idy0ey3AjLWIBbGTWoMqL8QpJTkq4ttD",
+   "LastModified": "2026-10-08T05:25:48+00:00",
+   "ETag": "\"44c1f513dd8ea2d111116d8c0aa43f9b\""
+  },
+  "platinum/clients/z08367108/concentration.json": {
+   "VersionId": "LAEP7kIiE2Gz.I4ESGTpbHqeWIjqS2eJ",
+   "LastModified": "2026-10-08T05:51:40+00:00",
+   "ETag": "\"b220f040f7714489979cf5593eef5561\""
+  },
+  "gold/entities/clients/z08370165.json": {
+   "VersionId": "Peg6Pwx7HH7LVwgft9pRPA876WGg_FDF",
+   "LastModified": "2026-10-08T05:25:50+00:00",
+   "ETag": "\"590e9488d1e4a97039a0d4c9b04500fe\""
+  },
+  "gold/client_timeseries/z08370165.json": {
+   "VersionId": "PNUh9p_yIg37TD7BBphFLPssYxoYDjRp",
+   "LastModified": "2026-10-08T05:25:50+00:00",
+   "ETag": "\"590e9488d1e4a97039a0d4c9b04500fe\""
+  },
+  "platinum/clients/z08370165/concentration.json": {
+   "VersionId": "0qkzVjmAbuAHgBjr14h6ydz.fCJSXjYZ",
+   "LastModified": "2026-10-08T05:52:31+00:00",
+   "ETag": "\"c6b823b0908f8c98ea919ca798650655\""
+  },
+  "gold/entities/clients/z08370405.json": {
+   "VersionId": "Mochzo76G_aUK2jazXBuRzN44qm6J3pW",
+   "LastModified": "2026-10-08T05:25:49+00:00",
+   "ETag": "\"64d461d30796138589a73e7d92fac4f8\""
+  },
+  "gold/client_timeseries/z08370405.json": {
+   "VersionId": "M99O2PV5Q2e.1TpvMEa95GbYqwRy1bMk",
+   "LastModified": "2026-10-08T05:25:49+00:00",
+   "ETag": "\"64d461d30796138589a73e7d92fac4f8\""
+  },
+  "platinum/clients/z08370405/concentration.json": {
+   "VersionId": "EO8zcNU5Ke8Ilr.n0e0MGO0T0O0yMJDK",
+   "LastModified": "2026-10-08T05:51:39+00:00",
+   "ETag": "\"0a92069723c49aebf84267bfd82cff53\""
+  },
+  "gold/entities/clients/z08391340.json": {
+   "VersionId": "mDW7SzZHKf9DSmsbO1.yicolNJlk5DpC",
+   "LastModified": "2026-10-08T05:25:58+00:00",
+   "ETag": "\"e8ceabdf121f9ac942fe8c0854475914\""
+  },
+  "gold/client_timeseries/z08391340.json": {
+   "VersionId": "lGajOg9HfIGfyUAQOfYS_B9sFa3Fzo7N",
+   "LastModified": "2026-10-08T05:25:58+00:00",
+   "ETag": "\"e8ceabdf121f9ac942fe8c0854475914\""
+  },
+  "platinum/clients/z08391340/concentration.json": {
+   "VersionId": "rx65fAK1AMOr9qEsHy1Ki_vuW2NI5vPV",
+   "LastModified": "2026-10-08T05:51:38+00:00",
+   "ETag": "\"1b5c6410acf53722036db6a3c6e0b096\""
+  },
+  "gold/entities/clients/z08396078.json": {
+   "VersionId": "_4JELnbGqznZjGjTrymiLyjphpQkc0Bc",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"a12aef803b4c336ee64ec98b43fc61e0\""
+  },
+  "gold/client_timeseries/z08396078.json": {
+   "VersionId": "70N9K.QU3cfWTIumfkkLIjtKrYEgeghm",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"a12aef803b4c336ee64ec98b43fc61e0\""
+  },
+  "platinum/clients/z08396078/concentration.json": {
+   "VersionId": "rLHeHBCYLAPN.1yZHk3uWr5GGzgnVzse",
+   "LastModified": "2026-10-08T05:51:45+00:00",
+   "ETag": "\"89d62f4fa50647eb48168a1179dff11b\""
+  },
+  "gold/entities/clients/z08397108.json": {
+   "VersionId": "0O5_j.TilmVVFts3knMPvUaHfk1GgsM0",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"8f51b6011abe915fdc81cba7b3c01fe4\""
+  },
+  "gold/client_timeseries/z08397108.json": {
+   "VersionId": "ScFzQSKI4Lz6smOoXXD3Vdo68yzORq2f",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"8f51b6011abe915fdc81cba7b3c01fe4\""
+  },
+  "platinum/clients/z08397108/concentration.json": {
+   "VersionId": "74mlplXE0y1aqtOmqceMXx12WJT4Txyf",
+   "LastModified": "2026-10-08T05:51:41+00:00",
+   "ETag": "\"79da22de306b08fcb6a5796dfe119f5b\""
+  },
+  "gold/entities/clients/z08397885.json": {
+   "VersionId": "hqAmzPRUfG4BmfdD11EZ3MDaCUSi9WeW",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"8733b713c57ed45fb8c9ca686a5166a0\""
+  },
+  "gold/client_timeseries/z08397885.json": {
+   "VersionId": "hoNqkDdrzXVe7D6.Q_Aw5eMbllNeYaXG",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"8733b713c57ed45fb8c9ca686a5166a0\""
+  },
+  "platinum/clients/z08397885/concentration.json": {
+   "VersionId": "0Z2tss_nQK9A9cbohhFPKi8_KF1lxWcp",
+   "LastModified": "2026-10-08T05:51:51+00:00",
+   "ETag": "\"a15bd764701761ab4a39b3c09e6ede83\""
+  },
+  "gold/entities/clients/z08398262.json": {
+   "VersionId": "JPXa0.ZHsMVUmCkfIqCdMyKilqvfE3Iz",
+   "LastModified": "2026-10-08T05:25:59+00:00",
+   "ETag": "\"054f052ae9a0eeea865fc8f880b0a452\""
+  },
+  "gold/client_timeseries/z08398262.json": {
+   "VersionId": "27EwIOMLuaYDAvOZ8rNvpLip0sSyVj4W",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"054f052ae9a0eeea865fc8f880b0a452\""
+  },
+  "platinum/clients/z08398262/concentration.json": {
+   "VersionId": "drFn9XMTy9D0_mWJFIsR3TXsCqhf2jJ.",
+   "LastModified": "2026-10-08T05:52:01+00:00",
+   "ETag": "\"6b57d5bc133e6bf888938d22a1ab3106\""
+  },
+  "gold/entities/clients/z08399935.json": {
+   "VersionId": "m6m_mYsLHa3Mn0CdpCVp8IlsapyLUeGS",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"8c51f16407f1be74838c5b1fac296901\""
+  },
+  "gold/client_timeseries/z08399935.json": {
+   "VersionId": "adUUm39ybWNgniAjh5FY5JAkq8AtDJIY",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"8c51f16407f1be74838c5b1fac296901\""
+  },
+  "platinum/clients/z08399935/concentration.json": {
+   "VersionId": "4P0BD4.lKgxXgVULrJGZXjKhcEqpi_6l",
+   "LastModified": "2026-10-08T05:52:02+00:00",
+   "ETag": "\"f92caf0094b97d67a664cf7c99f47c3b\""
+  },
+  "gold/entities/clients/z08400054.json": {
+   "VersionId": "TctfwZteLmEwjYv3wtUFKzURuv373FBL",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"dc9a8b2842501252d90f3edef183e66b\""
+  },
+  "gold/client_timeseries/z08400054.json": {
+   "VersionId": "L5xLmWFaXg_zpptEXrQ95bd3rucBaDO1",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"dc9a8b2842501252d90f3edef183e66b\""
+  },
+  "platinum/clients/z08400054/concentration.json": {
+   "VersionId": "XwLPM7GSPTAEVSSjReokO058qnuKqohE",
+   "LastModified": "2026-10-08T05:52:21+00:00",
+   "ETag": "\"feb2f8b8f6506285ad7e981f209cd697\""
+  },
+  "gold/entities/clients/z08400735.json": {
+   "VersionId": "pjxSkEHJZMEf.neANUDNhStl5cHwOHlX",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"d324e64138d108971f7811d4793fb3e8\""
+  },
+  "gold/client_timeseries/z08400735.json": {
+   "VersionId": "k0c8qgFVGhGTHH0QohRJjfD6mIFoytJo",
+   "LastModified": "2026-10-08T05:26:00+00:00",
+   "ETag": "\"d324e64138d108971f7811d4793fb3e8\""
+  },
+  "platinum/clients/z08400735/concentration.json": {
+   "VersionId": "AtQT2jxYVeCIhabHKeTIaCtX16HHlqrp",
+   "LastModified": "2026-10-08T05:52:22+00:00",
+   "ETag": "\"0f002af2468860f76064cc2f1e531833\""
+  },
+  "gold/entities/clients/z0880128.json": {
+   "VersionId": "eZymgH.TxEST1IrSyDxXK7HLaJFRjFea",
+   "LastModified": "2026-10-08T05:22:56+00:00",
+   "ETag": "\"a312a8c7afdbc7a1d98875827e247102\""
+  },
+  "gold/client_timeseries/z0880128.json": {
+   "VersionId": "1Ko..CpfKQGcInxRzEtMvId.XWgeXTX3",
+   "LastModified": "2026-10-08T05:22:57+00:00",
+   "ETag": "\"a312a8c7afdbc7a1d98875827e247102\""
+  },
+  "platinum/clients/z0880128/concentration.json": {
+   "VersionId": "e8DhRMidhmTFM5VAi5uUienOCDrozMxg",
+   "LastModified": "2026-10-08T05:51:58+00:00",
+   "ETag": "\"5f0142db73c6856e215cd4537babff54\""
+  },
+  "gold/entities/clients/z0880237.json": {
+   "VersionId": "J8_OFBT93.SbtVBuF7yb_TE9CuTxySeR",
+   "LastModified": "2026-10-08T05:24:10+00:00",
+   "ETag": "\"8d393b8b3c56fea397e56f6b3b54e0a6\""
+  },
+  "gold/client_timeseries/z0880237.json": {
+   "VersionId": "_GTWUZkBOSglof0HrZPzft_TN9AW2xcU",
+   "LastModified": "2026-10-08T05:24:10+00:00",
+   "ETag": "\"8d393b8b3c56fea397e56f6b3b54e0a6\""
+  },
+  "platinum/clients/z0880237/concentration.json": {
+   "VersionId": "PIZ9s0rU347GDhcXSmgvlci_DuIXBCWm",
+   "LastModified": "2026-10-08T05:52:47+00:00",
+   "ETag": "\"f0421da246f3c313bd67081f1edd2e98\""
+  },
+  "gold/entities/clients/z0880407.json": {
+   "VersionId": "xb0vSlSxq6wQg7E0CvhEOHmOoe.fDM5T",
+   "LastModified": "2026-10-08T05:24:57+00:00",
+   "ETag": "\"455d78532e682b9643727b2dc1f66f47\""
+  },
+  "gold/client_timeseries/z0880407.json": {
+   "VersionId": "KPPJu8xFYA7rosSKfJL16iIZyrHvs6us",
+   "LastModified": "2026-10-08T05:24:57+00:00",
+   "ETag": "\"455d78532e682b9643727b2dc1f66f47\""
+  },
+  "platinum/clients/z0880407/concentration.json": {
+   "VersionId": "LK23s7I6Zi.XVqdWScmuumLQuTV06yEZ",
+   "LastModified": "2026-10-08T05:52:16+00:00",
+   "ETag": "\"43132615e6f5e538c73153cfbe07b7ca\""
+  },
+  "gold/entities/clients/z0884828.json": {
+   "VersionId": "SgDvOxT8zY2tzzG.POi8FGmZij5DNY_P",
+   "LastModified": "2026-10-08T05:24:23+00:00",
+   "ETag": "\"989d5098369c4fce37c4d2864147b0b1\""
+  },
+  "gold/client_timeseries/z0884828.json": {
+   "VersionId": "1HdiDuEf1D9CgSqIV8iJ04G2XmdqyTGB",
+   "LastModified": "2026-10-08T05:24:23+00:00",
+   "ETag": "\"989d5098369c4fce37c4d2864147b0b1\""
+  },
+  "platinum/clients/z0884828/concentration.json": {
+   "VersionId": "BFDzBHCqQLdcjmKLxluxOsmuvU_ojcHy",
+   "LastModified": "2026-10-08T05:51:37+00:00",
+   "ETag": "\"e667f09d0d91ef72950dbe4c8f818bfa\""
+  },
+  "gold/entities/clients/z0884841.json": {
+   "VersionId": "3EWJPLkIKUQXMaVVDn10vz2r58Ljlszv",
+   "LastModified": "2026-10-08T05:22:59+00:00",
+   "ETag": "\"d520b1fd53a2a726a5714a8db3ed1b43\""
+  },
+  "gold/client_timeseries/z0884841.json": {
+   "VersionId": "04Kquwrl9vBegbDPFA5GTrpFKtaMd3jq",
+   "LastModified": "2026-10-08T05:22:59+00:00",
+   "ETag": "\"d520b1fd53a2a726a5714a8db3ed1b43\""
+  },
+  "platinum/clients/z0884841/concentration.json": {
+   "VersionId": "suYdt7EJs6iSigM_9ymbCkq5aB_sXT50",
+   "LastModified": "2026-10-08T05:51:42+00:00",
+   "ETag": "\"0ae1e00d55f78e9f8bb02d08df638ae0\""
+  },
+  "gold/entities/clients/z0884950.json": {
+   "VersionId": "8tQj.3N1f5VJ3g6JzUmZlanWylG4OPeb",
+   "LastModified": "2026-10-08T05:23:00+00:00",
+   "ETag": "\"ec20780540e5c130d29aaf7dd50025f8\""
+  },
+  "gold/client_timeseries/z0884950.json": {
+   "VersionId": "7e0OAJl2Ya6paHI61OoAB0ETT6kdMnzc",
+   "LastModified": "2026-10-08T05:23:00+00:00",
+   "ETag": "\"ec20780540e5c130d29aaf7dd50025f8\""
+  },
+  "platinum/clients/z0884950/concentration.json": {
+   "VersionId": "YdX26QG8YjCrhZdKvf7_SFRz0d0bZ6nL",
+   "LastModified": "2026-10-08T05:51:42+00:00",
+   "ETag": "\"d17071c022244af27e701d44d75ca862\""
+  },
+  "gold/entities/clients/z0893313.json": {
+   "VersionId": "9shKD94lTVI2AUDAEFUwCPi9ioCLSWml",
+   "LastModified": "2026-10-08T05:23:16+00:00",
+   "ETag": "\"2aba5fcf21d4cb94cefcf15589bfbb73\""
+  },
+  "gold/client_timeseries/z0893313.json": {
+   "VersionId": "kVvwRf6d0ejmzr20I3frN8exOKTcV5UC",
+   "LastModified": "2026-10-08T05:23:16+00:00",
+   "ETag": "\"2aba5fcf21d4cb94cefcf15589bfbb73\""
+  },
+  "platinum/clients/z0893313/concentration.json": {
+   "VersionId": "Rge_T1jEN0blFVo6Vibr3sKxjeet0zey",
+   "LastModified": "2026-10-08T05:52:05+00:00",
+   "ETag": "\"c53426b8385f595df041072d5f6c5ecc\""
+  }
+ }
+}

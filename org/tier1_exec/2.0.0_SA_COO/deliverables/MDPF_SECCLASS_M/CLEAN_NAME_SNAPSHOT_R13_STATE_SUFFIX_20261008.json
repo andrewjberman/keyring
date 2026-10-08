@@ -1,0 +1,40 @@
+{
+ "clean": {
+  "CSCO": "Cisco Systems Inc"
+ },
+ "custody": [],
+ "rows": {
+  "CSCO": {
+   "asset_class": {
+    "S": "equity"
+   },
+   "classified_by": {
+    "S": "legacy"
+   },
+   "instrument_kind": {
+    "S": "single_security"
+   },
+   "last_updated": {
+    "S": "2026-09-30T00:02:50Z"
+   },
+   "management_style": {
+    "S": "unknown"
+   },
+   "name": {
+    "S": "Cisco Systems Inc/Delaware"
+   },
+   "sub_asset_class": {
+    "S": "Information Technology"
+   },
+   "ticker": {
+    "S": "CSCO"
+   },
+   "updated_by": {
+    "S": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+   }
+  }
+ },
+ "table": "etf-classifications",
+ "taken_at": "2026-10-08T18:36:18.111836+00:00",
+ "updated_by": "mdpf-secclass-clean-names-v2"
+}
