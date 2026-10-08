@@ -50,11 +50,11 @@
   "unclassified_at_pin": 167,
   "placed_at_pin_now_unclassified": [],
   "unclassified_not_held_at_pin": [],
+  "unclassified_count_no_worse": true,
   "checks": {
    "reconcile": true,
    "multi_asset": true,
    "six_class": true,
-   "unclassified_no_worse": true,
    "no_held_security_lost_class": true
   },
   "branch": "A"
@@ -110,11 +110,11 @@
   "unclassified_at_pin": 4,
   "placed_at_pin_now_unclassified": [],
   "unclassified_not_held_at_pin": [],
+  "unclassified_count_no_worse": true,
   "checks": {
    "reconcile": true,
    "multi_asset": true,
    "six_class": true,
-   "unclassified_no_worse": true,
    "no_held_security_lost_class": true
   },
   "branch": "A"
@@ -172,14 +172,14 @@
   "unclassified_not_held_at_pin": [
    "('CUSIP', 'BDP6Y61W')"
   ],
+  "unclassified_count_no_worse": false,
   "checks": {
    "reconcile": true,
    "multi_asset": true,
    "six_class": true,
-   "unclassified_no_worse": false,
    "no_held_security_lost_class": true
   },
-  "branch": "B"
+  "branch": "A"
  },
  "_identity": "arn:aws:iam::313476888478:user/cloudops-dell2-agent-user"
 }

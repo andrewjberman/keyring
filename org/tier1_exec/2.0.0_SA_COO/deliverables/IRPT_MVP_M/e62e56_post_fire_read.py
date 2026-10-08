@@ -6,9 +6,9 @@ Read-only. Two modes, one per side of each weekday irpt-holdings-snapshot fire (
     python <this> pin  --out <pins>.json                 # before the fire: each firm's current/manifest.json VersionId
     python <this> read --pins <pins>.json --out <r>.json  # after the fire: Branch A (keep) or B (re-point) per firm
 
-Branch A per firm (all four): reconcile difference <= 0.01; 0 multi_asset; 0 classes outside the six; unclassified at or
-below the pinned publication's count. Also measured (proposed to the CTO, row S392): no security held at the pin
-loses its class (`no_held_security_lost_class`); unclassified new positions are listed, not graded. A firm that did not move keeps serving its pin and reads NOT-MOVED. Without --pins the
+Branch A per firm (all four; CTO AMENDMENT 2.1 @b3f3996a72): reconcile difference <= 0.01; 0 multi_asset; 0 classes
+outside the six; no security held at the pin is unclassified after the fire. New positions that serve unclassified
+are listed (`unclassified_not_held_at_pin`), not graded. A firm that did not move keeps serving its pin and reads NOT-MOVED. Without --pins the
 read uses the first-fire pins recorded in NEVER_WIDEN_IRPT_BCKEND_COO_HALF_SECCLASS_E62_E56_RELEASE_20261007.md.
 """
 import argparse
@@ -91,8 +91,8 @@ def firm_read(s3, firm, bucket, pin):
     checks = {"reconcile": rec.get("reconciled") is True and diff is not None and abs(diff) <= TOLERANCE,
               "multi_asset": out["multi_asset_nodes"] == 0,
               "six_class": not out["classes_outside_six"],
-              "unclassified_no_worse": out["unclassified"] <= out["unclassified_at_pin"],
               "no_held_security_lost_class": not out["placed_at_pin_now_unclassified"]}
+    out["unclassified_count_no_worse"] = out["unclassified"] <= out["unclassified_at_pin"]  # listed, not graded (2.1)
     out["checks"] = checks
     out["branch"] = ("NOT-MOVED" if not out["moved"] else "A" if all(checks.values()) else "B")
     return out

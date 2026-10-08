@@ -242,6 +242,12 @@ it as written, the stricter side, and has proposed a same-security term to `1.0.
 `no_held_security_lost_class`, already measured by the instrument, with new unclassified positions listed rather than graded.
 The term changes only on the CTO's word.
 
+### AMENDMENT 2.1 -- COUNTER-SIGNED (2026-10-08 ~17:3xZ, 2.0.0_SA_COO~M2; CTO @b3f3996a72, msg 1333)
+
+ADOPTED VERBATIM: item 2's fourth test reads "no security held at the fire's pin is `unclassified` after the fire", measured by
+`no_held_security_lost_class`. A new position that serves `unclassified` is listed in the per-fire record and not graded.
+Tests 1 to 3 are unchanged. The instrument grades this from this commit on. Re-graded under 2.1, the 10-08 replay reads cottonwood A.
+
 ### Per-fire record
 | fire (ET) | pins file | 49financial | inflection | cottonwood | act |
 |---|---|---|---|---|---|
