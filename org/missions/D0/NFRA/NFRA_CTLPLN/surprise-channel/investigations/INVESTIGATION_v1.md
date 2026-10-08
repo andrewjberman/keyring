@@ -3596,3 +3596,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A command-keyed reply ('M123 #dev notes', '#0') is built and tested. A natural-language text goes through assist.INTENT_SYSTEM, whose rule reads '\"dev\" only for a chat (C...)'; the model is therefore told not to plan dev on an M tag, though parse_plan, open_items and the sms.reply path would carry it. Changing that rule changes an existing chat path's prompt, which the order says stays byte for byte, so it is left. The mail text's own instruction is the command form."
 }
 ```
+
+## NFRA_CTLPLN-W33-S1 -- TO-CT-i-5: the box tool has no lock/device/CPU switch, so the seam test supplies them through a runner
+
+```json
+{
+  "id": "NFRA_CTLPLN-W33-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~33",
+  "surfaced_at": "2026-10-08T00:30Z",
+  "one_line": "TO-CT-i-5 item 2: .tools/remote-job.py has no switch for its lock file, device name or CPU read, so the seam test runs the real tool through a runner that replaces them, as the box tool's own test does",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/remote-job.py LOCK, device_name(), measure(), make_runtime()",
+      ".tools/tests/test_remote_job_review.py main()",
+      "data/transcripts/scripts/tests/test_inbound_seam.py RUNNER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'run the REAL .tools/remote-job.py as a subprocess with --dry-run on a temporary lock and liveness file' and, if dry-run cannot give a complete envelope after a grade, 'build the lock the way the box tool's own test does and say so in the report'.",
+  "world_is": "The tool's LOCK is a module constant (.tools/.remote-job.json) with no argument or environment override; only the liveness file has one (OPAL_LIVENESS_FILE). `grade` always writes LOCK and `--dry-run` on accept writes no lock, so a graded dry-run complete cannot be produced from a bare subprocess without touching the real lock. device_name() shells to agentbus-sqs.sh and measure() imports psutil. The test therefore starts the real tool by file path through a python -c runner that sets rj.LOCK to a temporary file and replaces device_name, measure and make_runtime (the last with a stand-in that only prints) before calling the tool's own main(argv); accept, bid and complete envelopes come from --dry-run, and the lock is built by one non-dry accept whose sender is that stand-in. The tool's code is unedited; the real .tools/.remote-job.json is read before and after and is unchanged (absent at the cut). No disagreement between the two halves was found: every field the cloud handlers read (reviewer, available, cpu_pct, mem_pct, device, coo, grade.by, grade.verdict, summary, deployed) is sent under the same name; fields sent and not read (accept: device, serial, brief_sha256; complete: serial, evidence) are inert."
+}
+```
