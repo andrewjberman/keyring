@@ -13,7 +13,6 @@ import csv
 import glob
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 import boto3
@@ -72,16 +71,19 @@ def main():
     ma = sum(1 for i in items if i.get("asset_class") == "multi_asset")
     model_rows = sum(1 for i in items if i.get("classified_by") == "model")
     s3 = boto3.client("s3", region_name="us-east-1")
-    day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    try:
-        listing = json.loads(s3.get_object(Bucket="opal-data-mdpf",
-                                           Key=f"mdpf/global/gold/ai_classified_securities/date={day}/index.json")["Body"].read())
+    # The NEWEST listing, not today's: a run that crosses midnight UTC leaves the latest listing under yesterday's date until its
+    # next chunk rewrites it (laptop ~SC's warning, 2026-10-08), and reading today's key then grades a false FAIL.
+    prefix = "mdpf/global/gold/ai_classified_securities/"
+    listings = [o["Key"] for page in s3.get_paginator("list_objects_v2").paginate(Bucket="opal-data-mdpf", Prefix=prefix)
+                for o in page.get("Contents", []) if o["Key"].endswith("/index.json")]
+    newest = max(listings) if listings else None
+    lcount = None
+    if newest:
+        listing = json.loads(s3.get_object(Bucket="opal-data-mdpf", Key=newest)["Body"].read())
         lcount = listing.get("count", len(listing.get("securities", listing.get("rows", []))))
-    except s3.exceptions.NoSuchKey:
-        lcount = None
     ok = not probs and gone == 0 and ma == 0 and landed > 0 and lcount == model_rows
     print(f"AI-LEG-VERIFY act={act} ok={ok} planned={len(keys)} landed={landed} unresolved={unresolved} problems={len(probs)} "
-          f"first={probs[:3]} snapshot_keys_gone={gone} multi_asset={ma} model_rows={model_rows} listing_count={lcount}")
+          f"first={probs[:3]} snapshot_keys_gone={gone} multi_asset={ma} model_rows={model_rows} listing_count={lcount} listing={newest}")
     return 0 if ok else 1
 
 
