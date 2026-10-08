@@ -2103,3 +2103,16 @@ fanout: 1 of 1 chains, cap 8, reason: one release pair, ordered acts. Slot ~172.
 fanout: 1 of 1 chains, cap 8, reason: one tool file + one row (round 77 holds the release; ONE ISSUANCE PER ROUND, so E4 is cut as
 round 78, which the analysis permits). Slot ~173. Check `deliverables/2.0.0_SA_COO~P2/checks/r78/p78_cells.py`, dry-run at base 212717f781 on dell2: AC1 PASS (61.4 s,
 the read returns here), AC2 FAIL (rc 0, no bound), AC3 FAIL (no row).
+
+## 73. ROUND 80, WORKSTREAM ~P (2026-10-08 ~18:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO analysis ADDENDUM 4 @eba8fde8bb: E7)
+
+The custody route is live but irpt-export-render packages reports/repository.py at 83e8b9577a, whose KINDS lacks CUSTODY_REPORT
+(row D2-W172-S3, ruled ~P's by ADDENDUM 4). This round repins and writes the packet; the release follows under a new pair (round 81),
+built from a clean worktree (row D2-S3). Section 72 (round 79, IB-pr-366) is on branch wk-IRPT_BCKEND-174; the drain unions both.
+Check: `deliverables/2.0.0_SA_COO~P2/checks/r80/p80_cells.py`, dry-run at base 2c287dec89: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-367` | E7 part 1: repin repository.py (+ any read-path policy row) past b13bab7495; clean-tree BUILD_ONLY; never-widen packet | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-364 (drained) | P80-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~175.
