@@ -4719,3 +4719,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Section G of the plan note says this in the plan table. If the issuer wanted three policies, or wanted the existing one rewritten, that is a recut; the two forms grant the same 94 secrets."
 }
 ```
+
+## NFRA_CTLPLN-W14-S23 -- resolution record for W14-S19: AMENDMENT 17 recut CTa1-AC5; CVO to disposition S19
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:22:18Z",
+  "one_line": "Resolution record for NFRA_CTLPLN-W14-S19: AMENDMENT 17 recut CTa1-AC5 to dell_write_refused=8/10 and the re-run reads it; the row gate refuses a worker's in-place edit and a worker's adjudicates, so this row is filed UNDER_INVESTIGATION for 3.0.0_SA_CVO to disposition S19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md AMENDMENT 17 item 3 @df84da40fa: row W14-S19 is dispositioned as resolved by that amendment",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py at HEAD df84da40fa, last line: TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False; the two allowed arms are kms:PutKeyPolicy for cloudops-dell1-agent-user and cloudops-dell2-agent-user, allowed by cloudops-dell-agent-respol-allow-policy (applied TO-APPLY-13) through the key policy's RootAdministersTheKeyAndCannotUseIt delegation",
+      ".tools/surprise-row-gate.py refused (1) an in-place disposition of NFRA_CTLPLN-W14-S19 ('EXISTING row ... was MUTATED in place') and (2) `adjudicates` on a worker's row ('3.0.0_SA_CVO's field'); this row is the lawful form"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 17 item 3: row W14-S19 is dispositioned as resolved by this amendment.",
+  "world_is": "S19 keeps disposition UNDER_INVESTIGATION in its own bytes (append-only; worker rows may not disposition). The criterion now reads PASS against the recut expectation.",
+  "notes": "Cites NFRA_CTLPLN-W14-S19. Proposed disposition for the CVO: S19 resolved by AMENDMENT 17 (the issuer's recut of its own criterion; the two kms:PutKeyPolicy arms are the accepted route, item 4 of 'What this Allow CAN undo', CTO msg 106733). The worker does not set it."
+}
+```
