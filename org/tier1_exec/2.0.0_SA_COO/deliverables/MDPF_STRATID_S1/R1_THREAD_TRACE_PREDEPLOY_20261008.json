@@ -1,0 +1,26 @@
+{
+  "global_key": "portal/gold/mdpf/global/aggregate-aua-timeseries/2026-10-07.json",
+  "date": "2026-10-07",
+  "overlap_measured": {
+    "divz": {
+      "sleeve_accounts": 1,
+      "overlap_accounts": 1,
+      "overlap_dollars": 1369406.08
+    },
+    "pfde": {
+      "sleeve_accounts": 4,
+      "overlap_accounts": 0,
+      "overlap_dollars": 0.0
+    }
+  },
+  "basis_pfde_cottonwood": "additive",
+  "pfde_cottonwood": 412892.63,
+  "pfde_global_tree": 412892.63,
+  "global_total_before": 2148075366.7,
+  "global_total_after": 2148488259.33,
+  "delta": 412892.63,
+  "client_served": 270465346.53000003,
+  "client_after": 270465346.53000003,
+  "withheld_on_date": [],
+  "verdict": "THREAD-OK"
+}
