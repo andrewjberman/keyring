@@ -5,7 +5,7 @@
  "project": "IRPT_CUSTDY",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/q1-custodial-investor-reporting-programme-brief-20261006.md@b714dd81b1",
  "endpoint_outcomes": [
@@ -216,3 +216,20 @@ COVERAGE. The ENDPOINT and CONTRACTS are not edited, so the ratified-text half d
 
 Hop 1 and S01 now name the firm advisor-ownership map as the advisor's account source. The directory only names the
 accounts. Neither the ENDPOINT nor the CONTRACTS changed.
+
+## v0.4 (1.0.0_SA_CTO, 2026-10-08) -- a wording addendum: the product is the "Performance client statement"
+
+Andrew-direct ~21:2xZ at the `1.0.0_SA_CTO~DELL2` terminal, VERBATIM: "Yeah the issue with the custody report is that it really
+sounds like its just a performance report, I dont see the differnce between what youre discussing for that purpose with what will
+end up being on the performance tab" and "if the functions youre building out are additive and currently dont exist on the
+performance tab, then that is great, but lets refer to it accoridngly" (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_212xZ_CUSTODY_REPORT_IS_PERFORMANCE_ADDITIVE_REFER_ACCORDINGLY.md`
+@b15e76c232, dell2).
+
+- Wherever this PRD says "custody report", read **"Performance client statement"**: the quarterly client-facing export of the
+  Performance report, with the added holdings, activity and fees sections, rendered in each firm's template, sourced from the
+  custodian. "Custody report" is retired as a product name.
+- The work continues; it is additive to the Performance tab.
+- Code identifiers in flight stay (`CUSTODY_REPORT`, `irpt-custody-x10-v1`, `custody-report-read`, `custody_write.py`), each
+  documented as the Performance client statement where it is defined.
+- Wording only. FWD-1 to FWD-9, the ENDPOINT and the CONTRACTS are unchanged in substance; no half re-opens.

@@ -220,6 +220,7 @@ _sm_on_exit() {
   _lock_drop
   # GC P3 residue item 5: this run's private index never outlives it (a kill -9 still can; the sweep below takes those).
   [ -n "${_PRIV_IDX:-}" ] && rm -f "$_PRIV_IDX" 2>/dev/null
+  [ -n "${_SM_FL_DIR:-}" ] && rm -rf "$_SM_FL_DIR" 2>/dev/null
   if [ -n "$_SM_ERR" ] && [ -f "$_SM_ERR" ]; then
     cls="$(grep -m1 -oE '(REFUSED|FAILED|BLOCKED|ERROR|CONFLICT|WARN)[^.]{0,90}' "$_SM_ERR" 2>/dev/null | tr -s ' ' || true)"
     rm -f "$_SM_ERR" 2>/dev/null
@@ -475,6 +476,99 @@ if [ "$_CONTINUING" -eq 0 ] && [ -n "$(git diff --cached --name-only)" ]; then
   echo "            Merging would grade a union that is not just this branch. Clear or commit first." >&2
   git diff --cached --name-only | sed 's/^/              /' >&2
   exit 2
+fi
+
+# ---------------------------------------------------------------- THE FAST LANE: a clean merge never opens in this tree
+# Andrew-direct 2026-10-08 ~19:5xZ: "im trying to effectively abstract away the issues with the constant merging because
+# currently, it is a major, major holdup on sitez box, it suffocates every single agent on that box." An in-tree merge holds
+# MERGE_HEAD open for its whole grade and commit, and safe-commit refuses EVERY seat in this worktree for that long (two
+# drains refused this seat's commits at 20:16Z and 20:39Z on 2026-10-08). When git can merge cleanly, this lane does
+# what .tools/box-sync.sh does: `git merge-tree --write-tree` in the object store; the path-scoped grade (Andrew ~19:1xZ)
+# on a private index in a private git dir pinned to both parents; `git commit-tree`; the tree check; then a LAND of
+# seconds under safe-commit's own commit lock: compare-and-swap of HEAD's branch, plus `git read-tree -m -u` of the
+# merged paths (it refuses rather than overwrite a seat's uncommitted edit). No MERGE_HEAD ever exists, so no seat is
+# refused. A CONFLICT falls through to the in-tree path below, because a person resolves it there.
+# SAFE_MERGE_IN_TREE=1 forces the old path. Owner 4.0.0_SA_CRO~A (1.0.0_SA_CTO msg 107030).
+_SM_FL_DIR=""
+_sm_fast_lane() {
+  local hb p1 tip out mrc t m mb paths n st rc att lockd w hp tl
+  [ -n "${OPAL_AGENT_SERIAL:-}" ] || return 1                      # the in-tree path refuses with its own text
+  hb="$(git symbolic-ref -q HEAD 2>/dev/null)" || return 1         # detached HEAD: in-tree path
+  tip="$(git rev-parse --verify "${BRANCH}^{commit}")" || return 1
+  lockd="$(git rev-parse --path-format=absolute --git-dir)/commit-queue.lock"
+  for att in 1 2 3; do
+    p1="$(git rev-parse HEAD)"
+    git merge-base --is-ancestor "$tip" "$p1" && return 1           # nothing to merge: the in-tree path says so
+    out="$(git merge-tree --write-tree --no-messages "$p1" "$tip" 2>/dev/null)"; mrc=$?
+    if [ "$mrc" -eq 1 ]; then echo "safe-merge: fast lane -- '$BRANCH' CONFLICTS with HEAD; falling back to the in-tree merge so it can be resolved"; return 1; fi
+    t="$(printf '%s\n' "$out" | head -1)"
+    { [ "$mrc" -eq 0 ] && [ -n "$t" ]; } || { echo "safe-merge: fast lane -- git merge-tree failed (rc=$mrc); in-tree path"; return 1; }
+    # the grade: paths the merge changes against BOTH parents, plus paths both sides changed since the merge base
+    mb="$(git merge-base "$p1" "$tip" 2>/dev/null || echo '')"
+    if [ "${SAFE_MERGE_FULL_GRADE:-0}" = "1" ]; then
+      paths="$(git diff --name-only "$p1" "$t")"
+    else
+      paths="$( { LC_ALL=C comm -12 <(git diff --name-only "$p1" "$t" | LC_ALL=C sort -u) <(git diff --name-only "$tip" "$t" | LC_ALL=C sort -u)
+                  [ -n "$mb" ] && LC_ALL=C comm -12 <(git diff --name-only "$mb" "$p1" | LC_ALL=C sort -u) <(git diff --name-only "$mb" "$tip" | LC_ALL=C sort -u); } \
+                | LC_ALL=C sort -u | sed '/^$/d' )"
+    fi
+    st="$(git diff --name-only "$p1" "$t" | sed '/^$/d' | wc -l | tr -d ' ')"
+    n="$(printf '%s\n' "$paths" | sed '/^$/d' | wc -l | tr -d ' ')"
+    [ "$st" -gt 0 ] || return 1                                      # stages nothing: the in-tree path refuses as before
+    _SM_GRADED="${n}/${st} fast-lane"
+    echo "safe-merge: fast lane -- grading ${n} of ${st} merged path(s) (introduced by the merge or changed on both sides)"
+    if [ "$n" -gt 0 ]; then
+      _SM_FL_DIR="$(git rev-parse --path-format=absolute --git-dir)/safe-merge-fl-$$"
+      rm -rf "$_SM_FL_DIR"; mkdir -p "$_SM_FL_DIR"
+      printf '%s\n' "$p1" > "$_SM_FL_DIR/HEAD"; printf '%s\n' "$tip" > "$_SM_FL_DIR/MERGE_HEAD"
+      git rev-parse --path-format=absolute --git-common-dir > "$_SM_FL_DIR/commondir"
+      GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" git read-tree "$t" || { echo "safe-merge: REFUSED -- could not build the private index" >&2; exit 1; }
+      rc=0; STAGED="$paths" GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$GATE" || rc=$?
+      rm -rf "$_SM_FL_DIR"; _SM_FL_DIR=""
+      if [ "$rc" -ne 0 ]; then
+        echo "safe-merge: *** REFUSED BY THE ROW GATE ON THE MERGE'S OWN PATHS (rc=$rc). *** Nothing landed; FIX ON THE BRANCH, then re-run." >&2
+        exit 1
+      fi
+    else
+      echo "safe-merge: SKIP -- the merge introduces no content of its own and no file changed on both sides; each side was graded at its own commit (Andrew ~19:1xZ)"
+    fi
+    [ -n "$SUBJECT" ] || SUBJECT="drain: merge $BRANCH (fast lane: no merge opened in the shared tree; row gate on what the merge introduces)"
+    m="$(GIT_AUTHOR_NAME="$OPAL_AGENT_SERIAL" GIT_AUTHOR_EMAIL="${OPAL_AGENT_SERIAL}@opal.agent" git commit-tree "$t" -p "$p1" -p "$tip" -m "$SUBJECT")" \
+      || { echo "safe-merge: REFUSED -- git commit-tree failed; nothing landed" >&2; exit 1; }
+    rc=0; _verify_merge_tree "$m" || rc=$?
+    if [ "$rc" -eq 5 ]; then echo "safe-merge: NOT MERGED -- the fast-lane merge ${m:0:10} would drop branch content; nothing landed (exit 5)." >&2; exit 5; fi
+    # LAND, under the commit lock safe-commit lands under (seconds)
+    w=0
+    until mkdir "$lockd" 2>/dev/null; do
+      hp=""; [ -f "$lockd/pid" ] && read -r hp < "$lockd/pid" 2>/dev/null
+      if [ -n "$hp" ] && ! kill -0 "$hp" 2>/dev/null; then rm -rf "$lockd"; continue; fi
+      w=$((w + 1)); [ "$w" -ge 300 ] && { echo "safe-merge: the commit lock stayed busy 300 s; nothing landed -- re-run" >&2; exit 3; }
+      sleep 1
+    done
+    echo "$$" > "$lockd/pid"; tl="${EPOCHREALTIME:-0}"
+    if [ "$(git rev-parse HEAD)" != "$p1" ]; then rm -rf "$lockd"; echo "safe-merge: fast lane -- a seat committed while the merge was graded; rebuilding on the new tip (attempt $att)"; continue; fi
+    git update-index -q --refresh >/dev/null 2>&1 || true
+    if ! git read-tree -m -u "$p1" "$m"; then
+      rm -rf "$lockd"
+      echo "safe-merge: REFUSED -- landing would overwrite an uncommitted local edit of a merged path (named above). Nothing landed; commit or clear it, then re-run." >&2
+      exit 1
+    fi
+    if ! git update-ref -m "safe-merge: merge $BRANCH (fast lane)" "$hb" "$m" "$p1"; then
+      git read-tree -m -u "$m" "$p1" 2>/dev/null; rm -rf "$lockd"
+      echo "safe-merge: the branch moved under the lock; the tree was put back; nothing landed -- re-run" >&2; exit 3
+    fi
+    rm -rf "$lockd"
+    echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD) (fast lane: no merge was opened in this worktree; land $(secs_since "$tl")s)"
+    rc=0; _verify_shared_index HEAD || rc=$?
+    [ "$rc" -eq 6 ] && exit 6
+    exit 0
+  done
+  echo "safe-merge: fast lane -- lost the race to seats' commits 3 times; nothing landed -- re-run" >&2
+  exit 3
+}
+secs_since() { local a="${1/[.,]/}" b="${EPOCHREALTIME:-0}"; b="${b/[.,]/}"; local d=$(( (10#$b - 10#$a) / 10000 )); printf '%d.%02d' $((d / 100)) $((d % 100)); }
+if [ "$_CONTINUING" -eq 0 ] && [ "${SAFE_MERGE_IN_TREE:-0}" != "1" ]; then
+  _sm_fast_lane || true
 fi
 
 if [ "$_CONTINUING" -eq 0 ]; then
