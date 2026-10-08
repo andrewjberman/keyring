@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -36,7 +37,17 @@ TAG_COND_RE = re.compile(r"aws:(ResourceTag|RequestTag|PrincipalTag)/(?P<key>[^\
 TAGKEYS_RE = re.compile(r"aws:TagKeys", re.I)
 
 
-def sh(cmd: list[str]) -> str:
+IAM_TIMEOUT_DEFAULT = 150
+
+
+def iam_timeout() -> int:
+    try:
+        return int(os.environ.get("COMP_TAGAUTHZ_IAM_TIMEOUT", IAM_TIMEOUT_DEFAULT))
+    except ValueError:
+        return IAM_TIMEOUT_DEFAULT
+
+
+def sh(cmd: list[str], timeout: int | None = None) -> str:
     """Run a CLI command. Resolves the executable explicitly -- on Windows `aws` is a .cmd shim
     that bare subprocess cannot find, and a silent FileNotFoundError here would look exactly like
     an empty result. A failed probe must never be mistaken for a clean probe."""
@@ -46,7 +57,12 @@ def sh(cmd: list[str]) -> str:
     if not exe:
         print(f"ERROR: executable not found on PATH: {cmd[0]}", file=sys.stderr)
         sys.exit(1)
-    p = subprocess.run([exe, *cmd[1:]], capture_output=True, text=True)
+    try:
+        p = subprocess.run([exe, *cmd[1:]], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        print(f"ERROR: TAGAUTHZ_IAM_READ_TIMEOUT bound={timeout}s cmd={' '.join(cmd)} "
+              "-- failing CLOSED (could not evaluate)", file=sys.stderr)
+        sys.exit(1)
     if p.returncode != 0:
         print(f"ERROR: {' '.join(cmd[:4])}... rc={p.returncode}\n{p.stderr[:400]}", file=sys.stderr)
         sys.exit(1)
@@ -266,7 +282,7 @@ def banner(aad: dict, conds: list[dict]) -> None:
 
 
 def cmd_pairs(args) -> int:
-    aad = json.loads(sh(["aws", "iam", "get-account-authorization-details", "--output", "json"]))
+    aad = json.loads(sh(["aws", "iam", "get-account-authorization-details", "--output", "json"], timeout=iam_timeout()))
     conds = collect_conditions(aad)
     banner(aad, conds)
     ours = [c for c in conds if is_ours(c["source"])]
@@ -286,7 +302,7 @@ def cmd_pairs(args) -> int:
 
 
 def cmd_check(args) -> int:
-    aad = json.loads(sh(["aws", "iam", "get-account-authorization-details", "--output", "json"]))
+    aad = json.loads(sh(["aws", "iam", "get-account-authorization-details", "--output", "json"], timeout=iam_timeout()))
     all_conds = collect_conditions(aad)
     # banner MUST report the full universe it swept, not the filtered subset -- a banner that
     # states the post-filter count is an artifact misreporting its own denominator.

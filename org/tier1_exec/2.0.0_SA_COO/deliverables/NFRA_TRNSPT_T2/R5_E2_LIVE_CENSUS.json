@@ -1,0 +1,89 @@
+{
+  "_run": {
+    "at_utc": "2026-10-08T18:06:07Z",
+    "by": "2.0.0_SA_COO~T2",
+    "content": "counts and dates only",
+    "host": "dell2",
+    "note": "second identical listing: the first run's output write failed on a path error, its result was not kept",
+    "senders_source": "criterion.load_tables()[0], sorted as pull.py sorts them",
+    "window": [
+      "2026-08-08T23:30:13+00:00",
+      "2026-10-07T23:30:13+00:00"
+    ],
+    "window_basis": "the 2026-10-07T23:30:13Z scheduled fire's 60-day window (run=20261007T233013Z), which holds 2026-08-11"
+  },
+  "has_attachment": true,
+  "senders": [
+    {
+      "sender": "sender#1",
+      "spans": [
+        {
+          "last_page_had_token": false,
+          "listed": 5,
+          "next_token_seen": false,
+          "page_counts": [
+            5
+          ],
+          "pages": 1,
+          "sender": "sender#1",
+          "span": [
+            "2026-08-08T23:30:13Z",
+            "2026-09-08T23:30:13Z"
+          ]
+        },
+        {
+          "last_page_had_token": false,
+          "listed": 8,
+          "next_token_seen": false,
+          "page_counts": [
+            8
+          ],
+          "pages": 1,
+          "sender": "sender#1",
+          "span": [
+            "2026-09-08T23:30:13Z",
+            "2026-10-07T23:30:13Z"
+          ]
+        }
+      ],
+      "total_listed": 13
+    },
+    {
+      "sender": "sender#2",
+      "spans": [
+        {
+          "last_page_had_token": false,
+          "listed": 44,
+          "next_token_seen": true,
+          "page_counts": [
+            25,
+            19
+          ],
+          "pages": 2,
+          "sender": "sender#2",
+          "span": [
+            "2026-08-08T23:30:13Z",
+            "2026-09-08T23:30:13Z"
+          ]
+        },
+        {
+          "last_page_had_token": false,
+          "listed": 43,
+          "next_token_seen": true,
+          "page_counts": [
+            25,
+            18
+          ],
+          "pages": 2,
+          "sender": "sender#2",
+          "span": [
+            "2026-09-08T23:30:13Z",
+            "2026-10-07T23:30:13Z"
+          ]
+        }
+      ],
+      "total_listed": 87
+    }
+  ],
+  "total_listed": 100
+}

@@ -44,3 +44,89 @@ E1 and E2 each open their change-management ledger entry at start, and each may 
 DEV and PROD landings (IB-pr-356 at 63b9382a) stay Andrew's word, after E1.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-08 ~17:3xZ): E4 -- S334's permanent disarm is seated on dell2
+
+This addendum follows the laptop `1.0.0_SA_CTO` ruling, relayed by `0.0.0_AB_MSTR~DELL2` as msg 1342 (laptop bus 02560565), VERBATIM:
+"ruled -- dell2 seats the fix itself; it holds the reproduction and the blocked trees, and the Dells are the work boxes. Bound the read in
+.tools/comp-tagauthz: a timeout on get-account-authorization-details, failing CLOSED with a named reason, or a narrower read (--filter
+scoped to the principals the tree tags), whichever settles row IRPT_BCKEND-S334 on a real default_tags tree. Lane:
+GIT_COMMIT_AUTHOR_OVERRIDE=0.5.0_AE_OpalETL, audited, naming this ruling; it reaches every box by the trunk. Your interim per-order
+override 0a91529221 stands until it lands."
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E4 | `~P2` | **Bound comp-tagauthz's IAM read** (`.tools/comp-tagauthz`), committed under `GIT_COMMIT_AUTHOR_OVERRIDE=0.5.0_AE_OpalETL`, with the audit line naming msg 1342 | (1) on one real `default_tags` tree, the gate returns a verdict in bounded time (the elapsed time is printed); (2) when the IAM read is forced to exceed its bound, the gate fails CLOSED with a named reason (negative arm); (3) S334 is disarmed in the investigation row, citing the commit | LOCAL |
+
+E4 may be issued in the round already open, or in the next one. The interim override stays in force until E4's commit is on the trunk.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-08 ~18:0xZ, on `~Y2` msg 1361, row D2-W156-S2): X-1 is recut on the live guard by `~P2`; release 2 re-pins after
+
+**What failed.** E2, release 2, ran and was rolled back to `ZspX0qD2...` at 17:44:54Z (`IRPT_BCKEND_ROUND65_Y_L8_COMPILE.md` @87a95c6fca).
+This seat read the cause in the source:
+- `_authz/served.py:919` resolves the create owner as `access.prospect_owner()` with no storage firm;
+- `_scope/interactive_access.py:123-137` therefore builds the owner from the actor's own firm and principal.
+
+So the on-behalf branch at `uploads.py:241-248` is never reached on the served path. The unit tests passed because they hand `create`
+an owner that the live guard never builds. The release-2 pair (@bf4707adf1, CTO half @6d24511482) is VOID: its pin no longer ships the
+behavior it signs.
+
+**Ruling: lane `~P2`** (`_scope/` and `_authz/served.py`, lane IRPT_LIVE_SCOPE_P, as in msg 944 (1)).
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E5 | `~P2` | **The live guard resolves an on-behalf owner.** For a CREATE by an OPAL_GLOBAL filer that names an owner firm in its `allowedFirmIds`, the owner the guard resolves is the shape `uploads.py`'s on-behalf branch admits. Every other case keeps today's owner. | (1) a test drives the REAL served path (`served.py`'s guarded handler with a verified internal subject), not `create` directly: the listed firm is admitted and the stored record names the actor and the owner firm; (2) negative arms on the same path: an unlisted firm, `"ALL"`, a non-internal principal and owner opal-capital are each refused with their existing codes; (3) the existing guard and uploads suites pass | LOCAL |
+
+After E5 drains:
+- `~Y2` re-runs the release census at the new pin.
+- A NEW release-2 pair is signed, with both halves at the new pin. This seat's three conditions carry over.
+- Then the release runs.
+
+S1 (the irpt-requests decrypt) stays moot until then.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-08 ~18:0xZ, on `3.0.0_SA_CVO` slug msg 1369, REMEDIATION_v26 @69ae308272): round 65 ~Y analysis
+
+**State.** The live code read back is release 1 (`ZspX0qD2...`). S392 is disarmed by AMENDMENT 2. Two rows are OPEN to this seat.
+
+- **D2-W156-S2** (the on-behalf branch cannot be reached on the served route): ruled in ADDENDUM 2. `~P2` does E5, then `~Y2`
+  re-pins, and then a new pair is signed.
+- **D2-W156-S1** (BLOCKING: `cloudops-dell2-agent-user` lacks `kms:Decrypt` on irpt-requests' CMK, so the admit's UPLOAD# record could
+  not be read back or deleted). **Ruling:** the NEW release-2 pair names, before any write, who reads back and who deletes the test
+  admit's record, and through which path. The paths are tried in this order, and the first one that works is used:
+  1. **No new grant.** Read back through the function's own read operation by direct invoke, since the function decrypts. Delete with
+     `delete-item` by key. A dry probe on a non-client item first measures whether delete and NOT-FOUND need `kms:Decrypt`.
+  2. **A laptop seat that holds the decrypt** does the read and the delete through the fenced path, and returns a counts-only file.
+  3. **A new decrypt grant to the dell2 user,** asked laptop `~C` through `0.0.0_AB_MSTR~DELL2`. This is a last resort, because
+     irpt-requests holds client request content.
+
+  The pair does not sign until one path is named and its probe has printed.
+
+**ENRICHMENT for `~Y2`, after E5 drains:** E6 is the re-pinned release 2, run under the new pair. Its criteria are the void pair's
+after-reads 1 to 7, plus this read-back and delete path printed with its probe.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-08 ~18:1xZ, on `3.0.0_SA_CVO` slug msg 1377, ADJUDICATION_v35 @cdf801e03b): rounds 77-78 ~P
+
+**State.**
+- **E1 (the custody release pair) is LIVE.** The CVO read `irpt-export-render` CodeSha256 `03p2eIEK...`; the census at 1e0cdaf90c reads
+  `changed_members=0`; the custody-report route is present.
+- **E4 (comp-tagauthz bounded) landed** at fad269226b. S334 is DISARMED; it closes once the commit is on the trunk.
+- **ARMED:** W165-S2 (MSTR) and D2-S3 (`~P2`: the shared tree's modified `export/entry.py` drops the custody route).
+
+**D2-W172-S3, ruling: `~P2` cuts it.** It is a repin in `~P`'s function, not new code, and not IRPT_CUSTDY's. HEAD's
+`reports/repository.py` carries `CUSTODY_REPORT` in KINDS, since b13bab7495. `irpt-export-render`'s source-map row still packages it at
+83e8b9577a, which does not.
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E7 | `~P2` | **Repin `reports/repository.py`, plus any reporting-policy row the read path checks, past b13bab7495, and release it under a new pair** | (1) `release-census.py irpt-export-render --pin <new pin>` lists only the repinned members, each against b13bab7495 or its named owner; (2) the build runs from a clean worktree at the pin, never the shared tree (D2-S3), and the built `entry.py` still routes `custody-report-read`; (3) after release, an Opal custody-report-read of one existing CUSTODY_REPORT by reference returns it, and the other-firm read still returns `OBJECT_NOT_COVERED` | SERVED |
+
+D2-S3 is disarmed by `~P2` the same turn it is next read: restore or commit the shared-tree `entry.py` with its owner, so that no build
+can pick it up.
+
+-- 1.0.0_SA_CTO~DELL2

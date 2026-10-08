@@ -20809,3 +20809,263 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The class change reached 1 of 5 tabled securities; the served run did not apply the CUSIP row where the local r2 precheck did. Disarm: the CTO rules hold-or-rollback; the root cause (served run vs the local build) routes to MDPF_SECCLASS dell1 2.0.0_SA_COO~M1."
 }
 ```
+
+## IRPT_BCKEND-D2-W156-S1 -- IB-yr-651 release 2 stopped before the admit read and rolled back: the dell2 operator credential cannot read, verify or delete irpt-requests (KMS decrypt denied), so after-read 1 and the upload-key deletes could not be met
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W156-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~156",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order needs to read back, and delete, the upload record the admit creates in irpt-requests; the credential this seat runs under (cloudops-dell2-agent-user) is denied kms:Decrypt on that table's CMK, so the admit read was not run, release 2 was rolled back to ZspX0qD2.., and the test profile row was deleted and read NOT FOUND.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb query and get-item on irpt-requests as cloudops-dell2-agent-user: AccessDeniedException, kms:Decrypt denied on key 7f4d3042-10d8-49a7-b55e-3c963cea8111 (describe-table SSEType KMS), 2026-10-08 ~17:41Z",
+      "intake/uploads.py create(): the admit writes an UPLOAD# row via DynamoReportIndex (irpt-requests, key tenant+request_revision) and an S3 object via artifacts.put; y65_cells.py AC2 reads the same keys with the same default credentials",
+      "ledger org/critical_paths/change_management/20261008T1732Z_irpt-ycg-release2-20261008_deploy_completion.md: L1-L3 closed; release 2 applied 17:37:00Z (798Lgqw2.., re-plan 0 changes, census failed={}), rolled back 17:44:54Z to ZspX0qD2.. (census failed={}, re-plan 0 changes)",
+      "rollback mechanism: the module reads the CURRENT S3 version, so the old version 4Pvl.mN3tY9bIQDDVVnGYFiNoKbrUSTh was re-promoted by one s3api copy-object (metadata COPY) to new versionId QBeNB.XXjTccRAbSADmCh_Wv7R0brx6q, content-sha256 ZspX0qD2..; then a targeted plan (0/1/0) and safe-apply. That copy-object is a live write the order's Grant did not list."
+    ]
+  },
+  "spec_asserts": "Order steps 6-7 and AC2: the admit read creates records the worker reads back and deletes, and the checker reads each key NOT FOUND; the grant lists exactly the live writes.",
+  "world_is": "The only credential on this device cannot decrypt irpt-requests, so an admit would leave a record this seat can neither read nor delete and AC2 could not grade; the worker stopped before after-read 1 (reads 2-5 not run), deleted the test row, rolled back with an extra copy-object, and filed this row. Disarm: nothing is armed (live is release 1, no test data exists); to run release 2 the issuer must grant a credential or an executing seat that can decrypt irpt-requests, or re-scope AC2 to the keys this seat can read."
+}
+```
+
+## IRPT_BCKEND-D2-W156-S2 -- Reading the live route: the admit may not reach the on-behalf branch at all, because the guarded owner for an internal subject is built from the subject itself
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W156-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~156",
+  "surfaced_at": "2026-10-08T17:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "By reading the code (not run live), on POST /api/scoped/investor-reporting/analysis/inputs an internal subject's owner is access.prospect_owner(), whose principal_id is the subject, so uploads.py create() sees principal_id == owner.principal_id and never takes the on-behalf branch; after-read 1's acting_principal_id would not be written and read 2 could admit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:905-922 (_handle_prospect): for verified_internal_subject, resolve_owner = access.prospect_owner() and the owner passed to the compute is that value",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:123-137 prospect_owner(): owner = current() minus fingerprint/allowedFirmIds, so owner.principal_id == subject",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:243-248: on_behalf requires principal_id != owner.principal_id; the unit tests (test_uploads_on_behalf.py, test_upload_door_reads_allowed_firms.py) pass an advisor-derived owner separately, which the live guard never builds for an internal subject",
+      "served.py:1010-1024: a non-service internal subject may already select any registered tenant via selected_tenant; only x-user-type service is held to allowedFirmIds, at the boundary with FIRM_BINDING"
+    ]
+  },
+  "spec_asserts": "Pair after-reads 1-2: an OPAL_GLOBAL filer whose allowedFirmIds names the firm is admitted with acting_principal_id = the filer and owner.firm_id = the firm; an unlisted firm is refused with the existing UPLOAD_* code.",
+  "world_is": "Inferred from source only; no live read was run (see IRPT_BCKEND-D2-W156-S1). If it holds, the live route admits an internal subject for a selected firm as before, records no acting_principal_id, and refuses an unlisted firm (service type) with FIRM_BINDING, not the upload code, so after-reads 1-2 as written cannot pass over this route; the offline suites pass because they supply the owner themselves."
+}
+```
+## IRPT_BCKEND-D2-W172-S1 -- amendment arrived after both applies; gate passed without override; plan text committed after the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 (plan text committed before each apply) reached the worker after both applies had landed; the safe-apply tag-authz gate passed without TAGAUTHZ_OVERRIDE on both roots, so no override was used and the plan text is committed after the fact from the saved planfiles.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply.sh output on export root: 'comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag'; api root apply rc=0; both re-plans exit 0 (No changes)",
+      "amendment @212717f781; ledger open commit 4328e78b53; plan text written by terraform show -no-color on the saved planfiles export.tfplan and api.tfplan (the exact files applied)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: commit terraform show of each planfile before its apply; use TAGAUTHZ_OVERRIDE only after the gate has refused without it.",
+  "world_is": "Both applies ran before the amendment arrived; the gate did not refuse on either root (it passed), so tagauthz_override_used is []. The plan text files are the applied planfiles rendered after the apply, not before it. The CTO may want to know S334 did not fire on these two roots."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S2 -- record-terraform-deploy.sh needs a CHANGELOG.json path the order does not grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, which the order's <paths> does not name; the lane gate refused, so the source map was committed alone and the changelog entry is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: owned-paths violation on infra/aws/terraform/investor-reporting/CHANGELOG.json, lane IRPT_COMPLETION_P, 'no NON-TERMINAL task order names this path in its paths block'",
+      "record-terraform-deploy.sh PATHSPEC adds infra/aws/terraform/${PIPELINE}/CHANGELOG.json whenever the changelog writer ran",
+      "recorder's would-be CHANGELOG entry kept at worktree .scratch/CHANGELOG.recorder_output.json (not committed)"
+    ]
+  },
+  "spec_asserts": "Order BOUNDS: the source map moves only through the build and record-terraform-deploy.sh; paths grant lists lambda-source-map.json and lambda/ci/CHANGELOG.md but not the terraform root CHANGELOG.json.",
+  "world_is": "The recorder cannot commit under this grant. The source map carries artifact_sha256 03p2eIEKU9... and last_deployed_at 2026-10-08T17:30:56Z (committed alone). The investor-reporting CHANGELOG.json has no entry for this deploy; the issuer decides whether a later order records it. Nothing served is affected."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S3 -- shipped repository.KINDS excludes CUSTODY_REPORT: the owner read fails closed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released irpt-export-render cannot serve a custody report to its owner: repository.KINDS is (PERFORMANCE, ANALYSIS), so ReportRepository.get raises ReportRefused for a CUSTODY_REPORT record and the route answers DEPENDENCY_UNAVAILABLE; the other-firm refusal is unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live zip repository.py: KINDS = ('PERFORMANCE', 'ANALYSIS'); _report_identity raises ReportRefused('unsupported report kind') for CUSTODY_REPORT; get() calls _report_identity",
+      "offline run of the live custody_read.py: owner firm as shipped -> ReportRefused 'unsupported report kind' (DEPENDENCY_UNAVAILABLE); with KINDS patched in the control run -> SERVED 228 bytes; other firm -> ReportDenied (OBJECT_NOT_COVERED) in both",
+      "reporting policy ACTIVE family list holds no CUSTODY_REPORT family (13 families); S3 irpt/<firm>/ has no custody prefix"
+    ]
+  },
+  "spec_asserts": "Packet and both never-widen halves: an Opal principal reads one retained CUSTODY_REPORT by reference and revision within its scope (Branch A).",
+  "world_is": "Nothing is retained (0 custody reports) and the shipped repository cannot read one back, so the Opal-by-ref leg cannot succeed until IRPT_CUSTDY adds the kind to repository.KINDS and a custody family to the reporting policy. The failure is closed (no body). This is the open leg named OPEN-BY-DESIGN in the after-reads, with a narrower cause than 'no report yet'."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S4 -- IB77-1-AC1 instrument crashes on this device (aws shim, large output); route is live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB77-1-AC1 cannot run on this device: the check's get-routes call (python subprocess -> bash .tools/aws -> aws.exe) dies with rc 3221225477 (0xC0000005) for the api's 6,368-byte route list, so AC1 reads FAIL although the route is live; the same call from the shell, and aws.exe called directly, return the list.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py IB77-1-AC1 run 3 times (bare, bash -c, powershell.exe): 'FAIL: get-routes rc 3221225477', identical each time",
+      "python subprocess of ['bash', '.tools/aws', 'apigatewayv2','get-routes',...,'--query','Items[].RouteKey'] -> rc 3221225477, 0 bytes; same with --query Items[:40].RouteKey (2,360 bytes) -> rc 0; Items[] full list (6,368 bytes) -> crash; under 'bash -c \"bash .tools/aws ... | wc -c\"' from python -> rc 0, 6368; C:/Program Files/Amazon/AWSCLIV2/aws.exe called directly from python -> rc 0, 6368 bytes",
+      "shell read of the same call: GET /api/scoped/investor-reporting/custody-report/{reportId} CUSTOM naqxlm listed on api 7k3ed8px20 (get-routes --query Items[?contains(RouteKey,'custody')])",
+      "every other AC1 field verified true by hand: pin, 3 members, start sha == rollback target, built == live == 03p2eIEK..., post-census 0, both re-plans 0, ledger closed, rolled_back false"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1: the check re-reads the route list live and prints 'IB77-1-AC1 PASS'.",
+  "world_is": "The check's instrument fails on this device before it reads the route list: a large-output aws call launched from a native python process through the .tools/aws shim crashes. The route is live; the check's verdict is FAIL by instrument fault, not by state. The check was not changed and AC1 is recorded FAIL; the order stays open. The issuer can re-run AC1 on a device where the shim call succeeds, or decide the instrument fix (.tools/aws is not in this order's paths)."
+}
+```
+## IRPT_BCKEND-D2-W173-S1 -- comp-tagauthz's IAM read is bounded; S334 resolved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W173-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~173",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S334: commit fad269226b changes .tools/comp-tagauthz.py to bound the IAM get-account-authorization-details read (env COMP_TAGAUTHZ_IAM_TIMEOUT, default 150 s) and fail closed rc 1 with TAGAUTHZ_IAM_READ_TIMEOUT. IB78-1-AC1 last line: IB78-1-AC1 PASS (rc 0 in 22.5 s); IB78-1-AC2 last line: IB78-1-AC2 PASS (rc 1 naming TAGAUTHZ_IAM_READ_TIMEOUT).",
+  "one_line": "The gate's IAM read now has a 150 s default bound and fails closed with a named token instead of hanging.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit fad269226b on wk-IRPT_BCKEND-173; p78_cells.py IB78-1-AC1 and AC2 PASS"
+    ]
+  },
+  "spec_asserts": "S334: the comp-tagauthz IAM read is unbounded and can hang the apply gate.",
+  "world_is": "The read is bounded by COMP_TAGAUTHZ_IAM_TIMEOUT (default 150 s); an overrun exits 1 naming TAGAUTHZ_IAM_READ_TIMEOUT."
+}
+```
+
+## IRPT_BCKEND-D2-S1 -- D2-W172-S4 and D2-W172-S2 resolved: the AC1 check filters its route read (AMENDMENT 2); the custody-release changelog entry is recorded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W172-S4 and IRPT_BCKEND-D2-W172-S2. S4: AMENDMENT 2 @bebe0e817a makes the AC1 check filter get-routes server-side to the one route key (the 6,368-byte list crashed python -> bash .tools/aws -> aws.exe with 0xC0000005) and sums the per-page length(Items) counts; IB77-1-AC1 PASS ('1 match of 115 routes'), re-run by the issuer and by the re-seated worker (@e78cb6aba6); IB-pr-364 complete, drained @fd99fb52e5. S2: the issuer recorded the irpt-export-render custody-release entry (version investor-reporting-custody-release-pr364, deployed_at 2026-10-08T17:30:56Z) in infra/aws/terraform/investor-reporting/CHANGELOG.json from the recorder output the worker saved, in the commit that carries this row.",
+  "one_line": "The release's AC1 instrument no longer crashes on dell2, and the deploy changelog carries the custody release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py . IB77-1-AC1 -> 'OK: pin 1e0cdaf90c, 3 of 3 members, live CodeSha256 == built, route live (1 match of 115 routes), replans 0, ledger closed' / IB77-1-AC1 PASS",
+      "CHANGELOG.json entries[0].version investor-reporting-custody-release-pr364 (from wk-irpt-bckend-172/.scratch/CHANGELOG.recorder_output.json)"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1 reads the live route; record-terraform-deploy.sh records every apply in the pipeline changelog.",
+  "world_is": "Both hold now."
+}
+```
+
+## IRPT_BCKEND-D2-S2 -- D2-W172-S3 ruled: the released custody-report route refuses every owner read until repository.KINDS carries CUSTODY_REPORT; routed to the CTO as the next enrichment
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W172-S3 as an UNSERVED leg, not a hazard: the live route fails CLOSED (DEPENDENCY_UNAVAILABLE, no body) for any CUSTODY_REPORT because the shipped repository.KINDS is (PERFORMANCE, ANALYSIS). The other-firm refusal holds. CTO criterion (3) of E1 (Opal read by ref returns the report) is therefore unmet on two counts: 0 retained custody reports, and the kind gap. Carried to 1.0.0_SA_CTO~DELL2 in the rounds 77-78 L8 packet as the next enrichment (who adds the kind and the custody reporting-policy family: IRPT_CUSTDY or ~P), not cut mid-round.",
+  "one_line": "The custody-report route is live and safe, but cannot yet return a custody report to anyone: the repository does not know the kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W172-S3 (offline run of the live zip's custody_read path: ReportRepository.get raises ReportRefused for CUSTODY_REPORT)",
+      "IB77-1_release_after_reads.json: opal_by_ref OPEN-BY-DESIGN, retained_custody_reports 0"
+    ]
+  },
+  "spec_asserts": "Packet branch A: an Opal principal reads one retained custody report by ref within scope.",
+  "world_is": "Not yet reachable: no report is retained and the repository refuses the kind. Closed, not open."
+}
+```
+
+## IRPT_BCKEND-D2-S3 -- dell2 shared tree: build residue in export/, and a modified entry.py that drops the live custody route
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T18:10:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 shared tree carries build residue in infra/aws/lambda/investor-reporting/export/: 32 untracked paths (copies of packaged members such as repository.py, custody.py, events.py, mint.py, dated 2026-10-08 ~01:03Z) and a MODIFIED tracked entry.py whose diff removes IB-pr-355's custody-report ROUTES and dispatch lines, the code the 17:22Z release just put live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (export lane): confirm the residue is no live seat's work, then git restore export/entry.py and remove the untracked staging copies",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short --untracked-files=all infra/aws/lambda/investor-reporting/export/ on dell2 CLOUD: 32 lines; git diff export/entry.py: -3/+1, removing 'GET /api/scoped/investor-reporting/custody-report/{reportId}': 'custody-report-read' and its dispatch entry",
+      "export/repository.py (untracked) differs from reports/repository.py at line 16 (KINDS); mtime 2026-10-07T21:03:36 local",
+      "the release is unaffected: release-census.py irpt-export-render --pin 1e0cdaf90c builds from pinned blobs and reads changed_members=0 (this seat, 2026-10-08 ~18:1xZ)"
+    ]
+  },
+  "spec_asserts": "A tracked source file in the shared tree equals HEAD unless a seat is editing it, and builds stage outside the source dir.",
+  "world_is": "Anyone who commits export/entry.py from the shared tree, or runs a working-tree check over export/ (the ADHC_DRIFTD.002 parity limb that flagged S381), carries the residue: the first would drop the live custody route from source."
+}
+```
