@@ -21968,6 +21968,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "ARMED until the round-78 redeploy (order AMGT-bb-18, legs 1-2) carries bb-8 and bb-17: the wrong currency is on the served page today. Disarm is that redeploy; its deployed list carries r78_bb17.py --crit AC1 --where deployed, whose H6 then reads 0 wrong. About 650 priced peer rows carry no currency at all and stay so: the scanner's source workbook has no currency column (round78/reads/SCANNER_CURRENCY_READ.md), and a Bloomberg field for them is Andrew's word."
+},
+{
+  "id": "AMGT_RESAPP-Z-S369",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~H",
+  "surfaced_at": "2026-10-08T01:46:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The pool universe carries ICT_US_Equity as a coverage entry with no name, and beside it an unresolved holding entry named 'International Container Termin' (ticker ICT, no security key) that lists ICT_PM_Equity and ICT_US_Equity as candidates; no field shows the two keys as one issuer.",
+  "spec_asserts": "A security on the pool universe carries a name of its own, and a holding entry resolves to one security key; AMGT_HARVST builds its gold list from the pool and reads the name from it or from the collector's identity record.",
+  "world_is": "Read 2026-10-08 ~01:2xZ by AMGT_HARVST order HVST-bh-6 (worker 0.9.0_WK_AMGT_HARVST~112, merged @bd64752926), pool s3://opal-data-harvest/universe/v1/2026-10-06.json, 302 records, 3 carrying ICT as a whole token: (1) security_key ICT_PM_Equity, ticker 'ICT PM', name 'International Container Terminals'; (2) security_key ICT_US_Equity, ticker 'ICT US', name null, source coverage, its resolution reason citing the Positioning chain, SEDOL 6455819 and domicile PH; (3) ticker 'ICT', security_key null, name 'International Container Termin' (30 characters, cut), source holding, book IDVZ weight 1.63, UNRESOLVED, naming ICT_PM_Equity and ICT_US_Equity as root-equal candidates, 'NAMED, NOT merged'. The identity registry (lib/research/identity/registrations.json, 72 entries) carries ICT_PM_Equity only, as INTL CONTAINER TERM SVCS INC. The collector's identity record (234 records) gives ICT_US_Equity the holding entry's cut name, 'pool name as read'. On the served gold (rebuild #8, 2026-10-07) ICT_US_Equity holds 0 pairs: its 17 earlier pairs rested on the refused form ICT and none was about it. NOT known: whether the coverage entry 'ICT US' was added on purpose or by the root join; whether the two keys are one issuer. Ruling 1.0.0_SA_CTO~Z msg 31533: ICT_US_Equity stays on the gold list with 0 pairs because the list is built from the pool; a name for it needs an identity read, which is a Bloomberg call and Andrew's word.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/bh6_ict_source.out: 'SOURCE d (pool universe): pool:universe/v1/2026-10-06.json record count: 302 ICT records: 3' and 'ICT_US_Equity and ICT_PM_Equity: NOT SHOWN BY ANY FIELD'.",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/BH6_ICT_US_EQUITY.md (the record, with what is not known).",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND60_ICT_US_SERVED_PAIRS_GRADE_20261007.md @160f1c9602: 17 of 17 served pairs not about the security."
+    ]
+  },
+  "notes": "Filed on AMGT_RESAPP's channel on 1.0.0_SA_CTO~Z's ruling (msg 31533) because the pool is this project's. ARMED while a holding in a book resolves to no security: disarmed when the pool resolves the holding entry to one key and the kept key carries a name. AMGT_HARVST changes nothing on its side."
 }
 ]
 ```
