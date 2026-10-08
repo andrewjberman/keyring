@@ -254,6 +254,29 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "spec_asserts": "The draft lands on the same ticket as the request, and the ticket records who sent the final commentary and when (FWD-6).",
     "world_is": "After F10 the draft lands on a new ticket created by svc-commentary; report_ref lives on the ticket only, so the service cannot find the request's own ticket; no sent-by/sent-at field is built.",
     "notes": "Not built in F10 by scope; FWD-6 grades PARTIAL until a later cell closes both clauses."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_TCKT_VNEXT~3",
+    "surfaced_at": "2026-10-08T23:10:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-W3-S1",
+    "one_line": "The order words the svc-commentary principal as sub == svc-commentary; the handler resolves every service subject from the authorizer context key email, so the new class matches email == svc-commentary AND userType == service.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (F10-d-1 / F10-r-1: the svc-commentary token the authorizer mints must carry the subject in the context field the handler reads as email, as svc-ticket-form and svc-analyst-intake do)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ticket_center/lambda_function.py principal_class: email = actor.get('email'); if email == SVC_TICKET_FORM ... (the existing two service subjects, same key)",
+        "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py SVC_FORM / SVC_INTAKE contexts carry the subject in email",
+        "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-F10-l1.svc-commentary-draft-write.md WORKER FACE item 1 (sub wording)"
+      ]
+    },
+    "spec_asserts": "principal_class resolves sub == svc-commentary AND userType == service to the new class (TO-F10-l1 item 1).",
+    "world_is": "The handler has no sub key; the authorizer context field that holds a service subject is email. The class was built on that existing key. Also: AMENDMENT 1 (coordinator message) moved svc-commentary's firm check to env COMMENTARY_ALLOWED_FIRMS; built as a module constant, the order file text itself left unedited because the order's write grant is status flip only.",
+    "notes": "If the authorizer mints svc-commentary with the subject only in sub, the class is UNRESOLVABLE and every create is a 403 - the O1 token-mint question in the contract."
   }
 ]
 ```
