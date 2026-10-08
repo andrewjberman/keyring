@@ -7707,6 +7707,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W114-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~114",
+      "surfaced_at": "2026-10-08T04:46:00Z",
+      "one_line": "HVST-bi-1: ignoring whitespace alone does not group TTE: 'TotalEnergies SE' has no suffix form (SE is not in CORPORATE_SUFFIXES), so 'Total Energies' (squashed 'totalenergies') equals neither the name nor a suffix form of the other; AC1 plant (i) and AC2 TTE read FAIL.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bi-1 section 1 item 1: widening limb 2 to ignore whitespace, with nothing else changed, makes 'Total Energies' and 'TotalEnergies SE' (root TTE) group.",
+      "world_is": "suffix_forms('TotalEnergies SE') returns [] at base 47297a5a82 (SE is only in _FORM_WORDS/_DEPOSITARY_TOKENS, not CORPORATE_SUFFIXES), so squashed 'totalenergies' never meets 'totalenergiesse'. bi1_census.out: TTE reads NOT GROUPED with the prefix reason (a squashed 'totalenergies' is a prefix of 'totalenergiesse'), ICT NOT GROUPED with the prefix reason, 5 other roots still grouped, 0 of 242 built dicts changed, last line CENSUS FAIL: TTE not grouped. Other tests: 495 passed, 1 failed (plant i). Not fixed: adding SE to CORPORATE_SUFFIXES would change alias sets across the pool and the order says nothing else changes; the issuer decides the route (a suffix, or a squashed-name-minus-form comparison limited to limb 2).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~114/bi1_census.out",
+          "lib/research/harvest/tests/test_bi1_grouping_whitespace.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
