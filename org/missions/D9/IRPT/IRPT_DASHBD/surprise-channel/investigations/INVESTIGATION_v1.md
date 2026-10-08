@@ -2869,3 +2869,51 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W31-S1 -- The one-batch run (batch size 0) ended about 900 s into the lots stage with no record and no cap line.
+
+```json
+{
+  "id": "IRPT_DASHBD-W31-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~31",
+  "surfaced_at": "2026-10-08T20:05:00Z",
+  "one_line": "The batch-size-0 run of round 28's runner ended near 900 s into the lots stage at 2,733 MB with no DONE line, no record file and no STOPPED_AT_CAP line; the runner's own cap is 3,600 s, so something else ended the process.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-52 item 1: a run is stopped by the runner at 3,600 s and recorded; every run yields {lots, total} figures.",
+  "world_is": "MEASURED: batch 0 over 7,604 accounts: the last PROGRESS line is elapsed 900.4 s, stage lots, working set 2,706.6 MB, peak 2,733.1 MB; no rec file written; the 2,000 and 4,000 runs before it (757.55 s, 813.18 s) and four after it ended normally. Who ended the process was not found (not the runner's watchdog: it writes the record first). The run is entered in LOTS_750_E3.json from its log line only. It could not have met the bar: past 750 s and over the 2,048 MB limit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~31/LOTS_750_E3.json runs[order 3]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W31-S2 -- The same batch size read 757.55 s and 692.81 s: the 750 s bar sits inside the run-to-run spread on this box.
+
+```json
+{
+  "id": "IRPT_DASHBD-W31-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~31",
+  "surfaced_at": "2026-10-08T20:05:00Z",
+  "one_line": "Batch size 2,000 gave a total of 757.55 s and then 692.81 s (and the default run, also 2,000, 666.98 s), so a single total near 750 s decides little: the spread at one size is 90 s with two other workers running on the machine.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-52: choose the batch size whose total is <= 750 s; DB29-3-AC2 reads one default run <= 750 s.",
+  "world_is": "MEASURED (LOTS_750_E3.json, 7,604 accounts, 2026-10-06, one process at a time, 2 other workers' light analyses on the same 16-core machine): totals at 2,000 per batch 757.55 s, 692.81 s, 666.98 s; 1,500: 627.25 s; 3,000: 707.34 s; 4,000: 813.18 s; round 28's 1,000 read 768.91 s. Lots peak fell from 1,735 MB (1,000) to 1,477 to 1,664 MB (2,000, two runs), so the peak is not monotone in the batch size either. Two of three 2,000 runs are under 750 s; the served Lambda's own wall time at this size was not measured (local, pandas 3.0.6, not the served 2.2.3).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~31/LOTS_750_E3.json runs, default_run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
