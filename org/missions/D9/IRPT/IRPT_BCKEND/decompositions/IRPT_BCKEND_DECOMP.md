@@ -2116,6 +2116,19 @@ Check: `deliverables/2.0.0_SA_COO~P2/checks/r80/p80_cells.py`, dry-run at base 2
 | `IB-pr-367` | E7 part 1: repin repository.py (+ any read-path policy row) past b13bab7495; clean-tree BUILD_ONLY; never-widen packet | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-364 (drained) | P80-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~175.
+
+## 74. ROUND 81, WORKSTREAM ~P (2026-10-08 ~19:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 5 msg 1408: E7 releases first)
+
+Both halves of IB-pr-367 are at HEAD (COO @764a0abf3c, CTO @275e506034). The custody after-reads move to the order after E8 (~M2) and
+IRPT_CUSTDY E2 (~K2); this order adds the CTO half's retained-read regression (one existing ANALYSIS/PERFORMANCE report read back by
+reference before and after; any change is Branch B). Check: `deliverables/2.0.0_SA_COO~P2/checks/r81/p81_cells.py`, dry-run at base
+ea6b96a66a: AC1 FAIL, AC2 FAIL (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-368` | release irpt-export-render at a0d8d4943f (repository.py + retention.py) from a clean worktree; pre/post retained read-back | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-367 (drained @9a594e96a8) | P81-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Slot ~176.
 ## 72. ROUND 79, WORKSTREAM ~P (2026-10-08 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO analysis ADDENDUM 2 @b227133904, msg 1362: E5)
 
 Release 2 (irpt-ycharts-generate, X-1) rolled back at 17:44:54Z: on the served path the guard builds InteractiveAccess with no profile
