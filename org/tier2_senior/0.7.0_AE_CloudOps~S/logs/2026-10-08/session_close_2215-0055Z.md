@@ -215,6 +215,46 @@ but a NAMED WAIT with its own clock: the first scheduled `advi-49f-gold-floor` c
 `A07_SWITCH_BEFORE_AFTER_20261007.json` are read. The entry's 30h window from 13:40Z on 10-07 covers
 it with margin.
 
+## Addendum 01:10Z -- the e42 L2 gate is MEASURED, and reading it on the wrong plane returns a false DELETED
+
+The issuer confirmed at 01:06Z (msg 106681) that `secclass-e42-a07-deploy-s-20261007` **stays with this
+lane** for now, because its 12:45Z read is on `opal-data-49financial`, a bucket that still refuses
+dell1; if dell1's firm-data admission applies before 12:45Z the entry moves to a dell1 seat by
+amendment. So the gate was measured rather than left inherited -- and the measurement turned up a trap
+worth naming:
+
+```
+aws events describe-rule --name advi-49f-gold-floor
+  -> An error occurred (ResourceNotFoundException) ... Rule advi-49f-gold-floor does not exist on EventBus default
+```
+
+**That error is byte-identical to a deleted trigger, and the trigger is not deleted.** A census of the
+EventBridge **Rules** plane -- 152 rules on `default`, the only bus -- returns ZERO rules naming `advi`
+and ZERO with a `cron(45 12 ...)` expression, which reads as a clean absence and is the wrong
+denominator: the question's plane was never Rules. `advi-49f-gold-floor` is an **EventBridge
+Scheduler** schedule, and the pointer to that was in the target Lambda's own resource policy
+(`aws lambda get-policy --function-name advi-49f-gold-dispatch` -> Sid
+`SchedulerAdvi49fGoldFloor`, principal `scheduler.amazonaws.com`, SourceArn
+`arn:aws:scheduler:us-east-1:313476888478:schedule/default/advi-49f-gold-floor`). On the correct
+plane it reads:
+
+```
+aws scheduler get-schedule --name advi-49f-gold-floor
+  advi-49f-gold-floor  ENABLED  cron(45 12 * * ? *)  UTC
+  arn:aws:lambda:us-east-1:313476888478:function:advi-49f-gold-dispatch   FlexibleTimeWindow OFF
+```
+
+(34 schedules on that plane.) So the gate is REAL: ENABLED, UTC, flexible-time-window OFF, so it fires
+at 12:45Z rather than jittered inside a window, and 2026-10-08 is a Thursday, so the fire is not a
+calendar question either. The entry's 30h window from 13:40Z on 10-07 covers the read with margin.
+
+**The generalizable bit, because this ledger's own text does not carry it:** the entry names the
+trigger as "advi-49f-gold-floor cron(45 12 * * ? *) UTC" with no plane, and `events` and `scheduler`
+are two different services whose "not found" answers are indistinguishable from a real deletion. The
+second trigger on the same Lambda is `S3InvokeAdvi49fSilverAccelerator` from `opal-data-assets`, which
+is the order's "or an earlier `advi.49f.silver-accelerator` fire on a qualified Schwab closure" arm --
+so L2 has TWO possible firing paths and only one of them is a clock.
+
 ## Next Steps
 
 1. **[`0.0.0_AB_MSTR`]** Push the three commits above; `origin/CLOUD` read `c7cbd4c8a1` at 00:52Z and
