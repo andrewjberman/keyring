@@ -1,7 +1,7 @@
 # ENDPOINT (step 2, /endpoint --forward) -- the market-data backfill demand queue
 
 - **Author:** `1.0.0_SA_CTO~DELL1`, L2, 2026-10-08 ~20:3xZ.
-- **Status: DRAFT -- awaits Andrew's DONE WHEN confirmation.** No project is registered yet. The block goes into the PRD under the
+- **Status: RATIFIED by Andrew ~22:4xZ ("1.) Yes."); the two readings settled below.** No project is registered yet. The block goes into the PRD under the
   section title `ENDPOINT (step 2, /endpoint --forward)` once it is registered (L3).
 - **Proposed code:** `MDPF_DEMQUE` (macro MDPF, directive D8; no collision in `org/projects/`). Not registered.
 - **Inputs (both briefs, both read in full):**
@@ -107,17 +107,17 @@ FWD-9  What is pulled first follows how much it matters
 8. **Pilot first:** a 50-security living-client pilot (dell2 research s.7 item 3) measures the error rate, the tolerance band and
    Yahoo's response before the first full session.
 
-## Open for Andrew (business meaning only)
+## Settled by Andrew (~22:4xZ, at the dell1 CTO terminal)
 
-1. **When room is short, which pages come first?** The briefs rank within Cottonwood (living client first) but not across pages.
-   REC, in order:
-   - production daily pulls (protected by the reserve);
-   - client pages for clients we serve (ADVI, IRPT, including new-client onboarding);
-   - ETF Positioning performance;
-   - Rival Funds history (the ACWI and IWM holdings history alone is about 12.8M BQL cells, so it runs in slices over many days);
-   - research pages (AMGT);
-   - anything for former clients last.
-   Why: client-facing figures for current clients are what an advisor sees; the rest are Opal's own analysis.
-2. **Does the queue manage only Bloomberg and Yahoo Finance, or every market-data vendor?** REC: Bloomberg and Yahoo Finance only for
-   now. YCharts, FactSet and custodian files appear in FWD-6's rule as named sources but are not metered by the queue. Why: those are the
-   two vendors he named and the two with a daily limit that has already bitten; widening can follow once the ledger works.
+VERBATIM: "1.) Yes. 2.) Production daily pulls includes ETF Positioning. Then Current clients and new client onboarding. Then rival
+funds history (which I think we can handle on BBG even if it takes a week or two of daily little jobs to get the majority of it out of
+the way). Then research pages. Then finally former clients last. 3.) Only BBG and Yahoo for now."
+
+1. The DONE WHEN lines FWD-1..9 are CONFIRMED as written.
+2. **The priority order (FWD-9) is:**
+   1. production daily pulls, which INCLUDE ETF Positioning;
+   2. current clients and new-client onboarding;
+   3. Rival Funds history, on Bloomberg, as small daily jobs over a week or two until the majority is done;
+   4. research pages;
+   5. former clients last.
+3. **The queue meters Bloomberg and Yahoo only for now.** Other vendors stay named as sources in each page's vendor rule (FWD-6).
