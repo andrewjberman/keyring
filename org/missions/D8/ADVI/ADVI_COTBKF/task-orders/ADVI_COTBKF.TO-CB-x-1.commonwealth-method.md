@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~46</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -63,6 +63,8 @@ Run `--before-list v1 --after-list v1 --before-cash-leg conditional --after-cash
 Extend the runner's LAST line, keeping the rest: `... control_same=<b> regressions=<n> movers_back=<m> year_chain_same=<True|False>
 r22_named=<k>/25`.
 
+**AMENDMENT 1 (CTO ruling msg 1944, 2026-10-08 ~23:3xZ, on row D2-W46-S1).** "A no-sweep control is ill-posed for an account-wide method, so the year-chain (103/103) is the control." AC2's expectation becomes `year_chain_same=True`; the no-sweep figures stay printed as information. "The method becomes the default once the packet names a cause for each of the 98 regressions: 35 are unlisted types, and the other 63 each need one." So, before the flip: in `sweep_regrade.md`, a table of all 98 MATCH -> DIFF months (account, month, computed before/after, reported) with ONE named cause each -- `unlisted_type:<type>` for the 35, and for each of the other 63 a cause read from that month's rows (e.g. a dividend row and its date, a fee type, a flow), traced, never forced; a month whose cause cannot be read is `unexplained:<what was checked>`. Do not change any treatment to clear one. The ex-date grading stays NOT GRADED (row W46-S2; round 25 sources ex-dates through the dell1 queue).
+
 Tests `data/assets/scripts/silver/tests/test_commonwealth_method.py` (stubs): a `man` fee lowers the day's return and is not a flow;
 an `fch` is a flow out and does not lower the return; a dividend at pay date vs ex date lands on the expected day; a cash posting
 carries into the next month's starting value exactly once.
@@ -72,8 +74,8 @@ carries into the next month's starting value exactly once.
 <criterion id="CB24x1-AC1" cell_refs="CB-x-1"><invocation>python -m pytest -q data/assets/scripts/silver/tests/test_commonwealth_method.py</invocation><expect>passed</expect></criterion>
 `CB24x1-AC1` -- the fee drag, the charge flow, both dividend dates and the carried cash level, each on a stub.
 
-<criterion id="CB24x1-AC2" cell_refs="CB-x-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg conditional --after-cash-leg method --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46</invocation><expect>control_same=True</expect></criterion>
-`CB24x1-AC2` -- the method re-graded against round 23's baseline; the no-sweep months unchanged.
+<criterion id="CB24x1-AC2" cell_refs="CB-x-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg conditional --after-cash-leg method --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46</invocation><expect>year_chain_same=True</expect></criterion>
+`CB24x1-AC2` -- (AMENDMENT 1) the year-chain control replaces the no-sweep control, ill-posed for an account-wide method (CTO msg 1944).
 
 <criterion id="CB24x1-AC3" cell_refs="CB-x-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg conditional --after-cash-leg method --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46</invocation><expect>year_chain_same=True</expect></criterion>
 `CB24x1-AC3` -- Opal's months chain into its years the way Commonwealth's do.
