@@ -84,6 +84,17 @@ each box runs its own work through its own CloudOps).** Real runs (a) and (c) ar
 - **Unchanged:** the criteria and checks. The activation legs still close on the CodeSha read-backs.
 - Gate limb: none graded this amendment (a modification; GATE viii only).
 
+**AMENDMENT 2 (2026-10-08 ~23:5xZ, issuer `2.0.0_SA_COO~P2`, on rows D2-S12/D2-S13 and CTO ruling msg 1949).**
+- **The release stands.** Refusing a shrunken build is the fail-safe working.
+- **Arm (a) passes when each firm reads EITHER of:**
+  - READY in its own `_refresh/<manifest as_of_business_date>/manifest.json` (the manifest's own date, not the fire's); or
+  - REFRESH_FAILED with the SAFE action, with the previous directory still served (that firm's search still answers from it).
+  Record per firm which branch held. Inflection and cottonwood's REFRESH_FAILED is carried to the dropped-entry cell (IB-pr-379), which
+  owes READY at all three firms before their directories go OVER_AGE.
+- **Arm (c) is discharged by IB89-1-AC2** (the five-arm controlled-clock drive against the deployed modules, offline). The first
+  natural over-age search is the organic arm: recorded when it happens, never waited on.
+- Gate limb: none graded this amendment (a modification; GATE viii only).
+
 <criterion id="IB89-1-AC1" cell_refs="IB-pr-377"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r89/p89_cells.py" . IB89-1-AC1</invocation><expect>IB89-1-AC1 PASS</expect></criterion>
 `IB89-1-AC1` -- pin 4710b8007b; refresh {refresh.py} and search {entry.py, expiry.py, trading_calendar.py}; live == built for both
 (re-read live); census 0 and re-plan 0; activation legs closed; not rolled back. Base: FAIL (no file).
