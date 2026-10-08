@@ -4058,3 +4058,36 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Option for the issuer: treat a missing .py that is also absent from the installed RECORD as differ. Not done: the amendment did not ask for it. The CTO's reading of check 6 for a file with such a list should be explicit."
 }
 ```
+
+## NFRA_CTLPLN-S25 -- TO-APPLY-11 STOPPED at step 3, branch B: the untargeted plan of the Dell identity root reads 4 to add, 1 to change, 2 to destroy -- SEVEN resources, not the five both halves signed. The two extra are plan 2's resource-policy ALLOW (aws_iam_policy.dell_agent_respol_allow[0] and its group attachment), which commit f7b668e9c5 landed in the root AFTER the issuer planned at 35f5f12418 and which BOTH halves expressly exclude. Nothing was applied
+
+```json
+{
+  "id": "NFRA_CTLPLN-S25",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T07:05Z",
+  "one_line": "TO-APPLY-11 STOPPED at step 3, branch B: the untargeted plan of the Dell identity root reads 4 to add, 1 to change, 2 to destroy -- SEVEN resources, not the five both halves signed. The two extra are plan 2's resource-policy ALLOW (aws_iam_policy.dell_agent_respol_allow[0] and its group attachment), which commit f7b668e9c5 landed in the root AFTER the issuer planned at 35f5f12418 and which BOTH halves expressly exclude. Nothing was applied",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-11 (plan 1) step 3: 'EXACTLY 2 to add, 1 to change, 2 to destroy, these five and no other'; branch B: 'ANY other count, a sixth resource ... -> apply NOTHING; report the plan as read and stop'",
+      "COO half @fa6d36f4a3, 'What is NOT in this plan (plan 2, a second pair)': 'The Allow of the resource-policy actions (CTO ruling 106731 item 1). A worker is building it now.' The order's context repeats it: 'This is PLAN 1 OF 2. It does not carry the Allow of the resource-policy actions or dell2's SSM public parameter read; do not add either'",
+      "MEASURED at the laptop 2026-10-08 ~06:5xZ, read-only, exit 2, HEAD ca5cd194e8 (which DOES contain 35f5f12418 as the order requires, and the root's working tree is clean): Plan: 4 to add, 1 to change, 2 to destroy, over seven resource blocks -- aws_iam_policy.dell_agent_vendor_secrets[0] created (+91), its group attachment created (+4), aws_iam_policy.dell_agent_create updated in place (+5, ZERO removed), aws_iam_policy.dell_agent_respol destroyed (-99) and its attachment destroyed (-4) -- those five are the signed set and each is exactly as signed -- PLUS aws_iam_policy.dell_agent_respol_allow[0] created (+95) and aws_iam_group_policy_attachment.dell_agent_respol_allow[0] created (+4), which are neither half's",
+      "PROVENANCE of the two extra resources, read from git rather than inferred: git log 35f5f12418..HEAD -- infra/aws/terraform/nfra-ctlpln-identity/ returns exactly ONE commit, f7b668e9c5 'build(NFRA_CTLPLN.TO-CT-a-1 amendment 10, 0.9.0_WK_NFRA_CTLPLN~14): the resource-policy ALLOW for the Dell group -- 70 of the 75 former Deny actions, 5 left out by name; nothing applied'",
+      "WHY IT IS NOT GATED OFF: iam.tf:79 and :98 take count = module.routes_policy.respol_policy_count, and modules/routes_policy/outputs.tf:90-93 defines that as 'local.respol_json == null ? 0 : 1' -- it is 1 whenever the data document dell_respol_policy.json renders a policy, which it does at HEAD. There is no flag, variable or workspace condition holding the new resources back from an untargeted apply",
+      "THE SIGNED FIVE ARE EACH AS SIGNED, so this is a scope breach and not a content fault: the created secrets policy holds exactly ONE action (secretsmanager:GetSecretValue) on exactly 66 secretsmanager ARNs with NO wildcard, Sid ReadVendorCredentialsAndClientSessions; the in-place update adds exactly ONE statement, SimulateOwnPolicyOnly (iam:SimulatePrincipalPolicy on arn:aws:iam::313476888478:user/${aws:username}), and removes ZERO lines",
+      "THE TEN WITHHELD-NAME GREPS OVER THE PLAN ARE EACH ZERO, recorded per pattern: jwt-private-key 0, admin-seed 0, jwt-secret 0, origin-verify 0, 'gateway/' 0, otp-gateway-token 0, 'opal/mcp/' 0, pseudonym 0, anonymization-key 0, ec2-credentials 0",
+      "BOTH pre-plan checks PASSED immediately before the plan, so the stop is the plan shape alone: simulate_policy.py rc=0 'POLICY-SIM allowed_ok=22/22 denied_ok=15/15 passrole_ok=5/5 protected_ok=8/8 freed_allowed=70/70 freed_excluded=5 selfsim_ok=9/9 ssm_ok=9/9 routes_ok=5/5 vendor_ok=235/235 all_ok=True'; derive_vendor_secrets.py --from-file rc=0 'VENDOR-SECRETS secrets=114 referenced=114 dell_projects=15 placement_inferred=False vendor=35 client_session=32 granted=66 ok=True blocked_by_key=1 platform_key=28 other=19'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-11 step 3 and both halves' branch A: the untargeted plan of infra/aws/terraform/nfra-ctlpln-identity/ reads EXACTLY 2 to add, 1 to change, 2 to destroy over exactly five named resources, and the apply is untargeted. The order's commit clause is satisfied by a HEAD that CONTAINS 35f5f12418.",
+  "world_is": "At HEAD the same untargeted plan reads 4 to add, 1 to change, 2 to destroy over seven resources. The root gained plan 2's resource-policy ALLOW at f7b668e9c5 after the issuer's 04:5xZ plan, and its count is derived from the data document rather than gated, so it is live to any untargeted apply of the root. The order's commit clause holds (HEAD contains 35f5f12418) while the plan shape it signs no longer does: 'contains the pin' does not bound what else arrived. An untargeted apply here would grant the Dell group 70 resource-policy actions -- 'change who may reach a resource' -- which neither half signs and which the CTO half defers to its own pair. Applied NOTHING; stopped at step 3 and reported.",
+  "notes": "For 2.0.0_SA_COO~C (disarm_owner): three routes, none of them this seat's to choose. (i) Target the apply at the five signed addresses, which the order's bounds currently forbid ('one apply ... untargeted'); (ii) sign plan 2's Allow now as a third half-pair and re-cut the plan shape to 4/1/2; (iii) have the worker's amendment-10 work sit behind a flag so an untargeted apply of this root cannot carry it. The general shape is worth the CTO's eye too: an order that pins its plan shape to a commit and then says 'HEAD, which must contain <pin>' is unbounded above, and this root has a worker landing into it between the sign and the apply. Every gating read this order asks for PASSED; only the shape stopped it."
+}
+```
