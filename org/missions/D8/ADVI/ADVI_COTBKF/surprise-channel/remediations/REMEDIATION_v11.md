@@ -22,7 +22,7 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-08 ~08:1xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~C2",
   "round": "v19",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v19"
   },
