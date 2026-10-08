@@ -22105,6 +22105,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "The page is DSGN_AMGTV1's. Surfaced, not chased; no code edited. It goes to the CVO's L9 read of the walk and to DSGN's next page round."
+},
+{
+  "id": "AMGT_RESAPP-Z-S373",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-08T09:26:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "On AMD US one screen says both 'the research pack built for this name -- October 7th, 2026, 9:01a ET -- Worked' and 'The research team's thesis pillars: no research pack for this security.'",
+  "spec_asserts": "Round-77 ruling 4: one served statement of a name's inputs, read by every place that states them; a reader is not told two things about one input.",
+  "world_is": "Capture 011 of the round-78 walk (portal d1b21c97, function +s6R0/rcpQ6): the block 'Where this page's data comes from' reads the research pack built and worked, and the Thesis panel directly below reads no research pack for this security. The two lines mean different things (the pack the system builds, and the research team's own pack), and the page uses one phrase for both. BA reads the same Thesis line (walk, COVERAGE).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_AMGT_RESAPP~303/captures/011-fwd1-AMD-segment-breakdown.png (viewed by this seat)",
+      "deliverables/0.9.0_WK_AMGT_RESAPP~303/WALK_ROUND78.md, COVERAGE, the BA line"
+    ]
+  },
+  "notes": "A page finding for DSGN_AMGTV1, beside rows Z-W303-S1 and Z-S372. Not chased."
 }
 ]
 ```
