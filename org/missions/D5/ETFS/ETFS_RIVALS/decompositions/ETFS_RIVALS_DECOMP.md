@@ -994,8 +994,11 @@ only after RIV-tw-1's J1 is graded on the 2026-10-09 run. Risk SERVED.
      asked is not written).
   5. With the switch OFF nothing changes: `tw-1.AC1.py` still ends `PASS 0 failures` (it compares the OFF run with the
      module at commit 361b735308).
-- Rulings at the cut (issuer): `HISTORY_OWED_CAP` is not touched (the CTO rules it with Andrew's answer). Nothing here
-  sets the switch. NOTHING in this cell or its checks calls a vendor: every check and test stubs the client hook and
+  6. **The cap (AMENDMENT 1, Andrew-direct ~17:1xZ via CTO msg 31926, ruling R24).** `HISTORY_OWED_CAP` becomes `20000`
+     (an `int`): up to 20,000 units a run, each unit one security on one day, so at most 20,000 returned records. It is the
+     only number that changes; `tw-1.AC1.py` arm (e), amended with this order, reads `20000`.
+- Rulings at the cut (issuer): `HISTORY_OWED_CAP` is 20,000 by item 6 (ruling R24). Nothing here
+  sets the switch: `ask` is set only after this cell is merged and RIV-tw-1's J1 is graded, where the vehicle reads it, in a pair. NOTHING in this cell or its checks calls a vendor: every check and test stubs the client hook and
   points the budget ledger at a temp directory. The cap counts history units only; the currency lookups are counted
   on top of it in the budget check.
 - Rulings on the check drafter's questions (issuer): `_stored_currencies` is read from the window's first day THROUGH

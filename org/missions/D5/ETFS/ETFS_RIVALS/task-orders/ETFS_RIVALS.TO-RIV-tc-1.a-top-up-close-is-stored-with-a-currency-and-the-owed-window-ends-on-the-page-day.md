@@ -44,8 +44,11 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
      asked is not written).
   5. With the switch OFF nothing changes: `tw-1.AC1.py` still ends `PASS 0 failures` (it compares the OFF run with the
      module at commit 361b735308).
-- Rulings at the cut (issuer): `HISTORY_OWED_CAP` is not touched (the CTO rules it with Andrew's answer). Nothing here
-  sets the switch. NOTHING in this cell or its checks calls a vendor: every check and test stubs the client hook and
+  6. **The cap (AMENDMENT 1, Andrew-direct ~17:1xZ via CTO msg 31926, ruling R24).** `HISTORY_OWED_CAP` becomes `20000`
+     (an `int`): up to 20,000 units a run, each unit one security on one day, so at most 20,000 returned records. It is the
+     only number that changes; `tw-1.AC1.py` arm (e), amended with this order, reads `20000`.
+- Rulings at the cut (issuer): `HISTORY_OWED_CAP` is 20,000 by item 6 (ruling R24). Nothing here
+  sets the switch: `ask` is set only after this cell is merged and RIV-tw-1's J1 is graded, where the vehicle reads it, in a pair. NOTHING in this cell or its checks calls a vendor: every check and test stubs the client hook and
   points the budget ledger at a temp directory. The cap counts history units only; the currency lookups are counted
   on top of it in the budget check.
 - Rulings on the check drafter's questions (issuer): `_stored_currencies` is read from the window's first day THROUGH
@@ -97,6 +100,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** PRD v0.19 @2914a61989 (ADMITTED); decomposition v1.18 (round 28 appended). Source: ROUND_ANALYSIS.round22 ADDENDUM 6 @8ea0b4a05a and CTO msg 31885. Cell ids listed against all 124 existing order ids before naming (row Z-S74's remedy): aw-1 and tc-1 are unused. Chain `~22`, slot `~22`, position 1 of 1. Check drafted by a helper under the issuer's brief, merged @f3650a8bd9, re-run by the issuer at base 2dbad40215: tc-1.AC1 FAIL 5 (a to e; f, g, h PASS). The helper measured that the cell as first written breaks four arms of tw-1.AC2 (an exact line match and its budget counts); the cell's rulings (stored currencies read through the report date; the clause omitted at zero) keep it passing unchanged, measured on a simulated build. THE VEHICLE RUNS THIS FILE FROM THE WORKING TREE (rows Z-S62, Z-S72; CTO ruling 31596): the merge waits on RIV-tw-1's J1 (2026-10-09 11:00Z) and carries a pair.
+
+**AMENDMENT 1 (issuer, 2026-10-08 ~18:2xZ, before any worker was spawned):** item 6 added -- `HISTORY_OWED_CAP` 20000, on Andrew's yes to the standing daily request ("Yes I like this strategy.", record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_171xZ_OPEN_CALLS_SIX_ANSWERED_AND_CELL_TRACKING_ASK.md` @e30fb3e610; CTO msg 31926, R24). `tw-1.AC1.py` arm (e) amended from 5000 to 20000 in the same commit, so at base it now FAILS 1 (e) and `tc-1.AC1.py` arm (g) with it: both grade the cap. The budget record stays in points requested; for a one-date request a security returns at most one record, so the recorded draw is an upper bound of the returned records, named as such in the switch-on pair. No gate limb graded this modification.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
