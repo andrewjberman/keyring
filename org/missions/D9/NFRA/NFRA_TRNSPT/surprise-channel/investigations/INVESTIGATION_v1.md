@@ -1037,6 +1037,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TO-TR-a11 build step 1: tokens = every ticker plus each issuer name's distinctive first word; the planted gate keeps a person name (not an issuer) wiped.",
     "world_is": "The gate holds for names that are not issuer tokens, but the rule as specified allowlists 738 dictionary-name words (issuer first words such as Allison, Apollo, Alger), so a person with such a name written bare in a transcript survives the wipe; the planted test cannot show this by construction.",
     "notes": "Built exactly as ordered; not changed by the worker. Counts only."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T22:10:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "AMENDMENT 1 excludes 'Apple' from the allowlist (556 name tokens excluded, 6,787 tokens remain) while criterion TR11-a11-AC1's checker r11_checks.py a11-list still requires the token 'apple' in NEED: AC1 prints R11-A11-LIST-FAIL missing tokens: apple. The amendment forbids re-adding Apple, so AC1 cannot pass as written and the order stays in_progress.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R11_CHECKS/r11_checks.py a11-list -> R11-A11-LIST-FAIL missing tokens: apple (rc 1); a11-gate -> R11-A11-GATE-OK 5 passed",
+        "r11_checks.py NEED set line 24 names apple; task order AMENDMENT 1 'this includes Apple' as the accepted stated loss"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1: the allowlist excludes every dictionary-colliding name token, Apple is the stated loss; AC1 expects R11-A11-LIST-OK, whose checker requires apple among the tokens.",
+    "world_is": "Both cannot hold. The worker followed the amendment and did not re-add Apple; the issuer owns the checker's NEED set (outside the worker's paths).",
+    "notes": "Counts only. Disarm/resolution owner: 2.0.0_SA_COO~T2 (drop apple from NEED, or rule otherwise)."
   }
 ]
 ```
