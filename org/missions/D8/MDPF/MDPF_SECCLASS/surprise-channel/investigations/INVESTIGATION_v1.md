@@ -5102,3 +5102,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "world_is": "Live table 2026-10-08: no CUSIP: or NAME:: row lacks the attribute, so the backfill is a standing guard for rows landed by a writer that omits it (the AI runner before this change) and a --write today would make 0 updates. The half request states the empty set and the 0 count; whether a half is still wanted for an empty set is the issuer's and the CTO's call. Bare rows (3,729) lack the attribute by design and read TICKER."
 }
 ```
+
+## MDPF_SECCLASS-D1-S4 -- deploy_ledger check grades a foreign device's entry against the local fetch, so PAST-WINDOW on another box's ledger can be a vintage artifact rather than an overrun
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T06:37Z",
+  "one_line": "deploy_ledger.py check computes age / window / PAST-WINDOW / HELD-STALE from THIS DEVICE'S CHECKOUT, so for an entry authored on another device it grades the vintage of the local fetch, not the live state. On dell1 at 06:31Z it printed two AMGT_CORPUS entries as PAST-WINDOW (13.4h and 14.2h against a 4.0h window) when both are OPEN ON PURPOSE -- each waits on a later act and its author will set the window to that act -- and they read past-window here only because site Z had not pushed since about 19:3xZ. The verdict word PAST-WINDOW carries no scope qualifier, so a foreign entry's staleness is indistinguishable from a real overrun.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deploy_ledger.py check on dell1, 2026-10-08T06:31Z: 'OPEN: amgt-corpus-r40-ap10d age=13.4h window=4.0h [PAST-WINDOW] stranded=[Lw, Lv] author=2.0.0_SA_COO~X' and 'OPEN: amgt-corpus-r40-ap10m age=14.2h window=4.0h [PAST-WINDOW] stranded=[Lv] author=2.0.0_SA_COO~X'.",
+      "0.0.0_AB_MSTR~DELL1 msg 812, relayed by 2.0.0_SA_COO~M1 msg 813: both AMGT_CORPUS entries are open on purpose -- ap10m waits on today's 13:00Z fire, ap10d on the bb-18 redeploy -- their site-Z author will set each entry's window to its act, and 'Dell1 sees them as past-window only because site Z hasn't pushed since about 19:3xZ'.",
+      "SAME CLASS, MEASURED EARLIER THIS SESSION IN THE OPPOSITE DIRECTION: at 00:4xZ the e65 ledger secclass-e65-cash-token-deploy-s-20261007 read '**Status:** HELD-SOVEREIGN-GATED' with its sentinel still tracked at the local HEAD, while at origin/CLOUD the same entry read 'CLOSED -- nothing stranded -- closed 20261008T004506Z' with the sentinel ABSENT. The local read was stale by one unpushed laptop commit (3b6f5c9a45).",
+      "The union read that makes the locality explicit: 31 worktrees scanned for the e65 sentinel, tracked-open in 5 and closed in none -- which proves only that THIS DEVICE saw no completion, exactly as CLAUDE.md NEVER-2 states."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: 'An entry a device left OPEN proves only that THIS device saw no completion: before acting on any open/--red entry, measure the ARTIFACT (rev-parse + describe + is-ancestor with a positive control); world-done -> close SUPERSEDED, never re-execute.' deploy_ledger.py's own contract: an entry left OPEN past its window BLARES (RED inbox delivery to COO), and enforcement rides COO /drive chaining `check --red` each cycle.",
+  "world_is": "NEVER-2 states the locality rule for the OPEN/CLOSED bit, and this row records that the same locality governs the DERIVED verdicts -- age, window, PAST-WINDOW, HELD-STALE -- which are computed against a local mtime/checkout and so inherit the fetch vintage. A cross-device RED is therefore a claim about this device's view, and a seat reading `check --red` on a box that is not the author's can manufacture an alarm that does not exist, which is what happened here: a correct-looking RED consumed two COO round-trips and one MSTR relay before it resolved to nothing owed.",
+  "notes": "NOTHING WAS MEASURED ABOUT THE FOUR ACTS THEMSELVES and nothing is claimed about them; the finding is about the instrument's scope, not their state. Also recorded, because it is the same trap wearing a different word: 'stranded=[...]' in that output names legs carrying no proof, NOT stranded world state -- this seat's own e65b entry reads stranded=[L1,L2,L3,L4] while all eight of its keys sit at pre-act content with parity restored and verified. WORKING RULE this seat now follows: treat `check` as self-scoped; before quoting age/window/PAST-WINDOW/HELD-STALE on an entry whose author= is a foreign device, fetch first and say the vintage, and read a foreign RED as 'unresolved on this device' rather than 'overrun'. Candidate remedy for the tool's owner, NOT proposed as built: print the entry's author DEVICE beside the verdict and qualify a foreign-authored verdict with the local fetch time, so the output cannot be read as an authoritative overrun. Disposition owed by 2.0.0_SA_COO~M1 per msgs 811 and 813, which ruled: leave all four in check --red, nothing owed by dell1 or by this seat."
+}
+```
