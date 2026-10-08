@@ -38,6 +38,15 @@ The producer defines and the consumer conforms (gen-wire.ts header), so the CONS
   narrowed type, derive it from the generated union (`Extract<AnalysisReportWire, {provider: 'OPAL_ENGINE'}>`, indexed access) in
   the consumer's own file, never in `contracts/wire/`.
 - Commit inside the portal submodule (branch wk-IRPT_YCDGEN-6-portal) first, then the submodule pointer in the outer worktree.
+- AMENDMENT 1 (issuer ruling on row IRPT_YCDGEN-D2-W6-S3): your first proof instance (94a0e10d39) measured that
+  `renderModule` in `portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts` emits `export interface X {..} | {..}`
+  for a union body (it picks `interface` whenever the body starts with `{` and ends with `}`), which is not TypeScript. Fix THAT
+  rule only: a body that is a top-level union renders as `export type X = ...`; every other contract's output stays byte-equal
+  (prove it: render all contracts before and after your edit to a temp dir and diff; only AnalysisReport may change). Regenerate
+  `contracts/wire/AnalysisReport.ts`. Then edit `contracts/wire/index.ts` and `contracts/wire/responses.ts` ONLY where they name
+  the hand-added AnalysisReport types, so they reference the generated union (other lines of those two files are another
+  workstream's; leave them byte-equal). Never run a test or command that writes into the real `contracts/wire/` other than your
+  own edits (the iv-e-26 test calls `generate()`: run the suite only in temp copies, as your v6_checks.py now does).
 
 ## 2. THE CONTRACT YOU BUILD AGAINST
 
@@ -54,7 +63,7 @@ The producer defines and the consumer conforms (gen-wire.ts header), so the CONS
 
 ## 4. SURFACES AND BOUNDS
 
-NEVER: a vendor call, any AWS call, a deploy, a `bun install`, a package fetch, a schema edit, a gen-wire.ts edit. A check you cannot
+NEVER: a vendor call, any AWS call, a deploy, a `bun install`, a package fetch, a schema edit, a gen-wire.ts edit beyond the union rule above. A check you cannot
 satisfy inside your `<paths>` is a surprise row appended to
 `org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v1.md` (id `IRPT_YCDGEN-D2-W6-S<k>`, next unused k;
 `fabric` "dell2"; `surfaced_at` the real UTC time).
@@ -62,6 +71,9 @@ satisfy inside your `<paths>` is a surprise row appended to
 <paths>
 portal
 portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts
+portal/src/pages/InvestorReporting/contracts/wire/index.ts
+portal/src/pages/InvestorReporting/contracts/wire/responses.ts
+portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts
 portal/src/pages/InvestorReporting/contracts/adapt.ts
 portal/src/pages/InvestorReporting/contracts/index.ts
 portal/src/api/endpoints/investor-reporting.ts
@@ -103,4 +115,10 @@ SERVED: portal product files change; nothing deploys; the candidate goes to 1.0.
 <workstream>R6L_ANALYSISREPORT_WIRE</workstream>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+**AMENDMENT 1 2026-10-08 (2.0.0_SA_COO~G2, issuer):** ruling on row IRPT_YCDGEN-D2-W6-S3 (ARMED, disarm owner this seat): the
+generator's union rendering is a defect inside this decomposition; paths granted: gen-wire.ts (the union rule only, other contracts
+byte-equal), contracts/wire/index.ts and responses.ts (only the AnalysisReport names). Criteria unchanged. This amendment is the
+disarm: the portal branch is not drained until AC2 and AC3 pass. Gate limb: none graded this modification (modified order; no
+placeholders). u-6 stays open until its AC2 is re-run on the fixed generator.
+
 <status>issued</status>
