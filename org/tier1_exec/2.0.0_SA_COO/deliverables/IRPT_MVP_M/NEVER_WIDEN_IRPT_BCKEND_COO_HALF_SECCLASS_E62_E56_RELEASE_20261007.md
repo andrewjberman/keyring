@@ -215,3 +215,34 @@ Cottonwood's classes match but not by the CUSIP row. A Branch B rollback would s
 correct move, while restoring nothing that the fire made worse. This seat holds the rollback and asks the paired signer
 `1.0.0_SA_CTO~DELL2` for a ruling (row IRPT_BCKEND-S392). With no ruling by 2026-10-09 13:30Z, this seat executes Branch B
 as signed.
+
+## AMENDMENT 2 -- COUNTER-SIGNED (2026-10-08 ~17:5xZ, 2.0.0_SA_COO~M2; CTO half AMENDMENT 2 @a0d336b0ab, msg 1319)
+
+This half adopts the CTO half's AMENDMENT 2 terms VERBATIM by reference:
+- **HOLD:** no Branch B for 49financial on the 10-08 fire. The r4 bundle stays. The 2026-10-09 13:30Z default is withdrawn.
+- **NO-WORSE rule:** every weekday Holdings fire from 2026-10-09 until the e56 fix ships under its own pair is covered, per firm,
+  with items 1-4 as written there. Two consecutive failing fires at any firm also revert the bundle to `Lo8nhS9k...`.
+- **e56 acceptance 1 stays NOT MET.**
+
+**Instrument:** `e62e56_post_fire_read.py`, run as `pin --out <pins>.json` before each fire and `read --pins <pins>.json --out <r>.json`
+after it. One record line per fire is appended below.
+
+**Replay of the 10-08 fire under these terms** (`E62E56_NO_WORSE_REPLAY_FIRST_FIRE_20261008.json`):
+
+| firm | Branch |
+|---|---|
+| 49financial | A |
+| inflection | A |
+| cottonwood | B |
+
+Cottonwood's B comes from `unclassified` 73 -> 74 nodes. The one new unclassified security is `CUSIP:BDP6Y61W`
+("F246 MyCompass Ind Moderate 2065 Fd R", USD 24,037.95), which was NOT held at the pin. It is a new position, not a security that
+lost its class: 0 securities held at the pin are unclassified now. The term as written grades position turnover. This seat applies
+it as written, the stricter side, and has proposed a same-security term to `1.0.0_SA_CTO~DELL2`:
+`no_held_security_lost_class`, already measured by the instrument, with new unclassified positions listed rather than graded.
+The term changes only on the CTO's word.
+
+### Per-fire record
+| fire (ET) | pins file | 49financial | inflection | cottonwood | act |
+|---|---|---|---|---|---|
+| 2026-10-08 10:15 (first fire, graded above) | 10-07 pins | HOLD (AMENDMENT 2) | A | A (original rule) | none |
