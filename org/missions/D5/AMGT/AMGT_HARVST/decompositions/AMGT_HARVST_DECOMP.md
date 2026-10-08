@@ -3526,3 +3526,25 @@ Issuer `2.0.0_SA_COO~H`. Series **`bn`**.
 - `bn-1` AC1 (`pytest test_bn1_names_made_whole.py`) base: FAIL as expected (the test is absent).
 - `bn-1` AC2 (`cat bn1_names_made_whole.out`) base: FAIL as expected (no such file).
 - `bn-1` AC3 (`pytest test_bm1_identity_records.py test_bm2_truncated_names.py test_bf1_job_record.py test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).
+
+## 84. ROUND 70 -- a stored per-security query override, set for AIG only (`1.0.0_SA_CTO~Z` msg 31664, R23), 2026-10-08 ~10:3xZ
+
+Round 69's `bn-1` is terminal (@357b53c71b): AIG's stored name is its SEC legal name and both OMAB lines are whole, in the
+new unpointed identity file; `ICT_US` is unrepaired with its reason, accepted. The query the collector derives for AIG is
+still "AMERICAN INTERNATIONAL", because `publishers._LEGAL_SUFFIX` strips "group". R23: fix it as a stored per-security
+override, never by changing the suffix rule.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bo`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bo-1` | `bo-1` | **An optional `query_override` on an identity record that replaces the derived queries when present; set for `AIG_US_Equity` only through the one builder.** `_LEGAL_SUFFIX`, `slug_query` and the matcher unchanged; plants with the absent field as negative control and the mutant; the derived query of all 242 names before and after (1 changed, 241 identical), 0 of 234 changed on the round-47 file, and the two American Airlines titles excluded. | SERVED | worker ~122 |
+
+**The merge is HELD** on the live Seeking Alpha leg ending AND a never-widen pair: a merge into `lib/opal_data_harvest` is a
+deploy to whatever the driver runs next. The order stays open until then.
+
+**Checks dry-run at the base before the cut:**
+- `bo-1` AC1 (`pytest test_bo1_query_override.py`) base: FAIL as expected (the test is absent).
+- `bo-1` AC2 (`cat bo1_query_table.out`) base: FAIL as expected (no such file).
+- `bo-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (count in the issuance commit).
