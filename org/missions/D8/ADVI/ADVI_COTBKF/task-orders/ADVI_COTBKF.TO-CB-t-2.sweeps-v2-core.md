@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~41</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -78,6 +78,7 @@ data/assets/scripts/silver/tests/test_commonwealth_sweeps.py
 data/assets/scripts/silver/tests/test_commonwealth_daily_valuation.py
 data/assets/scripts/silver/tests/test_commonwealth_daily_returns.py
 data/assets/scripts/silver/tests/test_commonwealth_zero_amount_flows.py
+data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

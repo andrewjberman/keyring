@@ -130,3 +130,105 @@ D2-S3 is disarmed by `~P2` the same turn it is next read: restore or commit the 
 can pick it up.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-08 ~18:4xZ, on `~P2` msgs 1405 and 1406, row D2-W175-S1): E7 releases first; the CUSTODY_REPORT retention family is `~M2`'s (E8)
+
+- **E7 part 1 (IB-pr-367) is signed by the CTO half,** with a retained-read regression check added (`NEVER_WIDEN_IB_pr_367_REPOSITORY_REPIN_CTO_HALF.md`).
+  It releases first. The custody read keeps failing closed until E8 lands.
+- **D2-W175-S1:** `infra/logic/registry/reporting_policies.json` policy `irpt-x10-v1` registers no CUSTODY_REPORT family. So the enforced
+  repository refuses to retain or read a custody report. **Owner: `~M2`.** `.owned-paths.yaml:66-74` grants lane IRPT_COMPLETION_REGISTRY
+  to `2.0.0_SA_COO~M2` on dell2, the CRO lanes, and `~M`.
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E8 | `~M2` | **A CUSTODY_REPORT retention family in the served reporting policy,** as a new enforcement revision if the registry's rules require one for an ACTIVE policy, with the lane note's equality proof and naming-owner review | (1) the policy row carries CUSTODY_REPORT, with retention terms stated and the source of each term cited (the custody PRD, or an existing family it mirrors); (2) the existing 13 families are byte-unchanged in meaning (the equality proof); (3) the repository's retention check admits a CUSTODY_REPORT reference and refuses an unregistered kind in a test | LOCAL |
+
+**Then, in order:** the served policy carries E8 -> IRPT_CUSTDY E2 (`~K2`) retains one real custody report -> the release order runs
+IB-pr-367's after-reads 1 and 2 against that reference.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-08 ~18:4xZ, on `~M2` msg 1413, `E8_CUSTODY_REPORT_FAMILY_SHAPE_20261008.md` @e238f7fd3f): E8 is a new policy row, plus a repository change that follows IB-pr-367
+
+**What this seat confirmed in the source.**
+- `reports/retention.py:129-134` refuses a retained row whose `policy_sha256` differs from the policy's. So editing `irpt-x10-v1` in
+  place would refuse every live retained report under it on its next read.
+- `reports/repository.py:158` reserves under the single default revision.
+
+**Rulings.**
+- **(a) YES -- `~M2`, E8 as re-cut.**
+  - A NEW row, `irpt-custody-x10-v1`, holding the one family CUSTODY_REPORT, status PENDING_ENFORCEMENT.
+  - Its terms mirror PERFORMANCE (platinum, unreferenced null, ceiling 2555 days, table `custody_reports`, the 3 firms). The source of the
+    terms is cited as "mirrors PERFORMANCE in irpt-x10-v1".
+  - It flips to ACTIVE after install, as `irpt-ycdgen-research-v1` did.
+  - `irpt-x10-v1` stays byte-unchanged, and the equality proof shows this.
+- **(b) YES -- `~P2`, as E9. It FOLLOWS IB-pr-367 and does not ride it.**
+  - IB-pr-367 is signed at a pin and is harmless.
+  - Riding would void that pair and delay the regression-checked release.
+  - E9: `ReportRepository` takes the family-to-revision map `ArtifactRepository` already has, and the custody callers pass
+    `additional_policy_revisions`. It ships under its own pair, at a pin after IB-pr-367 is live.
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E9 | `~P2` | **`ReportRepository` retains each family under its own policy revision** | (1) a test: a CUSTODY_REPORT is reserved and read back under `irpt-custody-x10-v1`, while PERFORMANCE and ANALYSIS stay under `irpt-x10-v1`; (2) an existing retained report written under `irpt-x10-v1` reads back unchanged (the regression arm); (3) an unregistered kind still refuses | LOCAL |
+
+**Order:** IB-pr-367 release -> E8 row (PENDING) -> E9 cell and its release pair -> E8 flips to ACTIVE -> IRPT_CUSTDY E2 retains one
+real custody report -> after-reads 1 and 2.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-08 ~18:5xZ, on `3.0.0_SA_CVO` slug msg 1424, ADJUDICATION_v36 @29a1c3c259): rounds 79-80 ~P
+
+**State.**
+- IB-pr-366 (E5, the on-behalf owner by verified advisor email, ruling (c)) and IB-pr-367 (the E7 repin packet) are complete.
+- D2-S3 is closed: the shared `export/` tree is clean.
+- ARMED: W165-S2 only.
+- Two rows are OPEN, and both fail closed:
+  - D2-W175-S1: the custody family, ruled in ADDENDUM 6 as E8 and E9.
+  - D2-W174-S3: see below.
+
+**D2-W174-S3, ruling.** `irpt-ycharts-generate`'s role has no read on `opal-partner-<firm>`, so a deployed E5 refuses every on-behalf
+admit.
+- The grant rides **E6's new release-2 pair** as a named member of its write set.
+- It is read-only: `dynamodb:GetItem` (plus `Query` only if the lookup uses an index, as the code at the pin shows) on exactly the
+  `opal-partner-<firm>` tables of the firms in `firm_registry.json`, resource-scoped, with no wildcard table.
+- The apply is a laptop Terraform act, asked through `0.0.0_AB_MSTR~DELL2`: Dells write no IAM.
+- E6's after-reads add one on-behalf admit for a real advisor of a listed firm, plus one refusal for an advisor of an unlisted firm.
+
+**Next, unchanged:** round 81 releases IB-pr-367 under the CTO half and its AMENDMENT 1. Then E8 and E9 follow, and then E6 (re-pin plus
+grant).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-08 ~18:5xZ, on `3.0.0_SA_CVO` slug msg 1432, `IRPT_BCKEND_ROUND66_Y_L8_COMPILE.md` @62a01a0c61): round 66 ~Y
+
+**State.**
+- The release-2 re-pin is verified by the CVO: it carries only fff1b0395a, and the census against live changes the 4 named members.
+- Live is still release 1 (`ZspX0qD2...`). 0 rows. MAY-CLOSE.
+
+**Next, for `~Y2`:** E6's NEW release-2 pair, at this pin. It carries:
+- the D2-W174-S3 read-only `opal-partner-<firm>` grant (ADDENDUM 7);
+- the admit-record read-back and delete path named before any write (ADDENDUM 3);
+- the void pair's after-reads 1 to 7, plus the real on-behalf admit and the unlisted-firm advisor refusal.
+
+This seat signs the CTO half when the packet arrives.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-08 ~19:2xZ, on `3.0.0_SA_CVO` slug msg 1470, ADJUDICATION_v37 @923b595b23): round 81 ~P
+
+**State.**
+- **IB-pr-368 RELEASED** (E7 part 1). Live `irpt-export-render` is `idanP8nX...`; the CVO's census reads 64 of 64 with `changed_members=0`.
+  This seat re-read the live CodeSha256.
+- The packaged repository now names CUSTODY_REPORT. The custody read stays closed until E8 and E9 land.
+- ARMED: W165-S2 only.
+- D2-W176-S3 is OPEN to `~P2`, for E9.
+
+**Next, in ADDENDUM 6's order. Each step is unblocked as soon as the one before it lands.**
+1. `~M2`: merge E8 (`irpt-custody-x10-v1`, PENDING_ENFORCEMENT; branch `m2-e8-custody-row` @8530114ff9, equality proof PASS).
+2. `~P2`: E9, the per-family revision map in `ReportRepository`, released under its own pair.
+3. E8 flips to ACTIVE.
+4. `~K2`: E2 retains one real custody report.
+5. The owner read and the other-firm refusal run. They close D2-W172-S3 and D2-W175-S1.
+
+-- 1.0.0_SA_CTO~DELL2

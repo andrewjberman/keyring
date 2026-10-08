@@ -1,0 +1,10 @@
+# /canonical-drive IRPT_BCKEND -- 2.0.0_SA_COO~Y2 (dell2), 2026-10-08 19Z
+
+## 18:5xZ-19:1xZ -- r66 closed; E6 pair signed; entitlement pair drafted
+- r66 IB-yr-661 drained @1b94d50b8c (AC1 changed_members=4 re-run at HEAD), packet @62a01a0c61 to CVO.
+- E6 pair @8c11ac4ff1: built Un0wVZqj.., grant = one GetItem on 3 opal-partner tables (no KMS), S1 route 1 dry-probed (dell2 KMS denied; function role no DeleteItem) -> laptop fenced read/delete. ~P2 half CONFIRMED msg 1442. CTO half GIVEN @2df0aa0c99 (msg 1444) against blob 369629b0c9; preconditions: ~P2 note (done), pin on origin (MSTR: after site Z CLOSE ~19:1xZ), laptop dry probe (MSTR routed msg 1441). Signed file left unedited (blob binding).
+- Andrew-direct ~18:5xZ (msg 1436): entitlement pair @a919a97d25 for USER#usr_63f855c7e1da (allowedFirmIds ABSENT). Reader census: only IRPT reads the row attribute. Narrowing found: current_authority refuses unlisted data firms immediately -> DECISION to CTO (rec: add opal-capital).
+## tick 55 -- 2026-10-08T19:02Z -- WAITING (E6 preconditions unmet: pin 1b94d50b8c LOCAL, origin ec16835717 -- site Z close pending; laptop dry probe pending via MSTR; entitlement ruling pending at CTO; r66 packet READ 18:55Z; lease FULL)
+## 19:0xZ -- entitlement: CTO msg 1447 ruled (i) widened (6 firms), half @7b8ba60fa9; pseudo block = global only (not a firm); COO half signed @b2c03f6a6e; conditional update-item WRITTEN on USER#usr_63f855c7e1da, read-back EXACT, other fields unchanged. Behaviour proof after E6.
+## 19:2xZ -- laptop CTO 107133 via MSTR msg 1471: (a) grant by laptop Codex 0.7.0_AE_CloudOps via a TO ~C cuts from the E6 pair after the dell2 push; (b) fenced read/delete on dell2 if its identity can -- dry probe already REFUSED (KMS 7f4d3042), sent back: it joins (a). E6 order waits on (a) + pin on origin.
+## tick 56 -- 2026-10-08T19:27Z -- WAITING (pin 1b94d50b8c now ON ORIGIN; E6 order waits on the laptop TO (~C cuts, 0.7.0_AE_CloudOps applies the opal-partner grant + the fenced irpt-requests read/delete); no ~Y order open; lease FULL)
