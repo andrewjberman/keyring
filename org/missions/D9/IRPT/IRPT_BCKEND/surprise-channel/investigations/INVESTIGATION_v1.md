@@ -21311,3 +21311,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The suites import the source tree at HEAD, whose composition.py is newer than the one packaged; the replay used the packaged one, so the served combination (packaged composition with the new repository.py and retention.py) is covered by the replay only, not by the suites. No behavioural difference was observed on the replay's path, and the next release that moves composition.py will change the served surface."
 }
 ```
+
+## IRPT_BCKEND-D2-S6 -- D2-W176-S3 ruled: the packaged composition.py lags HEAD; E9's release pair repins it with the E9 change
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T20:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W176-S3 by carrying it to E9's release pair (IB-pr-369 is the code; its pair follows, CTO ADDENDUM 6). irpt-export-render packages composition.py at a staged pin older than HEAD's source, so source-tree suites exercise a composition the function does not ship; IB-pr-368's served combination was covered by the offline differential replay of the live and built zips (identical result_sha256 a7a8ae481b97, negative control refused by both). E9 changes composition.py (the revisions map), so its packet must repin the composition.py staged row together with repository.py and submit_installed.py, and grade the census at that pin.",
+  "one_line": "The shipped composition.py is older than the source; the next release (E9) must carry it forward explicitly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W176-S3 (both zips' composition.py differ from HEAD source)",
+      "IB-pr-368 after-reads replay record (commit d8d2fb723c), drained @4f101ea53d"
+    ]
+  },
+  "spec_asserts": "A release census names every member whose behaviour the release depends on.",
+  "world_is": "Holds for IB-pr-368 (replay); E9's pair must name composition.py."
+}
+```
