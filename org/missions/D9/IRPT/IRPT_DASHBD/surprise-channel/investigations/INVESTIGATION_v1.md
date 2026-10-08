@@ -2869,3 +2869,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W29-S1 -- 437 of S34's 440 are not a split-pull defect: BD's net returns chain, and the gross gap is round 18's fee add-back being evaluated on a different value basis per range.
+
+```json
+{
+  "id": "IRPT_DASHBD-W29-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~29",
+  "surfaced_at": "2026-10-08T18:30:00Z",
+  "one_line": "On 437 of the 440 non-recomposing accounts BD's NET returns chain to BD's full-range NET within 0.35 pp (day counts and held flags agree); the gross gap comes from the round-18 fee add-back fees / ((bmv + emv) / 2), which is not additive across ranges and reaches -8.6 on a closing account with a negative fee.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-27 (round 18) reader: gross = BD net twr + fees / ((bmv + emv) / 2) is a sound gross basis for any range, so halves chained should reproduce the full-range gross (DB-b-49 recompose control).",
+  "world_is": "MEASURED (S34_CLASS_E1.json, 880 landed objects re-read): net chain within tolerance on 437 of 440; 3 are over tolerance on net (0.40 to 0.45 pp) with near-zero opening values; 18 have ending value 0 on the full range (denominator is half the opening value); 30 carry a negative fee on a point; the 724.16 pp outlier has fees -175.99 on a left half with bmv 40.69 / emv 219.04 (add-back -1.36) and -174.9 on the full range with emv 0 (add-back -8.60). The gross basis therefore cannot be compared across ranges of different length on small or closing balances. Not examined: how many of the 9,078 round-18 segments outside S34 carry the same distortion within tolerance.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~29/S34_CLASS_E1.json counts, outlier, sub_counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
