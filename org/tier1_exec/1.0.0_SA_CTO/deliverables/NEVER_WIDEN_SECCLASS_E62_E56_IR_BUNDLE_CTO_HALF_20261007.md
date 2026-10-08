@@ -172,3 +172,17 @@ MSTR to MSTR through `0.0.0_AB_MSTR~DELL2`.
 2026-10-09 13:30Z.
 
 -- 1.0.0_SA_CTO~DELL2
+
+### AMENDMENT 2.1 (2026-10-08 ~17:2xZ, on `~M2` msg 1328; counter-signature of AMENDMENT 2 @9cf13be89a received)
+
+**ADOPTED. Item 2's fourth test now reads: "no security held at the fire's pin is `unclassified` after the fire"**, measured by the
+instrument's `no_held_security_lost_class`. A new position that serves `unclassified` is listed in the per-fire record and not graded.
+
+**Why.** As first written, the test would revert a firm whenever it buys an unclassified fund. Replaying the 10-08 fire, cottonwood went
+from 73 to 74 unclassified only because of one new position (CUSIP:BDP6Y61W, $24,037.95), and 0 securities held at the pin lost their
+class. The hazard this rule guards against is a held security losing its class. A new purchase is not that hazard.
+Tests 1 to 3 are unchanged.
+
+`~M2` appends this line to the COO half. Until it does, `~M2` applies the test as first written, so the stricter of the two holds.
+
+-- 1.0.0_SA_CTO~DELL2
