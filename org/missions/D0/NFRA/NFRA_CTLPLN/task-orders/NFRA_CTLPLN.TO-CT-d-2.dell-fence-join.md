@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -410,3 +410,43 @@ Each line must read `ok=True`.
 
 **BOUNDS.** Read-only AWS (`iam simulate-*`, `sts get-caller-identity`). No apply, no plan against the backend, no registry edit,
 no bucket listing, no object read, no download; every Terraform call sets `CHECKPOINT_DISABLE=1` in a provider-less scratch root.
+
+## AMENDMENT 7 (2.0.0_SA_COO~C, 2026-10-08 ~01:2xZ) -- REOPENED, PRIORITY: dell1 is now admitted IN FULL; the two fence checks must hold on that registry
+
+The issuer reopens its own order; the slot is re-seated in a fresh worktree; earlier commits are inherited state on the trunk.
+What changed: Andrew lifted the limit on dell1's firm data (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_004xZ_LIFT_FOUR_DELL_LIMITS_SECRETS_FIRM_DATA_RESOURCE_POLICIES_PUSH.md`;
+`1.0.0_SA_CTO` msg 106669 ruling 2: "dell1 is admitted to the firm-data fences in full, like dell2. No prefix-list cell.") and
+`4.0.0_SA_CRO` made the three `cloudops-dell1-agent-user` rows FULL rows @173f98f24b (no `actions`, no `prefix`). The registry now
+holds NO scoped row. Issuer's runs on the trunk, ~01:0xZ:
+- `FENCE-JOIN pairs=3 rows=3/3 typed_in_tf=0 cross_firm_leaks=3 evaluator_allowed=3/3 negative_arm=denied other_rows_changed=3 validator=ok scoped_rows=0 scoped_confined=0/0 ok=False`
+- `FENCE-SCOPED rows_today=32 unchanged_today=False scoped_rendered=9/9 sim_ok=30/30 refusals_ok=0/7 unknown_key_refused_by=module ok=False`
+The issuer's targeted plan of the three bucket policies reads `0 to add, 3 to change, 0 to destroy`, 126 lines removed and none
+added: the three `DenyScopedExemption1...` statements leave each policy and the dell1 user stays admitted. An apply order
+cannot name a failing check. Gate limb: none graded this modification. NO registry, `.tf`, module or `lib/` edit.
+
+1. DIAGNOSE FIRST, as AMENDMENT 6 required, each failing field by reading the script: is it the check's assumption about the
+   registry, or a real defect? Write a short section "state 3: dell1 unscoped" into `tests/fence_checks_registry_states.md`.
+   A real defect (a principal of another firm admitted; the validator accepting a planted defect on today's registry) is a
+   STOP with a BLOCKING row and no edit.
+2. `check_dell_fence_join.py` and `dell_fence_join_pairs.json`: the expected UNSCOPED pairs are now six: the two Dell agent
+   users on each of the three fenced buckets. Put the three dell1 pairs into the pairs file's `dell1_unscoped_pairs` list as
+   DATA, each with the record's path as its authority (the file is the declared list of expected rows; a seventh unscoped Dell
+   row, or an unscoped row for any principal not listed, is still a leak). The line keeps its fields; `pairs=6 rows=6/6`.
+   Keep every negative control AMENDMENT 6 added and add one: with a pair removed from the pairs file (in a scratch copy) the
+   same registry reads `cross_firm_leaks=1 ok=False`.
+3. `check_fence_scoped_rows.py`: its fixtures must not depend on which real principals hold rows. Build the "with scoped rows"
+   state by adding scoped rows for a SYNTHETIC principal that no registry row names (a made-up user ARN in this account,
+   stated as synthetic in the script), one per fenced bucket, to a scratch copy of today's registry; the identity side of its
+   simulator arms then cannot be a real user's attached policies: use a small inline identity policy document that allows
+   get, put and list on the estate's bucket pattern (the worst case the confinement must hold against), through
+   `simulate-custom-policy`. `rows_today` reports today's real count; `unchanged_today` compares today's render with scoped
+   rows absent against the render at the commit before the first scoped row landed, EXCEPT for the principals the registry has
+   since admitted unscoped (print which, from the registry diff): say exactly what is compared. All seven refusal cases and
+   the control stay.
+4. Run both checks, and `derive_fence_row_shape.py` and `dell_fence_census.py --selftest`, each under `timeout 120`; all read
+   `ok=True`. Rewrite the proof instance's three rows from your runs; validate; flip the order to `complete`.
+
+**ACCEPTANCE (same three ids, expectations unchanged):** `CT4d2-AC1` `typed_in_tf=0 cross_firm_leaks=0`; `CT4d2-AC2`
+`FENCE-ROW-SHAPE rows=`; `CT4d2-AC3` `unknown_key_refused_by=validator\+module`. Each line must read `ok=True`.
+
