@@ -5,7 +5,7 @@
  "project": "COMM_ASSIST",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4"],
@@ -25,20 +25,30 @@ dont care" (@c0a11edcc8). Ratified on those words; a wording change under them r
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
-```
-  FWD-1  Someone at Opal asks for work in a message, Andrew gets one text with a recommendation, a fresh agent does the
-         work, a reviewer checks it, and the person who asked is told it is done
-         DONE WHEN  EXERCISED -- one real request carried end to end
-         ACCEPT     a colleague's real request becomes one text to Andrew; after his yes, the work is done by an agent that
-                    was not in the conversation, someone other than that agent checks it, and the colleague hears back that it
-                    is done, without Andrew relaying anything by hand
-         SOURCE     NFRA_CTLPLN FWD-20 (v0.17-v0.19)
+FWD-1 and FWD-2 carry NFRA_CTLPLN FWD-20 and FWD-26 (v0.20, lines 212-222 and 282-290) with their ACCEPT lines VERBATIM; the
+move is recorded in NFRA_CTLPLN's addendum v0.21. FWD-3 and FWD-4 are new, on Andrew's words of point 1.
 
-  FWD-2  Anything an agent writes in Andrew's name sounds like him
-         DONE WHEN  EXERCISED -- drafts written from his own past messages, read by him
-         ACCEPT     the drafts he is texted are written from one collection of his own messages, sorted by the kind of thing
-                    he is doing, and he sends them with few or no changes
-         SOURCE     NFRA_CTLPLN FWD-26 (v0.19)
+```
+  FWD-1  Someone at Opal asks for a piece of work in a message, Andrew hears of it from one text with
+         a recommendation, a fresh seat on the box with the most room does it, a reviewer grades it,
+         and the person who asked is told it is done
+         DONE WHEN  EXERCISED -- one real request taken the whole way, and the person who asked told the
+                    outcome
+         ACCEPT     a person asks for a small piece of work in Teams; Andrew gets one text saying what
+                    was asked and what is recommended, and can answer it without opening Teams; the
+                    job goes to the box with the most room by a measurement taken when it is offered; a
+                    seat started fresh for that job, handed a written brief, does it; a seat that did
+                    none of the work grades it; the person who asked is told, where they asked, that it
+                    is done; a request replayed from a saved example fails the outcome
+         SOURCE     NFRA_CTLPLN FWD-20, verbatim
+
+  FWD-2  Anything an agent writes in Andrew's name is written from one file of how he writes
+         DONE WHEN  EXERCISED -- one draft written for him from the file and read by him
+         ACCEPT     there is one file that shows how Andrew writes, built from real messages of his
+                    for each kind of thing an agent would write for him; an agent drafting a reply or
+                    a post in his name uses it, and Andrew reading the draft says it sounds like him;
+                    nothing is sent in his name that he has not approved
+         SOURCE     NFRA_CTLPLN FWD-26, verbatim
 
   FWD-3  Every Teams message and channel mention addressed to Andrew reaches his phone, and a daily count proves it
          DONE WHEN  EXERCISED -- one full working day whose count adds up
@@ -47,22 +57,42 @@ dont care" (@c0a11edcc8). Ratified on those words; a wording change under them r
                     nothing fell through that day
          SOURCE     Andrew point 1, "a lot of them are falling through"
 
-  FWD-4  Mail from the five client firms that names Andrew reaches his phone the same way Teams does
-         DONE WHEN  EXERCISED -- one real client email texted to him
-         ACCEPT     an email from one of the five firms whose body mentions Andrew arrives as a text with a draft reply, the
-                    client is flagged as a client, and mail that does not name him does not text him
+  FWD-4  Mail from the five he named (Cottonwood, Inflection, 49 Financial, Alongside, and Opal for internal) that names
+         Andrew reaches his phone the same way Teams does
+         DONE WHEN  EXERCISED -- one real such email texted to him
+         ACCEPT     an email from one of the five whose body mentions Andrew arrives as a text with a draft reply; a sender
+                    from one of the four client firms is flagged as a client and an Opal sender as internal; mail that does
+                    not name him, or comes from anyone else, does not text him and is not passed to any model
          SOURCE     Andrew point 1, "the same exact process accessible via email"; ~22:5xZ, "it always has to say andrew in
-                    the body text somewhere"
+                    the body text somewhere"; NFRA_CTLPLN C-SEATS clause 9
 ```
 
 ## CONTRACTS
 
-- **C-JOB** (was C-SEATS clause 8): an inbound job is done by a fresh agent briefed only from a file; the requester is told.
-- **C-MAIL** (was clause 9): mail is admitted only from the five firms' own domains and only when the body names Andrew; mail is
-  drafted, never sent.
-- **C-VOICE** (was clause 10): one voice file, `andrew_voice.md`, built from his own messages by kind of act.
+Clauses 8, 9 and 10 are NFRA_CTLPLN C-SEATS clauses 8-10 (v0.20, lines 726-727, 754-758, 782-791), carried VERBATIM.
+
+- **C-JOB** (clause 8): "**An inbound job** is done by a seat spawned fresh for it and briefed from a file; the requester is told
+  the outcome in the channel they asked in."
+- **C-MAIL** (clause 9): "**Mail.** Only his own mailbox, through the gateway. A message is considered ONLY when both hold: its
+  sender's domain is one of the five he named (Cottonwood, Inflection, 49 Financial, Alongside, and Opal for internal), each
+  domain string read from the estate's firm records and never typed; and its body names "Andrew". A message failing either test is
+  not passed to any model." Mail is drafted, never sent by an agent.
+- **C-VOICE** (clause 10): "One file, `andrew_voice.md`, organised by the kind of act (a reply to a client's mail, a Teams reply, a
+  Teams post, an End of Day post, and others as they arise), each with representative messages Andrew himself wrote. The messages
+  come from his own mailbox and his own Teams, through the gateway, read only. Names are not wiped ... `daily_reports/eod/VOICE.md`,
+  which the End of Day post reads today, is not replaced by a cell's choice: the cell reads it, carries what it holds into the new
+  file's End of Day section, and the reader of the old file moves to the new one in the same cell or stays where it is. The
+  messages themselves are client mail, so they are NOT committed to the repository, whose origin is an outside host: the file with
+  its messages lives in an Opal-owned home outside git, and the repository carries only its location and its section list."
 - **C-ONE-YES**: nothing goes out in his name without his `1`.
 - **C-PACKAGE**: a deploy half lists every file its package carries and names any file outside COMM (CVO finding, msg 107474).
+
+## v0.2 (1.0.0_SA_CTO, 2026-10-08 ~23:5xZ) -- the carry made verbatim
+
+On 3.0.0_SA_CVO's L4-R refusal of v0.1 (`org/tier1_exec/3.0.0_SA_CVO/deliverables/COMM_ASSIST_v0.1_L4R_RATIFIED_TEXT_REVIEW_20261008.md`
+@a8fdeb4d23, findings 1-6): FWD-1 and FWD-2 now carry FWD-20's and FWD-26's ACCEPT verbatim (the replay ban, "where they asked",
+answering without opening Teams, the box with the most room; "says it sounds like him"); FWD-4 names the five as clause 9 does,
+Opal as internal; C-MAIL and C-VOICE carry clauses 9 and 10's limits verbatim; NFRA_CTLPLN addendum v0.21 moves the outcomes out.
 
 ## SURFACE MANIFEST (step 4 -> step 5)
 
