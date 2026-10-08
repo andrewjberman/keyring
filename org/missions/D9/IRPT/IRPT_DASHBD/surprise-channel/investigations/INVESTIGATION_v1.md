@@ -2819,3 +2819,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W27-S2 -- The lots peak is flat across batch sizes (about 1.7 GB): a batch-independent component sets it, and 250 per batch is over 900 s.
+
+```json
+{
+  "id": "IRPT_DASHBD-W27-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~27",
+  "surfaced_at": "2026-10-08T14:07:26Z",
+  "one_line": "Batching bounds the lots stage but the peak does not fall with the batch size: 1,713 MB at 250 accounts per batch and 1,735 MB at 1,000, so a component the batch does not shrink sets it; and 250 per batch takes 905.7 s in total, over 900.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-48 item 1: the lots stage processes accounts in bounded batches so its peak memory does not grow with the population; DB28-2-AC1 grades the lots peak flat across two batch sizes (max/min <= 1.25).",
+  "world_is": "MEASURED (BATCHED_E2.json, 7,604 accounts, 2026-10-06, pandas 3.0.6 not the served 2.2.3): batch 250 lots 684.61 s / 1,713.4 MB, total 905.67 s; batch 1000 lots 495.54 s / 1,735.3 MB, total 768.91 s; max/min 1.013. Round 27's unbatched run reached at least 2,759.5 MB and refused. The peak is flat across batch sizes, so what sets it was not found to be the batch; the balance-history scan (paid once, population-wide) and the day's partitions are the batch-independent reads in the stage but were not isolated here. Smaller batches cost wall time (31 batches vs 8). The population at run time was 7,604 against the order's 7,597.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/BATCHED_E2.json runs, lots_peak_max_over_min"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
