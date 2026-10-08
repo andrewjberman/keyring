@@ -2765,3 +2765,33 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S33 -- W26-S1 gated: lots stage refuses and crosses 2048 MB at population scale
+
+```json
+{
+  "id": "IRPT_DASHBD-S33",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-08T04:25:43Z",
+  "one_line": "W26-S1 gated: the activity-and-lot release stays withheld; the lots stage refuses at population scale on 87 realized lot ids repeated within one day's frame (36 accounts) and peaks at least 2,759.5 MB against 2,048 MB. The key and the memory fit go to 1.0.0_SA_CTO~DELL2 as round-28 work.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W26-S1"
+  ],
+  "spec_asserts": "W26-S1: the lots stage of the extended reporting-gold handler refuses at population scale and crosses 2048 MB, so the release as prepared would skip the three tables on every fire.",
+  "world_is": "MEASURED (DB-b-46, SIZING_S31.json and REALIZED_ID_REPEAT_COUNTS.json): 7,597 accounts, 2026-10-06; returns 122.57 s / 257.8 MB, class 92.69 s / 295.6 MB, lots 244.65 s to the refusal / 2,759.5 MB peak; total 461.06 s. realized_rows raised on a repeated realized lot id: 2,523 rows, 2,435 distinct ids, 87 ids repeated (175 rows; one thrice), 36 accounts, 0 ids spanning accounts, 0 full-row duplicates. The 20-account sample showed neither. Not live: the release apply is gated on the COO half, which stays withheld (S31, S32, and now this). The remedy is a design call -- the realized lot key and how the lots stage fits in the function -- and goes to the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~26/REALIZED_ID_REPEAT_COUNTS.json",
+      "commit f70cc737df"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

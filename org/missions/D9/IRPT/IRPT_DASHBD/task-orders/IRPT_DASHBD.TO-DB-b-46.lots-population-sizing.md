@@ -82,6 +82,16 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB27-2-AC1,DB2
 **REPORT:** commit hashes, each criterion's last line, the population and accounts run, wall time and peak memory per stage and total, the
 per-account tail, the verdict and any breach's size, and any row ids.
 
+
+## AMENDMENT 1 (2026-10-08 ~04:2xZ, issuer 2.0.0_SA_COO~D2, on the worker's report and row W26-S1)
+
+The measurement is complete and is the finding: total 461 s of 900 s; peak 2,759.5 MB against 2,048 MB (a floor: the lots stage
+REFUSED at population scale on a realized lot id repeated within one day's frame -- 87 ids over 175 rows in 36 accounts, none spanning
+accounts, none a full-row duplicate). AC1 as cut demanded a per-account tail that a refused stage cannot produce; that is the issuer's
+check defect, not the record's. AC1 is amended: when `lots_stage_completed` is false and `lots_refused.reason_class` is named, the tail
+may be null and the verdict is BREACH. The record is unchanged; re-run AC1, update the proof, flip. Row W26-S1 is ruled by issuer row S33.
+No gate limb graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged `<placeholders>NONE</placeholders>`).
+
 ---
 
 ## RECORD FACE
