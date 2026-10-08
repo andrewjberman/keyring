@@ -20627,3 +20627,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: 0 extras."
 }
 ```
+
+## IRPT_BCKEND-W169-S1 -- regenerated ExportReceipt makes covered_account_ids required; a test consumer no longer typechecks
+
+```json
+{
+  "id": "IRPT_BCKEND-W169-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~169",
+  "surfaced_at": "2026-10-08T05:37:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After regenerating ~P's four wire files (portal branch wk-IRPT_BCKEND-169-portal @c0291b68), tsc -b --noEmit exits 2: iv-e-26.submit-data-optional.test.ts line 33 builds an ExportReceipt facts object without the now-required covered_account_ids (IB-pr-343). IB75-1-AC2 is a stop; no consumer was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_BCKEND-169-portal @c0291b68; p75_cells.py . IB75-1-AC2 -> FAIL: TS2741 at iv-e-26.submit-data-optional.test.ts(33,5), 1 error"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration (base PASS as a control).",
+  "world_is": "It exits 2 with one TS2741 in a test fixture that omits covered_account_ids. The fixture needs the field; the owner of that test (not this cell's grant) must add it."
+}
+```
