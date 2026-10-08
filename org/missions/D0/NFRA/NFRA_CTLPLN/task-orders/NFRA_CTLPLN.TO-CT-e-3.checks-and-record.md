@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -134,6 +134,7 @@ org/devices/intake/intake_check.py
 org/devices/intake/test_intake_check.py
 docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
+org/devices/intake/test_intake_seam.py
 </paths>
 
 ---
@@ -267,4 +268,27 @@ this pass: every test uses fixtures; you do not fetch, and you do not touch the 
 
 **ACCEPTANCE (same three ids, expectations unchanged; the case count in the test line moves):** `CT5e3-AC1`, `CT5e3-AC2`,
 `CT5e3-AC3`. Rewrite the proof instance's rows from your runs, validate, and flip the order to `complete`.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-08 ~06:0xZ) -- REOPENED, SHORT: disarm row W6-S17 (an extra file must fail check 6) and repair the seam test (row W6-S16)
+
+AMENDMENT 3's pass is accepted except for two things its own report named. The branch is NOT merged until both are fixed.
+Gate limb: none graded this modification. One path is added to `<paths>`: `org/devices/intake/test_intake_seam.py`.
+
+1. **Row NFRA_CTLPLN-W6-S17 (ARMED, owner this issuer): an EXTRA module in a wheel now passes check 6 against a complete
+   installed copy.** That is the one case check 6 exists for: a file the published wheel should not contain. Repair, by the
+   installed copy's own `RECORD` file (in its `.dist-info`): a wheel `.py` whose path the installed `RECORD` LISTS but which is
+   absent on disk is `missing` (as now); a wheel `.py` whose path the installed `RECORD` does NOT list is `extra`, and
+   `extra > 0` is `failed` with the files named. If the installed copy has no readable `RECORD`, a `.py` with no counterpart on
+   disk is `extra` (fail) unless EVERY `.py` is absent, which stays `not_applicable` ("no installed file to compare"). The
+   evidence line becomes `compared=<k> missing=<m> extra=<e> differ=<d>`. Restore a test asserting that an extra module fails
+   (the one AMENDMENT 3 replaced), and keep the missing-file and editable cases passing.
+2. **Row NFRA_CTLPLN-W6-S16: the seam test's stand-in signature has no signing line**, so check 8 now refuses it and
+   `test_intake_seam.py` reads `ok=False`. In that file, change ONLY the stand-in signature text so it carries a line beginning
+   `CHECK 8 SIGNED` naming the file, as the new rule requires; and keep, or add if absent, one negative arm in which a
+   signature WITHOUT a signing line is refused. `python org/devices/intake/test_intake_seam.py` must end
+   `INTAKE-SEAM-TEST stages=6 negative_arms=<a>/<a> index_requests=4 ok=True` (the negative-arm count may rise by one).
+3. Re-run the three criteria and the seam test; rewrite the proof instance; validate; flip to `complete`. Rows S16 and S17 are
+   resolved by this amendment: say so in your report (rows are immutable).
+
+**ACCEPTANCE:** `CT5e3-AC1`, `CT5e3-AC2`, `CT5e3-AC3`, expectations unchanged.
 
