@@ -117,7 +117,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   statement and is removed. `round47/checks/r47/r47.cjs` (the ledger's wording) is superseded by this cell and is not a criterion.
 - **Two cells, one shared directory:** `AV-zzc-2` may also touch `__harness__/`; the drain merges the two portal branches in order.
 
-<status>pending</status>
+<status>complete</status>
 <round>51</round>
 <slot>~113</slot>
 <fabric>site-z</fabric>
