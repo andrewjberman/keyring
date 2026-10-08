@@ -76,7 +76,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
          DONE WHEN  EXERCISED -- one seat-filed request on DEV; its open ticket carries all three files, each opened from the ticket page by an Opal person
          ACCEPT     an Opal person opens the request's ticket while it is still open and finds the report, the branded PDF with the commentary and the
                     advisor's original Excel there, without asking anyone; the attach is refused for another ticket type, a closed ticket and a human caller
-         SOURCE     Andrew 2026-10-08 ~22:3xZ (ADDENDUM 2, C-PACKAGE); CRO trace hop 8
+         SOURCE     Andrew 2026-10-08 ~22:3xZ (ADDENDUM 2, C-PACKAGE)
 ```
 
 ## 1. What exists (the L4 reads; MEASURED unless marked)
@@ -107,6 +107,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
 | C-QUEUE | this project | The list shows type and age for every open ticket (FWD-5), from fields the item already holds (`ticket_type`, created time) |
 | C-COMMENTARY | NFRA_TRNSPT (FWD-10, FWD-11, C-TICKET-ATTACH) | An "add commentary" request is the trigger NFRA_TRNSPT reads. The draft lands on the same ticket. The ticket records who sent the final commentary and when (FWD-6). This project builds the ticket fields; NFRA_TRNSPT builds the draft |
 | C-NAMES | rule 30 | Every new address and name is `lib/opal_naming.py` output printed in the order that writes it. C-ONE-DOOR means no new address is expected for the Analysis Request |
+| C-PACKAGE: the package attaches to the ticket that requested it | this project | **What exists:** `POST /api/scoped/tickets/{ticketId}/report` (REPORT), for internal humans and the assignee only. **New:** `POST /api/scoped/tickets/{ticketId}/package`, for ONE service principal named in the type definition (C-TYPE). The route writes `package: {report_ref, pdf_ref, original_ref, commentary_ref, attached_at, attached_by}` on an `analysis_request` ticket that is open. **Pointers only:** each ref is the handle of an artifact IRPT already retains, so C-ONE-DOOR's no-bytes rule stands and no ticket bucket is created. **Refused:** any other type; a closed ticket; a ticket whose firm differs from the report's firm; a second write unless it carries the prior `attached_at` (no silent overwrite); every other principal. The ticket page lists the refs, and each file opens through IRPT's existing signed-link reader. |
 | C-DEPLOY | law | Service and Terraform changes go through `safe-apply`. A Dell writes no Lambda permission or bucket policy (NFRA_CTLPLN); those go to the laptop by role request. Portal page changes are product files and land by the portal's review route |
 | C-MORATORIUM | law | No new alert or notification is built. The existing SES email on create is unchanged |
 
@@ -209,9 +210,7 @@ now.
 
 **New contract.**
 
-| Contract | Owner | Text |
-|---|---|---|
-| C-PACKAGE: the package attaches to the ticket that requested it | this project | **What exists:** `POST /api/scoped/tickets/{ticketId}/report` (REPORT), for internal humans and the assignee only. **New:** `POST /api/scoped/tickets/{ticketId}/package`, for ONE service principal named in the type definition (C-TYPE). The route writes `package: {report_ref, pdf_ref, original_ref, commentary_ref, attached_at, attached_by}` on an `analysis_request` ticket that is open. **Pointers only:** each ref is the handle of an artifact IRPT already retains, so C-ONE-DOOR's no-bytes rule stands and no ticket bucket is created. **Refused:** any other type; a closed ticket; a ticket whose firm differs from the report's firm; a second write unless it carries the prior `attached_at` (no silent overwrite); every other principal. The ticket page lists the refs, and each file opens through IRPT's existing signed-link reader. |
+C-PACKAGE now lives in the CONTRACTS table (section 2), after C-NAMES.
 
 **New outcome.** FWD-9: an Analysis Request ticket, still open, carries its package. That is the report, the branded PDF with the
 commentary, and the original Excel, each opened from the ticket page by an Opal person. It is driven by a seat filing on DEV; Alyssa's
