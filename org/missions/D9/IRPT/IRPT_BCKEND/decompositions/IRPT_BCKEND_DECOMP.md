@@ -2209,3 +2209,16 @@ dry-run at base ece42ad420: all four criteria FAIL.
 
 fanout: 2 of 2 chains, cap 8, reason: disjoint write sets (P87-a: export tf, source map, ledger, deliverables ~182; P87-b: two source
 files + tests + deliverables ~183). Slots ~182, ~183.
+
+## 81. ROUND 88, WORKSTREAM ~P (2026-10-08 ~22:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO half of IB-pr-373 condition 1)
+
+IB-pr-375 (persisted_by + the composition-hash binding) is drained; the CTO requires it live before any firm reads a Performance client
+statement. custody_persist.py ships from the source dir; custody_write.py is a staged row pinned at d34a46f37d, so the release repins it.
+This round writes the packet; the release goes to 0.7.0_AE_CloudOps~DELL2 (Andrew-direct msg 1756), function only (the route waits for
+the IAM leg pair @77440a907b). Check `deliverables/2.0.0_SA_COO~P2/checks/r88/p88_cells.py`, dry-run at base 7c08fe294e: AC1, AC2 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-376` | IB-pr-375 release packet: custody_write.py repin, census, clean BUILD_ONLY, never-widen packet | FWD-8 / CUSTDY S08 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-375 (drained) | P88-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~184.
