@@ -3083,3 +3083,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 1.0.0_SA_CTO: either accept 'Cloud(Ops|Comp) at any version is CLOUDOPS', or narrow CLOUDOPS to the launcher's two arms and rule how the TIER2 complement is to be written; no serial currently in use is affected."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T02:35:45Z",
+  "one_line": "AMENDMENT 7 asks `dell_fence_census.py --selftest` to read ok=True, but the file is outside the order's <paths> and the lane gate refused the commit; the self-test reads cases=0/0 ok=False because it takes its scoped pair from a registry that no longer holds a scoped row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/shared-infra/tests/dell_fence_census.py --selftest at 9c58690566 (registry @173f98f24b, no scoped row): 'SELFTEST-SETUP no scoped registry row has a policy (saved or live) holding its confining statements' then 'FENCE-CENSUS-SELFTEST cases=0/0 ok=False'. run_selftest() takes its pair from scoped_rows(), which returns rows carrying both actions and prefix; there are none.",
+      "The fix, tested in this worktree before the commit was refused: when scoped_rows() is empty, build the pair in memory (first FENCED bucket's saved policy, the dell1 ARN appended to the fence's admitted list, the three DenyScopedExemption1 statements the module renders for actions GetObject/ListBucket/GetBucketLocation and prefix irpt/<firm>/platinum/holdings/). Result: 'FENCE-CENSUS-SELFTEST cases=7/7 ok=True' in 55 s. The 51-line diff is kept untracked at C:/tmp/wk-ctlpln-6/.scratch/census_selftest_fixture.patch (worktree of 0.9.0_WK_NFRA_CTLPLN~6, branch wk-NFRA_CTLPLN-6); the file was restored to HEAD afterwards.",
+      "safe-commit refusal on the commit that included tests/dell_fence_census.py: 'VIOLATION: infra/aws/terraform/shared-infra/tests/dell_fence_census.py -- lane=CLOUD_OPS_OR_ETL ... agent=0.9.0_WK_NFRA_CTLPLN~6 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. The order's own BOUNDS paragraph lists tests/dell_fence_census.py as READ and never edit. No override was used; the other five files committed at b6c5d8f1c1.",
+      "Not a render or validator defect: python lib/opal_naming.py validate on a scratch copy of today's registry with one unknown key planted refuses it (rc 1); on the unchanged copy it reads 'VALIDATE: OK 53 system row(s), 13 scope row(s), 0 warning(s)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN.TO-CT-d-2 AMENDMENT 7 item 4: 'Run both checks, and derive_fence_row_shape.py and dell_fence_census.py --selftest, each under timeout 120; all read ok=True'; the worker brief allowed the smallest equivalent change to dell_fence_census.py if it failed for the same reason as the other checks.",
+  "world_is": "dell_fence_census.py --selftest reads ok=False (cases=0/0) because the registry holds no scoped row since dell1 became a full row, and the lane gate refuses a worker's edit to that file because the order's <paths> block does not name it; the three criteria CT4d2-AC1..AC3 do not run the self-test.",
+  "notes": "For 2.0.0_SA_COO~C: either add tests/dell_fence_census.py to the order's <paths> (then the tested patch applies as is) or have the file's owner land it; until then the self-test line stays ok=False and the order is left in_progress. Nothing else in the fence checks depends on it."
+}
+```
