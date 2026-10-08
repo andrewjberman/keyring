@@ -21042,3 +21042,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Not yet reachable: no report is retained and the repository refuses the kind. Closed, not open."
 }
 ```
+
+## IRPT_BCKEND-D2-W174-S1 -- IB-pr-366 stopped: the served CREATE path has no server-resolvable owner principal for the target firm
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W174-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~174",
+  "surfaced_at": "2026-10-08T18:23:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DECOMP_INVALIDATING by the order's own instruction (the row gate refuses that disposition while the round has open orders, so it is filed UNDER_INVESTIGATION): IB-pr-366 cannot be built as written: the served CREATE path has no server-resolvable owner PRINCIPAL for the target firm, so the admitted on-behalf owner shape (a firm advisor's owner, principal_id != the filer) cannot be built without inventing a principal. Cell stopped before any served.py or interactive_access.py edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:892-925 (_handle_prospect) and :977-1024 (handle): the only verified inputs on a CREATE by an internal subject are the filer's own trusted headers (x-firm-id opal-capital, x-user-email = the filer, empty x-advisor-id) and selected_tenant (the target FIRM, registry-validated). Nothing names a principal of the target firm.",
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-123: the EXISTING canonical reads are get_user(email) (the filer's own row: carries allowedFirmIds, no firm roster), get_partner_profile(email, firm_id) (needs the advisor's email first) and get_organization('opal-capital'). None lists or resolves a firm's advisor. A firm-to-advisor read would be a new read, which the order forbids.",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:22-48 resolve_prospect_owner: the owner principal_id is the verified email of a FIRM_ADVISOR/FIRM_OPERATIONS caller's own headers. intake/tests/test_uploads_on_behalf.py:50 and test_upload_door_reads_allowed_firms.py:93 get that owner from the FIRM advisor's own claims, which the filer's request never carries.",
+      "intake/uploads.py:243-248 needs owner.principal_id != filer principal_id: access.prospect_owner() (interactive_access.py:123-137) copies the filer, so the owner firm can be set to the target but the principal cannot be made different from a verified source. The only other sources are an unverified body field (forbidden by the order) or a synthesized id derived from the firm string (inventing a principal that no advisor's resolve_prospect_owner would ever equal, so no firm advisor could later re-read the record)."
+    ]
+  },
+  "spec_asserts": "IB-pr-366: for an OPAL_GLOBAL filer whose allowedFirmIds lists the target firm, the guard resolves the owner shape uploads.py admits (the FIRM advisor's owner, principal != filer); owner firm and principal are SERVER-RESOLVED from verified request fields or existing server state; if no server-resolvable owner principal exists, STOP and file DECOMP_INVALIDATING.",
+  "world_is": "The firm half is resolvable (selected_tenant, registry-validated, and allowedFirmIds from the existing get_user read via a profile_reader on the guard's InteractiveAccess). The principal half is not: no verified request field and no existing profile read yields a principal of the target firm that differs from the filer. Cell stopped; no source file edited, no test written (a test over a synthesized owner would assert the invention). AC3 PASS at base (6 of 6 suites), AC1 and AC2 FAIL (no test file). Choices for the CTO or the COO: (a) rule a server-held firm intake principal (named, with its source) that the guard may use as owner.principal_id; (b) change uploads.py's on-behalf rule so a firm-level owner with the filer as principal is admitted (~Y2's lane); (c) a body-named advisor email verified against a partner-profile read (get_partner_profile(email, firm) exists) -- an unverified body field becomes a lookup key only, which the order does not currently allow."
+}
+```
