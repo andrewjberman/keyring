@@ -79,3 +79,13 @@ Verbatim, laptop terminal to 1.0.0_SA_CTO:
 Placement: each of the three briefs leads with a FAST FIX that can go out to every box now; the registered project
 (laptop-operated) follows. The graph-coherence PRD draft `org/tier1_exec/1.0.0_SA_CTO/deliverables/GRAPH_COHERENCE_ENDPOINT_DRAFT_20261008.md`
 stays DRAFT and is not registered (no L3 carriers) until the project stage.
+
+## Addendum ~16:1xZ -- bring back the apply seats
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO, answering "Do you want to bring one or both back for those two items?" (the
+graph read grant and the one-off graph rebuild, `FAST_FIX_RULINGS_20261008_162xZ.md` graph F1 and F3):
+
+> "yes, bring back COO~C and a CloudOps seat"
+
+Placement: 0.0.0_AB_MSTR spawns `2.0.0_SA_COO~C` and `0.7.0_AE_CloudOps~E` (the seat that held the identity-root
+deploy before the reboot). ~C cuts the grant widen (graph token included); ~E applies it and runs the graph rebuild.
