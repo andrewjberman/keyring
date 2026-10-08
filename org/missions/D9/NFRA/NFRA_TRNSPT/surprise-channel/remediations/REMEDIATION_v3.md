@@ -59,11 +59,15 @@ FWD-7's DONE WHEN is met by the 3 admitted messages (ledger L3), so D2-S2 does n
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
-      "round": "v5"
+      "round": "v5",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/adjudications/ADJUDICATION_v5.md (round 7 E1 census R7_E1_ENCRYPTED_CENSUS.json: 368 of 368 encrypted-only author messages, the 08-11 pair included, are Opal-internal; CTO msg 1517)"
+      }
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

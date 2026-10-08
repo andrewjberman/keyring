@@ -903,6 +903,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "CTO round-5 analysis @a8931c9d12 E1 (1): from the fire's run record, read on dell2, is the 08-11 message's id present in the listing, and each admission test's result as pass/fail flags.",
     "world_is": "The run record cannot answer it: it stores counts, not the listing or per-message flags. The decisive read is a gateway re-listing of 2026-08-10..12 for the pull's sender table with criterion.classify, flags only.",
     "notes": "A run record that kept per-candidate flags (date, sender index, four booleans) would make the next such question a store read; that is a design option for the CTO, not built here."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S1",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T19:41:17Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "TR-g-7: the ruled new silver column admission_class makes two existing test_outlook_silver.py assertions fail (19-column pins); the file is outside this order's paths, so the suite check is red until the issuer amends them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/transcripts/scripts/tests -q -p no:cacheprovider -k 'outlook or mail or encrypted' --ignore=data/transcripts/scripts/tests/test_eod_voice.py: 2 failed, 99 passed",
+        "data/transcripts/scripts/tests/test_outlook_silver.py:149-153 test_row_columns_and_types pins set(row) to 19 names without admission_class; :232 test_the_wipes_limits_travel_inside_the_parquet asserts table.num_columns == 19 (now 20)",
+        "test_eod_voice.py fails at collection (ModuleNotFoundError: test_teams_chat_tenant), unrelated to this order and outside the -k filter's reach; excluded with --ignore"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-g-7 build item 4: silver gets a new column admission_class (schema updated), and the order asks existing outlook tests to stay green without changing an existing test's expectation.",
+    "world_is": "Adding the column is the ruled semantic and moves the silver row from 19 to 20 columns; the two pins are exact-set / exact-count assertions in a file this order does not grant. Both criteria (g7-class, g7-gold) pass; only the issuer's drain suite is red.",
+    "notes": "Fix is two lines in test_outlook_silver.py: add admission_class to the expected set and 19 -> 20. The worker did not edit it (refusal clause)."
   }
 ]
 ```
