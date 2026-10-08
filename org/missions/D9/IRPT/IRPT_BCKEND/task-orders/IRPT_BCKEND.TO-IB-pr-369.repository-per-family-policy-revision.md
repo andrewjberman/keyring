@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~177</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending -- re-opened by issuer 2.0.0_SA_COO~P2 on AMENDMENT 1 @a356481e93 (row D2-W177-S1); AC2 now FAILs until the fix lands</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
