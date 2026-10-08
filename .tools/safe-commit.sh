@@ -370,8 +370,15 @@ _SC2P_DIR=""
 _SC2P_MSGKIND=""
 _SC2P_MSGFILE=""
 _SC2P_MSGS=()
+# True only while the lock dir's pid file still names THIS process. After a waiter's reclaim (c) of a live holder,
+# another seat may hold the lock: the old holder must not remove it on exit (GC P3 residue item 4, 4.0.0_SA_CRO~B 107108).
+_sc_lock_mine() {
+  local _p=""
+  if [ -f "${LOCK_DIR:-/nonexistent}/pid" ]; then read -r _p < "$LOCK_DIR/pid" 2>/dev/null || true; fi
+  [ -n "$_p" ] && [ "$_p" = "$$" ]
+}
 _sc_on_exit() {
-  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
+  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ] && _sc_lock_mine; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
   if [ -n "${_SC2P_DIR:-}" ]; then rm -rf "$_SC2P_DIR" 2>/dev/null || true; fi
   return 0
 }
@@ -444,7 +451,10 @@ fi
 
 # Release the land lock early (the two-phase path; the legacy path keeps its EXIT-trap release).
 _sc_release_lock() {
-  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then rm -rf "$LOCK_DIR" 2>/dev/null || true; LOCK_ACQUIRED=0; fi
+  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then
+    if _sc_lock_mine; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
+    LOCK_ACQUIRED=0
+  fi
   return 0
 }
 
