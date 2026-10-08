@@ -5459,3 +5459,32 @@ by dell1 or by this seat.
   "notes": "Not disarmable and not decided here; the signing seats read the limit. Leg G should count mix sums < 0.999 on the healed dates beside the multi_asset census."
 }
 ```
+
+## MDPF_SECCLASS-D1-S12 -- safe-deploy of one BD gold file also re-shipped _shared modules; one moved out of turn and was restored
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S12",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T19:12Z",
+  "one_line": "safe-deploy, asked to deploy ONE BD gold file (C_06), also re-shipped 3 _shared modules to s3://opal-data-bd/code/gold/lib/_shared/; one of them (etf_classification_scheduled.py) changed bytes, shipping e65 amendment 3 ahead of its own ledger (secclass-e65b-namekey-deploy-s-20261007). Restored to the prior bytes 61 s later.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-deploy.sh --author 2.0.0_SA_COO~M1 data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py (19:09Z): 'DEPLOYED-SHIPPED' lines for etf_classifications_dynamodb.py, etf_classification_scheduled.py, etf_classification.py -> code/gold/lib/_shared/, then 'DEPLOYED [bd] ...C_06...'",
+      "list-object-versions: etf_classifications_dynamodb.py and etf_classification.py ETags equal their prior versions (DELTA=0); etf_classification_scheduled.py 3f1e6be8... (01:49:54Z) -> 40ffa3fa... (19:09:12Z)",
+      "diff prior vs HEAD: HEAD adds the NAME:: skip in the cash-ticker test (TO-SC-e65 amendment 3 @1fae201565, row S63)",
+      "copy-object from VersionId keWIVX74Byn38wT7eBADpt1ElR7U1E3t at 19:10:11Z: new VersionId YoJkpC5X267BZaMnYdbVi6B28FFIkguM, ETag 3f1e6be8910952f33c88bf100c610ab6 (= prior)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A signed act deploys exactly the objects its half names (here one code object, C_06); a _shared module moves only under its own ledger.",
+  "world_is": "safe-deploy's shipped-bundle step refreshes every _shared member the deployed script's pipeline declares, so a one-file deploy can move a table-writer module (the scheduled classifier) out of turn. The BD gold schedule is bd-gold-nightly-fallback cron(0 23 ? * MON-SAT *), so no scheduled fire fell between 19:09:12Z and 19:10:11Z (an event-triggered fire in that window was not read).",
+  "notes": "Owner of the tool: the deploy lane (0.7.0_AE_CloudOps). Until it is scoped, a deploy half should name the shipped-bundle members or the seat should diff them before signing. ~SD's e65b ledger still owns the scheduled module's move."
+}
+```
