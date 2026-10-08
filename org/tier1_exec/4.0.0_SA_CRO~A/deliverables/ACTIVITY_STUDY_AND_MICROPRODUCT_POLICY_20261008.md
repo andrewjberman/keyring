@@ -30,7 +30,9 @@ silently answered for the workspace itself; it is discarded, and the clones abov
 - **The portal's CI runs only on a push to `DEV`** (`.github/workflows/ci.yml`); its deploy only on `PROD`
   (`deploy.yml`). `promote-to-prod.yml` is manual. A push to any other branch costs no Actions minutes.
 
-## 2. The proposed microproduct policy (portal, opal_ai, mcportal)
+## 2. The microproduct policy (portal, opal_ai, mcportal) -- ADOPTED
+
+**Andrew-direct 2026-10-08 ~22:4xZ, laptop terminal, VERBATIM:** "yes to the microproduct policy"
 
 **No box branches for the microproducts.** At ~23 landings a day and 13 in the busiest hour, the portal's push races are
 occasional and a retry is cheap. Box branches would add an integrator, a schedule and a merge per pass. That is cost
@@ -72,3 +74,14 @@ regenerated only by the integrator, never committed from a box. Microproduct poi
 - Rejected pushes: no record exists, in any repo.
 - Box attribution comes from lane suffixes; a laptop-style serial can run on another box.
 - The portal's `DEV` CI duration and the Actions minutes it uses: not read (the GitHub API needs Andrew's word).
+
+## 5. Adoption and what implements each rule (4.0.0_SA_CRO~A, ~22:4xZ)
+
+| Rule | Implemented by |
+|---|---|
+| 1. One trunk per microproduct, `DEV`; land, fetch-merge-push on rejection, never rebase | today's practice; `/integrate` "MICROPRODUCTS" names it |
+| 2. `PROD` only via `/prod-deploy` | unchanged (`.claude/skills/prod-deploy/SKILL.md`) |
+| 3. Candidate branches deleted once landed | the seat that lands a candidate deletes it in the same act; `/integrate` "MICROPRODUCTS" |
+| 4. Only the integrator moves the workspace's pointers to the microproducts | NO NEW CODE, MEASURED: `git merge-tree` (which box-sync and the safe-merge fast lane use) already takes the DESCENDANT pointer when one box's pointer descends from the other's (fixture 2026-10-08 ~22:5xZ: S1 vs S2 -> S2, rc 0); two DIVERGED pointers are a real conflict and the box is HELD for a person. Moving a pointer stays a deliberate commit (for example `/prod-deploy`'s step), never a side effect |
+| 5. opal_ai and mcportal: same policy, nothing built | -- |
+| 6. Graduation when push contention shows in a record | no record of rejected pushes exists yet; deferred, owner 4.0.0_SA_CRO~A |
