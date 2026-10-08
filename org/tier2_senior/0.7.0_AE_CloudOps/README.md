@@ -57,7 +57,7 @@
 | `docs/deployment/LAMBDA_DEPLOYMENT_PROTOCOL.md` | Any Lambda or Lambda@Edge write, deploy, or layer work |
 | `docs/deployment/EC2_DEPLOYMENT_PROTOCOL.md` | Any EC2 service code or infrastructure work |
 | `docs/deployment/EC2_CODE_DEPLOYMENT_STANDARD.md` | Any time code runs on EC2, including ad-hoc scripts |
-| `infra/aws/TERRAFORM_PIPELINE_STRATEGY.md` | Any Terraform changes, imports, or rollbacks |
+| `.claude/skills/cloud-ops/SKILL.md` and `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/STNDRD_PHASE6_TERRAFORM_PROTOCOL_20260715.md` | Any Terraform changes, imports, or rollbacks; follow the assigned task order's exact steps |
 | `org/ref/deployment/cloudfront_deployment_checklist.md` | Any CloudFront behavior, cache policy, or Lambda@Edge change |
 | `infra/aws/lambda/ci/lambda-source-map.json` | Before touching any Lambda function — source of truth |
 | `infra/aws/ec2/EC2_MANIFEST.json` | Before touching any EC2 service — source of truth |
