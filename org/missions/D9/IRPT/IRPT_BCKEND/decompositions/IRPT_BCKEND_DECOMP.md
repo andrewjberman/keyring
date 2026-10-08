@@ -2054,3 +2054,16 @@ packaged member and no build script changes. Check: `deliverables/2.0.0_SA_COO~P
 | `IB-pr-360` | the back-fill tool moves to export/tools/; the parity rule finds 0 extras; its tests pass | FWD-2 / FWD-8 releases | WORLD (floor: infra/; the deployed zip is unchanged) | none | P74-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one file move. Slot ~168.
+
+## 69. ROUND 76, WORKSTREAM ~P (2026-10-08 ~05:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's rounds 69-74 analysis @b35c7d8c73, msg 1214)
+
+The CTO's enrichment list names two items, which the CTO numbers "round 75". Round 75 already holds IB-pr-361, so they are cut here
+as round 76, ONE issuance. E1: the four ARMED rows disarmed or re-justified. E2: the custody release packet, as one release pair; the
+packet only, nothing applied. The PROD print promote follows E2 on Andrew's word. Check: `deliverables/2.0.0_SA_COO~P2/checks/r76/p76_cells.py`.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-362` | E1: S334, W140-S1, W145-S2, W165-S2 disarmed with evidence, or ARMED with the one disarm act and its owner | round-close hygiene | LOCAL | none | P76-a |
+| `IB-pr-363` | E2: the custody release packet (census at one pin, every member owned, both branches, rollback per function, after-reads) | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; the packet only, nothing applied) | IB-pr-351/352/355/356/359 (drained) | P76-b |
+
+fanout: 2 of 2 chains, cap 8, reason: disjoint write sets (E1: rows + its deliverable; E2: a possible source-map re-pin + its deliverables). Slots ~170, ~171.

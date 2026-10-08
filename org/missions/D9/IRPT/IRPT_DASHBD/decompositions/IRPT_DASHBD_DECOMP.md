@@ -602,3 +602,17 @@ corrected it: S31 needs its own run and S32 waits on DB-b-43, so neither graduat
 | `DB-b-46` | S31: the extended handler over the whole 49F population for one trading day, wall and peak per stage against 900 s / 2048 MB, the per-account tail; a breach reported with its size | LOCAL | DB-b-41 (merged) | B27 |
 
 fanout: 1 of 1 chains, cap 8, reason: one measurement. Worker 0.9.0_WK_IRPT_DASHBD~26 in its own worktree.
+
+## 29. ROUND 28, WORKSTREAM B (2026-10-08 ~07:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-27 analysis @7fa28c7d6d, msg 1222)
+
+Round 27 is closed: DB-b-46 @acb7066605 (ADJUDICATION_v13 @d640bc455f). S31 measured BREACH: the lots stage refuses on 87 realized lot
+ids repeated within a day (175 rows, 36 accounts, distinct lots) and peaks at least 2,759.5 MB against 2,048 MB. Rulings: the key is the
+smallest measured column set; batch first, raise memory only if the batched peak on pandas 2.2.3 still breaches.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-47` | E1: the realized-lot key measured on the 175 rows; contracts + stage use it; true duplicates still refuse | LOCAL | DB-b-46 (merged) | B28 |
+| `DB-b-48` | E2(1): the lots stage batched; the full day re-run at two batch sizes, lots peak flat | WORLD (handler path floor; applies nothing) | DB-b-47 (the stage must not refuse) | B28 |
+| (issuer act) | E2(2): the batched run on pandas 2.2.3 -- the laptop carries pandas 2.3.3 (MSTR msg 1136), so it runs on dell2 when the Python 3.12 kit lands, with DB-b-43 | LOCAL | DB-b-48 | B28 |
+
+fanout: 1 of 1 chains, cap 8, reason: E2 measures the stage only once E1 stops its refusal, and both edit the same producer. Worker 0.9.0_WK_IRPT_DASHBD~27 in its own worktree.
