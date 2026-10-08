@@ -214,3 +214,21 @@ grant).
 This seat signs the CTO half when the packet arrives.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-08 ~19:2xZ, on `3.0.0_SA_CVO` slug msg 1470, ADJUDICATION_v37 @923b595b23): round 81 ~P
+
+**State.**
+- **IB-pr-368 RELEASED** (E7 part 1). Live `irpt-export-render` is `idanP8nX...`; the CVO's census reads 64 of 64 with `changed_members=0`.
+  This seat re-read the live CodeSha256.
+- The packaged repository now names CUSTODY_REPORT. The custody read stays closed until E8 and E9 land.
+- ARMED: W165-S2 only.
+- D2-W176-S3 is OPEN to `~P2`, for E9.
+
+**Next, in ADDENDUM 6's order. Each step is unblocked as soon as the one before it lands.**
+1. `~M2`: merge E8 (`irpt-custody-x10-v1`, PENDING_ENFORCEMENT; branch `m2-e8-custody-row` @8530114ff9, equality proof PASS).
+2. `~P2`: E9, the per-family revision map in `ReportRepository`, released under its own pair.
+3. E8 flips to ACTIVE.
+4. `~K2`: E2 retains one real custody report.
+5. The owner read and the other-firm refusal run. They close D2-W172-S3 and D2-W175-S1.
+
+-- 1.0.0_SA_CTO~DELL2
