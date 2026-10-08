@@ -3946,3 +3946,62 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: if the seam should stay at exactly the order's keys, `call_id` is the one the open-calls link needs; the rest can be dropped at the cost of age-before-send and the schema marker."
 }
 ```
+
+## NFRA_CTLPLN-S23 -- TO-APPLY-10 step 2 states an expected BEFORE census line (dell1_admitted=21/24 dell1_scoped=3 disagree=0 ok=True) that is stale against the registry the SAME order names: with the three dell1 rows already made FULL rows @173f98f24b, the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False before the apply, so AC2's two named fields are not the discriminating ones -- disagree 3 -> 0 and gap_dell1 1 -> 0 are
+
+```json
+{
+  "id": "NFRA_CTLPLN-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T05:40Z",
+  "one_line": "TO-APPLY-10 step 2 states an expected BEFORE census line (dell1_admitted=21/24 dell1_scoped=3 disagree=0 ok=True) that is stale against the registry the SAME order names: with the three dell1 rows already made FULL rows @173f98f24b, the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False before the apply, so AC2's two named fields are not the discriminating ones -- disagree 3 -> 0 and gap_dell1 1 -> 0 are",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-10 @351dd873af step 2: 'Run the live fence census and record its last line (expected before: dell1_admitted=21/24 dell1_scoped=3 ... disagree=0 ok=True)'; AC2's expect is 'dell1_admitted=24/24 dell1_scoped=0'",
+      "BEFORE, measured 2026-10-08 ~05:0xZ at the laptop (deliverables/BEFORE10_census_live_20261008.txt): FENCE-CENSUS buckets=24 read=24 unreadable=0 fenced=3 no_policy=11 no_fence=10 dell1_admitted=24/24 dell1_scoped=0 dell2_admitted=24/24 dell2_scoped=0 disagree=3 undeclared=2 gap_dell1=1 gap_dell2=0 ok=False",
+      "AFTER, same instrument (deliverables/AFTER10_census_live_20261008.txt): identical line except disagree=0 gap_dell1=0 ok=True; the evaluator line moved from dell1={'explicitDeny': 3, 'allowed': 21} to dell1={'allowed': 24}",
+      "CAUSE, read from the script rather than inferred: dell_fence_census.py takes ADMISSION from the registry's exemptions rows and SCOPE from whether a row carries actions/prefix, while its evaluator limb simulates the LIVE policy; 4.0.0_SA_CRO made the three dell1 rows full rows @173f98f24b BEFORE this order was cut, so from that commit the census reads dell1 as admitted and unscoped while the live policies still carried the three DenyScopedExemption1 statements -- three DISAGREE rows on exactly the three fenced buckets",
+      "ok is computed at dell_fence_census.py:505 as read == n and unread == 0 and not dis and f + p + q == n, so undeclared and gap_dell1 never enter it: the BEFORE ok=False was the three disagreements alone, and 24=24, 0 unreadable and 3+11+10=24 all held"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-10 step 2: the live fence census BEFORE the apply reads dell1_admitted=21/24 dell1_scoped=3 ... disagree=0 ok=True. AC2: after the apply it reads dell1_admitted=24/24 dell1_scoped=0.",
+  "world_is": "Before the apply the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False, because the registry rows the order itself names (@173f98f24b) are already full rows. AC2's two named fields therefore read the SAME before and after this act and do not discriminate it; what the act moved is disagree 3 -> 0 and gap_dell1 1 -> 0. Both halves' condition 5 (disagree=0 ok=True) reads MET after the apply, so nothing was blocked -- but a later applier who graded AC2 on its two printed fields alone would read PASS without the apply having landed.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: this is the third order in a row in which this census's verdict and the act disagree in shape (TO-APPLY-8's ok=False on a correct act is the earlier one). The cell already on the list to make the census print scope beside admission could also pin AC2-style expects to the field that MOVES. Not adjudicated here; the order's three ACs all pass."
+}
+```
+
+## NFRA_CTLPLN-S24 -- The census invocation TO-APPLY-10 step 2 and AC2 name (dell_fence_census.py --live) defaults --out to the TRACKED fixture tests/dell_fence_census.json, so the bare form EDITS a test file the same order's bounds forbid editing, and rewriting it flips the step-1 join check from ok=True to ok=False (evaluator_allowed 6/6 -> 3/6) -- the order's own step sequence cannot be run as written
+
+```json
+{
+  "id": "NFRA_CTLPLN-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T05:40Z",
+  "one_line": "The census invocation TO-APPLY-10 step 2 and AC2 name (dell_fence_census.py --live) defaults --out to the TRACKED fixture tests/dell_fence_census.json, so the bare form EDITS a test file the same order's bounds forbid editing, and rewriting it flips the step-1 join check from ok=True to ok=False (evaluator_allowed 6/6 -> 3/6) -- the order's own step sequence cannot be run as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_fence_census.py:730 ap.add_argument('--out', default=str(DEFAULT_JSON), help='where --live saves the result') and :742 Path(a.out).write_text(...): a bare --live run OVERWRITES infra/aws/terraform/shared-infra/tests/dell_fence_census.json, which is git-tracked (git ls-files prints it; git check-ignore does not)",
+      "order NFRA_CTLPLN.TO-APPLY-10 bounds: 'no edit to any .tf, module, registry or test file'; its step 2 and AC2 both name the bare form",
+      "MEASURED, not inferred: after the first bare --live run, git status --porcelain printed ' M infra/aws/terraform/shared-infra/tests/dell_fence_census.json' and check_dell_fence_join.py then read rc=1 FENCE-JOIN pairs=6 rows=6/6 cross_firm_leaks=0 evaluator_allowed=3/6 ok=False with its NEGATIVE arm moving from '0 stripped' to '2 stripped'; the same check had read rc=0 evaluator_allowed=6/6 ok=True minutes earlier",
+      "CAUSE: check_dell_fence_join.py:287 reads CENSUS_JSON = tests/dell_fence_census.json as the base document for its EVAL arm (:456 doc = by_bucket[b]['policy']) and for its NEGATIVE arm (:483). The committed fixture predates the Dell admissions, so appending the pair's ARN to its fence list yields allowed 6/6; a fixture refreshed from the pre-apply LIVE plane still carries the three DenyScopedExemption1 statements, so dell1's three pairs read explicitDeny and the arm reads 3/6",
+      "RESTORED AND RE-EXERCISED: git checkout of the fixture returned the join check to rc=0 evaluator_allowed=6/6 ok=True, reproducibly, twice",
+      "DISARMED for this act by redirecting the save path: both the BEFORE and the AFTER census ran as dell_fence_census.py --live --out org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/{BEFORE,AFTER}10_census_live_20261008.json, and git status --porcelain on the tests directory printed EMPTY after each. The redirect changes nothing the census measures: run_live(scratch) is identical and only the save path differs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-10 step 1: both checks ok=True IMMEDIATELY BEFORE the plan, and a failing check is a STOP. Step 2 then runs dell_fence_census.py --live. Bounds: no edit to any .tf, module, registry or test file.",
+  "world_is": "Step 2's named invocation overwrites the tracked fixture that step 1's check reads as its base document, so running step 1, then step 2, then the plan makes the step-1 check read ok=False at the plan -- a STOP manufactured by the order's own sequence, on a tree with no fault in it. The bare form also edits a test file the bounds forbid. Handled here by restoring the fixture and redirecting every census run's --out into this seat's deliverables; no repo test file was edited by this act.",
+  "notes": "For 2.0.0_SA_COO~C: the cheap fix is to write --out <a path outside tests/> into the order's step 2 and into AC2's invocation, or to give the census a --no-save flag. The sharper question is for the checks' owner: an acceptance check whose verdict depends on a fixture being STALE will read ok=True only until someone refreshes it, and the refresh is itself a step of the same order."
+}
+```
