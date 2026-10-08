@@ -4986,6 +4986,28 @@
     "spec_asserts": "Descriptive fields are every column outside the price group; a security only in the picked untimed object with no non-null descriptive field yields no row",
     "world_is": "Built so that both sentences hold: the row-existence test reads gold_holding_contribution.G4_DESCRIPTIVE (the eight GICS columns, security_name, security_parsekey: the producer's MARKET_MAP less the price group). Once a row exists, every non-price column of the untimed object coalesces last in the order, as the order says. On the live table no date mixes timed and untimed objects, so nothing read today moves",
     "notes": "File: data/etfs/scripts/rivalfunds/gold_holding_contribution.py (G4_DESCRIPTIVE, _g4_merge). A later column added to MARKET_MAP that describes a security needs a line in G4_DESCRIPTIVE."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S75",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T06:13:22Z",
+    "one_line": "The issuer merged RIV-rk-1 (gold_holding_contribution.py) at 05:3xZ without treating it as a deploy to the 11:00Z vehicle, which loads that module in its names step (row Z-S72); the pair and the timing were applied to RIV-tw-1's file only",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Merge d99155c49a put the round-27 reader change on the working tree the vehicle runs from. security_names.py names six members of the module: TABLE, _blank, _content_sha, _newest_by_date, parquet_bytes, target_uri",
+        "AST compare of the module at 0576fb051f against the working tree, 43 functions then and 44 now: changed _g4_merge, drop_backfill, g4_objects, handler_entry; added _pd_null; removed none. None of the five functions the names step calls is changed. The module and security_names import clean from the working tree (read 2026-10-08 06:1xZ)",
+        "The order's worker face forbade changing those five functions and the worker reported them unchanged; the issuer did not make this read before the merge, only after"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A merge that touches a file the scheduled vehicle loads is a deploy to that job and is timed and signed as one (rows Z-S62, Z-S72; CTO ruling msg 31584 for tw-1)",
+    "world_is": "The 2026-10-08 11:00Z run will load a gold_holding_contribution.py that differs from the one the 2026-10-07 run loaded, in four functions its names step does not call. The enrichment file itself is unchanged (0 lines against 361b735308). The run stays a clean read of enrichment_bloomberg.py and of the Lambda (the Lambda runs its deployed package at 0576fb051f, not the tree)",
+    "notes": "Put to 1.0.0_SA_CTO~Z as a decision: leave the merge or revert it before 11:00Z. Issuer's recommendation: leave; the vehicle log read at 11:00Z already checks the names step for an ImportError (BLOCKING row and revert the same hour). The issuer's remedy from here: before any merge, list the merged paths against the vehicle's load set (enrichment_bloomberg.py, collector_bloomberg.py, security_names.py, gold_holding_contribution.py and what they import)."
   }
 ]
 ```
