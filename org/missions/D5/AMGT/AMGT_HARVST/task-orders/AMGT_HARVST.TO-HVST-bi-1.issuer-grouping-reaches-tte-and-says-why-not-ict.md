@@ -57,6 +57,30 @@ The ruling for this cell: the grouping reaches TTE; for ICT it says why not, in 
 
 Change an existing test assertion only where this cell's rule is the reason, and list each in your report.
 
+## AMENDMENT 1 (issuer, 2026-10-08 ~05:0xZ, on row AMGT_HARVST-Z-W114-S1; no gate limb graded it)
+
+Your first pass (commit b8f52c248a on this branch) is right as far as the face went, and the face was short: "TotalEnergies SE"
+has no suffix form, because `SE` is not in `CORPORATE_SUFFIXES`, so ignoring whitespace alone cannot group TTE. You were right
+not to add a suffix. The ruling:
+
+1. **Limb 2, one more step, in the COMPARISON only.** After the whitespace-and-case squash, two names also match when one
+   squashed name equals the other squashed name with ONE trailing corporate-form word removed, where the form words are the
+   module's own `_FORM_WORDS` (squashed and casefolded the same way). "Total Energies" -> `totalenergies`;
+   "TotalEnergies SE" -> `totalenergiesse` -> minus the form word `se` -> `totalenergies`: a match. The removed tail must be
+   a WHOLE form word and what remains must be non-empty and equal to the other name exactly.
+2. `CORPORATE_SUFFIXES`, `suffix_forms`, `_FORM_WORDS` and every alias path are NOT changed: no security's aliases move.
+3. ICT must still stay apart: `internationalcontainerterminals` minus `internationalcontainertermin` leaves `als`, which is
+   not a form word.
+4. The `reason` for a root left apart is computed on the names as written (strict prefix of the unsquashed, casefolded
+   strings), as you have it.
+5. Plants: (i) now passes by this step; add (vi) a name that equals the other only after removing a tail that is NOT a form
+   word is not grouped (use the ICT pair's shape with different words); (vii) the mutant: with this step off, (i) fails to
+   group again.
+6. Re-run `bi1_census.py` and overwrite `bi1_census.out`; write the proof instance. Your next row id is
+   `AMGT_HARVST-Z-W114-S2`.
+
+The three criteria are unchanged.
+
 <paths>
 lib/research/harvest/universe_securities.py
 lib/research/harvest/tests/
