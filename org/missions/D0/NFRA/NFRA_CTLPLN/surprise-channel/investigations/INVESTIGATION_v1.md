@@ -5093,3 +5093,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Cites NFRA_CTLPLN-W38-S1. Proposed disposition for the CVO: S1 resolved by AMENDMENT 1 (the issuer's own recut). The worker does not set it."
 }
 ```
+
+## NFRA_CTLPLN-S33 -- a refused End of Day redraft fails silently; Andrew hears 'redrafting' and then nothing
+
+```json
+{
+  "id": "NFRA_CTLPLN-S33",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-08T21:05:58Z",
+  "one_line": "An End of Day redraft the post-format check refuses fails the event silently: Andrew is told 'redrafting', then nothing; the queue retries hourly (3 tries) and dead-letters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: the first cell of INBOUND round 7 (restore the link line deterministically; text Andrew the reason on any refusal and keep the previous draft open), deployed under its own pair. Andrew informed through 0.0.0_AB_MSTR (msg re 107296) the same turn.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/teams-global-chat-assist-handler-lambda 2026-10-08: 20:14:57Z tenant eod.sprint_ready texted (E1008); 20:20:57Z owner.text applied; 20:22:16Z ldo_event_failed kind sms.reply object 792eb59e6d0d RuntimeError 'End of Day draft refused: first line is not the sprint link'.",
+      "data/transcripts/scripts/teams_chat/tenant.py:237-249 _eod_draft raises RuntimeError on any check_post problem; daily_reports/eod/post_format.py:117-120 the first-line check.",
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py:311-318 a raising handler reports the record failed; SQS teams-global-chat-assist-queue.fifo VisibilityTimeout 3600, maxReceiveCount 3 -> teams-global-chat-assist-dlq.fifo (read ~21:0xZ: 1 visible, 1 in flight)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct (relayed 0.0.0_AB_MSTR msg 107296): 'It responded to the redraft request, it just never sent a redraft back'. A redraft request ends in a redraft or a reason.",
+  "world_is": "A model rewrite that drops the sprint link line is refused by check_post; the refusal raises, nothing is texted, and the End of Day object's FIFO group waits on hourly retries of a stochastic model call.",
+  "notes": "Found on Andrew's report while round 6 drains; not a round-6 cell. Today's sprint is covered by 0.0.0_AB_MSTR's own run."
+}
+```
