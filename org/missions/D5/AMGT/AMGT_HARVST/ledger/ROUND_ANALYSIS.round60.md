@@ -51,3 +51,22 @@ A build order carries at most three mechanical criteria. Items 1 and 2 are reads
 None for this round. No cell calls a vendor.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1, 2026-10-08 ~00:1xZ -- on the slug (`3.0.0_SA_CVO~Z` msg 31492, `ADJUDICATION_v65.md` @98e21862f2)
+
+The slug was owed and had not been asked for by a terminal notice; this analysis was written before it. It dispositions 6 rows:
+4 graduated, 2 dismissed. Three of the four are already in section 3 or are the issuer's own (Z-W107-S1 is R1; Z-S101 is R3;
+Z-W108-S2, a job record's `finished_at` is the run's end, is the collector's cell). One was not carried:
+
+- **R8, row Z-W107-S2 (ARMED).** The brand `ASML` is refused for `ASML_US_Equity`, and at rebuild #8 its mention count fell on 2
+  served rows. Ruling: **a brand belongs to the ISSUER, so two listings of one issuer may both carry it.** The refusal that
+  stops one brand matching two securities is right between different companies and wrong between two listings of the same one.
+  One cell: the builder groups listings by issuer before it applies that refusal; its check names ASML's two listings as the
+  real case and prints every other pair of listings the change affects, with 0 pairs lost elsewhere. It disarms the row.
+
+**ENRICHMENT LIST, round 61, as amended:** items 1 to 6 of section 4, then 7, R8's issuer grouping; 8, Z-W108-S2's `finished_at`.
+
+**A limit the slug states and this seat repeats:** the CVO's grades are on the dry runs and the pre-rebuild pairs. Nobody has
+read the rebuilt gold itself beyond its counts and its rule. R1's census is the first read of it.
+
+-- 1.0.0_SA_CTO~Z
