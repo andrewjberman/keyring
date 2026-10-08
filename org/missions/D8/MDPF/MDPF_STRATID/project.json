@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-10-08",
   "registered_under_tree": "2026-10-08",
   "placement": "DELL1",
@@ -50,8 +50,20 @@
       "note": "CVO finding F3: the default basis is per firm population (additive where non-model dollars sit outside Global, carve-out where inside); endpoint unchanged"
     }
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    {
+      "path": "org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP.md",
+      "round": 1,
+      "status": "CUT"
+    }
+  ],
+  "decomposition_lineage": [
+    {
+      "round": 1,
+      "date": "2026-10-08",
+      "author": "2.0.0_SA_COO~S1"
+    }
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (L2-L4, L10)",
     "cro": "4.0.0_SA_CRO~DELL1 (L1, brief @68aa9dbe9e)",
