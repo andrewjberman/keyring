@@ -5008,6 +5008,29 @@
     "spec_asserts": "A merge that touches a file the scheduled vehicle loads is a deploy to that job and is timed and signed as one (rows Z-S62, Z-S72; CTO ruling msg 31584 for tw-1)",
     "world_is": "The 2026-10-08 11:00Z run will load a gold_holding_contribution.py that differs from the one the 2026-10-07 run loaded, in four functions its names step does not call. The enrichment file itself is unchanged (0 lines against 361b735308). The run stays a clean read of enrichment_bloomberg.py and of the Lambda (the Lambda runs its deployed package at 0576fb051f, not the tree)",
     "notes": "Put to 1.0.0_SA_CTO~Z as a decision: leave the merge or revert it before 11:00Z. Issuer's recommendation: leave; the vehicle log read at 11:00Z already checks the names step for an ImportError (BLOCKING row and revert the same hour). The issuer's remedy from here: before any merge, list the merged paths against the vehicle's load set (enrichment_bloomberg.py, collector_bloomberg.py, security_names.py, gold_holding_contribution.py and what they import)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S76",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T11:35:24Z",
+    "one_line": "2026-10-08: the Bloomberg Terminal was signed out at 11:00Z, both rivalfunds vehicle legs wrote nothing, and the scheduled page of 2026-10-08 was published without the day's Bloomberg holdings and closes",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261008_070001.log (137 lines): DAPI DOWN, the fallback's three fills did not verify, 'PRECONDITION: FAILED -- PULL NOT ATTEMPTED'; RIVALFUNDS BLOOMBERG LEG EXIT CODE 93 (captures 2026-10-07 BAD-ANCHOR), RIVALFUNDS ENRICHMENT EXIT CODE 97 (BloombergError: could not start blpapi session; market unreachable after 3 session attempts). No ImportError, no Traceback, no HISTORY OWED line. The names step did not run: the leg failed before it",
+        "Served page date=2026-10-08, manifest generated 11:06:19Z: 13 funds in input, 11 updated; CGIC and SCHY FAIL report_date_freshness (latest report 2026-10-05 against 2026-10-07 expected, source bloomberg); holding_contribution as_of 2026-10-07 over 5 dates of closes (the newest stored close date is 2026-10-06); fund sections 1,411 of 1,411; 13 chart objects",
+        "The page has 1,411 security buttons against 2,247 on the 2026-10-07 page: the difference is the AI account blocks (per fund: The last 30 days, Observed, Inferred, What would prove this wrong, Direction verdict), which the 13:00Z sweep writes; the six tables per fund are present on both (read for ETFT heading by heading)",
+        "1.0.0_SA_CTO~Z msg 31689 names the same log and asks 0.0.3_BG_BBGTerminal for the recovery runbook's Step 2 once a human has signed in"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The daily page of day D carries each fund's holdings through D-1 and closes through D-1 (FWD-1; the vehicle's two legs run at 11:00Z before the Lambda chain reads)",
+    "world_is": "The 2026-10-08 page is whole in shape and one trading day short in Bloomberg-sourced content: two funds not updated, no close of 2026-10-07 for any security. The 11:00Z run graded neither round-27 merge: the enrichment leg failed before its names step, so the read ruling 31584 and ruling 31596 rest on is still owed. RIV-tw-1's merge stays held",
+    "notes": "Owner of the Terminal sign-in and the re-pull: 0.0.3_BG_BBGTerminal and a human (not this seat; integrations/bloomberg is no-modify). This seat's part after a re-pull lands: read that log's rivalfunds legs (it is then the clean read on the unchanged enrichment file), and republish 2026-10-08 on the CTO's word. The 13:00Z sweep is read as scheduled."
   }
 ]
 ```
