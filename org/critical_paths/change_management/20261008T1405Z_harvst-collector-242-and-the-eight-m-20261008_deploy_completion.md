@@ -12,12 +12,15 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | before the edit: universe() under the new pointer | 242 names, 8 added, 0 removed; the live sa leg pid 29240 not reading the pointer per job |  | OPEN |
-| L2 | git | lib/opal_data_harvest/config.json: the two pointers moved, nothing else in the file | the commit hash and a two-line diff |  | OPEN |
+| L1 | verify | before the edit: universe() under the new pointer | 242 names, 8 added, 0 removed; the live sa leg pid 29240 not reading the pointer per job | read 13:25Z before the edit: universe() under the new pointer 242, added 8, removed 0, 4 names reworded; the driver loads its rows once at start and hands each job a security file, so pid 29240 does not read the pointer per job | CLOSED 20261008T160124Z |
+| L2 | git | lib/opal_data_harvest/config.json: the two pointers moved, nothing else in the file | the commit hash and a two-line diff | commit 203db573d4: config.json 2 insertions, 2 deletions, the two pointer lines; edited 14:06:55Z, universe() read back 242 | CLOSED 20261008T160124Z |
 | L3 | activation | three legs launched by --names for the eight: bbg, wsj, barrons | three pids, each leg's UNIVERSE line reading 8 and its first JOB line |  | OPEN |
 | L4 | verify | each leg ended: PAIRS line per leg, stored counts per name, no stop status | the three .out files' closing tables |  | OPEN |
-| L5 | verify | the live sa leg undisturbed across the edit | pid 29240 alive, .err 0 bytes, a job ended after the edit |  | OPEN |
+| L5 | verify | the live sa leg undisturbed across the edit | pid 29240 alive, .err 0 bytes, a job ended after the edit | read 15:57Z: sa pid 29240 alive, r54_sa_run1.err 0 bytes, 79 JOBs against 76 at the edit, request log moving | CLOSED 20261008T160124Z |
 
 ## Log
 
 - 20261008T140511Z OPENED by 2.0.0_SA_COO~H with 5 leg(s)
+- 20261008T160124Z LEG L1 closed: read 13:25Z before the edit: universe() under the new pointer 242, added 8, removed 0, 4 names reworded; the driver load
+- 20261008T160124Z LEG L2 closed: commit 203db573d4: config.json 2 insertions, 2 deletions, the two pointer lines; edited 14:06:55Z, universe() read back 
+- 20261008T160124Z LEG L5 closed: read 15:57Z: sa pid 29240 alive, r54_sa_run1.err 0 bytes, 79 JOBs against 76 at the edit, request log moving

@@ -3,6 +3,7 @@
  "macro_code": "POSN",
  "directive": "D4",
  "fabric": "site-z",
+ "placement": "SITEZ",
  "pipeline": null,
  "status": "closed",
  "dep_stage": "CLOSED",

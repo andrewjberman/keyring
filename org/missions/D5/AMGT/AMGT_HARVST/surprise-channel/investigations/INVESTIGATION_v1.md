@@ -7947,6 +7947,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S104",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-08T15:16:21Z",
+      "one_line": "The collector accepts a fetched article only when a stored alias appears whole, and for 149 of 242 names every alias ends in a legal-form word, so articles naming the company without its suffix are fetched and rejected company_not_mentioned.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "C-HV: a covered company's articles at each publisher are collected; the search for a name uses its company string with the legal suffix stripped (publishers.slug_query), so an article found by that search is about that name.",
+      "world_is": "lib/opal_data_harvest/publishers.py lines 145-150 accept a body only if some alias matches whole-word, case-insensitive, in title plus text. The search strips the legal suffix; the acceptance does not. Read 2026-10-08 ~15:0xZ over the job files dated 10-05 to 10-08 under the four runtime roots, accepted against rejected for company_not_mentioned as the only issue -- names whose every alias ends in a legal-form word (149, by a 20-word list of this seat's): wsj 152 / 1,807, barrons 3 / 726, bbg 2,341 / 890, sa 383 / 32,833; names with a plain alias (93): wsj 320 / 183, barrons 120 / 376, bbg 1,067 / 272, sa 5,518 / 2,937. Seen first on the eight names run on Andrew's word today: wsj finished 7 of 8 with 0 stored, one rejected article titled 'Bloom Energy Raises Outlook'. NOT measured: how many of the rejections are right (a search hit that is not about the company); job files of re-run pairs are counted twice; the class test is a rough word list. Ruled by 1.0.0_SA_CTO~Z R25 (msg 31831): repair the acceptance check to use the strings slug_queries returned, not the aliases; re-collection is Andrew's word.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:145",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json",
+          ".runtime/opal-data-harvest-wsj/runs/ (job files 20261005T to 20261008T; runtime, not in the repo)",
+          "1.0.0_SA_CTO~Z msg 31831"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

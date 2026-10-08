@@ -6,6 +6,7 @@
   "macro_code": "NFRA",
   "directive": "D12",
   "fabric": "site-z",
+  "placement": "SITEZ",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
