@@ -167,3 +167,15 @@ and 4.0.0_SA_CRO~A (two-phase safe-commit ON by default on the laptop at 2:00 PM
 not frozen: the stitch functions keep it current). 5 -> 4.0.0_SA_CRO~A (keep one trunk now; per-box branches are a
 priority, design starts now). 6 -> 4.0.0_SA_CRO~B (worktree removal allowed: merged, clean, idle 48 h, never `drain-*`,
 logged; its formal version governs).
+
+## Addendum ~17:4xZ (1:45 PM ET) -- site Z locking up; move the cluster now
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO, after being told site Z's merge waited on his word at its terminal:
+
+> "Also i can see the locking up is already beginning to happen on the sitez box, which i interpret as a function of not
+> having the efficient gitops on there. It is currently 1:45p, we should begin making moves across the cluster to get on
+> that now."
+
+Placement: this is the word for site Z to drain the fast-fix set now (origin CLOUD, which holds a92d59d74f), the
+drain-worktree way, then the one-time kill-maint sweep and /govern 30m. Two-phase safe-commit follows when the laptop's
+first read is clean; that read is pulled forward from ~18:45Z to ~18:15Z.
