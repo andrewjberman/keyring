@@ -37,6 +37,10 @@ a ruling, for a reviewer to judge.
   agents should have /govern on a 30m loop at instantiation." (record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`; it
   supersedes the 2026-06-03 "not auto-armed" word). A different cadence is still Andrew's call.
+- **Each box fires on its own minutes of the hour** (Andrew-direct ~18:0xZ, VERBATIM in section 9 of
+  `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`): laptop `:00` and `:30`, site Z `:06` and
+  `:36`, dell1 `:12` and `:42`, dell2 `:18` and `:48`. Arm the cron on those minutes (e.g. dell1 `12,42 * * * *`), never a
+  bare interval. A cycle still running when its next slot arrives skips that slot.
 - When Andrew invokes `/govern`, it initiates the loop at the 1-hour default (or the
   interval Andrew gives).
 - Never invoked by any agent other than a fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`).
