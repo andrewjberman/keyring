@@ -5377,3 +5377,32 @@ by dell1 or by this seat.
   "notes": "Not disarmable by this seat: amending <owned_cells>, <decomp_ref> or the criterion set of an order is the issuer's act, and adding '# pipeline-override:' would be this seat implementing its own escape from a gate -- CLAUDE.md section 2 'DO NOT MANUFACTURE FRICTION' clause (a) runs the other way but the same principle bars inventing the exemption. Three shapes the issuer could take, none chosen here: (i) narrow <owned_cells> to SC-e-32 and repoint <decomp_ref> to DECOMP_R8.md, which closes every limb because AC1 already cites only SC-e-32 and SC-e-50 was never discharged by a criterion on this order; (ii) split the cells across two orders; (iii) the audited '# pipeline-override: <reason>' the gate itself offers. SCOPE BEYOND THIS ORDER: any order whose <decomp_ref> cites the round that RELEASED its cells rather than the one that DECLARED them is unflippable the same way, and the failure appears only at the close, after the work is done -- the gate cannot see it at the cut. This seat reverted its own premature 'complete' flip back to 'pending' rather than leave an uncommitted terminal claim in the working tree."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W65-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~65",
+  "surfaced_at": "2026-10-08T18:48:32Z",
+  "one_line": "SC-e-75: the multi_asset on the 36 BD concentration.json keys does not enter in D_04; it is frozen on 2026-10-03..05 history entries of the C_06 envelopes gold/entities/clients/{rid}.json, so the D_04 fix is moot and the order stops at step 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BD_MULTI_ASSET_TRACE_20261008.md (org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/): 36 of 36 opal-data-bd concentration.json hit keys read; 141 multi_asset holdings; by date 2026-10-03=47, 10-04=47, 10-05=47; zero on any date >= 10-06; by ticker ABALX 12, AMECX 9, CAIBX 9, SCGB1 5, 88 no-ticker, plus KAGIX/FBALX/FKIQX/MDLOX/AAETX/CFIHX 3 each.",
+      "D_04.client_portal_summary.py:1192 conc_list = data.get('concentration', []) and :1208 write it unchanged to platinum/clients/{rid}/concentration.json; the module does no class mapping on that path.",
+      "s3://opal-data-bd/gold/entities/clients/z08119861.json (C_06 envelope, VersionId pUkdGIUqCg0Y_I8tkmOHelaTlNn5U.ar, LastModified 2026-10-08T05:24:01Z) already holds KAGIX asset_class multi_asset on 2026-10-03/04/05, class_source etf-classifications: the value is one hop upstream of D_04.",
+      "C_06.client_mix_timeseries.py:731-740 incremental merge: existing_conc[ds] is overwritten only for dates in the new partitions, so a dated entry classified while the etf-classifications table held multi_asset (R9 write 2026-10-03; remap commit 0d9457b639 2026-10-07 03:10 -0400) is never reclassified.",
+      "Deployed-vs-repo by content, 9 of 9 files identical (D_04, C_06, lib/etf_classifier, s3_layout, config, exclusions, floored_percentiles, mix_views, lib/_shared/etf_classifications_dynamodb): sha256 equal; no stale running bytes.",
+      "Criteria at the worktree root: SC14-e75-AC1 PYTEST-BAD rc=4 (test file absent, not written); SC14-e75-AC2 NOT-READY (half absent); SC14-e75-AC3 PYTEST-OK 76 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e75 step 2: 'FIX only if the source is D_04.client_portal_summary.py ... If the source is another file or an input object, STOP after step 1 and file a row. The issuer re-points.' Steps 3-4 (test, half request) presuppose a D_04 fix and a deploy of D_04 to code/gold/.",
+  "world_is": "The source is an INPUT OBJECT (the C_06 envelopes gold/entities/clients/{rid}.json, history dates 2026-10-03..05, frozen by C_06's incremental merge), not D_04. Deploying a changed D_04 would not move the 141 holdings unless D_04 itself rewrote the class, which is a class copy of exactly the kind the six-class design retired. Steps 2-4 were not executed; AC1 and AC2 cannot be met as written; AC3 holds as the control. The order is left open.",
+  "notes": "Not decided here (issuer's re-point): (i) a C_06 FULL build, which reclassifies every date through the current table; (ii) a targeted rewrite of the 36 envelopes' 3 dated entries; (iii) a D_04 passthrough guard that maps any class outside the six (plus unclassified) at write time, which would also pin the next such case. Any of (i)/(ii) writes served gold/entities/clients/ and platinum/clients/ objects and needs the never-widen pair. COT's twin is out of scope here: 2 opal-data-cot keys (z09305621, z09305679, 1 hit each, last modified 2026-10-08T11:36:56Z) in the cell's evidence file."
+}
+```
