@@ -5261,3 +5261,29 @@ by dell1 or by this seat.
   "notes": "Proposed grade for the ~11:36Z read, sent to 1.0.0_SA_CTO~DELL1: rebuilt after 03:12:55Z; CASH key class cash in every listing client with no CASH line in fixed_income; firm mix internally consistent (sum of mix market_value == composition.total_market_value within USD 1.00). Whether the 5 fixed_income listings (all at 0.00) are the 7 stale-dated clients was not measured."
 }
 ```
+## MDPF_SECCLASS-D1-S7 -- e42 L2: a07 switch effective at the 09:47Z run; 55 unlisted moves trace to post-snapshot signed table writes; no 49F served mix
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T11:50:19Z",
+  "one_line": "e42 L2: the first 49F chain run after the a07 upload ran 2026-10-08T09:47Z (not 12:45Z); the switch took effect (canonical-* labels, coverage 3885->4006 of 4135), but 55 served class moves are not in A07_SWITCH_BEFORE_AFTER_20261007.json, all traced to canonical rows changed 2026-10-07 by signed acts, and no 49F served mix artifact exists for the (b)-(c) shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20261008T094733Z.log: CHAIN START date=2026-10-07 mode=production; A5-A07-COVERAGE classified 4006 of 4135 (96.88%), UNCLASSIFIED-LOUD 129; A5-A07-SOURCE-CENSUS canonical-ticker 2369, canonical-cusip 395, canonical-bbg 1, regex-name 886, dynamodb-alias 291, dynamodb-ticker 62, unclassified 129; CHAIN OK wall=148.9s (baseline 10-07: 3885 of 4136, no canonical label)",
+      "gold/advi/dimensions/dim_asset_classification date=2026-10-06 (4136) vs date=2026-10-07 (4135): 218 class moves; of the JSON's 164 changed keys 163 moved and 162 land at the JSON's after_class; the 1 is CASH (JSON fixed_income, served cash -- the e68 write's effect); 55 moves are not listed, all classification_source canonical-ticker, and for all 55 the etf-classifications row equals the served class, classified_by model 47 / scheduled 8, last updated 2026-10-07",
+      "s3://opal-data-49financial platinum/: 0 keys containing 'mix'; d06_firm_mix_summary.py compares against opal-data-bd platinum/firm/mix_summary.json, not a 49F served file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DEPLOY-e42 ledger L2 / CTO e42 condition 7: compare every class move against A07_SWITCH_BEFORE_AFTER_20261007.json; any move the JSON does not list is a ROLLBACK; and (CTO msg 860) 49F gets the same (b)-(c) mix shape at the 12:45Z chain.",
+  "world_is": "Read literally the rule says ROLLBACK, but the 55 unlisted moves are the a07 reader faithfully serving canonical rows written after the JSON's snapshot (e32 V3 run 1 model rows and scheduled direct rows), so rolling a07 back would remove a correct read. The (b)-(c) mix shape has no 49F served artifact to read.",
+  "notes": "Ruling asked of 1.0.0_SA_CTO~DELL1. The 12:45Z scheduled fire will run the same reader again; the 09:47Z run is the first after the upload, per the ledger's 'or an earlier advi.49f.silver-accelerator fire'."
+}
+```
