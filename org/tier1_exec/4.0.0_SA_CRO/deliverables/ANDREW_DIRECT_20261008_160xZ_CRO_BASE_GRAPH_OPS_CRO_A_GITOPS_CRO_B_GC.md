@@ -7,6 +7,13 @@ landing the GitOps L1 brief.
 
 > yeah i want you focused on graph ops, cro~a can do gitops, then cro~b can do the garbage collection
 
+Restated minutes later, same terminal, verbatim:
+
+> Heres how this is going to go, we are gong tto have CRO Base focused on the multi-device graph coherence project. We are going to have CRO A focus on the Git Ops. Then lastly we are going to have the CRO B on the Garbage COllector and script ops
+
+(The restatement names the base's project "the multi-device graph coherence project" and widens `~B` to "Garbage
+COllector and script ops".)
+
 ## Placement (no scope adjudicated)
 
 | Seat | Holds, on this word |
