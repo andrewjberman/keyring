@@ -773,6 +773,29 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-S10 is ARMED: the first WRITTEN item would store the owner-key value.",
     "world_is": "The deployed writer stores the claim name and email only, so the G-CLOSE narrow and widen write no owner-key value. Z-S11 had disarmed on the plan (MP-b-3 shipped through MP-a-2); this row is the measurement on the running bytes.",
     "notes": "Re-measured because a second project's cell redeployed the same function after MP-a-2's drain."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S18",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-08T21:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "PRD v0.5 C11 gives the portal a read grant on two globgrph-bucket prefixes; the portal is served by the gateway process (C3), so that grant lands on opal-gateway-role, which graph-read.tf:4-8 says holds NOTHING on the globgrph bucket under NFRA_CLDGRPH's R3 control (CG-s-12).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md @8de5b2dc76 v0.5 addendum C11: 'The portal holds a read grant on those two prefixes only, Terraform-applied under C10.' (s3://opal-313476888478-globgrph/fabric/activity/v1/ and .../fabric/open-calls/v1/)",
+        "same PRD C3: 'The built pages are static assets served by the gateway application at /. The admin API handlers live with the gateway'; app/server.py:1126 mounts admin_api.admin_app at /api/admin.",
+        "infra/aws/terraform/opal-gateway/graph-read.tf:4-8: 'the gateway is a THIN PROXY ... It holds NOTHING on the globgrph S3 bucket ... the moment opal-gateway-role needs s3:GetObject there, R3 has been broken (CG-s-12, deliverable 0.7.0_AE_CloudOps~P B.3(iii))'.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md:200 R3 (Andrew-direct 2026-09-02): the gateway is 'a THIN PROXY ... and never the host' of the graph SERVING PLANE; R3's text names the serving plane, the bucket-wide 'nothing' is CG-s-12's implementation of it."
+      ]
+    },
+    "spec_asserts": "C11: the portal reads the activity and open-calls stores with a prefix-scoped read grant.",
+    "world_is": "The only principal that can hold the portal's grant is opal-gateway-role, whose standing control (graph-read.tf, CG-s-12) is no grant of any kind on the globgrph bucket. Applying C11 as written breaks that control as written. Not acted on: no Terraform written, no grant applied.",
+    "notes": "Holds only the grant cell of round 4 (FWD-14's store read). Ruling owner: 1.0.0_SA_CTO~O (contract text). Options named in the ask, issuer's rec first: (a) a prefix-scoped read on fabric/activity/v1/ and fabric/open-calls/v1/ only, with the graph-read.tf control text amended to carve out fabric/ (outside warehouse/, never the served graph); (b) the two stores move to a bucket the gateway may read; (c) the gateway proxies the reads through the projection service."
   }
 ]
 ```
