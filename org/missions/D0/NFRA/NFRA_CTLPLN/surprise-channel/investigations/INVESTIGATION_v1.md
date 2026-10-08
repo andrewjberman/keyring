@@ -5278,3 +5278,145 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The issuer's wording caused it, not the applier. Rule from here: an order that has a worker report a record's fields names the opaque-id fields explicitly."
 }
 ```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T22:58:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S31",
+  "one_line": "AMENDMENT 20 item 3: the one plan read of a secret VALUE that the Dell group is refused (dell2, portal-auth, data.aws_secretsmanager_secret_version.irpt_render_jwt_public_key) is NOT granted, because the secrets census class for that secret is OTHER and the vendor block must keep OTHER refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_plan_reads.py --table: dell2 | portal-auth | data.aws_secretsmanager_secret_version.irpt_render_jwt_public_key | secretsmanager:GetSecretValue | live=implicitDeny before=implicitDeny; the same arm granted by exact ARN made vendor_ok read 243/245 (VENDOR-ARM 055 and 177: class OTHER, want refused, read allowed)",
+      "tests/vendor_secrets_census.json decisions['opal/auth/irpt-render-jwt-public-key'] = OTHER, granted false, reason 'a public key (RS256 verification); description'",
+      "infra/aws/terraform/portal-auth/irpt-render-secrets.tf:38 the data source reads the secret's value to plan"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 20 item 3: grant exactly the reads a Dell's plan makes that the Dell is refused; AMENDMENT 20 item 4: every other field reads as at the base (vendor_ok=245/245, OTHER secrets stay refused).",
+  "world_is": "The two instructions collide on one read. Neither test was weakened: the plan-reads policy grants the two SSM parameters only; this read is printed as PLANREAD-HELD and left out of planread_ok's count (422 counted, 1 held). Until the CTO reclassifies that secret (a public key, so likely a one-line census ruling) or rules the read in, a dell2 plan of infra/aws/terraform/portal-auth is refused at that read.",
+  "notes": "Granting it is one Resource entry in a second statement of dell_planreads_policy.json plus the census class change; derive_plan_reads.py render_policy shows the form (removed here)."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T22:58:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S32",
+  "one_line": "ssm:PutParameter is already allowed to both Dells on every parameter (create policy CreateUpdateTagCompute, Resource *), including /mdpf/custody_source, the operationally controlled bd-to-schwab cutover value; the new plan-reads policy adds only GetParameter/GetParameters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule: accept, or add a Deny of ssm:PutParameter on arn:aws:ssm:us-east-1:313476888478:parameter/mdpf/custody_source to the create policy; a cell for the file owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json statement CreateUpdateTagCompute lists ssm:PutParameter on Resource *",
+      "tests/simulate_policy.py PLANREAD-NEG dell1 and dell2: ssm:PutParameter on parameter/mdpf/custody_source -> allowed with and without the plan-reads policy",
+      "relay of dell1 CTO msgs 1218 and 1220 (coordinator message during this pass): the grant must be read-only, never ssm:PutParameter"
+    ]
+  },
+  "spec_asserts": "The coordinator's relay: the read grant for /mdpf/custody_source is read-only, never ssm:PutParameter.",
+  "world_is": "The new grant is read-only (the exactness arm refuses any Put/Delete/Add/Remove action in it). The cutover parameter is nonetheless writable by both Dells through the standing create policy, granted by an earlier cell, so a Dell can flip the value.",
+  "notes": "Not changed here: the create policy is read-only to this pass."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T22:58:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S33",
+  "one_line": "tests/render_passrole.py (CT-c-3's named-role PassRole renderer, outside this order's paths) now stops with 'statement DenyEveryIamWrite not found' because AMENDMENT 20 removed DenyEveryIamWrite and DenyPassRoleExceptNamed; simulate_policy.py's second block no longer calls it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/render_passrole.py --check -> ValueError: statement DenyEveryIamWrite not found (render(), HOST_SID)",
+      "no .tools/*.py or org/devices/*.py file names render_passrole; tests/derive_protected_functions.py imports only block_text and BLOCK_SEP from it, which still work"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 20 item 2: remove DenyPassRoleExceptNamed.",
+  "world_is": "The renderer's subject (a named-role PassRole Deny rendered from applied role requests, org/devices/role_requests) is retired by Andrew's lift; the file is left in place, untouched, for the CTO or the file owner to retire. The PASSROLE simulation arms now read allowed on the real files (passrole_ok=5/5)."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T22:58:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S34",
+  "one_line": "transcripts/tests/check_transcripts_dell_decrypt.py prints ok=False on its last line while its CTa1-AC5 expectation text matches: the live key policy no longer equals the pre-edit render (it now holds the applied DellAgentUsersDecryptOnly statement).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run 2026-10-08 from the worktree root: 'live key policy (kms get-key-policy) statements=3 equals the pre-edit render ...: False' then 'TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False'",
+      "this pass changed no file under infra/aws/terraform/transcripts"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 17 recut CTa1-AC5 to the line text through unlisted_refused=True; the live-equals-pre-edit check was true before the transcripts change was applied.",
+  "world_is": "The text the criterion matches is present; the trailing ok field is False for a reason that is the applied world, not a defect of this pass."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T22:58:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S35",
+  "one_line": "AMENDMENT 20 item 3: no register maps a Dell-placed project to Terraform roots, so the 29 roots are INFERRED from each project's task-order <paths> blocks and pipeline field; five of the 15 placed projects name none, and MDPF_SECCLASS's parent path 'investor-reporting' expands to all 14 sub-roots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/plan_reads_census.json (derive_plan_reads.py --write): roots=29 of 83 terraform roots, projects=15, files_read=358, reads=275, unmapped_blocks=0; projects with no root: ADVI_BILLING, DSGN_IRPTV1, IRPT_CUSTDY, MDPF_SECHIST, NFRA_OPSWKF",
+      "origin/box/dell1 @16944312a9 and origin/box/dell2 @846cbbe61e carry the same infra/aws/terraform tree as this branch (git diff HEAD origin/box/<dell> -- infra/aws/terraform is empty for both), so every root was readable"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 20 item 3: placement from each project's project.json and the device register; print the root list.",
+  "world_is": "project.json carries placement but no root; org/devices/DEVICES.json carries no project placement. The census covers the data sources and aws_ssm_parameter resources of those roots (and the local modules they call); the refresh reads of managed resources of other types were measured by the earlier resource-kind cell (derive_resource_kinds.py) and are not re-measured. A project that later applies a root outside the list needs `derive_plan_reads.py --write` and `--write-policy` re-run."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T22:58:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S36",
+  "one_line": "The description of aws_iam_policy.dell_agent_deploy ('never change access, audit or delete production data') is now false for IAM roles and policies; it is left as is because a managed policy's description is ForceNew and changing it would replace the group's main policy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf aws_iam_policy.dell_agent_deploy description; the AWS provider marks aws_iam_policy.description ForceNew (not run: no plan)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 20: the plan creates two policies and attachments and changes the deploy policy document in place.",
+  "world_is": "Text only. A replacement would detach and recreate the deploy policy in one apply; the issuer may choose to leave it."
+}
+```
