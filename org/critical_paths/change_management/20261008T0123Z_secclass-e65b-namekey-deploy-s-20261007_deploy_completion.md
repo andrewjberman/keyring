@@ -20,3 +20,55 @@
 ## Log
 
 - 20261008T012356Z OPENED by 0.7.0_AE_CloudOps~SD with 4 leg(s)
+
+- 20261008T013112Z DEPLOY ATTEMPT FAILED CLOSED by 0.7.0_AE_CloudOps~SD -- tooling, not state. ZERO keys moved; nothing to roll back. See the section below.
+
+## ATTEMPT 1 FAILED CLOSED -- .tools/aws.cmd resolves no AWS CLI on dell1 (0.7.0_AE_CloudOps~SD, 20261008T013112Z)
+
+The ONE safe-deploy run of step 5 was invoked as the order names it:
+
+    .tools/safe-deploy.sh --author "0.7.0_AE_CloudOps~SD"       data/black_diamond/scripts/gold/E_18.detect_new_securities.py       data/cot/scripts/gold/A_00.accounts_dimension.py
+
+It enumerated the expected 8 destinations (2 script carriers + 6 declared shipped
+artifacts across opal-data-bd and opal-data-cot), then failed on the FIRST upload:
+
+    ERROR  UPLOAD_FAIL  [shipped] .../etf_classifications_dynamodb.py -> s3://opal-data-bd/...
+      aws.cmd: FATAL -- no AWS CLI found. Checked
+      %LOCALAPPDATA%\Programs\Python\Python312\Scriptsws.cmd,
+      %LOCALAPPDATA%\Programs\AWSCLIV2\Amazon\AWSCLIV2ws.exe,
+      %ProgramFiles%\Amazon\AWSCLIV2ws.exe
+
+STATE AFTER THE FAILURE -- MEASURED, not inferred from the tool's own
+"files listed above as DEPLOYED may already be on S3" warning. All 8 keys re-read:
+every one carries BOTH the same ETag AND the same VersionId it carried before the
+attempt. A byte-identical PUT to a versioned bucket still mints a NEW VersionId, so
+UNCHANGED VersionIds are positive proof that ZERO PUTs occurred -- not merely that
+content is unchanged. Nothing landed; nothing is half-landed; there is nothing to roll
+back. Both movers still read 3f1e6be8910952f33c88bf100c610ab6 at VersionIds
+0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu (bd) and 0e4OsubYyRdw4RnmCvfMYM0SZtLLM9z9 (cot).
+
+CAUSE: `.tools/aws.cmd` -- the Windows-shell companion that NATIVE-PYTHON callers reach
+through `shutil.which` -> `~/bin/aws.cmd` -> the tracked `.tools/aws.cmd` -- hardcodes
+three absolute CLI paths and none exists on dell1. The real CLI here is
+`%LOCALAPPDATA%\Programs\Amazon\AWSCLIV2ws.exe`
+(/c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws.exe, 9,448,160 B, 2026-10-02),
+which is NOT candidate 2 (`Programs\AWSCLIV2\Amazon\AWSCLIV2`) -- a different nesting.
+Verified directly: `cmd //c ".toolsws.cmd --version"` prints the same FATAL.
+
+The bash shim `.tools/aws` is UNAFFECTED and resolved correctly all session
+(AWS_SHIM_DEBUG=1 prints real-entry /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws),
+which is why every hand-run read in this entry succeeded while the deploy failed. That is
+the exact asymmetry `.tools/aws.cmd`'s own header documents for site Z.
+
+REMEDY, named and NOT executed: add a fourth candidate
+`%LOCALAPPDATA%\Programs\Amazon\AWSCLIV2ws.exe` to `.tools/aws.cmd`. That is a write
+to `.tools/aws.cmd`, which this order's <paths> block does not name -- OUT OF LANE for this
+seat. Reported to 2.0.0_SA_COO~M1 the same hour.
+
+CARRIES BEYOND THIS ORDER: `.tools/aws.cmd`'s own header records that under `--quiet` this
+same failure is a SILENT NO-OP -- `infra/aws/lambda/ci/build-and-upload.sh` "reported a
+successful upload while S3 kept the OLD zip". build-and-upload.sh is step 4 of
+TO-DEPLOY-e57e61, the next order in this seat's queue, so that order must not be run on
+this device until the shim resolves. Filed as a surprise row.
+
+The entry stays OPEN with all four legs OPEN and the world untouched.
