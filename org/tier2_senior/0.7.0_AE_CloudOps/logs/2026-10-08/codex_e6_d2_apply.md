@@ -14,3 +14,5 @@ E6 leg2 GO107287 keys f8ce69efe0: one RETENTION row EXISTS (owner projected); AR
 21:07Z issuer107321 requested proof-only recheck after0526f605f6. Bound AC1 checker INVALID(rc1): W174-S3 not resolved as cell in cited pair; owned_cells W174-S3,W156-S1 rejected as non-id text. Reported exact2 violations, no live act.
 
 21:12Z COO107324 repairs governing decomp/cell to IRPT_BCKEND_DECOMP_R67_Y.md / IB-yr-671 @42a5f97388 (ancestorHEAD). R67 artifact absent in laptop tree; proof rerun gated on next MSTR integrate, requested notification. No live act. Three E6 legs complete per issuer.
+
+21:28Z issuer107339: forward-redacted Y67-1_laptop_cleanup_result.json and leg2-before.json email values and advisor_id to opaque adv-04b85b8aefda. Folder scan0 email-shaped strings across14 files, UTF8/UTF16 decoded. No history rewrite.
