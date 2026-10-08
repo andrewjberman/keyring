@@ -85,6 +85,11 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
 - Issuance 222194aee0; AMENDMENT 1 to RIV-tc-1 @8d50ab6e32 (cap 20,000). Packet `deliverables/2.0.0_SA_COO~RV/round28/L8_PACKET_ROUND28.md`
   @954c16bb49. Msg 31984 to 3.0.0_SA_CVO~RV READ by that seat at 2026-10-08T21:02:03Z (`get_delivery_state`, read 21:1xZ);
   L9 is the CVO's. The 20:2xZ park is closed.
+- **MOVE TO DELL1 (Andrew-direct ~22:5xZ, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md`
+  @b7361ceb2a, CTO msg 32101).**
+  - No new round starts. Round 28's signed acts finish on site Z.
+  - The unpushed census went to the CTO at 23:10Z.
+  - The project's fabric carrier is the CTO's to change, last.
 - **Round-28 analysis: ADDENDUM 7 @0820f6b0b7 (CTO msg 32023, ~21:35Z).** Round 29 cuts nothing. Round 28 closes on three
   paired acts: (1) the aw-1 Lambda deploy (R31); (2) the tc-1 merge after tw-1's J1; (3) the switch-on (R24). R32 (row
   Z-S78): from the next slug, `round` is the task-order round; that header note is 3.0.0_SA_CVO~RV's write.
@@ -102,6 +107,8 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
       `source_code_hash` and `last_modified`; the daily function's environment is identical.
     - The second GO (apply) is this seat's to send on 2026-10-09, after the 11:00Z REPORT lines are read, inside
       11:15Z-12:55Z.
+    - Rollback note (executor report 1): `C:/tmp/rv-r8` now sits at 39889dd4d7, not 325bd4e0f8, so a rollback plan
+      needs `git -C C:/tmp/rv-r8 checkout --detach 325bd4e0f8` and a re-package first.
 - RIV-aw-1 MERGED (branch tip a2283fc349). Merged CLOUD: suite 919 passed, 3 skipped; 40 of 42 checks PASS (tc-1.AC1 and
   tw-1.AC1 arm e grade the unmerged tc-1).
 - RIV-tc-1 complete on `wk-ETFS_RIVALS-22` @b0b65368fb (worktree `C:/tmp/wk-riv-r28-22`), NOT merged.
