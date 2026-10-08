@@ -2168,3 +2168,15 @@ dry-run at base 25076d5af5: AC1, AC2, AC3 FAIL.
 | `IB-pr-370` | E9 release packet: repin set, census, clean-tree BUILD_ONLY, never-widen packet | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-369 (drained) | P83-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~178.
+
+## 77. ROUND 84, WORKSTREAM ~P (2026-10-08 ~20:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves of IB-pr-370 and CTO msg 1536: release E9 now)
+
+E9 releases at pin 0a57f3c0e9 (five members); custody stays refused under the PENDING row; the ACTIVE row rides E10's pair (CTO adopted
+the REC, msg 1536). The offline differential replay (IB-pr-368's AMENDMENT 1 shape) runs before the apply. Worktree cut from box/dell2.
+Check `deliverables/2.0.0_SA_COO~P2/checks/r84/p84_cells.py`, dry-run at base c086ec4c2b: AC1 FAIL, AC2 FAIL (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-371` | release irpt-export-render at 0a57f3c0e9 (E9, five members) from a clean worktree; replay before apply | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-370 (drained) | P84-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Slot ~179.
