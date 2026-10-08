@@ -10,3 +10,5 @@ BEFORE: before-iam.json contains seven attachments and the complete routes-host 
 Plan SHA256 01296c72dbe8258629a2517c090010ef5527cf27a00f86d027b76b3324edf993. Simulation passes all required fields including routes_freed=90/138 routes_still_refused=48 vendor_ok=245/245 all_ok=True; full line in simulation-before.txt.
 
 Readback uses single-resource IAM principal simulations and separate admin controls. APPLIED pending Dell first use. Required relay: ssm:SendCommand on the 12 documents stays refused until cell D2 applies.
+
+Closure: all three ledger legs proven and entry CLOSED; sentinel removed. Full-name proof check VALID, zero violations. Readback 10/10, administrator controls 3/3, retained policies 6/6; re-plan exit=0. No push performed.

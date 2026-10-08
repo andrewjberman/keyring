@@ -1,0 +1,9 @@
+{
+  "document_arn": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+  "document_name": "advi-49f-chain-dispatch",
+  "document_status": "Active",
+  "function_arn": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+  "existing_role_arn": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+  "bucket": "opal-data-cot",
+  "prospective_object": "code/gold/x.py (simulation only; no object written)"
+}

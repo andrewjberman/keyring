@@ -1,0 +1,771 @@
+{
+  "captured_at_utc": "2026-10-08T18:57:57.868660+00:00",
+  "arms": [
+    {
+      "user": "cloudops-dell1-agent-user",
+      "arm": "code_write",
+      "action": "s3:PutObject",
+      "resource": "arn:aws:s3:::opal-data-cot/code/gold/x.py",
+      "expected": "allowed",
+      "decision": "allowed",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-deploy-policy",
+          "sid": "S3ObjectsOnOpalBuckets",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 265
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "s3:PutObject",
+        "EvalResourceName": "arn:aws:s3:::opal-data-cot/code/gold/x.py",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 265
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:s3:::opal-data-cot/code/gold/x.py",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 15
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 265
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell1-agent-user",
+      "arm": "document_update",
+      "action": "ssm:UpdateDocument",
+      "resource": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+      "expected": "allowed",
+      "decision": "allowed",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-create-policy",
+          "sid": "CreateUpdateTagCompute",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-create-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 422
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 1329
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "ssm:UpdateDocument",
+        "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-create-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 422
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 1329
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-create-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 422
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 1329
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell1-agent-user",
+      "arm": "document_send",
+      "action": "ssm:SendCommand",
+      "resource": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+      "expected": "implicitDeny",
+      "decision": "implicitDeny",
+      "matched_statements": [],
+      "raw": {
+        "EvalActionName": "ssm:SendCommand",
+        "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+        "EvalDecision": "implicitDeny",
+        "MatchedStatements": [],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+            "EvalResourceDecision": "implicitDeny"
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell1-agent-user",
+      "arm": "function_code",
+      "action": "lambda:UpdateFunctionCode",
+      "resource": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+      "expected": "explicitDeny",
+      "decision": "explicitDeny",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-routes-fn-policy",
+          "sid": "DenyRoutesToPrivilegedRolesFunctions",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-routes-fn-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 5497
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "lambda:UpdateFunctionCode",
+        "EvalResourceName": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+        "EvalDecision": "explicitDeny",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-routes-fn-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 5497
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+            "EvalResourceDecision": "explicitDeny",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-routes-fn-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 15
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 5497
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell1-agent-user",
+      "arm": "iam_create",
+      "action": "iam:CreateRole",
+      "resource": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+      "expected": "explicitDeny",
+      "decision": "explicitDeny",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-deploy-policy",
+          "sid": "DenyEveryIamWrite",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 2114
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 2392
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "iam:CreateRole",
+        "EvalResourceName": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+        "EvalDecision": "explicitDeny",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 2114
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 2392
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+            "EvalResourceDecision": "explicitDeny",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 2114
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 2392
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell2-agent-user",
+      "arm": "code_write",
+      "action": "s3:PutObject",
+      "resource": "arn:aws:s3:::opal-data-cot/code/gold/x.py",
+      "expected": "allowed",
+      "decision": "allowed",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-deploy-policy",
+          "sid": "S3ObjectsOnOpalBuckets",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 265
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "s3:PutObject",
+        "EvalResourceName": "arn:aws:s3:::opal-data-cot/code/gold/x.py",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 265
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:s3:::opal-data-cot/code/gold/x.py",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 15
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 265
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell2-agent-user",
+      "arm": "document_update",
+      "action": "ssm:UpdateDocument",
+      "resource": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+      "expected": "allowed",
+      "decision": "allowed",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-create-policy",
+          "sid": "CreateUpdateTagCompute",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-create-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 422
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 1329
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "ssm:UpdateDocument",
+        "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-create-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 422
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 1329
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-create-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 422
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 1329
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell2-agent-user",
+      "arm": "document_send",
+      "action": "ssm:SendCommand",
+      "resource": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+      "expected": "implicitDeny",
+      "decision": "implicitDeny",
+      "matched_statements": [],
+      "raw": {
+        "EvalActionName": "ssm:SendCommand",
+        "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+        "EvalDecision": "implicitDeny",
+        "MatchedStatements": [],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+            "EvalResourceDecision": "implicitDeny"
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell2-agent-user",
+      "arm": "function_code",
+      "action": "lambda:UpdateFunctionCode",
+      "resource": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+      "expected": "explicitDeny",
+      "decision": "explicitDeny",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-routes-fn-policy",
+          "sid": "DenyRoutesToPrivilegedRolesFunctions",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-routes-fn-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 5497
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "lambda:UpdateFunctionCode",
+        "EvalResourceName": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+        "EvalDecision": "explicitDeny",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-routes-fn-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 15
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 5497
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+            "EvalResourceDecision": "explicitDeny",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-routes-fn-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 15
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 5497
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "user": "cloudops-dell2-agent-user",
+      "arm": "iam_create",
+      "action": "iam:CreateRole",
+      "resource": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+      "expected": "explicitDeny",
+      "decision": "explicitDeny",
+      "matched_statements": [
+        {
+          "policy": "cloudops-dell-agent-deploy-policy",
+          "sid": "DenyEveryIamWrite",
+          "aws_match": {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 2114
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 2392
+            }
+          }
+        }
+      ],
+      "raw": {
+        "EvalActionName": "iam:CreateRole",
+        "EvalResourceName": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+        "EvalDecision": "explicitDeny",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 1,
+              "Column": 2114
+            },
+            "EndPosition": {
+              "Line": 1,
+              "Column": 2392
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+            "EvalResourceDecision": "explicitDeny",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "cloudops-dell-agent-deploy-policy",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 1,
+                  "Column": 2114
+                },
+                "EndPosition": {
+                  "Line": 1,
+                  "Column": 2392
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    }
+  ],
+  "admin_controls": [
+    {
+      "arm": "document_send",
+      "raw": {
+        "EvalActionName": "ssm:SendCommand",
+        "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "AdministratorAccess",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 3,
+              "Column": 17
+            },
+            "EndPosition": {
+              "Line": 8,
+              "Column": 6
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "AdministratorAccess",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 3,
+                  "Column": 17
+                },
+                "EndPosition": {
+                  "Line": 8,
+                  "Column": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "arm": "function_code",
+      "raw": {
+        "EvalActionName": "lambda:UpdateFunctionCode",
+        "EvalResourceName": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "AdministratorAccess",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 3,
+              "Column": 17
+            },
+            "EndPosition": {
+              "Line": 8,
+              "Column": 6
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "AdministratorAccess",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 3,
+                  "Column": 17
+                },
+                "EndPosition": {
+                  "Line": 8,
+                  "Column": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    },
+    {
+      "arm": "iam_create",
+      "raw": {
+        "EvalActionName": "iam:CreateRole",
+        "EvalResourceName": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+        "EvalDecision": "allowed",
+        "MatchedStatements": [
+          {
+            "SourcePolicyId": "AdministratorAccess",
+            "SourcePolicyType": "IAM Policy",
+            "StartPosition": {
+              "Line": 3,
+              "Column": 17
+            },
+            "EndPosition": {
+              "Line": 8,
+              "Column": 6
+            }
+          }
+        ],
+        "MissingContextValues": [],
+        "EvalDecisionDetails": {},
+        "ResourceSpecificResults": [
+          {
+            "EvalResourceName": "arn:aws:iam::313476888478:role/opal-portal-lambda-role",
+            "EvalResourceDecision": "allowed",
+            "MatchedStatements": [
+              {
+                "SourcePolicyId": "AdministratorAccess",
+                "SourcePolicyType": "IAM Policy",
+                "StartPosition": {
+                  "Line": 3,
+                  "Column": 17
+                },
+                "EndPosition": {
+                  "Line": 8,
+                  "Column": 6
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "ok": true
+    }
+  ],
+  "attached_policies": [
+    {
+      "PolicyName": "cloudops-dell-agent-create-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-platform-secrets-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-platform-secrets-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-respol-allow-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-deploy-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-routes-fn-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-fn-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-vendor-secrets-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-vendor-secrets-policy"
+    }
+  ],
+  "routes_host_absent": true,
+  "retained_group_policy_documents": {
+    "cloudops-dell-agent-create-policy": true,
+    "cloudops-dell-agent-platform-secrets-policy": true,
+    "cloudops-dell-agent-respol-allow-policy": true,
+    "cloudops-dell-agent-deploy-policy": true,
+    "cloudops-dell-agent-routes-fn-policy": true,
+    "cloudops-dell-agent-vendor-secrets-policy": true
+  },
+  "all_ok": true,
+  "limits": "Identity simulations only; no S3 code write, no SSM document change, no SendCommand. Bucket policies/SCPs and Dell first use unexercised."
+}
