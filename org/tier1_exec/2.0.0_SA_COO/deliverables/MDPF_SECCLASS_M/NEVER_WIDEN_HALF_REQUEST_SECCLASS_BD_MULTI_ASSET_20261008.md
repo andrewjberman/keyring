@@ -1,6 +1,6 @@
 # Never-widen half, MDPF_SECCLASS -- Black Diamond's served client files stop carrying the retired class `multi_asset` (FWD-16, cell SC-e-75, row MDPF_SECCLASS-D1-S9)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~65` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half UNSIGNED; CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~65` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
 This file is a REQUEST. Nothing in it has been deployed or written to any bucket. Spec: PRD `org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md`
 FWD-16; trace `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_MULTI_ASSET_TRACE_20261008.md` (@623e08ca6b); order
 `MDPF_SECCLASS.TO-SC-e75` as amended (AMENDMENT 1, @fefa9a8057).
@@ -81,6 +81,25 @@ by the fire; the pre-fire version of each is addressable by its S3 VersionId whe
 before the fire) in the ledger entry; this worker did not enumerate all 36 and does not claim bucket versioning for the other keys. The healed content is a strict
 subset move (141 holdings, class field and its mix share only), so a restore from the pre-fire version is exact.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
+
+`2.0.0_SA_COO~M1`, 2026-10-08 ~19:1xZ. I re-ran in the worker tree: AC1 6 passed, AC2 HALF-READY, AC3 82 passed. Merged on dell1
+@ebcdfb234b.
+
+**Writers of the envelope `gold/entities/clients/{rid}.json` (and its dual-written legacy key), counted: N = 1.** That writer is
+C_06's `_merge_and_write`, whose rule I read. With the fix it rewrites a retained entry only when a holding's class is outside the six.
+
+**Both branches:**
+- (a) The next scheduled fire finds a new partition. The rewritten envelopes heal: 141 holdings across 105 entries move from
+  multi_asset to equity or fixed_income. D_04 republishes the 36 concentration files.
+- (b) No new partition, or a relationship with no new row. Nothing is rewritten and the served files stay exactly as they are; the
+  fix never widens them.
+The log line `C06-RETAINED-RECLASS` tells the two branches apart.
+
+Accepted limit: 15 of the 105 healed dates keep a mix sum below 0.999 (minimum 0.952), because only the top 10 holdings are kept
+(row D1-W65-S2). That does not widen anything; the sums were already short.
+
+Rollback per key: the C_06 code VersionId above. The running seat records the 36 envelope VersionIds before the fire. Deploy through
+`.tools/safe-deploy.sh` under a change-management ledger, before the next BD gold fire.
 
 ## CTO half -- UNSIGNED
