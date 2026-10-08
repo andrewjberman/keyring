@@ -3326,3 +3326,32 @@ row reached stated with their pair counts.
 **Checks dry-run at the base before the cut:**
 - `bg-1` AC1 (`pytest lib/research/harvest/tests/test_bg1_ticker_refusals.py`) base: FAIL as expected (the test is absent).
 - `bg-1` AC2 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).
+
+## 75. ROUND 61 -- six enrichment items after served gold rebuild #8 (`1.0.0_SA_CTO~Z` msg 31486, analysis @3b19f962e0), 2026-10-08 ~00:3xZ
+
+Round 60 is terminal: `bg-1` merged, rebuild #8 DONE 2026-10-07 22:48Z (record @1c819a517e, ledger closed). The round-60
+analysis rules R1 to R7 and lists six items. No rebuild is cut in this round (R7): R1 to R5 land on the builder and the next
+rebuild is its own pair after their grades.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bh`**.
+- **Fan-out:** 3 of 4 chains, cap 8 (the `bh-4 -> bh-5 -> bh-3` chain shares `universe_securities.py` and `bh-3` needs CSL's
+  name from `bh-4`; `bh-1` is a chain of one; `bh-2` and `bh-6` are two chains of one queued on one light worker, because the
+  box is running two collection legs).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bh-1` | `bh-1` | **The pairs that rest on the bare-name fallback alone: a census by security with its denominator, and a sample of 30.** Read-only script over the served list file and silver; a packet with every span in context; no grade by the worker. JUDGMENT: the CVO grades the 30, bar 27. | LOCAL | worker ~111 |
+| `HVST-bh-2` | `bh-2` | **Every pair resting on one of the nine ticker forms no sample reached (20 at the dry run), whole, in context.** Read-only. JUDGMENT: the CVO reads all; a form with 2 or more wrong pairs is refused. | LOCAL | worker-light ~112 |
+| `HVST-bh-3` | `bh-3` | **A bare ticker form shared with a company outside coverage counts only beside a second anchor; `CSL` is the case.** `ticker_anchors` data, two per-security fields, the matcher, plants with the Carlisle line as negative control, a census: 39 of 39 good pairs kept, 3 of 3 Carlisle pairs dropped, 0 other securities changed. | LOCAL | worker ~110 (third) |
+| `HVST-bh-4` | `bh-4` | **A key-only security takes its name from `lib/research/identity/registrations.json`: CAT, CSL, Keyence.** The join after pool and identity map, plants, a census. No vendor call. | LOCAL | worker ~110 (first) |
+| `HVST-bh-5` | `bh-5` | **A legal name cut inside a corporate suffix loses the fragment; one suffix list; every changed name printed** (row Z-S96). Plants, a census. | LOCAL | worker ~110 (second) |
+| `HVST-bh-6` | `bh-6` | **What `ICT_US_Equity` is and where its key came from**, from five sources each with its record count. Read-only record. | LOCAL | worker-light ~112 (second) |
+
+**The close run (issuer):** read each census and packet; hand the two packets to `3.0.0_SA_CVO~Z`; run the suite on the merged
+tree. No gold is built.
+
+**Checks dry-run at the base before the cut:**
+- `bh-1` AC1, `bh-2` AC1, `bh-6` AC1 (`cat` of an output file) base: FAIL as expected (no such file).
+- `bh-3`, `bh-4`, `bh-5` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
+- `bh-3`, `bh-4`, `bh-5` AC2 (`cat` of the cell's census output) base: FAIL as expected (no such file).
+- `bh-3`, `bh-4`, `bh-5` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (419 passed).
