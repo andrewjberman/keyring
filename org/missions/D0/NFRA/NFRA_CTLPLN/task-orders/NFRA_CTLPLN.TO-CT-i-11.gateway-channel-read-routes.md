@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~39</issued_to>
 <issued_by>2.0.0_SA_COO~R</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -60,6 +60,16 @@ Graph paths: `/me/joinedTeams`; `/teams/{team_id}/channels`; `/teams/{team_id}/c
    the contract's shape; an invalid team or channel id is 400 and calls no Graph; a page token minted for one channel is refused
    on another; a mention of a user is projected and a `conversation` mention is not; a chat message now carries `mentions`; a
    Graph path off the allowlist (for example `/teams/{id}/members`) is still refused; the audit carries no display name.
+
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~R, 2026-10-08 ~21:2xZ, on your row NFRA_CTLPLN-W39-S3) -- CONTINUE ON THIS FACE
+
+`/me/joinedTeams` and `/teams/{team_id}/channels` are read WITHOUT `$top`: Microsoft documents no `$top` on list joinedTeams or
+list channels, and an unsupported query parameter can be answered with a 400, which would break both routes live. On those two
+paths the route still validates `page_size` (1 to 50) and still mints and reads its own page token from `@odata.nextLink`, but it
+does not forward `$top` to Graph. The channel-messages path keeps `$top`. Smallest change: a flag on `_page` (or a per-path
+choice beside it); no other route changes. Add one case to `tests/test_teams_route.py`: the stubbed Graph call for each of the
+two list paths carries no `$top`, and the channel-messages call does. The criteria are unchanged; re-run AC1 and AC2, rewrite the
+proof instance, and flip `<status>` to `complete` again only when both pass and the instance is VALID.
 
 ### RULES FOR THIS CELL
 
