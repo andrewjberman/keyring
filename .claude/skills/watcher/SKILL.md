@@ -59,5 +59,5 @@ History and the incidents behind each trap: `docs/references/WATCHER_HISTORY.md`
 - The agentbus consumer (`/agentbus`) is a separate Monitor with the same 30-minute death; re-arm it on its expiry
   notice.
 - No `/watcher` cron and no loop. The Monitor is the standing mechanism.
-- A Monitor command you write by hand runs as `timeout 1790 bash -c '<cmd>'`, or with a native count flag (`typeperf
+- A Monitor command you write by hand runs as `timeout 1770 bash -c '<cmd>'`, or with a native count flag (`typeperf
   -sc`). The harness kill reaches only the wrapper.

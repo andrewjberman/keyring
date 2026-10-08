@@ -41,6 +41,7 @@ param(
   [int]$MonitorCapSeconds = 1860,
   [int[]]$OnlyPid,           # restrict targets to these PIDs (operator spot-kill; the exercise harness)
   [string]$LivenessPath = '',# default: <workspace>/org/mcp/liveness.json beside this script's .tools/
+  [string]$AuditLog = '',    # default: <workspace>/org/mcp/agent-spawn-audit.log (one KILL-MAINT line per stopped tree)
   [switch]$Json
 )
 
@@ -92,6 +93,7 @@ $inFlightCmd = 'safe-(commit|merge|deploy|apply)\.sh|commit-worker\.sh|commit-ga
 
 # ---- owner liveness: serial -> live MCP server pid (liveness.json, pid confirmed as a server.py) ----
 if (-not $LivenessPath) { $LivenessPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'org\mcp\liveness.json' }
+if (-not $AuditLog)     { $AuditLog     = Join-Path (Split-Path -Parent $PSScriptRoot) 'org\mcp\agent-spawn-audit.log' }
 $liveSerials = $null   # $null = UNREADABLE: no owner verdict, so no ORPHANED target this run (fail closed)
 try {
   $lj = Get-Content $LivenessPath -Raw -ErrorAction Stop | ConvertFrom-Json
@@ -356,6 +358,20 @@ foreach ($t in $targets) {
   if ($tkRc -eq 0) {
     $killed++; $freed += $t.MB
     Write-Output ("  OK:   stopped tree PID {0,-6} {1,-22} (+{2} descendant(s), {3}MB)" -f $t.Id, $t.Name, $desc.Count, $t.MB)
+    # RECORD every stop (Andrew-direct 2026-10-08 ~16:2xZ: "keeps a record of what it stopped"), beside the
+    # KILL / KILL-ORPHAN lines of kill-agent.ps1 and kill-orphans. A failed append never fails the stop.
+    try {
+      $by = $env:OPAL_AGENT_SERIAL
+      if (-not $by) { $by = 'unknown' }
+      $cls = $t.Category
+      if ($t.PSObject.Properties['Class'] -and $t.Class) { $cls = $t.Class }
+      $line = "{0}  KILL-MAINT  {1}  by {2}  pid={3}  name={4}  descendants={5}  reason={6}  cmd={7}" -f `
+        (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'), $cls, $by, $t.Id, $t.Name, $desc.Count, $t.Reason, $t.Cmd
+      $line = ($line -replace '[^\x20-\x7E]', '?')
+      [IO.File]::AppendAllText($AuditLog, $line + "`n", [Text.Encoding]::ASCII)
+    } catch {
+      [Console]::Error.WriteLine(("WARN: audit append failed ({0}): {1}" -f $AuditLog, $_.Exception.Message))
+    }
   } elseif (-not (Get-Process -Id $t.Id -ErrorAction SilentlyContinue)) {
     Write-Output ("  SKIP: PID {0,-6} {1,-22} already exited" -f $t.Id, $t.Name)
   } else {
