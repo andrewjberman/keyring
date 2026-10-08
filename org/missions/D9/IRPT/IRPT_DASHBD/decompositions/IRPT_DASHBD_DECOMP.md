@@ -591,3 +591,14 @@ pair signed by dell2's CTO and COO, the GO by the laptop CTO.
 | (next cell) | the tie-out of the split figures, branches A/B graded | LOCAL | DB-b-45 | B26-4, cut when the records return |
 
 fanout: 1 of 1 chains, cap 8, reason: one run of one plan. Seat 0.7.0_AE_CloudOps~I (laptop), not a worker.
+
+## 28. ROUND 27, WORKSTREAM B (2026-10-08 ~02:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 1184, correcting its round-26 analysis @0ae2f15e5c)
+
+Round 26 is closed (DB-b-41, -42, -44 VALID; ADJUDICATION_v11/v12). The round-26 analysis cut no round 27; on the issuer's ask the CTO
+corrected it: S31 needs its own run and S32 waits on DB-b-43, so neither graduates at DB-b-45's drain. S31 is cut now.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-46` | S31: the extended handler over the whole 49F population for one trading day, wall and peak per stage against 900 s / 2048 MB, the per-account tail; a breach reported with its size | LOCAL | DB-b-41 (merged) | B27 |
+
+fanout: 1 of 1 chains, cap 8, reason: one measurement. Worker 0.9.0_WK_IRPT_DASHBD~26 in its own worktree.
