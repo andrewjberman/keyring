@@ -52,6 +52,8 @@ fires even where the vendor already posts a CFNCASH leg for the sale, which coun
 
 **AMENDMENT 2 (issuer ruling, 2026-10-08 ~20:5xZ, on row D2-W45-S2).** Amendment 1's condition (a) is withdrawn: measured, a credit from a sale of a security not valued the day before can restore the level (round 22's 25) or inflate it (the 9), and nothing in the data separates the two until that security is priced. PRD C-DAILY decides it: "A day not computable is UNKNOWN, never interpolated." So: (a') where the funding sale's security was NOT valued in the account on the day before, the credit day's return is BLANK with the reason `UNVALUED_FUNDING_SALE` (and the month UNGRADABLE by the existing chain rule), never credited and never skipped; (b) and (c) stay as built. No condition is chosen by its result: report the variant table you measured beside this one. In `sweep_regrade.md` count round 22's 25 by their new verdict (MATCH / DIFF / UNGRADABLE) and name every month still MATCH -> DIFF with its traced cause (B3S748567 2025-07's funding security 316067107 is the parked core candidate, row D2-S30). AC2 stays `regressions=0`; if it cannot be met, refuse with the remaining months named and do not weaken the test.
 
+**AMENDMENT 3 (CTO ruling msg 1618, 2026-10-08 ~21:0xZ, on row D2-W45-S3).** "Accept B3S748567 as the one named regression: it is funded by the parked 316067107 and stays labeled with that cause." AC2's expectation becomes `regressions=1`, and that one month must be B3S748567 2025-07 labeled with the parked cause (D2-S30) in `sweep_regrade.md`. Record that round 22's 25 recovered months are DIFF again under `conditional`. No code change is ordered by this amendment.
+
 Tests `data/assets/scripts/silver/tests/test_commonwealth_cash_leg.py` (add to it): a funding sale WITH an existing CFNCASH leg gets no
 second credit (the value moves by the sale once); a funding sale WITHOUT one is credited (round 22's case still holds).
 
@@ -60,7 +62,7 @@ second credit (the value moves by the sale once); a funding sale WITHOUT one is 
 <criterion id="CB23w1-AC1" cell_refs="CB-w-1"><invocation>python -m pytest -q data/assets/scripts/silver/tests/test_commonwealth_cash_leg.py</invocation><expect>passed</expect></criterion>
 `CB23w1-AC1` -- an existing cash leg is not credited twice; a sale without one still is.
 
-<criterion id="CB23w1-AC2" cell_refs="CB-w-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg r19 --after-cash-leg conditional --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45</invocation><expect>regressions=0</expect></criterion>
+<criterion id="CB23w1-AC2" cell_refs="CB-w-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg r19 --after-cash-leg conditional --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45</invocation><expect>regressions=1</expect></criterion>
 `CB23w1-AC2` -- the conditional credit regresses no month that matched under round 19's legs.
 
 <criterion id="CB23w1-AC3" cell_refs="CB-w-1" judgment="true"/>

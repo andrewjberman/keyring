@@ -2992,3 +2992,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S35 -- corrects W30-S1: the right-half gap is the tie-out's additive fee add-back (compounded: 1,334 of 1,527 tie)
+
+```json
+{
+  "id": "IRPT_DASHBD-S35",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T21:17:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Corrects IRPT_DASHBD-W30-S1 and this seat's ADJUDICATION_v15 lead: the 1,528 'real misses' are mostly the tie-out's ADDITIVE fee add-back, not Opal vs BD. Compounding BD's add-back ((1+net)(1+add-back)-1) instead of adding it moves the median right-half gap from +0.567 pp to +0.043 pp and the tied count from 0 to 1,334 of 1,527.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~28/TIEOUT_SPLIT_E1.json (per-half bd_net_return, bd_fee_addback, bd_return = gross with additive add-back; this seat's computation, dell2, 2026-10-08 ~21:1xZ)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~13/tieout_e2_gross.py:27-31 (add-back = fees / ((bmv + emv) / 2), added to BD's net TWR)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:25 and :1276 (Opal's daily is GROSS by design; fee_amount null with FEE_RAIL_UNUSED)"
+    ]
+  },
+  "spec_asserts": "ADJUDICATION_v15 / REMEDIATION_v13 (W30-S1): Opal's fee_amount is 0 because Opal does not deduct an advisory fee BD deducts; the fix is Opal's fee feed.",
+  "world_is": "Wrong on both counts. (1) Opal's account_return_daily is gross of fees BY DESIGN (fee_amount null, reason FEE_RAIL_UNUSED); right_gap_e2 counted the null as 0. There is no broken fee feed. (2) The split tie-out already compares Opal gross to BD gross, where BD gross = BD net TWR + fees/average balance, ADDED. 1,527 of the 1,528 right halves carry an add-back (median 2.388 pp; the halves are long, median 629 days vs 183 for the tied left halves), and the gap is a steady fraction of it (gap/add-back median 0.25, p10 0.15, p90 0.34). An additive add-back omits the fee-times-return interaction over a long, positive period (median BD net 22.7%). Compounding it: median gap +0.043 pp (p10 -0.096, p90 +0.244), within 0.35 pp on 1,334 of 1,527 (was 0). About 193 accounts remain off after the correction."
+}
+```
