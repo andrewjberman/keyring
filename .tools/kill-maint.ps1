@@ -42,31 +42,147 @@ param(
   [int[]]$OnlyPid,           # restrict targets to these PIDs (operator spot-kill; the exercise harness)
   [string]$LivenessPath = '',# default: <workspace>/org/mcp/liveness.json beside this script's .tools/
   [string]$AuditLog = '',    # default: <workspace>/org/mcp/agent-spawn-audit.log (one KILL-MAINT line per stopped tree)
+  # UNATTENDED (Andrew-direct 2026-10-08 ~16:4xZ): scripts mode + Execute, run by the box's scheduled task. Refuses to
+  # stop anything (and logs KILL-MAINT-ABORT) when the session map is empty while an agent runs, or when more than
+  # -MaxTargets trees qualify (a classifier fault looks like a flood). Always logs one KILL-MAINT-RUN line.
+  [switch]$Unattended,
+  [int]$MaxTargets = 25,
   [switch]$Json
 )
 
 $ErrorActionPreference = 'Stop'
+if ($Unattended) { $Mode = 'scripts'; $Execute = [switch]$true }   # apps mode is never unattended
 
 # ---- one process snapshot (PID, PPID, Name, CommandLine, WorkingSetSize, CreationDate) ----
 $all = Get-CimInstance Win32_Process
 $byId = @{}
 foreach ($p in $all) { $byId[[int]$p.ProcessId] = $p }
+# parent -> children index, built once (the walks below were O(N) per step: ~160 s under Task Scheduler priority)
+$kids = @{}
+foreach ($p in $all) {
+  $pp = [int]$p.ParentProcessId; $me = [int]$p.ProcessId
+  if ($pp -eq $me) { continue }
+  if (-not $kids.ContainsKey($pp)) { $kids[$pp] = New-Object System.Collections.Generic.List[int] }
+  $kids[$pp].Add($me)
+}
+$runClock = [Diagnostics.Stopwatch]::StartNew()
 
 function MB($bytes) { if ($bytes) { [math]::Round($bytes/1MB,0) } else { 0 } }
 
-# ---- live-claude descendant closure (protected by session-ancestry) --------
-$claudePids = @($all | Where-Object { $_.Name -match 'claude' } | ForEach-Object { [int]$_.ProcessId })
-$protectedTree = New-Object System.Collections.Generic.HashSet[int]
-$queue = New-Object System.Collections.Generic.Queue[int]
-foreach ($c in $claudePids) { [void]$protectedTree.Add($c); $queue.Enqueue($c) }
-while ($queue.Count -gt 0) {
-  $cur = $queue.Dequeue()
-  foreach ($p in $all) {
-    if ([int]$p.ParentProcessId -eq $cur) {
-      $kid = [int]$p.ProcessId
-      if ($protectedTree.Add($kid)) { $queue.Enqueue($kid) }
+# ---- SESSION SHELLS: every live Claude Code and Codex session, with its PIDs assigned ------------------------
+# Andrew-direct 2026-10-08 ~16:4xZ: unattended runs are fine "as long as there is a clear mechanism of assigning PIDs
+# to Claude Code and Codex session shells. Those should never be killed by these kind of operations".
+# A SESSION = its AGENT ROOT(S) (claude.exe / codex.exe) + its SESSION SHELL (the outermost shell above the root,
+# below the terminal: the window the seat was launched in) + EVERY descendant of that shell. Measured on the laptop
+# 2026-10-08: WindowsTerminal -> powershell.exe -> claude.exe | codex.exe (app-server + TUI) -> the agent's tools.
+# Every PID in a session is protected in every mode. Name-matched claude*/codex* processes are protected too, even
+# when no session resolves for them (belt and braces).
+$agentRootRx = '^(claude|codex)\.exe$'
+$shellRx     = '^(powershell|pwsh|cmd|bash|sh)\.exe$'
+function Get-Subtree([int]$root) {
+  $set = New-Object System.Collections.Generic.HashSet[int]
+  [void]$set.Add($root)
+  $q = New-Object System.Collections.Generic.Queue[int]
+  $q.Enqueue($root)
+  while ($q.Count -gt 0) {
+    $cur = $q.Dequeue()
+    if ($kids.ContainsKey($cur)) {
+      foreach ($kid in $kids[$cur]) { if ($set.Add($kid)) { $q.Enqueue($kid) } }
     }
   }
+  return ,$set
+}
+$sessionByHost = @{}
+foreach ($r in @($all | Where-Object { $_.Name -match $agentRootRx })) {
+  $rid = [int]$r.ProcessId
+  $hostId = $rid; $cur = $r; $hops = 0
+  while ($hops -lt 8) {
+    $pp = [int]$cur.ParentProcessId
+    if (-not $byId.ContainsKey($pp)) { break }
+    $par = $byId[$pp]
+    if ($par.Name -notmatch $shellRx) { break }
+    $hostId = $pp; $cur = $par; $hops++
+  }
+  if (-not $sessionByHost.ContainsKey($hostId)) {
+    $sessionByHost[$hostId] = [PSCustomObject]@{
+      Host = $hostId; HostName = $byId[$hostId].Name; Roots = (New-Object System.Collections.Generic.List[string])
+      Kind = ''; Serials = (New-Object System.Collections.Generic.List[string]); Pids = $null
+    }
+  }
+  $sessionByHost[$hostId].Roots.Add(("{0}:{1}" -f ($r.Name -replace '\.exe$',''), $rid))
+}
+$sessions = @($sessionByHost.Values | Sort-Object Host)
+$protectedTree = New-Object System.Collections.Generic.HashSet[int]
+foreach ($s in $sessions) {
+  $s.Pids = Get-Subtree $s.Host
+  $kinds = @($s.Roots | ForEach-Object { $_.Split(':')[0] } | Sort-Object -Unique)
+  if ($kinds -contains 'claude' -and $kinds -contains 'codex') { $s.Kind = 'Claude+Codex' }
+  elseif ($kinds -contains 'codex') { $s.Kind = 'Codex' } else { $s.Kind = 'Claude Code' }
+  foreach ($x in $s.Pids) { [void]$protectedTree.Add($x) }
+}
+foreach ($p in @($all | Where-Object { $_.Name -match 'claude|codex' })) {
+  foreach ($x in (Get-Subtree ([int]$p.ProcessId))) { [void]$protectedTree.Add($x) }
+}
+$agentRootCount = @($all | Where-Object { $_.Name -match $agentRootRx }).Count
+
+# ---- MSYS LINK: a session's Git Bash work keeps its session through MSYS's own parent chain ----------------------
+# Git Bash fork/exec leaves a Windows ParentProcessId that has already exited, so a live seat's Bash-tool job or
+# Monitor command (sleep, timeout, safe-commit, typeperf...) reads as parentless in Win32_Process. MSYS keeps the
+# real chain: `ps -al` gives PID, PPID and WINPID. Measured on the laptop 2026-10-08: a Monitor's sleep chains
+# sleep -> bash -> timeout -> bash whose WINPID is a Bash-tool shell inside the session; a background job's sleep
+# chains to the Bash-tool shell likewise. Every MSYS descendant of an in-session WINPID joins that session, with its
+# Windows subtree. When the session ends its shells die, the MSYS chain breaks (PPID 1), and the work is reapable.
+$msysOk = $false
+$psExe = $null
+foreach ($b in @($all | Where-Object { $_.Name -eq 'bash.exe' -and $_.ExecutablePath -match '\\usr\\bin\\bash\.exe$' })) {
+  $cand = Join-Path (Split-Path -Parent $b.ExecutablePath) 'ps.exe'
+  if (Test-Path $cand) { $psExe = $cand; break }
+}
+if (-not $psExe) {
+  $g = Get-Command git.exe -ErrorAction SilentlyContinue
+  if ($g) { $cand = Join-Path (Split-Path -Parent (Split-Path -Parent $g.Source)) 'usr\bin\ps.exe'; if (Test-Path $cand) { $psExe = $cand } }
+}
+$msysRows = @()
+if ($psExe) {
+  try {
+    $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    $psOut = & $psExe -al 2>$null
+    $ErrorActionPreference = $prevEap
+    foreach ($ln in @($psOut | Select-Object -Skip 1)) {
+      $tok = @(($ln.Trim()) -split '\s+')
+      if ($tok.Count -gt 0 -and $tok[0] -notmatch '^\d+$') { $tok = @($tok | Select-Object -Skip 1) }   # status flag column
+      if ($tok.Count -ge 4 -and $tok[0] -match '^\d+$' -and $tok[1] -match '^\d+$' -and $tok[3] -match '^\d+$') {
+        $msysRows += [PSCustomObject]@{ Pid = [int]$tok[0]; PPid = [int]$tok[1]; WinPid = [int]$tok[3] }
+      }
+    }
+    if ($msysRows.Count -gt 0) { $msysOk = $true }
+  } catch { $msysOk = $false }
+}
+$msysJoined = 0
+if ($msysOk) {
+  $winToSession = @{}
+  foreach ($s in $sessions) { foreach ($x in $s.Pids) { $winToSession[[int]$x] = $s } }
+  $msysSession = @{}   # msys pid -> session
+  $changed = $true; $guard = 0
+  while ($changed -and $guard -lt 50) {
+    $changed = $false; $guard++
+    foreach ($r in $msysRows) {
+      if ($msysSession.ContainsKey($r.Pid)) { continue }
+      $s = $null
+      if ($winToSession.ContainsKey($r.WinPid)) { $s = $winToSession[$r.WinPid] }
+      elseif ($msysSession.ContainsKey($r.PPid)) { $s = $msysSession[$r.PPid] }
+      if ($s -ne $null) {
+        $msysSession[$r.Pid] = $s; $changed = $true
+        foreach ($x in (Get-Subtree $r.WinPid)) {
+          if (-not $winToSession.ContainsKey([int]$x)) {
+            $winToSession[[int]$x] = $s; [void]$s.Pids.Add([int]$x); [void]$protectedTree.Add([int]$x); $msysJoined++
+          }
+        }
+      }
+    }
+  }
+} else {
+  [Console]::Error.WriteLine("WARN: no MSYS process table (Git Bash ps.exe not found or empty) -- session map covers Windows ancestry only")
 }
 
 # ---- fabric comms infra (cmdline match; these are DETACHED from claude) ----
@@ -89,7 +205,9 @@ $drainCmd = '[\\/]drain-'
 # Windows parent has already exited, so a LIVE seat's safe-commit / safe-apply reads as outside every claude tree
 # (measured on the laptop 2026-10-08: an in-flight safe-apply and safe-commit, parents dead). Stopping one mid-flight
 # leaves a merge open, a lock held, or a terraform apply half-landed.
-$inFlightCmd = 'safe-(commit|merge|deploy|apply)\.sh|commit-worker\.sh|commit-gate\.sh|terraform'
+# A running git hook is in-flight work too (safe-merge hooks run 15-45 min): exercised 2026-10-08 16:55Z, a test run
+# with the Monitor cap lowered to 5 s stopped a live seat's 8-second-old `bash .git\hooks/pre-commit`.
+$inFlightCmd = 'safe-(commit|merge|deploy|apply)\.sh|commit-worker\.sh|commit-gate\.sh|terraform|[\\/]hooks[\\/](pre|post|prepare|commit)-[a-z-]+'
 
 # ---- owner liveness: serial -> live MCP server pid (liveness.json, pid confirmed as a server.py) ----
 if (-not $LivenessPath) { $LivenessPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'org\mcp\liveness.json' }
@@ -101,11 +219,29 @@ try {
   foreach ($e in $lj.PSObject.Properties) {
     $lp = 0
     try { $lp = [int]$e.Value.pid } catch { $lp = 0 }
-    if ($lp -gt 0 -and $byId.ContainsKey($lp) -and $byId[$lp].CommandLine -match 'server\.py') { $liveSerials[$e.Name] = $lp }
+    # a Claude seat's liveness pid is its MCP server.py; a Codex seat's is its codex-agent-heartbeat.py
+    if ($lp -gt 0 -and $byId.ContainsKey($lp) -and $byId[$lp].CommandLine -match 'server\.py|codex-agent-heartbeat\.py') {
+      $liveSerials[$e.Name] = $lp
+      # bind the serial to the session whose subtree holds that pid
+      foreach ($s in $sessions) { if ($s.Pids.Contains($lp)) { $s.Serials.Add($e.Name) } }
+    }
   }
 } catch {
   [Console]::Error.WriteLine(("WARN: liveness unreadable ({0}) -- ORPHANED class disabled this run" -f $LivenessPath))
 }
+
+function Write-Audit([string]$line) {
+  # one ASCII line to the audit log; an append failure never fails the run
+  try {
+    $line = ($line -replace '[^\x20-\x7E]', '?')
+    [IO.File]::AppendAllText($AuditLog, $line + "`n", [Text.Encoding]::ASCII)
+  } catch {
+    [Console]::Error.WriteLine(("WARN: audit append failed ({0}): {1}" -f $AuditLog, $_.Exception.Message))
+  }
+}
+$runBy = $env:OPAL_AGENT_SERIAL
+if (-not $runBy) { if ($Unattended) { $runBy = 'kill-maint-task' } else { $runBy = 'unknown' } }
+function UtcNow { (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ') }
 
 function Get-Descendants([int]$root) {
   $seen = New-Object System.Collections.Generic.HashSet[int]
@@ -113,11 +249,8 @@ function Get-Descendants([int]$root) {
   $q.Enqueue($root)
   while ($q.Count -gt 0) {
     $cur = $q.Dequeue()
-    foreach ($p in $all) {
-      if ([int]$p.ParentProcessId -eq $cur -and [int]$p.ProcessId -ne $root) {
-        $kid = [int]$p.ProcessId
-        if ($seen.Add($kid)) { $q.Enqueue($kid) }
-      }
+    if ($kids.ContainsKey($cur)) {
+      foreach ($kid in $kids[$cur]) { if ($kid -ne $root -and $seen.Add($kid)) { $q.Enqueue($kid) } }
     }
   }
   return ,$seen
@@ -127,7 +260,7 @@ function Get-Descendants([int]$root) {
 $denyName = '^(System|Idle|Registry|csrss|wininit|winlogon|services|lsass|smss|' +
             'fontdrvhost|dwm|explorer|conhost|OpenConsole|WindowsTerminal|wt|' +
             'powershell|pwsh|WerFault|sihost|ctfmon|RuntimeBroker|taskhostw|' +
-            'svchost|spoolsv|dllhost|claude|SearchHost|StartMenuExperienceHost)(\.exe)?$'
+            'svchost|spoolsv|dllhost|claude|codex|SearchHost|StartMenuExperienceHost)(\.exe)?$'
 # security / EDR -- IT-managed, killing is both futile and a security event:
 $denySecurity = 'EPSecurityService|EPIntegrationService|Sysmon|Huntress|Sentinel|MsMpEng|SecurityHealth|Defender|CSFalcon|CrowdStrike'
 
@@ -175,6 +308,7 @@ if ($Mode -eq 'scripts' -or $Mode -eq 'all') {
     if ($protectedTree.Contains($procId)) { continue }                       # live-claude descendant
     $cmd = ''
     if ($p.CommandLine) { $cmd = $p.CommandLine }
+    if (-not $cmd) { continue }                                              # unreadable command line: cannot classify, never
     if ($cmd -match $drainCmd) { continue }                                  # drain worktree: never
     if ($cmd -match $inFlightCmd) { continue }                               # in-flight lock holder: never
     # age guard: skip very young procs (parent link may not have resolved yet)
@@ -266,6 +400,7 @@ if ($Mode -eq 'apps' -or $Mode -eq 'all') {
   }
 }
 
+
 # ============================== REPORT ======================================
 if ($OnlyPid) {
   $narrowed = New-Object System.Collections.Generic.List[object]
@@ -274,21 +409,35 @@ if ($OnlyPid) {
 }
 $totalMB = ($targets | Measure-Object MB -Sum).Sum
 if (-not $totalMB) { $totalMB = 0 }
+$sessionPidCount = 0
+foreach ($s in $sessions) { $sessionPidCount += $s.Pids.Count }
 
 if ($Json) {
   [PSCustomObject]@{
-    mode=$Mode; execute=[bool]$Execute; count=$targets.Count; reclaim_mb=$totalMB;
+    mode=$Mode; execute=[bool]$Execute; unattended=[bool]$Unattended; count=$targets.Count; reclaim_mb=$totalMB;
+    sessions=@($sessions | ForEach-Object { [PSCustomObject]@{ kind=$_.Kind; host=$_.Host; host_name=$_.HostName;
+      roots=@($_.Roots); serials=@($_.Serials); pids=@($_.Pids) } });
     targets=$targets; kept=$kept
   } | ConvertTo-Json -Depth 5
   if (-not $Execute) { return }
 }
 
 $modeLabel = $Mode.ToUpper()
-if ($Execute) { $banner = "EXECUTE" } else { $banner = "DRY-RUN (nothing killed)" }
+if ($Unattended) { $banner = "UNATTENDED EXECUTE" } elseif ($Execute) { $banner = "EXECUTE" } else { $banner = "DRY-RUN (nothing killed)" }
 Write-Output "=== /kill $modeLabel -- $banner ==="
-Write-Output ("protected: {0} live-claude-tree PIDs + comms-infra (server/broker/consumer never; watcher/poller/agentbus watch by owner) + in-flight safe-*/terraform + drain-* worktrees + hard-deny system/EDR" -f $protectedTree.Count)
+
+# THE SESSION MAP -- printed on every run: which PIDs belong to which Claude Code / Codex session (never targets)
+Write-Output ""
+if ($msysOk) { $msysNote = ("{0} joined via the MSYS chain" -f $msysJoined) } else { $msysNote = 'MSYS chain UNAVAILABLE' }
+Write-Output ("--- session shells: {0} session(s), {1} PIDs ({2}), never targets ---" -f $sessions.Count, $sessionPidCount, $msysNote)
+foreach ($s in $sessions) {
+  $ser = '(no serial bound)'
+  if ($s.Serials.Count -gt 0) { $ser = ($s.Serials -join ',') }
+  Write-Output ("  {0,-12} shell PID {1,-6} {2,-15} roots {3,-28} {4,4} PIDs  {5}" -f $s.Kind, $s.Host, $s.HostName, ($s.Roots -join ','), $s.Pids.Count, $ser)
+}
+Write-Output ("protected: {0} PIDs (session shells + claude*/codex* trees) + comms-infra (server/broker/consumer never; watcher/poller/agentbus watch by owner) + in-flight safe-*/terraform + drain-* worktrees + hard-deny system/EDR" -f $protectedTree.Count)
 if ($liveSerials -ne $null) { $nLive = $liveSerials.Count } else { $nLive = 'UNREADABLE' }
-Write-Output ("owners: {0} serial(s) with a live MCP server in {1}; Monitor cap {2}s" -f $nLive, $LivenessPath, $MonitorCapSeconds)
+Write-Output ("owners: {0} serial(s) live in {1}; Monitor cap {2}s" -f $nLive, $LivenessPath, $MonitorCapSeconds)
 if ($kept.Count -gt 0) {
   Write-Output ""
   Write-Output "--- owner-keyed infra KEPT (owner live; newest copy) ---"
@@ -297,9 +446,27 @@ if ($kept.Count -gt 0) {
   }
 }
 
+# UNATTENDED GUARDS: refuse to act on a run that looks wrong; log why
+if ($Unattended) {
+  $abort = ''
+  $msysLive = @($all | Where-Object { $_.ExecutablePath -match '\\usr\\bin\\' }).Count
+  if ($agentRootCount -gt 0 -and $sessions.Count -eq 0) { $abort = "agent processes running ($agentRootCount) but the session map is empty" }
+  elseif ($msysLive -gt 0 -and -not $msysOk) { $abort = "Git Bash processes running ($msysLive) but no MSYS process table -- a session's bash work cannot be assigned" }
+  elseif ($targets.Count -gt $MaxTargets) { $abort = ("{0} targets exceed -MaxTargets {1}" -f $targets.Count, $MaxTargets) }
+  if ($abort) {
+    Write-Output ""
+    Write-Output "ABORT: $abort -- nothing stopped."
+    Write-Audit ("{0}  KILL-MAINT-ABORT  by {1}  host={2}  sessions={3}  targets={4}  reason={5}" -f (UtcNow), $runBy, $env:COMPUTERNAME, $sessions.Count, $targets.Count, $abort)
+    return
+  }
+}
+
 if ($targets.Count -eq 0) {
   Write-Output ""
   Write-Output "OK: no kill targets found. Nothing to do."
+  if ($Unattended) {
+    Write-Audit ("{0}  KILL-MAINT-RUN  by {1}  host={2}  sessions={3}  session_pids={4}  targets=0  killed=0  failed=0  msys_ok={5}  msys_rows={6}  msys_joined={7}  ms={8}" -f (UtcNow), $runBy, $env:COMPUTERNAME, $sessions.Count, $sessionPidCount, $msysOk, $msysRows.Count, $msysJoined, $runClock.ElapsedMilliseconds)
+  }
   return
 }
 
@@ -333,12 +500,15 @@ $killed = 0; $failed = 0; $freed = 0
 # WHOLE-TREE stop (taskkill /T). Stop-Process on one PID orphans native children: measured on the laptop
 # 2026-10-08, stopping a bash wrapper left its typeperf + awk running; taskkill /T left none.
 foreach ($t in $targets) {
-  # a tree stop must never reach a claude session
+  # a tree stop must never reach a session shell or an agent: skip any tree holding a protected PID or a claude/codex
   $desc = Get-Descendants $t.Id
-  $claudeBelow = $false
-  foreach ($d in $desc) { if ($byId.ContainsKey($d) -and $byId[$d].Name -match 'claude') { $claudeBelow = $true } }
-  if ($claudeBelow) {
-    Write-Output ("  SKIP: PID {0,-6} {1,-22} has a claude process beneath it" -f $t.Id, $t.Name)
+  $sessionBelow = $false
+  foreach ($d in $desc) {
+    if ($protectedTree.Contains($d)) { $sessionBelow = $true }
+    if ($byId.ContainsKey($d) -and $byId[$d].Name -match 'claude|codex') { $sessionBelow = $true }
+  }
+  if ($sessionBelow -or $protectedTree.Contains([int]$t.Id)) {
+    Write-Output ("  SKIP: PID {0,-6} {1,-22} its tree holds a session PID" -f $t.Id, $t.Name)
     continue
   }
   # re-read the PID: gone (an earlier tree stop took it) or REUSED since the snapshot means hands off
@@ -359,19 +529,10 @@ foreach ($t in $targets) {
     $killed++; $freed += $t.MB
     Write-Output ("  OK:   stopped tree PID {0,-6} {1,-22} (+{2} descendant(s), {3}MB)" -f $t.Id, $t.Name, $desc.Count, $t.MB)
     # RECORD every stop (Andrew-direct 2026-10-08 ~16:2xZ: "keeps a record of what it stopped"), beside the
-    # KILL / KILL-ORPHAN lines of kill-agent.ps1 and kill-orphans. A failed append never fails the stop.
-    try {
-      $by = $env:OPAL_AGENT_SERIAL
-      if (-not $by) { $by = 'unknown' }
-      $cls = $t.Category
-      if ($t.PSObject.Properties['Class'] -and $t.Class) { $cls = $t.Class }
-      $line = "{0}  KILL-MAINT  {1}  by {2}  pid={3}  name={4}  descendants={5}  reason={6}  cmd={7}" -f `
-        (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ'), $cls, $by, $t.Id, $t.Name, $desc.Count, $t.Reason, $t.Cmd
-      $line = ($line -replace '[^\x20-\x7E]', '?')
-      [IO.File]::AppendAllText($AuditLog, $line + "`n", [Text.Encoding]::ASCII)
-    } catch {
-      [Console]::Error.WriteLine(("WARN: audit append failed ({0}): {1}" -f $AuditLog, $_.Exception.Message))
-    }
+    # KILL / KILL-ORPHAN lines of kill-agent.ps1 and kill-orphans.
+    $cls = $t.Category
+    if ($t.PSObject.Properties['Class'] -and $t.Class) { $cls = $t.Class }
+    Write-Audit ("{0}  KILL-MAINT  {1}  by {2}  pid={3}  name={4}  descendants={5}  reason={6}  cmd={7}" -f (UtcNow), $cls, $runBy, $t.Id, $t.Name, $desc.Count, $t.Reason, $t.Cmd)
   } elseif (-not (Get-Process -Id $t.Id -ErrorAction SilentlyContinue)) {
     Write-Output ("  SKIP: PID {0,-6} {1,-22} already exited" -f $t.Id, $t.Name)
   } else {
@@ -381,3 +542,6 @@ foreach ($t in $targets) {
 }
 Write-Output ""
 Write-Output ("DONE: killed {0}, failed {1}, ~{2}MB reclaimed." -f $killed, $failed, $freed)
+if ($Unattended) {
+  Write-Audit ("{0}  KILL-MAINT-RUN  by {1}  host={2}  sessions={3}  session_pids={4}  targets={5}  killed={6}  failed={7}  msys_ok={8}  msys_rows={9}  msys_joined={10}  ms={11}" -f (UtcNow), $runBy, $env:COMPUTERNAME, $sessions.Count, $sessionPidCount, $targets.Count, $killed, $failed, $msysOk, $msysRows.Count, $msysJoined, $runClock.ElapsedMilliseconds)
+}
