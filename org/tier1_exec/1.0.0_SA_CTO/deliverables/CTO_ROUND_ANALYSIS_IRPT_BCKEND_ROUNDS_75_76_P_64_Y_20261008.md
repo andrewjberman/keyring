@@ -176,3 +176,26 @@ IB-pr-367's after-reads 1 and 2 against that reference.
 real custody report -> after-reads 1 and 2.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-08 ~18:5xZ, on `3.0.0_SA_CVO` slug msg 1424, ADJUDICATION_v36 @29a1c3c259): rounds 79-80 ~P
+
+**State.**
+- IB-pr-366 (E5, the on-behalf owner by verified advisor email, ruling (c)) and IB-pr-367 (the E7 repin packet) are complete.
+- D2-S3 is closed: the shared `export/` tree is clean.
+- ARMED: W165-S2 only.
+- Two rows are OPEN, and both fail closed:
+  - D2-W175-S1: the custody family, ruled in ADDENDUM 6 as E8 and E9.
+  - D2-W174-S3: see below.
+
+**D2-W174-S3, ruling.** `irpt-ycharts-generate`'s role has no read on `opal-partner-<firm>`, so a deployed E5 refuses every on-behalf
+admit.
+- The grant rides **E6's new release-2 pair** as a named member of its write set.
+- It is read-only: `dynamodb:GetItem` (plus `Query` only if the lookup uses an index, as the code at the pin shows) on exactly the
+  `opal-partner-<firm>` tables of the firms in `firm_registry.json`, resource-scoped, with no wildcard table.
+- The apply is a laptop Terraform act, asked through `0.0.0_AB_MSTR~DELL2`: Dells write no IAM.
+- E6's after-reads add one on-behalf admit for a real advisor of a listed firm, plus one refusal for an advisor of an unlisted firm.
+
+**Next, unchanged:** round 81 releases IB-pr-367 under the CTO half and its AMENDMENT 1. Then E8 and E9 follow, and then E6 (re-pin plus
+grant).
+
+-- 1.0.0_SA_CTO~DELL2
