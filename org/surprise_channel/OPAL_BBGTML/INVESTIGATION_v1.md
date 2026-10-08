@@ -378,3 +378,34 @@ report.
   "notes": "Surfaced, not chased, and nothing outside the order was edited: the tzero copy, publish_to_portal.py and the two documents are untouched. Three routes an owner may choose, none taken here: (1) port the same grade_cix_series limb into the tzero copy, which makes the send gate strictest again and is the smallest change; (2) have publish_to_portal.py run BOTH copies; (3) factor the shared checks into one module both copies import, which is the real fix for a file that has now diverged twice and is the largest change. Route (1) or (3) also retires the standing confusion that the two copies' DOCSTRINGS each claim to be the production one. This needs a new order or an amendment to TO-GUARD-3: this seat's bounds name only the tplus1 copy."
 }
 ```
+
+
+### OPAL_BBGTML-Z-S13 -- the pinned Teams watch goes blind for a window when its 15-minute token lapses unre-selected; one live Andrew message dropped on 2026-10-08
+
+Filed by 2.0.0_SA_COO~Z on the route of 0.0.0_AB_MSTR~Z (msg 32095) from 0.0.3_BG_BBGTerminal (msg 32093).
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S13",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T23:35:34Z",
+  "one_line": "The pinned Teams watch goes BLIND for a whole window when its 15-minute issuer token lapses and is not re-selected: 1 of 3 windows measured blind on 2026-10-08, and Andrew's 21:57:19Z Tax SMA message was not emitted by the armed watcher (surfaced about 10 minutes late by a direct poll).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPORTED BY 0.0.3_BG_BBGTerminal msg 32093 (org/mcp/inbox/0.0.0_AB_MSTR/~Z/read/20261008T225301Z_0.0.3_BG_BBGTerminal_MEASURED__Teams-watch_blocker__1__went_B.md), NOT re-measured here: window A lapsed then re-selected, 0 events; window B lapsed with no re-selection line, blind; window C re-selected, emitted late, lapsed at the tail. Its evidence: the monitors' stderr banners in that seat's tasks/b95i1hu85.output (blind) and bj3z1t0zh.output (late emit).",
+      "The same seat: Andrew's 21:57:19.836Z Tax SMA message was found by calling poll_addressed_teams_messages directly; the next watcher cycle emitted it about 10 minutes late.",
+      "Routed to this seat by 0.0.0_AB_MSTR~Z msg 32095 as the placer of the Teams-watch row OPAL_BBGTML-Z-S10."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Blocker (1), documented by 4.0.0_SA_CRO~Z on 2026-09-24: the issuer token has a 15-minute TTL and is minted only on expiry. The armed watcher is the concierge's intake: every addressed Teams message is emitted as an event while it is armed.",
+  "world_is": "When the token lapses and the re-selection does not happen, the watcher stays armed and emits nothing for the rest of its window, so a live addressed message is dropped until a later cycle or a direct poll finds it.",
+  "notes": "Surfaced, not chased. A sibling of Z-S10 in the same engine (.claude/skills/teams-assist/teams-watch.py), not the same fault: S10 is the identity claim, this row is the token lifetime. The engine's owner per Z-S10 is 0.5.0_AE_OpalETL~Z, not registered at filing (get_agent_status 2026-10-08 ~23:3xZ). Disarm: an order to that seat for a refresh before expiry (or a re-select that is checked each cycle), cut by this seat when that seat is seated. Until then the compensating act is the terminal seat's own direct poll_addressed_teams_messages read, which is what found the dropped message."
+}
+```
