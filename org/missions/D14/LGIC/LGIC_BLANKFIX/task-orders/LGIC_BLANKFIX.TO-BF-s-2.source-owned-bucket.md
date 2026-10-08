@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -90,6 +90,35 @@ validated with `python .tools/proof-of-spec-check.py <instance> BS2-AC1,BS2-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the lines of this class before and now; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-08) -- the landed rulings, the measured state, and what is left for this cell
+
+The registry's lane landed the rulings: `infra/logic/registry/key_rulings.json`, `event_rules.json` and a NEW file
+`name_rulings.json` @331e3fe609 (`4.0.0_SA_CRO`, msg 106696; accepted by `1.0.0_SA_CTO`, msg 106698). Read each file's `_about`
+before you build. Measured by the issuer on the trunk after `BF-s-5` to `BF-s-8` merged
+(`python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json`):
+`roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=228 not_asked=26 pattern=8 carded=0
+refused=0 hole=26 carded_class_holes=8 source_bucket_holes=3 event_rule_holes=0 unknown_word_holes=3 other_holes=12`.
+Run that command first and work from ITS lines, not from this summary.
+
+**The cell's subject has moved.** The registry answers a source-named bucket with a ROW in `name_rulings.json` (read its
+`_about.source_owned_bucket`): never a fill the check works out. That reader is the root check's and is built by `BF-s-4`. So the
+build this face describes ("a bucket the registry marks as owned by a source is written by that rule") is NOT yours.
+
+**What is left for THIS cell, in `lib/opal_naming_keyfill.py`** (`BF-s-7` is merged; the file is free): the registry's lane
+reports that a ruling row is not matched where the check could not READ the key's bucket, and names the cases: `firms/`,
+`quarantine/`, `forwardfill_v2/`, `meta/templates/`, and two per-firm rows whose bucket comes from a call to a function
+`_bucket_for`.
+1. For each of those keys, find in the source file why `bucket_of` reads no bucket, and extend the reader ONLY by rules that
+   read evidence in the same file: a bucket passed through a local variable or a function parameter whose every call site in
+   the file names the same bucket; a per-firm choice made by calling a function (the row names it in `bucket_from`) is
+   recognised as a run-time, per-firm bucket exactly as a `*_BUCKET_MAP` variable is today. Where the file does not decide, the
+   reader returns no bucket and says why. Never guess from a folder or a name's spelling.
+2. Extend the test with one case per new rule and the DIFFERENCE CONTROL (the same key with one call site reads its bucket;
+   with two call sites naming different buckets it reads none).
+3. `BS2-AC2` reads `source_bucket_holes=0`, which `BF-s-4`'s reader closes, not yours: it may still fail when you run it. That
+   is a correct outcome here. YOUR measure is the count of `HOLE` lines whose text says the bucket was not read: report it
+   before and after, per root, from the all-roots command.
 
 ---
 
