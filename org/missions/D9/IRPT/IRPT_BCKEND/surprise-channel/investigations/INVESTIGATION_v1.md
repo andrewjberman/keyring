@@ -21069,3 +21069,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The firm half is resolvable (selected_tenant, registry-validated, and allowedFirmIds from the existing get_user read via a profile_reader on the guard's InteractiveAccess). The principal half is not: no verified request field and no existing profile read yields a principal of the target firm that differs from the filer. Cell stopped; no source file edited, no test written (a test over a synthesized owner would assert the invention). AC3 PASS at base (6 of 6 suites), AC1 and AC2 FAIL (no test file). Choices for the CTO or the COO: (a) rule a server-held firm intake principal (named, with its source) that the guard may use as owner.principal_id; (b) change uploads.py's on-behalf rule so a firm-level owner with the filer as principal is admitted (~Y2's lane); (c) a body-named advisor email verified against a partner-profile read (get_partner_profile(email, firm) exists) -- an unverified body field becomes a lookup key only, which the order does not currently allow."
 }
 ```
+
+## IRPT_BCKEND-D2-W174-S2 -- S1 resolved by CTO msg 1402 option (c): the served CREATE guard resolves the on-behalf owner from a verified advisor profile
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W174-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~174",
+  "surfaced_at": "2026-10-08T18:36:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W174-S1: the CTO ruled option (c) (msg 1402) and the order was amended (AMENDMENT 1, 1e3ab5d454). The served CREATE guard now takes an advisor email as a lookup key only (query string advisor_email), verifies it through the existing CanonicalProfileReaders.get_partner_profile(email, tenant) and get_user(email) on the registry-validated owner firm, and builds the owner with resolve_prospect_owner from that advisor's verified identity; fix commit fff1b0395a (served.py _create_owner / _advisor_owner / _RequestReads; uploads.py and interactive_access.py unchanged). IB79-1-AC1, AC2, AC3 PASS at that commit.",
+  "one_line": "S1 resolved: the principal half of the on-behalf owner is now server-resolved from a verified advisor profile, per CTO msg 1402 option (c).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py@fff1b0395a _create_owner/_advisor_owner",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py@fff1b0395a (18 tests through served.lambda_entry; the stored owner equals resolve_prospect_owner of the advisor's claims)",
+      "CTO msg 1402 (option (c)); order AMENDMENT 1 @1e3ab5d454"
+    ]
+  },
+  "spec_asserts": "IB-pr-366 as amended: the CREATE request names an advisor email used only as a lookup key, verified through get_partner_profile on the owner firm; fail closed with existing codes on absent email, absent or disabled profile, another firm's advisor, or a read error.",
+  "world_is": "Holds in the offline served-path test (15 refusal arms and the admit arm pass). Not exercised live; see D2-W174-S3 for the grant the live function role lacks."
+}
+```
+
+## IRPT_BCKEND-D2-W174-S3 -- the on-behalf advisor lookup needs a read grant on opal-partner-<firm> that the irpt-ycharts-generate role does not have
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W174-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~174",
+  "surfaced_at": "2026-10-08T18:36:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The on-behalf advisor lookup reads opal-partner-<firm>, and irpt-ycharts-generate's role grants no read on any opal-partner table, so the live admit fails closed (NOT_AUTHORIZED) until Terraform adds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:196-203: the role's dynamodb grants are Query on opal-users-v2/index/email-index and GetItem on opal-users-v2 (plus jobs, requests, etf-classifications); no opal-partner-* resource appears in the file",
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:105-123: get_partner_profile does GetItem on TableName opal-partner-<firm>",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@fff1b0395a _advisor_owner: any read error becomes ProspectOwnershipRefused, public NOT_AUTHORIZED, nothing stored"
+    ]
+  },
+  "spec_asserts": "CTO msg 1402 option (c): verify the advisor email through the EXISTING get_partner_profile on the owner firm.",
+  "world_is": "By reading the Terraform (no live call), the function role cannot GetItem opal-partner-49financial, so a deployed build would refuse every on-behalf upload. The code path is correct and fails closed; the grant (and its KMS decrypt scope, if the partner tables are CMK-encrypted) is an infra change outside this order's paths. Also for the release pair: the advisor email travels as the query parameter advisor_email beside selected_tenant, because the upload body schema rejects unknown fields."
+}
+```
