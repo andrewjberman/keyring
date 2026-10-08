@@ -55,7 +55,7 @@ class `multi_asset`.
 
 ### ACCEPTANCE
 
-<criterion id="SC14-e75-AC1" cell_refs="SC-e-75"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/r10_pytest_ok.py data/black_diamond/scripts/gold/tests/test_d04_bd_no_multi_asset.py</invocation><expect>PYTEST-OK</expect></criterion>
+<criterion id="SC14-e75-AC1" cell_refs="SC-e-75"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/r10_pytest_ok.py data/black_diamond/scripts/gold/tests/test_c06_retained_dates_six_class.py</invocation><expect>PYTEST-OK</expect></criterion>
 `SC14-e75-AC1` -- the new pin passes: the traced multi_asset input lands inside the six classes, and the equity control holds.
 <criterion id="SC14-e75-AC2" cell_refs="SC-e-75"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_MULTI_ASSET_20261008.md</invocation><expect>HALF-READY</expect></criterion>
 `SC14-e75-AC2` -- the half request carries the act, the blast radius with a candidate diff, and the rollback per key.
@@ -84,8 +84,8 @@ Dry-run at the base (dell1 CLOUD, 2026-10-08 ~18:4xZ):
   weaken the test.
 
 <paths>
-data/black_diamond/scripts/gold/D_04.client_portal_summary.py
-data/black_diamond/scripts/gold/tests/test_d04_bd_no_multi_asset.py
+data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py
+data/black_diamond/scripts/gold/tests/test_c06_retained_dates_six_class.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_MULTI_ASSET_TRACE_20261008.md
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_MULTI_ASSET_20261008.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -119,3 +119,31 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: 1.0.0_SA_CTO~DELL1 msg 1050 (DECISION, SELF-DRIVE tick 18); row MDPF_SECCLASS-D1-S9 @90d90b9dc8; DECOMP_R14 (cut as round 14: round 13 already holds the e74 issuance).
+
+### AMENDMENT 1 -- re-point to C_06's incremental merge (issuer 2.0.0_SA_COO~M1, 2026-10-08 ~19:0xZ; row MDPF_SECCLASS-D1-W65-S1)
+
+The worker's trace (`BD_MULTI_ASSET_TRACE_20261008.md` @623e08ca6b) found the following:
+- D_04 copies `concentration` unchanged from the C_06 envelope `gold/entities/clients/{rel_id}.json` (D_04:1192, :1208).
+- The value sits on dated entries 2026-10-03 to 10-05: 141 holdings across the 36 keys. They were classified from the table before the
+  remap (commit 0d9457b639, 10-07 07:10Z).
+- C_06's incremental merge (`C_06.client_mix_timeseries.py` ~:731-740) rewrites only the dates in new partitions, so those retained
+  entries are never reclassified.
+- Deployed bytes equal the repo on 9 of 9 files.
+Of the trace's three options, this seat chooses the fix at the writer, so the next scheduled fire heals all 36 files. A D_04 guard
+would mask the cause, and a hand rewrite of envelopes edits served data by hand.
+
+Steps 2-3, replaced:
+2. FIX in `C_06.client_mix_timeseries.py`'s merge. A RETAINED dated entry (one not rebuilt this run) with any holding whose class is
+   outside the six {equity, fixed_income, cash, alternatives, structured, commodities} (or `unclassified`):
+   - reclassify that holding through the same classifier call C_06 uses for new dates (~:228), by its ticker and name;
+   - recompute that date's mix class totals from the reclassified holdings;
+   - leave market values, weights, dates and any entry already inside the six unchanged.
+   Print one census line per run, e.g. `C06-RETAINED-RECLASS entries=<n> holdings=<n>`.
+3. Write `data/black_diamond/scripts/gold/tests/test_c06_retained_dates_six_class.py`. It must cover:
+   - a retained entry holding `multi_asset` comes out inside the six, with its date's mix totals consistent;
+   - a retained entry already inside the six is byte-identical after the merge (the control).
+Step 4 (the half request) stands. Its act is the deploy of C_06 to `s3://opal-data-bd/code/gold/`, then the next scheduled BD gold
+fire. The blast radius names the 36 keys, the 141 holdings, and a local candidate diff on z08119861's envelope. AC1 now runs the new C_06
+test. The <paths> grant swaps D_04 and its test for C_06 and its test. AC2, AC3 and the bounds are unchanged.
+Gate limb: none grades an amendment to an existing order.
+
