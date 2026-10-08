@@ -64,6 +64,10 @@ do not stack two loops on the same checkout.
 - **Branch:** the loop targets **the currently checked-out branch**, resolved at run
   time (`git rev-parse --abbrev-ref HEAD`) — normally `CLOUD`. It does not hardcode a
   branch, so it stays correct if the checkout is on a different branch.
+- **On a box that has switched to `box/<box>`** (per-box branches, 2026-10-08; `/integrate` "PER-BOX BRANCHES"): only
+  this box writes `box/<box>`, so the fast-forward from `origin/box/<box>` is always a no-op. This loop does NOT take
+  the trunk on such a box. The trunk arrives through the `/integrate` BOX PASS (a merge of `origin/CLOUD` in a drain
+  worktree, then a fast-forward). Leave `/git-pull` unarmed on a switched box.
 
 ## Step 2 — Arm the loop (Monitor tool, persistent)
 

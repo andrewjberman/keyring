@@ -4801,3 +4801,84 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Cites NFRA_CTLPLN-W14-S19. Proposed disposition for the CVO: S19 resolved by AMENDMENT 17 (the issuer's recut of its own criterion; the two kms:PutKeyPolicy arms are the accepted route, item 4 of 'What this Allow CAN undo', CTO msg 106733). The worker does not set it."
 }
 ```
+
+## NFRA_CTLPLN-W14-S24 -- AMENDMENT 15 reads 'the routes Deny'; routes.tf builds TWO Deny policies and item 5 as put to Andrew names only one
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T18:25:54Z",
+  "one_line": "routes.tf creates cloudops-dell-agent-routes-host-policy (command documents, code prefixes) and cloudops-dell-agent-routes-fn-policy (function updates on 66 ARNs of YES-role functions); this pass removed only the host policy, because item 5's own words and msg 106945 name documents, task definitions and prefixes, not functions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_TEN_ANSWERS_LIFT_ITEMS_5_AND_4_WIDEN_BOTH_GRANTS_DELL2_RETRIES_DELL1_INSTALLS.md row 1: item 5 is the Deny on 'writing or sending a command document, task definition or downloaded artifact prefix that runs as a privileged role', the description of the host policy in routes.tf",
+      "infra/aws/terraform/nfra-ctlpln-identity/routes.tf at c9d8210b3e: two aws_iam_policy resources (dell_agent_routes_fn, dell_agent_routes_host) and two group attachments; AMENDMENT 15 item 2 says 'the policy or policies and attachments that routes.tf creates'",
+      "INFERRED reading of which of the two Andrew lifted; the record's quoted text matches the host policy's description word for word and the function policy's description ('updating a function that runs as a role able to write IAM, the audit trail or delete production data') is not in it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 15 items 1 and 2: remove the routes Deny (policy or policies and attachments routes.tf creates); report whether there is a second document.",
+  "world_is": "Two documents. Removed: aws_iam_policy.dell_agent_routes_host[0] and its attachment (2 destroys). Kept: aws_iam_policy.dell_agent_routes_fn[0] and its attachment; the simulation prints ROUTES-KEPT for a function of a YES-IAM role, explicitDeny by DenyRoutesToPrivilegedRolesFunctions, both users.",
+  "notes": "If the issuer reads 'the routes Deny' as both, the cut is two more destroys and the same edit in routes.tf, check_identity.py (EXPECTED and counted) and the kept arm of simulate_policy.py; it is not done unasked because it widens a function-update refusal Andrew's quoted words do not name."
+}
+```
+
+## NFRA_CTLPLN-W14-S25 -- dell1's 'bd code prefix' refusal is not reproduced on the identity plane; no statement of this root refuses s3:PutObject on opal-data-bd/code/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S25",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T18:25:56Z",
+  "one_line": "AMENDMENT 15 item 2's stop condition asks which statement refuses dell1's s3:PutObject on the cot and bd code prefixes: the cot prefixes are refused by cloudops-dell-agent-routes-host-policy (DenyRoutesToPrivilegedRolesPrefixes), but live SimulatePrincipalPolicy reads every opal-data-bd/code/ key I tried ALLOWED for both users, so a bd refusal, if real, is not an identity-policy refusal and not the routes policy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam:SimulatePrincipalPolicy on arn:aws:iam::313476888478:user/cloudops-dell1-agent-user and cloudops-dell2-agent-user, 2026-10-08 ~18:1xZ, s3:PutObject: opal-data-cot/code/gold/x.py, code/bronze/cot_bronze_ingest.py, code/silver/cot_silver_merge.py -> explicitDeny, matched cloudops-dell-agent-routes-host-policy; opal-data-bd/code/gold/x.py, code/silver/x.py, code/bronze/x.py, code/bronze/cot_bronze_ingest.py, code/bronze/templates/fees.json, code/gold/gold_dispatch.sh, code/gold/lib/advisor_nna_attribution.py, code/canonical-schwab-runner/run-canonical.sh -> allowed, matched cloudops-dell-agent-deploy-policy (S3ObjectsOnOpalBuckets); denominator 14 resources x 2 users in the second run",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json: the hosts route download prefixes name only opal-data-cot and opal-data-inf keys; the rendered hosts document (1,445 characters) names no opal-data-bd key",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf and s3-49financial.tf: the Terraform-declared fences are on opal-data-49financial, opal-data-cottonwood and opal-data-inflection; no bucket policy for opal-data-bd is declared in that root. Live bucket policies, service control policies and key policies were not read (outside the bounds: SimulateCustomPolicy and SimulatePrincipalPolicy only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 15 item 2: dell1's measured refusal on the cot and bd code prefixes is caused by the routes policy; if not, STOP and report the statement.",
+  "world_is": "Cot: caused by the routes-host policy, removed by this step, so the Cottonwood code prefix frees. Bd: no identity statement refuses it, before or after; the simulation's Black Diamond arm (opal-data-bd/code/gold/x.py) reads allowed in both states for both users. The statement behind a real dell1 refusal on bd, if there was one, is outside what this pass can read. The pass continued because the stop condition names a refusing statement outside the routes policy and none was found on the plane it can read.",
+  "notes": "The issuer should ask dell1 for the exact key, the error text and the time of the bd refusal (an AccessDenied from S3 names whether an explicit deny in a resource-based policy or an identity policy, or an SCP, caused it). Removing the routes policy cannot deliver a bd write that something outside the identity policies refuses."
+}
+```
+
+## NFRA_CTLPLN-W14-S26 -- Lifting item 5 does not let a Dell SEND or DELETE the twelve command documents: no Allow covers ssm:SendCommand or ssm:DeleteDocument
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T18:25:57Z",
+  "one_line": "After the routes-host Deny is gone the simulation reads ssm:SendCommand and ssm:DeleteDocument on the twelve documents implicitDeny for both users (24 of 69 arms per user): the Deny was the only statement naming them, and no Allow in the group's six policies grants either action; only Create, Update and UpdateDocumentDefaultVersion free.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py at this pass's commit, ROUTES-FREED lines: dell1 and dell2, ssm:SendCommand on each of 12 documents -> STILL-REFUSED implicitDeny by no Allow statement matches; ssm:DeleteDocument likewise; with the hosts document (today) -> explicitDeny by DenyRoutesToPrivilegedRolesDocuments",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json and dell_create_policy.json: no Allow of ssm:SendCommand or ssm:DeleteDocument; dell2_ssm_policy.json allows ssm:SendCommand only on the instance and two other documents",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/PLAN_NOTE_DELL_VENDOR_SECRETS.md section F, 'What STILL refuses'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 5 as lifted by Andrew: the Deny on 'writing or sending a command document ... that runs as a privileged role' comes off both Dells.",
+  "world_is": "The Deny comes off; writes of documents and code prefixes free (82 of 130 formerly refused arms); sends and deletes of the twelve documents (48 of 130) stay refused because nothing allows them. Same shape as the resource-policy Deny of AMENDMENT 9, which AMENDMENT 10 followed with an Allow.",
+  "notes": "Whether a Dell should be able to send these twelve documents is a grant to cut (an Allow of ssm:SendCommand on the twelve document ARNs plus the instances), not a removal; the issuer and the CTO decide. Not done: it is outside AMENDMENT 15."
+}
+```

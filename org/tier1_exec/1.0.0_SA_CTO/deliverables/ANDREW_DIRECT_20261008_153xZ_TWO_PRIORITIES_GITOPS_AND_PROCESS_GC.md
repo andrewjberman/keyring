@@ -149,3 +149,46 @@ what is in their workstream"
 
 Placement: 1.0.0_SA_CTO reads 2.0.0_SA_COO~C's workstream (cells, write paths, state) first, then asks 4.0.0_SA_CRO,
 ~A and ~B for timing and their write paths, and rules any overlap to one owner.
+
+## Addendum ~17:4xZ -- Andrew answers six open calls
+
+Cards put at ~17:3xZ (1 unattended cleanup: (a) /govern only or (b) also a scheduled task; 2 two-phase commit on for the
+laptop ~2:10 PM ET; 3 start the long-term self-ending script packages; 4 graph engine: (a) stay on Kuzu 0.11.3, (b) a
+fork, (c) another way; 5 branch model: (a) one trunk, (b) per-box, (c) per-project; 6 automatic worktree removal and its
+limits). Verbatim answer:
+
+> "1.) A is better for now. 2.) Yes, but faster, 2p ET today. 3.) rec approved. 4.) A for now, also i dont think its
+> actually frozen youre just not accounting for the stitch functions. 5.) A for now but we need to get on to B very soon it
+> is a priority. 6.) Yes sure, CRO~B is working on a formal version of this"
+
+Routing: 1 -> 4.0.0_SA_CRO~B (no scheduled task installed; /govern Step 3a.6 is the one unattended reaper). 2 -> 0.0.0_AB_MSTR
+and 4.0.0_SA_CRO~A (two-phase safe-commit ON by default on the laptop at 2:00 PM ET = 18:00Z today). 3 -> 4.0.0_SA_CRO~B
+(start P1, the comms watchers). 4 -> 4.0.0_SA_CRO (stay on Kuzu; the engine's upstream is archived, but the served graph is
+not frozen: the stitch functions keep it current). 5 -> 4.0.0_SA_CRO~A (keep one trunk now; per-box branches are a
+priority, design starts now). 6 -> 4.0.0_SA_CRO~B (worktree removal allowed: merged, clean, idle 48 h, never `drain-*`,
+logged; its formal version governs).
+
+## Addendum ~17:4xZ (1:45 PM ET) -- site Z locking up; move the cluster now
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO, after being told site Z's merge waited on his word at its terminal:
+
+> "Also i can see the locking up is already beginning to happen on the sitez box, which i interpret as a function of not
+> having the efficient gitops on there. It is currently 1:45p, we should begin making moves across the cluster to get on
+> that now."
+
+Placement: this is the word for site Z to drain the fast-fix set now (origin CLOUD, which holds a92d59d74f), the
+drain-worktree way, then the one-time kill-maint sweep and /govern 30m. Two-phase safe-commit follows when the laptop's
+first read is clean; that read is pulled forward from ~18:45Z to ~18:15Z.
+
+## Addendum ~18:3xZ -- two carried calls answered
+
+Cards put at ~18:2xZ: (1) restart this seat's hourly /self-drive over the laptop directives now, at the :17 slot, with GitOps,
+GC and graph coherence ranked first each tick; (2) delete the 159 old `origin/q/*` branches once per-box branches have run
+clean -- only those already in the trunk, after all four boxes run a full day on their own branches, the other 10 listed for
+their owners first. Verbatim answer:
+
+> "1.) Yes. 2.) YEs."
+
+Placement: (1) this seat re-arms `/self-drive` at `17 * * * *` off the arming record
+`ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`, the three priorities first. (2) B8 of
+`PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md` is authorized on those terms; 0.0.0_AB_MSTR deletes when the condition reads true.

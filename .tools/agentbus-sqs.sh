@@ -483,20 +483,45 @@ case "$cmd" in
     # WITH A SPACE -- so $2/$3 silently yields "pid=Blo". A PID file plus `kill -0` asks the
     # kernel a question with one right answer and no field positions to get wrong. Stale locks
     # self-clear: if the recorded PID is dead, we take the lock.
-    LOCK="/tmp/agentbus-consumer-${dev}.lock"
-    if [ -f "$LOCK" ]; then
-        other=$(cat "$LOCK" 2>/dev/null || echo "")
+    #
+    # ATOMIC ACQUISITION (P1 process GC): the lock is CREATED with noclobber (O_EXCL), so of two simultaneous arms
+    # exactly one creates it; the old check-then-write let both start. A stale lock (recorded pid dead) is renamed
+    # aside -- a rename succeeds for one racer only -- and the create is retried; losing any step is the rc-3 refusal.
+    # AGENTBUS_LOCK overrides the path (tests only).
+    LOCK="${AGENTBUS_LOCK:-/tmp/agentbus-consumer-${dev}.lock}"
+    _lock_take() { ( set -C; printf '%s\n' "$$" > "$LOCK" ) 2>/dev/null; }
+    _lock_read() {   # an empty read may be a racer between create and write: read once more after 1 s
+        local o; o="$(cat "$LOCK" 2>/dev/null || true)"
+        if [ -z "$o" ] && [ -e "$LOCK" ]; then sleep 1; o="$(cat "$LOCK" 2>/dev/null || true)"; fi
+        printf '%s' "$o"
+    }
+    _lock_refuse() {
+        echo "agentbus-sqs: REFUSING -- a consumer for '${dev}' is ALREADY RUNNING (pid ${1:-?})." >&2
+        echo "  SQS is exactly-once: a second consumer would STEAL this device's mail at random," >&2
+        echo "  with no trace on the losing side. This is not a duplicate-delivery race." >&2
+        echo "  If that consumer is dead, its lock self-clears -- re-run and you will take it." >&2
+        echo "  To hand over deliberately: stop the other Monitor first, then re-run." >&2
+        exit 3
+    }
+    if ! _lock_take; then
+        other="$(_lock_read)"
         if [ -n "$other" ] && kill -0 "$other" 2>/dev/null; then
-            echo "agentbus-sqs: REFUSING -- a consumer for '${dev}' is ALREADY RUNNING (pid ${other})." >&2
-            echo "  SQS is exactly-once: a second consumer would STEAL this device's mail at random," >&2
-            echo "  with no trace on the losing side. This is not a duplicate-delivery race." >&2
-            echo "  If that consumer is dead, its lock self-clears -- re-run and you will take it." >&2
-            echo "  To hand over deliberately: stop the other Monitor first, then re-run." >&2
-            exit 3
+            _lock_refuse "$other"
         fi
         echo "agentbus-sqs: stale lock for pid ${other:-?} (process gone) -- taking it." >&2
+        # ONE racer clears: mkdir is atomic. Under it, remove the lock only if it still holds the dead pid, then
+        # take. A racer that cannot get the mutex stands down (rc 3). A mutex left by a crash ages out after 60 s.
+        _took=1
+        if mkdir "${LOCK}.clearing" 2>/dev/null; then
+            if [ "$(_lock_read)" = "$other" ]; then rm -f "$LOCK"; fi
+            if _lock_take; then _took=0; fi
+            rmdir "${LOCK}.clearing" 2>/dev/null || true
+        else
+            _age=$(( $(date +%s) - $(stat -c %Y "${LOCK}.clearing" 2>/dev/null || date +%s) ))
+            if [ "$_age" -gt 60 ]; then rmdir "${LOCK}.clearing" 2>/dev/null || true; fi
+        fi
+        [ "$_took" -eq 0 ] || _lock_refuse "$(_lock_read)"
     fi
-    echo $$ > "$LOCK"
     # Release on any exit path so a clean stop never leaves a lock that blocks the next session.
     trap 'rm -f "$LOCK" 2>/dev/null || true' EXIT INT TERM
     echo "agentbus-sqs: watching ${dev} inbound (long-poll 20s). Emits one line per message; silent otherwise." >&2
@@ -515,12 +540,27 @@ case "$cmd" in
         fi
     done
     if [ -n "$_PYBIN" ] && [ -f "${_jq_self_dir}/agentbus-consumer.py" ]; then
+        # OWNER TIE (P1 process GC): $PPID here is 1 -- the harness's top process (Git\bin\bash.exe) is not an MSYS
+        # process -- so the owner is resolved on the WINDOWS chain from this process's winpid: the topmost bash.exe
+        # above it (what the Monitor stop kills) and that process's parent (the session). The consumer exits when
+        # either exits. Empty resolution = no --owner-winpid = the consumer's cap-only behaviour (fail open).
+        _owner_args=()
+        _selfwin="$(cat "/proc/$$/winpid" 2>/dev/null || true)"
+        if [ -n "$_selfwin" ]; then
+            for _o in $("$_PYBIN" "${_jq_self_dir}/agentbus-consumer.py" --resolve-owners "$_selfwin" | tr -d '\r' || true); do
+                _owner_args+=(--owner-winpid "$_o")
+            done
+        fi
         exec "$_PYBIN" "${_jq_self_dir}/agentbus-consumer.py" \
             --queue-url "$q" --device "$dev" --region "$REGION" \
-            --lock "$LOCK" --lock-pid "$$"
+            --lock "$LOCK" --lock-pid "$$" "${_owner_args[@]}"
     fi
     echo "agentbus-sqs: python/boto3 unavailable -- falling back to the per-poll aws-CLI loop" >&2
-    while true; do
+    # BOUNDED like the python consumer (1700 s, AGENTBUS_MAX_SECONDS overrides, 0 disables): an unbounded loop
+    # outlives its Monitor and holds the lock. $SECONDS is bash's own clock -- no extra process per pass.
+    _max_s="${AGENTBUS_MAX_SECONDS:-1700}"
+    SECONDS=0
+    while [ "$_max_s" -eq 0 ] || [ "$SECONDS" -lt "$_max_s" ]; do
         set +e
         out=$(aws sqs receive-message --region "$REGION" --queue-url "$q" \
                 --wait-time-seconds 20 --max-number-of-messages 10 \
@@ -530,7 +570,9 @@ case "$cmd" in
         if [ $rc -ne 0 ]; then
             # LOUD, and never silently retried into looking like an empty queue.
             echo "[agentbus] RECV ERROR rc=${rc} -- this is NOT an empty queue: $(printf '%s' "$out" | tr '\n' ' ' | cut -c1-160)"
-            sleep 60
+            _left=60
+            if [ "$_max_s" -gt 0 ] && [ $((_max_s - SECONDS)) -lt 60 ]; then _left=$((_max_s - SECONDS)); fi
+            [ "$_left" -gt 0 ] && sleep "$_left"
             continue
         fi
         if printf '%s' "$out" | grep -q '"Messages"'; then
@@ -621,6 +663,8 @@ case "$cmd" in
             fi
         fi
     done
+    echo "[AGENTBUS-EXPIRED] aws-CLI fallback consumer for ${dev} ended after ${_max_s}s (Monitors die at 30 min). RE-ARM with ONE Monitor call: cd <workspace-root> && exec bash .tools/agentbus-sqs.sh watch"
+    exit 0
     ;;
 
   device)

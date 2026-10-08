@@ -89,7 +89,10 @@ AUDIT="${NEVER_GATE_AUDIT:-$WS/org/git-author-override-audit.log}"
 # /open-calls card). Without it, on the site-Z device GATE 1 (NEVER#7 rebase) and GATE 5 (integrator-
 # only push/pull) both read the working branch as NOT shared and never fired -- exhibited by exercise:
 # 27 rebase arms in the suite, 15 failing, the 12 that denied all targeting `git -C portal` (DEV).
-SHARED_BRANCHES='^(CLOUD|DEV|PROD|SITEZ|main|master)$'
+# box/<box> ADDED 2026-10-08 (per-box branches, build item B1, 1.0.0_SA_CTO PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md;
+# Andrew ~18:0xZ): each box's branch is shared by every seat on that box, so NEVER#7 (no rebase) and GATE 5
+# (integrator-only push/pull) cover it exactly as they cover CLOUD.
+SHARED_BRANCHES='^(CLOUD|DEV|PROD|SITEZ|main|master|box/[A-Za-z0-9_-]+)$'
 
 deny() {
     "$JQ" -nc --arg r "$1" \

@@ -345,7 +345,9 @@ if [ "${SAFE_COMMIT_USE_QUEUE:-0}" = "1" ] && cq_worker_alive; then
 fi
 
 # ==========================================================================
-# TWO-PHASE COMMIT (opt-in: SAFE_COMMIT_TWO_PHASE=1). GitOps; Andrew-direct 2026-10-08 ~16:5xZ and his ruling ~17:0xZ
+# TWO-PHASE COMMIT (ON by default since 2026-10-08 18:00Z, Andrew-direct ~17:4xZ "Yes, but faster, 2p ET today",
+# record 1.0.0_SA_CTO ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md; SAFE_COMMIT_TWO_PHASE=0 opts
+# one call out). GitOps; Andrew-direct 2026-10-08 ~16:5xZ and his ruling ~17:0xZ
 # ("Yes go ahead"), record org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_165xZ_LEAD_COMMIT_LOCK_SHRINK_BUILD.md.
 # VALIDATE, with NO lock: staging, every safe-commit gate below, and the pre-commit, prepare-commit-msg and commit-msg
 #   hooks run in a PRIVATE git dir whose HEAD is pinned at BASE (the tip read here) and whose index is private, over
@@ -368,14 +370,21 @@ _SC2P_DIR=""
 _SC2P_MSGKIND=""
 _SC2P_MSGFILE=""
 _SC2P_MSGS=()
+# True only while the lock dir's pid file still names THIS process. After a waiter's reclaim (c) of a live holder,
+# another seat may hold the lock: the old holder must not remove it on exit (GC P3 residue item 4, 4.0.0_SA_CRO~B 107108).
+_sc_lock_mine() {
+  local _p=""
+  if [ -f "${LOCK_DIR:-/nonexistent}/pid" ]; then read -r _p < "$LOCK_DIR/pid" 2>/dev/null || true; fi
+  [ -n "$_p" ] && [ "$_p" = "$$" ]
+}
 _sc_on_exit() {
-  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
+  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ] && _sc_lock_mine; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
   if [ -n "${_SC2P_DIR:-}" ]; then rm -rf "$_SC2P_DIR" 2>/dev/null || true; fi
   return 0
 }
 _sc2p_eligible() {
   local k=0 a=""
-  [ "${SAFE_COMMIT_TWO_PHASE:-0}" = "1" ] || { _SC2P_WHY="flag off"; return 1; }
+  [ "${SAFE_COMMIT_TWO_PHASE:-1}" = "1" ] || { _SC2P_WHY="SAFE_COMMIT_TWO_PHASE=${SAFE_COMMIT_TWO_PHASE:-}"; return 1; }
   [ "${SAFE_COMMIT_USE_QUEUE:-0}" != "1" ] || { _SC2P_WHY="the queue path was requested"; return 1; }
   [ -z "${GIT_DIR:-}${GIT_WORK_TREE:-}${GIT_INDEX_FILE:-}" ] || { _SC2P_WHY="the caller set GIT_DIR, GIT_WORK_TREE or GIT_INDEX_FILE"; return 1; }
   [ -z "${_SUPERPROJECT:-}" ] || { _SC2P_WHY="a nested repo (submodule)"; return 1; }
@@ -413,7 +422,7 @@ _sc2p_eligible() {
 }
 if _sc2p_eligible; then
   _SC_2P=1
-elif [ "${SAFE_COMMIT_TWO_PHASE:-0}" = "1" ]; then
+elif [ "${SAFE_COMMIT_TWO_PHASE:-}" = "1" ]; then   # say why only when the caller asked for it explicitly
   echo "safe-commit: two-phase NOT used (${_SC2P_WHY}); legacy path." >&2
 fi
 if [ "$_SC_2P" -eq 1 ]; then
@@ -442,7 +451,10 @@ fi
 
 # Release the land lock early (the two-phase path; the legacy path keeps its EXIT-trap release).
 _sc_release_lock() {
-  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then rm -rf "$LOCK_DIR" 2>/dev/null || true; LOCK_ACQUIRED=0; fi
+  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then
+    if _sc_lock_mine; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
+    LOCK_ACQUIRED=0
+  fi
   return 0
 }
 

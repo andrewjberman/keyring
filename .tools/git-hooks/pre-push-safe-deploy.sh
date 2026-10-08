@@ -5,9 +5,9 @@
 # Reads the push refspec from stdin (git pre-push protocol):
 #   <local-ref> <local-sha1> <remote-ref> <remote-sha1>
 #
-# For each push line whose REMOTE ref is refs/heads/CLOUD, delegates the
-# range to safe-deploy.sh (which passes if no data/*/scripts/*.py is in it).
-# Any other remote ref prints one SKIP line and deploys nothing.
+# For each push line whose REMOTE ref is refs/heads/CLOUD (a box that has not switched to a per-box branch), or
+# refs/heads/box/<this box>, delegates the range to safe-deploy.sh (which passes if no data/*/scripts/*.py is in it).
+# An integration push of CLOUD, another box's branch, or any other ref prints one SKIP line and deploys nothing.
 #
 # To bypass (emergency only):
 #   git push --no-verify
@@ -50,13 +50,72 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
         continue
     fi
 
-    # Deploy only on the trunk (NFRA_CTLPLN FWD-5, contract C-TRUNK-DEPLOY): publishing any
-    # other branch never puts a pipeline script into production. Keyed on the REMOTE ref,
-    # so `git push origin work:CLOUD` still deploys and `git push origin CLOUD:work` does not.
-    if [[ "$REMOTE_REF" != "refs/heads/CLOUD" ]]; then
-        echo "SKIP: no deploy ran for $REMOTE_REF -- the deploy gate runs only on a push to refs/heads/CLOUD" >&2
+    # WHICH PUSHES DEPLOY (NFRA_CTLPLN FWD-5, contract C-TRUNK-DEPLOY, extended for per-box branches -- build item B2,
+    # 1.0.0_SA_CTO PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md; Andrew ~16:4xZ "We should no longer need to be running
+    # deploys for the whole fabric on this box"). A deploy fires on the AUTHORING box, for that box's own work only:
+    #   refs/heads/box/<this box>  -> deploy the box's diff against origin/CLOUD (merge-base..tip). Other boxes' work the
+    #                                 box took from the trunk is already in origin/CLOUD, so it is not in that diff.
+    #   refs/heads/box/<other box> -> SKIP: only the authoring box deploys its branch.
+    #   refs/heads/CLOUD           -> if the push brings in any origin/box/* tip (an INTEGRATION push), deploy nothing:
+    #                                 each box deployed its own work on its box push. If that integration push ALSO
+    #                                 carries commits of this box that came through no box branch, REFUSE: push those
+    #                                 first, on their own, so they deploy. A CLOUD push that brings in no box branch is
+    #                                 a box that has not switched yet: today's behaviour, unchanged.
+    #   anything else              -> SKIP, as before.
+    # Keyed on the REMOTE ref, so `git push origin work:CLOUD` still deploys and `git push origin CLOUD:work` does not.
+    BOX_REFS="$(git for-each-ref --format='%(refname)' refs/remotes/origin/box/ 2>/dev/null || true)"
+    case "$REMOTE_REF" in
+      refs/heads/box/*)
+        _target="${REMOTE_REF#refs/heads/box/}"
+        _me="${AGENTBUS_DEVICE:-}"
+        if [ -z "$_me" ] && [ -f "$REPO_ROOT/.tools/agentbus-sqs.sh" ]; then
+            _me="$(bash "$REPO_ROOT/.tools/agentbus-sqs.sh" device 2>/dev/null | sed -n 's/^device: *//p' | head -1)"
+        fi
+        if [ -z "$_me" ] || [ "$_me" = "UNKNOWN" ]; then
+            echo "BLOCKED: push of $REMOTE_REF -- this box's name is unknown (AGENTBUS_DEVICE unset), so the deploy gate cannot tell whether this is the authoring box. Set AGENTBUS_DEVICE and push again." >&2
+            exit 1
+        fi
+        if [ "$_target" != "$_me" ]; then
+            echo "SKIP: no deploy ran for $REMOTE_REF -- box/$_target is not this box ($_me); only the authoring box deploys its branch" >&2
+            continue
+        fi
+        _mb="$(git merge-base refs/remotes/origin/CLOUD "$LOCAL_SHA" 2>/dev/null || true)"
+        if [ -z "$_mb" ]; then
+            echo "BLOCKED: push of $REMOTE_REF -- no merge-base with origin/CLOUD, so this box's own diff cannot be bounded. Fetch origin and push again." >&2
+            exit 1
+        fi
+        echo "deploy gate: $REMOTE_REF is this box's branch -- deploying its own diff against origin/CLOUD (${_mb:0:10}..${LOCAL_SHA:0:10})" >&2
+        bash "$SAFE_DEPLOY" --no-pipescript --commit-range "${_mb}..${LOCAL_SHA}" || exit 1
         continue
-    fi
+        ;;
+      refs/heads/CLOUD)
+        _integ=""
+        if [ -n "$BOX_REFS" ] && [[ "$REMOTE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            for _r in $BOX_REFS; do
+                if git merge-base --is-ancestor "$_r" "$LOCAL_SHA" 2>/dev/null && ! git merge-base --is-ancestor "$_r" "$REMOTE_SHA" 2>/dev/null; then
+                    _integ="${_integ}${_integ:+ }${_r#refs/remotes/origin/}"
+                fi
+            done
+        fi
+        if [ -n "$_integ" ]; then
+            # shellcheck disable=SC2086
+            _own="$(git rev-list --no-merges "${REMOTE_SHA}..${LOCAL_SHA}" --not $BOX_REFS 2>/dev/null | head -5)"
+            if [ -n "$_own" ]; then
+                echo "BLOCKED: this CLOUD push integrates ($_integ) AND carries commits that came through no box branch:" >&2
+                printf '  %s
+' $_own >&2
+                echo "  Those would never deploy. Push them first on their own (they deploy on that push), then push the integration." >&2
+                exit 1
+            fi
+            echo "SKIP: no deploy ran for $REMOTE_REF -- an integration push ($_integ); each box deployed its own work on its box push" >&2
+            continue
+        fi
+        ;;
+      *)
+        echo "SKIP: no deploy ran for $REMOTE_REF -- the deploy gate runs only on a push to refs/heads/CLOUD or to this box's refs/heads/box/<box>" >&2
+        continue
+        ;;
+    esac
 
     # Build commit range: remote_sha..local_sha
     # On new branch (remote = 0000...), diff against merge-base with the shared trunk --
