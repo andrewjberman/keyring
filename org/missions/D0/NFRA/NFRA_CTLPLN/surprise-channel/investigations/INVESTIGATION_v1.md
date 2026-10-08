@@ -5224,3 +5224,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "No other existing assertion changed."
 }
 ```
+
+## NFRA_CTLPLN-S34 -- a chat's second draft within a week is never texted: the run-once key offer:<tag>:v<n> collides
+
+```json
+{
+  "id": "NFRA_CTLPLN-S34",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-08T21:30:02Z",
+  "one_line": "A chat's draft text is sent at most once per key offer:<tag>:v<version>; the tag is fixed per chat and a new draft restarts at v1, so within the 7-day run-once window every later first draft in that chat is NOT texted while the event logs 'texted'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: INBOUND round 7's first cell (a run-once key unique per draft, every ctx.once key of the agent audited for reuse), deployed under its own pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/teams-global-chat-assist-handler-lambda 2026-10-08 04:00Z-21:2xZ: 14 tenant lines kind teams.messages with result texted (9) or updated (5) between 13:42Z and 15:57Z, and ZERO sms_sent lines in that span; the 4 sms_sent lines of the day are the End of Day draft and owner replies (positive control: the filter reads sms_sent where it occurs). Ingress log group: 0 sms_sent.",
+      "data/transcripts/scripts/teams_chat/tenant.py offer(): ctx.once('offer:%s:v%d' % (tag, version), ... a.send_sms ...); chat_tag(): 'The chat's stable tag' kept in state; on_chat_messages: version = old.version+1 if a draft is pending else 1, and pending is cleared when he answers by hand.",
+      "infra/aws/terraform/modules/ldo/runtime/ldo.py:382-396 once() returns the recorded result when the key exists; LDO_DEDUP_DAYS default 7 (:99)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-08 ~18:4xZ: 'I feel like I am not getting all the team's messages. It seems like a lot of them are falling through'. A draft the agent records as texted reached his phone.",
+  "world_is": "The agent records texted/updated and returns; the text is suppressed by an old run-once record for the same tag and version. Inferred link to the 14 unmatched outcomes; the DynamoDB once records were not read.",
+  "notes": "Found while reconciling CT-i-10's real count (sms_sent=4 vs texted=9 + updated=5). Not fixed by the round-6 package (TO-APPLY-19)."
+}
+```
