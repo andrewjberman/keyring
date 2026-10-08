@@ -388,10 +388,10 @@ def selftest() -> int:
              res["line"].endswith("unread_limbs=0 ok=True") and "ruling_shaped=2" in res["line"] and
              "ruling_paths=2" in res["line"], res["line"])
         gone = run(fx["mgr"], start, end, fx["repo"], os.path.join(base, "no-such-mcp"), out=lambda _t: None)
-        case("an unreadable message source is UNREAD and ok=False, never a zero",
+        case("an unreadable message source is UNREAD and the run is not ok, never a zero",
              gone["unread"] == 1 and gone["line"].endswith("ok=False") and "messages=0" in gone["line"], gone["line"])
         broken = run(fx["mgr"], start, end, os.path.join(base, "no-such-repo"), fx["mcp"], out=lambda _t: None)
-        case("an unreadable repository is UNREAD and ok=False", broken["unread"] == 1 and broken["line"].endswith("ok=False"),
+        case("an unreadable repository is UNREAD and the run is not ok", broken["unread"] == 1 and broken["line"].endswith("ok=False"),
              broken["line"])
     good = sum(1 for r in results if r)
     print("MSTR-RECORD-SELFTEST cases=%d/%d ok=%s" % (good, len(results), good == len(results)))

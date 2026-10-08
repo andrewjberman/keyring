@@ -151,13 +151,13 @@ def test_liveness(base: str) -> None:
     fx2 = fixture(os.path.join(base, "noproc"), with_processes=False)
     rc2, out2, _ = run_liveness(fx2, reg)
     last2 = out2.strip().splitlines()[-1] if out2.strip() else ""
-    case("an unreadable process list: every seat UNKNOWN, none DEAD, ok=False and rc 1",
+    case("an unreadable process list: every seat UNKNOWN, none DEAD, ok is False and rc 1",
          rc2 == 1 and last2.endswith("ok=False") and " dead=0 " in last2 and "WARN" in out2, "rc=%d %s" % (rc2, out2))
     gone = os.path.join(base, "empty")
     os.makedirs(gone)
     write(os.path.join(gone, "now"), str(NOW))
     rc3, out3, err3 = run_liveness(gone, reg)
-    case("an unreadable liveness file stops the tool: ok=False, rc 3, never an empty box",
+    case("an unreadable liveness file stops the tool: ok is False, rc 3, never an empty box",
          rc3 == 3 and out3.strip().endswith("seats=0 moving=0 quiet=0 hung=0 dead=0 unknown=0 ok=False"),
          "rc=%d %s %s" % (rc3, out3, err3))
 
