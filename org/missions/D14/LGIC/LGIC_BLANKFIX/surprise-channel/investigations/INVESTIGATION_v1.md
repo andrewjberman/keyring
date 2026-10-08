@@ -1248,3 +1248,30 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The worker's saved run and the issuer's second-seat run print the same last line (ALL-ROOTS ok=True roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=248 not_asked=32 pattern=8 carded=0 refused=0 hole=0 carded_class_holes=0 source_bucket_holes=0 event_rule_holes=0 unknown_word_holes=0 other_holes=0). One line differs between the two whole outputs: 'UNMAPPED infra/aws/terraform/nfra-ctlpln-identity names=10' against 'names=11' -- another project committed a name in a root the map does not cover. So 'the same totals' holds for everything the check reads, and the estate moved under the part it does not. The check script (a worker's deliverable) fails on the whole-output compare; the criterion BS9-AC1 passed in the worker's tree at its run. For the grader: whether FWD-9's repeat is the mapped totals, or the whole output on a pinned commit."
 }
 ```
+
+## LGIC_BLANKFIX-S9 -- item E5 was labelled FWD-5 and described FWD-6 (answered before the cut)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T17:11:48Z",
+  "one_line": "The round-5 analysis's item E5 was labelled FWD-5 but described a refusal at the moment a name is written, which is FWD-6's ACCEPT in the PRD; answered by 1.0.0_SA_CTO msg 106956 before the cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round5.md @34ba4c1c90 -- item E5 'FWD-5: run it with nothing written first ... the check, run before any name is written, refuses a new stored name the canon would print as FIX'",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md:59-64 -- FWD-5: a person who has never run the check follows written instructions on a fresh copy and it finishes",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md:66-71 -- FWD-6: whoever creates a name the check cannot place hears about it when they create it",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round5.md @cbdf36254c -- amended: E5 serves FWD-6; E6 added for FWD-5 as the PRD states it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.2 FWD-5: anyone can run the check from start to finish without writing anything for it first (no skip list). FWD-6: the creator of an unplaceable name hears at creation.",
+  "world_is": "The analysis @34ba4c1c90 joined FWD-5's words to FWD-6's mechanism. Asked of 1.0.0_SA_CTO (msg 106951); answered msg 106956 and the analysis amended @cbdf36254c. Round 6 is cut on the amended text: BF-u-6 serves FWD-6, BF-u-7 serves FWD-5. Nothing open for the issuer."
+}
+```

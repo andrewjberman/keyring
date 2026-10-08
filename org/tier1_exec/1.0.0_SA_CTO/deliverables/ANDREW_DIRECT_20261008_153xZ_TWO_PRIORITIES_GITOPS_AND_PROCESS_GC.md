@@ -124,3 +124,28 @@ boxes' deploys (0.7.0_AE_CloudOps~E and ~F stay down); a deploy for a project pl
 Same minute, verbatim: "With that in mind, we do have the codex 0.7.0_AE_CloudOps available and idle as needed for
 deploys on this box". So the laptop's own deploys (e.g. the NFRA_CTLPLN identity-root apply) go to the Codex seat
 `0.7.0_AE_CloudOps`, by task order.
+
+## Addendum ~17:0xZ -- GitHub Actions budget
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO, answering (1) add a cancel-superseded-runs rule to portal `ci.yml`? and (2) read
+the Actions minute usage through the GitHub API?: "1.) No need. 2.) Yes". Per-use word for one read of the Opal-Capital
+org's billing usage and budgets (gh api). Read ~17:0xZ: plan `free`; October 1-8 Linux minutes 1,811 (portal 1,035,
+ajb_workspace 769, opal_ai 7), all inside the included allowance; Actions budget $200 with prevent_further_usage=false
+(alerts to the org owner), so Actions do not stop when the allowance runs out.
+
+## Addendum ~17:1xZ -- status of the box managers on the new GC and GitOps abilities
+
+Verbatim: "Yes I updated it, i also want to make sure that the various MSTRs across the boxes are now managing with the new
+garbage collection and git ops abilities, get status on this". ("it" = the GitHub Actions budget.) Read at ~17:1xZ:
+origin CLOUD 838362db08; since the fast-fix push a92d59d74f, dell1 has drained and pushed (838362db08), dell2 and site Z
+have not. 0.0.0_AB_MSTR collects a per-box status over the bus.
+
+## Addendum ~17:1xZ -- the CROs drive changes themselves; de-duplicate against 2.0.0_SA_COO~C
+
+Verbatim: "I have also tasked the CROs (Base ~A and ~B) with driving changes themselves, because we need to move and a lot of
+this isnt complicated. I want you to get timing expectations from that group and check in with COO~C and make sure taht
+their work is not duplicated or in any way overlapping. Likely makes the most sense to start with COO~C first to establish
+what is in their workstream"
+
+Placement: 1.0.0_SA_CTO reads 2.0.0_SA_COO~C's workstream (cells, write paths, state) first, then asks 4.0.0_SA_CRO,
+~A and ~B for timing and their write paths, and rules any overlap to one owner.
