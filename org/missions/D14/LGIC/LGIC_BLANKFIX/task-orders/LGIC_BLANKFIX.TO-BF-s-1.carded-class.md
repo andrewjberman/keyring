@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -92,6 +92,33 @@ validated with `python .tools/proof-of-spec-check.py <instance> BS1-AC1,BS1-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; per root the lines of this class before and now; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-08) -- the landed rulings, the measured state, and what is left for this cell
+
+The registry's lane landed the rulings: `infra/logic/registry/key_rulings.json`, `event_rules.json` and a NEW file
+`name_rulings.json` @331e3fe609 (`4.0.0_SA_CRO`, msg 106696; accepted by `1.0.0_SA_CTO`, msg 106698). Read each file's `_about`
+before you build. Measured by the issuer on the trunk after `BF-s-5` to `BF-s-8` merged
+(`python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json`):
+`roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=228 not_asked=26 pattern=8 carded=0
+refused=0 hole=26 carded_class_holes=8 source_bucket_holes=3 event_rule_holes=0 unknown_word_holes=3 other_holes=12`.
+Run that command first and work from ITS lines, not from this summary.
+
+**What is left for THIS cell, in `lib/opal_naming_rootcheck.py`:**
+1. **A ruled address with more than one open place.** Six `opal-assets` lines (`_quarantine/`) print `HOLE` with "a brace remains
+   that no per-firm answer admits": the registry's ruled form is `{source}/{scope}/state/quarantine/`. The CTO's standing
+   judgment (round-4 analysis): a target with a named variable is whole when the LINE says what fills it and from where; a
+   variable the line does not explain is a hole. So: a key-ruling row's canonical may carry any of the grammar's own place names
+   when the ROW says, for each, what fills it (read `_about` for the field that carries that; if no field does, the row cannot
+   be admitted: report it and leave the `HOLE`). The line prints `FIX`, the form, and one sentence per open place. A brace the
+   row does not explain stays a `HOLE`.
+2. **A ruled BUCKET is not this cell's:** bucket and group names are answered by `name_rulings.json`, which `BF-s-4` reads next
+   on this same slot. Do not build that reader here.
+3. `BS1-AC2` reads `carded_class_holes=0` on the all-roots last line. Some carded lines stay holes only because the check could
+   not read the key's BUCKET, so no ruling matches; that reading is another cell's (`BF-s-2`, in `lib/opal_naming_keyfill.py`,
+   running beside you). If, after your build, carded lines remain ONLY for that reason, `BS1-AC2` fails as written and that is a
+   correct outcome: report each remaining line whole with its reason; do not force it and do not edit the key reader.
+4. The DIFFERENCE CONTROL in the test: the same two-place form is `FIX` when the row explains both places and `HOLE` when it
+   explains one.
 
 ---
 

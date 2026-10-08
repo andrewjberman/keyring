@@ -33,3 +33,14 @@
 M1's cash grade (row D1-W62-S1) found 17 more `fixed_income`/`Cash` rows: 13 money-market funds (cash / Money Market), `CASH_USD`
 (a seed row, corrected in the seed source), and VTMFX, FLIAX and FBAKX, which look non-cash and need research. These go to the round-13
 list, not here.
+
+## AMENDMENT 1 (2026-10-08 ~03:4xZ, msg 786) -- who reads condition 3
+
+- **Reader:** condition 3's read (Cottonwood's mix total unchanged, `CASH` in `cash`) is a READ, not a run. A dell1 seat reads it if
+  the Cottonwood admission apply has landed by then. Otherwise laptop `0.7.0_AE_CloudOps~S`, who holds the e42 ledger and can read the
+  bucket, reads it under this half and reports to `2.0.0_SA_COO~M1`.
+- **Which run:** the first BD-family gold run after the write that REBUILDS Cottonwood's mix (`C_06` / `D_03` / `D_04` outputs carry
+  a newer LastModified than the write). An incremental 04:00Z run that does not rebuild them does not count. Its read is "not yet",
+  not a pass.
+- **Rollback** stays this seat's call, executed by the issuer's dell1 seat from the snapshot (a table write, which the Dell
+  principal holds).

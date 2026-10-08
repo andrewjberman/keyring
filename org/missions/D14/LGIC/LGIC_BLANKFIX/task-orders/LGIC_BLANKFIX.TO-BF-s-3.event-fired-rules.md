@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~4</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -92,6 +92,22 @@ validated with `python .tools/proof-of-spec-check.py <instance> BS3-AC1,BS3-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the three lines before and now, whole; whether any reader code changed; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-08) -- the landed rulings, the measured state, and what is left for this cell
+
+The registry's lane landed the rulings: `infra/logic/registry/key_rulings.json`, `event_rules.json` and a NEW file
+`name_rulings.json` @331e3fe609 (`4.0.0_SA_CRO`, msg 106696; accepted by `1.0.0_SA_CTO`, msg 106698). Read each file's `_about`
+before you build. Measured by the issuer on the trunk after `BF-s-5` to `BF-s-8` merged
+(`python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json`):
+`roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=228 not_asked=26 pattern=8 carded=0
+refused=0 hole=26 carded_class_holes=8 source_bucket_holes=3 event_rule_holes=0 unknown_word_holes=3 other_holes=12`.
+Run that command first and work from ITS lines, not from this summary.
+
+**What is left for THIS cell:** the three rows are landed in `event_rules.json` and the run already reads
+`event_rule_holes=0` and `cot-pipeline` with no event-rule hole, so the reader needs no change: confirm that by reading the three
+lines of the `cot-pipeline` run and report them whole. Your build is the test only: the DIFFERENCE CONTROL on a registry the
+test writes to a temporary folder, and the rows the test needs asserted by name. If `lib/tests/test_opal_naming_cadence.py`
+pins a count of the registry's rows anywhere, repair it to a shape assertion and say what it became.
 
 ---
 

@@ -44,3 +44,19 @@ needs the old list, and the cell is cut from that read.
 
 No ENDPOINT change, so no sign-off re-opens. The kimi grant, the cot deny and the seat-gate ENFORCE switch are the laptop's (laptop
 `1.0.0_SA_CTO`, items 1-2 and my S68 recommendation).
+
+## ADDENDUM 1 (2026-10-08 ~03:5xZ) -- the CVO's round-12 slug (msg 784, ADJUDICATION_v10 @99e1f8fd57)
+
+The slug compiles release mode's rows: 15 dismissed, 2 ARMED open, 11 INERT graduations drafted. **No recut.** Round 12 stands as
+issued. Mid-round the spec and the decomposition are frozen. The slug changes no cell, only these orders of work:
+
+1. **S66 (ARMED, the e32 AI leg's verify).** `ai_leg_verify.py:84` printed `ok=True` with `landed=187 unresolved=2104`. **No AI leg
+   resumes** (e32's remaining 2,104, or e49) until `ok` requires `unresolved == 0` or `landed + refused == planned`, pinned by a test
+   that feeds it the killed run's numbers. It joins round-12 cell 3 as a precondition of the AI legs, under the same order. The 187
+   rows that landed stay; they were put on absence under the half.
+2. **S54 (ARMED, the bun cache provisioning).** It stays with its disarm owner `2.0.0_SA_COO~M1`. No portal build on dell1 provisions
+   with `--node-modules install` until it disarms (link, never install: the Dell rule).
+3. **The graduations stay gate-refused** until their TO-DEPLOY flips. The e66 ledger is CLOSED (msg 719), so TO-DEPLOY-e66 flips now by
+   its executor. e21 flips by its executor. e42 flips after the 12:45Z read.
+4. **FWD-1:** the walker now reaches the client pages (S61 fixed). The CVO grades FWD-1 on a rendered client page at the next
+   compile. No cell is owed.
