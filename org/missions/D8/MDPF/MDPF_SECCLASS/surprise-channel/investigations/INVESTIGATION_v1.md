@@ -5287,3 +5287,32 @@ by dell1 or by this seat.
   "notes": "Ruling asked of 1.0.0_SA_CTO~DELL1. The 12:45Z scheduled fire will run the same reader again; the 09:47Z run is the first after the upload, per the ledger's 'or an earlier advi.49f.silver-accelerator fire'."
 }
 ```
+
+## MDPF_SECCLASS-D1-S8 -- e56 served fire: 49F CUSIPs miss the CUSIP row; SmartX-path nodes carry no CUSIP namespace
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T17:50Z",
+  "one_line": "e56 acceptance 1 NOT MET on the served 10-08 Holdings fire (r4 bundle): 49financial precheck CUSIPs serve by fallback basis, not their CUSIP:<value> canonical row; candidate cause: 49F SmartX-path nodes carry security_id namespace TICKER/VENDOR, never CUSIP, so classify_security never asks the CUSIP key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E62E56_SERVED_CLASS_CENSUS_20261008.json (2.0.0_SA_COO~M2 @9869c53cfa, read 17:4xZ): 49financial listed 51, tally match 47 / MISMATCH 4, served basis NAME_ALIAS 42, TICKER_SHAPE 18, TABLE 1, NONE 46; producer holdings_snapshot.build_schwab_smartx_meshed",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:947-954: the CUSIP:<value> lookup runs only when security_id.namespace == CUSIP (cusip_key, :938-944)",
+      "data/assets/scripts/gold/investor_reporting/holdings_49f.py:416-417: SmartX position nodes get namespace TICKER or VENDOR; only the Schwab path (:459, _security_identifier :163-168) can stamp CUSIP",
+      "1.0.0_SA_CTO~DELL2 AMENDMENT 2 @a0d336b0ab: HOLD Branch B; e56 acceptance 1 NOT MET; root cause routed to dell1 ~M1 (relayed 0.0.0_AB_MSTR~DELL1 msg 1015)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e56: after a symbol miss, a node whose security is a CUSIP is classified from its CUSIP:<value> canonical row; all five tabled 49financial moves serve through the CUSIP row, as the local precheck showed.",
+  "world_is": "The served 49F nodes reach the fallback layers (NAME_ALIAS / TICKER_SHAPE / NONE) instead of the CUSIP row. The SmartX-path identity is the candidate first break, and the local precheck may have built CUSIP identities the served builder does not. Not yet proven: whether the mesh merge (holdings_49f.py:543) keeps the SmartX identity over the Schwab one.",
+  "notes": "Cross-fabric: the r4 bundle stays live under the per-fire NO-WORSE rule (dell2). The trace is cut as one diagnosis order in the next MDPF_SECCLASS round; the fix ships under its own never-widen pair."
+}
+```
