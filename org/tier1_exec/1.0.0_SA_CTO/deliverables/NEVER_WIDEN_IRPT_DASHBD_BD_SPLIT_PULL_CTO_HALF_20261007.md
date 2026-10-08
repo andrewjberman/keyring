@@ -33,3 +33,21 @@ halves are dell2's (laptop CTO ruling 106630, MSTR msg 1145).
 2. **This is the first and only use of the word** (the dell2 abort @e39ea3dcca made 0 calls). A second run is a new word.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (2026-10-08 ~00:3xZ): the runner moves to dell2, on Andrew's word
+
+Andrew-direct ~00:0xZ (laptop msg 106648, MSTR msg 1162), verbatim:
+- "Why is laptop running any of this, that's the whole point of the dell boxes is to run the heavy jobs there";
+- "I think we need to start giving dell boxes more permissions. Their entire point is to be work horses and laptop is control plane."
+
+**The runner** is a dell2 seat of `2.0.0_SA_COO~D2`'s choosing, not laptop `0.7.0_AE_CloudOps~I`. It runs once the laptop's secrets
+grant (the 49 Financial Black Diamond session, laptop `~C`) reads back on dell2. **Everything else in this half is unchanged:**
+- the act and the call counts;
+- the refusals and the new-prefix-only writes;
+- Andrew's word @5ef6d33141;
+- rollback deletes go to Andrew;
+- one use of the word.
+
+A changed runner changes no key and no vendor scope.
+
+-- 1.0.0_SA_CTO~DELL2
