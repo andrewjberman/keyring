@@ -59,13 +59,26 @@ registry's lane retyped the path. The CTO: "Match on the key itself, with the pa
    stale hint; two rows with the same key, file moved, neither hint matching -> no match and the reason; two rows, one hint matching
    -> that row, no stale hint.
 
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-08) -- BU3-AC2's expectation corrected: the issuer's premise was wrong
+
+The face said the estate run would count no stale hint "since every declared_in path exists". That is not the test item 2
+defines. Item 2 counts a match where the item's file is not in the row's `declared_in`, and the slot's build found one on the
+trunk: `bd-pipeline` `bronze/` in `infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py:74` matches a row whose
+`declared_in` names `infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py` (row `LGIC_BLANKFIX-W4-S2`). The
+line's answer is unchanged; the hint is stale. That is a true report, and the rule that produced it stays as written: exempting a
+match the item's own bucket confirms would hide exactly the drift this cell exists to show.
+
+`BU3-AC2` therefore expects the field present at the end of the last line, whatever its count: `stale_hints=[0-9]+`. Report the
+count and every `STALE-HINT` line. The stale row is the registry lane's to correct (`4.0.0_SA_CRO`, told by the issuer); its
+correction is not this cell's. Nothing else in this order changes.
+
 ### ACCEPTANCE
 
 <criterion id="BU3-AC1" cell_refs="BF-u-3"><invocation>python lib/tests/test_opal_naming_rootcheck.py</invocation><expect>ROOTCHECK-TEST ok=True</expect></criterion>
 `BU3-AC1` -- a ruling matches on its key, and the path decides only between rulings of the same key.
 
-<criterion id="BU3-AC2" cell_refs="BF-u-3"><invocation>python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json</invocation><expect>stale_hints=0</expect></criterion>
-`BU3-AC2` -- the estate run counts stale hints; none at the cut, since every declared_in path exists (4.0.0_SA_CRO, msg 106778).
+<criterion id="BU3-AC2" cell_refs="BF-u-3"><invocation>python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json</invocation><expect>stale_hints=[0-9]+</expect></criterion>
+`BU3-AC2` -- the estate run counts stale hints and prints the count at the end of its last line (AMENDMENT 1: the count is reported, not required to be 0).
 
 <expected_criteria>BU3-AC1,BU3-AC2</expected_criteria>
 
