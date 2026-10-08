@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~1</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -76,6 +76,15 @@ Dry-run at the base (CLOUD 4839b6f2d2): AC1 and AC2 `FAIL absent` -- FAIL as exp
 check: keep `test_outlook_*.py`, `test_mail_*.py` and `test_gateway_mail.py` green (`python -m pytest data/transcripts/scripts/tests -q
 -p no:cacheprovider -k "outlook or mail or encrypted"`).
 
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~T2, 2026-10-08) -- reopened for the silver test pin (row NFRA_TRNSPT-D2-W1-S1)
+
+The ruled `admission_class` silver column makes the row 20 columns; `data/transcripts/scripts/tests/test_outlook_silver.py` pins 19
+(`test_row_columns_and_types`, `test_the_wipes_limits_travel_inside_the_parquet`). That file is now in your grant. Update exactly those
+two expectations (add `admission_class` to the expected column set; 19 -> 20) and nothing else in it. Then run
+`python -m pytest data/transcripts/scripts/tests -q -p no:cacheprovider -k "outlook or mail or encrypted" --ignore=data/transcripts/scripts/tests/test_eod_voice.py`
+(the ignore is an unrelated collection error), which must read 0 failed; re-run AC1 and AC2; update the instance; flip to complete only
+then. The issuer ACCEPTS the `landed_dates` addition in `pull.run` (an ENCRYPTED_UNVERIFIED landing builds its silver partition).
+
 ## BOUNDS
 
 - **Grant.** The six files above, this order's file, your deliverables folder and the investigation file. Nothing else.
@@ -90,6 +99,7 @@ data/transcripts/scripts/outlook/land_bronze.py
 data/transcripts/scripts/outlook/silver.py
 data/transcripts/scripts/outlook/gold.py
 data/transcripts/scripts/tests/test_encrypted_class.py
+data/transcripts/scripts/tests/test_outlook_silver.py
 org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
