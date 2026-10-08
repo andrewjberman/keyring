@@ -5278,3 +5278,138 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "The issuer's wording caused it, not the applier. Rule from here: an order that has a worker report a record's fields names the opaque-id fields explicitly."
 }
 ```
+
+## NFRA_CTLPLN-S9101 -- TO-CT-k-2 AMENDMENT 9 step 4 says every one of the six roots must init from the pack; seeking-alpha cannot ini
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9101",
+  "one_line": "TO-CT-k-2 AMENDMENT 9 step 4 says every one of the six roots must init from the pack; seeking-alpha cannot init at all at HEAD, for a reason that is not a provider: 7 module calls pass source_dir, which modules/yang-lambda does not declare.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "readback --root infra/aws/terraform/seeking-alpha --from <pack> --init-only (init -backend=false, pack sole source): 7 x 'Error: Unsupported argument ... An argument named source_dir is not expected here' (module analysis_coordinator ... news_scraper in main.tf); rc=1; output kept at the worktree .scratch/rb/seeking-alpha.txt.",
+      "infra/aws/terraform/modules/yang-lambda/{main,variables,outputs}.tf: zero occurrences of source_dir, identical in the worktree (3c711c1ac9) and the base checkout working tree; market-overview uses the same module and inits.",
+      "Provider leg proven on a stand-in directory holding seeking-alpha's REAL .terraform.lock.hcl and its two providers (aws ~> 5.0, archive 2.7.1): TF-READBACK version=1.15.8 init=ok; the same stand-in with every hash replaced by zeros fails with 'doesn't match any of the checksums', so the lock is enforced."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 9 step 4: for each of the six roots, readback --root <root> --from <pack> with the direct registry excluded: every one must init.",
+  "world_is": "Five of six roots init from the pack with the registry excluded (astn-pipeline, globgrph, market-overview, opal-gateway, investor-reporting/core). seeking-alpha's init stops on a configuration defect before any provider is installed; its provider supply (aws 5.100.0 by zh, archive 2.7.1 by zh) is proven on the stand-in only.",
+  "notes": "For 2.0.0_SA_COO~C: dell2 will see the same Unsupported-argument errors on seeking-alpha whatever the mirror holds; the owner of the seeking-alpha root or of modules/yang-lambda fixes it (outside this order's paths)."
+}
+```
+
+## NFRA_CTLPLN-S9102 -- The tool's readback cannot run without a state backend and a real plan; the order's BOUNDS forbid any plan or 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9102",
+  "one_line": "The tool's readback cannot run without a state backend and a real plan; the order's BOUNDS forbid any plan or backend contact, so I added readback --init-only and ran CTk2-AC13 with it instead of the bare invocation the criterion names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_terraform_providers.py cmd_readback before this commit: terraform init -input=false WITHOUT -backend=false (core declares backend s3, bucket opal-313476888478-terraform-state), then terraform plan -detailed-exitcode; AMENDMENT 4 item 1 says this needs a Dell's AWS identity and the state backend.",
+      "Task order message: apply nothing; no terraform plan or apply against any backend (init for readback is fine only with the pack as the sole provider source and no backend).",
+      "New flag --init-only: init -backend=false -input=false with TF_DATA_DIR in a scratch directory, TF_PLUGIN_CACHE_DIR dropped, the root's lock file restored byte for byte after init, NO plan; last line TF-READBACK version=<v> init=ok plan_exit=skipped ok=True. Default behaviour (no flag) is unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTk2-AC13: readback --root infra/aws/terraform/investor-reporting/core --from <pack> expecting ok=True.",
+  "world_is": "The bare invocation would read the S3 state of investor-reporting/core with the laptop's AWS identity and plan against it. It was NOT run. The proof row records the --init-only invocation and says so.",
+  "notes": "For 2.0.0_SA_COO~C: a Dell's own full read-back (init with backend, then plan) is the bare form; the issuer may add --init-only to AC13's invocation if the criterion is meant to be offline."
+}
+```
+
+## NFRA_CTLPLN-S9103 -- A pack that carries aws 5.100.0 as a release ZIP must REPLACE the Dell's mirror, not be merged into it: when t
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9103",
+  "one_line": "A pack that carries aws 5.100.0 as a release ZIP must REPLACE the Dell's mirror, not be merged into it: when the same version also sits there UNPACKED (the earlier kit's form), Terraform takes the unpacked directory and seeking-alpha's lock (no Windows h1) is then refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured 2026-10-08 on this laptop: a mirror holding aws/5.100.0/windows_amd64/ (unpacked, from the plugin cache) AND terraform-provider-aws_5.100.0_windows_amd64.zip, init on the seeking-alpha stand-in with the real lock: 'Error while installing hashicorp/aws v5.100.0: the local package ... doesn't match any of the checksums previously recorded in the dependency lock file'. The same stand-in against the zip-only pack inits.",
+      "seeking-alpha's lock holds one h1 (not the Windows one) and 15 zh values; the Windows zip's zh (9f8b909d...) is one of them, so only the packed form matches. 75 of 76 lock files on disk (all but seeking-alpha) hold the Windows h1 H3mU..., so the unpacked form serves them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 9 step 3: add the fetched providers to the kit in the same form as AMENDMENT 1's pass (an unpacked filesystem mirror).",
+  "world_is": "The earlier form cannot serve seeking-alpha, or market-overview's and seeking-alpha's archive 2.7.1 (locks without the Windows h1), so the pack carries those three (aws 5.100.0, archive 2.7.1, external 2.4.2) as zips. dell2 holds aws 5.100.0 unpacked from the earlier kit.",
+  "notes": "disarm_owner 2.0.0_SA_COO~C: route the pack so dell2 REPLACES its whole mirror directory with this pack (it is a superset: 7 provider versions, the earlier aws 5.100.0/6.67.0/archive 2.8.1 included), or deletes registry.terraform.io/hashicorp/aws/5.100.0/ before copying."
+}
+```
+
+## NFRA_CTLPLN-S9104 -- required derives 17 roots / 10 locks (the Dell-placed projects), but dell2's census is every lock file in the 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9104",
+  "one_line": "required derives 17 roots / 10 locks (the Dell-placed projects), but dell2's census is every lock file in the tree (40); investor-reporting/core's lock file is gitignored and untracked, so a fresh worktree has none. I added --all-roots and seeded that one lock from the base checkout; the earlier pack the order says to read is not on this box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "required at worktree HEAD 3c711c1ac9: TF-REQUIRED roots=17 locked=10 no_lock=7 providers=1 distinct_versions=1; required --all-roots: roots=45 locked=38 no_lock=7 (40 lock files read), 5 distinct (provider, version): archive 2.7.1 (2 roots), archive 2.8.0 (3), aws 5.100.0 (40), external 2.4.2 (1), local 2.9.1 (1). The base checkout's disk holds 76 lock files (untracked ones included) with the same 5 pairs.",
+      ".gitignore:208 **/.terraform.lock.hcl ignores investor-reporting/core/.terraform.lock.hcl; the base copy was copied byte for byte into the worktree (ignored, never committed).",
+      "C:/tmp/kit-terraform-pack-20261007 (the AMENDMENT 4 record) does not exist on this box, so the pack was cut afresh to C:/tmp/kit-providers-20261008-k9/pack as a full superset (readback --from needs each root's whole set), not as a --only add-on."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 9 step 1: required over every root at HEAD, denominator 40 as dell2 counted.",
+  "world_is": "40 lock files read with --all-roots, matching dell2's denominator; the default required (AC3) still reads the 17 derived roots and its output file gains hashicorp/local 2.9.1 through the seeded core lock.",
+  "notes": "Informational."
+}
+```
+
+## NFRA_CTLPLN-S9105 -- I cannot commit the tool, test and required-json edits of AMENDMENT 9: the owned-paths gate admits a worker on
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:36:58Z",
+  "id": "NFRA_CTLPLN-S9105",
+  "one_line": "I cannot commit the tool, test and required-json edits of AMENDMENT 9: the owned-paths gate admits a worker only as 0.9.0_WK_<CODE>~<digits> with a non-terminal order issued_to that serial, and my serial 0.9.0_WK_NFRA_CTLPLN~K9 is neither numeric nor the order's issued_to (0.9.0_WK_NFRA_CTLPLN~13), so org/devices/** (lane NFRA_CTLPLN_FAST_C) refuses me.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: 'VIOLATION: org/devices/kit_terraform_providers.py -- lane=NFRA_CTLPLN_FAST_C ... agent=0.9.0_WK_NFRA_CTLPLN~K9 not in permitted_agents' (also org/devices/kit_terraform_required.json and org/devices/test_kit_terraform_providers.py).",
+      ".tools/owned-paths-validate.py:123 _WORKER_SERIAL_RE = ^0\\.9\\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$ (K9 does not match) and :243-244 (a worker's grant is the <paths> of the NON-TERMINAL order whose <issued_to> equals the serial; the order's <issued_to> is 0.9.0_WK_NFRA_CTLPLN~13).",
+      "The same slot form also made the row gate read K9 as an unregistered fabric coordinate, so these rows mint as the bare NFRA_CTLPLN-S9101..S9105 (range chosen to avoid the COO's next S36...), not NFRA_CTLPLN-K9-S<k> as the spawn message asked."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spawn message: write only the order's <paths> block, commit with safe-commit under author 0.9.0_WK_NFRA_CTLPLN~K9. Worker RULING 1: the <paths> block IS the grant.",
+  "world_is": "The edits to org/devices/kit_terraform_providers.py, org/devices/test_kit_terraform_providers.py and org/devices/kit_terraform_required.json are in the worktree C:/tmp/wk-ctlpln-k9 (branch wk-NFRA_CTLPLN-K9) UNCOMMITTED; the deliverables, the surprise rows and the proof are committed (lane ANY). No override was used.",
+  "notes": "For 2.0.0_SA_COO~C: commit those three paths from the worktree under your own author (or re-seat the order to a numeric slot and re-spawn); the lane gate will admit either."
+}
+```
