@@ -20574,3 +20574,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The generator cannot complete against the committed routes.json: no wire file (committed or temp) is compared, so the drift of the 4 AnalysisReport-related files measured at base is not observable until routes.json declares response_schema: null (or a schema) for custody-report-read, or renderResponses skips undefined. The failing test is dsgn-irptv1/iv-e-26.wire-regen.test.ts (IVE26-AC3). Not fixed here: the order forbids fixing the drift and editing contracts/wire or routes.json is outside the grant."
 }
 ```
+
+## IRPT_BCKEND-S388 -- portal wire drift: gen-wire output differs from 4 committed AnalysisReport-related contracts/wire files
+
+```json
+{
+  "id": "IRPT_BCKEND-S388",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T00:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Regenerating the portal wire types (portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts) yields 4 files that differ from the committed portal/src/pages/InvestorReporting/contracts/wire/ copies, the AnalysisReport v2 types among them. The drift was measured at portal b3fedfea before round 73. It was hidden while generate() crashed on the custody route row's missing response_schema (fixed @60f7d8f4c8); with the generator running, its comparison tests report it (3 of 7 fail, IVE26-AC3 among them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer dry-run in worktree ~167 at portal b3fedfea: one run of the four generator tests rewrote 25 tracked contracts/wire files, git diff --numstat non-empty on 4",
+      "after @60f7d8f4c8, in worktree ~167: p73_cells.py IB73-1-AC1 PASS with 'tests 2 pass, 3 fail (reported, not graded)'",
+      "1.0.0_SA_CTO~DELL2 msg 1173: file the drift as a row with an owner; do not regenerate it as a rider"
+    ]
+  },
+  "spec_asserts": "The committed contracts/wire types are the generator's output from docs/contracts/investor-reporting/v1 (IVE26-AC3: idempotent regeneration, content pin 17 of 17).",
+  "world_is": "4 committed files differ from the regenerated output. Either the schemas or the committed types moved without the other. The owner is ~P2 until a cell traces which side is right; this round regenerated nothing."
+}
+```
