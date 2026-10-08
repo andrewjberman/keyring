@@ -4610,3 +4610,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
 }
 ```
+
+
+## NFRA_CTLPLN-S32 -- placement-check places every Dell project on the laptop (reads `fabric`, never `placement`)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T16:55:00Z",
+  "one_line": ".tools/placement-check.py resolves a project's box from project.json `fabric` only (:90), so projects carrying fabric=laptop with placement=DELL1/DELL2 are counted on the laptop and dell1 and dell2 read as placed 0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~16:5xZ: .tools/placement-check.py:90 `box = dev.resolve(str(d.get(\"fabric\") or \"\"), reg)`; no read of `placement` in read_projects().",
+      "Read by a 4.0.0_SA_CRO sub-read 2026-10-08 ~16:3xZ: IRPT_YCDGEN, NFRA_TRNSPT and MDPF_SECHIST carry fabric=laptop with placement=DELL2/DELL2/DELL1, and the tool reports dell1 and dell2 as 'placed 0 (ROOM)'.",
+      "Not read: whether crossbox-deploy-check.py reads placement first in code (its docstring says so)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "placement-check is the C-PLACEMENT viewer of which box holds which project; crossbox-deploy-check imports its overlaps.",
+  "world_is": "Every Dell-placed project is attributed to the laptop, so the per-box placement figures and any cross-box overlap that depends on the box are wrong for dell1 and dell2. INERT: a viewer that never changes an exit; crossbox-deploy-check's use not traced.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~16:1xZ order (long-term graph coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_161xZ_GRAPH_COHERENCE_LONG_TERM_FOLD_IN_ACTIVITY_OVERLAP.md). Proposes no change; the fix owner is the tool's."
+}
+```

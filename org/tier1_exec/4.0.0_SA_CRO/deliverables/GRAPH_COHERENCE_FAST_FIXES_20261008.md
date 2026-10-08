@@ -6,6 +6,11 @@
 @`fdef7ad167`: "we need to get fast solutions out across the boxes while we get organized".
 **Topic:** shared graph read access from every box, and current state (brief
 `docs/briefs/multi-device-graph-coherence-brief-20261008.md` @`8b4f996b64`; draft PRD NFRA_GRPHCO).
+**CORRECTION 2026-10-08 ~16:5xZ -- F3 IS WITHDRAWN.** Its premise is false: the nightly full rebuild published every
+night (projection manifests read live: derive_runner full builds 10-04 02:11Z, 10-05, 10-06, 10-07 02:13Z, 10-08 02:12Z,
+849-985 s each). The "last full 2026-10-04" read came from the head marker's `writer_id`, which every later incremental
+overwrites. Sent to `2.0.0_SA_COO~C` and `1.0.0_SA_CTO` as msgs 106999/107000. The same correction applies to
+`CLOUD_GRAPH_MULTI_AGENT_COHERENCE_PRIOR_ART_20261008.md` sections 3.2 and 6.3, and to the brief's Part IV finding 2.
 **Not here:** the fabric layer (who is working on what). That is a build, not a same-day fix.
 
 | # | Change | Applies it | Boxes | Rollback | Cost if wrong |
