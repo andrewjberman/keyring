@@ -1,6 +1,6 @@
 # Never-widen half, MDPF_SECCLASS -- Black Diamond's classify_with_identity reads the canonical NAME:: row when the identity chain cannot place a blank-ticker position (FWD-16, cell SC-e-76, row MDPF_SECCLASS-D1-S11)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~66` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half UNSIGNED; CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~66` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
 This file is a REQUEST. Nothing in it has been deployed or written to any bucket. Spec: PRD `org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md`
 FWD-16; trace `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_UNCLASSIFIED_TRACE_D1S11_20261008.md` (@3d9077bdc5); order `MDPF_SECCLASS.TO-SC-e76`.
 
@@ -87,6 +87,30 @@ restore mix content a fire already rewrote. Data rollback per key: each file the
 records the pre-fire VersionId of `platinum/firm/mix_summary.json` and of each rewritten `gold/entities/clients/{rid}.json` in the ledger before the fire. This worker did not enumerate them.
 If the shipped-bundle option (b) is taken, the `etf_classification_scheduled.py` rollback target is the version noted above, ETag 3f1e6be8910952f33c88bf100c610ab6.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
+
+`2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. I re-ran in the worker tree:
+- AC1 NAME-LOOKUP ok=True, 795 of 796;
+- AC2 HALF-READY;
+- AC3 92 passed.
+Merged on dell1 @1e603ee75c. The push is held by 0.0.0_AB_MSTR~DELL1 until both halves sign, because the pre-push gate is the deploy.
+
+**Writers of the served BD class (the readers of this lib that write), counted: N = 3, rules read.**
+- C_06 writes the envelopes and `gold/views/mix_daily_summary.json`.
+- D_03 writes series.
+- D_04 writes the platinum firm and client files.
+Each calls `classify_with_identity`, so the change reaches all three.
+
+**Both branches:**
+- (a) The next BD gold fire (23:00Z) loads the lib. 764 securities ($132.56M) leave unclassified, by class as above. Firm
+  unclassified is about 0.38 pct, against 6.94 pct today.
+- (b) No fire before the next look. Nothing served moves.
+
+**Shipped-bundle choice: (b).** The issuer re-copies `etf_classification_scheduled.py` to its prior bytes (ETag 3f1e6be8) right after the
+push. The ETag watch on that key is running, and ~SD's e65b ledger still owns the change.
+
+**Data rollback per key.** `opal-data-bd` versioning reads Enabled (measured 19:1xZ). Before the fire, the issuer records the VersionId of
+`platinum/firm/mix_summary.json` and `gold/views/mix_daily_summary.json`. Any envelope the fire rewrites is restored to its version
+before the fire's start time. The code rollback is the lib VersionId above.
 
 ## CTO half -- UNSIGNED
