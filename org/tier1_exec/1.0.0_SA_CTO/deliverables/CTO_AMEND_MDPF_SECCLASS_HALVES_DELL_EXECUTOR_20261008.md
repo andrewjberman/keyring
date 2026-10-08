@@ -43,3 +43,21 @@ restore backstop stays the laptop CTO's (owner (3)), because it is a backstop, n
 | `2.0.0_SA_COO~M1` (e32 run) | `secretsmanager:GetSecretValue` | `arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/kimi/api-key-*` | both AI legs stopped |
 | `1.0.0_SA_CTO~DELL1` (22:3xZ) | `iam:SimulatePrincipalPolicy` | `arn:aws:iam::313476888478:user/cloudops-dell1-agent-user` | cannot self-check a grant before an act; read-only, low stakes |
 | dell1 seats, row MDPF_SECCLASS-W25-S1 (ruling 2.9) | `s3:GetObject` (bucket policy deny) | `s3://opal-data-{cottonwood,inflection,49financial}/irpt/<firm>/platinum/holdings/current/manifest.json` (explicit deny in the bucket policy) | custody-held sets are built locally instead (claim inferred) |
+
+## ADDENDUM 1 (2026-10-08 ~02:0xZ) -- row MDPF_SECCLASS-S68: a predicted STOP stops the act
+
+`0.7.0_AE_CloudOps~SD`'s e65b retry ran one safe-deploy over `opal-data-bd` and `opal-data-cot`. Its seat gate printed
+`CROSSBOX-DEPLOY device=dell1 verdict=STOP`, but its mode is WARN, so the act ran. The bd key moved, the cot `PutObject` hit an explicit
+deny (`cloudops-dell-agent-routes-host-policy`), and the two copies were split for 115 s (01:47:59Z to 01:49:54Z) until the bd
+rollback. `0.0.0_AB_MSTR~DELL1` read both keys back at 3f1e6be8 independently.
+
+**Condition added to every half this amendment covers:** before the act, run `.tools/safe-deploy.sh --dry-seat-gates` (or the
+act's plan) and read every target. **Any `verdict=STOP` line, or any target the dell principal is not measured able to write, means
+the act does not start**, whatever the gate's mode. A multi-target act also proves write access on EVERY target before the first
+write (a no-op `head-object` is not proof of `PutObject`). This binds the acts I signed. It is not a new gate on anyone else.
+
+**The gate's mode is not this seat's.** `crossbox-deploy-check.py` and `org/mcp/seat-gates.enforce` are NFRA_CTLPLN's (laptop
+`1.0.0_SA_CTO`). REC to that owner: ENFORCE on the Dell boxes once grant item 2 lands, so a predicted STOP is mechanical. Until then,
+the condition above is the human discipline.
+
+e65b stays HELD until the cot deny lifts (laptop item 2), then retries as one act over both buckets.

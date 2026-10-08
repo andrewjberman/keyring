@@ -4963,3 +4963,91 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Scope beyond this order: the pin/declaration pair, not the pin's recency, is what every staged_from build verifies, so any Lambda family using staged_from can ship pre-port shared modules silently after a port lands. Remedy for THIS act (issuer's, 2.0.0_SA_COO~M1): re-pin the four staged_from entries to the merged e57e61 commit with fresh sha256 values -- a write to infra/aws/lambda/ci/lambda-source-map.json, outside TO-DEPLOY-e57e61's <paths>. Candidate general remedy, NOT proposed as built: the builder prints, per staged member, whether its pin is an ancestor of HEAD AND whether the blob at HEAD differs from the blob at the pin, so staleness is visible beside drift. Nothing was built, uploaded or applied under this finding; the ledger entry secclass-e57e61-fwd10-apply-s-20261007 records the STOP with the world untouched."
 }
 ```
+
+## MDPF_SECCLASS-D1-S2 -- .tools/aws.cmd resolves no AWS CLI on dell1: the bash half of the shim pair works, the Windows half is dead, and under --quiet it is a silent no-op
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T01:37Z",
+  "one_line": ".tools/aws.cmd -- the Windows-shell companion every NATIVE-PYTHON caller reaches via shutil.which -> ~/bin/aws.cmd -> the tracked .tools/aws.cmd -- hardcodes THREE absolute AWS CLI paths and none exists on dell1, where the CLI is %LOCALAPPDATA%\\Programs\\Amazon\\AWSCLIV2\\aws.exe (NOT candidate 2, %LOCALAPPDATA%\\Programs\\AWSCLIV2\\Amazon\\AWSCLIV2\\aws.exe, a different nesting). The bash shim .tools/aws resolves correctly, so every hand-run read reads HEALTHY while native-Python callers fail. This is the THIRD device on which this one file's hardcoded list has broken, and its OWN header documents the class ('a device-specific absolute path in a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume') after the same break on site Z.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-DEPLOY-e65b step 5: .tools/safe-deploy.sh over the two gold carriers enumerated the expected 8 destinations then failed on the FIRST upload: 'ERROR UPLOAD_FAIL [shipped] .../etf_classifications_dynamodb.py -> s3://opal-data-bd/...  aws.cmd: FATAL -- no AWS CLI found. Checked %LOCALAPPDATA%\\Programs\\Python\\Python312\\Scripts\\aws.cmd, %LOCALAPPDATA%\\Programs\\AWSCLIV2\\Amazon\\AWSCLIV2\\aws.exe, %ProgramFiles%\\Amazon\\AWSCLIV2\\aws.exe'.",
+      "Direct reproduction independent of safe-deploy: invoking .tools/aws.cmd --version through cmd prints the same FATAL line.",
+      "The real CLI exists: /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws.exe, 9448160 B, dated 2026-10-02. AWS_SHIM_DEBUG=1 .tools/aws sts get-caller-identity prints 'aws-shim real-entry: /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws'; python shutil.which('aws.cmd') returns C:/Users/Test/bin/aws.cmd, whose generated body delegates to the tracked .tools/aws.cmd by absolute path.",
+      "Denominator 3: all three candidate paths tested absent on this device with test -f.",
+      "POST-FAILURE STATE, measured: all 8 keys the deploy would touch carry BOTH the same ETag AND the same VersionId as before the attempt. A byte-identical PUT to a versioned bucket still mints a NEW VersionId, so unchanged VersionIds prove ZERO PUTs occurred -- the attempt failed CLOSED with nothing half-landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Git section: 'AWS via the .tools/aws shim (+aws.cmd, both or neither)' -- the pair is meant to give bash and Windows shells an equally working aws. CLAUDE.md NEVER: never write device-specific logic into ajb_workspace -- DERIVE, do not hardcode. .tools/aws.cmd's own header: 'A device-specific absolute path in a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume.'",
+  "world_is": "The pair is NOT 'both or neither' on dell1: the bash half works and the Windows half is dead, so reachability reads healthy from every probe an agent runs by hand while the deploy and build paths fail. The 2026-07-30 site-Z remedy added two more hardcoded candidates instead of resolving, so the same break recurs once per new device.",
+  "notes": "HAZARD, and why it is INERT rather than ARMED: .tools/aws.cmd's own header records that under --quiet this same failure is a SILENT NO-OP -- 'infra/aws/lambda/ci/build-and-upload.sh reported a successful upload while S3 kept the OLD zip. Caught only by the upload-verify gate.' build-and-upload.sh is step 4 of MDPF_SECCLASS.TO-DEPLOY-e57e61, the next order in this seat's queue, so running it here before the shim resolves risks an apply whose artifact was never uploaded -- and neither a 0/1/0 source_code_hash plan nor AC1 would catch it (MDPF_SECCLASS-D1-S1 records why AC1 cannot). DISARMED SAME TURN by the disarm_owner: 2.0.0_SA_COO~M1 msg 733 HOLDS both TO-DEPLOY-e65b and TO-DEPLOY-e57e61 until the fix lands, ruled the fix 0.0.0_AB_MSTR~DELL1's as shared infrastructure, asked for a DERIVED lookup rather than a fourth hardcoded path, and directed that aws.cmd be proven to resolve the CLI first on retry, that the 8 keys be re-read, and that for e57e61 the uploaded zip's ETag be confirmed changed before the apply. So nothing will run the hazardous path on this device. The DEFECT remains open, which is why the class is BLOCKING and the disposition UNDER_INVESTIGATION. This seat did NOT edit .tools/aws.cmd: it is outside TO-DEPLOY-e65b's <paths> and the ruling is explicit. e65b's ledger entry secclass-e65b-namekey-deploy-s-20261007 stays OPEN across the retry, per that ruling, with all four legs OPEN and the world untouched."
+}
+```
+
+## MDPF_SECCLASS-S68 -- safe-deploy's CROSSBOX gate predicted STOP for dell1 and proceeded in WARN mode; e65b half-landed and was rolled back
+
+```json
+{
+  "id": "MDPF_SECCLASS-S68",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T01:53Z",
+  "one_line": "TO-DEPLOY-e65b's retry on dell1 0.7.0_AE_CloudOps~SD ran ONE safe-deploy over two buckets. safe-deploy's own seat gate printed CROSSBOX-DEPLOY device=dell1 verdict=STOP for both roots but proceeded because its mode is WARN. The bd mover uploaded (3f1e6be8 -> 40ffa3fa), then s3:PutObject on opal-data-cot hit an EXPLICIT deny (policy cloudops-dell-agent-routes-host-policy), leaving the two firm copies split. ~SD rolled the bd key back by VersionId in-session; exposure 01:47:59Z-01:49:54Z (115 s), no gold run consumed it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~SD msg 736: action s3:PutObject, resource arn:aws:s3:::opal-data-cot/code/gold/lib/_shared/etf_classifications_dynamodb.py, principal cloudops-dell1-agent-user, explicit deny in arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy",
+      "~SD msg 736: safe-deploy printed CROSSBOX-DEPLOY device=dell1 verdict=STOP for both roots, mode=WARN; the rollback restored bd from VersionId 0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu, and both buckets read 3f1e6be8 by independent head-object",
+      "issuer read at 01:46Z: both keys ETag 3f1e6be8 before the retry"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy whose own gate predicts a refusal for one of its targets does not start. A two-bucket act lands in both or neither (NEVER-2).",
+  "world_is": "The cross-box seat gate is advisory (WARN), so a predicted-STOP deploy started and half-landed. The NEVER-2 rollback contained it.",
+  "notes": "e65b is HELD until Andrew's item 2 (the dell1 firm-data limits) is applied, which lifts the cot deny; it is not moved back to a laptop seat (laptop CTO rule 1). Proposed remedy for the gate's owner: a CROSSBOX verdict=STOP fails closed before the first PUT, at least for a multi-bucket act."
+}
+```
+
+## MDPF_SECCLASS-D1-S3 -- deploy_ledger.py regenerates a ledger entry and silently deletes prose a seat appended to it, including a committed NEVER-2 STOP record
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T02:30Z",
+  "one_line": ".tools/deploy_ledger.py REGENERATES a change_management entry from its own structured state on every close-leg / hold / close, and SILENTLY DISCARDS any free prose a seat appended to that entry by hand. Measured: closing leg L1 of secclass-e57e61-fwd10-apply-s-20261007 deleted a 43-line '## STOP BEFORE THE BUILD' section this seat had written and COMMITTED at f9c38b6165 -- the close reported '6 insertions(+), 49 deletions(-)' with no warning that it had removed a prior author's committed record. The NEVER-2 law tells a seat to record a STOP and escalate loud; the entry is the obvious place to write it; and the contract tool for that entry destroys it at the next leg close.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "f9c38b6165 'ledger(0.7.0_AE_CloudOps~SD): STOP before the build ...' reported '1 file changed, 46 insertions(+)' and that version of the file is 67 lines carrying 2 occurrences of 'STOP BEFORE THE BUILD' (git show f9c38b6165:<path>).",
+      "After `deploy_ledger.py close-leg --leg-id L1` and `hold`, commit 2ec2bd5480 on the same file reported '6 insertions(+), 49 deletions(-)' and the live file now carries 0 occurrences of 'STOP BEFORE THE BUILD'. The deleted lines in that diff include '**Status:** OPEN', both OPEN manifest rows, and the '- 20261008T010626Z STOP BEFORE THE BUILD ...' log line.",
+      "The loss is SILENT: close-leg printed only 'OK: leg L1 closed. Remaining open: [L2, L3]'. No warning, no backup path, no refusal.",
+      "SCOPE, measured on the sibling entry: secclass-e65b-namekey-deploy-s-20261007 still carries its two hand-appended sections ('ATTEMPT 1 FAILED CLOSED' x1, 'ATTEMPT 2 -- HALF-LANDED' x1) at commit 27302e4624 ONLY because no deploy_ledger verb has run on it since; its next close-leg/hold/close will discard them the same way. That entry's content includes the e65b half-landed deploy and its rollback -- the NEVER-2 record itself.",
+      "Not a formatting quirk: the tool's own open output states the entry is its artifact ('REQUIRED COMMIT PATHSPEC ... the sentinel is the gate's only input'), so regeneration is by design; what is undeclared is that regeneration DELETES committed third-party content rather than preserving or refusing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: 'NEVER leave a confirmed deploy half-landed -- finish in-session or roll back + escalate loud; ledger entry in org/critical_paths/change_management/ opened at start, closed at completion.' The ledger entry is the named carrier of a deploy's record, and a STOP or a rollback is exactly what it exists to carry. deploy_ledger.py's own docstring: 'every multi-leg deploy OPENS a change_management ledger entry at deploy-START declaring its COMPLETE manifest, CLOSES only when every leg carries verification proof'.",
+  "world_is": "The entry is a GENERATED file, not an append-only record. Its structured fields (legs, proofs, status, log lines the tool writes itself) survive; anything a human or agent adds around them does not. So the carrier the NEVER law names is the one place a STOP narrative cannot safely live, and the deletion is invisible at the moment it happens -- it shows up only as an unexplained deletion count in a later commit.",
+  "notes": "This seat lost nothing permanently: the section was recovered from f9c38b6165 and both narratives (e57e61's STOP and e65b's half-landed/rollback) are preserved in org/tier2_senior/0.7.0_AE_CloudOps~SD/deliverables/MDPF_SECCLASS_E57E61_PROOF_INSTANCE_AND_ACT_NARRATIVE_20261008.md, which no tool regenerates. WORKING RULE this seat now follows, offered to others: put structured state in the ledger via the tool's own verbs (open/close-leg/hold/close and their --proof text, which DO survive because the tool writes them), and put narrative in a deliverable the ledger points at. The long --proof strings on L1 and L2 of the e57e61 entry are deliberately written that way. Candidate remedies for the tool's owner, NEITHER proposed as built: (a) preserve any content below a sentinel marker across regeneration; or (b) refuse to regenerate when the file carries bytes the tool did not write, naming them, so the loss is loud instead of silent. Remedy (b) matches the fail-closed posture the rest of the deploy toolchain takes -- safe-deploy's upload verify and safe-apply's 'a gate that cannot evaluate must not pass' both refuse rather than proceed quietly."
+}
+```
