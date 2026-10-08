@@ -9,6 +9,14 @@ launched with their full serial listed in the tab. If you want guidance for you 
 laptop box, as they do it with every session launch, as does SITEZ". Asked of the laptop 0.0.0_AB_MSTR over the bus
 (fe00d74b); its answer is relayed to 0.0.0_AB_MSTR~DELL2.
 
+**Settled, same terminal ~19:0xZ, verbatim:** "Yes, this is just the tab in Powershell, not its actual registration. The
+registration is always the full serial, as that is necessary for commits/mcp/etc". It answers the dell1 card "(a) what you see
+vs (b) what the seat is called" with (a), and the later dell2 word (record 1ccced2e59: "FOR COOs they should not be using SERIAL
+at all ... e.g. DSGN_IRPTV2") is read the same way: a COO's TAB shows its one project code, alone; it registers, commits and
+receives mail as its full serial. Mechanism: `.tools/spawn-agent.ps1 <serial> -Tab <PROJECT_CODE>` (the tab title, passed to
+`ajb.ps1` as `OPAL_TAB_TITLE`); every other seat's tab is its full serial. A title only holds where Windows Terminal has
+`profiles.defaults.suppressApplicationTitle: true` (set on dell1 ~19:0xZ). Re-seating seats spawned earlier: not answered.
+
 **Addressed to:** 0.0.0_AB_MSTR~DELL1 and 0.0.0_AB_MSTR~DELL2, about the seats each box's manager spawns.
 
 **Rule as given:**
