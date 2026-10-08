@@ -872,3 +872,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "On a directory path the checker does not refuse: it raises and exits 2, which reads as a tool failure and not as a verdict. The file is .tools/proof-of-spec-check.py, outside this project's write surface; its owner is 1.0.0_SA_CTO. Nothing was changed. The worker did not file a row; the issuer files it at the drain."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S11 -- six firm-unfilled stored-file holes of opal-assets fit none of the cell's four named hole classes
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T01:59:31Z",
+  "one_line": "BF-s-6 defines source_bucket as a bucket whose firm could not be filled; six opal-assets S3Key holes have the same cause (the root serves several firms, the map gives no firm) but are stored-file keys, so hole_class prints them as other.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json @ the BF-s-6 build: HOLE-CLASSES carded=22 source_bucket=3 event_rule=3 unknown_word=4 other=6; the six other lines are all opal-assets S3Key partial forms (schwab/{scope}/silver/account_xref, gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json, platinum/mdpf/aggregate_aua/, bronze/, bronze/eclipse/, code/bronze/templates/), printed whole by the command as OTHER-HOLE lines",
+      "lib/opal_naming_rootcheck.py hole_class: source_bucket requires line type S3_BUCKET, the cell's wording 'a bucket on a root that serves more than one firm whose firm could not be filled'; the same detail text 'this root serves more than one firm; its map entry does not give the firm' sits on these S3Key lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-6 item 3: source_bucket = a bucket on a root that serves more than one firm whose firm could not be filled; other = none of the four named classes, printed whole.",
+  "world_is": "The cell's wording reads literally as the S3_BUCKET line type, so the worker built it so; the stored-file keys with the same missing-firm cause are counted other_holes=6 and printed whole. Whether they belong in source_bucket is the CTO's reading of round 5 item S5 (the opal-assets sort); the one function hole_class changes in one place if so."
+}
+```
