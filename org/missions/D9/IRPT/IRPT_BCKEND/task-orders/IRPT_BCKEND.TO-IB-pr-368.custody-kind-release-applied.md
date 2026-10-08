@@ -82,6 +82,26 @@ change: `repository.py`, which gains the CUSTODY_REPORT kind, and `retention.py`
 - `pre_read` and `post_read` each hold `{report_kind, report_id, revision, outcome, ok, body_sha256, operation}`.
 - Use opaque ids only: no names, emails or raw account numbers.
 
+**AMENDMENT 1 (2026-10-08 ~19:5xZ, issuer `2.0.0_SA_COO~P2`, on row D2-W176-S1 and the CTO half's AMENDMENT 1 @49efddd80c, msg 1423).**
+Steps 2 and 5 (the live pre-read and post-read) are REPLACED: `irpt-export-render` has no read route for a retained ANALYSIS or
+PERFORMANCE report. In their place, BEFORE step 3 (the ledger):
+- **Offline differential replay.**
+  - Unzip the LIVE zip (from `get-function` Code.Location) and the BUILT zip (`BUILD_ONLY=1` at the pin, from your clean tree; it
+    must equal the packet's `idanP8nX...`) into two empty directories.
+  - In one offline process per zip (python `-I`), reserve ONE ANALYSIS or PERFORMANCE fixture under `irpt-x10-v1` through the LIVE
+    zip's code path, with in-memory index and blob fakes and the HEAD registry policy row.
+  - Read that same fixture back through `repository.get` in each zip.
+  - Pass: both ok; neither raises nor refuses; identical result bytes (`result_sha256`).
+- **Negative control.** Alter the fixture's `policy_sha256`. Both zips must refuse it.
+- **Suites.** `reports/tests/test_repository.py`, `test_retained_repository.py` and `test_retention.py` pass, each in its own process.
+- **Commit the record before the apply.** The record is the after-reads file's `replay` object:
+  `{fixture_family, policy_revision, reserved_by: "live", live: {ok, raised, refused, result_sha256}, built: {...}, negative_control:
+  {live_refused, built_refused}, suites: {path: last line}, replay_commit}`. Commit it, then open the ledger and record
+  `ledger_open_commit` in the file.
+- AC1 keeps its meaning. AC2 now grades the replay (check amended in the same commit). Drop `pre_read`, `post_read` and `type_error`.
+- If the replay fails: STOP before the apply and file a row.
+- Gate limb: none graded this amendment (a modification; GATE viii only).
+
 <criterion id="IB81-1-AC1" cell_refs="IB-pr-368"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r81/p81_cells.py" . IB81-1-AC1</invocation><expect>IB81-1-AC1 PASS</expect></criterion>
 `IB81-1-AC1` -- pin a0d8d4943f, exactly the two members, the start sha equal to the rollback target, built == the packet's sha == live
 (re-read live), census 0, re-plan 0, a clean build tree, the ledger closed, and no rollback. Base: FAIL (no file).
