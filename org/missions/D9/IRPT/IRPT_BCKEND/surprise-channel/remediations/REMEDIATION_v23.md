@@ -27,11 +27,11 @@ terraform on dell2).
       "owner": "2.0.0_SA_COO~P2",
       "round": "v64"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-08T08:53:07Z"
     }
   },
   {

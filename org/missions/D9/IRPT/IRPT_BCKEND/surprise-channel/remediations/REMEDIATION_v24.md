@@ -26,11 +26,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-08 ~02:4xZ. Graduated at sweep 1
       "owner": "2.0.0_SA_COO~P2",
       "round": "v75"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-08T08:53:07Z"
     }
   },
   {
