@@ -2420,6 +2420,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "NFRA_OPALAI OA-t-5 and app/identity_scope.py: opal_asker_query is the concierge identity's asker-scoped portal READ, admitted on its allowlist, and the item-0 close run expects it to answer Alyssa's portal question.",
     "world_is": "As written at HEAD it is classified as an unknown mutating tool and refused before its handler runs. Not checked: whether the deployed gateway release carries a different destructive_ops.py, and whether another path registers the tool as SAFE. INERT today because no live seat calls it (the Analyst is not running); it would fail the close run's served answer.",
     "notes": "Fix shape for the owner, not done here: add opal_asker_query to SAFE_TOOLS if it is a pure read, with a test that goes through _run. The Alyssa sitting planned for 2026-10-08 includes the close run."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S62",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~O",
+    "surfaced_at": "2026-10-08T18:40Z",
+    "one_line": "Row Z-S61 EXERCISED on the live gateway: opal_asker_query is refused write_class_denied to master_admin, so the deployed release carries the same classification as HEAD and every tier is refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O called the opalgateway MCP tool opal_asker_query(chat_id='probe-nonexistent', message_id='0', key='probe') on 2026-10-08 ~18:3xZ; response: {\"error\": \"tier 'master_admin' is not entitled to write-class 'UNCLASSIFIED'\", \"guard_denied\": true, \"code\": \"write_class_denied\"}. The bogus ids never reached Graph: the gate at tools.py:157-161 answers before the handler.",
+        "destructive_ops.py:126-147 and :192-201 at HEAD: classify() consults the integration registry before failing closed, but write_class() does not, so a tool with no SAFE_TOOLS or TOOL_WRITE_CLASS entry reads UNCLASSIFIED at the entitlement gate regardless of any declared classification."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~O",
+    "spec_asserts": "Row NFRA_OPALAI-Z-S61: 'Not checked: whether the deployed gateway release carries a different destructive_ops.py.'",
+    "world_is": "Checked: it does not. The most privileged tier is refused, so no tier can call the Analyst's one data tool. ARMED: Alyssa's sitting and the item-0 close run call it.",
+    "notes": "Cites Z-S61; Z-S61 not edited. Disarm: the fix ships in the next gateway release (opal_asker_query into SAFE_TOOLS if it is a pure read, with a test through _run), cut at the NFRA_OPLGTW round-31 analysis that 1.0.0_SA_CTO~O writes."
   }
 ]
 ```
