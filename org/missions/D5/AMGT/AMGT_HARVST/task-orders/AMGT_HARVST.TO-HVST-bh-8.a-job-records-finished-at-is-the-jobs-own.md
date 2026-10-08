@@ -89,9 +89,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Chain of one, slot ~113. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base PASS as
   expected (count in the issuance commit).
 
+**COMPLETE 2026-10-08 ~01:5xZ (issuer):**
+- **Built:** worker ~113 @530cee8eda; merged @8baf092ca4 at 01:18Z under ledger `harvst-bh8-job-finished-at-m-20261008` (opened
+  @463351b831 before the merge), on `1.0.0_SA_CTO~Z`'s GO (msg 31504, three terms); `2.0.0_SA_COO~Z` no objection (msg 31502).
+- **AC1 PASS:** 6 of 6. **AC2 PASS:** 68 of 68. Package suite on the branch: 746 passed, 3 skipped.
+- **Existing assertion changed:** none. **Rows:** none.
+- **The ledger's read-backs (first live Seeking Alpha record, next Bloomberg job) are recorded in the ledger entry, not here.**
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>62</round>
 <slot>~113</slot>
 <fabric>site-z</fabric>

@@ -73,9 +73,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~112's queue: `bh-2`, then `bh-6` (two small read cells on one light worker; the box runs two collection legs).
 - **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**AMENDMENT 1 + COMPLETE 2026-10-08 ~01:5xZ (issuer; no gate limb graded the amendment):**
+- **Built:** worker ~112 @6f62bb5a53; merged @77a9531091 (6 paths, index check 0 of 6 differ). No product file changed.
+- **AC1 as cut reads CENSUS FAIL: T 17 below 20 (BNP 2 against 5).** The bar of 20 was the issuer's own figure from dry run 3 and
+  it was wrong for this population. The issuer read the SERVED gold part (48,025 rows): the pairs whose only matched form is
+  one of the nine forms are 17, form by form equal to the worker's census (BNP 2, HEI 3, SNPS 3, DG 2, ED 2, GPN 2, ADBE 1,
+  NKE 1, SHOP 1). AMENDMENT: the bar is "all nine forms printed and the total equal to the served gold's count"; on that bar
+  the census is whole. Why dry run 3 printed BNP 5 is not explained (row AMGT_HARVST-Z-W112-S1 stands).
+- **Correction owed and sent to `1.0.0_SA_CTO~Z`:** the never-widen half and the act's record say 20 pairs; the served count is 17.
+- **AC2 (judgment) OWED by `3.0.0_SA_CVO~Z`:** `deliverables/0.9.0_WK_AMGT_HARVST~112/BH2_NINE_FORMS.md`, all 17 pairs.
+- **Rows:** AMGT_HARVST-Z-W112-S1.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>61</round>
 <slot>~112</slot>
 <fabric>site-z</fabric>

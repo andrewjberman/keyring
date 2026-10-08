@@ -97,9 +97,17 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as expected (no such file);
   AC3 base PASS as expected (419 passed).
 
+**COMPLETE 2026-10-08 ~01:5xZ (issuer):**
+- **Built:** worker ~110 @ae75d1e946; merged @0576fb051f (5 paths, index check 0 of 5 differ).
+- **AC1 PASS:** 8 of 8. **AC2 PASS:** CENSUS OK (242 securities, 19,032 articles): names from the registry 3; CAT pairs 79 to 85,
+  mention count 108 to 227; CSL 42 to 42; Keyence 0 to 0; other securities changed 0 of 242. **AC3 PASS:** 427 on the branch.
+- `CSL LTD` yields the name alias `CSL LTD` only; `CSL` stays the ticker form's. Registry loader: 72 read, 68 loaded, 4 unjoinable.
+- **Existing assertion changed:** none. **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>61</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>

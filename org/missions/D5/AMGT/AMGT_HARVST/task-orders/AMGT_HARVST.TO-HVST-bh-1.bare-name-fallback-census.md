@@ -83,9 +83,18 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   the securities that fail." AC2 is that grade; the remedy below the bar is a later cell, never this worker's.
 - Chain of one. **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-08 ~01:5xZ (issuer):**
+- **Built:** worker ~111 @3dfd928aef; merged @d3f0b95c16 (5 paths, index check 0 of 5 differ). No product file changed.
+- **AC1 PASS:** CENSUS OK. 242 securities, 5 with an empty alias list, 19,032 silver articles. Fallback-only pairs 277: Nokia 262
+  of its 263 served pairs (0 with no stored-case span), BP (US) 8 of 1,244 (all 8 other-case), SAP 7 of 258 (all 7 other-case),
+  GSK 0 of 465, RWE 0 of 67.
+- **AC2 (judgment) OWED by `3.0.0_SA_CVO~Z`:** `deliverables/0.9.0_WK_AMGT_HARVST~111/BH1_FALLBACK_SAMPLE.md`, 30 of 277, bar 27.
+- **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>61</round>
 <slot>~111</slot>
 <fabric>site-z</fabric>

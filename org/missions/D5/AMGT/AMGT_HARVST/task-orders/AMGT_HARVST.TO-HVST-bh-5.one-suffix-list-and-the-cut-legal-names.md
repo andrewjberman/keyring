@@ -105,9 +105,23 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~110's queue, second. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as
   expected (no such file); AC3 base PASS as expected (419 passed).
 
+**COMPLETE 2026-10-08 ~01:5xZ (issuer):**
+- **Built:** worker ~110 (re-seated) @2b22e36e05; merged @92c37b7e31 (6 paths, index check 0 of 6 differ).
+- **AC1 PASS:** 8 of 8. **AC2 PASS:** CENSUS OK (234 identity records, 10 names of exactly 30 characters, 19,043 articles):
+  changed 2 of 10 -- AIG "American International Group" (fragment `I`), KCDMY "Kimberly-Clark de Mexico" (fragment `SAB d`);
+  8 unchanged, ICT's cut name among them; AIG pairs 16 to 16, mention count 23 to 35; other securities changed 0 of 242.
+  **AC3 PASS:** 435 on the branch.
+- **Issuer ruling on row Z-W110-S3 (no gate limb graded it):** where several suffixes offer a fragment the SHORTEST is dropped, so
+  "Group" stays; that is the reading plant (i) fixes and the face's "tried in the tuple's order" was loose.
+- **Row Z-W110-S2:** the face named the two OMAB names as visibly cut; "Grupo Aeroportuario del Centro" is a whole 30-character
+  name and is left alone. Visibly cut are 3 (AIG, KCDMY, ICT), not 5; row Z-S96's count is corrected by this.
+- **Reported, not changed:** `_FORM_WORDS` adds SPA, SE, LP, LLC beside the list; the fragment rule does not read them.
+- **Existing assertion changed:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>61</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>

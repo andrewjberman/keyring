@@ -77,9 +77,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   not by hand." A removal, if the record calls for one, is a cell of the next round.
 - Slot ~112's queue, after `bh-2`. **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-08 ~01:5xZ (issuer):**
+- **Built:** worker-light ~112 (re-seated) @7d96a094f8; merged @bd64752926 (4 paths, index check 0 of 4 differ).
+- **AC1 PASS:** RECORD OK, 5 of 5 sources read (gold list 242, registry 72, collector identity record 234, pool universe 302,
+  landed fallback universe 89).
+- **What it shows:** the pool carries `ICT_US_Equity` as a COVERAGE entry with no name; the cut name "International Container
+  Termin" sits on a separate UNRESOLVED holding entry with ticker `ICT` and no key, which names `ICT_PM_Equity` and
+  `ICT_US_Equity` as root-equal candidates, "NAMED, NOT merged". The identity record took that name "as read". No field shows
+  the two keys as one issuer. Not known: whether the coverage entry `ICT US` was added on purpose or by the root join.
+- **For `1.0.0_SA_CTO~Z` (R6):** a source carries the key but none names it on the key itself. **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>61</round>
 <slot>~112</slot>
 <fabric>site-z</fabric>
