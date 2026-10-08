@@ -490,6 +490,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "D1-W6-S1: ARMED -- four pulls depend on a login that lapses and is not re-minted before they run, with neither answer true.",
     "world_is": "The exposure is real and pre-existing (not caused or widened by MDPF_HEALGAP). Disarmed for this project by routing: the round-2 drain-end read carries the four by name as FWD-6 NOT YET REALIZED residuals, each with its recovery today, so the CTO's round-2 analysis decides whether each becomes a round-3 cell (heal it the way FWD-1 did) or a ruled NOT-EXPOSED with a new reason. No monitor or notification is built (C-FIX-NOT-NOTIFY). Owner of the routing: 2.0.0_SA_COO~G1; owner of the decision: 1.0.0_SA_CTO~DELL1 at L10."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S7",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T16:05:00Z",
+    "one_line": "A second reader of the runner's same-day bronze was missed by every half of this project: cot-satellites-registry-producer-daily cron(0 7 * * ? *) is DERIVED from the runner's 06:00Z landing. Today's induced failure (HG-d3) starved it: 07:00Z and 07:01Z both BLOCKED, so the served platinum/satellites/registry.json and holdings.json still read as_of 2026-10-07. The HG-t-5 move to 12:45Z would starve it every day.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf:286 description 'Fires 1h after the measured 06:00:43Z upstream landing'; the same file's schedule comment: if cot-rebalancer-runner-daily is ever re-anchored, this cron must move with it.",
+        "CloudWatch /aws/lambda/cot-satellites-registry-producer 2026-10-08: 07:00Z and 07:01Z 'RegistryProducerError: BLOCKED: no roster partition at s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_models/2026-10-08/page_000.json'; no event after 07:04Z. Paginated read 09-28..10-07: 'OK: wrote' on each of 10 of 10 days.",
+        "s3 head opal-data-cot platinum/satellites/registry.json LastModified 2026-10-07T07:00:19Z, body as_of 2026-10-07; holdings.json 2026-10-07T07:00:20Z.",
+        "Round-1 never-widen halves and the R2 act-2 half draft counted N=1 reader (the 13:30Z silver/gold floor); comp-find over infra/ for cot-rebalancer-runner-daily hits the runner's own .tf and this file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD/decomp ROUND 2 HG-t-5: moving the daily fire to cron(45 12 * * ? *) changes one schedule under its own pair with served delta 0; round-1 exercise halves: an induced 06:00Z failure healed by 11:32Z reaches every served reader by its floor.",
+    "world_is": "The satellites producer reads same-day bronze at 07:00Z with no re-attempt, so any day the runner lands after 07:00Z serves a one-day-stale registry. Today is such a day (stale now). Held by 2.0.0_SA_COO~G1: HG-t-5 is NOT applied (act 2 split; the age change HG-t-4 alone may proceed). Disarm owner 1.0.0_SA_CTO~DELL1 rules (a) the same-day re-run of the producer (a served write off its clock; never-widen pair, owner 0.6.2_AE_PartnerETL) and (b) the FWD-5 design: move the satellites trigger with the runner, chain it to the stamp, or withdraw HG-t-5."
   }
 ]
 ```
