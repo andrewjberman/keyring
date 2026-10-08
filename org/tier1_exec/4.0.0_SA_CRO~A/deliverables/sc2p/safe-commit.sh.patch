@@ -1,0 +1,280 @@
+diff --git a/.tools/safe-commit.sh b/org/tier1_exec/4.0.0_SA_CRO~A/deliverables/sc2p/safe-commit.sh.candidate
+index 31f71bc815..51582eea33 100644
+--- a/.tools/safe-commit.sh
++++ b/org/tier1_exec/4.0.0_SA_CRO~A/deliverables/sc2p/safe-commit.sh.candidate
+@@ -78,6 +78,7 @@ fi
+ # --------------------------------------------------------------------------
+ # Arg parse -- PRESERVED byte-for-byte from the pre-queue safe-commit.sh.
+ # --------------------------------------------------------------------------
++_SC_ORIG_ARGS=("$@")   # two-phase re-exec on a same-path race replays these
+ FORCE=0
+ COMMIT_ARGS=()
+ PATHSPEC=()
+@@ -343,6 +344,224 @@ if [ "${SAFE_COMMIT_USE_QUEUE:-0}" = "1" ] && cq_worker_alive; then
+   # REQID empty -> enqueue failed -> fall through to the legacy path (D6).
+ fi
+ 
++# ==========================================================================
++# TWO-PHASE COMMIT (opt-in: SAFE_COMMIT_TWO_PHASE=1). GitOps; Andrew-direct 2026-10-08 ~16:5xZ and his ruling ~17:0xZ
++# ("Yes go ahead"), record org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_165xZ_LEAD_COMMIT_LOCK_SHRINK_BUILD.md.
++# VALIDATE, with NO lock: staging, every safe-commit gate below, and the pre-commit, prepare-commit-msg and commit-msg
++#   hooks run in a PRIVATE git dir whose HEAD is pinned at BASE (the tip read here) and whose index is private, over
++#   the SHARED working tree (GIT_DIR=<private dir>, GIT_WORK_TREE=<this worktree>; the private dir's `commondir` file
++#   names the real common git dir, so objects, refs, config and hooks are the real ones). HEAD cannot move under the
++#   gates, and the shared index is never touched while they run.
++# LAND, under the SAME lock the legacy path takes: write the validated entries onto the CURRENT tip with git plumbing
++#   (read-tree, update-index, write-tree, commit-tree, update-ref with the expected old value), bring the shared index's
++#   entries for those paths level with the commit, release. THEN run the post-commit hook, outside the lock, in a
++#   second private git dir whose HEAD is pinned at the NEW commit (every post-commit script reads HEAD; pinned, a peer's
++#   commit cannot be read as this one). Three of them leave background jobs that keep that dir in use, so it is not
++#   removed here: each two-phase run removes such dirs older than an hour.
++# A commit that loses the race waits only for the land lock and never re-validates, UNLESS a commit that landed after
++#   BASE changed one of the same paths: then this run re-executes itself from the top, at most 3 attempts in all.
++# Not eligible -> the legacy path below, unchanged, with one line saying why.
++# ==========================================================================
++_SC_2P=0
++_SC2P_WHY=""
++_SC2P_DIR=""
++_SC2P_MSGKIND=""
++_SC2P_MSGFILE=""
++_SC2P_MSGS=()
++_sc_on_exit() {
++  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then rm -rf "$LOCK_DIR" 2>/dev/null || true; fi
++  if [ -n "${_SC2P_DIR:-}" ]; then rm -rf "$_SC2P_DIR" 2>/dev/null || true; fi
++  return 0
++}
++_sc2p_eligible() {
++  local k=0 a=""
++  [ "${SAFE_COMMIT_TWO_PHASE:-0}" = "1" ] || { _SC2P_WHY="flag off"; return 1; }
++  [ "${SAFE_COMMIT_USE_QUEUE:-0}" != "1" ] || { _SC2P_WHY="the queue path was requested"; return 1; }
++  [ -z "${GIT_DIR:-}${GIT_WORK_TREE:-}${GIT_INDEX_FILE:-}" ] || { _SC2P_WHY="the caller set GIT_DIR, GIT_WORK_TREE or GIT_INDEX_FILE"; return 1; }
++  [ -z "${_SUPERPROJECT:-}" ] || { _SC2P_WHY="a nested repo (submodule)"; return 1; }
++  # The commit lock is per worktree, so only the MAIN (shared) worktree has contention to remove; a linked worktree
++  # keeps the legacy path (its own lock, nobody else in it).
++  [ "$(git rev-parse --path-format=absolute --git-dir 2>/dev/null)" = "$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ]     || { _SC2P_WHY="a linked worktree (its lock is its own; nothing to gain)"; return 1; }
++  git symbolic-ref -q HEAD >/dev/null 2>&1 || { _SC2P_WHY="HEAD is detached"; return 1; }
++  case "$(git config --get commit.cleanup 2>/dev/null || true)" in ""|default|whitespace) ;; *) _SC2P_WHY="commit.cleanup is set"; return 1 ;; esac
++  while [ $k -lt ${#COMMIT_ARGS[@]} ]; do
++    a="${COMMIT_ARGS[$k]}"
++    case "$a" in
++      --author) k=$((k + 2)); continue ;;
++      -F|--file)
++        [ -z "$_SC2P_MSGKIND" ] || { _SC2P_WHY="more than one message source"; return 1; }
++        _SC2P_MSGKIND=F; _SC2P_MSGFILE="${COMMIT_ARGS[$((k + 1))]:-}"; k=$((k + 2)); continue ;;
++      --file=*)
++        [ -z "$_SC2P_MSGKIND" ] || { _SC2P_WHY="more than one message source"; return 1; }
++        _SC2P_MSGKIND=F; _SC2P_MSGFILE="${a#--file=}"; k=$((k + 1)); continue ;;
++      -m|--message)
++        [ "$_SC2P_MSGKIND" != F ] || { _SC2P_WHY="-m mixed with -F"; return 1; }
++        _SC2P_MSGKIND=m; _SC2P_MSGS+=("${COMMIT_ARGS[$((k + 1))]:-}"); k=$((k + 2)); continue ;;
++      --message=*)
++        [ "$_SC2P_MSGKIND" != F ] || { _SC2P_WHY="-m mixed with -F"; return 1; }
++        _SC2P_MSGKIND=m; _SC2P_MSGS+=("${a#--message=}"); k=$((k + 1)); continue ;;
++      *) _SC2P_WHY="commit argument '$a' is not handled by the two-phase path"; return 1 ;;
++    esac
++  done
++  [ -n "$_SC2P_MSGKIND" ] || { _SC2P_WHY="no -F or -m message"; return 1; }
++  if [ "$_SC2P_MSGKIND" = F ]; then
++    { [ "$_SC2P_MSGFILE" != "-" ] && [ -f "$_SC2P_MSGFILE" ]; } || { _SC2P_WHY="the -F file is missing or is stdin"; return 1; }
++  fi
++  local _re='^[^<>]+ <[^<>]*>$'
++  [[ "$RAW_AUTHOR" =~ $_re ]] || { _SC2P_WHY="--author is missing or not 'Name <email>'"; return 1; }
++  return 0
++}
++if _sc2p_eligible; then
++  _SC_2P=1
++elif [ "${SAFE_COMMIT_TWO_PHASE:-0}" = "1" ]; then
++  echo "safe-commit: two-phase NOT used (${_SC2P_WHY}); legacy path." >&2
++fi
++if [ "$_SC_2P" -eq 1 ]; then
++  _SC2P_T0="$EPOCHREALTIME"
++  _SC2P_BASE="$(git rev-parse --verify HEAD)"
++  _SC2P_REAL_GITDIR="$(git rev-parse --absolute-git-dir)"
++  _SC2P_COMMON="$(git rev-parse --path-format=absolute --git-common-dir)"
++  _SC2P_WT="$(git rev-parse --show-toplevel)"
++  _SC2P_REAL_INDEX="$(git rev-parse --path-format=absolute --git-path index)"
++  _SC2P_NOW="${EPOCHSECONDS:-0}"
++  for _old in "${_SC2P_REAL_GITDIR}"/sc2p-*-*; do
++    [ -d "$_old" ] || continue
++    _oe="${_old##*/sc2p-}"; _oe="${_oe#pc-}"; _oe="${_oe%%-*}"
++    case "$_oe" in (*[!0-9]*|"") continue ;; esac
++    if [ $((_SC2P_NOW - _oe)) -gt 3600 ]; then rm -rf "$_old" 2>/dev/null || true; fi
++  done
++  _SC2P_DIR="${_SC2P_REAL_GITDIR}/sc2p-${_SC2P_NOW}-$$"
++  trap '_sc_on_exit' EXIT
++  rm -rf "$_SC2P_DIR" 2>/dev/null || true
++  mkdir -p "$_SC2P_DIR"
++  printf '%s\n' "$_SC2P_BASE" > "$_SC2P_DIR/HEAD"
++  printf '%s\n' "$_SC2P_COMMON" > "$_SC2P_DIR/commondir"
++  export GIT_DIR="$_SC2P_DIR" GIT_WORK_TREE="$_SC2P_WT"
++  git read-tree "$_SC2P_BASE"
++fi
++
++# Release the land lock early (the two-phase path; the legacy path keeps its EXIT-trap release).
++_sc_release_lock() {
++  if [ "${LOCK_ACQUIRED:-0}" -eq 1 ]; then rm -rf "$LOCK_DIR" 2>/dev/null || true; LOCK_ACQUIRED=0; fi
++  return 0
++}
++
++# _sc2p_commit: the hooks (validate, pinned env), then the land. Sets _commit_out; returns git-commit-like codes
++# (0 landed; 1 a hook refused or nothing to commit; 3 contention, nothing landed). Called in a conditional, so set -e
++# is off inside: every step checks its own rc.
++_sc2p_commit() {
++  local out="" rc=0 msg="" k=0 meta="" path="" n=0 cur="" tree="" commit="" subject="" branch="" pc_out="" att=""
++  local t_v1="" t_l1="" t_l2="" t_l3="" t_b="" t_r="" overlap="" stat="" pc_dir=""
++  local -A _mine=()
++  GIT_AUTHOR_NAME="${RAW_AUTHOR% <*}"; GIT_AUTHOR_EMAIL="${RAW_AUTHOR##*<}"; GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL%>}"
++  export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
++  # (V1) pre-commit, on the private index with HEAD pinned at BASE.
++  out="$(GIT_EDITOR=false git hook run --ignore-missing pre-commit 2>&1)" || rc=$?
++  if [ "$rc" -ne 0 ]; then _commit_out="$out"; return 1; fi
++  # (V2) the message, as git commit builds it: -F verbatim, or the -m paragraphs joined by a blank line.
++  msg="$_SC2P_DIR/COMMIT_EDITMSG"
++  if [ "$_SC2P_MSGKIND" = F ]; then
++    cat -- "$_SC2P_MSGFILE" > "$msg" || { _commit_out="ERROR: could not read the -F file $_SC2P_MSGFILE"; return 1; }
++  else
++    { k=0; for m in "${_SC2P_MSGS[@]}"; do [ "$k" -gt 0 ] && printf '\n\n'; printf '%s' "$m"; k=$((k + 1)); done; printf '\n'; } > "$msg"
++  fi
++  out="${out}$(GIT_EDITOR=false git hook run --ignore-missing prepare-commit-msg -- "$msg" message 2>&1)" || rc=$?
++  if [ "$rc" -ne 0 ]; then _commit_out="$out"; return 1; fi
++  out="${out}$(GIT_EDITOR=false git hook run --ignore-missing commit-msg -- "$msg" 2>&1)" || rc=$?
++  if [ "$rc" -ne 0 ]; then _commit_out="$out"; return 1; fi
++  git stripspace < "$msg" > "$msg.clean" || { _commit_out="ERROR: git stripspace failed"; return 1; }
++  if [ ! -s "$msg.clean" ]; then _commit_out="${out}"$'\n'"Aborting commit due to empty commit message."; return 1; fi
++  IFS= read -r subject < "$msg.clean" || true
++  # (V3) the validated entries: index vs BASE, limited exactly as `commit --only -- PATHSPEC EXCLUDES` limits it.
++  if ! git diff --cached --raw -z --no-renames --no-abbrev "$_SC2P_BASE" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" > "$_SC2P_DIR/raw"; then
++    _commit_out="${out}"$'\n'"ERROR: could not list the staged entries"; return 1
++  fi
++  : > "$_SC2P_DIR/info"; : > "$_SC2P_DIR/paths"
++  while IFS= read -r -d '' meta && IFS= read -r -d '' path; do
++    read -r _o_m _n_m _o_s _n_s _st <<< "$meta"
++    printf '%s %s\t%s\0' "$_n_m" "$_n_s" "$path" >> "$_SC2P_DIR/info"
++    printf '%s\0' "$path" >> "$_SC2P_DIR/paths"
++    _mine["$path"]=1
++    n=$((n + 1))
++  done < "$_SC2P_DIR/raw"
++  if [ "$n" -eq 0 ]; then _commit_out="${out}"$'\n'"nothing to commit: no change under the pathspec"; return 1; fi
++  t_v1="$EPOCHREALTIME"
++
++  # (L) land. Back to the real git dir, index and HEAD.
++  unset GIT_DIR GIT_WORK_TREE
++  _sc_take_lock
++  t_l1="$EPOCHREALTIME"
++  if [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ]; then
++    _sc_release_lock
++    echo "${ISO_TS} MERGE-REFUSED-LATE  ${AGENT:-UNKNOWN}  ${n}  (two-phase: a merge opened before the land; nothing landed)" >> "$AUDIT_LOG" 2>/dev/null || true
++    _commit_out="${out}"$'\n'"safe-commit: REFUSED -- a merge is open in this worktree; nothing landed. Re-run after it lands."
++    return 3
++  fi
++  cur="$(git rev-parse --verify HEAD)"
++  if [ "$cur" != "$_SC2P_BASE" ]; then
++    while IFS= read -r -d '' path; do
++      if [ -n "${_mine[$path]+x}" ]; then overlap="${overlap}${overlap:+ }${path}"; fi
++    done < <(git diff --name-only -z --no-renames "$_SC2P_BASE" "$cur" 2>/dev/null)
++  fi
++  if [ -n "$overlap" ]; then
++    _sc_release_lock
++    att="${SAFE_COMMIT_2P_ATTEMPT:-1}"
++    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) RETRY-2P  ${AGENT:-UNKNOWN}  attempt=${att}  same-path=(${overlap})" >> "$AUDIT_LOG" 2>/dev/null || true
++    if [ "$att" -ge 3 ]; then
++      _commit_out="${out}"$'\n'"safe-commit: REFUSED -- commits that landed during validation changed the same path(s) on 3 attempts: ${overlap}. Nothing landed; re-run."
++      return 3
++    fi
++    echo "safe-commit: two-phase -- a commit that landed after this run's base changed the same path(s): ${overlap}. Re-validating (attempt $((att + 1)) of 3)." >&2
++    rm -rf "$_SC2P_DIR" 2>/dev/null || true; _SC2P_DIR=""
++    unset GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
++    exec env SAFE_COMMIT_2P_ATTEMPT=$((att + 1)) bash "$0" "${_SC_ORIG_ARGS[@]}"
++  fi
++  if ! GIT_INDEX_FILE="$_SC2P_DIR/land.index" git read-tree "$cur" \
++     || ! GIT_INDEX_FILE="$_SC2P_DIR/land.index" git update-index -z --index-info < "$_SC2P_DIR/info"; then
++    _sc_release_lock; _commit_out="${out}"$'\n'"ERROR: two-phase land could not build the tree; nothing landed."; return 1
++  fi
++  tree="$(GIT_INDEX_FILE="$_SC2P_DIR/land.index" git write-tree)" || { _sc_release_lock; _commit_out="${out}"$'\n'"ERROR: git write-tree failed; nothing landed."; return 1; }
++  if [ "$tree" = "$(git rev-parse "${cur}^{tree}")" ]; then
++    _sc_release_lock; _commit_out="${out}"$'\n'"nothing to commit: the tip already holds this content"; return 1
++  fi
++  t_b="$EPOCHREALTIME"
++  commit="$(git commit-tree "$tree" -p "$cur" -F "$msg.clean")" || { _sc_release_lock; _commit_out="${out}"$'\n'"ERROR: git commit-tree failed; nothing landed."; return 1; }
++  if ! git update-ref -m "commit: ${subject}" HEAD "$commit" "$cur"; then
++    _sc_release_lock; _commit_out="${out}"$'\n'"ERROR: the branch moved under the land lock (a writer outside safe-commit?); nothing landed. Commit object ${commit} is unreferenced."; return 3
++  fi
++  # The shared index: set this commit's paths to the committed entries (pathspec from a NUL file: no argv cliff).
++  for k in 1 2 3 4 5; do
++    if GIT_LITERAL_PATHSPECS=1 git reset -q "$commit" --pathspec-from-file="$_SC2P_DIR/paths" --pathspec-file-nul 2>/dev/null; then k=0; break; fi
++    sleep "$k"
++  done
++  if [ "$k" -ne 0 ]; then
++    echo "WARN: commit ${commit:0:10} LANDED, but the shared index was not updated for its paths. Run: git reset -q HEAD -- <your paths>" >&2
++  fi
++  t_r="$EPOCHREALTIME"
++  _sc_release_lock
++  t_l2="$EPOCHREALTIME"
++  pc_dir="${_SC2P_REAL_GITDIR}/sc2p-pc-${EPOCHSECONDS:-0}-$$"
++  if mkdir -p "$pc_dir" && printf '%s
++' "$commit" > "$pc_dir/HEAD" && printf '%s
++' "$_SC2P_COMMON" > "$pc_dir/commondir"; then
++    pc_out="$(GIT_DIR="$pc_dir" GIT_WORK_TREE="$_SC2P_WT" GIT_INDEX_FILE="$_SC2P_REAL_INDEX" git hook run --ignore-missing post-commit 2>&1)" || true
++  else
++    pc_out="WARN: could not pin a post-commit view; post-commit hook NOT run for ${commit:0:10}"
++  fi
++  t_l3="$EPOCHREALTIME"
++  branch="$(git symbolic-ref --short -q HEAD 2>/dev/null || echo HEAD)"
++  stat="$(git diff --shortstat "$cur" "$commit" 2>/dev/null || true)"
++  _commit_out="${out:+${out}$'\n'}[${branch} ${commit:0:10}] ${subject}"$'\n'"${stat}${pc_out:+$'\n'${pc_out}}"
++  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) LANDED-2P  ${AGENT:-UNKNOWN}  ${commit:0:10}  paths=${n}  validate=$(_sc2p_s "$_SC2P_T0" "$t_v1")s  wait=$(_sc2p_s "$t_v1" "$t_l1")s  hold=$(_sc2p_s "$t_l1" "$t_l2")s  build=$(_sc2p_s "$t_l1" "$t_b")s  ref=$(_sc2p_s "$t_b" "$t_r")s  post-commit=$(_sc2p_s "$t_l2" "$t_l3")s  attempt=${SAFE_COMMIT_2P_ATTEMPT:-1}" >> "$AUDIT_LOG" 2>/dev/null || true
++  return 0
++}
++# seconds between two EPOCHREALTIME stamps, 2 decimals, no subprocess
++_sc2p_s() {
++  local a="${1/[.,]/}" b="${2/[.,]/}" d
++  d=$(( (10#$b - 10#$a) / 10000 ))
++  printf '%d.%02d' $((d / 100)) $((d % 100))
++}
++
+ # ==========================================================================
+ # LEGACY PATH (default; also the D6 fallback for worker-down / enqueue-fail).
+ # PRESERVED byte-for-byte from the pre-queue safe-commit.sh, EXCEPT the
+@@ -355,6 +574,7 @@ fi
+ # by its own loop and never by mtime. Every reclaim appends LOCK-RECLAIM, every waited acquisition LOCK-WAIT, to
+ # AUDIT_LOG. The wait is `read -t 1` on a held-open FIFO (no process per poll; inbox-watch.sh's _wait5 pattern), with
+ # `sleep 1` as the fallback. Harness: extract this block (LOCK_DIR= .. LOCK_ACQUIRED=1) and source it.
++_sc_take_lock() {   # the legacy path calls this here; the two-phase path calls it at its land step
+ LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$(git rev-parse --absolute-git-dir 2>/dev/null)/commit-queue.lock}"
+ LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-300}"
+ LOCK_STALE_SEC="${SAFE_COMMIT_LOCK_STALE_SEC:-240}"   # 240 < the 300 s give-up, so (c) can fire (CTO msg 106996)
+@@ -418,7 +638,9 @@ if [ "$elapsed" -gt 0 ]; then
+   echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) LOCK-WAIT  ${AGENT:-UNKNOWN}  ${elapsed}s" >> "$AUDIT_LOG" 2>/dev/null || true
+ fi
+ LOCK_ACQUIRED=1
+-trap '[ "$LOCK_ACQUIRED" -eq 1 ] && rm -rf "$LOCK_DIR" 2>/dev/null || true' EXIT
++trap '_sc_on_exit' EXIT
++}
++if [ "$_SC_2P" -eq 0 ]; then _sc_take_lock; fi
+ 
+ # (1) BASELINE: what was already staged at lock-entry (foreign + any caller pre-add).
+ BASELINE="$(git diff --cached --name-only 2>/dev/null || true)"
+@@ -1175,7 +1397,11 @@ fi
+ # cleanup below; a hang holds index.lock fabric-wide. Belt, not the gate --
+ # deliberately unexercised (exercising it requires a bare message-less git
+ # commit, which is itself banned); its failure mode is a visible refusal.
++if [ "$_SC_2P" -eq 1 ]; then
++  _sc2p_commit && _commit_rc=0 || _commit_rc=$?
++else
+ _commit_out="$(GIT_EDITOR=false git commit --only "${COMMIT_ARGS[@]}" -- "${PATHSPEC[@]}" "${COMMIT_EXCLUDES[@]}" 2>&1)" && _commit_rc=0 || _commit_rc=$?
++fi
+ printf '%s
+ ' "$_commit_out"
+ 
+@@ -1190,7 +1416,10 @@ printf '%s
+ # cleans up after it and says so. A file that could NOT be unstaged is REPORTED, never
+ # silently left -- an unreported residue is the whole hazard.
+ # ============================================================================
+-if [ "$_commit_rc" -ne 0 ]; then
++if [ "$_commit_rc" -ne 0 ] && [ "$_SC_2P" -eq 1 ]; then
++  echo "ERROR: safe-commit did NOT commit (rc=$_commit_rc). The refusal text is printed above." >&2
++  echo "       Two-phase path: everything was staged in a PRIVATE index, so the shared index holds nothing from this call." >&2
++elif [ "$_commit_rc" -ne 0 ]; then
+   _resid=0; _stuck=0; _mleft=0
+   _load_open_merge_set
+   while IFS= read -r _sf; do
