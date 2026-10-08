@@ -3355,3 +3355,25 @@ tree. No gold is built.
 - `bh-3`, `bh-4`, `bh-5` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
 - `bh-3`, `bh-4`, `bh-5` AC2 (`cat` of the cell's census output) base: FAIL as expected (no such file).
 - `bh-3`, `bh-4`, `bh-5` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (419 passed).
+
+## 76. ROUND 62 -- the two items ADDENDUM 1 added to the round-60 analysis' list (`1.0.0_SA_CTO~Z` msg 31493, @c75d056652), 2026-10-08 ~00:5xZ
+
+The CVO's L10 slug (msg 31492, `ADJUDICATION_v65.md` @98e21862f2) arrived after the analysis; ADDENDUM 1 adds two items. The
+analysis names them round 61's items 7 and 8; they are cut as ROUND 62, its own issuance, because the L6 gate admits one
+issuance per round and round 61's was committed (@fcf5542a36) minutes before the addendum. No worker was spawned between the two.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bh`**, continued.
+- **Fan-out:** 2 of 2 chains, cap 8 (`bh-7` queues on worker ~110 behind round 61's three orders, which write the same
+  `universe_securities.py`; `bh-8` is a chain of one in `lib/opal_data_harvest`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bh-7` | `bh-7` | **A brand belongs to the issuer: two listings of one issuer may both carry it** (R8, row Z-W107-S2). One issuer = an equal registry LEI, or a shared ticker root with one company name equal to the other's name or suffix form. Plants with two different companies as negative control; a census: `ASML` back on `ASML_US_Equity`, 0 pairs lost, 0 securities changed outside a group. | LOCAL | worker ~110 (fourth) |
+| `HVST-bh-8` | `bh-8` | **A Seeking Alpha job record's `finished_at` is the job's own end** (row Z-W108-S2). The run record carries it per job; both writers read it through one helper; an old run record keeps its address. Code and plants only: no S3, no emit, no switch change. The merge is the issuer's act with a ledger entry. | SERVED | worker ~113 |
+
+**Checks dry-run at the base before the cut:**
+- `bh-7` AC1 (`pytest` of the new test file) base: FAIL as expected (the test is absent); AC2 (`cat bh7_census.out`) base: FAIL
+  as expected (no such file); AC3 (the harvest suite) base: PASS as expected (419 passed).
+- `bh-8` AC1 (`pytest test_bh8_job_finished_at.py`) base: FAIL as expected (the test is absent); AC2 (`pytest test_bf1_job_record.py
+  test_ba1_stopped_pair_is_retried.py test_az1_alias_set.py lib/research/freshness/tests -q`) base: PASS as expected (count in
+  the commit).
