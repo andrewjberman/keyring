@@ -6,3 +6,7 @@ comp-which, comp-to, comp-iam (D2 service uncovered), comp-blast, comp-diff run.
 Next issuer107234: NFRA_TRNSPT x9 once, then overlay.
 
 D2 B GO107249: applied20:49:58Z exact0/1/0; live shell/F1 allowed AllowShellScriptOnF1HostWhileWindowOpen; otherhost explicitDeny DenyOtherPrivilegedHostsWhileShellWindowOpen; window=true replan0. Ledger closed. CTO/COO/MSTR relay20:50:54-56Z. Close on X1 or06:00Z; deadline wake event requested from issuer. No SSM commands sent.
+
+CTO107277 reports session-only deadline reminder armed05:55Z; it will send hard-close event if noX1. Its session lifetime is a limitation; hard deadline2026-10-09T06:00Z retained here and with COO.
+
+E6 leg2 GO107287 keys f8ce69efe0: one RETENTION row EXISTS (owner projected); ARTIFACT/UPLOAD NOT_FOUND; S3 HEAD404. Three exact DDB deletes then strongly consistent projected reads NOT_FOUND; S3 reHEAD404 and delete skipped. Result Y67-1_laptop_cleanup_result.json; approved single S3 scope39ab7ddd70 never used because absent.
