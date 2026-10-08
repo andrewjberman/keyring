@@ -2795,3 +2795,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W27-S1 -- The quantity closed alone separates the 175 repeated-id rows; the contract key keeps lot_id because the whole day needs it.
+
+```json
+{
+  "id": "IRPT_DASHBD-W27-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~27",
+  "surfaced_at": "2026-10-08T10:46:26Z",
+  "one_line": "Among the 175 repeated-id realized rows the quantity closed alone is already unique (175 of 175), so lot_id is not necessary within those rows; the key is lot_id plus quantity because lot_id is necessary over the whole 2,523-row day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-47 item 1 and DB28-1-AC1: the smallest column set beginning with the current key under which the 175 rows are unique, with each key column necessary (dropping any one leaves fewer than 175).",
+  "world_is": "MEASURED (LOT_KEY_E1.json): over the 175 rows quantity alone separates all 175 (every other table column fewer), so within those rows only quantity is necessary and key_columns is [quantity], its drop leaving the current key at 87 of 175. Over the whole day frame (2,523 rows) dropping lot_id from the contract key (account, date, lot_id, quantity) leaves 2,357 unique, so lot_id stays necessary to the table key and the contract primary_key is the current key plus quantity. The minimality list therefore reports the necessary column within the 175, and the contract key is the wider five-column key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/LOT_KEY_E1.json columns_of_the_contract_key_each_dropped_one_at_a_time, whole_day_frame"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

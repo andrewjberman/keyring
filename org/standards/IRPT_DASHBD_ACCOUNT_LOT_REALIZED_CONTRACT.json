@@ -31,7 +31,7 @@
       "name": "lot_id",
       "type": "string",
       "nullable": false,
-      "meaning": "the closing event id and the opening event id joined by '/': unique on every partition measured; a repeat refuses"
+      "meaning": "the closing event id and the opening event id joined by '/': NOT unique alone (distinct lots can share it); unique with quantity within a closing date and account, and a repeat of that whole key refuses"
     },
     {
       "name": "ticker_symbol",
@@ -196,7 +196,8 @@
     "firm",
     "account_id",
     "business_date",
-    "lot_id"
+    "lot_id",
+    "quantity"
   ],
-  "primary_key_meaning": "one row per realized lot: lot_id (closing event id / opening event id) is unique within a closing date and account"
+  "primary_key_meaning": "one row per realized lot: lot_id (closing event id / opening event id) with the quantity that closed is unique within a closing date and account. REVISED under IRPT_DASHBD.TO-DB-b-47 (round 28): lot_id alone repeats (distinct lots share an id: 87 ids over 175 rows in 36 accounts on 2026-10-06, none identical in every column; LOT_KEY_E1.json) and quantity separates them; a row identical in every column to another still refuses"
 }
