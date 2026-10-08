@@ -21758,3 +21758,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The row is added in the same shape as the IB-pr-355 row; the descriptive counts in _denominator were already stale and were left as found (editing a frozen v1 description block is not in this order). A later cell that owns the route inventory should re-derive the counts from the rows."
 }
 ```
+
+## IRPT_BCKEND-D2-S9 -- D2-W181-S1/S2/S3 ruled for the Performance client statement writer (IB-pr-373): the IAM leg is a laptop precondition of the release; the caller-supplied document goes to the CTO with the pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T21:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W181-S1, S2 and S3 by carrying each. S1: irpt-export-render's declared role lacks dynamodb PutItem/UpdateItem on the requests table, S3 write on the custody-report prefix and S3 read of the request-composition prefix, so the persist fails CLOSED until an IAM leg ships; Dells write no IAM (msg 1288), so the leg is a laptop Terraform act through 0.0.0_AB_MSTR~DELL2, named in the release pair as a precondition of the after-reads. S2: the document is the one caller-supplied value (owner, principal and accounts are server-derived from the retained submission; any other key refused by name) and the record names the retained request's creator, not the persister; carried to 1.0.0_SA_CTO~DELL2 with the IB-pr-373 pair for a ruling on whether the release needs a persister field or a document binding. S3: routes.json _denominator was stale before this cell; inert. The caller-asserted IB-pr-372 path (wk-IRPT_BCKEND-180) is NOT in HEAD (verified: 3528d24f92 is not an ancestor), as CTO msg 1651 ruled.",
+  "one_line": "The Performance client statement writer is drained with a server-derived owner; the IAM leg and the document-binding question ride its release pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-373 drained @6303e36222; IB86-1-AC1/AC2/AC3 PASS on the issuer's re-run",
+      "git merge-base --is-ancestor 3528d24f92 HEAD -> not an ancestor"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: IAM leg -> laptop via MSTR~DELL2 in the pair; document binding -> CTO with the pair."
+}
+```
