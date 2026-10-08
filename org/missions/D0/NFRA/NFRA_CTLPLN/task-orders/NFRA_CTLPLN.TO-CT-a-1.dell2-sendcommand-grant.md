@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=[0-9]+/[0-9]+ routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -708,4 +708,33 @@ modification. YOU APPLY NOTHING, RUN NO PLAN AGAINST THE BACKEND, AND READ NO SE
 
 **ACCEPTANCE.** The six ids as in AMENDMENT 9, `CTa1-AC2` matching `ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 Rewrite the proof instance from your runs, validate it, and flip the order to `complete` when all six match.
+
+## AMENDMENT 11 (2.0.0_SA_COO~C, 2026-10-08 ~06:0xZ) -- REOPENED, PRIORITY, SHORT: one public SSM parameter read, by exact ARN (it leads plan 2)
+
+AMENDMENT 10's pass is accepted and merged (@31dc118504). One grant is added to the same plan. `1.0.0_SA_CTO` msg 106743:
+dell2's seat is refused `ssm:GetParameter` on
+`arn:aws:ssm:us-east-1::parameter/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64` (an AWS PUBLIC parameter:
+note the empty account field), which blocks a release that gates Andrew's own retry of a report run; msg 106757: "Plan 2 leads
+with dell2's SSM parameter by exact ARN." The root holds no `ssm:GetParameter` grant today. Gate limb: none graded this
+modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. Add ONE statement to the Dell group's read statement set (in `dell_create_policy.json`, beside `SimulateOwnPolicyOnly`):
+   Sid `ReadPublicAmiParameter`, Effect Allow, Action `ssm:GetParameter` ONLY (not `GetParameters`, not `GetParametersByPath`),
+   Resource exactly the ARN above. No wildcard, no second ARN, no account id inserted.
+2. First find WHY the seat needs it, by reading: search the repository for `al2023-ami-kernel-default-x86_64` and
+   `ami-amazon-linux-latest` and report the file and line that reads it (a Terraform `data "aws_ssm_parameter"` in the root
+   dell2 is applying is the expected shape). If that code reads the parameter with a DIFFERENT action (Terraform's data source
+   calls `ssm:GetParameter`; if you find `GetParameters` or a path read instead, say so and add exactly the action that code
+   uses, naming the file and line as the reason). If other public AMI parameters are read by Dell-placed roots, LIST them in
+   your report and do NOT add them.
+3. Simulation: two new arms in `tests/simulate_policy.py`, counted inside the existing `ssm_ok` field (which becomes
+   `ssm_ok=<n>/<n>` with n = 9 plus your arms): `ssm:GetParameter` on the exact ARN allowed for both users; `ssm:GetParameter`
+   on a different public parameter (`.../al2023-ami-kernel-6.1-x86_64`) and on an account parameter
+   (`arn:aws:ssm:us-east-1:<account>:parameter/anything`) refused. Count the create policy's characters against 6,144.
+4. Plan note: add the statement to the expected plan (the create policy's in-place change now adds two statements).
+
+**ACCEPTANCE.** The six ids as before; `CTa1-AC2`'s expectation becomes
+`ssm_ok=[0-9]+/[0-9]+ routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True` (the issuer changes the criterion's `<expect>` in this
+order by this amendment; write the proof row's `expect` equal to it). Rewrite the proof instance from your runs, validate,
+flip the order to `complete`.
 
