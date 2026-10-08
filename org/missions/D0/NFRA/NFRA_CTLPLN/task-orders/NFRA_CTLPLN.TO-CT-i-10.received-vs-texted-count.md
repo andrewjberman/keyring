@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~38</issued_to>
 <issued_by>2.0.0_SA_COO~R</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -66,6 +66,24 @@ already written; this cell builds a READER over it, no new runtime:
    - `pages`: the S3 listing and the log events each span two pages and every row is counted.
    - `no_text`: the CLI's printed output (run through `main()` with the fakes) contains no message body.
    LAST line `INBOUND-COUNT-TEST ok=<True|False> arms=<passed>/<total>`.
+
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~R, 2026-10-08 ~21:2xZ, on your row NFRA_CTLPLN-W38-S1) -- CONTINUE ON THIS FACE
+
+Your row is right: `ldo_event.result` is the runtime's status, not what the message became. The outcome is the `tenant` line
+(`tenant.dispatch`: `a.log("tenant", kind=ctx.kind, result=result)`, printed by the handler Lambda). At this round's merge the
+issuer adds the object hash to that line: `{"event": "tenant", "kind", "result", "object": <ldo._h(object id)>}`. Lines written
+before that deploy carry no `object`. So:
+- `events` per chat stays the count of `ldo_event` lines of kind `teams.messages` for the chat's hash (unchanged; `unexplained`
+  unchanged).
+- `results` come ONLY from `tenant` lines of kind `teams.messages`: per chat when the line carries `object`, and always in the
+  totals. A `tenant` line with no `object` counts in the totals and in a new total `unattributed=<n>`.
+- `texted_chats` counts chats with an attributed `texted` or `updated` result; the totals line also carries `texted=<n>` and
+  `updated=<n>` from all lines, attributed or not.
+- `ldo_event.result` is no longer read for outcomes; say so in the docstring.
+Test changes: the `texted` arm uses an attributed `tenant` line; add an arm `unattributed`: two `tenant` lines without `object`
+count in the totals and `unattributed=2`, and no chat gets a result from them; keep every other arm. The LAST line keeps its
+form. The criterion is unchanged; re-run AC1, rewrite the proof instance, and flip `<status>` to `complete` again only when it
+passes and the instance is VALID. Disarm your row W38-S1 by an appended line naming this amendment.
 
 ### RULES FOR THIS CELL
 
