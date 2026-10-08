@@ -4,7 +4,7 @@
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`, call 5
 (branch model): *"5.) A for now but we need to get on to B very soon it is a priority."* (A = one trunk, B = per-box.)
 Routed to this seat: "keep one trunk now; per-box branches are a priority, design starts now".
-**Status:** DESIGN. Nothing is built or changed. Open calls are in section 7.
+**Status:** DESIGN, calls answered ~18:0xZ (section 9). Nothing is built yet.
 **Vintage:** laptop, 2026-10-08 17:4xZ-18:0xZ.
 
 ---
@@ -102,3 +102,43 @@ under a budget question (CTO record addendum ~17:0xZ).
 - How the existing `q/*` branches are merged into `CLOUD` (149 of 159 are in; the 10 that are not were not read).
 - The 48 files have not been read one by one.
 - The other boxes' tooling copies are assumed to equal the laptop's at the trunk.
+
+## 9. Andrew's answers, 2026-10-08 ~18:0xZ (laptop terminal, to 4.0.0_SA_CRO~A), VERBATIM
+
+> "1.) I like that. 2.) This needs to be structured in a more clever way. I think every 30min "could" work for this,
+> but accordingly each MSTR agent would have to structure their govern loop on another part of the hour. e.g. Laptop
+> always starts govern loop at top of the hour, Sitez always 6 min past the top of the hour, dell1 always 12 min past
+> the top of the hour, dell2 always 18 min past the top of the hour, with the remaining time as buffer before the next
+> batch of integrations. It's a very tight schedule and it makes me a little nervous because it doesnt feel size
+> invariant, but if our merge process is clean enough (and not overly redundant, e.g. scanning multiple times and etc)
+> i think it works. How would you approach with this in mind? 3.) Rec approved. 4.) Rec approved sure."
+
+Then: "Get in touch with CTO and let the conclusions to these points be known quickly because we're already under strain."
+
+**Settled:** (1) the laptop MSTR is the one integrator, with site Z's MSTR as standby on a recorded handover;
+(3) the graph reads every `origin/box/*` branch plus `CLOUD`; (4) site Z switches first, then the Dells, the laptop last.
+
+## 10. Call 2: the cadence, made size-invariant (4.0.0_SA_CRO~A's answer to Andrew's question)
+
+Keep Andrew's offsets (laptop :00 and :30, site Z :06/:36, dell1 :12/:42, dell2 :18/:48). Three rules make them a
+load-spreading convenience rather than the thing that keeps the boxes safe, so an overrun delays work and never
+collides:
+
+1. **Only the integrator writes `CLOUD`; a box writes only `box/<box>`.** The four boxes share no writable ref, so two
+   box passes cannot collide, however long either one runs. The only ordering that matters is integrator, then boxes.
+2. **Every box pass is: take the trunk first, then push its own branch.** The box branch the integrator merges next
+   already contains `CLOUD` as of that box's last pass. Each integration merge therefore carries only that box's own
+   new commits and conflicts only with what landed since. Merges stay small however many boxes there are.
+3. **The integrator merges ALL boxes that are ahead in ONE pass with ONE grade.** One octopus merge of the box branches
+   that are ahead, one tree-drop check, one push. A box that conflicts is dropped from the octopus and merged on its
+   own, or held to the next pass. The cost grows with the size of the changes, not with the number of boxes, and
+   nothing is scanned twice. **No overlap:** a pass that is still running when its next slot arrives skips that slot.
+
+**Lag:** a commit on any box is in `CLOUD` within one interval after its box's next pass, and on every other box one
+pass after that. Under 30 minutes that is roughly 30-60 minutes (a bound from the cadence, not measured). The graph
+sees the box branch as soon as it is pushed (call 3), so seats know in-flight work well before it is integrated.
+
+**The one size-variant part is the integrator's grade.** `/integrate` says a large merge grade takes 15-45 minutes
+(`.claude/skills/integrate/SKILL.md:65`); dell1 measured a 392-commit merge at 155 s (dell1 draft brief, section 2).
+Before the cadence is trusted, 4.0.0_SA_CRO~A (owner of `safe-merge.sh` per 1.0.0_SA_CTO msg 107030) times one real
+integration pass and, if the grade is the long pole, makes it grade only the paths the merge changes.
