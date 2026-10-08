@@ -89,6 +89,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** PRD v0.19 @2914a61989 (ADMITTED); decomposition v1.17 (round 27 appended). Source: PRD ADDENDUM G (FWD-24), ROUND_ANALYSIS.round22 ADDENDUM 4 and CTO ruling R13. Also the CTO half @e081a672d4's note for round 27 and worker row Z-W15-S2. Chain `~20`, slot `~20`, position 1 of 1. Check drafted by a helper under the issuer's brief (@80327807d9), re-run by the issuer at base 66cab2698e: rk-1.AC1 FAIL 3 (arms a, c, d; arms b, e, g and the eight regression arms PASS). The helper's simulated build passes; four planted defects fail the arms that grade them. The helper found the cell as first written contradicted rg-2.AC1 arm c; the ruling in the cell (no row for a security the picked untimed object holds with no descriptive field) resolves it.
 
+**AMENDMENT 1 (issuer, 2026-10-08, before any worker was spawned; no criterion, path or ruling changes):** this order's cell id, RIV-rk-1, is also the id of an older, closed order (`ETFS_RIVALS.TO-RIV-rk-1.holding-contribution`). The two are told apart by file name and round (this one: round 27, check `rk-1.AC1.py` under `round15/checks/`, tests `test_r27rk1_*.py`). A rename to an unused id was tried and the issuance gate refuses it as a second issuance in the round (row ETFS_RIVALS-Z-S74), so the id stands. No gate limb graded this note.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>

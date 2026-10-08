@@ -4943,6 +4943,28 @@
     "spec_asserts": "A stage re-run on its own inputs reproduces its served output (1.0.0_SA_CTO~Z msg 31527: a stage that does not reproduce its own served output is a finding)",
     "world_is": "Not reproduced, alike under both codes. Read so far: the four keys differ in FORM, not in trade; the replay reads a later holdings revision of GQGU in which the fund's raw identifier is a ticker string. Not traced: which served object the page's stages read for that date and whether the comparison picked the same one; why corporate_actions_applied and dividends_applied differ on every row; why canonical_shape 2026-10-06 is rewritten. The served page is not affected by this row: nothing was written by the replay",
     "notes": "Asked by 1.0.0_SA_CTO~Z msg 31527 as a surprise row, not a hold; read in round 27. Related: the one-key rule of round 22 (a trade under a CUSIP gathered under its Bloomberg key by parsekey) and rows Z-S57, Z-S65."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S74",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T05:04:08Z",
+    "one_line": "The issuance gate admits an order whose cell id an earlier order already holds, and then refuses the rename that would fix it as a second issuance in the round",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuance 21b3614f93 (round 27) added ETFS_RIVALS.TO-RIV-rk-1.the-reader-keeps-a-close-only-on-its-own-trading-date.md while ETFS_RIVALS.TO-RIV-rk-1.holding-contribution.md exists; .tools/to-pipeline-gate.py printed OK. The task-orders folder holds 124 order ids; two are held twice: rk-1 (this round) and cu-1 (round 24, ETFS_RIVALS.TO-RIV-cu-1.*, closed and deployed)",
+        "A commit that removed the order and added the same text as ETFS_RIVALS.TO-RIV-kd-1.* was refused: 'round 27 of ETFS_RIVALS already has an issuance at HEAD ... ONE ISSUER PER ROUND is keyed to the ROUND'; the audited '# pipeline-override:' line was taken and the refusal stood (the override covers the coverage refusal, not this one). The rename was undone; nothing of it is committed",
+        "The issuer picked the ids without listing the existing ones: first RIV-rd-1 (held by a round-7 order, caught before issuance), then RIV-rk-1 (held, not caught), and for round 24 RIV-cu-1 (held, not caught)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A cell id names one cell of the project (the decomposition's cell_refs and every packet cite cells by id)",
+    "world_is": "Two ids each name two orders of different rounds. Nothing mechanical has confused them: each order's decomp_ref resolved, each check file lives under its own name, and the earlier orders are complete. A reader of the record who greps an id finds two cells. The id of round 27's reader cell stands as RIV-rk-1 with a note in the order",
+    "notes": "Owner of the gate: 1.0.0_SA_CTO (the gate's own refusal names it). Shape of a repair: the issuance gate refuses a newly-added order whose cell id any existing order file carries, and admits a pure rename of an order added by the round's own issuance. The issuer's own remedy from here: list the existing ids before naming a cell."
   }
 ]
 ```
