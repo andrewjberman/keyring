@@ -2246,3 +2246,29 @@ round.** Never edit an existing row.
   "world_is": "The script's reproduce-guard refuses stale arms honestly (unexplained, never forced), but the invocation is not self-contained: it needs the none->v1 arms in the default data-dir. A repair: the script rebuilds or checks the arms' list versions itself, or the invocation names its own --data-dir."
 }
 ```
+
+## ADVI_COTBKF-D2-S32 -- L9 CB21u1-AC3 MET; both traced classes show W42-S1's missing cash credit
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S32",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T19:02:48Z",
+  "one_line": "L9 CB21u1-AC3 MET: the rule is printed before the counts with fixed constants and an ordered first-fit, ties are never forced, and each class's traced month shows its mechanism in the printed day values (re-derived by this seat). Beyond the criterion: BOTH traces show the same mechanism as W42-S1. The after arm's value steps down by the sweep buy (-4,010.86 carried from before the month; -199.98 then -188.14 on RGY005018's two sweep-trade days) and never steps back, so the 72/75 split is WHERE the missing cash credit lands, not two causes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md lines 5-114 (rule, counts, both traces)",
+      "this seat's re-derivation: D49141714 2019-02-28 after 52.73/51.04-1 = 0.033111, before 4063.59/4061.9-1 = 0.000416; RGY005018 2024-12-10 after 21808.25/21852.77-1 = -0.002037, before 22008.23/21852.77-1 = 0.007114",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_21_L9_GRADE_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB21u1-AC3: each class's traced month shows its named mechanism in the printed day values, and the rule, not the result, decided the class.",
+  "world_is": "Met. The two classes partition where the sweep-buy debit without a funding credit moves the month: on no-trade days (a balance carried in) or on the trade days themselves. The W42-S1 repair is the test: if it lands, both classes should collapse together."
+}
+```
