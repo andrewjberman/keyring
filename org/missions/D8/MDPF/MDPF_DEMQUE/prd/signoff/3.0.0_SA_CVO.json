@@ -1,0 +1,12 @@
+{
+  "prd": "MDPF_DEMQUE_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "ac05f0256ea8d7160bd736157c3a624bc059cd9a",
+  "half": "ratified-text",
+  "half_hash": "1cb624b9991502841fd1376965eaa4ab35969ed09d710f62ac72b6b2f3e00af9",
+  "endpoint_hash": "5dc6af168966f40f1062b9ff2357bfe1d5b12aa5bc93c347a07c80e366269571",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_DEMQUE_PRD_V01_RATIFIED_TEXT_REVIEW_20261008.md@ee24841850",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-08T22:45:02Z"
+}

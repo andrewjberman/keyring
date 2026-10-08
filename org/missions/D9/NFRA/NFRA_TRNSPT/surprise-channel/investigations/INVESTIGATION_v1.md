@@ -1102,6 +1102,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "Decomposition round 12: the close trace strings H2 -> H3 -> H4 -> H6 as one journey; the ticket write follows the agreed contract.",
     "world_is": "Each cell passes its own tests, but the drafter and the ticket client disagree on one required field, so the journey stops at H6.",
     "notes": "Found by the issuer's end-to-end trace, not by any cell's criteria (each cell built against its own fake)."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T23:03:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "FWD-10 H6 will dead-letter every REAL report: ~V2's ticket-write contract v0.1 section 2 REQUIRES answers.household, but the IRPT analysis composition has no household (~P2 msg 1849: 'account_type, themes and household are ABSENT from irpt-analysis-composition.v1'). The synthetic trace passes only because its fixture supplies one.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 with 2.0.0_SA_COO~V2 (make household optional or name its true source in the ticket contract), then 2.0.0_SA_COO~T2 adapts H2/H6",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md section 2: answers.household listed as required",
+        "~P2 msg 1849 (docs/contracts/investor-reporting/v1/RequestComposition.schema.json: 0 matches for household)",
+        "data/transcripts/scripts/tests/test_commentary_entry.py composition(): household planted under commentary_basis (synthetic only)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-TICKET: the draft lands on a ticket for the requester; the ticket-write contract's body is buildable from what H1/H2 supply.",
+    "world_is": "One required body field has no producer; account_type and themes are also absent (they only weaken ranking and the prompt).",
+    "notes": "Holdings category weights are derivable from the normalized-input artifact (~P2 msg 1849); that is an H2 enhancement, not a blocker."
   }
 ]
 ```
