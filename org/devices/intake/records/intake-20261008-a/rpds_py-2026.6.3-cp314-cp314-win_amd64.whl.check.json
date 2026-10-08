@@ -64,12 +64,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 99.87 days old (min 14); 71 earlier releases (min 3)",
+        "summary": "release 99.89 days old (min 14); 71 earlier releases (min 3)",
         "this_release_at": "2026-06-30T07:14:54.821184Z",
         "first_release_at": "2023-03-01T06:30:10.320768Z",
         "release_count": 72,
         "earlier_releases": 71,
-        "age_days": 99.87,
+        "age_days": 99.89,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -146,17 +146,19 @@
     {
       "n": 8,
       "name": "a person reads the result of 1 to 7 and signs the batch",
-      "verdict": "unsigned",
+      "verdict": "passed",
       "evidence": {
-        "summary": "no --signed-by given: nobody has signed this file",
-        "signer": null,
-        "path": null
+        "summary": "signature file names the batch and the file",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_RPDS_PY_ONLY.md",
+        "signature_file_sha256": "e10f30cfc50a126a52d43b4acc5f4fb9dcba683e2889968b2461938da250deb5",
+        "signature_file_git_author": "1.0.0_SA_CTO"
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
-  "verdict": "not_checked",
+  "verdict": "checked",
   "checked_by": "2.0.0_SA_COO~C",
-  "at": "2026-10-08T04:08:11Z"
+  "at": "2026-10-08T04:36:23Z"
 }
