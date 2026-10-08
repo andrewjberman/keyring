@@ -2054,3 +2054,16 @@ packaged member and no build script changes. Check: `deliverables/2.0.0_SA_COO~P
 | `IB-pr-360` | the back-fill tool moves to export/tools/; the parity rule finds 0 extras; its tests pass | FWD-2 / FWD-8 releases | WORLD (floor: infra/; the deployed zip is unchanged) | none | P74-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one file move. Slot ~168.
+
+## 68. ROUND 75, WORKSTREAM ~P (2026-10-08 ~03:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on row S388 after the owner split)
+
+One regeneration of the portal wire types on DEV d1b21c97 changes 6 files. Four are ~P's: ExportBundle (IB-pr-336), ExportReceipt
+(IB-pr-343), and responses/index (the route table, IB-pr-355). AnalysisReport is IRPT_YCDGEN's (~G2 owns it, msg 1188) and
+HoldingsSnapshot is MDPF_SECCLASS's (relayed to dell1 via ~M2). This cell regenerates ~P's four from their contracts and restores
+the rest. Check: `deliverables/2.0.0_SA_COO~P2/checks/r75/p75_cells.py`, dry-run in worktree ~169 at portal DEV d1b21c97.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-361` | regenerate ExportBundle, ExportReceipt, responses, index from their contracts; nothing else | FWD-2 / FWD-8 | LOCAL (portal) | none | P75-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one regeneration. Slot ~169; portal_ref: d1b21c97 (portal origin DEV).
