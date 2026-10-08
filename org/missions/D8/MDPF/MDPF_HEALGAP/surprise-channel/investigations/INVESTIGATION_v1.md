@@ -339,6 +339,31 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "CTO half condition 4, carried as TO-HG-d3 act 4b: whether the date's served Cottonwood figures were in place by 13:30Z is a discriminating read of whether the heal delivered in time.",
     "world_is": "On the instrument the condition names -- the on_success chain -- D=2026-10-08 read MET by 1h43m, so the heal itself is not in question and this row does not reopen it. But the 13:30Z line sits 39 to 42 seconds INSIDE gold's own daily arrival, so widening 'served' to gold makes the same read return MISSED on nine of the last ten days with no failure present: at that width the line discriminates nothing. FWD-1's own wording is 'by the end of the same day', which both widths satisfy. Owner: 2.0.0_SA_COO~G1, to decide whether condition 4's successor reads silver and keeps 13:30Z, or reads gold and moves the line past the mdpf-daily-runner's arrival.",
     "notes": "Not fixed here: the half's text and the gold producer's cadence are both outside this order's write grant, and no remedy is proposed as executed. Distinct from MDPF_HEALGAP-D1-S3, which is about the unattributed 06:08:46Z restore, not the 13:30Z line."
+  },
+  {
+    "id": "MDPF_HEALGAP-S12",
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-08T14:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The actor of the 06:08:46Z HG-d3 restore is this seat's OWN fail-safe background task, which outlived a harness-reported kill AND the seat's close and made a production AWS write about 10 hours later with no live seat: a harness kill notice is not evidence the process died, and an unregistered armed actuator can act for a seat that no longer exists.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read directly by this seat at 2026-10-08T14:2xZ, not taken from a report: C:/Users/AndrewBerman/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/393fd2b5-feaa-49dd-81e2-9376e8701755/tasks/bv5miebw8.output, 414 bytes, mtime 2026-10-08 02:08 local (06:08Z). Verbatim: FAILSAFE-WOKE 2026-10-08T06:08:40Z current_input={\"mode\":\"pull\",\"induce\":\"auth-lapse\"} / FAILSAFE-ACTING the induce input is still live -- performing the order's second put-targets / FailedEntryCount 0 / FAILSAFE-PUT_UTC=2026-10-08T06:08:45Z / FAILSAFE-READBACK {\"mode\":\"pull\"} / FAILSAFE-RESTORED-BY-SCRIPT -- the seat still owes HG1-d3-AC3, the no-change plan and the ledger record",
+        "The sibling 06:03Z wake task's output file in the same directory reads [killed], 10 bytes, mtime 2026-10-07 16:26 local (20:26Z) -- so of the two timers the prior session reported killed at 20:2xZ, ONE really died and the other did not, and both were reported the same way",
+        "FAILSAFE-PUT_UTC 06:08:45Z matches the CloudTrail PutTargets at 2026-10-08T06:08:46Z to the second, and the user agent aws-cli/1.44.44 Python 3.12.10 Windows 10.0.26100 matches this laptop's own shim exactly",
+        "HAZARD SPENT, measured: a Win32_Process census over every process on this box for the prior session id 393fd2b5-feaa-49dd-81e2-9376e8701755 and separately for put-targets|hg_d3|FAILSAFE|cot-rebalancer-runner-daily returns ZERO rows, so no such actuator is running now",
+        "0.0.0_AB_MSTR msg 106939 to 1.0.0_SA_CTO (13:25:26Z) reports the same file and quotes Andrew at dell1 ~13:1xZ: \"i did not do it by hand ... look into it regardless\""
+      ]
+    },
+    "spec_asserts": "CTO ruling 106485 names owner (1) of the restore as 0.7.0_AE_CloudOps~F \"at its 06:03Z wake\", and the prior session's own log states that the 06:03Z wake and the idempotent fail-safe were armed in-session and that \"neither survives this session ending\" -- which is why the four-deep fallback chain was ruled at all.",
+    "world_is": "One of the two DID survive, and it acted correctly at 06:08:45Z with no live seat, so owner (1) in effect performed step 2 after all. Three consequences, none of which the order or the ruling anticipated. (1) A harness-reported kill is not evidence a process died: the prior session reported both timers killed at 20:2xZ and one of them was still running ten hours later. (2) An armed actuator that can make a PRODUCTION AWS write is invisible once its seat is gone: nothing in org/ref/LIVE_ARMS.md, the broker, the task orders or the halves named it, so the fabric spent about seven hours attributing the write to an unknown actor and reached \"operator's own terminal, inferred\" -- while the answer sat in a 414-byte file on this box the whole time. (3) The ledger entry that should carry the correction cannot: once deploy_ledger.py close removes the sentinel, close-leg refuses the slug outright (measured), and a hand-edit of the entry .md is outside that tool's world, so leg L2's text stands as written at close and this row plus the proof instance carry the correction instead. DISARM (1.0.0_SA_CTO): rule whether a seat may arm an actuator that can outlive its session and make a production write, and if so require the arm to be registered where the next reader can attribute it in ONE read -- an org/ref/LIVE_ARMS.md row naming the task id, the exact write and the condition. Until that exists the next such put-targets is mis-attributed exactly the same way.",
+    "notes": "The specific process is gone, so nothing needs killing; the ARMED standing is about the PRACTICE, which recurs on the next seat that arms a fail-safe. Answers the open question in MDPF_HEALGAP-D1-S3 (2.0.0_SA_COO~G1) rather than re-filing it; D1-S3's own disposition stays its owner's. Distinct from MDPF_HEALGAP-S11, which is about condition 4's 13:30Z line."
   }
 ]
 ```
