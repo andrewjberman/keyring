@@ -21095,3 +21095,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Holds again for export/. The staging-in-source-dir behaviour of the build that left it is not changed by this row."
 }
 ```
+
+## IRPT_BCKEND-D2-W175-S1 -- the CUSTODY_REPORT kind is packaged after IB-pr-367, but no retention policy family registers it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W175-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~175",
+  "surfaced_at": "2026-10-08T18:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The repin makes the packaged repository.py name CUSTODY_REPORT, but the ACTIVE retention policy irpt-x10-v1 registers no CUSTODY_REPORT family, so an enforced repository refuses to retain or read a custody report (RetentionRefused: unregistered retention family); after-read 1 cannot pass until a policy row carries the family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python (lib/opal_naming.reporting_policy('irpt-x10-v1')['families'] at P a0d8d4943f): 13 families, 'CUSTODY_REPORT' in families -> False; state ACTIVE",
+      "infra/aws/lambda/investor-reporting/reports/retention.py@f60e6f1d2a RetentionPolicy._policy: family_policy = policy.get('families', {}).get(family); not a dict -> RetentionRefused('unregistered retention family'); ReportRepository.persist calls retention.reserve(..., report_kind, ...) and get() calls _check_retention(..., item['ref']['report_kind'], ...) -> require_live -> _policy",
+      "infra/logic/registry/reporting_policies.json at HEAD a0d8d4943f: grep CUSTODY_REPORT over infra/logic and lib -> no match; the other two policy rows (irpt-dashbd-x10-v1, irpt-ycdgen-research-v1) list SERVED_* and YCHARTS_* families only",
+      "b13bab7495 (IB-pr-336) touched no registry file; test_repository.py exercises CUSTODY_REPORT with retention=None only",
+      "reporting_policies.json is therefore NOT repinned by IB-pr-367: a repin to any commit at or before HEAD cannot add the family"
+    ]
+  },
+  "spec_asserts": "IB-pr-367 cell text: check the reporting_policies.json row (pinned c4fedd31c5) and any member the read path imports; once repository.py's KINDS carries CUSTODY_REPORT, an owner read of a CUSTODY_REPORT no longer fails closed (the order's after-read 1: an Opal custody-report-read returns a real report).",
+  "world_is": "The repin of repository.py (b13bab7495) and retention.py (f60e6f1d2a) is necessary and is done, but not sufficient: the policy registry has no CUSTODY_REPORT family, so ReportRepository.persist and .get under the enforced retention refuse the kind by family. Existing PERFORMANCE and ANALYSIS retained reads are unchanged (their references carry irpt-x10-v1, which is ACTIVE and unchanged). Owner of the missing row: the registry lane (4.0.0_SA_CRO owns reporting_policies.json rows); the producer (IRPT_CUSTDY E2) hits the same refusal on its first persist."
+}
+```
