@@ -4920,6 +4920,29 @@
     "spec_asserts": "Row ETFS_RIVALS-Z-S62: the vehicle runs the working tree, so a merge touching a module it loads is a deploy of that module",
     "world_is": "The 2026-10-08 11:00Z run loads round 25's module top level and cannot call the reader. Not exercised: the leg was not run by this seat. 1.0.0_SA_CTO~Z ruled no revert (msg 31489) with one term: the first read of that day's vehicle log states the enrichment leg's exit code and its security_names step are as on 2026-10-07; an ImportError or a new top-level failure in gold_holding_contribution there is a BLOCKING row and a revert the same hour",
     "notes": "Related: ETFS_RIVALS-Z-S62, Z-S71. Owner of the log read: 2.0.0_SA_COO~RV, with the L4 leg of ledger etfs-rivalfunds-r22."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S73",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T01:53:29Z",
+    "one_line": "A replay of build-canonical-shape and build-trade-schedule made today does not reproduce the served objects: revision and corporate-action columns differ on every date, and on 2026-10-01 four GQGU trims carry a ticker key where the served rows carry a CUSIP",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round26/upstream_stages_local.pin.json and .live_code.json (replay 2026-09-29..2026-10-06 through a read-only overlay, 2026-10-08 ~01:2xZ): the SAME differences from the served objects under the live code and under the pin code; the two codes' outputs are equal to each other row for row (upstream_ab_compare_live_code_vs_pin.json), so the reader change is not the cause",
+        "trade_schedule date=2026-10-01, 21 rows in the replay and 21 in the newest served object: 17 keys in both; replay only [[\"AMD US Equity\", \"-71424.68000000001\"], [\"ASML US Equity\", \"-48829.23\"], [\"LRCX US Equity\", \"-311871.7\"], [\"MU US Equity\", \"-167900.66999999998\"]]; served only [[\"007903107\", \"-71424.68000000001\"], [\"512807306\", \"-311871.7\"], [\"595112103\", \"-167900.66999999998\"], [\"N07059210\", \"-48829.23\"]]. The four pairs carry the same dollars: the same four trims of GQGU over the window 2026-09-28 to 2026-10-01, keyed by a Bloomberg ticker string in the replay and by a CUSIP in the served rows",
+        "The replay's rows cite dataset_revision 20261005T054409Z-9357ccb096f1; the served-only rows cite 20261004T110541Z-5583fd8945f7. Five served objects exist for that date (20261002T110033Z .. 20261005T054409Z)",
+        "On the other dates the row keys agree and the differing columns are corporate_actions_applied, dividends_applied, dataset_revision, prior_dataset_revision and, on 2026-10-02, inference_version and a corporate-actions revision column; canonical_shape: the replay finds 5 of 6 report dates already built with identical content and writes 2026-10-06 anew under both codes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A stage re-run on its own inputs reproduces its served output (1.0.0_SA_CTO~Z msg 31527: a stage that does not reproduce its own served output is a finding)",
+    "world_is": "Not reproduced, alike under both codes. Read so far: the four keys differ in FORM, not in trade; the replay reads a later holdings revision of GQGU in which the fund's raw identifier is a ticker string. Not traced: which served object the page's stages read for that date and whether the comparison picked the same one; why corporate_actions_applied and dividends_applied differ on every row; why canonical_shape 2026-10-06 is rewritten. The served page is not affected by this row: nothing was written by the replay",
+    "notes": "Asked by 1.0.0_SA_CTO~Z msg 31527 as a surprise row, not a hold; read in round 27. Related: the one-key rule of round 22 (a trade under a CUSIP gathered under its Bloomberg key by parsekey) and rows Z-S57, Z-S65."
   }
 ]
 ```
