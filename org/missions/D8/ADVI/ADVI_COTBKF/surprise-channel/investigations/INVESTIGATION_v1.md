@@ -2435,3 +2435,32 @@ round.** Never edit an existing row.
   "world_is": "The rule is built as stated and does not reach regressions=0: B3S748567 2025-07 passes every condition because its sold fund is held and priced (a row-type or valuation condition cannot tell a core cash fund from any held fund; it needs the D2-S30 designation). The blank is a relabel, not a verdict mover: every blank day was already UNPRICED, so round 22's 25 land DIFF, not UNGRADABLE. The test is not weakened; the order stays open."
 }
 ```
+
+## ADVI_COTBKF-D2-W45-S4 -- CB23w2-AC2 not met: divfee as ordered leaves regressions=95 (181 DIFF->MATCH, 58 of the 75 sweep_trade_day movers back); fch never helps, the dividend leg is 46 gained / 28 lost
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T21:42Z",
+  "one_line": "CB23w2-AC2 not met: the divfee rule as ordered (dv credit, man/fch debit, on a conditional baseline) leaves regressions=95 against 181 DIFF->MATCH; 58 of the 75 sweep_trade_day movers are back to MATCH; fch never helps (0 of 24 DIFF months, 25 MATCH->DIFF), the dividend leg is 46 gained / 28 lost",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation as written (before conditional, after divfee, list v1 both arms, --out .../0.9.0_WK_ADVI_COTBKF~45/divfee): months_before=2058/1525/79010 months_after=2121/1438/79034 control_same=True regressions=95 movers_back=78 (rc 0, 8m11s under timeout 1500); report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/divfee/sweep_regrade.md section 'CB-w-2' and its table 'Months that moved MATCH -> DIFF between the arms'. Transitions (82593 months): DIFF->MATCH 181, MATCH->DIFF 95, MATCH->UNGRADABLE 23, DIFF->UNGRADABLE 14, UNGRADABLE->DIFF 13",
+      "the 95 by what the month carries: fch_fee_leg_in_month (30): 0QF878979 2017-11; 0QF878981 2020-11; 0QF879231 2017-11,2018-11,2019-11; 0QF879353 2020-11,2022-11,2023-11,2024-11,2025-11; 0QF895828 2018-11,2019-11; 0QF895984 2018-11; 0QF927346 2022-05; B3S661358 2018-11,2019-11; B3S749464 2023-11,2024-11; B3S782299 2022-11,2023-11; D49146094 2019-11,2020-11,2021-11,2022-11,2023-11,2024-11; H2Y365503 2023-11; H2Y365888 2023-11; RGY004120 2025-11; RGY005715 2025-11 | dividend_leg_in_month (28): 0QF878956 2023-08,2024-08,2025-02,2026-03; 0QF879143 2021-08; 0QF879353 2022-05,2022-08,2023-02,2023-05,2023-08,2024-02,2024-08,2025-02,2025-05,2026-02; 0QF899639 2024-11; B3S786844 2022-12; B3S798436 2024-08,2024-09,2024-12,2025-02,2025-11,2025-12; B3S804888 2025-12; B3S808045 2026-01; RGY003587 2025-06,2025-09; RGY007351 2026-03 | level_from_earlier_legs (28): 0QF878981 2022-04; 0QF879181 2020-10,2021-01,2021-04; 0QF879353 2021-12,2022-09,2022-10,2022-12,2023-01; 0QF880505 2021-02,2022-01,2022-07,2022-10; 0QF911558 2022-08,2023-02; B3S670862 2021-08,2021-09,2023-02; B3S670865 2021-08,2021-09,2022-09,2023-02; B3S703388 2024-05,2024-11; RGY004120 2025-03,2025-05,2025-06,2025-09 | man_fee_leg_in_month (7): 0QF878956 2025-04; 0QF880505 2024-04; B3S670862 2021-10; B3S703388 2023-07; B3S808881 2025-01; B3S808882 2025-01; RGY004222 2024-10 | man_fee_and_dividend_legs_in_month (2): 0QF878956 2025-01; RGY007351 2025-12",
+      "variants measured with the same invocation shape (scratch driver, FEE_TYPES / DIVIDEND_TYPES patched; regressions / movers_back / sweep_trade_day back of 75): ordered man+fch & dv 95/78/58; man & dv 78/80/60; man only 32/42/35; man+fch no dividend 91/40/33; dividend only 70/32/20; control_same=True in all. No variant reaches 0",
+      "fch: of the months carrying an fch fee leg and no dividend leg, 24 stay DIFF, 0 become MATCH, 25 MATCH become DIFF, 6 stay MATCH; man: 174 stay DIFF, 112 become MATCH, 11 become UNGRADABLE, 7 MATCH become DIFF, 22 stay MATCH. Example 0QF879231 2017-11: fch -35.00 paid by a 35.00 sweep sale, reported 0.00, computed 0.0026 before and -4.586 after",
+      "dividend: of the months carrying a dividend leg and no fee leg, 349 stay DIFF, 46 become MATCH, 28 MATCH become DIFF, 6 stay MATCH. Example 0QF879143 2021-08: dv 90.00 (stock 293792107) with a 90.00 sweep buy the same day, reported -2.59, computed -2.556 before and -1.595 after. Sweep purchase B equals dividend D on 29127 of 39788 dividend days with a sweep buy, so the pairing is real where it holds",
+      "23 months leave MATCH for UNGRADABLE (not counted by regressions): 22 are 0QF879352 2023-05..2025-12 (every day NON_POSITIVE_BASE under the fee debit) and B3S765083 2022-08 (17 of 23 days)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-2: a dividend that funds a sweep buy credits cash and a fee paid by a sweep sale debits cash, one general rule over the row types, layered on conditional; AC2 expects regressions=0 against that baseline.",
+  "world_is": "The rule is built as ordered (commonwealth_sweeps.divfee_rows, default divfee, 36 tests in the cash-leg file, mutants fire) and regresses 95 months that matched under conditional while recovering 181 and 58 of the 75 sweep_trade_day movers. The reported return of a month with an fch leg, and of 28 months with a dividend leg, equals the computed return WITHOUT the leg: the vendor appears to leave IRA maintenance fees (fch) out of the return and to take some dividends at another date than the pay date (inference; the transactions carry no ex-date). A row-type set of man only cuts regressions to 32 but still not to 0. The test is not weakened; the order stays open for the issuer and the CTO to rule on the fee-type set and the dividend timing."
+}
+```
