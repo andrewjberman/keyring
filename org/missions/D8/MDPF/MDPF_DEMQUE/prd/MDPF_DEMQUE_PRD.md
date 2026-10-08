@@ -5,7 +5,7 @@
  "project": "MDPF_DEMQUE",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/bbg-backfill-demand-queue-brief-20261008.md@91f5c90ec2",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -134,8 +134,12 @@ one alone. `bbg_budget.json`'s row figures convert at the switch; the conversion
 **C-METER -- Bloomberg and Yahoo only.** The ledger meters those two vendors (Andrew ~22:4xZ). Bloomberg is metered per channel (BQL and
 reference/history separately, because only BQL blocked on 2026-10-05). Other vendors appear only as named sources in C-ROUTE.
 
-**C-RESERVE -- production is never crowded out.** Per Bloomberg channel, the reserve starts from the measured floor (2.92M BQL cells on
-2026-10-05) and is re-measured from the ledger. A backfill draw that would cross the reserve stops at it and resumes the next day. The
+**C-RESERVE -- production is never crowded out.** (v0.2, CVO finding F1.) Per Bloomberg channel there are two figures. The CEILING
+is the day's capacity, seeded from the measured floor on capacity (2.92M BQL cells on 2026-10-05) and re-measured from the ledger.
+The RESERVE is what production needs: the measured BQL draw of the tier-1 production pulls plus a stated margin, re-measured from the
+ledger. The backfill allowance is CEILING minus RESERVE, minus what has already been drawn that day. A backfill draw that would cross
+into the reserve stops at it and resumes the next day. If the allowance measures at or near zero, that is a finding reported with its
+numbers, never a silent stall: FWD-4's finish dates and FWD-9's tier 3 depend on it. The
 production pulls (C-PRIORITY tier 1) never draw against the backfill allowance. Buying capacity or entitlement is Andrew's spend
 decision and is out of scope.
 
@@ -206,7 +210,7 @@ what any page shows, metering other vendors, rewriting the model notebooks (brie
 | id | outcome_ref | surface | claim | verb | bound |
 |---|---|---|---|---|---|
 | S01 | FWD-2, FWD-3 | the one demand ledger, in cells, per vendor channel, job and page | measured (`bbg_budget.py:5-14`: rows, rival-funds only) | build | C-CELL; C-METER; C-HOMES |
-| S02 | FWD-3 | the per-channel reserve and the backfill allowance | measured (`bbg_budget.json`: 150,000 / 30,000 rows) | amend | C-RESERVE; floor 2.92M BQL cells |
+| S02 | FWD-3 | the per-channel reserve and the backfill allowance | measured (`bbg_budget.json`: 150,000 / 30,000 rows) | amend | C-RESERVE; ceiling from the 2.92M floor, reserve = production draw + margin |
 | S03 | FWD-4, FWD-9 | the queue: request, quote, rank, slice, schedule, record | held | build | C-QUOTE; C-PRIORITY |
 | S04 | FWD-5 | the unresolved list, with reason and open date ranges, fed by the existing resolvers | measured (`resolve_tickers.py`; `crosswalk.py`) | build | C-IDENTITY; no second resolver |
 | S05 | FWD-1, FWD-7 | the shared Yahoo pacer and failure rule | measured (`lambda_function_v2.py:46`, per-caller pacing) | build | C-YAHOO; C-PRICES |
@@ -235,5 +239,5 @@ evidence files (their figures are the brief's, marked M or E as it marks them); 
 ## PRIOR ART TO CARRY
 
 `data/etfs/scripts/rivalfunds/bbg_budget.py` + `bbg_budget.json` (the right shape, the wrong scope); the pacer note
-`org/tier0_utility/0.0.3_BG_BBGTerminal/deliverables/MDPF_SECHIST_PACER_20261007.md`; `lambda_function_v2.py`'s batch pacing;
+(the MDPF_SECHIST pacer note cited in v0.1 exists in no tree: CVO finding F2, measured 0 of 74,316 files; removed); `lambda_function_v2.py`'s batch pacing;
 `resolve_tickers.py`'s seven methods; `crosswalk.py`; `integrations/bloomberg/READ_HERE.md` (two-phase budgeted sign-in).
