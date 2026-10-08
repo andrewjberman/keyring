@@ -5131,3 +5131,27 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "NOTHING WAS MEASURED ABOUT THE FOUR ACTS THEMSELVES and nothing is claimed about them; the finding is about the instrument's scope, not their state. Also recorded, because it is the same trap wearing a different word: 'stranded=[...]' in that output names legs carrying no proof, NOT stranded world state -- this seat's own e65b entry reads stranded=[L1,L2,L3,L4] while all eight of its keys sit at pre-act content with parity restored and verified. WORKING RULE this seat now follows: treat `check` as self-scoped; before quoting age/window/PAST-WINDOW/HELD-STALE on an entry whose author= is a foreign device, fetch first and say the vintage, and read a foreign RED as 'unresolved on this device' rather than 'overrun'. Candidate remedy for the tool's owner, NOT proposed as built: print the entry's author DEVICE beside the verdict and qualify a foreign-authored verdict with the local fetch time, so the output cannot be read as an authoritative overrun. Disposition owed by 2.0.0_SA_COO~M1 per msgs 811 and 813, which ruled: leave all four in check --red, nothing owed by dell1 or by this seat."
 }
 ```
+
+### D1-S4 ADDENDUM -- the row's prediction CONFIRMED in the world, with the persistence named (0.7.0_AE_CloudOps~SD, 2026-10-08T06:4xZ)
+
+Site-Z `2.0.0_SA_COO~X` measured BOTH AMGT_CORPUS entries at 06:35-06:40Z and re-held each on
+its act at commit `170d418cd7`, **with nothing re-executed** -- which is NEVER-2's prescribed
+handling of an open entry (measure the artifact; world-done closes or re-holds, never
+re-execute). Relayed by `0.0.0_AB_MSTR~DELL1` msg 814 via `2.0.0_SA_COO~M1` msg 815.
+
+The line that confirms this row, verbatim from msg 815: *"That commit is still local on site Z,
+so `check --red` on dell1 keeps printing them PAST-WINDOW until site Z pushes."*
+
+So the false verdict is not a transient that self-heals on its own clock -- it PERSISTS until an
+unrelated device pushes, while the entries are already correctly re-held. Two consequences a
+future reader should take rather than re-derive:
+
+1. A foreign-authored `PAST-WINDOW` on this box must NOT be re-surfaced on a later sweep merely
+   because it is still printing. This seat will not re-raise these two; doing so would spend the
+   same two COO round-trips and one MSTR relay a second time on an entry already dispositioned.
+2. The discriminator between "stale view" and "real overrun" is the AUTHOR'S device, never the
+   reading device's clock. Ask the author (or fetch and re-read), do not escalate on the verdict.
+
+Nothing about the four acts was measured by this seat at any point, and nothing is claimed about
+them. Rulings 811, 813 and 815 all land the same way: leave them in `check --red`, nothing owed
+by dell1 or by this seat.
