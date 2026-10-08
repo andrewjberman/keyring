@@ -295,6 +295,27 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "D1-S1: ARMED -- an untargeted apply of opal-assets inside the window restores the input and silently voids the 06:00Z test.",
     "world_is": "Disarmed for the window: every apply of opal-assets is held to a targeted plan that does not name the daily target until 06:20Z, and the restore owners are named and armed. Residual (not a hazard): the guard is a notice binding by reading, not a gate; the cut lesson is that an amendment moving a step's time re-reads every half bounding that step's duration."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T06:20:00Z",
+    "one_line": "The HG-d3 restore of cot-rebalancer-runner-daily's input landed at 06:08:46Z from an actor none of the three named restore owners claims: the laptop CTO made no put, ~F was down, and dell1's fallback read NOOP at 06:10:09Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail PutTargets 05:50-06:15Z: 1 of 1 on rule cot-rebalancer-runner-daily, 2026-10-08T06:08:46Z, user/Andrew_Berman, input {\"mode\":\"pull\"} (read by 2.0.0_SA_COO~G1 06:1xZ)",
+        "0.0.0_AB_MSTR~DELL1 msg 808: key ending CBIJ, IP 108.242.96.89, aws-cli/1.44.44 Python 3.12.10 Windows 10.0.26100; laptop 1.0.0_SA_CTO says it made no put; dell1 acts as cloudops-dell1-agent-user on aws-cli 2.37.9",
+        "hg_d3_restore_fallback.py 06:10:09Z NOOP-ALREADY-RESTORED; OS task 06:11:01Z NOOP-ALREADY-RESTORED; hg_fwd1_exercise.py --restored RESTORED-OK 06:10:23Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-HG-d3 step 2 and the FWD-1 never-widen half: the restore is made by a named owner -- (1) 0.7.0_AE_CloudOps~F, (2) 2.0.0_SA_COO~G1 at 06:10Z, (3) laptop 1.0.0_SA_CTO at 06:17Z -- with its put time-stamped in the ledger.",
+    "world_is": "The right value landed inside the 06:05-06:20Z window, so the exercise is intact (FAILED-OK, RESTORED-OK). But the act carries no owner: a laptop-credential process or Andrew directly wrote the target, and nothing in the order or the halves names it. INERT: the value is the declared restore value and no further put is pending. The ledger names the actor by CloudTrail identity until the laptop identifies it (asked by MSTR~DELL1 msg 808)."
   }
 ]
 ```
