@@ -2169,3 +2169,629 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   }
 }
 ```
+
+## IRPT_DASHBD-W21-S1 -- the served flow rule drops every CONDITIONAL-BY-COUNTERPARTY row on pandas 3: `_final is None` never matches a NaN
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T15:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S1",
+  "one_line": "On pandas 3.0.6 account_return_daily.classify_and_sum assigns _final = None into a frame column, the column becomes str dtype and the None becomes NaN, so `_final is None` matches nothing and every CONDITIONAL-BY-COUNTERPARTY row is dropped from the flow and is not counted as UNRESOLVED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "classify_and_sum (account_return_daily.py lines 508-611) resolves a CONDITIONAL-BY-COUNTERPARTY row by same-account-type-transfer, then the pair matcher, then the text counterpart, and defaults an unmatched row to EXTERNAL; FINAL_BY_PARTITION maps that class to None and the code reads 'unresolved so far' as `_final is None`. The round-23 identity record treats the flow term as complete.",
+  "world_is": "pandas 3.0.6 on this machine: `t['_final'] = [list holding str and None]` yields a str-dtype column in which the None is NaN (a 3-line probe returns [False, False, False] for `v is None`). So _pending() is empty on every day, no stage runs, nothing defaults to EXTERNAL, and the census shows the rows only as `ft_excluded_class-nan_rows` (71, 38, 32, 74 on four of the days). 6 cash journal rows and 5 in-kind rows of the largest-gap account are dropped this way; the same producer with `pd.options.future.infer_string = False` resolves them (flow -351,775.00 on 2026-09-02 against 0.00 as run, -3,000,165.12 on 2026-09-14, 12 days printed in the record). The 91 graded accounts carry 24 CONDITIONAL rows over 7 types. WHETHER THE LAMBDA RUNTIME THAT SERVES account_return_daily CARRIES pandas 3 IS UNMEASURED: comp-find found no pandas pin under infra/aws/lambda/investor-reporting (0 requirements files over 578 files scanned).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json conditional_class_evidence (12 days, as-run and counterfactual flow per account) and largest_gap_window.evidence_rows (11 rows)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 510-535 (_final assigned from a list holding None) and 528-529 (_pending)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/gap_diagnosis_e1.py flow proof, run on pandas 3.0.6"
+    ]
+  },
+  "notes": "ARMED because a pandas 3 host silently under-reads every journal and transfer of assets, in the served-producer file and in every table built on it. The producer was not edited (read-only grant). The remedy is a one-line comparison (pd.isna) in a served file, which is not this order's grant; E2's order must either grant it or state a different disarm."
+}
+```
+
+## IRPT_DASHBD-W21-S2 -- fixing the named cause does not tie the in-kind windows: 7 of 39 gaps stay above 0.05 with the CONDITIONAL rows resolved
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T15:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S2",
+  "one_line": "With the CONDITIONAL rows resolved (the counterfactual run) 7 of the 39 windows still miss by more than 0.05, two of them by about 1.6 million and 92 thousand, because the identity has no term for in-kind lots, for a basis posted after receipt, or for a basis adjustment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-24 cut reads E2 as 'fix the named cause and re-grade': one cause for the 39 gaps, found by E1.",
+  "world_is": "E1 names five causes over the 9 MISSING-TERM windows (CONDITIONAL_FLOW_NOT_READ 4, LOT_BASIS_MOVED_WITHOUT_FLOW 2, LOT_BASIS_ABOVE_ORIGINAL_COST 3, FEE_ADMIN_HAS_NO_TERM 1, WITHHELD_TAX_HAS_NO_TERM 1; two windows carry two). Resolving the first only closes 2 windows (the cash-only ones); the two in-kind windows turn into other gaps because an in-kind arrival brings a lot whose whole value is gain (cost basis 0 until posted) and the flow also counts the arrival (window gap -1,607,156.91 and +92,255.50), and the lot table lags the balance by one trading day on an in-kind journal out. FEE-ADMIN, a withheld-tax debit and the ADJ in-kind removal move value and map to no term, and a basis wedge on new lots (cost_basis_unamortized above the cash paid, 99.94 on one lot) shifts the gain. Each is a term or a definition the identity lacks, not a rounding.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json gap_classes.counterfactual and gap_classes.rows (each MISSING-TERM row carries its components, residual and evidence rows)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json unmapped_value_movers (10 types)"
+    ]
+  },
+  "notes": "For the round-24 analysis: the enrichment list for E2 should state which of the five the re-grade must close and which it carries forward as a stated unmapped term; an identity that ties on the cash-only windows and not on the in-kind ones is a partial FWD-4."
+}
+```
+
+## IRPT_DASHBD-W21-S3 -- the census grain: a type is key plus side, because a key can carry opposite signs
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T15:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S3",
+  "one_line": "The order asks for a sign per type, but one tran_srcde/tr_cd/sb_cd key carries both a credit and a debit (BKSWP, BRSWP, $JNL, TOA), so the census is keyed on the key plus its debit_credit side: 35 types over 30 keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order lists 'every type, its row count, its sign as the activity rule reads it (+, - or UNSIGNED)', one sign per type.",
+  "world_is": "The rule signs a cash row from debit_credit (C +, D -) and an in-kind row from L/S, so the sign belongs to the row's side, not the key. The census in GAP_DIAGNOSIS_E1.json is keyed on tran_srcde/tr_cd/sb_cd/debit_credit (35 rows over 2,662 fact_trn rows of the 91 graded accounts; 30 distinct keys), and `unmapped_value_movers` names types in the same form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json type_census and type_census_scope.type_grain"
+    ]
+  }
+}
+```
+
+## IRPT_DASHBD-S30 -- W21-S1 disarmed for the served gold (layer pandas 2.2.3 measured)
+
+```json
+{
+  "id": "IRPT_DASHBD-S30",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T16:04:58Z",
+  "one_line": "W21-S1 disarmed for the served gold: the served reporting-gold function's layer carries pandas 2.2.3, so the None-to-NaN drop in classify_and_sum is pandas-3-only and hits LOCAL runs on dell2 (pandas 3.0.6), which DB-b-37 now runs under the served behaviour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W21-S1"
+  ],
+  "spec_asserts": "W21-S1: classify_and_sum in the served producer resolves CONDITIONAL-BY-COUNTERPARTY rows with _final is None; under pandas 3 the None becomes NaN and the rows drop from the flow uncounted; whether the Lambda runtime carries pandas 3 was unmeasured.",
+  "world_is": "MEASURED: irpt-49f-reporting-gold-lambda takes pandas from irpt-performance-native-layer (lambda.tf:34-53); the layer's latest version is v1 (created 2026-09-24, python3.12), and its zip in the account's lambda-layers bucket lists pandas-2.2.3.dist-info, numpy-1.26.4.dist-info and pyarrow-14.0.2.dist-info (zip directory read by ranged S3 reads; nothing executed). So the served account_return_daily gold is not affected. This box runs pandas 3.0.6, so the round-23 local identity run was. DB-b-37 amendment 1 runs the call under the served behaviour and asserts the conditional rows resolve. LATENT: the served code still drops these rows if its layer ever moves to pandas 3; that hardening belongs to a release cell of the served producer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda list-layer-versions irpt-performance-native-layer: v1, 2026-09-24",
+      "layer zip directory: pandas-2.2.3, numpy-1.26.4, pyarrow-14.0.2",
+      "local python -c pandas.__version__: 3.0.6",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf:34-53"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard is not live on the served gold (pandas 2.2.3 measured); its local effect is handled by DB-b-37 amendment 1; the latent pandas-3 hardening is named for the served producer's next release."
+}
+```
+
+## IRPT_DASHBD-W21-S4 -- after the three fixes one in-kind account still misses: the custodian re-selects the relieved lots the day after an in-kind departure
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T16:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S4",
+  "one_line": "One of the 91 windows still fails after amendment 1's three rules, because the custodian re-selects which lots an in-kind departure relieved on the next trading day, moving cost basis with the share count, the flow and the value all unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 rules 1-3 name the causes of the in-kind windows (dropped conditional rows, in-kind transfers at transfer-date value, unmapped value movers) and expect the re-grade to close them.",
+  "world_is": "After the rules, 55 of 91 windows tie within one cent and 36 do not: 32 ROUNDING, 3 MISSING-TERM (a basis above the cash paid, unchanged from DB-b-36) and 1 OTHER. The OTHER window carries two signatures: a lot table that trails the balance by one trading day on an in-kind departure (two day gaps that net to zero over the two days), and a single day on which the custodian re-selects the lots relieved by the departure of the day before (the lots' share count is the same before and after, no flow, no sale, and the day's gap equals the change in the custodian's summed cost basis to the cent). The second is a restatement of basis that moves no value; no rule in the order maps it, and a term built from the lot table's own basis change would zero the gap by construction, so it is carried as a gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json regrade.failures (the class OTHER row carries both signatures and its day gaps)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py classify_failure"
+    ]
+  },
+  "notes": "For the round-24 analysis: either the identity states a restatement term (a decision about what unrealized_change means when basis moves with no value) or the window stays a listed failure. Not plugged here."
+}
+```
+
+## IRPT_DASHBD-W21-S5 -- the lot table trails the balance on an in-kind departure, so the leg is matched to the lots on the day they post (a choice the order did not state)
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T16:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S5",
+  "one_line": "On one in-kind departure the custodian's unrealized lots still carry the position on the leg's day and drop it on the next trading day, so an in-kind leg waits up to 3 trading days for its lots; the 3 is a chosen bound, not a measured one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 rule 2: an in-kind departure is a WITHDRAWAL at its market value on the transfer date, and the lots that left are measured from it; the order states no timing between the leg and the lot table.",
+  "world_is": "Of the 4 in-kind departures matched in the window, 3 post on the leg's own day and 1 posts one trading day later (the balance has already dropped the position, the lot table has not). The producer keeps the flow on the leg's day and books the departure gain on the day the lots post, so the two days carry equal and opposite gaps (each stays GAP_ABOVE_ALLOWANCE) and the window over both ties. The bound LEG_LAG_DAYS = 3 is a choice: one lagged departure is the only sample, and a leg not posted within the bound is listed unmatched, never bent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json inkind.matched_departures (leg_day, lag_trading_days)",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py LEG_LAG_DAYS and _one_security"
+    ]
+  },
+  "notes": "A longer history of in-kind departures would measure the lag; until then the bound is the producer's, stated here."
+}
+```
+
+## IRPT_DASHBD-W21-S6 -- pandas' option context is process-global: the served runtime must wrap the whole flow prefetch, not one call
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T16:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S6",
+  "one_line": "Amendment 1 rule 1 says to run the served call under pd.option_context(\"future.infer_string\", False); the context is global to the process, so a context entered per call inside the producer's thread pool restores the option under a sibling thread still classifying.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 rule 1: run the call under pd.option_context(\"future.infer_string\", False) where the option exists, and assert that the CONDITIONAL rows resolved.",
+  "world_is": "pandas options are process-wide state, not thread-local, and compute_local classifies the flow days on a ThreadPoolExecutor of 12. The context is therefore held around the whole pool, and ServedFlowCache.get refuses to classify a day when the option is not in force (a test covers the refusal). Because the producer needs each day's own transaction frame for its in-kind and income supplements, ServedFlowCache reproduces FlowCache.get call for call; a control reads three days with both and finds the returned tuples equal on 3 of 3, and the same served call on pandas' default string behaviour differs on the conditional-bearing days (2 of 2 sampled).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json controls",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py served_runtime, ServedFlowCache, compute_local"
+    ]
+  },
+  "notes": "If the served producer is ever hardened (a pd.isna test in classify_and_sum, named in S30), this wrapper becomes redundant and its refusal can go with it."
+}
+```
+
+## IRPT_DASHBD-W22-S1 -- the lag order measures all trades but the bound governs in-kind legs; reinvested-dividend lots carry the trade date in orgpurch_date
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T17:47:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S1",
+  "one_line": "The order measures the lag of every trade, but LEG_LAG_DAYS governs only in-kind legs; and a reinvested-dividend buy has no lot acquired on its trade date, its same-day lot carries the trade date in orgpurch_date instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-38 item 1: for every trade that should produce or relieve a lot (buys, sells, in-kind), find its lot row and the lag in trading days; the measured distribution sets LEG_LAG_DAYS.",
+  "world_is": "LEG_LAG_DAYS is read only by _one_security, for in-kind legs; the buy and sell lags (873 of 887 trades) are measured beside it and do not feed any producer rule. Matching a buy to its lot by acquired_date left 7 of 765 buys unmatched, all sb_cd RD (reinvested dividend): the custodian posts their lot the same day with acquired_date earlier and orgpurch_date equal to the trade date. They match on orgpurch_date at lag 0. Result: 887 of 887 matched, 886 at lag 0 and 1 at lag 1 (an in-kind departure), so LEG_LAG_DAYS is 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/LOT_LAG_E2.json lags, by_kind, buys_matched_by",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/lot_lag_e2.py buy matching",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py LEG_LAG_DAYS, _one_security"
+    ]
+  },
+  "notes": "The sample holds 14 in-kind legs; the bound is measured on a window with 1 lagged leg. A longer history would tighten it. The producer lists a leg past the bound and never bends it."
+}
+```
+
+## IRPT_DASHBD-W22-S2 -- A realized lot names the open lot it closed by its opening event id, and that id repeats within an account when a wash sale re-dates a lot, so the sal
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T18:48:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S2",
+  "one_line": "A realized lot names the open lot it closed by its opening event id, and that id repeats within an account when a wash sale re-dates a lot, so the sale linked to no single lot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-39 item 2: change the activity or lot rule so every account with the same pattern is handled. The producer links a realized row to the prior day's open lot by close_open_event_id and security alone.",
+  "world_is": "In the 91-account window one sale of 0.94 shares was listed SALE_NOT_LINKED_TO_ONE_LOT: its opening event id is shared by a second, smaller lot (acquired a different day), so two open lots matched. The realized row carries its acquired_date; adding it to break a tie links the sale to exactly one lot (0 unlinked sales in the re-run, from 1). This is a linking rule, not a figure: no sale is linked that was not already unique on event id, and a tie still unresolved stays unlinked and listed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py _sold_lot",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/WINDOWS_E1.json rule_audit.unmatched (empty)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json inkind.unmatched (round 24: 1 listing)"
+    ]
+  },
+  "notes": "Round 24 left that sale unlinked and its basis at the custodian's figure; with the wash-sale rule it had to be linked or it would have opened a new cent-sized gap."
+}
+```
+
+## IRPT_DASHBD-W22-S3 -- The wash-sale rule adds a basis_source member (WASH_SALE_EXCLUDED_BASIS) and the method and schema versions move (3 and 1.2); the lot contracts under 
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T18:48:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S3",
+  "one_line": "The wash-sale rule adds a basis_source member (WASH_SALE_EXCLUDED_BASIS) and the method and schema versions move (3 and 1.2); the lot contracts under org/standards do not list basis_source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-39 item 2 names a rule change in the activity or lot rule; it does not name a schema member.",
+  "world_is": "Measuring a lot from the cash paid needs the custodian's figure and the identity's figure to differ with a stated reason, which basis_source already carries for in-kind lots. The axis stays one-intent (which cost the lot is measured from) with three members in a stated precedence (IN_KIND over WASH_SALE over CUSTODIAN). org/standards/IRPT_DASHBD_ACCOUNT_LOT_*_CONTRACT.json do not mention basis_source (round 24 added it without a contract line), and are outside this order's paths, so they were not edited. METHOD_VERSION 2 to 3 and SCHEMA_VERSION 1.1 to 1.2 mark the change; no table is written to S3, so no served consumer reads either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py BASIS_SOURCES, METHOD_VERSION, SCHEMA_VERSION",
+      "org/standards/IRPT_DASHBD_ACCOUNT_LOT_UNREALIZED_DAILY_CONTRACT.json (no basis_source column)"
+    ]
+  },
+  "notes": "For the CTO's next analysis: the two lot contracts need a basis_source and custodian_cost_basis line before any table is served."
+}
+```
+
+## IRPT_DASHBD-W22-S4 -- Removing served_runtime() (DB-b-40 item 1) leaves round 24's regrade helper unable to regenerate: it calls aal.served_runtime().
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T19:25:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S4",
+  "one_line": "Removing served_runtime() (DB-b-40 item 1) leaves round 24's regrade helper unable to regenerate: it calls aal.served_runtime().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-40 item 1: set the option once at the producer's entry and remove the per-call context.",
+  "world_is": "deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py calls aal.served_runtime() in its control block (two uses); with the function removed that file raises AttributeError if run again. It is a round-24 deliverable outside this order's paths, so it was not edited; the round-24 record it wrote (IDENTITY_REGRADE_E2.json) is unchanged and this worker's windows_e1.py does not use the removed name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py run_flow_served and main controls",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py set_served_runtime, classify_flow_days"
+    ]
+  },
+  "notes": "Regenerating round 24's record needs either aal.set_served_runtime() in that helper or the pre-b-40 producer; neither is a data change."
+}
+```
+
+## IRPT_DASHBD-W22-S5 -- The served classify_and_sum cannot take a frame whose index repeats a label: it addresses rows with t.at[label, column].
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T19:25:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S5",
+  "one_line": "The served classify_and_sum cannot take a frame whose index repeats a label: it addresses rows with t.at[label, column].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-40 item 2: make classify_and_sum resolve the conditional class without depending on None surviving a column; change nothing else.",
+  "world_is": "While testing that the hardened column does not depend on the frame's index, a frame with a repeated index label (as pd.concat of several partitions without ignore_index would give) made the unchanged stage 1 (t.at[idx, detail_col] or '') raise ValueError (the truth value of a Series is ambiguous). The same happens on the unhardened source, so it predates this order. The served read path builds one partition's frame per call, so the repeated-label case is not reached today; the new test uses a unique, shuffled index. Not changed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py classify_and_sum stage 1 (t.at[idx, detail_col])",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_daily_none.py test_classify_and_sum_does_not_depend_on_the_frame_index_when_it_holds_the_final_column"
+    ]
+  },
+  "notes": "A reset_index(drop=True) on the copy at the top of classify_and_sum would remove it; out of scope for an order that changes nothing else in the file."
+}
+```
+
+## IRPT_DASHBD-W23-S1 -- The role's silver read set holds only the three custody prefixes, but the activity and lot producer reads the custodian's lot tables, which sit beside them.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S1",
+  "one_line": "The role's silver read set holds only the three custody prefixes, but the activity and lot producer reads the custodian's lot tables, which sit beside them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 item 4: the write ARNs become the returns, class and three new prefixes; read on the three prefixes for the newest-landed-day listing. Nothing in the order grants the role a read of the custodian's lot tables.",
+  "world_is": "account_activity_lots.py reads fact_rld, fact_uln and fact_ult (and fact_trn) under the silver custody root, siblings of the transactions prefix. The role's silver read set (locals.tf irpt_rg_silver_prefixes) was dim_position, dim_balance and fact_trn only, so with the order's grants alone every activity and lot day would fail AccessDenied at the first lot read and land as LOTS_SKIPPED (Branch B on every fire). This cell adds the custodian's lot-table prefixes to the silver READ set, derived in locals.tf from the declaration's lot_source (the move W20-S1 asked for), never typed: GetObject and the ListBucket prefix pattern on three more prefixes. No write, no Delete, no other bucket. The packet names it for the CTO half to sign. Whether the silver bucket's own policy admits the role on those prefixes is not read by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf irpt_rg_silver_prefixes (this cell's commit)",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py read_window / lot_prefix",
+      "data/assets/scripts/gold/irpt_reporting/sources.json lot_source"
+    ]
+  },
+  "notes": "The after-read A5 prints the role policy; the silver statements are the ones to read for the three added prefixes."
+}
+```
+
+## IRPT_DASHBD-W23-S2 -- The lots stage costs about twice the returns stage in time and four times in peak memory on 20 accounts for one day; at population scale it is unmeasured against a 900 s, 2048 MB function.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S2",
+  "one_line": "The lots stage costs about twice the returns stage in time and four times in peak memory on 20 accounts for one day; at population scale it is unmeasured against a 900 s, 2048 MB function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO-DB-b-41 item 4: the schedule does not change; item 6: record the run's wall time and peak memory.",
+  "world_is": "20 accounts, 2026-10-05, one local process: the unextended handler 34.6 s and 228 MB peak working set; the extended handler 69.5 s and 992 MB, with 1,330 unrealized-lot rows. The round-23 record (deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json) gives a population of 7,597 accounts, 380 times the sample, so the lots stage's rows, its pandas row loops and its memory at population scale are not measured and may exceed the function's 900 s timeout or 2048 MB. The lots stage runs AFTER the returns and class stages, so a timeout or out-of-memory kill there cannot lose a returns or class day; it would end the invocation in error each fire, the lots days would never land, and nothing in this root notifies anyone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/RELEASE_LOCAL_RUN.json wall_seconds, peak_working_set_mb",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json population"
+    ]
+  },
+  "notes": "The first fire's after-read (packet A1) shows whether the day landed; an ad-hoc dry_run invoke measures the duration before the organic fire. Memory and timeout are in lambda.tf and unchanged by this order; changing them is a later cell's act.",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-W23-S3 -- The activity and lot producer had no emit function, so the handler could not emit through it; emit_day() is added to the producer.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S3",
+  "one_line": "The activity and lot producer had no emit function, so the handler could not emit through it; emit_day() is added to the producer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 item 3: the handler emits the same day of the three tables through account_activity_lots.py's own functions. The producer's header and a test said it has no upload path.",
+  "world_is": "account_activity_lots.py carried compute_local and write_parquet (local) and no function that writes S3; test_the_addresses_are_builder_output_and_the_producer_has_no_write_path asserted no put_object, upload_file or stream_to_parquet in the file. This cell adds ONE function, emit_day() (the account_class_daily.emit_class_day shape: the builder address, data.parquet then manifest.json, a refusal on an empty day, a row off the day and a repeated primary key), and changes that test to allow exactly that one function and nothing else in the file. The producer's CLI still has no upload path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py emit_day, PRIMARY_KEYS",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_activity_lots.py test_the_addresses_are_builder_output_and_the_only_write_path_is_emit_day"
+    ]
+  },
+  "notes": "Both files are in the order's paths."
+}
+```
+
+## IRPT_DASHBD-W23-S4 -- No file names 'the round-24 sample'; the first 20 accounts of the 100-account list the later rounds graded were used, and that day holds no realized lot for them.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S4",
+  "one_line": "No file names 'the round-24 sample'; the first 20 accounts of the 100-account list the later rounds graded were used, and that day holds no realized lot for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 item 6: the extended handler's --local mode for 2026-10-05 over the round-24 sample's first 20 accounts. Item 1: prove uniqueness of the primary key on the local run's rows.",
+  "world_is": "Round 24's record (deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json exercise_selection) names its population as the 91 graded accounts of the round-23 sample; the list itself is the `accounts` array of deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json (100 accounts). The first 20 of that array were used and the source is written into RELEASE_LOCAL_RUN.json. On 2026-10-05 those 20 accounts close no realized lot (0 rows), so a one-day run cannot show the realized key unique; KEY_UNIQUENESS_WINDOW.json runs the same 20 accounts over 2026-09-01..2026-10-05 (24 trading days: 432 activity, 30 realized and 30,183 unrealized rows, 0 repeated keys) and exercises emit_day(upload=False) on every day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/RELEASE_LOCAL_RUN.json accounts_source, primary_key_uniqueness",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/KEY_UNIQUENESS_WINDOW.json"
+    ]
+  },
+  "notes": "If a different list was meant, release_local_run.py takes the list from one constant and reruns in about two minutes."
+}
+```
+
+## IRPT_DASHBD-W23-S5 -- terraform is not on this box, so the HCL edits in locals.tf, iam.tf and lambda.tf are unvalidated and the plan counts in the packet are read from the diff, not from a plan.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S5",
+  "one_line": "terraform is not on this box, so the HCL edits in locals.tf, iam.tf and lambda.tf are unvalidated and the plan counts in the packet are read from the diff, not from a plan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 items 4 and 7: edit the three .tf files; the packet carries a targeted plan command and its expected counts. NO terraform init, plan or apply is permitted to this cell.",
+  "world_is": "No terraform or tofu binary resolves on PATH, so terraform fmt and validate were not run either. The new locals (the derived silver lot prefixes, the three gold table prefixes, the five write ARNs) were emulated in Python from sources.json and scopes.json and printed in the packet; the expressions used are split, trimsuffix, slice, join, concat, distinct and a for expression, all in the language since 0.12. The expected plan (0 to add, 3 to change, 0 to destroy) is derived from which resource arguments the diff touches, and the issuer reads the real plan before the halves are used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf (this cell's commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE.md Plan"
+    ]
+  },
+  "notes": "A plan that differs from the expected counts stops the apply; the packet says so."
+}
+```
+
+## IRPT_DASHBD-W23-S6 -- The deployed bundle pins a returns producer that is not the one at HEAD, so a rebuilt artifact changes the served returns code by 4 lines the local DELTA=0 run does not cover.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:34:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S6",
+  "one_line": "The deployed bundle pins a returns producer that is not the one at HEAD, so a rebuilt artifact changes the served returns code by 4 lines the local DELTA=0 run does not cover.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO-DB-b-41: the returns output must not change by a byte (DELTA=0); the round-22 packet's precondition 1 lists three pins (account_class_daily.py, the class client, sources.json) and no re-pin of account_return_daily.py.",
+  "world_is": "The source map entry irpt-49f-reporting-gold-lambda pins data/assets/scripts/gold/irpt_reporting/account_return_daily.py at bc50d5711e with sha256 cb38fe16f002a1cf5a07ddd704f01a6992528bbec04f2486e13dca3e6b734529. The file at this branch's HEAD has sha256 9935f5c7bcd7bd9ca071ae7b7a672a49a5d96fcb0cd7d558c9fc3bc49157fc19: commit ba544b6064 (TO-DB-b-40, round 25) changed classify_and_sum (the _final column held as object and tested with isna; 4 insertions, 3 deletions). The local release run compares the round-25 handler with the extended one over the SAME returns producer (HEAD's), so it shows 0 bytes of change from this cell's handler and declaration, and says nothing about bc50d5711e versus HEAD. The round-25 record (PANDAS_ONCE_E3.md) shows equal output with string inference off, the behaviour of the layer's pandas 2.2.3, which could not be run on this box. The packet names the re-pin as precondition 1 pin 0 and puts DELTA=0 on the served returns in its after-read (A4).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from[0]",
+      "git log bc50d5711e..HEAD -- data/assets/scripts/gold/irpt_reporting/account_return_daily.py -> ba544b6064",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/PANDAS_ONCE_E3.md Controls"
+    ]
+  },
+  "notes": "The deploying lane may keep the old pin (the activity producer then imports the older returns producer) or re-pin; the packet's after-read A4 reads the served T-1 against a local run of the unextended handler either way.",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-S31 -- W23-S2 ruled: the release apply waits on a population-scale measurement of the lots stage
+
+```json
+{
+  "id": "IRPT_DASHBD-S31",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T23:24:36Z",
+  "one_line": "W23-S2 disarmed by gating: the COO half of the activity-and-lot release packet is WITHHELD until the lots stage is measured at the 7,597-account population inside the function's 900 s and 2048 MB; the first-fire dry_run sizing in the packet is not accepted in its stead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W23-S2"
+  ],
+  "spec_asserts": "W23-S2: the lots stage is unmeasured at the 7,597-account population against the 900 s / 2048 MB function; the packet's COO half text accepts the sizing risk for the first fire with a dry_run read.",
+  "world_is": "MEASURED by the worker (RELEASE_LOCAL_RUN.json): 20 accounts, one trading day, one process -- unextended handler 34.6 s and 228 MB peak; extended 69.5 s and 992 MB, the lots stage adding about 35 s and about 764 MB. The population is 7,597 accounts (380 x the sample). Nothing measured says the stage fits; a stage that never fits would log LOTS_SKIPPED on every fire and serve nothing. The hazard is live only at the apply, and the apply needs the COO half: the issuer withholds it until a measurement at population scale (one trading day, all 7,597 accounts, wall time and peak memory printed) shows the stage fits, or the stage is split so it does. Routed to 1.0.0_SA_CTO~DELL2 in the round-26 packet as an enrichment for round 27.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~23/RELEASE_LOCAL_RUN.json: wall time and peak memory before and after",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json: population 7,597",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf: timeout 900, memory 2048"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S32 -- W23-S6 ruled: the account_return_daily re-pin waits on DB-b-43 (pandas 2.2.3)
+
+```json
+{
+  "id": "IRPT_DASHBD-S32",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T23:24:36Z",
+  "one_line": "W23-S6 disarmed by gating: the packet's pin 0 re-pins account_return_daily.py to the round-25 hardening, which DB-b-43 has not yet tested on the served layer's pandas 2.2.3; the COO half is WITHHELD until DB-b-43 passes there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W23-S6"
+  ],
+  "spec_asserts": "W23-S6: the deployed pin of account_return_daily.py (bc50d5711e) differs from HEAD by the round-25 classify_and_sum change (ba544b6064); the local equality run used HEAD on both sides, so it does not cover the change; the packet adds a re-pin as pin 0.",
+  "world_is": "The re-pin would ship classify_and_sum's object-dtype + isna change to the served function, which runs pandas 2.2.3. Its only evidence is the round-25 equality with string inference off on pandas 3.0.6. DB-b-43 (the None test on pandas 2.2.3) could not run on the laptop (pandas 2.3.3, MSTR msg 1136) and runs on dell2 once the approved Python 3.12 kit lands. The issuer withholds the COO half until DB-b-43 passes on 2.2.3; a byte-equality of the returns table under 2.2.3, old pin against new, is added to the after-read before the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-49f-reporting-gold-lambda pin bc50d5711e",
+      "commit ba544b6064",
+      "MSTR msg 1136: laptop pandas 2.3.3",
+      "decomposition section 26a: DB-b-43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W26-S1 -- The lots stage refuses at population scale on a repeated realized lot id, after 244.7 s and above the memory limit.
+
+```json
+{
+  "id": "IRPT_DASHBD-W26-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~26",
+  "surfaced_at": "2026-10-08T03:40:17Z",
+  "one_line": "At the 49F population the extended handler's lots stage REFUSES on a repeated realized lot id (87 ids, 175 rows, 36 accounts) after 244.7 s and a 2,759.5 MB peak working set: the memory limit is breached by 711.5 MB before the refusal, and the lots tables are not produced.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-46 item 1: run the extended handler's --local for 2026-10-06 over its own population (7,597 accounts) and record wall and peak per stage, with the per-account tail; the producer's realized_rows docstring: a realized lot id is unique on every partition measured, so a repeat is a source change to look at.",
+  "world_is": "Measured with the handler and producer unchanged (SIZING_S31.json): returns 122.6 s / 257.8 MB, class 92.7 s / 295.6 MB, lots 244.7 s / 2,759.5 MB (process peak), total 461.1 s / 2,759.5 MB against 900 s / 2048 MB. The lots stage read the 7,597 accounts and classified the flow, then realized_rows raised SystemExit 'realized lot id ... appears twice in one frame' (handler.lots_days caught it: LOTS_SKIPPED, handler.local raised REFUSED). The 2026-10-06 fact_rld partition holds 2,523 rows, 2,435 distinct ids, 87 ids repeated (175 rows, one id three times), 36 accounts, 0 ids across more than one account, 0 rows equal to another in all columns (REALIZED_ID_REPEAT_COUNTS.json). The stage never reached the activity loop, the in-kind step or the writes, so the stage's full wall and peak are unmeasured (not extrapolated) and the memory figure is a floor; the earlier 20- and 100-account local runs did not report it. The timeout is not breached up to the refusal (461.1 s of 900 s). Served on pandas 2.2.3 / Linux; this run is pandas 3.0.6 / Windows working set, so the memory figure is a laptop measure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/REALIZED_ID_REPEAT_COUNTS.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/sizing_s31.py",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py realized_rows (the repeat refusal)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py lots_days, local"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "With the repeat unresolved, a served fire would spend about 245 s and over 2.7 GB on the lots stage and then skip the three tables each day; the limit of 2048 MB would be crossed in the lots stage. Whether the repeat is a source change to dedupe, to key by another column, or to refuse by design is a producer decision outside this order's paths. The population-scale completion time and peak need a re-run once the repeat is resolved."
+}
+```
+
+## IRPT_DASHBD-W26-S2 -- The per-account tail of the lots stage is null: the stage is batched and the refusal precedes its only per-account loop.
+
+```json
+{
+  "id": "IRPT_DASHBD-W26-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~26",
+  "surfaced_at": "2026-10-08T03:40:17Z",
+  "one_line": "The lots stage has no per-account step to time except the activity row loop, which the refusal prevented from running, so the per-account seconds tail (p50, p95, p99, max) is null in SIZING_S31.json and DB27-2-AC1 FAILs on it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-46 item 1 and 3: record the seconds per account for the lots stage, with per_account_seconds {p50, p95, p99, max}; the criterion DB27-2-AC1 requires all four non-null.",
+  "world_is": "compute_local batches its reads, flow classification and unrealized-row build over all accounts at once (read_window 15.2 s, first_data_dates 118.3 s, unrealized_rows 108.9 s, classify_flow_days 1.4 s, realized_rows 0.01 s inside the 244.7 s stage); the only per-account call is activity_row in the final loop, reached after realized_rows, which refused. So no per-account sample exists (per_account_samples 0). The stage's mean is 0.0322 s per account (244.65 s over 7,597), a batch mean and not a tail; the tail is not derived from it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json per_account_samples, lots_substeps_seconds",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py compute_local"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S33 -- W26-S1 gated: lots stage refuses and crosses 2048 MB at population scale
+
+```json
+{
+  "id": "IRPT_DASHBD-S33",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-08T04:25:43Z",
+  "one_line": "W26-S1 gated: the activity-and-lot release stays withheld; the lots stage refuses at population scale on 87 realized lot ids repeated within one day's frame (36 accounts) and peaks at least 2,759.5 MB against 2,048 MB. The key and the memory fit go to 1.0.0_SA_CTO~DELL2 as round-28 work.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W26-S1"
+  ],
+  "spec_asserts": "W26-S1: the lots stage of the extended reporting-gold handler refuses at population scale and crosses 2048 MB, so the release as prepared would skip the three tables on every fire.",
+  "world_is": "MEASURED (DB-b-46, SIZING_S31.json and REALIZED_ID_REPEAT_COUNTS.json): 7,597 accounts, 2026-10-06; returns 122.57 s / 257.8 MB, class 92.69 s / 295.6 MB, lots 244.65 s to the refusal / 2,759.5 MB peak; total 461.06 s. realized_rows raised on a repeated realized lot id: 2,523 rows, 2,435 distinct ids, 87 ids repeated (175 rows; one thrice), 36 accounts, 0 ids spanning accounts, 0 full-row duplicates. The 20-account sample showed neither. Not live: the release apply is gated on the COO half, which stays withheld (S31, S32, and now this). The remedy is a design call -- the realized lot key and how the lots stage fits in the function -- and goes to the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~26/REALIZED_ID_REPEAT_COUNTS.json",
+      "commit f70cc737df"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

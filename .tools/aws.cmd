@@ -27,8 +27,14 @@ set "PYTHONIOENCODING=utf-8"
 set "_OPAL_AWS=%LOCALAPPDATA%\Programs\Python\Python312\Scripts\aws.cmd"
 if not exist "%_OPAL_AWS%" set "_OPAL_AWS=%LOCALAPPDATA%\Programs\AWSCLIV2\Amazon\AWSCLIV2\aws.exe"
 if not exist "%_OPAL_AWS%" set "_OPAL_AWS=%ProgramFiles%\Amazon\AWSCLIV2\aws.exe"
+@rem DELL1 (2026-10-08, 0.0.0_AB_MSTR~DELL1): the native v2 installer can also land at
+@rem %LOCALAPPDATA%\Programs\Amazon\AWSCLIV2\aws.exe. Then DERIVE: the first aws.exe on PATH (never
+@rem this .cmd, which `where aws.exe` cannot match). The laptop and site-Z order above is unchanged.
+if not exist "%_OPAL_AWS%" set "_OPAL_AWS=%LOCALAPPDATA%\Programs\Amazon\AWSCLIV2\aws.exe"
+if not exist "%_OPAL_AWS%" for /f "delims=" %%P in ('where aws.exe 2^>nul') do if not defined _OPAL_AWS_PATH set "_OPAL_AWS_PATH=%%P"
+if not exist "%_OPAL_AWS%" if defined _OPAL_AWS_PATH set "_OPAL_AWS=%_OPAL_AWS_PATH%"
 if not exist "%_OPAL_AWS%" (
-    echo aws.cmd: FATAL -- no AWS CLI found. Checked %%LOCALAPPDATA%%\Programs\Python\Python312\Scripts\aws.cmd, %%LOCALAPPDATA%%\Programs\AWSCLIV2\Amazon\AWSCLIV2\aws.exe, %%ProgramFiles%%\Amazon\AWSCLIV2\aws.exe 1>&2
+    echo aws.cmd: FATAL -- no AWS CLI found. Checked %%LOCALAPPDATA%%\Programs\Python\Python312\Scripts\aws.cmd, %%LOCALAPPDATA%%\Programs\AWSCLIV2\Amazon\AWSCLIV2\aws.exe, %%ProgramFiles%%\Amazon\AWSCLIV2\aws.exe, %%LOCALAPPDATA%%\Programs\Amazon\AWSCLIV2\aws.exe, PATH aws.exe 1>&2
     exit /b 127
 )
 "%_OPAL_AWS%" %*

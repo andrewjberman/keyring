@@ -24,9 +24,10 @@ All cases below were read on the served 2026-10-05 publication.
 | multi-relationship membership | 32 (E-M3) | COT acc_0f1e215e521798954f80f291 is in 2 relationships (3 of 860 accounts); 58 rows collapse to 29 unique; rebuilt = served 462,857.7422 | measured (compile @d1abea06f8) |
 | coverage denominated | 31 | 49F 5,952 of 7,597; INF 627 of 858; COT 475 of 860 | measured |
 
-**Grade:** the CTO's round-31 analysis said that E-M3 met makes this project's FWD-5 share REALIZED, and E-M3 is met. The
-grade itself is the CTO's, after the CVO's round-32 sweep, and is not yet written. FWD-5 as a whole then waits only on
-IRPT_FNTEND's view.
+**Grade: REALIZED** for this project's share, by `1.0.0_SA_CTO~DELL2` in the sweep-15 part-1 analysis
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_SWEEP_15_PART_1_20261007.md` @db1e82ce18, msg 890), on the
+CVO's E-M3 grade C-S300. FWD-5 as a whole waits only on IRPT_FNTEND's view. The 22% unattributed-membership residual is a coverage
+question for that view and the overlay sources.
 
 ## Live thread
 
@@ -57,21 +58,23 @@ Each order was cut on a delivered FILE, pinned by commit and sha256, because del
 
 ## Next-list, in order
 
-1. **Wait for the CTO's answer to round 32.** Then issue its M items in one issuance the same tick, or record FWD-5's
-   share REALIZED if it has none.
-2. **dell1's release ask for `holdings_snapshot.py` (SC-e-56):** sign or refuse the COO half against its stated blast
-   radius (the three firms' Holdings publications, rollback per key).
-3. **The unclassified Cottonwood tickers** (BDCASHIN, FCASH, CQP plus 5, from the 10-05 build log). Andrew's word is
-   recorded @fa8d7d1cf7: a "Cash" token is the cash class, and the others can be web-searched. The tickers are dell1
-   `~M1`'s, relayed through `0.0.0_AB_MSTR~DELL2` (msg 667). This seat does not classify them.
+1. **The SC-e-62/56 release** (dell1 r3 @a87e215afc). The IRPT_BCKEND COO half is
+   `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_IRPT_BCKEND_COO_HALF_SECCLASS_E62_E56_RELEASE_20261007.md`,
+   signed @a8276122e5 and re-pointed to r3 @ef800c1bd0; the CTO half is @f67ab9002b with AMENDMENT 1 @6c57a70f2f. This seat owes:
+   - after `0.0.0_AB_MSTR` merges r3, the `tar -tzf` read-back of the bundle: 12 members, exactly 2 changed;
+   - after the first weekday `irpt-holdings-snapshot` fire (10:15 ET), the per-firm read: new revision, reconcile, class moves
+     against expected, 0 `multi_asset`; or Branch B's rollback to the recorded pins before the next fire.
+   The 238 pre-check passed on r2 (producer bytes equal at r3). No manual Holdings run is covered.
+2. **No new M item** this sweep (CTO msg 890). The next M round comes from the CTO's next analysis.
+3. **The unclassified Cottonwood tickers** belong to dell1 `~M1` under Andrew's word @fa8d7d1cf7 (relayed, msg 667).
 
 ## Dependencies
 
 | Needs | From (owner) | State |
 |---|---|---|
 | round-32 sweep and slug | `3.0.0_SA_CVO` | packet READ 13:15Z (id 605) |
-| FWD-5 share grade, round-33 items | `1.0.0_SA_CTO~DELL2` | after the slug |
-| release ask for `holdings_snapshot.py` | dell1 `2.0.0_SA_COO~M1` | not yet sent |
+| FWD-5 share grade | `1.0.0_SA_CTO~DELL2` | REALIZED (msg 890) |
+| r3 merge into CLOUD | `0.0.0_AB_MSTR~DELL2` | both halves on r3; not merged at 17:02Z |
 | Cottonwood read access for dell2 | NFRA_CTLPLN fence apply (TO-APPLY-4) | MET: reads at 15:02Z |
 
 ## Retired from the 10-02 list

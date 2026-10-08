@@ -5,7 +5,7 @@
  "project": "NFRA_TRNSPT",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-trnspt-commentary-ingestion-expansion-brief-v3-20260930.md@bd14c47f70",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -61,10 +61,11 @@ Briefs: the header's `brief_ref` is the CRO's consolidated commentary brief (it 
                     author, a client recipient, a YCharts report attached) is not treated as feedback
          SOURCE     v3 brief sections 2-5; Andrew-direct 2026-09-30 (own ingestion, criterion, daily pull from his mailbox)
 
-  FWD-8  Andrew can show who may read the database, and it is only the people he named
-         DONE WHEN  EXERCISED -- a third person is tried and refused, in front of Andrew
-         ACCEPT     Andrew and the terminal seat's account can read the original; a third person cannot by any route, and Andrew sees that shown, not asserted.
-                    A separate, narrower reader may see only the copy with names and numbers removed
+  FWD-8  (AMENDED IN PLACE) Andrew can show who may read the database, and it is only the readers he named
+         DONE WHEN  EXERCISED -- someone not on his list is tried on the original and refused, and the attempt can be repeated on demand for Andrew to watch
+         ACCEPT     the original can be read by Andrew, the terminal seat's account and the agent accounts of the two Dell machines (his word, 2026-10-07);
+                    anyone else cannot by any route, and Andrew can see that shown, not asserted. A separate, narrower reader may see only the copy with
+                    names and numbers removed. Whoever reads the original never copies its meeting or email content into a note, a log or a message
          SOURCE     L1 brief O8; v3 brief section 4 (a scoped role reads the wiped copies only)
 
   FWD-9  A builder asks one question across meetings, updates and commentary
@@ -117,7 +118,7 @@ Briefs: the header's `brief_ref` is the CRO's consolidated commentary brief (it 
 | C-TICKET: where the draft lands | consumed; D7 `OPAL_TICKET_VNEXT` (now laptop) | A new ticket type `analysis_request`; the draft text in the ticket and the report as an ATTACHMENT; requester name and firm on the ticket (Alyssa first). The Ticket Center is internal-only (READ v3 section 8). The requester may claim and complete their own ticket, for ALL tickets: D7 removes the segregation-of-duties block (`_sod_block`, `infra/aws/lambda/ticket_center/lambda_function.py:904`) after confirming nothing there was the only control on a trade ticket. The ticket's deployed security state (the 2026-08-12 finding) is read BEFORE client-derived text goes into it. |
 | C-TICKET-ATTACH: the attachment | D7 WS-1 then WS-2 | D7's storage read and ticket bucket (WS-1, with its cross-firm read fix) come before any attachment write; WS-2's own exercise is an authorised upload and retrieval and a different-firm user REFUSED. Until it lands the ticket carries text and a report link (INTERIM, this PRD's ruling 6.5). |
 | C-TRIGGER: the READY hook | consumed; IRPT_BCKEND | No hook exists after a report is READY (READ v3 section 8). The build is a task order to IRPT_BCKEND, not a TRNSPT build; a DynamoDB stream on `irpt-requests` filtered to `REPORT#` items is the proposed route. A trigger is a route, not an alert. The commentary must never block or fail the report; a failure goes to a dead-letter queue and a retry. |
-| C-READERS: who reads what | Andrew-direct L1 brief O8 | The raw (bronze) tier has exactly two named readers: Andrew and `opalbloomberg@opalinvest.com`. A pipeline role that WRITES is a third principal and is named in the round's halves; the writer cannot be a reader by accident. A separate scoped role may read the wiped silver and gold prefixes only. |
+| C-READERS: who reads what | Andrew-direct L1 brief O8 | The raw (bronze) tier has these named readers: Andrew, `opalbloomberg@opalinvest.com`, and the two Dell agent users (Andrew-direct 2026-10-07 ~16:1xZ, verbatim "Yes Dell boxes can read all of that", record `ANDREW_DIRECT_20261007_161xZ_SIX_OPEN_CALLS_ANSWERED_TICKET_CENTER_AND_TRNSPT_ON_DELL2.md` @a3e5396e1e; key policy under laptop CTO half @091b68b282). A reader of the raw tier prints or saves none of its content in a row, log, commit or message: keys, counts and field names only (that half's condition 6). A pipeline role that WRITES is a third principal and is named in the round's halves; the writer cannot be a reader by accident. A separate scoped role may read the wiped silver and gold prefixes only. |
 | C-MORATORIUM: no alerts | law (CLAUDE.md section 5) | No failure alarm, SNS or SES send, freshness checker, health report or monitor is built. A daily pull runs on its own clock (a schedule), never "on success of upstream" alone. Gaps (FWD-4) are a data table, not a notification. Anything else needs Andrew's explicit word. |
 | C-FIRM: firms | law (CLAUDE.md section 5) | The cross-firm rule binds pipeline trees, not this serving path. Because examples cross firms, the wipe removes firm and advisor names so a firm's identity cannot ride inside a draft. |
 | C-COPY: what is not copied | law (CLAUDE.md section 5) | Nothing here creates a shadow pipeline or a standing parity comparator. The OneDrive market-update generator is prior art for later tiers, not in scope for bronze, and is not imported. |
@@ -260,3 +261,12 @@ headings (the ADDENDUM and sections 1-11): 13 of 13 are mapped.
 | v3 section 9 -- round-1 shape | registry rows, the rule and bronze, silver with the wipe, gold first run, the slicer over a replay, owned dependencies | section 3 (communications); section 5 |
 | v3 section 10 -- calls to Andrew | now empty of calls, apart from owned dependencies | section 6 |
 | v3 section 11 -- superseded and not claimed | what v1 and v2 lose; not read and not measured items | ruling 6.3; section 1 |
+
+## v0.2 (1.0.0_SA_CTO~DELL2, 2026-10-07 ~18:3xZ) -- FWD-8 and C-READERS amended in place on Andrew's word
+
+- **Readers:** Andrew-direct ~16:1xZ reverses laptop ruling A ("Yes Dell boxes can read all of that"). The two Dell agent users join the
+  named readers of the raw tier. This is the amendment owed by laptop CTO half @091b68b282 (its condition 7).
+- **FWD-8's DONE WHEN:** it is seat-driven. Someone not on the list is refused, repeatably on demand, which replaces "in front of
+  Andrew".
+- **Content rule:** the half's condition 6 (no raw content in any record) is carried into the ACCEPT line and C-READERS.
+- **Ids and half:** no id changed. The ENDPOINT changed, so the ratified-text half re-opens for `3.0.0_SA_CVO`.

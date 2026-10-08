@@ -524,3 +524,95 @@ realized gain and no flow. W20-S1 and W20-S3 ride the release packet. The releas
 | `DB-b-37` | E2: fix the named cause; re-grade the same 91 accounts; one window with realized gain and a flow ties to the cent | LOCAL | DB-b-36 | B24 |
 
 fanout: 1 of 1 chains, cap 8, reason: E2 fixes what E1 names, so one worker queue. Worker 0.9.0_WK_IRPT_DASHBD~21 in its own worktree.
+
+## 25. ROUND 25, WORKSTREAM B (2026-10-07 ~17:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-24 analysis @99580aac8c, msg 899)
+
+Round 24 is closed: DB-b-36 and DB-b-37 @f71fd042c1 (REMEDIATION_v10 @f7bd5e9a6c). FWD-4 is exercised locally on one window (realized
+gain and both flows, gap 0.0075) and not served; 55 of 91 windows tie, 32 of the 36 misses are ROUNDING. The release of the activity and
+lot tables follows E1 under its own halves, carrying W20-S1 and W20-S3.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-38` | E2: the lot-lag bound measured (W21-S5); LEG_LAG_DAYS set from the distribution with its percentile | LOCAL | DB-b-37 (merged) | B25 |
+| `DB-b-39` | E1: the 4 non-rounding windows read against lot events and fixed through the rule; the 91 windows re-run (W21-S4) | LOCAL | DB-b-38 | B25 |
+| `DB-b-40` | E3: the pandas option once per process; the served classify_and_sum hardened against None in source (W21-S6) | LOCAL | DB-b-39 (write set) | B25 |
+
+fanout: 1 of 2 chains, cap 8, reason: E1 re-runs with E2's LEG_LAG_DAYS (a data edge); E3 has no data edge but edits the same producer file as both, so it runs last in the one queue (cut by write set). Worker 0.9.0_WK_IRPT_DASHBD~22 in its own worktree.
+
+## 26. ROUND 26, WORKSTREAM B (2026-10-07 ~20:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-25 analysis @3543da2f4d, msg 1079)
+
+Round 25 is closed: DB-b-38..40 @5ffd7b740d (REMEDIATION_v11 @80d6ea4ef3). The round-24 sample ties except for rounding: 58 of 91
+within one cent, 33 within 0.05, 0 missing a term. FWD-4 grades REALIZED only when a person reads the served tables; the next act is
+their release.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-41` | E1: release prep for the activity and lot tables in the served reporting-gold function (contracts complete with keys and basis_source; source names into sources.json; handler, bundle, role; never-widen packet covering the whole next apply of the root, the unapplied class release included) | WORLD (paths floor; the analysis classes it SERVED) | DB-b-40 (merged) | B26-1 |
+| `DB-b-42` | E2 criterion (2): can a served input to classify_and_sum carry a repeated index label; refuse with a named reason if so | LOCAL | DB-b-40 (merged) | B26-2 |
+
+E2 criterion (1) (the None hardening tested on pandas 2.2.3) is NOT cut: dell2 has Python 3.14 with pandas 3.0.6 only and downloads are
+barred; the environment is requested from the laptop through 1.0.0_SA_CTO~DELL2, and the cell is cut when it lands.
+
+fanout: 2 of 2 chains, cap 8, reason: no data edge between E1 and E2, and the write sets are disjoint (E1: handler, terraform, activity producer, sources.json, contracts; E2: account_return_daily.py and its None test file). Workers 0.9.0_WK_IRPT_DASHBD~23 and ~24, each in its own worktree.
+
+### 26a. Round 26 amendment (2026-10-07 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 1092)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-43` | E2 criterion (1): the None-hardening test (`tests/test_account_return_daily_none.py`) run on the served layer's pandas 2.2.3 by LAPTOP RELAY: the test and the producer at pin b65c14f4df, relayed by 0.0.0_AB_MSTR~DELL2, the result returned as a FILE (pandas version printed beside the pytest summary). An issuer act, no worker; graded by the issuer on the returned file | LOCAL | DB-b-40 (merged) | B26-3 |
+
+The pandas 2.2.3 kit goes through the package route in parallel (4.0.0_SA_CRO~D2 intake, then 1.0.0_SA_CTO~DELL2). If DB-b-42 changes
+`classify_and_sum` (verdict CAN), the relay re-runs at the drain's pin.
+
+### 26b. Round 26, WORKSTREAM BD (the FWD-8 Black Diamond thread; its own issuance) (2026-10-07 ~21:4xZ, issuer 2.0.0_SA_COO~D2, on Andrew's per-use word relayed by 0.0.0_AB_MSTR~DELL2 msg 1103)
+
+FWD-8's split Black Diamond pull, listed since round 20 and held on Andrew's word, is cut. The word (record @5ef6d33141) is for ONE
+read-only pull: 2,299 accounts, 2,299 calls, 4,598 date ranges, each closure segment of `CLOSURE_ALIGN_E1P.json` split at 2025-01-09
+(round-19 analysis @b402b7b2e3 section 2). Expected outcome, both branches, as stated there: (A) the split figures tie within 0.35 pp on
+most of the 2,299, naming BD's closure-day booking as the cause; (B) they do not, and the residue read widens.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-44` | the split pull's plan and runner, built and planned OFFLINE (no vendor call) | LOCAL | DB-b-29 (merged) | B26-4 |
+| (issuer act) | `run --go` of the plan: the LIVE pull, once, under the word | WORLD (vendor call) | DB-b-44 | B26-4 |
+| (next cell) | the tie-out of the split figures against Opal's, branches A/B graded | LOCAL | the landed pull | B26-4, cut when the pull lands |
+
+fanout: 1 more chain (B26-4), worker 0.9.0_WK_IRPT_DASHBD~25 in its own worktree; disjoint from DB-b-41's write set.
+
+## 27. ROUND 27, WORKSTREAM BD (2026-10-07 ~23:5xZ, issuer 2.0.0_SA_COO~D2, on laptop 1.0.0_SA_CTO msg 106630 via 0.0.0_AB_MSTR~DELL2 msg 1145)
+
+DB-b-44 is closed (@35a0fc34d4). Its live run aborted on dell2 before any vendor call: this box's user cannot read
+`blackdiamond/49f/session` (abort record @e39ea3dcca). The laptop CTO ruled: a task order to a fresh laptop `0.7.0_AE_CloudOps~I`, the
+pair signed by dell2's CTO and COO, the GO by the laptop CTO.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-45` | the split BD pull run ONCE on the laptop (at most one sweep); records returned as files and graded on dell2 | WORLD (vendor call, S3 writes under a new prefix) | DB-b-44 (merged) | B26-4 |
+| (next cell) | the tie-out of the split figures, branches A/B graded | LOCAL | DB-b-45 | B26-4, cut when the records return |
+
+fanout: 1 of 1 chains, cap 8, reason: one run of one plan. Seat 0.7.0_AE_CloudOps~I (laptop), not a worker.
+
+## 28. ROUND 27, WORKSTREAM B (2026-10-08 ~02:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 1184, correcting its round-26 analysis @0ae2f15e5c)
+
+Round 26 is closed (DB-b-41, -42, -44 VALID; ADJUDICATION_v11/v12). The round-26 analysis cut no round 27; on the issuer's ask the CTO
+corrected it: S31 needs its own run and S32 waits on DB-b-43, so neither graduates at DB-b-45's drain. S31 is cut now.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-46` | S31: the extended handler over the whole 49F population for one trading day, wall and peak per stage against 900 s / 2048 MB, the per-account tail; a breach reported with its size | LOCAL | DB-b-41 (merged) | B27 |
+
+fanout: 1 of 1 chains, cap 8, reason: one measurement. Worker 0.9.0_WK_IRPT_DASHBD~26 in its own worktree.
+
+## 29. ROUND 28, WORKSTREAM B (2026-10-08 ~07:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-27 analysis @7fa28c7d6d, msg 1222)
+
+Round 27 is closed: DB-b-46 @acb7066605 (ADJUDICATION_v13 @d640bc455f). S31 measured BREACH: the lots stage refuses on 87 realized lot
+ids repeated within a day (175 rows, 36 accounts, distinct lots) and peaks at least 2,759.5 MB against 2,048 MB. Rulings: the key is the
+smallest measured column set; batch first, raise memory only if the batched peak on pandas 2.2.3 still breaches.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-47` | E1: the realized-lot key measured on the 175 rows; contracts + stage use it; true duplicates still refuse | LOCAL | DB-b-46 (merged) | B28 |
+| `DB-b-48` | E2(1): the lots stage batched; the full day re-run at two batch sizes, lots peak flat | WORLD (handler path floor; applies nothing) | DB-b-47 (the stage must not refuse) | B28 |
+| (issuer act) | E2(2): the batched run on pandas 2.2.3 -- the laptop carries pandas 2.3.3 (MSTR msg 1136), so it runs on dell2 when the Python 3.12 kit lands, with DB-b-43 | LOCAL | DB-b-48 | B28 |
+
+fanout: 1 of 1 chains, cap 8, reason: E2 measures the stage only once E1 stops its refusal, and both edit the same producer. Worker 0.9.0_WK_IRPT_DASHBD~27 in its own worktree.

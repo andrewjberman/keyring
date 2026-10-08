@@ -2,7 +2,7 @@
 
 <to_id>NFRA_CTLPLN.TO-CT-d-1</to_id>
 <project>NFRA_CTLPLN</project>
-<issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
+<issued_to>0.9.0_WK_NFRA_CTLPLN~8</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>complete</status>
@@ -68,7 +68,7 @@ proof row. Run `--live` once first to produce the saved file (outside the 120 s 
 evaluator call that evaluates the Dell user as denied. (`--control` makes one live `simulate-principal-policy` call for the admitted
 principal; if no bucket is fenced, the line reads `CONTROL none-fenced ok=False` and you file a row.)
 
-<expected_criteria>CT4d1-AC1,CT4d1-AC2</expected_criteria>
+<expected_criteria>CT4d1-AC1,CT4d1-AC2,CT4d1-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -117,3 +117,45 @@ lane: the <paths> block IS the grant (worker RULING 1).
 
 Source: CTO msg 106061 (a); row IRPT_BCKEND-S347 @ce0b9df49c; decomposition round 4. Base dry-run at the cut: CT4d1-AC1 and CT4d1-AC2
 base FAIL as expected (the script does not exist).
+
+## AMENDMENT (2.0.0_SA_COO~C, 2026-10-07 ~19:4xZ) -- REOPENED: the census reads a SCOPED admission as what it is
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; the earlier commits are
+inherited state on the trunk. Since this census was built the fences gained scoped rows: a registry row carrying `actions` and
+`prefix` admits its principal through the fence and confines it, by three Deny statements, to get, list and bucket-location under
+one prefix (cell CT-d-2, applied today for the dell1 user on three buckets, order NFRA_CTLPLN.TO-APPLY-8). The census grades
+agreement between "the policy admits this principal" and "the evaluator lets it read an object in the bucket"; for a scoped
+admission those two differ BY DESIGN, so the live census now reads (issuer's run, ~19:2xZ):
+`FENCE-CENSUS buckets=24 read=24 unreadable=0 fenced=3 no_policy=11 no_fence=10 dell1_admitted=24/24 dell2_admitted=24/24 disagree=3 undeclared=2 gap_dell1=1 gap_dell2=0 ok=False`
+with three `DISAGREE ... dell1 reading=ADMITTED evaluator=explicitDeny` rows. The applier reported it unsmoothed (msg 106522);
+the CTO had already asked for a cell "to make the census print scope" (msg 106482). Note also `gap_dell1=1` beside
+`dell1_admitted=24/24`: read what `gap` counts and say whether it is now stale. Gate limb: none graded this modification.
+
+1. FIRST, read `dell_fence_census.py` and write, in a short section at the top of your report, exactly what `reading`,
+   `evaluator`, `disagree`, `gap_*`, `undeclared` and `ok` each mean in the code today, and which of them a scoped admission
+   breaks. Decide for each whether the disagreement is the instrument's assumption or a real fault; if you find a real fault in
+   a live policy (for example a scoped principal allowed OUTSIDE its prefix), STOP, change nothing, file a BLOCKING row and report.
+2. THE REPAIR, all derived from the registry (`infra/logic/registry/exemptions.json`), nothing typed: a principal whose row for a
+   bucket carries `actions` and `prefix` is read as `SCOPED`, a third value beside ADMITTED and not admitted. For a SCOPED pair the
+   evaluator arms are: get UNDER the row's prefix -> allowed; get OUTSIDE it -> explicitDeny; put under it -> explicitDeny. It
+   AGREES only when all three read so; any other result is a `DISAGREE` row naming the arm that differed (so a scoped principal
+   that can write, or read outside its prefix, makes the census fail, which is the point of having it). An unscoped pair keeps
+   today's meaning exactly. A registry row that says scoped where the LIVE policy holds no `DenyScopedExemption` statement for
+   that principal is a `DISAGREE` (declared scoped, admitted whole).
+   The last line gains `dell1_scoped=<n> dell2_scoped=<n>` and `dellN_admitted` counts FULL admission only, so today it reads
+   `dell1_admitted=21/24 dell1_scoped=3`. `gap_*` is recomputed on that basis; say what it then reads and why.
+3. `--from-file` must still read the committed `dell_fence_census.json`; re-take that file `--live` so it holds the three buckets'
+   CURRENT policies (it is the saved copy other checks simulate against), and say in your report that you re-took it and what
+   changed in it (statement counts per bucket). The `--control` arm must still pass.
+4. Negative controls in a new `--selftest` verb, on scratch copies in memory (no AWS write): a scoped row whose live policy lacks
+   the three statements -> DISAGREE; a policy whose scoped Deny omits the put arm -> DISAGREE naming put; an unscoped admitted
+   principal -> unchanged reading. LAST line `FENCE-CENSUS-SELFTEST cases=<k>/<n> ok=<True|False>`.
+
+**ACCEPTANCE.** CT4d1-AC1 and CT4d1-AC2 are unchanged and must still pass. One criterion is ADDED:
+
+<criterion id="CT4d1-AC3" cell_refs="CT-d-1"><invocation>python infra/aws/terraform/shared-infra/tests/dell_fence_census.py --selftest</invocation><expect>FENCE-CENSUS-SELFTEST cases=</expect></criterion>
+`CT4d1-AC3` -- the same line must read `ok=True`. In the proof row's evidence also give the `--live` last line after the
+repair; it is expected to read `disagree=0 ... ok=True` with `dell1_scoped=3`, and if it does not, report what it reads and why.
+
+**BOUNDS.** Read-only AWS (`s3api get-bucket-policy`, `list-buckets`, `iam simulate-*`, `sts get-caller-identity`), as the cell had.
+No object read, no object listing in any firm bucket, no apply, no registry edit.

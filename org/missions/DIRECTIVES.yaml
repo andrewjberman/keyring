@@ -333,7 +333,8 @@ directives:
       ~19:4xZ) + TO-D."
     members:
       subgroups: []
-      projects: [OPAL_TICKET_VNEXT]
+      projects: [TCKT_VNEXT]
+      members_note: "TCKT_VNEXT is OPAL_TICKET_VNEXT renamed at L3 by 1.0.0_SA_CTO~DELL2, 2026-10-07, on Andrew-direct ~17:0xZ 'Proceed with recs' (macro TCKT ratified in MACROS.yaml; Rule 24 record org/tier1_exec/2.0.0_SA_COO~V2/deliverables/MACRO_ENUM_RULE24_D7_20261007.md). The flat row org/projects/OPAL_TICKET_VNEXT.json is the pre-tree registration of the same project and is not a second member."
     stance: "Portal accept/in-progress/complete already LIVE (P0). Open legs: Graph DL discovery
       RESULTS IN (49@opalinvest.com + inflection@opalinvest.com FOUND; Cottonwood NONE -- at Andrew;
       intake identity ruled opalsupport@opalinvest.com w/ the SendFromAliasEnabled discharge read open), Graph subscription/poll

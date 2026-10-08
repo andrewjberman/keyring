@@ -1,0 +1,12 @@
+{
+  "id": "opal-assets-cot-rebalancer-until-20261008T0620Z",
+  "root": "infra/aws/terraform/opal-assets",
+  "resources": [
+    "aws_cloudwatch_event_target.cot_rebalancer_runner_daily"
+  ],
+  "rule": "targeted-only-excluding",
+  "until": "2026-10-08T06:20:00Z",
+  "by": "1.0.0_SA_CTO",
+  "reason": "Until 06:20Z on 2026-10-08 an apply of infra/aws/terraform/opal-assets is TARGETED and its plan does not name aws_cloudwatch_event_target.cot_rebalancer_runner_daily; an untargeted apply waits. That target's live input carries {mode:pull,induce:auth-lapse} on purpose since 17:40Z for MDPF_HEALGAP.TO-HG-d3 under dell1's signed pair (open deploy org/critical_paths/.open_deploys/mdpf-healgap-hg-d3-fwd1-exercise-20261008.json); any apply that includes it puts the input back and silently voids tomorrow's 06:00Z test. Measured by 0.7.0_AE_CloudOps~F (msg 106553) at origin/CLOUD 20:10Z: the target plans 1 to change. Written from the CTO broadcast msg 106555 (read at the path in record, in the shared checkout's inbox; inboxes are not tracked, so that path is not in a worker worktree).",
+  "record": "org/mcp/inbox/2.0.0_SA_COO/~C/read/20261007T201404Z_1.0.0_SA_CTO_CROSS-BOX_DEPLOY_NOTICE_until_06_20Z_202.md"
+}

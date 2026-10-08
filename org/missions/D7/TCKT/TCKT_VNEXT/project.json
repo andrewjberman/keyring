@@ -1,0 +1,46 @@
+{
+  "project_code": "TCKT_VNEXT",
+  "macro_code": "TCKT",
+  "directive": "D7",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-08-31",
+  "registered_under_tree": "2026-10-07",
+  "placement": "DELL2",
+  "pods": [],
+  "related": [
+    "IRPT_YCDGEN",
+    "IRPT_BCKEND",
+    "NFRA_TRNSPT"
+  ],
+  "name": "The Ticket Center takes typed requests, the Analysis Request first: a holdings file attached through the Analysis upload door and the finished report returned on the ticket",
+  "description": "Renamed from OPAL_TICKET_VNEXT (registered 2026-08-31; illegal under the tree grammar for its second underscore) on Andrew-direct 2026-10-07 ~17:0xZ 'Proceed with recs' (macro TCKT, code TCKT_VNEXT). Scope: the purpose document's WS-1 and WS-2 only (docs/architecture/D7_TICKET_VNEXT_PRD.md); WS-3 to WS-6 are out.",
+  "renamed_from": "OPAL_TICKET_VNEXT",
+  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_OPAL_TICKET_VNEXT_20261007.md@c7da21e358",
+  "andrew_direct_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_151xZ_TICKET_CENTER_D7_FORWARD_ON_DELL2_ANALYSIS_REQUEST_FIRST_ATTACHMENTS.md",
+  "macro_ref": "org/tier1_exec/2.0.0_SA_COO~V2/deliverables/MACRO_ENUM_RULE24_D7_20261007.md@a602a79154",
+  "prds": [
+    {
+      "path": "org/missions/D7/TCKT/TCKT_VNEXT/prd/TCKT_VNEXT_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-07",
+      "author": "1.0.0_SA_CTO~DELL2"
+    }
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~V2"
+  },
+  "coo_lane": "2.0.0_SA_COO~V2",
+  "phase": "L4 PRD v0.1 DRAFT (1.0.0_SA_CTO~DELL2); L4-R halves owed: 3.0.0_SA_CVO ratified-text, brief half accepted (the CRO wrote the brief) or a live COO not holding the round.",
+  "placement_ruling": "Laptop 1.0.0_SA_CTO ruling 106359 (2026-10-07): D7 and its one member placed on DELL2 on Andrew's word at the laptop 4.0.0_SA_CRO terminal; placement commit 98fcdce272."
+}

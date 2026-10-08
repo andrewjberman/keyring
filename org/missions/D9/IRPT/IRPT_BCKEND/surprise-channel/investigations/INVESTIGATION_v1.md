@@ -20231,3 +20231,399 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-S385 -- W148-S1 and W146-S1 DISARMED: irpt-export-render fails closed in production (IB-pr-349)
+
+```json
+{
+  "id": "IRPT_BCKEND-S385",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T16:51:44Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-W148-S1 (BLOCKING, ARMED: 7 non-Opal principals reach a fail-open export read) and IRPT_BCKEND-W146-S1 (ARMED: live irpt-export-render fail-open). The disarm condition is met: the deployed _covered refuses an empty list.",
+  "one_line": "IB-pr-349 released irpt-export-render at pin b921635dad (laptop applier 0.7.0_AE_CloudOps~I, both never-widen halves). Live CodeSha256 is aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= (LastModified 2026-10-07T14:38:36Z). The issuer's release-census at the pin reads changed_members=0. On the deployed bytes an existing receipt is REFUSED for an admin and a non-Opal principal, and an Opal read is ADMITTED. Ledger CLOSED; IB68-1-AC1 PASS and proof VALID, re-run by the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer: python infra/aws/lambda/ci/release-census.py irpt-export-render --pin b921635dad -> changed_members=0 (2026-10-07 ~14:4xZ)",
+      "issuer: p68_cells.py . IB68-1-AC1 -> PASS (live CodeSha256 == built, exposure arms true); proof-of-spec-check VALID rc=0 at HEAD 581ccf5454",
+      "org/critical_paths/change_management/20261007T1356Z_irpt-export-render-ib-pr-349-failclosed-20261007_deploy_completion.md: Status CLOSED"
+    ]
+  },
+  "spec_asserts": "W148-S1 / W146-S1: the live export read admits a receipt that names no account.",
+  "world_is": "The live export read refuses it. Existing exports stay refused until the IB-pr-350 back-fill; new-export READY is OPEN-BY-DESIGN (S382)."
+}
+```
+
+## IRPT_BCKEND-W152-S1 -- IB-yr-631 admit is inert in production until InteractiveAccess.current() carries allowedFirmIds
+
+```json
+{
+  "id": "IRPT_BCKEND-W152-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~152",
+  "surfaced_at": "2026-10-07T21:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-yr-631: uploads.py now admits an internal principal whose allowedFirmIds names the owner firm, but InteractiveAccess.current() (the production principal source) does not carry allowedFirmIds, and its authorize_current compares principal != current, so the admit is unreachable in production until _scope/interactive_access.py (outside this cell's paths) states the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:61-68 current() builds the OPAL_GLOBAL row as {firm_id, principal_id, home_firm_id, principal_class, advisor_id} -- no allowedFirmIds",
+      "same file :81 authorize_current returns False when principal != current(), so a principal enriched with allowedFirmIds outside current() is refused by the real callback",
+      "allowedFirmIds lives on the opal-users-v2 profile row: ycharts/generate/current_authority.py allowed_firm_ids() :67; _scope/canonical_profile_reads.py _USER_FIELDS :27",
+      "intake/uploads.py _internal_for_allowed_firm reads principal['allowedFirmIds']; intake/tests/test_uploads_on_behalf.py exercises it against a callback that models current()'s rule"
+    ]
+  },
+  "spec_asserts": "TO-IB-yr-631 cell: admit an INTERNAL principal whose allowedFirmIds contains the owner's firm_id, using the existing field; authorize_current stays the gate.",
+  "world_is": "The admit is implemented in uploads.py and proven offline (AC1-AC3). The production principal does not yet carry allowedFirmIds, so with the real InteractiveAccess the admit is inert (fails closed to the existing refusal). Carrying the field needs a one-line change to InteractiveAccess.current() (read from the profile row) in _scope/interactive_access.py, which is not in this order's paths and was not edited. Owed to the issuer: a cell for that file before the TCKT_VNEXT live run."
+}
+```
+
+## IRPT_BCKEND-W162-S1 -- ClientReportDocument requires a household document (`report`: ClientReportDocument | NotCoveredClientReport, r
+
+```json
+{
+  "id": "IRPT_BCKEND-W162-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~162",
+  "surfaced_at": "2026-10-07T18:17:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ClientReportDocument requires a household document (`report`: ClientReportDocument | NotCoveredClientReport, render/clientreport/types.ts) but PrintEntry's loaded bundle (RenderBundle) carries only performanceReport, dashboardPerformance, analysisReport and narrativePacket, and the typed client has no operation that returns a client report; so no PrintEntry-only change can mount the template. No edit made; stopped on IB70-3-AC1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx:457 @339851c7 -- export function ClientReportDocument({ report, ...slots }: { report: ClientReportData | NotCoveredClientReport } & ClientReportSlots)",
+      "portal/src/pages/InvestorReporting/render/manifest.ts:273-288 @339851c7 -- RenderBundle fields: reportKind ('performance' | 'analysis'), performanceReport, dashboardPerformance, analysisReport, narrativePacket, renderOptions, disclosures; no household/client report",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts:297 @339851c7 -- op = reportKind === 'performance' ? 'performance-report' : 'analysis-report'; no third branch; ReportKind is 'performance' | 'analysis'",
+      "portal/src/api/endpoints/investor-reporting.ts @339851c7 -- the typed client exposes getPerformanceReport, getAnalysisReport, getHoldingsSnapshot, getNarrativePacket, getOwnedAnalysisReport, getExportReceipt, getExportDownload; none returns a custody/client report; Grep for custody-report|ClientReport over portal/src/api finds no match"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-353 worker face: the page mounts ClientReportDocument for custody-report 'with the bundle it loads, the same way it mounts PerformanceDocument', in PrintEntry.tsx only.",
+  "world_is": "The only way to mount it in PrintEntry.tsx alone is to invent the `report` prop (a cast or fabricated household), which the order forbids by its own clause. The missing piece is a read that returns the household document (a typed-client operation plus a resolveBundle branch and a ReportKind/RenderBundle member), none of which is in this cell's paths. PrintEntry.tsx, the tests and the template are unchanged by this worker. Owed to the issuer: re-cut with the loader (api/endpoints/investor-reporting.ts, export/resolveBundle.ts, render/manifest.ts) in grant, and name the route that serves the household document.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-W163-S1 -- IB-pr-354: InteractiveAccess now carries allowedFirmIds from an INJECTED profile reader (profile_reader kwarg,
+
+```json
+{
+  "id": "IRPT_BCKEND-W163-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~163",
+  "surfaced_at": "2026-10-07T18:42:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-354: InteractiveAccess now carries allowedFirmIds from an INJECTED profile reader (profile_reader kwarg, CanonicalProfileReaders.get_user shape), but no production constructor passes one, so the on-behalf admit stays inert in production until those call sites are wired (outside this grant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py: __init__ profile_reader=None; current() adds allowedFirmIds only for a verified internal subject when the reader returns the subject's own row with a named firm list; None reader, a raising reader, an absent/unreadable/empty value or ALL yields no field",
+      "comp-find 'InteractiveAccess(' over infra/aws/lambda/investor-reporting: production constructors _authz/served.py:856,873,903; export/submit_installed.py:116; performance/entry.py:171; reports/generate_installed.py:312; ycharts/generate/prospect_submission.py:55 -- none passes profile_reader; served.py:955 already builds CanonicalProfileReaders(boto3.client('dynamodb')).get_user(email)",
+      "prospect_owner() copied every actor key into the retained owner; it now drops allowedFirmIds so the entitlement is never stored in an owner record (same file)",
+      "pytest from infra/aws/lambda/investor-reporting: _scope/tests/test_interactive_access_on_behalf.py + test_interactive_access.py + intake/tests/test_uploads_on_behalf.py -> 28 passed, 7 subtests passed; _scope/tests -> 223 passed"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-354 AC1: current() carries allowedFirmIds from the existing profile reader, injected or the one canonical_profile_reads/current_authority use; edits only interactive_access.py and the new test.",
+  "world_is": "The carry is built and proven against the real InteractiveAccess with a fake reader (inject path allowed by the order). Reaching the live admit needs the Entry/consumer call sites to pass CanonicalProfileReaders(...).get_user as profile_reader, in files outside this grant (e.g. _authz/served.py); not edited. Owed to the issuer: a wiring cell before the TCKT_VNEXT live run. Each current() call with a reader costs an email-index query plus a consistent get_item on opal-users-v2 for an internal subject; the order did not specify caching."
+}
+```
+
+## IRPT_BCKEND-W164-S1 -- IB-pr-355: the new export/custody_read.py is not in the irpt-export-render zip's source list (lambda-source-ma
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T19:55:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-355: the new export/custody_read.py is not in the irpt-export-render zip's source list (lambda-source-map.json), so the route answers UNEXPECTED on a deployed zip until the map names it; entry.py imports it lazily so no other export route is touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json:4633 lists the flat export-function members by file name (retained_export.py, submit_service.py, submit_installed.py ...) -- no custody_read.py; that file and any .tf are outside this order's <paths>",
+      "infra/aws/lambda/investor-reporting/export/entry.py: operations value for custody-report-read is a lambda doing __import__('custody_read') at call time, so a zip without the module fails that one operation only, never cold start (a top-level import would have killed all three existing export routes)",
+      "pytest from export/: tests/test_custody_read.py + tests/test_submit_custody_report.py -> 22 passed; from investor-reporting/: _authz/tests/test_unguarded_census.py -> 9 passed"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-355: entry.py takes two lines only (the ROUTES key and `custody-report-read: custody_report_read` in operations); no .tf edit; nothing applied here.",
+  "world_is": "A bare `custody_report_read` name in operations needs a top-level import in entry.py (a third line, and a cold-start ImportError for every export route if the zip lacks the module), so the operations value is a lazy lambda instead; the ROUTES key and the operation name are exactly as specified. The deployed route works only after custody_read.py is added to the irpt-export-render member list in lambda-source-map.json (and the build/apply the order excludes). Owed to the issuer: that source-map line in the deploy cell before IB-pr-356 relies on the route live.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-W164-S2 -- IB-pr-355: the face names `custody_report_read(ctx, request)` but the Entry calls an operation as `(request, s
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T19:55:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-355: the face names `custody_report_read(ctx, request)` but the Entry calls an operation as `(request, scope, event, ctx)`; built to the Entry signature, and the route's routes.json row carries no response_schema/consumer_operation (none exists for it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1067 `compute(req, scope, event, ctx)`; export/entry.py export_receipt(request, scope, event, ctx) is the shape the face says to follow",
+      "docs/contracts/investor-reporting/v1/routes.json: the export-receipt row carries response_schema responses/export-receipt.response.schema.json; no schema for the custody read is in this order's paths, so the new row names route_key, handler, cell, status, note and operation only; test_unguarded_census.py passes (9 passed)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-355 item 1: custody_report_read(ctx, request) shaped like export_receipt; item 3: one row in the same shape as the export-receipt row.",
+  "world_is": "The only callable the Entry can invoke is (request, scope, event, ctx); reportId comes from event.pathParameters and revision from event.queryStringParameters. The routes.json row omits response_schema and consumer_operation because the custody read has no schema file yet. Owed to the issuer, if wanted: a response schema file for custody-report-read and the consumer_operation name when IB-pr-356 lands."
+}
+```
+
+## IRPT_BCKEND-W164-S3 -- IB72-1-AC2's checker slices entry.py ROUTES at the FIRST '}' , which is the brace inside the first route key, 
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T20:04:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB72-1-AC2's checker slices entry.py ROUTES at the FIRST '}' , which is the brace inside the first route key, so no route key containing {param} can ever be found in the slice; the criterion cannot pass on any correct entry.py.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r72/p72_cells.py: block = entry[entry.index('ROUTES = {'):entry.index('}', entry.index('ROUTES = {'))]; then 'ROUTE not in block' fails",
+      "measured on worktree HEAD cf6839fe38: block ends ...'ROUTES = {\n    \"GET /api/scoped/investor-reporting/export/{exportId' ; the EXISTING route key 'GET /api/scoped/investor-reporting/export/{exportId}' is also not in the slice (False), as is the new key (False) and the operation name (False)",
+      "substance holds elsewhere: export/tests/test_custody_read.py asserts entry.ROUTES['GET /api/scoped/investor-reporting/custody-report/{reportId}'] == 'custody-report-read' and passes; _authz/tests/test_unguarded_census.py (pins ROUTES against routes.json) 9 passed; routes.json half of AC2 passes the checker's own routes.json test"
+    ]
+  },
+  "spec_asserts": "IB72-1-AC2: export/entry.py ROUTES maps the route key to custody-report-read, graded by p72_cells.py IB72-1-AC2 expecting 'IB72-1-AC2 PASS'.",
+  "world_is": "The checker cannot be satisfied by any entry.py whose ROUTES keys carry a path parameter brace. The entry.py edit is correct and tested; AC2 is left FAIL by its own invocation. Owed to the issuer (the checker is outside this grant): slice to the matching closing brace of the dict (e.g. the first '\n}' after 'ROUTES = {'), then re-grade IB72-1-AC2."
+}
+```
+
+## IRPT_BCKEND-W165-S1 -- IB-pr-356: the custody-report-read operation is read in LiveClient outside parseIrEnvelope, because contracts/
+
+```json
+{
+  "id": "IRPT_BCKEND-W165-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~165",
+  "surfaced_at": "2026-10-07T20:42:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-356: the custody-report-read operation is read in LiveClient outside parseIrEnvelope, because contracts/envelope.ts (outside this grant) lists no data adapter for it; the success shape is read as the contract's bare body OR the response envelope's data.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts parseIrEnvelope: a non-refused envelope for an operation with no IR_DATA_ADAPTER entry throws EnvelopeMismatch('operation'); IR_DATA_ADAPTER has no custody-report-read key (b64805f7)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py response_envelope wraps every served body as {contract_version, operation, firm_id, data, unprojected_grant}; the TO states the 200 body as {report_kind, report_id, revision, report} without saying whether that is the envelope's data",
+      "portal b3fedfea api/endpoints/investor-reporting.ts readCustodyReportAnswer accepts both and checks report_kind, report_id and revision against the request; ir-72 custody-print.test.tsx proves both shapes and a refusal envelope"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-356 item 1: add the custody-report-read operation 'shaped like the analysis read already there' (the analysis read goes through send() and parseIrEnvelope).",
+  "world_is": "The analysis shape cannot be reused unchanged: the one parser refuses an operation it has no adapter for. The operation is a route-table row plus a LiveClient method with its own reader. If IB-pr-355 serves a shape that is neither the bare body nor the envelope's data, the print page shows its refusal (EnvelopeMismatch -> MissingPayloadError) rather than a document. Owed to the issuer or CTO: whether envelope.ts gains an IR_DATA_ADAPTER entry once IB-pr-355 serves the route."
+}
+```
+
+## IRPT_BCKEND-W165-S2 -- Running the portal bun suite over src/pages/InvestorReporting regenerates tracked portal/src/pages/InvestorRep
+
+```json
+{
+  "id": "IRPT_BCKEND-W165-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~165",
+  "surfaced_at": "2026-10-07T20:42:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Running the portal bun suite over src/pages/InvestorReporting regenerates tracked portal/src/pages/InvestorReporting/contracts/wire/*.ts (27 files) in the worktree, dropping the AnalysisReport v2 types, so tsc -b --noEmit (IB72-2-AC2) fails until they are restored.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "after `bun --no-install test src/pages/InvestorReporting src/api` (baseline run, before any edit) `git status` in the portal worktree listed 27 modified contracts/wire/*.ts; `git diff` of wire/AnalysisReport.ts showed 56 deletions (provider?: 'YCHARTS', AnalysisReportOpalWire, AnalysisSectionNotAvailableReason, AnalysisReportAnyWire)",
+      "tsc -b --noEmit then reported 22 errors (contracts/index.ts TS2724/TS2305 on AnalysisReportAnyWire, AnalysisReportOpalWire; adapt.ts TS2339) none in the files this cell edits; after restoring the files from HEAD (git show HEAD:<file>) tsc -b --noEmit rc 0",
+      "the generator is the fe-s-13 gen-wire.ts regeneration test (IVE26-AC3 'gen-wire.ts regeneration is idempotent' fails at base in this tree)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-356 item 6: run bun --no-install test on both folders and tsc -b --noEmit from portal/; IB72-2-AC2 base PASS (a control).",
+  "world_is": "The full-suite run is not read-only: it rewrites tracked generated files, and a worker that runs the full suite and then the AC2 tsc gets a false FAIL (or commits the regenerated files). This worker ran the two named folders for AC1 and the full folder once for a base-vs-after diff, restored the 27 files from HEAD, committed only its six paths, and did not stage any wire file. The worktree still lists the 27 as modified (line-ending/stat only, git diff --numstat empty). Disarm owner: the issuer, to keep the full suite out of a worker's criteria or have the generator test write elsewhere.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-W165-S3 -- The custody-report-read route row in IR_ROUTE_TABLE is not in docs/contracts/investor-reporting/v1/routes.json
+
+```json
+{
+  "id": "IRPT_BCKEND-W165-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~165",
+  "surfaced_at": "2026-10-07T20:42:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The custody-report-read route row in IR_ROUTE_TABLE is not in docs/contracts/investor-reporting/v1/routes.json until IB-pr-355 lands, so fe-s-13 routes.test.ts reports it as 'IN THE TABLE, NOT IN THE FILE' (that test already fails at base on a different route).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test over src/pages/InvestorReporting + src/api: base prints 'MISSING FROM THE TABLE: GET .../analysis/requests/{requestId}/pdf' and 'ROUTES MATCHED: 18 of 19'; after b3fedfea it adds 'IN THE TABLE, NOT IN THE FILE: GET /api/scoped/investor-reporting/custody-report/{reportId}'",
+      "failing-test diff base vs after: 43 vs 40 failures, no test newly failing (three fewer, none attributable to this cell)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-356 item 1 adds the operation per the shared contract; IB-pr-355 adds the routes.json row (IB72-1-AC2).",
+  "world_is": "The two cells land the two halves of the route's declaration. In a tree carrying both, the extra-in-table reason disappears; the pdf-route reason remains and is not this cell's. Merge order between ~164 and ~165 is not constrained by this."
+}
+```
+
+## IRPT_BCKEND-S386 -- S382 ruled: IB-pr-349 new-export after-reads OPEN-BY-DESIGN (AMENDMENT 1 @b883510cd9)
+
+```json
+{
+  "id": "IRPT_BCKEND-S386",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T22:42:38Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S382: ruled by the issuer's AMENDMENT 1 @b883510cd9 (CTO REC msg 757). The exposure arms were proven on the deployed bytes; the new/performance/analysis READY legs are OPEN-BY-DESIGN because no authenticated Opal principal exists without an auth-plane write the order forbids. IB68-1-AC1 PASS under the amended criterion; IB-pr-349 complete @8cfdf2a38c.",
+  "one_line": "IB-pr-349's legs 4-5 (a new export READY plus its admitted-read line) stay open by design; they are discharged by the first real Opal export (Andrew's or an Opal user's) read with its irpt_export_read_admitted line, which the issuer records.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 @b883510cd9 (p68_cells.py OPEN-BY-DESIGN keys; IB-pr-349 and IB-pr-350 faces)",
+      "IB-pr-349 flipped complete @8cfdf2a38c after the issuer re-ran IB68-1-AC1 PASS and proof VALID"
+    ]
+  },
+  "spec_asserts": "S382: after-reads 4-5 need an authenticated Opal principal that the order forbids minting.",
+  "world_is": "Graded on the deployed-bytes controls; the open legs await the first real Opal export."
+}
+```
+
+## IRPT_BCKEND-S387 -- S384 fixed: p68_cells.py resolves Git Bash instead of bare bash
+
+```json
+{
+  "id": "IRPT_BCKEND-S387",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T22:42:38Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S384: the issuer's own check defect. p68_cells.py called subprocess.run([\"bash\", .tools/aws, ...]); a python-spawned bare bash resolves on Windows to the System32 WSL stub, so the live CodeSha256 read failed on the laptop. It now uses .tools/git_bash_resolver.bash_argv, per CLAUDE.md's python-to-bash rule; IB68-1-AC1 re-run PASS at dell2 HEAD.",
+  "one_line": "checks/r68/p68_cells.py read the live CodeSha256 through bare bash, which fails on any box where python resolves bash to the WSL stub; fixed to use git_bash_resolver.bash_argv.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-S384 (0.7.0_AE_CloudOps~I): 'live CodeSha256 unreadable rc 1' on the laptop",
+      "issuer re-run after the fix: p68_cells.py . IB68-1-AC1 -> PASS"
+    ]
+  },
+  "spec_asserts": "S384: IB68-1-AC1's live read works on every applier box.",
+  "world_is": "It does after the fix; later checks resolve bash the same way."
+}
+```
+
+## IRPT_BCKEND-W167-S1 -- gen-wire.ts generate() throws on routes.json's custody-report-read row (no response_schema key), so iv-e-26 (I
+
+```json
+{
+  "id": "IRPT_BCKEND-W167-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~167",
+  "surfaced_at": "2026-10-07T23:22:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "gen-wire.ts generate() throws on routes.json's custody-report-read row (no response_schema key), so iv-e-26 (IVE26-AC3) fails before it compares any file; with the tests writing to a temp dir the failure writes nothing tracked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun --no-install test over the four generator tests at portal 63b9382a: 6 pass, 1 fail; IVE26-AC3 error: ENOENT open 'docs/contracts/investor-reporting/v1/undefined' at fe-s-13/gen-wire.ts:469 (renderResponses) via generate()",
+      "docs/contracts/investor-reporting/v1/routes.json (22 routes): the one route lacking a response_schema key is 'GET /api/scoped/investor-reporting/custody-report/{reportId}' (operation custody-report-read, cell IB-pr-355, commit cf6839fe38); renderResponses skips only response_schema === null, so undefined reaches readFileSync",
+      "git status --porcelain portal/src/pages/InvestorReporting/contracts/wire after the run is empty; IB73-1-AC1 PASS"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-359: after the generator is pointed at a temp dir, output that still differs from the committed wire files is named in a row as an observation; the base failure of IVE26-AC3 was read as drift in the content-pin arm.",
+  "world_is": "The generator cannot complete against the committed routes.json: no wire file (committed or temp) is compared, so the drift of the 4 AnalysisReport-related files measured at base is not observable until routes.json declares response_schema: null (or a schema) for custody-report-read, or renderResponses skips undefined. The failing test is dsgn-irptv1/iv-e-26.wire-regen.test.ts (IVE26-AC3). Not fixed here: the order forbids fixing the drift and editing contracts/wire or routes.json is outside the grant."
+}
+```
+
+## IRPT_BCKEND-S388 -- portal wire drift: gen-wire output differs from 4 committed AnalysisReport-related contracts/wire files
+
+```json
+{
+  "id": "IRPT_BCKEND-S388",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T00:53:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Regenerating the portal wire types (portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts) yields 4 files that differ from the committed portal/src/pages/InvestorReporting/contracts/wire/ copies, the AnalysisReport v2 types among them. The drift was measured at portal b3fedfea before round 73. It was hidden while generate() crashed on the custody route row's missing response_schema (fixed @60f7d8f4c8); with the generator running, its comparison tests report it (3 of 7 fail, IVE26-AC3 among them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer dry-run in worktree ~167 at portal b3fedfea: one run of the four generator tests rewrote 25 tracked contracts/wire files, git diff --numstat non-empty on 4",
+      "after @60f7d8f4c8, in worktree ~167: p73_cells.py IB73-1-AC1 PASS with 'tests 2 pass, 3 fail (reported, not graded)'",
+      "1.0.0_SA_CTO~DELL2 msg 1173: file the drift as a row with an owner; do not regenerate it as a rider"
+    ]
+  },
+  "spec_asserts": "The committed contracts/wire types are the generator's output from docs/contracts/investor-reporting/v1 (IVE26-AC3: idempotent regeneration, content pin 17 of 17).",
+  "world_is": "4 committed files differ from the regenerated output. Either the schemas or the committed types moved without the other. The owner is ~P2 until a cell traces which side is right; this round regenerated nothing."
+}
+```
+
+## IRPT_BCKEND-S389 -- S381 resolved: the back-fill tool lives in export/tools/; the export build passes ADHC_DRIFTD.002 without BAU_PARITY_SKIP
+
+```json
+{
+  "id": "IRPT_BCKEND-S389",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T02:09:28Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S381: IB-pr-360 moved backfill_covered_account_ids.py to infra/aws/lambda/investor-reporting/export/tools/ (drained @37d65133d1), outside the parity limb's top-level scope. IB74-1-AC1 PASS re-run at HEAD: the ADHC_DRIFTD.002 rule finds 0 extras over 64 union members, the tool runs --help from its new home, and its 7 tests pass.",
+  "one_line": "Every irpt-export-render build since IB-pr-344 needed BAU_PARITY_SKIP=1 (which disables the extras limb for everything) because an unregistered operator tool sat in the export source dir. The tool now lives in export/tools/; no build script, source map or packaged member changed, and the deployed zip is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain @37d65133d1 (wk-IRPT_BCKEND-168; worker commits 8d66fb03da, f62c3e84b2), proof VALID",
+      "issuer re-run at HEAD: p74_cells.py . IB74-1-AC1 -> 'OK: 0 parity extras over 64 union members; tool --help rc 0; tests 7 passed'"
+    ]
+  },
+  "spec_asserts": "S381: an export build passes the parity limb without an override.",
+  "world_is": "It does: 0 extras."
+}
+```

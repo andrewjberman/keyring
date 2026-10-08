@@ -6,7 +6,8 @@
     python lib/opal_naming_rootcheck.py lines ROOT --map PATH     (the run checks its own lines)
 
 Kinds, decided by the first test that applies: PATTERN (before CARDED: a variable segment is a pattern, not a name),
-a stored-file key the registry's key_rulings.json answers by (bucket, key) (tested before the card: FIX or RIGHT on its
+a stored-file key the registry's key_rulings.json answers by (bucket, key), by a per-firm variable or by the declaring
+file (declared_in), and a name its name_rulings.json answers by (name, type) (tested before the card: FIX or RIGHT on its
 canonical address, NOT-ASKED when none is owed),
 CARDED (a card that names a correct name, or says none is owed; a card that does neither prints HOLE), REFUSED (a key
 a path word or a bucket ties to another firm: says what was measured and what the reader does; counted, never a blank,
@@ -18,6 +19,7 @@ string both become HOLE. The modules (scope, rootmap, cadence, policyrole, keyfi
 Python 3.9; ASCII only.
 """
 import argparse
+import ast
 import json
 import os
 import re
@@ -71,7 +73,8 @@ KEY_RULINGS_FILE = "key_rulings.json"
 
 def load_key_rulings(path=None):
     """{(bucket, key): row} from the registry's key rulings file (opal_naming.REGISTRY_DIR). Each row carries exactly one
-    of `canonical` and `none_owed`; a row with both or neither, or a second row for one (bucket, key), is an error."""
+    of `canonical` and `none_owed`, and exactly one of `bucket` and (`bucket_per` 'firm' with `bucket_from`); a row with
+    both or neither, or a second row for one (bucket, key), is an error. A per-firm row is keyed ("per:" + bucket_from, key)."""
     path = path or os.path.join(opal_naming.REGISTRY_DIR, KEY_RULINGS_FILE)
     with open(path, "rb") as fh:
         doc = json.loads(fh.read().decode("utf-8"))
@@ -80,35 +83,162 @@ def load_key_rulings(path=None):
         if bool(r.get("canonical")) == bool(r.get("none_owed")):
             raise ValueError("key ruling %r/%r carries not exactly one of canonical and none_owed" % (
                 r.get("bucket"), r.get("key")))
-        k = (r.get("bucket"), r.get("key"))
+        per = bool(r.get("bucket_per") or r.get("bucket_from"))
+        if bool(r.get("bucket")) == per or (per and not (r.get("bucket_per") == "firm" and r.get("bucket_from"))):
+            raise ValueError("key ruling %r carries not exactly one of bucket and (bucket_per 'firm' with bucket_from)" % (
+                r.get("key"),))
+        di = r.get("declared_in")
+        if di is not None and not (isinstance(di, list) and di and all(isinstance(x, str) and x for x in di)):
+            raise ValueError("key ruling %r/%r: declared_in is not a non-empty list of file paths" % (r.get("bucket"), r.get("key")))
+        fl = r.get("fills")
+        if fl is not None and not (isinstance(fl, dict) and all(isinstance(v, str) and v.strip() for v in fl.values())):
+            raise ValueError("key ruling %r/%r: fills is not an object of plain sentences" % (r.get("bucket"), r.get("key")))
+        k = ("per:" + r["bucket_from"], r.get("key")) if per else (r.get("bucket"), r.get("key"))
         if k in out:
             raise ValueError("two key rulings for %r" % (k,))
         out[k] = r
     return out
 
 
-def _ruling_of(item, rulings, bucket_reader=None):
-    """(row or None, unread reason or None) for a stored-file item: the row matching (bucket, key) where the bucket is
-    the one opal_naming_keyfill.bucket_of(item) reads. An item whose bucket is not read matches no row; the reason says so,
-    but only when some row carries the item's key under a bucket (otherwise there is nothing the bucket would have decided)."""
-    if item["type"] != "S3Key" or not rulings:
+NAME_RULINGS_FILE = "name_rulings.json"
+
+
+def load_name_rulings(path=None):
+    """{(name, type): row} from the registry's name rulings file. Each row carries exactly one of `canonical` and
+    `none_owed`; a second row for one (name, type) is an error."""
+    path = path or os.path.join(opal_naming.REGISTRY_DIR, NAME_RULINGS_FILE)
+    with open(path, "rb") as fh:
+        doc = json.loads(fh.read().decode("utf-8"))
+    out = {}
+    for r in doc.get("name_rulings") or []:
+        if bool(r.get("canonical")) == bool(r.get("none_owed")):
+            raise ValueError("name ruling %r/%r carries not exactly one of canonical and none_owed" % (
+                r.get("name"), r.get("type")))
+        k = (r.get("name"), r.get("type"))
+        if not k[0] or not k[1]:
+            raise ValueError("name ruling %r carries no name or no type" % (r,))
+        if k in out:
+            raise ValueError("two name rulings for %r" % (k,))
+        out[k] = r
+    return out
+
+
+def named_in_source(item, asked, text=None):
+    """[names] of `asked` that the item's own Python source file NAMES as code: a variable, a function, an attribute
+    (`directory_handler._bucket_for(...)`) or an imported name. The keyfill reader sees a variable only as a string
+    constant; a per-firm row names a function the file calls, so the row's match reads the file's code as well. Docstrings,
+    comments and strings do not count. [] when the file is not Python, unreadable or does not parse."""
+    path, src = opal_naming_keyfill._item_text(item, text)
+    if path is None or src is None or not path.endswith(".py") or not asked:
+        return []
+    try:
+        tree = ast.parse(src)
+    except (SyntaxError, ValueError):
+        return []
+    seen = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name):
+            seen.add(node.id)
+        elif isinstance(node, ast.Attribute):
+            seen.add(node.attr)
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            seen.add(node.name)
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            for al in node.names:
+                seen.add(al.name.split(".")[-1])
+                if al.asname:
+                    seen.add(al.asname)
+    return sorted(a for a in asked if a in seen)
+
+
+def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
+    """(row or None, unread reason or None) for a stored-file item. A PER-FIRM row (bucket_per, bucket_from) is matched first:
+    its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
+    runtime_bucket). Then a row with `declared_in`: its key equals the item's key AND the file that declares the item (the
+    file part of its `where`) is one of declared_in; no bucket is read. Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
+    reads. An item whose bucket is not read matches no row; the reason says the bucket is chosen at run time and names the
+    variable when its file shows one, else says it was not read, but only when some row carries the item's key under a
+    bucket (otherwise there is nothing the bucket would have decided)."""
+    if item["type"] != "S3Key":
+        return None, None
+    runtime_reader = runtime_reader or opal_naming_keyfill.runtime_bucket
+    asked = sorted(set(r["bucket_from"] for r in (rulings or {}).values() if r.get("bucket_from")))
+    names, _rb = runtime_reader(item, None, asked)
+    names = sorted(set(names) | set(named_in_source(item, asked)))
+    for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
+        if row.get("bucket_per") and k == item["current"] and row["bucket_from"] in names:
+            return row, None
+    where_file = str(item.get("where") or "").replace("\\", "/").rsplit(":", 1)[0]
+    for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
+        if row.get("declared_in") and k == item["current"] and where_file in row["declared_in"]:
+            return row, None
+    if not rulings:
         return None, None
     bucket, why = (bucket_reader or opal_naming_keyfill.bucket_of)(item)
     if bucket is None:
+        if names:
+            return None, ("the bucket is chosen at run time from %s, one bucket per firm, and the registry holds no per-firm "
+                          "answer for this key and variable, so no key ruling is matched" % (", ".join(names),))
         if any(k == item["current"] for (_b, k) in rulings):
             return None, "the bucket was not read (%s), so no key ruling is matched" % (why,)
         return None, None
     return rulings.get((bucket, item["current"])), None
 
 
+def _is_per_firm(row):
+    return bool(row) and bool(row.get("bucket_per"))
+
+
+def stray_braces(text, per_firm=False, places=()):
+    """True when `text` carries a brace. A per-firm answer's {scope} is admitted, and so is each open place in `places`
+    (the places a key ruling's `fills` explains)."""
+    if per_firm:
+        text = text.replace("{scope}", "")
+    for p in places:
+        text = text.replace("{%s}" % (p,), "")
+    return "{" in text or "}" in text
+
+
+_PLACE_RE = re.compile(r"\{([^{}]*)\}")
+
+
+def admitted_places(row):
+    """The open places of a key ruling's canonical that its `fills` explains: every place of the canonical has an entry in
+    fills and fills names no place the canonical lacks. () for a per-firm row (unchanged), a row with no canonical, a row
+    with no open place, no fills, or any mismatch."""
+    if not row or _is_per_firm(row) or not row.get("canonical") or not isinstance(row.get("fills"), dict):
+        return ()
+    order = []
+    for p in _PLACE_RE.findall(row["canonical"]):
+        if p not in order:
+            order.append(p)
+    if not order or set(order) != set(row["fills"]):
+        return ()
+    return tuple(order)
+
+
 def _ruling_line(item, row):
     """(kind, detail) of a stored-file item the key rulings answer: the whole canonical address, or none owed."""
     if row.get("canonical"):
+        if _is_per_firm(row):
+            return "FIX", ("%s (the firm's place {scope} is filled per firm: the code reads its bucket from %s, one bucket "
+                           "per firm, so the firm is the one whose bucket is being served)" % (row["canonical"], row["bucket_from"]))
         if row["canonical"] == item["current"]:
             return "RIGHT", row["canonical"]
+        places = admitted_places(row)
+        if places:
+            return "FIX", "%s (each open place is filled where the code holds it: %s)" % (
+                row["canonical"], "; ".join("{%s}: %s" % (p, str(row["fills"][p]).strip().rstrip(".")) for p in places))
         return "FIX", row["canonical"]
     return "NOT-ASKED", "no name is owed for this stored file: %s; no rename is owed" % (
         str(row["none_owed"]).strip().rstrip("."),)
+
+
+def _name_ruling_line(item, row):
+    """(kind, detail) of a name (a bucket, a group, a secret) the name rulings answer: the whole correct name, or none owed."""
+    if row.get("canonical"):
+        return ("RIGHT", row["canonical"]) if row["canonical"] == item["current"] else ("FIX", row["canonical"])
+    return "NOT-ASKED", "%s; no rename is owed" % (str(row["none_owed"]).strip().rstrip("."),)
 
 
 def _card_for(card_rows, item):
@@ -217,7 +347,8 @@ def decide(item, ans, fourth=None):
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
     resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, plus verdict_for()'s carried,
     agrees and canonical, or None), policy (policyrole's row of this declaration or None), card (the card row or None),
-    key_ruling (the key_rulings.json row matched on (bucket, key) or None), ruling_unread (why no row was matched: the bucket was not read)."""
+    key_ruling (the key_rulings.json row matched on (bucket, key), per firm, or declared_in, or None),
+    name_ruling (the name_rulings.json row matched on (name, type) or None; tested after the key ruling, before the card), ruling_unread (why no row was matched: the bucket was not read)."""
     fourth = fourth or _schema_fourth()
     cur, typ = item["current"], item["type"]
     key = ans.get("key")
@@ -226,7 +357,12 @@ def decide(item, ans, fourth=None):
         what = var.group(0) if var else key.get("basis")
         return "PATTERN", "a code pattern, not a name; variable %r" % (what,)
     if ans.get("key_ruling"):
-        return _ruling_line(item, ans["key_ruling"])
+        kind, detail = _ruling_line(item, ans["key_ruling"])
+        if kind == "FIX" and stray_braces(detail, _is_per_firm(ans["key_ruling"]), admitted_places(ans["key_ruling"])):
+            return "HOLE", "partial form %s; a brace remains that no per-firm answer admits" % (detail,)
+        return kind, detail
+    if ans.get("name_ruling"):
+        return _name_ruling_line(item, ans["name_ruling"])
     if ans.get("carded"):
         kind, detail = _card_line(item, ans.get("card"))
         if ans.get("ruling_unread"):
@@ -235,7 +371,7 @@ def decide(item, ans, fourth=None):
     if key is not None and key.get("class") == "REFUSED-CROSS-FIRM":
         return "REFUSED", _refused_line(key)
     if ans.get("raised") is not None:
-        return "HOLE", str(ans["raised"])
+        return "HOLE", str(ans["raised"]) + ("; " + ans["ruling_unread"] if ans.get("ruling_unread") else "")
     verdict, canon = ans["graded"]
     cad = ans.get("cadence") if typ in _CADENCE_TYPES else None
     rebuilt = False
@@ -297,10 +433,22 @@ def decide(item, ans, fourth=None):
     return "HOLE", "partial form %s; could not fill " % (form,) + "; ".join(why)
 
 
-def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None):
-    root = root.replace("\\", "/").rstrip("/")
+_TF_PREFIX = "infra/aws/terraform/"
+
+
+def map_key(root):
+    """The root's map key: its folder path RELATIVE to infra/aws/terraform/ (investor-reporting/directory), whether the
+    root is given with or without that prefix and with or without a trailing slash. Never its last path word."""
+    r = str(root).replace("\\", "/").strip().strip("/")
+    return r[len(_TF_PREFIX):] if r.startswith(_TF_PREFIX) else r
+
+
+def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None,
+               name_rulings=None):
+    root = _TF_PREFIX + map_key(root)
     rulings = load_key_rulings() if key_rulings is None else key_rulings
-    items, _stats = opal_naming_scope.root_items(root)
+    nrulings = load_name_rulings() if name_rulings is None else name_rulings
+    items, _stats = opal_naming_scope.root_items(root, map_path)
     if not_judged is None:
         card_rows = load_card_rows()
     else:
@@ -309,7 +457,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
             c = c if isinstance(c, dict) else {"plane": c[0], "name": c[1]}
             card_rows.setdefault((c.get("plane"), c.get("name")), []).append(c)
     doc = opal_naming_rootmap.load_map(map_path)
-    name = os.path.basename(opal_naming_scope._norm_root(root))
+    name = map_key(opal_naming_scope._norm_root(root))
     entry = (doc.get("roots") or {}).get(name)
     krows = {}
     for r in opal_naming_keyfill.fill_keys(items, entry):
@@ -329,6 +477,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
                "fills": None if entry is None else entry.get("fills"),
                "resolved": None}
         ans["key_ruling"], ans["ruling_unread"] = _ruling_of(it, rulings)
+        ans["name_ruling"] = nrulings.get((it["current"], it["type"]))
         pol = ans["policy"]
         ans["resolved"] = opal_naming_rootmap.resolve(doc, name, it["current"], it["type"],
                                                       role=None if pol is None else pol.get("role_name"))
@@ -340,7 +489,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
 
     if sink is not None:
         sink.append(entry)
-    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root)[0]), out, report_only, sink)
+    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root, map_path)[0]), out, report_only, sink)
 
 
 def _collisions(decided):
@@ -397,7 +546,7 @@ def run_items(root, items, answer_of, expected_n, out=print, report_only=False, 
 
 def lines_check(root, map_path, out=print):
     """Run the root and check its own output; the last printed line is ROOTCHECK-LINES. Returns the exit code."""
-    root = root.replace("\\", "/").rstrip("/")
+    root = _TF_PREFIX + map_key(root)
     lines, sink = [], []
     check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
     entry = sink[0] if sink else None
@@ -412,6 +561,9 @@ def lines_check(root, map_path, out=print):
             bad.append("a rule code in: " + line)
         if kind == "NOT-ASKED" and "rename" not in line:
             bad.append("a NOT-ASKED line without 'rename': " + line)
+        if kind == "FIX" and stray_braces(detail, _is_per_firm(_ans.get("key_ruling")),
+                                          admitted_places(_ans.get("key_ruling"))):
+            bad.append("a FIX line carries a brace: " + line)
         if kind == "FIX":
             targets.setdefault((it["type"], detail), set()).add(it["current"])
         if kind == "REFUSED" and "belongs to another firm's store" in line:
@@ -441,7 +593,7 @@ def lines_check(root, map_path, out=print):
 def keys_check(root, map_path, out=print):
     """One line per inline policy of the root: the system printed, the role's system, the exception if any and which won.
     The last line is ROOTCHECK-KEYS. Returns the exit code."""
-    root = root.replace("\\", "/").rstrip("/")
+    root = _TF_PREFIX + map_key(root)
     lines, sink = [], []
     check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
     by_where = {}
@@ -497,6 +649,116 @@ def keys_check(root, map_path, out=print):
     return 0 if ok else 1
 
 
+HOLE_CLASSES = ("carded", "source_bucket", "event_rule", "unknown_word", "other")
+_LINE_RE = re.compile(r"^(?P<kind>[A-Z-]+) (?P<type>\S+) (?P<cur>.*?) -> (?P<detail>.*?)  \[(?P<where>[^\]]*)\]$")
+
+
+def hole_class(line_type, detail):
+    """The class of a HOLE line, decided here and nowhere else: `carded` (the detail says a card skipped it and gave no
+    name), `source_bucket` (a bucket of a root that serves more than one firm whose firm could not be filled), `event_rule`
+    (an event rule whose on-{event} token is not ruled), `unknown_word` (a word in no vocabulary, an unresolved token, or a
+    first segment that is neither a source nor a tier), else `other`."""
+    d = str(detail)
+    t = str(line_type)
+    if "skipped by a card" in d and "the card gives no correct name" in d:
+        return "carded"
+    if t == "S3_BUCKET" and "this root serves more than one firm" in d and "could not fill {source}/{scope}" in d:
+        return "source_bucket"
+    if t == "EVENT_RULE" and "token is not ruled" in d:
+        return "event_rule"
+    if "is in no vocabulary" in d or "is an unresolved token" in d or "is neither a source nor a tier" in d:
+        return "unknown_word"
+    return "other"
+
+
+def _split_line(line):
+    """(kind, type, current, detail, where) of a printed item line, or None."""
+    m = _LINE_RE.match(line)
+    return None if m is None else (m.group("kind"), m.group("type"), m.group("cur"), m.group("detail"), m.group("where"))
+
+
+def all_roots(map_path, out=print, run_one=None):
+    """The run over every Terraform root: the denominator first (roots, mapped, each unmapped root by name with its name
+    count from the scope), then each mapped root in sorted order (its ROOTCHECK line and COMPLETED or STOPPED), then the
+    totals per kind and the holes per class; the last line is ALL-ROOTS. Returns 0 when ok (whatever the holes)."""
+    run_one = run_one or check_root
+    all_r = list(opal_naming_scope._roots())
+    doc = opal_naming_rootmap.load_map(map_path)
+    keys = sorted((doc.get("roots") or {}))
+    covered, problems = set(), []
+    for key in keys:
+        try:
+            covered.add(opal_naming_scope._map_key_root(key))
+        except ValueError as exc:
+            problems.append("map key %s: %s" % (key, exc))
+    unmapped = [r for r in all_r if r not in covered]
+    out("ROOTS total=%d mapped=%d unmapped=%d" % (len(all_r), len(keys), len(unmapped)))
+    for r in unmapped:
+        try:
+            n = str(len(opal_naming_scope.root_items(r, map_path)[0]))
+        except Exception as exc:  # an unreadable count is printed and fails the run, never dropped
+            n = "unread"
+            problems.append("unmapped root %s: name count unread: %s: %s" % (r, type(exc).__name__, exc))
+        out("UNMAPPED %s names=%s" % (r, n))
+    done, stopped, tot = 0, 0, dict((k, 0) for k in KINDS)
+    cls = dict((c, 0) for c in HOLE_CLASSES)
+    other_lines, items_all = [], 0
+    for key in keys:
+        lines, reason = [], ""
+        try:
+            run_one(key, map_path, out=lines.append, report_only=True)
+        except Exception as exc:  # a stopped root is counted, never dropped
+            reason = "%s: %s" % (type(exc).__name__, exc)
+        last = lines[-1] if lines else ""
+        if not reason and not last.startswith("ROOTCHECK "):
+            reason = "no ROOTCHECK last line (last printed: %r)" % (last,)
+        if reason:
+            stopped += 1
+            out("ROOT %s | %s | STOPPED %s" % (key, last or "-", reason))
+            continue
+        count = dict((k, 0) for k in KINDS)
+        holes = []
+        for ln in lines[:-1]:
+            parts = _split_line(ln)
+            kind = ln.split(" ", 1)[0]
+            if kind in count:
+                count[kind] += 1
+            if kind == "HOLE" and parts is not None:
+                holes.append(parts)
+            elif kind == "HOLE":
+                holes.append(("HOLE", "?", "?", ln, "?"))
+        fields = dict(p.split("=", 1) for p in last.split()[1:] if "=" in p)
+        items = int(fields.get("items", "-1"))
+        if sum(count.values()) != items:
+            problems.append("%s: the counts sum to %d, the last line says items=%d" % (key, sum(count.values()), items))
+        done += 1
+        items_all += items
+        for k in KINDS:
+            tot[k] += count[k]
+        for (_k, typ, cur, detail, where) in holes:
+            c = hole_class(typ, detail)
+            cls[c] += 1
+            if c == "other":
+                other_lines.append("OTHER-HOLE %s || %s %s -> %s  [%s]" % (key, typ, cur, detail, where))
+        out("ROOT %s | %s | COMPLETED" % (key, last))
+    out("TOTALS completed=%d stopped=%d " % (done, stopped) + " ".join(
+        "%s=%d" % (k.lower().replace("-", "_"), tot[k]) for k in KINDS))
+    out("HOLE-CLASSES " + " ".join("%s=%d" % (c, cls[c]) for c in HOLE_CLASSES))
+    for ln in other_lines:
+        out(ln)
+    for p in problems:
+        out("FAIL: " + p)
+    ok = (len(keys) + len(unmapped) == len(all_r) and done + stopped == len(keys) and not problems
+          and sum(cls.values()) == tot["HOLE"])
+    out("ALL-ROOTS ok=%s roots_total=%d mapped=%d unmapped=%d completed=%d stopped=%d items=%d right=%d fix=%d "
+        "not_asked=%d pattern=%d carded=%d refused=%d hole=%d carded_class_holes=%d source_bucket_holes=%d "
+        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d"
+        % (ok, len(all_r), len(keys), len(unmapped), done, stopped, items_all, tot["RIGHT"], tot["FIX"],
+           tot["NOT-ASKED"], tot["PATTERN"], tot["CARDED"], tot["REFUSED"], tot["HOLE"], cls["carded"],
+           cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"]))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     if argv and argv[0] == "keys":
@@ -506,6 +768,12 @@ def main(argv=None):
         kp.add_argument("--map", required=True)
         ka = kp.parse_args(argv)
         return keys_check(ka.root, ka.map)
+    if argv and argv[0] == "all":
+        pp = argparse.ArgumentParser(description="the run over every Terraform root, denominator first")
+        pp.add_argument("cmd")
+        pp.add_argument("--map", required=True)
+        pa = pp.parse_args(argv)
+        return all_roots(pa.map)
     if argv and argv[0] == "lines":
         lp = argparse.ArgumentParser(description="run a root and check its own lines")
         lp.add_argument("cmd")

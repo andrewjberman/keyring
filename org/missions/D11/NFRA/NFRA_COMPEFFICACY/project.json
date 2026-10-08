@@ -3,6 +3,7 @@
   "macro_code": "NFRA",
   "directive": "D11",
   "fabric": "laptop",
+  "placement": "LAPTOP",
   "pipeline": null,
   "status": "closed",
   "dep_stage": "EXECUTING",

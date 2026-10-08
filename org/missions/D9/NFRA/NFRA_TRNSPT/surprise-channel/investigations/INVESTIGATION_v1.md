@@ -812,6 +812,53 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "A test run leaves the tree as it found it.",
     "world_is": "Two committed records are rewritten by every suite run.",
     "notes": "Found at the issuer's drain hygiene; restored each time; not a content change."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S1",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-07T15:25:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The transcripts suite in ONE pytest process stops at collection: 5 teams-chat test modules (test_eod_voice, test_teams_chat_eod_republish, test_teams_chat_jobs, test_teams_chat_natural, test_teams_chat_stale_eod) import the sibling test module test_teams_chat_tenant by bare name and raise ModuleNotFoundError, so r2_suite_check.py prints SUITE-ERROR and can no longer serve as the drain check.",
+    "disarm_owner": "4.0.0_SA_CRO (author of the teams-chat tests, last touch fa2e17f953 2026-10-02); the issuer runs the suite with --continue-on-collection-errors until then",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "shared tree CLOUD at 0e7df75158: python -m pytest data/transcripts/scripts/tests -q --continue-on-collection-errors -> 239 passed, 5 errors",
+        "round-4 branch wk-NFRA_TRNSPT-1 @33fb037923: same command -> 244 passed, 5 errors (the 5 new round-4 tests pass; same 5 errors)",
+        "r2_suite_check.py on that branch: SUITE-ERROR no result line: 5 errors"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The whole transcripts suite passes in ONE pytest process (TR2-x2-AC1; the issuer's drain check).",
+    "world_is": "Collection fails on 5 teams-chat modules before any test runs; every other test passes.",
+    "notes": "Found at the round-4 drain. Not caused by round 4; the chat-assist tests are outside this project's round-4 cells."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S2",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-07T23:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "C3's driven fire (window 60 days, reaching 2026-08-11) landed 3 admitted messages dated 2026-09-02, 2026-09-15 and 2026-09-17, but NOT the 2026-08-11 message the window was set for; the run record cannot say whether that message was listed and classified a near miss (96 near misses write nothing) or never listed. listed=100 equals 2 senders x 2 spans x 25 (the gateway's default page size), which is consistent with a per-span listing truncation, though round 3's CHECK 3 proved paging on a small window. Separately: all 3 silver rows are held_out (3 of 3).",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (round-5 analysis: a listing census per sender and span, counts only, decides truncation vs criterion; the held-out rate is FWD-10's input)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fire line run=20261007T233013Z: window_days=60 listed=100 admitted=3 landed=12 skipped_known=1 list_refusals=0 silver_rows=3 held_out=3",
+        "run.json numeric fields: candidates=99 ingest=3 near_miss=96 not_landed_not_admitted=96 pdfs=3 landed_dates=[2026-09-02, 2026-09-15, 2026-09-17]",
+        "data/transcripts/scripts/outlook/gateway_mail.py list_rows pages each span to its token's end (MAX_LIST_PAGES 200); infra/aws/ec2/opal-gateway/app/mail_route.py:213 DEFAULT_PAGE_SIZE 25",
+        "deliverables/2.0.0_SA_COO~D/R3_CHECKS/r3_listing_checks.py CHECK 3: page_size=1 pages to the end on a small window, ascending by receivedDateTime"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C3: one scheduled fire with a window reaching 2026-08-11 lands that message (analysis round 3 s.2: the named admitted message).",
+    "world_is": "The fire landed 3 other admitted messages; 2026-08-11 is absent from bronze, cause not readable from the counts.",
+    "notes": "FWD-7's DONE WHEN (a real feedback email filed by the ordinary daily run, no person starting it) is met by the 3 messages. No message content was read or printed; keys and counts only."
   }
 ]
 ```

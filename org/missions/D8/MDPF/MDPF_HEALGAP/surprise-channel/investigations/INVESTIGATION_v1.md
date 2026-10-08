@@ -253,6 +253,92 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     },
     "spec_asserts": "Feeding a saved plan to the recorder scopes it to what that plan applies, and its refusal names its cause.",
     "world_is": "A reader who counts aws_lambda_function entries in resource_changes without reading change.actions concludes the apply deployed the runner (the seat did, then corrected it from the resolver source). And --plan resolves against the terraform root, so a path fault and an empty-set refusal print the same verdict line -- the same diagnostic-ambiguity shape as MDPF_HEALGAP-S7. Tool owner unread; outside this project's surface, so it reaches 1.0.0_SA_CTO in the slug."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-07T20:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G1",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-D1-S1",
+    "one_line": "The induced auth-lapse input on the cot rebalancer's daily event target stands about 12.5 hours (17:40Z to 06:20Z 2026-10-08), not the half's 'about 25 minutes'; any untargeted apply of opal-assets in that span restores the input and silently voids the 06:00Z FWD-1 test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "laptop 1.0.0_SA_CTO msg 106554, relayed as dell1 msg 627: CROSS-BOX DEPLOY NOTICE, no untargeted apply of infra/aws/terraform/opal-assets until 06:20Z 2026-10-08",
+        "~F's plan at 20:10Z: aws_cloudwatch_event_target.cot_rebalancer_runner_daily '1 to change'; live input {\"mode\":\"pull\",\"induce\":\"auth-lapse\"}"
+      ]
+    },
+    "spec_asserts": "The FWD-1 exercise half (CTO_HALF_MDPF_HEALGAP_FWD1_EXERCISE_20261008) sizes the induced state at about 25 minutes.",
+    "world_is": "The input was set at 17:40Z for a 06:00Z fire and is restored at 06:20Z, so the window is about 12.5 hours, across a whole evening of other applies on a shared root. The only guard is the laptop's time-boxed notice. Disarm: G1 restores the input at 06:20Z and reads the target back; the notice expires then."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-07T20:26:00Z",
+    "one_line": "Disarms MDPF_HEALGAP-D1-S1 (disarm owner 2.0.0_SA_COO~G1): the ~12.5h induced-input window is guarded by the laptop CTO's CROSS-BOX DEPLOY NOTICE until 06:20Z, ended by the 06:05-06:20Z restore (owner ~F at 06:03Z, this seat armed at 06:10Z), and the HG-d3 half now states the true window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "laptop 1.0.0_SA_CTO msg 106554 (relay 0.0.0_AB_MSTR~DELL1 msg 628): no untargeted apply of infra/aws/terraform/opal-assets until 06:20Z 2026-10-08; a targeted plan must not name aws_cloudwatch_event_target.cot_rebalancer_runner_daily",
+        "half corrected @5c14dbcb51 (17:40:36Z to the 06:05-06:20Z restore, ~12.5 hours)",
+        "restore fallback owner (2): org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R1_CHECKS/hg_d3_restore_fallback.py @cc6b15a7f3, one-shot armed for 06:10Z; dry run 2026-10-07T17:59Z named the exact re-put"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S1: ARMED -- an untargeted apply of opal-assets inside the window restores the input and silently voids the 06:00Z test.",
+    "world_is": "Disarmed for the window: every apply of opal-assets is held to a targeted plan that does not name the daily target until 06:20Z, and the restore owners are named and armed. Residual (not a hazard): the guard is a notice binding by reading, not a gate; the cut lesson is that an amendment moving a step's time re-reads every half bounding that step's duration."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T06:20:00Z",
+    "one_line": "The HG-d3 restore of cot-rebalancer-runner-daily's input landed at 06:08:46Z from an actor none of the three named restore owners claims: the laptop CTO made no put, ~F was down, and dell1's fallback read NOOP at 06:10:09Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudTrail PutTargets 05:50-06:15Z: 1 of 1 on rule cot-rebalancer-runner-daily, 2026-10-08T06:08:46Z, user/Andrew_Berman, input {\"mode\":\"pull\"} (read by 2.0.0_SA_COO~G1 06:1xZ)",
+        "0.0.0_AB_MSTR~DELL1 msg 808: key ending CBIJ, IP 108.242.96.89, aws-cli/1.44.44 Python 3.12.10 Windows 10.0.26100; laptop 1.0.0_SA_CTO says it made no put; dell1 acts as cloudops-dell1-agent-user on aws-cli 2.37.9",
+        "hg_d3_restore_fallback.py 06:10:09Z NOOP-ALREADY-RESTORED; OS task 06:11:01Z NOOP-ALREADY-RESTORED; hg_fwd1_exercise.py --restored RESTORED-OK 06:10:23Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-HG-d3 step 2 and the FWD-1 never-widen half: the restore is made by a named owner -- (1) 0.7.0_AE_CloudOps~F, (2) 2.0.0_SA_COO~G1 at 06:10Z, (3) laptop 1.0.0_SA_CTO at 06:17Z -- with its put time-stamped in the ledger.",
+    "world_is": "The right value landed inside the 06:05-06:20Z window, so the exercise is intact (FAILED-OK, RESTORED-OK). But the act carries no owner: a laptop-credential process or Andrew directly wrote the target, and nothing in the order or the halves names it. INERT: the value is the declared restore value and no further put is pending. The ledger names the actor by CloudTrail identity until the laptop identifies it (asked by MSTR~DELL1 msg 808)."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T13:25:00Z",
+    "one_line": "Advances MDPF_HEALGAP-D1-S3: the 06:08:46Z restore was made by an automated laptop-credential process -- the same key and client that set the induce at 17:40:39Z ran a read-put-read restore after polling the rule roughly hourly all night; Andrew confirms it was not by hand.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Andrew-direct 13:1xZ (0.0.0_AB_MSTR record @14130c9b47): 'i did not do it by hand ... more likely a cascading issue/error, look into it regardless.'",
+        "CloudTrail read by 2.0.0_SA_COO~G1 13:2xZ, rule cot-rebalancer-runner-daily, 10-07 12:00Z..10-08 06:15Z: PutTargets 2 of 3 events on the rule, both user/Andrew_Berman key ...CBIJ aws-cli/1.44.44 -- 17:40:39Z (the induce set, TO-HG-d3 step 1) and 06:08:46Z (the restore).",
+        "06:08 shape: ListTargetsByRule 06:08:41Z -> PutTargets 06:08:46Z -> ListTargetsByRule 06:08:56Z (the order's step-2 read, put, read-back).",
+        "Same client read the rule ~hourly overnight: 18:42, 19:09, 20:10, 20:29, 20:39, 20:43, 21:24, 21:36, 22:22, 22:48, 23:06, 23:48, 00:40, 01:35, 02:36, 03:34, 04:37, 05:41, 06:08:41Z (130 ListTargetsByRule on the rule in the window, all principals).",
+        "Source IP 108.242.96.89 is shared with dell1 (cloudops-dell1-agent-user reads from it too), so IP does not discriminate the box; principal + OS build 26100 (dell1 26200) do (1.0.0_SA_CTO~DELL1 msg 911)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S3: the restore carries no owner -- the laptop CTO made no put, ~F's timers were reported dead at 20:2xZ (MSTR msg 642), dell1 read NOOP.",
+    "world_is": "An owned automation did it: a laptop-credential process with ~F's toolchain kept polling the rule all night and restored on schedule. Most likely 0.7.0_AE_CloudOps~F's owner-(1) restore loop survived the session kill that was reported as 'timers died', so the defect is a liveness report that called a running loop dead, not an unknown actor. INERT: correct value, in window. Open until the laptop names the process (asked via 0.0.0_AB_MSTR~DELL1)."
   }
 ]
 ```

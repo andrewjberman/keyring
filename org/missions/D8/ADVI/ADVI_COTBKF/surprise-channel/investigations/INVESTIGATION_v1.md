@@ -1789,3 +1789,280 @@ round.** Never edit an existing row.
   "notes": "A grader who reads RGY007151 as a real 0.003 holding rather than a gap can re-class it; the script's rule is structural (every signed row inbound)."
 }
 ```
+
+## ADVI_COTBKF-D2-S26 -- The served document index carries no page count: page_count is 0 or empty for all 11,119 documents
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S26",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T18:50Z",
+  "one_line": "silver document_index.page_count sums to 0 over 11,119 documents in every doc_type (ADVS, CLNT, NCSD, REPR, STMT, TXRP), so the served index cannot say how long any document is",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read of s3://opal-data-assets/commonwealth/cottonwood/silver/document_index/date=2026-06-23/document_index.parquet (boto3 get_object, pandas): 11,119 rows; groupby(doc_type).page_count.sum() = 0.0 in all 6 types; the column is int64 in the schema"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5: a person searches by account, type and date and opens the one document they need; the index carries page_count as a field.",
+  "world_is": "The documents open (11,119 VERIFIED in silver documents) and search works, so FWD-5 stands as realized; the page_count field is present but never filled. A one-cell enrichment (count pages from the served PDFs) would fill it.",
+  "notes": "Found by the issuer while answering Andrew's status question, not by a task order. Offered to 1.0.0_SA_CTO~DELL2 for the next enrichment list."
+}
+```
+
+## ADVI_COTBKF-D2-W33-S1 -- The order says a flow's amount is its Amount; the module uses direction x |Amount| because the Amount sign convention on the silver transactions is not documented anywhere the worker may read
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W33-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~33",
+  "surfaced_at": "2026-10-07T19:54Z",
+  "one_line": "The order says a flow's amount is its Amount; the module uses direction x |Amount| because the Amount sign convention on the silver transactions is not documented anywhere the worker may read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_flows.py: flow_amount(); data/assets/scripts/silver/tests/test_commonwealth_daily_returns.py: test_signed_amount_gives_the_same_flow_as_unsigned passes (lo -20.0 and lo 20.0 both give flow -20)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2 step 1: the flow amount of a row is its Amount.",
+  "world_is": "No file in the silver scripts or the order records whether Amount is stored signed (a withdrawal negative) or unsigned (like Quantity). A bare Amount read as signed would turn an unsigned lo into an inflow. commonwealth_flows.flow_amount returns direction x |Amount| (direction from the flow table; for share-moving types it equals commonwealth_signs.SIGN), which equals the signed Amount when the vendor signs it and is right when the vendor does not; it is wrong only for a row booked with the opposite sign to its type (a negative-Amount li). The first real run should count flow rows by type and sign of Amount before the grade is trusted."
+}
+```
+
+## ADVI_COTBKF-D2-W33-S2 -- commonwealth_daily_holdings.load_tx_pos() cannot supply the flows: cw.TX_COLS has no Amount, so the returns script has its own four-column loader
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W33-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~33",
+  "surfaced_at": "2026-10-07T19:54Z",
+  "one_line": "commonwealth_daily_holdings.load_tx_pos() cannot supply the flows: cw.TX_COLS has no Amount, so the returns script has its own four-column loader",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:444 TX_COLS; data/assets/scripts/silver/commonwealth_daily_returns.py: load_tx()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2 step 2: read silver transactions with commonwealth_daily_holdings.load_tx_pos().",
+  "world_is": "load_tx_pos() projects commonwealth_crosswalk.TX_COLS (Account_Number, Cusip, Symbol, Quantity, Trade_Date, Transaction_Type, Advisor_ID) and the cache written from it has no Amount column. commonwealth_daily_returns.load_tx() reads Account_Number, Trade_Date, Transaction_Type and Amount from the cache only when the cache carries Amount, else from the silver transactions table on S3 (read-only, same prefix and reader as load_tx_pos). Not exercised on real data this round (stub only); the first real run reads S3 once for four columns."
+}
+```
+
+## ADVI_COTBKF-D2-W32-S1 -- the census reader keeps no price column; the valuation re-reads the stores with a price-keeping cleaner
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W32-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~32",
+  "surfaced_at": "2026-10-07T20:04Z",
+  "one_line": "the census read_store keeps no price (its cleaner drops the column) and the cached store frames are priceless, so the valuation re-reads the six stores from S3 with the cleaner swapped in memory",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py _clean returns only kind,key,day,source; .scratch/price_census_cache/*.parquet columns = ['kind','key','day','source'] (6 files read with pandas)",
+      "first run of data/assets/scripts/silver/commonwealth_daily_valuation.py read the six stores read-only from S3 (cold 1m45s, over the 120 s bound once; cached reruns 74 s); inside one store 2204 gold-holdings and 3753 silver-canonical-prices security-days carry disagreeing rows (silver (max-min)/min median 4.6, i.e. the highest row is typically 5.6 times the lowest) and are left unpriced; gold had a further ~31,000 float32-noise disagreements (relative < 1e-6) that PRICE_TOL now treats as one price"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-p-1: prices come from the six census stores via STORES, read_store (or load_store_cached), symbol_claims, match_security -- the cache at .scratch/price_census_cache is usable.",
+  "world_is": "read_store/load_store_cached return day keys without prices, so no valuation can come from them or their cache. The script imports the census module, swaps pc._clean for a price-keeping variant for the duration of the read, and caches the priced frames under <data-dir>/price_cache. Nothing in the census file is edited. Same-key-day disagreement inside a store (silver 3753, gold 2204) is a data question for whoever owns the price load: the script blanks those days rather than choose.",
+  "notes": "The 3753 silver conflicts differ by a median factor of 5.6 (highest row over lowest), which looks like two different securities or units under one key and day, not rounding."
+}
+```
+
+## ADVI_COTBKF-D2-S27 -- Security transfers in and out mostly carry no Amount, so once prices land their days will read FLOW_UNVALUED instead of a return
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S27",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T20:52Z",
+  "one_line": "Of the external-flow rows, lo 18,157 / trco 147 (all) / trfo 611 / li 1,424 / trfi 60 carry Amount 0; CB-p-2 blanks such a day (FLOW_UNVALUED), so today only 101 days are blanked for it because the rest are already UNPRICED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer census on the drained code (b07434a3f5): external flow rows by sign of Amount -- li 59,720 positive / 1,424 zero; lo 31,532 / 18,157; trfo 1,298 / 611; trfi 2,613 / 60; trco 0 / 147; ftax 4,156 NEGATIVE / 56 positive; stax 112 negative",
+      "real run: DAILY-RETURNS account_days=1691729 computed=127300 blank=1564429; blank_reason UNPRICED 1,560,217, ZERO_BASE 2,578, FIRST_DAY 1,533, FLOW_UNVALUED 101"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2: a flow's amount is its Amount; a flow row with Amount zero or null blanks that day (FLOW_UNVALUED).",
+  "world_is": "Amount is unsigned for the in/out types (direction comes from the type, as the worker built) but signed negative for ftax/stax; a security transfer usually carries no Amount at all, so its value is quantity x that day's close, which step 2 already has. Answers W33-S1: direction x |Amount| is right for every type measured.",
+  "notes": "Enrichment candidate: value a zero-Amount security flow at quantity x the same-day close from the valuation step; still blank when that close is missing."
+}
+```
+
+## ADVI_COTBKF-D2-S28 -- On the 4,231 months graded today, months with a flow mostly DIFF (866 of 1,138, median |diff| 7.4 pct pts); months with no flow MATCH 1,675 of 3,093
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S28",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T20:52Z",
+  "one_line": "The monthly grade on the stores Opal already holds: 1,947 MATCH, 2,284 DIFF, 78,362 UNGRADABLE (a blank day); the DIFFs concentrate in months with an external flow, so the end-of-day flow convention or a flow class is off",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MONTHLY-GRADE months=82593 match=1947 diff=2284 ungradable=78362 tolerance_pct=0.05 (shared tree after the drain, b07434a3f5)",
+      "graded months by has-flow: no flow MATCH 1,675 DIFF 1,418 (median |diff| 0.353); with flow MATCH 272 DIFF 866 (median |diff| 7.445); 280 accounts graded, 57 with 12 or more MATCH months"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-DAILY step 4: the days chained per month give Commonwealth's monthly return, MATCH within the stated tolerance or DIFF with its reason.",
+  "world_is": "Chaining works where nothing enters or leaves (half of no-flow months MATCH inside 0.05 points); a month with a flow is usually far off, which points at the flow (timing: end of day vs start of day; class: ftax/stax as external; sign) rather than the prices.",
+  "notes": "Enrichment candidate: grade the flow months under start-of-day vs end-of-day flow and with tax withholding internal, and keep the convention that MATCHes more; a DIFF still carries its reason."
+}
+```
+
+## ADVI_COTBKF-D2-W36-S1 -- The order reads the empty page_count as 10,072 listings with no NumberOfPages and 1,034 with "0"; 13 more (all 13 REPR documents) carry a value that is not a number
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W36-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~36",
+  "surfaced_at": "2026-10-07T22:17Z",
+  "one_line": "The order's 10,072 + 1,034 leaves 13 documents of the 11,119 unaccounted: every REPR listing carries NumberOfPages as a non-number (5 'W', 5 'Barnett', 3 empty), a shifted column in the REPR listing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_page_counts.py run on the served index: ADVS 165 / CLNT 932 / NCSD 1239 / STMT 7736 absent key, TXRP 1034 '0', REPR 13 other; sums 10,072 + 1,034 + 13 = 11,119",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~36/page_counts.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-3: 10,072 listings carry no NumberOfPages and 1,034 carry it as '0'.",
+  "world_is": "Those two counts hold, and 13 more listings (REPR) carry the field with a non-numeric value, which the index's _int() turns into null. The script folds them into listing_none on the PAGE-COUNTS line (10,085) and shows them apart in page_counts.md. No listing in any doc type carries a positive value, so the cause (absent: no positive NumberOfPages in any listing) is unchanged; all 13 REPR PDFs are counted from their bytes."
+}
+```
+
+## ADVI_COTBKF-D2-W35-S1 -- on the real run the zero-Amount valuation newly grades 6 months, all DIFF, all lo/li; no trf* row sits in a newly graded month
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W35-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~35",
+  "surfaced_at": "2026-10-07T22:24Z",
+  "one_line": "Zero-Amount flow rows 20,403, valued 5,017, blank for no price 15,386; only 6 account-months move from UNGRADABLE to graded (all DIFF, 2,284 -> 2,290; MATCH unchanged at 1,947), each carries an lo or li row, none a trf* row, so the order's 'transfer' example month is an lo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DAILY-RETURNS account_days=1691729 computed=127396 blank=1564333 flow_types=61 of 61 zero_amount=20403 valued=5017 blank_no_price=15386 (computed 127,300 -> 127,396)",
+      "monthly grade over the same performance rows before/after: UNGRADABLE 78,362 -> 78,356, DIFF 2,284 -> 2,290, MATCH 1,947 -> 1,947; valued rows by type li 458, lo 4,474, trco 27, trfi 15, trfo 43, si/so 0; no valued row has Quantity 0 or a cash CUSIP"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-1 item 4: one account-month containing a valued zero-Amount transfer, fully priced, blank before and computed and graded after.",
+  "world_is": "Most months holding a zero-Amount row stay blank for another reason (an unpriced holding, or 15,386 rows with no same-day price). The only months that become fully priced are 6, all lo/li (securities in or out of the account); the worked month is B3S703388 2025-09 (lo of 21 shares of 594918104 at 508.037384 = -10668.785065, UNGRADABLE -> DIFF computed 0.7664 vs reported 0.84). Also: the transactions cache (cache/transactions.parquet) has no Amount, so the returns script reads Account_Number, Trade_Date, Transaction_Type, Amount, Cusip, Quantity from S3 (read-only) as before."
+}
+```
+
+## ADVI_COTBKF-D2-W35-S2 -- the start-of-day negative-base rule blanks days after a negative prior-day value that the end rule computes; the no-flow control holds only on the months graded under both
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W35-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~35",
+  "surfaced_at": "2026-10-07T23:36Z",
+  "one_line": "The order's start-of-day rule (zero or negative base stays ZERO_BASE) blanks 26,903 days that the end rule computes, all after a NEGATIVE prior-day value, so 416 no-flow months graded under end are blank under start and the control 'every no-flow month grades identically' holds only on the months graded under both",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "start run: ZERO_BASE 29,668 account-days against 2,578 under end; 27,112 days computed under end and ZERO_BASE under start, of which 25,499 have flow 0 and 26,903 have prev < 0 (209 have prev > 0 with a large outflow); account_day_value.parquet carries 27,672 negative values over 637 accounts",
+      "graded months: end 4,237, start 3,614, both 3,613, end only 624 (208 flow, 416 no-flow, 291 MATCH under end), start only 1; commonwealth_flow_timing.py prints these as excluded_graded_one_side_only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-2 item 1 and AC2: start of day is value_t / (value_(t-1) + flow_t) - 1 with a zero or negative base ZERO_BASE, and the no-flow control grades identically under both timings (control_same=True).",
+  "world_is": "The end rule blanks only value_(t-1) == 0, so an account whose prior-day value is negative (an overdrawn cash line, a short position) gets a computed return under end (flat -498.20 reads 0.0) and a blank under start. The two conventions are the same formula on a no-flow day, so the gap is the base rule, not the timing. The script compares the months graded under BOTH (control_same=True over 2,676 months) and states the 624 excluded months in flow_timing.md; whether a negative base should be blank under end too (which would move the round 16 grade, 4,237 months, by about 624) is a ruling for the CTO, not made here. The default FLOW_TIMING stays end."
+}
+```
+
+## ADVI_COTBKF-D2-W39-S1 -- largest DIFF flow class lo/over 10%: value falls by twice the withdrawal (lo of CFNCASH paired with sl of the FDIC sweep)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W39-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~39",
+  "surfaced_at": "2026-10-08T03:32Z",
+  "one_line": "In the largest DIFF flow class (lo/over 10%, 252 months) the account value falls by TWICE the withdrawal on the flow day in 74 of 106 single-lo months (once in 2), because the lo row (CFNCASH) is paired with an sl row of the FDIC sweep for the same amount",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FLOW-DIFF-CLASSES diff_flow_months=857 classes=8 largest=lo/over 10% largest_months=252 examples=3 (deliverables/0.9.0_WK_ADVI_COTBKF~39/flow_diff_classes.md)",
+      "single-lo months of the class with a computed flow day: 106; value drop == 2 x |flow| (within 1% + 0.05): 74; == 1 x |flow|: 2",
+      "0QF879352 2023-07-14: lo 455.68 CFNCASH qty 455.68 and sl 455.68 FDIC66606 qty 455.68; value 1395.47 -> 484.11, drop 911.36 = 2 x 455.68; day return -0.326542 vs reported month -0.18"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-r-3 item 1: the DIFF flow months are explained by flow type and size; the holdings chain values the withdrawal once (the lo takes value out, the paired sl is internal).",
+  "world_is": "A withdrawal of cash is booked as lo of CFNCASH plus an sl of the FDIC sweep for the same quantity. The holdings fall by both legs (the sl removes the sweep and the lo removes cash that the sl never credited), so the value falls by twice the flow while the return subtracts the flow once. This is the holdings side (commonwealth_signs / daily_holdings), not the flow rule; no fix made here."
+}
+```
+
+## ADVI_COTBKF-D2-W39-S2 -- order's 937 / 242 flow-month population differs from the grade's 1,173 / 316
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W39-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~39",
+  "surfaced_at": "2026-10-08T03:49Z",
+  "one_line": "The order's flow-month population (937 fully priced flow months, 242 MATCH) is not reproducible from the committed chain: months graded MATCH or DIFF that carry an external-flow row are 1,173 (316 MATCH, 857 DIFF); with a nonzero daily flow 1,145 (297 MATCH, 848 DIFF)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MONTHLY-GRADE months=82593 match=1973 diff=2264 ungradable=78356 tolerance_pct=0.05 reproduced exactly from the three chain scripts at defaults",
+      "flow_diff_classes.md: Months graded MATCH with a flow: 316; DIFF flow months 857; daily_returns flow != 0 months graded: MATCH 297, DIFF 848, UNGRADABLE 22,869; 28 classed months carry a flow row but no nonzero daily flow (net zero or off the value span)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-r-3 cell text: on the fully priced months, months with an external flow MATCH 242 of 937 (median |diff| of the DIFFs 6.3 points).",
+  "world_is": "No definition of 'fully priced flow month' over the committed grade gives 937 / 242; this script's denominator is every graded (MATCH or DIFF) month with at least one external-flow row, stated in flow_diff_classes.md. The class ranking does not depend on the gap."
+}
+```

@@ -86,6 +86,11 @@ RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/clou
       section 3), as does the drain's refuser on the merged index (`.tools/safe-merge.sh`); spine section 4 binds by
       reading.
 
+32. **SEAT ROLES: MSTR runs infrastructure and rules no project; the CTO holds its fabric's open calls and rules
+    the ones that touch only it, a cross-fabric call going MSTR to MSTR; COOs work by a drive skill; every fabric
+    seats a CVO; the CRO briefs, and researches S3+ or WORLD operations.** Mechanism: launchers, skills and gates
+    (DESIRED; binds by reading). Spec: `org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md` C-SEATS.
+
 ## 2. HOW MUCH TO CHECK -- the speed governor
 
 **VERIFICATION SCALES WITH THE COST OF BEING WRONG. WHEN THE NEXT CHECK WOULD NOT CHANGE WHAT YOU DO, STOP.** An

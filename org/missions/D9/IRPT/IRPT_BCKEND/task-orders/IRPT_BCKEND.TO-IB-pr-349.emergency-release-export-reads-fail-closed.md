@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~I</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete -- flipped by issuer 2.0.0_SA_COO~P2 on IB68-1-AC1 PASS (amended criterion, AMENDMENT 1 @b883510cd9) and proof VALID, both re-run by the issuer at dell2 HEAD 581ccf5454; legs 4-5 OPEN-BY-DESIGN, discharged by the first real Opal export (row S382)</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

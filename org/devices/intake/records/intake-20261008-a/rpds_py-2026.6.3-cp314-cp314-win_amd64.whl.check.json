@@ -1,0 +1,164 @@
+{
+  "schema": "intake-check/1",
+  "batch": "intake-20261008-a",
+  "file_name": "rpds_py-2026.6.3-cp314-cp314-win_amd64.whl",
+  "held_sha256": "0be972be84cfcaf46c8c6edf690ca0f154ac17babf1f6a955a51579b34ad2dc5",
+  "checks": [
+    {
+      "n": 1,
+      "name": "sha256 equals the digest the index publishes",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "re-read from disk now: sha256 and size equal the index's published values",
+        "computed_sha256": "0be972be84cfcaf46c8c6edf690ca0f154ac17babf1f6a955a51579b34ad2dc5",
+        "published_sha256": "0be972be84cfcaf46c8c6edf690ca0f154ac17babf1f6a955a51579b34ad2dc5",
+        "computed_size": 220380,
+        "published_size": 220380,
+        "record_held_sha256_matches_disk": true
+      },
+      "rules_out": "a file altered in transit or served by an impostor",
+      "leaves": "anything the real project published"
+    },
+    {
+      "n": 2,
+      "name": "name, version and tags are exactly the approved line",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "file name, METADATA, WHEEL tags and the approved list all say rpds-py==2026.6.3",
+        "parsed_file_name": {
+          "dist": "rpds_py",
+          "version": "2026.6.3",
+          "build": "",
+          "python_tag": "cp314",
+          "abi_tag": "cp314",
+          "platform_tag": "win_amd64"
+        },
+        "metadata_name": "rpds-py",
+        "metadata_version": "2026.6.3",
+        "wheel_tags": [
+          "cp314-cp314-win_amd64"
+        ],
+        "approved_line_sought": "rpds-py==2026.6.3",
+        "approved_list": "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_BATCH_20261008_A.md",
+        "on_approved_list": true
+      },
+      "rules_out": "a near-name package; a resolver substituting another version or pulling an unlisted package",
+      "leaves": "a wrong approval"
+    },
+    {
+      "n": 3,
+      "name": "the version is one this machine already runs",
+      "verdict": "not_applicable",
+      "evidence": {
+        "summary": "this machine holds no installed copy of rpds-py 2026.6.3 (installed versions of that name: 0.30.0)",
+        "reason": "this machine holds no installed copy of rpds-py 2026.6.3 (installed versions of that name: 0.30.0)",
+        "installed_versions": [
+          "0.30.0"
+        ]
+      },
+      "rules_out": "a brand-new release nobody has used",
+      "leaves": "a build for Python 3.14 that differs from the 3.12 build of the same version"
+    },
+    {
+      "n": 4,
+      "name": "the release's age and the project's earlier releases",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "release 99.89 days old (min 14); 71 earlier releases (min 3)",
+        "this_release_at": "2026-06-30T07:14:54.821184Z",
+        "first_release_at": "2023-03-01T06:30:10.320768Z",
+        "release_count": 72,
+        "earlier_releases": 71,
+        "age_days": 99.89,
+        "min_release_age_days": 14,
+        "min_earlier_releases": 3,
+        "yanked": false
+      },
+      "rules_out": "a package or release published days ago",
+      "leaves": "an old compromise not yet found"
+    },
+    {
+      "n": 5,
+      "name": "build attestation present or absent",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "the index shows a build attestation for this file",
+        "attestation": "present",
+        "url": "https://pypi.org/integrity/rpds-py/2026.6.3/rpds_py-2026.6.3-cp314-cp314-win_amd64.whl/provenance"
+      },
+      "rules_out": "where present: a file uploaded by hand from a stolen account",
+      "leaves": "where absent: nothing; many projects publish none"
+    },
+    {
+      "n": 6,
+      "name": "the archive opened and listed, never installed",
+      "verdict": "not_applicable",
+      "evidence": {
+        "summary": "check 3 was not applicable: no installed copy of this version to compare with",
+        "reason": "check 3 was not applicable: no installed copy of this version to compare with"
+      },
+      "rules_out": "code added outside the compiled files",
+      "leaves": "code inside the compiled files"
+    },
+    {
+      "n": 7,
+      "name": "Windows' own malware scan of the file",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "on-access scan by Little Dog Tech Managed Antivirus Antimalware, state enabled and current; file present and unchanged after 20 s; no on-demand verdict available",
+        "decoding": "productState is read as six hex digits 0xAABBCC: BB is real-time protection (0x10 or 0x11 on; 0x00 or 0x01 off; any other byte unknown); CC is the definitions (0x00 current; 0x10 out of date; any other byte unknown); unknown is never treated as on or current. Worked examples: 393472 = 0x060100 -> off; 266240 = 0x041000 -> on, definitions current.",
+        "scan_wait_seconds": 20,
+        "limit": "No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected it.",
+        "products": [
+          {
+            "display_name": "Windows Defender",
+            "name_non_ascii_replaced": false,
+            "state": 393472,
+            "hex": "0x060100",
+            "realtime": "off",
+            "definitions": "current"
+          },
+          {
+            "display_name": "Little Dog Tech Managed Antivirus Antimalware",
+            "name_non_ascii_replaced": false,
+            "state": 266240,
+            "hex": "0x041000",
+            "realtime": "on",
+            "definitions": "current"
+          }
+        ],
+        "products_count": 2,
+        "active": [
+          "Little Dog Tech Managed Antivirus Antimalware"
+        ],
+        "copy_name": "rpds_py-2026.6.3-cp314-cp314-win_amd64.whl.scan-copy",
+        "stale_copy_removed": false,
+        "problems": [],
+        "held_after": "unchanged",
+        "copy_after": "unchanged",
+        "copy_cleanup": "removed",
+        "held_sha256_before": "0be972be84cfcaf46c8c6edf690ca0f154ac17babf1f6a955a51579b34ad2dc5",
+        "copy_sha256_readback": "0be972be84cfcaf46c8c6edf690ca0f154ac17babf1f6a955a51579b34ad2dc5"
+      },
+      "rules_out": "known malware",
+      "leaves": "anything new or targeted"
+    },
+    {
+      "n": 8,
+      "name": "a person reads the result of 1 to 7 and signs the batch",
+      "verdict": "passed",
+      "evidence": {
+        "summary": "signature file names the batch and the file",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_RPDS_PY_ONLY.md",
+        "signature_file_sha256": "e10f30cfc50a126a52d43b4acc5f4fb9dcba683e2889968b2461938da250deb5",
+        "signature_file_git_author": "1.0.0_SA_CTO"
+      },
+      "rules_out": "a tool's silent failure being read as a pass",
+      "leaves": "what none of 1 to 7 can see"
+    }
+  ],
+  "verdict": "checked",
+  "checked_by": "2.0.0_SA_COO~C",
+  "at": "2026-10-08T04:36:23Z"
+}

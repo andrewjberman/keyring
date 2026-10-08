@@ -300,12 +300,6 @@ parked:
   OPAL_TAXSMA:
     fabric: laptop
     why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
-  ADVI_49F:
-    fabric: laptop
-    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
-  ADVI_INSURE:
-    fabric: laptop
-    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
 pending_placement:
 - subject: the projects behind the 07-28 sequence
   question: '''MDPF COMPLETION'', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?'
@@ -405,6 +399,10 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'placement -- NFRA_TRNSPT targets dell2, the box that runs IRPT_YCDGEN, not site Z (the row''s why and its tree row''s placement field). Its stage and every other row are unchanged.'
   word: '''I would like for whatever device is handling the YCDGEN workstreams to also take on NFRA_TRNSPT, as I believe this is the project that runs the investment commentary which is the secondary layer that follows from the generation.'' (Andrew-direct 2026-10-07 ~13:4xZ at the 4.0.0_SA_CRO terminal; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_134xZ_NFRA_TRNSPT_TO_THE_BOX_HOLDING_IRPT_YCDGEN_DELL2.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'parked -- ADVI_49F and ADVI_INSURE leave the parked list: the hold that parked them is lifted. No order changed; neither is placed in the sequence or seated by this entry.'
+  word: '''8.) Advisor-intelligence hold is lifted, but want more clarity on what projects.'' (Andrew-direct 2026-10-07 ~18:3xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.

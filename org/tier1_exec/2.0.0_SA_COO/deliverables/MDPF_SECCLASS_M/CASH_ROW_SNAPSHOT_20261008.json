@@ -1,0 +1,36 @@
+{
+ "key": "CASH",
+ "new": {
+  "asset_class": "cash",
+  "sub_asset_class": "Cash"
+ },
+ "row": {
+  "asset_class": {
+   "S": "fixed_income"
+  },
+  "classified_by": {
+   "S": "legacy"
+  },
+  "last_updated": {
+   "S": "2026-08-25T17:48:57Z"
+  },
+  "management_style": {
+   "S": "unknown"
+  },
+  "name": {
+   "S": "Cash & Cash Equivalents"
+  },
+  "sub_asset_class": {
+   "S": "Ultra Short Duration"
+  },
+  "ticker": {
+   "S": "CASH"
+  },
+  "updated_by": {
+   "S": "seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)"
+  }
+ },
+ "table": "etf-classifications",
+ "taken_at": "2026-10-08T03:12:55.234320+00:00",
+ "updated_by": "mdpf-secclass-cash-row-r12"
+}

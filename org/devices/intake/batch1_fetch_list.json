@@ -1,0 +1,868 @@
+{
+ "assessed_names": 30,
+ "assessed_not_needing_fetch": [],
+ "assessment_approved": 26,
+ "assessment_read": true,
+ "claim": "derived: file names follow the wheel specification; whether any file exists on the index is UNREAD",
+ "closure_file": "closure_cp314_win_amd64.json",
+ "closure_last_line": "INTAKE-CLOSURE target=cp314-win_amd64 lines=67 closure=162 dependencies_added=95 pure=114 fits=11 needs_fetch=37 unknown_not_installed=0 specifier_conflicts=2 fixed_point=True ok=True",
+ "compiled": [
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 19,
+    "version": "3.14.1"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "aiohttp-3.14.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "aiohttp",
+   "norm": "aiohttp",
+   "parents": [
+    "aiobotocore",
+    "s3fs"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "3.14.1"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 1,
+    "version": "1.2.10"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "catboost-1.2.10-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==1.2.10",
+   "name": "catboost",
+   "norm": "catboost",
+   "parents": [],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "1.2.10"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 20,
+    "version": "2.0.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "cffi-2.0.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "cffi",
+   "norm": "cffi",
+   "parents": [
+    "cryptography",
+    "curl-cffi"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "2.0.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 21,
+    "version": "3.4.4"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "charset_normalizer-3.4.4-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "charset-normalizer",
+   "norm": "charset-normalizer",
+   "parents": [
+    "pdfminer-six",
+    "requests"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "3.4.4"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 23,
+    "version": "1.3.3"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "contourpy-1.3.3-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "contourpy",
+   "norm": "contourpy",
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "1.3.3"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 24,
+    "version": "7.13.5"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "coverage-7.13.5-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "coverage",
+   "norm": "coverage",
+   "parents": [
+    "pytest-cov"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "7.13.5"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 8,
+    "version": "1.5.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "duckdb-1.5.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==1.5.0",
+   "name": "duckdb",
+   "norm": "duckdb",
+   "parents": [],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "1.5.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 25,
+    "version": "4.63.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "fonttools-4.63.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "fonttools",
+   "norm": "fonttools",
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "4.63.0"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "frozenlist-1.8.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "frozenlist",
+   "norm": "frozenlist",
+   "parents": [
+    "aiohttp",
+    "aiosignal"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "1.8.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 26,
+    "version": "3.3.2"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "greenlet-3.3.2-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "greenlet",
+   "norm": "greenlet",
+   "parents": [
+    "playwright"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "3.3.2"
+  },
+  {
+   "assessed": {
+    "rec": "NO",
+    "row": 9,
+    "version": "0.8.41"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "hdbscan-0.8.41-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==0.8.41",
+   "name": "hdbscan",
+   "norm": "hdbscan",
+   "parents": [],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NOT-YET-APPROVED",
+   "version": "0.8.41"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 27,
+    "version": "0.13.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "jiter-0.13.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "jiter",
+   "norm": "jiter",
+   "parents": [
+    "anthropic",
+    "openai"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "0.13.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 28,
+    "version": "1.5.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "kiwisolver-1.5.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "kiwisolver",
+   "norm": "kiwisolver",
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "1.5.0"
+  },
+  {
+   "assessed": {
+    "rec": "NO",
+    "row": 10,
+    "version": "0.11.3"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "kuzu-0.11.3-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==0.11.3",
+   "name": "kuzu",
+   "norm": "kuzu",
+   "parents": [],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NOT-YET-APPROVED",
+   "version": "0.11.3"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 2,
+    "version": "6.0.2"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "lxml-6.0.2-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==6.0.2",
+   "name": "lxml",
+   "norm": "lxml",
+   "parents": [
+    "python-docx",
+    "python-pptx"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "6.0.2"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "markupsafe-3.0.3-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "MarkupSafe",
+   "norm": "markupsafe",
+   "parents": [
+    "jinja2"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "3.0.3"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 3,
+    "version": "3.11.1"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "matplotlib-3.11.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==3.11.1",
+   "name": "matplotlib",
+   "norm": "matplotlib",
+   "parents": [
+    "catboost"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "3.11.1"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 29,
+    "version": "5.2.1"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "mmh3-5.2.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "mmh3",
+   "norm": "mmh3",
+   "parents": [
+    "pyiceberg"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "5.2.1"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "multidict-6.7.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "multidict",
+   "norm": "multidict",
+   "parents": [
+    "aiobotocore",
+    "aiohttp",
+    "yarl"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "6.7.1"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 11,
+    "version": "2.4.2"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "numpy-2.4.2-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==2.4.2",
+   "name": "numpy",
+   "norm": "numpy",
+   "parents": [
+    "awswrangler",
+    "catboost",
+    "contourpy",
+    "exchange-calendars",
+    "hdbscan",
+    "matplotlib",
+    "model2vec",
+    "pandas",
+    "scikit-learn",
+    "scipy",
+    "sentence-transformers",
+    "transformers",
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "2.4.2"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 4,
+    "version": "2.3.3"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pandas-2.3.3-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==2.3.3",
+   "name": "pandas",
+   "norm": "pandas",
+   "parents": [
+    "awswrangler",
+    "catboost",
+    "exchange-calendars",
+    "pandas-market-calendars",
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "2.3.3"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 15,
+    "version": "12.1.1"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pillow-12.1.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==12.1.1",
+   "name": "pillow",
+   "norm": "pillow",
+   "parents": [
+    "matplotlib",
+    "pdfplumber",
+    "python-pptx"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "12.1.1"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "propcache-0.5.2-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "propcache",
+   "norm": "propcache",
+   "parents": [
+    "aiohttp",
+    "yarl"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "0.5.2"
+  },
+  {
+   "assessed": {
+    "rec": "NO",
+    "row": 5,
+    "version": "18.1.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pyarrow-18.1.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==18.1.0",
+   "name": "pyarrow",
+   "norm": "pyarrow",
+   "parents": [
+    "awswrangler"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NOT-YET-APPROVED",
+   "version": "18.1.0"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pydantic_core-2.41.5-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "pydantic_core",
+   "norm": "pydantic-core",
+   "parents": [
+    "pydantic"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "2.41.5"
+  },
+  {
+   "assessed": {
+    "rec": "NO",
+    "row": 12,
+    "version": "0.9.1"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pyiceberg-0.9.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==0.9.1",
+   "name": "pyiceberg",
+   "norm": "pyiceberg",
+   "parents": [],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NOT-YET-APPROVED",
+   "version": "0.9.1"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 13,
+    "version": "311"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pywin32-311-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==311",
+   "name": "pywin32",
+   "norm": "pywin32",
+   "parents": [
+    "mcp"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "311"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 6,
+    "version": "6.0.3"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "pyyaml-6.0.3-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==6.0.3",
+   "name": "PyYAML",
+   "norm": "pyyaml",
+   "parents": [
+    "awscli",
+    "huggingface-hub",
+    "transformers"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "6.0.3"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 30,
+    "version": "2026.2.28"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "regex-2026.2.28-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "regex",
+   "norm": "regex",
+   "parents": [
+    "transformers"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "2026.2.28"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 16,
+    "version": "0.30.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "rpds_py-0.30.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==0.30.0",
+   "name": "rpds-py",
+   "norm": "rpds-py",
+   "parents": [
+    "jsonschema",
+    "referencing"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "0.30.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 14,
+    "version": "1.8.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "scikit_learn-1.8.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==1.8.0",
+   "name": "scikit-learn",
+   "norm": "scikit-learn",
+   "parents": [
+    "hdbscan",
+    "sentence-transformers"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "1.8.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 17,
+    "version": "1.17.1"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "scipy-1.17.1-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==1.17.1",
+   "name": "scipy",
+   "norm": "scipy",
+   "parents": [
+    "catboost",
+    "hdbscan",
+    "scikit-learn",
+    "sentence-transformers"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "1.17.1"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 18,
+    "version": "2.10.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "torch-2.10.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==2.10.0",
+   "name": "torch",
+   "norm": "torch",
+   "parents": [
+    "sentence-transformers"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "2.10.0"
+  },
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 7,
+    "version": "16.0"
+   },
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "websockets-16.0-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "line",
+   "line_specifier": "==16.0",
+   "name": "websockets",
+   "norm": "websockets",
+   "parents": [
+    "yfinance"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "APPROVED",
+   "version": "16.0"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "wrapt-2.2.2-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "wrapt",
+   "norm": "wrapt",
+   "parents": [
+    "aiobotocore"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "2.2.2"
+  },
+  {
+   "assessed": null,
+   "class": "COMPILED-OTHER-PYTHON",
+   "file_exists_on_index": "UNREAD",
+   "file_name": "yarl-1.24.2-cp314-cp314-win_amd64.whl",
+   "installed_tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "yarl",
+   "norm": "yarl",
+   "parents": [
+    "aiohttp"
+   ],
+   "reason": "compiled for another Python only: cp312-cp312-win_amd64",
+   "status": "NEW-REQUEST",
+   "version": "1.24.2"
+  }
+ ],
+ "other_needs_copy": [
+  {
+   "assessed": {
+    "rec": "YES",
+    "row": 22,
+    "version": "8.3.1"
+   },
+   "class": "NO-METADATA",
+   "file_name": null,
+   "installed_tags": [
+    "py3-none-any"
+   ],
+   "kind": "dependency",
+   "line_specifier": null,
+   "name": "click",
+   "norm": "click",
+   "parents": [
+    "pyiceberg",
+    "typer",
+    "uvicorn"
+   ],
+   "reason": "editable install (no wheel can be re-packed from it)",
+   "status": "APPROVED",
+   "version": "8.3.1"
+  }
+ ],
+ "schema": "intake-fetch-list/1",
+ "summary": {
+  "APPROVED": 25,
+  "NEW-REQUEST": 7,
+  "NOT-YET-APPROVED": 4
+ },
+ "target": "cp314-win_amd64"
+}

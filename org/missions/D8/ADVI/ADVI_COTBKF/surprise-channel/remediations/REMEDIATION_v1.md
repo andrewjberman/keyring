@@ -121,11 +121,11 @@ disarm evidence.
     "owner": "1.0.0_SA_CTO",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_COTBKF-W10-S4",

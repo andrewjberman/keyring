@@ -49,3 +49,20 @@ folder's existing pattern. Stripping it from the line would only defer the same 
   not owed.
 - The push gate's read is then MATCH on a07's key plus NEW on the test key, both named here. Any other key in the range stops the push.
 This disarms S57 when the push reads exactly those two keys.
+
+## RULING ON CONDITION 4 (2026-10-08 ~11:5xZ, msg 875, row D1-S7) -- L2 PASS
+
+The first 49F chain run after the upload (09:47Z, production, date 10-07) shows the switch took effect: 4,006 of 4,135 classified,
+with `canonical-*` labels in the source census. Of the request JSON's 163 listed moves, 162 land at plan. The 163rd is `CASH`, now
+`cash` by SC-e-68's signed write. There are 55 further moves the JSON does not list. Each is a `canonical-ticker` read that EQUALS its
+current `etf-classifications` row, landed after the JSON was built by acts signed under their own halves (e32/e49 DIRECT, the AI
+model rows, scheduled rows).
+
+Condition 4's "an unlisted move stops the close and goes to rollback" existed to catch a move nobody signed. These 55 are signed
+moves, read through faithfully, and rolling a07 back would remove correct reads. **Condition 4 is graded PASS on:**
+- (a) every listed move at plan, or explained by a later signed write;
+- (b) every unlisted move equal to its live table row.
+
+The d06/d08 limb does not apply to 49F: no 49F served mix exists while the d06 twin is unpublished (e55 half, condition 3). Close the
+e42 ledger and flip TO-DEPLOY-e42. This was my specification error: the condition froze a population that later signed acts were
+always going to move.

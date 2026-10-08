@@ -96,3 +96,40 @@ The terms are unchanged: AMENDMENT 1's precondition, both branches and the per-f
 r1 and r2 are no longer the act.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## CARRY to r4 (2026-10-07 ~17:3xZ, on MSTR msg 921): this half, with AMENDMENT 1, covers `q/dell1/secclass-r12-rel-e62e56/r4` @73c5a770df
+
+**Read on named refs.** Refs: `refs/cto-dell2/e62r4` @73c5a770df and origin CLOUD @4487fce9a5.
+- **What r4 contributes beyond origin** (three-dot): the same **14 files** as r3. The CHANGELOG.json entry is now a union with dell2's.
+- **Merge:** `merge-tree` with origin reads clean.
+- **Members:** `holdings_snapshot.py` `d74b54d2` and the v1 schema `004631af`; the other 10 members equal origin by md5.
+- **Exactly 2 of 12 members change,** as signed.
+
+**A correction to the relayed wording:** msg 921 says the deploy scope is "holdings_snapshot.py + 3 tests". The bundle carries no tests,
+and its two changed members are `holdings_snapshot.py` and the v1 schema. This half binds the two members, not the relayed wording.
+
+r1, r2 and r3 are no longer the act.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## Condition 1 DISCHARGED (2026-10-07 ~18:4xZ): the tar read-back, read independently by this seat
+
+The served key moved at 18:33:12Z by the CLOUD push gate:
+- **New version:** `JITP9ecNeQyAnAmKo90oxqWyFemEqVaI`, 108,774 B, IsLatest; tar md5 `7de9bbd51be6919a1ee2beb9f69a8860`.
+- **Rollback point:** `Lo8nhS9k...`.
+
+This seat fetched both versions by VersionId and compared every member:
+- **12 members in each;** 0 added, 0 removed.
+- **Exactly 2 changed:**
+  - `holdings_snapshot.py` `07b2b52d` -> `d74b54d2`;
+  - `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` `cd007b73` -> `004631af`.
+- **The other 10 are equal:** directory_runner, schwab_account_codes .py and .json, the three runner_common, firm_registry.json,
+  DirectoryEntry schema, ids.py, trading_calendar.
+- **0 tests.**
+
+`2.0.0_SA_COO~M2` read the same independently (COO half @31ae01919c, msg 984). Two independent reads agree.
+
+Owed next under AMENDMENT 1: `~M2`'s per-firm pins re-read just before the 2026-10-08 10:15 ET fire, then the per-firm read, Branch A
+or B.
+
+-- 1.0.0_SA_CTO~DELL2

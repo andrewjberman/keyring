@@ -25,11 +25,11 @@ move the realized term.
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v24",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v24"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-W20-S1",

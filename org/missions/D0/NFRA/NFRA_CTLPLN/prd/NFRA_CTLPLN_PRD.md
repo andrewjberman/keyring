@@ -5,10 +5,10 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.18",
+ "prd_version": "v0.20",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26"],
  "status": "RATIFIED"
 }
 ```
@@ -278,6 +278,16 @@
          SOURCE     brief O10; Andrew-direct 2026-10-07 ~16:3xZ, "whether it takes place in launcher
                     updates, skill updates/creation, gates, etc., I want to make sure we cover both
                     GitOps, AWS DevOps, and Agent Workflow Ops"
+
+  FWD-26 Anything an agent writes in Andrew's name is written from one file of how he writes
+         DONE WHEN  EXERCISED -- one draft written for him from the file and read by him
+         ACCEPT     there is one file that shows how Andrew writes, built from real messages of his
+                    for each kind of thing an agent would write for him; an agent drafting a reply or
+                    a post in his name uses it, and Andrew reading the draft says it sounds like him;
+                    nothing is sent in his name that he has not approved
+         SOURCE     Andrew-direct 2026-10-07 ~21:4xZ, "i need an andrew_voice.md used for anything
+                    that an agent would speak for, that uses representative emails or teams messages
+                    or whatever as a reference for the given action"
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -759,3 +769,68 @@ An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to
    an act only he can do still reaches him.
 
 An ENDPOINT change (FWD-22's ACCEPT): the ratified-text half re-opens for `3.0.0_SA_CVO`. All other outcomes are unchanged.
+
+## ADDENDUM v0.19 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: the voice file. FWD-26
+
+Andrew-direct ~21:4xZ at the `2.0.0_SA_COO~R` terminal, recorded verbatim by that seat at
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_214xZ_COO_R_INBOUND_FOR_BOTH_TEAMS_AND_OUTLOOK_AND_AN_ANDREW_VOICE_MD.md`
+(@4f53112d76): "Yeah i need it for both teams and outlook, i believe i offered a spec/concept for how it would work for outlook.
+Also i need an andrew_voice.md used for anything that an agent would speak for, that uses representative emails or teams
+messages or whatever as a reference for the given action."
+
+1. **FWD-26 is new**, at the next unused id. It belongs to workstream INBOUND (`2.0.0_SA_COO~R`).
+2. **C-SEATS clause 10, the voice file.** One file, `andrew_voice.md`, organised by the kind of act (a reply to a client's
+   mail, a Teams reply, a Teams post, an End of Day post, and others as they arise), each with representative messages Andrew
+   himself wrote. The messages come from his own mailbox and his own Teams, through the gateway, read only. Names are not
+   wiped: his word at the `4.0.0_SA_CRO` terminal ~18:4xZ, "Names don't need to be wiped, nor should they be wiped for the
+   Teams op", was given for the mail and Teams operation, and is read here as covering the file that operation drafts from
+   (`3.0.0_SA_CVO` msg 106609 corrected the citation). `daily_reports/eod/VOICE.md`, which the End of Day post reads today, is not replaced by a
+   cell's choice: the cell reads it, carries what it holds into the new file's End of Day section, and the reader of the old
+   file moves to the new one in the same cell or stays where it is. The messages themselves are client mail, so they are NOT committed to
+   the repository, whose origin is an outside host: the file with its messages lives in an Opal-owned home outside git, and
+   the repository carries only its location and its section list. Which home is the cell's, said at the cut.
+3. **What does not change.** Nothing goes out in his name without his approval: no mail is sent by an agent (a draft only),
+   and nothing posts to Teams without his 1.
+4. **FWD-20 and clause 9: Teams and mail in the same round.** His word is "both". Clause 9 already carries what he gave for
+   mail at ~18:3xZ (his mailbox only; a sender from one of the five firms; his name in the body). Whether he meant more than
+   that by "a spec/concept" is not known; the round is cut on clause 9 and a wider reading arrives as his word.
+
+An ENDPOINT change (one outcome added): the ratified-text half re-opens for `3.0.0_SA_CVO`. All other outcomes are unchanged.
+
+## ADDENDUM v0.20 (1.0.0_SA_CTO, 2026-10-08) -- Andrew lifts four Dell limits; the Dells run the heavy jobs. Contracts changed; no outcome added
+
+Two Andrew-direct words at the `1.0.0_SA_CTO` terminal, recorded verbatim at
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_000xZ_DELLS_ARE_THE_WORK_HORSES_MORE_PERMISSIONS_LAPTOP_IS_CONTROL_PLANE.md`
+(@b3ab2ba2b0, corrected @4f768037a7) and
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_004xZ_LIFT_FOUR_DELL_LIMITS_SECRETS_FIRM_DATA_RESOURCE_POLICIES_PUSH.md`
+(@14a030c049): "Their entire point is to be work horses and laptop is control plane" and "lets start with lifting 1 2 3 6".
+
+1. **C-ROLES.** A Dell project's run is made on its Dell. The laptop decides, signs and applies access; it hosts no Dell
+   project's run. A run refused for access is answered by granting the access, not by moving the run.
+2. **C-IDENTITY, what a Dell user may now do** (each an apply at the laptop under a CTO and COO pair):
+   - read every vendor credential and every client-firm or custodian session in the secrets store. NOT a secret whose holder
+     can act as Opal's own platform (signing keys, seeds, bearer tokens): those enter only by a refused run, named;
+   - dell1 is admitted to the three firm-data fences in full, as dell2 is (a read AND write reach; deletes stay denied);
+   - the Deny on resource-policy actions comes off the Dell group. His earlier "For now, laptop should admin" is reversed by
+     his own word for the Dells.
+   NOT changed: a Dell creates no IAM role or policy ("they shouldnt need to create or touch IAMs"); the routes Deny stays; the
+   download tiers of C-INTAKE stay.
+3. **C-QUEUE and C-PUSH-RULE.** Each Dell's own fabric manager pushes its box's work to the shared branch: fetch, merge under
+   the merge guard, push, never a rebase. The laptop's fabric manager is no longer the only pusher and merges a Dell's queue
+   branch only when asked. MEASURED: the push gate already admitted `0.0.0_AB_MSTR~DELL1` and `~DELL2`; dell1 pushed twice on
+   2026-10-08 (`5cbb530eb6`, `bfa7299c23`).
+4. **Standing class.** An access refusal a Dell seat meets is reported by action and resource name the same hour, and granted
+   the same day UNLESS it is one of clause 2's "NOT changed" lines (IAM creation, routes, downloads), which stay refused
+   (corrected on `3.0.0_SA_CVO` msg 106701: the first wording read inverted).
+5. **Reported to this seat, not approved by it** (his 19:0xZ word of 2026-10-07): a Dell's push, deploy or resource-policy change
+   is told to the laptop; the laptop steps in on an open call, an overlap between boxes, or a deploy that could upset another box.
+
+6. **A Dell's push never deploys another box's change** (`3.0.0_SA_CVO` msg 106701). The pre-push deploy gate reads every
+   commit in the push, including commits another box wrote. A Dell's fabric manager pushes with a deploy ceiling of zero
+   unless every deploy-scope file in the push belongs to an order of its own box, under that order's own pair. A deploy-scope
+   file from another box in the push is published and not deployed; its deploy is its own box's order.
+7. **Interim, stated as such:** clause 2's carve-out of signing keys, seeds and bearer tokens is narrower than item 1 as he
+   lifted it, and the full grant to dell1 adds a write reach where item 2 was worded as a read. Both were told to him in those
+   words the same hour; neither is widened or narrowed by a seat until he answers.
+
+Contracts change and no outcome does: the ratified-text half re-opens for `3.0.0_SA_CVO` on the CONTRACTS section.

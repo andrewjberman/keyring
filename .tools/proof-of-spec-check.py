@@ -417,6 +417,13 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
         if a.get("kind") == "s3_object":
             n_s3 += 1
             continue
+        # BF-s-8: a DIRECTORY named as an artifact path is a refusal with its reason, never a read of it (a
+        # PermissionError traceback is neither VALID nor a refusal). Covers every route that opens a path: the
+        # worktree reads (PENDING rows) and the pinned git-tree route.
+        if path and ((_REPO_ROOT / path).is_dir() or (
+                _COMMITISH_RE.match(pin) and _git_out("cat-file", "-t", f"{pin}:{path}").strip() == "tree")):
+            v.append(f"artifact-resolution: {path!r} is a directory; name its files")
+            continue
         tokens = a.get("introduces") or []
         if tokens and not (isinstance(tokens, list) and all(isinstance(t, str) and t for t in tokens)):
             v.append(f"artifact-resolution/content: {path!r} carries `introduces` that is not a list of non-empty strings")
@@ -2421,6 +2428,21 @@ def _self_test() -> int:
     _dg("DG8 DEPLOY: rollback whitespace-only -> 1 violation", _dg_inst(rollback="   "), _marked, 1, "NAMED rollback")
     _dg("DG9 BUILD (genre absent) -> 0 violations and NO frame (a BUILD run prints what it printed before)",
         {"controls": {"mutant": {}, "determinism": {}}}, "", 0, None, 0)
+
+    # ---- ARTIFACT-PATH-IS-A-DIRECTORY limb (BF-s-8): a refusal with its reason, never a traceback ----
+    def _ar(name, path, expect_v, needle=None):
+        row = {"path_or_key": path, "kind": "script", "commit_or_etag": PENDING_SENTINEL}
+        try:
+            got, _fr = artifact_resolution_check({"artifacts_produced": [row]})
+            ok = len(got) == expect_v and (needle is None or any(needle in x for x in got))
+            tail = (got[0] if got else "no violation")[:110]
+        except Exception as exc:  # noqa: BLE001 -- a crash is a failed arm, not a crashed self-test
+            got, ok, tail = [], False, "CRASH %s: %s" % (type(exc).__name__, exc)
+        arms.append((name, ok, len(got), expect_v, tail))
+
+    _ar("AR1 artifact path names a DIRECTORY -> 1 violation naming it as a directory (no traceback)",
+        ".tools", 1, "is a directory; name its files")
+    _ar("AR2 control: the same row naming a FILE -> 0 violations", ".tools/proof-of-spec-check.py", 0)
 
     passed = sum(1 for a in arms if a[1])
     print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4 + invocation alignment + count-bar + drives "

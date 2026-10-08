@@ -14,25 +14,28 @@ The ids are permanent. This is the first emission; no id is retired.
 
 ```
   FWD-1  Alyssa files an Analysis Request with a holdings file and opens the finished report from the same ticket
-         DONE WHEN  EXERCISED -- one real request for one household, one account, an Overview report and the default fee, followed from filing to the report opened on the ticket
-         ACCEPT     Alyssa files the request with the file attached, the report is made from that file without anyone re-typing the holdings, and she opens
-                    the finished report from the ticket; it fails if anyone forwarded a file by email or chat at any step
+         DONE WHEN  EXERCISED -- on DEV, an Opal sign-in in Alyssa's role files one request (one household, one account, an Overview report, the default fee)
+                    with a real holdings file and follows it to the report opened on the ticket; Alyssa's own first real request grades it again (the organic arm)
+         ACCEPT     someone at Opal files the request with the file attached, the report is made from that file without anyone re-typing the holdings, and the
+                    finished report opens from the ticket; it fails if anyone forwarded a file by email or chat at any step
          SOURCE     brief I.0 (the candidate thread), O1, O4
 
   FWD-2  A person at another firm cannot open the request or its file
-         DONE WHEN  EXERCISED -- a real sign-in from another firm tries both and is refused, in front of Andrew
-         ACCEPT     Andrew watches someone signed in for a different firm try to open the ticket and its attached file, and both are refused; a statement
-                    that it is refused does not count
+         DONE WHEN  EXERCISED -- a sign-in belonging to a different firm (a test account at that firm, made for the purpose) tries both and is refused,
+                    and the attempt can be repeated on demand for Andrew to watch
+         ACCEPT     someone signed in for a different firm tries to open the ticket and its attached file and is refused both times; Andrew can ask to see it
+                    done again at any time; a statement that it is refused does not count
          SOURCE     brief O2, finding F7, Part V
 
   FWD-3  The person filing learns at once when the file will not work, before anyone at Opal sees it
-         DONE WHEN  EXERCISED -- Alyssa's known-bad sheet is turned back with what to fix, and her known-good sheet goes through
+         DONE WHEN  EXERCISED -- a known-bad sheet (several accounts in one file, a totals row, a holding that cannot be priced) is turned back with what to
+                    fix, and a known-good sheet goes through; Alyssa's own two test sheets grade it again when she supplies them (the organic arm)
          ACCEPT     a file that today would come back from Alyssa by email comes back from the form instead, saying what to fix; the good file files normally
          SOURCE     brief O3, finding F6 (9 of 31 requests needed a resubmission)
 
   FWD-4  The person who filed a request can work it and finish it themselves
-         DONE WHEN  EXERCISED -- one person files a request, claims it and completes it
-         ACCEPT     Alyssa files a request and then claims and completes that same request, on any type of ticket; nothing stops her because she filed it
+         DONE WHEN  EXERCISED -- one Opal sign-in files a request, claims it and completes it, on DEV
+         ACCEPT     the person who filed a request claims and completes that same request, on any type of ticket; nothing stops them because they filed it
          SOURCE     brief finding F4; Andrew 2026-09-30 ("that rule of no one can file and run their own ticket is nonsensical", all tickets)
 
   FWD-5  Someone working the queue sees every open request of every type in one place and can tell them apart without opening them
