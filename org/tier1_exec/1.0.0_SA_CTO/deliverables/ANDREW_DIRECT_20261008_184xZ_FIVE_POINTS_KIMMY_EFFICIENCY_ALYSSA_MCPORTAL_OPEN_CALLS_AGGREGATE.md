@@ -85,3 +85,22 @@ texting service; "get" = git; "MC portal" / "infra underscore MC portal" = NFRA_
    (graph activity overlap, git operations, commit pace by box and project, overlap risk, pushes across boxes).
 5. **Open calls aggregated cluster-wide** with no lag: every box's calls pushed to AWS the moment they appear, one skill on any
    box reads them by project, agent and box.
+
+## Addendum ~19:2xZ -- Andrew answers the five calls
+
+Cards (~19:1xZ): 1 grade a merge only on the paths it changes; 2 macro COMM under D9; 3 Alyssa's sitting now; 4 how far to
+loosen Schwab account anonymization (REC: account title and last 4 digits to entitled advisors, tax ID and address hidden);
+5 Alyssa downloads (REC: no for now). Verbatim answer:
+
+> "1.) Yes. 2.) Yes agreed. 3.)She can do that any time, i will have her do it right now. Are you saying that account names
+> and etc are there with 13 month lookback now? 4.) Yes that's fine, I just asked that any "name" file regarding client name or
+> account name is included. 5.) no downloads needed yet, but she can read it and have her agent compose CSVs with the findings
+> so its kind of moot anyway."
+
+Placement: (1) 4.0.0_SA_CRO~A builds path-scoped merge grading in `safe-merge.sh` (cross-file checks still read every file both
+sides changed); 0.0.0_AB_MSTR lands. (2) Macro COMM is ratified for D9 (Teams and Outlook, the LDO-001 assistant, routing to
+Andrew, its queues and communications); 1.0.0_SA_CTO lands the MACROS.yaml row. (3) Alyssa reconnects now. His question is
+answered from the contract: account names are NOT served today, and the grant's date mode is `rolling_complete_window`, whose
+contract default is 30 calendar days, not 13 months. (4) Client name and account name fields are included in Alyssa's
+Schwab scope; tax ID and mailing address stay out (he named only names). (5) No download operation; read access only.
+(3)-(5) go to site Z's 1.0.0_SA_CTO~O (NFRA_MCPINDEX / NFRA_OPLGTW).

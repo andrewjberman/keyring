@@ -4882,3 +4882,135 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Whether a Dell should be able to send these twelve documents is a grant to cut (an Allow of ssm:SendCommand on the twelve document ARNs plus the instances), not a removal; the issuer and the CTO decide. Not done: it is outside AMENDMENT 15."
 }
 ```
+
+## NFRA_CTLPLN-W14-S27 -- IAM cannot pair a document with an instance: the only form that gives dell2 + RunShellScript + F1 = allowed and dell2 + RunShellScript + any other host of the group Allow = refused also refuses every document to those hosts while the window is open
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "ssm:SendCommand is authorised against the document and the instance as separate resources with the same request context, so a Deny on the shell-script document cannot except one instance; the pairing is only reachable by refusing the OTHER hosts' instance resources for every document while the window is open (dell2 loses its sends of the twelve documents to those six hosts for the window's life).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py SHELLWIN-ARM 01-07 and 13 (this pass): OPEN dell2 [RunShellScript, F1 host] -> allowed; OPEN dell2 [RunShellScript, each of the 6 hosts] -> explicitDeny per-resource [allowed, explicitDeny] by DenyOtherPrivilegedHostsWhileShellWindowOpen; OPEN dell2 [advi-49f-chain-dispatch, host 1] -> explicitDeny (the collateral)",
+      "forms tried (scratch script .scratch/forms.py at this pass, iam:SimulateCustomPolicy, both ARNs in one ResourceArns): FORM 1 (DenyShellDocuments loses the RunShellScript resource, Allow RunShellScript + F1 added): dell2 [RunShellScript, F1] allowed BUT dell2 [RunShellScript, bd host i-0090b823a4a0997e3] allowed too (document side allowed by the window, instance side allowed by the group Allow) -> does NOT give the pairing; FORM 2 (FORM 1 + a Deny of ssm:SendCommand on the instance ARNs of the six hosts while open): pairing exact (F1 allowed, each of the six refused, an instance outside the Allow implicitDeny, dell1 [RunShellScript, F1] implicitDeny) with the collateral above; no condition key distinguishes the document on the instance-side evaluation, so no narrower form exists in IAM",
+      "modules/routes_policy/main.tf locals win_added, shellwin_open_json; iam.tf aws_iam_policy.dell2_ssm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 19 item 3: prove which IAM form gives exactly dell2 + RunShellScript + F1 = allowed and dell2 + RunShellScript + any other 1(b) instance = refused; if none, STOP.",
+  "world_is": "FORM 2 gives the pairing exactly as stated and was built. It is not free: while open (until the hard close 2026-10-09T06:00Z) dell2 cannot send ANY document to the six hosts (the Deny is on their instance resources), a restriction only, in the safe direction. With the default (closed) none of it is in force.",
+  "notes": "The issuer should confirm to the CTO that the collateral is accepted; if not, drop the statement DenyOtherPrivilegedHostsWhileShellWindowOpen from the module (one list element, win_added) and the pairing is lost: dell2 RunShellScript then reaches all six hosts while open, as FORM 1 shows. The F1 host is not one of the six (census verdict NO), so the Deny never touches it."
+}
+```
+
+## NFRA_CTLPLN-W14-S28 -- The group send Allow is a cross product of documents and hosts, and dell2's standing shell Deny is not a shell boundary: twelve documents with free-text parameters reach six privileged hosts, and dell2's own resident documents reach them too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "Because the document and the instance are authorised separately, the group Allow lets both Dells send each of the 12 documents to each of the 6 hosts (including the cot documents to bd hosts), dell2 can send irpt-ycharts-deploy and irpt-ycharts-run (its own Allow names them) to the 6 hosts and any of the 12 to the F1 host, and several of the 12 interpolate a free-text parameter into a shell command line, so dell2 has a shell on the roles of those hosts through them while DenyShellDocuments stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py SENDCMD-REPORTED lines (this pass): dell2 [F1, advi-49f-chain-dispatch] -> allowed per-resource [allowed, allowed]; dell2 [bd host i-0090b823a4a0997e3, irpt-ycharts-run] -> allowed [allowed, allowed]; dell1 [F1, advi-49f-chain-dispatch] -> implicitDeny (dell1 has no F1 instance Allow); SHELLWIN-REPORTED: OPEN dell2 [F1, advi-49f-chain-dispatch] -> allowed",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check output (this pass), PARAM lines: opal-cot-bronze-run RunDate/Table/DryRun, opal-cot-silver-run RunDate/DryRun, opal-cot-gold-run DryRun/StartAt, opal-inf-export-run HeadlessMode/SkipS3/SkipExport, opal-inf-test-login-stage1-3 HeadlessMode, opal-inf-jwt-fetch HeadlessMode are FREE-TEXT-COMMAND (interpolated into a shell command line, no allowedValues, no allowedPattern); irpt-ycharts-deploy ArtifactPrefix likewise (ssm.tf:43)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md CELL: \"a document that takes a free-text command parameter is a shell on that role and is OUT of the grant\" (CTO ruling 106138 section 1), now overtaken by msgs 107113 and 107120 for the twelve documents"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO msg 107120: dell2's DenyShellDocuments \"stays as the standing rule\"; msg 107113: Allow ssm:SendCommand on the 12 documents and AWS-RunShellScript for the Dell group.",
+  "world_is": "The standing rule keeps dell2 off AWS-RunShellScript but not off a shell: the 12 documents the group Allow names carry free-text parameters, so a send with a crafted parameter runs a command as the host role (a role the census reads YES-DELETE). The never-widen pair reading this should treat the group Allow as a shell on the six hosts for BOTH Dells; the Deny is cosmetic for dell2 once the Allow applies. Not fixed here: no IAM form separates documents by parameter.",
+  "notes": "Pair this with the CTO: either accept (the Allow is the ruling), or drop the free-text documents from the 12 (a smaller list is one filter in the module, derive_ssm_documents classifies each parameter) or have dell2 policy deny the free-text ones by name (a document-side Deny cuts them for all hosts, F1 included)."
+}
+```
+
+## NFRA_CTLPLN-W14-S29 -- The order's sendcmd_ok says RunShellScript on a host of the Allow is allowed for BOTH users; for dell2 that cannot hold beside item 3 or the standing Deny, so dell2's arm reads explicitDeny and counts as met
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S29",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "AMENDMENT 19 item 4 sendcmd_ok: 'both users: each of the 12 documents and RunShellScript on one 1(b) host allowed'; item 3 and msg 107120 refuse dell2 + RunShellScript + any 1(b) host (window closed: DenyShellDocuments; open: the pairing Deny), and the window is dell2's only shell exception.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py SENDCMD-ARM 13 (dell1 [host, RunShellScript] -> allowed) and 30 (dell2 -> explicitDeny by DenyShellDocuments); SHELLWIN-ARM 02-07 and 16",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md AMENDMENT 19 items 3 and 4 (the two texts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "item 4: sendcmd_ok counts RunShellScript on a 1(b) host as allowed for both users.",
+  "world_is": "sendcmd_ok=34/34 counts dell1 allowed and dell2 refused (wanted explicitDeny by DenyShellDocuments). Also changed by item 2, not a surprise: the ssm_ok arm \"dell1 reads a command result\" read denied at the base and reads allowed now (the group Allow carries the read actions); routes_freed moved 90/138 to 114/138 and routes_still_refused 48 to 24 because the sends of the twelve documents now read allowed (no Deny on them, an Allow for them).",
+  "notes": "If the issuer meant dell2 to be allowed RunShellScript on a 1(b) host, that is a second window (a new ruling); nothing here builds it."
+}
+```
+
+## NFRA_CTLPLN-W14-S30 -- Two readings the order left open, taken narrow: the hosts of the send Allow are the 6 hosts a document is found to run on (not all 17 hosts of the 3 privileged roles), and the window is a document swap in dell2's own policy (not separate resources)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S30",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "1(b) 'the instance ARNs those documents run on - the hosts the role census ties to the privileged roles': read as the host routes with at least one document (6 of 17 YES-role hosts; the other 11 (8 historical-prices-fetcher, bd-fees, bd-assets, smartx-exporter) have no document route and are not named); the window variable chooses the document aws_iam_policy.dell2_ssm carries (no separate window resource), so the default plan leaves dell2_ssm unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check SEND-GRANT-1b table (17 YES-role hosts, all verdict YES-DELETE, all state stopped; 6 IN the send Allow)",
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf aws_iam_policy.dell2_ssm policy = var.open_dell2_f1_shell_window ? module.routes_policy.shellwin_open_json : file(dell2_ssm_policy.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "item 1(b) and item 3 as written; item 6 \"dell2's window resources absent\" with the default.",
+  "world_is": "Narrow reading built. Widening to all 17 hosts is one changed filter in the module (rt.kind == \"host\") and adds 11 instance ARNs (about 700 characters). A separate count-gated window policy cannot work: the standing Deny on the shell-script document is in dell2_ssm_policy.json and an Allow cannot override a Deny, so the file's Deny must leave the document while the window is open. Plan note section H says so by address.",
+  "notes": "Both are the issuer's to confirm; neither changes the six criteria."
+}
+```
+
+## NFRA_CTLPLN-Z-S4 -- open-calls.py close refuses a call Andrew himself has ruled, because the row reads CROSS-BOX and no cross-box file exists
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-10-08T17:52:00Z",
+  "one_line": "A call Andrew answered in his own words cannot be closed on the box list: close demands a CLOSED-BOTH cross-box file, which is the route for a CTO-level ruling, not for his.",
+  "spec_asserts": "The /open-calls skill (section 'The CTO's list for its box') gives close as `--ruling <path of the ruling>`; the cross-box rule there governs whether THIS BOX'S CTO may settle a call alone. Andrew's word is the sovereign ruling the skill exists to collect.",
+  "world_is": "2026-10-08 ~17:5xZ: 1.0.0_SA_CTO~O added four rows (sitez-20261008T174158Z-bb06, -3450, -dc96, -f241) that duplicated calls Andrew had already ruled at the 4.0.0_SA_CRO~Z terminal (record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md @116d52009d). `python .tools/open-calls.py close --id <each> --by 1.0.0_SA_CTO~O --ruling <that record>` returned REFUSED four of four: 'reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (0 files under org/devices/crossbox)'. The four rows stay OPEN on org/devices/state/sitez/open_calls.json although no decision is pending. The file was not hand-edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/open-calls.py at f24862b44c, close subcommand: four REFUSED lines, read 2026-10-08 ~17:5xZ.",
+      "open-calls.py list after the attempt: rows=10 open=10, the four rows asked_by 1.0.0_SA_CTO~O still [OPEN]."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy for the issuer to choose: a close form that takes an ANDREW_DIRECT record as the ruling and skips the cross-box route, or a withdraw verb for a duplicate row. Until then a ruled call reads OPEN and can be re-carded to Andrew, the exact failure the skill warns against."
+}
+```

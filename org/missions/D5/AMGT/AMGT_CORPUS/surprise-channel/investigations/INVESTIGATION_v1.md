@@ -3929,6 +3929,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The two rules meet at a block whose only item after the lead is an unnamed heading-like line. The worker kept the ruling as written and left the heading-only test unchanged, so such a block is served as the heading plus that line.",
   "notes": "Disarm: the issuer reads the recompose census (changed lines whose new value is a lead plus one short bold line) and, if any appear, orders a narrow guard (heading-only when the only non-empty item after the lead is the skipped, non-prose heading-like item). The worker did not widen the order.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W5-S9",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+  "surfaced_at": "2026-10-08T15:35:00Z",
+  "one_line": "CRPS-ap-7 AMENDMENT 3: the order's issued_to is 0.9.0_WK_AMGT_CORPUS~3, so safe-commit refuses slot ~5 on the order's own paths; the code edit is made and tested but cannot be committed by ~5.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order AMGT_CORPUS.TO-CRPS-ap-7.six-dispersion-mnemonics.md line 9: issued_to 0.9.0_WK_AMGT_CORPUS~3; slot tag ~3; the launch prompt seats ~5",
+      "bash .tools/safe-commit.sh for integrations/bloomberg/research/model_block_pull.py and tests/test_fire_budget_record_round40.py: owned-paths lane violation, 'agent=0.9.0_WK_AMGT_CORPUS~5 not in permitted_agents -- no NON-TERMINAL task order at HEAD issued_to this serial names this path', rc=1",
+      "AC1 ap7 build 1/1 control 2/2; AC3 ap7b build 2/2 control 2/2; AC2 61 passed, 55 warnings in 3.28s; new test file 10 passed -- all on the uncommitted edit in /c/tmp/wk-crps-r40-5c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The launch prompt seats slot ~5 on this order; the order's paths are the worker's write grant.",
+  "world_is": "The order's issued_to still names ~3, so the lane gate admits only ~3; the edit is left uncommitted in the worktree and no override was used.",
+  "notes": "Disarm not needed. The issuer re-issues the order to ~5 (or commits the working-tree edit as ~3); no proof instance or complete tag was written.",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```

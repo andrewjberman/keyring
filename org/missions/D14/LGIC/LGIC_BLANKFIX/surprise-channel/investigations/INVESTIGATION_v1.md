@@ -1392,3 +1392,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The drafts leave 180 fields UNDECIDED, so 73 of 74 entries cannot land; measuring them is work no frozen round-6 cell carries. Parked: owner 2.0.0_SA_COO~G; un-parks at the round-6 drain-end message to 1.0.0_SA_CTO as a round-7 input, with the CRO's empty-root retirement recommendation. The 13 names:none entries are BF-u-2's (slot ~4, queued)."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S2 -- BU3-AC2 expects stale_hints=0 but the estate holds one item whose file is not in its ruling's declared_in
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T19:05:00Z",
+  "one_line": "Built to the cell, `all` prints stale_hints=1 (not 0): the bd-pipeline freshness probe declares `bronze/`, a file the opal-assets-ingest-mirror ruling does not list; BU3-AC2 cannot be met as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py (worktree wk-LGIC_BLANKFIX-4) `python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json` -> `STALE-HINT bd-pipeline || FIX S3Key bronze/ -> orion/inflection/bronze/; the ruling's declared_in names infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py; the key is declared in infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py  [...:74]`; last line ends `other_holes=0 stale_hints=1`",
+      "infra/logic/registry/key_rulings.json -- the `bronze/` row (bucket opal-data-inf) lists only the ingest-mirror lambda_function.py in declared_in; the line's answer is the same as at the base (before and after bodies of the run differ only by the STALE-HINT line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BU3-AC2: stale_hints=0 at the cut 'since every declared_in path exists' (4.0.0_SA_CRO, msg 106778); build item 2: a stale hint is a match where the item's file is not in the row's declared_in.",
+  "world_is": "Existence of every declared_in path is not the test the build defines: the probe's `bronze/` matched this row at the base through its (bucket, key) match and now matches it as the only candidate of the key, so by the defined rule it is one stale hint. No weakening made. Two ways to reach 0, both outside this cell: the registry's lane adds the probe path to the row's declared_in, or the COO amends item 2 so a match the item's own bucket confirms is not stale."
+}
+```

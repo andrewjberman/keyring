@@ -3568,3 +3568,26 @@ Issuer `2.0.0_SA_COO~H`. Series **`bp`**.
 - `bp-1` AC1 (`pytest test_bp1_malformed_override.py`) base: FAIL as expected (the test is absent).
 - `bp-1` AC2 (`cat bp1_query_table_rerun.out`) base: FAIL as expected (no such file).
 - `bp-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (778 passed, 3 skipped on that head).
+
+## 86. ROUND 73 -- the collector's acceptance check, and the lower-case alias read (row AMGT_HARVST-Z-S104; `1.0.0_SA_CTO~Z` R25, R26, R27), 2026-10-08 ~16:1xZ
+
+Found on the eight names run on Andrew's word: the Wall Street Journal finished 8 of 8 with 0 stored. The collector searches
+with the legal suffix stripped and accepts only on the full stored name; for 149 of 242 names every alias ends in a
+legal-form word. (Round 72 was the issuer's direct act, the rebuild-#10 dry run, with no order.)
+
+Issuer `2.0.0_SA_COO~H`. Series **`bq`**.
+- **Fan-out:** 2 of 2 chains, cap 8 (disjoint write sets: `lib/research/harvest/` and `lib/opal_data_harvest/`; no edge).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bq-1` | `bq-1` | **R26(a): whether gold pairs a lower-case common word with a security whose alias is that word, shown by a planted test with two controls; nothing repaired.** | LOCAL | worker-light ~124 |
+| `HVST-bq-2` | `bq-2` | **R25 as amended by R27: a fetched article is accepted on the strings `slug_queries` returned, whole-word and case-insensitive; proof table over 242 that the new rule is a superset of the old; the one-word forms listed.** | SERVED | worker ~125, stacked on 537ac56e9b |
+
+**NOT cut:** R26(b), a stored-case rule for gold's aliases. It waits on the issuer's census over built gold of which pairs
+such a rule would remove, by security (R27). **Merge order when the time comes (R26):** gold first, then acceptance; each
+merge its own pair; `bq-2`'s merge is HELD while any collection leg runs. **Nothing is re-collected** on this round.
+
+**Checks dry-run at the base before the cut:**
+- `bq-1` AC1 base: FAIL as expected (the test is absent). AC2 base: FAIL as expected (no such file).
+- `bq-2` AC1 base: FAIL as expected (the test is absent). AC2 base: FAIL as expected (no such file). AC3 base: PASS as
+  expected (787 passed, 3 skipped on 537ac56e9b).

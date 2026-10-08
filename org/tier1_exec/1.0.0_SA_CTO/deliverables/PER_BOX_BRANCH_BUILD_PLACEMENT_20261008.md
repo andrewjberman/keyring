@@ -17,5 +17,10 @@ Andrew: "let the conclusions to these points be known quickly because we're alre
 | B7 | Cut-over: site Z creates `box/sitez` at its `CLOUD` tip, pushes, switches its shared tree; the laptop runs the first integrator pass (a no-op proof); then dell1, dell2; the laptop last | 0.0.0_AB_MSTR~Z, then ~DELL1, ~DELL2, 0.0.0_AB_MSTR, each on its own box; 0.0.0_AB_MSTR coordinates | -- | after B1 + B2 are on origin |
 | B8 | Delete the 159 old `origin/q/*` branches | -- | -- | Andrew's word (a delete); after the model runs clean |
 
+**Order change, Andrew ~19:5xZ** (verbatim in `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_195xZ_LAPTOP_TO_BOX_BRANCH_PROGRAMMATIC_PULLS.md`):
+"we need to get this box pushed to its box branch". B7's "the laptop last" is reversed: the laptop switches to `box/laptop` now.
+Until 4.0.0_SA_CRO~A's programmatic pass lands, the laptop's commits reach `CLOUD` only through the integrator pass that
+0.0.0_AB_MSTR runs.
+
 Rollback (design section 6.4): each box switches back to `CLOUD` after one last box-branch merge; nothing is deleted until the
 model has run clean.
