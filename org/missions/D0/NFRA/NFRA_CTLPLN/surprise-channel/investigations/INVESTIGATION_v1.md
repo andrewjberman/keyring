@@ -4285,3 +4285,82 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 1.0.0_SA_CTO: the condition is sound for the ingress and sound in intent for the handler -- the import class it targets IS covered, because the two functions share one package and the ingress exercised it. Wording that would be satisfiable: 'one ordinary invocation of the function that carries the clock, plus both functions' error counts, and the handler's own first invocation reported with FWD-20's exercise.' Until then an applier must either report NOT OBSERVED or invoke the handler, and the bounds forbid the second."
 }
 ```
+
+## NFRA_CTLPLN-W13-S28 -- TO-CT-s-3 AMENDMENT 1 item 1 retires org/mcp/seat-gates.enforce, but .tools/git-hooks/missions-tree-check.sh (cell CT-s-8) still reads that file and OPAL_SEAT_G
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T09:05:00Z",
+  "one_line": "TO-CT-s-3 AMENDMENT 1 item 1 retires org/mcp/seat-gates.enforce, but .tools/git-hooks/missions-tree-check.sh (cell CT-s-8) still reads that file and OPAL_SEAT_GATES_ENFORCE_FILE as the switch of its own close gate, so the wrappers' 'retired, turns on nothing' WARN line is false for that hook.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/missions-tree-check.sh lines 68, 73 (enf=${OPAL_SEAT_GATES_ENFORCE_FILE:-$ROOT/org/mcp/seat-gates.enforce}) and 102 (BLOCKED ... org/mcp/seat-gates.enforce present) @ed1adcaa72",
+      ".tools/tests/test_round_close_and_research.py lines 109 (creates org/mcp/seat-gates.enforce in a scratch tree) and 123 (pops OPAL_SEAT_GATES_ENFORCE_FILE) @ed1adcaa72",
+      "all executable readers of either old name in the worktree: those two files, plus the two wrappers' retired-WARN lines and this cell's own test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1 item 1: the old single file org/mcp/seat-gates.enforce, if ever present, turns on NOTHING and prints one WARN line saying it is retired and naming the four.",
+  "world_is": "True for safe-apply.sh and safe-deploy.sh after this edit. Not true of the close gate in missions-tree-check.sh, which still treats the file as ITS enforce switch; a person who creates the old file to turn that gate on will see the wrappers print that it is retired. The hook was not edited (another cell's file), so the two meanings coexist under one name.",
+  "notes": "For 2.0.0_SA_COO~C: CT-s-8's hook needs its own switch name (for example seat-gates.close-gate.enforce) in a cell that owns that file; until then the WARN line is accurate only for the two wrappers."
+}
+```
+
+## NFRA_CTLPLN-W13-S29 -- The dry pass attributes each commit to its AUTHOR's serial as ordered, but a commit's author is not the seat that pushes or applies it: all 17 would-stops of th
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S29",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T09:05:00Z",
+  "one_line": "The dry pass attributes each commit to its AUTHOR's serial as ordered, but a commit's author is not the seat that pushes or applies it: all 17 would-stops of the last 30 deploy/Terraform commits are apply-who REFUSED on WORKER or COO authors, which never run the wrappers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-gates-dry-pass.py --last 30 --ref CLOUD --device laptop --repo-root C:/Users/AndrewBerman/Desktop/ajb_workspace -> SEAT-GATES-DRY ranges=30 would_stop=17 skipped=0 ok=False; 16 WORKER authors and 1 COO author, all apply-who REFUSED",
+      "the same run with --repo-root this worktree (HEAD ed1adcaa72): would_stop=17 as well, but 5 of them also carry a crossbox STOP on data/assets (ADVI_COTBKF placed on dell2 is live in that tree and no longer live in the shared checkout)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1 item 5: replay the last 30 commits attributing each to its commit author's serial, and read every would-stop as a true or false stop.",
+  "world_is": "The author of a drained commit is the worker or COO that wrote it; the push is made by an integrator and a Terraform apply by a CLOUDOPS or TIER2 seat. So an author-attributed apply-who REFUSED says what the rule thinks of the writer, not of the actor. The real actor of a pre-push of a drained range is a fabric manager, which the rule as written also REFUSES; that is the case item 3 reports for a ruling. A true false-stop count needs the pusher's serial, which git history does not record.",
+  "notes": "The tool takes --serial to replay one named actor over every range (for example the MSTR serial); the report carries both readings."
+}
+```
+
+## NFRA_CTLPLN-W13-S30 -- Item 4 says fix the OPEN-DEPLOY limb 'the same way' if it matches by root token; it does, but for a Terraform root I kept the root match because an apply works 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S30",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T09:05:00Z",
+  "one_line": "Item 4 says fix the OPEN-DEPLOY limb 'the same way' if it matches by root token; it does, but for a Terraform root I kept the root match because an apply works on the state of the whole root, and narrowed it to carried files only for a non-Terraform (data pipeline) root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-deploy-check.py measure_open_deploy(): narrow = files is not None and not rel.startswith('infra/aws/terraform/') @ this commit",
+      ".tools/tests/test_apply_who_and_crossbox.py cases 'OPEN-DEPLOY, files mode (data root)' (clear unless a carried file is named) and '... on a TERRAFORM root' (still hits on the root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1 item 4: the same rule for the OPEN-DEPLOY limb if it matches by root token; fix it the same way if so.",
+  "world_is": "The limb matched by root token, so it had the same defect for data pipelines (many scripts share one root). Fixed there. For a Terraform root, narrowing it to the files that differ from the merge base would let an apply of a root clear another seat's open apply of the same root whenever no .tf file differs, which is the commonest case; the token match stays. This is a judgment the order did not make.",
+  "notes": "For 2.0.0_SA_COO~C: if the intent was file-judged for Terraform roots too, it is one condition in measure_open_deploy()."
+}
+```
