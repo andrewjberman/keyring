@@ -2080,3 +2080,16 @@ packet only, nothing applied. The PROD print promote follows E2 on Andrew's word
 | `IB-pr-363` | E2: the custody release packet (census at one pin, every member owned, both branches, rollback per function, after-reads) | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; the packet only, nothing applied) | IB-pr-351/352/355/356/359 (drained) | P76-b |
 
 fanout: 2 of 2 chains, cap 8, reason: disjoint write sets (E1: rows + its deliverable; E2: a possible source-map re-pin + its deliverables). Slots ~170, ~171.
+
+## 70. ROUND 77, WORKSTREAM ~P (2026-10-08 ~17:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both never-widen halves of IB-pr-363: COO half @7a5f0d2fb7, CTO half @652141d7cc, msg 1314 "the release order is yours to cut")
+
+The custody release pair at pin 1e0cdaf90c, applied from dell2 (step C applied 12:39:33Z, msgs 1288/1297; irpt-export-render is not one
+of the ten protected functions in `infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json`; no firm bucket, state-bucket
+config, shared key or assets bucket is changed, so the before-rule does not bind and the act is reported after). Function first,
+then the one route. Check: `deliverables/2.0.0_SA_COO~P2/checks/r77/p77_cells.py`, dry-run at base 0c9d22dbd1 (both FAIL, no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-364` | release irpt-export-render at 1e0cdaf90c (3 members), then apply the custody-report-read route; after-reads per both halves | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-363 (drained @7a5f0d2fb7) | P77-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release pair, ordered acts. Slot ~172.
