@@ -93,3 +93,18 @@ deploy before the reboot). ~C cuts the grant widen (graph token included); ~E ap
 Correction, verbatim, same minute: "we have 0.7.0_AE_CloudOps already working as a codex agent". So only `2.0.0_SA_COO~C` is
 spawned; the apply and the rebuild go to the live Codex seat `0.7.0_AE_CloudOps`, as task orders cut by ~C (a Tier-2
 seat hears an act only as a task order, LD-0529).
+
+## Addendum ~16:3xZ -- garbage collection becomes a /govern responsibility
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO:
+
+> "Also, I think there is an opportunity here that we can build very fast that can be folded in to our existing /govern
+> function for the fabric manager MSTR agents. In essence, we already have a script that they use to check cpu/ram, they
+> should also have a script to do a scan for the python/bash processes, which probably already exists as a function of
+> /kill scripts. I think the fast solution is adding a quick concise "garbage collector" line into govern skill text as a
+> garbage collection responsibility. I think with each loop tick, they basically run a check on what scripts are running
+> and if any are accruing / zombies and manage from there."
+
+Placement: 1.0.0_SA_CTO adds the line to `.claude/skills/govern/SKILL.md` Step 3a (this box's own processes, every cycle,
+dry census then act). It reaches every box's MSTR by the trunk. This is the unattended-run word the GC fast-fix list held
+for Andrew, scoped to a /govern cycle.
