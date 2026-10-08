@@ -3596,3 +3596,190 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A command-keyed reply ('M123 #dev notes', '#0') is built and tested. A natural-language text goes through assist.INTENT_SYSTEM, whose rule reads '\"dev\" only for a chat (C...)'; the model is therefore told not to plan dev on an M tag, though parse_plan, open_items and the sms.reply path would carry it. Changing that rule changes an existing chat path's prompt, which the order says stays byte for byte, so it is left. The mail text's own instruction is the command form."
 }
 ```
+
+## NFRA_CTLPLN-W33-S1 -- TO-CT-i-5: the box tool has no lock/device/CPU switch, so the seam test supplies them through a runner
+
+```json
+{
+  "id": "NFRA_CTLPLN-W33-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~33",
+  "surfaced_at": "2026-10-08T00:30Z",
+  "one_line": "TO-CT-i-5 item 2: .tools/remote-job.py has no switch for its lock file, device name or CPU read, so the seam test runs the real tool through a runner that replaces them, as the box tool's own test does",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/remote-job.py LOCK, device_name(), measure(), make_runtime()",
+      ".tools/tests/test_remote_job_review.py main()",
+      "data/transcripts/scripts/tests/test_inbound_seam.py RUNNER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'run the REAL .tools/remote-job.py as a subprocess with --dry-run on a temporary lock and liveness file' and, if dry-run cannot give a complete envelope after a grade, 'build the lock the way the box tool's own test does and say so in the report'.",
+  "world_is": "The tool's LOCK is a module constant (.tools/.remote-job.json) with no argument or environment override; only the liveness file has one (OPAL_LIVENESS_FILE). `grade` always writes LOCK and `--dry-run` on accept writes no lock, so a graded dry-run complete cannot be produced from a bare subprocess without touching the real lock. device_name() shells to agentbus-sqs.sh and measure() imports psutil. The test therefore starts the real tool by file path through a python -c runner that sets rj.LOCK to a temporary file and replaces device_name, measure and make_runtime (the last with a stand-in that only prints) before calling the tool's own main(argv); accept, bid and complete envelopes come from --dry-run, and the lock is built by one non-dry accept whose sender is that stand-in. The tool's code is unedited; the real .tools/.remote-job.json is read before and after and is unchanged (absent at the cut). No disagreement between the two halves was found: every field the cloud handlers read (reviewer, available, cpu_pct, mem_pct, device, coo, grade.by, grade.verdict, summary, deployed) is sent under the same name; fields sent and not read (accept: device, serial, brief_sha256; complete: serial, evidence) are inert."
+}
+```
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T02:35:45Z",
+  "one_line": "AMENDMENT 7 asks `dell_fence_census.py --selftest` to read ok=True, but the file is outside the order's <paths> and the lane gate refused the commit; the self-test reads cases=0/0 ok=False because it takes its scoped pair from a registry that no longer holds a scoped row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/shared-infra/tests/dell_fence_census.py --selftest at 9c58690566 (registry @173f98f24b, no scoped row): 'SELFTEST-SETUP no scoped registry row has a policy (saved or live) holding its confining statements' then 'FENCE-CENSUS-SELFTEST cases=0/0 ok=False'. run_selftest() takes its pair from scoped_rows(), which returns rows carrying both actions and prefix; there are none.",
+      "The fix, tested in this worktree before the commit was refused: when scoped_rows() is empty, build the pair in memory (first FENCED bucket's saved policy, the dell1 ARN appended to the fence's admitted list, the three DenyScopedExemption1 statements the module renders for actions GetObject/ListBucket/GetBucketLocation and prefix irpt/<firm>/platinum/holdings/). Result: 'FENCE-CENSUS-SELFTEST cases=7/7 ok=True' in 55 s. The 51-line diff is kept untracked at C:/tmp/wk-ctlpln-6/.scratch/census_selftest_fixture.patch (worktree of 0.9.0_WK_NFRA_CTLPLN~6, branch wk-NFRA_CTLPLN-6); the file was restored to HEAD afterwards.",
+      "safe-commit refusal on the commit that included tests/dell_fence_census.py: 'VIOLATION: infra/aws/terraform/shared-infra/tests/dell_fence_census.py -- lane=CLOUD_OPS_OR_ETL ... agent=0.9.0_WK_NFRA_CTLPLN~6 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. The order's own BOUNDS paragraph lists tests/dell_fence_census.py as READ and never edit. No override was used; the other five files committed at b6c5d8f1c1.",
+      "Not a render or validator defect: python lib/opal_naming.py validate on a scratch copy of today's registry with one unknown key planted refuses it (rc 1); on the unchanged copy it reads 'VALIDATE: OK 53 system row(s), 13 scope row(s), 0 warning(s)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN.TO-CT-d-2 AMENDMENT 7 item 4: 'Run both checks, and derive_fence_row_shape.py and dell_fence_census.py --selftest, each under timeout 120; all read ok=True'; the worker brief allowed the smallest equivalent change to dell_fence_census.py if it failed for the same reason as the other checks.",
+  "world_is": "dell_fence_census.py --selftest reads ok=False (cases=0/0) because the registry holds no scoped row since dell1 became a full row, and the lane gate refuses a worker's edit to that file because the order's <paths> block does not name it; the three criteria CT4d2-AC1..AC3 do not run the self-test.",
+  "notes": "For 2.0.0_SA_COO~C: either add tests/dell_fence_census.py to the order's <paths> (then the tested patch applies as is) or have the file's owner land it; until then the self-test line stays ok=False and the order is left in_progress. Nothing else in the fence checks depends on it."
+}
+```
+
+## NFRA_CTLPLN-W15-S1 -- placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W15-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~15",
+  "surfaced_at": "2026-10-08T02:52:42Z",
+  "one_line": "placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py line 90: box = dev.resolve(str(d.get(\"fabric\") ...)); `placement` is not read there",
+      "measured from this worktree 2026-10-08 ~02:4xZ: over placement-check read_projects() (34 live projects), 15 have a `placement` that resolves to a box other than read_projects()'s box or carry no `placement` field (e.g. IRPT_BCKEND fabric laptop, placement DELL2; MDPF_HEALGAP fabric laptop, placement DELL1; NFRA_REPORT no placement field)",
+      ".tools/crossbox-deploy-check.py projects_covering() already re-reads project.json `placement` over proj[\"box\"], the same workaround"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-5 BUILD 1 (c): 'PLACEMENT: the project row's `placement` against this box', and (a): use .tools/placement-check.py's functions, imported.",
+  "world_is": "read_projects() returns box from `fabric`; the project row's `placement` differs for 15 of 34 live projects. .tools/open-calls.py imports read_projects() and overlaps() and then overrides each project's box with the resolved project.json `placement` (falling back to the fabric box when the field is absent), so its PATHS and RESOURCES readings use placement. placement-check.py itself was not edited (it is in the order's paths, but changing which field its viewer reads would change its output for every other reader).",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: whether placement-check.py's read_projects() should read `placement` first is a decision on a shared viewer; open-calls.py's override goes away if it does. Three live projects have no `placement` field at all, so their box is the fabric box in this tool's reading."
+}
+```
+
+## NFRA_CTLPLN-W14-S11 -- TO-CT-a-1 amendment 8: the vendor-secrets census stores no per-reference reader fact; reader evidence re-derived by hand
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T01:23:17Z",
+  "one_line": "TO-CT-a-1 amendment 8: the saved vendor-secrets census does not record, per reference, whether a program reads the secret by name (its `program` flag is a file-suffix test that is true for comments and constants), and the project join rests in part on a whole-tree path entry (portal/)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_vendor_secrets.py is_program(): suffix in {.py,.js,.mjs,.cjs,.ts,.tsx,.sh,.ps1} and not a test/fixture path; join rows store only {file, lines, program, named_exactly_by_a_task_order}. Of the 61 join rows, the program=True references that are comments or other non-reads include bd_49f_auto_login.js:25-27 (comment lines), _render_identity/mint.py:17-19,70-72 (comments saying no Secrets Manager call is made), opal-gateway/app/config.py:251 (comment)",
+      "IRPT_BCKEND's task orders carry the path entry `portal/` (the whole portal tree): task_order_paths('org/missions/D9/IRPT/IRPT_BCKEND/') includes it, so portal/etl/.../opal-portal-volatility-fetcher/lambda_function.py (reads opal/external-apis by name, line 84) and portal/scripts/setup-env.sh (reads opal/portal/config, line 77) are 'IRPT_BCKEND code' in the join",
+      "a reading program the join does not hold: infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py:45,87 reads blackdiamond/49f/session by default name and is loaded by IRPT_BCKEND's performance/bd_adapter.py:52-60; the join reaches the secret only through performance/tenants.py:145",
+      "derive_vendor_secrets.py --verify-readers: READERS-VERIFIED entries=13 ok=True (each name line holds the literal, each read line holds its call token)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 8 item 1: the census's own earlier distinction separates a program that fetches the value from a grant, registry, manifest, fixture or document; if it is not stored per reference, re-derive it and say so.",
+  "world_is": "The distinction is stored per file as a suffix test only. I re-derived it from the repository: 13 reader entries (secret, project, name line, read line, token) are now data in the script head and are checked on every run; a secret with a program file and no entry is READER-UNCLEAR and not granted (7 secrets, listed with reasons in the plan note); the one-segment path entry portal/ was not treated as a project's own code. Granted set: 9 of 114. Not assessed here: whether IRPT_BCKEND's `portal/` path entry is intended (it grants the project the whole portal tree as a write surface), and the readers of secrets in projects with no task order.",
+  "notes": "For the CTO at the round analysis: the join could store 'reads_by_name' per reference (the read-call line) so a later census needs no hand-made reader table; the `portal/` entry in IRPT_BCKEND's task-order paths is worth a look as a write-surface question separate from this cell."
+}
+```
+
+## NFRA_CTLPLN-W14-S12 -- TO-CT-a-1 amendment 9: origin-verify is OTHER in the amendment and PLATFORM-KEY in the dispatch; the judgment calls of the classification
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T03:10:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S12",
+  "one_line": "TO-CT-a-1 amendment 9: AMENDMENT 9 lists 'an origin-verify value' under OTHER while the dispatch says opal/auth/origin-verify is PLATFORM-KEY; several secrets could only be placed by judgment and went to the cautious class",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md AMENDMENT 9 item A, OTHER bullet: '(configuration bundles with no description, a public key, an origin-verify value, the firm's own directory app credential, a secret scheduled for deletion)'; the issuer's dispatch to this worker: 'opal/auth/origin-verify (lets a holder skip the edge's checks: PLATFORM-KEY)'",
+      "tests/derive_vendor_secrets.py CLASSIFICATION: opal/auth/origin-verify is PLATFORM-KEY (doubt between PLATFORM-KEY and anything else resolves to PLATFORM-KEY); both classes are NOT granted so the grant is the same either way",
+      "judgment calls, all in the CLASSIFICATION table with their reason: GRANTED opal/opalai/analyst-claude-oauth-token (a model provider's account token), smartx/credentials/yang-shared (a person's vendor login), the five opal/openai/* keys and FredApiKey (no description, placed by name and code); OTHER (cautious) estate-report/github-token, github-token, google/andrew-goldengate/credentials, google/officialmadeaux/credentials, twilio/recovery-code, blackdiamond/49f/otp-relay, blackdiamond/cot/otp-relay, find-insure/job-board/placeholder, teams/global/owner-phone and the configuration bundles"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 9 item A: each secret gets one class by name, description, tags and use; an origin-verify value is OTHER; doubt between a granted class and OTHER is OTHER, between PLATFORM-KEY and anything else is PLATFORM-KEY.",
+  "world_is": "opal/auth/origin-verify is a CloudFront origin-verification shared secret: a holder can call the origin and skip the edge's checks, so it is PLATFORM-KEY by the doubt rule and by the dispatch, against the amendment's own OTHER example. Nine secrets are OTHER by the cautious rule and eight were granted by judgment; each is named with its reason in the plan note for a person to rule. No secret value was read for any of this.",
+  "notes": "For the CTO / signers: the two classes are both not-granted, so only the label differs for origin-verify. The signers may move any OTHER secret into a granted class by editing its row in tests/derive_vendor_secrets.py CLASSIFICATION and re-running --reclass (one line, no live call)."
+}
+```
+
+## NFRA_CTLPLN-W14-S13 -- TO-CT-a-1 CTa1-AC3 expects names_from_builder=9/9; the check prints 11/11
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T03:10:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S13",
+  "one_line": "TO-CT-a-1 CTa1-AC3 expects 'names_from_builder=9/9' but the check counts every named resource of the root and prints 11/11 after amendment 9 (12/12 at amendment 8)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md line 113: <expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect>; AMENDMENT 9 item B: 'tests/check_identity.py's name count moves accordingly' and the acceptance paragraph: 'CTa1-AC1, AC3, AC4, AC5 unchanged'",
+      "timeout 120 python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py -> 'IDENTITY-STATIC validate=ok no_access_key=True names_from_builder=11/11 policy_size_ok=True ok=True' (the EXPECTED table has 11 entries: group, 2 users, deploy, create, 2 bus, ssm, 2 routes, secrets, minus the removed respol)"
+    ]
+  },
+  "spec_asserts": "CTa1-AC3 expects the literal text names_from_builder=9/9; amendment 9 says the criterion is unchanged and that the name count moves accordingly.",
+  "world_is": "The count printed is 11/11: all 11 named resources match the builder. The literal 9/9 cannot appear; the two statements of the amendment contradict each other. I did not change the check to print 9/9. The proof row records the printed line and its expect field is the part that is stable (policy_size_ok=True ok=True).",
+  "notes": "The issuer can restate the expectation as names_from_builder=11/11. The same drift existed at amendment 8 (12/12) and was carried in the previous proof the same way."
+}
+```
+
+## NFRA_CTLPLN-W14-S14 -- TO-CT-a-1 amendment 9: secrets document 5,968 of 6,144; census age; one blocked-by-key secret
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T03:10:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S14",
+  "one_line": "TO-CT-a-1 amendment 9: the secrets grant document is 5,968 of 6,144 characters; the listing is from 2026-10-07T21:00Z; one granted-class secret is under a customer-managed key",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/render_routes_policy.py / check_identity.py: 'policy vendor-secrets (module output) chars_no_whitespace=5968 limit=6144 OK' for 66 exact ARNs; the 67th would pass about 6,060 and the 68th about 6,150",
+      "tests/vendor_secrets_census.json header.taken_at 2026-10-07T21:00:45Z, 114 secrets in 17 regions (all in us-east-1); list-secrets does not return secrets scheduled for deletion",
+      "schwab/sdd/session: kms_key_id is a customer-managed key (kms_default false); class CLIENT-SESSION; decision BLOCKED-BY-KEY, left out, no key policy touched"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 9 item A: ONE statement on the group, split into two managed policies by a stable rule if the document would pass 6,144 characters; a secret under a customer-managed key is left out as blocked-by-key; the listing is 114 secrets.",
+  "world_is": "ONE policy fits with 176 characters to spare, so it is not split (the stable split rule, by class, is recorded in iam.tf for the next addition). A secret created after the listing is not in the grant until the census is retaken. schwab/sdd/session is the one blocked-by-key secret.",
+  "notes": "Retake the census with derive_vendor_secrets.py --live (names only, about six minutes) before the apply if secrets were added; the new class table will flag an unclassified new secret (ok=False) rather than skip it."
+}
+```

@@ -2,10 +2,10 @@
 
 <to_id>LGIC_BLANKFIX.TO-BF-s-4</to_id>
 <project>LGIC_BLANKFIX</project>
-<issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
+<issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -87,7 +87,7 @@ The block is your WRITE grant. You READ and never edit anything outside the bloc
 
 <proof_of_spec>
 Criterion ids: BS4-AC1, BS4-AC2. Instance at
-`org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-s-4.unknown-first-words.proof_of_spec.json`,
+`org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-4.unknown-first-words.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> BS4-AC1,BS4-AC2` BEFORE the flip.
 </proof_of_spec>
 
@@ -114,6 +114,38 @@ Run that command first and work from ITS lines, not from this summary.
    how a pattern is marked; if neither file has such a mark, build nothing for it and say so.
 4. `BS4-AC2` reads `unknown_word_holes=0`; add to your report the `source_bucket_holes` count, which your reader should also
    bring to 0.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-08) -- the issuer's error: this order runs on slot ~2
+
+The issuance cut this order to slot `~1` and the issuer then spawned it on slot `~2`, where the root check's file was free. The
+lane gate read `<issued_to>` and refused the slot-`~2` worker's commit (row `LGIC_BLANKFIX-W2-S15`), correctly. The order is
+re-pointed: `<issued_to>` and every deliverables path on this face now name `0.9.0_WK_LGIC_BLANKFIX~2`. Nothing else changes.
+
+### AMENDMENT 3 (2.0.0_SA_COO~G, 2026-10-08) -- handed; the measured state; one more reader on the same file
+
+`BF-s-1` and `BF-s-2` are merged (their orders stay open on criteria your build serves). Measured by the issuer on the trunk:
+`python lib/opal_naming.py census --all-roots` reads `items=412 right=124 fix=237 not_asked=27 pattern=8 refused=0 hole=16
+carded_class_holes=2 source_bucket_holes=3 event_rule_holes=0 unknown_word_holes=3 other_holes=8`. Run it first and work from its
+lines.
+
+Your build is AMENDMENT 1's items 1 to 4 (the reader for `name_rulings.json`), and one more in the same file:
+
+5. **A ruled address with more than one open place.** Six `opal-assets` lines (`_quarantine/`) print `HOLE` with "a brace remains
+   that no per-firm answer admits". The registry's lane gave the row a field for exactly this: `fills` on a `key_rulings.json`
+   row (@3c76aa613b; read `_about.row_fields`): an object with one entry per open place, keyed by the place's name without
+   braces, each value one sentence saying what fills the place and where the code gets it. Build: a key-ruling row whose
+   `canonical` carries open places is admitted when `fills` has an entry for EVERY place in the canonical and no other; the line
+   prints `FIX`, the form, and each place's sentence from `fills` (never from `evidence`). A canonical with an open place and no
+   matching `fills` entry stays `HOLE`. The per-firm rows (`bucket_per`, `bucket_from`) are unchanged. The `lines` command's
+   brace rule admits these lines the same way and refuses every other brace.
+6. The DIFFERENCE CONTROL for item 5, on a registry the test writes to a temporary folder: the same two-place row is `FIX` with
+   both `fills` entries and `HOLE` with one. The test `lib/tests/test_opal_naming_rootcheck.py` has a case from an earlier order
+   asserting that a two-place canonical is `HOLE`: keep that assertion for a row WITHOUT `fills`, and say in your report what you
+   changed in it.
+7. Lines you are NOT expected to close: stored files whose bucket the code does not decide in its own file (`quarantine/`,
+   `firms/`, `bronze/`, `bronze/eclipse/`): the registry's lane is deciding how those are keyed. If `BS4-AC2`
+   (`unknown_word_holes=0`) fails ONLY because `firms/` or `bbg/` still waits on that, record the FAIL, leave the status pending
+   and report each remaining line whole with its reason.
 
 ---
 

@@ -18,6 +18,7 @@ string both become HOLE. The modules (scope, rootmap, cadence, policyrole, keyfi
 Python 3.9; ASCII only.
 """
 import argparse
+import ast
 import json
 import os
 import re
@@ -92,6 +93,34 @@ def load_key_rulings(path=None):
     return out
 
 
+def named_in_source(item, asked, text=None):
+    """[names] of `asked` that the item's own Python source file NAMES as code: a variable, a function, an attribute
+    (`directory_handler._bucket_for(...)`) or an imported name. The keyfill reader sees a variable only as a string
+    constant; a per-firm row names a function the file calls, so the row's match reads the file's code as well. Docstrings,
+    comments and strings do not count. [] when the file is not Python, unreadable or does not parse."""
+    path, src = opal_naming_keyfill._item_text(item, text)
+    if path is None or src is None or not path.endswith(".py") or not asked:
+        return []
+    try:
+        tree = ast.parse(src)
+    except (SyntaxError, ValueError):
+        return []
+    seen = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name):
+            seen.add(node.id)
+        elif isinstance(node, ast.Attribute):
+            seen.add(node.attr)
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            seen.add(node.name)
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            for al in node.names:
+                seen.add(al.name.split(".")[-1])
+                if al.asname:
+                    seen.add(al.asname)
+    return sorted(a for a in asked if a in seen)
+
+
 def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     """(row or None, unread reason or None) for a stored-file item. A PER-FIRM row (bucket_per, bucket_from) is matched first:
     its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
@@ -104,6 +133,7 @@ def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     runtime_reader = runtime_reader or opal_naming_keyfill.runtime_bucket
     asked = sorted(set(r["bucket_from"] for r in (rulings or {}).values() if r.get("bucket_from")))
     names, _rb = runtime_reader(item, None, asked)
+    names = sorted(set(names) | set(named_in_source(item, asked)))
     for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
         if row.get("bucket_per") and k == item["current"] and row["bucket_from"] in names:
             return row, None
