@@ -49,3 +49,16 @@ The advisory (~15:3xZ):
    in commit `4d069108b5`, file `docs/briefs/process-and-worktree-garbage-collection-brief-20261008.md` (DRAFT; input
    to the L1 brief, not the brief of record). Read: `git show 4d069108b5:docs/briefs/process-and-worktree-garbage-collection-brief-20261008.md`.
 3. **The `/self-drive` 60m laptop loop is not re-armed** while these two lead.
+
+## Addendum ~15:5xZ -- Andrew re-places the seats (supersedes item 1's seat placement)
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO:
+
+> "Heres how this is going to go, we are gong tto have CRO Base focused on the multi-device graph coherence project. We
+> are going to have CRO A focus on the Git Ops. Then lastly we are going to have the CRO B on the Garbage COllector and
+> script ops"
+
+Placement now: **4.0.0_SA_CRO** (base) = multi-device graph coherence; **4.0.0_SA_CRO~A** = GitOps;
+**4.0.0_SA_CRO~B** = garbage collector and script ops (input: the dell1 draft @4d069108b5). Same word recorded by the
+CRO at `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_160xZ_CRO_BASE_GRAPH_OPS_CRO_A_GITOPS_CRO_B_GC.md`
+@b387b7e868.
