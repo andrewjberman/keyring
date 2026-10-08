@@ -5051,3 +5051,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "This seat lost nothing permanently: the section was recovered from f9c38b6165 and both narratives (e57e61's STOP and e65b's half-landed/rollback) are preserved in org/tier2_senior/0.7.0_AE_CloudOps~SD/deliverables/MDPF_SECCLASS_E57E61_PROOF_INSTANCE_AND_ACT_NARRATIVE_20261008.md, which no tool regenerates. WORKING RULE this seat now follows, offered to others: put structured state in the ledger via the tool's own verbs (open/close-leg/hold/close and their --proof text, which DO survive because the tool writes them), and put narrative in a deliverable the ledger points at. The long --proof strings on L1 and L2 of the e57e61 entry are deliberately written that way. Candidate remedies for the tool's owner, NEITHER proposed as built: (a) preserve any content below a sentinel marker across regeneration; or (b) refuse to regenerate when the file carries bytes the tool did not write, naming them, so the loss is loud instead of silent. Remedy (b) matches the fail-closed posture the rest of the deploy toolchain takes -- safe-deploy's upload verify and safe-apply's 'a gate that cannot evaluate must not pass' both refuse rather than proceed quietly."
 }
 ```
+
+## MDPF_SECCLASS-D1-W57-S1 -- C_06 publishes a mix that omits a class outside MIX_ASSET_CLASSES while its sum check counts it
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W57-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~57",
+  "surfaced_at": "2026-10-08T03:06:00Z",
+  "one_line": "C_06 drops a held class that is not in MIX_ASSET_CLASSES from the stored mix without a sign: its pct-sum check includes it, its mix list does not, so the stored mix of a date holding multi_asset sums below 1.0 and is published as is.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/C_06.client_mix_timeseries.py process_date: mix_agg = grp.groupby('asset_class')[...].sum(); pct_sum over ALL classes in mix_agg is checked against 1.0 (PCT_TOL); then mix = {ac: ... for ac in MIX_ASSET_CLASSES} keeps only the eight listed keys. A class outside the list passes the check and leaves the mix.",
+      "Served instance: platinum/clients/z09305621/concentration.json date 2026-10-05 holds SGIIX as multi_asset (market_value 25862.98 of a book of about 269,630 (market_value / pct)); the same date's stored mix carries no multi_asset key by construction of MIX_ASSET_CLASSES, so its share is absent from the mix. Read-only GET 2026-10-08; only two relationships (z09305621, z09305679) of 453 gold client files carry the word.",
+      "Not changed by TO-SC-e67 (its paths grant covers the concentration list only); named in the half request's Blast radius as 'not touched: the mix series'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06's own docstring: 'pct sum validation: per (date, relationship_id) mix must sum to 1.0 (+-0.001). Dates failing validation are excluded from the JSON output.' The stored mix of a published date is expected to sum to 1.0.",
+  "world_is": "The validation sums every class present in the data, then the published mix keeps only MIX_ASSET_CLASSES, so a date holding a class outside that list (multi_asset, for SGIIX on two relationships) is published with a mix summing below 1.0 and no skip. The word's holding is now reclassified in the concentration list by SC-e-67, but those dates' stored mix is not recomputed."
+}
+```
