@@ -2,7 +2,7 @@
 
 <to_id>LGIC_BLANKFIX.TO-BF-s-1</to_id>
 <project>LGIC_BLANKFIX</project>
-<issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
+<issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>pending</status>
@@ -87,7 +87,7 @@ The block is your WRITE grant. You READ and never edit anything outside the bloc
 
 <proof_of_spec>
 Criterion ids: BS1-AC1, BS1-AC2. Instance at
-`org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-s-1.carded-class.proof_of_spec.json`,
+`org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-1.carded-class.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> BS1-AC1,BS1-AC2` BEFORE the flip.
 </proof_of_spec>
 
@@ -119,6 +119,21 @@ Run that command first and work from ITS lines, not from this summary.
    correct outcome: report each remaining line whole with its reason; do not force it and do not edit the key reader.
 4. The DIFFERENCE CONTROL in the test: the same two-place form is `FIX` when the row explains both places and `HOLE` when it
    explains one.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-08) -- the issuer's error: this order runs on slot ~2
+
+The issuance cut this order to slot `~1` and the issuer then spawned it on slot `~2`, where the root check's file was free. The
+lane gate read `<issued_to>` and refused the slot-`~2` worker's commit (row `LGIC_BLANKFIX-W2-S15`), correctly. The order is
+re-pointed: `<issued_to>` and every deliverables path on this face now name `0.9.0_WK_LGIC_BLANKFIX~2`. Nothing else changes.
+
+**State of the work at this amendment.** The slot-`~2` worker built and proved the cell and could not commit: its build
+(`lib/opal_naming_rootcheck.py`, its test) and a proof instance are UNCOMMITTED in the worktree `C:/tmp/wk-blankfix-2`; only the
+channel rows `W2-S12` to `W2-S15` are committed (356578d4c0). `BS1-AC1` passed (165 cases); `BS1-AC2` read
+`carded_class_holes=5`, a correct fail under AMENDMENT 1 item 3. The proof instance was written under the slot-`~1` deliverables
+folder: it belongs under `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/`.
+
+**Row W2-S12 stands as built:** a ruled address with more than one open place is NOT admitted until the registry row carries a
+field that says what fills each place; prose in `evidence` is not parsed. The issuer has asked the registry's lane for that field.
 
 ---
 

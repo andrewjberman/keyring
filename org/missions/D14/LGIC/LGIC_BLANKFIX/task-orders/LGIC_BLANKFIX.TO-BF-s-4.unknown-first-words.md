@@ -2,7 +2,7 @@
 
 <to_id>LGIC_BLANKFIX.TO-BF-s-4</to_id>
 <project>LGIC_BLANKFIX</project>
-<issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
+<issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>staged</status>
@@ -87,7 +87,7 @@ The block is your WRITE grant. You READ and never edit anything outside the bloc
 
 <proof_of_spec>
 Criterion ids: BS4-AC1, BS4-AC2. Instance at
-`org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-s-4.unknown-first-words.proof_of_spec.json`,
+`org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-4.unknown-first-words.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> BS4-AC1,BS4-AC2` BEFORE the flip.
 </proof_of_spec>
 
@@ -114,6 +114,12 @@ Run that command first and work from ITS lines, not from this summary.
    how a pattern is marked; if neither file has such a mark, build nothing for it and say so.
 4. `BS4-AC2` reads `unknown_word_holes=0`; add to your report the `source_bucket_holes` count, which your reader should also
    bring to 0.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-08) -- the issuer's error: this order runs on slot ~2
+
+The issuance cut this order to slot `~1` and the issuer then spawned it on slot `~2`, where the root check's file was free. The
+lane gate read `<issued_to>` and refused the slot-`~2` worker's commit (row `LGIC_BLANKFIX-W2-S15`), correctly. The order is
+re-pointed: `<issued_to>` and every deliverables path on this face now name `0.9.0_WK_LGIC_BLANKFIX~2`. Nothing else changes.
 
 ---
 
