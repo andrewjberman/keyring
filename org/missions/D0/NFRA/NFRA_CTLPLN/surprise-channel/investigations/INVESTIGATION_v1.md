@@ -2719,3 +2719,101 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The cloud half implements the seam from the order text; the protocol document does not yet record it. Not edited here (outside <paths>); the box-half worker or the COO owns the document edit."
 }
 ```
+
+## NFRA_CTLPLN-W31-S4 -- TO-CT-i-3: Alongside has no recorded mail domain in the estate's firm records; its mail is not considered
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: Alongside has no recorded mail domain in the estate's firm records; its mail is not considered",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c load_registry() over scopes: tenant-bearing scopes = 49financial, inflection, cottonwood, demo (kind demo), global (no domain); no alongside",
+      "MAIL_ROUTE_MEASURED.md section 3 (deliverables/0.9.0_WK_NFRA_CTLPLN~31/)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Clause 9 names five senders' domains, 'each domain string read from the estate's firm records and never typed'. The firm records name three client firms with an email_domain (49financial, inflection, cottonwood) and no Alongside.",
+  "world_is": "No scope in infra/logic/registry/scopes.json, no firms[] row in data/firm_registry.json, no key in portal/src/lib/firmAccess.ts FIRM_EMAIL_DOMAINS or comp-constants.config.yaml FIRM_EMAIL_DOMAINS. The word appears only as a mission label (.tools/comp_missions.py:658). Blocking for this firm only: mail_requests.py loads the three recorded domains, considers no mail from Alongside, and types no domain. The issuer rules whether a record is added and by whom."
+}
+```
+
+## NFRA_CTLPLN-W31-S5 -- TO-CT-i-3: Opal (internal) has no recorded mail domain in the firm records; its mail is not considered
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: Opal (internal) has no recorded mail domain in the firm records; its mail is not considered",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sender_gate.py:20-31 holds _OPAL_DOMAIN as a typed constant for the gateway's own four-domain gate",
+      "MAIL_ROUTE_MEASURED.md section 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Clause 9 names Opal for internal among five domains read from the estate's firm records.",
+  "world_is": "The firm records (scopes.json, firm_registry.json, FIRM_EMAIL_DOMAINS) carry no Opal tenant domain; the portal's internal firm id opal-capital has none (firmAccess.ts:21). The string occurs only as a constant in another service's code (infra/aws/ec2/opal-gateway/app/sender_gate.py:27, the Teams sender gate) and inside two author addresses (data/transcripts/assets/authors.json:5,11). Neither is a firm record, so nothing is read from them and nothing is typed. Blocking for this firm only; the issuer rules whether an Opal record is added to the registry."
+}
+```
+
+## NFRA_CTLPLN-W31-S6 -- TO-CT-i-3: the gateway's headless mail route cannot serve a read under clause 9 today (admits by exact sender address from a 3-address table; lists per single table sender)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: the gateway's headless mail route cannot serve a read under clause 9 today (admits by exact sender address from a 3-address table; lists per single table sender)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MAIL_ROUTE_MEASURED.md sections 1-2 with file and line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Clause 9: 'Only his own mailbox, through the gateway.' The order expects the gateway to be the read; the order's BLIND note anticipates this being a read of the contract.",
+  "world_is": "infra/aws/ec2/opal-gateway/app/mail_route.py:15-16,153-156,342-349,395-400: only a message whose own sender address is in MAIL_SENDER_TABLE is served ('no domain match'); the listing needs one table-listed sender and its rows carry no sender or body. A message from any of the five firms' domains is refused 403 sender_not_allowed unless that exact address is added. Also data/transcripts/scripts/outlook/gateway_mail.py:16 still says 'There is NO listing route' although list_page is defined at :131. The real read needs a gateway change (domain admission, a mailbox listing) on NFRA_OPLGTW; the handler and the two tests are built and proven against stand-ins."
+}
+```
+
+## NFRA_CTLPLN-W31-S7 -- TO-CT-i-3: assist.offer_text has no mail kind, so on_mail_messages composes its own text and takes only the offer mechanics of a chat (index, once, send_sms)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-3: assist.offer_text has no mail kind, so on_mail_messages composes its own text and takes only the offer mechanics of a chat (index, once, send_sms)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/assist.py offer_text (non-eod branch); tenant.py offer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'it becomes ONE text to Andrew through the same offer path a chat uses, kind \"mail\", the head line reading #<tag> Mail - <sender name>, <firm>'.",
+  "world_is": "tenant.offer calls assist.offer_text, whose non-eod branch writes the head '#tag Teams - <title>' and a Draft section ending 'Reply 1 send'; neither is right for mail and assist.py and tenant.py are outside this order's paths. mail_requests._mail_text builds the mail head and a work-request body (no draft, since reply by mail is not built), and the handler does the same ctx.index / ctx.once / assist.send_sms steps tenant.offer does. Its tag (M000-M999) probes ldo.lookup by a lazy import, as tenant.chat_tag does, so the module stays standard-library plus assist. The issuer may prefer a mail branch in assist.offer_text at the merge."
+}
+```
