@@ -95,6 +95,31 @@ grade_merge() {
   return "$rc"
 }
 
+# resolve_known P1 P2 T0 -> prints the resolved tree when EVERY conflicted path is a known multi-writer class (a surprise-
+# channel section union, or a regenerated generated index entry: .tools/merge-resolve-known.py); returns 1 otherwise.
+# The conflicted paths come from `git merge-tree --name-only`; T0 is the tree it wrote (markers and all).
+resolve_known() {
+  local p1="$1" p2="$2" t0="$3" mb res idx k path blob how mode tr
+  local -a cps=()
+  while IFS= read -r path; do [ -n "$path" ] && cps+=("$path"); done < <(git merge-tree --write-tree --name-only --no-messages "$p1" "$p2" 2>/dev/null | tail -n +2)
+  [ "${#cps[@]}" -gt 0 ] || return 1
+  mb="$(git merge-base "$p1" "$p2" 2>/dev/null)" || return 1
+  res="$(python "$ROOT/.tools/merge-resolve-known.py" --base "$mb" --ours "$p1" --theirs "$p2" --tree "$t0" "${cps[@]}" 2>&1)" \
+    || { printf '%s\n' "$res" | sed 's/^/    resolver: /' >&2; return 1; }
+  idx="$(git rev-parse --path-format=absolute --git-dir)/resolve-known-$$.index"
+  rm -f "$idx"
+  GIT_INDEX_FILE="$idx" git read-tree "$t0" || { rm -f "$idx"; return 1; }
+  while read -r k path blob how; do
+    [ "$k" = "RESOLVED" ] || continue
+    mode="$(git ls-tree "$t0" -- "$path" | awk '{print $1}')"
+    GIT_INDEX_FILE="$idx" git update-index --cacheinfo "${mode:-100644},${blob},${path}" || { rm -f "$idx"; return 1; }
+    echo "    resolved ${path} (${how})" >&2
+  done <<< "$res"
+  tr="$(GIT_INDEX_FILE="$idx" git write-tree)" || { rm -f "$idx"; return 1; }
+  rm -f "$idx"
+  printf '%s\n' "$tr"
+}
+
 # make_merge P1 P2 MESSAGE -> sets MERGE_OUT (the merge commit) and GRADED_NOTE; rc 4 on conflict, 1 on refusal.
 # Called directly, never inside $( ): a subshell would lose GRADED_NOTE and the private dir path the EXIT trap cleans.
 MERGE_OUT=""; GRADED_NOTE=""
@@ -103,7 +128,12 @@ make_merge() {
   MERGE_OUT=""
   out="$(git merge-tree --write-tree --no-messages "$p1" "$p2" 2>/dev/null)"; local mrc=$?
   t="$(printf '%s\n' "$out" | head -1)"
-  if [ "$mrc" -eq 1 ]; then return 4; fi
+  if [ "$mrc" -eq 1 ]; then
+    # a conflict: resolve it here when it is only the known multi-writer classes (O6), else HOLD as before
+    t="$(resolve_known "$p1" "$p2" "$t")" || return 4
+    echo "box-sync: the conflict was only known multi-writer files -- resolved without a worktree" >&2
+    mrc=0
+  fi
   if [ "$mrc" -ne 0 ] || [ -z "$t" ]; then echo "box-sync: git merge-tree failed (rc=$mrc)" >&2; return 1; fi
   grade_merge "$p1" "$p2" "$t" >&2 || return 1
   m="$(git commit-tree "$t" -p "$p1" -p "$p2" -m "$msg")" || return 1
