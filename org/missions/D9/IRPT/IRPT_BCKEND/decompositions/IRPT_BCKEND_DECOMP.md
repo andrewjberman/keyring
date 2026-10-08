@@ -2042,3 +2042,15 @@ dry-run in worktree ~167 at portal b3fedfea.
 | `IB-pr-359` | generator tests write to temp, never tracked contracts/wire; the custody read passes a named envelope validation | FWD-8 / CUSTDY hop 5 | LOCAL (portal) | IB-pr-356 (portal b3fedfea) | P73-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one portal branch. Slot ~167; portal_ref: b3fedfea (IB-pr-356's commit).
+
+## 67. ROUND 74, WORKSTREAM ~P (2026-10-08 ~01:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on row S381)
+
+The export build's ADHC_DRIFTD.002 parity limb flags IB-pr-344's operator tool, which sits in the export source dir unregistered, so
+every irpt-export-render build since needs BAU_PARITY_SKIP=1. The tool moves to export/tools/, outside the limb's top-level scope; no
+packaged member and no build script changes. Check: `deliverables/2.0.0_SA_COO~P2/checks/r74/p74_cells.py`.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-360` | the back-fill tool moves to export/tools/; the parity rule finds 0 extras; its tests pass | FWD-2 / FWD-8 releases | WORLD (floor: infra/; the deployed zip is unchanged) | none | P74-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one file move. Slot ~168.
