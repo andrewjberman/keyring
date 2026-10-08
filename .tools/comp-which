@@ -1200,6 +1200,16 @@ RULES = [
      "fast query layer over the SERVED cloud graph, which the estate refreshes on its own schedule "
      "(nightly derive-runner + incremental updater). Rule 20: default to QUERY, never rebuild to "
      "answer a traversal -- and since 2026-09-09 (CG-s-30) there is no agent-routed rebuild to run"),
+    (["who else is working on", "who is working on", "who else is on", "which box is working on",
+      "which boxes touched", "overlap between boxes", "cross-box overlap", "overlap map", "two boxes on",
+      "who touched this", "who changed this today", "activity by box", "per-box activity"],
+     "who is working on a surface, per box (comp-activity: commits + open orders + open deploys + graph)",
+     ["comp-activity who <path-or-surface> [--hours 24] [--graph]",
+      "comp-activity overlap [--hours 24] [--all]",
+      "comp-activity boxes [--hours 24]"],
+     "every box writes one record per commit to a shared store; who joins it with open task orders' <paths>, open "
+     "deploy entries and the estate graph; overlap ranks surfaces with 2+ boxes (Terraform first). Read it before "
+     "changing anything another box may be on"),
     # pipescript -- the CLAUDE.md situation-table's own headline question ("What's in the news/advi/
     # market/... pipeline?") had NO curated vocabulary and fell to grep (frozen-cohort sub-floor).
     (["what's in the", "whats in the", "what is in the", "pipeline overview", "named thread",
