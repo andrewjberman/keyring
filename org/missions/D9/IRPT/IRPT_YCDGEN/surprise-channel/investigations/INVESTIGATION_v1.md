@@ -2116,3 +2116,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "No run was made: running as the service principal would itself be a YCharts call. Unblocks on Andrew's word, one of: (a) add svc-irpt-analysis@opalinvest.com to OPAL_PRODUCER_PRINCIPALS for this run (a resident release) and name the real Cottonwood holdings file to submit; or (b) the organic arm, Andrew's own run. Result sent to 0.0.0_AB_MSTR~DELL2 per the ruling."
 }
 ```
+
+## IRPT_YCDGEN-D2-S2 -- round-close-check reads an empty expected to_id and refuses every round-6 proof
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-08T18:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "round-close-check.py refuses all 19 round-6 proof instances with \"names to_id '<the order's own id>', not ''\": the expected to_id it compares against is empty",
+  "spec_asserts": "round-close-check.py grades each complete order's proof instance against that order's to_id, so a well-formed instance whose to_id is the order's own id passes.",
+  "world_is": "`python .tools/round-close-check.py --project IRPT_YCDGEN --round 6` at dell2 CLOUD 2c287dec89 (2026-10-08 ~18:2xZ): ORDERS 19 complete; PROOF-BAD 19 of 19, each line 'names to_id IRPT_YCDGEN.TO-YCD-<x>-6.<slug>, not ''' -- the instance's to_id is the order's file stem and the expected value is empty; PROOFS proof_ok=0 proof_bad=19; verdict=REFUSED. The same instances pass .tools/proof-of-spec-check.py (VALID rc=0 on u-6 and v-6 today). UNMEASURED: which code path yields the empty expected id (likely the tree task-orders/ layout vs a flat task_orders/ read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round-close-check.py output, 19 PROOF-BAD lines, verdict=REFUSED",
+      "proof-of-spec-check.py VALID rc=0 on IRPT_YCDGEN.TO-YCD-v-6 instance @e02ad46806"
+    ]
+  },
+  "notes": "Not a round-6 defect: the round's close also waits on FWD-1 (F1 release held to ~20:0xZ). Owner of the checker to confirm; this seat keeps working."
+}
+```
