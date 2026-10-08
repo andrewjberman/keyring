@@ -10085,3 +10085,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "ARMED: any gateway deploy can sign out any connected client, by timing. Done here: the release form now names the re-authentication a deploy can cost and bars a deploy inside the 12 hours before the send without it named (CTO msg 31439). Not done: no code change. A remedy is a short grace in oauth_as for the immediately previous generation (accept or re-issue within seconds, same client), or a drain of in-flight refreshes before the restart; either is a change to the token rules and goes to the CTO before any cell. The concierge's sign-in is Andrew's act."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W35-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~35",
+  "surfaced_at": "2026-10-07T23:20Z",
+  "one_line": "The gateway's stop at the 21:49Z restart was already a SIGTERM that drained in about one second and ended 'Deactivated successfully'; the journal does not show the stop cutting a refresh, so row Z-S67's trigger stays INFERRED, and a restart-free route to the same lost answer exists in server.py (a 503 at the 30 s budget while the abandoned work still commits).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 99d3aced-4af4-41eb-84a6-714728325a16 (read-only, ~22:42Z), saved at org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~35/DR1_SSM_READ.txt: KillSignal=15, TimeoutStopUSec=1min 30s, SendSIGKILL=yes; journal 21:49:02 Stopping, uvicorn 'Shutting down' + 'Waiting for connections to close', 21:49:03 'Finished server process', systemd 'Deactivated successfully', 21:49:03 Started; no timeout or SIGKILL line; 410 lines in the window, 195 access lines (counted, not printed).",
+      "FILE uvicorn 0.51.0 server.py:269-317 and config.py:230: SIGTERM closes the listener, waits for connections and tasks, timeout_graceful_shutdown defaults to None; a request whose bytes were read runs to its answer. RUN tests/test_deploy_drain_before_restart.py test_ogdr1_ac01 PASS (graceful stop mid-refresh: answer delivered, generation advanced once) and test_ogdr1_ac02 PASS (abrupt stop after the rotation: answer lost, retry with the old token revokes the family with refresh_token_reuse).",
+      "FILE infra/aws/ec2/opal-gateway/app/server.py:367-382 (_within_budget): after oauth_as.REFRESH_ENDPOINT_SECONDS = 30 (oauth_as.py:91) the handler answers 503 and 'the abandoned work finishes in the background'; the rotation transaction (oauth_as.py:970-973) can therefore commit after the client was told to retry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row Z-S67 and order OG-dr-1: the restart cut a refresh after the rotation was written and before the answer reached the client (INFERRED); making the deploy drain before it restarts removes the cause.",
+  "world_is": "The offline reproduction shows the CONSEQUENCE (a lost answer after a rotation, then a retry, revokes the family) but the stop at 21:49 is already graceful and shows no cut; a drain bound and a recorded stop result are added, which do not change what a normal SIGTERM stop did. Whether the 21:49 revocation came from the stop, from a slow refresh answered 503 at the 30 s budget while its rotation committed, or from the client's own retry is not decided by anything read. Any gateway deploy, and any slow refresh, can still end a session.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here (outside the cell and the paths): any change to app/server.py or app/oauth_as.py. A read that would decide the route: the gateway audit lake's token-endpoint records around 21:49Z (status and latency per refresh, no identifiers) for a 503 or a response over 30 s; remedy 2 (a short grace for the previous generation, with 4.0.0_SA_CRO~Z) covers every route."
+}
+```
