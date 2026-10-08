@@ -89,3 +89,7 @@ graph read grant and the one-off graph rebuild, `FAST_FIX_RULINGS_20261008_162xZ
 
 Placement: 0.0.0_AB_MSTR spawns `2.0.0_SA_COO~C` and `0.7.0_AE_CloudOps~E` (the seat that held the identity-root
 deploy before the reboot). ~C cuts the grant widen (graph token included); ~E applies it and runs the graph rebuild.
+
+Correction, verbatim, same minute: "we have 0.7.0_AE_CloudOps already working as a codex agent". So only `2.0.0_SA_COO~C` is
+spawned; the apply and the rebuild go to the live Codex seat `0.7.0_AE_CloudOps`, as task orders cut by ~C (a Tier-2
+seat hears an act only as a task order, LD-0529).
