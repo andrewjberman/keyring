@@ -423,6 +423,64 @@ reads as a STOP on a legitimate deploy. Relayed to `1.0.0_SA_CTO` at 07:34Z. L1'
 true when written and stays as the historical record; what changed is which version a rollback would be
 replacing, not which version it restores.
 
+## Addendum 12:50Z -- SESSION CLOSE: what landed after 07:35Z, and the two conditions that were written against the wrong population
+
+**e68 PASSED on dell1 and this lane's deliverable needed correcting.** dell1 graded TO-VERIFY-e68 PASS
+and closed the ledger (`f6c9dc3d35`). Cottonwood's mix rebuilt **11:36:44Z** -- the minute this lane's
+ten-version read predicted, which is the part of the e68 work that held. The part that did not: CTO half
+AMENDMENT 3 retired condition 3 as unpassable, because Cottonwood's served compositions ALREADY listed
+`CASH` as `cash` before the write (206 of 226 clients, 0 in `fixed_income`), so the -$5,480,054.44 came
+from the e42 compare's `inferred` local build and never described served output; and the new run's new
+`data_as_of` means the total cannot match across two data days. This lane's deliverable had asserted
+amendment 1's arithmetic as "the arithmetic dell1's read is graded on". Corrected at `bd8b099`, table
+kept unedited as the record of what was expected and why it was wrong. **The discriminating fact was in
+hand twice**: section 1 quotes the half's own "`inferred`, not the served mix bytes", and addendum 2
+above had already reasoned that an inferred population makes a dollar mismatch an artifact and not a
+rollback -- applied to e42 and not carried across to e68. Section 1's own table also shows the served
+`cash` bucket ALREADY holding USD 23,242,866.75, which it would not if `CASH` sat in `fixed_income`. The
+number was read and not interrogated.
+
+**e42 flipped, and the rollback this lane held never fired.** L2 graded on the **09:47Z** 49F production
+run -- NOT the 12:45Z floor the order named, but the S3 silver-accelerator arm, which addendum 3 above
+had flagged as "TWO possible firing paths and only one of them is a clock". The read found **55 moves the
+JSON does not list**, which under this order's literal text is the rollback reserved to this seat;
+`1.0.0_SA_CTO~DELL1` ruled PASS (`2a8ca734d2`) because each is a `canonical-ticker` read equal to its
+live table row from acts signed under their own halves, so a rollback "would remove correct reads". The
+ruling's own words on the cause: "the condition froze a population that later signed acts were always
+going to move." Flip + VALID instance at `0cc39934ae` on branch `ae-s-e42-flip`, citing `e1b98c193b` and
+`2a8ca734d2` as amendment 1 directed, from a worktree at `origin/CLOUD` for the same gate reason e66
+established.
+
+**THE PATTERN WORTH CARRYING FORWARD: three conditions in one project were written against a population
+they did not describe** -- e66 condition 3 (compared against the prior NIGHT, which carries the nightly's
+own source refresh), e68 condition 3 (compared served output against an `inferred` local build, across
+two data days), e42 condition 4 (froze a move list that later signed acts were always going to move).
+Each was caught by its author and re-specified, and each cost a cycle. The common tell is a condition
+whose expected values are DERIVED from a snapshot while its oracle reads a LIVE artifact.
+
+**The 163-vs-164 gap this lane raised is reconciled, and the instance was amended for it.** M1's answer:
+the JSON lists 164 changed keys; 163 moved in the served dim (162 at plan plus CASH via e68); the 164th,
+`786514AS8`, was already `fixed_income` in the 10-06 dim, so it did not move. Both counts were right
+about different populations -- LISTED versus MOVED -- which is the same class again. Amended at
+`70cae71b2b`, re-graded VALID, rather than leaving a graded artifact on a WORLD-risk order reading
+UNRECONCILED.
+
+**e21 was pending to this lane and its objective measured ALREADY SATISFIED.** `0.0.0_AB_MSTR`'s count
+said no order remained; parsing `<issued_to>` found `TO-DEPLOY-e21` at `pending`.
+`code/gold/lib/_shared/etf_classification.py` measured ETag `3a033c04678f1c96d116b641545b17bb` at 73,461
+B in BOTH `opal-data-bd` and `opal-data-cot`, equal to the trunk -- and the cot VersionId
+`DR2_GLcXEPI2wCIr.U3zG1uctEnfofpW` is the one THIS LANE's e65 run minted, so e65's six byte-identical
+re-uploads delivered e21's objective incidentally. This seat did NOT flip it: the act was never taken AS
+e21. The issuer closed it SUPERSEDED by TO-DEPLOY-e65.
+
+**FINAL STATE, parsed from `<issued_to>` at origin rather than recalled.** e21 superseded, e42 complete,
+e65 complete, e66 complete; `TO-VERIFY-e68` still reads `status=pending` though its ledger is closed and
+dell1 graded it PASS -- the residual is the status field alone and that flip is not this seat's, since
+amendment 2 stood this lane down. So: **no order is owed WORK by this lane; one order addressed to it is
+not yet terminal in its own status field.** Both facts, rather than the rounder sentence. The e42 ledger
+no longer reads open on this device: the fast-forward brought the issuer's close, which this device had
+been reading as OPEN while the world was done -- the NEVER-2 shape exactly.
+
 ## Next Steps
 
 1. **[`0.0.0_AB_MSTR`]** Push the three commits above; `origin/CLOUD` read `c7cbd4c8a1` at 00:52Z and
