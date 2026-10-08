@@ -21123,6 +21123,36 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The repin of repository.py (b13bab7495) and retention.py (f60e6f1d2a) is necessary and is done, but not sufficient: the policy registry has no CUSTODY_REPORT family, so ReportRepository.persist and .get under the enforced retention refuse the kind by family. Existing PERFORMANCE and ANALYSIS retained reads are unchanged (their references carry irpt-x10-v1, which is ACTIVE and unchanged). Owner of the missing row: the registry lane (4.0.0_SA_CRO owns reporting_policies.json rows); the producer (IRPT_CUSTDY E2) hits the same refusal on its first persist."
 }
 ```
+
+## IRPT_BCKEND-D2-W176-S1 -- IB-pr-368 stopped before apply: no read route returns a retained ANALYSIS or PERFORMANCE report ok, so the condition-1 regression pre-read cannot be built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-368 STOPPED before any apply: the function has no read operation that returns a retained ANALYSIS or PERFORMANCE report ok with a body, so the CTO condition-1 regression pre-read (ok, report_id, revision, body_sha256) cannot be built; the one repository.get read route (custody-report-read) refuses any non-CUSTODY_REPORT kind by name, and denied an Opal principal on a real retained ANALYSIS report (OBJECT_NOT_COVERED). Nothing applied, no ledger opened, live still 03p2eIEK.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "step 0 reads: merge-base --is-ancestor a0d8d4943f HEAD rc=0; live CodeSha256 03p2eIEKU9iSIOe5GYDbkbisapqAjULUyAPA/Wcxrfc= (LastModified 2026-10-08T17:22:16Z); git status --porcelain empty; packet blob aa9115a66f459f89ec970a60998cd26be23cc310; both halves present at HEAD fba505cec6",
+      "step 1: release-census.py irpt-export-render --pin a0d8d4943f -> changed repository.py, retention.py; changed_members=2",
+      "infra/aws/lambda/investor-reporting/export/entry.py@fba505cec6 ENTRY.operations: submit-export (write), export-receipt and export-download (read the receipt object and its download slice; neither calls repository.get), custody-report-read; grep of ports['reports'] over export/: the only readers are submit_service.py:57, submit_async.py:133 (writes) and custody_read.py:72",
+      "export/custody_read.py:72-80@fba505cec6: resolves through retained_export.resolve (reports.get = repository.get, so retention.py runs) and then raises ExportSubmitRefused('the custody report read serves a CUSTODY_REPORT only; ...') when the kind is anything else, so an ANALYSIS or PERFORMANCE reference can never answer ok with a document through this route",
+      "one direct invoke (read only, no write op) of custody-report-read with an Opal internal principal (r57_invokes happy-principal header shape), selected_tenant of the report's firm, and the retained ANALYSIS reference taken from deliverables/0.9.0_WK_IRPT_BCKEND~101/ANALYSIS_EXPORT_R28.json: StatusCode 200, ok=false, public_reason_code OBJECT_NOT_COVERED (repository.py _allow: retained_export.authorizer requires the caller's identity equal the retained owner field for field, and an Opal principal is not the owner)",
+      "dynamodb scan of irpt-requests to enumerate retained reports and owners: AccessDeniedException kms:Decrypt for the worker identity, so the table cannot be read outside the function",
+      "p81_cells.py IB81-1-AC2 requires pre_read.ok is True and equal report_id, revision, body_sha256 on both sides; satisfying it by impersonating the owner's advisor headers would not help (custody-report-read still refuses the kind) and is not done"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-368 step 2 and CTO half condition 1: an existing retained ANALYSIS or PERFORMANCE report can be read back by reference through one of the function's own READ operations that resolves it through repository.get, by direct invoke under an Opal principal, returning ok with a body.",
+  "world_is": "The deployed function serves exactly one reference-resolving read, custody-report-read, and it serves a CUSTODY_REPORT only; export-receipt and export-download never reach repository.get. So there is no pre-read baseline for retention.py's effect on an ANALYSIS or PERFORMANCE read, and the release was not applied. Options for the issuer and CTO (not chosen here): (a) name a different read-back that does exercise retention.py for those kinds (for example an owner-principal read arm, or the CTO's offline replay of repository.get over a retained blob with the old and new retention.py), or (b) have the CTO restate condition 1 for a function with no such route. Nothing was changed in the world: live CodeSha256 unchanged, no ledger entry, no build, no plan."
+}
+```
 ## IRPT_BCKEND-D2-W174-S1 -- IB-pr-366 stopped: the served CREATE path has no server-resolvable owner principal for the target firm
 
 ```json
@@ -21226,5 +21256,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "Each open finding has an owner and a carrier.",
   "world_is": "It does: E8 (~M2) and E9 (IB-pr-369) carry the first; ~Y2's E6 pair carries the second."
+}
+```
+
+## IRPT_BCKEND-D2-W176-S2 -- S1 resolved: the retained-read regression condition ran as the offline differential replay and the IB-pr-367 release was applied
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W176-S1: the retained-read regression condition had no live instrument (irpt-export-render has no read route for a retained ANALYSIS or PERFORMANCE report), and the CTO restated it as an offline differential replay (CTO half AMENDMENT 1 @49efddd80c, msg 1423) which the order adopted (AMENDMENT 1, @0004fcc566). The replay ran and is committed at d8d2fb723c, before the ledger (9fb292a64c) and before the apply: one ANALYSIS fixture under irpt-x10-v1, reserved by the LIVE zip's own code path, read back through repository.get in the live zip (03p2eIEK...) and in the built zip (idanP8nX...) in separate python -I processes with identical result_sha256 a7a8ae481b9727753526baa9ed187bc0d56aead9e6650cca0c9f56ab863c18c8, neither raising nor refusing; the altered policy_sha256 control was refused by both (RetentionRefused: retention binding changed); test_repository (24), test_retained_repository (9) and test_retention (21) passed, each alone. The release was then applied (live CodeSha256 == built, re-plan 0, census 0, ledger closed); IB81-1-AC1 and AC2 PASS.",
+  "one_line": "S1 resolved: the retained-read regression check ran as the CTO's offline differential replay, live == built, negative control refused by both, then the release applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/replay/ (replay_zip.py, live_run.json, built_run.json, suite_*.txt)@d8d2fb723c",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_IB_pr_367_REPOSITORY_REPIN_CTO_HALF.md@49efddd80c (AMENDMENT 1, msg 1423)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/IB81-1_release_after_reads.json (replay, built_sha, ledger_open_commit 9fb292a64c, ledger_closed)"
+    ]
+  },
+  "spec_asserts": "CTO half condition 1 as amended (msg 1423, @49efddd80c): a differential replay of repository.get on one irpt-x10-v1 fixture reserved by the live zip's code path, identical bytes, altered-policy control refused in both, three suites pass, record committed before the apply.",
+  "world_is": "It held on every arm: live and built returned the same result_sha256 on the reserved ANALYSIS fixture, the control was refused by both, the suites passed, and the record was committed before the ledger and the apply. The limit is the one the amendment names: this is a code-level proof on in-memory fakes, not a read of a live retained report."
+}
+```
+
+## IRPT_BCKEND-D2-W176-S3 -- the packaged composition.py is older than the source composition.py the suites exercise
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The packaged composition.py in irpt-export-render (live and built alike) is the aa1cfaea6b vintage; the source composition.py at HEAD is newer, so the three suites exercised a composition the function does not ship.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of infra/aws/lambda/investor-reporting/reports/composition.py against the built zip's composition.py: differ at line 25 (the source adds additional_policy_revisions and per-family revisions; f60e6f1d2a YCD-l-6)",
+      "diff -rq of the unzipped live and built zips: only repository.py and retention.py differ, so composition.py is identical in both and unchanged by this release",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/replay/replay_zip.py: the replay imports composition from the zip directory, asserted per module"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: the three suites pass; the replay exercises the live and the built zip.",
+  "world_is": "The suites import the source tree at HEAD, whose composition.py is newer than the one packaged; the replay used the packaged one, so the served combination (packaged composition with the new repository.py and retention.py) is covered by the replay only, not by the suites. No behavioural difference was observed on the replay's path, and the next release that moves composition.py will change the served surface."
 }
 ```
