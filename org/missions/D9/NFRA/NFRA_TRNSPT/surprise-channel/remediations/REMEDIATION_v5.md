@@ -25,11 +25,11 @@ is minted. D2-S4 was closed in place at 2e7ebf86ca (known writer, owner COMM). A
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
