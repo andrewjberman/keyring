@@ -196,6 +196,17 @@ Report once:
 
 The `<status>` flip is the issuer's.
 
+## AMENDMENT 1 (2026-10-08 ~12:3xZ, by the issuer on CTO ruling msg 31722) -- ONE MORE WORDING, IN A FILE ALREADY IN YOUR PATHS
+
+The team names its own document a "Research Pack", so those two words belong to the team's document alone. The thing this
+system BUILDS for a name loses them. In `lib/research/api/top_band.py`, the `INPUT_SOURCES` entry for `"pack"` (line 36 as
+measured at the cut) serves its source as `the research pack built for this name`. Change that ONE string to
+`the analysis built for this name`. Change nothing else in that entry and no other sentence that says "research pack" anywhere:
+the others name the team's document and stay. If a test in your two test folders asserts the old string, amend that assertion to
+the new one. Do not edit any file under `org/` outside your own deliverables for this (older rounds' checks keep their text).
+In your report, add one line: the served `source` of the `pack` row of `input_provenance` for `AMD_US_Equity`, read through the
+handler on your tree.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** CTO round-78 analysis R1: each hookup is named, and the redeploy's pair lists them. WAVE 1: cut from the drain of cc-1 to cc-5. Drafted in `deliverables/2.0.0_SA_COO~Z/round79/GROUP_D_NOTES.md` (cell D1), committed before the cut, in the issuance commit's ancestry. Checks dry-run at the base: AC1 base: run at the cut, result in the group notes; AC2 base: run at the cut, result in the group notes; AC3 base: run at the cut, result in the group notes.
@@ -206,3 +217,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 (CTO msg 31722): the pack row's served source wording, one string in top_band.py, already in paths; wave 0 drained 5 of 5 (cc-1 @0433c23f27, cc-4 @f6b844fadd, cc-5 @646167b6df, cc-3 @beee52785a, cc-2 @bdd1a55638), every criterion re-run YES on the shared tree</status>

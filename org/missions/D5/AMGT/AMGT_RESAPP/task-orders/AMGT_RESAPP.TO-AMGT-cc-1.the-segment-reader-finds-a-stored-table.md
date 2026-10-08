@@ -120,3 +120,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @0433c23f27; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads SERVED: YES; AMD read from 2 bodies; served only after the adapter cell cc-6</status>

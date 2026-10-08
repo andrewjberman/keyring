@@ -150,3 +150,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @beee52785a; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads SERVED: YES; 95 of 95 covered, read 12, checked 13, no record 70 at the run; served only after cc-6 and the grant</status>

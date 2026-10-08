@@ -171,3 +171,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @bdd1a55638; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads SERVED: YES; 85 of 85 stored names served, 72 labelled, 4 not; row Z-W309-S1 (the stale-hash test) answered by cc-5; served only after cc-6</status>

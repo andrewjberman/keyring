@@ -127,3 +127,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @646167b6df; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads SERVED: YES; the build's gate exits 0; 4 of 4 old prefix values equal; the list reads 34 entries; nothing applied: the grant is cc-7's leg</status>
