@@ -3,6 +3,7 @@
 import importlib.util
 import json
 import os
+import time
 
 import pytest
 
@@ -29,7 +30,25 @@ def env(monkeypatch, tmp_path):
     monkeypatch.setattr(rj, "measure", lambda: (12.5, 40.0))
     monkeypatch.setattr(rj, "make_runtime", lambda: rt)
     monkeypatch.delenv("OPAL_AGENT_SERIAL", raising=False)
+    live = tmp_path / "liveness.json"                # a reviewer seat seen just now, so a bid can be available
+    live.write_text(json.dumps({REVIEWER: {"last_seen_epoch": time.time()}}), encoding="utf-8")
+    monkeypatch.setenv("OPAL_LIVENESS_FILE", str(live))
     return rt
+
+
+REVIEWER = "3.0.0_SA_CVO"
+
+
+def brief_file(tmp_path):
+    path = tmp_path / "brief.md"
+    path.write_text("Fix the CSV export on the Holdings page.\n", encoding="utf-8")
+    return str(path)
+
+
+def grade_pass(tmp_path, job="J042"):
+    record = tmp_path / "grade.md"
+    record.write_text("PASS: read the real artifact\n", encoding="utf-8")
+    return rj.main(["grade", job, "--as", REVIEWER, "--verdict", "PASS", "--record", str(record)])
 
 
 def test_bid_available_with_the_contract_payload(env):
@@ -37,9 +56,10 @@ def test_bid_available_with_the_contract_payload(env):
     (ev,) = env.sent
     assert ev["object_id"] == "job:J042" and ev["kind"] == "job.bid" and ev["event_id"] == "bid-J042-laptop"
     p = ev["payload"]
-    assert set(p) == {"device", "serial", "available", "cpu_pct", "mem_pct", "at"}
+    assert set(p) == {"device", "serial", "available", "reviewer", "cpu_pct", "mem_pct", "at"}
     assert p["device"] == "laptop" and p["serial"] == "0.0.0_AB_MSTR" and p["available"] is True
     assert (p["cpu_pct"], p["mem_pct"]) == (12.5, 40.0)
+    assert p["reviewer"] == REVIEWER and "unavailable_reason" not in p
 
 
 def test_bid_unavailable_while_another_job_is_open(env):
@@ -48,12 +68,15 @@ def test_bid_unavailable_while_another_job_is_open(env):
     assert env.sent[0]["payload"]["available"] is False and env.sent[0]["payload"]["serial"] == "0.0.0_AB_MSTR~Z"
 
 
-def test_accept_locks_then_close_unlocks(env):
-    assert rj.main(["accept", "J042", "--coo", "2.0.0_SA_COO~R"]) == 0
+def test_accept_locks_then_close_unlocks(env, tmp_path):
+    brief = brief_file(tmp_path)
+    digest = rj.sha256_file(brief)
+    assert rj.main(["accept", "J042", "--coo", "2.0.0_SA_COO~R", "--brief-file", brief]) == 0
     ev = env.sent[-1]
     assert ev["kind"] == "job.accepted" and ev["event_id"] == "accept-J042"
-    assert ev["payload"] == {"device": "laptop", "serial": "0.0.0_AB_MSTR", "coo": "2.0.0_SA_COO~R"}
-    assert rj.read_lock()["job"] == "J042"
+    assert ev["payload"] == {"device": "laptop", "serial": "0.0.0_AB_MSTR", "coo": "2.0.0_SA_COO~R",
+                             "brief_sha256": digest}
+    assert rj.read_lock()["job"] == "J042" and rj.read_lock()["brief_sha256"] == digest
     rj.main(["bid", "J043"])
     assert env.sent[-1]["payload"]["available"] is False
     assert rj.main(["close", "J042"]) == 0 and rj.read_lock() is None
@@ -65,13 +88,19 @@ def test_accept_refused_while_another_job_is_open(env):
     assert rj.read_lock()["job"] == "J007"
 
 
-def test_complete_payload_and_attempt_event_id(env):
-    rj.main(["accept", "J042", "--coo", "2.0.0_SA_COO~R"])
+def test_complete_payload_and_attempt_event_id(env, tmp_path):
+    rj.main(["accept", "J042", "--coo", "2.0.0_SA_COO~R", "--brief-file", brief_file(tmp_path)])
+    sent_before = len(env.sent)
+    assert rj.main(["complete", "J042", "--summary", "export fixed"]) == 2    # no grade yet: refused, nothing sent
+    assert len(env.sent) == sent_before
+    assert grade_pass(tmp_path) == 0
     rj.main(["complete", "J042", "--summary", "export fixed", "--deployed", "--evidence", "commit abc"])
     ev = env.sent[-1]
     assert ev["kind"] == "job.complete" and ev["event_id"] == "complete-J042-1"
+    grade = rj.read_lock()["grade"]
+    assert grade["by"] == REVIEWER and grade["verdict"] == "PASS"
     assert ev["payload"] == {"device": "laptop", "serial": "0.0.0_AB_MSTR", "summary": "export fixed",
-                             "deployed": True, "evidence": "commit abc"}
+                             "deployed": True, "evidence": "commit abc", "coo": "2.0.0_SA_COO~R", "grade": grade}
     rj.main(["complete", "J042", "--summary", "again", "--attempt", "2"])
     assert env.sent[-1]["event_id"] == "complete-J042-2" and env.sent[-1]["payload"]["deployed"] is False
     assert rj.read_lock()["job"] == "J042"          # the lock stays until close
@@ -86,10 +115,10 @@ def test_fail_sends_and_clears_the_lock(env):
     assert rj.read_lock() is None
 
 
-def test_dry_run_sends_nothing_and_touches_no_lock(env, monkeypatch, capsys):
+def test_dry_run_sends_nothing_and_touches_no_lock(env, monkeypatch, capsys, tmp_path):
     monkeypatch.setattr(rj, "make_runtime", lambda: (_ for _ in ()).throw(AssertionError("no send on a dry run")))
     rj.main(["bid", "J042", "--dry-run"])
-    rj.main(["accept", "J042", "--coo", "2.0.0_SA_COO~R", "--dry-run"])
+    rj.main(["accept", "J042", "--coo", "2.0.0_SA_COO~R", "--brief-file", brief_file(tmp_path), "--dry-run"])
     assert rj.read_lock() is None
     rj.write_lock({"job": "J042", "coo": "x"})
     rj.main(["fail", "J042", "--reason", "r", "--dry-run"])
