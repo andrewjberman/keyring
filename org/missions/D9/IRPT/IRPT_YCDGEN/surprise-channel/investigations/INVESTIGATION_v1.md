@@ -2250,3 +2250,32 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "AC3 is recorded FAIL by the criterion's own wording (every test passes). The census names the three so the issuer can rule them out of the reader set or fix them in their owning cell."
 }
 ```
+
+## IRPT_YCDGEN-D2-W6-S3 -- the generator emits an invalid `interface` for the v2 union; the committed generated AnalysisReport.ts does not typecheck and two wire files are outside this order's paths
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W6-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T17:41:00Z",
+  "one_line": "The generator emits `export interface AnalysisReportWire {..} | {..}` for the v2 union, which is not valid TypeScript, so the committed generated AnalysisReport.ts fails the portal typecheck (35 syntax errors); wire/index.ts and wire/responses.ts also name the hand-added types and are outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "YCD-v-6 R20: the committed AnalysisReport.ts equals the generator's output from v2, every consumer reads the generated union, the portal typechecks, and its InvestorReporting tests pass as they did. Order bars a gen-wire.ts edit and limits the write grant under contracts/wire/ to AnalysisReport.ts.",
+  "world_is": "(1) renderModule tests `body.startsWith('{') && body.endsWith('}')` to choose `interface`; a union body `{...} | {...}` passes that test, so gen-wire.ts line ~421 emits `export interface AnalysisReportWire {...} | {...}`. bun typecheck (tsc -b --noEmit) on the regenerated file: 35 errors, all TS1109/TS1005/TS1011 in contracts/wire/AnalysisReport.ts lines 94-141. (2) Measured with a TEMPORARY, uncommitted edit that changes only that one keyword to `export type AnalysisReportWire = {`, typecheck of the whole portal is rc 0 with the consumers migrated here (adapt.ts, contracts/index.ts, coverage.test.ts; investor-reporting.ts needed no edit), but ONLY with two further temporary edits to files this order may not write: contracts/wire/index.ts (re-exports AnalysisReportAnyWire, AnalysisReportOpalSectionWire, AnalysisReportOpalWire, AnalysisSectionNotAvailableReason, no longer exported) and contracts/wire/responses.ts (imports AnalysisReportOpalWire and reads AnalysisReportWire['extraction_validation'|'undated_sections'|'extraction_coverage'], members only the YCHARTS branch has). (3) The committed branch state is therefore: AC1 PASS, typecheck FAIL (35 errors in AnalysisReport.ts, which also hide any semantic errors elsewhere), and the InvestorReporting suite has exactly one test that was green at d1b21c97 and is red here, iv-e-17.regenerated.test.ts 'IVE17-AC2 -- the regenerated wire carries every landed ask, and the portal typechecks clean', which runs tsc and fails on the same 35 errors. (4) Side finding: running the portal suite in the real tree executes iv-e-26.wire-regen and rewrites every file under contracts/wire/; the rewrite changed ExportBundle.ts, ExportReceipt.ts, HoldingsSnapshot.ts, index.ts and responses.ts, so those five already differ from the generator's output at d1b21c97. The worker restored all of them from HEAD (git status clean apart from the four paths in this order) and v6_checks.py tests runs both trees in temporary copies so it cannot recur.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "v6_checks.py typecheck: 'rc=2 ; 35 error line(s)' and '35 error(s) in src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts'",
+      "v6_checks.py tests: 'green at d1b21c97: 900 ; of those not green at head: 1' naming iv-e-17.regenerated.test.ts IVE17-AC2",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts renderModule, the `body.startsWith('{') && body.endsWith('}')` choice between interface and type",
+      "temporary experiment: typecheck rc 0 with the interface->type keyword change plus the two wire/index.ts and wire/responses.ts edits described above (not committed; reproducible from the description)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because draining the portal branch as it stands lands a tree that does not typecheck. Disarm: either do not drain dc88c4f7 plus this cell's portal commit until a cell with write grants on gen-wire.ts (union bodies emit `export type`), wire/index.ts and wire/responses.ts (drop the four hand-added names, derive the YCHARTS slice with Extract) has run, or amend this order's paths to include them and re-run. The consumer migration in this order is correct and complete against that fixed shape."
+}
+```
