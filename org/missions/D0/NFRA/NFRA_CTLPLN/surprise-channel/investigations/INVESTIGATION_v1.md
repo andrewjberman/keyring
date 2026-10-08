@@ -5450,3 +5450,78 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The kit satisfies the read-back it named (IRPT_BCKEND-D2-S11) but NOT the pinning clause: the mirror is pinned to three provider builds, while the roots lock seven distinct (source, constraint) pairs and 40 locks pin four distinct provider versions plus a non-Windows aws h1. The named read-back therefore cannot detect this class -- it passes on any ONE root whose lock the mirror happens to match, and ticket-center is such a root, so a green read-back is consistent with 6 roots being unservable. Remedy is not an apply: either the kit carries archive 2.7.1 + 2.8.0, external 2.4.2 and local 2.x for windows_amd64, or the laptop re-locks the affected roots for windows_amd64 (`terraform providers lock -platform=windows_amd64`) and ships the result, because generating either on dell2 requires the registry egress the rc deliberately forbids. Class BLOCKING because it names a concrete refusal on six identified roots that only a laptop-side act can clear; hazard_standing INERT because no apply order is in flight against any of the six at this moment, so nothing is being damaged while it stands."
 }
 ```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T23:46:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S37",
+  "one_line": "AMENDMENT 21 item 1: the census has no public-key class, so the IRPT render PUBLIC key was re-classed OTHER to PLATFORM-KEY (the granted class nearest it) and rides in the secrets part-two policy, whose description still says it holds signing keys, seeds, admin credentials and gateway bearer tokens.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_vendor_secrets.py: CLASSIFICATION row and RULINGS row for opal/auth/irpt-render-jwt-public-key now PLATFORM-KEY (msg 107457); --reclass printed 'granted before=94 / after=95: added 1; removed 0' and the last line 'granted=95 ... platform_key=29 other=18'",
+      "tests/simulate_policy.py VENDOR-ONE-TO-ONE entries=95 (part one 66, part two 29) chars=5968+2806; part one is byte-for-byte unchanged",
+      "iam.tf aws_iam_policy.dell_agent_platform_secrets description string is unchanged (a description is ForceNew, so editing it would destroy and recreate the policy)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 21 item 1: rule opal/auth/irpt-render-jwt-public-key GRANTED with class 'a PUBLIC key'; granted 94 to 95, OTHER 19 to 18, the exact ARN joins whichever part the module's split puts it in.",
+  "world_is": "The four classes are VENDOR-CREDENTIAL, CLIENT-SESSION, PLATFORM-KEY, OTHER and the module splits the grant by class, so a granted public key must sit in one of the first three; PLATFORM-KEY (where its private half already is) was chosen. The label is imprecise: the key signs nothing. Adding a fifth class would change the census line's identity sum and the module's two parts, which the order did not ask for.",
+  "notes": "If the CTO wants a public-key class, it is a census-schema change (value-enum proposal under rule 24), not a one-line ruling."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T23:46:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S38",
+  "one_line": "AMENDMENT 21 item 3: tests/render_passrole.py was NOT deleted (tests/derive_protected_functions.py imports block_text and BLOCK_SEP from it); its Deny renderer and --write mode were removed and --check now asserts the current truth, so its last line changed from PASSROLE-RENDER to PASSROLE-CHECK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_protected_functions.py:32 'import render_passrole as rp' and rp.block_text / rp.BLOCK_SEP at lines 200 and 209; derive_protected_functions.py --from-file tests/protected_functions_listing.json --check still reads in_sync=True ok=True",
+      "org/tier2_senior/0.7.0_AE_CloudOps~E/task_orders/NFRA_CTLPLN.TO-APPLY-3 and TO-APPLY-6 name 'tests/render_passrole.py --check' in their checklists and TO-APPLY-3's session log recorded 'PASSROLE-RENDER applied=0 named=0 wildcard=0 in_sync=True ok=True'",
+      "python tests/render_passrole.py --check -> PASSROLE-CHECK retired_statements_present=none passrole_actions_in_deploy_policy=none passrole_allowed_on_any_role=True passrole_denies=none ok=True"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 21 item 3: if the script exists only to prove the removed Deny, delete it and every reference; otherwise change only the stale assertion to the current truth (PassRole allowed on any role).",
+  "world_is": "The script is not only the Deny's proof (it carries two helpers another script imports), so it stayed. Changing 'only the assertion' was not enough to make --check meaningful: the renderer required DenyEveryIamWrite to exist and wrote the retired Deny back with --write, so that code path was removed too, since leaving it would let a later --write reinstate the retired Deny. Past apply checklists that call --check still run (rc 0) but now see a different last line.",
+  "notes": "Reversible: git history holds the renderer."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T23:46:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S39",
+  "one_line": "tests/derive_plan_reads.py (no flag) reads census_file_matches=False ok=False at this base: a Dell-placed project, MDPF_DEMQUE, is registered now and was not when tests/plan_reads_census.json was saved (projects 15 saved, 16 derived; roots 29 both); outside AMENDMENT 21, so the file was left as it is.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python tests/derive_plan_reads.py -> 'PLAN-READS-CENSUS roots=29 of 83 terraform roots, projects=16, files_read=359, reads=275, unmapped_blocks=0, census_file_matches=False ok=False'",
+      "build() against the saved file: projects differ by MDPF_DEMQUE only; roots and files_read keys differ in content, the read count is 275 in both",
+      "the six AMENDMENT 21 criteria do not run derive_plan_reads.py; simulate_policy.py reads the saved census file and printed planread_ok=423/423"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 20 item 3: the plan-reads grant covers every read a Dell-placed root's plan makes that the Dell is refused.",
+  "world_is": "The saved plan-reads census is one project behind the registers. Whether MDPF_DEMQUE's roots add a refused read is UNREAD: re-running 'derive_plan_reads.py --write' and '--write-policy' was not done (it would rewrite the census and could add an Allow, outside this amendment).",
+  "notes": "A cell for the file owner: re-derive, then re-run the sixth and eleventh simulation blocks."
+}
+```
