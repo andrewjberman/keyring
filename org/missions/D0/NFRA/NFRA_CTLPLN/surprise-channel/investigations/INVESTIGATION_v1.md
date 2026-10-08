@@ -4091,3 +4091,80 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C (disarm_owner): three routes, none of them this seat's to choose. (i) Target the apply at the five signed addresses, which the order's bounds currently forbid ('one apply ... untargeted'); (ii) sign plan 2's Allow now as a third half-pair and re-cut the plan shape to 4/1/2; (iii) have the worker's amendment-10 work sit behind a flag so an untargeted apply of this root cannot carry it. The general shape is worth the CTO's eye too: an order that pins its plan shape to a commit and then says 'HEAD, which must contain <pin>' is unbounded above, and this root has a worker landing into it between the sign and the apply. Every gating read this order asks for PASSED; only the shape stopped it."
 }
 ```
+
+## NFRA_CTLPLN-W18-S1 -- The order says remote-drive has NO reviewer step; its Half 1 table already carries one (a live reviewer grades the COO's report and runs `remote-job.py grade` before `complete`), so the one added line is a close-time check beside it, not the first reviewer step
+
+```json
+{
+  "id": "NFRA_CTLPLN-W18-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~18",
+  "surfaced_at": "2026-10-08T06:49:52Z",
+  "one_line": "The order says remote-drive has NO reviewer step; its Half 1 table already carries one (a live reviewer grades the COO's report and runs `remote-job.py grade` before `complete`), so the one added line is a close-time check beside it, not the first reviewer step",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".claude/skills/remote-drive/SKILL.md Half 1 table rows 3-4 @8902e8bc26"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-8 BUILD 3: `.claude/skills/remote-drive/SKILL.md` has NO reviewer step today: add it as that one line and nothing more.",
+  "world_is": "At the branch HEAD the skill's Half 1 table row 'The COO's MCP completion report' hands the live reviewer on the box the report and has it write a grade record and run `remote-job.py grade`; the row 'The reviewer's PASS grade' then runs `complete`. The inbound workstream has already added it. The line added here sits after that table and runs `round-close-check.py --reviewer-only` before `complete`, so a box with no live CVO-kind seat reads REFUSED at the same place the table already assumes one. It adds a blank line and one line (2 inserted lines in the diff).",
+  "notes": "For 2.0.0_SA_COO~C: if the inbound workstream rewrites Half 1, the added paragraph is the only line of this cell in that file and can move or drop without touching the tool."
+}
+```
+
+## NFRA_CTLPLN-W18-S2 -- The order says the hook has audited overrides 'as that hook's other limbs have', but missions-tree-check.sh has no override on any limb (it says 'never bypass'); the close block uses the seat-gates convention SEAT_GATES_OVERRIDE and logs to org/git-author-override-audit.log
+
+```json
+{
+  "id": "NFRA_CTLPLN-W18-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~18",
+  "surfaced_at": "2026-10-08T06:49:52Z",
+  "one_line": "The order says the hook has audited overrides 'as that hook's other limbs have', but missions-tree-check.sh has no override on any limb (it says 'never bypass'); the close block uses the seat-gates convention SEAT_GATES_OVERRIDE and logs to org/git-author-override-audit.log",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/missions-tree-check.sh close_gate() @8902e8bc26",
+      ".tools/safe-apply.sh lines 76-130 (SEAT_GATES_OVERRIDE) @8902e8bc26",
+      ".tools/tests/test_round_close_and_research.py case override @8902e8bc26"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-8 BUILD 2: an audited override as that hook's other limbs have (read the hook for its form).",
+  "world_is": "Reading .tools/git-hooks/missions-tree-check.sh at HEAD before the edit: three outcomes (OK, validator refusal, could-not-run), each a plain exit 1 with 'never bypass' in the remedy; no override variable or audit file. The sibling seat-gate wrappers .tools/safe-apply.sh and .tools/safe-deploy.sh (CT-s-3) use SEAT_GATES_OVERRIDE=\"reason\" and org/git-author-override-audit.log. The new block uses that form, and only inside the close-gate block: the generator's refusal still has no override. Tested in the scratch repo (case 'ENFORCE with SEAT_GATES_OVERRIDE admits and writes the audit line')."
+}
+```
+
+## NFRA_CTLPLN-W18-S3 -- The order says every complete order needs a VALID proof instance; the check reads each instance structurally by default (about 5 s per instance would be about 3 min for 36 orders, over the 120 s bound and too slow for a commit hook), and runs proof-of-spec-check.py only under --deep
+
+```json
+{
+  "id": "NFRA_CTLPLN-W18-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~18",
+  "surfaced_at": "2026-10-08T06:49:52Z",
+  "one_line": "The order says every complete order needs a VALID proof instance; the check reads each instance structurally by default (about 5 s per instance would be about 3 min for 36 orders, over the 120 s bound and too slow for a commit hook), and runs proof-of-spec-check.py only under --deep",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py ...CT-s-7... real 0m5.375s @8902e8bc26",
+      ".tools/round-close-check.py proof_state() @8902e8bc26"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-8 BUILD 1 GRADED: every task order of the round that is `complete` has a VALID proof instance.",
+  "world_is": "Measured: `python .tools/proof-of-spec-check.py <instance> <ids>` took 5.4 s on one instance here (git calls inside), and NFRA_CTLPLN has 36 complete orders. The default reading is: the instance parses, names the order's to_id, carries an acceptance row for every criterion of the order and no FAIL row; it is printed as `PROOFS mode=structural`. `--deep` adds the checker's rc 0 per instance. The hook and AC2 use the structural reading. A structural pass is weaker than VALID: it does not run the checker's own limbs (surprises, alignment, count-bar).",
+  "notes": "For 2.0.0_SA_COO~C: if the commit hook should run the checker, it needs a cache keyed on the instance's blob hash or a staged-only reading; this cell did not build either."
+}
+```
