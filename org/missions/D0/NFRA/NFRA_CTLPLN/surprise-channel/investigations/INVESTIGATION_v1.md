@@ -4988,3 +4988,81 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Both are the issuer's to confirm; neither changes the six criteria."
 }
 ```
+
+## NFRA_CTLPLN-W39-S1 -- the consent-filter's caller map for /hx/teams does not list the two scopes the new list routes need
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T20:40:00Z",
+  "one_line": "CT-i-11: graph_scope_map.CALLER_GRAPH_SCOPES['teams_route'] (lines 98-99) omits Team.ReadBasic.All and Channel.ReadBasic.All, which GET /me/joinedTeams and GET /teams/{id}/channels need; if MS_INGEST_IDENTITY is a scoped identity, token_broker.py:223 cuts those two scopes from the token request.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/graph_scope_map.py:92-99 (teams_route caller set) and :33,:35 (list_teams / list_channels map to the two scopes)",
+      "infra/aws/ec2/opal-gateway/app/token_broker.py:219-223 (scopes = [s for s in scopes if s in consented] or ['User.Read']) and app/identity_scope.py:121-143 (consent_scopes unions CALLER_GRAPH_SCOPES)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~39/CHANNEL_READ_SCOPES_MEASURED.md section 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the order's step 1: state which needed scopes the requested list does not carry. The base lists (config.py:66, :101) carry all three.",
+  "world_is": "The base lists carry all three scopes. The caller map the consent filter unions does not list two of them. Whether the filter applies depends on whether MS_INGEST_IDENTITY is in the identity-scope overlay, which a worker cannot read. graph_scope_map.py is outside this order's paths and was not edited.",
+  "notes": "If the identity is unscoped, nothing changes. If scoped, the two list routes return a Graph refusal until the map names the two scopes."
+}
+```
+
+## NFRA_CTLPLN-W39-S2 -- two existing test assertions held a path that this cell makes live
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T20:40:01Z",
+  "one_line": "CT-i-11: with the three routes added, two of the 14 existing cases in tests/test_teams_route.py fail as written (a 404 on /channels/{team}/{channel}/messages, and a PathRefused on GET /teams/{id}/channels/{id}/messages); I changed those two list entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_teams_route.py test_methods_and_unknown_routes and test_graph_allowlist_fails_closed_per_verb at the base (HEAD 311d55e652)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the order: the 14 existing cases pass; change no existing route's behaviour beyond the additive mentions key.",
+  "world_is": "Both entries named exactly the paths the order asks to be served. I replaced the 404 entry with /teams/{id} , /teams/{id}/members and /channels/{team}/{channel} (still 404), and the refused GET entry with /teams/{id}/channels/{id}/messages/{message_id} (still refused). No existing route's behaviour changed; the other 12 cases are untouched except the added mentions key in MSG_KEYS and the three new URLs in READ_URLS.",
+  "notes": "The issuer's dry run counted 14 passing at the base; the base file passes, the changed file passes 20 of 20."
+}
+```
+
+## NFRA_CTLPLN-W39-S3 -- the contract's page_size becomes $top on two Graph list calls that may not take it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T20:40:02Z",
+  "one_line": "CT-i-11: the contract says same page_size and page_token rules, and _page always sends $top; whether Graph accepts $top on /me/joinedTeams and /teams/{id}/channels is not measured (offline, no Graph call), and the existing tools.py calls to both send only $select.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/teams_route.py _page (sends $top on every call)",
+      "infra/aws/ec2/opal-gateway/app/tools.py:1121-1122 and :1129-1130 (the same two paths, $select only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the contract: all three routes take page_size 1 to 50 and an opaque page_token.",
+  "world_is": "Built as the contract states, through _page. The offline tests stub Graph, so they cannot show the live answer; a first live call to either list route would. Unverified, not claimed either way.",
+  "notes": "If Graph refuses $top there, the fix is one parameter in the endpoint branch, which is the issuer's to order."
+}
+```
