@@ -1,0 +1,15 @@
+# drive log 2.0.0_SA_COO~P2 -- 2026-10-08 20Z (desktop-n8rjv0a): E9 chain released, E10 cut
+
+- 2026-10-08T20:0xZ | IRPT_BCKEND | L7 r82 | IB-pr-369 first pass 3/3 but row D2-W177-S1 ARMED (custody revision requested unconditionally -> pre-E8 build breaks all submits); AMENDMENT 1 @a356481e93 (request only if registry carries the row; new -k x10_composes_without_custody_row), re-opened @974e703ec8, ~177 re-seated; containment: branch 177 stays UNDRAINED (no build can reach it) until D2-W177-S3 resolves S1; ~176 replay+release running | RULE + DRIVE FORWARD
+- 2026-10-08T20:1xZ | IRPT_BCKEND | L7 r81+r82 | 0/2 | ~176 building the differential replay (replay/ dir, nothing applied, no sentinel); ~177 just re-seated on AMENDMENT 1 | NO-OP: both lanes moving
+- 2026-10-08T20:2xZ | IRPT_BCKEND | L7 r81+r82 | ~Y2 msg 1438 E6 P half CONFIRMED (served.py 570f79ca = fff1b0395a at pin 1b94d50b8c); drained worktrees 172-175 removed (junction probe clean, all merged); ~176 replay committed, ~177 disarming | DRIVE FORWARD
+- 2026-10-08T20:3xZ | IRPT_BCKEND | L7 r81+r82 | 0/2 | ~176 plan text committed @bc89a0fddf (apply next); ~177 editing submit_installed + test | NO-OP: both lanes moving
+- 2026-10-08T20:0xZ | IRPT_BCKEND | L8 r82 + L7 r83 | r82 packet @e7a3c22f46 to CVO; ~178 started (no commit yet) | DRIVE FORWARD (L8 compile)
+- 2026-10-08T20:0xZ | IRPT_BCKEND | L7 r83 | CTO ADDENDUM 10 (msg 1511): E10 (~P2: production composition site for persist_custody_report in the function that runs IRPT_CUSTDY's producer, own pair) QUEUED -- CTO orders it after E9 is live; E9 release packet (~178) in flight | NO-OP: E10 gated on E9 live by the CTO's order
+- 2026-10-08T20:0xZ | IRPT_BCKEND | L7/L8 r83 | IB-pr-370 complete (re-graded 3/3), drained @a1f2d9f43c (now on box/dell2, msg 1530), worktree 178 removed, MAY-CLOSE; row D2-S8; COO half @4e3ead72a3; CTO asked for its half + REC (ACTIVE repin rides E10's pair) | DRIVE FORWARD
+- 2026-10-08T20:1xZ | IRPT_BCKEND | L8 r83 | packet @29101b51f5 to CVO; CTO half IB-pr-370 asked 20:04Z, no reply yet (<1 tick) | DRIVE FORWARD (L8 compile)
+- 2026-10-08T20:1xZ | IRPT_BCKEND | L6/L7 r84 | CTO half IB-pr-370 GIVEN @c086ec4c2b + REC adopted (ACTIVE rides E10; ~M2 flips E8 ACTIVE before E10's pin) msg 1536; r84 IB-pr-371 (E9 release) issued @8ab740fdeb from box/dell2, worker ~179 | DRIVE FORWARD
+- 2026-10-08T20:2xZ | IRPT_BCKEND | L7 r84 | ~M2 msg 1539: E8 ACTIVE at b4d98a4fe3 (in HEAD); E10 pin must be at/after it; E10 cut on E9 live (CTO order) | NO-OP: ~179 releasing E9
+- 2026-10-08T20:2xZ | IRPT_BCKEND | L7 r84 | 0/1 | ~179 replay committed @9082fb60e0 then ledger @84565ea663; upload in progress | NO-OP: lane moving
+- 2026-10-08T20:3xZ | IRPT_BCKEND | L6-L8 r84-85 | IB-pr-371 complete (re-graded: live PbyqmHBQ, replay identical), drained @4e65feb098, worktree 179 removed, MAY-CLOSE; L8 r84 @db50e4867f to CVO; ~M2 told E9 installed; r85 IB-pr-372 (E10 custody writer site in irpt-export-render per CUSTDY PRD S07) issued @7986534296, worker ~180 | PARALLELIZE
+- 2026-10-08T20:3xZ | IRPT_BCKEND | L7 r85 | 0/1 | ~180 started; r83/r84 packets READ by CVO (1535, 1553) | NO-OP: lane moving
