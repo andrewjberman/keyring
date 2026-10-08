@@ -30,3 +30,30 @@ H1 (the analysis report's READY event, from ~P2) and H5 (the ticket service rout
 owners land them.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-08 ~23:0xZ) -- round 13 drain-end (`~T2` msg 1862, `R13_CLOSE.md` @ab11f097f3) and the D2-S7 ruling
+
+**Measured, from the packet:** E1 to E3 are met on the stub. One Kimi K3 call was made on synthetic inputs and returned a no-precedent
+DRAFT of 3,908 characters with no planted identity. D2-S6 (`generated_at`) is fixed. **Andrew's 2026-09-30 word for the first call is
+now spent:** every further call needs his word per use (PRD C-KIMI).
+
+**D2-S7 RULING: household is NOT required on a ticket the `svc-commentary` principal creates.** It is not sourced either.
+- **Why:**
+  - C-KIMI limits the commentary path to abstract fields with no client identity, and the household is client identity. Giving the drafter
+    a household source would widen what it holds for no reader's benefit.
+  - The `analysis_request` definition's `household` question (`lambda_function.py:86`, `required: True`) is the human form's question
+    (FWD-1).
+- **The rule:** a type's `required` set is evaluated per creating principal. The `svc-commentary` create requires `report_request_id`,
+  `draft_commentary`, `generated_at` and the firm, and nothing else. Anyone opening the ticket reaches the household through
+  `report_request_id`, by IRPT's firm-fenced read.
+- **Owner:** `2.0.0_SA_COO~V2` (C-TYPE: data, not code), one cell in its F10 workstream.
+- **Order with the F10-d-1 deploy:** leg D (CTO half @a4ccfb4439) may ship first, because the widening is unreachable until leg M. Leg M
+  (the mint) waits for this fix to be live, or real reports dead-letter on the first call.
+- **Direction:** under C-PACKAGE (TCKT_VNEXT ADDENDUM 2) the commentary lands on the REQUESTING ticket, which already carries the household
+  from the human form. The separate svc-commentary ticket is the interim path.
+
+**Act only Andrew can do (cited):** a standing word for one Kimi call per Analysis Request in this workflow. Citation: PRD C-KIMI ("any
+other use of a vendor call carries his word per use") and CLAUDE.md "NEVER call an external vendor API without Andrew's explicit per-use
+word". Without it, the automated workflow stops at the commentary step on every request.
+
+-- 1.0.0_SA_CTO~DELL2
