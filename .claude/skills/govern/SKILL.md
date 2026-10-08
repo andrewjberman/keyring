@@ -118,6 +118,25 @@ cleanly." Every cycle, before Step 3b:
    bring the owner online to assess it (Andrew ~17:3xZ, "The agent has to be online to assess"; record
    `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_173xZ_GC_FOUR_CALLS_ANSWERED_WORKTREE_OWNER_MUST_ASSESS.md`).
    Record stopped count, classes, MB freed, worktrees removed and ESCALATE rows on the GC line.
+7. **BRANCH SYNC AND OPEN CALLS, every cycle** (Andrew-direct 2026-10-08 ~20:1xZ, VERBATIM: "we need the fabric managers at each
+   box to manage that"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_FABRIC_MANAGERS_KEEP_THEIR_BOX_SYNCED.md`).
+   On this box's own minutes (laptop `:00/:30`, site Z `:06/:36`, dell1 `:12/:42`, dell2 `:18/:48`):
+   (a) **box-sync runs from the box's Windows scheduled task "Opal box-sync"**, never from this loop (Andrew ~20:1xZ to
+   4.0.0_SA_CRO~A, "I think B is the stable long-term solution"; record
+   `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_201xZ_BOX_SYNC_SCHEDULED_TASK_B.md`). This loop VERIFIES:
+   `powershell -NoProfile -File .tools/box-sync-schedule.ps1 -Status`; if the task is absent, install it (`-Install`) the same
+   cycle. A box branch more than one cycle behind `origin/CLOUD`, or a box the integrator HELD, is a finding on the SYNC line,
+   never a quiet pass; a held box's conflict is resolved by its own manager the same cycle.
+   (b) **the integrator** (the laptop; site Z's manager on a recorded handover) reads its task's last integrate result, and
+   MEASURES EVERY BOX'S PULL (Andrew-direct ~20:2xZ, VERBATIM: "I want to make sure that every box in the organization does a
+   pull from CLOUD as needed to get all the newest information onto their device"; record
+   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261008_202xZ_EVERY_BOX_PULLS_CLOUD_AS_NEEDED.md`): after
+   `git fetch origin`, for each `origin/box/<box>`, `git merge-base --is-ancestor origin/CLOUD origin/box/<box>` (current) or
+   `git rev-list --count origin/box/<box>..origin/CLOUD` (behind by N). A box behind for two cycles is chased over the bus to its
+   manager the same cycle; every box's state goes on the SYNC line.
+   (c) **open calls:** `python .tools/open-calls.py publish`, then `python .tools/open-calls.py list --all --cloud`; a box read
+   ABSENT is asked over the bus to publish.
+   Record on the SYNC line: box branch ahead/behind `origin/CLOUD` (ls-remote read), integrate result, open calls per box.
 
 This step acts on this box only. Another box's seat is that box's manager's; the register `org/devices/DEVICES.json` is the list
 of boxes and Step 3b is how the managers keep in touch.
@@ -142,7 +161,8 @@ set but this one is an other box.
 2. **ON-TRACK CHECK, every side** — a slip with a written re-date is HEALTHY; a slip WITHOUT one is
    the finding (route to the owning COO). Directive overlap appearing between the fabrics is itself
    a finding for Andrew (his quarantine premise — same law as /integrate Step 2's overlap band).
-3. **QUIET-PERIOD MERGE** — if EVERY fabric reads quiet (no seat mid-commit on another box per that box's
+3. **QUIET-PERIOD MERGE** — SUPERSEDED for the trunk by Step 3a.7 (per-box branches merge every cycle, no quiet period needed;
+   Andrew ~18:0xZ and ~20:1xZ). What follows applies only to a box not yet on its box branch: if EVERY fabric reads quiet (no seat mid-commit on another box per that box's
    manager's word; no unswept lane commits here) and divergence is nonzero, run **`/integrate merge`** (the
    full protocol, every leg coordinated over the bus). Not quiet = assess-only and carry to the
    next cycle. The 08-19 evening precedent: overlap ~0 is the healthy shape; a large overlap stops
@@ -165,6 +185,7 @@ Print fixed format (CROSS-FABRIC line added per the 2026-08-19 amendment):
   RESPONDED:     {N} closed
   SEATS:         {n} seats | moving {a} quiet {b} hung {c} dead {e} unknown {u} | acts: {serial: skill -> result | none}
   GC:            {n} stopped ({classes}) | {MB} MB freed | worktrees removed {w} | escalate {e} (owners) | 0
+  SYNC:          box/<box> ahead {a} / behind {b} origin/CLOUD | integrate: merged {boxes} / held {boxes} / n.a. | open calls: {box: n} | absent {boxes}
   CROSS-FABRIC:  status exchanged | on-track every box / finding: ... | merge: ran (heads) / assess-only / not-quiet
   LOOP:          cron-driven (next cycle in {interval})
 ```
