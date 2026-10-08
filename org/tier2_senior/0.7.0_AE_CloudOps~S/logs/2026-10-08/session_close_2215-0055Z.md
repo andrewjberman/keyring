@@ -360,10 +360,28 @@ equals `composition.unclassified.market_value` so the line is the real residual 
 they must be applied to the SERVED mix artifacts. The half agrees on which population is authoritative:
 the held set is "`inferred`, not the served mix bytes" (line 33).
 
-**One ambiguity left standing rather than resolved:** the half labels these "the d06 (49F) and d08
-(COT) mix artifacts", while `d08_firm_ownership_map.py` sits in `runners_49f/`. Whether "(COT)" names
-the firm the d08 artifact covers or a separate Cottonwood runner is not settled here; the 12:45Z read
-should name which artifact it actually measured rather than assume the mapping.
+**CORRECTION to the d08 mapping above -- the ambiguity resolved, and the first answer was WRONG.** A
+wider name sweep (840 hits across 226,665 files) settles it: the COT mix emitter is
+**`data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py`**, in the COT runner family. So:
+
+| the half's label | the actual producer |
+|---|---|
+| d06 (49F) | `data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py` |
+| d08 (COT) | `data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py` |
+
+`runners_49f/d08_firm_ownership_map.py` -- which this log named a paragraph earlier as the d08
+candidate -- **is not the d08 mix artifact at all.** It is an ownership map read at request time by
+`data/assets/scripts/gold/irpt_custody/advisor_client_list.py`, and it merely shares the ordinal.
+**THE d0N NUMBERS ARE PER-RUNNER-FAMILY ORDINALS, NOT GLOBAL IDS**, and the two families disagree on
+every one of them: COT's own d06 is `runners_cot/d06_cot_filters_dimensions.py`, filters and
+dimensions, nothing to do with a mix. Reading the ordinal as global is what produced the wrong answer,
+and at 12:45Z it would have meant measuring the 49F ownership map and reporting it as the Cottonwood
+mix total -- a confident wrong read, not a visible failure.
+
+One more note from the same sweep, on why this leg sits with a laptop seat at all:
+`org/missions/D8/MDPF/MDPF_SECCLASS/task-orders/MDPF_SECCLASS.TO-SC-e55.d06-unclassified-line.md:123`
+says the check is run by "a laptop seat the bucket admits" -- the same `opal-data-49financial`
+admission that keeps e42 here rather than on a Dell.
 
 ## Next Steps
 

@@ -996,3 +996,178 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The registry says a bucket belongs to a FIRM (scopes.json bucket and bucket aliases, v.bucket_firm); it names no source for a bucket as such. The only statement of one-source ownership it carries is a PRODUCT scope row whose key is also a systems.json source (mdpf, etfs, irpt, harvest) with its bucket. The build reads that as the bucket's one source (_bucket_source); a firm bucket and a shared store (opal-data-assets) name none, so no source is refused there. Today no real stored key is refused for a source on that rule: the real sweep prints refused=0. If the CTO wants a different table (for example the source a firm bucket's pipeline tree writes), it is a registry row to add."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S6 -- meta/templates/ was not an unread bucket: the reader read the wrong one (the copy's source bucket)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T04:05:00Z",
+  "one_line": "meta/templates/ was not an unread bucket: the reader read the wrong one (the copy's source bucket)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:157-163 (PROVENANCE_RIDERS row: src_bucket opal-data-cot beside dst_prefix blackdiamond/cottonwood/meta/templates/) and :74, :255, :475 (MONOLITH = opal-data-assets, the bucket dst_prefix is listed in)",
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json before the build: the HOLE for this key carried no 'bucket was not read' text, because bucket_of returned opal-data-cot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 of TO BF-s-2 names meta/templates/ among the keys whose bucket bucket_of could not read, so no ruling row was matched.",
+  "world_is": "bucket_of returned a bucket for it: opal-data-cot, pooled from the src_bucket entry of the same statement. The registry row (key_rulings.json, blackdiamond/cottonwood/meta/templates/) is under opal-data-assets, the monolith the dst_prefix is written to. The hole therefore was a wrong read, not an unread bucket, and its text did not say the bucket was not read. The build reads the field the key is the value of (dst_prefix): every statement of the file that reads row['dst_prefix'] and names a bucket names MONOLITH (opal-data-assets), so that bucket decides, and the row now matches."
+}
+```
+
+## LGIC_BLANKFIX-W3-S7 -- the dict-row and keyword-call keys needed two more same-file rules than the two the amendment lists
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T04:05:00Z",
+  "one_line": "the dict-row and keyword-call keys needed two more same-file rules than the two the amendment lists",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_keyfill.py _bucket_via_field and _bucket_via_container (this build); tests 'FIELD', 'CONTAINER' and their DIFFERENCE CONTROL cases in lib/tests/test_opal_naming_keyfill.py",
+      "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py:127-143 (forwardfill_v2/ in the opal-data-cot row of MAP, three rows in one statement) and infra/aws/lambda/investor-reporting/performance/tenants.py:155-165 (forwardfill_v2/ as data_plane_prefix beside data_plane_bucket='opal-data-cot' in one call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 1: extend the reader only by rules that read evidence in the same file, giving as the rules a bucket passed through a local variable or function parameter, and a per-firm choice made by calling a function.",
+  "world_is": "Neither forwardfill_v2/ key is passed through a variable or a function: each sits in a statement that names several buckets (a three-row MAP; a three-route ROUTES dict), so bucket_of returned 'names several buckets, none picked'. Two further rules read the same file: (1) the bucket that shares the key's own call or dict literal (exactly one distinct bucket there decides; none or several read none), and (2) where the key is the value of a dict field F, the buckets named by the statements that read that field in the file (all the same bucket decides; different buckets read none). Rule 2 is tried first because rule 1 alone would give meta/templates/ the dict's src_bucket. Each rule has a DIFFERENCE CONTROL in the test. If the CTO wants only the amendment's two rules, the two functions are the whole extra."
+}
+```
+
+## LGIC_BLANKFIX-W3-S8 -- quarantine/ and firms/ are not decided by their own files: two holes keep saying the bucket was not read, now with the reason
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T04:05:00Z",
+  "one_line": "quarantine/ and firms/ are not decided by their own files: two holes keep saying the bucket was not read, now with the reason",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_keys/keys.py:114 (QUARANTINE_PREFIX = 'quarantine/'; no S3 call and no bucket literal in the file)",
+      "infra/aws/lambda/investor-reporting/export/backfill_covered_account_ids.py:35, :135, :154, :195-207 (the key is listed with Bucket=bucket, a parameter of discover_firms; its call site passes run's parameter bucket; run's call site passes args.bucket, from the argument --bucket whose default is os.environ.get(IRPT_EVIDENCE_BUCKET))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 1 lists quarantine/ and firms/ among the keys to be read; item 3 asks for the count of HOLE lines that say the bucket was not read, before and after.",
+  "world_is": "Neither file names a bucket: keys.py builds key strings and calls S3 nowhere; backfill_covered_account_ids.py takes its bucket from a command-line argument or an environment variable. The row's bucket (opal-data-ycharts) cannot be read from these files without guessing from the folder, which the amendment forbids. The reader returns no bucket and the reason now says what it found: 'key constant QUARANTINE_PREFIX (line 114) is used at lines 548,596,598, none names a bucket', and 'Bucket=bucket (line 135), a parameter of discover_firms ... line 154 passes bucket, a parameter of run; line 207 passes args.bucket, which names no bucket literal in this file'. Both HOLE lines remain and still say the bucket was not read. A way to close them is a registry choice (a row that names the environment variable IRPT_EVIDENCE_BUCKET as bucket_from, or a ruling by key for these two files), not a reader rule."
+}
+```
+
+## LGIC_BLANKFIX-W2-S12 -- the registry's key-ruling rows carry no field that says what fills an open place, so the six opal-assets _quarantine/ lines stay HOLE
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S12",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T03:52:00Z",
+  "one_line": "the registry's key-ruling rows carry no field that says what fills an open place, so the six opal-assets _quarantine/ lines stay HOLE",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/key_rulings.json _about.row_fields @331e3fe609: bucket, key, shape, canonical, none_owed, evidence, owner; no field for what fills a place",
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json: six OTHER-HOLE opal-assets lines '_quarantine/ -> partial form {source}/{scope}/state/quarantine/; a brace remains that no per-firm answer admits' before and after the build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-1 AMENDMENT 1 item 1: a key-ruling row's canonical may carry the grammar's place names when the ROW says, for each, what fills it; read _about for the field that carries that; if no field does, the row cannot be admitted: report it and leave the HOLE.",
+  "world_is": "No _about field names what fills a place. The only statement is prose inside the _quarantine/ row's evidence field ('WHAT FILLS THE TWO PLACES: {source} and {scope} are the first two segments of the partition that was rejected'); evidence is declared as 'what was read and measured', and reading a convention out of its prose would be a guess at a schema. Per the amendment the row is not admitted: the six lines stay HOLE (class other), no reader was built for an unratified field, and the test asserts that a one-place and a two-place canonical are both HOLE and the same row with no open place is FIX. To admit it the registry's owner adds a ratified field (for example one entry per place with its source) to key_rulings.json _about and the row; the reader is then a few lines in decide()."
+}
+```
+
+## LGIC_BLANKFIX-W2-S13 -- BS1-AC2 reads carded_class_holes=5 after the build: each remaining line is a bucket the key reader does not read or a bucket name, not a missing ruling
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S13",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T03:52:00Z",
+  "one_line": "BS1-AC2 reads carded_class_holes=5 after the build: each remaining line is a bucket the key reader does not read or a bucket name, not a missing ruling",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json: last line ALL-ROOTS ok=True ... hole=23 carded_class_holes=5 (was 8)",
+      "lib/opal_naming_keyfill.bucket_of on the opal-assets templates line returns ('opal-data-cot', ...) the SOURCE bucket of the PROVENANCE_RIDERS dict, while the ruling row is under opal-data-assets (the destination)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-1 BS1-AC2: carded_class_holes=0 over every mapped root.",
+  "world_is": "Five carded lines remain and AMENDMENT 1 item 3 names the reason: investor-reporting/core quarantine/ (keys.py:114, no bucket literal in the file); investor-reporting/performance forwardfill_v2/ (tenants.py:164, several buckets none picked); opal-assets forwardfill_v2/ (ingest-mirror lambda_function.py:142, several buckets none picked); opal-assets blackdiamond/cottonwood/meta/templates/ (lambda_function.py:163, the key reader picks the source bucket opal-data-cot where the row is under opal-data-assets); investor-reporting/narrative S3_BUCKET opal-data-news-v2 (evidence.py:58, a bucket name; answered by name_rulings.json, BF-s-4). Rows exist for the first four keys and are not matched only because the bucket is not read as the row's. Not forced; keyfill not edited. The order stays pending."
+}
+```
+
+## LGIC_BLANKFIX-W2-S14 -- a per-firm row's variable is a function the file calls, not a string constant, so the keyfill reader never matched it; the row match now also reads the file's code
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S14",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T03:52:00Z",
+  "one_line": "a per-firm row's variable is a function the file calls, not a string constant, so the keyfill reader never matched it; the row match now also reads the file's code",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/snapshot.py:663 directory_handler._bucket_for(registry_firm_id) and ops/status.py:405; key_rulings.json per-firm rows bucket_from _bucket_for",
+      "lib/opal_naming_keyfill.runtime_bucket reads string constants only (names=(_bucket_for,) finds nothing in these files)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "key_rulings.json _about.per_firm: MATCH when the key equals the row's and the file that declares the item names bucket_from.",
+  "world_is": "The file names _bucket_for as code (an attribute call), never as a string, so the three lines (holdings snapshot.py:64 and :665, ops status.py:407) printed HOLE 'bucket was not read'. lib/opal_naming_rootcheck.py now has named_in_source(item, asked): Python ast of the item's own file, a name, attribute, def or import counts; a comment, docstring or string does not. _ruling_of unions its answer with the runtime reader's. The three lines print FIX with {scope} kept. keyfill is read, not edited; if BF-s-2 extends runtime_bucket the two agree."
+}
+```
+
+## LGIC_BLANKFIX-W2-S15 -- TO BF-s-1 is issued_to 0.9.0_WK_LGIC_BLANKFIX~1 but handed to the ~2 re-seat, so the lane gate refuses ~2's commit of the order's own paths
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S15",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T03:58:35Z",
+  "one_line": "TO BF-s-1 is issued_to 0.9.0_WK_LGIC_BLANKFIX~1 but handed to the ~2 re-seat, so the lane gate refuses ~2's commit of the order's own paths",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh --author 0.9.0_WK_LGIC_BLANKFIX~2 ... -- lib/opal_naming_rootcheck.py lib/tests/test_opal_naming_rootcheck.py <proof>: rc=1, 'WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' for three paths",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/task-orders/LGIC_BLANKFIX.TO-BF-s-1.carded-class.md line 6: <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>; the only non-terminal order issued to ~2 at HEAD is BF-s-9 (staged)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The instruction to this worker: commit on the branch through .tools/safe-commit.sh as 0.9.0_WK_LGIC_BLANKFIX~2.",
+  "world_is": "The owned-paths gate grants a worker exactly the paths of non-terminal orders issued_to its serial (ADHC_OWNPTH.005). BF-s-1 names ~1, so the build (lib/opal_naming_rootcheck.py, its test) and the proof instance sit uncommitted in C:/tmp/wk-blankfix-2 on wk-LGIC_BLANKFIX-2. No override was used. Only this channel file, lane ANY, is committed. The issuer re-issues the order to ~2 (or commits the worktree diff) to land the build."
+}
+```

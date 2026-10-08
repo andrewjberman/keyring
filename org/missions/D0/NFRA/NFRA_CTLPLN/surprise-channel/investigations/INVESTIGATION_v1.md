@@ -3596,3 +3596,82 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A command-keyed reply ('M123 #dev notes', '#0') is built and tested. A natural-language text goes through assist.INTENT_SYSTEM, whose rule reads '\"dev\" only for a chat (C...)'; the model is therefore told not to plan dev on an M tag, though parse_plan, open_items and the sms.reply path would carry it. Changing that rule changes an existing chat path's prompt, which the order says stays byte for byte, so it is left. The mail text's own instruction is the command form."
 }
 ```
+
+## NFRA_CTLPLN-W33-S1 -- TO-CT-i-5: the box tool has no lock/device/CPU switch, so the seam test supplies them through a runner
+
+```json
+{
+  "id": "NFRA_CTLPLN-W33-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~33",
+  "surfaced_at": "2026-10-08T00:30Z",
+  "one_line": "TO-CT-i-5 item 2: .tools/remote-job.py has no switch for its lock file, device name or CPU read, so the seam test runs the real tool through a runner that replaces them, as the box tool's own test does",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/remote-job.py LOCK, device_name(), measure(), make_runtime()",
+      ".tools/tests/test_remote_job_review.py main()",
+      "data/transcripts/scripts/tests/test_inbound_seam.py RUNNER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'run the REAL .tools/remote-job.py as a subprocess with --dry-run on a temporary lock and liveness file' and, if dry-run cannot give a complete envelope after a grade, 'build the lock the way the box tool's own test does and say so in the report'.",
+  "world_is": "The tool's LOCK is a module constant (.tools/.remote-job.json) with no argument or environment override; only the liveness file has one (OPAL_LIVENESS_FILE). `grade` always writes LOCK and `--dry-run` on accept writes no lock, so a graded dry-run complete cannot be produced from a bare subprocess without touching the real lock. device_name() shells to agentbus-sqs.sh and measure() imports psutil. The test therefore starts the real tool by file path through a python -c runner that sets rj.LOCK to a temporary file and replaces device_name, measure and make_runtime (the last with a stand-in that only prints) before calling the tool's own main(argv); accept, bid and complete envelopes come from --dry-run, and the lock is built by one non-dry accept whose sender is that stand-in. The tool's code is unedited; the real .tools/.remote-job.json is read before and after and is unchanged (absent at the cut). No disagreement between the two halves was found: every field the cloud handlers read (reviewer, available, cpu_pct, mem_pct, device, coo, grade.by, grade.verdict, summary, deployed) is sent under the same name; fields sent and not read (accept: device, serial, brief_sha256; complete: serial, evidence) are inert."
+}
+```
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T02:35:45Z",
+  "one_line": "AMENDMENT 7 asks `dell_fence_census.py --selftest` to read ok=True, but the file is outside the order's <paths> and the lane gate refused the commit; the self-test reads cases=0/0 ok=False because it takes its scoped pair from a registry that no longer holds a scoped row.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/shared-infra/tests/dell_fence_census.py --selftest at 9c58690566 (registry @173f98f24b, no scoped row): 'SELFTEST-SETUP no scoped registry row has a policy (saved or live) holding its confining statements' then 'FENCE-CENSUS-SELFTEST cases=0/0 ok=False'. run_selftest() takes its pair from scoped_rows(), which returns rows carrying both actions and prefix; there are none.",
+      "The fix, tested in this worktree before the commit was refused: when scoped_rows() is empty, build the pair in memory (first FENCED bucket's saved policy, the dell1 ARN appended to the fence's admitted list, the three DenyScopedExemption1 statements the module renders for actions GetObject/ListBucket/GetBucketLocation and prefix irpt/<firm>/platinum/holdings/). Result: 'FENCE-CENSUS-SELFTEST cases=7/7 ok=True' in 55 s. The 51-line diff is kept untracked at C:/tmp/wk-ctlpln-6/.scratch/census_selftest_fixture.patch (worktree of 0.9.0_WK_NFRA_CTLPLN~6, branch wk-NFRA_CTLPLN-6); the file was restored to HEAD afterwards.",
+      "safe-commit refusal on the commit that included tests/dell_fence_census.py: 'VIOLATION: infra/aws/terraform/shared-infra/tests/dell_fence_census.py -- lane=CLOUD_OPS_OR_ETL ... agent=0.9.0_WK_NFRA_CTLPLN~6 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. The order's own BOUNDS paragraph lists tests/dell_fence_census.py as READ and never edit. No override was used; the other five files committed at b6c5d8f1c1.",
+      "Not a render or validator defect: python lib/opal_naming.py validate on a scratch copy of today's registry with one unknown key planted refuses it (rc 1); on the unchanged copy it reads 'VALIDATE: OK 53 system row(s), 13 scope row(s), 0 warning(s)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN.TO-CT-d-2 AMENDMENT 7 item 4: 'Run both checks, and derive_fence_row_shape.py and dell_fence_census.py --selftest, each under timeout 120; all read ok=True'; the worker brief allowed the smallest equivalent change to dell_fence_census.py if it failed for the same reason as the other checks.",
+  "world_is": "dell_fence_census.py --selftest reads ok=False (cases=0/0) because the registry holds no scoped row since dell1 became a full row, and the lane gate refuses a worker's edit to that file because the order's <paths> block does not name it; the three criteria CT4d2-AC1..AC3 do not run the self-test.",
+  "notes": "For 2.0.0_SA_COO~C: either add tests/dell_fence_census.py to the order's <paths> (then the tested patch applies as is) or have the file's owner land it; until then the self-test line stays ok=False and the order is left in_progress. Nothing else in the fence checks depends on it."
+}
+```
+
+## NFRA_CTLPLN-W15-S1 -- placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them
+
+```json
+{
+  "id": "NFRA_CTLPLN-W15-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~15",
+  "surfaced_at": "2026-10-08T02:52:42Z",
+  "one_line": "placement-check.py read_projects() places each project by its `fabric`, but 15 of 34 live projects carry a project.json `placement` that resolves to a different box or none, so a reader that imports it without re-reading `placement` mis-places them",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/placement-check.py line 90: box = dev.resolve(str(d.get(\"fabric\") ...)); `placement` is not read there",
+      "measured from this worktree 2026-10-08 ~02:4xZ: over placement-check read_projects() (34 live projects), 15 have a `placement` that resolves to a box other than read_projects()'s box or carry no `placement` field (e.g. IRPT_BCKEND fabric laptop, placement DELL2; MDPF_HEALGAP fabric laptop, placement DELL1; NFRA_REPORT no placement field)",
+      ".tools/crossbox-deploy-check.py projects_covering() already re-reads project.json `placement` over proj[\"box\"], the same workaround"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-5 BUILD 1 (c): 'PLACEMENT: the project row's `placement` against this box', and (a): use .tools/placement-check.py's functions, imported.",
+  "world_is": "read_projects() returns box from `fabric`; the project row's `placement` differs for 15 of 34 live projects. .tools/open-calls.py imports read_projects() and overlaps() and then overrides each project's box with the resolved project.json `placement` (falling back to the fabric box when the field is absent), so its PATHS and RESOURCES readings use placement. placement-check.py itself was not edited (it is in the order's paths, but changing which field its viewer reads would change its output for every other reader).",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: whether placement-check.py's read_projects() should read `placement` first is a decision on a shared viewer; open-calls.py's override goes away if it does. Three live projects have no `placement` field at all, so their box is the fabric box in this tool's reading."
+}
+```
