@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~182</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete -- flipped by issuer 2.0.0_SA_COO~P2 after AMENDMENT 1 (cell_refs IB-pr-371 -> IB-pr-374, row D2-W182-S2): worker proof re-validated VALID; IB87-1-AC1 PASS (live rNjtTwcm re-read) and IB87-1-AC2 PASS on the issuer run</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -80,11 +80,15 @@ persist cannot be reached, and it fails closed if reached.
   built: {...}, negative_control: {live_refused, built_refused}, suites: {path: last line}, replay_commit}`. Name the ANALYSIS
   fixture as `fixture_family`, and keep the PERFORMANCE result alongside it under `extra`.
 
-<criterion id="IB87-1-AC1" cell_refs="IB-pr-371"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r87/p87_cells.py" . IB87-1-AC1</invocation><expect>IB87-1-AC1 PASS</expect></criterion>
+**AMENDMENT 1 (2026-10-08 ~22:2xZ, issuer `2.0.0_SA_COO~P2`, on row D2-W182-S2).** Both criteria's `cell_refs` read `IB-pr-371`, a
+derivation defect of the issuer: the order was derived from IB-pr-371's text. They now read `IB-pr-374`, the owned cell. The criteria,
+invocations and expectations are unchanged. Gate limb: none graded this amendment (a modification; GATE viii only).
+
+<criterion id="IB87-1-AC1" cell_refs="IB-pr-374"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r87/p87_cells.py" . IB87-1-AC1</invocation><expect>IB87-1-AC1 PASS</expect></criterion>
 `IB87-1-AC1` -- pin 9238309eca, exactly the five members, the start sha equal to the rollback target, built == the packet's sha == live
 (re-read live), census 0, re-plan 0, a clean build tree, the ledger closed, and no rollback. Base: FAIL (no file).
 
-<criterion id="IB87-1-AC2" cell_refs="IB-pr-371"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r87/p87_cells.py" . IB87-1-AC2</invocation><expect>IB87-1-AC2 PASS</expect></criterion>
+<criterion id="IB87-1-AC2" cell_refs="IB-pr-374"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r87/p87_cells.py" . IB87-1-AC2</invocation><expect>IB87-1-AC2 PASS</expect></criterion>
 `IB87-1-AC2` -- the replay: an irpt-x10-v1 fixture reserved by the live path reads back with identical bytes through both zips, the
 negative control is refused by both, the three suites pass, and the replay was committed before the ledger opened. Base: FAIL (no file).
 
