@@ -847,3 +847,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "No brace rule existed on a key-ruling line or in the lines command before this build, so 'as today' described the {system}/{cadence} fill path only. The build adds the rule for key-ruling FIX lines and the lines command; the bd-pipeline count line is unchanged by it (ROOTCHECK ok=True items=142 right=9 fix=118 not_asked=12 pattern=3 carded=0 refused=0 hole=0 before and after)."
 }
 ```
+
+## LGIC_BLANKFIX-S5 -- the proof checker raises on a directory artifact path where it should refuse
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T00:20:05Z",
+  "one_line": "The proof-of-spec checker crashes (rc 2, PermissionError) when a proof instance names a DIRECTORY as an artifact path; a worker worked round it by listing 13 files one by one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BF-q-6 worker report (0.9.0_WK_LGIC_BLANKFIX~2, commit 51fde5ac43): the checker crashed, rc=2, PermissionError, on a directory artifact path; the instance lists the 13 per-root files as separate rows",
+      "NOT reproduced by the issuer: the crash is the worker's report; the instance as committed validates rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The spine, L7: proof-of-spec-check.py refuses an instance whose artifact rows do not resolve at their pins. A refusal is a verdict with a reason.",
+  "world_is": "On a directory path the checker does not refuse: it raises and exits 2, which reads as a tool failure and not as a verdict. The file is .tools/proof-of-spec-check.py, outside this project's write surface; its owner is 1.0.0_SA_CTO. Nothing was changed. The worker did not file a row; the issuer files it at the drain."
+}
+```
