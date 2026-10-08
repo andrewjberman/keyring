@@ -180,9 +180,10 @@ def entry_must_exist_in_file_and_path_must_exist():
 @case
 def path_built_by_another_cell_is_allowed_absent():
     doc = base_doc()
-    doc["rules"][0]["mechanism"] = {"path": "org/ref/NO_SUCH_FILE.json", "entry": "MSTR"}
+    doc["rules"][0]["holder"] = "SKILL"
+    doc["rules"][0]["mechanism"] = {"path": ".claude/skills/no-such-skill/SKILL.md", "entry": "x"}
     problems, _ = CK.validate(doc, ROOT)
-    refused_when_existing = has(problems, "NO_SUCH_FILE.json does not exist")
+    refused_when_existing = has(problems, "no-such-skill/SKILL.md does not exist")
     doc["rules"][0]["built_by"] = "CT-s-1"
     problems2, stats2 = CK.validate(doc, ROOT)
     return (refused_when_existing and not problems2 and stats2["pending_paths"] == ["R-GITOPS-1"]),         "existing_refused=%s pending=%s" % (refused_when_existing, stats2["pending_paths"])
