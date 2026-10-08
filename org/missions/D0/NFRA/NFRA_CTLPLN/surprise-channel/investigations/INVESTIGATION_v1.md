@@ -3783,3 +3783,278 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Retake the census with derive_vendor_secrets.py --live (names only, about six minutes) before the apply if secrets were added; the new class table will flag an unclassified new secret (ok=False) rather than skip it."
 }
 ```
+
+## NFRA_CTLPLN-W34-S1 -- TO-CT-i-6: the plan needs the transcripts-pull package built too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W34-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~34",
+  "surfaced_at": "2026-10-08T00:50Z",
+  "one_line": "TO-CT-i-6 item 4: the transcripts root cannot be planned, even with -target, unless a SECOND package (transcripts-pull.zip) is also built; the order builds only the Teams-assist package",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -target=module.ldo_001 in infra/aws/terraform/transcripts at 56061b2d9c + the two statements: 'Error: Error in function call' on mail_pull.tf line 106 and pull.tf line 105, filebase64sha256(local.pull_zip), 'open lambda/transcripts-pull/dist/transcripts-pull.zip: The system cannot find the path specified' (rc 1, no plan produced)",
+      "infra/aws/terraform/transcripts/pull.tf line 19 (pull_zip) and line 105, mail_pull.tf line 106 evaluate filebase64sha256 at configuration load, so a -target does not skip them",
+      "Remedy taken, local only: bash infra/aws/lambda/transcripts-pull/build.sh built dist/transcripts-pull.zip (56 files, SHA-256 b84461a885d28f1dc5521a65a7f28616d82792f4e6151a8ea37af17c72e294bf) in this worktree; dist/ is gitignored (infra/.gitignore:48) and was not committed or uploaded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-i-6 BUILD item 3 builds the one package infra/aws/lambda/teams-chat-assist/build.sh; item 4 then reads 'terraform plan -target=module.ldo_001' as a read the build makes possible.",
+  "world_is": "The plan needs both dist/teams-chat-assist.zip and dist/transcripts-pull.zip on disk; with only the first it fails at load. The second zip is built from the worktree's own sources, so the untargeted plan's pull and mail_pull function hashes reflect this worktree's build; the applier must build both packages before any plan.",
+  "notes": "For 2.0.0_SA_COO~R: add the transcripts-pull build to the cut's item 3 and to the applier's preflight."
+}
+```
+
+## NFRA_CTLPLN-W17-S1 -- the broker liveness file and the drive-mode leases are gitignored and exist only in the main worktree, so seat-list.py reads them there, not from the tree it runs in
+
+```json
+{
+  "id": "NFRA_CTLPLN-W17-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~17",
+  "surfaced_at": "2026-10-08T05:20:30Z",
+  "one_line": "the broker liveness file and the drive-mode leases are gitignored and exist only in the main worktree, so seat-list.py reads them there, not from the tree it runs in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".gitignore:251 org/mcp/liveness.json and .gitignore:614 org/mcp/drive_mode/ (git check-ignore -v, 2026-10-08 ~04:4xZ)",
+      "ls /c/tmp/wk-ctlpln-17/org/mcp/liveness.json: No such file or directory; the main worktree holds it (9 registered seats at 04:45Z)",
+      ".tools/seat-list.py main_root() and Ctx.path() at ff5e6ea8a7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-7 BUILD 1: one row per live seat 'from this box's org/mcp/liveness.json', and the drive 'from .tools/drive-mode.py's markers'.",
+  "world_is": "org/mcp/liveness.json and org/mcp/drive_mode/ are untracked (gitignored) and absent from a linked worktree; they exist only in the main worktree. seat-list.py finds that worktree through the git common dir (as .tools/drive-mode.py main_root() does) and writes seats.json into the tree it runs in.",
+  "notes": "No decision needed for the cell; recorded because a worker run from a linked worktree and a seat run from the main worktree read the same live files but write seats.json to different trees."
+}
+```
+
+## NFRA_CTLPLN-W17-S2 -- the three COO seats live on the laptop read drive=NONE: no live lease and no LIVE_ARMS Arms row names a drive for ~C, ~G or ~R
+
+```json
+{
+  "id": "NFRA_CTLPLN-W17-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~17",
+  "surfaced_at": "2026-10-08T05:20:30Z",
+  "one_line": "the three COO seats live on the laptop read drive=NONE: no live lease and no LIVE_ARMS Arms row names a drive for ~C, ~G or ~R",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-list.py write, run from /c/tmp/wk-ctlpln-17 with AGENTBUS_DEVICE=laptop 2026-10-08 05:12:47Z: three COO rows, drive=NONE each",
+      "org/ref/LIVE_ARMS.md lines 46-49 (COO~C, no drive word) and grep for COO~G and COO~R over the file: 0 lines",
+      "the main worktree org/mcp/drive_mode/ holds 8 markers (seats 2.0.0_SA_COO~D, ~P, ~M and 4.0.0_SA_CRO); none names ~C, ~G or ~R (read 2026-10-08 ~05:2xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-07 (cell text of TO-CT-s-7): 'COOs ... either run /canonical-drive /closer-drive to proceed projects, running /remote-drive if a one-off request comes in'; LIVE_ARMS.md 'all COOs should have /canonical-drive running'.",
+  "world_is": "seat-list.py write at 2026-10-08 ~05:12Z: 2.0.0_SA_COO~C, ~G and ~R each read drive=NONE (drive-mode status shows no lease with those seats; org/ref/LIVE_ARMS.md Arms names ~C only at line 46, with 'NO cron', and names ~G and ~R nowhere). All three read doing=WORKING by open orders (4, 4, 0) and commits (1m, 28m, 73m). The drive column therefore shows what is authorised, not what is running.",
+  "notes": "For 1.0.0_SA_CTO, who lands LIVE_ARMS rows: whether the Arms register should name the three laptop COOs' loops is its call. The tool decides nothing about it."
+}
+```
+
+## NFRA_CTLPLN-W14-S15 -- TO-CT-a-1 amendment 10: lambda:AddPermission on the ten protected functions reads allowed, the Deny that stays does not cover it
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T04:48:56Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule before the apply: add lambda:AddPermission and lambda:RemovePermission to DenyProtectedFunctions, or set in_allow false for them in dell_respol_actions.json; or confirm the Allow stands)",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S15",
+  "one_line": "TO-CT-a-1 amendment 10: lambda:AddPermission on the ten protected functions reads ALLOWED for both Dell users, not explicitDeny; the Deny that stays does not list it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/simulate_policy.py run (CTa1-AC2): 'CANUNDO-ii PROTECTED-ADDPERMISSION functions=10 explicitDeny: dell1=0 dell2=0 (item 4 expected 10 of 10); allowed: dell1=10 dell2=10' on the effective set group policies + per-user policies + dell_respol_allow_policy.json + the two routes Deny documents",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json statement DenyProtectedFunctions: ten actions (UpdateFunctionCode, UpdateFunctionConfiguration, PublishVersion, CreateAlias, UpdateAlias, DeleteFunction, DeleteAlias, PutFunctionConcurrency, UpdateFunctionUrlConfig, CreateFunctionUrlConfig); lambda:AddPermission is not among them",
+      "modules/routes_policy/main.tf lambda_actions is the same ten; so the routes Deny does not cover it either (intersection of the 75 with the routes Deny actions is empty: ROUTES-DENY-INTERSECTION none)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 10 item 2(e)(ii) and item 4: lambda:AddPermission on the ten protected functions is expected to read explicitDeny from the Deny that stays, and the simulation block should show the ten still reading explicitDeny.",
+  "world_is": "The ten read allowed for both users. The Deny that stays never named lambda:AddPermission; before this change the removed resource-policy Deny and the absence of an Allow held it. No Allow was narrowed and no exclusion was added (the order forbids it): the reading is reported as it is (not counted in all_ok) and the ten functions are left reachable by AddPermission once the Allow is applied.",
+  "notes": "Consequence: a Dell could add a permission letting any principal or service invoke the portal authorizers and auth handlers; it still cannot change their code or configuration. The issuer or the CTO chooses: add AddPermission and RemovePermission to DenyProtectedFunctions (the protected-functions census and its renderer then agree), exclude them in the data, or accept."
+}
+```
+
+## NFRA_CTLPLN-W16-S1 -- TO-CT-s-6 asks `open` to print the bus line with the commit, but the commit that holds the cross-box file cannot exist before the file is written, so a second command `line` was added
+
+```json
+{
+  "id": "NFRA_CTLPLN-W16-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~16",
+  "surfaced_at": "2026-10-08T05:19:50Z",
+  "one_line": "TO-CT-s-6 asks `open` to print the bus line with the commit, but the commit that holds the cross-box file cannot exist before the file is written, so a second command `line` was added",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order BUILD 1: `open` writes org/devices/crossbox/<id>.json and prints a line ending `| file org/devices/crossbox/<id>.json @<commit>`; `receive` checks the file exists at that commit",
+      ".tools/crossbox-call.py `open` prints the line with `@UNCOMMITTED` (which `receive` cannot parse, so it cannot be sent by mistake) and `line --id` prints the same line with `git log -1 --format=%h -- <file>` once the file is committed and clean",
+      ".tools/crossbox-call.py --selftest cases line-refused-until-the-file-is-committed and line-carries-the-commit-and-no-substance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-6: `open` writes the file and prints the ONE line the manager puts on the bus, beginning `CROSSBOX <id> <kind> for <to-serial>: <subject> | file org/devices/crossbox/<id>.json @<commit>`; `receive` checks the file exists at the named commit.",
+  "world_is": "A commit hash cannot name the commit that adds the file it is printed beside, so `open` alone cannot print a line the other box can verify. The tool adds `line --id <id>` (run after the file is committed) and `open` prints the provisional form with @UNCOMMITTED. The skill section lists it as step 1.",
+  "notes": "For 2.0.0_SA_COO~C: the order's six-command list is seven in practice (open, line, sent, receive, ack/acked, close, plus merge). If the cell should instead commit the file itself, that is a lane-gate question: this tool never runs git commit."
+}
+```
+
+## NFRA_CTLPLN-W16-S2 -- One cross-box file is edited on two boxes (sender: sent, closed.from; receiver: ack, closed.to), so CLOSED-BOTH needs a field-wise merge of the two copies; `merge --id --ref` was added and the file shape gained schema, call_id, opened_at, from_by and to_by
+
+```json
+{
+  "id": "NFRA_CTLPLN-W16-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~16",
+  "surfaced_at": "2026-10-08T05:19:50Z",
+  "one_line": "One cross-box file is edited on two boxes (sender: sent, closed.from; receiver: ack, closed.to), so CLOSED-BOTH needs a field-wise merge of the two copies; `merge --id --ref` was added and the file shape gained schema, call_id, opened_at, from_by and to_by",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order THE SEAM: org/devices/crossbox/<id>.json has `closed` {from_at, to_at} with either side null until that side closes, and state CLOSED-BOTH only when both are recorded; each close is run on its own box",
+      ".tools/crossbox-call.py `merge`: folds the other copy (read with git show <ref>:<path>) into this one, fills null fields, refuses a field both copies hold with different values",
+      ".tools/open-calls.py crossbox_closed_both() links a file to a call by `id`, or the call id appearing anywhere in the file text: the new explicit `call_id` field satisfies it, exercised by selftest case the-open-calls-close-reader-accepts-CLOSED-BOTH"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-6 SEAM: the file keys are id, kind, from_device, to_device, from_serial, to_serial, subject, body_path, state, sent, ack, closed {from_at, to_at}; the closed state is reached when both sides are recorded.",
+  "world_is": "Two boxes cannot both write one file in one checkout; each writes its own copy and git carries them, so a plain git merge of the same JSON can conflict on adjacent lines. The tool adds a `merge` command and keys schema (crossbox/1), call_id (explicit link to the open-calls id), opened_at (age before sending) and closed.from_by/to_by. The two existing readers (crossbox-deploy-check.py, open-calls.py) read by .get() and ignore the extra keys; this tool's own reader refuses unknown keys.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: if the seam should stay at exactly the order's keys, `call_id` is the one the open-calls link needs; the rest can be dropped at the cost of age-before-send and the schema marker."
+}
+```
+
+## NFRA_CTLPLN-S23 -- TO-APPLY-10 step 2 states an expected BEFORE census line (dell1_admitted=21/24 dell1_scoped=3 disagree=0 ok=True) that is stale against the registry the SAME order names: with the three dell1 rows already made FULL rows @173f98f24b, the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False before the apply, so AC2's two named fields are not the discriminating ones -- disagree 3 -> 0 and gap_dell1 1 -> 0 are
+
+```json
+{
+  "id": "NFRA_CTLPLN-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T05:40Z",
+  "one_line": "TO-APPLY-10 step 2 states an expected BEFORE census line (dell1_admitted=21/24 dell1_scoped=3 disagree=0 ok=True) that is stale against the registry the SAME order names: with the three dell1 rows already made FULL rows @173f98f24b, the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False before the apply, so AC2's two named fields are not the discriminating ones -- disagree 3 -> 0 and gap_dell1 1 -> 0 are",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-10 @351dd873af step 2: 'Run the live fence census and record its last line (expected before: dell1_admitted=21/24 dell1_scoped=3 ... disagree=0 ok=True)'; AC2's expect is 'dell1_admitted=24/24 dell1_scoped=0'",
+      "BEFORE, measured 2026-10-08 ~05:0xZ at the laptop (deliverables/BEFORE10_census_live_20261008.txt): FENCE-CENSUS buckets=24 read=24 unreadable=0 fenced=3 no_policy=11 no_fence=10 dell1_admitted=24/24 dell1_scoped=0 dell2_admitted=24/24 dell2_scoped=0 disagree=3 undeclared=2 gap_dell1=1 gap_dell2=0 ok=False",
+      "AFTER, same instrument (deliverables/AFTER10_census_live_20261008.txt): identical line except disagree=0 gap_dell1=0 ok=True; the evaluator line moved from dell1={'explicitDeny': 3, 'allowed': 21} to dell1={'allowed': 24}",
+      "CAUSE, read from the script rather than inferred: dell_fence_census.py takes ADMISSION from the registry's exemptions rows and SCOPE from whether a row carries actions/prefix, while its evaluator limb simulates the LIVE policy; 4.0.0_SA_CRO made the three dell1 rows full rows @173f98f24b BEFORE this order was cut, so from that commit the census reads dell1 as admitted and unscoped while the live policies still carried the three DenyScopedExemption1 statements -- three DISAGREE rows on exactly the three fenced buckets",
+      "ok is computed at dell_fence_census.py:505 as read == n and unread == 0 and not dis and f + p + q == n, so undeclared and gap_dell1 never enter it: the BEFORE ok=False was the three disagreements alone, and 24=24, 0 unreadable and 3+11+10=24 all held"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-10 step 2: the live fence census BEFORE the apply reads dell1_admitted=21/24 dell1_scoped=3 ... disagree=0 ok=True. AC2: after the apply it reads dell1_admitted=24/24 dell1_scoped=0.",
+  "world_is": "Before the apply the census read dell1_admitted=24/24 dell1_scoped=0 disagree=3 gap_dell1=1 ok=False, because the registry rows the order itself names (@173f98f24b) are already full rows. AC2's two named fields therefore read the SAME before and after this act and do not discriminate it; what the act moved is disagree 3 -> 0 and gap_dell1 1 -> 0. Both halves' condition 5 (disagree=0 ok=True) reads MET after the apply, so nothing was blocked -- but a later applier who graded AC2 on its two printed fields alone would read PASS without the apply having landed.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: this is the third order in a row in which this census's verdict and the act disagree in shape (TO-APPLY-8's ok=False on a correct act is the earlier one). The cell already on the list to make the census print scope beside admission could also pin AC2-style expects to the field that MOVES. Not adjudicated here; the order's three ACs all pass."
+}
+```
+
+## NFRA_CTLPLN-S24 -- The census invocation TO-APPLY-10 step 2 and AC2 name (dell_fence_census.py --live) defaults --out to the TRACKED fixture tests/dell_fence_census.json, so the bare form EDITS a test file the same order's bounds forbid editing, and rewriting it flips the step-1 join check from ok=True to ok=False (evaluator_allowed 6/6 -> 3/6) -- the order's own step sequence cannot be run as written
+
+```json
+{
+  "id": "NFRA_CTLPLN-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T05:40Z",
+  "one_line": "The census invocation TO-APPLY-10 step 2 and AC2 name (dell_fence_census.py --live) defaults --out to the TRACKED fixture tests/dell_fence_census.json, so the bare form EDITS a test file the same order's bounds forbid editing, and rewriting it flips the step-1 join check from ok=True to ok=False (evaluator_allowed 6/6 -> 3/6) -- the order's own step sequence cannot be run as written",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_fence_census.py:730 ap.add_argument('--out', default=str(DEFAULT_JSON), help='where --live saves the result') and :742 Path(a.out).write_text(...): a bare --live run OVERWRITES infra/aws/terraform/shared-infra/tests/dell_fence_census.json, which is git-tracked (git ls-files prints it; git check-ignore does not)",
+      "order NFRA_CTLPLN.TO-APPLY-10 bounds: 'no edit to any .tf, module, registry or test file'; its step 2 and AC2 both name the bare form",
+      "MEASURED, not inferred: after the first bare --live run, git status --porcelain printed ' M infra/aws/terraform/shared-infra/tests/dell_fence_census.json' and check_dell_fence_join.py then read rc=1 FENCE-JOIN pairs=6 rows=6/6 cross_firm_leaks=0 evaluator_allowed=3/6 ok=False with its NEGATIVE arm moving from '0 stripped' to '2 stripped'; the same check had read rc=0 evaluator_allowed=6/6 ok=True minutes earlier",
+      "CAUSE: check_dell_fence_join.py:287 reads CENSUS_JSON = tests/dell_fence_census.json as the base document for its EVAL arm (:456 doc = by_bucket[b]['policy']) and for its NEGATIVE arm (:483). The committed fixture predates the Dell admissions, so appending the pair's ARN to its fence list yields allowed 6/6; a fixture refreshed from the pre-apply LIVE plane still carries the three DenyScopedExemption1 statements, so dell1's three pairs read explicitDeny and the arm reads 3/6",
+      "RESTORED AND RE-EXERCISED: git checkout of the fixture returned the join check to rc=0 evaluator_allowed=6/6 ok=True, reproducibly, twice",
+      "DISARMED for this act by redirecting the save path: both the BEFORE and the AFTER census ran as dell_fence_census.py --live --out org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/{BEFORE,AFTER}10_census_live_20261008.json, and git status --porcelain on the tests directory printed EMPTY after each. The redirect changes nothing the census measures: run_live(scratch) is identical and only the save path differs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-10 step 1: both checks ok=True IMMEDIATELY BEFORE the plan, and a failing check is a STOP. Step 2 then runs dell_fence_census.py --live. Bounds: no edit to any .tf, module, registry or test file.",
+  "world_is": "Step 2's named invocation overwrites the tracked fixture that step 1's check reads as its base document, so running step 1, then step 2, then the plan makes the step-1 check read ok=False at the plan -- a STOP manufactured by the order's own sequence, on a tree with no fault in it. The bare form also edits a test file the bounds forbid. Handled here by restoring the fixture and redirecting every census run's --out into this seat's deliverables; no repo test file was edited by this act.",
+  "notes": "For 2.0.0_SA_COO~C: the cheap fix is to write --out <a path outside tests/> into the order's step 2 and into AC2's invocation, or to give the census a --no-save flag. The sharper question is for the checks' owner: an acceptance check whose verdict depends on a fixture being STALE will read ok=True only until someone refreshes it, and the refresh is itself a step of the same order."
+}
+```
+
+## NFRA_CTLPLN-W6-S16 -- TO-CT-e-3 amendment 3: the signing-line rule of item 2(b) makes the seam test's stand-in signature fail check 8, so test_intake_seam.py reads ok=False
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T05:37:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W6-S16",
+  "one_line": "TO-CT-e-3 amendment 3: the signing-line rule of item 2(b) makes the seam test's stand-in signature fail check 8, so test_intake_seam.py reads ok=False",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_seam.py line 112 writes the stand-in signature as 'batch <b>\\nfile <f>\\nsigned for the seam run only\\n' with no signing line",
+      "timeout 120 python org/devices/intake/test_intake_seam.py (before my edit) -> 'INTAKE-SEAM-TEST stages=6 negative_arms=3/3 index_requests=4 ok=True'; (after) -> 'check ... c8=failed verdict=not_checked' then 'INTAKE-SEAM-TEST stages=1 negative_arms=0/3 index_requests=4 ok=False'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3 item 2(b) requires a signature file to carry a signing line; item 4 says run test_intake_seam.py and report its last line, and the worker brief says it must still read ok=True. I may not edit the seam test.",
+  "world_is": "Both cannot hold: the seam test's stand-in signature has no signing line, so any phrase rule refuses it at check 8 and the seam run stops at stage 2 of 6. I kept the rule and reported the failing last line rather than weaken the rule.",
+  "notes": "One-line repair in the seam test (its owner's file, outside my paths): add a line 'CHECK 8 SIGNED -- seam stand-in' to the text written at line 112. The check tool needs no change for it."
+}
+```
+
+## NFRA_CTLPLN-W6-S17 -- TO-CT-e-3 amendment 3 item 1(b): a .py file that the wheel has and a REAL installed copy lacks is now counted missing, so an added module no longer fails check 6
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T05:37:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W6-S17",
+  "one_line": "TO-CT-e-3 amendment 3 item 1(b): a .py file that the wheel has and a REAL installed copy lacks is now counted missing, so an added module no longer fails check 6",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py case_check_6_some_present_some_missing_compares_the_present: a wheel with one identical __init__.py and one extra new_module.py reads c6 passed, compared=1 missing=1 differ=0",
+      "the earlier case case_py_absent_from_installed_copy_is_a_difference asserted the opposite (c6 failed, the path listed as differing); I removed it because the amendment says a file with no counterpart on disk is 'missing, never differ'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3 item 1(b): a .py file of the wheel with NO counterpart on disk is counted as missing, never as differ; the check is failed only when differ > 0. The brief's check 6 rules out 'code added outside the compiled files'.",
+  "world_is": "Against a complete installed copy, a wheel that adds a new .py module (code the installed version does not have) now passes check 6 where it failed before. The tool cannot tell that case from a sound installed copy whose files are gone. I followed the amendment and added an evidence field py_missing_not_in_installed_record (the missing files the installed copy's own RECORD never listed) and printed no verdict from it.",
+  "notes": "Option for the issuer: treat a missing .py that is also absent from the installed RECORD as differ. Not done: the amendment did not ask for it. The CTO's reading of check 6 for a file with such a list should be explicit."
+}
+```
