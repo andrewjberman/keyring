@@ -20705,3 +20705,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does not: the retained path carries the pointer's accounts, and a pointer naming none is refused before finalize. Disarmed."
 }
 ```
+
+## IRPT_BCKEND-W171-S1 -- infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/route
+
+```json
+{
+  "id": "IRPT_BCKEND-W171-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~171",
+  "surfaced_at": "2026-10-08T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/routes.json; routes.tf reads only the docs copy, so a route added to the stale copy would never apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the two files at 1e0cdaf90c: differ at char 7 line 2",
+      "infra/aws/terraform/investor-reporting/api/routes.tf local.contract_routes_path points at docs/contracts/investor-reporting/v1/routes.json (comment: 'routes.json IS the carrier and Terraform reads it')"
+    ]
+  },
+  "spec_asserts": "routes.tf: ONE route list, the contract file; no second carrier.",
+  "world_is": "A second routes.json is tracked in the api root. Nothing reads it for the apply; the IB-pr-363 packet names the docs copy as the writer's input."
+}
+```
