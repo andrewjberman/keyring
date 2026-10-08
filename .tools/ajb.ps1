@@ -67,7 +67,7 @@ function Get-AgentLoopDirective {
 
     switch -Regex ($base) {
         '^0\.0\.0_AB_MSTR$' {
-            return "$header`n  MSTR:`n  1. /watcher ONCE (inbox Monitor, arm-at-load).`n  2. /agentbus ONCE (this device's cross-device SQS consumer; an rc=3 refusal naming a live pid means a consumer already holds this device -- that IS success, do not work around it).`n  3. /integrate ONCE (joint fabric parity ASSESSMENT; assess-only at load -- /integrate merge only on explicit direction).`n  Event-triggered: /mstr-review, /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, /govern (Andrew-discretion).`n  Role (Andrew-direct 2026-08-28): device/fabric infra manager + cross-device / cross-fabric comms; spawn/kill of WORK-population seats is the COO's own function now (MSTR keeps the primitive for infra-class population: reboots, fleet relaunch, cross-fabric seats).`n  Standing duties + any scoped arming: org/XXX.md Step 1b-F MSTR row."
+            return "$header`n  MSTR:`n  1. /watcher ONCE (inbox Monitor, arm-at-load).`n  2. /agentbus ONCE (this device's cross-device SQS consumer; an rc=3 refusal naming a live pid means a consumer already holds this device -- that IS success, do not work around it).`n  3. /integrate ONCE (joint fabric parity ASSESSMENT; assess-only at load -- /integrate merge only on explicit direction).`n  Event-triggered: /mstr-review, /mstr-spawn, /mstr-kill, /mstr-charter, /comp-ferry, /govern (Andrew-discretion).`n  Spawn/kill of WORK-population seats is the COO's own function (MSTR keeps the primitive for infra-class population: reboots, fleet relaunch, cross-fabric seats).`n  Standing duties + any scoped arming: org/XXX.md Step 1b-F MSTR row."
         }
         '^1\.0\.0_SA_CTO$' {
             return "$header`n  ws CTO: /watcher ONCE. /ws-charter ad-hoc. Event-driven via the inbox Monitor; /fabric-check + /stimulus-scan on signals, not timers."
@@ -76,7 +76,7 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CTO: /watcher ONCE. /cl-charter ad-hoc. Event-driven via the inbox Monitor."
         }
         '^2\.[01]\.0_SA_COO$' {
-            return "$header`n  COO: /watcher ONCE. /drive is OFF by default -- the COO coordinates and routes, it does not re-drive the estate. Arm /drive ONLY per a live scoped authorization in the org/XXX.md Step 1b-F COO row (honor its cadence AND its stop condition); if none is live, arm nothing.`n  Event-triggered: /mstr-spawn, /mstr-kill (a COO function in addition to 0.0.0_AB_MSTR -- Andrew-direct 2026-08-28; seat and release work-population lanes directly, no request to MSTR)."
+            return "$header`n  COO: /watcher ONCE. /drive is OFF by default. Arm /drive ONLY per a live scoped authorization in the org/XXX.md Step 1b-F COO row (honor its cadence AND its stop condition); if none is live, arm nothing.`n  Event-triggered: /mstr-spawn, /mstr-kill (a COO function in addition to 0.0.0_AB_MSTR -- Andrew-direct 2026-08-28; seat and release work-population lanes directly, no request to MSTR)."
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO: /watcher ONCE. /spot-check + /verify-channel ad-hoc / closeout-triggered. Scope (base vs ~Z) + any scoped arming: org/XXX.md Step 1b-F CVO rows."
@@ -85,13 +85,16 @@ function Get-AgentLoopDirective {
             return "$header`n  CL CVO: /watcher ONCE. /verify-channel + /case-find + /spot-check ad-hoc."
         }
         '^0\.[0-9]+\.[0-9]+_AE_CloudOps(~[A-Za-z0-9]+)?$' {
-            return "$header`n  AE_CloudOps: /watcher ONCE, then /cloud-ops ONCE (session-orient one-shot, not a cron). Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:). /work ad-hoc."
+            return "$header`n  AE_CloudOps: /watcher ONCE, then /cloud-ops ONCE (session-orient one-shot, not a cron). Event-driven. /work ad-hoc."
         }
         '^0\.8\.0_AE_CloudComp(~[A-Za-z0-9]+)?$' {
-            return "$header`n  AE_CloudComp: /watcher ONCE, then /cloud-ops ONCE. Event-driven: act on Monitor-delivered TOs; keep broker STATUS accurate. /work ad-hoc."
+            return "$header`n  AE_CloudComp: /watcher ONCE, then /cloud-ops ONCE. Event-driven. /work ad-hoc."
         }
         '^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_' {
-            return "$header`n  Tier-2/3 worker: /watcher ONCE. Event-driven: act on Monitor-delivered dispatches/TOs; keep broker STATUS accurate (WORKING:/IDLE:/BLOCKED:). /work ad-hoc."
+            return "$header`n  Tier-2/3: /watcher ONCE. Event-driven. /work ad-hoc."
+        }
+        '^0\.[0-9]+\.[0-9]+_WK_' {
+            return "$header`n  Worker: /watcher ONCE. Your task order is your whole instruction."
         }
         '^1\.[0-9]+\.[0-9]+_DS_CompLearns(~[A-Za-z0-9]+)?$' {
             return "$header`n  CL Tier-2 DS: /watcher ONCE. Event-driven; keep broker STATUS accurate. /work ad-hoc."
@@ -100,7 +103,7 @@ function Get-AgentLoopDirective {
             return "$header`n  CL Tier-2 SC: /watcher ONCE. Event-driven; keep broker STATUS accurate. /work ad-hoc."
         }
         '^4\.0\.0_SA_CRO(~[A-Za-z0-9]+)?$' {
-            return "$header`n  ws CRO (recon->specs; does NOT dispatch): /watcher ONCE. Event-driven: research/RCG program work + Andrew directives via the inbox Monitor."
+            return "$header`n  ws CRO (does NOT dispatch): /watcher ONCE. Event-driven: research/RCG program work + Andrew directives via the inbox Monitor."
         }
         '^0\.0\.[0-9]+_(UA|BG)_' {
             return "$header`n  Tier-0 Utility Agent: /watcher ONCE, then the launcher skill(s) in your prompt.md 'On Launch' section. Event-driven + on-demand; draft-and-ask on anything outward-facing or irreversible."
@@ -108,6 +111,57 @@ function Get-AgentLoopDirective {
         default {
             return "$header`n  UNRECOGNIZED ('$Serial' matched no role pattern)`n  1. Run /watcher ONCE (arm-at-load).`n  WARN MSTR: 'role-mapping gap for $Serial in ajb.ps1'."
         }
+    }
+}
+
+# Get-SeatStatement: serial -> the seat's statement of what it IS (org/ref/SEAT_ROLES.json, read only by
+# lib/seat_roles.py). A LAUNCH AID, NEVER A LAUNCH DEPENDENCY: every failure (no python, no module, a
+# malformed file, an unknown kind, a hang past 20 s, an exception) returns Text=$null with a Reason and the
+# caller launches on the existing role text. Reads only; writes nothing.
+function Get-SeatStatement {
+    [CmdletBinding()]
+    param([Parameter(Mandatory=$true)] [string]$Serial)
+
+    $result = @{ Text = $null; Reason = 'unknown failure' }
+    try {
+        $module = Join-Path $Global:AjbRepoRoot 'lib\seat_roles.py'
+        if ($Serial -notmatch '^[A-Za-z0-9._~-]+$') { $result.Reason = 'serial has characters outside A-Za-z0-9._~-'; return $result }
+        if (-not (Test-Path -LiteralPath $module)) { $result.Reason = 'lib/seat_roles.py not found'; return $result }
+        $py = Get-Command python -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $py) { $py = Get-Command py -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 }
+        if (-not $py) { $result.Reason = 'python not found on PATH'; return $result }
+        $psi = New-Object System.Diagnostics.ProcessStartInfo
+        $psi.FileName = $py.Source
+        $psi.Arguments = '"' + $module + '" statement ' + $Serial
+        $psi.WorkingDirectory = $Global:AjbRepoRoot
+        $psi.UseShellExecute = $false
+        $psi.CreateNoWindow = $true
+        $psi.RedirectStandardOutput = $true
+        $psi.RedirectStandardError = $true
+        $proc = [System.Diagnostics.Process]::Start($psi)
+        $outTask = $proc.StandardOutput.ReadToEndAsync()
+        $errTask = $proc.StandardError.ReadToEndAsync()
+        if (-not $proc.WaitForExit(20000)) {
+            try { $proc.Kill() } catch { }
+            $result.Reason = 'timed out after 20 s'
+            return $result
+        }
+        $out = ($outTask.Result).Trim()
+        $err = ($errTask.Result).Trim()
+        if ($proc.ExitCode -ne 0) {
+            $why = $err
+            if ($why.Length -gt 120) { $why = $why.Substring(0, 120) }
+            $result.Reason = "python exit $($proc.ExitCode): $why"
+            return $result
+        }
+        if (-not $out) { $result.Reason = 'python printed nothing'; return $result }
+        $result.Text = $out -replace "`r`n", "`n"
+        $result.Reason = ''
+        return $result
+    } catch {
+        $result.Text = $null
+        $result.Reason = "exception: $($_.Exception.Message)"
+        return $result
     }
 }
 
@@ -126,6 +180,10 @@ function ajb {
         # `claude --model` / `claude --effort`. Unset = claude's own default.
         [string]$Model,
         [string]$Effort,
+
+        # -PrintPrompt: print the assembled first message to standard output and return. Nothing
+        # after the assembly runs: no claude, no window or tab, no env var, no file written.
+        [switch]$PrintPrompt,
 
         [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
         [string[]]$Extra
@@ -160,7 +218,7 @@ function ajb {
     # `wt --title` at tab CREATION is the only mechanism that survives. Headless
     # spawns already get this from spawn-agent.ps1. Outside WT the in-tab OSC
     # path below still works. Escape hatch: $env:AJB_NO_WT_RELAUNCH = '1'.
-    if (-not $Headless -and $env:WT_SESSION -and $env:AJB_NO_WT_RELAUNCH -ne '1') {
+    if (-not $PrintPrompt -and -not $Headless -and $env:WT_SESSION -and $env:AJB_NO_WT_RELAUNCH -ne '1') {
         $wtCmd = Get-Command wt.exe -ErrorAction SilentlyContinue
         if ($wtCmd) {
             $ajbPath = Join-Path $Global:AjbRepoRoot '.tools\ajb.ps1'
@@ -189,10 +247,25 @@ function ajb {
     $watcherDirective = "FIRST: run /watcher to self-heal inbox-watcher + broker registration. THEN: org/XXX.md startup protocol."
     $loopDirective = Get-AgentLoopDirective $Serial
 
-    if ($Extra) {
-        $firstMessage = "$Serial $($Extra -join ' ')`n`n$watcherDirective`n`n$loopDirective"
+    # The seat's statement of what it IS (org/ref/SEAT_ROLES.json), after the watcher line and BEFORE the
+    # role text. Any failure: one loud line, and the launch proceeds on the existing text unchanged.
+    $statementBlock = ''
+    $stmt = Get-SeatStatement $Serial
+    if ($stmt.Text) {
+        $statementBlock = "$($stmt.Text)`n`n"
     } else {
-        $firstMessage = "$Serial`n`n$watcherDirective`n`n$loopDirective"
+        Write-Host "SEAT-ROLES: no statement for $Serial ($($stmt.Reason))" -ForegroundColor Red
+    }
+
+    if ($Extra) {
+        $firstMessage = "$Serial $($Extra -join ' ')`n`n$watcherDirective`n`n$statementBlock$loopDirective"
+    } else {
+        $firstMessage = "$Serial`n`n$watcherDirective`n`n$statementBlock$loopDirective"
+    }
+
+    if ($PrintPrompt) {
+        Write-Output $firstMessage
+        return
     }
 
     Write-Host "[ajb] launching $Serial in ajb_workspace ..." -ForegroundColor Cyan
