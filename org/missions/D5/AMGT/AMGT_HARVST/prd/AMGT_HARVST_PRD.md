@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.20",
+  "prd_version": "v0.21",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -449,6 +449,17 @@ act a seat can take on demand; none is a wait.
                     (config recurring_schedule_enabled false), exercised only
                     by an operator-started run on a per-use word, and nothing
                     is registered with the Windows scheduler (v0.20).
+         CONFIRMED  (v0.21) Andrew-direct 2026-10-08 ~16:4xZ at the
+                    1.0.0_SA_CTO~Z terminal: "daily news pull should be running
+                    nonstop effectively on this box." TWO of the three terms
+                    are now his: the host (this box) and a run nobody starts,
+                    which he words as running continuously, not once a day.
+                    The THIRD is still this fabric's reading and unconfirmed:
+                    which publishers. The run may be built to cycle
+                    continuously on this box at the collector's existing pace;
+                    it is switched on for a publisher only when he has named
+                    that publisher. Record:
+                    org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_164xZ_DAILY_NEWS_PULL_NONSTOP_ON_THIS_BOX.md
          ACCEPT     An analyst who opens a covered name on a trading morning
                     reads the prior trading day's articles wherever a cleared
                     publisher carried any, and can tell from the page's own

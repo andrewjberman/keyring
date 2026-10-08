@@ -1,0 +1,244 @@
+{
+ "schema": "open-calls/1",
+ "device": "sitez",
+ "written_at": "2026-10-08T16:59:23Z",
+ "written_by": "1.0.0_SA_CTO~Z",
+ "rows": [
+  {
+   "id": "sitez-20261008T165918Z-97ab",
+   "project": "AMGT_HARVST",
+   "subject": "Daily news pull: which publishers does the nonstop run on this box cover (Bloomberg.com, WSJ, Barron's, Seeking Alpha; FT out)?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_164xZ_DAILY_NEWS_PULL_NONSTOP_ON_THIS_BOX.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T16:59:18Z",
+   "scope": {
+    "measured_at": "2026-10-08T16:59:18Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of LGIC_ENFORCE placed on laptop (infra/logic/registry)",
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261008T165919Z-5a53",
+   "project": "ETFS_RIVALS",
+   "subject": "May the daily rivalfunds leg ask Bloomberg each morning for owed closing prices until the 365-day history is whole?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T16:59:19Z",
+   "scope": {
+    "measured_at": "2026-10-08T16:59:19Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/etfs-rivalfunds"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/etfs-rivalfunds-iam-1.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/etfs-rivalfunds-iam-1.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261008T165920Z-ce4b",
+   "project": "NFRA_OPLGTW",
+   "subject": "May merged worktrees on site Z be force-removed, deleting their untracked scratch files?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_OPEN_CALLS_ITEM_5_HIS_ITEMS_4_AND_6_EXPLAINED.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T16:59:20Z",
+   "scope": {
+    "measured_at": "2026-10-08T16:59:20Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261008T165921Z-35ce",
+   "project": "MDPF_SECHIST",
+   "subject": "Lift the no-modify order for etf_daily_pull.py (SH-t-4: the run record prints its draw), after the 2026-10-09 07:00 ET pull?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECHIST_SH_T4_SITEZ_DEPLOY_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T16:59:21Z",
+   "scope": {
+    "measured_at": "2026-10-08T16:59:21Z",
+    "paths": "clear",
+    "placement": "hit",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [
+      "project MDPF_SECHIST is placed on dell1, this box is sitez"
+     ],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261008T165922Z-faf8",
+   "project": "AMGT_HARVST",
+   "subject": "A Barron's sign-in: the saved session of 2026-09-30 is refused, 0 of 8 collected",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T16:59:22Z",
+   "scope": {
+    "measured_at": "2026-10-08T16:59:22Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of LGIC_ENFORCE placed on laptop (infra/logic/registry)",
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "sitez-20261008T165923Z-d299",
+   "project": "AMGT_CORPUS",
+   "subject": "Push portal candidate 1cbc56a75eee (citations, dossier line, term filter) to DEV?",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/missions/D5/AMGT/AMGT_CORPUS/ledger/CTO_REVIEW_PORTAL_636ce634_ROUND40.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T16:59:23Z",
+   "scope": {
+    "measured_at": "2026-10-08T16:59:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "portal/src/pages/SecurityAnalysis/modelSheet.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/SecurityAnalysis/__harness__/modelPattern.harness.cjs overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/SecurityAnalysis/types.ts overlaps the write set of IRPT_BCKEND placed on dell2 (portal)",
+      "portal/src/pages/SecurityAnalysis/components/StatTile.tsx overlaps the write set of IRPT_BCKEND placed on dell2 (portal)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/corpus/dossier.py is on the shared branch (lib)",
+      "lib/research/corpus/tests/test_dossier_slash_safe_round26.py is on the shared branch (lib)",
+      "lib/research/api/case_rule.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_case_rule_mixed_input_round26.py is on the shared branch (lib)",
+      "lib/research/corpus/induction_scheduled.py is on the shared branch (lib)",
+      "lib/research/corpus/tests/test_induction_schedule.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null
+  }
+ ]
+}
