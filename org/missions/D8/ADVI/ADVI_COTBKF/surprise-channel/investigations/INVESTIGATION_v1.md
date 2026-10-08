@@ -1965,3 +1965,28 @@ round.** Never edit an existing row.
   "world_is": "Most months holding a zero-Amount row stay blank for another reason (an unpriced holding, or 15,386 rows with no same-day price). The only months that become fully priced are 6, all lo/li (securities in or out of the account); the worked month is B3S703388 2025-09 (lo of 21 shares of 594918104 at 508.037384 = -10668.785065, UNGRADABLE -> DIFF computed 0.7664 vs reported 0.84). Also: the transactions cache (cache/transactions.parquet) has no Amount, so the returns script reads Account_Number, Trade_Date, Transaction_Type, Amount, Cusip, Quantity from S3 (read-only) as before."
 }
 ```
+
+## ADVI_COTBKF-D2-W35-S2 -- the start-of-day negative-base rule blanks days after a negative prior-day value that the end rule computes; the no-flow control holds only on the months graded under both
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W35-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~35",
+  "surfaced_at": "2026-10-07T23:36Z",
+  "one_line": "The order's start-of-day rule (zero or negative base stays ZERO_BASE) blanks 26,903 days that the end rule computes, all after a NEGATIVE prior-day value, so 416 no-flow months graded under end are blank under start and the control 'every no-flow month grades identically' holds only on the months graded under both",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "start run: ZERO_BASE 29,668 account-days against 2,578 under end; 27,112 days computed under end and ZERO_BASE under start, of which 25,499 have flow 0 and 26,903 have prev < 0 (209 have prev > 0 with a large outflow); account_day_value.parquet carries 27,672 negative values over 637 accounts",
+      "graded months: end 4,237, start 3,614, both 3,613, end only 624 (208 flow, 416 no-flow, 291 MATCH under end), start only 1; commonwealth_flow_timing.py prints these as excluded_graded_one_side_only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-2 item 1 and AC2: start of day is value_t / (value_(t-1) + flow_t) - 1 with a zero or negative base ZERO_BASE, and the no-flow control grades identically under both timings (control_same=True).",
+  "world_is": "The end rule blanks only value_(t-1) == 0, so an account whose prior-day value is negative (an overdrawn cash line, a short position) gets a computed return under end (flat -498.20 reads 0.0) and a blank under start. The two conventions are the same formula on a no-flow day, so the gap is the base rule, not the timing. The script compares the months graded under BOTH (control_same=True over 2,676 months) and states the 624 excluded months in flow_timing.md; whether a negative base should be blank under end too (which would move the round 16 grade, 4,237 months, by about 624) is a ruling for the CTO, not made here. The default FLOW_TIMING stays end."
+}
+```
