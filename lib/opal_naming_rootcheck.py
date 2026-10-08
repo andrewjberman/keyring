@@ -6,7 +6,8 @@
     python lib/opal_naming_rootcheck.py lines ROOT --map PATH     (the run checks its own lines)
 
 Kinds, decided by the first test that applies: PATTERN (before CARDED: a variable segment is a pattern, not a name),
-a stored-file key the registry's key_rulings.json answers by (bucket, key) (tested before the card: FIX or RIGHT on its
+a stored-file key the registry's key_rulings.json answers by (bucket, key), by a per-firm variable or by the declaring
+file (declared_in), and a name its name_rulings.json answers by (name, type) (tested before the card: FIX or RIGHT on its
 canonical address, NOT-ASKED when none is owed),
 CARDED (a card that names a correct name, or says none is owed; a card that does neither prints HOLE), REFUSED (a key
 a path word or a bucket ties to another firm: says what was measured and what the reader does; counted, never a blank,
@@ -86,9 +87,38 @@ def load_key_rulings(path=None):
         if bool(r.get("bucket")) == per or (per and not (r.get("bucket_per") == "firm" and r.get("bucket_from"))):
             raise ValueError("key ruling %r carries not exactly one of bucket and (bucket_per 'firm' with bucket_from)" % (
                 r.get("key"),))
+        di = r.get("declared_in")
+        if di is not None and not (isinstance(di, list) and di and all(isinstance(x, str) and x for x in di)):
+            raise ValueError("key ruling %r/%r: declared_in is not a non-empty list of file paths" % (r.get("bucket"), r.get("key")))
+        fl = r.get("fills")
+        if fl is not None and not (isinstance(fl, dict) and all(isinstance(v, str) and v.strip() for v in fl.values())):
+            raise ValueError("key ruling %r/%r: fills is not an object of plain sentences" % (r.get("bucket"), r.get("key")))
         k = ("per:" + r["bucket_from"], r.get("key")) if per else (r.get("bucket"), r.get("key"))
         if k in out:
             raise ValueError("two key rulings for %r" % (k,))
+        out[k] = r
+    return out
+
+
+NAME_RULINGS_FILE = "name_rulings.json"
+
+
+def load_name_rulings(path=None):
+    """{(name, type): row} from the registry's name rulings file. Each row carries exactly one of `canonical` and
+    `none_owed`; a second row for one (name, type) is an error."""
+    path = path or os.path.join(opal_naming.REGISTRY_DIR, NAME_RULINGS_FILE)
+    with open(path, "rb") as fh:
+        doc = json.loads(fh.read().decode("utf-8"))
+    out = {}
+    for r in doc.get("name_rulings") or []:
+        if bool(r.get("canonical")) == bool(r.get("none_owed")):
+            raise ValueError("name ruling %r/%r carries not exactly one of canonical and none_owed" % (
+                r.get("name"), r.get("type")))
+        k = (r.get("name"), r.get("type"))
+        if not k[0] or not k[1]:
+            raise ValueError("name ruling %r carries no name or no type" % (r,))
+        if k in out:
+            raise ValueError("two name rulings for %r" % (k,))
         out[k] = r
     return out
 
@@ -124,7 +154,8 @@ def named_in_source(item, asked, text=None):
 def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     """(row or None, unread reason or None) for a stored-file item. A PER-FIRM row (bucket_per, bucket_from) is matched first:
     its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
-    runtime_bucket). Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
+    runtime_bucket). Then a row with `declared_in`: its key equals the item's key AND the file that declares the item (the
+    file part of its `where`) is one of declared_in; no bucket is read. Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
     reads. An item whose bucket is not read matches no row; the reason says the bucket is chosen at run time and names the
     variable when its file shows one, else says it was not read, but only when some row carries the item's key under a
     bucket (otherwise there is nothing the bucket would have decided)."""
@@ -136,6 +167,10 @@ def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     names = sorted(set(names) | set(named_in_source(item, asked)))
     for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
         if row.get("bucket_per") and k == item["current"] and row["bucket_from"] in names:
+            return row, None
+    where_file = str(item.get("where") or "").replace("\\", "/").rsplit(":", 1)[0]
+    for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
+        if row.get("declared_in") and k == item["current"] and where_file in row["declared_in"]:
             return row, None
     if not rulings:
         return None, None
@@ -154,11 +189,32 @@ def _is_per_firm(row):
     return bool(row) and bool(row.get("bucket_per"))
 
 
-def stray_braces(text, per_firm=False):
-    """True when `text` carries a brace. A per-firm answer's {scope} is the one brace admitted."""
+def stray_braces(text, per_firm=False, places=()):
+    """True when `text` carries a brace. A per-firm answer's {scope} is admitted, and so is each open place in `places`
+    (the places a key ruling's `fills` explains)."""
     if per_firm:
         text = text.replace("{scope}", "")
+    for p in places:
+        text = text.replace("{%s}" % (p,), "")
     return "{" in text or "}" in text
+
+
+_PLACE_RE = re.compile(r"\{([^{}]*)\}")
+
+
+def admitted_places(row):
+    """The open places of a key ruling's canonical that its `fills` explains: every place of the canonical has an entry in
+    fills and fills names no place the canonical lacks. () for a per-firm row (unchanged), a row with no canonical, a row
+    with no open place, no fills, or any mismatch."""
+    if not row or _is_per_firm(row) or not row.get("canonical") or not isinstance(row.get("fills"), dict):
+        return ()
+    order = []
+    for p in _PLACE_RE.findall(row["canonical"]):
+        if p not in order:
+            order.append(p)
+    if not order or set(order) != set(row["fills"]):
+        return ()
+    return tuple(order)
 
 
 def _ruling_line(item, row):
@@ -169,9 +225,20 @@ def _ruling_line(item, row):
                            "per firm, so the firm is the one whose bucket is being served)" % (row["canonical"], row["bucket_from"]))
         if row["canonical"] == item["current"]:
             return "RIGHT", row["canonical"]
+        places = admitted_places(row)
+        if places:
+            return "FIX", "%s (each open place is filled where the code holds it: %s)" % (
+                row["canonical"], "; ".join("{%s}: %s" % (p, str(row["fills"][p]).strip().rstrip(".")) for p in places))
         return "FIX", row["canonical"]
     return "NOT-ASKED", "no name is owed for this stored file: %s; no rename is owed" % (
         str(row["none_owed"]).strip().rstrip("."),)
+
+
+def _name_ruling_line(item, row):
+    """(kind, detail) of a name (a bucket, a group, a secret) the name rulings answer: the whole correct name, or none owed."""
+    if row.get("canonical"):
+        return ("RIGHT", row["canonical"]) if row["canonical"] == item["current"] else ("FIX", row["canonical"])
+    return "NOT-ASKED", "%s; no rename is owed" % (str(row["none_owed"]).strip().rstrip("."),)
 
 
 def _card_for(card_rows, item):
@@ -280,7 +347,8 @@ def decide(item, ans, fourth=None):
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
     resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, plus verdict_for()'s carried,
     agrees and canonical, or None), policy (policyrole's row of this declaration or None), card (the card row or None),
-    key_ruling (the key_rulings.json row matched on (bucket, key) or None), ruling_unread (why no row was matched: the bucket was not read)."""
+    key_ruling (the key_rulings.json row matched on (bucket, key), per firm, or declared_in, or None),
+    name_ruling (the name_rulings.json row matched on (name, type) or None; tested after the key ruling, before the card), ruling_unread (why no row was matched: the bucket was not read)."""
     fourth = fourth or _schema_fourth()
     cur, typ = item["current"], item["type"]
     key = ans.get("key")
@@ -290,9 +358,11 @@ def decide(item, ans, fourth=None):
         return "PATTERN", "a code pattern, not a name; variable %r" % (what,)
     if ans.get("key_ruling"):
         kind, detail = _ruling_line(item, ans["key_ruling"])
-        if kind == "FIX" and stray_braces(detail, _is_per_firm(ans["key_ruling"])):
+        if kind == "FIX" and stray_braces(detail, _is_per_firm(ans["key_ruling"]), admitted_places(ans["key_ruling"])):
             return "HOLE", "partial form %s; a brace remains that no per-firm answer admits" % (detail,)
         return kind, detail
+    if ans.get("name_ruling"):
+        return _name_ruling_line(item, ans["name_ruling"])
     if ans.get("carded"):
         kind, detail = _card_line(item, ans.get("card"))
         if ans.get("ruling_unread"):
@@ -373,9 +443,11 @@ def map_key(root):
     return r[len(_TF_PREFIX):] if r.startswith(_TF_PREFIX) else r
 
 
-def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None):
+def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None,
+               name_rulings=None):
     root = _TF_PREFIX + map_key(root)
     rulings = load_key_rulings() if key_rulings is None else key_rulings
+    nrulings = load_name_rulings() if name_rulings is None else name_rulings
     items, _stats = opal_naming_scope.root_items(root, map_path)
     if not_judged is None:
         card_rows = load_card_rows()
@@ -405,6 +477,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
                "fills": None if entry is None else entry.get("fills"),
                "resolved": None}
         ans["key_ruling"], ans["ruling_unread"] = _ruling_of(it, rulings)
+        ans["name_ruling"] = nrulings.get((it["current"], it["type"]))
         pol = ans["policy"]
         ans["resolved"] = opal_naming_rootmap.resolve(doc, name, it["current"], it["type"],
                                                       role=None if pol is None else pol.get("role_name"))
@@ -488,7 +561,8 @@ def lines_check(root, map_path, out=print):
             bad.append("a rule code in: " + line)
         if kind == "NOT-ASKED" and "rename" not in line:
             bad.append("a NOT-ASKED line without 'rename': " + line)
-        if kind == "FIX" and stray_braces(detail, _is_per_firm(_ans.get("key_ruling"))):
+        if kind == "FIX" and stray_braces(detail, _is_per_firm(_ans.get("key_ruling")),
+                                          admitted_places(_ans.get("key_ruling"))):
             bad.append("a FIX line carries a brace: " + line)
         if kind == "FIX":
             targets.setdefault((it["type"], detail), set()).add(it["current"])
