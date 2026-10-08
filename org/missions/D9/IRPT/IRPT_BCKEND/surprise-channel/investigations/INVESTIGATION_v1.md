@@ -21653,3 +21653,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It answers with a different public reason code: release 2 raises the coded InputAccessDenied where release 1 raised a bare PermissionError. No write occurs on either, so no exposure; the code moves from UNEXPECTED to NOT_AUTHORIZED. Recorded as read 7 FAIL because 'as before' was not met to the letter."
 }
 ```
+
+## IRPT_BCKEND-D2-W181-S1 -- irpt-export-render's role, as Terraform declares it, holds no write on the retained-report index or the custod
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-export-render's role, as Terraform declares it, holds no write on the retained-report index or the custody-report prefix and no read of the request-composition prefix, so the guarded custody persist fails closed (nothing written) until an IAM change that this cell is barred from making ships beside the function and the route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/b1_submit.tf@9238309eca: dynamodb is GetItem only on the requests table (ReadRetainedReportIndexInServedFirmPartitions); s3:GetObject/GetObjectVersion only on the PERFORMANCE family prefix of the reporting bucket (b1_report_prefixes, families[PERFORMANCE]); no dynamodb:PutItem or UpdateItem and no s3:PutObject on the reporting bucket in b1_submit.tf, iam.tf or b2_render.tf (the only PutObject statements are the evidence-bucket generations/exports prefixes)",
+      "comp-iam service irpt-export-render (this session): statements 1, 3 and 4 as above, 24 statements, none granting the table write that retention.reserve/index.publish (conditional put_item) and ReportRepository.persist need, nor the S3 read of state/request_compositions that artifacts.get needs for the retained request",
+      "infra/aws/lambda/investor-reporting/reports/repository.py DynamoReportIndex.publish and retention.py DynamoRetentionIndex.publish call table.put_item; export/custody_persist.py loads the retained request through ports['artifacts'] (ArtifactRepository.get -> blobs.get)",
+      "Declared state only: the LIVE role policy was not read (raw aws IAM inspection is routed to comp-iam, which prints the declared statements); the same gap already holds for custody-report-read's blob read (CUSTODY_REPORT is not the PERFORMANCE prefix)"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 1/6: the persist is reachable through the guarded Entry (a DECLARED route row and an operation) and the packet carries the two after-reads (an Opal custody-report-read by reference returns the report; another firm gets OBJECT_NOT_COVERED); BOUNDS: no IAM, bucket, table, principal or Terraform change.",
+  "world_is": "The code, route row and registry are complete and tested offline, and every release arm passes against the built zip, but the live role cannot perform the writes or the request read the operation makes, so the persist (and the first after-read) would answer a dependency refusal until a role statement (dynamodb:PutItem/UpdateItem on the requests table scoped to the served firms, s3:PutObject/GetObject and kms on the custody_reports and request_compositions prefixes) is applied. It fails closed: the first write the repository makes is the retention row (a conditional put_item), so a refused put leaves nothing served. The IAM change belongs to a later release order with its own sign-off; the packet states it as a precondition of Branch A's after-reads."
+}
+```
+
+## IRPT_BCKEND-D2-W181-S2 -- The persisted document is the one caller-supplied value: the owner, accounts, request identity and source evid
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The persisted document is the one caller-supplied value: the owner, accounts, request identity and source evidence are all derived from the retained request, but the report's content comes from the body of a verified Opal operator and is not recomputed or checked against the request, and the report record names the retained request's creator, not who persisted it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_persist.py@d34a46f37d: _request() takes document and provenance from the body; custody_report_persist() passes the document to custody_write.persist_custody_report unchanged after the as_of_date check; the retained request (a frozen irpt-analysis-composition.v1) carries the INPUTS of the custody report (snapshot, accounts, recipe), not its computed sections",
+      "infra/aws/lambda/investor-reporting/reports/repository.py persist(): the record stores owner (the retained request's), request_ref and provenance; no persisting-principal field; reports/custody_write.py _check_document only requires a calendar as_of_date (no custody document schema is published, export/submit_installed.py _validate)",
+      "export/tests/test_custody_writer_composed.py::test_derived_owner_content_naming_another_owner_changes_nothing: a document that names another owner or accounts is stored as content, and the row's owner stays the retained request's"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 2: the owner and the account set come from server-held state, never from a field the caller sends; the request names WHICH retained request to persist, by reference.",
+  "world_is": "Owner, accounts and evidence are server-derived as ordered. The report body is not derivable from the retained request inside this function (the render that computes the sections is IRPT_CUSTDY's producer, E2a), so it arrives in the body; its integrity rests on the caller being a verified Opal operator whose current scope covers every account of the request, the same authority that reads the report. This is inert today (no route applied, no caller). The CTO may rule whether E2a should bind the document to the request (a content hash inside the retained request, or a server-side render) before the route is applied; the persister's identity is recoverable only from the Lambda log line and CloudTrail, not from the retained record, because adding it to the provenance would make an idempotent retry by a second operator a new revision."
+}
+```
+
+## IRPT_BCKEND-D2-W181-S3 -- docs/contracts/investor-reporting/v1/routes.json's _denominator block (declared 19, total 21) already disagree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "docs/contracts/investor-reporting/v1/routes.json's _denominator block (declared 19, total 21) already disagreed with its rows (20 DECLARED + 2 ROUTED_ELSEWHERE = 22) before this cell, and the new custody-report-persist row makes it 21 + 2 = 23; the block is named as the denominator the replay battery reads and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json@9238309eca: json status counts DECLARED 21, ROUTED_ELSEWHERE 2 (23 rows); _denominator.declared 19, routed_elsewhere 2, total 21",
+      "docs/contracts/investor-reporting/v1/routes.json@3fd3179217 (before this cell): DECLARED 20, ROUTED_ELSEWHERE 2 (22 rows) against the same _denominator 19/2/21; the IB-pr-355 row (cf6839fe38) added a DECLARED route without moving the block",
+      "no test reads _denominator: _authz/tests/test_unguarded_census.py, test_guarded_entries.py and the export suite (303 passed, 2 skipped) pass with the stale block"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 1: add the route row to routes.json (status DECLARED); nothing is applied here.",
+  "world_is": "The row is added in the same shape as the IB-pr-355 row; the descriptive counts in _denominator were already stale and were left as found (editing a frozen v1 description block is not in this order). A later cell that owns the route inventory should re-derive the counts from the rows."
+}
+```
