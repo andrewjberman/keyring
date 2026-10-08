@@ -2900,3 +2900,84 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
 }
 ```
+
+## NFRA_CTLPLN-W13-S25 -- TO-CT-s-3: the block cannot sit after the halt gate and also let --dry-seat-gates exit before it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S25",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T00:45:30Z",
+  "one_line": "The order asks for ONE block per wrapper placed after the halt gate, and for a --dry-seat-gates path that exits BEFORE the halt gate's side effects; one contiguous block cannot be both after and before the same line, so I placed it before the halt gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-apply.sh at 8f761307bf: the halt gate runs at 'halt_gate_check \"safe-apply\" || exit $?' and a pending routine message makes it return 1, so a test that reached it could not exit 0 deterministically; .tools/safe-deploy.sh at 8f761307bf has the same call at 'halt_gate_check \"safe-deploy\" || exit $?'",
+      "precedent in the same two files: the named-commit check (CT-d-3) sits before the halt gate and exits there under SAFE_NAMED_COMMIT_CHECK_ONLY=1 (.tools/tests/test_named_commit_deploy.py case 8 relies on it)",
+      "the block is read-only and runs in a subshell, so the order of the two stages changes nothing but which line prints first; the serial is resolved with .tools/lib/resolve-actor.sh resolve_actor (the helper the existing TAGAUTHZ limb uses), because the halt gate's own halt_gate_resolve_serial is defined by sourcing the library that comes after the block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 BUILD 4: one added block each in .tools/safe-apply.sh and .tools/safe-deploy.sh, placed after the halt gate and before the apply; the worker note: --dry-seat-gates exits BEFORE the halt gate's side effects.",
+  "world_is": "Both cannot hold for one block. I put the block immediately after the named-commit check and before the halt gate in both wrappers; in ENFORCE a refusal therefore prints before a halt-gate STOP would, and in WARN mode nothing about the exit code or flow differs (proved by running the pinned original and the new wrapper side by side, same rc and same output once the block's lines are removed).",
+  "notes": "For 2.0.0_SA_COO~C: if the intent is that a halted seat sees the halt gate first, the dry path would need a second small edit (an early exit before the gate), which the one-block rule forbids; say which order you want and a later cell can move the block."
+}
+```
+
+## NFRA_CTLPLN-W13-S26 -- TO-CT-s-3: REFUSING a WORKER contradicts the halt gate's and the commit lane's explicit worker grants
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T00:45:40Z",
+  "one_line": "The order's rule refuses a WORKER from applying, but .tools/halt-gate-check.sh was changed on 2026-09-04 precisely so that an L7 worker CAN safe-apply and safe-ec2-deploy, and CLAUDE.md rule 13 and the /cloud-ops skill never say who may apply by seat kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/halt-gate-check.sh lines 177-181: 'SPINE v3 WORKER (2026-09-04) ... no L7 worker could safe-apply or safe-ec2-deploy; the commit lane learned about workers at e08447ff7d and this gate did not. A worker is a REAL principal iff a NON-TERMINAL task order under <CODE> at HEAD is issued_to it'",
+      "CLAUDE.md rule 13 names lanes, not seat kinds: 'DS owns commit->QA-deploy for data/*/scripts/{gold,silver,bronze}/*.py ... DT/AE = infra/PROD-triggers/multi-pipeline'; .claude/skills/cloud-ops/SKILL.md lines 207 and 242 say 'AE coordinates with DS but DS owns the cycle'; neither mentions WORKER, COO, CTO, CVO, CRO or MSTR as applying or not applying",
+      "apply-who-check.py (this cell) refuses WORKER as the order directs; shipped in WARN mode, so nothing is refused today: on this box the worker serial 0.9.0_WK_NFRA_CTLPLN~13 reads kind=WORKER verdict=REFUSED and the wrapper only prints it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 BUILD 1: an apply is made by a CLOUDOPS seat or a TIER2 seat under a task order; MSTR, CTO, COO, CVO, CRO and WORKER are REFUSED.",
+  "world_is": "The estate's halt gate already admits a worker holding a non-terminal task order to safe-apply and safe-deploy. I implemented the order's rule unchanged and reported the conflict instead of resolving it. If org/mcp/seat-gates.enforce is ever created, every worker deploy that today passes the halt gate would be refused by this check unless SEAT_GATES_OVERRIDE is given.",
+  "notes": "For 2.0.0_SA_COO~C and 1.0.0_SA_CTO: decide before the enforce file is created whether a WORKER under a task order is admitted (one line in apply-who-check.py's ADMIT_UNDER_ORDER) or whether workers stop applying and the issuer's CloudOps seat applies. The enforce file is a person's act; this cell did not create it."
+}
+```
+
+## NFRA_CTLPLN-W13-S27 -- TO-CT-s-3: two existing tests that touch the wrappers were already red or over the bound before this cell's edit
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T00:45:50Z",
+  "one_line": "Before any edit of mine, .tools/test_safe_deploy.py ended 'FAIL: 7/14 cases failed' (EXCEPTION: Strings must be encoded before hashing) and .tools/hooks/tests/test_never_rules_gate.sh hit the 120 s bound (rc 124); both gave the same results after my edit, so they are not caused by it and I fixed neither.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "baseline at 8f761307bf before any edit: timeout 120 python .tools/test_safe_deploy.py -> rc=1, last line 'FAIL: 7/14 cases failed'; after the edit the same command -> rc=1, same last line",
+      "baseline: timeout 120 bash .tools/hooks/tests/test_never_rules_gate.sh -> rc=124 with FAIL lines for 'git rebase -i', 'git rebase (bare)', 'git pull --rebase'; after the edit -> rc=124 again",
+      "the other four wrapper-related tests were green before and after: test_safe_apply_targeted.sh RESULT: PASS; test_named_commit_deploy.py NAMED-COMMIT-TEST cases=8/8 ok=True; test-pre-push-safe-deploy.sh 13 passed, 0 failed; test_safe_deploy_distribution_member.py 9/9; test_safe_deploy_receipt_names_both_legs.py 4/4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 BUILD 4: every existing self-test or test of the two wrappers still passes (find and run them).",
+  "world_is": "Two of the seven tests found already did not pass before the edit (one fails with 'Strings must be encoded before hashing' on this interpreter, one does not finish in 120 s). The criterion 'still passes' is therefore true of five and 'unchanged' is true of all seven.",
+  "notes": "For 2.0.0_SA_COO~C: route to the tooling lane; not this cell's paths."
+}
+```
