@@ -4477,3 +4477,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: one line in each order -- point <decomp_ref><decomp_doc> at NFRA_CTLPLN_DECOMP.access1.md (where CT-a-1 is), or add the CT-a cells to round4.md if that is where the issuer intends them to live. Either resolves it; the applier cannot choose between them, since which decomp a cell belongs to is the issuer's statement about its own decomposition. This seat's TO-APPLY-12 instance is left faithful to the order as written, with the single violation and its cause recorded in the instance itself."
 }
 ```
+
+## NFRA_CTLPLN-W36-S1 -- Python cannot start Git Bash by the name 'bash' on this device; the reproducibility test resolves it through .tools/git_bash_resolver.py
+
+```json
+{
+  "id": "NFRA_CTLPLN-W36-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~36",
+  "surfaced_at": "2026-10-08T10:05Z",
+  "one_line": "Python cannot start the Git Bash that build.sh needs by the name 'bash': on this device that name is the WSL stub, so the reproducibility test resolves Git Bash through .tools/git_bash_resolver.py",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First run of tests/test_build_reproducible.py with subprocess.run(['bash', build.sh]) printed '<3>WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed: No such file or directory' and rc=1 (worktree C:/tmp/wk-ctlpln-36, 2026-10-08 ~09:5xZ).",
+      "The same class is documented in the header of .tools/git_bash_resolver.py ('a python subprocess invoking bare bash gets the System32 WSL stub'); after importing git_bash() from it the test ran and printed PACKAGE-REPRODUCIBLE ok=True."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: the test 'runs the real build.sh twice ... against two temporary copies of the build's INPUTS' and names no way to start bash from Python.",
+  "world_is": "A bare 'bash' from a Python subprocess is the WSL stub on this device, so the test imports git_bash() from .tools/git_bash_resolver.py by a path relative to the repository root (found from the test's own location, no absolute path baked). The test therefore depends on that helper.",
+  "notes": "Form only: the test file is inside the cell's <paths>; the helper is read, not edited."
+}
+```
+
+## NFRA_CTLPLN-W36-S2 -- transcripts-pull/build.sh has the same line-ending dependence (read), and the shared tree's two CRLF registry files do not show in git status
+
+```json
+{
+  "id": "NFRA_CTLPLN-W36-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~36",
+  "surfaced_at": "2026-10-08T10:05Z",
+  "one_line": "transcripts-pull/build.sh packages infra/logic/registry/*.json by the same cp-then-zip pattern with no line-ending normalisation, so it carries the same defect as the Teams agent's package; and the shared tree's two CRLF registry files are invisible to git status",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "READ, not exercised: infra/aws/lambda/transcripts-pull/build.sh lines 20-34 copy '$REPO'/infra/logic/registry/*.json into dist/pkg and zip the bytes as read; no CRLF-to-LF step. The measured Teams-agent build (PACKAGE_LINE_ENDINGS_MEASURED.md in this worker's deliverables) gave 61858efddc4f with the shared tree's two CRLF registry files and 42659e79f3f8 without, under the old script.",
+      "MEASURED in the shared tree (C:/Users/AndrewBerman/Desktop/ajb_workspace, HEAD 9431eb0e57): git ls-files --eol shows w/crlf for infra/logic/registry/remediations.json and scopes.json against i/lf; git hash-object --no-filters gives 5a17b3a317... and 08abb888a6..., not the index blobs 0f40e0683e... and d0f83d17db...; yet 'git status --short -- infra/logic/registry' prints nothing for them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's preflight names the transcripts-pull package, built by another script, as possibly carrying the same defect, to be named in the report if seen.",
+  "world_is": "The pattern is present in transcripts-pull/build.sh (read only; not built, not changed). Whether its two functions' deployed hash already differs from an LF build is not measured here. The CRLF working copies in the shared tree stay until someone rewrites them; no tool shows them as modified.",
+  "notes": "Out of this cell's paths and not widened. A cell on transcripts-pull/build.sh would apply the same packaging-step change; the choice to cut it is the COO's."
+}
+```
