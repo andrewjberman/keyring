@@ -112,9 +112,25 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~110's queue, after `bh-9`. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL
   as expected (no such file); AC3 base PASS as expected (460 passed).
 
+**AMENDMENT 2 + COMPLETE 2026-10-08 ~04:2xZ (issuer; `1.0.0_SA_CTO~Z` ruling A, msg 31568; no gate limb graded the amendment):**
+- **Built:** worker ~110 (re-seated) @66873bfe98; merged @38ffb95329 (7 paths, index check 0 of 7 differ).
+- **AC2 as cut reads CENSUS FAIL: GRADED HEICO PAIRS KEPT is 0 of 2.** The cell was cut to measure exactly that. The ruling: HEI
+  is under the rule; the bar becomes "Hawaiian Electric dropped 1 of 1, the HEICO pairs lost are exactly the two named, other
+  securities changed 0 of 242". On that bar the census is whole.
+- **Census over 19,137 articles:** 43 articles carry an exact-case `HEI` span; 40 name HEICO and are kept; `HEI_US_Equity` pairs
+  44 to 41. Dropped: sa:4412260 (Hawaiian Electric) and the two bare aerospace ticker lists sa:3584086 and sa:3685322, in which
+  nine whole-article searches for HEICO's name, class-A symbol or units read 0. **Those two are TRUE PAIRS LOST by name** in
+  the next rebuild's pair, beside BP's two (four in all). Pairs kept only by the symbol anchor `HEI.A`: 0.
+- **AC1 PASS:** 17 of 17. **AC3 PASS:** 491 on the branch; the issuer's drain check is in this close's commit message.
+- **AMENDMENT 1 landed:** the `CSLLY` row's source ends "evidenced by article spans only -- not in the pool (302 records), the
+  identity registry (72) or the collector's identity record (234), read 2026-10-08"; `HEI.A` carries the same sentence.
+- **Existing assertion changed (1):** `test_bh3_ticker_second_anchor.py::test_viii_the_shipped_entry_is_the_one_csl_entry` now
+  expects the two keys. **Row Z-W110-S6:** answered by the ruling. **OWED by `3.0.0_SA_CVO~Z`:** the read of the two lost pairs.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>63</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>
