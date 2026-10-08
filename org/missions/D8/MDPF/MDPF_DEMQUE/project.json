@@ -22,8 +22,20 @@
   "description": "Andrew-direct 2026-10-08 ~19:3xZ at the 0.0.0_AB_MSTR~DELL1 terminal (record @cf7005c305): 'each CRO on those fabrics is writing a brief/analysis about what is effectively a backfill data queue project ... All of this needs to get wrapped up into a registered project which will be run on this device.' Briefs: site Z org-wide docs/briefs/bbg-backfill-demand-queue-brief-20261008.md @91f5c90ec2; dell2 Cottonwood research @e112184d3b. Absorbs the Yahoo price backfill (Andrew ~19:1xZ, @489e1cd24c); MDPF_SECHIST keeps the Bloomberg pull and supplies its price-need file. Endpoint ratified ~22:4xZ: priority production (incl. ETF Positioning) > current clients + onboarding > Rival Funds on BBG in small daily jobs > research > former clients; meters Bloomberg and Yahoo only.",
   "brief_ref": "docs/briefs/bbg-backfill-demand-queue-brief-20261008.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
-  "prds": [],
-  "prd_lineage": [],
+  "prds": [
+    {
+      "path": "org/missions/D8/MDPF/MDPF_DEMQUE/prd/MDPF_DEMQUE_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1"
+    }
+  ],
   "decompositions": [],
   "decomposition_lineage": [],
   "leads": {
