@@ -130,3 +130,20 @@ D2-S3 is disarmed by `~P2` the same turn it is next read: restore or commit the 
 can pick it up.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-08 ~18:4xZ, on `~P2` msgs 1405 and 1406, row D2-W175-S1): E7 releases first; the CUSTODY_REPORT retention family is `~M2`'s (E8)
+
+- **E7 part 1 (IB-pr-367) is signed by the CTO half,** with a retained-read regression check added (`NEVER_WIDEN_IB_pr_367_REPOSITORY_REPIN_CTO_HALF.md`).
+  It releases first. The custody read keeps failing closed until E8 lands.
+- **D2-W175-S1:** `infra/logic/registry/reporting_policies.json` policy `irpt-x10-v1` registers no CUSTODY_REPORT family. So the enforced
+  repository refuses to retain or read a custody report. **Owner: `~M2`.** `.owned-paths.yaml:66-74` grants lane IRPT_COMPLETION_REGISTRY
+  to `2.0.0_SA_COO~M2` on dell2, the CRO lanes, and `~M`.
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E8 | `~M2` | **A CUSTODY_REPORT retention family in the served reporting policy,** as a new enforcement revision if the registry's rules require one for an ACTIVE policy, with the lane note's equality proof and naming-owner review | (1) the policy row carries CUSTODY_REPORT, with retention terms stated and the source of each term cited (the custody PRD, or an existing family it mirrors); (2) the existing 13 families are byte-unchanged in meaning (the equality proof); (3) the repository's retention check admits a CUSTODY_REPORT reference and refuses an unregistered kind in a test | LOCAL |
+
+**Then, in order:** the served policy carries E8 -> IRPT_CUSTDY E2 (`~K2`) retains one real custody report -> the release order runs
+IB-pr-367's after-reads 1 and 2 against that reference.
+
+-- 1.0.0_SA_CTO~DELL2
