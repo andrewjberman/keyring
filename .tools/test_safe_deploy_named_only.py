@@ -48,10 +48,31 @@ def test_unnamed_artifacts_are_reported_not_shipped():
     assert sdc.unnamed_artifacts_for([C06], [C06]) == list(ARTIFACTS)
 
 
-def test_an_artifact_named_alone_ships_to_every_declaring_layer():
-    """The artifact's OWN deploy (no script named): ships to each layer that declares it, each target listed."""
-    rows = sdc.shipped_artifacts_for([SCHED])
-    assert rows == [(SCHED, BD_BUCKET, KEY), (SCHED, COT_BUCKET, KEY)]
+def test_an_artifact_named_alone_ships_nowhere_and_is_unrouted():
+    """CTO msg 107175: an artifact-only deploy with no tree named ships NOWHERE and names its declaring trees."""
+    assert sdc.shipped_artifacts_for([SCHED]) == []
+    unrouted = sdc.unrouted_artifacts_for([SCHED])
+    assert list(unrouted) == [SCHED]
+    assert len(unrouted[SCHED]) == 2   # both firm trees declare it today
+
+
+def test_tree_flag_routes_an_artifact_only_deploy_to_that_tree_only():
+    bd_name = next(k for k, v in sdc.CODE_TREES.items() if v is _BD)
+    assert sdc.shipped_artifacts_for([SCHED], (bd_name,)) == [(SCHED, BD_BUCKET, KEY)]
+    assert sdc.unrouted_artifacts_for([SCHED], (bd_name,)) == {}
+
+
+def test_explicit_artifact_only_deploy_is_refused_end_to_end(monkeypatch, capsys):
+    """main() with only the artifact named: rc 2, the refusal line, and NO upload attempted."""
+    def _no_upload(*_a, **_k):
+        raise AssertionError("an upload was attempted")
+    monkeypatch.setattr(sdc, "deploy_file", _no_upload)
+    monkeypatch.setattr(sdc, "mint_bundle", _no_upload)
+    rc = sdc.main(["--no-pipescript", SCHED])
+    out = capsys.readouterr().out
+    assert rc == 2
+    assert "REFUSED-ARTIFACT" in out and SCHED in out
+    assert "nothing was deployed" in out
 
 
 def test_bd_deploy_naming_the_artifact_never_ships_it_to_cot():
