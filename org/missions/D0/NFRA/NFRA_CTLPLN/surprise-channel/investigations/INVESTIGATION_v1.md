@@ -4005,3 +4005,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: the cheap fix is to write --out <a path outside tests/> into the order's step 2 and into AC2's invocation, or to give the census a --no-save flag. The sharper question is for the checks' owner: an acceptance check whose verdict depends on a fixture being STALE will read ok=True only until someone refreshes it, and the refresh is itself a step of the same order."
 }
 ```
+
+## NFRA_CTLPLN-W6-S16 -- TO-CT-e-3 amendment 3: the signing-line rule of item 2(b) makes the seam test's stand-in signature fail check 8, so test_intake_seam.py reads ok=False
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T05:37:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W6-S16",
+  "one_line": "TO-CT-e-3 amendment 3: the signing-line rule of item 2(b) makes the seam test's stand-in signature fail check 8, so test_intake_seam.py reads ok=False",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_seam.py line 112 writes the stand-in signature as 'batch <b>\\nfile <f>\\nsigned for the seam run only\\n' with no signing line",
+      "timeout 120 python org/devices/intake/test_intake_seam.py (before my edit) -> 'INTAKE-SEAM-TEST stages=6 negative_arms=3/3 index_requests=4 ok=True'; (after) -> 'check ... c8=failed verdict=not_checked' then 'INTAKE-SEAM-TEST stages=1 negative_arms=0/3 index_requests=4 ok=False'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3 item 2(b) requires a signature file to carry a signing line; item 4 says run test_intake_seam.py and report its last line, and the worker brief says it must still read ok=True. I may not edit the seam test.",
+  "world_is": "Both cannot hold: the seam test's stand-in signature has no signing line, so any phrase rule refuses it at check 8 and the seam run stops at stage 2 of 6. I kept the rule and reported the failing last line rather than weaken the rule.",
+  "notes": "One-line repair in the seam test (its owner's file, outside my paths): add a line 'CHECK 8 SIGNED -- seam stand-in' to the text written at line 112. The check tool needs no change for it."
+}
+```
+
+## NFRA_CTLPLN-W6-S17 -- TO-CT-e-3 amendment 3 item 1(b): a .py file that the wheel has and a REAL installed copy lacks is now counted missing, so an added module no longer fails check 6
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-08T05:37:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W6-S17",
+  "one_line": "TO-CT-e-3 amendment 3 item 1(b): a .py file that the wheel has and a REAL installed copy lacks is now counted missing, so an added module no longer fails check 6",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/test_intake_check.py case_check_6_some_present_some_missing_compares_the_present: a wheel with one identical __init__.py and one extra new_module.py reads c6 passed, compared=1 missing=1 differ=0",
+      "the earlier case case_py_absent_from_installed_copy_is_a_difference asserted the opposite (c6 failed, the path listed as differing); I removed it because the amendment says a file with no counterpart on disk is 'missing, never differ'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3 item 1(b): a .py file of the wheel with NO counterpart on disk is counted as missing, never as differ; the check is failed only when differ > 0. The brief's check 6 rules out 'code added outside the compiled files'.",
+  "world_is": "Against a complete installed copy, a wheel that adds a new .py module (code the installed version does not have) now passes check 6 where it failed before. The tool cannot tell that case from a sound installed copy whose files are gone. I followed the amendment and added an evidence field py_missing_not_in_installed_record (the missing files the installed copy's own RECORD never listed) and printed no verdict from it.",
+  "notes": "Option for the issuer: treat a missing .py that is also absent from the installed RECORD as differ. Not done: the amendment did not ask for it. The CTO's reading of check 6 for a file with such a list should be explicit."
+}
+```
