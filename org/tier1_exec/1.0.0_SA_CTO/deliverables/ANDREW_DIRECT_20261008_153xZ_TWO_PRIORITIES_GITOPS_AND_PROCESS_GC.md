@@ -139,3 +139,13 @@ Verbatim: "Yes I updated it, i also want to make sure that the various MSTRs acr
 garbage collection and git ops abilities, get status on this". ("it" = the GitHub Actions budget.) Read at ~17:1xZ:
 origin CLOUD 838362db08; since the fast-fix push a92d59d74f, dell1 has drained and pushed (838362db08), dell2 and site Z
 have not. 0.0.0_AB_MSTR collects a per-box status over the bus.
+
+## Addendum ~17:1xZ -- the CROs drive changes themselves; de-duplicate against 2.0.0_SA_COO~C
+
+Verbatim: "I have also tasked the CROs (Base ~A and ~B) with driving changes themselves, because we need to move and a lot of
+this isnt complicated. I want you to get timing expectations from that group and check in with COO~C and make sure taht
+their work is not duplicated or in any way overlapping. Likely makes the most sense to start with COO~C first to establish
+what is in their workstream"
+
+Placement: 1.0.0_SA_CTO reads 2.0.0_SA_COO~C's workstream (cells, write paths, state) first, then asks 4.0.0_SA_CRO,
+~A and ~B for timing and their write paths, and rules any overlap to one owner.

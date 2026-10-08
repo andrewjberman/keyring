@@ -60,9 +60,9 @@ def surface(path):
     parts = p.split("/")
     if _APPEND_RE.search(p):
         return "append:" + (os.path.dirname(p) or p), "APPEND"
-    if p.startswith("infra/aws/terraform/") and len(parts) > 4:
+    if p.startswith("infra/aws/terraform/") and len(parts) >= 4:
         return "tf:" + parts[3], "INFRA"
-    if p.startswith("infra/aws/lambda/") and len(parts) > 4:
+    if p.startswith("infra/aws/lambda/") and len(parts) >= 4:
         return "lambda-src:" + parts[3], "CODE"
     if p.startswith("infra/aws/") and len(parts) > 3:
         return "infra:" + parts[2], "CODE"
@@ -327,6 +327,65 @@ def fetch(hours):
     return sorted(best.values(), key=lambda r: r["when"]), len(keys)
 
 
+_PATHS_RE = re.compile(r"^<paths>[ \t]*$(.*?)^</paths>[ \t]*$", re.S | re.M)
+_STATUS_RE = re.compile(r"<status>\s*([^<\s]+)\s*</status>")
+_ISSUED_RE = re.compile(r"<issued_to>\s*([^<]+?)\s*</issued_to>")
+_TERMINAL_TO = {"complete", "superseded", "cancelled"}
+_OPEN_DEPLOY_DONE = {"closed", "complete", "completed", "superseded", "rolled_back", "rolled-back", "cancelled"}
+
+
+def _covers(declared, target, tkey):
+    d = declared.strip().replace("\\", "/").rstrip("/").lstrip("./") if not declared.strip().startswith(".") else \
+        declared.strip().replace("\\", "/").rstrip("/")
+    if not d:
+        return False
+    t = target.rstrip("/")
+    if d == t or t.startswith(d + "/") or d.startswith(t + "/"):
+        return True
+    return surface(d)[0] == tkey
+
+
+def declares(target, tkey):
+    """Open task orders whose <paths> cover the target (DECLARES), read from this box's tree."""
+    import glob
+    out = []
+    place = _placement()
+    for f in glob.glob(os.path.join(ROOT, "org", "missions", "D*", "*", "*", "task-orders", "*.md")):
+        try:
+            text = open(f, encoding="utf-8", errors="replace").read()
+        except OSError:
+            continue
+        st = _STATUS_RE.search(text)
+        if st and st.group(1).lower() in _TERMINAL_TO:
+            continue
+        hit = [ln.strip() for m in _PATHS_RE.finditer(text) for ln in m.group(1).splitlines()
+               if ln.strip() and _covers(ln, target, tkey)]
+        if hit:
+            code = f.replace("\\", "/").split("/org/missions/")[1].split("/")[2]
+            who = _ISSUED_RE.search(text)
+            out.append((place.get(code, "unplaced"), code, os.path.basename(f), (who.group(1) if who else "?"),
+                        (st.group(1) if st else "?"), hit[0]))
+    return sorted(out)
+
+
+def holds(target, tkey):
+    """Open change-management entries whose title or leg targets name the target (HOLDS), this box's tree."""
+    import glob
+    needle = {target.rstrip("/"), tkey.split(":", 1)[-1]}
+    out = []
+    for f in glob.glob(os.path.join(ROOT, "org", "critical_paths", ".open_deploys", "*.json")):
+        try:
+            d = json.load(open(f, encoding="utf-8"))
+        except Exception:
+            continue
+        if str(d.get("status", "")).lower() in _OPEN_DEPLOY_DONE:
+            continue
+        blob = " ".join([str(d.get("title", ""))] + [str(leg.get("target", "")) for leg in d.get("legs", [])])
+        if any(n and n in blob for n in needle):
+            out.append((d.get("author", "?"), d.get("slug", os.path.basename(f)), d.get("status", "?")))
+    return out
+
+
 def graph_context(tkey):
     """What the estate graph says the surface IS, through the served graph (needs the graph read token). One line per
     node kind with a count, plus the graph's own vintage line. Empty when the surface has no estate node."""
@@ -379,6 +438,14 @@ def cmd_who(args):
                                                r["subject"][:70]))
     if len(hits) > args.limit:
         print("  ... %d earlier commit(s) not shown (--limit)" % (len(hits) - args.limit))
+    dec = declares(t, tkey)
+    print("  DECLARES  %d open task order(s) name it in <paths> (this box's tree)" % len(dec))
+    for box, code, fname, who, st, path in dec[: args.limit]:
+        print("    %-8s %-18s %-10s %-28s %s  (%s)" % (box, code[:18], st[:10], who[:28], fname[:60], path[:60]))
+    hl = holds(t, tkey)
+    print("  HOLDS     %d open deploy entr(ies) name it (this box's tree)" % len(hl))
+    for author, slug, st in hl[: args.limit]:
+        print("    %-28s %-22s %s" % (author[:28], st[:22], slug))
     if args.graph:
         for line in graph_context(tkey):
             print(line)
