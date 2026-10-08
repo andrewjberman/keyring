@@ -95,9 +95,27 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   the thinning is a collection gap.
 - Chain of one, slot ~116. **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-08 ~08:1xZ (issuer):**
+- **Built:** worker ~116 @9b9f148aea; merged @0ae995ac2b (5 paths, index check 0 of 5 differ). No product file changed.
+- **AC1 PASS:** CENSUS OK. Silver 19,159 articles (11 with no published day), run records 1,248, bronze objects 19,788; window
+  2026-07-11 to 2026-10-08; five of five sources in every table.
+- **What it reads, by PUBLISHED week (table A):** no source shows a sustained fall. Weekly counts over the 12 whole weeks: bbg 58
+  to 101, sa 46 to 102, wsj 9 to 25, barrons 0 until mid-August then 19 to 51, ft 0 to 7. The mechanical THINNED lines name
+  only the last one or two days of the window (bbg and wsj 2026-10-08, sa 2026-10-07; barrons and ft NEVER), which is the
+  partial tail, not a thinning.
+- **How it was collected (tables B, C, D):** every one of the 1,248 run records is `retrieval_mode` backfill with one job for
+  one security; the first finished 2026-09-30; no daily sweep appears. Fetched days and bronze stamps sit almost wholly from
+  2026-09-28 on. So about 700 articles a month across five sources is the level the backfill holds, not a recent drop.
+- **In-window naming:** Caterpillar 0, CSL 0, AIG 0, Nokia 7 over the 714 articles published 2026-09-09 to 2026-10-08, equal
+  to the reviewer's read.
+- **AC2 (judgment) OWED by `3.0.0_SA_CVO~Z`:** `deliverables/0.9.0_WK_AMGT_HARVST~116/BK1_PER_SOURCE_PER_DAY.md`. **Rows:** none.
+- **Not measured, and not this cell's to measure:** whether the publishers carried Caterpillar, CSL or AIG stories in the
+  window that the per-security jobs did not return (R14: no publisher is called).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>66</round>
 <slot>~116</slot>
 <fabric>site-z</fabric>
