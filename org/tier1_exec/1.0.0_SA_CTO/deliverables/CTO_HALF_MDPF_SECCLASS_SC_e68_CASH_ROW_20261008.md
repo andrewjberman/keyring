@@ -44,3 +44,12 @@ list, not here.
   not a pass.
 - **Rollback** stays this seat's call, executed by the issuer's dell1 seat from the snapshot (a table write, which the Dell
   principal holds).
+
+## AMENDMENT 2 (2026-10-08 ~05:2xZ, msg 801) -- the run that grades condition 3 is Cottonwood's own, not a BD-family run
+
+Laptop ~S measured it: the 04:00Z BD run left 0 Cottonwood objects newer than the 03:12:55Z write. Cottonwood's mix
+(`platinum/firm/mix_summary.json`) is rebuilt daily at ~11:35-11:40Z by `cot-bd-session-trigger` (document `opal-cot-gold-run`). So
+condition 3 and amendment 1 now read: **the first Cottonwood gold run that rebuilds `platinum/firm/mix_summary.json` after the write**
+(expected ~11:36Z 2026-10-08). The pass is that the total equals the before-read (568,707,320.21, VersionId `eH1ZuCUJ...`) and that
+`fixed_income` and `cash` move by the `CASH` row's amount. "BD-family" in condition 3 was my wording error. The reader rule of
+amendment 1 stands: dell1 if admitted by then, else ~S.
