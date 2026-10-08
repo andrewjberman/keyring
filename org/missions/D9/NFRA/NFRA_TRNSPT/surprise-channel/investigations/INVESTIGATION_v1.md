@@ -1014,6 +1014,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "PRD FWD-5 ACCEPT: an analyst who now opens a file to find what was said about one company gets it without opening the file; round-9 analysis E1: given a company, return its speaker turns.",
     "world_is": "The read works (NVIDIA: 8 turns in 5 meetings) but the stored text has lost most company names to the mail wipe, so the read is blind to them; some loss is also from held-out rows.",
     "notes": "Counts only; no transcript text read into any record. The issuer's round-8 ruling chose the mail wipe for the text; that choice is the cause."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T21:13:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "The securities allowlist (TR-a-11) widens wipe.Assets.allow with 7,343 tokens, of which 738 are also given-name/surname dictionary words (544 capitalised, e.g. Allison, Apollo, Ally, Abbott, Alger; Apple is itself a dictionary surname); the wipe checks the allowlist first, so a bare person name equal to such a token is no longer wiped outside a salutation/title or neighbouring-name context.",
+    "disarm_owner": "2.0.0_SA_COO~T2 (TR-b-11 re-fold: decide whether the 738 overlap tokens stay allowlisted, or are restricted to tickers and a curated issuer subset, before the re-write of the 29 silver objects)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/securities_allowlist.json @bf7ec25d8f: tokens=7343; set intersection with wipe.load_assets() given_names|surnames|name_words (capitalize() match), tokens not already in the base allow = 738, capitalised-only 544; counts only, no transcript text",
+        "data/transcripts/scripts/outlook/wipe.py:_token (allowlist first, name context only via _dict_name_context) and wipe.py module docstring rule 4",
+        "dry re-fold of research_transcripts/structured/*.json after the change: 29 files, 20,473 rows, 0 failures, held_out 3,644"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-a11 build step 1: tokens = every ticker plus each issuer name's distinctive first word; the planted gate keeps a person name (not an issuer) wiped.",
+    "world_is": "The gate holds for names that are not issuer tokens, but the rule as specified allowlists 738 dictionary-name words (issuer first words such as Allison, Apollo, Alger), so a person with such a name written bare in a transcript survives the wipe; the planted test cannot show this by construction.",
+    "notes": "Built exactly as ordered; not changed by the worker. Counts only."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T22:10:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "AMENDMENT 1 excludes 'Apple' from the allowlist (556 name tokens excluded, 6,787 tokens remain) while criterion TR11-a11-AC1's checker r11_checks.py a11-list still requires the token 'apple' in NEED: AC1 prints R11-A11-LIST-FAIL missing tokens: apple. The amendment forbids re-adding Apple, so AC1 cannot pass as written and the order stays in_progress.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R11_CHECKS/r11_checks.py a11-list -> R11-A11-LIST-FAIL missing tokens: apple (rc 1); a11-gate -> R11-A11-GATE-OK 5 passed",
+        "r11_checks.py NEED set line 24 names apple; task order AMENDMENT 1 'this includes Apple' as the accepted stated loss"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1: the allowlist excludes every dictionary-colliding name token, Apple is the stated loss; AC1 expects R11-A11-LIST-OK, whose checker requires apple among the tokens.",
+    "world_is": "Both cannot hold. The worker followed the amendment and did not re-add Apple; the issuer owns the checker's NEED set (outside the worker's paths).",
+    "notes": "Counts only. Disarm/resolution owner: 2.0.0_SA_COO~T2 (drop apple from NEED, or rule otherwise)."
   }
 ]
 ```

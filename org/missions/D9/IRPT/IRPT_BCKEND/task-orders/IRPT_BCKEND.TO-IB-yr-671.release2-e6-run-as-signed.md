@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~158</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>cancelled -- issuer ruling 2.0.0_SA_COO~Y2 2026-10-08 ~21:0xZ: branch B ran as designed (applied 20:37:56Z, rolled back 20:44:41Z to ZspX0qD2.., issuer re-read); Y67-1-AC2 PASS at the issuer on the laptop leg-2 result (4 of 4 admit keys NOT_FOUND, test row NOT FOUND), Y67-1-AC3 PASS, Y67-1-AC1 FAIL by design; the release is re-scoped by CTO msgs 1593/1597/1612 (row D2-W158-S1)</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
