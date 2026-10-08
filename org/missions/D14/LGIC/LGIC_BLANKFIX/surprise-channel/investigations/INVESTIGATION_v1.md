@@ -1365,3 +1365,30 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Lines 66-71 end mid-sentence in the ACCEPT; the second half of the ACCEPT (the list of unplaceable names no longer than before) is on line 72. The design quotes lines 67-73. Nothing is blocked; the CVO's reading at BU6-AC2 should take lines 67-73."
 }
 ```
+
+## LGIC_BLANKFIX-S10 -- 180 UNDECIDED fields hold 73 of the 74 drafted entries (parked to round 7)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T18:39:50Z",
+  "one_line": "Of the 74 entries BF-u-1 drafted, only inf-pipeline loads: 60 ordinary entries carry 180 UNDECIDED fields between them and 13 names:none entries wait on the reader (BF-u-2). 4.0.0_SA_CRO asks that a worker measure the 180.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/ROOT_MAP_ROUND6_NOTES_20261008.md @6091606dd8 -- 'UNDECIDED fields: 180. By field: source 51, fills 49, scope 33, exceptions 26, system 19, why 2'; per-root list follows",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/ROOT_MAP_ROUND6_NOTES_20261008.md @6091606dd8 -- 'Per entry (each alone): 1 PASS (inf-pipeline), 73 FAIL'; decided subset all ok=True mapped=14 items=776 hole=69",
+      "4.0.0_SA_CRO msg 107107 -- 'have the round-6 worker measure the 180 UNDECIDED fields'; REC retire the 2 empty roots as dead Terraform rather than add a third why",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round6.md -- FROZEN at the cut; no round-6 cell measures UNDECIDED fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 6 E1: map the next roots, largest first; BF-u-1 drafts each field decided by a file and line or UNDECIDED, and the registry's lane writes the entries.",
+  "world_is": "The drafts leave 180 fields UNDECIDED, so 73 of 74 entries cannot land; measuring them is work no frozen round-6 cell carries. Parked: owner 2.0.0_SA_COO~G; un-parks at the round-6 drain-end message to 1.0.0_SA_CTO as a round-7 input, with the CRO's empty-root retirement recommendation. The 13 names:none entries are BF-u-2's (slot ~4, queued)."
+}
+```
