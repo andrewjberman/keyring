@@ -1,0 +1,1327 @@
+{
+ "schema": "seat-rules/1",
+ "rules": [
+  {
+   "id": "R-GITOPS-1",
+   "area": "GITOPS",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "No seat rebases a shared branch (CLOUD, DEV, PROD, SITEZ, main, master), including git pull --rebase.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/never-rules-gate.sh",
+    "entry": "GATE 1 -- NEVER#7"
+   },
+   "probe": {
+    "label": "rebase-on-CLOUD",
+    "tool": ".tools/hooks/never-rules-gate.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/never-rules-gate.sh"
+    ],
+    "stdin_json": {
+     "tool_input": {
+      "command": "git rebase origin/CLOUD"
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "1.0.0_SA_CTO"
+    ],
+    "expect": "\"permissionDecision\":\"deny\".*NEVER#7",
+    "expect_rc": 0,
+    "git_branch": "CLOUD",
+    "stands_for_all_kinds": true
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md section 5: \"NEVER rebase on a shared branch (CLOUD/DEV/PROD/main); rejected push = pull-merge, re-push.\""
+  },
+  {
+   "id": "R-GITOPS-2",
+   "area": "GITOPS",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "No seat runs git stash (push or save) or git clean in the shared tree; they park or delete every dirty file, other seats' work included.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/never-rules-gate.sh",
+    "entry": "GATE 4 -- THE SHARED-WORKTREE BLAST RULE"
+   },
+   "probe": {
+    "label": "stash-push",
+    "tool": ".tools/hooks/never-rules-gate.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/never-rules-gate.sh"
+    ],
+    "stdin_json": {
+     "tool_input": {
+      "command": "git stash push -m wip"
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "1.0.0_SA_CTO"
+    ],
+    "expect": "\"permissionDecision\":\"deny\".*shared-worktree blast rule",
+    "expect_rc": 0,
+    "stands_for_all_kinds": true
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "never-rules-gate.sh GATE 4: \"git stash (and git clean) park/delete EVERY dirty file in the repo -- INCLUDING OTHER AGENTS' UNSAVED WORK.\""
+  },
+  {
+   "id": "R-GITOPS-3",
+   "area": "GITOPS",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "A commit message is written to a file and passed with -F; a git commit -m or safe-commit -m carrying a backtick or $( is refused.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/never-rules-gate.sh",
+    "entry": "GATE 3 -- LD-0276"
+   },
+   "probe": {
+    "label": "commit-m-backtick",
+    "tool": ".tools/hooks/never-rules-gate.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/never-rules-gate.sh"
+    ],
+    "stdin_json": {
+     "tool_input": {
+      "command": "git commit -m \"fix `whoami` thing\""
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "1.0.0_SA_CTO"
+    ],
+    "expect": "\"permissionDecision\":\"deny\".*EXECUTION VECTOR",
+    "expect_rc": 0,
+    "stands_for_all_kinds": true
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md Git: \"A commit message is an EXECUTION VECTOR -- -F <file> authored by a non-shell writer.\""
+  },
+  {
+   "id": "R-GITOPS-4",
+   "area": "GITOPS",
+   "kinds": [
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "Only a manager seat (0.0.0_AB_MSTR, any lane) pushes or pulls a shared branch; every other seat commits to its own branch and the integration window moves it. Three portal carve-outs exist (a DT serial on portal PROD/DEV, a live FAST lease's seat on portal DEV, test-only portal DEV); the workspace branches have none.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/never-rules-gate.sh",
+    "entry": "GATE 5 -- LD-0367 rule 2"
+   },
+   "probe": {
+    "label": "push-CLOUD-not-manager",
+    "tool": ".tools/hooks/never-rules-gate.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/never-rules-gate.sh"
+    ],
+    "stdin_json": {
+     "tool_input": {
+      "command": "git push origin CLOUD"
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "1.0.0_SA_CTO",
+     "0.4.0_DS_ClientPlatform~A"
+    ],
+    "expect": "\"permissionDecision\":\"deny\".*INTEGRATOR-ONLY",
+    "expect_rc": 0,
+    "git_branch": "CLOUD",
+    "stands_for_all_kinds": true
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"They manage merges/pulls/pushes/integrates across the fabric.\""
+  },
+  {
+   "id": "R-GITOPS-5",
+   "area": "GITOPS",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "Who pushes the shared branch from a Dell. Today GATE 5 admits any 0.0.0_AB_MSTR serial with any lane suffix, so a manager on ANY machine passes it; that only the laptop's manager integrates and pushes (and that site Z alone pushes the trunk, per org/devices/DEVICES.json) is text, not a tool.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/never-rules-gate.sh",
+    "entry": "GATE 5 -- LD-0367 rule 2"
+   },
+   "probe": {
+    "label": "push-CLOUD-manager-lane-ADMITTED",
+    "tool": ".tools/hooks/never-rules-gate.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/never-rules-gate.sh"
+    ],
+    "stdin_json": {
+     "tool_input": {
+      "command": "git push origin CLOUD"
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "0.0.0_AB_MSTR~DELL1"
+    ],
+    "expect": "\\A\\s*\\Z",
+    "expect_rc": 0,
+    "git_branch": "CLOUD",
+    "forbid": "permissionDecision"
+   },
+   "built_by": "existing",
+   "needs_andrew": true,
+   "question": "May a Dell's own manager (0.0.0_AB_MSTR on that box, any lane) land and push the shared branch, or only the laptop's manager? Today the gate admits a manager serial on any machine; the one-machine limit is text only.",
+   "source": "Andrew's standing word that the laptop's manager integrates and pushes; org/devices/DEVICES.json: site Z alone pushes the trunk (CT-s-2 order, BUILD 1)."
+  },
+  {
+   "id": "R-GITOPS-6",
+   "area": "GITOPS",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "A seat commits only to paths its lane admits; org/tier0/STAKES_MATRIX.md is Andrew's alone, so every seat kind is refused on it.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/owned-paths-validate.py",
+    "entry": "def _cmd_check_agent"
+   },
+   "probe": {
+    "label": "stakes-matrix",
+    "tool": ".tools/owned-paths-validate.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/owned-paths-validate.py",
+     "--check-agent",
+     "{SERIAL}",
+     "{ROOT}/.owned-paths.yaml"
+    ],
+    "stdin": "org/tier0/STAKES_MATRIX.md\n",
+    "serials": [
+     "0.0.0_AB_MSTR",
+     "1.0.0_SA_CTO",
+     "2.0.0_SA_COO",
+     "3.0.0_SA_CVO",
+     "4.0.0_SA_CRO",
+     "0.7.0_AE_CloudOps~S",
+     "0.4.0_DS_ClientPlatform~A",
+     "0.9.0_WK_NFRA_CTLPLN~8"
+    ],
+    "expect": "VIOLATION: org/tier0/STAKES_MATRIX.md",
+    "expect_rc": 1
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CT-s-2 order, RULES: \"org/tier0/STAKES_MATRIX.md is Andrew's alone.\""
+  },
+  {
+   "id": "R-GITOPS-7",
+   "area": "GITOPS",
+   "kinds": [
+    "WORKER"
+   ],
+   "rule": "A worker is refused a path in a restricted lane unless its non-terminal task order names that path. On a path in an ANY-lane (.tools/**, docs/**, data/**) the lane gate admits a worker with no grant check.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/owned-paths-validate.py",
+    "entry": "def _owns_task_order_paths"
+   },
+   "probe": {
+    "label": "restricted-lane-path-not-in-order",
+    "tool": ".tools/owned-paths-validate.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/owned-paths-validate.py",
+     "--check-agent",
+     "{SERIAL}",
+     "{ROOT}/.owned-paths.yaml"
+    ],
+    "stdin": "infra/aws/terraform/opal-assets/main.tf\n",
+    "serials": [
+     "0.9.0_WK_NFRA_CTLPLN~8"
+    ],
+    "expect": "VIOLATION: infra/aws/terraform/opal-assets/main.tf .*WORKER: no NON-TERMINAL task order",
+    "expect_rc": 1
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md rule 27: \"A worker's write surface is exactly the <paths> its non-terminal order names (.tools/owned-paths-validate.py).\""
+  },
+  {
+   "id": "R-GITOPS-8",
+   "area": "GITOPS",
+   "kinds": [
+    "WORKER"
+   ],
+   "rule": "A worker edits nothing outside the paths its task order names and its own deliverables folder. Where the path is in an ANY-lane no tool checks this; it is told at start.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": ".claude/agents/worker.md",
+    "entry": "edit outside the task order's"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "worker.md: \"Never: edit outside the task order's <paths> and your deliverables folder -- <paths> IS your write grant\"."
+  },
+  {
+   "id": "R-GITOPS-9",
+   "area": "GITOPS",
+   "kinds": [
+    "WORKER"
+   ],
+   "rule": "A worker commits on its own worktree branch only and never pushes, merges, rebases, checks out -- or cleans. (Push, rebase and clean are also refused by R-GITOPS-1, -2 and -4; merge and checkout are told, not checked.)",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": ".claude/agents/worker.md",
+    "entry": "Commit on your worktree branch only"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "worker.md: \"Commit on your worktree branch only; never push, merge, rebase, `checkout --` or `clean`.\""
+  },
+  {
+   "id": "R-GITOPS-10",
+   "area": "GITOPS",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "The manager merges, pulls, pushes and integrates across the fabric, in the integration window, by /integrate; it does this and does not work a project.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/integrate/SKILL.md",
+    "entry": "/integrate"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"They manage merges/pulls/pushes/integrates across the fabric.\""
+  },
+  {
+   "id": "R-GITOPS-11",
+   "area": "GITOPS",
+   "kinds": [
+    "COO"
+   ],
+   "rule": "A COO merges its workers' terminal branches at the end of each chain (safe-merge); a worker never merges.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/dispatch/SKILL.md",
+    "entry": "Step 5"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "canonical-drive obligation 3: \"Terminal orders -> merge per chain end (/dispatch Step 5)\"."
+  },
+  {
+   "id": "R-AWSDEVOPS-1",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "No seat runs a bare terraform apply or destroy; the change goes through .tools/safe-apply.sh (or safe-destroy.sh), which carries the halt-gate checkpoint.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/never-rules-gate.sh",
+    "entry": "GATE 2 -- NEVER#3"
+   },
+   "probe": {
+    "label": "bare-terraform-apply",
+    "tool": ".tools/hooks/never-rules-gate.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/never-rules-gate.sh"
+    ],
+    "stdin_json": {
+     "tool_input": {
+      "command": "terraform apply -auto-approve"
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "1.0.0_SA_CTO"
+    ],
+    "expect": "\"permissionDecision\":\"deny\".*NEVER#3",
+    "expect_rc": 0,
+    "stands_for_all_kinds": true
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md section 6 and 5 NEVER: \"NEVER bare terraform apply (use safe-apply).\""
+  },
+  {
+   "id": "R-AWSDEVOPS-2",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "WORKER"
+   ],
+   "rule": "Only a cloud-ops seat or a Tier-2 seat under a task order applies a cloud change; a manager, CTO, COO, CVO, CRO or worker is refused by the apply wrapper.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/apply-who-check.py",
+    "entry": "APPLY-WHO"
+   },
+   "probe": {
+    "label": "apply-who",
+    "tool": ".tools/apply-who-check.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/apply-who-check.py",
+     "--serial",
+     "{SERIAL}",
+     "--root",
+     "{ROOT}/infra/aws/terraform/opal-assets"
+    ],
+    "serials": [
+     "0.0.0_AB_MSTR",
+     "1.0.0_SA_CTO",
+     "2.0.0_SA_COO",
+     "3.0.0_SA_CVO",
+     "4.0.0_SA_CRO",
+     "0.9.0_WK_NFRA_CTLPLN~8"
+    ],
+    "expect": "APPLY-WHO .*verdict=REFUSED"
+   },
+   "built_by": "CT-s-3",
+   "needs_andrew": false,
+   "source": "CT-s-3 order: \"an apply is made by a CLOUDOPS seat or a TIER2 seat under a task order; MSTR, CTO, COO, CVO, CRO and WORKER are REFUSED\"; Andrew 16:3xZ: cover \"AWS DevOps\"."
+  },
+  {
+   "id": "R-AWSDEVOPS-3",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "CLOUDOPS",
+    "TIER2"
+   ],
+   "rule": "A deploy that could upset another box (an open cross-box call, an overlapping project, or a standing deploy notice naming the root) is stopped before it is made.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/crossbox-deploy-check.py",
+    "entry": "CROSSBOX-DEPLOY"
+   },
+   "probe": {
+    "label": "crossbox-deploy-notice",
+    "tool": ".tools/crossbox-deploy-check.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/crossbox-deploy-check.py",
+     "--root",
+     "{ROOT}/infra/aws/terraform/opal-assets",
+     "--notices",
+     "{CWD}/notices"
+    ],
+    "env": {
+     "AGENTBUS_DEVICE": "laptop"
+    },
+    "files": {
+     "notices/seatrules-fixture.json": "{\"id\": \"seatrules-fixture\", \"root\": \"infra/aws/terraform/opal-assets\", \"resources\": [], \"rule\": \"no-apply\", \"until\": \"2099-12-31T23:59:59Z\", \"by\": \"seat-rules-check fixture\", \"reason\": \"fixture for the probe\", \"record\": \"org/ref/SEAT_RULES.json\"}"
+    },
+    "serials": [
+     "0.7.0_AE_CloudOps~S",
+     "0.4.0_DS_ClientPlatform~A"
+    ],
+    "expect": "verdict=STOP"
+   },
+   "built_by": "CT-s-3",
+   "needs_andrew": false,
+   "source": "Andrew 2026-10-07 ~19:0xZ: a deploy \"that could upset another device's work\" is the case that goes through the laptop."
+  },
+  {
+   "id": "R-AWSDEVOPS-4",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "CLOUDOPS",
+    "TIER2"
+   ],
+   "rule": "A cloud change is opened in a change-management ledger entry before the act and closed with proof; terraform goes through .tools/safe-apply.sh.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/cloud-ops/SKILL.md",
+    "entry": "GOES THROUGH `.tools/safe-apply.sh`"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md section 5: \"NEVER leave a confirmed deploy half-landed ... ledger entry opened at start, closed at completion.\""
+  },
+  {
+   "id": "R-AWSDEVOPS-5",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "CLOUDOPS"
+   ],
+   "rule": "A cloud-ops seat starts by running /watcher once and /cloud-ops once, then acts only on delivered task orders.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": ".tools/ajb.ps1",
+    "entry": "AE_CloudOps"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "ajb.ps1 AE_CloudOps arm: \"/watcher ONCE, then /cloud-ops ONCE ... act on Monitor-delivered TOs\"."
+  },
+  {
+   "id": "R-AWSDEVOPS-6",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "CLOUDOPS",
+    "TIER2"
+   ],
+   "rule": "Which seat administers bucket, key and queue policies from a Dell. Andrew's word is \"For now, laptop should admin\": a resource policy is the laptop's act. NO tool refuses a Dell seat that sets one (sqs:SetQueueAttributes, sns:SetTopicAttributes, or a Policy at creation), and no launcher or skill text says it; it is recorded only in CTO deliverables.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": "org/ref/SEAT_ROLES.json",
+    "entry": "CLOUDOPS"
+   },
+   "probe": null,
+   "built_by": "CT-s-1",
+   "needs_andrew": true,
+   "question": "Should the laptop alone administer bucket, key and queue policies, and is a tool to refuse a Dell seat that sets one wanted, or does the word stay told at start? Today nothing refuses it.",
+   "source": "Andrew's card-2 answer \"For now, laptop should admin\" (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_CT_c_1_DELL_CREATE_GRANT_20261007.md)."
+  },
+  {
+   "id": "R-AWSDEVOPS-7",
+   "area": "AWSDEVOPS",
+   "kinds": [
+    "CLOUDOPS",
+    "TIER2"
+   ],
+   "rule": "A Dell seat is refused updates to ten protected Lambda functions (five are the edge functions) and refused iam:PassRole except on named roles; a deploy of one of those is a write-in to the laptop. The refusal is an IAM Deny in the Dell deploy policy; this row's probe reads the policy file (declared), it does not call AWS.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+    "entry": "DenyProtectedFunctions"
+   },
+   "probe": {
+    "label": "policy-declares-deny",
+    "tool": "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+    "argv": [
+     "{PY}",
+     "{SELF}",
+     "_policy_deny",
+     "{ROOT}/infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json",
+     "DenyProtectedFunctions",
+     "lambda:UpdateFunctionCode"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "POLICY-DENY sid=DenyProtectedFunctions",
+    "expect_rc": 0
+   },
+   "built_by": "existing",
+   "needs_andrew": true,
+   "question": "Do the Dells stay denied the ten protected functions and role passing (so those deploys are written in to the laptop), or is the denial narrowed? The Deny is declared in the policy file; whether it is applied live is not read from here.",
+   "source": "CT-s-2 order, BUILD 1: \"the routes this project denied the Dells to ten older pipeline roles\"; CTO half: \"NEWLY REFUSED: updates to ten of 233 Lambda functions\"."
+  },
+  {
+   "id": "R-WORKFLOW-1",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "A manager is refused a project's specification, decomposition, adjudication and remediation files; it is an infrastructure manager, not project reasoning.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/owned-paths-validate.py",
+    "entry": "def _cmd_check_agent"
+   },
+   "probe": {
+    "label": "manager-on-project-files",
+    "tool": ".tools/owned-paths-validate.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/owned-paths-validate.py",
+     "--check-agent",
+     "{SERIAL}",
+     "{ROOT}/.owned-paths.yaml"
+    ],
+    "stdin": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md\norg/missions/D0/NFRA/NFRA_CTLPLN/decompositions/NFRA_CTLPLN_DECOMP.seats1.md\norg/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/adjudications/ADJUDICATION_v1.md\norg/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/remediations/REMEDIATION_v1.md\n",
+    "serials": [
+     "0.0.0_AB_MSTR"
+    ],
+    "expect": "(?s)VIOLATION.*VIOLATION.*VIOLATION.*VIOLATION",
+    "expect_rc": 1
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"MSTR whole purpose is not business logic/project reasoning, they are infrastructure managers.\""
+  },
+  {
+   "id": "R-WORKFLOW-2",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "A manager cannot send a message to a Tier-2 seat (serial starting 0. that is not Tier-0); work reaches a Tier-2 seat through its issuer.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/hooks/mstr-no-tier2-writes.sh",
+    "entry": "TIER0_EXTRA_DENY"
+   },
+   "probe": {
+    "label": "manager-sends-to-tier2",
+    "tool": ".tools/hooks/mstr-no-tier2-writes.sh",
+    "argv": [
+     "bash",
+     "{ROOT}/.tools/hooks/mstr-no-tier2-writes.sh"
+    ],
+    "stdin_json": {
+     "tool_name": "mcp__opal-agent-comms__send_message",
+     "tool_input": {
+      "to_agent": "0.4.0_DE_SeatRulesProbe",
+      "subject": "probe",
+      "body": "probe"
+     },
+     "cwd": "{CWD}"
+    },
+    "serials": [
+     "0.0.0_AB_MSTR"
+    ],
+    "expect": "\"permissionDecision\":\"deny\".*BLOCKED \\(mstr-no-tier2-writes\\)",
+    "expect_rc": 0
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "mstr-no-tier2-writes.sh: Andrew-direct 2026-09-03: \"You should never be engaging with tier2 agents\"."
+  },
+  {
+   "id": "R-WORKFLOW-3",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CVO"
+   ],
+   "rule": "The reviewer sends to the CTO and to no one else (its findings travel up in the slug); a send to any other seat is refused whole.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": "org/mcp/cvo_send_guard.py",
+    "entry": "def cvo_worker_send_refusal"
+   },
+   "probe": {
+    "label": "cvo-sends-to-coo",
+    "tool": "org/mcp/cvo_send_guard.py",
+    "argv": [
+     "{PY}",
+     "{SELF}",
+     "_call",
+     "{ROOT}/org/mcp/cvo_send_guard.py",
+     "cvo_worker_send_refusal",
+     "[\"3.0.0_SA_CVO\", [\"2.0.0_SA_COO\"], [[], \"\"]]"
+    ],
+    "serials": [
+     "3.0.0_SA_CVO"
+    ],
+    "expect": "RESULT: \"",
+    "expect_rc": 0,
+    "forbid": "RESULT: null"
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Canonical workflow L8 / CLAUDE.md rule 27: \"the CVO's one send is the slug\"."
+  },
+  {
+   "id": "R-WORKFLOW-4",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO"
+   ],
+   "rule": "A Tier-0 or Tier-1 seat sends an act to a Tier-2 seat only as a task order the message cites, issued to that recipient; acks and act-free information pass.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": "org/mcp/cvo_send_guard.py",
+    "entry": "def tier2_act_send_refusal"
+   },
+   "probe": {
+    "label": "act-to-tier2-no-order",
+    "tool": "org/mcp/cvo_send_guard.py",
+    "argv": [
+     "{PY}",
+     "{SELF}",
+     "_call",
+     "{ROOT}/org/mcp/cvo_send_guard.py",
+     "tier2_act_send_refusal",
+     "[\"{SERIAL}\", [\"0.4.0_DE_SeatRulesProbe\"], \"Go\", \"Please apply the change to the bucket now and push it.\", \"{ROOT}\"]"
+    ],
+    "serials": [
+     "0.0.0_AB_MSTR",
+     "1.0.0_SA_CTO",
+     "2.0.0_SA_COO",
+     "3.0.0_SA_CVO",
+     "4.0.0_SA_CRO"
+    ],
+    "expect": "SEND REFUSED \\(LD-0529",
+    "expect_rc": 0
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "org/mcp/cvo_send_guard.py LD-0529: \"a Tier-2 seat acts only on a task order in its own home\"."
+  },
+  {
+   "id": "R-WORKFLOW-5",
+   "area": "WORKFLOW",
+   "kinds": [
+    "WORKER"
+   ],
+   "rule": "A worker never grades a judgment criterion: its proof row carries the output and no verdict, and the checker refuses a judgment row with a status.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/proof-of-spec-check.py",
+    "entry": "judgment=true"
+   },
+   "probe": {
+    "label": "judgment-self-grade",
+    "tool": ".tools/proof-of-spec-check.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/proof-of-spec-check.py",
+     "--self-test"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "PASS\\s+J judgment=true with status PASS -> 1 violation"
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md rule 27 L9: \"JUDGMENT criteria are graded here and never self-graded.\""
+  },
+  {
+   "id": "R-WORKFLOW-6",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "COO",
+    "CVO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "A project's PRD (L4) is written by the CTO only (the lane table also admits the CRO); every other kind is refused on prd/.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/owned-paths-validate.py",
+    "entry": "def _cmd_check_agent"
+   },
+   "probe": {
+    "label": "prd-file",
+    "tool": ".tools/owned-paths-validate.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/owned-paths-validate.py",
+     "--check-agent",
+     "{SERIAL}",
+     "{ROOT}/.owned-paths.yaml"
+    ],
+    "stdin": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md\n",
+    "serials": [
+     "0.0.0_AB_MSTR",
+     "2.0.0_SA_COO",
+     "3.0.0_SA_CVO",
+     "0.7.0_AE_CloudOps~S",
+     "0.4.0_DS_ClientPlatform~A",
+     "0.9.0_WK_NFRA_CTLPLN~8"
+    ],
+    "expect": "VIOLATION: org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md",
+    "expect_rc": 1
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md rule 27: \"L4 PRD -- 1.0.0_SA_CTO only.\""
+  },
+  {
+   "id": "R-WORKFLOW-7",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CTO"
+   ],
+   "rule": "The CTO cannot sign its own PRD: prd/signoff/ admits the reviewers and the COO, not the author.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/owned-paths-validate.py",
+    "entry": "def _cmd_check_agent"
+   },
+   "probe": {
+    "label": "cto-signs-own-prd",
+    "tool": ".tools/owned-paths-validate.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/owned-paths-validate.py",
+     "--check-agent",
+     "{SERIAL}",
+     "{ROOT}/.owned-paths.yaml"
+    ],
+    "stdin": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/signoff/CVO_RATIFIED_v1.json\n",
+    "serials": [
+     "1.0.0_SA_CTO"
+    ],
+    "expect": "VIOLATION: org/missions/D0/NFRA/NFRA_CTLPLN/prd/signoff/",
+    "expect_rc": 1
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "CLAUDE.md rule 27 L4-R: \"3.0.0_SA_CVO signs the RATIFIED-TEXT half ... 4.0.0_SA_CRO signs the BRIEF half\"."
+  },
+  {
+   "id": "R-WORKFLOW-8",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "A NEW task order commits only under the COO (2.0.0_SA_COO or a lane of it); COO is the only seat that does task orders.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/to-pipeline-gate.py",
+    "entry": "def _issuer_identity_violations"
+   },
+   "probe": {
+    "label": "new-order-not-under-coo",
+    "tool": ".tools/to-pipeline-gate.py",
+    "argv": [
+     "{PY}",
+     "{SELF}",
+     "_call",
+     "{ROOT}/.tools/to-pipeline-gate.py",
+     "_issuer_identity_violations",
+     "[\"org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-ZZ-1.probe.md\", \"{SERIAL}\"]"
+    ],
+    "serials": [
+     "0.0.0_AB_MSTR",
+     "1.0.0_SA_CTO",
+     "3.0.0_SA_CVO",
+     "4.0.0_SA_CRO",
+     "0.7.0_AE_CloudOps~S",
+     "0.4.0_DS_ClientPlatform~A",
+     "0.9.0_WK_NFRA_CTLPLN~8"
+    ],
+    "expect": "COO is the only agent that does task orders",
+    "expect_rc": 0
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew at the MSTR terminal 2026-09-03: \"COO is the only agent that does task orders\" (LD-0521 A3)."
+  },
+  {
+   "id": "R-WORKFLOW-9",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO"
+   ],
+   "rule": "A task order is never issued to a Tier-0 or Tier-1 seat; workers are Tier-2 only.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/to-pipeline-gate.py",
+    "entry": "def _issued_to_tier_violations"
+   },
+   "probe": {
+    "label": "order-issued-to-tier1",
+    "tool": ".tools/to-pipeline-gate.py",
+    "argv": [
+     "{PY}",
+     "{SELF}",
+     "_call",
+     "{ROOT}/.tools/to-pipeline-gate.py",
+     "_issued_to_tier_violations",
+     "[\"org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-ZZ-1.probe.md\", \"<issued_to>{SERIAL}</issued_to>\"]"
+    ],
+    "serials": [
+     "0.0.0_AB_MSTR",
+     "1.0.0_SA_CTO",
+     "2.0.0_SA_COO",
+     "3.0.0_SA_CVO",
+     "4.0.0_SA_CRO"
+    ],
+    "expect": "names a TIER-[01] seat",
+    "expect_rc": 0
+   },
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-09-03 (LD-0521): \"L7 workers are TIER-2 ONLY\"; Andrew 16:3xZ: \"COOs are the workers\" that run the drives."
+  },
+  {
+   "id": "R-WORKFLOW-10",
+   "area": "WORKFLOW",
+   "kinds": [
+    "COO"
+   ],
+   "rule": "A COO proceeds projects with /canonical-drive, or /closer-drive when the project's lease reads FAST.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/canonical-drive/SKILL.md",
+    "entry": "0. Who, when, over what"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"COOs ... either run /canonical-drive /closer-drive to proceed projects\"."
+  },
+  {
+   "id": "R-WORKFLOW-11",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "Only a COO runs the canonical-drive body (the CVO runs its reviewer mode); any other serial halts and messages the COO.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/canonical-drive/SKILL.md",
+    "entry": "any other serial halts and messages the COO"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "canonical-drive section 0: \"any other serial halts and messages the COO.\""
+  },
+  {
+   "id": "R-WORKFLOW-12",
+   "area": "WORKFLOW",
+   "kinds": [
+    "COO"
+   ],
+   "rule": "A COO runs /remote-drive for a one-off request that arrives from Teams: identify the function, trace it, do the work, validate on the real artifact, report to its manager.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/remote-drive/SKILL.md",
+    "entry": "Half 2"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"running /remote-drive if a one-off request comes in\"."
+  },
+  {
+   "id": "R-WORKFLOW-13",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "The manager answers REMOTE-JOB offers (bid, award, close) and seats a fresh COO for the job; it routes the job and does not do it.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/remote-drive/SKILL.md",
+    "entry": "Half 1"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"a functioning bid pipeline for pulling in work based on utilization\"; \"spawned fresh, briefed, and run /remote-drive\"."
+  },
+  {
+   "id": "R-WORKFLOW-14",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "The manager can unstick a stuck seat (by serial, after a peek) to keep the fabric running.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/unstick/SKILL.md",
+    "entry": "Operator-initiated only"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"They also can manage /unstick /mstr-spawn /mstr-kill to keep their fabric running cleanly.\""
+  },
+  {
+   "id": "R-WORKFLOW-15",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "Only 0.0.0_AB_MSTR or a COO (any lane) spawns a seat; any other serial refuses the spawn. The spawn tool itself only rate-limits (3 per spawner per minute); it checks no kind.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/mstr-spawn/SKILL.md",
+    "entry": "Identity gate"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "mstr-spawn Step 0: \"confirm the caller serial is 0.0.0_AB_MSTR or 2.0.0_SA_COO\"."
+  },
+  {
+   "id": "R-WORKFLOW-16",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR",
+    "CTO",
+    "COO",
+    "CVO",
+    "CRO",
+    "CLOUDOPS",
+    "TIER2",
+    "WORKER"
+   ],
+   "rule": "Only 0.0.0_AB_MSTR or a COO (any lane) kills a seat; a COO kills a manager only on Andrew's word.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/mstr-kill/SKILL.md",
+    "entry": "Identity gate"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "mstr-kill Step 0: \"confirm the caller serial is 0.0.0_AB_MSTR or 2.0.0_SA_COO\"."
+  },
+  {
+   "id": "R-WORKFLOW-17",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CTO"
+   ],
+   "rule": "The CTO adjudicates an open call that pertains only to its fabric and interferes with no other project's resources; it does not put it to Andrew.",
+   "holder": "SKILL",
+   "mechanism": {
+    "path": ".claude/skills/open-calls/SKILL.md",
+    "entry": "Self-adjudication inside a running project"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"If the open call ... only pertains to their fabric ... they can adjudicate them.\""
+  },
+  {
+   "id": "R-WORKFLOW-18",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CTO"
+   ],
+   "rule": "Whether an open call touches only the CTO's own box is a measurement (paths, placement, resources, shared bucket or branch), not a judgment: OWN-BOX or CROSS-BOX is printed by a tool.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/open-calls.py",
+    "entry": "CALL-SCOPE"
+   },
+   "probe": {
+    "label": "call-scope-selftest",
+    "tool": ".tools/open-calls.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/open-calls.py",
+     "scope",
+     "--selftest"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "CALL-SCOPE-SELFTEST cases=[0-9]+/[0-9]+ ok=True"
+   },
+   "built_by": "CT-s-5",
+   "needs_andrew": false,
+   "source": "Andrew 16:3xZ: \"If however there is an open call that touches multiple surfaces, they must have their MSTR reach out\"."
+  },
+  {
+   "id": "R-WORKFLOW-19",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CTO",
+    "MSTR"
+   ],
+   "rule": "A cross-box call travels CTO, manager, the other box's manager, that CTO, and is closed on both boxes or on neither; it is not closed on one side only.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/crossbox-call.py",
+    "entry": "CROSSBOX-SELFTEST"
+   },
+   "probe": {
+    "label": "crossbox-call-selftest",
+    "tool": ".tools/crossbox-call.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/crossbox-call.py",
+     "--selftest"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "CROSSBOX-SELFTEST cases=[0-9]+/[0-9]+ ok=True"
+   },
+   "built_by": "CT-s-6",
+   "needs_andrew": false,
+   "source": "Andrew 16:3xZ: the CTO \"must have their MSTR reach out to the MSTR of the relevant fabric and coordinate\"."
+  },
+  {
+   "id": "R-WORKFLOW-20",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "A manager's record that carries a project ruling is flagged, so the manager stays an infrastructure manager.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/mstr-record-check.py",
+    "entry": "MSTR-RECORD"
+   },
+   "probe": {
+    "label": "mstr-record-selftest",
+    "tool": ".tools/mstr-record-check.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/mstr-record-check.py",
+     "--selftest"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "MSTR-RECORD-SELFTEST",
+    "forbid": "ok=False"
+   },
+   "built_by": "CT-s-4",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"MSTR whole purpose is not business logic/project reasoning\"."
+  },
+  {
+   "id": "R-WORKFLOW-21",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CVO",
+    "COO"
+   ],
+   "rule": "A round is not closed on a box with no reviewer seat registered and no grade by it; the close is refused.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/round-close-check.py",
+    "entry": "ROUND-CLOSE"
+   },
+   "probe": {
+    "label": "round-close-selftest",
+    "tool": ".tools/round-close-check.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/round-close-check.py",
+     "--selftest"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "ROUND-CLOSE-SELFTEST cases=[0-9]+/[0-9]+ ok=True"
+   },
+   "built_by": "CT-s-8",
+   "needs_andrew": false,
+   "source": "Andrew 16:3xZ: \"CVO is dedicated reviewer in those drive processes so mandatory spawn on any fabric.\""
+  },
+  {
+   "id": "R-WORKFLOW-22",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CRO",
+    "CTO"
+   ],
+   "rule": "Research is owed for an operation of stakes class S3 or above or a task order classed WORLD, and not below it; a tool prints OWED or NOT-OWED from the class.",
+   "holder": "GATE",
+   "mechanism": {
+    "path": ".tools/research-owed.py",
+    "entry": "RESEARCH-OWED"
+   },
+   "probe": {
+    "label": "research-owed-selftest",
+    "tool": ".tools/research-owed.py",
+    "argv": [
+     "{PY}",
+     "{ROOT}/.tools/research-owed.py",
+     "--selftest"
+    ],
+    "stands_for_all_kinds": true,
+    "expect": "RESEARCH-OWED-SELFTEST cases=[0-9]+/[0-9]+ ok=True"
+   },
+   "built_by": "CT-s-8",
+   "needs_andrew": false,
+   "source": "Andrew 16:3xZ: \"if the project does not meet a meaningful quantified risk layer ... there is no need to bring them out.\""
+  },
+  {
+   "id": "R-WORKFLOW-23",
+   "area": "WORKFLOW",
+   "kinds": [
+    "MSTR"
+   ],
+   "rule": "The manager is an infrastructure manager, not business logic or project reasoning: it merges, pulls, pushes and integrates, runs /unstick, /mstr-spawn and /mstr-kill, and pulls in work by utilization.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": "org/ref/SEAT_ROLES.json",
+    "entry": "MSTR"
+   },
+   "probe": null,
+   "built_by": "CT-s-1",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"MSTR whole purpose is not business logic/project reasoning, they are infrastructure managers.\""
+  },
+  {
+   "id": "R-WORKFLOW-24",
+   "area": "WORKFLOW",
+   "kinds": [
+    "COO"
+   ],
+   "rule": "A COO is a worker that proceeds projects: its start text says it runs /canonical-drive or /closer-drive, and /remote-drive for a one-off request. The launcher's COO arm today says none of the three.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": "org/ref/SEAT_ROLES.json",
+    "entry": "COO"
+   },
+   "probe": null,
+   "built_by": "CT-s-1",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"COOs are the workers, they either run /canonical-drive /closer-drive to proceed projects, running /remote-drive if a one-off request comes in\"."
+  },
+  {
+   "id": "R-WORKFLOW-25",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CVO"
+   ],
+   "rule": "The reviewer is the dedicated reviewer in the drives, a mandatory spawn on any fabric; where several projects share one macro on a fabric, a macro reviewer lane (for example CVO~NFRA) is best practice. No launcher or skill text says this today.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": "org/ref/SEAT_ROLES.json",
+    "entry": "CVO"
+   },
+   "probe": null,
+   "built_by": "CT-s-1",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"CVO is dedicated reviewer in those drive processes so mandatory spawn on any fabric.\""
+  },
+  {
+   "id": "R-WORKFLOW-26",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CRO"
+   ],
+   "rule": "The research seat is the dedicated research agent: with Andrew it analyzes projects and runs /brief-create to start /canonical-flow; for the fabric's CTO it researches risky or unclear operations of meaningful risk. The launcher's CRO arm says only 'recon->specs; does NOT dispatch'.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": "org/ref/SEAT_ROLES.json",
+    "entry": "CRO"
+   },
+   "probe": null,
+   "built_by": "CT-s-1",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"CRO is the dedicated research agent.\""
+  },
+  {
+   "id": "R-WORKFLOW-27",
+   "area": "WORKFLOW",
+   "kinds": [
+    "CTO"
+   ],
+   "rule": "The CTO is the business-logic and project-focused lead on its fabric and accrues every open call on it. The launcher's CTO arm today says only '/watcher ONCE ... event-driven'.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": "org/ref/SEAT_ROLES.json",
+    "entry": "CTO"
+   },
+   "probe": null,
+   "built_by": "CT-s-1",
+   "needs_andrew": false,
+   "source": "Andrew-direct 2026-10-07 ~16:3xZ: \"The CTO is the business-logic/project-focused lead on their fabric.\""
+  },
+  {
+   "id": "R-WORKFLOW-28",
+   "area": "WORKFLOW",
+   "kinds": [
+    "TIER2",
+    "CLOUDOPS"
+   ],
+   "rule": "A Tier-2 seat is event-driven: it acts on Monitor-delivered dispatches and task orders and keeps its broker STATUS accurate (WORKING, IDLE, BLOCKED).",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": ".tools/ajb.ps1",
+    "entry": "Get-AgentLoopDirective"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "ajb.ps1 Tier-2/3 worker arm: \"Event-driven: act on Monitor-delivered dispatches/TOs; keep broker STATUS accurate\"."
+  },
+  {
+   "id": "R-WORKFLOW-29",
+   "area": "WORKFLOW",
+   "kinds": [
+    "WORKER"
+   ],
+   "rule": "A worker executes one task order at a time in its own worktree; what it cannot do or was not told is a surprise ROW in the project's channel, never a question or a message.",
+   "holder": "LAUNCHER",
+   "mechanism": {
+    "path": ".claude/agents/worker.md",
+    "entry": "ONE row to the investigation file"
+   },
+   "probe": null,
+   "built_by": "existing",
+   "needs_andrew": false,
+   "source": "worker.md: \"what is not there is a surprise row, never a question\"."
+  }
+ ]
+}
