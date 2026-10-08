@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.19",
+  "prd_version": "v0.22",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -31,6 +31,15 @@
   "status": "RATIFIED"
 }
 ```
+
+**v0.22 (2026-10-08 ~17:3xZ, `1.0.0_SA_CTO~Z`):** FWD-18 stated ONCE, on `3.0.0_SA_CVO~Z`'s REFUSE of v0.21 (msg 31918):
+the READING and CONFIRMED lines are cut, because all three terms are now Andrew's (host, continuous, four publishers);
+DONE WHEN describes a continuous run (a cycle, one record per cycle, the unattended cycle that accepts a publisher).
+
+**v0.20 (2026-10-08 ~15:3xZ, `1.0.0_SA_CTO~Z`):** FWD-18's fence only, on `3.0.0_SA_CVO~Z`'s REFUSE of v0.19 (msg 31839, review
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_HARVST_v0.19_RATIFIED_TEXT_20261008_Z.md` @5325186148). The refusal is right:
+v0.19 stated a schedule, a host and four publishers as fact where Andrew's words name none. A READING line now says so, and the
+schedule stays OFF until his yes is cited. The `C-HV-EGRESS` line of v0.19 reads under that same condition.
 
 **v0.19 ADDENDUM (2026-10-08 ~13:4xZ, `1.0.0_SA_CTO~Z`)**, on Andrew-direct ~13:1xZ to `2.0.0_SA_COO~H` (its msg 31770, verbatim):
 "ALSO WE SHOULD BE PULLING THE DAYS NEW ARTICLES PER SOURCE PER DAY."
@@ -415,34 +424,45 @@ act a seat can take on demand; none is a wait.
                     sure is not a vote", NEWS_SCANNER_DEEP_DIVE_20260916.md s.6);
                     HARVST brief O1, O3, O4
 
-  FWD-18 The day's new articles are collected for every covered name, per
-         source, every day, with nobody starting the run
-         DONE WHEN  EXERCISED -- a scheduled run on the site Z box (v0.19; the
-                    host FWD-10 permits "until the local job matures"), with no
-                    agent session in its path, asks each cleared source
-                    (Bloomberg.com, WSJ, Barron's, Seeking Alpha; the FT joins
-                    on Andrew's word) for what it published about the covered
-                    list since that source's last completed run, stores each
-                    new article once (a held article is never fetched again),
-                    and writes ONE run record per source per day stating asked,
-                    new, already held and failed. A source that published
-                    nothing records zero new, never a missing record; a source
-                    that could not run without a hand records that, by name.
-                    Driven deliberately: one operator-started run of the same
-                    command is the test; the first scheduled run that completes
-                    unattended on a source is that source's acceptance. Negative
-                    arm: a planted held article is counted already held and no
+  FWD-18 New articles are collected for every covered name from four
+         publishers, continuously on this box, with nobody starting the run
+         DONE WHEN  EXERCISED -- ONE process on the site Z box (FWD-10 permits
+                    the box "until the local job matures"), with no agent
+                    session in its path, runs without end. A CYCLE is one pass
+                    over the covered list for one publisher: it asks that
+                    publisher for what it published about the list since that
+                    publisher's last completed cycle, stores each new article
+                    once (a held article is never fetched again), and writes
+                    ONE cycle record stating the publisher, start and end, asked,
+                    new, already held and failed. The process moves to the next
+                    publisher at the collector's existing pace and starts again
+                    at the end. The publishers are Bloomberg.com, WSJ, Barron's
+                    and Seeking Alpha; the FT is not run. A publisher that
+                    published nothing records zero new, never a missing record;
+                    a publisher that cannot run without a hand (a bot check, a
+                    refused sign-in) records that by name in its cycle record
+                    and the process goes on to the next publisher.
+                    ACCEPTANCE, per publisher: the first cycle that completes
+                    with no one at the box after the process was started. One
+                    operator-started cycle is the test, never the acceptance.
+                    The process may be registered to start with the box; a
+                    publisher is run only once it is on this list. Negative arm:
+                    a planted held article is counted already held and no
                     request is made for its body.
-         ACCEPT     An analyst who opens a covered name on a trading morning
-                    reads the prior trading day's articles wherever a cleared
-                    publisher carried any, and can tell from the page's own
-                    words when a source did not run.
+         ACCEPT     An analyst who opens a covered name reads the articles its
+                    publishers carried since the last cycle, and can tell from
+                    the page's own words when a publisher did not run.
          SOURCE     Andrew-direct 2026-10-08 ~13:1xZ ("WE SHOULD BE PULLING THE
-                    DAYS NEW ARTICLES PER SOURCE PER DAY"); Andrew-direct
-                    2026-09-14 (a local job cycling the platforms "in a polite
-                    manner so no rate limiting"); 2026-09-15 ("articles have to
-                    be keyed on some kind of stable key so we dont keep pulling
-                    the same ones")
+                    DAYS NEW ARTICLES PER SOURCE PER DAY"); ~16:4xZ ("daily news
+                    pull should be running nonstop effectively on this box");
+                    ~17:1xZ, on this seat's card naming the four publishers and
+                    the existing pace ("Agreed, rec approved."; records
+                    ANDREW_DIRECT_20261008_164xZ_DAILY_NEWS_PULL_NONSTOP_ON_THIS_BOX.md
+                    and ANDREW_DIRECT_20261008_171xZ_OPEN_CALLS_SIX_ANSWERED_AND_CELL_TRACKING_ASK.md
+                    in org/tier1_exec/1.0.0_SA_CTO/deliverables/); 2026-09-14 (a
+                    local job cycling the platforms "in a polite manner so no
+                    rate limiting"); 2026-09-15 ("articles have to be keyed on
+                    some kind of stable key so we dont keep pulling the same ones")
 ```
 
 ---

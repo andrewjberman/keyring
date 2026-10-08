@@ -4988,3 +4988,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Both are the issuer's to confirm; neither changes the six criteria."
 }
 ```
+
+## NFRA_CTLPLN-Z-S4 -- open-calls.py close refuses a call Andrew himself has ruled, because the row reads CROSS-BOX and no cross-box file exists
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-10-08T17:52:00Z",
+  "one_line": "A call Andrew answered in his own words cannot be closed on the box list: close demands a CLOSED-BOTH cross-box file, which is the route for a CTO-level ruling, not for his.",
+  "spec_asserts": "The /open-calls skill (section 'The CTO's list for its box') gives close as `--ruling <path of the ruling>`; the cross-box rule there governs whether THIS BOX'S CTO may settle a call alone. Andrew's word is the sovereign ruling the skill exists to collect.",
+  "world_is": "2026-10-08 ~17:5xZ: 1.0.0_SA_CTO~O added four rows (sitez-20261008T174158Z-bb06, -3450, -dc96, -f241) that duplicated calls Andrew had already ruled at the 4.0.0_SA_CRO~Z terminal (record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md @116d52009d). `python .tools/open-calls.py close --id <each> --by 1.0.0_SA_CTO~O --ruling <that record>` returned REFUSED four of four: 'reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (0 files under org/devices/crossbox)'. The four rows stay OPEN on org/devices/state/sitez/open_calls.json although no decision is pending. The file was not hand-edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/open-calls.py at f24862b44c, close subcommand: four REFUSED lines, read 2026-10-08 ~17:5xZ.",
+      "open-calls.py list after the attempt: rows=10 open=10, the four rows asked_by 1.0.0_SA_CTO~O still [OPEN]."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy for the issuer to choose: a close form that takes an ANDREW_DIRECT record as the ruling and skips the cross-box route, or a withdraw verb for a duplicate row. Until then a ruled call reads OPEN and can be re-carded to Andrew, the exact failure the skill warns against."
+}
+```

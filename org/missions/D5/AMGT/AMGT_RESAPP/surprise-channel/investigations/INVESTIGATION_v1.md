@@ -22147,5 +22147,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   },
   "notes": "Surfaced, not chased. The issuer grades the suite on the shared tree."
 }
+,
+{
+  "id": "AMGT_RESAPP-Z-S374",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-08T19:40:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "comp-lambdamap parity is structurally blind to opal-amgt-scoped-api: its lambda-source-map entry carries no last_deployed_commit and no artifact_sha256, so the function falls in the tool's NO-RECORD bucket rather than MATCH.",
+  "spec_asserts": "The source map's own _note says that for TF-managed functions record-terraform-deploy.sh updates last_deployed_commit after terraform apply, and that artifact_s3_key and artifact_sha256 are populated by build-and-upload.sh before the apply. comp-lambdamap parity grades three legs: record x live CodeSha256 x S3 artifact.",
+  "world_is": "Run at 2026-10-08 18:5xZ: MATCH 166, STALE-RECORD 6, DISPOSITIONED 1, POSSIBLE-HALF-LANDED 4, NOT-LIVE 4, UNVERIFIABLE 7, NO-RECORD 41. No printed row names opal-amgt-scoped-api. Its functions entry holds source_dir, source, files, tf_file, tf_resource, artifact_s3_key, iam_role, _note and _artifact_note -- and neither last_deployed_commit nor artifact_sha256 -- so the tool has no record leg for it and cannot grade the deploy either way. The 3-leg parity was therefore proven by hand in cell AMGT-cc-7 instead: live CodeSha256 ltXvElwZ4iyRx6bJLDQRWksbDoiTesc8xvu1h+p3QI0= equals the uploaded object's content-sha256 equals the local sha256 of C:/tmp/cc7-r79-63f0605039.zip. The _artifact_note that cell corrected (row AMGT_RESAPP-Z-S370) was the visible half of the same under-population. NOT READ: whether record-terraform-deploy.sh would populate the two fields for this entry, or why the entry was created without them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-lambdamap parity, 26 lines of output, summary line read at 2026-10-08 18:5xZ; grep for 'amgt-scoped-api' over that output returns 0 rows",
+      "infra/aws/lambda/ci/lambda-source-map.json, functions['opal-amgt-scoped-api'], all 9 keys printed by this seat",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-cc-7.the-code-redeploy.proof_of_spec.json, compiler_tools"
+    ]
+  },
+  "notes": "Surfaced, not chased. Beside row AMGT_RESAPP-Z-S370 (the _artifact_note), which cell AMGT-cc-7 closed; this row is the wider gap behind it. Populating the entry is not this cell's write surface."
+},
+{
+  "id": "AMGT_RESAPP-Z-S375",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-08T19:40:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "The GO carried COO half call 11 as a FILE LIST, and one merge window falsified the list while leaving the underlying term true; a denominator would have survived.",
+  "spec_asserts": "COO half call 11 requires the issuer to read the landed diff of every PACKAGED file between the pin and the new HEAD, and says the criteria run on the shared tree as written if that diff is the staged one (the naming census and exemption rows, no line of address(), key() or lookup()). The GO states the reading as: 'Call 11, read at HEAD 2d0d4296bf: against the pin only lib/opal_naming.py (+12, the census) and exemptions.json differ'.",
+  "world_is": "By the time the executor read the tree, HEAD had moved from 2d0d4296bf to d5840c9e52 and THIRTEEN paths differed from the pin over the criteria's import surface, not two: infra/logic/registry/{event_rules,exemptions,key_rulings}.json, mail_parties.json and name_rulings.json (added), lib/opal_data_harvest/config.json, lib/opal_naming.py, lib/opal_naming_keyfill.py, lib/opal_naming_rootcheck.py, lib/seat_roles.py (added), four lib/tests naming tests and three org/standards IRPT contracts. Tested against the live package's own 388 arcnames, exactly TWO are packaged -- lib/opal_naming.py and infra/logic/registry/exemptions.json -- which are the two the GO names, and the +12/-0 diff of opal_naming.py touches no line of address(), key() or lookup(). So the TERM held and the act proceeded on the tree as written; only the sentence carrying it had expired. lib/opal_data_harvest/config.json is the one worth naming: AMGT_HARVST had just repointed its universe_source and symbol_resolution_source to the 20261008 files, which would matter to a view built on the tree, and it is not packaged, so it does not. NOT READ: whether any later HEAD adds a packaged file before the round closes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "msg 31834 (the GO), the call-11 sentence quoted above",
+      "git diff --name-status 63f0605039 d5840c9e52 over lib/, infra/logic/registry/, org/standards/, infra/aws/terraform/harvest/, modules/yang-lambda/: 13 paths",
+      "zipfile namelist of C:/tmp/bb18-r78-fbb643923e.zip, 388 entries, membership tested per changed path",
+      "git diff 63f0605039 d5840c9e52 -- lib/opal_naming.py: 12 insertions 0 deletions, 0 lines matching def address/key/lookup"
+    ]
+  },
+  "notes": "Surfaced, not chased, and NOT a refusal of the GO: the GO's conclusion was correct on the packaged denominator. A next GO that states the DENOMINATOR ('n of the 136 packaged paths differ, and they are ...') rather than a two-file list would not need re-deriving by the executor. Issuer's to weigh at the round-79 analysis."
+}
 ]
 ```
