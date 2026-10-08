@@ -4583,3 +4583,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Supersedes the bound recommendation in W8-S14 only as to how often: a bound of timeout 240 on CTs2-AC1 would make the criterion independent of load. No existing row was edited."
 }
 ```
+
+## NFRA_CTLPLN-S31 -- the Dell deploy grant reaches the cloud graph bucket (opal-* wildcard), head marker and Iceberg files included
+
+```json
+{
+  "id": "NFRA_CTLPLN-S31",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T14:20:00Z",
+  "one_line": "the Dell group's deploy policy grants s3:PutObject on arn:aws:s3:::opal-*/*, which includes the cloud graph's bucket opal-313476888478-globgrph, where a write to warehouse/_branch_head.main.json starts a Kuzu rebuild and the Iceberg graph tables live; no fence names the bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~14:1xZ by 4.0.0_SA_CRO: infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json, an Allow of s3:GetObject, s3:GetObjectVersion, s3:PutObject, s3:ListBucket and more on ['arn:aws:s3:::opal-*', 'arn:aws:s3:::opal-*/*']; its only S3 Deny covers delete and lifecycle on opal-data-* (not opal-313476888478-*).",
+      "Read: infra/aws/terraform/globgrph/projection.tf (an S3 write to warehouse/_branch_head.main.json notifies the queue that starts the projection worker) and infra/aws/globgrph/derive_runner.py:390, :407-419 (the head marker names the current snapshot of graph_nodes and graph_edges).",
+      "Not measured: the live policy (no simulate-principal-policy run), whether a bucket policy on opal-313476888478-globgrph denies the Dell users, and whether any Dell seat has written there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Dell grant is read as admitting deploys and the firm buckets; the graph plane is described as written only by its own in-VPC service roles (docs/architecture/NFRA_GLOBGRPH_PRD.md, the v0.4.1 N-agent rule: agents never write the graph).",
+  "world_is": "As written, a Dell credential can put any object in the graph bucket, including the head marker and the Iceberg table files, so a Dell seat could start a rebuild or replace graph data. Nothing found says this was intended or ruled out. INERT: nothing is known to have done it.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
+}
+```
