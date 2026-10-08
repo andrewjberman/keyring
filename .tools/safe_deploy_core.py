@@ -1038,13 +1038,54 @@ def second_targets_for(rel_path: str) -> list[tuple[str, str]]:
     return out
 
 
-def shipped_artifacts_for(rel_paths: list[str]) -> list[tuple[str, str, str]]:
-    """Declared SHIPPED ARTIFACTS that ride along with a deploy of rel_paths.
+def shipped_artifacts_for(named_paths: list[str]) -> list[tuple[str, str, str]]:
+    """Declared SHIPPED ARTIFACTS this deploy uploads: ONLY the ones it NAMES.
 
-    Returns [(repo_path, bucket, s3_key)], de-duplicated, in declaration order. A layer's
-    artifacts ride when at least one path in rel_paths resolves to that (tree, layer)."""
+    Returns [(repo_path, bucket, s3_key)], de-duplicated, in declaration order. An artifact rides only
+    when its own repo path is in named_paths (the deploy's explicit files, or the paths changed in its
+    commit range), and only to the (tree, layer)s of the SCRIPTS this deploy also names -- a BD gold
+    deploy never ships to cot. A deploy that names artifacts and NO script of any declaring layer is the
+    artifact's own deploy: it ships to every (tree, layer) that declares it, each target printed.
+
+    RULE (1.0.0_SA_CTO msg 107147 on dell1 rows MDPF_SECCLASS-D1-S12/S13, 2026-10-08): "a deploy
+    ships only the files its own ledger names". This used to ride EVERY declared artifact along with
+    ANY deploy of the layer, shipping the artifact's CURRENT repo bytes; a one-file BD gold deploy
+    therefore released etf_classification_scheduled.py's bytes that belonged to another ledger's
+    pending deploy, three times on 2026-10-08 (01:47Z, 19:09Z, 19:20Z). An artifact that a
+    deploy does not name now stays at whatever S3 holds; see unnamed_artifacts_for()."""
+    named = {p.replace("\\", "/") for p in named_paths}
+    script_layers: set[tuple[str, str]] = set()
+    for rel_path in named:
+        rtl = resolve_tree_layer(rel_path)
+        if rtl is not None:
+            script_layers.add((rtl[0], rtl[2]))
+    declaring = [(tname, layer) for tname, tree in CODE_TREES.items()
+                 for layer, spec in tree.get("shipped_artifacts", {}).items()
+                 if named.intersection(spec["members"])]
+    scoped = [tl for tl in declaring if tl in script_layers]
+    targets = scoped if scoped else declaring   # artifact-only deploy -> every declaring layer
     out: list[tuple[str, str, str]] = []
     seen: set[tuple[str, str]] = set()
+    for tname, layer in targets:
+        tree = CODE_TREES[tname]
+        spec = tree["shipped_artifacts"][layer]
+        for member in spec["members"]:
+            if member not in named:
+                continue
+            key = tree["layers"][layer][1] + spec["dest_subdir"] + member.rsplit("/", 1)[-1]
+            if (tree["bucket"], key) in seen:
+                continue
+            seen.add((tree["bucket"], key))
+            out.append((member, tree["bucket"], key))
+    return out
+
+
+def unnamed_artifacts_for(rel_paths: list[str], named_paths: list[str]) -> list[str]:
+    """Declared shipped artifacts of the layers rel_paths deploy to that this deploy does NOT name.
+    They are NOT uploaded (see shipped_artifacts_for); the deploy prints one line per member so the
+    reader sees the dependency stayed at its served bytes, never a silent skip."""
+    named = {p.replace("\\", "/") for p in named_paths}
+    out: list[str] = []
     for rel_path in rel_paths:
         rtl = resolve_tree_layer(rel_path)
         if rtl is None:
@@ -1054,11 +1095,8 @@ def shipped_artifacts_for(rel_paths: list[str]) -> list[tuple[str, str, str]]:
         if not spec:
             continue
         for member in spec["members"]:
-            key = tree["layers"][layer][1] + spec["dest_subdir"] + member.rsplit("/", 1)[-1]
-            if (tree["bucket"], key) in seen:
-                continue
-            seen.add((tree["bucket"], key))
-            out.append((member, tree["bucket"], key))
+            if member not in named and member not in out:
+                out.append(member)
     return out
 
 
@@ -1494,7 +1532,12 @@ def main(argv: list[str]) -> int:
         explicit_files=args.files if args.files else None,
     )
 
-    if not files and not bundle_member_files:
+    # The deploy's OWN file set: what it names (explicit files) or what its range changed. Shipped
+    # artifacts ride only when named here (shipped_artifacts_for); an artifact can be named alone.
+    named_pool = list(args.files) if args.files else _changed_paths(args.commit_range)
+    shipped = shipped_artifacts_for(named_pool)
+
+    if not files and not bundle_member_files and not shipped:
         print("OK: safe-deploy -- no deploy-scope script files detected, nothing to do")
         return 0
 
@@ -1534,8 +1577,11 @@ def main(argv: list[str]) -> int:
             if is_distribution_spec(spec):
                 both = f" AND bundle {hit[1]} (DISTRIBUTION)"
         print(f"  [script]        {f}  (authored by {author}) -> {dest}{both}")
-    for sp, sb, sk in shipped_artifacts_for(files):
-        print(f"  [shipped]       {sp} -> s3://{sb}/{sk}  (declared shipped artifact, CODE_TREES)")
+    for sp, sb, sk in shipped:
+        print(f"  [shipped]       {sp} -> s3://{sb}/{sk}  (declared shipped artifact, named by this deploy)")
+    for sp in unnamed_artifacts_for(files, named_pool):
+        print(f"  [not shipped]   {sp}  (declared for this layer, NOT named by this deploy -- S3 keeps its "
+              f"served bytes; it ships only with the deploy that names it)")
     for f in _bundle_only:
         # No file_to_s3_target: a bundle member's destination is the BUNDLE's, resolved at the
         # mint below. Naming the leg honestly beats printing a '?' destination that reads as a
@@ -1626,7 +1672,7 @@ def main(argv: list[str]) -> int:
             print(f"  Audit: {BYPASS_AUDIT_LOG}")
             print()
 
-    if not to_deploy:
+    if not to_deploy and not shipped:   # a deploy that names only shipped artifacts still ships them
         print("OK: safe-deploy -- all deploy-scope file(s) are SERVE-HELD; nothing served.")
         return 0
 
@@ -1674,12 +1720,14 @@ def main(argv: list[str]) -> int:
     # SHIPPED ARTIFACTS first, so code that imports them never lands before its dependency.
     # They are not appended to `deployed` (comp-pipescript does not model the lib/_shared leg;
     # the ETag verify in deploy_file is their acceptance), the same stance as second targets.
-    for sp, sb, sk in shipped_artifacts_for(to_deploy):
+    n_shipped = 0   # named shipped artifacts uploaded and ETag-verified (deploy_file), for the summary
+    for sp, sb, sk in shipped:
         s_status, s_detail = deploy_file(WORKSPACE / sp.replace("/", os.sep), sb, sk, sp)
         if s_status == "SHA_MISMATCH":
             etag_refusal = True
         if s_status == "MATCH":
             print(f"  DEPLOYED-SHIPPED  {sp} -> s3://{sb}/{sk}")
+            n_shipped += 1
         else:
             print(f"  ERROR  {s_status}  [shipped] {sp} -> s3://{sb}/{sk}")
             if s_detail:
@@ -1849,6 +1897,10 @@ def main(argv: list[str]) -> int:
     # anything builds `to_deploy` by a route that bypasses detect_script_files. Enumerating skip
     # reasons is the six-sites-when-there-are-eight error.
     n_dep, n_skip = len(deployed), len(skipped_not_member)
+    if not n_dep and n_shipped:
+        print(f"OK: safe-deploy gate PASS -- {n_shipped} named shipped artifact(s) deployed and ETag-verified; "
+              "0 script file(s).")
+        return 0
     if not n_dep:
         detail = f"; {n_skip} SKIPPED (first-mint, 404)" if n_skip else ""
         print(f"OK: safe-deploy gate PASS -- 0 file(s) deployed{detail}. NOTHING WAS DEPLOYED.")
