@@ -20990,3 +20990,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The read is bounded by COMP_TAGAUTHZ_IAM_TIMEOUT (default 150 s); an overrun exits 1 naming TAGAUTHZ_IAM_READ_TIMEOUT."
 }
 ```
+
+## IRPT_BCKEND-D2-S1 -- D2-W172-S4 and D2-W172-S2 resolved: the AC1 check filters its route read (AMENDMENT 2); the custody-release changelog entry is recorded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W172-S4 and IRPT_BCKEND-D2-W172-S2. S4: AMENDMENT 2 @bebe0e817a makes the AC1 check filter get-routes server-side to the one route key (the 6,368-byte list crashed python -> bash .tools/aws -> aws.exe with 0xC0000005) and sums the per-page length(Items) counts; IB77-1-AC1 PASS ('1 match of 115 routes'), re-run by the issuer and by the re-seated worker (@e78cb6aba6); IB-pr-364 complete, drained @fd99fb52e5. S2: the issuer recorded the irpt-export-render custody-release entry (version investor-reporting-custody-release-pr364, deployed_at 2026-10-08T17:30:56Z) in infra/aws/terraform/investor-reporting/CHANGELOG.json from the recorder output the worker saved, in the commit that carries this row.",
+  "one_line": "The release's AC1 instrument no longer crashes on dell2, and the deploy changelog carries the custody release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py . IB77-1-AC1 -> 'OK: pin 1e0cdaf90c, 3 of 3 members, live CodeSha256 == built, route live (1 match of 115 routes), replans 0, ledger closed' / IB77-1-AC1 PASS",
+      "CHANGELOG.json entries[0].version investor-reporting-custody-release-pr364 (from wk-irpt-bckend-172/.scratch/CHANGELOG.recorder_output.json)"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1 reads the live route; record-terraform-deploy.sh records every apply in the pipeline changelog.",
+  "world_is": "Both hold now."
+}
+```
+
+## IRPT_BCKEND-D2-S2 -- D2-W172-S3 ruled: the released custody-report route refuses every owner read until repository.KINDS carries CUSTODY_REPORT; routed to the CTO as the next enrichment
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W172-S3 as an UNSERVED leg, not a hazard: the live route fails CLOSED (DEPENDENCY_UNAVAILABLE, no body) for any CUSTODY_REPORT because the shipped repository.KINDS is (PERFORMANCE, ANALYSIS). The other-firm refusal holds. CTO criterion (3) of E1 (Opal read by ref returns the report) is therefore unmet on two counts: 0 retained custody reports, and the kind gap. Carried to 1.0.0_SA_CTO~DELL2 in the rounds 77-78 L8 packet as the next enrichment (who adds the kind and the custody reporting-policy family: IRPT_CUSTDY or ~P), not cut mid-round.",
+  "one_line": "The custody-report route is live and safe, but cannot yet return a custody report to anyone: the repository does not know the kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W172-S3 (offline run of the live zip's custody_read path: ReportRepository.get raises ReportRefused for CUSTODY_REPORT)",
+      "IB77-1_release_after_reads.json: opal_by_ref OPEN-BY-DESIGN, retained_custody_reports 0"
+    ]
+  },
+  "spec_asserts": "Packet branch A: an Opal principal reads one retained custody report by ref within scope.",
+  "world_is": "Not yet reachable: no report is retained and the repository refuses the kind. Closed, not open."
+}
+```
