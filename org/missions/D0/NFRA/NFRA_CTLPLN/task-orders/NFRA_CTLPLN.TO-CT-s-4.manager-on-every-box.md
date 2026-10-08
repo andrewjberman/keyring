@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -166,3 +166,38 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: Andrew-direct 2026-10-07 ~16:3xZ (record above), ~18:3xZ item 7, ~18:5xZ, ~19:0xZ, and ~21:1xZ at this seat's terminal
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_211xZ_COO_C_MAKE_SURE_GITOPS_AWSOPS_AGENT_WORKFLOW_DEMANDS_ARE_MET_AND_SAY_LINE_FOR_LINE.md`);
 PRD `prd/NFRA_CTLPLN_PRD.md` v0.19 @b44686cebc (ADMITTED), FWD-21 to FWD-25, contract C-SEATS clauses 1 to 7; CTO msg 106584 (the split).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-08 ~11:2xZ) -- REOPENED, SHORT: a seat alive on ANOTHER box must never read DEAD
+
+The cell is merged. Its first real use found a defect that nearly caused a duplicate seat. `1.0.0_SA_CTO` msg 106893:
+".tools/seat-liveness.py prints DEAD for any serial with an open order and no LOCAL process. The serial string is the same on
+every box, and the laptop's broker cannot see another box's sessions. The tool reads each order's project placement
+(project.json placement; the device register) and prints a serial placed on another box as ELSEWHERE with the box named, never
+DEAD; only a serial placed on this box with no process is DEAD. Its respawn guidance names that difference." The case that
+showed it: `0.7.0_AE_CloudOps~A` read DEAD on the laptop with 38 open orders; it is alive on site Z, and a respawn would have
+made a duplicate of another box's live seat. Gate limb: none graded this modification.
+
+1. **A new class, ELSEWHERE.** For a serial with no process on this box, read WHERE its open orders' projects are placed: each
+   order's project code -> that project's `project.json` `placement` field (values such as LAPTOP, SITEZ, DELL1, DELL2; read the
+   register for the exact set, and `org/devices/DEVICES.json` for how a placement value names a device). Then:
+   - every open order's project is placed on ANOTHER box -> `ELSEWHERE(<box>)` (name the box, or the boxes if more than one);
+   - at least one open order's project is placed on THIS box -> the class is decided as today (DEAD when no process), and the
+     line says how many of its orders are placed here and how many elsewhere;
+   - a project with NO placement value, or an order whose project cannot be read -> the seat is `UNKNOWN` with the reason
+     "placement unread for <n> order(s)", NEVER DEAD: an unread placement must not license a respawn.
+   Also read the lane suffix as evidence where the register gives it meaning (a `~DELL1`, `~DELL2`, `~Z` style lane, or a lane
+   the device register lists for a box): report what you found the register says about lanes and use it only if it is data
+   in a file, not a naming guess.
+2. The last line gains `elsewhere=<n>` between `dead=` and `unknown=`:
+   `SEAT-LIVENESS device=<d> seats=<n> moving=<a> quiet=<b> hung=<c> dead=<e> elsewhere=<f> unknown=<g> ok=<...>`.
+3. **Respawn guidance** in `/govern` Step 3a (the skill text you wrote): a DEAD seat is a seat placed on THIS box; ELSEWHERE is
+   never respawned here and is that box's manager's to look at (name the cross-box route: the manager asks the other box's
+   manager over the bus); UNKNOWN is never respawned. Keep your date guard for DEAD.
+4. Tests in `.tools/tests/test_manager_on_every_box.py`: all orders placed elsewhere -> ELSEWHERE with the box named; mixed ->
+   decided as today with both counts; placement missing -> UNKNOWN; a seat placed here with no process -> DEAD still.
+5. Run the tool on this machine and report the line and, for each seat that read DEAD in your last pass, what it reads now.
+
+**ACCEPTANCE.** `CTs4-AC1`, `CTs4-AC3` unchanged. `CTs4-AC2`'s expectation: if the order's `<expect>` for it names the fields
+after `dead=`, the issuer changes it by this amendment to `SEAT-LIVENESS device=laptop seats=`; write the proof row's `expect`
+equal to the order's text as you find it after this amendment. Rewrite the proof instance, validate, flip to `complete`.
+
