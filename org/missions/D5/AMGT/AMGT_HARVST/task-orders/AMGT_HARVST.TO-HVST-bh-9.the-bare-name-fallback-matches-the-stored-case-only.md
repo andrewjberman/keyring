@@ -101,9 +101,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~110's queue, after `bh-7`. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL
   as expected (no such file); AC3 base PASS as expected (460 passed).
 
+**COMPLETE 2026-10-08 ~03:4xZ (issuer):**
+- **Built:** worker ~110 (re-seated) @2709a4d299; merged @8b414c692c (5 paths, index check 0 of 5 differ).
+- **AC1 PASS:** 6 of 6. **AC2 PASS:** CENSUS OK over 19,116 articles, 242 securities, 5 with an empty alias list: removed pairs
+  15 -- BP (US) 8 of 1,248, SAP 7 of 258; Nokia 0 of 263, GSK 0 of 471, RWE 0 of 67; every removed pair has other-case spans
+  only; `TRUE PAIRS LOST BY NAME: sa:4473686 removed, sa:4441205 removed`; securities with aliases changed 0 of 237. The
+  worker's own added control: the BEFORE arm equals the base commit's module on the five securities, 0 counts differing.
+  **AC3 PASS:** 474 on the branch; the issuer's drain check is in this close's commit message.
+- **The 15 are the class `3.0.0_SA_CVO~Z` read whole** (3 in the sample @31fbcebb42, the other 12 @9e8ca92e4e): 13 not about the
+  company, 2 true BP pairs. The next rebuild's never-widen pair names those two as TRUE PAIRS LOST by key (msg 31551).
+- **Existing assertion changed:** none. **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>63</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>
