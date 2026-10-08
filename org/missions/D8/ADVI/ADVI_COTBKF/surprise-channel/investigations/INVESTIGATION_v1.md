@@ -2352,3 +2352,30 @@ round.** Never edit an existing row.
   "world_is": "Met. Unmeasured lead for the 23 MATCH -> DIFF regressions (19 in 0QF879130 and 0QF879352): the rule credits cash whenever a non-sweep sale and a sweep buy share a day, so if the vendor already posts a cash leg for some of those sales, the synthetic credit counts it twice. A per-month check for an existing CFNCASH row on the credited days decides it."
 }
 ```
+
+## ADVI_COTBKF-D2-W45-S1 -- CB23w1-AC2 not met: the double-credit lead is falsified (0 of 23), the conditional rule drops 0 of 2703 credits
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T20:12Z",
+  "one_line": "CB23w1-AC2 cannot be met by the conditional rule as ordered: the double-credit lead (D2-S34) is falsified -- 0 of the 23 regressions are double credits and the conditional rule drops 0 of 2703 funding credits, so regressions=23 stays",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation (r19 -> conditional, list v1 both arms): months_after=2103/1520/78970 control_same=True regressions=23 movers_back=25; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md section 'Round 22's 23 regressions' (classes: other:cfncash_row_not_the_sale_cash=13, other:no_cfncash_row_on_credit_day=10, double_credit=0; 0 of 23 MATCH under conditional)",
+      "funding_credit_rows over the whole transactions table (1,416,497 rows): 2703 credit days unconditional, 2703 conditional -- 0 dropped. Only 310 of the 2703 credit days carry any CFNCASH row at all; of 451 (credit day, CFNCASH row) pairs, 3 have |Amount| equal to the sale proceeds and all 3 are type lo (a withdrawal, debit sign), none a credit-signed row",
+      "0QF879352 (13 of the 23): on the credit days 2021-07-16, 2021-07-20, 2022-07-18 the CFNCASH row is the withdrawal lo (12788.22 / 10000.00 / 7034.39) paired with a sweep sl of the same amount; the stock sale (13000 / 10000 / 24,560.55 over six securities) funds the sweep buy. Skipping every credit day that carries ANY CFNCASH row (a wider condition than the order's, tried in a scratch probe on the six accounts of the 23, not shipped) removes those 13 months and leaves 10 regressions, so no CFNCASH-row condition reaches regressions=0",
+      "the other 10 (0QF879130 2025-05..2025-10, B3S691415 2023-10, B3S748567 2025-07, B3S808881/B3S808882 2025-01): no CFNCASH row on any credit day. In a scratch probe of those accounts under r19, on 9 of the 10 months the account value on the day before a credit day is blank (holdings 3-4, priced 2-3: the sold bond/bill/fund has no price) and the sale day is the first complete day; the credit then adds the sale's proceeds to a value that never held the sold security (0QF879130 2025-04-07: r19 24,239.68, repaired 239,239.68, the difference 215,000 = the three earlier credits). B3S748567 2025-07 is the exception: its sold fund (316067107) was priced and the value fell by the credit under r19. Lead only, not a claim: a credit conditioned on the sold security having been valued the day before"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-1 / CTO round-22 ruling E1 (row D2-S34): the 23 MATCH -> DIFF regressions come from a funding credit applied where the vendor already posts a CFNCASH leg; a rule that credits only where no CFNCASH row exists removes them (regressions=0).",
+  "world_is": "No CFNCASH row of the credit days carries a sale's cash in the 23 months; the conditional rule is implemented (commonwealth_sweeps.py funding_credit_rows(conditional=True), cash_leg conditional, default) and is a no-op on the data. All 23 are `other`. The order's refusal clause applies: the test is not weakened and the rule is not widened beyond the order."
+}
+```
