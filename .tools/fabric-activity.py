@@ -325,7 +325,16 @@ def fetch(hours):
         rank = (r.get("box_claim") == "measured", r.get("infer_rev") or 0)
         if prev is None or rank > (prev.get("box_claim") == "measured", prev.get("infer_rev") or 0):
             best[r["sha"]] = r
+    trunk = set(git("rev-list", "--since=" + (start - dt.timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "origin/CLOUD").split())
+    for r in best.values():
+        r["merged"] = r["sha"] in trunk  # MERGED: the commit is on origin/CLOUD as this box last fetched it
     return sorted(best.values(), key=lambda r: r["when"]), len(keys)
+
+
+def trunk_age():
+    t = git("log", "-1", "--format=%cI", "origin/CLOUD").strip()
+    return t or "unknown"
 
 
 _PATHS_RE = re.compile(r"^<paths>[ \t]*$(.*?)^</paths>[ \t]*$", re.S | re.M)
@@ -432,11 +441,15 @@ def cmd_who(args):
         if files or any(s["key"] == tkey for s in r.get("surfaces", [])):
             hits.append((r, files))
     boxes = sorted({r["box"] for r, _ in hits})
+    onbox = sorted({r["box"] for r, _ in hits if not r.get("merged")})
     print("WHO %s  (surface %s, last %dh)  %d commit(s) from %d box(es): %s   [records scanned %d]"
           % (t, tkey, args.hours, len(hits), len(boxes), ", ".join(boxes) or "-", scanned))
+    print("  not yet on origin/CLOUD from: %s   (origin/CLOUD as last fetched here: %s)"
+          % (", ".join(onbox) or "none", trunk_age()))
     for r, files in hits[-args.limit:]:
-        print("  %s  %-8s %-9s %-32s %s  %s" % (r["when"], r["box"], r["box_claim"], r["seat"][:32], r["sha"][:10],
-                                               r["subject"][:70]))
+        print("  %s  %-8s %-9s %-7s %-30s %s  %s" % (r["when"], r["box"], r["box_claim"],
+                                                     "MERGED" if r.get("merged") else "on-box", r["seat"][:30],
+                                                     r["sha"][:10], r["subject"][:64]))
     if len(hits) > args.limit:
         print("  ... %d earlier commit(s) not shown (--limit)" % (len(hits) - args.limit))
     dec = declares(t, tkey)
@@ -461,8 +474,9 @@ def cmd_overlap(args):
             if s["cls"] in ("APPEND", "RECORD") and not args.all:
                 continue
             e = by.setdefault(s["key"], {"cls": s["cls"], "boxes": {}, "last": ""})
-            b = e["boxes"].setdefault(r["box"], {"n": 0, "seats": set()})
+            b = e["boxes"].setdefault(r["box"], {"n": 0, "seats": set(), "onbox": 0})
             b["n"] += 1
+            b["onbox"] += 0 if r.get("merged") else 1
             b["seats"].add(r["seat"])
             e["last"] = max(e["last"], r["when"])
     rows = [(k, e) for k, e in by.items() if len([b for b in e["boxes"] if b != "unplaced"]) >= 2]
@@ -474,7 +488,8 @@ def cmd_overlap(args):
           % (args.hours, len(rows), len(by), len(recs), ", ".join("%s %d" % kv for kv in sorted(claims.items())),
              scanned))
     for k, e in rows[: args.limit]:
-        parts = ["%s:%d" % (b, v["n"]) for b, v in sorted(e["boxes"].items())]
+        parts = ["%s:%d%s" % (b, v["n"], ("(%d on-box)" % v["onbox"]) if v["onbox"] else "")
+                 for b, v in sorted(e["boxes"].items())]
         print("  %-8s %-48s %s   last %s" % (e["cls"], k[:48], " ".join(parts), e["last"]))
     return 0
 
