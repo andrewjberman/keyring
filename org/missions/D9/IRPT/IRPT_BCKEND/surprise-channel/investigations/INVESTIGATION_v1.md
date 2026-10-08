@@ -21653,3 +21653,236 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It answers with a different public reason code: release 2 raises the coded InputAccessDenied where release 1 raised a bare PermissionError. No write occurs on either, so no exposure; the code moves from UNEXPECTED to NOT_AUTHORIZED. Recorded as read 7 FAIL because 'as before' was not met to the letter."
 }
 ```
+
+## IRPT_BCKEND-D2-W159-S1 -- The branch-A recorder writes a CHANGELOG.json path outside the order's <paths>; only the source-map half was recorded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W159-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~159",
+  "surfaced_at": "2026-10-08T21:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The branch-A recorder record-terraform-deploy.sh stages infra/aws/terraform/investor-reporting/CHANGELOG.json, a path the order's <paths> does not name, so its own commit is refused; the source-map half was committed alone and the CHANGELOG half is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --function irpt-ycharts-generate --version investor-reporting-irpt-ycg-release3 --author <serial> at 21:35Z: safe-commit refused, 'VIOLATION: infra/aws/terraform/investor-reporting/CHANGELOG.json -- lane=IRPT_COMPLETION_P ... no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'",
+      "The order's <paths> names infra/aws/lambda/ci/CHANGELOG.md and lambda-source-map.json (the lambda/ci pair), not terraform/investor-reporting/CHANGELOG.json, which the recorder writes (entry 'investor-reporting-irpt-ycg-release3', deployed_commit 6f758dd807)",
+      "Handled: CHANGELOG.json unstaged and restored from HEAD (git show, no checkout); lambda-source-map.json (last_deployed_commit 5d3eed8904.., at 21:35:15Z) committed alone at 63181c2c27",
+      "Round 67's worker (~158) did not run this recorder, so no earlier run exercised the path"
+    ]
+  },
+  "spec_asserts": "Step 10: 'In branch A only, run record-terraform-deploy.sh', with <paths> carrying infra/aws/lambda/ci/CHANGELOG.md and lambda-source-map.json.",
+  "world_is": "The recorder for pipeline investor-reporting writes terraform/investor-reporting/CHANGELOG.json, which the grant omits and which lane IRPT_COMPLETION_P owns, so a worker cannot complete it. The deploy itself and the ledger are unaffected; only the CHANGELOG entry is unrecorded. Issuer: add that path to the next order's <paths> or run the recorder at the drain."
+}
+```
+## IRPT_BCKEND-D2-W181-S1 -- irpt-export-render's role, as Terraform declares it, holds no write on the retained-report index or the custod
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-export-render's role, as Terraform declares it, holds no write on the retained-report index or the custody-report prefix and no read of the request-composition prefix, so the guarded custody persist fails closed (nothing written) until an IAM change that this cell is barred from making ships beside the function and the route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/b1_submit.tf@9238309eca: dynamodb is GetItem only on the requests table (ReadRetainedReportIndexInServedFirmPartitions); s3:GetObject/GetObjectVersion only on the PERFORMANCE family prefix of the reporting bucket (b1_report_prefixes, families[PERFORMANCE]); no dynamodb:PutItem or UpdateItem and no s3:PutObject on the reporting bucket in b1_submit.tf, iam.tf or b2_render.tf (the only PutObject statements are the evidence-bucket generations/exports prefixes)",
+      "comp-iam service irpt-export-render (this session): statements 1, 3 and 4 as above, 24 statements, none granting the table write that retention.reserve/index.publish (conditional put_item) and ReportRepository.persist need, nor the S3 read of state/request_compositions that artifacts.get needs for the retained request",
+      "infra/aws/lambda/investor-reporting/reports/repository.py DynamoReportIndex.publish and retention.py DynamoRetentionIndex.publish call table.put_item; export/custody_persist.py loads the retained request through ports['artifacts'] (ArtifactRepository.get -> blobs.get)",
+      "Declared state only: the LIVE role policy was not read (raw aws IAM inspection is routed to comp-iam, which prints the declared statements); the same gap already holds for custody-report-read's blob read (CUSTODY_REPORT is not the PERFORMANCE prefix)"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 1/6: the persist is reachable through the guarded Entry (a DECLARED route row and an operation) and the packet carries the two after-reads (an Opal custody-report-read by reference returns the report; another firm gets OBJECT_NOT_COVERED); BOUNDS: no IAM, bucket, table, principal or Terraform change.",
+  "world_is": "The code, route row and registry are complete and tested offline, and every release arm passes against the built zip, but the live role cannot perform the writes or the request read the operation makes, so the persist (and the first after-read) would answer a dependency refusal until a role statement (dynamodb:PutItem/UpdateItem on the requests table scoped to the served firms, s3:PutObject/GetObject and kms on the custody_reports and request_compositions prefixes) is applied. It fails closed: the first write the repository makes is the retention row (a conditional put_item), so a refused put leaves nothing served. The IAM change belongs to a later release order with its own sign-off; the packet states it as a precondition of Branch A's after-reads."
+}
+```
+
+## IRPT_BCKEND-D2-W181-S2 -- The persisted document is the one caller-supplied value: the owner, accounts, request identity and source evid
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The persisted document is the one caller-supplied value: the owner, accounts, request identity and source evidence are all derived from the retained request, but the report's content comes from the body of a verified Opal operator and is not recomputed or checked against the request, and the report record names the retained request's creator, not who persisted it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_persist.py@d34a46f37d: _request() takes document and provenance from the body; custody_report_persist() passes the document to custody_write.persist_custody_report unchanged after the as_of_date check; the retained request (a frozen irpt-analysis-composition.v1) carries the INPUTS of the custody report (snapshot, accounts, recipe), not its computed sections",
+      "infra/aws/lambda/investor-reporting/reports/repository.py persist(): the record stores owner (the retained request's), request_ref and provenance; no persisting-principal field; reports/custody_write.py _check_document only requires a calendar as_of_date (no custody document schema is published, export/submit_installed.py _validate)",
+      "export/tests/test_custody_writer_composed.py::test_derived_owner_content_naming_another_owner_changes_nothing: a document that names another owner or accounts is stored as content, and the row's owner stays the retained request's"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 2: the owner and the account set come from server-held state, never from a field the caller sends; the request names WHICH retained request to persist, by reference.",
+  "world_is": "Owner, accounts and evidence are server-derived as ordered. The report body is not derivable from the retained request inside this function (the render that computes the sections is IRPT_CUSTDY's producer, E2a), so it arrives in the body; its integrity rests on the caller being a verified Opal operator whose current scope covers every account of the request, the same authority that reads the report. This is inert today (no route applied, no caller). The CTO may rule whether E2a should bind the document to the request (a content hash inside the retained request, or a server-side render) before the route is applied; the persister's identity is recoverable only from the Lambda log line and CloudTrail, not from the retained record, because adding it to the provenance would make an idempotent retry by a second operator a new revision."
+}
+```
+
+## IRPT_BCKEND-D2-W181-S3 -- docs/contracts/investor-reporting/v1/routes.json's _denominator block (declared 19, total 21) already disagree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "docs/contracts/investor-reporting/v1/routes.json's _denominator block (declared 19, total 21) already disagreed with its rows (20 DECLARED + 2 ROUTED_ELSEWHERE = 22) before this cell, and the new custody-report-persist row makes it 21 + 2 = 23; the block is named as the denominator the replay battery reads and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json@9238309eca: json status counts DECLARED 21, ROUTED_ELSEWHERE 2 (23 rows); _denominator.declared 19, routed_elsewhere 2, total 21",
+      "docs/contracts/investor-reporting/v1/routes.json@3fd3179217 (before this cell): DECLARED 20, ROUTED_ELSEWHERE 2 (22 rows) against the same _denominator 19/2/21; the IB-pr-355 row (cf6839fe38) added a DECLARED route without moving the block",
+      "no test reads _denominator: _authz/tests/test_unguarded_census.py, test_guarded_entries.py and the export suite (303 passed, 2 skipped) pass with the stale block"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 1: add the route row to routes.json (status DECLARED); nothing is applied here.",
+  "world_is": "The row is added in the same shape as the IB-pr-355 row; the descriptive counts in _denominator were already stale and were left as found (editing a frozen v1 description block is not in this order). A later cell that owns the route inventory should re-derive the counts from the rows."
+}
+```
+
+## IRPT_BCKEND-D2-S9 -- D2-W181-S1/S2/S3 ruled for the Performance client statement writer (IB-pr-373): the IAM leg is a laptop precondition of the release; the caller-supplied document goes to the CTO with the pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T21:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W181-S1, S2 and S3 by carrying each. S1: irpt-export-render's declared role lacks dynamodb PutItem/UpdateItem on the requests table, S3 write on the custody-report prefix and S3 read of the request-composition prefix, so the persist fails CLOSED until an IAM leg ships; Dells write no IAM (msg 1288), so the leg is a laptop Terraform act through 0.0.0_AB_MSTR~DELL2, named in the release pair as a precondition of the after-reads. S2: the document is the one caller-supplied value (owner, principal and accounts are server-derived from the retained submission; any other key refused by name) and the record names the retained request's creator, not the persister; carried to 1.0.0_SA_CTO~DELL2 with the IB-pr-373 pair for a ruling on whether the release needs a persister field or a document binding. S3: routes.json _denominator was stale before this cell; inert. The caller-asserted IB-pr-372 path (wk-IRPT_BCKEND-180) is NOT in HEAD (verified: 3528d24f92 is not an ancestor), as CTO msg 1651 ruled.",
+  "one_line": "The Performance client statement writer is drained with a server-derived owner; the IAM leg and the document-binding question ride its release pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-373 drained @6303e36222; IB86-1-AC1/AC2/AC3 PASS on the issuer's re-run",
+      "git merge-base --is-ancestor 3528d24f92 HEAD -> not an ancestor"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: IAM leg -> laptop via MSTR~DELL2 in the pair; document binding -> CTO with the pair."
+}
+```
+
+## IRPT_BCKEND-D2-W183-S1 -- custody-report-read serves the document only, so persisted_by and the composition hash (stored in the record's provenance) are read by resolve, not returned by the HTTP operation
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W183-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~183",
+  "surfaced_at": "2026-10-08T22:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The Performance client statement record now carries persisted_by and composition_sha256 in its provenance, and retained_export.resolve returns that provenance unchanged, but the custody-report-read operation answers only report_kind, report_id, revision and report, so an HTTP reader does not see either field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_read.py@1f14f0db5e: custody_report_read returns {report_kind, report_id, revision, report}; it drops resolved['provenance']; the file is outside this order's paths",
+      "infra/aws/lambda/investor-reporting/export/tests/test_custody_writer_composed.py::test_persisted_by_the_stored_record_names_the_verified_caller_not_the_submitter: _read_back (retained_export.resolve over the same repository) returns provenance['persisted_by'] == the persister and provenance == the stored record's provenance"
+    ]
+  },
+  "spec_asserts": "IB-pr-375 step 1: 'A read through custody-report-read returns it unchanged.'",
+  "world_is": "The record stores persisted_by in provenance (repository.persist stores owner, request_ref, report and provenance only; a new top-level record field would be a repository.py change outside the paths). The unchanged read is proved on the resolve path that custody-report-read is built on. Whether the operation's response should also carry persisted_by is a separate change to custody_read.py and the route contract, not made here; no firm reads a statement through it yet."
+}
+```
+
+## IRPT_BCKEND-D2-W183-S2 -- the content binding is a declared hash in the document, verified against the retained composition; it proves which composition the document claims, not that the sections were computed from it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W183-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~183",
+  "surfaced_at": "2026-10-08T22:10:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The strongest binding the existing data allows is the document declaring composition_sha256 equal to the retained REQUEST_COMPOSITION artifact's content hash; the sections cannot be recomputed here, so a verified Opal operator can still supply sections that do not follow from the composition, and every producer of a Performance client statement document must now declare the hash or the persist refuses it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_persist.py@1f14f0db5e: _check_request already verifies sha256(loaded['data']) == loaded['ref']['sha256']; the retained composition holds inputs (snapshot, accounts, recipe, settings), not the computed sections",
+      "infra/aws/lambda/investor-reporting/reports/custody_write.py: _check_binding refuses an absent, malformed or different composition_sha256 with CustodyWriteRefused, which the Entry's reasons table maps to INVALID_INPUT (export/entry.py line 473)",
+      "export/tests/test_custody_writer_composed.py: 54 passed; the persist-path tests that persisted DOCUMENT now persist _doc(request), the same document plus the declared hash; no assertion was removed or loosened"
+    ]
+  },
+  "spec_asserts": "IB-pr-375 step 2: 'Choose the strongest binding the existing data allows, and say why.'",
+  "world_is": "Recomputing or verifying the sections against the composition is not possible in this function (the render that computes them is the IRPT_CUSTDY producer). The binding is therefore declared-and-verified. A producer of the document (IRPT_CUSTDY) must add composition_sha256 to what it posts; that is a caller change the CTO and COO sequence before any firm reads a statement."
+}
+```
+## IRPT_BCKEND-D2-W182-S1 -- worker 182 had no terraform binary in its worktree (SAFE_APPLY_TERRAFORM to the main checkout's) and read the order's W179 row prefix as W182
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W182-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~182",
+  "surfaced_at": "2026-10-08T22:14:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The worktree carries no .tools/terraform.exe; terraform init, plan and safe-apply ran with the main checkout's terraform.exe through SAFE_APPLY_TERRAFORM, and the order's row-id prefix W179 was read as W182.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls .tools/terraform* in C:/dev/wk-irpt-bckend-182 -> no match; C:/dev/ajb_workspace/.tools/terraform.exe exists, version v1.15.8",
+      "safe-apply.sh resolves SAFE_APPLY_TERRAFORM first (lines 35-37); apply log: Apply complete! Resources: 0 added, 1 changed, 0 destroyed. Re-plan: No changes.",
+      "IRPT_BCKEND.TO-IB-pr-374 BOUNDS says row ids are IRPT_BCKEND-D2-W179-S<k>; the dispatching message and the id schema require W{n} to equal the committing worker's suffix (182)"
+    ]
+  },
+  "spec_asserts": "IB-pr-374 step 5: plan the export root and run safe-apply from the planfile in the worktree; row ids are D2-W179-S<k>.",
+  "world_is": "The binary is untracked and absent from a fresh worker worktree, so a worker must name the main checkout's binary (read-only use, no file edited there) to plan and apply. The row id uses W182 because the gate requires the worker suffix. Neither changed what was applied: the same single resource changed, 0 destroyed."
+}
+```
+
+## IRPT_BCKEND-D2-W182-S2 -- TO-IB-pr-374 criteria cite cell IB-pr-371 while the order owns IB-pr-374; proof cannot validate, order left open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W182-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~182",
+  "surfaced_at": "2026-10-08T22:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-374's two criteria carry cell_refs=\"IB-pr-371\" but <owned_cells> is IB-pr-374, so the proof_of_spec instance cannot be VALID and the order cannot be flipped to complete; the release itself is applied and both p87 checks PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-374.pcs-writer-release-function.md lines 83 and 87: cell_refs=\"IB-pr-371\"; <owned_cells>IB-pr-374</owned_cells> at the decomp_ref block",
+      "python .tools/proof-of-spec-check.py <instance> IB87-1-AC1,IB87-1-AC2 -> alignment-backward 0/1; VIOLATION: declared cell 'IB-pr-374' is named in the TO's <owned_cells> but NO criterion references it; INVALID (rc=1)",
+      "IB87-1-AC1 PASS and IB87-1-AC2 PASS at HEAD (p87_cells.py); live CodeSha256 rNjtTwcm... == built; re-plan No changes; census changed_members=0; ledger CLOSED"
+    ]
+  },
+  "spec_asserts": "The proof_of_spec instance validates and the order's <status> flips to complete when both criteria PASS.",
+  "world_is": "The order's criteria cite the earlier cell (IB-pr-371, copied from the predecessor order), so no criterion discharges the owned cell. A worker may not amend criteria or weaken a check, and the flip is gated on a VALID instance, so the order stays <status>pending</status>. Remedy owned by the issuer 2.0.0_SA_COO~P2: amend both cell_refs to IB-pr-374 (a criteria amendment the issuer may make itself) and re-run proof-of-spec-check on the committed instance, then flip. Nothing served is affected."
+}
+```

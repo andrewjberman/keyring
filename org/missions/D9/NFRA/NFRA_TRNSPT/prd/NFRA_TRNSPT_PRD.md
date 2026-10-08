@@ -4,7 +4,7 @@
 {
  "project": "NFRA_TRNSPT",
  "directive": "D9",
- "fabric": "laptop",
+ "fabric": "dell2",
  "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-trnspt-commentary-ingestion-expansion-brief-v3-20260930.md@bd14c47f70",
