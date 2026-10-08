@@ -32,6 +32,11 @@ param(
     [string]$Model,
     [string]$Effort,
 
+    # Tab title only; the seat still registers, commits and receives mail as $Serial.
+    # A COO's tab shows its one project code (Andrew-direct 2026-10-08 ~19:0xZ at dell1:
+    # "this is just the tab in Powershell, not its actual registration").
+    [string]$Tab,
+
     [Parameter(Position = 1, ValueFromRemainingArguments = $true)]
     [string[]]$Extra
 )
@@ -205,7 +210,15 @@ if ($Effort) { $moFlags += " -Effort '$($Effort.Replace("'", "''"))'" }
 # process CommandLine, where the concurrency cap and kill-agent.ps1 grep for
 # it. Title is set OSC 0 + WindowTitle belt-and-suspenders (ajb.ps1 repeats
 # the pair immediately before claude.exe takes the console).
-$inner = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
+$title = $Serial
+if ($Tab) {
+    if ($Tab -notmatch '^[A-Za-z0-9_.~-]+$') { Write-Error "spawn-agent: -Tab '$Tab' has characters outside A-Za-z0-9_.~-"; exit 1 }
+    $title = $Tab
+}
+if (-not $Tab -and $Serial -match '^2\.[0-9]+\.0_SA_COO') {
+    Write-Host "[spawn-agent] WARN: COO spawned without -Tab <PROJECT_CODE>; its tab shows the serial."
+}
+$inner = "[Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
 
 # Title path: prefer wt.exe with an explicit --title at tab CREATION (works
 # without the suppressApplicationTitle setting); the OSC/WindowTitle pair in
@@ -237,10 +250,10 @@ if ($usableWt) {
     # -ArgumentList element. Note this script never observes the child's fate
     # -- the sound oracle for a live agent is its own register_agent, not our
     # "launched" print.
-    $innerWtPayload = "[Console]::Write(([char]27).ToString() + ']0;$Serial' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$Serial'; . $ajbForWt; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
+    $innerWtPayload = "[Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . $ajbForWt; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
     $innerForWt = $innerWtPayload -replace ';', '\;'
     # `-w new` opens a fresh WT window (one-window-per-agent UX convention).
-    & wt.exe -w new new-tab --title $Serial powershell.exe -NoProfile -NoExit -Command $innerForWt
+    & wt.exe -w new new-tab --title $title powershell.exe -NoProfile -NoExit -Command $innerForWt
     # Do NOT -PassThru wt.exe: it is a LAUNCHER that hands the tab to the
     # existing Windows Terminal process -- its pid is NOT the agent's shell,
     # and recording it would be a confident wrong pid. The marker-carrying
