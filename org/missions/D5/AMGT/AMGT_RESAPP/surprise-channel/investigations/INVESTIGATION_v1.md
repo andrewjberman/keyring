@@ -22191,7 +22191,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "git diff 63f0605039 d5840c9e52 -- lib/opal_naming.py: 12 insertions 0 deletions, 0 lines matching def address/key/lookup"
     ]
   },
-  "notes": "Surfaced, not chased, and NOT a refusal of the GO: the GO's conclusion was correct on the packaged denominator. A next GO that states the DENOMINATOR ('n of the 136 packaged paths differ, and they are ...') rather than a two-file list would not need re-deriving by the executor. Issuer's to weigh at the round-79 analysis."
+  "notes": "Surfaced, not chased, and NOT a refusal of the GO: the GO's conclusion was correct on the packaged denominator. A next GO that states the DENOMINATOR ('n of the 136 packaged paths differ, and they are ...') rather than a two-file list would not need re-deriving by the executor. Issuer's to weigh at the round-79 analysis."},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~314",
+  "surfaced_at": "2026-10-08T21:39:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W314-S1",
+  "one_line": "The walker account read armed by ANOTHER seat's walk when AMGT-cc-8 started, after reading disarmed at my first call; the order says file BLOCKING and stop, so no act was walked.",
+  "spec_asserts": "The GO: 'The walker account reads disarmed (armedBy none)'; the order: 'The issuer holds the walker slot. If ui_walker_account.py status reads armed by anyone else when you start or between passes, file a BLOCKING row and stop.'",
+  "world_is": "My first call (about 21:3xZ, 17:3x EDT) read 'status=disabled ... armed=no armedBy=none'. At 17:36 EDT the same command read 'status=active ... armed=yes (1.8 min ago) armedBy=Opal_Bloomberg:32772:636317a2; SSM PRESENT', and it read armed again at 17:37 (2.4 min) and 17:38 (3.8 min) with the same holder. The holder is a running walk, node pid 30012 started 17:34:38 EDT: 'node .claude/skills/ui-walk/walk.mjs --base http://localhost:5174 --route /security-analysis --security \"BA US\" --security \"NVDA US\" --security \"SPOT US\" --max-minutes 5', launched from a bash call that redirects to /tmp/x/walk_terms.log (a Claude shell, claude-8298). It is not this worker: this worker armed nothing, started no browser and ran no walk. Its own arm would have printed HELD and minted nothing. Worker 314 stopped here: 0 arms, 0 pages opened, 0 captures, no dev server started.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ui_walker_account.py status, run three times at 17:36, 17:37 and 17:38 EDT, each reading armedBy=Opal_Bloomberg:32772:636317a2 (armed 1.8, 2.4 and 3.8 minutes before)",
+      "Win32_Process read: pid 30012 node walk.mjs (CreationDate 5:34:38 PM), parent chain bash pid 20100 / 12192 whose command line carries 'walk_terms.log'",
+      "my own first call at the start: 'STATUS: row PRESENT opal-ui-walker@opal.test status=disabled ... armed=no armedBy=none; SSM ABSENT'"
+    ]
+  },
+  "notes": "Surfaced, not chased; no attempt to disarm another holder's lease (disarm runs for its holder only, and the walk may be live). The walk was capped at 5 minutes, so it should have ended by about 17:40 EDT; a re-GO after a status read of disarmed is the way forward. Companion row AMGT_RESAPP-Z-W314-S2 (port 5174)."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~314",
+  "surfaced_at": "2026-10-08T21:39:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W314-S2",
+  "one_line": "Port 5174 had a LISTENING dev server from ANOTHER worktree (C:/tmp/wk-crps-r40-4/portal) when AMGT-cc-8 started, though the GO read 0 listeners; this worker's own dev build could not take the port.",
+  "spec_asserts": "The GO: 'port 5174 had 0 listeners at the GO'; bound 4: 'The dev server runs only on port 5174.' Serving from this worktree's portal (C:/tmp/r79-308/portal) was the order.",
+  "world_is": "At 17:36 EDT netstat read '[::1]:5174 LISTENING 35236' with live connections. Pid 35236 is 'node scripts/dev-live.mjs --port 5174', child of bun pid 12112 ('bun run dev:live --port 5174', created 5:28:55 PM), whose parent bash call was 'cd C:/tmp/wk-crps-r40-4/portal && ... bun run dev:live --port 5174 > /tmp/x/dev5174.log'. So the listener serves the portal of worktree wk-AMGT_CORPUS-40-4 (git worktree list: C:/tmp/wk-crps-r40-4 366ad30240), not the portal at 38cc0ecf in C:/tmp/r79-308. A walk against it would read another seat's build, not the ref the order names. Still LISTENING at 17:38 EDT. Worker 314 started no server and stopped the work (see S1). Listener count on 5174 at my last read: 1, none of them mine.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "netstat -ano at 17:36 and 17:38 EDT: '[::1]:5174 [::]:0 LISTENING 35236'",
+      "Win32_Process: pid 35236 node scripts/dev-live.mjs --port 5174, ppid 12112 bun.exe, ppid 19900 bash.exe whose command line holds 'cd C:/tmp/wk-crps-r40-4/portal'",
+      "git worktree list: C:/tmp/wk-crps-r40-4 366ad30240 [wk-AMGT_CORPUS-40-4]"
+    ]
+  },
+  "notes": "Surfaced, not chased; the other seat's process was not touched. The walker row S1 and this row are one contention (another AMGT-family worker is mid-walk on the shared device). Two walkers cannot run at once on one account and one port; the issuer sequences them."
 }
 ]
 ```
