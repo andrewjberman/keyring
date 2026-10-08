@@ -2160,3 +2160,26 @@ the battery.
 page's own officer sort). Neither is in battery29.
 **Then:** the drain, battery29 with no skip on the combined candidate, the close walk on a local build against the live function (BA,
 AMD, BP/ LN, MSFT), CTO review, and ONE DEV push on Andrew's word.
+
+## v52 -- ROUND 52 (issuer, 2026-10-08 ~12:5xZ) -- ONE DIRECT ACT: THE RESEARCH TEAM'S DOCUMENT READS "THE RESEARCH TEAM'S PACK" EVERYWHERE
+
+**Rectangle:** CTO msg 31721 (REVIEW + RULING on `round51/ROUND51_CLOSE.md` @24f8e4384c): SAUX-37, 38 and 39 accepted on the walk;
+finding F1 ruled; candidate bfba701f RETURNED "for that one cell", the wording. **The ruling:** the team names its own file "Research
+Pack", so the words belong to the team's document alone; on the page it is "the research team's pack" everywhere; "research-team
+report" is withdrawn (`reasonWords.ts` and `tabs/ThesisTab.tsx`). The BUILT thing loses the word at the producer (AMGT_RESAPP round
+79, cc-6: its source is served as "the analysis built for this name"). This supersedes v51's L5 decision on SAUX-40.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzd-1` DIRECT ACT (under the size floor, `<risk>LOCAL</risk>`; no task order) | FWD-27 (SAUX-40) | `reasonWords.ts`, `tabs/ThesisTab.tsx` | 2.0.0_SA_COO~D |
+
+**The act:** portal `dbeb6764` = bfba701f + two commits (`655994d2`, `dbeb6764`), two files, +9 -4. The first commit's rule was
+wrong: CTO msg 31737 asked for the doubling case, and "no class A report is on file" read "... is not on file is on file"; two more
+served shapes garbled ("the most recent class A report ...", "no class-A or class-B report was picked"). The second commit gives each
+served sentence shape its own form. The shapes were read from `lib/research/corpus/continuation.py` and `dossier.py`.
+**Check:** `round52/checks/r52/r52.cjs` (r51b.cjs with arm 2 re-pointed to the ruling, plus six served sentence shapes printed and
+graded for doubled words and stacked articles): 2 of 3 at the base (the ~114 tree at 060d0025) and at 655994d2; 3 of 3 on dbeb6764.
+`r51a.cjs` still 4 of 4. `r51b.cjs` arm 2 is superseded.
+**Real run:** `round51/walk/walk51.mjs` on dbeb6764 against the live function, BA US and BP/ LN: 8 of 8 reads PASS
+(`round51/walk/read-20261008T123449Z/`); every drawn line naming the team's pack is printed in `round52/ROUND52_CLOSE.md`.
+**Fan-out:** 0 orders (`fanout: 0`, one direct act).
