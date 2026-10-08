@@ -3403,3 +3403,22 @@ allows a lost pair only by name (the two BP pairs, and the 3 Carlisle pairs).
 - `bh-9` AC1, `bh-10` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
 - `bh-9` AC2, `bh-10` AC2 (`cat` of the cell's census output) base: FAIL as expected (no such file).
 - `bh-9` AC3, `bh-10` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (460 passed).
+
+## 78. ROUND 64 -- rebuild #9 under its pair, and the issuer grouping for TTE and ICT (`1.0.0_SA_CTO~Z` msg 31575, ADDENDUM 2 @e93cccc7be), 2026-10-08 ~04:5xZ
+
+Rounds 61 to 63 are terminal, 10 of 10 orders (@6c959d416b). ADDENDUM 2 records rulings R9 to R13 and lists three items for
+round 64: rebuild #9 under its own pair; row Z-W110-S5; then the first walk of the Security Analysis feed on rebuilt gold.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bi`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one order; the other two items are not orders of this issuance, for the reasons below).
+
+| item | how it runs | class |
+|---|---|---|
+| **Rebuild #9** | The ISSUER'S ACT under its never-widen pair, as rebuild #8 was: dry run `deliverables/2.0.0_SA_COO_H/round64/gold_rebuild9.signing.py` (in flight, PUTS 0), rule `gold_rebuild9_rule.py`, the 21 removals named by key in `REBUILD9_NAMED_REMOVALS.json` (4 true pairs lost). No worker order. | SERVED |
+| `HVST-bi-1` (`bi-1`) | **The issuer grouping reaches the two TotalEnergies listings and says why the two ICT listings stay apart.** Limb 2 ignores whitespace in the name comparison; a `reason` on each root left apart; plants with the ICT pair as negative control; a census: TTE grouped, ICT not, built dicts changed 0. Merged AFTER the act. worker-light ~114. | LOCAL |
+| **The first walk of the Security Analysis feed on rebuilt gold** | Needs the rebuilt gold and its stamp: an unmet dependency today. Cut as the next round the tick the act ends. | -- |
+
+**Checks dry-run at the base before the cut:**
+- `bi-1` AC1 (`pytest test_bi1_grouping_whitespace.py`) base: FAIL as expected (the test is absent).
+- `bi-1` AC2 (`cat bi1_census.out`) base: FAIL as expected (no such file).
+- `bi-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (491 passed).
