@@ -20781,3 +20781,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The apply reads one list; a second, unread copy is tracked and should be removed in a later round."
 }
 ```
+
+## IRPT_BCKEND-D2-W172-S1 -- amendment arrived after both applies; gate passed without override; plan text committed after the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 (plan text committed before each apply) reached the worker after both applies had landed; the safe-apply tag-authz gate passed without TAGAUTHZ_OVERRIDE on both roots, so no override was used and the plan text is committed after the fact from the saved planfiles.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply.sh output on export root: 'comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag'; api root apply rc=0; both re-plans exit 0 (No changes)",
+      "amendment @212717f781; ledger open commit 4328e78b53; plan text written by terraform show -no-color on the saved planfiles export.tfplan and api.tfplan (the exact files applied)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: commit terraform show of each planfile before its apply; use TAGAUTHZ_OVERRIDE only after the gate has refused without it.",
+  "world_is": "Both applies ran before the amendment arrived; the gate did not refuse on either root (it passed), so tagauthz_override_used is []. The plan text files are the applied planfiles rendered after the apply, not before it. The CTO may want to know S334 did not fire on these two roots."
+}
+```
