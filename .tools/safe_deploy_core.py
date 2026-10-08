@@ -1157,11 +1157,15 @@ def mint_bundle(label: str, bname: str, b: dict) -> tuple[str, str, dict]:
 
     env = _aws_env()
     meta_arg = ",".join(f"{k}={v}" for k, v in sorted(metadata.items()))
-    cp = subprocess.run(
-        [aws_bin, "s3", "cp", str(local), f"s3://{b['bucket']}/{b['s3_key']}",
-         "--metadata", meta_arg],
-        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120, env=env,
-    )
+    try:
+        cp = subprocess.run(
+            [aws_bin, "s3", "cp", str(local), f"s3://{b['bucket']}/{b['s3_key']}",
+             "--metadata", meta_arg],
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120, env=env,
+        )
+    finally:
+        # the bundle file exists only for this upload; every deploy used to leave its temp dir behind (GC P3)
+        shutil.rmtree(tmp, ignore_errors=True)
     if cp.returncode != 0:
         return "UPLOAD_FAIL", cp.stderr.strip(), shas
 
