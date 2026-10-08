@@ -48,6 +48,8 @@ fires even where the vendor already posts a CFNCASH leg for the sale, which coun
    DIFF after, and `movers_back` counts round-19 movers MATCH after. In `sweep_regrade.md` show the 23 under the new rule and whether
    each of round 22's 25 recovered movers is still MATCH.
 
+**AMENDMENT 1 (issuer ruling, 2026-10-08 ~20:1xZ, on row D2-W45-S1).** The first run falsified the double-credit lead: 0 of the 23 are `double_credit`; 13 (0QF879352) carry a CFNCASH `lo` withdrawal on the credit day; 10 have no CFNCASH row, and in 9 of them the SOLD security has no value on the day before the credit day, so the credit adds proceeds to a value that never held it. The rule `conditional` becomes: the funding credit applies only where (a) the sold security was VALUED (not blank, not UNPRICED) in the account on the day before the credit day, and (b) no same-day credit-signed CFNCASH row equals the proceeds (as built). Then trace one 0QF879352 month end to end (each day's cash rows, sweep legs, the credit, the value) and state, in the report and before any change, the general condition that would or would not clear it; ship that condition only if it is one general rule over row types that keeps round 22's 25 MATCH and the control unchanged. AC2 stays `regressions=0`; if it still cannot be met, refuse again with the remaining months named and their traced cause, and do not weaken the test.
+
 Tests `data/assets/scripts/silver/tests/test_commonwealth_cash_leg.py` (add to it): a funding sale WITH an existing CFNCASH leg gets no
 second credit (the value moves by the sale once); a funding sale WITHOUT one is credited (round 22's case still holds).
 
