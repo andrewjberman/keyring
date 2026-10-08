@@ -946,6 +946,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-s-8 build item 1 and the speaker ruling: speaker is a string passed through unchanged; a file that cannot parse is listed in failures.",
     "world_is": "One utterance carries a null speaker (unattributed). Passing None through keeps the ruling 'speaker unchanged' and the 29-of-29 criterion; the silver speaker column therefore holds one null in 20473 rows.",
     "notes": "The issuer may rule a sentinel (e.g. UNATTRIBUTED, matching the file's speakers list) instead of null; that is a one-line change in research_fold._fold_one and a ruling, not the worker's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S2",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T20:24:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TR-w-9: the per-row held_out count over the 29 files is 4555 rows, not 2716; 2716 is the number of DISTINCT residual-flag words (wipe_blocks de-duplicates its flag list), so the round-8 'rows held out' figure counted words.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c build(sorted(glob('research_transcripts/structured/*.json'))) at data/transcripts/scripts/teams/research_fold.py@c59ec0af21 -> files=29 rows=20473 failures=0 residual_flags=2716 held_out_rows=4555",
+        "data/transcripts/scripts/outlook/wipe.py:336-337 appends a flag only 'if w not in flags'; the per-block occurrence counter c2['residual'] counts every occurrence; held_out uses the latter via a _Wiper mirror asserted equal to wipe_blocks' flag list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-8 analysis @08ff07562f and the TR-w-9 cell: '2,716 residual-flag rows held out'; held_out is TRUE when an utterance drew at least one residual flag.",
+    "world_is": "Under the TR-w-9 definition 4555 of 20473 rows are held out (15918 stored and re-wiped); 2716 is residual_flags, a distinct-word count. The writer follows the stated definition, so the issuer's served write holds out 4555 rows.",
+    "notes": "Test fixtures show sentence-initial title/common capitalised words (e.g. a leading title or noun) also draw a flag, which is why the row count exceeds the word count. The issuer should expect 4555, not 2716, in the read-back."
   }
 ]
 ```
