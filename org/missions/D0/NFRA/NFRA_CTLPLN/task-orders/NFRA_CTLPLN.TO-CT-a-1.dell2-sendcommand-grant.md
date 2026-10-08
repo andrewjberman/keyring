@@ -417,7 +417,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -838,3 +838,83 @@ BACKEND. THE ISSUER HOLDS THIS BRANCH OFF THE TRUNK UNTIL THE APPLIER REPORTS ST
 
 **ACCEPTANCE.** The six ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
 
+## AMENDMENT 16 (2.0.0_SA_COO~C, 2026-10-08 ~16:3xZ) -- REOPENED, PRIORITY: item 3 -- widen the two grants (cell 2, step E)
+
+Authority: Andrew-direct 2026-10-08 ~13:2xZ, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_TEN_ANSWERS_LIFT_ITEMS_5_AND_4_WIDEN_BOTH_GRANTS_DELL2_RETRIES_DELL1_INSTALLS.md`
+row 3: "WIDEN THE TWO GRANTS, YES" to "the 28 platform keys, the audit trail and its bucket, the portal's protected functions
+and the four cross-box queues"; "Not named and so not widened by this: the 19 unplaced secrets, and the one custodian
+session behind its own key". `1.0.0_SA_CTO` msg 106945 cell (2); msg 106987: cell 2 goes FIRST, cell 1 after it applies;
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/FAST_FIX_RULINGS_20261008_162xZ.md` graph F1: `opal/mcp/graph-read-token` is one of
+the 28 and ships here. AMENDMENT 15 (cell 1, the routes Deny) is NOT on this branch: it is parked on branch
+`wk-NFRA_CTLPLN-14` and is not part of this pass. Do not touch `routes.tf` or the routes arms. Gate limb: none graded this
+modification. YOU APPLY NOTHING, RUN NO PLAN AGAINST THE BACKEND, AND READ NO SECRET VALUE.
+
+THE ISSUER'S READING (the CTO half confirms or widens it): "the two grants" are the SECRETS read grant and the
+RESOURCE-POLICY Allow. What comes in is what those two grants held out on the four named things. Nothing else moves:
+`DenyEveryIamWrite` (cell 3), `DenyPassRoleExceptNamed`, `DenyApiKeyReads`, `DenyS3DeletesOnProductionData`,
+`DenyTableAndDatabaseDeletes`, the protected functions' ten DEPLOY actions, and the routes Deny all stay as they are.
+
+1. **SECRETS: the 28 PLATFORM-KEY secrets are GRANTED.** In `tests/derive_vendor_secrets.py` the class PLATFORM-KEY becomes
+   a granted class (record this amendment as the rule's source in the script's head). OTHER (19) and BLOCKED-BY-KEY
+   (`schwab/sdd/session`) stay NOT granted. Re-derive the census from the saved listing (or `--live`, names and metadata
+   only, never a value) and print the class counts; expected granted 66 + 28 = 94. The grant stays exact ARNs, no
+   wildcard, built by the module from the census. The document will pass 6,144 characters: SPLIT by a stable rule (one
+   managed policy per granted class is the rule `iam.tf` already names), names from the builder, each with its group
+   attachment; print each document's characters and the group's managed-policy count (expected 7 of 10). Keep the existing
+   policy's name and address for one of the parts so it updates in place rather than being destroyed and re-created.
+   Name `opal/mcp/graph-read-token` in your report as granted.
+2. **THE AUDIT TRAIL: `cloudtrail:PutResourcePolicy` and `cloudtrail:DeleteResourcePolicy` come into the Allow.** In
+   `dell_respol_policy.json` flip both to `in_allow: true` (summary 72 of 75 in the Allow). `DenyCloudTrailWrites`
+   (`dell_deploy_policy.json`) denies them today through `cloudtrail:Put*` and `cloudtrail:Delete*`: rewrite that statement
+   so it no longer denies those TWO actions and still denies every other CloudTrail Stop/Delete/Update/Put action. Take the
+   full action list of those four prefixes from the AWS service reference or the simulator, print it, and write it
+   explicitly (or use a `NotAction`-free form you show is equivalent); show by simulation that `cloudtrail:StopLogging`,
+   `DeleteTrail`, `UpdateTrail` and `PutEventSelectors` still read explicitDeny.
+3. **THE AUDIT-TRAIL BUCKET: its resource-policy actions come out of the Deny.** Split `DenyAuditTrailBucketPolicy`
+   (`dell_create_policy.json`): the actions AMENDMENT 12 put in (bucket policy, ACL, access point, access grant and the
+   like: the ones present in the Allow's data) LEAVE the Deny; the seven AMENDMENT 13 added (lifecycle, logging,
+   notification, encryption, versioning, ownership controls, public-access block, with their deletes) STAY, in a statement
+   renamed `DenyAuditTrailBucketWrites`, same two resources. List each action with where it went.
+4. **THE PROTECTED FUNCTIONS: their permission actions come out of the Deny.** From `DenyProtectedFunctions`
+   (`dell_deploy_policy.json`) remove ONLY the actions AMENDMENT 12 added (find them by `git log -p` on that file; at least
+   `lambda:AddPermission`, `lambda:RemovePermission`; print the set and the commit). The ten deploy actions it held before
+   stay, on the same twenty resources.
+5. **THE FOUR AGENTBUS QUEUES: `DenyAgentbusQueuePolicy` is removed** (`dell_create_policy.json`). The per-user receive
+   policies are untouched: a Dell still receives only from its own queue.
+6. **SIZE.** Print the characters of every touched document against 6,144.
+7. **SIMULATION.** `vendor_ok=<a>/<n>` counts the new grant: add named arms `secretsmanager:GetSecretValue` on
+   `opal/mcp/graph-read-token` and on two other PLATFORM-KEY secrets -> allowed for both users; one OTHER secret and
+   `schwab/sdd/session` -> still refused. The `undo_denied` field becomes its mirror, `undo_freed=<a>/<n>
+   undo_still_denied=<k>` in the same place (before `selfsim_ok`): each action on each named resource that this pass frees
+   reads allowed for both users, and the arms that must stay refused (the seven bucket writes, the CloudTrail
+   Stop/Delete/Update arms, the protected functions' deploy actions) read explicitDeny with the statement named.
+   `freed_allowed` becomes 72/72. The last fields stay `ssm_ok=<a>/<n> routes_ok=5/5 vendor_ok=<a>/<n> all_ok=True`.
+8. **STATIC CHECK.** `tests/check_identity.py`: the builder-name count and the attachment count move with the split; report
+   both. `allow_default_true=True` stays.
+9. **PLAN NOTE**, a new section G, "STEP E -- the two grants widened (item 3, cell 2)", for the people who sign: the
+   expected plan BY READING, resource by address so the applier can TARGET it (expected: the deploy, create and
+   resource-policy Allow policies and the secrets policy changed in place; one new secrets policy and its attachment
+   created; nothing destroyed); what each Dell can newly do, in plain words (read the 28 platform keys, by name; change the
+   audit trail's resource policy; change the audit-trail bucket's policy and ACLs; change who may invoke the ten protected
+   functions; change the four queues' policies and attributes); and what still refuses after this step.
+
+**ACCEPTANCE.** The six ids, expectations unchanged (`CTa1-AC2`
+`ssm_ok=[0-9]+/[0-9]+ routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`; `CTa1-AC6` reads `ok=True` with granted=94).
+Rewrite the proof instance, validate, flip to `complete`.
+
+## AMENDMENT 17 (2.0.0_SA_COO~C, 2026-10-08 ~17:2xZ) -- issuer repair: CTa1-AC5's expectation is recut to the world STEP C made (row W14-S19)
+
+Your AMENDMENT 16 report and row NFRA_CTLPLN-W14-S19: `CTa1-AC5` reads `dell_write_refused=8/10` on the unedited tree at
+d613ff4526 as well, so the failure is not this pass's. The two arms that read allowed are `kms:PutKeyPolicy` on the transcripts
+key for dell1 and for dell2: the resource-policy Allow applied in STEP C (2026-10-08, order TO-APPLY-13) grants it, and that
+route was signed with open eyes. The COO half of step C lists it as item 4 of "What this Allow CAN undo" ("The transcripts
+key's policy. A Dell could widen itself past the decrypt-only grant applied on 2026-10-07"), accepted by `1.0.0_SA_CTO` msg
+106733 as inside what Andrew lifted. No key-policy Deny is cut. Gate limb: none graded this modification (the issuer amends
+its own criterion, Andrew-direct 2026-09-24). YOU APPLY NOTHING.
+
+1. `CTa1-AC5`'s `<expect>` is changed above in this order, by this amendment, to
+   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True`.
+2. Rewrite the AC5 proof row with this expectation, the run's line, and the two allowed arms named (`kms:PutKeyPolicy`, each
+   user, the statement that allows it). Validate the instance; flip the order to `complete` when all six match.
+3. Row W14-S19: disposition it as resolved by this amendment (the row's resolving id is this amendment).
