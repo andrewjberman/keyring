@@ -143,9 +143,24 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~110's queue, third. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as
   expected (no such file); AC3 base PASS as expected (419 passed).
 
+**COMPLETE 2026-10-08 ~02:4xZ (issuer):**
+- **Built:** worker ~110 in two passes: @99ed64f3fe (the rule; good pairs kept 31 of 39, BLOCKING row Z-W110-S4) and, under
+  AMENDMENT 1, @931e07cfa7 (the symbol anchor). Merged @1866108355 (8 paths, index check 0 of 8 differ).
+- **AC1 PASS:** 25 of 25. **AC2 PASS:** CENSUS OK over 19,049 articles: CSL pairs 42 to 39; good pairs kept 39 of 39, 8 of them
+  recovered by the exact-case symbol anchor `CSLLY` ("CSL ( OTCQX:CSLLY )" in bird-flu vaccine-maker lists); Carlisle dropped 3
+  of 3 (sa:3877150, sa:3972317, sa:4148034); ungraded dropped 0; other covered forms under the rule 0; other securities changed
+  0 of 242. **AC3 PASS:** 460 on the branch; issuer drain check on merged CLOUD 460 passed.
+- **Anchors:** CSL Limited, CSL Seqirus, Seqirus, CSL Behring; symbol anchor CSLLY, its source the 8 article spans (the pool and
+  the registry were not checked for it).
+- **Deviation accepted by the issuer:** an entry whose security is absent from the universe is listed in
+  `ticker_anchors_not_in_universe`, not raised (the fixture universes lack CSL); a present security without the form raises.
+- **Row Z-W110-S4:** answered by `1.0.0_SA_CTO~Z` msg 31554 and this amendment. **OWED by `3.0.0_SA_CVO~Z`:** the grade of the 8
+  recovered pairs (`bh3_census.out`, RECOVERED BY A SYMBOL ANCHOR). **Existing assertion changed:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>61</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>
