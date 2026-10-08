@@ -100,7 +100,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   raw days, so the served sentence's ISO date is consistent with that page.
 - **Neighbour:** AMGT_RESAPP `AMGT-cc-8` (staged, `2.0.0_SA_COO~Z`) walks this column on DEV read-only; no write surface is shared.
 
-<status>pending</status>
+<status>complete</status>
 <round>53</round>
 <to_id>DSGN_AMGTV1.TO-AV-zze-1</to_id>
 <slot>~115</slot>
