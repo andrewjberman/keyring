@@ -2352,3 +2352,115 @@ round.** Never edit an existing row.
   "world_is": "Met. Unmeasured lead for the 23 MATCH -> DIFF regressions (19 in 0QF879130 and 0QF879352): the rule credits cash whenever a non-sweep sale and a sweep buy share a day, so if the vendor already posts a cash leg for some of those sales, the synthetic credit counts it twice. A per-month check for an existing CFNCASH row on the credited days decides it."
 }
 ```
+
+## ADVI_COTBKF-D2-W45-S1 -- CB23w1-AC2 not met: the double-credit lead is falsified (0 of 23), the conditional rule drops 0 of 2703 credits
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T20:12Z",
+  "one_line": "CB23w1-AC2 cannot be met by the conditional rule as ordered: the double-credit lead (D2-S34) is falsified -- 0 of the 23 regressions are double credits and the conditional rule drops 0 of 2703 funding credits, so regressions=23 stays",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation (r19 -> conditional, list v1 both arms): months_after=2103/1520/78970 control_same=True regressions=23 movers_back=25; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md section 'Round 22's 23 regressions' (classes: other:cfncash_row_not_the_sale_cash=13, other:no_cfncash_row_on_credit_day=10, double_credit=0; 0 of 23 MATCH under conditional)",
+      "funding_credit_rows over the whole transactions table (1,416,497 rows): 2703 credit days unconditional, 2703 conditional -- 0 dropped. Only 310 of the 2703 credit days carry any CFNCASH row at all; of 451 (credit day, CFNCASH row) pairs, 3 have |Amount| equal to the sale proceeds and all 3 are type lo (a withdrawal, debit sign), none a credit-signed row",
+      "0QF879352 (13 of the 23): on the credit days 2021-07-16, 2021-07-20, 2022-07-18 the CFNCASH row is the withdrawal lo (12788.22 / 10000.00 / 7034.39) paired with a sweep sl of the same amount; the stock sale (13000 / 10000 / 24,560.55 over six securities) funds the sweep buy. Skipping every credit day that carries ANY CFNCASH row (a wider condition than the order's, tried in a scratch probe on the six accounts of the 23, not shipped) removes those 13 months and leaves 10 regressions, so no CFNCASH-row condition reaches regressions=0",
+      "the other 10 (0QF879130 2025-05..2025-10, B3S691415 2023-10, B3S748567 2025-07, B3S808881/B3S808882 2025-01): no CFNCASH row on any credit day. In a scratch probe of those accounts under r19, on 9 of the 10 months the account value on the day before a credit day is blank (holdings 3-4, priced 2-3: the sold bond/bill/fund has no price) and the sale day is the first complete day; the credit then adds the sale's proceeds to a value that never held the sold security (0QF879130 2025-04-07: r19 24,239.68, repaired 239,239.68, the difference 215,000 = the three earlier credits). B3S748567 2025-07 is the exception: its sold fund (316067107) was priced and the value fell by the credit under r19. Lead only, not a claim: a credit conditioned on the sold security having been valued the day before"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-1 / CTO round-22 ruling E1 (row D2-S34): the 23 MATCH -> DIFF regressions come from a funding credit applied where the vendor already posts a CFNCASH leg; a rule that credits only where no CFNCASH row exists removes them (regressions=0).",
+  "world_is": "No CFNCASH row of the credit days carries a sale's cash in the 23 months; the conditional rule is implemented (commonwealth_sweeps.py funding_credit_rows(conditional=True), cash_leg conditional, default) and is a no-op on the data. All 23 are `other`. The order's refusal clause applies: the test is not weakened and the rule is not widened beyond the order."
+}
+```
+
+## ADVI_COTBKF-D2-W45-S2 -- CB23w1-AC2 not met under AMENDMENT 1: regressions=1, the 25 recovered movers lost to condition (a)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T20:42Z",
+  "one_line": "CB23w1-AC2 not met under AMENDMENT 1: (a)+(b)+(c) leaves regressions=1 (B3S748567 2025-07) but loses all 25 round-22 recovered movers; no variant measured has regressions=0 and the 25 kept",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation with the shipped `conditional` = (a) sold security valued the day before + (b) no credit-signed CFNCASH row equal to the proceeds + (c) no CFNCASH row of any type equal to a same-day sweep sale: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md; one 0QF879352 month traced before the change in trace_0QF879352.md @86a13267df",
+      "classes of the 23 (sum 23): double_credit 0; vendor_cfncash_leg_of_sweep_sale 13 (0QF879352 2023-05,06,08,09,11,12, 2024-02,03,05,06,08,09,11: on all three credit days 2021-07-16, 2021-07-20, 2022-07-18 a CFNCASH lo equals the same-day sweep sale 12788.22 / 10000.00 / 7034.39; the credits total 32678.95 and sit in the level from the first complete day 2022-07-18: r19 17640.53, repaired 50319.48); sold_security_not_valued_day_before 9 (0QF879130 2025-05..10, B3S691415 2023-10, B3S808881 and B3S808882 2025-01); other:credit_kept_by_every_condition 1 (B3S748567 2025-07). Now: 22 of 23 MATCH",
+      "variants measured with the same invocation (scratch driver patching funding_credit_rows, caches shared, control_same=True in each): (a)+(b) as ordered: regressions=14 movers_back=0; (b)+(c) without (a): regressions=10 movers_back=25 months_after=2116/1507/78970; (a)+(b)+(c): regressions=1 movers_back=0. Credit days kept of 2703: (b)+(c) 2671, (a)+(b)+(c) 793",
+      "the 25 recovered movers are lost by (a), not by (c): their five accounts (0QF879238 2017-07..2018-06, B3S605725 2018-01, B3S804888 2024-02/08 2025-02/08, D49141608 2019-02..09, D49141714 2019-02) have 0 of their credit days with a sold security valued the day before, the same state as the 9 that (a) clears, so the condition cannot tell a credit that restores the level (the 25) from one that inflates it (the 9). The credit is right for the 25 and wrong for the 9 and the 13 by the evidence of the reported returns; the variable that separates them is not in (a), (b) or (c)",
+      "the remaining month B3S748567 2025-07 (computed 0.0535, reported 0.12): sold security the money-market fund 316067107 (rule (b) candidate, off in list v1, priced), credit days 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70), each paired with a sweep buy of the same amount and no CFNCASH row that day; r19 value 2025-07-31 9816.72 vs credited 21692.42, the difference 11875.70; the month's interest base matches r19 (0.12 pct of 9.8k)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-1 AMENDMENT 1 (issuer ruling on row D2-W45-S1): a credit conditioned on (a) the sold security valued the day before and (b) no equal credit-signed CFNCASH row, with a general condition for the 13 shipped only if it keeps round 22's 25 MATCH and the control unchanged, gives regressions=0.",
+  "world_is": "(a)+(b) leaves 14 regressions and loses the 25; (c) clears the 13 and keeps the 25 (measured without (a)); (a) clears 9 of the other 10 but loses the 25; one month (B3S748567 2025-07) is untouched by every condition. regressions=0 with the 25 kept is not reached by any combination of (a), (b), (c). The shipped default is (a)+(b)+(c) as the order directs; the issuer may rule (a) out, which gives regressions=10 with the 25 kept. The test is not weakened."
+}
+```
+
+## ADVI_COTBKF-D2-W45-S3 -- CB23w1-AC2 not met under AMENDMENT 2: regressions=1 (B3S748567 2025-07); the blank relabels 2110 already-UNPRICED days and moves no verdict
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T21:00Z",
+  "one_line": "CB23w1-AC2 not met under AMENDMENT 2: (a')+(b)+(c) leaves regressions=1 (B3S748567 2025-07, core candidate 316067107, row D2-S30); the blank changes no verdict (2110 of 2111 blank days were already UNPRICED) and round 22's 25 are 0 MATCH / 25 DIFF / 0 UNGRADABLE",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation with the shipped AMENDMENT 2 rule (b)+(c) credit, (a') unvalued funding sale blanked: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0 (rc 0, 5m47s under timeout 1500); report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md sections 'CB-w-1 AMENDMENT 2' and 'Round 22's 23 regressions'. Classes of the 23 (sum 23): vendor_cfncash_leg_of_sweep_sale 13, unvalued_funding_sale 9, other:credit_kept_by_every_condition 1; 22 of 23 now MATCH",
+      "variant table, all measured with the same invocation: round 22 repaired 23/25 (regressions/movers_back, months_after 2103/1520/78970); (b)+(c) 10/25 (2116/1507/78970); (a)+(b) 14/0 (2045/1538/79010); (a)+(b)+(c) 1/0 (2058/1525/79010); (a')+(b)+(c) 1/0 (2058/1525/79010). Credit days posted of 2703: (b)+(c) 2671; (a')+(b)+(c) 560 with 2111 blank days",
+      "the blank moves no verdict: of 2111 credit days with an unvalued funding sale, 2110 are on the value grid and all 2110 were already blank (reason UNPRICED) under the same values with no blank list (daily_returns run with and without blank_days on the persisted after values: 2110 reasons changed UNPRICED -> UNVALUED_FUNDING_SALE, 0 computed days changed); the 1797 months holding one were already UNGRADABLE; no month of the 23 or of round 22's 25 holds a blank day (their credit days are in earlier months)",
+      "round 22's 25 by new verdict: MATCH 0, DIFF 25, UNGRADABLE 0 (0QF879238 2017-07..12, 2018-01..06; B3S605725 2018-01; B3S804888 2024-02/08, 2025-02/08; D49141608 2019-02..09; D49141714 2019-02). Not crediting leaves their accounts' level at r19 (DIFF); a one-day blank on the credit day cannot reach the later months that carry the level",
+      "the remaining MATCH -> DIFF month: B3S748567 2025-07 (computed 0.0535, reported 0.12). Sold security 316067107 is held (bought 45000 on 2024-05-02) and priced 1.00, so (a') does not blank it; credits 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70) each pay a same-day sweep buy, no CFNCASH row on those days, so (b) and (c) drop nothing; value 2025-07-31 r19 9816.72 vs credited 21692.42. The reported return has the r19 base: consistent with the vendor not carrying the fund in its performance base (inference), i.e. the parked core candidate of row D2-S30"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-1 AMENDMENT 2 (issuer ruling on row D2-W45-S2): a funding sale of a security not valued the day before blanks the credit day (UNVALUED_FUNDING_SALE, month UNGRADABLE), (b) and (c) stay, and AC2 stays regressions=0; round 22's 25 are reported by new verdict.",
+  "world_is": "The rule is built as stated and does not reach regressions=0: B3S748567 2025-07 passes every condition because its sold fund is held and priced (a row-type or valuation condition cannot tell a core cash fund from any held fund; it needs the D2-S30 designation). The blank is a relabel, not a verdict mover: every blank day was already UNPRICED, so round 22's 25 land DIFF, not UNGRADABLE. The test is not weakened; the order stays open."
+}
+```
+
+## ADVI_COTBKF-D2-W45-S4 -- CB23w2-AC2 not met: divfee as ordered leaves regressions=95 (181 DIFF->MATCH, 58 of the 75 sweep_trade_day movers back); fch never helps, the dividend leg is 46 gained / 28 lost
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T21:42Z",
+  "one_line": "CB23w2-AC2 not met: the divfee rule as ordered (dv credit, man/fch debit, on a conditional baseline) leaves regressions=95 against 181 DIFF->MATCH; 58 of the 75 sweep_trade_day movers are back to MATCH; fch never helps (0 of 24 DIFF months, 25 MATCH->DIFF), the dividend leg is 46 gained / 28 lost",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation as written (before conditional, after divfee, list v1 both arms, --out .../0.9.0_WK_ADVI_COTBKF~45/divfee): months_before=2058/1525/79010 months_after=2121/1438/79034 control_same=True regressions=95 movers_back=78 (rc 0, 8m11s under timeout 1500); report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/divfee/sweep_regrade.md section 'CB-w-2' and its table 'Months that moved MATCH -> DIFF between the arms'. Transitions (82593 months): DIFF->MATCH 181, MATCH->DIFF 95, MATCH->UNGRADABLE 23, DIFF->UNGRADABLE 14, UNGRADABLE->DIFF 13",
+      "the 95 by what the month carries: fch_fee_leg_in_month (30): 0QF878979 2017-11; 0QF878981 2020-11; 0QF879231 2017-11,2018-11,2019-11; 0QF879353 2020-11,2022-11,2023-11,2024-11,2025-11; 0QF895828 2018-11,2019-11; 0QF895984 2018-11; 0QF927346 2022-05; B3S661358 2018-11,2019-11; B3S749464 2023-11,2024-11; B3S782299 2022-11,2023-11; D49146094 2019-11,2020-11,2021-11,2022-11,2023-11,2024-11; H2Y365503 2023-11; H2Y365888 2023-11; RGY004120 2025-11; RGY005715 2025-11 | dividend_leg_in_month (28): 0QF878956 2023-08,2024-08,2025-02,2026-03; 0QF879143 2021-08; 0QF879353 2022-05,2022-08,2023-02,2023-05,2023-08,2024-02,2024-08,2025-02,2025-05,2026-02; 0QF899639 2024-11; B3S786844 2022-12; B3S798436 2024-08,2024-09,2024-12,2025-02,2025-11,2025-12; B3S804888 2025-12; B3S808045 2026-01; RGY003587 2025-06,2025-09; RGY007351 2026-03 | level_from_earlier_legs (28): 0QF878981 2022-04; 0QF879181 2020-10,2021-01,2021-04; 0QF879353 2021-12,2022-09,2022-10,2022-12,2023-01; 0QF880505 2021-02,2022-01,2022-07,2022-10; 0QF911558 2022-08,2023-02; B3S670862 2021-08,2021-09,2023-02; B3S670865 2021-08,2021-09,2022-09,2023-02; B3S703388 2024-05,2024-11; RGY004120 2025-03,2025-05,2025-06,2025-09 | man_fee_leg_in_month (7): 0QF878956 2025-04; 0QF880505 2024-04; B3S670862 2021-10; B3S703388 2023-07; B3S808881 2025-01; B3S808882 2025-01; RGY004222 2024-10 | man_fee_and_dividend_legs_in_month (2): 0QF878956 2025-01; RGY007351 2025-12",
+      "variants measured with the same invocation shape (scratch driver, FEE_TYPES / DIVIDEND_TYPES patched; regressions / movers_back / sweep_trade_day back of 75): ordered man+fch & dv 95/78/58; man & dv 78/80/60; man only 32/42/35; man+fch no dividend 91/40/33; dividend only 70/32/20; control_same=True in all. No variant reaches 0",
+      "fch: of the months carrying an fch fee leg and no dividend leg, 24 stay DIFF, 0 become MATCH, 25 MATCH become DIFF, 6 stay MATCH; man: 174 stay DIFF, 112 become MATCH, 11 become UNGRADABLE, 7 MATCH become DIFF, 22 stay MATCH. Example 0QF879231 2017-11: fch -35.00 paid by a 35.00 sweep sale, reported 0.00, computed 0.0026 before and -4.586 after",
+      "dividend: of the months carrying a dividend leg and no fee leg, 349 stay DIFF, 46 become MATCH, 28 MATCH become DIFF, 6 stay MATCH. Example 0QF879143 2021-08: dv 90.00 (stock 293792107) with a 90.00 sweep buy the same day, reported -2.59, computed -2.556 before and -1.595 after. Sweep purchase B equals dividend D on 29127 of 39788 dividend days with a sweep buy, so the pairing is real where it holds",
+      "23 months leave MATCH for UNGRADABLE (not counted by regressions): 22 are 0QF879352 2023-05..2025-12 (every day NON_POSITIVE_BASE under the fee debit) and B3S765083 2022-08 (17 of 23 days)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-2: a dividend that funds a sweep buy credits cash and a fee paid by a sweep sale debits cash, one general rule over the row types, layered on conditional; AC2 expects regressions=0 against that baseline.",
+  "world_is": "The rule is built as ordered (commonwealth_sweeps.divfee_rows, default divfee, 36 tests in the cash-leg file, mutants fire) and regresses 95 months that matched under conditional while recovering 181 and 58 of the 75 sweep_trade_day movers. The reported return of a month with an fch leg, and of 28 months with a dividend leg, equals the computed return WITHOUT the leg: the vendor appears to leave IRA maintenance fees (fch) out of the return and to take some dividends at another date than the pay date (inference; the transactions carry no ex-date). A row-type set of man only cuts regressions to 32 but still not to 0. The test is not weakened; the order stays open for the issuer and the CTO to rule on the fee-type set and the dividend timing."
+}
+```
