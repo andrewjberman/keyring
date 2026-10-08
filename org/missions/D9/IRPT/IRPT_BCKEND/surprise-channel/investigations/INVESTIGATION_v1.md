@@ -21123,3 +21123,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The repin of repository.py (b13bab7495) and retention.py (f60e6f1d2a) is necessary and is done, but not sufficient: the policy registry has no CUSTODY_REPORT family, so ReportRepository.persist and .get under the enforced retention refuse the kind by family. Existing PERFORMANCE and ANALYSIS retained reads are unchanged (their references carry irpt-x10-v1, which is ACTIVE and unchanged). Owner of the missing row: the registry lane (4.0.0_SA_CRO owns reporting_policies.json rows); the producer (IRPT_CUSTDY E2) hits the same refusal on its first persist."
 }
 ```
+
+## IRPT_BCKEND-D2-W176-S1 -- IB-pr-368 stopped before apply: no read route returns a retained ANALYSIS or PERFORMANCE report ok, so the condition-1 regression pre-read cannot be built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-368 STOPPED before any apply: the function has no read operation that returns a retained ANALYSIS or PERFORMANCE report ok with a body, so the CTO condition-1 regression pre-read (ok, report_id, revision, body_sha256) cannot be built; the one repository.get read route (custody-report-read) refuses any non-CUSTODY_REPORT kind by name, and denied an Opal principal on a real retained ANALYSIS report (OBJECT_NOT_COVERED). Nothing applied, no ledger opened, live still 03p2eIEK.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "step 0 reads: merge-base --is-ancestor a0d8d4943f HEAD rc=0; live CodeSha256 03p2eIEKU9iSIOe5GYDbkbisapqAjULUyAPA/Wcxrfc= (LastModified 2026-10-08T17:22:16Z); git status --porcelain empty; packet blob aa9115a66f459f89ec970a60998cd26be23cc310; both halves present at HEAD fba505cec6",
+      "step 1: release-census.py irpt-export-render --pin a0d8d4943f -> changed repository.py, retention.py; changed_members=2",
+      "infra/aws/lambda/investor-reporting/export/entry.py@fba505cec6 ENTRY.operations: submit-export (write), export-receipt and export-download (read the receipt object and its download slice; neither calls repository.get), custody-report-read; grep of ports['reports'] over export/: the only readers are submit_service.py:57, submit_async.py:133 (writes) and custody_read.py:72",
+      "export/custody_read.py:72-80@fba505cec6: resolves through retained_export.resolve (reports.get = repository.get, so retention.py runs) and then raises ExportSubmitRefused('the custody report read serves a CUSTODY_REPORT only; ...') when the kind is anything else, so an ANALYSIS or PERFORMANCE reference can never answer ok with a document through this route",
+      "one direct invoke (read only, no write op) of custody-report-read with an Opal internal principal (r57_invokes happy-principal header shape), selected_tenant of the report's firm, and the retained ANALYSIS reference taken from deliverables/0.9.0_WK_IRPT_BCKEND~101/ANALYSIS_EXPORT_R28.json: StatusCode 200, ok=false, public_reason_code OBJECT_NOT_COVERED (repository.py _allow: retained_export.authorizer requires the caller's identity equal the retained owner field for field, and an Opal principal is not the owner)",
+      "dynamodb scan of irpt-requests to enumerate retained reports and owners: AccessDeniedException kms:Decrypt for the worker identity, so the table cannot be read outside the function",
+      "p81_cells.py IB81-1-AC2 requires pre_read.ok is True and equal report_id, revision, body_sha256 on both sides; satisfying it by impersonating the owner's advisor headers would not help (custody-report-read still refuses the kind) and is not done"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-368 step 2 and CTO half condition 1: an existing retained ANALYSIS or PERFORMANCE report can be read back by reference through one of the function's own READ operations that resolves it through repository.get, by direct invoke under an Opal principal, returning ok with a body.",
+  "world_is": "The deployed function serves exactly one reference-resolving read, custody-report-read, and it serves a CUSTODY_REPORT only; export-receipt and export-download never reach repository.get. So there is no pre-read baseline for retention.py's effect on an ANALYSIS or PERFORMANCE read, and the release was not applied. Options for the issuer and CTO (not chosen here): (a) name a different read-back that does exercise retention.py for those kinds (for example an owner-principal read arm, or the CTO's offline replay of repository.get over a retained blob with the old and new retention.py), or (b) have the CTO restate condition 1 for a function with no such route. Nothing was changed in the world: live CodeSha256 unchanged, no ledger entry, no build, no plan."
+}
+```
