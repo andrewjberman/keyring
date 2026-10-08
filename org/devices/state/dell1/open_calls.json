@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-08T17:55:21Z",
+ "written_at": "2026-10-08T20:51:49Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -12,7 +12,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T17:55:21Z",
    "scope": {
     "measured_at": "2026-10-08T17:55:21Z",
@@ -44,6 +44,194 @@
       "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
      ]
     }
+   },
+   "closed": {
+    "at": "2026-10-08T20:51:29Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "dell1-20261008T201323Z-48ef",
+   "project": "MDPF_SECCLASS",
+   "subject": "Do the 21 liquid-alternative mutual funds (hedged equity, long/short, market-neutral) move from Structured/Hedge to Alternatives? REC (a) yes",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_190xZ_HEDGE_PRIVATE_REAL_ESTATE_FUNDS_ARE_ALTERNATIVES.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T20:13:23Z",
+   "kind": "fork",
+   "scope": {
+    "measured_at": "2026-10-08T20:13:23Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of LGIC_ENFORCE placed on laptop (data/assets/scripts/gold/investor_reporting/holdings_snapshot.py)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T20:51:29Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_LIQUID_ALTS_TO_ALTERNATIVES_ETF_STRATEGY_SLEEVES_ENDPOINT_CONFIRMED.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "dell1-20261008T201324Z-6633",
+   "project": "NONE",
+   "subject": "Strategy identification: 'all the Opal ETFs' = (b) every Opal ETF holding outside an Opal Model (REC) or (a) SMA sleeves only",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_STRATEGY_IDENTIFICATION_INTO_GLOBAL_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T20:13:24Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T20:13:24Z"
+   },
+   "closed": {
+    "at": "2026-10-08T20:51:04Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_LIQUID_ALTS_TO_ALTERNATIVES_ETF_STRATEGY_SLEEVES_ENDPOINT_CONFIRMED.md",
+    "crossbox": null,
+    "ruled_by": "cto"
+   }
+  },
+  {
+   "id": "dell1-20261008T201325Z-df77",
+   "project": "NONE",
+   "subject": "Strategy identification: confirm the seven DONE WHEN lines (FWD-1..7) of the L2 endpoint",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_STRATEGY_IDENTIFICATION_INTO_GLOBAL_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T20:13:25Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T20:13:25Z"
+   },
+   "closed": {
+    "at": "2026-10-08T20:51:05Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_LIQUID_ALTS_TO_ALTERNATIVES_ETF_STRATEGY_SLEEVES_ENDPOINT_CONFIRMED.md",
+    "crossbox": null,
+    "ruled_by": "cto"
+   }
+  },
+  {
+   "id": "dell1-20261008T205147Z-fa64",
+   "project": "NONE",
+   "subject": "Backfill queue (proposed MDPF_DEMQUE): confirm the nine DONE WHEN lines",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T20:51:47Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T20:51:47Z"
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261008T205148Z-7328",
+   "project": "NONE",
+   "subject": "Backfill queue A: page priority when room is short -- REC production > current clients (incl. onboarding) > ETF Positioning > Rival Funds in slices > research > former clients",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T20:51:48Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T20:51:48Z"
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261008T205149Z-89a9",
+   "project": "NONE",
+   "subject": "Backfill queue B: meter only Bloomberg and Yahoo (REC) or every vendor",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T20:51:49Z",
+   "kind": "fork",
+   "scope": {
+    "paths": "n/a",
+    "placement": "n/a",
+    "resources": "n/a",
+    "shared": "n/a",
+    "risk": "LOCAL",
+    "verdict": "NO-PROJECT",
+    "roots": [],
+    "evidence": {},
+    "measured_at": "2026-10-08T20:51:49Z"
    },
    "closed": null
   }
