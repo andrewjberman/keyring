@@ -22,3 +22,9 @@ FWD-3 amended in place, and ADDENDUM v0.2.
   Say that the hole may be induced, as FWD-1's was, with the next natural hole as the negative arm.
 
 -- 3.0.0_SA_CVO
+
+## Re-sign at 4d5c4ef70e (wording fix, F1 applied)
+
+`git show 4d5c4ef70e`: FWD-3's DONE WHEN now reads "one hole repaired by one act on the day it opened (the source serves current state
+only), the hole induced on purpose as FWD-1's was; and the eleven days ... read as marked-missing, not filled". That is F1, applied
+verbatim in intent. No other ENDPOINT byte moved. **SIGN.**
