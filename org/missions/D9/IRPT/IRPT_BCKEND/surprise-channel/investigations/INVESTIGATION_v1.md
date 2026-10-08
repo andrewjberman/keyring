@@ -21574,3 +21574,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: the ACTIVE repin is carried with the E9 pair to the CTO; custody stays fail-closed meanwhile."
 }
 ```
+
+## IRPT_BCKEND-D2-W179-S1 -- the worktree carries no .tools/terraform.exe (gitignored), so the plan could not run until the binary was copied in
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W179-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~179",
+  "surfaced_at": "2026-10-08T20:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order says plan with .tools/terraform.exe, but a fresh worktree has none (the pattern .tools/*.exe is gitignored) and none on PATH; the worker copied the base checkout's binary into the worktree's ignored .tools/ and ran terraform init in the export root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls .tools/terraform* in the worktree: no such file; git check-ignore -v .tools/terraform.exe: .gitignore:193:.tools/*.exe",
+      "the first plan attempt: rc=127 '.tools/terraform.exe: No such file or directory'; terraform v1.15.8 from the copied binary, init succeeded, plan 0 to add, 1 to change, 0 to destroy",
+      "git status --porcelain stayed empty after the copy and the init (both ignored)"
+    ]
+  },
+  "spec_asserts": "Plan infra/aws/terraform/investor-reporting/export with the worktree's .tools/terraform.exe to a planfile.",
+  "world_is": "A new worktree is not provisioned with terraform.exe; the binary and .terraform/ were added as ignored untracked files. The same copy will be needed by every release worker. No tracked file, state or served object differed from the order's expectation."
+}
+```
