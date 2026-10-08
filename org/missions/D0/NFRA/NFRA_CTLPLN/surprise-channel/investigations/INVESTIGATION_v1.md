@@ -2817,3 +2817,127 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "tenant.offer calls assist.offer_text, whose non-eod branch writes the head '#tag Teams - <title>' and a Draft section ending 'Reply 1 send'; neither is right for mail and assist.py and tenant.py are outside this order's paths. mail_requests._mail_text builds the mail head and a work-request body (no draft, since reply by mail is not built), and the handler does the same ctx.index / ctx.once / assist.send_sms steps tenant.offer does. Its tag (M000-M999) probes ldo.lookup by a lazy import, as tenant.chat_tag does, so the module stays standard-library plus assist. The issuer may prefer a mail branch in assist.offer_text at the merge."
 }
 ```
+
+## NFRA_CTLPLN-W31-S8 -- TO-CT-i-4: voice.examples reads the state store through assist.get_json, and the existing teams-chat tests do not fake that read; the read is made only inside the deployed function
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4: voice.examples reads the state store through assist.get_json, and the existing teams-chat tests do not fake that read; the read is made only inside the deployed function",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/voice.py examples, _LIVE_ENV",
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py Fakes (no get_json fake)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'voice.examples(kind) reads that object through assist.get_json (faked in every test)'.",
+  "world_is": "test_teams_chat_tenant.py, test_teams_chat_jobs.py and test_teams_chat_assist.py call draft_chat_reply and tenant._completion_draft without replacing assist.get_json (only two tests replace it, for other reads); with the voice block in every draft, an unguarded read would reach assist.aws('s3') from a unit test. voice.examples reads the object only when AWS_LAMBDA_FUNCTION_NAME (the Lambda runtime) or ANDREW_VOICE_EXAMPLES is set, and returns [] otherwise; test_inbound_voice.py sets the second and fakes get_json. Measured: the 127-test command runs 127 passed with no store read. Recorded in VOICE_HARVEST_COMMANDS.md section 3."
+}
+```
+
+## NFRA_CTLPLN-W31-S9 -- TO-CT-i-4: the job_completion voice block rides in the user message, not the system prompt, because an existing test keys its stand-in on the system prompt being exactly COMPLETION_SYSTEM
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4: the job_completion voice block rides in the user message, not the system prompt, because an existing test keys its stand-in on the system prompt being exactly COMPLETION_SYSTEM",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py _completion_draft",
+      "data/transcripts/scripts/tests/test_teams_chat_tenant.py:87"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'_completion_draft adds prompt_block(\"job_completion\")' (the chat reply's block is stated as added to its system prompt; the completion's place is not named).",
+  "world_is": "test_teams_chat_tenant.py Fakes._kimi branches on system == a.COMPLETION_SYSTEM; with the block appended to the system prompt, test_teams_chat_jobs.py::test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat failed (1 failed, 126 passed; measured), and that file is outside this order's paths. tenant._completion_draft now sends COMPLETION_SYSTEM unchanged and appends 'How Andrew writes this kind of message:' plus the block to the user message; 127 passed. If the issuer wants it in the system prompt, the test's stand-in must change first."
+}
+```
+
+## NFRA_CTLPLN-W31-S10 -- TO-CT-i-4: no drafter reads the mail_reply or teams_post sections: a mail request is texted with no draft (CT-i-3), and nothing drafts a Teams post
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4: no drafter reads the mail_reply or teams_post sections: a mail request is texted with no draft (CT-i-3), and nothing drafts a Teams post",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/mail_requests.py on_mail_messages",
+      "data/transcripts/scripts/teams_chat/andrew_voice.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'a reply drafted to a mail request adds prompt_block(\"mail_reply\")' (the order says 'if mail_requests.py drafts through assist').",
+  "world_is": "mail_requests.on_mail_messages sets draft \"\" and never calls assist.draft_chat_reply, and AMENDMENT 2 answers his 1 with 'a reply by mail is not built'; no function drafts a Teams post. The two sections are in the file and checked; voice.prompt_block('mail_reply') and ('teams_post') work and are tested through the module, but no code path calls them. They become used when a reply by mail or a drafted post is built."
+}
+```
+
+## NFRA_CTLPLN-W31-S11 -- TO-CT-i-4 AMENDMENT 2: 'a new field origin reading "mail" with the message id' is built as origin="mail" plus message_id, and the mail object carries state kind "mail"
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4 AMENDMENT 2: 'a new field origin reading \"mail\" with the message id' is built as origin=\"mail\" plus message_id, and the mail object carries state kind \"mail\"",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py on_job_open, on_sms_reply",
+      "data/transcripts/scripts/tests/test_inbound_mail_reply.py a_mail_tag_that_names_no_item_is_an_unknown_tag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'a new field origin reading \"mail\" with the message id; chat_id empty'.",
+  "world_is": "tenant.on_job_open sets st['origin']='mail' and st['message_id']=<the message key> only for a job.open payload with origin 'mail'; a chat job has neither field. The issuer may have meant one field holding both. Separately, mail_requests.on_mail_messages now sets ctx.state['kind']='mail' so tenant.on_sms_reply answers a reply to an emptied or mismatched mail object 'Nothing waiting under #<tag>' instead of opening a chat job from an object with no chat (the dev branch ran before the no-item check); a chat object never carries this key."
+}
+```
+
+## NFRA_CTLPLN-W31-S12 -- TO-CT-i-4 AMENDMENT 2: his plain-English text cannot open a job on a mail item, because INTENT_SYSTEM tells the model dev is only for a chat (C...)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T23:59Z",
+  "one_line": "TO-CT-i-4 AMENDMENT 2: his plain-English text cannot open a job on a mail item, because INTENT_SYSTEM tells the model dev is only for a chat (C...)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/assist.py INTENT_SYSTEM"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'the smallest change that makes his texted reply to a mail item act on it, the same way a reply to a chat item does'.",
+  "world_is": "A command-keyed reply ('M123 #dev notes', '#0') is built and tested. A natural-language text goes through assist.INTENT_SYSTEM, whose rule reads '\"dev\" only for a chat (C...)'; the model is therefore told not to plan dev on an M tag, though parse_plan, open_items and the sms.reply path would carry it. Changing that rule changes an existing chat path's prompt, which the order says stays byte for byte, so it is left. The mail text's own instruction is the command form."
+}
+```
