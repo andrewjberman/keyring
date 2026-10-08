@@ -21069,3 +21069,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Anyone who commits export/entry.py from the shared tree, or runs a working-tree check over export/ (the ADHC_DRIFTD.002 parity limb that flagged S381), carries the residue: the first would drop the live custody route from source."
 }
 ```
+
+## IRPT_BCKEND-D2-S4 -- D2-S3 disarmed: the shared tree's export/ residue is removed and entry.py restored to HEAD (custody route present)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S3 (CTO ADDENDUM 4 @eba8fde8bb: disarm the same turn it is read). The residue was no seat's work: the modified export/entry.py was byte-identical to entry.py at the old staged pin 34f71024a1 (sha256 fc241d806ecc), and all 31 untracked files were byte-identical to blobs already in git (git hash-object + cat-file -e: 31 of 31), all with mtime 2026-10-07 21:03 local (one build batch). Before removal the diff was saved to deliverables/2.0.0_SA_COO~P2/D2-S3_shared_tree_entry_py_pre_restore.patch and every removed path with its blob id to D2-S3_removed_staging_copies.txt. After: export/entry.py equals HEAD (sha256 b32032d38b94, 2 custody-report-read lines); export/ reads 0 untracked and 0 modified paths.",
+  "one_line": "No build or commit from the dell2 shared tree can now drop the live custody route or carry stale staged copies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 34f71024a1:.../export/entry.py | sha256sum -> fc241d806ecc == the modified working file; after git checkout -- the file: b32032d38b94",
+      "31 untracked paths, 31 of 31 blobs present in the object store; git ls-files --others export/ -> 0 after removal"
+    ]
+  },
+  "spec_asserts": "A tracked source file in the shared tree equals HEAD unless a seat is editing it, and builds stage outside the source dir.",
+  "world_is": "Holds again for export/. The staging-in-source-dir behaviour of the build that left it is not changed by this row."
+}
+```
