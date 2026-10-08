@@ -5031,6 +5031,28 @@
     "spec_asserts": "The daily page of day D carries each fund's holdings through D-1 and closes through D-1 (FWD-1; the vehicle's two legs run at 11:00Z before the Lambda chain reads)",
     "world_is": "The 2026-10-08 page is whole in shape and one trading day short in Bloomberg-sourced content: two funds not updated, no close of 2026-10-07 for any security. The 11:00Z run graded neither round-27 merge: the enrichment leg failed before its names step, so the read ruling 31584 and ruling 31596 rest on is still owed. RIV-tw-1's merge stays held",
     "notes": "Owner of the Terminal sign-in and the re-pull: 0.0.3_BG_BBGTerminal and a human (not this seat; integrations/bloomberg is no-modify). This seat's part after a re-pull lands: read that log's rivalfunds legs (it is then the clean read on the unchanged enrichment file), and republish 2026-10-08 on the CTO's word. The 13:00Z sweep is read as scheduled."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S77",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T15:27:53Z",
+    "one_line": ".tools/round-close-check.py reads an order's FIRST status tag, so all three complete orders of round 27 read as not complete and its MAY-CLOSE verdict graded nothing",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/round-close-check.py --project ETFS_RIVALS --round 27 at 15:23Z 2026-10-08 printed: 'ORDERS scope round=27 workstream=all: 3 order(s), 0 complete, 3 not complete and outside the verdict', 'PROOFS mode=structural complete=0 proof_ok=0 proof_bad=0', 'judgment=0 graded=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'",
+        "Each of the three order files carries two status tags in file order: <status>pending</status> then <status>complete</status> (the issuer appends the flip at the drain; the gate reads the last). Line 135 of the tool reads tag(text, 'status'), the first",
+        "The three proof instances exist and each passed .tools/proof-of-spec-check.py at the drain; the CVO graded J1 of two cells MET and holds the third open (ADJUDICATION_v35.Z, C-S80). The tool saw none of it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-close check refuses a round whose complete orders lack a passing proof or carry an ungraded or self-graded judgment criterion (its own header; /canonical-drive obligation 3)",
+    "world_is": "For a round whose orders were flipped by appending, the check counts 0 complete orders and returns MAY-CLOSE over an empty set. It would have returned the same verdict had a proof been missing or J1 been self-graded. Round 27's real state, read without the tool: 3 of 3 orders complete with VALID proofs; J1 graded by the CVO on two, open on tw-1 until the 2026-10-09 11:00Z vehicle run. This seat does not count round 27 closed on the tool's verdict",
+    "notes": "Owner of the tool: 1.0.0_SA_CTO (its author by git, to be confirmed by the owner). Repair shape: read the LAST status tag, as the pipeline gate does. The fixture at the tool's own self-test writes a single status tag per order, so its tests cannot see this."
   }
 ]
 ```
