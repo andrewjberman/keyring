@@ -1,4 +1,4 @@
-﻿ALLOWED-EXPECTED s3:PutObject on arn:aws:s3:::opal-data-assets/x -> allowed
+ALLOWED-EXPECTED s3:PutObject on arn:aws:s3:::opal-data-assets/x -> allowed
 ALLOWED-EXPECTED lambda:UpdateFunctionCode on arn:aws:lambda:us-east-1:313476888478:function:x -> allowed
 ALLOWED-EXPECTED ecs:RegisterTaskDefinition on * -> allowed
 ALLOWED-EXPECTED s3:GetObject on arn:aws:s3:::opal-313476888478-terraform-state/nfra-ctlpln-identity/tfstate -> allowed

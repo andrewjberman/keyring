@@ -1,0 +1,102 @@
+bash : safe-apply: [seat-gates] mode=WARN APPLY-WHO serial=0.7.0_AE_CloudOps kind=CLOUDOPS root=nfra-ctlpln-identity
+verdict=ADMITTED reason=a CLOUDOPS seat applies
+At line:2 char:649
++ ... ding ASCII; bash .tools/safe-apply.sh -chdir=infra/aws/terraform/nfra ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (safe-apply: [se...PS seat applies:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+safe-apply: [seat-gates] mode=WARN CROSSBOX-DEPLOY device=laptop root=nfra-ctlpln-identity open_call=clear
+overlap=clear upset=clear open_deploy=clear verdict=CLEAR
+  [naming-apply-gate] NAMING NOT-GRADED infra/aws/terraform/nfra-ctlpln-identity/iam.tf:20 cloudops-dell1-agent-user
+-> -
+  [naming-apply-gate]   why: aws_iam_user.dell1 name: IAM_USER is outside the grade's domain (G1.2)
+  [naming-apply-gate] NAMING NOT-GRADED infra/aws/terraform/nfra-ctlpln-identity/iam.tf:25 cloudops-dell2-agent-user
+-> -
+  [naming-apply-gate]   why: aws_iam_user.dell2 name: IAM_USER is outside the grade's domain (G1.2)
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:36
+cloudops-dell-agent-deploy-policy -> cloudops-dell-agent-deploy-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_deploy name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:51
+cloudops-dell-agent-create-policy -> cloudops-dell-agent-create-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_create name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:96
+cloudops-dell-agent-respol-allow-policy -> cloudops-dell-agent-respol-allow-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_respol_allow name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:122
+cloudops-dell1-agent-bus-policy -> cloudops-dell1-agent-bus-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell1_bus name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:129
+cloudops-dell2-agent-bus-policy -> cloudops-dell2-agent-bus-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell2_bus name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:150
+cloudops-dell2-agent-ssm-policy -> cloudops-dell2-agent-ssm-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell2_ssm name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:181
+cloudops-dell-agent-vendor-secrets-policy -> cloudops-dell-agent-vendor-secrets-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_vendor_secrets name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/iam.tf:212
+cloudops-dell-agent-platform-secrets-policy -> cloudops-dell-agent-platform-secrets-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_platform_secrets name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/routes.tf:22
+cloudops-dell-agent-routes-fn-policy -> cloudops-dell-agent-routes-fn-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_routes_fn name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT infra/aws/terraform/nfra-ctlpln-identity/routes.tf:47
+cloudops-dell-agent-routes-host-policy -> cloudops-dell-agent-routes-host-policy
+  [naming-apply-gate]   why: aws_iam_policy.dell_agent_routes_host name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING-APPLY: infra/aws/terraform/nfra-ctlpln-identity: 3 .tf file(s), 12 resource-name
+attribute(s): 12 graded, 0 expressions deferred to plan (0 module-produced)
+  [naming-apply-gate] NAMING-GATE: PASS 12 graded
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell1_bus cloudops-dell1-agent-bus-policy ->
+cloudops-dell1-agent-bus-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell1_bus (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell2_bus cloudops-dell2-agent-bus-policy ->
+cloudops-dell2-agent-bus-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell2_bus (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell2_ssm cloudops-dell2-agent-ssm-policy ->
+cloudops-dell2-agent-ssm-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell2_ssm (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_create cloudops-dell-agent-create-policy ->
+cloudops-dell-agent-create-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_create (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_deploy cloudops-dell-agent-deploy-policy ->
+cloudops-dell-agent-deploy-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_deploy (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_platform_secrets[0]
+cloudops-dell-agent-platform-secrets-policy -> cloudops-dell-agent-platform-secrets-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_platform_secrets[0] (ADDITION): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_respol_allow[0]
+cloudops-dell-agent-respol-allow-policy -> cloudops-dell-agent-respol-allow-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_respol_allow[0] (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_routes_fn[0] cloudops-dell-agent-routes-fn-policy ->
+cloudops-dell-agent-routes-fn-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_routes_fn[0] (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_routes_host[0] cloudops-dell-agent-routes-host-policy
+-> cloudops-dell-agent-routes-host-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_routes_host[0] (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_policy.dell_agent_vendor_secrets[0]
+cloudops-dell-agent-vendor-secrets-policy -> cloudops-dell-agent-vendor-secrets-policy
+  [naming-plan-gate]   why: aws_iam_policy.dell_agent_vendor_secrets[0] (existing): CONFORMANT as IAM_POLICY
+  [naming-plan-gate] NAMING NOT-GRADED aws_iam_user.dell1 cloudops-dell1-agent-user -> -
+  [naming-plan-gate]   why: aws_iam_user.dell1 (existing): IAM_USER is outside the grade's domain (G1.2)
+  [naming-plan-gate] NAMING NOT-GRADED aws_iam_user.dell2 cloudops-dell2-agent-user -> -
+  [naming-plan-gate]   why: aws_iam_user.dell2 (existing): IAM_USER is outside the grade's domain (G1.2)
+  [naming-plan-gate] NAMING-PLAN-DENOM: C:/Users/ANDREW~1/AppData/Local/Temp/tmp.ig6ykiKIyh.json: 12 resource-name(s)
+graded
+  [naming-plan-gate] NAMING-PLAN: PASS 12 graded
+safe-apply: SKIP tag-authz gate -- no provider default_tags block matched across 3 .tf/.tf.json file(s) under
+infra/aws/terraform/nfra-ctlpln-identity.
+[tombstone-gate] checked 2 create(s) in this plan against 7 tombstone(s)
+[tombstone-gate] CLEAN: no planned create matches a tombstoned resource.
+aws_iam_policy.dell_agent_platform_secrets[0]: Creating...
+aws_iam_policy.dell_agent_respol_allow[0]: Modifying... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy]
+aws_iam_policy.dell_agent_deploy: Modifying... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy]
+aws_iam_policy.dell_agent_create: Modifying... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy]
+aws_iam_policy.dell_agent_create: Modifications complete after 0s [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy]
+aws_iam_policy.dell_agent_deploy: Modifications complete after 1s [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy]
+aws_iam_policy.dell_agent_platform_secrets[0]: Creation complete after 1s [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-platform-secrets-policy]
+aws_iam_group_policy_attachment.dell_agent_platform_secrets[0]: Creating...
+aws_iam_policy.dell_agent_respol_allow[0]: Modifications complete after 1s [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy]
+aws_iam_group_policy_attachment.dell_agent_platform_secrets[0]: Creation complete after 0s [id=cloudops-dell-agents-group-20261008180017632500000001]
+
+Apply complete! Resources: 2 added, 3 changed, 0 destroyed.
