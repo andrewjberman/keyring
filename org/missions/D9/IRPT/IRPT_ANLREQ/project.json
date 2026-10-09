@@ -24,7 +24,7 @@
   "prds": [
     {
       "path": "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md",
-      "version": "v0.2",
+      "version": "v0.3",
       "status": "DRAFT"
     }
   ],
@@ -36,6 +36,11 @@
     },
     {
       "version": "v0.2",
+      "date": "2026-10-09",
+      "author": "1.0.0_SA_CTO~DELL2"
+    },
+    {
+      "version": "v0.3",
       "date": "2026-10-09",
       "author": "1.0.0_SA_CTO~DELL2"
     }

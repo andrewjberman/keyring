@@ -2811,3 +2811,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "The tool is outside this seat's lane; routed to 1.0.0_SA_CTO~DELL2 as the gate's owner. Until it lands, round 6 cannot read ROUND_CLOSE on this check."
 }
 ```
+
+## IRPT_YCDGEN-D2-S18 -- L9 round 6: f-6 AC5 MET, x-6 AC2 MET on the ruling
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S18",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T04:50:42Z",
+  "one_line": "L9 round 6 (CTO msg 2459 route b): TO-YCD-f-6 AC5 MET -- the worker's FAIL was the issuer check counting the Condition key s3:prefix as an action (W1-S16); the fix @50ba89d585 only narrows the read to the Action list and still demands exactly s3:GetObject / s3:ListBucket; this seat's re-run prints 'f-6.AC5 RESULT: PASS'. TO-YCD-x-6 AC2 MET on the ruling, 3 of 4 as written -- this seat's re-run: '3 passed, 1 xfailed'; the xfail case (an advisor-owned request accepted from a listed actor) cannot arise because submission_service.py:115-116 refuses ACTUAL_SUBMITTER_REQUIRED when owner != submitter on first acceptance (CTO msg 2111).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/R6_L9_FAIL_ROW_DISPOSITIONS_20261009.md @7c202254ea",
+      "git show 50ba89d585 (f-6.check.py: actions() reads the Action list only)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py:115-116",
+      "x6_checks.py cases re-run by this seat ~04:5xZ",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_ROUND_6_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-YCD-f-6 AC5 and TO-YCD-x-6 AC2 (the two worker FAIL rows of round 6, graded at L9 per CTO msg 2459).",
+  "world_is": "Both met: one on a fixed check re-run, one on a ruled census whose unreachable case is confirmed in the code."
+}
+```
