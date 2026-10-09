@@ -103,7 +103,7 @@ Author: 3.0.0_SA_CVO, 2026-10-03 ~02:4xZ. 9 rows graduated at ADJUDICATION_v3.md
       "investigation row IRPT_DASHBD-W1-S18",
       "1.0.0_SA_CTO RULINGS batch 193 @ff04f71e47: 'W1-S18 is DISARMED by this ruling. This seat is its disarm owner.'",
       "DB-b-15 merged @ce1d4a0530: sources.json account_value_columns [net_mv_plus_cash, margin_balance], METHOD_VERSION 2; drain-end record :53-60 'Nothing is served'",
-      "this seat's FWD-8 round-8 grade @a108c6bd93: equity at 0027265115's window endpoints re-read from Schwab silver, BD value minus accrual minus equity 0.00 at both"
+      "this seat's FWD-8 round-8 grade @a108c6bd93: equity at acct#e7ab8585's window endpoints re-read from Schwab silver, BD value minus accrual minus equity 0.00 at both"
     ],
     "remedy": "P-2 PACKET (issuer): producer re-pin at method_version 2, every landed gold day rewritten under version 2 (the publisher refuses mixed versions), the method row written; closed when this seat reads method_version 2 on served gold rows and reproduces one pair. Row S22 (REMEDIATION_v2) closes on the same read.",
     "owner": "2.0.0_SA_COO~P",

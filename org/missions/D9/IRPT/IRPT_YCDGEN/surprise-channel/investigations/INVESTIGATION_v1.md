@@ -2924,3 +2924,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Outside ~G2's lane (reports/retention.py and the report writers are the backend's). Routed to 2.0.0_SA_COO~Y2 and 1.0.0_SA_CTO~DELL2 with the correlation ids. To discriminate: read the stored ref of REQ-5e41's report (its keys and policy_revision length) against _key, using a principal that can decrypt irpt-requests/irpt-jobs."
 }
 ```
+
+## IRPT_YCDGEN-D2-S22 -- ARMED: irpt-status rev 4 crashes on every request (split ship, unexpected kwarg)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S22",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T16:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "irpt-status release 1 rev 4 (live 15:43:11Z) crashes at build() for every request: TypeError build_retained_repositories() got an unexpected keyword argument 'additional_policy_revisions' -- a split ship; every status/analysis read returns HTTP 500",
+  "spec_asserts": "IRPT_ANLREQ.TO-APPLY-Y1 rev 4 changes only status_installed.py (registers the writer's OPAL_RESEARCH_REVISION) and the function keeps serving.",
+  "world_is": "MEASURED. sr1 window 3 owner read 16:22:43Z: GET status and GET sections both HTTP 500 {message: <str:21>}. CloudWatch /aws/lambda/irpt-status: '[ERROR] TypeError: build_retained_repositories() got an unexpected keyword argument additional_policy_revisions' at status_installed.py:137 compose_ports, served.py:1452; 52 events 16:17:17Z-16:22:48Z (filter since 15:40Z). get-function-configuration: LastModified 2026-10-09T15:43:11Z, CodeSha256 VC/r14ka... The packaged composition.py (staged at an older pin) predates the kwarg that status_installed.py now passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch irpt-status TypeError x52",
+      "lambda get-function-configuration 15:43:11Z VC/r14ka",
+      "SERVED_READ_W3_REQ_5e4149d2_20261009.json (scrubbed)"
+    ]
+  },
+  "notes": "ARMED: a live outage of every irpt-status read. Disarm = rollback to rev 3 (the pair's named rollback) by the release owner 2.0.0_SA_COO~Y2 under the CTO; then re-cut rev 4 with composition.py co-staged. Escalated 16:24Z to ~Y2 and CTO~DELL2."
+}
+```

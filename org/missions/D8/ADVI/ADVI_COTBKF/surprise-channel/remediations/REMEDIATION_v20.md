@@ -17,7 +17,7 @@ Graduated at round 28's L9 (ADJUDICATION_v22.md), round label v29: 2 rows, OPEN.
    "investigation row ADVI_COTBKF-D2-W53-S3",
    "last line of the AC2 run (rc 0) @8137a94e91: SWEEP-REGRADE sweeps=2 rejected=517 double_drop_months=0 fixed=0 months_before=3098/886/78609 months_after=3133/838/78622 control_same=True regressions=4 movers_back=139 year_chain_same=True r22_named=25/25 dividend_both=NA"
   ],
-  "remedy": "Explain the 4 named regressions (B3S728504, B3S728506; 2023-05, 2023-06) from the rows -- dividend dating is suspected, unmeasured -- or keep them ABSENT in the served tables with the reason; a fifth regression voids the mint's amendment.",
+  "remedy": "Explain the 4 named regressions (acct#79d02c2c, acct#4a890dd1; 2023-05, 2023-06) from the rows -- dividend dating is suspected, unmeasured -- or keep them ABSENT in the served tables with the reason; a fifth regression voids the mint's amendment.",
   "owner": "2.0.0_SA_COO~C2",
   "round": "v29",
   "remediation": {
