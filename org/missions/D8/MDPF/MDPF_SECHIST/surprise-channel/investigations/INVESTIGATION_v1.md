@@ -124,6 +124,27 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Row ids are unique within a project's channel (surprise-row gate duplicate-id limb); S2 states the three securities show no sector on the served page.",
     "world_is": "Two id pairs collide across documents (the gate grades each new row in its own file, so it did not see the other document); and the sector gap S2 named closed on the 10-07 publish without any SECCLASS FWD-12 write (the table's legacy seed values now reach the page). The FWD-1 read on 2026-10-08 grades classification against the page as it stands then."
+  },
+  {
+    "id": "MDPF_SECHIST-D1-W5-S1",
+    "project": "MDPF_SECHIST",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_SECHIST~5",
+    "surfaced_at": "2026-10-09T13:55:00Z",
+    "one_line": "The R3 named-test check r3_named_tests.py grades PASSED by regex '::name PASSED' and reports GAP-TESTS-BAD on a passing suite when FORCE_COLOR=3 is set in the shell, because pytest then emits ANSI codes between the name and PASSED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~H1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "worktree wk-mdpf_sechist-r3-6, shell env FORCE_COLOR=3: python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py GAP data/etfs/scripts/silver/test_etf_history_gap_record.py <3 names> -> output 'test_absent_interior_day_listed \u001b[32mPASSED' and last line GAP-TESTS-BAD not-passed=<all 3>, rc=1 (4 passed in pytest's own summary)",
+        "same command under 'env -u FORCE_COLOR' -> GAP-TESTS-OK passed=3/3, rc=0; the check (r3_named_tests.py:36) passes the parent environment to pytest and does not set NO_COLOR or --color=no"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order MDPF_SECHIST.TO-SH-t6 criterion SH3-t6-AC1: running the named invocation from the worktree root prints GAP-TESTS-OK once the three named tests pass.",
+    "world_is": "On a shell that exports FORCE_COLOR (this seat's does: FORCE_COLOR=3), the same invocation prints GAP-TESTS-BAD for passing tests, so every R3 named-test criterion (GAP, BLANK, MMF, PULL, ENTRY, WRITER) is graded by environment, not by the code. I did not edit the check (order forbids it); the criterion was recorded with FORCE_COLOR unset. Armed for the other five R3 workers and the drain, whose shells may carry the same variable; the owner can add '--color=no' to the check's pytest argv."
   }
 ]
 ```
