@@ -22329,6 +22329,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Without a fitz stub on PYTHONPATH test_no_analyze.py::test_battery_import_reaches_no_analyze_module also fails (it runs a subprocess importing document.py -> fitz); that one is the box's missing PyMuPDF, not this change. Candidate fix for the issuer: grant test_section_coverage.py and change the expectation to [('business', 'Item 4.B. Business Overview'), ('mdna', ...)]."
+},
+{
+  "id": "AMGT_RESAPP-D1-W315-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~315",
+  "surfaced_at": "2026-10-09T02:38:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "AMENDMENT 2 resolved row AMGT_RESAPP-D1-W315-S1: the one stale expectation in test_section_coverage.py now names business then mdna, and the filings folder reads 192 passed.",
+  "spec_asserts": "Order dd-1 AMENDMENT 2: change the single expectation in test_one_section_lists_the_other_as_not_covered to business then mdna, nothing else in the file, and the filings folder reads 0 failed.",
+  "world_is": "With the expectation changed and fitz stubbed, pytest lib/research/filings/tests/ last line: 192 passed in 10.80s (0 failed). lib/research/api/tests/ last line: 2 failed, 866 passed in 37.95s; both failures are ModuleNotFoundError: No module named 'pypdf' (test_print_fiscal_year_sort.py::test_head_copy_raises_on_mixed_keys, test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/tests/test_section_coverage.py:41-46 on branch wk-AMGT_RESAPP-315",
+      "pytest lib/research/filings/tests/ (fitz stub) last line: 192 passed in 10.80s",
+      "resolves AMGT_RESAPP-D1-W315-S1"
+    ]
+  },
+  "notes": "Resolves AMGT_RESAPP-D1-W315-S1 (landed row not edited). The api folder's two failures are the box's missing pypdf, no row."
 }
 ]
 ```
