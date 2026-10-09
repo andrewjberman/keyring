@@ -1766,3 +1766,28 @@
 }
 ]
 ```
+
+```json
+{
+  "id": "DSGN_AMGTV1-D1-S2",
+  "project": "DSGN_AMGTV1",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T17:12:48Z",
+  "one_line": "COMPLETION_REPORT.schema.json's written_by pattern ^2\\.0\\.0_SA_COO(~[A-Z]+)?$ refuses a COO lane with a digit (~D1, ~H1, ~R1 are live), so the true lane serial cannot be written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "spec_asserts": "org/standards/COMPLETION_REPORT.schema.json: written_by is the COO serial, base plus an optional ~lane.",
+  "world_is": "Live COO lanes carry digits (2.0.0_SA_COO~D1 wrote DSGN_AMGTV1's round-68 report). jsonschema Draft7 refuses written_by '2.0.0_SA_COO~D1'; the report carries the base serial '2.0.0_SA_COO' (valid and true) and its commit author carries the lane.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/COMPLETION_REPORT.schema.json (written_by pattern)",
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/COMPLETION_REPORT.round68.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the issuer at the round-68 close; the schema's owner widens the lane pattern (e.g. ~[A-Z][A-Z0-9]*)."
+}
+```

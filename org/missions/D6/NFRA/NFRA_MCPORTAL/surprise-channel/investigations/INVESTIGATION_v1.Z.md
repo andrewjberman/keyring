@@ -1064,6 +1064,58 @@
     "spec_asserts": "Z-S24: deploy_ledger.py hold/close-leg silently drop appended entry prose.",
     "world_is": "The tool is fixed at source @a9d1b38f12. This project's record discipline (Z-S25) is kept, and the issuer does not re-test the fix.",
     "notes": "Measured by the fixer's replay, cited not re-run. A worktree based before @a9d1b38f12 still runs the old tool; the applier's MP-x-4 release tree is cut from box/sitez, so its base decides which version it runs."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S27",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T16:48Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The Control Plane page's cold read is UNDER R-13's 30 s bar but its margin is SHRINKING through the working day, because the handler's default window is a ROLLING 6 hours and the record count in it grows with commit volume. Measured today: 13.6-16.8 s over ~3,150 records at 14:0xZ, 18.1-24.4 s over ~3,790 records at 15:5xZ, 24.2 s over 4,040 records at 16:2xZ. Headroom fell 1.79x -> 1.23x in about two hours. Shipped as-is because the order's remedy fires only ABOVE 30 s; this row carries the trend to the enrichment list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SEVEN release-time samples, all on the host under the instance role, all cold (a fresh interpreter per sample, so admin_fabric's in-process body cache is empty by construction). On base 91811b648a at ~14:0xZ: 16.767 / 15.336 / 13.964 / 13.615 s over 3141-3154 records, 0 skipped. On base c97232408d at ~15:5xZ: 24.443 / 19.728 / 18.118 s over 3788-3793 records, 0 skipped. AC3's own post-deploy read at ~16:2xZ: compute_s=24.2 over 4,040 records. Warm reads moved 0.765-0.839 s -> 0.986-1.096 s across the same span.",
+        "THE DENOMINATOR IS THE EXPLANATION, which is why this is a trend and not noise: the record count rose ~3,150 -> ~4,040 (+28%) in about 2.3 hours of a working day, and the cold time rose with it. Implied cost ~5.5 ms/record, so the 30 s bar sits near ~5,460 records in the window. The window is ROLLING 6 hours (admin_fabric DEFAULT_HOURS=6, MIN 1 MAX 24), so the count climbs through the working day and falls overnight -- the worst case is a late-day first open, not a morning one.",
+        "THE ISSUER WARNED OF EXACTLY THIS and the measurement now quantifies it: its 04:2xZ FYI said '21.3 s sits under R-13's 30 s bar with thin margin, and the 6-hour window grows with daytime commit volume. Its value at your release-time measurement is the one that counts.' Note the earlier 21.3 s figure scanned FEWER records (3,004) than today's 14:0xZ samples at ~3,150 yet read SLOWER, so per-record cost is not the only term -- S3 latency and host load move it too, and a single sample cannot separate them.",
+        "WHY IT SHIPPED ANYWAY, and this is the order's own rule rather than a judgement: MP-x-4 step 2 says 'If it takes more than 30 s (half the ALB's 60-second idle timeout): before release, narrow the handler's default window (6 to 2 hours) or warm the body cache at boot'. Every release-time sample was under 30 s, so the remedy did NOT fire, app/admin_fabric.py shipped exactly as MP-x-1 wrote it, and no criterion was repaired. Narrowing the window un-triggered would have changed product behaviour the order did not authorise.",
+        "THE REAL TIMEOUT IS FARTHER AWAY THAN THE BAR, stated so the risk is not overread: the ALB idle timeout is 60 s and the 30 s bar is the order's half-margin, so at 24.4 s the page is ~2.5x from an actual timeout and ~1.23x from the policy bar. The hazard is a BREACHED POLICY MARGIN first, a user-visible timeout only well after that.",
+        "A 2-HOUR WINDOW WAS MEASURED BUT IS NOT A CLEAN FIGURE: _compute(2) read 0.79-1.10 s, taken AFTER the 6h calls in the same process, so overlapping bodies were already cached. That is a LOWER bound on a cold 2-hour read, never a cold figure, and it is reported as such -- a cold 2h measurement needs its own fresh interpreter and has not been taken."
+      ]
+    },
+    "spec_asserts": "R-13 sets one bar -- the cold _compute(6) must be at or under 30 s at the release-time measurement -- and MP-x-4 step 2 treats that single reading as the decision: 'A page whose first open can time out never ships.'",
+    "world_is": "The bar is met at every release-time sample, but the quantity it measures is not stationary: it tracks a rolling 6-hour record count that grew 28% during this cell's own execution and carried the cold read from 13.6 s to 24.4 s. So a point measurement against a fixed bar certifies the moment of the act, not the page's behaviour later the same day. The order has no re-measure clause and no alarm (and the standing moratorium forbids building one unasked), so nothing currently re-reads this number after the release.",
+    "notes": "Issuer's call for the enrichment list; nothing in MP-x-4 waits on it and the page is live and serving. Options, cheapest first: (a) narrow DEFAULT_HOURS 6 -> 2 in app/admin_fabric.py, which the order already names as an authorised remedy shape and which the page's 60-second refresh makes cheap -- needs a cold 2h measurement first, since the only 2h figure taken is cache-warm; (b) warm the body cache at boot, also named by the order, which moves the cost off the first open; (c) bound the work rather than the window (cap keys scanned, or paginate), which is the only option that does not degrade with fabric growth; (d) accept and re-measure at a stated cadence. Do NOT read this row as a request for an alarm or monitor -- that is under a standing moratorium and would need Andrew's explicit word. Measured by 0.7.0_AE_CloudOps~MP during MP-x-4; the figures and their denominators are in deliverables/0.7.0_AE_CloudOps~MP/MP-x-4_PRE_ACT_RECORD.md."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S28",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T16:48Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "x4.AC2.sh reads mcportal_commit's ancestry with a bare `git -C mcportal ... 2>/dev/null`, but a LINKED WORKTREE has no nested mcportal checkout, so the command fails, the redirect swallows the error, and the clause reports 'contains d60b4e0=no' -- a FALSE NEGATIVE that fails the whole criterion. The same class of sparse/linked-worktree gap also made deploy-to-ec2.sh refuse once (it needs data/transcripts/scripts/teams/meeting_allowlist.json under the calling worktree root).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED. Run from the cell's trunk worktree C:/tmp/mp-x4, x4.AC2.sh printed 'deployed=1e32562729... previous=c97232408d... descends=yes; gateway app/tests files changed=4, outside MP-x-1's set=0; mcportal_commit=d60b4e0 contains d60b4e0=no' and RESULT: FAIL. Three of four clauses pass; only the mcportal clause reads no.",
+        "THE CLAUSE IS SELF-CONTRADICTORY ON ITS FACE, which is the tell: it prints 'mcportal_commit=d60b4e0 contains d60b4e0=no'. The value and the sought token are the same string, so a correctly-running test could not answer no.",
+        "CAUSE, read from the script and confirmed in the filesystem: line `mok=no; [ -n \"$MCP\" ] && git -C mcportal merge-base --is-ancestor d60b4e0 \"$MCP\" 2>/dev/null && mok=yes`. _root.sh cds to the CALLING worktree root, and `test -d mcportal` there is FALSE (`test -e mcportal/.git` also false): git checks a nested repo out in the MAIN tree only. So git exits non-zero for a missing path, 2>/dev/null hides the reason, and the && chain leaves mok at its initialised `no`. An ABSENT REPO and a GENUINELY WRONG COMMIT are indistinguishable in the output.",
+        "THE SUBSTANCE IS TRUE, verified directly with a positive control: from the main tree, `git -C mcportal merge-base --is-ancestor d60b4e0 d60b4e0` exits 0 (YES), while the control `is-ancestor d60b4e0 d60b4e0~1` exits non-zero -- so the test discriminates and the clause's real answer is yes.",
+        "AND IT PASSES AS WRITTEN once the record is at HEAD in a tree that has mcportal: AC2's logic verbatim, run from the main tree against this branch's manifest, printed 'descends=yes; ... changed=4, outside MP-x-1's set=0; mcportal_commit=d60b4e0 contains d60b4e0=yes' -> WOULD BE: PASS. So the issuer's own post-drain run is expected to PASS, and this refusal is scoped to running it from a linked worktree before the drain.",
+        "THE SIBLING INSTANCE, same root cause, caught before it cost anything: OG-tl-1's change to deploy-to-ec2.sh added a precondition reading $WORKSPACE_ROOT/data/transcripts/scripts/teams/meeting_allowlist.json and refusing on an unreadable file. The cell's sparse list had no data/, so the deploy would have refused; it was added and the script's own expression evaluated in the worktree (4 ids, shape matches) before the act. deploy-to-ec2.sh:40-44 already carries the fallback AC2 lacks -- when the worktree's mcportal is not a repo it resolves `_main/mcportal` from `git rev-parse --git-common-dir`."
+      ]
+    },
+    "spec_asserts": "MP-x-4 section 4 says the proof_of_spec criteria are to be run 'from your worktree root', and the cell is directed (section 1, row Z-W5-S2) to work in a linked worktree with a no-cone sparse pattern list. Together those presume the checks run correctly from a sparse linked worktree.",
+    "world_is": "A check that reaches into the nested mcportal repo cannot run correctly from a linked worktree, because git checks that repo out in the main tree only -- and because the call is wrapped in 2>/dev/null it degrades to a FALSE NEGATIVE instead of an error. Separately, a no-cone sparse list silently omits paths that the deploy script and the checks read (data/transcripts/, mcportal/), so 'run it from your worktree root' is only safe once the pattern list is widened to every path the instruments touch -- which is not discoverable from the order.",
+    "notes": "Issuer's call; MP-x-4 is NOT blocked, since the substance is verified and the criterion is expected to pass on the post-drain run. Per BOUNDS 3 the criterion was NOT repaired and the check was not edited (section 3 makes it read-never-write): it is REFUSED with its measurement. Options: (a) give x4.AC2.sh the same `_main/mcportal` fallback deploy-to-ec2.sh:40-44 already has -- the minimal fix, and it makes the check worktree-agnostic; (b) drop the 2>/dev/null on that call so an absent repo surfaces as an error rather than a `no`, which is the SILENCE half of the defect and worth fixing regardless of (a); (c) state in the order that this criterion is graded on the merged index by the issuer, not by the cell. Also worth landing somewhere durable: the no-cone pattern list a gateway release needs is .tools/ org/ lib/ infra/ ops/ data/transcripts/ plus the root config files, and mcportal must be reachable for AC2."
   }
 ]
 ```

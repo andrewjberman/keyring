@@ -13,7 +13,7 @@ dividend and fee legs (W43-S1), layered so each rule's effect stays separately m
 
 1. Round 22's real run on the trunk (@4839b6f2d2): arms v1/`r19` -> v1/`repaired`, `months_after=2103/1520/78970 control_same=True`;
    25 of 163 movers back to MATCH (`sweep_balance` 25/72, `sweep_trade_day` 0/75, core 0/16); 23 MATCH -> DIFF regressions, 19 in
-   0QF879130 and 0QF879352 (`deliverables/0.9.0_WK_ADVI_COTBKF~43/sweep_regrade.md`).
+   acct#c42b98c0 and acct#05dd4a9d (`deliverables/0.9.0_WK_ADVI_COTBKF~43/sweep_regrade.md`).
 2. The runner selects the cash-leg rule per arm (`--before-cash-leg` / `--after-cash-leg`: `r19`, `repaired`).
 3. W43-S1: dividend rows fund sweep buys and `man`/`fch` fee rows are paid by sweep sales with no matching cash leg; 94 of the 122
    `neither` movers still DIFF carry such a row on a sweep-trade day.
