@@ -236,6 +236,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "rg bbg_budget|\\.record\\( over tplus1/tools/run_daily_pull.py and both tplus1/src/*.ipynb: zero matches"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W13-S1",
+    "one_line": "The history reserve (40 cells) is the static producer names only; the ledger's one day draws 5858 history cells, so the quoted allowance per day is the ceiling less a reserve well under the real production draw.",
+    "spec_asserts": "TO-DQ-t15 step 2: history.reserve = the tier-1 producers' daily history legs read as text (names x fields x rows per name), margin stated, gaps named.",
+    "world_is": "Only etf_daily_pull.py states its history names in code: (FUNDS 4 + EXTRA_SECURITIES 2) x RET 2 fields + FUNDS 4 x FUND_D 5 fields, one top-up row each = 32 cells, x1.25 = 40. The run-time universe constituents (derive_universe reads S3), the depth backfill (BACKFILL_CAP 50), price_axis_pull (covered universe) and enrichment_bloomberg are named gaps, so they are not in the 40. The served ledger's largest history day (dt=2026-10-08) is 5858 cells, which includes those legs. The history ceiling is that same 5858 floor, so the history allowance per day (ceiling - reserve = 5818) treats the reserve as 40 although production drew far more that day; the finish days quoted from it (history 2026-10-13, model_block 2026-10-13) are HELD and may be early by that margin. Nothing was guessed; a measured production draw on the ledger (separating tier-1 from demand rows) would replace the reserve.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~13",
+    "surfaced_at": "2026-10-09T09:34:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/reserve_estimate.py --print: history producers {etf_daily_pull: 32}, value 40, 8 gaps named",
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:46,52,397,472,473",
+        "demand_ledger dt=2026-10-08 history cells 5858 (s3://opal-data-assets/bloomberg/global/bronze/demand_ledger/dt=2026-10-08/ledger.jsonl)"
+      ]
+    }
   }
 ]
 ```
