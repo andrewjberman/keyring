@@ -4702,3 +4702,30 @@ round.** Never edit an existing row.
   "world_is": "Done as ordered (keys equal before and after; suites green; no deploy). The writer's later SERVED redeploy cell must ship lib/opal_naming.py and the registry beside the writer, or add a beside-module key table; B_00.canonical_holdings.py already imports opal_naming the same way."
 }
 ```
+
+## ADVI_COTBKF-D2-S72 -- live cot B_00 imports opal_naming, which the code mirror does not carry (latent: rps empty)
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S72",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T15:54:25Z",
+ "one_line": "The LIVE cot gold B_00 (code/gold/B_00.canonical_holdings.py, deployed round 41, VersionId hU7ZrZTD...) imports opal_naming INSIDE _ff_worker (served :1362-1365: sys.path to ../../../../lib, then 'from opal_naming import lookup', then a tree token from a ../../../../data relpath). The cot code mirror carries NO opal_naming and NO NAMING_SCHEMA.json anywhere under code/ (issuer census: 0), and code/gold/lib/ holds 16 keys without it. So the day schwab/silver/rps/ fills and _ff_worker runs from code/gold/, the gold run raises ImportError (fail-closed, not silent). Unreachable today (rps 0 keys vs a positive control, round 42 drain). The same gap blocks the planned writer redeploy (row W75-S1: the writer now imports opal_naming at module level).",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".scratch/advi_cotbkf/b00_served_now.py (fetched served bytes, sha 45fbbd92...) lines 1362-1365",
+   "issuer list of opal-data-cot code/: 0 keys containing opal_naming or NAMING_SCHEMA.json; code/gold/lib/: 16 keys",
+   "data/cot/scripts/gold/gold_dispatch.sh:497-498 syncs only code/gold/",
+   "rps reachability 0 keys vs positive control (round 42 packet @0dd3bad9eb)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Round 41's deployed carry-forward stamp runs correctly from the cot code mirror when its path is reached.",
+ "world_is": "It would raise ImportError: opal_naming is not deployed beside the cot gold scripts. Latent while rps is empty."
+}
+```
