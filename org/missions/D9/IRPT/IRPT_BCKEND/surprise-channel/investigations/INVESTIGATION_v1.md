@@ -22140,3 +22140,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It is when every page is read, with the denominator printed. That is how this one was graded."
 }
 ```
+
+## IRPT_BCKEND-D2-S16 -- irpt-ycharts-generate release 4 rolled back the same session: its one changed member cannot import in the package, and the offline suites cannot see it because they resolve a same-name composition module
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S16",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T00:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-ycharts-generate release 4 (E11) landed correctly and was ROLLED BACK the same session because its one changed member cannot import in the deployed package: custody_submission.py does `from composition import CUSTODY_POLICY_REVISION`, and that name is defined only in investor-reporting/reports/composition.py while the function packages the GENERATE tree's composition.py -- a same-name module shadow that the E11 offline suites cannot see, because on the test sys.path `composition` resolves to the module that does carry it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~00:2xZ on dell2, release-4 bytes live: aws lambda invoke irpt-ycharts-generate {\"irpt_import_census\":true} -> {\"modules\": 62, \"failed\": {\"custody_submission\": \"ImportError: cannot import name 'CUSTODY_POLICY_REVISION' from 'composition' (/var/task/composition.py)\"}}",
+      "POSITIVE CONTROL, same invoke after the rollback: {\"modules\": 62, \"failed\": {}} -- the census reads clean on the pre-release bytes, so the failure was introduced by this release and is not an instrument artifact",
+      "the landing itself was correct and is not in question: plan 0/1/0 changing only s3_object_version and source_code_hash, applied from the committed planfile 43e2dfdb10, live CodeSha256 emzWWzrR0TUf7sHDbEeDeedc1EnTeaXAMl5kSHYLU7E= == the signed built sha, targeted re-plan 'No changes'",
+      "DEFINITION DENOMINATOR: comp-find '^CUSTODY_POLICY_REVISION\\s*=' over 68341 files scanned -> exactly 1 definition, infra/aws/lambda/investor-reporting/reports/composition.py:19 (= \"irpt-custody-x10-v1\")",
+      "USE SITES: comp-find 'CUSTODY_POLICY_REVISION' over the ycharts/generate tree -> 8 hits, all imports or uses, 0 definitions; custody_submission.py:15 'from composition import CUSTODY_POLICY_REVISION, build_retained_repositories', used at :80 and :81",
+      "the offline suites the order names DID pass against the same source: pytest test_custody_submission_revision.py -> 3 passed; the three custody suites -> 66 passed, 2 skipped. test_custody_submission_revision.py:16 itself does 'from composition import CUSTODY_POLICY_REVISION', so on the test sys.path that import RESOLVES -- to a different file of the same module name than the one the zip packages",
+      "ROLLED BACK the same session per the order's Branch B: copy-object re-promoted the step-0 version NqbpRnnx5METt43XaI_4nmk5fZDRTQpk (new current version nA7hze1zlQfF55Q05.Vxr4E3v8kCE7HW, CopySourceVersionId = the step-0 version), then a targeted apply; live now reads Un0wVZqjqpwKhpYyFeBRW3fVFddrlHR0BtHjYuP5eNY=, State Active, LastUpdateStatus Successful",
+      "Y70-1-AC1 FAIL (reads not all PASS -- the correct grade), Y70-1-AC2 PASS (test filer key NOT FOUND on a consistent get-item; admit_keys empty so the laptop limb is skipped by the check's own logic), Y70-1-AC3 PASS (branch B coherent); ledger irpt-ycg-release4-20261008 CLOSED, all 4 legs proven"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-APPLY-Y70 objective: 'Release 4 of irpt-ycharts-generate on dell2: E11 (one changed member, custody_submission.py), built emzWWzrR...', with step 4 after-read 2 requiring the import census to read 'failed: {}' and step 5 requiring the offline suites to pass.",
+  "world_is": "Both halves of the order's own evidence set were satisfied EXCEPT the import census, and the two disagree by construction: the suites exercise the module against a sys.path where `composition` carries CUSTODY_POLICY_REVISION, and the package ships a composition.py that does not. A green pytest run is therefore NOT evidence that a packaged module imports, whenever the package and the test path can resolve the same module name to different files -- and this function packages 62 modules, so the shadow is cheap to create and invisible until an in-package census runs. The remedy is a code decision this seat does not own: either custody_submission.py stops importing the name from `composition` (take it from where it is defined, or stage reports/composition.py as a packaged member the way trading_calendar.py is staged elsewhere), or the generate tree's composition.py defines it. Reads 3-7 were never reached, so no test filer, no on-behalf upload, no upload records, no resolve_upload message and no YCharts securities_info resolution were made; nothing is stranded and no S3 version was deleted. ONE RESIDUE IS LEFT DELIBERATELY VISIBLE: build-and-upload moved the source map's artifact_sha256 to emzWWzrR.. at step 2 and the deploy recorder was not run, so the map now disagrees with the live Un0wVZqj.. That is true and is left standing because the next act on this function is the fix, not a re-record."
+}
+```

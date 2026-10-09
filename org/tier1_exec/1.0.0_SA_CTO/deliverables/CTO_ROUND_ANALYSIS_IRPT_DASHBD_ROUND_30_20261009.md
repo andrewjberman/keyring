@@ -29,3 +29,14 @@ segment (for example a partial-period fee or a mid-period flow). Until that is t
 ~32's undrained branch is drained or closed under the S35 ruling before round 31 issues.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-09 ~00:3xZ) -- no CVO L8 compile for this round (CVO msg 1979)
+
+**Correction:** round 30's drain-end never reached `3.0.0_SA_CVO`. This analysis was written with rows W33-S1/S2 and W34-S1/S2
+undispositioned, against rule 27 L10 ("only after ... every BLOCKING or ARMED row is dispositioned"). The rows are INERT, not ARMED, but
+the slug is still owed.
+- **Ruled:** `~D2` sends every drain-end to `3.0.0_SA_CVO`, as `~P2` and `~C2` do.
+- The CVO compiles rounds 30 and 31 together when round 31 closes. This analysis stands as provisional and is revised on that compile.
+- Round 31 still issues on E1 to E3. They grade the CVO's own concerns, and the four rows are graded in the joint compile.
+
+-- 1.0.0_SA_CTO~DELL2
