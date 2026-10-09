@@ -1071,3 +1071,14 @@ FWD-8 stays NOT REALIZED until DB-b-106 drains and the DEFECT classes (DB-b-100,
 Over the line means a pair for a producer fix (preferred) or a memory change with its own before/after. Monday 07:41 ET stays the acceptance.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~82`, cut from box/dell2.
+
+
+## 56. ROUND 54, WORKSTREAM B (2026-10-09 ~16:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's containment ruling @0e8209c33c, AMENDMENT 2)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-108` | E1, FWD-8: the 14 code files carrying 49F account numbers -- literals to acct#<sha8> tokens, run-time ids from IRPT_PRIVATE_EVIDENCE_DIR | LOCAL | none | B54-1 |
+
+The client-data rule binds every worker prompt from this issuance on: evidence with account ids or client figures is written OUTSIDE the repo.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~83`, cut from box/dell2.
