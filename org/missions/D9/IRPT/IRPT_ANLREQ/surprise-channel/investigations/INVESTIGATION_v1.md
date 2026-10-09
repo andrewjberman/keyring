@@ -397,6 +397,32 @@
 ]
 ```
 
+## IRPT_ANLREQ-D2-W11-S3 -- gen-wire.ts run as main cannot finish from a linked portal worktree; the one file was rendered through its own renderModule
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W11-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~11",
+  "surfaced_at": "2026-10-09T06:10:00Z",
+  "one_line": "AMENDMENT 2 item 3 says regenerate AnalysisSubmissionRequest.ts with gen-wire.ts from the workspace-root schema, but run as main from a linked portal worktree (C:/tmp/anlreq-v11-portal) the generator resolves the workspace root six levels up (C:/tmp/), so generate() dies on the first document, AnalysisReport, whose served-v2 schema path (infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json) is not there. The v1 schema directory IS reachable through the generator's own IRPT_CONTRACTS_DIR override, so I called the generator's own exported renderModule for AnalysisSubmissionRequest alone, with that override, and wrote only that one file; no other generated file was touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE in C:/tmp/anlreq-v11-portal @69716c81: bun run of generate(<scratch dir>) with IRPT_CONTRACTS_DIR set -> ENOENT open C:\tmp\\infra\u0007ws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json (gen-wire.ts:639, the first document in WIRE_CONTRACTS).",
+      "RESULT: renderModule('AnalysisSubmissionRequest', <schema text read by schemaFilePath>) -> the committed file differs from its old self by exactly two lines: the header sha256 (ed84ac36... -> a6f224cd..., equal to sha256sum of docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json at workspace 5be2acd7cc) and `readonly ticket_id?: string`.",
+      "SAME CAUSE, other tests: in the linked worktree the fe-s-13 tests (routes, content-pins, producer-fixtures), iv-e-26 wire-regen and the component-census tests read the same missing C:/tmp/docs and C:/tmp/infra paths and fail with ENOENT; fe-s-1 source-bounds fails on a pre-existing 'ycharts' token at contracts/index.ts:29. None is in this order's files. The submission-request test and every TicketCenter test pass (23 of 23)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 3: regenerate the wire type with its own generator from the schema at the workspace root; if the generator cannot reach the schema from the portal worktree, STOP and report.",
+  "world_is": "The generator reaches the v1 schema (via IRPT_CONTRACTS_DIR) but not the served-v2 AnalysisReport schema from a linked worktree outside the workspace layout, so a full run aborts; the one required file was produced by the generator's own renderModule with the override."
+}
+```
+
 ## IRPT_ANLREQ-D2-S3 -- disposition of D2-S2 item 1: H1 withdrawn by the CTO; hop 4b is I3 alone
 
 ```json
