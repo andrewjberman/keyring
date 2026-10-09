@@ -3996,3 +3996,55 @@ round.** Never edit an existing row.
  "world_is": "7 control months moved (5 accounts), all from the basis change; largest 0.83 pp. The gate condition is met."
 }
 ```
+
+## ADVI_COTBKF-D2-W64-S1 -- No bond-specific Yahoo symbol exists for the three bonds, so the rewrite REMOVES all 1,734 bond rows with no replacement -- source ruling needed
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W64-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~64",
+  "surfaced_at": "2026-10-09T12:53:29Z",
+  "one_line": "CB-aj-1: by the Yahoo rule committed before the run (4bc82c2d47), yfinance Search(<CUSIP>) returned no hit and history(<CUSIP>, auto_adjust=False) returned empty for all three bonds (05613L3H2, 95000U2D4, 651639AX4; 6 calls, equity tickers never queried), so bonds_priced=0/3: the 111 daily rows and 1,623 canonical rows (1,734) are removed with no replacement and the three bonds read UNPRICED in the rewritten files. A source ruling is needed for a bond price source (a non-Yahoo as-traded source, or acceptance that the bonds stay unpriced) before CB-aj-2 applies.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 4bc82c2d47 data/assets/scripts/silver/commonwealth_cot_price_rewrite.py (Yahoo rule in its docstring, committed before the first run)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~64/cot_price_rewrite.md section 1 (symbol None, closes 0, hits [] for each CUSIP; calls 6 per run)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~64/cot_price_rewrite_manifest.json (removed 1734, repriced 0 over 38 keys)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expects Yahoo may return a bond-specific or CUSIP-keyed series for each bond; if none, the bond's rows are removed and a source ruling is asked.",
+  "world_is": "Yahoo returned no CUSIP-keyed or bond-specific series for any of the three bonds; the three bonds read unpriced in the 38 rewritten files, and every other row is byte-identical (other_rows_identical=True on 38 of 38 keys)."
+}
+```
+
+## ADVI_COTBKF-D2-W64-S2 -- Writer census: 7 writers of the price prefix in the repo, none run by the live gold-run document; two full runs, so 12 Yahoo calls in all
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W64-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~64",
+  "surfaced_at": "2026-10-09T12:53:29Z",
+  "one_line": "CB-aj-1: the census finds 7 repo writers of silver/prices (one in the cot tree, build_canonical_prices_v2.py:624; six in the other firms' trees) and scheduled=0: the live opal-cot-gold-run document (version 10) names none of them and carries no S_00 / gold_dispatch step, though the entry schedule and all three chain rules are ENABLED. The code mirror that document syncs (code/gold/ in the cot bucket) is not in the repo and was not read. Disclosed: run 1 stopped at the key parse (section 2 and section 5 both list the keys, 76 not 38) before any S3 or Yahoo call; run 2 printed writers=32 scheduled=11 because the census over-matched, fixed in 1a21ebbab6; run 3 is the recorded run, so Yahoo was called 6 times in each of runs 2 and 3 (12 in all), both empty. Run 2 and run 3 produced the same sha256 for all 38 files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~64/cot_price_rewrite.md section 3 (writer table and live reads)",
+      "commits 4bc82c2d47 (rule), fc87ae2988 (key loader reads section 5), 1a21ebbab6 (census); the Yahoo and diff rules are unchanged across them",
+      "live ssm get_document opal-cot-gold-run version 10: mentions_build_canonical_prices False, mentions_gold_dispatch False, mentions_S_00 False"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A scheduled writer would overwrite the rewrite; the issuer pre-scan expected the chain's gold run to be the candidate.",
+  "world_is": "No enabled schedule leads to a script that writes silver/prices in the live gold-run document; a manual run of the cot builder (gold_dispatch silver-prep) is the one repo path that would rebuild canonical_prices."
+}
+```
