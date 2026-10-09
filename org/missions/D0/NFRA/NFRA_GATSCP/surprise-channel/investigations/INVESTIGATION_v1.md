@@ -477,3 +477,28 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
 }
 ```
+
+## NFRA_GATSCP-D1-W8-S1 -- proof-of-spec-check.py rc=2 on every instance: PROOF_OF_SPEC.schema.json line 157 holds a description inside "type"
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W8-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~8",
+  "surfaced_at": "2026-10-09T14:06Z",
+  "one_line": "python .tools/proof-of-spec-check.py <instance> <ids> exits 2 (UnknownType) on every instance, including the round-2 GE6 instance that passed at its own flip; the schema's artifacts_produced kind enum at org/standards/PROOF_OF_SPEC.schema.json:157 carries a prose description as the value of \"type\".",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-NFRA_GATSCP-8 @e19881df2d: proof-of-spec-check.py on deliverables/0.9.0_WK_NFRA_GATSCP~7/NFRA_GATSCP.TO-GS-e-6...proof_of_spec.json GE6-AC1,GE6-AC2 -> TOOL-ERROR UnknownType: Unknown type \"string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO, row IRPT_DASHBD-S41)...\", rc=2",
+      "org/standards/PROOF_OF_SPEC.schema.json:157 \"type\": \"string aws_resource ADDED 2026-10-09 ...\" (the CTO's e7c10e5b4b); same cause as the two red LIVE self-test arms of D1-S13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The proof validator returns rc 0 or 1 on a well-formed instance, so the order's flip to complete is gated on rc 0.",
+  "world_is": "The validator cannot run; GS-f-1's criterion GF1-AC1 passes by its own output (GS-F1-POINTER ok=True arms=2 failed=0) but the instance cannot be validated, so the order's status stays pending. Outside the grant: the schema is not mine to edit; owner 1.0.0_SA_CTO."
+}
+```
