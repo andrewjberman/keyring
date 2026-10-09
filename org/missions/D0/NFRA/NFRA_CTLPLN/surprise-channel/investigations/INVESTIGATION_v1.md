@@ -6579,3 +6579,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A pair-condition grade lives outside any order's criteria, so the tool neither requires nor sees it. Close (1.0.0_SA_CTO~DELL1): a pair-condition grade appears in the round's judgment count."
 }
 ```
+
+## NFRA_CTLPLN-D1-S8 -- an integrate that lands a file on CLOUD before its pinned entry's box push silently closes the pre-push deploy window
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T21:36Z",
+  "one_line": "The pre-push deploy gate deploys only files in the box's diff against origin/CLOUD; once the laptop's integrate carried 88e974ca10 to CLOUD, data/mdpf/scripts/gold/mdpf_gold_consolidator.py (OPEN, pinned entry mdpf-stratid-r2-keyset-f3f4-dell1-20261009) was no longer in any box diff, so no push could deploy it and S3 kept the old bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~DELL1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse at 21:35Z: HEAD, origin/box/dell1 and origin/CLOUD all hold blob 8582352ca7 for the consolidator",
+      "box/dell1 pushes 21:24Z and 21:31Z: 'deploy gate: refs/heads/box/dell1 -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy'",
+      "s3://opal-data-mdpf/code/scripts/gold/mdpf_gold_consolidator.py sha256 3d78e9550c1b50e8... vs the entry's pinned sha256 2cd88dc41ce6a0bb",
+      "0.7.0_AE_CloudOps~DELL1 msg 3221: entry OPEN with 4 legs proven, asking for a box push"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy-scope script named by an OPEN, pinned change-management entry is deployed by the next push that carries it (CTO ruling msg 107341 B2).",
+  "world_is": "The gate's universe is the box's diff against origin/CLOUD at push time. The integrator merges box branches into CLOUD on its own clock, so a file can reach CLOUD (and every box) before any pinned-entry push, after which the push path can never deploy it. ARMED: F3 is not live until CloudOps deploys it directly under the OPEN entry. Remedy for the gate owner: deploy any OPEN-entry-named file whose S3 bytes differ from the pinned blob, regardless of the diff."
+}
+```
