@@ -10493,3 +10493,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not fixed here, deliberately. OG-ap-2 (@15349fa639) does authorise this seat to touch lambda-source-map.json, but only to register trading_calendar.py for the 49F dispatcher, in its own commit; that authority does not extend to rewriting this converter's deploy fields, and the two edits are kept apart. Whoever owns the update should set artifact_sha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE= and a last_deployed_commit naming the applied tree. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, but that form is UNREPRESENTABLE to SURPRISE_ID_RE in .tools/proof-of-spec-check.py:1206, whose optional infix is a SINGLE letter plus digits -- a two-letter 'AE' cannot match, so the row would not exist to the gate (proof-of-spec SURPRISES limb, ENFORCE for a tree TO). This project already hit and settled exactly this: an earlier seat exercised NFRA_OPLGTW-Z-OG-S1 against the same regex, got NO MATCH, and continued the Z-S series instead. Following that precedent this row is Z-S69 (max in channel was Z-S67, read over all 86 hits, not off one page). A gate stands and is not overridden; the order's row-id instruction is what needs correcting, and 2.0.0_SA_COO~O is told."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S70",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T03:46:58Z",
+  "one_line": "The advi-49f-gold-dispatch zip cannot carry a BUILD_MANIFEST.json member, which both OG-bf-1-Y halves and the source map's own _build_note say it does: the builder only ships a manifest that already exists in the source dir and never generates one, and this function's dir has none. The two member hashes the halves actually bind on match exactly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN BUILD_ONLY=1 build-and-upload.sh opal-assets advi-49f-gold-dispatch -> SHA256 EmlN9/zeB3rk90/QeJd7deRh01yiW3yKXEcLUQpFD0o=; zipfile namelist is exactly ['lambda_function.py', 'trading_calendar.py'], 2 members, no BUILD_MANIFEST.json.",
+      "RUN member hashes from the built zip: lambda_function.py 16904 bytes sha256 a524977a86caff1463c2c306f683fba40286dd44ddb8fbe6f62eb1ed0bec9990 and trading_calendar.py 12897 bytes sha256 8ec8e43def5854f67a0dadcef7c735906f44aa07ae5916b2fc62c4c81ca9a3a8 -- both EQUAL to the ask's section 1.",
+      "FILE infra/aws/lambda/ci/build-and-upload.sh:510 gates the manifest limb on `[ -f \"$ABS_SOURCE/BUILD_MANIFEST.json\" ]`, i.e. it READS an existing file and never writes one; :490 notes only 1 of 14 BUILD_MANIFESTs in the estate carries an index declaration.",
+      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ holds lambda_function.py and trading_calendar.py only -- no BUILD_MANIFEST.json to ship.",
+      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch']._build_note asserts 'Zip carries BUILD_MANIFEST.json (T2a stamp: vintage commit + member sha256)', which is not true of the built zip."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-2 step 1 and COO half term 2 / CTO half term 4: the zip holds lambda_function.py, trading_calendar.py 'plus the builder's manifest', each member equal to the ask's section 1 hashes.",
+  "world_is": "The hash clause is MET for both members. The manifest clause is unsatisfiable by construction here, not skipped: the builder has no manifest-writing path, so no invocation of it could produce that member while the source dir lacks the file. I did NOT add one -- the package dir is outside this order's <paths> -- and I did not correct the _build_note either, because that is a claim edit wider than the one-entry registration both halves scoped to this leg. Proceeded on the binding clause: AC1's own expectation grades only the two members ('member lambda_function.py: present=True equal-to-HEAD=True' and the same for trading_calendar.py) and never the manifest, so the criterion as written is reachable.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Benign, surfaced rather than waved through. Two cheap follow-ups for whoever owns them, neither mine under this order: commit a BUILD_MANIFEST.json in the dispatcher's package dir if the T2a stamp is actually wanted for this function, and correct the _build_note, which today asserts a member the zip does not carry. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, which SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) cannot match because its optional infix is a single letter plus digits; exercised both ways, Z-S70 matches and Z-AE-S3 does not. Continuing the Z-S series per this project's own Z-OG-S1 precedent, as for Z-S68 and Z-S69."
+}
+```

@@ -2280,3 +2280,28 @@ as expected; CONTROLS and PLANTED pass). On a scratch reference edit it reads 5 
 base (exit=1).
 **Chains:** 1. **Fan-out:** 1 of 1. **Risk:** LOCAL. **Rows:** `DSGN_AMGTV1-D1-W120-S<k>`.
 **Then:** the drain, tsc and eslint on the Freshness files, a signed-in /freshness real run, and CTO review.
+
+## v57 -- ROUND 57 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~04:xxZ) -- TWO CELLS ON /security-analysis (DIRECT ACTS)
+
+**Rectangle:** the round-56 analysis's enrichment list (`ledger/ROUND_ANALYSIS.round56.md`, msgs 1570/1593), read against the two walks
+(`deliverables/2.0.0_SA_COO~D1/round56/WALK_SECURITY_ANALYSIS_DEV_0008ddd3.md`) and a code map of portal 0008ddd3:
+1. R1 -> half (b), the honest not-found -> cell `AV-zzi-1`. Half (a), Enter resolves a typed name, is NOT cut: the page has no suggestions
+   and no resolve call, and a page-side name lookup breaks C-PRESENTATION-ONLY. It goes back to 1.0.0_SA_CTO~DELL1 as a producer/contract
+   question.
+2. R2 money -> NOT cut: the "$" is in quoted news headlines, and the page's own money is one form (USD). R3 dates -> cell `AV-zzi-2` (served
+   reason text on the Model card, using the page's own precedent `SecurityOverlay.tsx:96`).
+3. R4 contrast -> NOT cut: the HeroDialog header on the navy band, a walker false positive. R5 -> cell `AV-zzi-2` (the two truncated Price
+   labels: full text on focus; the title already serves hover). The "clipped element" is an empty chart `tspan`, so it is not cut.
+4. R6 -> NOT cut: the month cursor was removed on purpose (AV-zi-1) for the 30D/90D/365D windows. This goes back to the CTO with that
+   record.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzi-1` DIRECT ACT (LOCAL) | FWD-27, FWD-11 | `SA/notFound.ts` (new), `SA/SecurityAnalysis.tsx`, `SA/__tests__/notFound.test.tsx` (new); `SA/__harness__/` (re-anchor only) | ~121 (worker) |
+| `AV-zzi-2` DIRECT ACT, repairs batched (LOCAL) | FWD-27 | `SA/components/PriceBars.tsx`, `SA/dateWords.ts`, `SA/components/model/WhatChangedPanel.tsx`, `SA/tabs/ModelTab.tsx` | ~122 (worker-light) |
+
+**Write sets disjoint. Chains:** 2 (no edge). **Fan-out:** 2 of 2, cap 8. **Base:** portal 0008ddd3.
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round57/checks/r57a.cjs`: base 1 of 4, scratch reference 4 of 4. `r57b.cjs`: base 1 of 4, scratch
+reference 4 of 4. `battery29`: base ALL PASS; on the scratch, every harness green.
+**Rows:** `DSGN_AMGTV1-D1-W121-S<k>`, `-D1-W122-S<k>`. **Then:** the drain (tsc, eslint, battery29 on the combined candidate), a signed-in
+/security-analysis walk, and CTO review.

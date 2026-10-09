@@ -34,3 +34,11 @@ On the held e67 branch only, until it merges: D1-W57-S1.
 
 e57e61 verify at the 2026-10-08T14:00Z run (~SD); e65b, e67 and e71 deploys on item 5; e32 run 2 and e49 AI legs on the kimi grant;
 e68 L2 laptop read; SC-e-73 deferred until e67 is live and a served census reads multi_asset 0.
+
+## Dispositions added 2026-10-09 (laptop XA-20261009T034917Z-0eb1, ruled (a) 03:54:30Z; 1.0.0_SA_CTO~DELL1 @9fc0d443ad)
+
+- e63 (E_18 canonical caller, secclass-r10-held-34 @cbbda93539): RETIRED SUPERSEDED. It is superseded by e65b's `_shared` ship (two keys at 40ffa3fa,
+  0.7.0_AE_CloudOps~SC1 @5832bb9bba), which e63's module copy (caf18d79) would conflict with. The branch is kept: its deletion is destructive
+  git and waits on a human word.
+- e60 (BD D_04 Unclassified line, secclass-r10-held-d04 @24a219520b): RELEASE under a fresh never-widen pair, cut only after the e75 leg G
+  read at the 2026-10-09 04:00Z BD fire, because both touch the same served firm file.

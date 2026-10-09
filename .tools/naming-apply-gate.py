@@ -60,9 +60,18 @@ exits 0, on an internal error too (`NAMING ERROR <reason>`).
     or the grade) with a `why:` line under it, then `NAMING-PLAN: <PASS|WARN|REFUSE> <n> graded`. Logged the same
     way, in mode PLAN-WARN or PLAN-ENFORCE.
 
+THE PLACEMENT STEP, PLAN MODE (LGIC_BLANKFIX FWD-6, round 8 BF-w-1; the commit limb's step, design FWD6_DESIGN_round6.md).
+For an ADDED resource whose name belongs to a Terraform root, plan mode asks lib/opal_naming_rootcheck.py place(), the root
+check's own decision for that name, against the tree on disk: FIX or HOLE in a MAPPED root is a REFUSE row naming the form to
+use, or what is owed and to whom; in an UNMAPPED root only a name the matrix already refuses gets place()'s text; any other kind
+leaves the row as it was. The root is the --root DIR given, else the one root whose enumerated names include the name (a name no
+root lists, or listed by two roots, is graded by grade() alone and a notice says so). The mode is the switch file
+org/mcp/naming-place.enforce, the commit limb's: PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says); ABSENT ->
+the same text prints, marked would-refuse, and the verdict is unchanged. Nothing turns the step off but the file's absence.
+
 Usage:
     python .tools/naming-apply-gate.py DIR [--enforce]
-    python .tools/naming-apply-gate.py --plan-json FILE [--enforce]
+    python .tools/naming-apply-gate.py --plan-json FILE [--enforce] [--root DIR]
 
 Standard library only. ASCII only.
 """
@@ -83,6 +92,8 @@ OPAL_PATH = os.path.join(REPO, "lib", "opal_naming.py")
 COMMIT_LIMB = os.path.join(TOOLS_DIR, "naming-gate.py")
 ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
+PLACE_FILE = os.path.join(REPO, "org", "mcp", "naming-place.enforce")  # the placement step's switch: present = refuse
+PLACE_MAP = "infra/logic/registry/root_map.json"
 # The census's two own-name types whose node type grade() places outside its domain (G1.2): graded, NOT-GRADED, pass.
 NOT_GRADED_TYPES = {"aws_iam_user": ("IAM_USER", "name"), "aws_route53_record": ("ROUTE53_RECORD", "name")}
 RAISE_CANON = "(rule or registry defect)"
@@ -330,7 +341,64 @@ def _is_addition(change, attr):
     return False
 
 
-def run_plan(path):
+def place_enforcing():
+    """True while the switch file is present. Nothing else turns the step on or off."""
+    return os.path.exists(PLACE_FILE)
+
+
+def _rootcheck():
+    lib = os.path.join(REPO, "lib")
+    if lib not in sys.path:
+        sys.path.insert(0, lib)
+    import opal_naming_rootcheck as rcm
+    return rcm
+
+
+def place_amend(base, res, on):
+    """The (verdict, canonical, why, refuses) of an ADDED resource after place() answered `res`. refuses is True (the matrix),
+    "PLACE" (the placement step, switch present) or False. FIX or HOLE in a MAPPED root: a REFUSE row with the form or what is
+    owed; in an UNMAPPED root only a row the matrix already refuses is amended. Any other kind leaves the row as it is."""
+    verdict, canon, why, refuses = base
+    if res["kind"] not in ("FIX", "HOLE") or (not res["mapped"] and refuses is not True):
+        return base
+    form, text = _rootcheck().refusal_text(res)
+    return ("REFUSE", form, "%s [grade() said: %s]" % (text, why), "PLACE" if on else bool(refuses))
+
+
+def place_additions(graded, pending, root_arg, notes):
+    """Amend the ADDED rows in `graded` (a list; pending: [(index, name, node_type)]) with place(), one pass per root."""
+    if not pending:
+        return
+    on = place_enforcing()
+    try:
+        rcm = _rootcheck()
+        by_root = {}
+        for (i, name, node_type) in pending:
+            if root_arg:
+                roots = [rcm._TF_PREFIX + rcm.map_key(root_arg)]
+            else:
+                roots = rcm.roots_of_name(name, node_type)
+            if len(roots) != 1:
+                notes.append("NAMING PLACE-NOTICE %s %s: %s; graded by grade() alone (pass --root DIR to place it)"
+                             % (node_type, name, "no root lists this name" if not roots else "roots %s all list this name" % ", ".join(roots)))
+                continue
+            by_root.setdefault(roots[0], []).append((i, name, node_type))
+        for root, items in sorted(by_root.items()):
+            results = rcm.place_many(root, PLACE_MAP, [(n, t, None) for (_i, n, t) in items])
+            for (i, _n, _t), res in zip(items, results):
+                row = graded[i]
+                v, canon, why, refuses = place_amend((row[0], row[3], row[4], row[5]), res, on)
+                graded[i] = (v, row[1], row[2], canon, why, refuses)
+    except Exception as exc:  # the step never raises into the gate; it refuses only while the switch is present
+        line = "NAMING PLACE ERROR the placement step could not run: %s: %s" % (type(exc).__name__, exc)
+        notes.append(line)
+        if on:
+            for (i, _n, _t) in pending:
+                row = graded[i]
+                graded[i] = ("REFUSE", row[1], row[2], row[3], row[4] + " [" + line + "]", "PLACE")
+
+
+def run_plan(path, root_arg=None, notes=None):
     """graded rows for one `terraform show -json` document's resource_changes: one row per managed resource
     whose Terraform type carries a graded own-name attribute (the schema's map, same as DIR mode and the
     commit limb -- item 4). An ADDITION is graded for real (judge(), may REFUSE); every other resource is
@@ -357,7 +425,8 @@ def run_plan(path):
     changes = plan.get("resource_changes")
     if not isinstance(changes, list):
         raise GateError("%s carries no resource_changes array (is it a `terraform show -json` document?)" % path)
-    graded = []
+    graded, pending = [], []
+    notes = [] if notes is None else notes
     for rc in changes:
         if not isinstance(rc, dict) or rc.get("mode") != "managed":
             continue
@@ -376,9 +445,60 @@ def run_plan(path):
             verdict, canon, why, refuses = judge(mod, node_type, name)
         else:
             verdict, canon, why, refuses = judge_capped(mod, node_type, name)
+        if addition:
+            pending.append((len(graded), name, node_type))
         graded.append((verdict, address, name, canon,
                        "%s (%s): %s" % (address, "ADDITION" if addition else "existing", why), refuses))
+    place_additions(graded, pending, root_arg, notes)
     return graded
+
+
+def place_self_test():
+    """The placement step's arms on plain data (no root check is run): what each answer of place() does to an ADDED row, the
+    exit and the switch. Prints one line per arm; returns True when all hold."""
+    import tempfile
+    fix = {"kind": "FIX", "detail": "irpt-x-daily", "form": "irpt-x-daily", "mapped": True, "owed": [],
+           "fills": ['the cadence word "daily" is read from the schedule (b)']}
+    hole = {"kind": "HOLE", "detail": "partial form {system}-x-lambda; could not fill {system}: no map entry for this root",
+            "form": "{system}-x-lambda", "mapped": True, "fills": [],
+            "owed": [("4.0.0_SA_CRO", "a root-map entry for the root a/b (infra/logic/registry/root_map.json)")]}
+    right = {"kind": "RIGHT", "detail": "x", "form": None, "mapped": True, "fills": [], "owed": []}
+    good = ("CONFORMANT", "x", "x is CONFORMANT", False)
+    bad = ("REFUSE", "x-{cadence}", "OUT-OF-PATTERN", True)
+    on_fix, off_fix = place_amend(good, fix, True), place_amend(good, fix, False)
+    um_bad_off = place_amend(bad, dict(hole, mapped=False), False)
+    rows = lambda r: [(r[0], "a.b", "x", r[1], r[2], r[3])]  # noqa: E731
+    saved = globals()["PLACE_FILE"]
+    sw_off = sw_on = None
+    try:
+        with tempfile.TemporaryDirectory(prefix="naming_apply_gate_selftest_") as td:
+            globals()["PLACE_FILE"] = os.path.join(td, "switch")
+            sw_off = not place_enforcing()
+            with open(globals()["PLACE_FILE"], "w") as fh:
+                fh.write("x")
+            sw_on = place_enforcing()
+    finally:
+        globals()["PLACE_FILE"] = saved
+    arms = [
+        ("FIX on an added resource in a mapped root, switch present -> REFUSE with the form, refuses=PLACE",
+         on_fix[0] == "REFUSE" and on_fix[3] == "PLACE" and on_fix[1] == "irpt-x-daily" and "Owed: use irpt-x-daily" in on_fix[2]),
+        ("the same, switch absent -> the same text, refuses=False (verdict unchanged)",
+         off_fix[3] is False and off_fix[1] == on_fix[1] and off_fix[2] == on_fix[2]),
+        ("HOLE, switch present -> the owner and the row owed", place_amend(good, hole, True)[3] == "PLACE"
+         and "4.0.0_SA_CRO" in place_amend(good, hole, True)[2]),
+        ("RIGHT -> untouched", place_amend(good, right, True) == good),
+        ("unmapped root: a row the matrix refuses gets the text and keeps refuses=True; a well-formed one is untouched",
+         um_bad_off[3] is True and "4.0.0_SA_CRO" in um_bad_off[2] and place_amend(good, dict(hole, mapped=False), True) == good),
+        ("exit: PLACE exits 1 without the older switch; a would-refuse row exits 0; an old refusal needs the older switch",
+         decide_plan_exit(rows(on_fix), False)[4] == 1 and decide_plan_exit(rows(off_fix), False)[4] == 0
+         and decide_plan_exit(rows(bad), False)[4] == 0 and decide_plan_exit(rows(bad), True)[4] == 1),
+        ("switch: absent file -> off, present file -> on", sw_off is True and sw_on is True),
+    ]
+    ok = True
+    for label, held in arms:
+        ok = ok and bool(held)
+        print("SELF-TEST place arm %s: %s" % (label, "ok" if held else "FAIL"))
+    return ok
 
 
 def self_test():
@@ -401,6 +521,7 @@ def self_test():
         arm = got is want
         ok = ok and arm
         print("SELF-TEST arm %s -> addition=%s: %s" % (label, got, "ok" if arm else "FAIL"))
+    ok = place_self_test() and ok
     print("NAMING-APPLY-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
@@ -412,6 +533,7 @@ def main(argv=None):
     ap.add_argument("--plan-json", dest="plan_json", metavar="FILE",
                      help="a rendered `terraform show -json` document to grade -- plan mode (EN-t-2 round 2)")
     ap.add_argument("--enforce", action="store_true", help="a REFUSE exits 1 (also NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)")
+    ap.add_argument("--root", help="plan mode: the Terraform root the plan is for (default: the root whose names include each added name)")
     args = ap.parse_args(argv)
     if args.self_test:
         return self_test()
@@ -419,7 +541,7 @@ def main(argv=None):
         ap.error("give exactly one of DIR or --plan-json")
     enforce = enforcing(args.enforce)
     if args.plan_json:
-        return _main_plan(args.plan_json, enforce)
+        return _main_plan(args.plan_json, enforce, args.root)
     return _main_dir(args.dir, enforce)
 
 
@@ -466,10 +588,27 @@ def _main_dir(d, enforce):
     return 1 if (refused and enforce) else 0
 
 
-def _main_plan(path, enforce):
+def decide_plan_exit(graded, enforce):
+    """(summary, refused, place_refused, would-refuse, exit code) of the plan rows. A "PLACE" row exits 1 whatever the older
+    switch says; a True row exits 1 only while the older switch is on."""
+    refused = sum(1 for g in graded if g[5] is True)
+    place_ref = sum(1 for g in graded if g[5] == "PLACE")
+    would = sum(1 for g in graded if g[0] == "REFUSE" and g[5] is False)
+    warned = sum(1 for g in graded if g[0] == "WARN")
+    if (refused and enforce) or place_ref:
+        summary = "REFUSE"
+    elif refused or warned or would:
+        summary = "WARN"
+    else:
+        summary = "PASS"
+    return summary, refused, place_ref, would, 1 if ((refused and enforce) or place_ref) else 0
+
+
+def _main_plan(path, enforce, root_arg=None):
     mode = "PLAN-ENFORCE" if enforce else "PLAN-WARN"
+    notes = []
     try:
-        graded = run_plan(path)
+        graded = run_plan(path, root_arg, notes)
     except Exception as exc:
         line = "NAMING ERROR %s" % (str(exc) if isinstance(exc, GateError) else "%s: %s" % (type(exc).__name__, exc))
         print(line)
@@ -478,31 +617,29 @@ def _main_plan(path, enforce):
             print("  (WARN window: the limb's own error never blocks an apply; enforce is off)")
         return 1 if enforce else 0
     graded.sort(key=lambda r: (r[1], r[2]))
-    verdict_lines = []
+    verdict_lines = list(notes)
+    for ln in notes:
+        print(ln)
     for verdict, address, name, canon, why, _refuses in graded:
         vl = "NAMING %s %s %s -> %s" % (verdict, address, name, canon)
         verdict_lines.append(vl)
         print(vl)
         print("  why: %s" % why)
-    refused = sum(1 for g in graded if g[5])
-    warned = sum(1 for g in graded if g[0] == "WARN")
     denom = "NAMING-PLAN-DENOM: %s: %d resource-name(s) graded" % (path, len(graded))
     print(denom)
     if not graded:
         print("  (0 graded resource-name(s) in this plan: nothing to grade, or nothing this schema's map covers)")
-    if refused and enforce:
-        summary = "REFUSE"
-    elif refused or warned:
-        summary = "WARN"
-    else:
-        summary = "PASS"
+    summary, refused, place_ref, would, rc = decide_plan_exit(graded, enforce)
     if refused and not enforce:
         print("  (WARN window: %d REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or"
               " org/mcp/naming-gate.enforce)" % refused)
+    if would:
+        print("  (placement step: %d would-refuse verdict(s) did not block; the step refuses while org/mcp/naming-place.enforce"
+              " exists, and that switch is absent)" % would)
     last = "NAMING-PLAN: %s %d graded" % (summary, len(graded))
     print(last)
     log_lines(verdict_lines + [denom, last], mode)
-    return 1 if (refused and enforce) else 0
+    return rc
 
 
 if __name__ == "__main__":
