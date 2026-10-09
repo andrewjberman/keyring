@@ -8,7 +8,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-29",
   "registered_under_tree": "2026-09-29",
-  "placement": "SITEZ",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "AMGT_RESAPP",
@@ -32,18 +32,19 @@
   ],
   "decomposition_lineage": [],
   "leads": {
-    "cto": "1.0.0_SA_CTO~Z",
-    "coo": "2.0.0_SA_COO~D",
+    "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
+    "coo": "UNSEATED on dell1 -- seated by 0.0.0_AB_MSTR~DELL1 on this re-placement (prior site-Z lane 2.0.0_SA_COO~D)",
     "cvo": "3.0.0_SA_CVO~Z",
     "cro": "4.0.0_SA_CRO~Z",
     "workers": "0.9.0_WK_DSGN_AMGTV1~<n>, per the L6 issuance"
   },
-  "coo_lane": "2.0.0_SA_COO~D",
+  "coo_lane": null,
   "fabric_ruling": "site-z -- Andrew-direct 2026-09-28 ~22:4xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'COO~D is fine, because they are on separate boxes, so there shouldn't be any overlap. DSGN_AMGTV1 will be owned by the sitez box, so it should not interfere with any COO~D ops on the laptop box.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_DSGN_AMGTV1_SEATS_ON_COO_D_SITEZ.md). D13 is placed LAPTOP; this member is the named per-member exception the register header reserves to Andrew per case (DIRECTIVES.yaml:24-26), adjudicated by 3.0.0_SA_CVO~Z msg 26308 (REC (a) CONCUR). directives-check displays D13 as LAPTOP for this member: display only, no tool routes member work by directive placement.",
   "blocking": "PRD v0.2 ADMITTED (ratified-text SIGNED by 3.0.0_SA_CVO~Z @5a222f83d6; brief half auto). L5 decomposition and the round-1 issuance (the Valero thread) are 2.0.0_SA_COO~D's.",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md",
   "counterpart": null,
-  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was SITEZ. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
+  "placement_ruling": "Moved to dell1 on Andrew-direct 2026-10-08 ~22:5xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: \"I think all the AMGT work should go to DELL1. That means AMGT_CORPUS RESAPP HARVST and also DSGN_AMGTV1. I think we can also put ETFS_RIVALS over there as well.\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md @b7361ceb2a). Re-placed at L3 by 1.0.0_SA_CTO~DELL1 2026-10-09 on the site-Z hand-over and census (@6a308cd424). PRODUCER RULE: the site-Z producers named in the census stay at site Z and dell1 reads their S3/DynamoDB outputs; a dell1 change to a site-Z producer path is a site-Z deploy under a never-widen pair carrying 1.0.0_SA_CTO~Z's half before the merge.",
+  "handover_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md @70c5bd38d1"
 }
