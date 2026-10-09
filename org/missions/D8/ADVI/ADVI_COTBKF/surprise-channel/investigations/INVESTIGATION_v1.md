@@ -4258,3 +4258,28 @@ round.** Never edit an existing row.
   "world_is": "The stock invocation cannot reach a verdict on a worktree cut before 1f256cfc64; every worker order cut from the same base meets the same rc=2 until the base carries the fix."
 }
 ```
+
+## ADVI_COTBKF-D2-S63 -- disarms D2-W66-S1: the account_return_daily mint is held on the producer's method gap
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S63",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T13:56:15Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W66-S1 (its disarm_owner, same turn): the only act that could land the false custodian-method manifest is TO-CB-al-2 (the mint), now HELD by its AMENDMENT 1 -- emit_day(upload=True) does not run until IRPT_DASHBD changes the producer (a truthful return_basis value + method row, or a Cottonwood sources.json entry with a manifest-text parameter) and the CTO rules; the gap is routed to 1.0.0_SA_CTO~DELL2. No served write occurred.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-al-2.account-return-daily-mint.md AMENDMENT 1",
+   "prefix s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/ still empty (CB-al-1 --verify-served: match=0/3325, every day ABSENT)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner.",
+ "world_is": "W66-S1 disarmed: the act it guards is held until the producer can state FWD-3's method truthfully."
+}
+```

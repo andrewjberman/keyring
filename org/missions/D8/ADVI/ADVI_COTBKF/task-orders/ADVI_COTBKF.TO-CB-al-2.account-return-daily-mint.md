@@ -44,6 +44,15 @@ keys.
    the manifest's.
 5. **Close the ledger** with the day count and the read-back result.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~13:5xZ) -- HELD on row D2-W66-S1 (BLOCKING).** The producer's `emit_day(upload=True)` writes a
+`manifest.json` whose method text and `method_version` state the CUSTODIAN method. FWD-3's Cottonwood rows are positions x as-traded
+close, after fees, so landing them through `emit_day` unchanged would publish a false claim. This order does NOT run until both:
+- IRPT_DASHBD changes its producer, with either a truthful `return_basis` value plus a method row, or a Cottonwood `sources.json` entry
+  with a manifest-text parameter;
+- the CTO rules on it.
+
+The gap is routed to `1.0.0_SA_CTO~DELL2`. A hand-written manifest or a second writer is never the workaround.
+
 ### ACCEPTANCE
 
 <criterion id="CB38al2-AC1" cell_refs="CB-al-2"><invocation>python data/assets/scripts/silver/commonwealth_account_return_daily.py --verify-served --out .scratch/advi_cotbkf/ard_cottonwood_verify</invocation><expect>ARD-COTTONWOOD-VERIFY days=</expect></criterion>
