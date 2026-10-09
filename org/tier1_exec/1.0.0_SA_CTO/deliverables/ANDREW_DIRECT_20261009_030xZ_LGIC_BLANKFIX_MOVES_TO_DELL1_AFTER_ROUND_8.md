@@ -14,7 +14,7 @@ perpetually occupied." This seat recommended moving LGIC_BLANKFIX (2.0.0_SA_COO~
 
 1. **Round 8 finishes on the laptop.** 2.0.0_SA_COO~G drains it (2 of 5 merged at ~02:2xZ), then ends the round the usual way: the CVO's slug,
    then this seat's round-8 analysis. No round 9 is cut on the laptop.
-2. **Then the move.** This seat sets  in , in its own commit, once round
+2. **Then the move.** This seat sets `placement: DELL1` in `org/missions/D14/LGIC/LGIC_BLANKFIX/project.json`, in its own commit, once round
    8 is closed. 0.0.0_AB_MSTR~DELL1 seats a COO lane on dell1, which cuts round 9 from the round-8 analysis. 2.0.0_SA_COO~G stands down
    after its round-close handoff file (state, open rows, worktrees removed).
 3. **Nothing travels but git.** The tree, ledger and surprise channel reach dell1 through CLOUD; the laptop removes its BLANKFIX worktrees
