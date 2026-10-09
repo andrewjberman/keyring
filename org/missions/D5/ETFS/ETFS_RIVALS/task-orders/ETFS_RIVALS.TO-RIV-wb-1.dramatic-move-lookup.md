@@ -108,7 +108,8 @@ FAIL as expected.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 by 2.0.0_SA_COO~V1: merged 98c5ba6d31; amended AC1 PASS 5 of 5 (worker ~24 proof VALID) -->
 <round>28</round>
 <workstream>2</workstream>
 <slot>~24</slot>
