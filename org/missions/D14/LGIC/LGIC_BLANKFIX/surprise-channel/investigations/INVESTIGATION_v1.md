@@ -1958,3 +1958,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Both stages are wired to act on the gate's NAMING-PLACE line (pre-plan: exit 6 for an unscoped apply, warn only for a scoped or planfile apply as before; plan: exit 7). Only the plan stage has a producer: the directory mode cannot tell an addition from an existing resource and runs no placement step. The pre-plan arms therefore use a stand-in gate and prove the script's wiring, not the gate's output. No change to the gate's directory mode was made; whether it should place anything is the owner's call."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S2 -- org/naming-place-override-audit.log is named in the write grant but is gitignored runtime state (*.log), so the audit lines never travel in a commit
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T06:21:00Z",
+  "one_line": "BF-x-4 lists org/naming-place-override-audit.log in its paths, but .gitignore line 68 (*.log) ignores it, as it does org/git-author-override-audit.log, so each box's override rows stay on that box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git check-ignore -v org/naming-place-override-audit.log org/git-author-override-audit.log -> .gitignore:68:*.log for both; git ls-files org/git-author-override-audit.log -> empty",
+      "exercise_override.py arm O1 (0.9.0_WK_LGIC_BLANKFIX~2): the audit line is appended in the box's tree by .tools/safe-commit.sh and the gate reads it there"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-x-4 build 1 and its paths block: safe-commit appends one audit line to org/naming-place-override-audit.log, a path inside the write grant.",
+  "world_is": "The file is created at first use and is never tracked, like the older git-author-override audit log the cell modelled it on; the gate's check is local to the box and the 600-second window, so nothing needs the line to travel. I did not create the file, add a negation to .gitignore (outside the grant) or commit a placeholder. Whether the override rows should be tracked for review is the owner's call."
+}
+```
