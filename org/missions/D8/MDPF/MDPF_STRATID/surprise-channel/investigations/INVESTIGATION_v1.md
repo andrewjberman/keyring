@@ -103,6 +103,26 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The sma_additive_aua series is counted at the frontier as its own labelled component beside taxsma, so the Global total equals the fold's opal_aggregate_aua.",
     "world_is": "The total reconciles to the cent; the component's as_of/carried labels are not vintage-exact on a carried date. A per-date source-date channel (round-2 enrichment) would let the label match the Tax component's."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S1",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:00:18Z",
+    "one_line": "On Cottonwood's 2026-10-08 Rebalancer names the unidentified list holds 38 of 362 names, because opal_sma_member_of knows only the four ETF SMAs, so every Opal-named model and sleeve (Opal Satellite 50, Opal Short-Term, ...) lists NO_MEMBER beside the real unknowns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md: RESULT LISTED 38; Opal_Muni_Income 64,119,753.85 RULE_NOT_COUNTED (HOLDINGS join fact_model_assignment.external_id = fact_holdings.AccountID, 1 of 1 accounts)",
+        "data/assets/scripts/silver/rebalancer_schemas.py:226 opal_sma_member_of returns a member only for DIVZ/IDVZ/PFDE/PFOE name rules"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Anything that looks like an Opal strategy but matched nothing is listed with firm, name and dollars (FWD-7); the order's names are roster.model_name, definition.model_name/sleeve_name/component_name.",
+    "world_is": "The list is correct to the order's rule but mixes ordinary Opal models (not SMA strategies) and one holdings-component name (OPAL INTERNATIONAL DIVIDEND INCOME ETF) with the true unknowns; a reader wanting only SMA candidates needs a model-vs-sleeve scope on the names. ID FORM: the order names id MDPF_STRATID-W2-W6-S<k>, which proof-of-spec-check SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) cannot parse, so the row is minted MDPF_STRATID-D1-W6-S1 (the dell1 worker form the row gate requires). Also fact_model_assignment.account_id does not join fact_holdings.AccountID (external_id does)."
   }
 ]
 ```
