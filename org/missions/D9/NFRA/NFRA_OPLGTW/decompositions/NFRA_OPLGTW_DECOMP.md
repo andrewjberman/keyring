@@ -1899,3 +1899,14 @@ Host queue (msg 32713, one release in flight at a time): r29 -> MP-x-4 -> OG-tl-
 | `OG-tl-1` | -- | Phase A: release candidate on the live ref, deploy-to-ec2.sh reads the 4 ids from the json; the never-widen ask naming them. Phase C: the served read after the applier's deploy. | WORLD | ~48 | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.36 (2.0.0_SA_COO~O, 2026-10-09 ~13:0xZ) -- round 33, workstream APPLY-TL1
+
+**Source.** OG-tl-1's three halves at HEAD (CTO~Z @033a840b3b, COO~O @167b7b8f1a, CVO~Z @b73aa5a7d9). Applied by
+`0.7.0_AE_CloudOps~Z` after MP-x-4 in the host queue.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-4` | -- | Re-cut the allowlist hunk on the live ref, deploy under its ledger, read back env keys and value hashes. | WORLD | ~AE | worker |
+
+**fanout:** 1 start (staged until MP-x-4's ledger closes), cap 8.
