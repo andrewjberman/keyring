@@ -3,11 +3,11 @@
   "former_codes": [],
   "macro_code": "AMGT",
   "directive": "D5",
-  "fabric": "site-z",
+  "fabric": "dell1",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
-  "coo_lane": "2.0.0_SA_COO~X",
+  "coo_lane": "2.0.0_SA_COO~C1",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
   "last_updated": "2026-10-06T03:50:00Z",
@@ -78,6 +78,12 @@
   "blocking": "None. an-3 is the scheduled 13:00Z fire's own clock.",
   "threads": [],
   "thread_counter": 0,
-  "placement": "SITEZ",
-  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was None. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
+  "placement": "DELL1",
+  "placement_ruling": "Andrew-direct 2026-10-09 ~01:5xZ (relayed by 0.0.0_AB_MSTR~Z bus d21f51be, site Z CTO msg 32243), VERBATIM: \"i just canceled your spawns, those agents are on DELL1 now, thats where they can work\" -- moves ETFS_RIVALS and AMGT_CORPUS to dell1 NOW, mid-round, overriding dell1 CTO term 4; under Andrew-direct 2026-10-08 ~22:5xZ (@b7361ceb2a). Re-placed at L3 by 1.0.0_SA_CTO~DELL1. PRODUCER RULE: site-Z producers in the census (@6a308cd424) stay at site Z; a dell1 change to a site-Z producer path (incl. a module an ACTIVE site-Z producer imports) is a site-Z deploy under a never-widen pair carrying 1.0.0_SA_CTO~Z's half before the merge.",
+  "fabric_ruling": "dell1 -- Andrew-direct 2026-10-09 ~01:5xZ (relayed by 0.0.0_AB_MSTR~Z bus d21f51be, site Z CTO msg 32243), VERBATIM: \"i just canceled your spawns, those agents are on DE...",
+  "leads_dell1": {
+    "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
+    "coo": "2.0.0_SA_COO~C1 (dell1), seated ~01:5xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1407)"
+  },
+  "handover_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md @0953984a75"
 }

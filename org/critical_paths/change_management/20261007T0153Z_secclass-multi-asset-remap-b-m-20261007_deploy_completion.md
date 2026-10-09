@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-07T01:53:50.095679+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Andrew limit item 5: TO-SC-e67 (COT D_04 no multi_asset) held line q/dell1/secclass-r12-held-e67/r1 @a5ce0efab3; row MDPF_SECCLASS-S60. Measured 2026-10-09 00:1xZ by 2.0.0_SA_COO~M1: opal-data-cot listed=1153 hit_keys=2 post_switch=2 (z09305621, z09305679 concentration.json @2026-10-08T11:36Z), record MDPF_SECCLASS_M/SERVED_MULTI_ASSET_SPLIT_COT_20261009T00Z.json. Table rows (leg S) and IRPT holdings (leg H) are correct; no rollback. BD half reads at the 2026-10-08 23:00Z fire with secclass-e75 leg G. (held since 2026-10-09T00:09:51.088023+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / TO-SC-e67 (COT D_04 no multi_asset) deploy, held line q/dell1/secclass-r12-held-e67/r1 @a5ce0efab3, row MDPF_SECCLASS-S60. CORRECTION 2026-10-09 ~02:0xZ: the limit item 5 gate cited @a2ab733944 is LIFTED (Andrew-direct 2026-10-08 ~13:2xZ '1.) lIFT ITEM 5'; step D applied; live read: cloudops-dell-agent-routes-host-policy absent, 9 dell-agent policies present as control). The remaining gate is the e67 deploy under its COO+CTO pair. COT measured 2026-10-09 00:1xZ: post_switch=2 (z09305621, z09305679). (held since 2026-10-09T02:00:50.869677+00:00)
 **Deploy:** MDPF_SECCLASS: the 33 multi_asset etf-classifications rows remapped into the six classes by Andrew's rule B (no multi-asset class); conditional compare-and-set updates with a pre-state snapshot; halves COO + CTO
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -22,3 +22,5 @@
 - 20261007T071015Z LEG S closed: 2026-10-07 ~07:15Z remap_multi_asset_rows_b.py --write: WROTE 33 of 33, condition failures 0; snapshot MULTI_ASSET_REMAP
 - 20261008T180919Z LEG H closed: 2026-10-08 ~18:05Z, 2.0.0_SA_COO~M1: e62e56_post_fire_read.py read over the served irpt holdings publications business_d
 - 20261009T000951Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew limit item 5: TO-SC-e67 (COT D_04 no multi_asset) held line q/dell1/seccl
+- 20261009T020050Z HOLD RELEASED -> OPEN
+- 20261009T020050Z HELD-SOVEREIGN-GATED gate=external/TO-SC-e67 (COT D_04 no multi_asset) deploy, held line q/dell1/secclass-r12-held-

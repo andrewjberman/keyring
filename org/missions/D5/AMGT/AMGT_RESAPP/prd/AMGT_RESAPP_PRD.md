@@ -4,7 +4,7 @@
 {
   "project": "AMGT_RESAPP",
   "directive": "D5",
-  "fabric": "site-z",
+  "fabric": "dell1",
   "prd_version": "v0.41",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",

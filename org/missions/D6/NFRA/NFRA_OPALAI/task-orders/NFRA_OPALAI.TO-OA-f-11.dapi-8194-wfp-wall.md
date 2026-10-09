@@ -198,7 +198,7 @@ Z-S41 bars this seat from direct credential use. Dry-run at base (c249be336b): A
 live boot 2026-10-08T20:56:05Z). Synthetic arms, then removed: GREEN PASS; RED FAIL with Opal_Agent 8194 OPEN; RED FAIL
 with boot_time before the apply. A FAIL re-opens R5 at `1.0.0_SA_CTO~O` with its measurement. Gates nothing.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~26</slot>
 <fabric>site-z</fabric>
