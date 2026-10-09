@@ -890,3 +890,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W3-S3 -- AR-y-22: <owned_cells> still names AR-y-21 but no criterion of the amended order references it, so no VALID proof instance can exist
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The amended order declares <owned_cells>AR-y-21 AR-y-22</owned_cells> but its only criteria (AR22-y-AC1..3) carry cell_refs=\"AR-y-22\", so proof-of-spec-check refuses every instance for it with 'declared cell AR-y-21 ... NO criterion references it'; the order cannot reach a VALID proof, and so cannot be flipped to complete, until the issuer reconciles owned_cells with the criteria.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: write and validate the new proof instance, to_id the full id, 'validated ... BEFORE the flip to complete'; <owned_cells>AR-y-21 AR-y-22</owned_cells> (AR-y-21 complete, its AR21-y criteria recorded VALID by ~2).",
+  "world_is": "All three criteria PASS by output (AR22-y-AC1 14 passed; AC2 275 passed, 22 skipped; AC3 AR21-y-AC3 PASS). The instance at deliverables/0.9.0_WK_IRPT_ANLREQ~3/ validates schema and invocation alignment (3/3) and fails on one line only: VIOLATION alignment: declared cell 'AR-y-21' is named in the TO's <owned_cells> but NO criterion references it (.tools/proof-of-spec-check.py:1189-1191, a DELIMITED <owned_cells> is graded backward). I did not edit owned_cells or any cell_refs: both are the issuer's criteria face, and changing what the gate reads to make it pass is not a worker act. Status stays pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md: <owned_cells> line and the three <criterion ... cell_refs=\"AR-y-22\"> lines @a30b01837a",
+      "python .tools/proof-of-spec-check.py <instance> AR22-y-AC1,AR22-y-AC2,AR22-y-AC3 -> INVALID (rc=1), one VIOLATION",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json: the AR-y-21 criteria's own VALID instance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
