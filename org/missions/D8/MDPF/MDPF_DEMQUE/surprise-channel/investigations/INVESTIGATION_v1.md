@@ -321,6 +321,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "bbg_quote.py --quote DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json output"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S4",
+    "one_line": "quote_vs_actual.py --all raises KeyError 'finish_date' on a frozen quote file of an older shape (MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json), so the all-requests read stops at the first such file.",
+    "spec_asserts": "TO-DQ-t19 build item 1: --all prints one line per frozen quote; a missing quote file is a ValueError, never a default.",
+    "world_is": "requests/ holds 4 .quote.json files; the SECHIST card's quote (filed by 2.0.0_SA_COO~H1 before round 6) has no finish_date key. read() indexes quote['finish_date'] and --all crashes there. --request on the three round-5 quotes works (FWD4-OK ON_TIME at base @112f2f2b12). Remedy for the repair batch: a quote without finish_date reads verdict UNQUOTED with the gap named, never a crash and never a default date.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-09T13:04:34Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python data/mdpf/scripts/demque/quote_vs_actual.py --all at dell1 base @112f2f2b12: KeyError 'finish_date' (line 24)",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/requests/MDPF_SECHIST-CARD-A-COT-BBG-HISTORY.quote.json"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W18-S1",
+    "one_line": "DQ-t-21 appends four columns to prices.parquet as ordered, which fails the existing test_demque_store.py::test_only_the_locked_range_is_written (asserts exactly the three old columns); that file is outside the order's write grant.",
+    "spec_asserts": "TO-DQ-t21 step 2: prices.parquet gains cash, total_return, tr_source, flags AFTER the existing columns; and 'keep the existing test_demque_*.py passing'.",
+    "world_is": "data/mdpf/scripts/demque/test_demque_store.py line 32 asserts list(px.columns) == ['date','close_served','as_traded_close']; with the four columns appended it fails (1 failed, 76 passed across the demque test directory). Both instructions cannot hold. The new columns were built as ordered; the one-line fix to that assertion (compare the first three columns) belongs to the issuer, the file not being in <paths>. Also: daily_draw.py (not in <paths>) must pass bbg= to price_store.write for guard (a) to fire in the scheduled draw, and money_market.csv carries empty cusip cells (no CUSIP in the order).",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~18",
+    "surfaced_at": "2026-10-09T12:55:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_store.py:32",
+        "data/mdpf/scripts/demque/price_store.py",
+        "pytest -q data/mdpf/scripts/demque -> 1 failed, 76 passed"
+      ]
+    }
   }
 ]
 ```
