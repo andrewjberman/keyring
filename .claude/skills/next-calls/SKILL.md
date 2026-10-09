@@ -137,6 +137,9 @@ ONE-WORD FORM: "{i}{a|b}, {i2}{yes|no}, go" answers every BLOCKING call and auth
 /next-calls and proceed with the chosen sequence. This should continue until there is truly nothing left for them to do."*
 Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_000xZ_KEEP_WORK_DRIVING_OPEN_CALL_QUEUE_CROSS_ADJUDICATION_AND_NEXT_CALLS_ON_EMPTY_TICK.md`.
 
+**The switch first:** `python .tools/open-calls.py mode get --part empty_tick` (the `/keep-driving` cloud switch, Andrew-direct
+2026-10-09 ~00:4xZ). `state=off` -> the `--drive` form does not run and the tick is a plain NO-OP that says `empty_tick off`.
+
 `/next-calls <CODE> --drive` is the same assessment, scoped to the project, with three differences:
 1. **Nobody answers in the session.** Every genuinely open call is written to the box's queue the same tick (`python
    .tools/open-calls.py add --project <CODE> --subject "<the card's top line> REC <rec>" --asked-by <serial> --source

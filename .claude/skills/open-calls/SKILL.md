@@ -170,7 +170,8 @@ only Andrew can do: such an act still goes to him, named as that act.
 design `org/tier1_exec/4.0.0_SA_CRO~B/deliverables/DESIGN_KEEP_WORK_DRIVING_20261009.md`.** Each box's scheduled task
 `Opal open-calls scan` (`.tools/open-calls-scan-schedule.ps1 -Install`) runs `.tools/open-calls-scan.py` every 10 minutes. An
 OPEN `fork` row with no `escalation` drops one `[OPEN-CALLS SCAN]` file in the box CTO's inbox (no CTO live: the box MSTR's),
-re-sent every 30 minutes while unchanged. **Every call in that file gets ONE of three outcomes, the same turn:**
+re-sent every 30 minutes while unchanged; the `/keep-driving` cloud switch (`open-calls.py mode`) pauses it per box or
+everywhere. **Every call in that file gets ONE of three outcomes, the same turn:**
 
 - **RULE** (own-box, in pattern, one clear answer): `/open-calls --adjudicate <CODE>`, then `open-calls.py close --id <id> --by
   <serial> --ruling <record>`.
