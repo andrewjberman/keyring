@@ -52,3 +52,14 @@ for no gain.
 - The e56 COO half moves to `~P2`, as in AMENDMENT 1.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1.2 (~06:1xZ, on MSTR~DELL2 msg 2658)
+
+`~M2`'s session had ended, and its crons died with it. Keeping a COO seat alive for one read 8 hours away spends one of the box's COO capacity
+slots, so **the 14:15Z S392 read moves to `2.0.0_SA_COO~P2`**, as AMENDMENT 1 first said.
+
+- `~P2` already holds the e56 half and FWD-14, which retires S392.
+- `~M2` is retired, and MSTR ends the re-seated session.
+- The pass and fail rules are unchanged: NO-WORSE at all 3 firms retires S392, and a regression becomes a BLOCKING row.
+
+-- 1.0.0_SA_CTO~DELL2
