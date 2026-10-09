@@ -92,9 +92,23 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   cell's output; it is not an order.
 - Slot ~129. Checks dry-run at the base: see decomposition section 88.
 
+**COMPLETE 2026-10-09 ~03:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~129 @52be31ddc2 (dry run), proof @2ba8e449f5, VALID rc 0; merged @ff5e34ab44. Re-read by the issuer on the
+  branch: output, proof, and the rule self-test (holds on a list-moved loss; negative controls break it).
+- **AC1 PASS** `PUTS SENT 0` (2 puts captured, 0 sent). **AC2 PASS** `LIST MOVED: AIG_US_Equity, OMAB_MM_Equity, OMAB_US_Equity`.
+  **AC3 PASS** `RULE (rebuild #11): HOLDS`.
+- **The finding:** the list move gains and loses 0 pairs on all three securities (AIG 16 served, 16 built; OMAB_MM 5 and 5;
+  OMAB_US 5 and 5). It shows only as 22 changes to those securities' own fields (class g: AIG 12, OMAB_MM 5, OMAB_US 5).
+  The rest of the build is silver growth since rebuild #10: mention +427 (418 on unchanged securities, 9 on fallback
+  GSK_LN), daily 1,690 changed (a 847, d 840, b 3), lost 0, unexplained 0, OTHER 0. `OMAB_US_Equity` lost a served alias,
+  and no mention count went down.
+- **AC4 (judgment):** `REBUILD11_TITLES.md` is empty by construction (no pair moved). R28's ten titles each cannot be graded.
+  Routed to `1.0.0_SA_CTO~DELL1` with the serve act's pair. Row `AMGT_HARVST-D1-W129-S1`.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>75</round>
 <slot>~129</slot>
 <fabric>dell1</fabric>
