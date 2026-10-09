@@ -2450,3 +2450,81 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The listed name cannot be typed into the .tf and pass; it passes as the builder's module output, which is also what R2 asks for (the firm as scope, never hand-composed). The checker therefore feeds the module form as the pass arm and the typed literal as the difference control. The gate verifies the form of the declaration (no hand-kept firm token), not the string the module will print; that string is name() output by the checker's own call."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S10 -- 23 of the 254 stored-file lines have no key ruling row naming who moves the store, so their owner prints UNDECIDED with a reason; the order's last line expects undecided=10
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T13:36:10Z",
+  "one_line": "23 of the 254 stored-file lines (16 key class ADDRESS, 7 graded FIX) have no key ruling row, so no row names who moves the store; owner prints UNDECIDED (reason), while the order's last line reads undecided=10",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py stored_owner(): owner is read from the key ruling row's `owner` field (infra/logic/registry/key_rulings.json, 161 rows, every row carries owner); python .scratch census of the 254 stored-file lines at base: 218 matched a ruling row (14 per-firm, 10 with an open {source}/{scope} place), 16 are key class ADDRESS and 20 are graded with no key row (13 RIGHT, 7 FIX)",
+      "check_fwd4_stored_r14.py output: files=254 owner_and_scope=207 per_firm_patterns=14 undecided=10 owner_unnamed=23; the 13 RIGHT lines with no row print owner=none (the file is already at its address, nothing moves)",
+      "example: FIX S3Key code/silver/convert_fees_to_silver.py -> blackdiamond/49financial/code/silver/convert_fees_to_silver.py source=blackdiamond owner=UNDECIDED (no key ruling row names who moves this store) scope=49financial  [infra/aws/lambda/bd-pipeline/bd-49f-fees-runner/lambda_function.py:44]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-3 Build 3: last line `FWD4-STORED-R14 ok=True files=N owner_and_scope=N per_firm_patterns=14 undecided=10`; R4: owner from the ruling row, a field no row decides prints UNDECIDED with its reason.",
+  "world_is": "per_firm_patterns=14 and undecided=10 (the open {source}/{scope} rows) hold as stated. 23 more FIX lines have no ruling row to read an owner from, so by the same rule their owner is UNDECIDED with a reason. The checker prints them as a separate count, owner_unnamed=23, and keeps undecided= for the 10 open-place rows; files = owner_and_scope + per_firm_patterns + undecided + owner_unnamed (254 = 207 + 14 + 10 + 23). No mover was guessed from the root map or the address. Whoever owns key_rulings.json (4.0.0_SA_CRO) can close the 23 with rows; the check then moves them to owner_and_scope."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S11 -- the round-13 stored-file checker (check_fwd4_stored_files.py) read the address's scope as `owner=`; R4 makes owner the mover, so the checker was edited to read `scope=` (its last line is now files=240 with_source_owner=230 undecided=10)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T13:36:10Z",
+  "one_line": "keeping check_fwd4_stored_files.py passing unmodified is not possible under R4: it matched `owner=<single word>` and required the new key to begin source/owner; owner is now the ruling row's mover sentence and the address's scope is the `scope=` field",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "before the edit, on the new lines: `FWD4-STORED ok=False files=240 with_source_owner=0 undecided=0` (FAIL lines 'carries no source and owner' and 'the move's new key blackdiamond/49financial/... does not begin with its own source/owner blackdiamond/ADVI_FIRMBKTS moves the bucket ...')",
+      "after the edit (FIELDS regex replaced by rc.split_stored_fields; the path-prefix test reads the scope field): `FWD4-STORED ok=True files=240 with_source_owner=230 undecided=10`; the 14 per-firm lines are PATTERN now and are not FIX/RIGHT lines, so files fell from 254 to 240 and undecided from 24 to 10 (24 - 14)",
+      "the deliverable is in this worker's own deliverables folder, inside the grant; the assertions are unchanged in strength: both fields decided, the move agrees with its own fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's inherited-state paragraph: keep check_fwd4_stored_files.py passing (BAB2-AC2's invocation, last line FWD4-STORED ok=True).",
+  "world_is": "The checker passes again, but only after its parse moved from `owner=` to `scope=` for the address's word. R4 (two columns, never one in place of the other) makes that move necessary, not optional. Its counts differ from round 13 (254/230/24 became 240/230/10) because R5 turns the 14 per-firm FIX lines into PATTERN lines."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S12 -- the 14 per-firm stored-file lines change kind FIX -> PATTERN, so place() reports kind PATTERN for them; the census moves fix 1636 -> 1614 (-22) and right 672 -> 670 (-2), hole 0 -> 10, on this branch
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S12",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T13:36:10Z",
+  "one_line": "census at this branch: pattern 25 -> 39 (+14, R5), and also fix -22, right -2, hole 0 -> 10 (the AMENDMENT 1 partial-form rows: 8 FIX and 2 RIGHT lines that carried a word the reader does not give); the order's `nothing else moves` is true of R5 alone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "before: ALL-ROOTS ok=True ... items=2601 right=672 fix=1636 not_asked=268 pattern=25 ... hole=0 ... other_holes=0 (python lib/opal_naming.py census --all-roots at 43f6416fed)",
+      "after: ALL-ROOTS ok=True ... items=2601 right=670 fix=1614 not_asked=268 pattern=39 ... hole=10 ... other_holes=10; the 10 HOLE lines are the 10 undecided E1 rows (canonical-schwab-ec2 x3, fred-pipeline x1, market-overview x2, news-pipeline x3, transcripts x1), each printing `partial form <name>-{cadence}; could not fill {cadence}: <reader's reason>`",
+      "this branch carries the cadence reader as it was before BF-ac-1 @7a82774af7 (slot ~1); with that reader the evenly spaced rows are expected to take {N}h words again and the hole count to read lower"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-3 Build 2: the census pattern= count rises by 14 and nothing else moves; AMENDMENT 1 expects six rows to move once BF-ac-1 is merged.",
+  "world_is": "pattern rises by exactly 14 and the 14 FIX lines leave fix, as stated. The other movement is build item 4 (AMENDMENT 1) acting on this branch's older cadence reader, which gives no word for ten rows whose names carry one. place() on a per-firm stored-file name now returns kind PATTERN where it returned FIX; whether the commit-time gate treats a PATTERN differently from a FIX for a NEW per-firm stored-file literal was not measured here."
+}
+```
