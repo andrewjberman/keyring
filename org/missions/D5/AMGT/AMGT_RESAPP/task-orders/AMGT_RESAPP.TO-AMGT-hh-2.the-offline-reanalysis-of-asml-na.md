@@ -82,3 +82,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T09:2xZ by the issuer: AMGT-hh-1 merged @ac6ad315b6 (closed @aa7043ca97); worktree ~330 cut from box/dell1 after it. The comp-secrets fix landed @9e4730450c ('--json --reveal' refused); the --value-only read in the same call stands. Graded by no gate limb (a modification).</status>
