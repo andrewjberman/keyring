@@ -148,7 +148,6 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   }
 ]
 ```
-
 ```json
 {
   "id": "MDPF_SECHIST-Z-S1",
@@ -223,5 +222,53 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "TO-SH-t7 and its issuer: the existing gold tests in data/etfs/scripts/gold/ pass, and are run to show a security with no listed day reads as today.",
   "world_is": "Only two of the five pass in this worktree (backfill_rows, industry_group); the other three fail identically before and after the change for environment reasons, so they show nothing about SH-t-7 either way. SH-t-7's own proof of unchanged reading is its named tests plus the byte-identical outputs of the five suites."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W12-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~12",
+  "surfaced_at": "2026-10-09T14:00:00Z",
+  "one_line": "r3_named_tests.py greps pytest -v output for '::<name> PASSED' but does not strip ANSI color, so with FORCE_COLOR=3 in the caller's environment (as in this worker shell) a fully passing file reports TESTS-BAD for every named test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (FORCE_COLOR=3 in env) python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py WRITER data/mdpf/scripts/silver/test_security_series_writer.py test_three_values_per_day test_cusip_key_namespace test_no_write_without_switch -> pytest '6 passed' but last line 'WRITER-TESTS-BAD not-passed=test_three_values_per_day,test_cusip_key_namespace,test_no_write_without_switch', rc=1; the output shows 'PASSED' wrapped in ESC[32m...ESC[0m.",
+      "RUN same invocation under 'env -u FORCE_COLOR' -> '6 passed' and last line 'WRITER-TESTS-OK passed=3/3', rc=1 absent, rc=0.",
+      "FILE r3_named_tests.py: regex r'::' + name + r'(\\[[^\\]]*\\])? PASSED' over subprocess stdout with no color strip or --color=no; the file was not edited by this worker."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The criterion invocation prints <LABEL>-TESTS-OK for a file whose named tests pass, in whatever shell the worker or drain runs it.",
+  "world_is": "It prints OK only when FORCE_COLOR/PY_COLORS color forcing is absent from the environment; with FORCE_COLOR=3 it prints BAD on a passing file. The same holds for every round-3 criterion that uses r3_named_tests.py. The proof for SH3-t13-AC1 records the run with FORCE_COLOR unset."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W7-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~7",
+  "surfaced_at": "2026-10-09T14:45:00Z",
+  "one_line": "TO-SH-t8 asks for ONE total-return level field and names none; the pull now requests TOT_RETURN_INDEX_GROSS_DVDS, a field name chosen from vendor knowledge and not confirmed on the terminal (no Bloomberg call is permitted this cell).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D8/MDPF/MDPF_SECHIST/task-orders/MDPF_SECHIST.TO-SH-t8.pull-fill-and-total-return-field.md:29 says 'gains ONE total-return level field (route 2a)'; a search of org/missions/D8/MDPF for the field name found only DAY_TO_DAY_TOT_RETURN_GROSS_DVDS (the daily return, already pulled) and no level field.",
+      "FILE integrations/bloomberg/pipeline/etf_daily_pull.py TOTAL_RETURN_LEVEL_FIELD = 'TOT_RETURN_INDEX_GROSS_DVDS' (one constant; HISTORY_FIELDS = PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, that constant).",
+      "FILE integrations/bloomberg/mcp/blp_client.py:309-322 historical_data builds each row from the fields the response HAS (point.hasElement(f)); an invalid field name raises nothing at the default on_response_error='ignore', so a wrong name lands as an absent column, not a failed pull (rc stays 0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order names the cell (a total-return level field, route 2a) and its test (test_history_request_carries_total_return_level); it does not name the Bloomberg mnemonic.",
+  "world_is": "The mnemonic is a one-constant edit. Its first real confirmation is the first live history_topup carrying a non-null column of that name (the site-Z take is a separate WORLD act). If the terminal rejects the name, gold's C-MMF rule (TO-SH-t7) finds no level and blanks the day, which is its stated behaviour for a day with neither input."
 }
 ```

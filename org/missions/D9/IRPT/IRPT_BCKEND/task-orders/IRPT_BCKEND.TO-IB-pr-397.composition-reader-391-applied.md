@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -91,6 +91,18 @@ Gate limb: none graded this modification (LIMB 6 fires on newly-added orders onl
 IB-pr-401 is held (row D2-S48, disarmed by D2-S49) until IB-pr-409's rebuild is re-signed (CTO ADDENDUM 18.1). This order no longer waits
 behind it: IB-pr-397 is next on this lane. Its CTO half requires only that it run after IB-pr-395, which is complete. AMENDMENT 3's
 content stands unchanged: drop the root log group, pass retention 14, re-plan exactly 5 adds / 0 change / 0 destroy.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
+## AMENDMENT 6 (2026-10-09 ~13:1xZ, issuer 2.0.0_SA_COO~P2, on CTO msg 3341 / 391 CTO half AMENDMENT 2 @a66b8db934)
+
+The export root's plan at pin d5a48694a3 reads 11 adds: 5 for this release, and 6 for AR-t-13's commentary draft store (another
+release). The CTO ruled TARGET:
+- **Before the apply:** print the FULL plan with the 6 AR-t-13 lines named `NOT APPLIED`. Then print the plan targeted at exactly this
+  release's 5 signed addresses; it must read exactly 5 to add, 0 change, 0 destroy, with the module log group once at retention 14.
+- **Apply targeted at exactly those 5 addresses.** Never untargeted.
+- **After the apply:** a full plan must read exactly the 6 AR-t-13 adds. Anything else is a STOP and a row.
+Every other step of AMENDMENTS 1-3 and 5 stands.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 

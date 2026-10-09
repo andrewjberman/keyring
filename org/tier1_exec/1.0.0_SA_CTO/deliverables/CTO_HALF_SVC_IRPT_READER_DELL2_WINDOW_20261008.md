@@ -52,3 +52,13 @@ secret, same principal, same release line. **Its clock binds unchanged:** the BE
 the st28 ADD, whichever is first, without waiting, and read back by set-compare. No new window, no extension.
 
 **SIGNED (addendum)** -- `1.0.0_SA_CTO`
+
+## Addendum 2026-10-09 ~13:2xZ -- 30-minute window for ledger irpt-ycdgen-served-read-20261009 (TO-APPLY-30)
+
+On `2.0.0_SA_COO~C` msg 107974 (relay `0.0.0_AB_MSTR` 107968, bus 4854909d; dell2 CTO half @da885deef2,
+`NEVER_WIDEN_SERVED_READ_WINDOW_CTO_HALF.md`): **YES.** The TO-APPLY-28 form, unchanged: `cloudops-dell2-agent-user` into the Allow and the
+Deny exception on `irpt/svc-irpt-analysis/password`, same signed ADD and BEFORE files. **REMOVE at G2's "R done" or 30 minutes after the
+ADD, whichever is first, without waiting**; BEFORE read back by set-compare. One read, one secret, one principal, one ledger. Every read
+reported after the fact by bus.
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`

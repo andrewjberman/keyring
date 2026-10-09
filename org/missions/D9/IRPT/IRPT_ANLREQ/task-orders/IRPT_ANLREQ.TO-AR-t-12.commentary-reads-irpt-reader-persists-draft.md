@@ -120,13 +120,29 @@ refuses a new order file, so the cell rides here). Read `org/tier1_exec/1.0.0_SA
 
 ### ACCEPTANCE
 
+### AMENDMENT 6 (issuer, 2026-10-09 ~13:1xZ) -- RE-OPENED: row IRPT_BCKEND-D2-S50 (@e091bd6984), the draft store's log group declared twice
+
+`commentary_draft_store.tf` creates `aws_cloudwatch_log_group.commentary_draft_store` (`local.cds_log_group`), and the `yang-lambda` module
+creates the same group (`modules/yang-lambda/main.tf` `aws_cloudwatch_log_group.lambda`, `retention_in_days = var.log_retention_days`). The
+first apply would fail one create with ResourceAlreadyExistsException and land in part. The fix is the CTO's for the same defect, row D2-S41
+(IB-pr-391 CTO half AMENDMENT 1):
+13. Remove the root `aws_cloudwatch_log_group.commentary_draft_store` and its entry in the module's `depends_on`; pass `log_retention_days = 14`
+    to `module "irpt_commentary_draft_store"`. Keep `local.cds_log_group` (the role's S5 statement still scopes to that group's name). Change
+    nothing else.
+14. New `infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store_tf.py` (parses the .tf text):
+    `test_log_group_declared_once` (no `aws_cloudwatch_log_group` resource in commentary_draft_store.tf) and `test_module_carries_retention`
+    (the module block sets `log_retention_days = 14`).
+Base: box/dell2 at this amendment, where `ar1_t2_checks.py t13lg` reads `AR1-T13LG-FAIL absent`.
+
+<criterion id="AR13-t-AC2" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13lg</invocation><expect>AR1-T13LG-OK</expect></criterion>
+
 <criterion id="AR12-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t12</invocation><expect>AR1-T12-OK</expect></criterion>
 `AR12-t-AC1` -- the three named tests pass, the file is green, and `DecryptWithTheIrptKey` is gone from commentary.tf.
 
 <criterion id="AR13-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13</invocation><expect>AR1-T13-OK</expect></criterion>
 `AR13-t-AC1` -- the four named refusal tests pass and the store test file is green (dry-run at box/dell2 29125b907d: `AR1-T13-FAIL absent`).
 
-<expected_criteria>AR12-t-AC1 AR13-t-AC1</expected_criteria>
+<expected_criteria>AR12-t-AC1 AR13-t-AC1 AR13-t-AC2</expected_criteria>
 
 Dry-run at the base (box/dell2 c5d73485ca): `AR1-T12-FAIL absent: data/transcripts/scripts/tests/test_commentary_composition_port.py` -- FAIL
 as expected.
@@ -152,6 +168,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 infra/aws/lambda/investor-reporting/reports/repository.py
 infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py
 infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store.py
+infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store_tf.py
 infra/aws/lambda/investor-reporting/reports/tests/test_repository.py
 infra/logic/registry/reporting_policies.json
 infra/aws/terraform/investor-reporting/export/commentary_draft_store.tf

@@ -412,3 +412,99 @@ IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-sta
    DASHBD cell.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.1 (~13:3xZ, `~D2` msg 3356, row S43 BLOCKING): DB-b-86's three gaps -- the REC is taken in part
+
+1. **The selection (`account_set_id`): an operator seat creating it is REFUSED.** ADDENDUM 9.2 stands: no seat mints a human token for a write, and svc's routes are
+   not widened.
+   - The cell 9.2 named is now owed: the runner accepts the seat-authored selection FILE.
+   - If the API's `sel_<64 hex>` is a deterministic hash of the selection, the runner computes it the same way, and the ledger prints both inputs.
+   - If it is not deterministic, the runner's statement path takes the file without an id, and the statement records `selection_source: file` with its sha256.
+   - This cell is IRPT_DASHBD's, in the next issuance.
+2. **The Cottonwood returns gold holds 0 objects. This is the real blocker, and it comes first.** ADVI_COTBKF owns it, as the REC says. This seat places it on
+   COTBKF's enrichment list (COTBKF ADDENDUM 11.2). FWD-12 waits on it, and on nothing else.
+3. **hop3: the laptop runs it, as the REC says,** through a cross-box ORDER via `0.0.0_AB_MSTR~DELL2`.
+   - It runs only after (2) has landed rows.
+   - dell2's denial on the returns gold is the reach design and is NOT widened.
+   - The hop3 output comes back as a file with its sha256. DB-b-86 runs where its other inputs are.
+
+DB-b-86 stays issued and blocked on (2); S43 is resolved by this addendum's routing.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~13:3xZ) -- rounds 42 and 44 (CVO slug msg 3367, `ADJUDICATION_v26.md` @fbc76ab42d): MAY-CLOSE
+
+The CVO read the live gold Lambda as `yIAQjspL`. 10-08 is backfilled with 0 skipped. **S40 is CLOSED**, and 0 rows are ARMED.
+
+1. **The status key under the activity prefix meets the intent, not the letter: ACCEPTED.** `~D2` amends the order's criterion text to the key as built, in its own
+   amendment commit (the issuer amends its own criteria, Andrew-direct 2026-09-24). The commit names which gate limb, if any, graded it.
+2. **The double check (uniqueness on the final rows) is sound.** No act.
+3. **The verify-persisted sha256 limb is DORMANT** until IRPT_BCKEND serves `report_index.sha256` (W64-S1 OPEN). It stays in the runner, dormant, with no stub value.
+   **IRPT_BCKEND carries it as an enrichment item:** the persist and read responses return the stored object's sha256. That is a code change under IRPT_BCKEND's own
+   pair; `~P2` places it.
+4. **S43 is ruled at ADDENDUM 11.1** (@43bbe32935). The selection stays file-based; the Cottonwood returns gold comes first, owned by COTBKF; hop3 runs on the laptop.
+5. **DB-b-90 and DB-b-91 are released TOGETHER as ONE gold Lambda release** after `yIAQjspL`, under one never-widen pair.
+   - Both are gold-builder changes: the uniqueness check on final rows, and the lots-not-computed statement.
+   - The packet's member census against live `yIAQjspL` must show exactly the members those two orders own. Anything else means STOP.
+   - Branch B is the `yIAQjspL` version.
+   - DB-b-92 (the runner's sha256 check) rides the runner, not this release.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~14:0xZ) -- round 45 (CVO slug msg 3402, `ADJUDICATION_v27.md` @11b79674b2): MAY-CLOSE
+
+1. **D2-S3 is disarmed.** The schema break (e7c10e5b4b) was fixed by this seat @1f256cfc64. The CVO read the fix on HEAD, and `check_schema` passes.
+2. **The CVO's suggestion: a `check_schema` step on schema edits.** It is a mechanical validity check, not an approval gate, and it is ROUTED to its owner.
+   - The owner is laptop `1.0.0_SA_CTO`, who owns proof-of-spec tooling (the S41 route, ADDENDUM 11 item 4). It travels via `0.0.0_AB_MSTR~DELL2`.
+   - The proposed shape: `.tools/commit-gate.sh` runs `jsonschema.Draft202012Validator.check_schema` on any staged `org/standards/*.schema.json`.
+   - Cost: one call per schema commit. Non-application: every other file.
+   - This seat does not edit the commit gate.
+3. **W68-S1 (does live POST /analysis admit a file-only selection?) stays OPEN, and DB-b-86's first run proves it,** as the CVO says.
+   - Both branches are pre-ruled at ADDENDUM 11.1 item 1: the file path is accepted, or the runner takes the file without an id and records `selection_source: file`.
+   - A refusal on the first run is recorded with its code, and that branch is cut. No widening of svc.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.1 (~14:0xZ, `~C2` msg 3408, W66-S1 / S63): the Cottonwood returns method -- the sources entry, as STRUCTURED fields, never a new return_basis value
+
+**The call:** CB-al-1 built 3,325 Cottonwood days through `account_return_daily.py`. Its `return_basis` has no value for "positions x as-traded close, after fees",
+so the field reads NULL. `emit_day(upload=True)` then writes a manifest claiming the custodian method.
+
+**RULING: (b), a Cottonwood sources entry, but as STRUCTURED fields, not manifest text.**
+- **`return_basis` is "which arithmetic produced total_return_daily"** (`account_return_daily.py`:132). Positions times the as-traded close, chained daily with flows,
+  is TWR arithmetic.
+  - If CB-al-1's arithmetic is TWR, the row says `TWR`.
+  - If it is not, the row says `NOT_MEASURABLE` with its reason.
+  - **A new enum value would put the valuation source on the arithmetic axis.** That breaks rule 24 (iii), one axis per intent, so no enum edit is made.
+- **What differs for Cottonwood is the VALUATION SOURCE and the FEE TREATMENT.** Those are per-firm source facts, so the firm's sources entry carries them as fields:
+  - `valuation_source: positions_x_as_traded_close`;
+  - `fee_treatment: net_of_fees`;
+  - `price_basis: as_traded` (COTBKF ADDENDUM 8).
+- **The manifest writer reads those fields, and never defaults to the custodian method.** A firm with no entry writes `valuation_source: absent`. A consumer
+  can reject on the field (A VALUE MUST CARRY ITS CLAIM). The existing custodian firms' entries carry `custodian_reported` explicitly.
+
+**Placement:** ONE IRPT_DASHBD cell in `~D2`'s next issuance:
+- the sources entry fields;
+- the manifest writer reading them;
+- no default;
+- a negative arm: a firm with no entry writes `absent`.
+
+**The CB-al-2 mint stays HELD until that cell drains.** It then re-runs through the producer as built, under its own pair (COTBKF ADDENDUM 11.2).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14 (2026-10-09 ~14:0xZ) -- round 46 (CVO slug msg 3410, `ADJUDICATION_v28.md` @eae4b4d6e3) and FWD-8 (`~D2` msg 3411)
+
+1. **Round 46 MAY-CLOSE, ARMED 0.** The CVO's W69-S2 point (drop a stale lots-not-computed record on any successful landing) is already placed as a next-round cell.
+   That is in the R44 CTO half @fa8d2c2961.
+2. **FWD-8: YES to the cell.** `~D2`'s next issuance carries ONE LOCAL cell:
+   - it classifies each of the 510 UNEXPLAINED outside segments in `TIEOUT_COMPOUND_V2.json` (990 outside) by a named reason from a declared set, or files it as a
+     defect row;
+   - the reason set arrives with its rule-24 record;
+   - it reads the existing tie-out inputs only, with no vendor call;
+   - the result prints the denominator (990) and the per-reason counts, which sum to it.
+3. **The tolerance itself is NOT this seat's to rule.** PRD FWD-8 reads "a tolerance Andrew accepts" (`IRPT_DASHBD_PRD.md`:236, :587), an L2 line he confirmed.
+   - His word is the act, and open call 2f53 carries it with REC 0.35pp.
+   - The cell above runs regardless of the number he picks.
+
+-- 1.0.0_SA_CTO~DELL2

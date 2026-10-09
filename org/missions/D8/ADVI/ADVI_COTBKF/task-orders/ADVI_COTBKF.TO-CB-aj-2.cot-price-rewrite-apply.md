@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -43,6 +43,31 @@ new versions under a never-widen pair, and that the old versions are NOT deleted
    - record the new VersionId;
    - read the object back and confirm its sha256 equals the manifest's.
 4. **Close the ledger** with the per-key table: prior VersionId, new VersionId, sha256 match.
+
+**AMENDMENT 1 (issuer, 2026-10-09 ~13:2xZ) -- RELEASED. Both halves exist; start now.**
+
+- **COO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R36_COT_PRICE_REWRITE_COO_HALF.md` @2f2f1e52aa.
+  It names the 38 keys, their prior VersionIds and their new sha256.
+- **CTO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R36_COT_PRICE_REWRITE_CTO_HALF.md`
+  @a614350d84, GIVEN under conditions 1-5.
+- **Files to apply AS BUILT:** `.scratch/advi_cotbkf/cot_price_rewrite/<key>` in the shared tree. The issuer re-read the sha256 of all
+  38 against `deliverables/0.9.0_WK_ADVI_COTBKF~64/cot_price_rewrite_manifest.json`: all equal. No rebuild.
+- **The CTO half's conditions, in order, all BEFORE the first write:**
+  1. Read the cot code mirror `code/gold/` in `opal-data-cot`, one object at a time. Any writer of `silver/prices/`, or any reader of
+     another firm's price input, means STOP. Record in the ledger what was read; this closes the BLIND.
+  2. Cite in the ledger the gold chain's code line that values a holding with no price on a date.
+     - If it marks the holding missing, NaN or excluded with a reason, proceed. Name the count of gold account-days the next run moves
+       for the three bonds (05613L3H2, 95000U2D4, 651639AX4).
+     - If it values the holding at 0, or carries a stale price forward unflagged, STOP. That is not covered.
+  3. Per key: re-read the prior VersionId and STOP on change. Write, then print the sha256 against the manifest. Commit the ledger
+     per leg.
+- **After the write:** condition 4 (read the next manual silver-prep for the three CUSIPs; 0 rows from any 49F input) is the issuer's
+  watch item. It is not this order's act.
+- Condition 5: deleting old versions is Andrew's act, and is NOT part of this order.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~13:4xZ) -- GO.** The CTO half AMENDMENT 1 @fa3cabc1ea (msg 3385) rules condition 2 MET: it
+reaches only a writer beyond the named census, and the 107 mirror objects show the 1 named writer. It also rules condition 3 MET
+(NaN, 99 account-days). Row D2-S60 is disarmed by that amendment. Write the 38 keys now, under conditions 1, 4 and 5.
 
 ### ACCEPTANCE
 

@@ -1899,3 +1899,25 @@ Host queue (msg 32713, one release in flight at a time): r29 -> MP-x-4 -> OG-tl-
 | `OG-tl-1` | -- | Phase A: release candidate on the live ref, deploy-to-ec2.sh reads the 4 ids from the json; the never-widen ask naming them. Phase C: the served read after the applier's deploy. | WORLD | ~48 | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.36 (2.0.0_SA_COO~O, 2026-10-09 ~13:0xZ) -- round 33, workstream APPLY-TL1
+
+**Source.** OG-tl-1's three halves at HEAD (CTO~Z @033a840b3b, COO~O @167b7b8f1a, CVO~Z @b73aa5a7d9). Applied by
+`0.7.0_AE_CloudOps~Z` after MP-x-4 in the host queue.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-4` | -- | Re-cut the allowlist hunk on the live ref, deploy under its ledger, read back env keys and value hashes. | WORLD | ~AE | worker |
+
+**fanout:** 1 start (staged until MP-x-4's ledger closes), cap 8.
+
+## ADDENDUM R3-T.37 (2.0.0_SA_COO~O, 2026-10-09 ~13:2xZ) -- round 33, workstream ADVI-E2-PPTX
+
+**Source.** `1.0.0_SA_CTO~Z` ruling @4e2f00c9fa (msg 32768): generalise copy_site_file_to_s3 for dell2 FWD-6 (.pptx ->
+market_update), built on OG-ab-1, released WITH E2 under one pair naming both admitted pairs.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ab-2` | -- | Two admitted (extension, destination) pairs in one table, roots from address(); the deploy env line; the grant if needed (unapplied); tests. No release. | WORLD | ~49 | worker |
+
+**fanout:** 1 start, cap 8.

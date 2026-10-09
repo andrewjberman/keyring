@@ -326,3 +326,69 @@ D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
   names both exceptions above, so a reader is told what is blank and why.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.1 (~13:1xZ, `~C2` msg 3326): the reader gate is OPEN
+
+**The gate condition is met (row D2-S59 @1dc34e3f03).**
+- 7 of 566 control months moved, across 5 accounts.
+- Every changed held price is a re-priced canonical-store point, and there is no other cause.
+- The largest move is RGY005018 2024-11, -0.83 pp (DIFF to MATCH).
+
+**The ADDENDUM 9 gate is therefore OPEN. Nothing is granted by this line.** Each reader, role, route or export is its own never-widen pair, naming both ADDENDUM 11
+exceptions. Every reader read stays inside this firm's tree (CLAUDE.md, the cross-firm NEVER).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.2 (~13:3xZ): enrichment item from IRPT_DASHBD -- the Cottonwood daily returns gold
+
+`s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/` holds 0 objects (IRPT_DASHBD row S43). IRPT_DASHBD FWD-12, the first real custody
+statement, needs it. **COTBKF's next issuance carries ONE cell:**
+- mint that table from the as-traded FWD-3 tables, with its address from `opal_naming address()`;
+- give it the same two named exceptions (the 5 ABSENT months and the held bonds) as blanks with reasons;
+- write it under its own never-widen pair.
+
+The ADDENDUM 11.1 reader gate applies: readers come one pair at a time. The first reader is the laptop's hop3 leg (IRPT_DASHBD ADDENDUM 11.1).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~13:4xZ) -- round 37 (CVO slug msg 3387, `ADJUDICATION_v29.md` @b040240378)
+
+CB37ak1-AC2 is MET (row D2-S61).
+- All 988 held account-days belong to the Wells Fargo 4.15% 2029 bond.
+- BNP and Newmont have NO Cottonwood holder, so their 49F rows were pure contamination.
+- By the CB-aj-2 half's source order, all three stay UNPRICED until a firm-owned custodian price is found.
+
+**RULING on D2-S62: the cross-firm test keys on a FIRM FIELD, never a token.**
+- `bd_` names two different things:
+  - the Black Diamond PLATFORM, a custodian or reporting vendor that serves Cottonwood; its data is Cottonwood's own;
+  - the bd FIRM, another firm.
+  A token cannot tell them apart, so a token test either wrongly refuses Cottonwood's own platform data or wrongly admits the other firm's.
+- **Every price row carries `source_firm`.** It holds the firm whose data or configuration produced the row, set by the writer from its INPUT's address (the bucket and
+  key prefix it read), never from a name or ticker token.
+- The cross-firm check reads `source_firm != cottonwood` as the breach. A missing `source_firm` is `absent`, which the check grades as NOT-CLEAN (A VALUE MUST CARRY ITS
+  CLAIM).
+- **COTBKF next issuance, ONE cell:** add `source_firm` at the cot price writer (`build_canonical_prices_v2.py`) and to the rewrite census.
+  - The 38 rewritten keys are not re-minted for this. The field arrives with the next silver-prep under its own pair.
+  - The repo-side guard (`.tools/ds-precommit-check.py`) is bucket- and prefix-based already, and is unchanged.
+
+**Enrichment list for round 38:**
+1. `gold/account_return_daily` (ADDENDUM 11.2);
+2. the `_ff_worker` carry-forward flag (CB-aj-2 half AMENDMENT 1);
+3. `source_firm` on price rows (this addendum);
+4. the bonds' firm-owned price measurement (W64-S1 ruling).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~14:1xZ) -- rounds 36 and 39 (CVO slug msg 3419, `ADJUDICATION_v30.md` @5c363d0c76): both MET
+
+1. **D2-S52 is CLOSED.** 1,734 49F rows were removed from the 38 cot keys, verify reads 38/38, and every other row is identical. The cross-firm breach in Cottonwood's
+   store is gone at the current version.
+   - **Deleting the 38 prior versions is Andrew's act.** It is on the act list, each key named in `~CB2`'s apply report @e5eb80c75f.
+2. **The `_ff_worker` carry-forward stamp is BUILT, not deployed.** The next issuance cuts ONE SERVED cell to deploy it under its own pair.
+   - Its packet's census must show only the carry-forward members.
+   - Its proof drives the carry-forward on a synthetic day and reads the stamp.
+   - The path is unreachable for cot today, so the proof is not read from a live fire.
+3. **D2-S62 waits on round 40's `source_firm` cell** (ADDENDUM 12).
+4. **Round 38 (CB-al-2) stays HELD** on the IRPT_DASHBD sources-fields cell (IRPT_DASHBD ADDENDUM 13.1). That is the only thing it waits on.
+
+-- 1.0.0_SA_CTO~DELL2
