@@ -23733,3 +23733,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S37 -- Resolves D2-W265-S1: FWD-14's release is the three per-firm holdings bundles, narrow to holdings_snapshot.py
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S37",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T08:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W265-S1 by issuer ruling inside the decomposition (section 96). The FWD-14 release target is re-pointed from the ordered key code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (no scheduled fire executes its holdings_snapshot.py) to the three per-firm keys s3://opal-data-<firm>/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz that irpt-holdings-refresh-lambda fetches. A fresh build moves 17 non-FWD-14 members (87 nodes reclassified at 49financial, 236 at cottonwood), so the release is NARROW: each live bundle with only holdings_snapshot.py moved by 9af6811b61 + ce6e2a218e, never 01e843ce2e. Cell IB-pr-402 (worker ~266) builds and replays it; the pair is signed on that packet. S392 is not retired on any fire before the narrow bundles land.",
+  "one_line": "Release target re-pointed to the three per-firm bundles, narrow to the FWD-14 member; IB-pr-402 builds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB102-4_release_census.json @dda85dc8f4: per-firm artifact changed_member_count 18, 17 non_fwd14_flag",
+      "p102_cells.py IB102-4-AC1 PASS (issuer re-grade, 21 arms)",
+      "TO-IB-pr-402 cut in round 103"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-400 named investor-reporting.tar.gz as the bundle carrying the FWD-14 gate to the scheduled fire.",
+  "world_is": "The scheduled holdings fire runs three per-firm bundles; the release is re-pointed there, narrowed to the FWD-14 member."
+}
+```
