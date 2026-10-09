@@ -117,3 +117,92 @@ right where that judgment was wrong. The comp rail denied three piped census cal
 RUN NEXT line was the command that answered.
 
 **Gap.** `comp-iam` was DECLARED-NOT-APPLICABLE by the order's preflight and was not run; no IAM changed.
+
+---
+
+# Delta: SA-r-1b, the FWD-1 seat-arm run under pair v2.2
+
+**archetype:** MIXED
+
+`TCKT_VNEXT.TO-RUN-SA-r-1b` @`68642d02e9`, GO msg 3599, HOLD msg 3612, HOLD LIFTED msg 3622/3637.
+Ledger `tckt-vnext-sa-r1b-fwd1-seat-arm-v22-20261009` CLOSED, 5 legs proven. Commit `6ee4714821`.
+
+## What happened
+
+The HOLD I asked for (row D2-S16) worked: the CTO dropped the data-refresh STOP arm rather than let the
+run stop by construction, and AMENDMENT 1 added the synthetic attachment to the CREATE arms, which fixed
+the exact honesty gap I had reported against my own SA-r-1 trace.
+
+AC1 PASSED again (`READ27 27/27` rc 0, 16:18Z). `irpt-status` had MOVED to LastModified 15:43:11Z since
+SA-r-1's 12:45:28Z read; its member hash was still `87d9ecc4`, so the clamp bytes survived the redeploy.
+
+**The widened census**, from the LIVE route table as the GO required, not from the source census:
+119 routes on API `7k3ed8px20` against the source census's 117 -- a DIFFERENCE, printed as a finding. The
+real delta is 2 live-only `/api/scoped` GETs the source census structurally cannot see (it declares that
+blind spot itself): `.../analysis/requests/{requestId}/original` and
+`.../books/relationship/{clientKey}/fee-quarter/{quarter}`. The second is served by
+`advi-49f-billing-read-lambda`, a host absent from the census's 20 functions, and its producer is the
+script whose own help text says it carries client figures -- a firm-scoped surface never graded.
+
+**Clamp result: ZERO off-list admits, ZERO routes serving another firm's data.** Every reachable
+IRPT-served arm returned `FIRM_BINDING` for cottonwood and inflection; the ticket LIST returned 8 tickets
+with requester firms `['49financial']` only; AMENDMENT 1's CREATE arms reached `_create_firm_allowed` and
+both off-list arms were refused 400 with the body NAMING the firm.
+
+## Two things, one of them mine
+
+1. **The STOP was my own detector, not the world.** The run halted on an "off-list admit" at
+   `GET /api/scoped/amgt/watchlist`. All three arms returned HTTP 200, body length 2, identical
+   fingerprint `4f53cda18c2baa0c` -- an empty list for every firm. My ALL detector required
+   `own_len > 80` before calling an identical-fingerprint 2xx "selector ignored", and that floor
+   misrouted a SHORT identical 200 into the admit bucket. The discriminator should have been the
+   fingerprint alone. Reassessed in the trace, fixed in `sa_r1b_run.py`: length now annotates and never
+   classifies. **It cost the hops.** Two further arms were flagged "behaves as ALL" on ticket routes that
+   take no `selected_tenant` at all -- applying a selector test to a route with no selector was a
+   category error in the same instrument.
+2. **Row `TCKT_VNEXT-D2-S18` (ARMED): `irpt-status` 500s on 7 live routes** after its 15:43:11Z deploy.
+   Its own log: `TypeError: build_retained_repositories() got an unexpected keyword argument
+   'additional_policy_revisions'`, 47 events over 16:18-16:26Z. Measured before and after: 200 with sane
+   refusal envelopes at 15:40Z, 500 at 16:19Z, bracketing the deploy. So 6 of the 27 clamped routes are
+   ungradeable at HEAD and hop (e) polls one of them -- **FWD-1 could not have completed even without my
+   bug.** `reread_27.py` still reads CLAMPED because a member hash cannot see a runtime TypeError raised
+   on the way to that code; CLAMPED and 500 are both true at once.
+
+**AMENDMENT 2's negative proof carries its controls.** `/aws/lambda/opal-data-refresh-api` over
+[16:19:13Z, 16:26Z] filtered for the filer: 0. The group exists (243,076 bytes) and is live (5 events in
+24h); the window holds 0 events even unfiltered; and the POSITIVE CONTROL over SA-r-1's window, where the
+filer DID call, returns 3 matches including the gate's own line `User tckt-fwd1-...@opal.invalid
+userType=test-filer admitted as Opal-internal`. The filter finds the filer when it called and none when
+it did not, so the zero is a TRUE NEGATIVE -- and that line is the deployed gate confirming D2-S16 verbatim.
+
+Cleanup: row deleted, ConsistentRead read-back ABSENT; the one ticket the census created
+(`TCK-20261009-47fe2bb6`) COMPLETED http 200; token left to expire 18:19:13Z. No IAM, code or route change.
+
+## Blockers
+
+**Step 5 never ran, so the order is NOT flipped -- it stays `pending` and re-issue is the issuer's call.**
+A re-run cannot succeed until `irpt-status` is repaired: hop (e) polls one of the 500 routes. Owner of that
+fix is the IRPT_BCKEND release line that deployed at 15:43:11Z, routed via `2.0.0_SA_COO~V2`. This seat
+changes no code there.
+
+## Compiler Tools (delta)
+
+| tool | invocation | result |
+|---|---|---|
+| `reread_27.py` | AC1 for SA-r-1b | `READ27 27/27` rc 0; irpt-status moved to 15:43:11Z, member hash unchanged |
+| `apigatewayv2 get-routes/get-integrations` | live route table + route->Lambda map, paginated client-side | 119 routes, 91 `/api/scoped`, 14 Lambdas; 2 live-only scoped GETs found |
+| `logs filter_log_events` | irpt-status 16:18-16:26Z | 47 error events; the TypeError that pins row S18 |
+| `logs filter_log_events` | data_refresh, filer, both windows | 3 matches in SA-r-1's window (positive control), 0 in SA-r-1b's (the proof) |
+| `commit-gate.sh` | `sa_r1b_run.py`, twice | clean both times (before the run and after the detector fix) |
+| `deploy_ledger.py` | 5 legs | CLOSED, all proven |
+| `safe-commit.sh` | the run record | `6ee4714821` after two refusals, below |
+
+**What failed, and what it taught.** The `surprise-row-gate` refused my commit because `TCKT_VNEXT-D2-S17`
+already existed at HEAD -- the COO filed that id while this run was in flight -- so my row became S18. An
+id is one row, and the gate was the only thing that would have caught the collision. (The commit SUBJECT
+still says S17; it was written before the renumber. The row itself is S18 everywhere.) Earlier, the
+`to-pipeline-gate` refused the SA-r-1 `complete` flip twice: once for a missing proof-of-spec instance I had
+judged unnecessary, then for two precise schema violations (`controls` admits only `mutant`/`determinism`
+under the BUILD branch, and a non-PASS `status` requires `status_reason`). I folded both negative controls
+into `mutant` rather than setting `genre: DEPLOY` to unlock arbitrary control names, which would have been
+gaming the schema to pass a gate.

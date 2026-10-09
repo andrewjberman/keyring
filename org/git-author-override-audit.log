@@ -47774,6 +47774,90 @@ REFUSED_20261008)
 2026-10-09T16:45:57Z PASS  2.0.0_SA_COO~B1  1  (all paths in-lane) act=7f575c7cb2d7 paths=1:org/tier1_exec/2.0.0_SA_COO~B1/drive_log_20261009T16Z_desktop-hk1uu7n.md
 2026-10-09T16:46:08Z LANDED-2P  2.0.0_SA_COO~B1  4f5596a8e4  paths=1  validate=9.05s  wait=0.12s  hold=1.53s  build=0.96s  ref=0.54s  post-commit=4.67s  attempt=1
 2026-10-09T16:46:11Z LANDED-2P  2.0.0_SA_COO~D1  5f52097fd3  paths=1  validate=12.12s  wait=0.14s  hold=1.73s  build=1.13s  ref=0.54s  post-commit=4.53s  attempt=1
+2026-10-09T16:25:44Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane)
+2026-10-09T16:25:53Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=1.70  graded=n/a  args=(sm-cont-1ec9cdf5-c-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T16:25:54Z LANDED-2P  0.0.0_AB_MSTR~DELL1  e0dc6e1d31  paths=2  validate=8.65s  wait=0.14s  hold=1.69s  build=0.95s  ref=0.70s  post-commit=3.12s  attempt=1
+2026-10-09T16:25:54Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.90  graded=n/a  args=(--verify-merge 24288f9c27eda302adfad38a41744587aa7c9453)  first=(none)
+2026-10-09T16:25:55Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=3  secs=109.10  took=none (3 attempts lost the race)
+2026-10-09T16:25:57Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T16:26:03Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=0  secs=9.32  graded=1/3  args=(--continue)  first=(WARN -- 1 of 4 needed file(s) kept the first parent's version (fine for a PICK-ours resolution)
+2026-10-09T16:26:10Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.88  graded=n/a  args=(--verify-merge 415eba4916e1e75056e290bce2a5a9ae89f332f5)  first=(none)
+2026-10-09T16:26:11Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T16:26:16Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=19.77  took=ac405a35bc hold=1.17s graded=0/89 pushed=415eba4916
+2026-10-09T16:26:18Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=1.70  graded=n/a  args=(sm-cont-1ec9cdf5-d-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T16:26:21Z LANDED-2P  1.0.0_SA_CTO~DELL1  167e971ee2  paths=1  validate=10.83s  wait=0.08s  hold=1.30s  build=0.84s  ref=0.42s  post-commit=3.05s  attempt=1
+2026-10-09T16:26:22Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T16:26:27Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=7  secs=8.34  graded=2/3  args=(--continue)  first=(WARN -- 1 of 4 needed file(s) kept the first parent's version (fine for a PICK-ours resolution)
+2026-10-09T16:26:35Z MERGE-ATTEMPT  2.0.0_SA_COO~B1  rc=3  secs=60.57  graded=1/6 fast-lane  args=(wk-LGIC_ENFORCE-1)  first=(none)
+2026-10-09T16:26:37Z PASS  2.0.0_SA_COO~D1  2  (all paths in-lane)
+2026-10-09T16:26:50Z LANDED-2P  2.0.0_SA_COO~D1  42b528e904  paths=2  validate=12.02s  wait=0.10s  hold=1.33s  build=0.85s  ref=0.43s  post-commit=3.56s  attempt=1
+2026-10-09T16:27:00Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=1.90  graded=n/a  args=(sm-cont-8ae08b7f-a-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T16:27:05Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T16:27:12Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=0  secs=10.54  graded=2/4  args=(--continue)  first=(none)
+2026-10-09T16:27:15Z MERGE-ATTEMPT  2.0.0_SA_COO~B1  rc=0  secs=24.09  graded=1/6 fast-lane  args=(wk-LGIC_ENFORCE-1)  first=(none)
+2026-10-09T16:27:32Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=2.43  graded=n/a  args=(sm-cont-8ae08b7f-b-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T16:27:38Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T16:27:45Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=7  secs=11.91  graded=1/2  args=(--continue)  first=(WARN -- 2 of 4 needed file(s) kept the first parent's version (fine for a PICK-ours resolution)
+2026-10-09T16:28:04Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=3.77  graded=n/a  args=(sm-cont-8ae08b7f-c-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T16:28:07Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T16:28:07Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T16:28:14Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=0  secs=9.70  graded=1/3  args=(--continue)  first=(WARN -- 1 of 4 needed file(s) kept the first parent's version (fine for a PICK-ours resolution)
+2026-10-09T16:28:15Z LANDED-2P  1.0.0_SA_CTO~DELL1  6c54d62d17  paths=1  validate=7.06s  wait=0.09s  hold=1.47s  build=0.89s  ref=0.54s  post-commit=3.30s  attempt=1
+2026-10-09T16:28:30Z MERGE-ATTEMPT  0.9.0_WK_NFRA_GATSCP~16  rc=2  secs=0.37  graded=n/a  args=()  first=(REFUSED -- no branch given)
+2026-10-09T16:28:31Z MERGE-ATTEMPT  0.9.0_WK_NFRA_GATSCP~16  rc=2  secs=0.36  graded=n/a  args=(definitely-not-a-branch-xyz)  first=(REFUSED -- 'definitely-not-a-branch-xyz' is not a ref in this repo)
+2026-10-09T16:28:33Z MERGE-ATTEMPT  0.9.0_WK_NFRA_GATSCP~16  rc=2  secs=0.32  graded=n/a  args=(--verify-index b5f9287e72deeabdff1f3b27965e1d1e10ea873f)  first=(none)
+2026-10-09T16:28:34Z MERGE-ATTEMPT  0.9.0_WK_NFRA_GATSCP~16  rc=2  secs=0.34  graded=n/a  args=(--verify-merge b5f9287e72deeabdff1f3b27965e1d1e10ea873f)  first=(none)
+2026-10-09T16:28:50Z PASS  0.9.0_WK_LGIC_ENFORCE~2  3  (all paths in-lane)
+2026-10-09T16:29:09Z PASS  0.9.0_WK_NFRA_GATSCP~16  2  (all paths in-lane)
+2026-10-09T16:29:51Z PASS  2.0.0_SA_COO~R1  2  (all paths in-lane)
+2026-10-09T16:30:03Z LANDED-2P  2.0.0_SA_COO~R1  e5e4beb6e8  paths=2  validate=12.43s  wait=0.12s  hold=1.38s  build=0.89s  ref=0.46s  post-commit=3.79s  attempt=1
+2026-10-09T16:30:10Z PASS  0.9.0_WK_NFRA_GATSCP~16  2  (all paths in-lane)
+2026-10-09T16:30:40Z PASS  0.9.0_WK_AMGT_HARVST~133  3  (all paths in-lane)
+2026-10-09T16:30:47Z PASS  2.0.0_SA_COO~B1  4  (all paths in-lane)
+2026-10-09T16:30:58Z LANDED-2P  2.0.0_SA_COO~B1  119661e0fc  paths=4  validate=11.08s  wait=0.09s  hold=1.31s  build=0.77s  ref=0.51s  post-commit=3.29s  attempt=1
+2026-10-09T16:28:24Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=the only non-terminal order is TO-READ-R40-ap10b-lv (issued to 0.7.0_AE_CloudOps~ZC), whose served act (leg v fire 2026-10-09 13:00Z) is graded MET in ADJUDICATION_v47 and whose ledger amgt-corpus-r40-ap10b is CLOSED @9520a1d1e3; the status field was never flipped. Not this seat's row.
+2026-10-09T16:31:01Z PASS  3.0.0_SA_CVO  1  (all paths in-lane)
+2026-10-09T16:31:22Z PASS  0.7.0_AE_CloudOps~SC1  1  (all paths in-lane)
+2026-10-09T16:31:24Z PASS  2.0.0_SA_COO~N1  4  (all paths in-lane)
+2026-10-09T16:31:28Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T16:31:29Z LANDED-2P  0.7.0_AE_CloudOps~SC1  fe672807df  paths=1  validate=7.36s  wait=0.07s  hold=0.97s  build=0.59s  ref=0.35s  post-commit=2.76s  attempt=1
+2026-10-09T16:31:32Z PASS  0.9.0_WK_LGIC_ENFORCE~2  2  (all paths in-lane)
+2026-10-09T16:31:38Z LANDED-2P  0.0.0_AB_MSTR~DELL1  d3abe2c929  paths=1  validate=8.33s  wait=0.12s  hold=1.56s  build=0.99s  ref=0.52s  post-commit=3.70s  attempt=1
+2026-10-09T16:31:55Z MERGE-ATTEMPT  2.0.0_SA_COO~N1  rc=0  secs=2.99  graded=0/4 fast-lane  args=(coo-n1-gatscp-r4)  first=(none)
+2026-10-09T16:32:07Z PASS  0.9.0_WK_AMGT_HARVST~133  1  (all paths in-lane)
+2026-10-09T16:32:17Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T16:32:25Z LANDED-2P  0.0.0_AB_MSTR~DELL1  0bff65db8b  paths=1  validate=8.11s  wait=0.09s  hold=1.18s  build=0.76s  ref=0.38s  post-commit=2.86s  attempt=1
+2026-10-09T16:32:24Z PASS  2.0.0_SA_COO~H1  9  (all paths in-lane)
+2026-10-09T16:32:40Z LANDED-2P  2.0.0_SA_COO~H1  e3b4308e1b  paths=9  validate=27.53s  wait=0.08s  hold=1.18s  build=0.73s  ref=0.41s  post-commit=3.23s  attempt=1
+2026-10-09T16:33:12Z SURPRISE-ROW-OVERRIDE-HONOURED  3.0.0_SA_CVO  reason=the only non-terminal order is TO-READ-R40-ap10b-lv (issued to 0.7.0_AE_CloudOps~ZC), whose served act (leg v fire 2026-10-09 13:00Z) is graded MET in ADJUDICATION_v47 and whose ledger amgt-corpus-r40-ap10b is CLOSED @9520a1d1e3; the status field was never flipped. Not this seat's row.  provenance=UNVERIFIED-BY-GATE
+2026-10-09T16:33:11Z PASS  0.9.0_WK_DSGN_AMGTV1~142  2  (all paths in-lane)
+2026-10-09T16:33:22Z LANDED-2P  3.0.0_SA_CVO  2ce34de1c2  paths=1  validate=293.32s  wait=0.10s  hold=1.28s  build=0.82s  ref=0.43s  post-commit=2.53s  attempt=1
+2026-10-09T16:33:22Z PASS  0.9.0_WK_AMGT_HARVST~133  1  (all paths in-lane)
+2026-10-09T16:33:37Z PASS  2.0.0_SA_COO~B1  2  (all paths in-lane)
+2026-10-09T16:33:46Z LANDED-2P  2.0.0_SA_COO~B1  6dcca1e14f  paths=2  validate=9.45s  wait=0.08s  hold=1.11s  build=0.69s  ref=0.38s  post-commit=2.68s  attempt=1
+2026-10-09T16:33:55Z MERGE-ATTEMPT  2.0.0_SA_COO~D1  rc=0  secs=3.95  graded=0/2 fast-lane  args=(wk-DSGN_AMGTV1-142)  first=(none)
+2026-10-09T16:28:20Z PASS  2.0.0_SA_COO~O  1  (all paths in-lane)
+2026-10-09T16:28:31Z PASS  2.0.0_SA_COO~O  1  (all paths in-lane)
+2026-10-09T16:28:58Z LANDED-2P  2.0.0_SA_COO~O  863d9e9696  paths=1  validate=37.25s  wait=0.51s  hold=4.47s  build=2.04s  ref=1.99s  post-commit=12.93s  attempt=1
+2026-10-09T16:29:25Z PASS  0.7.0_AE_CloudOps~MP  3  (all paths in-lane)
+2026-10-09T16:29:36Z PASS  0.7.0_AE_CloudOps~MP  3  (all paths in-lane)
+2026-10-09T16:31:59Z PASS  3.0.0_SA_CVO~Z  1  (all paths in-lane)
+2026-10-09T16:33:14Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:33:30Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:33:38Z PASS  3.0.0_SA_CVO~Z  1  (all paths in-lane)
+2026-10-09T16:34:07Z LANDED-2P  0.0.0_AB_MSTR~Z  5b36980631  paths=1  validate=72.21s  wait=0.95s  hold=7.18s  build=4.24s  ref=2.18s  post-commit=16.33s  attempt=1
+2026-10-09T16:34:14Z LANDED-2P  3.0.0_SA_CVO~Z  ab2d669439  paths=1  validate=242.15s  wait=1.38s  hold=6.42s  build=4.52s  ref=1.47s  post-commit=14.84s  attempt=1
+2026-10-09T16:35:04Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=14.39  graded=n/a  args=(--verify-merge e1ceb5234c72e789ce36c4f5f19c681c6ea0aba9)  first=(none)
+2026-10-09T16:35:17Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=190.45  held=dirty-overlap graded=2/295
+2026-10-09T16:35:23Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T16:35:24Z PASS  0.9.0_WK_NFRA_OPLGTW~48  5  (all paths in-lane)
+2026-10-09T16:35:39Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T16:35:46Z PASS  0.9.0_WK_NFRA_OPLGTW~48  5  (all paths in-lane)
+2026-10-09T16:36:08Z LANDED-2P  2.0.0_SA_COO~ZZ  0ef79d6bf9  paths=1  validate=61.97s  wait=0.48s  hold=4.41s  build=2.32s  ref=1.86s  post-commit=12.94s  attempt=1
+2026-10-09T16:38:10Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=0  secs=20.52  graded=0/5 fast-lane  args=(wk-NFRA_OPLGTW-33-48 -m drain(NFRA_OPLGTW.TO-OG-tl-1 Phase C, 2.0.0_SA_COO~O): merge worker ~48 @2fa7afd9ec -- TL1_READ host-attested on c97232408d: allowlist 4 ids (sha bd206c96...), only TRANSCRIPT_MEETING_ALLOWLIST changed (basis recorded outside the body); proof VALID)  first=(none)
+2026-10-09T16:40:10Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:40:24Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:40:52Z LANDED-2P  0.0.0_AB_MSTR~Z  d1c68bcb32  paths=1  validate=49.08s  wait=0.50s  hold=4.01s  build=2.66s  ref=1.28s  post-commit=11.58s  attempt=1
 2026-10-09T16:46:34Z PASS  2.0.0_SA_COO~H1  2  (all paths in-lane) act=1a4338a2fd0f paths=2:org/missions/D8/MDPF/MDPF_SECHIST/surprise-channel/investigations/INVESTIGATION_v1.md|org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/NEVER_WIDEN_HALF_REQUEST_SECHIST_SH_T8_SITEZ_DEPLOY_20261009.md
 2026-10-09T16:46:35Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane) act=07f770473260 paths=2:org/git-author-override-audit.log|org/mcp/agent-spawn-audit.log
 2026-10-09T16:46:37Z PASS  2.0.0_SA_COO~N1  1  (all paths in-lane) act=d346d21fbd3e paths=1:org/missions/D0/NFRA/NFRA_GATSCP/deliverables/2.0.0_SA_COO~N1/TRACE_round4.md
