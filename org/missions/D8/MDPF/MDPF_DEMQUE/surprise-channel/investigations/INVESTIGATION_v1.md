@@ -301,6 +301,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "dq_t17_run.py re-run at dell1 base @0aa91a7a96: TRCMP-OK 3 names"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W18-S1",
+    "one_line": "DQ-t-21 appends four columns to prices.parquet as ordered, which fails the existing test_demque_store.py::test_only_the_locked_range_is_written (asserts exactly the three old columns); that file is outside the order's write grant.",
+    "spec_asserts": "TO-DQ-t21 step 2: prices.parquet gains cash, total_return, tr_source, flags AFTER the existing columns; and 'keep the existing test_demque_*.py passing'.",
+    "world_is": "data/mdpf/scripts/demque/test_demque_store.py line 32 asserts list(px.columns) == ['date','close_served','as_traded_close']; with the four columns appended it fails (1 failed, 76 passed across the demque test directory). Both instructions cannot hold. The new columns were built as ordered; the one-line fix to that assertion (compare the first three columns) belongs to the issuer, the file not being in <paths>. Also: daily_draw.py (not in <paths>) must pass bbg= to price_store.write for guard (a) to fire in the scheduled draw, and money_market.csv carries empty cusip cells (no CUSIP in the order).",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~18",
+    "surfaced_at": "2026-10-09T12:55:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/test_demque_store.py:32",
+        "data/mdpf/scripts/demque/price_store.py",
+        "pytest -q data/mdpf/scripts/demque -> 1 failed, 76 passed"
+      ]
+    }
   }
 ]
 ```
