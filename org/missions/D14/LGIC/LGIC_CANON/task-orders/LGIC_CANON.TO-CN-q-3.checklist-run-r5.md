@@ -13,7 +13,7 @@
 <workstream>~B1</workstream>
 
 **Directive:** D14 | **Fabric:** dell1 | **Decomp cell:** `CN-q-3` (`decompositions/LGIC_CANON_DECOMP.md`, round-5 section) | **outcome_ref:** FWD-5 |
-**depends_on:** CN-q-1 and CN-q-2 (both merged before this order is spawned; the issuer fast-forwards this slot first)
+**depends_on:** CN-q-1 and CN-q-2 (both merged); PART A also needs 4.0.0_SA_CRO's tenant.pages rows for its live arm
 
 ---
 
@@ -43,10 +43,34 @@ org/**/W73_S*_EVIDENCE.json, or any cottonwood manifest.
 
 ### THE CELL
 
-`CN-q-3` (analysis item 3). Run `infra/logic/10_ONBOARDING_CHECKLIST.md` end to end on the `LGIC_LGCTFM` practice wave `workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/` (49financial), as round 4's
+**PART A, first (folded in from ADDENDUM 1 by AMENDMENT 1; formerly drafted as CN-q-4).** (round-5 ADDENDUM 1, `org/missions/D14/LGIC/LGIC_CANON/ledger/ROUND_ANALYSIS.round5.md` section "ADDENDUM 1"; the CTO accepted the issuer's measurement): "The 7-page core is
+DERIVED for every client firm with the portal on. A firm's extra pages are READ from a registry field `tenant.pages`, never chosen
+during the checklist. `4.0.0_SA_CRO` writes the field for the existing firms from the grants `firmAccess.ts` already records ... An
+empty `tenant.pages` yields the core only, never a guessed extra. Negative arm: a page in `firmAccess.ts` with no `tenant.pages`
+entry is a STOP of the registry check, never a silent omission."
+
+The core, measured by the issuer as the pages all three client firms share: `/advisor-intelligence`, `/macro`, `/market`,
+`/philosophy`, `/portfolios`, `/positioning`, `/valuations`. CN-q-2 built `lib/opal_portal_paths.py`, which today derives
+`/portfolios` from surface mdpf and cards the rest to Andrew. `tenant.pages` is written into `infra/logic/registry/scopes.json` by
+`4.0.0_SA_CRO` (asked by the issuer; measured values: 49financial `["/trade-submission"]`, inflection `[]`, cottonwood
+`["/attribution","/factor-tilts","/trade-submission"]`). If the field has not landed when you start, build and test against a
+fixture copy of the registry, and run the criterion once it lands. You never write `scopes.json` yourself.
+
+**Build** in `lib/opal_portal_paths.py` and `lib/tests/test_opal_portal_paths.py`:
+1. Derivation: a FIRM row with `tenant.kind` `client` and `tenant.surfaces.portal` true derives the core plus `tenant.pages`. A
+   missing `tenant.pages` reads as empty: core only, never a guessed extra. Keep the scoped-route print for surface mdpf. Nothing is
+   carded for a page the core or `tenant.pages` holds.
+2. `--check [--access FILE]`: for every firm in `FIRM_ALLOWED_PATHS` (default `portal/src/lib/firmAccess.ts`), every granted page
+   must be in that firm's derived set. A page that is not STOPs: print `STOP <firm> <page> -- no tenant.pages entry` and exit
+   non-zero. A firm in the map with no FIRM scope row also STOPs. Print the denominators (firms, pages).
+3. Tests: core derived for a client with the portal on; `tenant.pages` extras added; an empty field gives the core only; `--check`
+   STOPs on a planted page (fixture).
+4. `org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/portal-paths-r5b.result.md`: the three firms' derived sets and the `--check` output.
+
+**PART B, then -- the FWD-5 run.** `CN-q-3` (analysis item 3). Run `infra/logic/10_ONBOARDING_CHECKLIST.md` end to end on the `LGIC_LGCTFM` practice wave `workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/` (49financial), as round 4's
 `C6_RUN.md` did: each step a READ against the firm's live state or a pure or dry-run call, never a live act. The grade is
 `reached + carded == steps`, with every carded step a firm-bucket one (steps 10, 14b and 16, owner ADVI_FIRMBKTS), denominators
-printed. Step 13 runs on the registry rows CN-q-1 added. Step 14a runs on CN-q-2's derivation. Step 14 is split into 14a (portal
+printed. Step 13 runs on the registry rows CN-q-1 added. Step 14a runs on the derivation as PART A leaves it: the 7-page core plus the firm's `tenant.pages` (round-5 ADDENDUM 1). Step 14 is split into 14a (portal
 paths) and 14b (the partner table, register entry X8). Step 14a is REACHED only when no path is carded for a cause outside the
 carve-out; otherwise it is carded, with the cause named.
 
@@ -58,10 +82,13 @@ carve-out; otherwise it is carded, with the cause named.
 
 ### ACCEPTANCE
 
+<criterion id="Q4R5-AC1" cell_refs="CN-q-3"><invocation>timeout 600 python org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~B1/fixed_inputs/r5/check_cn_r5.py paths2</invocation><expect>PASS-R5-PATHS2</expect></criterion>
+`Q4R5-AC1` -- PART A: 49financial derives exactly its FIRM_ALLOWED_PATHS entry with 0 carded; --check passes live and STOPs on a planted page.
+
 <criterion id="Q3R5-AC1" cell_refs="CN-q-3"><invocation>timeout 600 python org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~B1/fixed_inputs/r5/check_cn_r5.py run</invocation><expect>PASS-R5-RUN</expect></criterion>
 `Q3R5-AC1` -- reached + carded == 16; steps 13 and 14a reached; every carded step a firm-bucket one with its owner; routes hash unchanged; nothing live moved.
 
-<expected_criteria>Q3R5-AC1</expected_criteria>
+<expected_criteria>Q4R5-AC1, Q3R5-AC1</expected_criteria>
 
 Run every invocation from the root of your worktree. Each invocation's LAST printed line is the line the expectation is matched
 against. Commit your artifacts first, then run the criteria against the committed bytes.
@@ -76,6 +103,9 @@ against. Commit your artifacts first, then run the criteria against the committe
   `date -u +%FT%TZ` at filing) in `org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md` by textual splice, and never weaken a check or an expected value.
 
 <paths>
+org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/portal-paths-r5b.result.md
+lib/tests/test_opal_portal_paths.py
+lib/opal_portal_paths.py
 org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/CANON_RUN_R5.md
 org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/CANON_RUN_R5.json
 org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-q-3.checklist-run-r5.proof_of_spec.json
@@ -91,9 +121,9 @@ The block is your WRITE grant. You read and never edit anything outside it.
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: Q3R5-AC1. Instance at
+Criterion ids: Q4R5-AC1, Q3R5-AC1. Instance at
 `org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-q-3.checklist-run-r5.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> Q3R5-AC1 --governing-order org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-q-3.checklist-run-r5.md` BEFORE the
+validated with `python .tools/proof-of-spec-check.py <instance> Q4R5-AC1,Q3R5-AC1 --governing-order org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-q-3.checklist-run-r5.md` BEFORE the
 `complete` flip. Commit the artifact first, then pin it; never PENDING-THIS-COMMIT.
 </proof_of_spec>
 
@@ -112,3 +142,10 @@ lane: the <paths> block IS the grant (worker RULING 1); nothing in the prose gra
 
 Source: `org/missions/D14/LGIC/LGIC_CANON/ledger/ROUND_ANALYSIS.round5.md` (`1.0.0_SA_CTO~DELL1`, msg 3013); decomposition round-5 section. Base dry-run at the cut, by the issuer at base
 9794664db4: Q3R5-AC1 base: FAIL as expected (CANON_RUN_R5.json absent).
+
+## AMENDMENT 1 (2026-10-09 ~19:1xZ, issuer 2.0.0_SA_COO~B1) -- step 14a reads CN-q-4's derivation
+
+Round-5 ADDENDUM 1 (the CTO, on the issuer's measurement) adds cell CN-q-4: the 7-page core derived for a client firm with the portal
+on, extras read from registry field `tenant.pages`. The issuance gate holds one issuance per round, so that work is FOLDED INTO THIS ORDER as PART A (criterion Q4R5-AC1, check arm
+`paths2`, FAILS at the base); PART B, the run, follows on PART A's derivation. Not yet spawned. Gate limb grading this modification: none
+(to-pipeline-gate grades newly-added orders; a second issuance into round 5 is refused).
