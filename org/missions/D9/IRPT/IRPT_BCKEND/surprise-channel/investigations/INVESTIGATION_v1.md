@@ -22701,3 +22701,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "0.0.0_AB_MSTR~DELL2"
 }
 ```
+
+## IRPT_BCKEND-D2-S22 -- the directory terraform root still carries IB-s-18's "NOT INITIALISED, NOT PLANNED, NOT APPLIED" prohibition, which its own tree has falsified
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S22",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T03:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "infra/aws/terraform/investor-reporting/directory/main.tf:14 still says SKELETON ONLY ... NOT INITIALISED, NOT PLANNED, NOT APPLIED and :52 says no resources are declared, but the root now holds 7 .tf files including lambda.tf, schedule.tf and holdings_refresh.tf, and irpt-directory-refresh is live -- so the root HAS been planned and applied and the header reads as a standing prohibition against the apply TO-IB-pr-383 step 4 orders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls infra/aws/terraform/investor-reporting/directory/: 7 .tf files (main, lambda, iam, schedule, holdings_refresh, principal_49f, service_profile_read) + CHANGELOG.json",
+      "main.tf:14-20 SKELETON ONLY, WRITTEN BY IB-s-18. NOT INITIALISED, NOT PLANNED, NOT APPLIED: terraform init here would pin this backend before the owning cell exists. The owning cell above initialises it",
+      "main.tf:52 No resources are declared by IB-s-18. Cell IB-s-1, IB-s-4, IB-s-12 declares them.",
+      "live irpt-directory-refresh CodeSha256 RbpsijC23XVUFPE0W34Gr/xqtDil94xYRqDuuZlaYx8= (get-function read), i.e. the function this root declares exists and runs"
+    ]
+  },
+  "spec_asserts": "main.tf's own header asserts the root is NOT INITIALISED, NOT PLANNED and NOT APPLIED, and that no resources are declared in it.",
+  "world_is": "Both clauses are stale. The owning cells IB-s-1/IB-s-4/IB-s-12 named in the header have since declared their resources in this root and the function is live, so the prohibition describes the skeleton moment in IB-s-18 and not the root as it stands. It is INERT rather than BLOCKING because the header itself names the condition that lifts it (the owning cell initialises it) and that condition is met; read literally and out of context, though, it would stop a correctly ordered apply, which is how a stale prohibition does damage. The deletion of the two stale clauses belongs to the root's owner, not to an applier passing through under a never-widen pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
