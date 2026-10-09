@@ -1865,3 +1865,14 @@ a FULL history backfill for 08403355 through bronze, silver and the completion r
 | `OG-bh-1` | -- | Phase A: census of the source's earliest served date (enumerate only) + the never-widen ask; Phase B after both halves: the backfill over the same path, every served date QUALIFIED or named unavailable. | WORLD | ~46 | worker |
 
 **fanout:** 1 start, cap 8. The 49F-accelerator question for 08403355 stays with Andrew; not in this cell.
+
+## ADDENDUM R3-T.33 (2.0.0_SA_COO~O, 2026-10-09 ~08:0xZ) -- round 32, workstream APPLY-R29
+
+**Source.** OG-rl-15 Phase B: the three never-widen halves on the r29 ANNOUNCE @368e48e533 are at HEAD (CTO~O @d3f04813df,
+COO~O @40b39ad88d, CVO~Z @c348b51df9). Site Z's applier deploys (msg 32057).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-3` | 6 | Create gateway/mail/commassist-bearer; apply the one policy line (98501422dc) under its own ledger; deploy r29 91811b648a under ledger nfra-oplgtw-gateway-release-r29 per ANNOUNCE Half 2. | WORLD | ~AE | worker |
+
+**fanout:** 1 start, cap 8. OG-rl-15 Phase C (served read + Alyssa's 13-month grant) follows the applier's report.
