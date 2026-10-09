@@ -3998,6 +3998,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "With both builds satisfied the check prints 'aq1 build 1/1 control 0/1' (BABA US, ST SP management moved) and 'aq2 build 1/1 control 0/1' (8766 JP, SHOP CN management moved). The snapshot aq12_base_values.json is the pre-fix compose, so a control that holds 'unchanged' over it forbids the other cell's repair. The code is correct to both cells' prose build text; the criteria as written are not jointly satisfiable.",
   "notes": "Worker did not edit the check or snapshot (bound 1). The fix is the issuer's: exclude the BABA/ST (prefix) names from aq1's control and the 8766/SHOP (cut) names from aq2's control, or snapshot the controls from the post-fix compose. AC1 and AC2 are recorded FAIL in the proof instance and the order's status is left pending.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S2",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-09T18:45:00Z",
+  "one_line": "AC3 names test_dossier_passage_edges_round41.py, two of whose tests assert the defect CRPS-ar-1 fixes, but that file is not in <paths>, so the worker may not change them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order CRPS-ar-1 section 4 AC3: the pytest invocation lists lib/research/corpus/tests/test_dossier_passage_edges_round41.py; section 4 text: 'If a round-41 test asserts a ... on a whole bullet line, that assertion encodes the defect this cell fixes: change that assertion and say so in your report'; section 3 <paths> lists the new round42 test and five method-bump tests, NOT test_dossier_passage_edges_round41.py",
+      "run on branch wk-AMGT_CORPUS-42-1 with the build in lib/research/corpus/dossier.py: 'ar1 build 1/1 control 1/1', 'aq2 build 1/1 control 1/1'; pytest over the AC3 files except the new one: '2 failed, 46 passed': test_sentence_that_cannot_be_completed_ends_with_an_ellipsis (next line is a bold, smaller-size table label: does not continue, so no '...' by the order's rule; asserts value.endswith(SENTENCE + '...')) and test_docx_cut_before_a_heading_ends_with_an_ellipsis_not_a_comma (a docx paragraph never continues; asserts value.endswith('emphasizing corporate culture...'))"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC3 expects '^\\d+ passed in [\\d.]+s$' over a file set that includes test_dossier_passage_edges_round41.py, and the order tells the worker to change a round-41 assertion that encodes the defect.",
+  "world_is": "Two assertions in test_dossier_passage_edges_round41.py contradict the order's own rule (build item 2 and AC1) and cannot pass with it. The file is outside the worker's write grant, so the worker did not edit it; AC3 reads '2 failed, N passed'. The fix is the issuer's: add the file to <paths> (change those two assertions to expect NO '...'), or run the edit itself.",
+  "notes": "Worker did not edit the file (a path outside <paths> is a BLOCKING row, never an override). AC3 is recorded FAIL in the proof instance and the order's status is left pending. The code change is committed; AC1 and AC2 pass.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
