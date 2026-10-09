@@ -33,12 +33,12 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
-    "coo": "UNSEATED on dell1 -- seated by 0.0.0_AB_MSTR~DELL1 on this re-placement (prior site-Z lane 2.0.0_SA_COO~D)",
+    "coo": "2.0.0_SA_COO~D1 (dell1), seated ~00:2xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1274)",
     "cvo": "3.0.0_SA_CVO~Z",
     "cro": "4.0.0_SA_CRO~Z",
     "workers": "0.9.0_WK_DSGN_AMGTV1~<n>, per the L6 issuance"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~D1",
   "fabric_ruling": "site-z -- Andrew-direct 2026-09-28 ~22:4xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'COO~D is fine, because they are on separate boxes, so there shouldn't be any overlap. DSGN_AMGTV1 will be owned by the sitez box, so it should not interfere with any COO~D ops on the laptop box.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_DSGN_AMGTV1_SEATS_ON_COO_D_SITEZ.md). D13 is placed LAPTOP; this member is the named per-member exception the register header reserves to Andrew per case (DIRECTIVES.yaml:24-26), adjudicated by 3.0.0_SA_CVO~Z msg 26308 (REC (a) CONCUR). directives-check displays D13 as LAPTOP for this member: display only, no tool routes member work by directive placement.",
   "blocking": "PRD v0.2 ADMITTED (ratified-text SIGNED by 3.0.0_SA_CVO~Z @5a222f83d6; brief half auto). L5 decomposition and the round-1 issuance (the Valero thread) are 2.0.0_SA_COO~D's.",
   "thread_counter": 0,

@@ -7,7 +7,7 @@
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~W1",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
   "last_updated": "2026-10-05T06:15:00Z",
@@ -192,6 +192,6 @@
   "handover_ref": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md @70c5bd38d1",
   "leads_dell1": {
     "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
-    "coo": "UNSEATED on dell1 -- seated by 0.0.0_AB_MSTR~DELL1 on this re-placement (prior site-Z lane 2.0.0_SA_COO~H)"
+    "coo": "2.0.0_SA_COO~W1 (dell1), seated ~00:2xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1274)"
   }
 }
