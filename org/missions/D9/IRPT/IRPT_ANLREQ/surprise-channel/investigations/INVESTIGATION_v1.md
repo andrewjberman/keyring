@@ -422,3 +422,113 @@
   "world_is": "Until the ruling, H1's stream mapping would also have reached it; the ruling withdraws H1 and its kms:Decrypt grant before any apply, so one trigger remains."
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W41-S6..S10 (worker 0.9.0_WK_IRPT_ANLREQ~41, AR-t-13)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "The live draft write cannot complete: RetentionPolicy._allow refuses every service subject on reserve(), and ArtifactRepository.put() reserves before it writes. retention.py is outside AR-t-13's write grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-t-13 step 5/7: ArtifactRepository.put admits svc-commentary through SERVICE_WRITERS and the store writes the DRAFT through the retained repositories built the way composition.py builds them.",
+    "world_is": "With the retained repositories (build_retained_repositories, additional_policy_revisions=('irpt-anlreq-x10-v1',)), put(service_principal('svc-commentary', t), ..., 'ANALYSIS_COMMENTARY', REQ-..., ...) raises ReportDenied('retention owner access denied') at retention.reserve (measured offline with fake clients). retention._allow passes a service subject only on a read=True liveness check. The unit tests therefore use the bare ArtifactRepository (as test_svc_commentary does); the repository's own rules are proved there, the retention layer's admission of the one writer is not built. Needs: retention.py granted to a later cell, reserve() admitting SERVICE_WRITERS for its family only, and the row irpt-anlreq-x10-v1 moved to ACTIVE (it is PENDING_ENFORCEMENT, enforcement_ref null, so RetentionPolicy._registered refuses it too).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/retention.py:90-101 @283f7e7700 -- _allow: a service principal passes only when read=True",
+        "infra/aws/lambda/investor-reporting/reports/retention.py:208-211 @283f7e7700 -- reserve() calls self._allow(principal, owner) with read=False",
+        "infra/aws/lambda/investor-reporting/reports/repository.py ArtifactRepository.put -- retention.reserve before the blob write"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S7",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "AMENDMENT 5's ONE SERVICE_READERS entry (svc-irpt-packager -> ANALYSIS_COMMENTARY) is left out: AR-v-12 has named the principal, but test_svc_commentary.py:199 pins SERVICE_READERS to exactly the svc-commentary entry and that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Driver AMENDMENT 5: add ONE SERVICE_READERS entry for the package_principal AR-v-12 names, family ANALYSIS_COMMENTARY only; keep every reports/tests file green.",
+    "world_is": "ticket_center names 'svc-irpt-packager' (lambda_function.py:105, TO-AR-v12 complete). Adding the entry fails test_svc_commentary_surface_names_one_subject_and_one_family (assert SERVICE_READERS == {'svc-commentary': ...}); measured. The two instructions cannot both hold inside the granted paths, so the suite stays green and the entry is the follow-up: one line in repository.py plus that assert widened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ticket_center/lambda_function.py:105 @283f7e7700 -- \"package_principal\": \"svc-irpt-packager\"",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_svc_commentary.py:197-200 @283f7e7700 -- assert SERVICE_READERS == {\"svc-commentary\": frozenset({\"REQUEST_COMPOSITION\"})}"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S8",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "AMENDMENT 6 (no separate ticket on an analysis_ready run) is applied only when the store ports are present: test_commentary_ready_queue.py (AR11-t-AC1) pins stage 'ticket' and ok True for a queue run with no store ports, and is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Driver AMENDMENT 6: for an analysis_ready run the drafter posts NO separate svc-commentary ticket; AR11-t-AC1 stays green.",
+    "world_is": "A queue run that persisted a DRAFT now ends at stage 'draft_stored' with no ticket post (the live ports always carry the store). A queue run with no persist_draft port, which only a test builds, still posts the ticket, so test_ready_message_admitted_once keeps passing. The stream path (H1, withdrawn by the CTO) is unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_commentary_ready_queue.py:75 @283f7e7700 -- assert out['results'][0]['stage'] == 'ticket' and ok is True",
+        "data/transcripts/scripts/commentary/lambda_handler.py lambda_handler -- from_queue / STAGE_DRAFT_STORED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S9",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "lambda-source-map.json carries no entry for the svc-commentary composition reader, so the new draft-store entry has no registered precedent; its keys.py dependency closure (firm registry, raw_keys, ids) is not measured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-t-13 step 8: register the zip in lambda-source-map.json as the reader is registered.",
+    "world_is": "At 283f7e7700 the map holds no 'commentary-composition' key (the reader's tf header says the zip is the release pair's). The new entry irpt-commentary-draft-store-lambda lists the reports modules, acceptance/submission/keys staged at the pin, lib/opal_naming.py and the registry files (the reader doc's list), carries no artifact_s3_key hash, and says in _staged_from_note that keys.py's own closure is the release pair's to measure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @283f7e7700 -- no key containing 'commentary-composition' (Grep over the file returned no match)",
+        "infra/aws/terraform/investor-reporting/export/commentary_composition.tf:27-34 @283f7e7700 -- ARTIFACT paragraph"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S10",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "The stored DRAFT's bytes are now written: a JSON object {text, request_id, model, generated_at, status:'DRAFT'}; this is the shape row IRPT_ANLREQ-D2-W62-S4 said the packager assumed (a string `text`).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-t-13 step 9: the live persist_draft invokes the store with op put; W62-S4: the draft bytes shape is unwritten.",
+    "world_is": "make_draft_store.persist_draft maps the drafter's draft_text to `text` and carries only the request id, model, generated_at and status (not the slicer's candidate ids or statement). The store itself is shape-agnostic: it canonical-JSON-encodes any non-empty dict up to 256 KiB. `title` is not written. The request record is keyed by the tenant partition, so the body `tenant` is used only as the partition HINT for reading analysis#<request_id>#1 and must equal the record's own identity.tenant_firm_id; the principal and owner come from the record alone.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/commentary/lambda_handler.py make_draft_store @this commit",
+        "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py resolve_request @this commit",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W62-S4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
