@@ -1171,3 +1171,46 @@ documents; s-19 consumes s-18's live sentinel; the CTO sequenced the disarm firs
 - Z-W22-S1 and Z-W21-S12 are DEFERRED as ruled. Z-W21-S19, Z-W19-S13 and ETFS_RIVALS-W5-S3 are NFRA_OPLGTW's.
   `platinum/advi` waits on G-W. FWD-6..FWD-10 enter after MX-m-2 measures.
 - No gateway release this round (analysis section 4).
+
+# ROUND 8 -- PRD v0.7: INDEX EVERY NEED IN ALYSSA'S WORKFLOWS (L5, 2.0.0_SA_COO~MI, 2026-10-09)
+
+Source: PRD v0.7 @b06af7c0d2 (`1.0.0_SA_CTO~O`, msg 32348), FWD-11..FWD-18 and contract changes 1-6. Input list: brief
+`docs/briefs/mcpindex-alyssa-workflows-midstream-brief-20261009.md` @3455b1783a Part IV.A (29 candidates, E-1..E-29).
+Second read of the same inputs: `deliverables/2.0.0_SA_COO~MI/ALYSSA_WORKFLOWS_INDEX_INPUT_MAP_20261009.md` @280fd3c814.
+Issued in ONE issuance when `3.0.0_SA_CVO~Z` signs the ratified-text half (status at L5: brief SIGNED, ratified STALE).
+Round 7 stays open on MX-s-19 alone. MX-s-19 shares no path with these cells, so the two rounds do not collide.
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-d-7` | FWD-11 (the thread), FWD-13; contract 4 | discover's `latest_value` is READ from the served artifact's own as-of field at answer time, claim `measured`; a held certification value is never shown as the as-of. Proven on three datasets: model benchmarks (held 2026-08-10, served 2026-10-07 at L5), `aum-metrics`, `aggregate-aua-timeseries`. Plus the thread route: "how did <model> do against its benchmark <period>" reaches `mdpf_get_model_benchmarks` with that true date | CLOUD | WORLD (infra floor) |
+| `MX-c-6` | FWD-12, FWD-15, FWD-17, FWD-18; contracts 1, 5, 6 | the catalog holds all 29 needs as entries: need, source, status (SERVED / PARTIAL / GAP / DENIED), tool or none, owner or `unowned`, the browser workflow it retires (C# / W#), read or write class. GAP rows are a declared row type the catalog gate admits. The YCharts tools are vendor entries reading PARTIAL with their live error (Z-S85). The 8 unowned gaps are catalogued, never built. Written through the catalog's ONE writer (C1) | CLOUD | WORLD (infra floor) |
+| `MX-d-8` | FWD-14, FWD-17, FWD-1 change (contract 1) | discover answers a GAP entry with its owner, and a write-class entry with its class and whether the CALLER's grant allows it. Alyssa's six phrasings ("account counts by partner", "cost basis", "statement", "stress test", "download the attachment", "S&P YTD") and the three write asks each reach their entry on the first try in the routing harness. No phrasing lands on a dataset whose meaning is a different need | after MX-d-7 and MX-c-6 | WORLD (infra floor) |
+| `MX-r-9` | FWD-11, FWD-13, FWD-14, FWD-17 live | the gateway release of MX-d-7, MX-c-6 and MX-d-8 through the opal-gateway release train (`2.0.0_SA_COO~O` holds the queue). PHASE A: plan and ANNOUNCE by the worker. PHASE B: apply by a site-Z CloudOps lane under never-widen halves. Then the live reads: FWD-13's three comparisons, FWD-14's six discover calls, FWD-17's three answers | after MX-d-8 drains | WORLD |
+
+**Chains (fan-out 2 of 2 chains at the cut, cap 8):** [MX-d-7 -> MX-d-8 -> MX-r-9] and [MX-c-6 -> MX-d-8]. MX-d-7 and
+MX-d-8 both write `app/integrations/opal_discover/`. MX-c-6 writes `app/refs/DATA_CATALOG.yaml` and the catalog gate's
+row-type admission. So MX-d-7 and MX-c-6 run in parallel, and MX-d-8 needs both. MX-r-9 is one release of all three:
+two gateway releases would each re-test the whole service.
+
+**The thread (FWD-11) at close.** Alyssa, in her own words, asks how a model did against its benchmark for a period; the
+transcript is read beside the served artifact's date and the opalinvest.dev page. It is her act, graded at L9 by the
+CVO and booked through `0.0.0_AB_MSTR~Z`. It is the round's one essential wait, and the same shape as r6.J1. FWD-12's
+subtraction (the 29 entries against her two briefs) and FWD-18's count (denominator 14) are also read at L9 from the
+served catalog, by a reader who is not the author.
+
+**Not cells:**
+- FWD-16 follows NFRA_OPLGTW's serve dates. E-1..E-8 enter as GAP entries owned by NFRA_OPLGTW in MX-c-6. On the
+  day the first OPLGTW v2.x dataset serves, a cell turns its entry SERVED the same day (FWD-10's rule). Owner of the
+  trigger: this lane's drive tick reads OPLGTW's serve dates.
+- E-9, E-10, E-11, E-12, E-20, E-26, E-27, E-28: catalogued `unowned` in MX-c-6, never built here (contract 6).
+- Z-S85 (YCharts time series 403; snapshot symbol key lost) belongs to the YCharts integration's owner. MX-c-6 catalogs
+  the two tools as PARTIAL with the live error (FWD-15's ACCEPT); fixing them is not this round's.
+- E-24's grant ("not measured") and the DENIED verdicts are `opalbloomberg`'s at L5. MX-d-8 reads the CALLER's grant at
+  answer time, so Alyssa's own principal decides at r-9's live read and at the thread run (brief Part V, item 4).
+
+**Bounds inlined at L6:**
+- the catalog's ONE writer (C1);
+- every tool name is generated or validated (C3, CLAUDE.md rule 30, which now REFUSES);
+- no tool ships without its catalog entry and class (C2);
+- egress is open except Bloomberg (law edit @4d77a9c3ea), but no cell calls a vendor beyond the live reads named;
+- discover still reads NO body except the as-of field FWD-13 requires, and that read is the served object's own field.
