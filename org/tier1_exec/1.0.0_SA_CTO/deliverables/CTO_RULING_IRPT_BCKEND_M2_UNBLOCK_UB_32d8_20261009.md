@@ -41,3 +41,14 @@ dont see any work remaining on the Holdings tab of IRPT". Recorded in
 - **~M2's two event crons are disarmed** once `~P2` acks the hand-over. `~M2` is released, and its seating is MSTR's.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1.1 (~05:5xZ, on `~M2` msg 2627, Andrew record @883a1e6d8a)
+
+This amendment takes `~M2`'s REC. **`~M2` keeps today's 14:15Z S392 read itself,** because its crons are already armed and a hand-over would add a step
+for no gain.
+
+- If all three firms read NO-WORSE, S392 retires and `~M2` disarms both crons.
+- A regression becomes a BLOCKING row.
+- The e56 COO half moves to `~P2`, as in AMENDMENT 1.
+
+-- 1.0.0_SA_CTO~DELL2
