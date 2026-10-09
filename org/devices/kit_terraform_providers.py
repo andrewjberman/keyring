@@ -6,17 +6,23 @@ FILESYSTEM MIRROR with a checksum manifest and the CLI-config snippet that makes
 registry, and verifies such a pack on the receiving box. Pure stdlib. NO NETWORK: nothing here downloads, and no command this tool
 constructs names a registry address or a downloading verb (a test asserts it).
 
-    python org/devices/kit_terraform_providers.py required [--out <json>]
-    python org/devices/kit_terraform_providers.py located  [--search <dir> ...] [--platform windows_amd64]
+    python org/devices/kit_terraform_providers.py required [--out <json>] [--all-roots]
+    python org/devices/kit_terraform_providers.py located  [--search <dir> ...] [--platform windows_amd64] [--all-roots]
     python org/devices/kit_terraform_providers.py binary   [--tools-dir <dir>]
     python org/devices/kit_terraform_providers.py pack --out <dir> [--search <dir> ...] [--only <ns/type[@ver]> ...] [--include-unlocked] [--no-binary]
+                                                   [--all-roots] [--mirror-zips <dir> ...]
     python org/devices/kit_terraform_providers.py verify --from <dir> [--write-config <file>] [--run-binary] [--install-binary <target>]
-    python org/devices/kit_terraform_providers.py readback --root <dir> [--from <pack dir> | --config <file>] [--timeout <s>]
+    python org/devices/kit_terraform_providers.py readback --root <dir> [--from <pack dir> | --config <file>] [--timeout <s>] [--init-only]
 
 AMENDMENT 4: the pack also carries the Terraform BINARY this box's .tools/safe-apply.sh would run, resolved by the wrapper's own order
 (SAFE_APPLY_TERRAFORM override, then the sibling terraform.exe beside the wrapper in the base checkout's .tools/, then PATH). The binary
 is hashed against the manifest BEFORE it is ever executed; every terraform run here sets CHECKPOINT_DISABLE=1 so even `version` makes no
 network call.
+
+AMENDMENT 9: --all-roots adds every other directory under infra/aws/terraform that holds a lock file (dell2 counts every lock);
+--mirror-zips <dir> lays a release zip from a downloaded-mirror output directory into the pack in the PACKED form (Terraform
+matches it on zh: or h1:, so a lock holding only another platform's h1 still accepts it); readback --init-only runs `init -backend=false`
+with the pack as the sole provider source, restores the root's lock file byte for byte, and runs NO plan.
 
 The roots are derived by importing placed_projects() and cited_roots() from
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py (the method is not written twice), plus this project's own
@@ -84,6 +90,29 @@ def h1_of_dir(directory):
 
 def dir_size(directory):
     return sum(f.stat().st_size for f in pathlib.Path(directory).rglob("*") if f.is_file())
+
+
+def zip_name(source, version, platform):
+    return "terraform-provider-%s_%s_%s.zip" % (source.split("/")[2], version, platform)
+
+
+def h1_of_zip(zip_path):
+    """The h1 of a provider release zip = the dirhash h1 of its unpacked contents."""
+    import zipfile
+    with tempfile.TemporaryDirectory() as td:
+        with zipfile.ZipFile(str(zip_path)) as zf:
+            zf.extractall(td)
+        return h1_of_dir(td)
+
+
+def find_zip(source, version, platform, zip_dirs):
+    """A release zip in a downloaded-mirror output dir: <dir>/<host>/<ns>/<type>/terraform-provider-<type>_<ver>_<platform>.zip."""
+    host, ns, typ = source.split("/")
+    for zd in zip_dirs or []:
+        z = pathlib.Path(zd) / host / ns / typ / zip_name(source, version, platform)
+        if z.is_file():
+            return z
+    return None
 
 
 # ---------------------------------------------------------------- reading the roots
@@ -181,9 +210,30 @@ def lock_files(root_dir):
     return sorted(found)
 
 
-def build_required():
+def build_required(all_roots=False):
+    """Derived roots (the Dell-placed projects plus this project's two); with all_roots, EVERY directory under
+    infra/aws/terraform holding a lock file that the derived roots did not already read (AMENDMENT 9: dell2 counts every lock)."""
     roots = derive_roots()
     rows, providers, unlocked, errors = [], {}, [], []
+    read_locks = set()
+
+    def absorb(name, rdir, rel, row):
+        for p in parse_lock((rdir / rel).read_text(encoding="utf-8")):
+            row["providers"].append({"source": p["source"], "version": p["version"], "lock": rel})
+            rec = providers.setdefault((p["source"], p["version"]), {
+                "source": p["source"], "version": p["version"], "constraints": [], "roots": [], "h1": [], "zh": []})
+            if p["constraints"] and p["constraints"] not in rec["constraints"]:
+                rec["constraints"].append(p["constraints"])
+            tag = name if rel == LOCK_NAME else "%s/%s" % (name, rel[:-len(LOCK_NAME) - 1])
+            if tag not in rec["roots"]:
+                rec["roots"].append(tag)
+            for h in p["h1"]:
+                if h not in rec["h1"]:
+                    rec["h1"].append(h)
+            for h in p["zh"]:
+                if h not in rec["zh"]:
+                    rec["zh"].append(h)
+
     for name in sorted(roots):
         rdir = TF_BASE / name
         row = {"root": name, "projects": sorted(set(roots[name])), "status": None, "lock_files": [], "providers": []}
@@ -202,22 +252,21 @@ def build_required():
         else:
             row["status"] = "LOCKED"
             for rel in locks:
-                for p in parse_lock((rdir / rel).read_text(encoding="utf-8")):
-                    row["providers"].append({"source": p["source"], "version": p["version"], "lock": rel})
-                    rec = providers.setdefault((p["source"], p["version"]), {
-                        "source": p["source"], "version": p["version"], "constraints": [], "roots": [], "h1": [], "zh": []})
-                    if p["constraints"] and p["constraints"] not in rec["constraints"]:
-                        rec["constraints"].append(p["constraints"])
-                    tag = name if rel == LOCK_NAME else "%s/%s" % (name, rel[:-len(LOCK_NAME) - 1])
-                    if tag not in rec["roots"]:
-                        rec["roots"].append(tag)
-                    for h in p["h1"]:
-                        if h not in rec["h1"]:
-                            rec["h1"].append(h)
-                    for h in p["zh"]:
-                        if h not in rec["zh"]:
-                            rec["zh"].append(h)
+                read_locks.add(os.path.normcase(os.path.abspath(str(rdir / rel))))
+                absorb(name, rdir, rel, row)
         rows.append(row)
+    if all_roots:
+        extra = {}
+        for rel in lock_files(TF_BASE):
+            lp = TF_BASE / rel
+            if os.path.normcase(os.path.abspath(str(lp))) in read_locks:
+                continue
+            extra.setdefault(pathlib.PurePosixPath(rel).parent.as_posix(), []).append(lp)
+        for name in sorted(extra):
+            rdir = TF_BASE / name
+            row = {"root": name, "projects": ["ALL-LOCKS"], "status": "LOCKED", "lock_files": [LOCK_NAME], "providers": []}
+            absorb(name, rdir, LOCK_NAME, row)
+            rows.append(row)
     plist = [providers[k] for k in sorted(providers)]
     for p in plist:
         p["roots"].sort()
@@ -235,7 +284,7 @@ def required_summary(req):
 
 
 def cmd_required(args):
-    req = build_required()
+    req = build_required(getattr(args, "all_roots", False))
     for row in req["roots"]:
         if row["status"] == "LOCKED":
             print("root %-28s LOCKED   %s" % (row["root"], ", ".join("%s %s" % (p["source"].split("/", 1)[1], p["version"]) for p in row["providers"])))
@@ -412,7 +461,7 @@ def run_located(req, search_dirs, platform):
 
 
 def cmd_located(args):
-    req = build_required()
+    req = build_required(getattr(args, "all_roots", False))
     search = [pathlib.Path(s) for s in args.search] if args.search else default_search_dirs()
     print("search dirs (%d): %s" % (len(search), "; ".join(str(s) for s in search)))
     recs = run_located(req, search, args.platform)
@@ -600,12 +649,31 @@ def place(src, dst):
         return "copy"
 
 
-def pack(targets, search_dirs, out_dir, platform=PLATFORM, binary=None):
+def pack(targets, search_dirs, out_dir, platform=PLATFORM, binary=None, zip_dirs=None):
     """targets: [{source, version, h1:[...]}]; binary: a describe_binary() dict or None. -> (summary dict, manifest dict)."""
     out_dir = pathlib.Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     entries, missing, linked, copied, h1_rows = [], [], 0, 0, []
     for prov in targets:
+        zsrc = find_zip(prov["source"], prov["version"], platform, zip_dirs)
+        if zsrc is not None:
+            # AMENDMENT 9: a release zip is laid out as the PACKED mirror form; Terraform hashes it as zh: (the zip) and h1: (its
+            # contents), so a lock that holds only another platform's h1 but carries the zh list still accepts it.
+            host, ns, typ = prov["source"].split("/")
+            zh = "zh:" + sha256_file(zsrc)
+            h1 = h1_of_zip(zsrc)
+            match = None if not (prov.get("h1") or prov.get("zh")) else (zh in prov.get("zh", []) or h1 in prov.get("h1", []))
+            if match is False:
+                missing.append("%s@%s (zip %s matches NO lock hash)" % (prov["source"], prov["version"], zsrc.name))
+                continue
+            dest = out_dir / host / ns / typ / zsrc.name
+            how = place(zsrc, dest)
+            linked += how == "link"
+            copied += how == "copy"
+            entries.append({"path": dest.relative_to(out_dir).as_posix(), "sha256": sha256_file(dest), "size": dest.stat().st_size,
+                            "provider": prov["source"], "version": prov["version"]})
+            h1_rows.append({"provider": prov["source"], "version": prov["version"], "h1": h1, "zh": zh, "form": "zip", "matches_lock": match})
+            continue
         rec = locate_one(prov, search_dirs, platform)
         if rec["path"] is None:
             missing.append("%s@%s" % (prov["source"], prov["version"]))
@@ -625,7 +693,7 @@ def pack(targets, search_dirs, out_dir, platform=PLATFORM, binary=None):
                 "provider": prov["source"],
                 "version": prov["version"],
             })
-        h1_rows.append({"provider": prov["source"], "version": prov["version"], "h1": rec["h1"], "matches_lock": rec["h1_match"]})
+        h1_rows.append({"provider": prov["source"], "version": prov["version"], "h1": rec["h1"], "form": "unpacked", "matches_lock": rec["h1_match"]})
     manifest = {"kind": "terraform-filesystem-mirror", "platform": platform, "files": entries, "providers": h1_rows}
     bin_bytes = 0
     if binary is not None:
@@ -648,7 +716,7 @@ def pack(targets, search_dirs, out_dir, platform=PLATFORM, binary=None):
 
 
 def cmd_pack(args):
-    req = build_required()
+    req = build_required(getattr(args, "all_roots", False))
     targets = list(req["providers"])
     if args.only:
         sel = []
@@ -674,9 +742,9 @@ def cmd_pack(args):
             print("ERROR: no usable terraform binary by the wrapper resolution order (use --no-binary to pack providers alone)")
             return 1
         print("BINARY %s (source=%s) version=%s platform=%s sha256=%s" % (str(binary["path"]).replace("\\", "/"), binary["source"], binary["version"], binary["platform"], binary["sha256"][:12]))
-    summary, _m = pack(targets, search, args.out, args.platform, binary)
+    summary, _m = pack(targets, search, args.out, args.platform, binary, getattr(args, "mirror_zips", None))
     for r in _m["providers"]:
-        print("PACKED %s %s  h1=%s (%s)" % (r["provider"], r["version"], r["h1"], {True: "MATCHES-LOCK", False: "DOES-NOT-MATCH-LOCK", None: "UNLOCKED-NO-HASH-TO-CHECK"}[r["matches_lock"]]))
+        print("PACKED %s %s  form=%s h1=%s%s (%s)" % (r["provider"], r["version"], r.get("form", "unpacked"), r["h1"], " " + r["zh"] if r.get("zh") else "", {True: "MATCHES-LOCK", False: "DOES-NOT-MATCH-LOCK", None: "UNLOCKED-NO-HASH-TO-CHECK"}[r["matches_lock"]]))
     for m in summary["not_on_box"]:
         print("NOT-ON-THIS-BOX %s" % m)
     ok = not summary["not_on_box"] and summary["providers"] > 0
@@ -855,10 +923,40 @@ def cmd_readback(args):
         print("(b) CLI config: the pack mirror at %s, registry excluded" % pathlib.Path(args.from_dir).resolve().as_posix())
     else:
         print("(b) CLI config: none given (--from or --config); this box own Terraform CLI config applies")
+    init_only = getattr(args, "init_only", False)
+    data_dir = None
+    if init_only:
+        # AMENDMENT 9: init only, NO backend (no state read, no plan): the pack is the sole provider source (the laptop's own plugin
+        # cache variable is dropped), a package that matches no locked hash is an init error, and the .terraform data directory
+        # lives in a scratch directory.
+        data_dir = tempfile.mkdtemp(prefix="tfdata_")
+        extra["TF_DATA_DIR"] = data_dir
     env = terraform_run_env(extra)
+    if init_only and "TF_CLI_CONFIG_FILE" in extra:
+        env.pop("TF_PLUGIN_CACHE_DIR", None)
     root = str(pathlib.Path(args.root).resolve())
     prc = 1
     try:
+        if init_only:
+            lockp = pathlib.Path(root) / LOCK_NAME
+            before = lockp.read_bytes() if lockp.is_file() else None
+            try:
+                irc, iout = run_tf([tf, "-chdir=%s" % root, "init", "-backend=false", "-input=false", "-no-color"], None, env, args.timeout)
+                after = lockp.read_bytes() if lockp.is_file() else None
+            finally:
+                # init may prune or add lock entries (a lock entry the root no longer requires, a package hash it records);
+                # the root's lock file is put back byte for byte so the read-back leaves the tree as it found it.
+                if before is not None:
+                    lockp.write_bytes(before)
+            print("(b) init -backend=false rc=%d  lock file %s" % (irc, "ABSENT" if before is None else ("unchanged by init" if before == after else "CHANGED by init (restored)")))
+            for ln in iout.strip().splitlines():
+                if ln.strip():
+                    print("    init> %s" % ln.strip())
+            if irc != 0:
+                print("TF-READBACK version=%s init=fail plan_exit=- ok=False" % ver)
+                return 1
+            print("TF-READBACK version=%s init=ok plan_exit=skipped ok=True" % ver)
+            return 0
         irc, iout = run_tf([tf] + readback_init_command(root)[1:], None, env, args.timeout)
         print("(b) init rc=%d" % irc)
         for ln in iout.strip().splitlines()[-6:]:
@@ -875,6 +973,8 @@ def cmd_readback(args):
                 os.unlink(cfg_path)
             except OSError:
                 pass
+        if data_dir is not None:
+            shutil.rmtree(data_dir, ignore_errors=True)
     if prc == 2:
         print("!!! PLAN EXIT 2: CHANGES ARE PRESENT in %s. This is not a failure of the kit; it is a finding about the root." % root.replace("\\", "/"))
     elif prc == 0:
@@ -891,7 +991,9 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("required")
     p.add_argument("--out")
+    p.add_argument("--all-roots", action="store_true")
     p = sub.add_parser("located")
+    p.add_argument("--all-roots", action="store_true")
     p.add_argument("--search", action="append")
     p.add_argument("--platform", default=PLATFORM)
     p = sub.add_parser("pack")
@@ -901,6 +1003,8 @@ def main(argv=None):
     p.add_argument("--only", action="append")
     p.add_argument("--include-unlocked", action="store_true")
     p.add_argument("--no-binary", action="store_true")
+    p.add_argument("--all-roots", action="store_true")
+    p.add_argument("--mirror-zips", action="append")
     p = sub.add_parser("verify")
     p.add_argument("--from", dest="from_dir", required=True)
     p.add_argument("--write-config")
@@ -914,6 +1018,7 @@ def main(argv=None):
     p.add_argument("--config")
     p.add_argument("--tools-dir")
     p.add_argument("--timeout", type=int, default=600)
+    p.add_argument("--init-only", action="store_true")
     args = ap.parse_args(argv)
     return {"required": cmd_required, "located": cmd_located, "pack": cmd_pack, "verify": cmd_verify, "binary": cmd_binary,
             "readback": cmd_readback}[args.cmd](args)

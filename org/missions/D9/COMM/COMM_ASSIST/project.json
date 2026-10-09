@@ -1,0 +1,42 @@
+{
+  "project_code": "COMM_ASSIST",
+  "macro_code": "COMM",
+  "directive": "D9",
+  "fabric": "laptop",
+  "placement": "LAPTOP",
+  "placement_ref": "D9 is LAPTOP as a whole (DIRECTIVES.yaml, Andrew 2026-09-10); the assistant's root, applier and COO lane are on the laptop",
+  "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-08; site Z's gateway routes and mail admission (NFRA_OPLGTW) are dependencies, not placement",
+  "fabric_ruling": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-10-08",
+  "registered_under_tree": "2026-10-08",
+  "pods": [],
+  "related": [
+    "NFRA_CTLPLN",
+    "NFRA_OPLGTW",
+    "NFRA_TRNSPT",
+    "LGIC_NAMING"
+  ],
+  "name": "Andrew's Teams and Outlook assistant: every message addressed to him reaches his phone, drafted in his voice, answered by text",
+  "description": "The LDO-001 assistant (teams-global-chat-assist-ingress-lambda and -handler-lambda, module ldo_001 of infra/aws/terraform/transcripts) reads Andrew's Teams chats and channel @mentions through the Opal gateway, and his mail from the five firms when its body names him; it texts him each item with a draft written from andrew_voice.md, routes his reply (#1 send, #0 drop, notes to redraft, #dev to open a job), drafts and posts the End of Day update, and counts what was received against what was texted. Nothing goes out in his name without his 1; no mail is sent, only drafted.",
+  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc (Parts I, II, III, V; INBOUND's share)",
+  "andrew_direct_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md (point 1; ~19:2xZ addendum: macro COMM)",
+  "endpoint_ref": "org/missions/D9/COMM/COMM_ASSIST/prd/COMM_ASSIST_PRD.md (ENDPOINT)",
+  "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md (point 1 states FWD-3 and FWD-4 in his words)",
+  "prds": [
+    "org/missions/D9/COMM/COMM_ASSIST/prd/COMM_ASSIST_PRD.md"
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO"
+  },
+  "coo_lane": "2.0.0_SA_COO~R",
+  "workstreams": null,
+  "phase": "EXECUTING -- registered 2026-10-08 from NFRA_CTLPLN workstream INBOUND rounds 1-7 (history stays in NFRA_CTLPLN's tree); rounds 6 and 7 APPLIED 21:48Z / 22:32Z, not yet EXERCISED; next: the 2026-10-09 ~22:00Z full-day read (FWD-3)",
+  "blocking": null,
+  "last_updated": "2026-10-08"
+}
