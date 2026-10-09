@@ -105,6 +105,23 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-3.gateway-release-r29-apply.
   `last_deployed_commit` `d9539cc0b76dd07758ba0d8e4f4d1fcc759b472d`, `last_deployed_at` `2026-10-09T07:59:39Z`; no
   other key. Graded by no gate limb as a modification (placeholders NONE).
 
+- A2 (issuer, 2026-10-09 ~11:5xZ, on ARMED row Z-S74): step 3's halt gate failed closed rc=3 because
+  `C:/tmp/og-rel29` is a sparse checkout that does not materialise the applier's agent home. RULED: re-run Half 2
+  step (5) with `HALT_GATE_REPO_ROOT` and `HALT_GATE_INBOX_ROOT` pointed at the SHARED checkout
+  (`C:/Users/Opal Bloomberg/Desktop/ajb_workspace`), the configuration `.tools/halt-gate-check.sh:39-45` prescribes for
+  a linked worktree. It is NOT an override: the gate then reads the applier's real inbox and can halt it, where the
+  default root passed its inbox limb vacuously. No `HALT_OVERRIDE`. The dry-run before it sources the RELEASE
+  worktree's `.tools/halt-gate-check.sh` with the same two roots (rc 0 and rc 0), so it tests the gate the deploy runs.
+  The release bytes, the halves and every other step are unchanged. Graded by no gate limb as a modification.
+
+- A3 (issuer, 2026-10-09 ~12:2xZ, on row Z-S75; SUPERSEDES A2): A2 could not work -- `safe-ec2-deploy.sh:57` assigns
+  `HALT_GATE_REPO_ROOT` with no default (R-53), so the exported root is discarded, and `halt_gate_validate_serial` reads
+  that one root only. RULED, the applier's tested fix: `git -C C:/tmp/og-rel29 sparse-checkout add
+  org/tier2_senior/0.7.0_AE_CloudOps~Z`, so the gate's premise (the deploying seat's home exists) is TRUE in the
+  release worktree; the faithful dry run (sourcing the release worktree's gate) reads rc 0 / rc 0; then Half 2 step (5)
+  as signed. The release md5 list carries no `org/` path, so the shipped bytes cannot change; the worktree stays 0
+  porcelain at `91811b648a`. No `HALT_OVERRIDE`. Graded by no gate limb as a modification.
+
 <status>pending</status>
 <round>32</round>
 <workstream>APPLY-R29</workstream>

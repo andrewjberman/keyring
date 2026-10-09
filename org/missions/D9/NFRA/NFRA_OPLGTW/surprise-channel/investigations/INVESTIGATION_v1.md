@@ -11170,3 +11170,139 @@ name the one known failure instead of silently inheriting it.
   "notes": "No fix attempted outside the order's scope; owner of those suites to triage."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S74",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T11:46:27Z",
+  "one_line": "OG-ap-3's r29 deploy is BLOCKED fail-closed at safe-ec2-deploy's halt gate, rc=3, 'SERIAL RESOLVES TO NO KNOWN AGENT'. The cause is not a corrupted serial, which is what the gate's own message guesses: the release worktree C:/tmp/og-rel29 is a SPARSE checkout, so org/tier2_senior/0.7.0_AE_CloudOps~Z is absent from its DISK while being present in its HEAD COMMIT TREE, and the gate stats the disk. Nothing was deployed; the host still reads 97 of 97 identical to r28.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN the deploy exactly as Half 2 step (5) words it, from C:/tmp/og-rel29 with OPAL_AGENT_SERIAL unset, DEPLOY_BASE_REF=aa75078e1b, HALT_ACK=1, AGENT_NAME=0.7.0_AE_CloudOps~Z -> rc=3, blocked inside 'Step 1/3: Pre-Deployment Check' AFTER 'OK: Pre-deployment checks passed', with 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)' and 'Resolved serial: 0.7.0_AE_CloudOps~Z'.",
+      "RUN NOTHING REACHED THE HOST, measured after the block by the order's own instrument rather than assumed from the step it stopped at: python r29_ssm_prog.py r29_md5_host.py <out> md5 -> 'MD5 listed 97 identical 97 mismatch 0 []' and 'HOST_ONLY_FILES_UNDER_app_deploy 0 []', identical to the pre-deploy read. The service was never restarted and no file was shipped.",
+      "RUN THE DISCRIMINATOR, and it is a sparse checkout rather than a missing folder: `git -C /c/tmp/og-rel29 ls-tree -d --name-only HEAD org/tier2_senior/` CONTAINS org/tier2_senior/0.7.0_AE_CloudOps~Z (20 CloudOps folders in that tree), while `ls -d /c/tmp/og-rel29/org/tier2_senior/0.7.0_AE_CloudOps~Z` returns 'No such file or directory' and `git -C /c/tmp/og-rel29 config core.sparseCheckout` reads true. So the folder exists at the release sha and is simply not materialised on disk, and the gate's identity limb reads the disk.",
+      "RUN the serial file is NOT corrupted, which the gate's message offers as the usual cause: `od -c org/mcp/sessions/e4c836f6-ef52-4b7b-9538-dfd1a52fc50d.serial` reads exactly '0.7.0_AE_CloudOps~Z\\n' -- 20 characters and a newline, no stray byte, and the ~lane suffix IS a single uppercase letter. The gate resolved the serial correctly and then failed to find its home.",
+      "RUN MY OWN DRY RUN OF THE SAME TWO LIMBS PASSED, and that is the second half of this finding: sourcing .tools/halt-gate-check.sh from the MAIN checkout and calling halt_gate_resolve_serial then halt_gate_validate_serial returned rc=0 and rc=0 with serial 0.7.0_AE_CloudOps~Z. The deploy sources the WORKTREE's own copy, so HALT_GATE_REPO_ROOT (line 38: dirname of BASH_SOURCE/..) resolved to /c/tmp/og-rel29 instead of the shared checkout. A gate dry-run that does not reproduce the real invocation's ROOTS tests a different gate.",
+      "FILE .tools/halt-gate-check.sh lines 39-45 already name this exact class and its remedy, authored by 1.0.0_SA_CTO 2026-09-15 and citing this project's own rows: 'THE SHARED CHECKOUT (NFRA_OPLGTW-S19, S18 and W1-S6; LGIC_ENFORCE-W3-S6) ... a spine-v3 worker runs this gate from its OWN linked worktree, where org/mcp/inbox and org/mcp/sessions (both gitignored) do not exist: they live only in the main checkout. Rooted at this script's checkout, the gate read an ABSENT inbox as \"no messages\" and passed rc=0 ... and identity failed closed rc=3.' It records the measured discriminating pair: default root rc=0 silent, HALT_GATE_INBOX_ROOT at the shared inbox rc=1 with 14 pending.",
+      "RUN org/mcp/sessions/ does not exist in the release worktree at all (both it and org/mcp/inbox are gitignored), so with the default root the gate's INBOX limb would scan an absent directory and read it as 'no messages' -- the vacuous pass the comment above describes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-3 Half 2 step (5): run safe-ec2-deploy.sh from C:/tmp/og-rel29 with OPAL_AGENT_SERIAL unset and AGENT_NAME=0.7.0_AE_CloudOps~Z, after a dry-run of halt_gate_resolve_serial and halt_gate_validate_serial reads rc 0. The order's BOUNDS also say: never override a gate.",
+  "world_is": "The gate is RIGHT to fail closed and its premise is nevertheless wrong: it is deciding my identity from a sparse working tree that does not materialise my agent home, while the commit it is checked out at does contain it. NOTHING IS HALF-LANDED -- the block came before any change and the host is byte-identical to r28 on all 97 files, re-measured after the block. WHAT I HAVE NOT DONE AND WILL NOT DO WITHOUT A RULING: the order's BOUNDS forbid overriding a gate, so I have not used HALT_OVERRIDE, and I am not treating the documented env roots as my own call either, because this is a WORLD deploy under three signed halves. THE REMEDY I BELIEVE IS CORRECT, for the issuer to rule on: re-run step (5) with HALT_GATE_REPO_ROOT (and HALT_GATE_INBOX_ROOT) pointed at the SHARED checkout C:/Users/Opal Bloomberg/Desktop/ajb_workspace. That is the configuration the gate's own comment prescribes for this shape, and it makes the gate STRICTER rather than weaker: with the default root its inbox limb scans a directory that does not exist and passes vacuously, whereas rooted at the shared checkout it reads my real inbox and could actually halt me. It is the opposite of a bypass, which is why I think it is not the 'override a gate' the BOUNDS forbid -- but the distinction is the issuer's to draw, not mine, on an act of this class. A SECOND, SMALLER FINDING worth carrying into the order: step (5)'s dry-run instruction cannot catch this, because a dry run sourced from the main checkout resolves different roots than the deploy sourced from the worktree. If the dry run is meant to de-risk the deploy, it must be run with the deploy's own roots -- mine returned rc=0 on both limbs minutes before the deploy returned rc=3 on the same two limbs."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S75",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T12:18:02Z",
+  "one_line": "REFINES NFRA_OPLGTW-Z-S74 and corrects one half of it. Amendment A2's remedy -- set HALT_GATE_REPO_ROOT and HALT_GATE_INBOX_ROOT to the shared checkout -- CANNOT work as written: safe-ec2-deploy.sh:57 OVERWRITES HALT_GATE_REPO_ROOT unconditionally with the calling worktree, by deliberate design (R-53), and the predicate that refuses me reads HALT_GATE_REPO_ROOT ONLY. The re-run under A2 returned the same rc=3. A tested fix that needs no override and no gate edit is recorded below.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN step (5) re-run exactly per A2, exporting HALT_GATE_REPO_ROOT and HALT_GATE_INBOX_ROOT at the shared checkout and no HALT_OVERRIDE -> rc=3 again, same banner 'SERIAL RESOLVES TO NO KNOWN AGENT'. A2's dry-run precondition had passed rc 0 / rc 0 immediately before, which is itself the tell: the dry run honours the exported root and the deploy does not.",
+      "FILE infra/aws/ec2/safe-ec2-deploy.sh:57 is `HALT_GATE_REPO_ROOT=\"$_CALLING_TOPLEVEL\"` -- a bare assignment with no `${VAR:-}` default, so an exported value is DISCARDED. Its comment block at :25-42 says this is deliberate (ruling R-53, msg 97843 @e5b20926ff, row NFRA_OPLGTW-W2-S5): the calling worktree must be HALT_GATE_REPO_ROOT so an issuer-provisioned serial file inside a worker's own worktree resolves. So A2's variable is not merely ineffective here, it is the one variable this script is designed to own.",
+      "FILE .tools/halt-gate-check.sh halt_gate_validate_serial: the agent-home existence scan is `for d in \"${HALT_GATE_REPO_ROOT}/org/${tier}\"/*/` over five tier folders, and it consults HALT_GATE_REPO_ROOT ALONE. The two-root loop (`roots=(\"$HALT_GATE_SHARED_ROOT\")` plus REPO_ROOT) is in a DIFFERENT function, halt_gate_worker_issuer, which only runs for a 0.9.0_WK_*~<n> serial. My serial is not a worker serial, so the shared root is never consulted on my path -- which is why setting it changes nothing.",
+      "RUN HALT_GATE_SHARED_ROOT itself derives CORRECTLY and is a red herring: reproducing :48-53 from the worktree gives git-common-dir 'C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.git' and a derived root of '/c/Users/Opal Bloomberg/Desktop/ajb_workspace', which DOES carry org/tier2_senior/0.7.0_AE_CloudOps~Z on disk. So the shared-root machinery is healthy; the predicate just does not use it. Z-S74's mechanism (sparse checkout + a disk stat) stands; Z-S74's implied remedy via the shared root does not.",
+      "RUN THE TESTED FIX: `git -C /c/tmp/og-rel29 sparse-checkout add org/tier2_senior/0.7.0_AE_CloudOps~Z` (cone 8 -> 9 entries) materialises the folder, after which the FAITHFUL dry run -- sourcing the worktree's own halt-gate-check.sh with HALT_GATE_REPO_ROOT=/c/tmp/og-rel29, exactly what :57 sets, and with HALT_GATE_SHARED_ROOT and HALT_GATE_INBOX_ROOT unset -- reads halt_gate_resolve_serial rc=0 and halt_gate_validate_serial rc=0 reason=none.",
+      "RUN THE FIX CANNOT CHANGE WHAT THE DEPLOY SHIPS, checked rather than asserted: the release's own md5 list r29_release_md5.txt carries only the prefixes app, deploy, identity_tool_allowlist.txt and requirements.txt -- no org/ path at all. After the cone change the worktree's `git status --porcelain` reads 0 lines and HEAD is still 91811b648ab119e73e22f8d401dd09f45b8ab19b, so the release bytes are untouched and nothing became modified.",
+      "RUN the host remains untouched across both blocked attempts: r29_md5_host.py reads 'MD5 listed 97 identical 97 mismatch 0 []' and 'HOST_ONLY_FILES_UNDER_app_deploy 0 []' after the first block, and the second block stopped at the same pre-change point in Step 1/3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A2 @8e7b263404: re-run Half 2 step (5) with HALT_GATE_REPO_ROOT and HALT_GATE_INBOX_ROOT = C:/Users/Opal Bloomberg/Desktop/ajb_workspace, dry-run first with those same roots, no HALT_OVERRIDE, everything else as signed.",
+  "world_is": "A2's INTENT is satisfiable and its NAMED MECHANISM is not. The intent -- let the gate resolve my identity legitimately, without HALT_OVERRIDE and without touching the signed release -- is met by the tested fix above, which makes the gate's own premise TRUE rather than re-pointing or weakening it: the folder it looks for exists at the release sha and was simply not materialised by the sparse checkout. The mechanism A2 names cannot reach the predicate, for a reason that is itself a deliberate prior ruling (R-53), so this is two correct designs meeting badly rather than anybody's mistake. WHY I HAVE NOT PROCEEDED ON MY OWN READING: Z-S74 said in terms that the override-versus-configuration distinction was the issuer's to draw on an act of this class, the issuer then drew it by naming a specific mechanism, and substituting a different mechanism of my own after that would take back the call I had just handed over. The fix is tested and idle, the window runs to 23:00Z, and nothing is half-landed. ONE MORE OPTION THE ISSUER MAY PREFER, recorded so the choice is not falsely binary: halt_gate_validate_serial could scan HALT_GATE_SHARED_ROOT as well as HALT_GATE_REPO_ROOT, the way halt_gate_worker_issuer already does, which would fix this class for every seat deploying from a sparse worktree rather than for this deploy alone -- but .tools/ is outside this order's <paths> and a gate edit mid-deploy is a worse act than a cone change, so I name it as a follow-up rather than propose it now."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:04:39Z",
+  "one_line": "BLOCKING: the release commit on rel-nfra-oplgtw-tl1 is refused by the owned-paths lane gate (the release tree at 91811b648a carries no OG-tl-1 task order, so the worker grant finds nothing); the edit is built and tested but UNCOMMITTED, so AC1 cannot pass and there is no release_sha.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (cwd C:/tmp/og-reltl1) bash .tools/safe-commit.sh --author '0.9.0_WK_NFRA_OPLGTW~48 <...>' -F msg -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -> commit-gate OK (bash -n), then 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -- lane=CLOUD_OPS_OR_ETL', 'safe-commit did NOT commit (rc=1)'",
+      "READ .tools/owned-paths-validate.py:188-222 _worker_orders: the worker grant is the NON-TERMINAL task orders under the project code listed by `git ls-files` and read by `git show HEAD:<path>` in the COMMITTING tree",
+      "RUN git ls-files -- 'org/missions/D*/*/NFRA_OPLGTW/task-orders/*.md' in C:/tmp/og-reltl1 (HEAD 4514246d65): 63 orders, 0 matching tl-1 -> the grant for this order does not exist in the release tree",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~43/ANNOUNCE_OG-rl-15.md:7 -- the r29 release commit was made under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPLGTW~43 (R13(a), audited); this order forbids overriding a gate, so I did not"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step 2 and the cut: the release commit on rel-nfra-oplgtw-tl1 is made by the worker with safe-commit from C:/tmp/og-reltl1; section 2: never override a gate.",
+  "world_is": "The lane gate reads the order at HEAD of the committing tree, and a release worktree cut at the live base cannot hold an order issued after that base. The two stated rules cannot both be met. The edit stands uncommitted in C:/tmp/og-reltl1 (git diff: 1 file, 13 insertions, 3 deletions; bash -n OK; the extracted block tested on 3 inputs: 4 ids -> value of 595 bytes equal to the python join; 3 ids -> exit 1 'yields 3 ids'; missing json -> exit 1 'unreadable'). The stage commit 4514246d65 (data file only) passed because no lane claims that path. To resume: the issuer either commits that one file with the audited override as the r29 release did (then W/tl1_release.json and AC1 follow), or rules another route.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done: tl1_release.json, AC1 pass. Nothing deployed, uploaded or restarted."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:04:39Z",
+  "one_line": "The base 91811b648a does not carry data/transcripts/scripts/teams/meeting_allowlist.json, so a one-commit release cannot satisfy both 'carries the json byte-equal' and AC1's 'files differing 1'; I added a data-only stage commit 4514246d65 and AC1's base_sha must be that stage commit, not the live ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git cat-file -e 91811b648a:data/transcripts/scripts/teams/meeting_allowlist.json -> fatal: path does not exist; git ls-tree HEAD data/transcripts/scripts/teams/ lists NAMES.json, __init__.py, backfill_silver.py, ... and no meeting_allowlist.json",
+      "RUN git ls-tree box/sitez data/transcripts/scripts/teams/meeting_allowlist.json -> blob d57e815a7c; the staged copy in C:/tmp/og-reltl1 hashes d57e815a7ca1987e35041698fbdc26ea1e3698be (equal)",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/tl1.AC1.sh: diff base..release must be exactly deploy-to-ec2.sh, AND `git show release:<json>` must hash equal to HEAD's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: ONE commit, base = the host's live ref; and the release tree carries the json byte-equal to box/sitez HEAD's; AC1: base..release differs in exactly one file.",
+  "world_is": "Base 91811b648a lacks the json (dell2's file landed on box/sitez after r29 was cut). With base_sha = 91811b648a the diff is 2 files (script and json) and AC1 reads FAIL; with base_sha = 4514246d65 (parent 91811b648a, adds only the json) the diff is 1 file and AC1 can pass. The json sits outside infra/aws/ec2/opal-gateway so it never ships to the host; the host-bound delta from the live ref is the one script. Phase B decides which base_sha the applier's stale-base guard (DEPLOY_BASE_REF) is given: it is the host's live ref, not the stage commit.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Host read at Phase A: md5 97 of 97 identical to the r28 aa75078e1b list (SSM 1b5e2c57-3ff5-4ee7-9247-2340aea60adb, Success), EC2_MANIFEST deployed_commit aa75078e1b at box/sitez 6d0e23e25f; r29 not yet live, so the release is built on 91811b648a."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:16:42Z",
+  "one_line": "RESOLUTION of NFRA_OPLGTW-Z-W48-S1 by amendment OG-tl-1 A1 @9ba3e56d87: the one-file release commit 78afad4283 was made under the audited GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL; S1's blocking condition is cleared.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ git show 9ba3e56d87:org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-tl-1.transcript-allowlist-4-meetings.md lines 102-108: A1 rules that ONE commit (deploy-to-ec2.sh only) on rel-nfra-oplgtw-tl1 uses the override, no other commit, path or branch, no other gate",
+      "RUN GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL bash .tools/safe-commit.sh ... -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (cwd C:/tmp/og-reltl1) -> committed 78afad428389a4665aed267ac7f44e76533be59a, msg-verify MATCH; git diff --name-only 4514246d65 HEAD -> infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (1 file); worktree clean after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 forbids overriding a gate; S1 held the release commit on that rule.",
+  "world_is": "The issuer ruled amendment A1 @9ba3e56d87 permitting exactly one audited override for exactly this commit. It was used once, for that one file; the stage commit 4514246d65 and every commit on wk-NFRA_OPLGTW-33-48 were made without it. tl1_release.json records base_sha 4514246d658cfbb4de58636c9f6d149f7b9abb36 and release_sha 78afad428389a4665aed267ac7f44e76533be59a. Row S1 is not edited; this row is its resolution.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Resolves NFRA_OPLGTW-Z-W48-S1. Row S2 (json absent from base) stands."
+}
+```

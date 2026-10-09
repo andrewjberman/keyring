@@ -343,3 +343,111 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "It requires the exact word 'complete' and counts judgment=0 for an order marked judgment=true, so a round-close read can mis-count. Carried here by the box manager, who rules nothing on it; addressed to NFRA_GATSCP as the tool's last writer, re-address if another seat owns it."
 }
 ```
+
+## NFRA_GATSCP-Z-S1 -- receiving worker ACK record requires manager commit custody
+
+```json
+{
+  "id": "NFRA_GATSCP-Z-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZG",
+  "surfaced_at": "2026-10-09T11:14Z",
+  "one_line": "The canonical crossbox ACK requires the named receiving worker to write the ACK record, but DEVICES_CROSSBOX forbids that worker from committing the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crossbox-call.py ack --id XB-20261009T105156Z-1c53 --by 0.7.0_AE_CloudOps~ZG: ACKED at 2026-10-09T11:11:38Z.",
+      "safe-commit refused (rc=1): org/devices/crossbox/XB-20261009T105156Z-1c53.json lane=DEVICES_CROSSBOX; agent=0.7.0_AE_CloudOps~ZG not in permitted_agents. Private-index path left shared index untouched.",
+      "Site-Z manager 0.0.0_AB_MSTR~Z notified at 2026-10-09T11:13:56Z to commit the existing ACK as custodian and relay its exact line to dell1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "GS-e-2 step 4 requires the receiving worker to ACK the crossbox ORDER by its canonical contract. crossbox-call.py ack requires --by to name that receiving seat.",
+  "world_is": "The ACK is written but its commit is outside the worker lane. Project evidence and criterion are unaffected: GS-E2-SITEZ ok=True arms=3 failed=0. Manager custody requested; no permission bypass or role substitution used. The order spells the surprise-row fabric sitez, but the row gate refuses that value and requires the ratified enum site-z used here; the initial row commit was refused for that spelling."
+}
+```
+
+## NFRA_GATSCP-D1-S10 -- the first real cross-box order needed three manager hands C-DELIVER does not name
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S10",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T12:30Z",
+  "one_line": "FWD-7's first real cross-box order needed three manager hands that C-DELIVER does not name: the issuing COO cannot commit the crossbox file its issuance opens, the receiving lane cannot commit its ACK (row Z-S1), and the crossbox record plus this channel HELD box/sitez's integrate until site Z's manager resolved them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit of org/devices/crossbox/XB-20261009T105156Z-1c53.json as 2.0.0_SA_COO~N1, 10:52Z: VIOLATION lane=DEVICES_CROSSBOX; committed instead by 0.0.0_AB_MSTR~DELL1 (msg 2307)",
+      "row NFRA_GATSCP-Z-S1 (0.7.0_AE_CloudOps~ZG): the ACK record is refused to the receiving worker; site Z committed it as custodian @6a02d46287",
+      "msg 2392: box/sitez HELD at the 11:35Z integrate on XB-...-1c53.json (bus_message_id 9267a044 vs null) and on this channel (append union); resolved @062a980f32 (msg 2397)",
+      "deliverables/2.0.0_SA_COO~N1/TRACE_round2.md section 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-DELIVER: the issuance act opens the cross-box file and hands the line to the sending manager's automated path; FWD-7: the receiver finds the order with no one passing it along by hand.",
+  "world_is": "Open and send are now mechanical (issue --order; send-pending), and the order arrived and was executed with no hand relay of its content. The commit custody of the crossbox file on both ends, and the integrate resolver for a crossbox record whose two sides each wrote a field, still take a manager's hand. For the round-2 analysis."
+}
+```
+
+
+## NFRA_GATSCP-D1-S11 -- RECURRENCE of D1-S4: the L10 limb counted a POINTER file as an order again
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S11",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T12:39Z",
+  "one_line": "Second occurrence of row D1-S4: to-pipeline-gate's L10 limb counted a seat-home POINTER file as an open order on the CVO's MDPF_DEMQUE round-5 commit, which needed a second audited override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/ROUND_ANALYSIS.round5.md R3 @7732d73c04",
+      "msg 2427 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T12:37:55Z: 'Recurrence for to-pipeline-gate's owner'",
+      "first routing: row NFRA_GATSCP-D1-S4 (MDPF_DEMQUE round-4 R3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A file carrying the '# pipeline-override: this file is a POINTER' line is not an order.",
+  "world_is": "The limb still counts it; each round close with a live seat-home pointer costs an audited override until the round-2 lane fix lands. Carried by the box manager, who rules nothing on it."
+}
+```
+
+
+## NFRA_GATSCP-D1-S12 -- box-sync does not union org/git-author-override-audit.log, so it holds a box pass
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S12",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T12:39Z",
+  "one_line": "box-sync.sh line-unions agent-spawn-audit.log and safe-deploy-bypass-audit.log (4ff1b42948) but not org/git-author-override-audit.log; every commit on a box appends to it, so a box pass is HELD (not uptodate, then a content conflict) whenever CLOUD carries other boxes' lines.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell1 box pass HELD rc=4 at 12:2xZ ('Entry org/git-author-override-audit.log not uptodate') and again at 12:3xZ (CLOUD @6be2fbae1c conflict on that file and agent-spawn-audit.log)",
+      "each resolved by hand with git merge-file --union: 77d960385f and fe2d866fb5 on box/dell1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A box pass takes CLOUD without a manager hand-resolving append-only audit logs.",
+  "world_is": "The override log is missing from box-sync's union set, so a manager resolves it by hand each time. Carried by the box manager, who rules nothing on it."
+}
+```

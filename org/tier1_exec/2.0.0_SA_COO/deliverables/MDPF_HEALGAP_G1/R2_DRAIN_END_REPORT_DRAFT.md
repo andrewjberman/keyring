@@ -42,6 +42,11 @@ Before FINAL: `round-close-check.py --project MDPF_HEALGAP --round 2` must read 
 
 ## EXERCISE
 
+- **2026-10-09, a normal day under the round-2 code (FWD-1's negative arm, FWD-2's COMPLETE arm):** the 06:00Z fire wrote
+  `meta/2026-10-09-result.json` COMPLETE, 3 feeds arrived (06:01:02Z), the stamp, silver at 06:01:03Z, satellites as_of 10-09 at 07:00:19Z
+  (`hg_r2_act1_l4.py` L4-OK). The 11:3xZ re-attempt ran once at 11:32:16Z and logged `SKIP-IDEMPOTENT` for 2026-10-09; zero bronze keys
+  for the day were written after 07:00Z and the result object was not rewritten (read 12:13Z). The heal path does nothing on a good day.
+
 `PENDING` -- act 1 L4 (2026-10-09 06:00Z/07:00Z) and act 3 (2026-10-10): FWD-2 read of the PARTIAL result object, FWD-3 repair
 read (COMPLETE, R2-2 before/after key sets of the two present feeds), the 11:3xZ SKIP, the 13:30Z floor and 13:50Z reader.
 

@@ -24,3 +24,16 @@ Cron c9663ad1. Lease FULL.
 - **Re-walks:** NVDA at 11:33Z (one band, no overlap) and ASML_NA_Equity at 11:37Z (the sentence press reads inline).
 - **Candidates:** DEV `f043b827` and PROD `f8ec0937`, all checks plus battery29 PASS. The close is @bedf70c4bd. The CTO review and the
   CVO AC3 packet are sent.
+
+## ticks 59-60 -- 2026-10-09T11:4xZ-12:0xZ (dell1)
+- **Round 63:**
+  - The CTO approved DEV and signed its PROD half (msg 2360), and the COO half followed (@2586d2d62e).
+  - The CVO then graded AV-zzo-1 NOT MET (`ADJUDICATION_v37`): a false "Company description" label sat over the Item 5 lines, and the
+    press was never walked.
+  - The CTO withdrew the PROD half (msg 2365). This seat sent MSTR a STOP (11:48Z), and MSTR held PROD at `2e41c008` (msg 2367).
+  - DEV `f043b827` landed. The COO half is marked VOID.
+- **Round 64 ISSUED** @65856dd4b8:
+  - `AV-zzp-1` -> ~138: the served dossier description under its heading, the Item 5 lines under "From the filing", and an empty-state
+    arm. r64a dry-runs 1 of 4 on a real render.
+  - `AV-zzp-2` -> ~139: the walker's `--security-press` and `--window-press`, so the close walk can show the figure press and the ASML
+    listing press. r64b dry-runs 2 of 4.

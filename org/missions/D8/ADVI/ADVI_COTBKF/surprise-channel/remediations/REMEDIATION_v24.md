@@ -42,11 +42,11 @@ Graduated at round 33's L9 (ADJUDICATION_v26.md), round label v34: D2-S50 (BLOCK
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v34",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v34"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

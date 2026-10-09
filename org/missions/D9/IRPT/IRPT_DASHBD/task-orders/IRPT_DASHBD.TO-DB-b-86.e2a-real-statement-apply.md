@@ -52,6 +52,26 @@ artifact.
 
 <expected_criteria>DB41-3-AC1,DB41-3-AC2,DB41-3-AC3</expected_criteria>
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~12:2xZ): HELD -- un-holds only on two reads (CTO ADDENDUM 9.2 and 10.1)
+
+**Why held.** The runner as built (DB-b-85) reads `irpt-requests` directly. The CTO ruled no executor gets that grant (ADDENDUM 9.2). The runner
+is re-cut onto IRPT_BCKEND's owned read IB-pr-405 by DB-b-89 (round 43).
+
+**This order un-holds only when the issuer has READ all three of these, each recorded in this order's record before the first real
+statement:**
+1. IB-pr-405 is LIVE in its narrow `irpt-status` release, read back by CodeSha256.
+2. The mint's leg R is closed (DB-b-84; laptop `0.7.0_AE_CloudOps~CTL`'s NFRA_CTLPLN A29/30 applied, and ~DB2's simulations pass).
+3. DB-b-89 is drained.
+
+**Selection.** The `--selection` file is seat-authored from two served reads only: the Cottonwood client's account set from the served
+custody directory, and the snapshot id from the served holdings `current/manifest.json`. It is kept OUTSIDE the repo; its sha256, both source
+reads and the authoring seat go in the ledger (ADDENDUM 9.2 item 1).
+
+**AC1** is not loosened: a composition retained under `irpt-x10-v1` rather than `irpt-custody-x10-v1` fails honestly and is filed as a row
+(W61-S3).
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

@@ -93,7 +93,50 @@ box/sitez's gateway tree also carries ADVI_BILLING E2's UNRELEASED gateway tool 
 - Row NFRA_OPLGTW-Z-W47-S2 lists 3 gateway suites already failing on box/sitez (not E2's). Read them as part of the
   BEFORE red, beside Z-S88.
 
-Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-AMX-S<k>` (next free k), fabric `site-z`,
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-09 ~11:4xZ; row Z-S90 by the applier, ruled Z-S91).**
+- **The `.env` key equality is a RULE, never a count.** Before == after, both read from the THEN-LIVE ref at the act. The
+  ANNOUNCE's 51 is void.
+  - Once r29 is live, the set is expected to be 52. It includes OG-md-1's `MAIL_SENDER_DOMAIN_TABLE`, which rides r29
+    and is present on both sides.
+  - E2's `ADVI_FEE_STATEMENT_S3_ROOT` must be ABSENT on both sides.
+  - The never-widen halves name the rule, and the count the applier reads at the act.
+- **The deploy script is the live ref's copy, cut by construction in the deploy-only tree.** box/sitez HEAD's also
+  carries OG-md-1's `rm -f .../mail_sender_domain_table.txt` line.
+- **Row ids:** `NFRA_MCPINDEX-Z-S<k>` (next free k), the grammar `.tools/surprise-row-gate.py` admits. The earlier
+  `Z-AMX-S<k>` is withdrawn.
+
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-09 ~12:0xZ; cause NFRA_OPLGTW-Z-S74 @3b20e9156f).** r29's deploy was halt-gate
+BLOCKED rc=3, "SERIAL RESOLVES TO NO KNOWN AGENT", from a SPARSE release worktree.
+- **Why:** `.tools/halt-gate-check.sh` `halt_gate_validate_serial` looks for the base's folder under
+  `${HALT_GATE_REPO_ROOT}/org/<tier>/` and the lane's inbox under `${HALT_GATE_INBOX_ROOT}/<base>/~<lane>`. Both read
+  the deploy tree's DISK, not its commit.
+- **Measured for you (12:0xZ, the shared checkout):** `org/tier2_senior/0.7.0_AE_CloudOps/` exists, and so does
+  `org/mcp/inbox/0.7.0_AE_CloudOps/~MX/`. You pass there.
+- **Ruling, inside this order:** when PHASE B's deploy runs from a linked or sparse tree, export
+  `HALT_GATE_REPO_ROOT` and `HALT_GATE_INBOX_ROOT` pointing at the SHARED checkout
+  (`C:/Users/Opal Bloomberg/Desktop/ajb_workspace`, and its `org/mcp/inbox`).
+  - The gate still runs, still scans your own inbox, and still fails closed.
+  - This is NOT `HALT_OVERRIDE` and you never use that.
+  - Print the gate's verdict line in your PHASE B record.
+
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-09 ~12:3xZ) -- SUPERSEDES A4's mechanism; cause NFRA_OPLGTW-Z-S75
+@6dee08829e.**
+- **Why A4 fails:** `infra/aws/ec2/safe-ec2-deploy.sh:57` sets `HALT_GATE_REPO_ROOT` to the CALLING worktree
+  unconditionally, by design (R-53), so A4's export never reaches the predicate. Your 11567e1895 positive ran
+  `halt-gate-check.sh` directly, not through the wrapper.
+- **Ruling:** make the gate's premise TRUE in the deploy tree. Before PHASE B's apply, materialise your BASE's agent
+  folder in the deploy-only tree: `git -C <deploy tree> sparse-checkout add org/tier2_senior/0.7.0_AE_CloudOps`.
+  The folder exists at every ref in question; a sparse cone simply does not check it out.
+  - Nothing in the gate, the wrapper or the release content changes.
+  - HALT_OVERRIDE stays forbidden.
+  - The lane inbox is read from the shared root already (`halt-gate-check.sh:55` default).
+- **Proof before the apply:** run the wrapper's gate path FROM THE DEPLOY TREE as the wrapper runs it. The negative
+  control (no folder) must read rc=3 `unknown-base`; the positive (folder materialised) must read rc=0 and name your
+  own inbox. Print both.
+- If `2.0.0_SA_COO~O`'s ruling on Z-S75 lands a different mechanism for r29, that does not bind this order. Tell me,
+  and I rule.
+
+Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 
 ## 2. BOUNDS
