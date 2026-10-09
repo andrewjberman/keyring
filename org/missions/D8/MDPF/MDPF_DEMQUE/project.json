@@ -2,7 +2,7 @@
   "project_code": "MDPF_DEMQUE",
   "macro_code": "MDPF",
   "directive": "D8",
-  "fabric": "laptop",
+  "fabric": "dell1",
   "pipeline": "mdpf",
   "status": "active",
   "dep_stage": "ROUND_CLOSE",
@@ -52,5 +52,6 @@
     "coo": "2.0.0_SA_COO~Q1 (dell1; L5-L7, round 1 cut 2026-10-08)"
   },
   "placement_ruling": "Andrew-direct ~19:3xZ: 'a registered project which will be run on this device' (dell1).",
-  "coo_lane": "2.0.0_SA_COO~Q1"
+  "coo_lane": "2.0.0_SA_COO~Q1",
+  "fabric_ruling": "dell1 -- registered on dell1 by 1.0.0_SA_CTO~DELL1 under Andrew's placement word (see placement_ruling); fabric enum value per .tools/to-pipeline-gate.py:93"
 }
