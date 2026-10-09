@@ -1412,3 +1412,30 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## NFRA_IAMROLES202609-Z-S23 -- opal-smartx-lambda-role grants S3 on two buckets that do not exist, and Secrets Manager on a us-east-2 ARN while the secret lives in us-east-1.
+
+```json
+{
+  "id": "NFRA_IAMROLES202609-Z-S23",
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-09T19:25:00Z",
+  "one_line": "opal-smartx-lambda-role's inline grants point at nothing live: opal-smartx-s3-access names opal-data-smartx and opal-code-smartx (both NoSuchBucket), and opal-smartx-secrets names secret:opal/smartx/config-* in us-east-2 while the only such secret is in us-east-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam get-account-authorization-details (298 roles): opal-smartx-s3-access = s3:GetObject,s3:ListBucket on arn:aws:s3:::opal-data-smartx(/*), arn:aws:s3:::opal-code-smartx(/*); opal-smartx-secrets = secretsmanager:GetSecretValue on arn:aws:secretsmanager:us-east-2:313476888478:secret:opal/smartx/config-*",
+      "aws s3api get-bucket-policy --bucket opal-data-smartx and --bucket opal-code-smartx: both 'An error occurred (NoSuchBucket)'",
+      "aws secretsmanager list-secrets --filters Key=name,Values=opal/smartx/config: arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/smartx/config-IKCzE6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IAM-w-1 adopts opal-smartx-lambda-role as it stands (policies omitted by rule), treating it as the live smartx Lambdas' working role.",
+  "world_is": "As written, the role's S3 and secret grants reach nothing. Either the Lambdas run on another role, or they fail on read, or the buckets and secret were renamed (LGIC). This does not touch the w-1 tag act and does not hold it. The issuer reads which Lambdas assume this role and routes the grant repair to smartx-pipeline's owner."
+}
+```
