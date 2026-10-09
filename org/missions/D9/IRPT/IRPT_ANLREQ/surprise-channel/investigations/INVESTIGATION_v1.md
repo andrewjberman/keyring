@@ -839,6 +839,84 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W3-S1 -- AR-y-22: the served signer (ops/pdf_link.py PdfSigner) refuses every ORIGINAL_HOLDINGS / ORIGINAL_CSV key, so the new route answers a refusal once released
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:10:00Z",
+  "one_line": "The order has `original` sign through the same `signer` the pdf route uses, but PdfSigner.sign admits only keys matching irpt/<firm>/state/vendor_documents/ART-<64>/<sha>.pdf and asks the builder for family ORIGINAL_VENDOR_PDF, so with the real signer every original key (state/original_holdings/... .csv|.xlsx, state/prospect_inputs/... .csv) raises PDF_LINK_KEY_BINDING; my reader surfaces it as RequestReadRefused (INVALID_INPUT) and the route serves no link.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (cut a cell that lets ops/pdf_link.py sign the ORIGINAL_HOLDINGS and ORIGINAL_CSV families through opal_naming.reporting_destination, then release the irpt-status pair)",
+  "spec_asserts": "AR-y-22 item 1: 'release one Opal-signed link to the request's original upload', 'on the same pattern' as pdf, signing through `signer`; item 4 treats the read as needing only IAM, and pdf_link.py is not in the order's <paths>.",
+  "world_is": "Offline probe: PdfSigner(client_factory=..., destination=...).sign('cottonwood', 'irpt/cottonwood/state/original_holdings/ART-<a*64>/<b*64>.csv', 'b'*64) raises PdfLinkRefused PDF_LINK_KEY_BINDING. The reader, the operation and the route are complete and tested with a signer double (ops/tests/test_original_reader.py, 14 passed); the one served step that will not work is the real signer, outside this worker's write grant. Nothing leaks: the failure is a refusal, not a link to the wrong object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:19-21 STORED_KEY and FAMILY = ORIGINAL_VENDOR_PDF; :59-64 the key and destination bindings",
+      "infra/logic/registry/reporting_policies.json: ORIGINAL_HOLDINGS (state/original_holdings, csv) and ORIGINAL_CSV (state/prospect_inputs, csv) rows",
+      "infra/aws/terraform/investor-reporting/ops/iam.tf:85 already lists both families for GetObject and GetObjectVersion, so the IAM side needs no change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W3-S2 -- AR-y-22: the new routes.json entry carries no response schema and no consumer operation, because the order's grant names neither path
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:12:00Z",
+  "one_line": "'Copy the pdf route's entry shape exactly' cannot reach response_schema: the pdf entry points at responses/analysis-request-pdf.response.schema.json, whose operation is a const naming analysis-request-pdf and whose data is AnalysisRequestPdf.schema.json, and the order's <paths> allows no new contract file; the original route's entry therefore sets consumer_operation and response_schema to null, each with its absent_reason (the form routes.json already uses for the comparison catalogue and reporting-read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-22 item 3: add the same route to routes.json, 'Copy the pdf route's entry shape exactly'.",
+  "world_is": "The entry is key-for-key the pdf entry's (route_key, handler irpt-status, cell, status DECLARED, note, operation, consumer_operation, response_schema) plus the two *_absent_reason keys. The wire data is the pdf data shape (download_route {url, expires_at}, sha256, byte_length). A response schema for the original, and the portal's consumer operation, are the next cell's files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json: the analysis-request-pdf entry and the analysis/comparisons entry (consumer_operation null with consumer_operation_absent_reason)",
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-pdf.response.schema.json: operation const analysis-request-pdf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W3-S3 -- AR-y-22: <owned_cells> still names AR-y-21 but no criterion of the amended order references it, so no VALID proof instance can exist
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The amended order declares <owned_cells>AR-y-21 AR-y-22</owned_cells> but its only criteria (AR22-y-AC1..3) carry cell_refs=\"AR-y-22\", so proof-of-spec-check refuses every instance for it with 'declared cell AR-y-21 ... NO criterion references it'; the order cannot reach a VALID proof, and so cannot be flipped to complete, until the issuer reconciles owned_cells with the criteria.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: write and validate the new proof instance, to_id the full id, 'validated ... BEFORE the flip to complete'; <owned_cells>AR-y-21 AR-y-22</owned_cells> (AR-y-21 complete, its AR21-y criteria recorded VALID by ~2).",
+  "world_is": "All three criteria PASS by output (AR22-y-AC1 14 passed; AC2 275 passed, 22 skipped; AC3 AR21-y-AC3 PASS). The instance at deliverables/0.9.0_WK_IRPT_ANLREQ~3/ validates schema and invocation alignment (3/3) and fails on one line only: VIOLATION alignment: declared cell 'AR-y-21' is named in the TO's <owned_cells> but NO criterion references it (.tools/proof-of-spec-check.py:1189-1191, a DELIMITED <owned_cells> is graded backward). I did not edit owned_cells or any cell_refs: both are the issuer's criteria face, and changing what the gate reads to make it pass is not a worker act. Status stays pending.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md: <owned_cells> line and the three <criterion ... cell_refs=\"AR-y-22\"> lines @a30b01837a",
+      "python .tools/proof-of-spec-check.py <instance> AR22-y-AC1,AR22-y-AC2,AR22-y-AC3 -> INVALID (rc=1), one VIOLATION",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json: the AR-y-21 criteria's own VALID instance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_ANLREQ-D2-W65-S1 -- round 2: the lane tell in validate_public_request (input_id) is not stored on the acceptance record; the packager reads the stored owner shape instead
 
 ```json
@@ -863,4 +941,53 @@
   },
   "disposition": "UNDER_INVESTIGATION"
 }
+```
+
+
+## IRPT_ANLREQ-D2-W3-S4..S5 -- dispositions of this worker's rows S1 and S3 (AMENDMENT 2, 0.9.0_WK_IRPT_ANLREQ~3)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W3-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+    "surfaced_at": "2026-10-09T08:40:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by AMENDMENT 2: PdfSigner.sign takes family (default ORIGINAL_VENDOR_PDF) and admits exactly ORIGINAL_VENDOR_PDF, ORIGINAL_HOLDINGS, ORIGINAL_CSV, bound to reporting_destination; any other family refuses PDF_LINK_FAMILY; nothing is owed on S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W3-S1 (ARMED, signer refuses original keys): disarmed in-cell by AMENDMENT 2, landed in the commit after 614dde2cb2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/pdf_link.py FAMILIES and PdfSigner.sign(family=) on branch wk-IRPT_ANLREQ-3",
+        "infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py test_e2_*, test_e3_* (real PdfSigner, stub S3): 16 passed"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 item 2: sign admits exactly three families, key must equal reporting_destination, any other family refuses PDF_LINK_FAMILY.",
+    "world_is": "With the real signer a builder-shaped ORIGINAL_HOLDINGS key signs; NORMALIZED_PORTFOLIO, EXPORT_PDF, ANALYSIS, an unknown name and None refuse PDF_LINK_FAMILY; the vendor-PDF key still signs with and without the family argument; the reader passes the resolved family. The release of the irpt-status pair remains the issuer's."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W3-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+    "surfaced_at": "2026-10-09T08:40:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by AMENDMENT 2 item 1: <owned_cells> is AR-y-22 only, so the proof instance (AR22 criteria, cell_refs AR-y-22) validates; nothing is owed on S3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W3-S3 (owned_cells named AR-y-21): resolved by AMENDMENT 2, owned_cells is AR-y-22 only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md <owned_cells>AR-y-22</owned_cells> @614dde2cb2"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 item 1: owned_cells is AR-y-22 only.",
+    "world_is": "The proof instance is re-validated with proof-of-spec-check after the last commit."
+  }
+]
 ```

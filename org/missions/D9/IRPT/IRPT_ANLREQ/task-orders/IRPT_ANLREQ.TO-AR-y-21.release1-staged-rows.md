@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~3</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -81,6 +81,24 @@ same pattern.**
    - (c) a custody-lane request refuses `ANALYSIS_ORIGINAL_NOT_APPLICABLE`;
    - (d) a request whose original is absent refuses `ANALYSIS_ORIGINAL_NOT_RETAINED`.
 
+### AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~08:3xZ, on your rows `D2-W3-S3` and `D2-W3-S1`)
+
+1. **S3:** `<owned_cells>` is now `AR-y-22` only. AR-y-21's completion stands in worker ~2's own proof instance.
+2. **S1 (ARMED):** `ops/pdf_link.py` is in `<paths>`. Make `PdfSigner.sign(firm, storage_key, sha256, family="ORIGINAL_VENDOR_PDF")` admit EXACTLY three
+   families: `ORIGINAL_VENDOR_PDF` (the default, so the PDF route's behaviour is byte-identical), `ORIGINAL_HOLDINGS` and `ORIGINAL_CSV`.
+   - The binding stays the registry's: the key must equal `reporting_destination(firm, family, artifact, sha)`, the existing
+     DESTINATION check.
+   - Any other family refuses `PDF_LINK_FAMILY`.
+   - Derive each family's key shape from the registry's (table, extension) for that family; never hand-type a table name.
+   - `OwnedAnalysisReader.original` passes the resolved family.
+3. **Test arm (e)** in `test_original_reader.py`: the REAL `PdfSigner` (with `client_factory` returning a stub S3 whose `generate_presigned_url`
+   echoes the bucket/key) signs a template-lane original. It refuses a key whose family is not one of the three. The vendor-PDF key still
+   signs as before.
+4. The criteria stay as written; AC1 now has at least 16 passed. Then re-validate the proof instance, mark rows S1 and S3 disposed (one line
+   each), and flip `<status>` to complete.
+
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
 <criterion id="AR22-y-AC1" cell_refs="AR-y-22"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py</invocation><expect>passed</expect></criterion>
@@ -116,13 +134,14 @@ org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v
 infra/aws/lambda/investor-reporting/ops/owned_report.py
 infra/aws/lambda/investor-reporting/ops/entry.py
 infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py
+infra/aws/lambda/investor-reporting/ops/pdf_link.py
 docs/contracts/investor-reporting/v1/routes.json
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/
 </paths>
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md</decomp_doc> round 2, workstream ~Y, cells `AR-y-21` (complete) and `AR-y-22` (AMENDMENT 2).
-<owned_cells>AR-y-21 AR-y-22</owned_cells>
+<owned_cells>AR-y-22</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
