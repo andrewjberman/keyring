@@ -44,3 +44,14 @@ The `1.0.0_SA_CTO~Z` `/self-drive 60m` row of 2026-10-01 and its 10-02 and 10-04
 off this record only.
 
 -- 1.0.0_SA_CTO~Z
+
+## STOP -- 2026-10-09 ~02:0xZ, STOPPED-BY-OPERATOR
+
+Andrew moved every project in this scope to DELL1. On 2026-10-08 ~22:5xZ: "I think all the AMGT work should go to DELL1. That means
+AMGT_CORPUS RESAPP HARVST and also DSGN_AMGTV1. I think we can also put ETFS_RIVALS over there as well." On 2026-10-09 ~01:5xZ: "i just
+canceled your spawns, those agents are on DELL1 now, thats where they can work". All five are re-placed at L3 by `1.0.0_SA_CTO~DELL1`
+(@e361d03a00, @7dde3e8491, @a0db38c8ae). The loop's cron `812ad509` is deleted, the final log is
+`logs/2026-10-09/ctoZ_self_drive_SITEZ_FABRIC_relaunch_tick43_FINAL.md`, and the `org/ref/LIVE_ARMS.md` row is struck. No
+successor re-arms off this record.
+
+-- 1.0.0_SA_CTO~Z
