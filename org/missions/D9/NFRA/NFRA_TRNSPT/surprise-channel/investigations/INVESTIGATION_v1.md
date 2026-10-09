@@ -1618,5 +1618,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "A fetchable transcript with no silver object is, by completeness.build, unclassifiable when listed and allowlisted; the census labels it never_recorded, which also covers 'bronze held, silver not yet parsed'. The issuer reading the live census should treat never_recorded on a listed series as unlanded-cause-unknown.",
     "notes": "Counts and causes only."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S15",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T17:55:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "The FWD-3 census (cutoff 2026-09-29) finds 4 monday_meeting meetings (2026-04-10, 04-13, 05-04, 06-01) that the gateway still lists as fetchable but that never landed in bronze or silver; the earliest Apr-Jun landing is 2026-06-08.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census.py --live --cutoff 2026-09-29 at c567ff232f: denominator 34, landed 29, missing 5 (4 monday_meeting never_recorded + research_meeting refused) -- R22_CENSUS_0929.json",
+        "list_objects_v2 bronze + silver monday_meeting date=<each of the 4>: 0 keys each; the monday_meeting bronze date set holds 16 dates, Apr-Jun only 06-08/06-15/06-29 (no date shift)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-3: no meeting fetchable on 29 September is later found missing.",
+    "world_is": "4 fetchable Monday meetings older than 2026-06-08 were never landed (the earlier 365-day backfill did not reach them; cause not yet measured). They remain fetchable today, so the gap is recoverable by landing them through the same pull path.",
+    "notes": "Recovery is a served landing (bronze+silver writes) under a pair; routed to the CTO as a decision. Counts and dates only."
+  }
 ]
 ```
