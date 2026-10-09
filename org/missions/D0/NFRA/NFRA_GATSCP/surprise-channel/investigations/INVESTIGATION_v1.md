@@ -633,3 +633,54 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The worktree base lacks 6b65ca5a52, and a worker may not merge or edit the schema, so no rc 0 can be read. GF5-AC1 itself is PASS-by-output (GS-F5-CENSUS ok=True). The order stays pending until the base carries the fix."
 }
 ```
+
+## NFRA_GATSCP-D1-W13-S1 -- GS-f-6's lacks-check exempts a keep-ours resolution; a path reset in BOTH index and working copy is not caught
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W13-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~13",
+  "surfaced_at": "2026-10-09T14:08Z",
+  "one_line": "The order says refuse when ANY staged path is missing from the merge commit; a conflicted path resolved by keeping the first parent's bytes is also missing from the commit's diff against ^1, so the check cannot refuse it without refusing a legitimate resolution. _verify_staged_carried exempts a missing path whose working copy equals HEAD (git diff --quiet HEAD -- path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-merge.sh _verify_staged_carried (branch wk-NFRA_GATSCP-13)",
+      ".tools/tests/test_safe_merge_continue.py case c: keep-ours of one conflicted path exits 0; case b: path unstaged with its resolution left in the working copy exits 7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order GS-f-6 build 1: when any staged path is missing from the commit, REFUSED and exit non-zero.",
+  "world_is": "Narrower by one case: a missing path is a loss only when its working copy differs from the committed blob. A path reset in both the index and the working copy (e.g. checkout HEAD -- path) reads as a keep-ours and is not caught; D1-S5's mechanism of loss is not recorded in the order, so whether it left the working copy intact is unmeasured here."
+}
+```
+
+## NFRA_GATSCP-D1-W13-S2 -- proof-of-spec-check returns a TOOL-ERROR on this worktree: the schema at its base carries the corrupted commit_or_etag type
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W13-S2",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~13",
+  "surfaced_at": "2026-10-09T14:12Z",
+  "one_line": "On this worktree (base e19881df2d) python .tools/proof-of-spec-check.py exits rc=2 'UnknownType: Unknown type \"string aws_resource ADDED ...\"' because org/standards/PROOF_OF_SPEC.schema.json at e7c10e5b4b put prose into commit_or_etag.type; box/dell1 fixed it at 6b65ca5a52. The instance was validated with that fixed schema applied temporarily to the working tree (not committed, restored afterwards): VALID rc=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py on wk-NFRA_GATSCP-13 before the swap: TOOL-ERROR UnknownType, rc=2",
+      "git show box/dell1:org/standards/PROOF_OF_SPEC.schema.json carries no 'string aws_resource' in the type; 6b65ca5a52 1.0.0_SA_CTO~DELL1",
+      "same proof instance with the box/dell1 schema: VALID (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order: validate with python .tools/proof-of-spec-check.py <instance> GF6-AC1,GF6-AC2 before the flip; rc 0 is the verdict.",
+  "world_is": "The checker cannot run on a worktree cut before 6b65ca5a52; the fix is on box/dell1 and reaches this branch at the drain. The schema file is outside this order's grant and was not committed."
+}
+```
