@@ -10440,3 +10440,56 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S68",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T02:54:57Z",
+  "one_line": "Leg A is REFUSED by the LGIC naming plan gate in ENFORCE mode: the new EventBridge rule name canonical-schwab-si2-08403355-daily-pull is not name() output, and because the resource is an ADDITION the gate enforces rather than warns. Legs C and B are applied and the world is coherent; the schedule is simply not armed.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN .tools/safe-apply.sh -chdir=infra/aws/terraform/canonical-schwab-ec2 apply C:/tmp/ec2_tm1_legA.tfplan -> rc=7, 'BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.'",
+      "LINE [naming-plan-gate] NAMING REFUSE aws_cloudwatch_event_rule.si2_daily[\"08403355\"] canonical-schwab-si2-08403355-daily-pull -> schwab-canonical-si2-08403355-pull-daily; why: (ADDITION): OUT-OF-PATTERN as EVENT_RULE.",
+      "LINE the same gate's pre-plan stage graded 12 existing names in this root and WARNed on 8 of them (quartz-si2-spike-role, quartz-si2-monolith-write and others), i.e. the whole root is non-conformant and grandfathered; only the ADDITION is enforced.",
+      "FILE org/critical_paths/change_management/20261009T0205Z_nfra-oplgtw-og-tm-1-taxsma-master_deploy_completion.md legs L1-L4 CLOSED with read-back proof; L5 and L6 open."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order NFRA_OPLGTW.TO-OG-ap-1 step 4 and both halves: Leg A applies aws_cloudwatch_event_rule/target.si2_daily[\"08403355\"] at cron(45 10,22 * * ? *) with the siblings' exact structure (Andrew: 'via running it exactly same structure'), and the order's BOUNDS forbid overriding a gate.",
+  "world_is": "The sibling rules canonical-schwab-si2-08242234-daily-pull and -08335338-daily-pull carry the same out-of-pattern shape but are EXISTING, so they only WARN (CLAUDE.md rule 30 non-application: existing pipelines reach conformance through their own migration project, never as a rider). The new rule is an addition, so DEC-6 enforces and refuses. The two requirements are in direct conflict: matching the siblings is what the halves signed, and matching name() is what the gate demands. I did not override the gate and did not hand-type a workaround. Rule 30's own remedy for a builder refusal is a registry row in infra/logic/registry/, which is outside this order's <paths> and is a design decision, not an applier's call.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "THE DECISION IS THE ISSUER'S (with the CTO where rule 30 binds). Three options, no recommendation acted on: (a) an R20 register entry recording a deliberate departure, which rule 30 says Andrew acknowledges; (b) add/extend a row in infra/logic/registry/ so name() produces the sibling pattern for this system, then re-run Leg A unchanged; (c) accept the LGIC name schwab-canonical-si2-08403355-pull-daily, which departs from the siblings and may move AC1, whose tm1.sh limb (c) resolves the rule and its target. STATE WHEN LEAVING IT: legs C and B are fully applied and read back; the converter accepts 08403355, the notification rule exists, the box can write the three new prefixes, and the puller object carries the new ValidateSet. Because the rule does NOT exist, nothing pulls on a schedule and no bronze can land, which is exactly the safe ordering both halves require, so this is not a half-landed deploy. L6 (the gateway roles) is independent of the pull legs by both halves and proceeds. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, but that form is UNREPRESENTABLE to SURPRISE_ID_RE in .tools/proof-of-spec-check.py:1206, whose optional infix is a SINGLE letter plus digits -- a two-letter 'AE' cannot match, so the row would not exist to the gate (proof-of-spec SURPRISES limb, ENFORCE for a tree TO). This project already hit and settled exactly this: an earlier seat exercised NFRA_OPLGTW-Z-OG-S1 against the same regex, got NO MATCH, and continued the Z-S series instead. Following that precedent this row is Z-S68 (max in channel was Z-S67, read over all 86 hits, not off one page). A gate stands and is not overridden; the order's row-id instruction is what needs correcting, and 2.0.0_SA_COO~O is told."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S69",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T02:54:57Z",
+  "one_line": "The Leg C deploy makes infra/aws/lambda/ci/lambda-source-map.json stale for opal-assets-silver-schwab (artifact_sha256, last_deployed_commit, last_deployed_at), and that file is outside this order's <paths>, so this seat did not update it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/lambda/ci/lambda-source-map.json functions/opal-assets-silver-schwab: artifact_sha256 v2BztqbuhHD3gH95eMqCQzkjPEotvSoeIezEOfsxu90=, last_deployed_commit 6bfea3fdf56e1dd237ef9fb1cc417c0a3bde1f35, last_deployed_at 2026-07-15T22:30:10Z.",
+      "RUN aws lambda get-function-configuration opal-assets-silver-schwab after Leg C: CodeSha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE=, OPAL_BUILD_COMMIT 47c3c75f11.",
+      "FILE infra/aws/lambda/ci/build-and-upload.sh:661 'Update source-map entry (only after the verified write)' -- the canonical script writes those fields, and BUILD_ONLY=1 (which the order prescribes) explicitly skips the upload AND the source-map update."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md deployment rule 4: every Lambda carries an entry in lambda-source-map.json, and the entry is maintained across deploys. Order OG-ap-1 section 3 <paths> does not include that file.",
+  "world_is": "Because the order prescribes BUILD_ONLY=1 and then 'upload it', this seat replicated the script's own upload (PowerShell s3 cp with --metadata content-sha256, the key the yang-lambda module reads source_code_hash from) and deliberately did NOT run the script's source-map writer, which is outside the declared write surface. The entry's three deploy fields therefore name the pre-Leg-C artifact. Note this is a pairing/record field only: cloud-ops states the map does NOT compare deployed bytes to built bytes, so nothing reads it as a currency control. A SEPARATE pre-existing drift sits in the same entry and is not mine: memory_size reads 10240 while TF and the live function both read 3008, which the entry's own notes discuss.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here, deliberately. OG-ap-2 (@15349fa639) does authorise this seat to touch lambda-source-map.json, but only to register trading_calendar.py for the 49F dispatcher, in its own commit; that authority does not extend to rewriting this converter's deploy fields, and the two edits are kept apart. Whoever owns the update should set artifact_sha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE= and a last_deployed_commit naming the applied tree. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, but that form is UNREPRESENTABLE to SURPRISE_ID_RE in .tools/proof-of-spec-check.py:1206, whose optional infix is a SINGLE letter plus digits -- a two-letter 'AE' cannot match, so the row would not exist to the gate (proof-of-spec SURPRISES limb, ENFORCE for a tree TO). This project already hit and settled exactly this: an earlier seat exercised NFRA_OPLGTW-Z-OG-S1 against the same regex, got NO MATCH, and continued the Z-S series instead. Following that precedent this row is Z-S69 (max in channel was Z-S67, read over all 86 hits, not off one page). A gate stands and is not overridden; the order's row-id instruction is what needs correcting, and 2.0.0_SA_COO~O is told."
+}
+```

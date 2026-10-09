@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.2",
+  "prd_version": "v2.3",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -876,3 +876,32 @@ SIGN-OFF).
 
 **Sign-off.** ENDPOINT changes: FWD-18's ACCEPT. CONTRACTS change: C2 grant width and A30. The ratified-text half re-opens
 for `3.0.0_SA_CVO~Z`. The brief half carries no new brief: the input is Andrew's word, recorded by the CRO.
+
+### v2.3 addendum (2026-10-09 ~03:3xZ, 1.0.0_SA_CTO~O) -- the Bloomberg account mirrors Andrew's principal
+
+**Input.** Andrew-direct 2026-10-09 ~03:2xZ at this seat's terminal, verbatim in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_032xZ_OPAL_GATEWAY_BBG_MIRRORS_OPALGATEWAY.md`:
+"opal-gateway-bbg should be an exact copy of opal-gateway for now, just make it mirror whatever is on opalgateway for
+consistency, eventually we will make rules but not yet".
+
+**What this changes:**
+
+1. **v2.2 item 2's last sentences are reversed.** `opalbloomberg@opalinvest.com` now holds the same grants as Andrew's
+   principal. That covers every account in every served source, the same hidden classes and the same operations.
+2. **v2.2 item 5 is superseded.** `opalbloomberg` leaves identity scoping. Its `_SEED` entry in `app/identity_scope.py` and its
+   overlay rows in `identity_tool_allowlist.txt` are removed, so it is UNSCOPED, as Andrew's identity is. Its tool set is
+   whatever Andrew's is.
+3. **"for now".** This is today's state, not a design. Per-identity rules for this account are deferred until he names them.
+
+**Unchanged.** Every rule of v2.2 that his words do not reach:
+- Alyssa's grant and her no-download;
+- the hidden classes;
+- never joined across firms;
+- no grant mutation from MCP.
+
+**Consequence carried to r29's read-back.** An unscoped identity's consent asks the full `GRAPH_SCOPES` envelope. If the
+Microsoft 365 tools refuse on the current token, the act is a fresh sign-in in the BG seat's window. It is named then, with
+the evidence.
+
+**Sign-off.** The CONTRACTS change: C2 for one principal. The ENDPOINT is untouched. The ratified-text half re-opens for
+`3.0.0_SA_CVO~Z`. The brief half is his word, recorded by this seat.
