@@ -1116,6 +1116,31 @@
     "spec_asserts": "MP-x-4 section 4 says the proof_of_spec criteria are to be run 'from your worktree root', and the cell is directed (section 1, row Z-W5-S2) to work in a linked worktree with a no-cone sparse pattern list. Together those presume the checks run correctly from a sparse linked worktree.",
     "world_is": "A check that reaches into the nested mcportal repo cannot run correctly from a linked worktree, because git checks that repo out in the main tree only -- and because the call is wrapped in 2>/dev/null it degrades to a FALSE NEGATIVE instead of an error. Separately, a no-cone sparse list silently omits paths that the deploy script and the checks read (data/transcripts/, mcportal/), so 'run it from your worktree root' is only safe once the pattern list is widened to every path the instruments touch -- which is not discoverable from the order.",
     "notes": "Issuer's call; MP-x-4 is NOT blocked, since the substance is verified and the criterion is expected to pass on the post-drain run. Per BOUNDS 3 the criterion was NOT repaired and the check was not edited (section 3 makes it read-never-write): it is REFUSED with its measurement. Options: (a) give x4.AC2.sh the same `_main/mcportal` fallback deploy-to-ec2.sh:40-44 already has -- the minimal fix, and it makes the check worktree-agnostic; (b) drop the 2>/dev/null on that call so an absent repo surfaces as an error rather than a `no`, which is the SILENCE half of the defect and worth fixing regardless of (a); (c) state in the order that this criterion is graded on the merged index by the issuer, not by the cell. Also worth landing somewhere durable: the no-cone pattern list a gateway release needs is .tools/ org/ lib/ infra/ ops/ data/transcripts/ plus the root config files, and mcportal must be reachable for AC2."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S29",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T17:23Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S28",
+      "NFRA_MCPORTAL-Z-S27"
+    ],
+    "one_line": "Z-S28 FIXED at the check: x4.AC2.sh and r2.AC2.sh now resolve mcportal from the MAIN worktree and fail LOUD on an unreadable repo or a missing commit, instead of a 2>/dev/null false 'no'. x4.AC2 PASSES from a linked worktree. Z-S27 (cold-read margin shrinking) is confirmed by the issuer's own run, 27.4 s over 4,296 records at ~17:2xZ against the 30 s bar. It is routed as an ENRICHMENT for the next CP2/round-6 analysis (warm the body cache at boot, or more fetch threads), and it is a known risk for MP-r-2's AC3, which times three cold reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "x4.AC2 from C:/tmp/mp-cp2-issue (linked worktree): 'contains d60b4e0=yes ... RESULT: PASS'. r2.AC2's mcportal clause reads 'contains d60b4e0=yes' (control) and FAILs on the CP2 file set, as expected before MP-r-2.",
+        "x4.AC3 ssm 2b3b0d1c-a4de-4029-93b8-c361d6c54bfc: compute_s=27.4 reporting=4 scanned=4296. The applier's series: 13.6-16.8 s at ~3,150 records (14:0xZ), 24.2 s at 4,040 (16:2xZ)."
+      ]
+    },
+    "spec_asserts": "Z-S28: x4.AC2's mcportal clause false-negatives in a linked worktree. Z-S27: cold read under 30 s.",
+    "world_is": "The check is fixed in both scripts. The cold read is still under the bar, with about 9% headroom at 17Z, and is warm-cached after the first read in the live process.",
+    "notes": "Z-S27's remedy is NOT cut here: GATE (x) admits no new order into round 5 or CP2 round 1. If MP-r-2's step 2 measures over 30 s it STOPS as written, and the remedy becomes the first cell of the next round."
   }
 ]
 ```
