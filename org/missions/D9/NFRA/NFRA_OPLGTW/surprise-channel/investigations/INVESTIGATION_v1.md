@@ -10984,3 +10984,30 @@ name the one known failure instead of silently inheriting it.
   "world_is": "With the Log function's '[2026-10-09T07:39:27Z] ' prefix a DATE line is 40 characters; about 530 dates fill the cap. Phase B's SSM wrappers must print compactly (batch summaries, not per-file lines) for the same reason."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T14:56:35Z",
+  "one_line": "STOP at batch 3 of OG-bh-1: for six 08403355 era-C dates (2025-12-12, 15, 16, 17, 18, 19) the RPS section-1 zip carries 28 columns the converter's pin does not know, so opal-assets-silver-schwab raises SchemaDriftError, writes no fact_rps / fact_rps_s2 / dim_position / dim_balance, and each date's completion record reads incomplete (MISSING_OUTPUT x4); 18 Lambda errors (6 files x 3 attempts), DLQ 0 -> 6.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/opal-assets-silver-schwab 2026-10-09T14:08Z..14:35Z: '[ERROR] RuntimeError: event run ... had 1 failure(s): schwab/08403355/bronze/rps/20251212/08403355.CRS20251212.RPS.zip: SchemaDriftError(\"partition carries column(s) the pin does not know: ['account_title_line_1', 'account_title_line_2', 'account_title_line_3', 'acct_regis', 'acct_type', 'net_credit_debit', 'margin_balance', 'available_to_pay', 'mrgn_buying_pwr', 'money_mkt_funds', 'mtd_margin_int', 'daily_margin_int', 'eqty_excl_option', 'eqty_percentage', 'mkt_value_long', 'mkt_value_short', 'eqty_incl_option', 'option_rqrmnts', 'mnth_end_div_pay', 'maintenance_call', 'mvl_cash_ex_optn', 'net_mv_positions', 'net_mv_plus_cash', 'cash_balance_settled_only', 'cash_margin_bal_settled', 'versmrkr_3', 'bank_sweep_ibf', 'bank_cash'] (feed=RPS s1) -- vendor drift is a finding: measure, extend the pin, never silently absorb\")'; the same message for 20251215, 16, 17, 18, 19 (six distinct dates, three attempts each).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json batches[2] (SSM 794ca37d-3118-457c-8ed6-021000ee307c): puller rc 0, enumerated 2314 downloaded 694 skipped 1620 failed 0, landing guard ok; converter Errors 18, Throttles 0, Invocations 706; dlq_baseline 0, dlq_after 6; not_qualified lists the six dates with closure status incomplete and findings MISSING_OUTPUT for dim_balance, dim_position, fact_rps, fact_rps_s2.",
+      "bh1_tool.py dlq at 2026-10-09T14:54Z: DLQ visible=6 in_flight=0. The same six dates hold fact_rps for 08335338 and 08242234 (list-objects-v2 on silver/fact_rps/date=2025-12-12/ returned 1 key each), so the drift is in this master's files for those dates only; neighbouring dates of 08403355 convert and qualify (batches 1-2: 147 of 147 dates; batch 3: 56 of 62).",
+      "schwab_runtime.py _sweep_lane (repo HEAD): a lane whose sweep results include a failed conversion composes NO sweep completion marker (`if not any(r.action == 'failed' ...)`), records the failure in the sweep manifest, and folds guard FAIL into schwab/08403355/meta/backfill-status.json; run_sweep drains the DLQ (cap 100, deleting the messages)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ask section 2: era B and C are 'the shapes the producer qualifies today for 08335338'; the COO half's stop rule: an era B or C date not qualified for a reason other than missing sibling files STOPS the run. DLQ at or below its start depth.",
+  "world_is": "Run stopped after batch 3 (landed: batches 1-3, 2314 of 6002 files, dates 2025-12-11..2026-10-08; AC2 today: 201 of 758 qualified, 557 open). Not run: batches 4-9 and the closing 2000-day run. No retry, no delete, no code or pin change by this worker. Standing effects until disarmed: (1) the 12:15Z sweep will try the six rps files again, fail, write no sweep completion markers for the whole 08403355 lane, drain and delete the six DLQ messages, and fold backfill-status guard FAIL for 08403355 (event-path records are unaffected); (2) ledger nfra-oplgtw-og-bh-1-taxsma-history stays OPEN (24 h window from 08:37Z). Options for the issuer, not taken here: extend the converter's RPS s1 pin for the 28 columns (a producer code leg for 0.7.0_AE_CloudOps~Z, then re-run the six events), or declare the six dates unavailable and roll their six rps zips back per the ask section 5 so the lane's sweep guard clears, or accept the standing sweep failure.",
+  "notes": "Batches 1-3 timings: puller 29.5 / 29.8 / 28.5 min, converter drain +8.2 / +8.0 / +8.0 min after the puller, one batch about 38 min; remaining 6 batches plus closing run estimated about 4 h (2.6 s per file, 3,688 files left plus a 2-3 min closing run). Batches 4-9 reach back into 2024-2025, so more dates may carry the same drift; unmeasured."
+}
+```
