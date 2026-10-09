@@ -12,18 +12,18 @@
  "opened_at": "2026-10-09T12:53:23Z",
  "state": "ACKED",
  "sent": {
-  "at": "2026-10-09T13:21:38Z",
-  "bus_message_id": "ebd1b34f-eb42-4703-b164-63772ad219ad"
+  "at": null,
+  "bus_message_id": null
  },
  "ack": {
   "at": "2026-10-09T13:32:47Z",
   "by": "1.0.0_SA_CTO",
-  "bus_message_id": "17134a49-520f-4b0d-a6ce-0540bb785ffd"
+  "bus_message_id": null
  },
  "closed": {
-  "from_at": "2026-10-09T13:37:58Z",
-  "from_by": "1.0.0_SA_CTO~DELL2",
-  "to_at": null,
-  "to_by": null
+  "from_at": null,
+  "from_by": null,
+  "to_at": "2026-10-09T13:32:47Z",
+  "to_by": "1.0.0_SA_CTO"
  }
 }
