@@ -1015,3 +1015,31 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-W12-S1 -- safe-commit refuses IAM-u-3's deliverable on an unrelated NFRA_OPSWKF index drift
+
+```json
+[
+{
+  "id": "NFRA_IAMROLES202609-Z-W12-S1",
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~12",
+  "surfaced_at": "2026-10-09T06:31:56Z",
+  "one_line": "safe-commit REFUSES this worker's deliverable commit on a missions-tree INDEX-DRIFT in a different project (org/projects/NFRA_OPSWKF.json dep_stage index=PRD tree=EXECUTING); the refusal is outside this order's paths and the remedy is the register's.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR~Z -- the refusal text names R5, the register's members list, as 0.0.0_AB_MSTR's lane; not edited here and not bypassed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh -- BLOCKED: missions-tree-check, RESULT: 1 violation(s), '[INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index=PRD tree=EXECUTING', denominators 'tree=49 project(s)... 49 valid'. Observed at worktree base 50428b904f (branch wk-NFRA_IAMROLES202609-12), rc=1, run twice; git log confirms no commit by this serial.",
+      "The staged set was only org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~12/CONDITION_AXIS_EXERCISED.md; the violating file is in no order path of this worker."
+    ]
+  },
+  "spec_asserts": "The order expects the worker to commit its deliverable, proof and status flip to its own branch via safe-commit within its <paths>.",
+  "world_is": "The commit gate refuses on a tree-wide index drift unrelated to the staged file, so the deliverable stands uncommitted in the worktree (CONDITION_AXIS_EXERCISED.md, AC1=3, AC2=1, AC3 pin matches).",
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
+```
