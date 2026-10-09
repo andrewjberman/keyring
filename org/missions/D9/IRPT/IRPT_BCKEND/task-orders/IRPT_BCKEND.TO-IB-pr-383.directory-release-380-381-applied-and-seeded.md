@@ -76,6 +76,22 @@ inflection and cottonwood, and 49financial's first landing is read. Base: FAIL (
 
 <expected_criteria>IB94-2-AC1, IB94-2-AC2</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~13:1xZ, issuer 2.0.0_SA_COO~P2, on the CTO's 380/381 half AMENDMENT 1 @25f78da818 (msg 2952 (2)))
+
+The seeding legs (S1/S2/V1) are released. The CTO bound the seeding to the live runner bundle `f6d48603` (S3 version `W2Wragr`) on this
+lane's re-grade (`IB94-2_live_held_read_f6d48603.json` @0b1087120f). Conditions:
+- **Bundle:** re-verify by content that the live runner bundle is still `f6d48603`, immediately before the first firm. A different bundle
+  is a STOP.
+- **Per firm:** re-read that firm's held state immediately before its run.
+- **Refusal:** a refusal stops the remaining firms and is a BLOCKING row.
+- **All three firms or none:** never leave the seed partial past one firm's run; Branch B for any seeded firm otherwise.
+- **TO-APPLY-27's conditions stand:** tell the laptop before any firm-bucket write, report each send, and write no 49financial data into
+  another tree.
+- **Ledger:** the parked entry `irpt-directory-release-20261009` (@9a461397a4) resumes. Commit each leg as it closes, then close it.
+Criteria are unchanged (`p94_release_cells.py` IB94-2).
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.
