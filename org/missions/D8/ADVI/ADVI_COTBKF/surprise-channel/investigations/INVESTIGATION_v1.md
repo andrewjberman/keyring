@@ -4414,3 +4414,31 @@ round.** Never edit an existing row.
   "world_is": "The three fields are present and correct on all 3,325 built manifests, but the manifest's method_version field still names the producer's version 2 (whose dim_return_method row names the custodian's whole-account value as V), a second claim a consumer reading method_version rather than the fields would take as the custodian method. Local build only; nothing served. Producer is IRPT_DASHBD's file and was not edited."
 }
 ```
+
+## ADVI_COTBKF-D2-S66 -- L9 CB43aq1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S66",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:53:03Z",
+  "one_line": "L9 CB43aq1-AC2 MET: data/assets/scripts/gold/irpt_reporting/sources.json gains exactly one key, _commonwealth_delivery (registry_key z09, valuation_source positions_x_as_traded_close, fee_treatment net_of_fees, price_basis as_traded, no firm token; rule commit d41d82a633 before the output 90b2e493b4); the producer's compute path cannot pick it up -- account_return_daily.py:291 declared_sources() keeps only non-underscore object keys (this seat's read of sources.json: the one declared source is schwab_08335338) and :300 source_entry() refuses any key outside that list; IRPT_DASHBD's producer tests 102 passed and the handler tests 86 passed (the issuer's run).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:291-304 (declared_sources, source_entry)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json top-level keys (this seat's read)",
+      "git diff d41d82a633~1 90b2e493b4 -- data/assets/scripts/gold/irpt_reporting/sources.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_43_DRAIN_END_20261009.md @7f2f3d7323 (msg 3499)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_43_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB43aq1-AC2: one entry added, no firm token, values admitted; the producer's compute path is proven not to pick it up; IRPT_DASHBD's tests are green.",
+  "world_is": "Met as written."
+}
+```
