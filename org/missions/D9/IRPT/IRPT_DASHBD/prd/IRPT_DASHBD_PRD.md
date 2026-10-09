@@ -121,8 +121,8 @@ outcomes verbatim.
                     its own gold tables (returns, class, activity, realized, unrealized) through its own adapter
          ACCEPT     a person opens an Inflection account and a Cottonwood account and sees the same page as for 49 Financial;
                     where a firm's source cannot supply a figure (for example Inflection lots before Eclipse tax lots are
-                    shown populated) the page says so in a sentence instead of showing a number; Cottonwood's return is tied
-                    out against Black Diamond's own return as 49 Financial's is (FWD-8)
+                    shown populated) the page says so in a sentence instead of showing a number; each firm's return is tied
+                    out against its own reported source, named by the first cell's read, as 49 Financial's is (FWD-8)
          SOURCE     Andrew-direct 2026-10-09 ~03:3xZ, verbatim: "You should be doing this not just for 49 Financial, but for
                     all clients, inflection and cottonwood too." (record
                     org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/ANDREW_DIRECT_20261009_033xZ_ALL_CLIENTS_NOT_ONLY_49F.md @9a0a87676b)
@@ -493,6 +493,8 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
 
 - **New outcome FWD-11 (in ENDPOINT):** Inflection and Cottonwood get what 49 Financial gets, each through its own adapter (C-ADAPTERS
   already names all three).
+- **Tie-out source per firm (CVO L4-R msg 2330):** each firm ties out against its own reported source, named by the first cell's read.
+  Cottonwood's reported returns are Commonwealth's, not Black Diamond's, because cot is not bd (rule 13).
 - **The 49 Financial activity-and-lot release (R35, both halves GIVEN) proceeds as signed.** FWD-11 does not hold it.
 - **Each firm's gold release is its own never-widen pair.** A firm's bucket, prefixes and role are separate, and they never share a write set
   with another firm. Addresses come from `address()` output per firm (C-NAMES).
