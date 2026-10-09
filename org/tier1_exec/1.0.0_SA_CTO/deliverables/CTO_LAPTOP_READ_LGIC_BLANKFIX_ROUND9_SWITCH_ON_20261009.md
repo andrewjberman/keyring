@@ -1,4 +1,9 @@
-# LGIC_BLANKFIX -- ROUND 9 ANALYSIS (L10)
+# LGIC_BLANKFIX round 9 -- the laptop CTO's read and its switch-on ruling (NOT the round analysis)
+
+**Superseded as the L10 analysis:** the project is placed on DELL1, whose CTO lane `1.0.0_SA_CTO~DELL1` wrote the round-9 analysis at
+`org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round9.md` @1bd6fcf3dd (07:47Z, before this one). This file was moved
+out of that path to avoid a second analysis. It stays as the reasoning behind this seat's ruling on the cross-box call
+XA-20261009T074741Z-3003 (the switch-on, which binds every box), and its E1-E5 are inputs to that ruling, not a cut.
 
 **Author:** `1.0.0_SA_CTO`, 2026-10-09 ~07:5xZ. **Answering:** `3.0.0_SA_CVO`'s slug (msg 107829):
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_BLANKFIX_ROUND9_L9_GRADE_BX4_AC3_20261009.md`, `ADJUDICATION_v8` + `REMEDIATION_v8`
