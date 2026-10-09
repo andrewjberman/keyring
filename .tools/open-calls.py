@@ -12,8 +12,12 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
     python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
                                       [--ruled-by andrew|cto]
+    python .tools/open-calls.py hold --id <id> --by <serial> --reason <one line>     # held for Andrew; the scan skips it
+    python .tools/open-calls.py mode get [--box <b>] [--part scan|empty_tick|all]     # the keep-driving switch (/keep-driving)
+    python .tools/open-calls.py mode set --part scan|empty_tick|all --state on|off|inherit [--box <b>] --by <s> --reason <t>
     python .tools/open-calls.py scope --project <CODE> [--orders <order file> ...] [--roots <dir> ...]
     python .tools/open-calls.py scope --selftest
+  (close also takes --xadj <XA id>: a RULED cross-adjudication, .tools/xadj.py, settles a CTO-ruled CROSS-BOX row.)
 
 THE LIST is org/devices/state/<device>/open_calls.json (ONE WRITER: the box named, resolved from AGENTBUS_DEVICE through
 lib/devices.py, never from a path). Shape (schema "open-calls/1"; every reader refuses a key it does not know):
@@ -73,13 +77,17 @@ ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls/1"
 TOP_KEYS = {"schema", "device", "written_at", "written_by", "rows"}
 ROW_KEYS = {"id", "project", "subject", "asked_by", "source", "orders", "roots", "state", "opened_at", "scope", "closed",
-            "kind"}
+            "kind", "escalation"}
 KINDS = ("fork", "act")
 NO_PROJECT = "NONE"
 CLOUD_BUCKET = "opal-313476888478-globgrph"
 CLOUD_PREFIX = "fabric/open-calls/v1"
 ROW_REQUIRED = {"id", "project", "subject", "asked_by", "source", "state", "opened_at", "scope"}
-CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by"}
+CLOSED_KEYS = {"at", "by", "ruling", "crossbox", "ruled_by", "xadj"}
+# `escalation` (optional, Andrew-direct 2026-10-09 ~00:0xZ; .tools/open-calls-scan.py): the box CTO's answer to the scan when it
+# does not rule the call itself -- `xadj` (sent to cross-adjudication, ref = the XA id) or `andrew` (held for his word).
+ESC_KEYS = {"to", "ref", "at", "by", "reason"}
+ESC_TO = ("xadj", "andrew")
 RULED_BY = ("cto", "andrew")
 STATES = ("OPEN", "CLOSED")
 RISK_ORDER = ("LOCAL", "SERVED", "WORLD")
@@ -439,6 +447,10 @@ def validate_doc(doc, device: str, where: str) -> dict:
             raise BadFile("%s: row %s state %r is not one of %s" % (where, row["id"], row["state"], "/".join(STATES)))
         if "kind" in row and row["kind"] not in KINDS:
             raise BadFile("%s: row %s kind %r is not one of %s" % (where, row["id"], row["kind"], "/".join(KINDS)))
+        esc = row.get("escalation")
+        if esc is not None and (not isinstance(esc, dict) or set(esc) != ESC_KEYS or esc["to"] not in ESC_TO):
+            raise BadFile("%s: row %s `escalation` is malformed (keys %s, to one of %s)" % (
+                where, row["id"], "/".join(sorted(ESC_KEYS)), "/".join(ESC_TO)))
         closed = row.get("closed")
         if closed is not None and (not isinstance(closed, dict) or set(closed) - CLOSED_KEYS):
             raise BadFile("%s: row %s `closed` carries a key this reader does not know" % (where, row["id"]))
@@ -544,6 +556,132 @@ def cloud_read_all(boxes: list) -> tuple:
     return found, absent, refused
 
 
+# ---------------------------------------------------------------- the keep-driving switch (Andrew-direct 2026-10-09 ~00:4xZ)
+# "I also want to be able to flip this mode on or off somewhere in the cloud, it should be a switch that we use a skill to
+# flip on and off" -- approved as option (a): ONE object beside the per-box lists. Record:
+# org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_005xZ_KEEP_DRIVING_CLOUD_SWITCH.md. Skill: /keep-driving.
+# Parts: `scan` (the 10-minute nudge, .tools/open-calls-scan.py) and `empty_tick` (a COO's empty drive tick runs
+# /next-calls --drive). ABSENT = ON (his standing order); UNREADABLE = ON with a WARN (the switch never silently stops work).
+MODE_KEY = "%s/mode.json" % CLOUD_PREFIX
+MODE_SCHEMA = "keep-driving-mode/1"
+MODE_PARTS = ("scan", "empty_tick")
+MODE_STATES = ("on", "off")
+MODE_KEYS = {"schema", "scan", "empty_tick", "boxes", "set_by", "set_at", "reason"}
+
+
+def _mode_local():
+    return os.environ.get("OPAL_MODE_LOCAL", "").strip()   # tests: a file path stands in for the S3 object
+
+
+def mode_check(doc) -> dict:
+    if not isinstance(doc, dict) or set(doc) != MODE_KEYS or doc["schema"] != MODE_SCHEMA:
+        raise BadFile("mode.json: keys must be exactly %s with schema %s" % ("/".join(sorted(MODE_KEYS)), MODE_SCHEMA))
+    for part in MODE_PARTS:
+        if doc[part] not in MODE_STATES:
+            raise BadFile("mode.json: %s=%r is not on/off" % (part, doc[part]))
+    if not isinstance(doc["boxes"], dict):
+        raise BadFile("mode.json: boxes is not an object")
+    for box, over in doc["boxes"].items():
+        if not isinstance(over, dict) or set(over) - set(MODE_PARTS) or any(v not in MODE_STATES for v in over.values()):
+            raise BadFile("mode.json: box %s override is malformed" % box)
+    return doc
+
+
+def mode_read() -> tuple:
+    """(doc or None, source) where source is object | absent | unreadable:<why>."""
+    try:
+        if _mode_local():
+            if not os.path.exists(_mode_local()):
+                return None, "absent"
+            return mode_check(json.load(open(_mode_local(), encoding="utf-8"))), "object"
+        try:
+            obj = _s3().get_object(Bucket=CLOUD_BUCKET, Key=MODE_KEY)
+        except Exception as exc:  # noqa: BLE001
+            if _err_code(exc) in ("NoSuchKey", "404"):
+                return None, "absent"
+            raise
+        return mode_check(json.loads(obj["Body"].read())), "object"
+    except Exception as exc:  # noqa: BLE001 -- the switch never stops work by being unreadable
+        return None, "unreadable:%s" % (str(exc)[:120] or type(exc).__name__)
+
+
+def mode_state(doc, box: str, part: str) -> str:
+    """on|off for one part on one box: the box override, else the global value, else on."""
+    if doc is None:
+        return "on"
+    over = (doc.get("boxes") or {}).get(box) or {}
+    return over.get(part, doc[part])
+
+
+def mode_write(doc: dict) -> None:
+    mode_check(doc)
+    body = json.dumps(doc, indent=1, ensure_ascii=True) + "\n"
+    if _mode_local():
+        with open(_mode_local(), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(body)
+        return
+    _s3().put_object(Bucket=CLOUD_BUCKET, Key=MODE_KEY, Body=body.encode("ascii"), ContentType="application/json")
+
+
+def mode_line(doc, source: str, boxes: list) -> str:
+    over = ", ".join("%s %s" % (b, " ".join("%s=%s" % kv for kv in sorted(o.items())))
+                     for b, o in sorted(((doc or {}).get("boxes") or {}).items()) if o) or "none"
+    who = ("set by %s at %s: %s" % (doc["set_by"], doc["set_at"], doc["reason"])) if doc else "never set (default ON)"
+    per = " ".join("%s:scan=%s,empty_tick=%s" % (b, mode_state(doc, b, "scan"), mode_state(doc, b, "empty_tick")) for b in boxes)
+    return "KEEP-DRIVING scan=%s empty_tick=%s overrides=[%s] source=%s | %s | per-box %s" % (
+        mode_state(doc, "", "scan"), mode_state(doc, "", "empty_tick"), over, source, who, per)
+
+
+def cmd_mode(args) -> int:
+    dev = load_mod("opal_devices", "lib/devices.py")
+    reg = dev.load()
+    doc, source = mode_read()
+    if source.startswith("unreadable"):
+        print("WARN: the switch is unreadable (%s); every part reads ON" % source)
+    if args.action == "get":
+        box = dev.resolve(args.box, reg) if args.box else this_box(dev, reg)
+        if box is None:
+            raise Refused("ERROR: %r is not a device in the register" % args.box)
+        parts = MODE_PARTS if args.part == "all" else (args.part,)
+        print(mode_line(doc, source, dev.names(reg)))
+        for part in parts:
+            print("KEEP-DRIVING-MODE box=%s part=%s state=%s source=%s" % (box, part, mode_state(doc, box, part), source))
+        return 0
+    if source.startswith("unreadable"):
+        raise Refused("REFUSED: the switch is unreadable (%s); a set would overwrite a value nobody read" % source)
+    if not (args.by and args.reason and args.state):
+        raise Refused("REFUSED: set needs --state, --by and --reason")
+    box = None
+    if args.box:
+        box = dev.resolve(args.box, reg)
+        if box is None:
+            raise Refused("ERROR: %r is not a device in the register" % args.box)
+    new = doc or {"schema": MODE_SCHEMA, "scan": "on", "empty_tick": "on", "boxes": {}, "set_by": "", "set_at": "",
+                  "reason": ""}
+    parts = MODE_PARTS if args.part == "all" else (args.part,)
+    for part in parts:
+        if box is None:
+            if args.state == "inherit":
+                raise Refused("REFUSED: inherit applies to a box override only (--box)")
+            new[part] = args.state
+        else:
+            over = dict(new["boxes"].get(box) or {})
+            if args.state == "inherit":
+                over.pop(part, None)
+            else:
+                over[part] = args.state
+            if over:
+                new["boxes"][box] = over
+            else:
+                new["boxes"].pop(box, None)
+    new["set_by"], new["set_at"], new["reason"] = args.by, now_utc(), args.reason
+    mode_write(new)
+    print("SET %s %s=%s by %s" % ("box " + box if box else "global", "/".join(parts), args.state, args.by))
+    print(mode_line(new, "object", dev.names(reg)))
+    return 0
+
+
+
 def this_box(dev, reg) -> str:
     name, basis = dev.this_device(reg)
     if name is None:
@@ -618,8 +756,9 @@ def cmd_add(args) -> int:
         return 0
     print_scope(res, notes)
     if res["verdict"] == "CROSS-BOX":
-        print("ROUTE: this call touches another box or a shared set; it goes the cross-box route "
-              "(.tools/crossbox-call.py), not a ruling alone. It cannot be closed here until a cross-box file for it reads CLOSED-BOTH.")
+        print("ROUTE: this call touches another box or a shared set; the box CTO escalates it to cross-adjudication "
+              "(.tools/xadj.py open), not a ruling alone. It closes here on a RULED cross-adjudication (close --xadj) or a "
+              "CLOSED-BOTH cross-box file.")
     return 0
 
 
@@ -630,9 +769,11 @@ def print_list(device: str, count: dict) -> None:
     print("FILE %s | device=%s written_by=%s written_at=%s | %s | rows=%d" % (
         path, doc["device"], doc["written_by"], doc["written_at"], age_text(doc["written_at"]), len(rows)))
     for row in rows:
-        print("  %s [%s] %s %s | %s | scope=%s risk=%s | asked_by %s | source %s" % (
+        esc = row.get("escalation")
+        print("  %s [%s] %s %s | %s | scope=%s risk=%s | asked_by %s | source %s%s" % (
             row["id"], row["state"], row.get("kind", "fork"), row["project"], row["subject"], row["scope"].get("verdict", "?"),
-            row["scope"].get("risk", "?"), row["asked_by"], row["source"]))
+            row["scope"].get("risk", "?"), row["asked_by"], row["source"],
+            (" | escalated to %s %s" % (esc["to"], esc["ref"] or esc["reason"] or "")) if esc else ""))
     count["rows"] += len(rows)
     count["open"] += sum(1 for r in rows if r["state"] == "OPEN")
 
@@ -703,6 +844,7 @@ def cmd_list_cloud(args, dev, reg) -> int:
     found, absent, refused = cloud_read_all(boxes)
     total = {"open": 0, "closed": 0, "fork": 0, "act": 0}
     print("OPEN CALLS ACROSS THE CLUSTER -- s3://%s/%s/  (read %s)" % (CLOUD_BUCKET, CLOUD_PREFIX, now_utc()))
+    print(mode_line(*mode_read(), dev.names(reg)))
     for box in boxes:
         if box in absent:
             print("\n[%s] ABSENT: no cluster copy. Absent is not empty: nothing here says %s has no open calls." % (box, box))
@@ -796,8 +938,19 @@ def cmd_close(args) -> int:
     if not os.path.isfile(ruling):
         raise Refused("REFUSED: ruling %s is not a file; a closure cites the ruling it rests on" % args.ruling)
     cross = None
+    xid = None
     ruled_by = getattr(args, "ruled_by", "cto") or "cto"
-    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by != "andrew":
+    if getattr(args, "xadj", None):
+        xa = load_mod("opal_xadj", ".tools/xadj.py")
+        try:
+            xdoc = xa.get(args.xadj)
+        except xa.Refused as exc:
+            raise Refused(str(exc) if str(exc).startswith("REFUSED") else "REFUSED: %s" % exc)
+        if xdoc["call_id"] != row["id"] or xdoc["state"] != "RULED":
+            raise Refused("REFUSED: cross-adjudication %s is %s for call %s, not RULED for %s" % (
+                args.xadj, xdoc["state"], xdoc["call_id"], row["id"]))
+        xid = xdoc["id"]
+    if row["scope"].get("verdict") == "CROSS-BOX" and ruled_by != "andrew" and xid is None:
         found, lines = crossbox_closed_both(row["id"], args.crossbox)
         if found is None:
             raise Refused("REFUSED: call %s reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (%s). A call that touches "
@@ -805,10 +958,35 @@ def cmd_close(args) -> int:
         cross = os.path.splitext(found)[0]
     row["state"] = "CLOSED"
     row["closed"] = {"at": now_utc(), "by": args.by, "ruling": rel_to_root(args.ruling, ROOT), "crossbox": cross,
-                     "ruled_by": ruled_by}
+                     "ruled_by": ruled_by, "xadj": xid}
     write_list(device, doc, writer_serial(args.by))
-    why = cross or ("not required (Andrew's ruling)" if ruled_by == "andrew" else "not required (OWN-BOX)")
+    why = cross or ("cross-adjudication %s RULED" % xid if xid else None) or (
+        "not required (Andrew's ruling)" if ruled_by == "andrew" else "not required (OWN-BOX)")
     print("CLOSED id=%s by=%s ruled_by=%s ruling=%s crossbox=%s" % (args.id, args.by, ruled_by, row["closed"]["ruling"], why))
+    return 0
+
+
+def set_escalation(device: str, cid: str, esc: dict, serial: str) -> str:
+    """Mark an OPEN row escalated (xadj.py open, or `hold`); the box's scan stops nudging its CTO for it."""
+    doc = read_list(device)
+    row = next((r for r in doc["rows"] if r["id"] == cid), None)
+    if row is None:
+        raise Refused("REFUSED: no call %s on this box's list (%s)" % (cid, list_path(device)))
+    if row["state"] != "OPEN":
+        raise Refused("REFUSED: call %s is %s" % (cid, row["state"]))
+    if set(esc) != ESC_KEYS or esc["to"] not in ESC_TO:
+        raise Refused("REFUSED: escalation %r is malformed" % esc)
+    row["escalation"] = esc
+    return write_list(device, doc, writer_serial(serial))
+
+
+def cmd_hold(args) -> int:
+    dev = load_mod("opal_devices", "lib/devices.py")
+    device = this_box(dev, dev.load())
+    path = set_escalation(device, args.id, {"to": "andrew", "ref": None, "at": now_utc(), "by": args.by,
+                                            "reason": args.reason}, args.by)
+    print("HELD id=%s for Andrew by=%s file=%s (the scan no longer nudges the CTO for it; /open-calls carries it)" % (
+        args.id, args.by, path))
     return 0
 
 
@@ -885,7 +1063,59 @@ def close_path_cases(device: str) -> list:
             refused = True
         out.append(("a CTO ruling on a CROSS-BOX row is still refused without CLOSED-BOTH",
                     refused and read_list(device)["rows"][1]["state"] == "OPEN"))
+        # escalation + the cross-adjudication close (Andrew-direct 2026-10-09 ~00:0xZ)
+        xa = load_mod("opal_xadj", ".tools/xadj.py")
+        os.environ["OPAL_XADJ_LOCAL"] = os.path.join(base, "xadj")
+        xid = "XA-20261009T000000Z-0c7a"
+        xdoc = {"schema": xa.SCHEMA, "id": xid, "call_id": "c-cto", "project": "P", "subject": "s", "scope_verdict": "CROSS-BOX",
+                "from_device": device, "from_serial": "t", "opened_at": now_utc(), "body": "b", "state": "OPEN", "ruling": None}
+        xa._put(xa.key_of(xid), xdoc)
+        set_escalation(device, "c-cto", {"to": "xadj", "ref": xid, "at": now_utc(), "by": "t", "reason": None}, "t")
+        out.append(("an escalation is written on the row and read back valid",
+                    read_list(device)["rows"][1]["escalation"]["ref"] == xid))
+        a.xadj = xid
+        try:
+            cmd_close(a)
+            refused = False
+        except Refused:
+            refused = True
+        out.append(("a close on a cross-adjudication still OPEN is refused", refused))
+        xa._put(xa.key_of(xid), dict(xdoc, state="RULED", ruling={"at": now_utc(), "by": "1.0.0_SA_CTO", "device": "laptop",
+                                                                   "text": "(a)", "record": "r.md"}))
+        ok = cmd_close(a) == 0 and read_list(device)["rows"][1]["closed"]["xadj"] == xid
+        out.append(("a RULED cross-adjudication closes a CTO-ruled CROSS-BOX row", ok))
+        try:
+            set_escalation(device, "c-cto", {"to": "nowhere", "ref": None, "at": "", "by": "", "reason": None}, "t")
+            refused = False
+        except Refused:
+            refused = True
+        out.append(("a malformed escalation is refused", refused))
+        # the keep-driving switch
+        os.environ["OPAL_MODE_LOCAL"] = os.path.join(base, "mode.json")
+        doc0, src0 = mode_read()
+        out.append(("an absent switch reads ON for every part", doc0 is None and src0 == "absent"
+                    and mode_state(doc0, device, "scan") == "on" and mode_state(doc0, device, "empty_tick") == "on"))
+        m = {"schema": MODE_SCHEMA, "scan": "on", "empty_tick": "off", "boxes": {device: {"scan": "off"}}, "set_by": "t",
+             "set_at": now_utc(), "reason": "r"}
+        mode_write(m)
+        d1, s1 = mode_read()
+        out.append(("a box override beats the global value; the global value holds elsewhere",
+                    s1 == "object" and mode_state(d1, device, "scan") == "off" and mode_state(d1, "elsewhere", "scan") == "on"
+                    and mode_state(d1, device, "empty_tick") == "off"))
+        with open(os.environ["OPAL_MODE_LOCAL"], "w") as fh:
+            fh.write("{not json")
+        d2, s2 = mode_read()
+        out.append(("an unreadable switch reads ON, never off", d2 is None and s2.startswith("unreadable")
+                    and mode_state(d2, device, "scan") == "on"))
     finally:
+        os.environ.pop("OPAL_XADJ_LOCAL", None)
+        os.environ.pop("OPAL_MODE_LOCAL", None)
+        try:
+            os.remove(os.path.join(base, "mode.json"))
+        except OSError:
+            pass
+        import shutil
+        shutil.rmtree(os.path.join(base, "xadj"), ignore_errors=True)
         for k, v in keep.items():
             if v is None:
                 os.environ.pop(k, None)
@@ -1025,9 +1255,21 @@ def build_parser() -> argparse.ArgumentParser:
     cls.add_argument("--by", required=True)
     cls.add_argument("--ruling", required=True)
     cls.add_argument("--crossbox", help="id of the cross-box file for this call, when its text does not carry the call id")
+    cls.add_argument("--xadj", help="id of the RULED cross-adjudication file (.tools/xadj.py) this close rests on")
     cls.add_argument("--ruled-by", choices=RULED_BY, default="cto",
                      help="andrew: the ruling is Andrew's word and closes the row whatever its scope; "
                           "cto (default): a CROSS-BOX row needs a CLOSED-BOTH cross-box file")
+    mod = sub.add_parser("mode", help="the keep-driving switch in S3 (Andrew-direct 2026-10-09; skill /keep-driving)")
+    mod.add_argument("action", choices=("get", "set"))
+    mod.add_argument("--part", choices=MODE_PARTS + ("all",), default="all")
+    mod.add_argument("--state", choices=MODE_STATES + ("inherit",))
+    mod.add_argument("--box", help="get: read as this box; set: a per-box override (inherit removes it)")
+    mod.add_argument("--by")
+    mod.add_argument("--reason")
+    hold = sub.add_parser("hold", help="hold an OPEN call for Andrew's word (the scan stops nudging the CTO for it)")
+    hold.add_argument("--id", required=True)
+    hold.add_argument("--by", required=True)
+    hold.add_argument("--reason", required=True, help="one line: why only Andrew can rule it (money, vendor, directive, his hold)")
     sco = sub.add_parser("scope", help="measure whether a call touches only this box")
     sco.add_argument("--project")
     sco.add_argument("--orders", nargs="+", default=[])
@@ -1040,7 +1282,7 @@ def main(argv: list) -> int:
     args = build_parser().parse_args(argv)
     try:
         return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope,
-                "publish": cmd_publish}[args.cmd](args)
+                "publish": cmd_publish, "hold": cmd_hold, "mode": cmd_mode}[args.cmd](args)
     except Refused as exc:
         print(str(exc) if str(exc).startswith("REFUSED") else "ERROR: %s" % exc, file=sys.stderr)
         return 1 if str(exc).startswith("REFUSED") else 2

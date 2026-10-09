@@ -13,6 +13,9 @@
                        older agentbus watch; the newest copy is kept;
               ORPHANED an inbox-watch / agent-poller whose serial has no live MCP
                        server in org/mcp/liveness.json.
+              A DECLARED detached job (.tools/detached-job.sh marker, within
+              its max runtime) and anything running in a WORKER worktree
+              (linked worktree, leaf or branch wk-*) are never ORPHAN/NATIVE.
               broker.py / server.py / agentbus-consumer.py, an in-flight
               safe-commit/merge/deploy/apply, commit-worker, commit-gate or
               terraform, and anything in a drain-* worktree are never targets. Execute stops each target's
@@ -209,6 +212,98 @@ $drainCmd = '[\\/]drain-'
 # with the Monitor cap lowered to 5 s stopped a live seat's 8-second-old `bash .git\hooks/pre-commit`.
 $inFlightCmd = 'safe-(commit|merge|deploy|apply)\.sh|commit-worker\.sh|commit-gate\.sh|terraform|[\\/]hooks[\\/](pre|post|prepare|commit)-[a-z-]+'
 
+# ---- DECLARED DETACHED JOBS and WORKER WORKTREES: never ORPHAN / NATIVE ------------------------------------------
+# 0.0.0_AB_MSTR msgs 107412 + 107416 (2026-10-08): a deliberate detached job (site Z's AMGT_HARVST backfill from the
+# repo's .runtime checkpoint; dell2's worker gold-run loops in C:/dev/wk-* worktrees) sits outside every claude tree
+# past the Monitor cap, so the age predicate alone stopped it as ORPHAN. Two exemptions, both printed on every run:
+#   DECLARED  a live marker under <git common dir>/detached-jobs/*.json written by .tools/detached-job.sh, within its
+#             declared max runtime, whose process existed when the marker was written (a reused PID never matches).
+#             The marked process's Windows subtree AND its MSYS descendants are exempt; an expired marker exempts nothing.
+#   WORKTREE  a process whose command line, or whose cwd (MSYS /proc/<pid>/cwd, else its nearest MSYS ancestor's), is
+#             under a WORKER worktree: a linked worktree (`git worktree list --porcelain`) whose leaf or branch is wk-*.
+$root0 = Split-Path -Parent $PSScriptRoot
+$gitExe0 = (Get-Command git.exe -ErrorAction SilentlyContinue)
+$commonDir = $null
+if ($gitExe0) {
+  try {
+    $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    $commonDir = (& $gitExe0.Source -C $root0 rev-parse --path-format=absolute --git-common-dir 2>$null)
+    $ErrorActionPreference = $prevEap
+  } catch { $commonDir = $null }
+}
+if (-not $commonDir -and (Test-Path (Join-Path $root0 '.git') -PathType Container)) { $commonDir = Join-Path $root0 '.git' }
+$declaredSet = New-Object System.Collections.Generic.HashSet[int]
+$declaredBy  = @{}   # winpid -> "owner: purpose"
+$markerNotes = New-Object System.Collections.Generic.List[string]
+if ($commonDir -and (Test-Path (Join-Path $commonDir 'detached-jobs'))) {
+  foreach ($mf in @(Get-ChildItem (Join-Path $commonDir 'detached-jobs') -Filter '*.json' -ErrorAction SilentlyContinue)) {
+    try { $mk = Get-Content $mf.FullName -Raw | ConvertFrom-Json } catch { $markerNotes.Add(("UNREADABLE {0}" -f $mf.Name)); continue }
+    $wp = 0; try { $wp = [int]$mk.winpid } catch { $wp = 0 }
+    $declAt = $null; try { $declAt = [datetime]::Parse([string]$mk.declared_at).ToUniversalTime() } catch { $declAt = $null }
+    $maxS = 0; try { $maxS = [int]$mk.max_seconds } catch { $maxS = 0 }
+    $label = ("{0}: {1}" -f $mk.owner, $mk.purpose)
+    if ($wp -le 0 -or -not $declAt -or $maxS -le 0) { $markerNotes.Add(("MALFORMED {0}" -f $mf.Name)); continue }
+    if (-not $byId.ContainsKey($wp)) { $markerNotes.Add(("GONE {0} (pid {1} not running; {2})" -f $mf.Name, $wp, $label)); continue }
+    if ((Get-Date).ToUniversalTime() -gt $declAt.AddSeconds($maxS)) { $markerNotes.Add(("EXPIRED {0} (pid {1}, {2}s past; {3})" -f $mf.Name, $wp, [int]((Get-Date).ToUniversalTime() - $declAt.AddSeconds($maxS)).TotalSeconds, $label)); continue }
+    $pc = $byId[$wp].CreationDate
+    if ($pc -and $pc.ToUniversalTime() -gt $declAt.AddSeconds(10)) { $markerNotes.Add(("REUSED {0} (pid {1} started after the marker; {2})" -f $mf.Name, $wp, $label)); continue }
+    foreach ($x in (Get-Subtree $wp)) { [void]$declaredSet.Add([int]$x); $declaredBy[[int]$x] = $label }
+    $markerNotes.Add(("LIVE {0} (pid {1}; {2})" -f $mf.Name, $wp, $label))
+  }
+}
+# MSYS descendants of a declared PID (Git Bash fork/exec breaks the Windows parent chain; MSYS keeps it)
+if ($msysOk -and $declaredSet.Count -gt 0) {
+  $msysDecl = New-Object System.Collections.Generic.HashSet[int]
+  foreach ($r in $msysRows) { if ($declaredSet.Contains($r.WinPid)) { [void]$msysDecl.Add($r.Pid) } }
+  $changed = $true; $guard = 0
+  while ($changed -and $guard -lt 50) {
+    $changed = $false; $guard++
+    foreach ($r in $msysRows) {
+      if (-not $msysDecl.Contains($r.Pid) -and $msysDecl.Contains($r.PPid)) {
+        [void]$msysDecl.Add($r.Pid); $changed = $true
+        $lab = $null
+        foreach ($q in $msysRows) { if ($q.Pid -eq $r.PPid -and $declaredBy.ContainsKey($q.WinPid)) { $lab = $declaredBy[$q.WinPid] } }
+        foreach ($x in (Get-Subtree $r.WinPid)) { [void]$declaredSet.Add([int]$x); if ($lab) { $declaredBy[[int]$x] = $lab } }
+      }
+    }
+  }
+}
+function Norm-Posix([string]$p) {
+  if (-not $p) { return '' }
+  $p = $p.Trim().Replace('\', '/').ToLower()
+  if ($p -match '^/cygdrive/([a-z])(/.*)?$') { $p = '/' + $matches[1] + $matches[2] }
+  elseif ($p -match '^([a-z]):(/.*)?$') { $p = '/' + $matches[1] + $matches[2] }
+  return $p.TrimEnd('/')
+}
+$workerTrees = New-Object System.Collections.Generic.List[string]
+if ($gitExe0) {
+  try {
+    $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    $wtOut = @(& $gitExe0.Source -C $root0 worktree list --porcelain 2>$null)
+    $ErrorActionPreference = $prevEap
+    $cur = $null; $first = $true
+    foreach ($ln in ($wtOut + @(''))) {
+      if ($ln -match '^worktree (.+)$') { $cur = @{ Path = $matches[1]; Branch = '' } ; continue }
+      if ($ln -match '^branch refs/heads/(.+)$' -and $cur) { $cur.Branch = $matches[1]; continue }
+      if ($ln -eq '' -and $cur) {
+        if (-not $first -and ((Split-Path -Leaf $cur.Path) -match '^wk-' -or $cur.Branch -match '^wk-')) { $workerTrees.Add((Norm-Posix $cur.Path)) }
+        $first = $false; $cur = $null
+      }
+    }
+  } catch { [Console]::Error.WriteLine("WARN: git worktree list unreadable -- WORKTREE exemption covers no tree this run") }
+}
+function Under-WorkerTree([string]$text) {
+  # $text is a command line or a cwd; a worker tree matches in any of its three spellings, as a whole path segment
+  if (-not $text) { return $null }
+  $t = $text.Replace('\', '/').ToLower()
+  foreach ($w in $workerTrees) {
+    $forms = @($w)
+    if ($w -match '^/([a-z])(/.*)$') { $forms += @(($matches[1] + ':' + $matches[2]), ('/cygdrive' + $w)) }
+    foreach ($f in $forms) { if ($t -match ([regex]::Escape($f) + '([/"'' ]|$)')) { return $w } }
+  }
+  return $null
+}
+
 # ---- owner liveness: serial -> live MCP server pid (liveness.json, pid confirmed as a server.py) ----
 if (-not $LivenessPath) { $LivenessPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'org\mcp\liveness.json' }
 if (-not $AuditLog)     { $AuditLog     = Join-Path (Split-Path -Parent $PSScriptRoot) 'org\mcp\agent-spawn-audit.log' }
@@ -273,6 +368,7 @@ function Is-Denied($proc) {
 
 $targets = New-Object System.Collections.Generic.List[object]
 $kept    = New-Object System.Collections.Generic.List[object]   # owner-keyed infra left alone (the negative control)
+$exempt  = New-Object System.Collections.Generic.List[object]   # DECLARED / WORKTREE generic candidates left alone
 
 function Add-ScriptTarget($proc, [string]$cls, [string]$why) {
   $a = $null
@@ -301,6 +397,7 @@ function Add-ScriptTarget($proc, [string]$cls, [string]$why) {
 if ($Mode -eq 'scripts' -or $Mode -eq 'all') {
   $now = Get-Date
   $ownerRows = @{}
+  $genericCands = New-Object System.Collections.Generic.List[object]
   foreach ($p in $all) {
     if ($p.Name -notmatch '^(bash|python|pythonw|py|typeperf|awk|gawk|tail|timeout)\.exe$') { continue }
     $procId = [int]$p.ProcessId
@@ -329,6 +426,49 @@ if ($Mode -eq 'scripts' -or $Mode -eq 'all') {
       continue
     }
     if ($age -eq $null -or $age -lt $MonitorCapSeconds) { continue }        # could still be a live seat's Monitor
+    $genericCands.Add($p)
+  }
+  # the two exemptions (DECLARED, WORKTREE) are read for the generic candidates only; cwd costs one bash call
+  $cwdOf = @{}   # winpid -> cwd (MSYS /proc/<msys pid>/cwd, else the nearest MSYS ancestor's)
+  if ($msysOk -and $genericCands.Count -gt 0 -and $workerTrees.Count -gt 0) {
+    $msysByWin = @{}; $msysByPid = @{}
+    foreach ($r in $msysRows) { $msysByWin[$r.WinPid] = $r; $msysByPid[$r.Pid] = $r }
+    $want = New-Object System.Collections.Generic.List[int]
+    $chain = @{}   # winpid -> msys pids, self first then ancestors
+    foreach ($c in $genericCands) {
+      $w = [int]$c.ProcessId; $lst = New-Object System.Collections.Generic.List[int]
+      # an exec'd MSYS process gets a new WINPID under the original Windows process (measured: `bash -c "sleep N"`
+      # leaves bash.exe as the Windows stub and the MSYS row carries sleep's WINPID), so read the first subtree row
+      $anchor = $null
+      if ($msysByWin.ContainsKey($w)) { $anchor = $w } else { foreach ($x in (Get-Subtree $w)) { if ($msysByWin.ContainsKey([int]$x)) { $anchor = [int]$x; break } } }
+      if ($anchor -ne $null) {
+        $r = $msysByWin[$anchor]; $hops = 0
+        while ($r -and $hops -lt 12) { $lst.Add($r.Pid); [void]$want.Add($r.Pid); if ($msysByPid.ContainsKey($r.PPid) -and $r.PPid -ne $r.Pid) { $r = $msysByPid[$r.PPid] } else { $r = $null }; $hops++ }
+      }
+      $chain[$w] = $lst
+    }
+    $bashExe = Join-Path (Split-Path -Parent $psExe) 'bash.exe'
+    if ($want.Count -gt 0 -and (Test-Path $bashExe)) {
+      try {
+        $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+        # no double quote inside the script text: PS 5.1 mangles embedded quotes in a native argument
+        $cwdOut = @(& $bashExe -c 'for p; do echo $p $(readlink /proc/$p/cwd 2>/dev/null); done' _ @($want | Sort-Object -Unique) 2>$null)
+        $ErrorActionPreference = $prevEap
+        $cwdByMsys = @{}
+        foreach ($ln in $cwdOut) { if ($ln -match '^(\d+) (.+)$') { $cwdByMsys[[int]$matches[1]] = $matches[2] } }
+        foreach ($w in @($chain.Keys)) { foreach ($mp in $chain[$w]) { if ($cwdByMsys.ContainsKey($mp)) { $cwdOf[$w] = $cwdByMsys[$mp]; break } } }
+      } catch { [Console]::Error.WriteLine("WARN: MSYS cwd read failed -- WORKTREE exemption reads command lines only this run") }
+    }
+  }
+  foreach ($p in $genericCands) {
+    $procId = [int]$p.ProcessId
+    if ($declaredSet.Contains($procId)) {
+      $exempt.Add([PSCustomObject]@{ Id = $procId; Name = $p.Name; Why = ("DECLARED job ({0})" -f $declaredBy[$procId]) }); continue
+    }
+    $wt = Under-WorkerTree $p.CommandLine
+    $via = 'command line'
+    if (-not $wt -and $cwdOf.ContainsKey($procId)) { $wt = Under-WorkerTree $cwdOf[$procId]; $via = 'cwd' }
+    if ($wt) { $exempt.Add([PSCustomObject]@{ Id = $procId; Name = $p.Name; Why = ("WORKTREE {0} ({1})" -f $wt, $via) }); continue }
     if ($p.Name -match '^(typeperf|awk|gawk|tail|timeout)\.exe$') {
       Add-ScriptTarget $p 'NATIVE' ("native long-runner outside every live claude tree, older than the {0}s Monitor cap" -f $MonitorCapSeconds)
     } else {
@@ -417,7 +557,7 @@ if ($Json) {
     mode=$Mode; execute=[bool]$Execute; unattended=[bool]$Unattended; count=$targets.Count; reclaim_mb=$totalMB;
     sessions=@($sessions | ForEach-Object { [PSCustomObject]@{ kind=$_.Kind; host=$_.Host; host_name=$_.HostName;
       roots=@($_.Roots); serials=@($_.Serials); pids=@($_.Pids) } });
-    targets=$targets; kept=$kept
+    targets=$targets; kept=$kept; exempt=$exempt; markers=@($markerNotes); worker_trees=@($workerTrees)
   } | ConvertTo-Json -Depth 5
   if (-not $Execute) { return }
 }
@@ -445,6 +585,10 @@ if ($kept.Count -gt 0) {
     Write-Output ("  KEEP PID {0,-6} {1,-15} {2}  (copies={3})" -f $_.Id, $_.Kind, $_.Owner, $_.Copies)
   }
 }
+Write-Output ""
+Write-Output ("--- deliberate detached jobs: {0} marker(s), {1} worker worktree(s); {2} candidate(s) EXEMPT ---" -f $markerNotes.Count, $workerTrees.Count, $exempt.Count)
+foreach ($n in $markerNotes) { Write-Output ("  MARKER {0}" -f $n) }
+foreach ($e in $exempt) { Write-Output ("  EXEMPT PID {0,-6} {1,-15} {2}" -f $e.Id, $e.Name, $e.Why) }
 
 # UNATTENDED GUARDS: refuse to act on a run that looks wrong; log why
 if ($Unattended) {
@@ -506,9 +650,10 @@ foreach ($t in $targets) {
   foreach ($d in $desc) {
     if ($protectedTree.Contains($d)) { $sessionBelow = $true }
     if ($byId.ContainsKey($d) -and $byId[$d].Name -match 'claude|codex') { $sessionBelow = $true }
+    if ($declaredSet.Contains([int]$d)) { $sessionBelow = $true }
   }
   if ($sessionBelow -or $protectedTree.Contains([int]$t.Id)) {
-    Write-Output ("  SKIP: PID {0,-6} {1,-22} its tree holds a session PID" -f $t.Id, $t.Name)
+    Write-Output ("  SKIP: PID {0,-6} {1,-22} its tree holds a session PID or a declared job" -f $t.Id, $t.Name)
     continue
   }
   # re-read the PID: gone (an earlier tree stop took it) or REUSED since the snapshot means hands off

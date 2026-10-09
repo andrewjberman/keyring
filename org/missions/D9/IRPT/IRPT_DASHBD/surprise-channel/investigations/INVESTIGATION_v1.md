@@ -3114,3 +3114,76 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W35-S1 -- The daily-mean fee base fixes 134 of the 181 crossovers but itself moves 133 segments from WITHIN to OUTSIDE against round 30 (net +629 within).
+
+```json
+{
+  "id": "IRPT_DASHBD-W35-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~35",
+  "surfaced_at": "2026-10-09T01:00:00Z",
+  "one_line": "The daily-mean fee base fixes 134 of the 181 crossovers but itself moves 133 segments from WITHIN to OUTSIDE against round 30 (net +629 within).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-57 item 3: the fix is a module that re-grades all 9,078 segments with after_within >= 7,459; the order does not ask whether the fix reverses segments.",
+  "world_is": "MEASURED: tieout_compound_v2.py (add-back on the mean served daily market value of the linked days) grades 8,088 within / 990 outside of 9,078; against round 30 it moves 762 OUTSIDE to WITHIN and 133 WITHIN to OUTSIDE, 8,183 unchanged. The 133 reversals are not classed here (not asked). Of the 181 crossovers, 134 return to WITHIN, 47 stay OUTSIDE (23 flow-timing residue, 22 additive-tie coincidence, 2 negative fee total).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json verdict_moves_vs_round30",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/CROSSOVER_E1.json fix_regrade"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W36-S1 -- The fee-base correction (mean daily value) moves 762 segments to WITHIN but 133 round-30 WITHIN segments to OUTSIDE; the average of begin and end value is not the only fee-base reading.
+
+```json
+{
+  "id": "IRPT_DASHBD-W36-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~36",
+  "surfaced_at": "2026-10-09T01:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Re-forming the fee add-back on the mean daily served value moves 762 round-30 OUTSIDE segments to WITHIN and 133 round-30 WITHIN segments to OUTSIDE (net +629, 7,459 -> 8,088 of 9,078).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~36/UNEXPLAINED_CLASSES_E2.json fix.regrade_all_segments"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-58: a class disposed 'fixed' carries its re-graded effect; round 30's formation (fees / ((bmv + emv) / 2)) is the stated fee base of the tie-out.",
+  "world_is": "MEASURED on the 9,078 graded segments, baseline re-derived here and equal to round 30's record (7,459 within): the fee base 'mean daily served value over the linked days' gives 8,088 within; 762 OUTSIDE->WITHIN, 133 WITHIN->OUTSIDE. Of the 1,203 UNEXPLAINED, 618 move to within. The 133 reversals are segments the (bmv + emv) / 2 base tied and the mean-value base does not; their cause was not measured. The fix is a function in a new module (fee_base_gross); the served tie-out and round 30's reader are unchanged and nothing is adopted by assumption."
+}
+```
+
+## IRPT_DASHBD-W37-S1 -- The 370 FLOW_TIMING misses are the served END convention by construction, so within_flow_end is 0 of 370; two segments read 98 and 172 pp at START.
+
+```json
+{
+  "id": "IRPT_DASHBD-W37-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~37",
+  "surfaced_at": "2026-10-09T01:00:00Z",
+  "one_line": "The 370 FLOW_TIMING misses are the served END convention by construction, so within_flow_end is 0 of 370; two segments read 98 and 172 pp at START.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-59: grade the 370 both ways and print the swing; the counts go to the CTO with no convention adopted.",
+  "world_is": "MEASURED: the END re-link (round 17 link_alt_flow END) equals the served opal_return on 370 of 370 rows, and the round-30 population is the abs_diff_pp > 0.35 rows at the served convention, so within_flow_end = 0 of 370 and within_flow_start = 337 of 370. START moves 356 rows closer to BD and 14 further. Two segments read 172.33 and 97.92 pp at START against 1.17 and 1.08 at END (swing -171.15 and -96.84): link_alt_flow START divides by V_(t-1) + F_t, which approaches zero when a flow nearly offsets the prior value (MEASURED on both: one day's external flow is -100.59 and -99.97 percent of the prior day's value, so the START denominator is near zero or negative), so those two START figures are a denominator artifact of the reader, not a finding about BD. Nothing was filled or adopted; both are in the record as computed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~37/FLOW_TIMING_E3.json rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

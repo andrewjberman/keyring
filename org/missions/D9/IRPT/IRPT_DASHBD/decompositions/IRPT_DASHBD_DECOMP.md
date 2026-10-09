@@ -669,3 +669,19 @@ DB-b-54 is SUPERSEDED. DB-b-53 is RE-CUT IN PLACE as the replacement cell (the g
 | `DB-b-53` (re-cut) | the add-back compounded in the tie-out reader (a unit test that adjacent ranges chain); the full 9,078-segment 49F tie-out re-graded on the compounded basis, before/after and share within 0.35 pp; remaining misses named from the closed set | LOCAL | none open (round 18's record and pulls landed) | B30-3 |
 
 fanout: 2 of 2 live chains (B30-2 DB-b-55 running, B30-3 DB-b-53 re-cut), cap 8, reason: the replacement reads round 18's landed inputs only. Worker 0.9.0_WK_IRPT_DASHBD~34, cut from box/dell2.
+
+## 33. ROUND 31, WORKSTREAM BD (2026-10-09 ~00:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-30 analysis @4cfe197b0c, msg 1965)
+
+Round 30 is closed: DB-b-53 re-cut @1698740c8d (compounded tie-out 7,459 of 9,078 within 0.35 pp) and DB-b-55 @495789d6ec (batch 1000
+adopted). DB-b-54 is superseded. ~32's branch is CLOSED under S35: its commits are kept by the local tag `closed/wk-IRPT_DASHBD-32`
+(ffb214d212), not drained.
+
+The compounded basis carries an unexplained regression (181 within -> outside) and two named residues (UNEXPLAINED 1,203; FLOW_TIMING 370).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-57` | E1: the 181 within -> outside, one traced cause each; a compounding defect fixed in a new module with within >= 7,459 | LOCAL | DB-b-53 re-cut (merged) | B31-1 |
+| `DB-b-58` | E2: the 1,203 UNEXPLAINED classed; the top classes to 80% fixed or carried as named causes | LOCAL | DB-b-53 re-cut (merged) | B31-2 |
+| `DB-b-59` | E3: the 370 FLOW_TIMING graded at flow-start and flow-end, the swing per segment, nothing adopted | LOCAL | DB-b-53 re-cut (merged) | B31-3 |
+
+fanout: 3 of 3 chains, cap 8, reason: three disjoint populations over the same landed records; each writes only its own folder (a fix is a new module there). Workers 0.9.0_WK_IRPT_DASHBD~35, ~36, ~37, one worktree each, cut from box/dell2.

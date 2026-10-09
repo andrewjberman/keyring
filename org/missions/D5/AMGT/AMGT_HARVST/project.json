@@ -3,7 +3,7 @@
   "former_codes": [],
   "macro_code": "AMGT",
   "directive": "D5",
-  "fabric": "site-z",
+  "fabric": "dell1",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -193,5 +193,6 @@
   "leads_dell1": {
     "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
     "coo": "2.0.0_SA_COO~W1 (dell1), seated ~00:2xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1274)"
-  }
+  },
+  "fabric_ruling": "dell1 -- Andrew-direct 2026-10-08 ~22:5xZ ('I think all the AMGT work should go to DELL1 ... also DSGN_AMGTV1 ... ETFS_RIVALS'), record @b7361ceb2a; re-placed at L3 by 1.0.0_SA_CTO~DELL1 @a4bcfa869f"
 }

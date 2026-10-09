@@ -96,3 +96,33 @@ cell's output, so they build in parallel. `fanout: 4 of 4 chains, cap 8`.
    dell1 user's PutObject on the two keys -> `--apply` (SERVED: a never-widen half names the blast radius -- two keys in `opal-data-cot`,
    new objects, rollback = delete the two new objects) -> the price build per t-5's answer -> the page, looked at.
 4. FWD-1's "no person ran a pull" needs the draw scheduled on dell1: armed only after the real run, read with `comp-schedule`.
+
+
+---
+
+# ROUND 2 -- DRAFT, NOT ISSUED (issuer 2.0.0_SA_COO~Q1, dell1; drafted 2026-10-09 ~00:5xZ)
+
+Round 1 is FROZEN (ROUND_CLOSE @9317792251; thread n; real run @246e601ef2). `1.0.0_SA_CTO~DELL1` msg 1313: the round-1 analysis is
+HELD on one call at Andrew (FWD-1's consumer: (a) the client's backfilled holding values and performance, valued by ADVI_COTBKF from
+these prices -- the CTO's recommendation -- or (b) a new price page); round 2 carries the hop-5 fix, the S_00 schedule and the
+enrichment candidates either way, and may be decomposed now. This section is cut into cells, and issued in ONE issuance, only when the
+analysis is in hand.
+
+## Measured at the base, 2026-10-09 ~00:4xZ (bears on the hop-5 fix)
+
+- `opal-data-cot` `silver/transactions/`: 118 objects (2026-03-09 .. 2026-10-08), 993,962 rows, **1,515 distinct CUSIPs**. AMLP's CUSIP
+  `00162Q866` is in **0 of 118** objects. Of the price-need file's 4,545 CUSIPs (all sources), **945** appear anywhere in them.
+- So a lander keyed on Cottonwood's Black Diamond transactions can reach at most ~21% of the need; the rest are historical Commonwealth
+  holdings (10-year delivery, keyed by Cusip in `opal-data-assets/commonwealth/cottonwood/silver/transactions/`). Under consumer (a)
+  the landing target is ADVI_COTBKF's valuation input (an input contract at a fixed path, C-PRODUCERS), not `build_canonical_prices_v2.py`.
+
+## Candidate cells (one intent each; final cut follows the analysis)
+
+| candidate | what | serves | depends on the call |
+|---|---|---|---|
+| keep-prices | the draw persists each OK pull (as served, splits, dividends, as traded) to one price store per security, so a lander reads it instead of re-pulling (C-PRICES, C-ONCE) | FWD-1, FWD-8 | no |
+| fields | the queue accepts `dividends` / `splits` (ex-dates) beside `close`; served once already under `close` (@5a392db104) | FWD-4 | no |
+| ledger-home | the Yahoo ledger rows upload to the builder home `s3://opal-data-assets/yahoo/global/bronze/demand_ledger/dt=<date>` (t-3's registry row) | FWD-2 | no |
+| land-v2 | the hop-5 lander re-pointed at the ruled consumer, keyed by Commonwealth CUSIP; carries the row D1-W3-S1 key-derivation question | FWD-1 | YES |
+| s00 | `opal-cot-gold-run` gains S_00 with missing-key handling, or is retired from the thread, per the ruled consumer (dell1 applies its own SSM change, msg 1252) | FWD-1 | YES |
+| schedule | the daily draw on dell1, armed after the round's real run (FWD-1 "no person ran a pull") | FWD-1 | no |

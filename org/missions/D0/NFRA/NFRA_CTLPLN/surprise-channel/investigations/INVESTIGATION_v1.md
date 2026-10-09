@@ -5660,3 +5660,54 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: commit those three paths from the worktree under your own author (or re-seat the order to a numeric slot and re-spawn); the lane gate will admit either."
 }
 ```
+
+## NFRA_CTLPLN-S36 -- W36-S2 handed to NFRA_TRNSPT, the owner of the transcripts-pull package
+
+```json
+{
+  "id": "NFRA_CTLPLN-S36",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-09T00:10:32Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-W36-S2: handed to NFRA_TRNSPT (owner of infra/aws/lambda/transcripts-pull/) as a row file from the laptop, on 1.0.0_SA_CTO msg 107481; COMM_ASSIST carries it by reference.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/ROWS_FROM_LAPTOP_COMM_ASSIST_TRANSCRIPTS_PULL_LINE_ENDINGS_20261008.md (merged 15afb82392)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W36-S2's disarm owner is 2.0.0_SA_COO~R; the surface is not COMM's.",
+  "world_is": "The finding now sits on NFRA_TRNSPT's channel for its owner (2.0.0_SA_COO~T2, dell2) to mint; W36-S2 stays ARMED in its own bytes (append-only).",
+  "notes": "Proposed disposition for the CVO: W36-S2 resolved by handover. COMM_ASSIST-S1's note names this row S35 in error; S35 was already minted by 2.0.0_SA_COO~C."
+}
+```
+
+```json
+{
+  "id": "NFRA_CTLPLN-S37",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T00:10:15Z",
+  "one_line": "TO-DELL-1 carries two <status> lines, 'pending' then 'complete', and the row gate reads the first, so a finished order holds the slug; separately, three APPLY ordinals (11, 19, 20) each name two different orders.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~RV/task_orders/NFRA_CTLPLN.TO-DELL-1.dell-identity-apply-site-z.md:7-8 '<status>pending</status>' then '<status>complete</status>'",
+      "safe-commit refusal 2026-10-09 ~00:0xZ on this seat's remediation rows: '2 of 68 task order(s) under NFRA_CTLPLN are NOT terminal at HEAD: ... TO-APPLY-20.dell2-f1-shell-window-reopen-st26-ledger-laptop.md [pending], ... TO-DELL-1.dell-identity-apply-site-z.md [pending]'",
+      "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/: NFRA_CTLPLN.TO-APPLY-20.teams-agent-r7-code-deploy-laptop.md :3 <id>NFRA_CTLPLN.TO-APPLY-20.teams-agent-r7-code-deploy-laptop</id> :7 complete; NFRA_CTLPLN.TO-APPLY-20.dell2-f1-shell-window-reopen-st26-ledger-laptop.md :3 <id>NFRA_CTLPLN.TO-APPLY-20.dell2-f1-shell-window-reopen-st26-ledger-laptop</id> :7 pending (issued 51ca93c7b7). Neither file has a <to_id> element.",
+      "same pattern at TO-APPLY-11 (dell-identity-plan-1 and teams-agent-inbound-deploy) and TO-APPLY-19 (dell-identity-step-f and teams-agent-r6-code-deploy)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A task order carries one <status>; an APPLY ordinal names one order, so 'TO-APPLY-20' in a message or record resolves to one file.",
+  "world_is": "TO-DELL-1 has two status lines; the gate takes the first and reads a completed order as pending. The full <id>s of the paired APPLY orders differ, so the gate and the files are unambiguous, but the short form 'TO-APPLY-<n>' used in messages and grades is ambiguous for n = 11, 19, 20: INBOUND's round-7 deploy (complete) and the dell2 shell-window reopen (pending) are both 'TO-APPLY-20'.",
+  "notes": "Fix for the first: the issuer 2.0.0_SA_COO~Z deletes the stale '<status>pending</status>' line. For the second: the APPLY issuers (2.0.0_SA_COO~C, 2.0.0_SA_COO~R) draw ordinals from one counter, or cite the full id."
+}
+```

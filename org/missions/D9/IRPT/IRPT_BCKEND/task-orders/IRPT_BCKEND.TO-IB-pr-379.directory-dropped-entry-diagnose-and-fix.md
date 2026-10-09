@@ -68,11 +68,9 @@ OVER_AGE when its age exceeds `MAX_AGE_TRADING_DAYS = 2` (`L/directory/expiry.py
 <criterion id="IB91-1-AC1" cell_refs="IB-pr-379"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py" . IB91-1-AC1</invocation><expect>IB91-1-AC1 PASS</expect></criterion>
 `IB91-1-AC1` -- the diagnosis names both firms' dropped entries (opaque ids), the cause and the evidence, plus the over-age date. Base: FAIL.
 
-<criterion id="IB91-1-AC2" cell_refs="IB-pr-379"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py" . IB91-1-AC2</invocation><expect>IB91-1-AC2 PASS</expect></criterion>
-`IB91-1-AC2` -- the `dropped_entry` tests pass and the previous-state tests still pass. Base: FAIL.
+(withdrawn by AMENDMENT 1, carried by IB-pr-380) `IB91-1-AC2` -- the `dropped_entry` tests pass and the previous-state tests still pass. Base: FAIL.
 
-<criterion id="IB91-1-AC3" cell_refs="IB-pr-379"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py" . IB91-1-AC3</invocation><expect>IB91-1-AC3 PASS</expect></criterion>
-`IB91-1-AC3` -- the packet names P, the built sha, the rollback sha and both branches; the census records a clean-tree BUILD_ONLY with rc 0.
+(withdrawn by AMENDMENT 1, carried by IB-pr-380) `IB91-1-AC3` -- the packet names P, the built sha, the rollback sha and both branches; the census records a clean-tree BUILD_ONLY with rc 0.
 Base: FAIL.
 
 <expected_criteria>IB91-1-AC1</expected_criteria>

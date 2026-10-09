@@ -113,8 +113,10 @@ cleanly." Every cycle, before Step 3b:
    Every cycle, this box: (a) processes -- `powershell -NoProfile -File .tools/kill-maint.ps1 -Unattended`. It prints the
    Claude/Codex session map (never targets), catches REPLACED watcher copies itself (no separate /watcher census), aborts on a
    bad map, stops each target's whole tree and writes KILL-MAINT-RUN to `org/mcp/agent-spawn-audit.log`. (b) worktrees --
-   `python .tools/worktree_gc.py --go`: removes only CLEAN worktrees (merged, nothing uncommitted, idle >= 24 h; never
-   `--force`), never touches HELD unlanded work or a `drain-*` tree; for every ESCALATE row (held >= 48 h, owner not live)
+   `python .tools/worktree_gc.py --go`: removes every MERGED worktree idle >= 24 h -- CLEAN ones plainly, dirty ones with
+   `--force` (Andrew ~23:0xZ, "Force-removing merged worktrees is mandatory, if that is already merged it should be gotten
+   rid of"; record `ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_CALLS_ANSWERED.md`) -- and never touches HELD unmerged
+   work, a locked tree or a `drain-*` tree; for every ESCALATE row (held >= 48 h, owner not live)
    bring the owner online to assess it (Andrew ~17:3xZ, "The agent has to be online to assess"; record
    `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_173xZ_GC_FOUR_CALLS_ANSWERED_WORKTREE_OWNER_MUST_ASSESS.md`).
    Record stopped count, classes, MB freed, worktrees removed and ESCALATE rows on the GC line.

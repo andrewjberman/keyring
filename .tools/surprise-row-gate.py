@@ -153,6 +153,16 @@ OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
 # DUPLICATED IN .tools/owned-paths-validate.py AS _TO_STATUS_RE -- two carriers of one pattern,
 # fixed identically in the same commit. Naming it because the next edit must move both.
 TO_STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
+# THE LAST TAG GOVERNS (1.0.0_SA_CTO gate-owner ruling, msg 107528, 2026-10-09): an order's status is its LAST
+# line-anchored <status> tag. A stale earlier duplicate (pending above complete) must not read as the status.
+
+
+def _to_status_match(text):
+    """The LAST line-anchored <status> match in `text`, or None (ruling msg 107528)."""
+    found = list(TO_STATUS_RE.finditer(text or ""))
+    return found[-1] if found else None
+
+
 # `parked` (1.0.0_SA_CTO 2026-09-30, on 3.0.0_SA_CVO's MDPF_SECCLASS rounds 4-5 review Q1): a PARKED order sits OUTSIDE
 # the current round's rectangle by the CTO's ruling (the relaunch brief: nothing waits on a dead seat; the order carries its
 # owner and the condition that un-parks it). It is therefore not an open order of the round, and it must not pin every later
@@ -264,7 +274,7 @@ def _seats_with_open_orders(root, code):
         st, text = _blob(root, "HEAD", p)
         if st != "OK":
             continue
-        m = TO_STATUS_RE.search(text)
+        m = _to_status_match(text)
         word = m.group(1).lower() if m else ""
         if word in TERMINAL_TO_WORDS:
             continue
@@ -1303,7 +1313,7 @@ def _open_tos_census(root, code, merging=False, round_n=None):
             rm = TO_ROUND_RE.search(text)
             if rm and int(rm.group(1)) != round_n:
                 continue
-        m = TO_STATUS_RE.search(text)
+        m = _to_status_match(text)
         word = m.group(1).lower() if m else "<no status tag>"
         if word not in TERMINAL_TO_WORDS:
             label = "%s [%s]" % (os.path.basename(p), word)
@@ -2282,6 +2292,65 @@ def _mutation_violations(rel, head_text, staged_text):
     return out
 
 
+def _dual_mint_decision(head_rows, other_rows, staged_rows, published):
+    """PURE. {id: (refs carrying HEAD's copy, refs carrying MERGE_HEAD's copy)} for every DUAL-MINT in a merge.
+
+    1.0.0_SA_CTO ruling msg 107530 (2026-10-09, on 0.0.0_AB_MSTR's relay
+    org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261009T0042Z_DELL1_SURPRISE_ROW_DUPLICATE_ID_GATE_GAP.md): one row id
+    minted on two boxes is a DUAL-MINT, not a mutation. An id qualifies only when ALL hold: (a) each merge parent carries
+    exactly one row under it and the two differ; (b) the merged file carries exactly those two rows under it, both
+    byte-equivalent as DATA, nothing else; (c) each copy is already on a published ref (`published` = [(ref, {id: set of
+    content hashes})], origin/CLOUD and every origin/box/*). Anything else keeps the duplicate-id and MUTATED findings."""
+    def _by_id(rows):
+        d = {}
+        for r in rows or []:
+            rid = str((r or {}).get("id") or "").strip()
+            if rid:
+                d.setdefault(rid, []).append(_canon_hash(r))
+        return d
+    h, o, s = _by_id(head_rows), _by_id(other_rows), _by_id(staged_rows)
+    out = {}
+    for rid, hh in h.items():
+        oh = o.get(rid)
+        if len(hh) != 1 or not oh or len(oh) != 1 or hh[0] == oh[0]:
+            continue
+        if sorted(s.get(rid, [])) != sorted([hh[0], oh[0]]):
+            continue
+        rh = [ref for ref, m in published if hh[0] in m.get(rid, ())]
+        ro = [ref for ref, m in published if oh[0] in m.get(rid, ())]
+        if rh and ro:
+            out[rid] = (rh, ro)
+    return out
+
+
+def _dual_mints(root, rel, head_text, staged_text):
+    """The reader for _dual_mint_decision: {} off a merge, or when any parent or the trunk cannot be read (fail closed:
+    the duplicate-id and MUTATED findings then stand). An unreadable origin/box/* ref only narrows what is published.
+    COST: one read per published ref per channel file, only on a merge whose parents both carry the file."""
+    if head_text is None or not _merge_in_progress(root):
+        return {}
+    st, other = _blob(root, "MERGE_HEAD", rel)
+    if st != "OK" or not other:
+        return {}
+    raw = rel.lower().endswith(".json")
+    published = []
+    for ref in _published_refs(root):
+        pst, ptext = _blob(root, ref, rel)
+        if pst == "ERROR":
+            if ref == PUBLISHED_REF:
+                return {}
+            continue
+        if pst != "OK" or not ptext:
+            continue
+        m = {}
+        for r in _rows(ptext, raw)[0]:
+            rid = str((r or {}).get("id") or "").strip()
+            if rid:
+                m.setdefault(rid, set()).add(_canon_hash(r))
+        published.append((ref.replace("refs/remotes/", ""), m))
+    return _dual_mint_decision(_rows(head_text, raw)[0], _rows(other, raw)[0], _rows(staged_text, raw)[0], published)
+
+
 # CLOSED_UNREMEDIATED (proposal org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PROPOSAL_20261003_REMEDIATION_STATE_
 # CLOSED_UNREMEDIATED.md @759c693537; CVO concurrence cvoO_CONCUR_CLOSED_UNREMEDIATED_20261003.md @cfcae02e52). A row
 # that finished while world != spec as asserted carries remediation.closure {reason, pointer}; the schema's conditionals
@@ -2475,6 +2544,16 @@ def check_file(root, rel):
         v.append("%s: a file under adjudications/ is named ADJUDICATION_v<N>.md (annex 4a); this one is not" % rel)
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     _mut = _mutation_violations(rel, head, staged)
+    # DUAL-MINT (1.0.0_SA_CTO msg 107530): one id minted on two boxes, each copy already published, both kept verbatim side
+    # by side by the merge. Admitted with a note; the channel's CVO dispositions it. Neither copy is edited or renumbered.
+    _dm = _dual_mints(root, rel, head, staged) if _mut else {}
+    if _dm:
+        _mut = [x for x in _mut if not any(re.search(r"\b(id|row) %s (occurs|was MUTATED)" % re.escape(i), x) for i in _dm)]
+        for _i in sorted(_dm):
+            notes.append("%s: DUAL-MINT -- row id %s carries two different rows, one from each merge parent, each already "
+                         "on a published ref (HEAD's copy on %s; MERGE_HEAD's copy on %s). Both kept verbatim side by "
+                         "side, neither edited or renumbered; the channel's CVO dispositions it (1.0.0_SA_CTO msg 107530)"
+                         % (rel, _i, ", ".join(_dm[_i][0]), ", ".join(_dm[_i][1])))
     # A MERGE THAT ONLY CARRIES A ROW CHANGE NOTES IT (3.0.0_SA_CVO ruling @6166eb7b25): only the mutation and deletion
     # findings convert, and only when the whole file is the other parent's and this side never touched it. A duplicate-id
     # finding stays a violation.
@@ -2722,7 +2801,33 @@ def _self_test(root):
         p = _honour_audit_line(root, "why: repro", log_path=_tlog, agent="9.9.9_XX_TEST", now="2026-09-11T00:00:00Z")
         txt = open(p, encoding="utf-8").read() if p else ""
         return txt
+    # DUAL-MINT fixtures (1.0.0_SA_CTO msg 107530): the AMGT_HARVST-Z-S106 shape -- site Z's copy on origin/CLOUD,
+    # dell1's on origin/box/dell1, one shared row X-S1 untouched.
+    _dz = {"id": "X_PRJ-Z-S106", "one_line": "site Z copy"}
+    _dd = {"id": "X_PRJ-Z-S106", "one_line": "dell1 copy"}
+    _d0 = {"id": "X_PRJ-S1", "one_line": "shared"}
+    _dpub = [("origin/CLOUD", {"X_PRJ-Z-S106": {_canon_hash(_dz)}, "X_PRJ-S1": {_canon_hash(_d0)}}),
+             ("origin/box/dell1", {"X_PRJ-Z-S106": {_canon_hash(_dd)}, "X_PRJ-S1": {_canon_hash(_d0)}})]
+    _djs = lambda rows: json.dumps(rows)  # noqa: E731
     arms = [
+        # DUAL-MINT (1.0.0_SA_CTO msg 107530): both copies kept side by side, each on a published ref -> admitted.
+        ("DUAL-MINT: one id, a different row in each parent, both kept in the merge, each on a published ref -> admitted, refs named",
+         lambda: _dual_mint_decision([_d0, _dd], [_d0, _dz], [_d0, _dd, _dz], _dpub)
+         == {"X_PRJ-Z-S106": (["origin/box/dell1"], ["origin/CLOUD"])}),
+        ("DUAL-MINT NARROWNESS: the other parent's copy is on NO published ref -> NOT admitted",
+         lambda: _dual_mint_decision([_d0, _dd], [_d0, _dz], [_d0, _dd, _dz], _dpub[1:]) == {}),
+        ("DUAL-MINT NARROWNESS: the merge kept only ONE copy (one overwrote the other) -> NOT admitted (a mutation)",
+         lambda: _dual_mint_decision([_d0, _dd], [_d0, _dz], [_d0, _dz], _dpub) == {}),
+        ("DUAL-MINT NARROWNESS: a copy EDITED in the merge, or a third copy -> NOT admitted",
+         lambda: (_dual_mint_decision([_d0, _dd], [_d0, _dz], [_d0, _dd, dict(_dz, one_line="edited")], _dpub) == {}
+                  and _dual_mint_decision([_d0, _dd], [_d0, _dz], [_d0, _dd, _dz, _dz], _dpub) == {})),
+        ("DUAL-MINT NARROWNESS: the same row in both parents is no dual mint -> nothing admitted",
+         lambda: _dual_mint_decision([_d0, _dz], [_d0, _dz], [_d0, _dz, _dz], _dpub) == {}),
+        ("DUAL-MINT FILTER: the duplicate-id and MUTATED findings for the admitted id are the ONLY ones it removes",
+         lambda: (lambda mut: (len(mut) == 3 and [x for x in mut if not any(
+             re.search(r"\b(id|row) %s (occurs|was MUTATED)" % re.escape(i), x) for i in ["X_PRJ-Z-S106"])]
+             == [m for m in mut if "X_PRJ-S1 " in m]))(
+             _mutation_violations("x.json", _djs([_d0, _dd]), _djs([dict(_d0, one_line="edited"), _dd, _dz])))),
         # MERGE CARRIED, NOT MADE (3.0.0_SA_CVO ruling @6166eb7b25): the pure decision and its three narrowness arms.
         ("MERGE CARRIED: merged blob equals the other parent's and the local side made 0 commits -> carried (noted)",
          lambda: _carried_decision("a1b2c3", "a1b2c3", 0) is True),
@@ -3560,6 +3665,11 @@ def _self_test(root):
         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
          lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
          and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),
+        # THE LAST TAG GOVERNS (1.0.0_SA_CTO ruling msg 107528): a stale earlier duplicate is not the status.
+        ("last-tag: 'pending' then 'complete' reads complete; 'complete' then 'pending' reads pending; none reads None",
+         lambda: _to_status_match("<status>pending</status>\n<status>complete</status>\n").group(1) == "complete"
+         and _to_status_match("<status>complete</status>\n<status>pending</status>\n").group(1) == "pending"
+         and _to_status_match("no tag here, only `<status>` in prose\n") is None),
         # PROOF TERMINALITY (1.0.0_SA_CTO 2026-09-15; spine :436, :487-488). RED-FIRST: every arm below FAILS on the
         # pre-change module, which has neither _proof_terminal nor _proof_verdict. The LIVE arms read real bytes.
         ("proof terminality LIVE: LGIC_NAMING LN-e-3-r2 (VALID proof, its FAIL the round's measurement) reads terminal by proof",

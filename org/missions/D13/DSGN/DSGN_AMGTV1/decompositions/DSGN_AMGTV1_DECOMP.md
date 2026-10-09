@@ -2243,3 +2243,17 @@ reference edit it reads 4 of 4, and `round53/checks/r53a.cjs` still reads 3 of 3
 The record is `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md`
 @b7361ceb2a. The relay is 1.0.0_SA_CTO~Z msg 32100: "start no new round". AV-zzf-1 is `cancelled` with that pointer, and no worker
 took it. This round's list and `round54/checks/r54.cjs` are the next DSGN_AMGTV1 round's list on DELL1.
+
+## v55 -- ROUND 55 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~00:4xZ) -- ROUND 54's LIST, RE-CUT ON DELL1 (DIRECT ACT)
+
+**Rectangle:** v54's list, unchanged. Site Z cancelled `AV-zzf-1` before spawn on the move (v54, above), and the CTO~Z hand-over
+(`deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md`) names it the next round's input on DELL1.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzg-1` DIRECT ACT (= v54 `AV-zzf-1`: three repairs batched; under the size floor; `<risk>LOCAL</risk>`) | FWD-27 | `pages/Freshness/Freshness.tsx`, `pages/Freshness/freshnessRows.ts`, `pages/Freshness/Freshness.test.tsx` | ~119 (worker-light) |
+
+**Base:** portal 84e13d0f (origin DEV HEAD at the cut). **Dry-run at the base on DELL1** (nested worktree, worker-shaped): `round54/checks/r54.cjs`
+1 of 4 (arms 1-3 FAIL as expected, PLANTED passes); `round53/checks/r53a.cjs` 3 of 3; `round29/checks/battery29.sh` ALL PASS (0 skipped).
+**Chains:** 1. **Fan-out:** 1 of 1. **Risk:** LOCAL. **Rows:** a dell1 row reads `DSGN_AMGTV1-D1-W119-S<k>`.
+**Then:** the drain, battery29 and the Freshness bun test on the candidate, a /freshness real run, and CTO review.

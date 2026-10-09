@@ -297,41 +297,81 @@ def root_items(root, map_path=None):
     return out, stats
 
 
-# ---- BF-v-4: names the literal reader does not count -------------------------------------------------------------
+# ---- BF-v-4 / BF-w-2: names the literal reader does not count ----------------------------------------------------
 # census_repo() reads a name only when the name attribute of a graded resource is ONE string literal. A name built in a
-# `locals` block, from a `var.`, through a module or from a generated .json is counted by nothing, so a root that builds
-# all its names that way read names=0. scan_dir() reads one folder of .tf files and puts every such name in one of two
-# places: COUNTED (it resolves to a literal inside the folder's own files: a literal local, a .tfvars.json value) or
-# UNCOUNTED with a reason naming what was not followed: local, var, module, json, interpolation.
+# `locals` block, from a `var.`, through a module call, from a generated .json or from another resource is counted by
+# nothing, so a root that builds its names that way read names=0. scan_dir() reads one folder of .tf files with a small
+# HCL expression reader (strings and templates, references, objects, lists, conditionals, for expressions and the
+# functions listed in _FUNCS) and puts every such name in one of two places:
+#   COUNTED    the repository decides the value: a literal local or a chain of locals; a `var.` with a default, a value in
+#              the folder's own *.tfvars / *.tfvars.json, or the argument a module call passes; a module call to a folder of
+#              this repository (its source path followed, once per for_each / count key); a reference to another resource
+#              of the folder whose name or other argument resolves (aws_s3_bucket.x.id is that bucket's name).
+#   UNCOUNTED  the repository does not decide it. The reason is one of the closed set below, never a bare kind.
+#
+# The closed set of reasons an UNCOUNTED line carries (UNCOUNTED_REASONS; one line each):
+#   apply-time       the value exists only after apply: an attribute AWS or the provider computes (an arn, an id that is not
+#                    the name), a data source, or a resource argument that is not written in the repository
+#   var-unset        a variable of this root with no default and no value in the root's own *.tfvars / *.tfvars.json: it is
+#                    supplied outside the repository (-var, environment, the CI that applies the root)
+#   module-input     a variable of a reusable module folder (under a modules/ directory) read by itself: each call site
+#                    supplies it, and the call sites resolve it in the root that calls the module
+#   external-module  a module whose source is not a folder of this repository (registry, git, a missing path)
+#   open-key-domain  a count / for_each key with no literal domain: each.* or count.index where the repository spells no
+#                    collection to run over
+#   unevaluated      an expression form this reader does not evaluate (a function outside _FUNCS, a splat, a heredoc, a
+#                    directive, a reference cycle): the repository may decide it, this reader does not
 
-UNCOUNTED_REASONS = ("local", "var", "module", "json", "interpolation")
-_INTERP_RE = re.compile(r"\$\{([^{}]*)\}")
-_REF_LOCAL_RE = re.compile(r"^local\.([A-Za-z_][A-Za-z0-9_-]*)$")
-_REF_VAR_RE = re.compile(r"^var\.([A-Za-z_][A-Za-z0-9_-]*)$")
-_REF_EACH_RE = re.compile(r"^each\.(key|value(?:\.[A-Za-z_][A-Za-z0-9_-]*)*)$")
-_INTERP_KIND_RE = re.compile(r"\$\{\s*(local|var|module)[.\[]")
-_TAG_NAME_RE = re.compile(r'(?:^|[{,\s])"?Name"?\s*=\s*([^\n,}]+)')
+UNCOUNTED_REASONS = ("apply-time", "var-unset", "module-input", "external-module", "open-key-domain", "unevaluated")
+REASON_WHY = {
+    "apply-time": "the value exists only after apply: a provider-computed attribute, a data source, an argument not written here",
+    "var-unset": "a variable of this root with no default and no value in its own tfvars: supplied outside the repository",
+    "module-input": "an input of a reusable module read by itself: each call site supplies it and is resolved in the calling root",
+    "external-module": "a module whose source is not a folder of this repository",
+    "open-key-domain": "each.* or count.index where the repository spells no collection to run over",
+    "unevaluated": "an expression form this reader does not evaluate (function outside _FUNCS, splat, heredoc, directive, cycle)",
+}
+_ID_IS_NAME = ("S3_BUCKET", "IAM_ROLE", "LAMBDA", "EVENT_RULE", "LOG_GROUP", "DYNAMODB_TABLE", "INSTANCE_PROFILE")
+_MODULE_META = ("source", "for_each", "count", "depends_on", "providers", "version")
+_MAX_DEPTH = 40
+_NAME_TAG_RE = re.compile(r'(?:^|[{,\s])"?Name"?\s*=\s*("(?:[^"\\\n]|\\.)*")')
 
 
-class _Unres(Exception):
-    """An expression the folder's own files do not resolve to a literal; .reason is what was not followed."""
+class Unk(object):
+    """A value the folder's own files do not decide; .reason is one of UNCOUNTED_REASONS."""
 
     def __init__(self, reason):
-        Exception.__init__(self, reason)
         self.reason = reason
+
+
+class _Bad(Exception):
+    """Syntax this reader does not evaluate."""
+
+
+class _S(str):
+    """A string with the (path, line) pairs that spell it: where the literal it came from sits."""
+    srcs = frozenset()
+
+
+def _s(text, srcs=()):
+    o = _S(text)
+    o.srcs = frozenset(srcs)
+    return o
+
+
+def _srcs_of(v, depth=0):
+    if isinstance(v, _S):
+        return v.srcs
+    if depth < 3 and isinstance(v, (list, tuple)):
+        out = set()
+        for x in v:
+            out |= _srcs_of(x, depth + 1)
+        return out
+    return frozenset()
 
 
 def _flat(raw):
     return " ".join(str(raw).split())
-
-
-def _kind_of(ref):
-    """The reason a reference that is not followed carries, by what it starts with."""
-    ref = ref.strip()
-    for k in ("local", "var", "module"):
-        if ref.startswith(k + ".") or ref.startswith(k + "["):
-            return k
-    return "interpolation"
 
 
 def _json_line(text, path):
@@ -347,226 +387,1217 @@ def _json_line(text, path):
     return found
 
 
-class _Ctx(object):
-    def __init__(self, locals_, jvars):
-        self.locals = locals_      # name -> (raw expression, "file", line)
-        self.vars = jvars          # name -> (value, "file", text)
-        self.each = None           # (var name, key, value) while a for_each binding is read
+# ---- the lexer and the parser -----------------------------------------------------------------------------------
+
+_ID_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_-]*")
+_NUM_RE = re.compile(r"[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?")
+_OPS2 = ("==", "!=", "<=", ">=", "&&", "||", "=>")
+_ESC = {"n": "\n", "t": "\t", '"': '"', "\\": "\\", "r": "\r"}
 
 
-def _eval(raw, ctx, depth=0):
-    """(string, source) the expression spells: source is ("file", line) of the declaring line when the whole expression
-    is one reference, else None. _Unres when the folder's files do not resolve it."""
-    raw = str(raw).strip()
-    if depth > 8:
-        raise _Unres("local")
-    m = opal_naming._TF_LITERAL_RE.match(raw)
-    if not m:
-        q = _INTERP_KIND_RE.search(raw) if raw.startswith('"') else None
-        if q:
-            raise _Unres(q.group(1))  # a string with a quote inside an interpolation: the first reference not followed
-        return _ref(raw, ctx, depth)
-    body = m.group(1)
-    if "%{" in body:
-        raise _Unres("interpolation")
-    parts = list(_INTERP_RE.finditer(body))
-    if not parts:
-        if "${" in body:
-            raise _Unres("interpolation")
-        return body.replace('\\"', '"').replace("\\\\", "\\"), None
-    if len(parts) == 1 and parts[0].span() == (0, len(body)):
-        return _ref(parts[0].group(1).strip(), ctx, depth)
-    out, pos = [], 0
-    for p in parts:
-        out.append(body[pos:p.start()])
-        out.append(_ref(p.group(1).strip(), ctx, depth)[0])
-        pos = p.end()
-    out.append(body[pos:])
-    text = "".join(out)
-    if "${" in text:
-        raise _Unres("interpolation")
-    return text, None
+def _close_brace(raw, i):
+    """The index of the } that closes the { at raw[i], skipping strings."""
+    depth, n = 0, len(raw)
+    while i < n:
+        c = raw[i]
+        if c == '"':
+            i = _lex_string(raw, i)[1]
+            continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+    raise _Bad("unclosed brace")
 
 
-def _ref(ref, ctx, depth):
-    m = _REF_LOCAL_RE.match(ref)
-    if m:
-        row = ctx.locals.get(m.group(1))
-        if row is None:
-            raise _Unres("local")
+def _lex_string(raw, i):
+    """(parts, index after the closing quote) of the string that opens at raw[i]: parts are ("s", text) and
+    ("e", start, end) for a ${ } expression."""
+    j, n, buf, parts = i + 1, len(raw), [], []
+    while j < n:
+        c = raw[j]
+        if c == "\\":
+            nxt = raw[j + 1:j + 2]
+            buf.append(_ESC.get(nxt, "\\" + nxt))
+            j += 2
+            continue
+        if c == '"':
+            if buf:
+                parts.append(("s", "".join(buf)))
+            return parts, j + 1
+        if raw.startswith("$${", j):
+            buf.append("${")
+            j += 3
+            continue
+        if raw.startswith("%%{", j):
+            buf.append("%{")
+            j += 3
+            continue
+        if raw.startswith("${", j):
+            e = _close_brace(raw, j + 1)
+            if buf:
+                parts.append(("s", "".join(buf)))
+                buf = []
+            parts.append(("e", j + 2, e))
+            j = e + 1
+            continue
+        if raw.startswith("%{", j):
+            raise _Bad("directive")
+        buf.append(c)
+        j += 1
+    raise _Bad("unterminated string")
+
+
+def _lex(raw):
+    toks, i, n = [], 0, len(raw)
+    while i < n:
+        c = raw[i]
+        if c in " \t\r\n":
+            i += 1
+            continue
+        if c == "#" or raw.startswith("//", i):
+            j = raw.find("\n", i)
+            i = n if j < 0 else j + 1
+            continue
+        if raw.startswith("/*", i):
+            j = raw.find("*/", i + 2)
+            i = n if j < 0 else j + 2
+            continue
+        if c == '"':
+            parts, j = _lex_string(raw, i)
+            toks.append(("str", parts, i))
+            i = j
+            continue
+        if raw.startswith("<<", i):
+            raise _Bad("heredoc")
+        if c.isdigit():
+            m = _NUM_RE.match(raw, i)
+            txt = m.group(0)
+            toks.append(("num", float(txt) if ("." in txt or "e" in txt or "E" in txt) else int(txt), i))
+            i = m.end()
+            continue
+        m = _ID_RE.match(raw, i)
+        if m:
+            toks.append(("id", m.group(0), i))
+            i = m.end()
+            continue
+        if raw.startswith("...", i):
+            toks.append(("op", "...", i))
+            i += 3
+            continue
+        if raw[i:i + 2] in _OPS2:
+            toks.append(("op", raw[i:i + 2], i))
+            i += 2
+            continue
+        if c in "+-*/%<>!?:.,()[]{}=":
+            toks.append(("op", c, i))
+            i += 1
+            continue
+        raise _Bad("character %r" % c)
+    return toks
+
+
+class _Parser(object):
+    """Recursive descent over the tokens of one expression text. `path` and `base` give every string literal the
+    (path, line) that spells it."""
+
+    def __init__(self, text, path, base):
+        self.text, self.path, self.base = text, path, base
+        self.toks = _lex(text)
+        self.i = 0
+
+    def line(self, pos):
+        return self.base + self.text.count("\n", 0, pos)
+
+    def peek(self, k=0):
+        j = self.i + k
+        return self.toks[j] if j < len(self.toks) else ("eof", None, len(self.text))
+
+    def take(self):
+        t = self.peek()
+        self.i += 1
+        return t
+
+    def is_op(self, v, k=0):
+        t = self.peek(k)
+        return t[0] == "op" and t[1] == v
+
+    def is_id(self, v, k=0):
+        t = self.peek(k)
+        return t[0] == "id" and t[1] == v
+
+    def expect(self, v):
+        t = self.take()
+        if t[0] != "op" or t[1] != v:
+            raise _Bad("expected %s" % v)
+
+    def parse_all(self):
+        n = self.expr()
+        if self.peek()[0] != "eof":
+            raise _Bad("trailing tokens")
+        return n
+
+    def expr(self):
+        c = self.binary(0)
+        if self.is_op("?"):
+            self.take()
+            a = self.expr()
+            self.expect(":")
+            b = self.expr()
+            return ("cond", c, a, b)
+        return c
+
+    _LEVELS = (("||",), ("&&",), ("==", "!="), ("<", ">", "<=", ">="), ("+", "-"), ("*", "/", "%"))
+
+    def binary(self, lvl):
+        if lvl >= len(self._LEVELS):
+            return self.unary()
+        left = self.binary(lvl + 1)
+        while self.peek()[0] == "op" and self.peek()[1] in self._LEVELS[lvl]:
+            op = self.take()[1]
+            left = ("bin", op, left, self.binary(lvl + 1))
+        return left
+
+    def unary(self):
+        if self.is_op("!") or self.is_op("-"):
+            op = self.take()[1]
+            return ("un", op, self.unary())
+        return self.postfix(self.primary())
+
+    def postfix(self, node):
+        while True:
+            if self.is_op("."):
+                nxt = self.peek(1)
+                if nxt[0] == "id":
+                    self.take()
+                    node = ("attr", node, self.take()[1])
+                elif nxt[0] == "num" and isinstance(nxt[1], int):
+                    self.take()
+                    node = ("idx", node, ("lit", self.take()[1]))
+                else:
+                    raise _Bad("splat")
+            elif self.is_op("["):
+                if self.is_op("*", 1):
+                    raise _Bad("splat")
+                self.take()
+                k = self.expr()
+                self.expect("]")
+                node = ("idx", node, k)
+            else:
+                return node
+
+    def primary(self):
+        t = self.take()
+        kind, val, pos = t
+        if kind == "num":
+            return ("lit", val)
+        if kind == "str":
+            return self.template(val, pos)
+        if kind == "id":
+            if val == "true":
+                return ("lit", True)
+            if val == "false":
+                return ("lit", False)
+            if val == "null":
+                return ("lit", None)
+            if self.is_op("("):
+                self.take()
+                args = []
+                while not self.is_op(")"):
+                    args.append(self.expr())
+                    if self.is_op("..."):
+                        raise _Bad("expansion")
+                    if self.is_op(","):
+                        self.take()
+                    elif not self.is_op(")"):
+                        raise _Bad("call arguments")
+                self.take()
+                return ("call", val, args)
+            return ("id", val)
+        if kind == "op" and val == "(":
+            n = self.expr()
+            self.expect(")")
+            return n
+        if kind == "op" and val == "[":
+            if self.is_id("for"):
+                return self.for_expr("]")
+            items = []
+            while not self.is_op("]"):
+                items.append(self.expr())
+                if self.is_op(","):
+                    self.take()
+            self.take()
+            return ("tuple", items)
+        if kind == "op" and val == "{":
+            if self.is_id("for"):
+                return self.for_expr("}")
+            ents = []
+            while not self.is_op("}"):
+                ents.append(self.entry())
+                if self.is_op(","):
+                    self.take()
+            self.take()
+            return ("obj", ents)
+        raise _Bad("unexpected %s" % (val,))
+
+    def entry(self):
+        t = self.peek()
+        if t[0] == "id" and (self.is_op("=", 1) or self.is_op(":", 1)):
+            self.take()
+            key = ("lit", _s(t[1], [(self.path, self.line(t[2]))]))
+        else:
+            key = self.expr()
+        if not (self.is_op("=") or self.is_op(":")):
+            raise _Bad("object entry")
+        self.take()
+        return (key, self.expr())
+
+    def for_expr(self, close):
+        self.take()  # for
+        a = self.take()
+        if a[0] != "id":
+            raise _Bad("for variable")
+        kvar, vvar = None, a[1]
+        if self.is_op(","):
+            self.take()
+            b = self.take()
+            if b[0] != "id":
+                raise _Bad("for variable")
+            kvar, vvar = a[1], b[1]
+        if not self.is_id("in"):
+            raise _Bad("for in")
+        self.take()
+        coll = self.expr()
+        self.expect(":")
+        k = self.expr()
+        v = None
+        if close == "}":
+            self.expect("=>")
+            v = self.expr()
+            if self.is_op("..."):
+                raise _Bad("grouping")
+        cond = None
+        if self.is_id("if"):
+            self.take()
+            cond = self.expr()
+        self.expect(close)
+        return ("for", close, kvar, vvar, coll, k, v, cond)
+
+    def template(self, parts, pos):
+        out = []
+        for p in parts:
+            if p[0] == "s":
+                out.append(("s", p[1]))
+            else:
+                sub = self.text[p[1]:p[2]]
+                out.append(("e", _Parser(sub, self.path, self.line(p[1])).parse_all()))
+        line = self.line(pos)
+        if all(p[0] == "s" for p in out):
+            return ("lit", _s("".join(p[1] for p in out), [(self.path, line)]))
+        if len(out) == 1:
+            return out[0][1]
+        return ("tpl", out, (self.path, line))
+
+
+_PARSE_CACHE = {}
+
+
+def _parse(raw, path, line):
+    key = (path, line, raw)
+    if key not in _PARSE_CACHE:
         try:
-            val = _eval(row[0], ctx, depth + 1)[0]
-        except _Unres:
-            raise _Unres("local")
-        return val, (row[1], row[2])
-    m = _REF_VAR_RE.match(ref)
-    if m:
-        row = ctx.vars.get(m.group(1))
-        if row is None or not isinstance(row[0], str):
-            raise _Unres("var")
-        return row[0], (row[1], _json_line(row[2], [m.group(1)]))
-    m = _REF_EACH_RE.match(ref)
-    if m:
-        if ctx.each is None:
-            raise _Unres("json")
-        vname, key, value = ctx.each
-        _v, fname, text = ctx.vars[vname]
-        path, cur = [vname, key], value
-        if m.group(1) == "key":
-            return key, (fname, _json_line(text, path))
-        for part in m.group(1).split(".")[1:]:
-            if not isinstance(cur, dict) or part not in cur:
-                raise _Unres("json")
-            cur = cur[part]
-            path.append(part)
-        if not isinstance(cur, str):
-            raise _Unres("json")
-        return cur, (fname, _json_line(text, path))
-    raise _Unres(_kind_of(ref))
+            _PARSE_CACHE[key] = _Parser(raw, path, line).parse_all()
+        except (_Bad, IndexError):
+            _PARSE_CACHE[key] = None
+    return _PARSE_CACHE[key]
 
 
-def _bindings(raw, ctx):
-    """[(var name, key, value)] a for_each over a JSON-backed var spells; _Unres when it is not one."""
-    m = _REF_VAR_RE.match(str(raw).strip())
-    if not m:
-        raise _Unres(_kind_of(str(raw)))
-    row = ctx.vars.get(m.group(1))
-    if row is None or not isinstance(row[0], dict):
-        raise _Unres("var")
-    return [(m.group(1), k, v) for k, v in row[0].items()]
+# ---- the evaluator ----------------------------------------------------------------------------------------------
+
+class _Env(object):
+    def __init__(self, scope, each=None, count=None, loop=None, depth=0):
+        self.scope, self.each, self.count, self.loop, self.depth = scope, each, count, loop or {}, depth
+
+    def sub(self, **kw):
+        e = _Env(self.scope, self.each, self.count, dict(self.loop), self.depth + 1)
+        for k, v in kw.items():
+            setattr(e, k, v)
+        return e
 
 
-def _dir_vars(directory, json_names, label):
+class _Thunk(object):
+    """An expression read lazily, once, in the scope and the for_each / count binding it was written in."""
+
+    def __init__(self, raw, path, line, env):
+        self.raw, self.path, self.line, self.env = raw, path, line, env
+        self.done, self.val = False, None
+
+    def get(self):
+        if not self.done:
+            self.val = Unk("unevaluated")  # a cycle reads unevaluated
+            self.val = _run(self.raw, self.path, self.line, self.env)
+            self.done = True
+        return self.val
+
+
+def _run(raw, path, line, env):
+    node = _parse(raw, path, line)
+    if node is None or env.depth > _MAX_DEPTH:
+        return Unk("unevaluated")
+    try:
+        return _ev(node, env)
+    except (TypeError, ValueError, KeyError, IndexError, AttributeError, ZeroDivisionError, RecursionError, OverflowError):
+        return Unk("unevaluated")
+
+
+def _first_unk(*vals):
+    for v in vals:
+        if isinstance(v, Unk):
+            return v
+    return None
+
+
+def _text_of(v):
+    if isinstance(v, str):
+        return v
+    if isinstance(v, bool):
+        return "true" if v else "false"
+    if isinstance(v, int):
+        return str(v)
+    if isinstance(v, float):
+        return str(int(v)) if v == int(v) else repr(v)
+    return None
+
+
+def _ev(node, env):
+    k = node[0]
+    if k == "lit":
+        return node[1]
+    if k == "tpl":
+        out = []
+        for p in node[1]:
+            if p[0] == "s":
+                out.append(p[1])
+                continue
+            v = _ev(p[1], env)
+            if isinstance(v, Unk):
+                return v
+            t = _text_of(v)
+            if t is None:
+                return Unk("unevaluated")
+            out.append(t)
+        return _s("".join(out), [node[2]])  # a template is spelled where it is written
+    if k == "id":
+        return _root(node[1], env)
+    if k == "attr":
+        return _member(_ev(node[1], env), node[2], env)
+    if k == "idx":
+        return _index(_ev(node[1], env), _ev(node[2], env), env)
+    if k == "tuple":
+        return [_ev(x, env) for x in node[1]]
+    if k == "obj":
+        d = {}
+        for kn, vn in node[1]:
+            key = _ev(kn, env)
+            if isinstance(key, Unk):
+                return key
+            t = _text_of(key)
+            if t is None:
+                return Unk("unevaluated")
+            d[key if isinstance(key, _S) else t] = _ev(vn, env)
+        return d
+    if k == "un":
+        v = _ev(node[2], env)
+        if isinstance(v, Unk):
+            return v
+        if node[1] == "!":
+            return (not v) if isinstance(v, bool) else Unk("unevaluated")
+        return -v
+    if k == "cond":
+        c = _ev(node[1], env)
+        if isinstance(c, Unk):
+            return c
+        if not isinstance(c, bool):
+            return Unk("unevaluated")
+        return _ev(node[2] if c else node[3], env)
+    if k == "bin":
+        return _binary(node, env)
+    if k == "call":
+        return _call(node[1], node[2], env)
+    if k == "for":
+        return _for(node, env)
+    raise _Bad(k)
+
+
+def _binary(node, env):
+    op = node[1]
+    a = _ev(node[2], env)
+    if op == "&&" and a is False:
+        return False
+    if op == "||" and a is True:
+        return True
+    b = _ev(node[3], env)
+    u = _first_unk(a, b)
+    if u is not None:
+        return u
+    if op == "==":
+        return a == b
+    if op == "!=":
+        return a != b
+    if op == "&&":
+        return bool(a and b)
+    if op == "||":
+        return bool(a or b)
+    if op == "+":
+        return a + b
+    if op == "-":
+        return a - b
+    if op == "*":
+        return a * b
+    if op == "/":
+        return a / b
+    if op == "%":
+        return a % b
+    if op == "<":
+        return a < b
+    if op == ">":
+        return a > b
+    if op == "<=":
+        return a <= b
+    return a >= b
+
+
+def _items_of(coll):
+    """[(key, value)] a for expression or a for_each runs over; None when it is not a collection."""
+    if isinstance(coll, dict):
+        return list(coll.items())
+    if isinstance(coll, (list, tuple)):
+        return [(i, v) for i, v in enumerate(coll)]
+    return None
+
+
+def _for(node, env):
+    _k, close, kvar, vvar, collnode, kexpr, vexpr, cond = node
+    coll = _ev(collnode, env)
+    if isinstance(coll, Unk):
+        return coll
+    items = _items_of(coll)
+    if items is None:
+        return Unk("unevaluated")
+    out_l, out_d = [], {}
+    for key, val in items:
+        loop = dict(env.loop)
+        loop[vvar] = val
+        if kvar is not None:
+            loop[kvar] = key
+        e = env.sub(loop=loop)
+        if cond is not None:
+            c = _ev(cond, e)
+            if isinstance(c, Unk):
+                return c
+            if not c:
+                continue
+        if close == "]":
+            out_l.append(_ev(kexpr, e))
+        else:
+            kk = _ev(kexpr, e)
+            if isinstance(kk, Unk):
+                return kk
+            out_d[kk if isinstance(kk, _S) else _text_of(kk)] = _ev(vexpr, e)
+    return out_l if close == "]" else out_d
+
+
+# ---- references: locals, variables, modules, resources ----------------------------------------------------------
+
+class _Ns(object):
+    def __init__(self, scope, kind):
+        self.scope, self.kind = scope, kind
+
+
+class _ResType(object):
+    def __init__(self, scope, rtype):
+        self.scope, self.rtype = scope, rtype
+
+
+class _ResRef(object):
+    def __init__(self, scope, res):
+        self.scope, self.res = scope, res
+
+
+class _ResInst(object):
+    def __init__(self, scope, res, binding):
+        self.scope, self.res, self.binding = scope, res, binding
+
+    def member(self, attr):
+        sc, res = self.scope, self.res
+        kind, bk, bv = self.binding
+        guard = (id(res), attr, _text_of(bk))
+        if guard in sc.busy:
+            return Unk("unevaluated")
+        sc.busy.add(guard)
+        try:
+            env = _Env(sc, each=({"key": bk, "value": bv} if kind == "for_each" else None),
+                       count=(bk if kind == "count" else None))
+            row = res["attrs"].get(attr)
+            if row is not None:
+                return _run(row[0], res["path"], row[1], env)
+            am = sc.attr_map.get(res["type"])
+            if attr == "id" and am is not None and am[0] in _ID_IS_NAME and am[1] in res["attrs"]:
+                r2 = res["attrs"][am[1]]
+                return _run(r2[0], res["path"], r2[1], env)
+            return Unk("apply-time")
+        finally:
+            sc.busy.discard(guard)
+
+
+class _ModRef(object):
+    def __init__(self, scope, call):
+        self.scope, self.call = scope, call
+
+
+class _ModInst(object):
+    def __init__(self, scope):
+        self.scope = scope
+
+    def output(self, name):
+        return self.scope.output(name)
+
+
+def _root(name, env):
+    if name in env.loop:
+        return env.loop[name]
+    sc = env.scope
+    if name in ("local", "var", "module"):
+        return _Ns(sc, name)
+    if name == "each":
+        return env.each if env.each is not None else Unk("open-key-domain")
+    if name == "count":
+        return {"index": env.count} if env.count is not None else Unk("open-key-domain")
+    if name == "data":
+        return Unk("apply-time")
+    if name == "path":
+        return {"module": sc.f.directory, "root": sc.root_dir, "cwd": sc.root_dir}
+    if name in sc.f.res_types:
+        return _ResType(sc, name)
+    return Unk("unevaluated")
+
+
+def _member(base, key, env):
+    if isinstance(base, Unk):
+        return base
+    if isinstance(base, dict):
+        return base[key] if key in base else Unk("unevaluated")
+    if isinstance(base, _Ns):
+        if base.kind == "local":
+            return base.scope.local(key)
+        if base.kind == "var":
+            return base.scope.var(key)
+        call = base.scope.f.modules.get(key)
+        return _ModRef(base.scope, base.scope.module_call(key)) if call is not None else Unk("unevaluated")
+    if isinstance(base, _ResType):
+        res = base.scope.f.res_by_addr.get((base.rtype, key))
+        return _ResRef(base.scope, res) if res is not None else Unk("unevaluated")
+    if isinstance(base, _ResRef):
+        if base.res["bind"] is not None:
+            return Unk("unevaluated")
+        return _ResInst(base.scope, base.res, (None, None, None)).member(key)
+    if isinstance(base, _ResInst):
+        return base.member(key)
+    if isinstance(base, _ModRef):
+        if base.call.kind is not None:
+            return Unk("unevaluated")
+        inst = base.call.instance(None)
+        return inst.output(key) if isinstance(inst, _ModInst) else inst
+    if isinstance(base, _ModInst):
+        return base.output(key)
+    return Unk("unevaluated")
+
+
+def _index(base, key, env):
+    if isinstance(base, Unk):
+        return base
+    if isinstance(key, Unk):
+        return key
+    if isinstance(base, dict):
+        t = _text_of(key)
+        return base[t] if t in base else Unk("unevaluated")
+    if isinstance(base, (list, tuple)):
+        i = int(key)
+        return base[i] if 0 <= i < len(base) else Unk("unevaluated")
+    if isinstance(base, _ResRef):
+        b = base.scope.bindings(base.res)
+        if isinstance(b, Unk):
+            return b
+        kind, pairs = b
+        t = _text_of(key)
+        for bk, bv in pairs:
+            if _text_of(bk) == t:
+                return _ResInst(base.scope, base.res, (kind, bk, bv))
+        return Unk("unevaluated")
+    if isinstance(base, _ModRef):
+        inst = base.call.instance(key)
+        return inst
+    return _member(base, _text_of(key), env)
+
+
+# ---- functions --------------------------------------------------------------------------------------------------
+
+_FMT_RE = re.compile(r"%(%|[-+ 0#]*[0-9]*(?:\.[0-9]+)?[sdvfxXq])")
+
+
+def _f_format(a):
+    fmt, args, pos = a[0], a[1:], [0]
+    srcs = set(_srcs_of(list(a)))
+
+    def rep(m):
+        spec = m.group(1)
+        if spec == "%":
+            return "%"
+        arg = args[pos[0]]
+        pos[0] += 1
+        verb = spec[-1]
+        if verb in "sv":
+            if _text_of(arg) is None:
+                raise ValueError("format argument")
+            return ("%" + spec[:-1] + "s") % _text_of(arg)
+        if verb == "q":
+            return '"%s"' % _text_of(arg)
+        if verb in "dxX":
+            return ("%" + spec) % int(arg)
+        return ("%" + spec) % float(arg)
+    return _s(_FMT_RE.sub(rep, fmt), srcs)
+
+
+def _f_merge(a):
     out = {}
-    for fn in sorted(json_names):
-        if not fn.endswith(".tfvars.json"):
+    for d in a:
+        if d is None:
             continue
-        try:
-            with open(os.path.join(directory, fn), encoding="utf-8", errors="replace") as fh:
-                text = fh.read().replace("\r\n", "\n")
-            doc = json.loads(text)
-        except (OSError, ValueError):
-            continue
-        if isinstance(doc, dict):
-            for k, v in doc.items():
-                out[k] = (v, label + "/" + fn, text)
+        if not isinstance(d, dict):
+            return Unk("unevaluated")
+        out.update(d)
     return out
 
 
-_SCAN_CACHE = {}
+def _f_one(a):
+    x = a[0]
+    if not isinstance(x, (list, tuple)):
+        return Unk("unevaluated")
+    if len(x) == 0:
+        return None
+    return x[0] if len(x) == 1 else Unk("unevaluated")
 
 
-def scan_dir(directory, label, tf_names=None, json_names=None):
-    """(literal, resolved, uncounted) of the .tf files in ONE folder (a Terraform configuration: its locals and its
-    .tfvars.json files are the folder's own).
-      literal    the names census_repo() counts (read here by the census's own reader, for a test to read once);
-      resolved   the names the census cannot read that the folder's own files resolve to a literal: items
-                 {plane, type, current, where};
-      uncounted  one dict {type, attribute, expression, reason, where} per graded resource whose name does not resolve,
-                 and per module call whose called module builds names it does not state (reason module).
-    label is the repository-relative folder path that prefixes every `where`."""
-    directory = os.path.abspath(directory)
-    key = (directory, label, tuple(sorted(tf_names)) if tf_names is not None else None,
-           tuple(sorted(json_names)) if json_names is not None else None)
-    if key in _SCAN_CACHE:
-        return _SCAN_CACHE[key]
-    _SCAN_CACHE[key] = ([], [], [])  # a module cycle reads empty, never loops
-    names = sorted(tf_names) if tf_names is not None else sorted(f for f in os.listdir(directory) if f.endswith(".tf"))
-    jnames = sorted(json_names) if json_names is not None else sorted(
-        f for f in os.listdir(directory) if f.endswith(".tfvars.json"))
-    texts = {}
-    for fn in names:
-        try:
-            with open(os.path.join(directory, fn), encoding="utf-8", errors="replace") as fh:
-                texts[fn] = fh.read().replace("\r\n", "\n")
-        except OSError:
-            continue
-    lcl = {}
-    for fn in sorted(texts):
-        t = texts[fn]
-        for it in opal_naming._tf_items(t, 0, len(t)):
-            if it[0] == "block" and it[1] == "locals" and not it[2]:
-                for a in opal_naming._tf_items(t, it[4], it[5]):
-                    if a[0] == "attr":
-                        lcl.setdefault(a[1], (a[3], label + "/" + fn, opal_naming._line_of(t, a[2])))
-    ctx = _Ctx(lcl, _dir_vars(directory, jnames, label))
-    attr_map = opal_naming._census_tf_attr()
-    literal, resolved, uncounted = [], [], []
-    for fn in sorted(texts):
-        t = texts[fn]
-        rel = label + "/" + fn
-        names_, _exprs = opal_naming.census_tf_names(rel, t)
-        literal += [{"plane": "repo", "type": a, "current": b, "where": c} for a, b, c in names_]
-        for it in opal_naming._tf_items(t, 0, len(t)):
-            if it[0] != "block":
-                continue
-            where = "%s:%d" % (rel, opal_naming._line_of(t, it[3]))
-            if it[1] == "module" and len(it[2]) == 1:
-                src = [a for a in opal_naming._tf_items(t, it[4], it[5]) if a[0] == "attr" and a[1] == "source"]
-                raw = src[0][3] if src else ""
-                if _module_unstated(directory, opal_naming._tf_literal(raw)):
-                    uncounted.append({"type": "module", "attribute": "source", "expression": _flat(raw),
-                                      "reason": "module", "where": where})
-                continue
-            if it[1] != "resource" or len(it[2]) != 2 or it[2][0] not in attr_map:
-                continue
-            typ, attr = attr_map[it[2][0]]
-            attrs = {a[1]: a for a in opal_naming._tf_items(t, it[4], it[5]) if a[0] == "attr"}
-            raw = None
-            if attr == "tags.Name":
-                tags = attrs.get("tags")
-                m = _TAG_NAME_RE.search(tags[3]) if tags else None
-                raw = m.group(1).strip() if m else None
-            elif attr in attrs:
-                raw = attrs[attr][3]
-            if raw is None:
-                continue
-            if opal_naming._tf_literal(raw) is not None:
-                continue  # one literal: the census counts it (an empty literal names nothing)
-            got, bad = [], None
+def _f_toset(a):
+    seen, out = set(), []
+    for x in a[0]:
+        t = _text_of(x)
+        if t not in seen:
+            seen.add(t)
+            out.append(x)
+    return sorted(out, key=lambda x: str(_text_of(x)))
+
+
+def _f_lookup(a):
+    m, k = a[0], a[1]
+    if isinstance(m, dict):
+        t = _text_of(k)
+        if t in m:
+            return m[t]
+    return a[2] if len(a) > 2 else Unk("unevaluated")
+
+
+def _f_coalesce(a):
+    for x in a:
+        if x is not None and x != "":
+            return x
+    return Unk("unevaluated")
+
+
+def _f_element(a):
+    return a[0][int(a[1]) % len(a[0])]
+
+
+def _f_flatten(a):
+    out = []
+    for x in a[0]:
+        if isinstance(x, (list, tuple)):
+            out += _f_flatten([x])
+        else:
+            out.append(x)
+    return out
+
+
+def _f_join(a):
+    parts = [_text_of(x) for x in a[1]]
+    if None in parts:
+        return Unk("unevaluated")
+    return _s(a[0].join(parts), _srcs_of(a[1]) | _srcs_of([a[0]]))
+
+
+def _f_file(a):
+    path = os.path.normpath(str(a[0]))
+    if os.path.getsize(path) > 8000000:
+        return Unk("unevaluated")
+    try:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            return fh.read().replace(chr(13) + chr(10), chr(10))
+    except OSError:
+        return Unk("unevaluated")
+
+
+def _f_jsondecode(a):
+    try:
+        return json.loads(a[0])
+    except ValueError:
+        return Unk("unevaluated")
+
+
+def _f_str(fn):
+    return lambda a: _s(fn(str(a[0]), *a[1:]), _srcs_of([a[0]]))
+
+
+_FUNCS = {
+    "format": _f_format,
+    "file": _f_file,
+    "jsondecode": _f_jsondecode,
+    "lower": _f_str(lambda s: s.lower()),
+    "upper": _f_str(lambda s: s.upper()),
+    "replace": _f_str(lambda s, x, y: s.replace(str(x), str(y))),
+    "trimprefix": _f_str(lambda s, p: s[len(p):] if s.startswith(p) else s),
+    "trimsuffix": _f_str(lambda s, p: s[:-len(p)] if p and s.endswith(p) else s),
+    "trimspace": _f_str(lambda s: s.strip()),
+    "basename": lambda a: _s(os.path.basename(str(a[0]).replace(chr(92), "/").rstrip("/")), _srcs_of([a[0]])),
+    "abspath": lambda a: os.path.abspath(str(a[0])),
+    "startswith": lambda a: str(a[0]).startswith(str(a[1])),
+    "endswith": lambda a: str(a[0]).endswith(str(a[1])),
+    "tostring": lambda a: a[0] if isinstance(a[0], str) else _s(_text_of(a[0])),
+    "join": _f_join,
+    "split": lambda a: [_s(x, _srcs_of([a[1]])) for x in a[1].split(a[0])],
+    "concat": lambda a: [x for lst in a for x in lst],
+    "merge": _f_merge,
+    "keys": lambda a: sorted(a[0].keys(), key=str),
+    "values": lambda a: [a[0][k] for k in sorted(a[0].keys(), key=str)],
+    "one": _f_one,
+    "toset": _f_toset,
+    "tolist": lambda a: list(a[0]),
+    "tomap": lambda a: dict(a[0]),
+    "tonumber": lambda a: a[0] if isinstance(a[0], (int, float)) else float(a[0]),
+    "lookup": _f_lookup,
+    "contains": lambda a: _text_of(a[1]) in [_text_of(x) for x in a[0]],
+    "coalesce": _f_coalesce,
+    "length": lambda a: len(a[0]),
+    "flatten": _f_flatten,
+    "distinct": _f_toset,
+    "sort": lambda a: sorted(a[0], key=str),
+    "compact": lambda a: [x for x in a[0] if x not in (None, "")],
+    "element": _f_element,
+    "zipmap": lambda a: dict(zip([_text_of(k) for k in a[0]], a[1])),
+    "setunion": lambda a: _f_toset([[x for lst in a for x in lst]]),
+}
+
+
+def _call(name, argnodes, env):
+    if name == "try":
+        last = Unk("unevaluated")
+        for n in argnodes:
             try:
-                binds = [None]
-                if "each." in raw:
-                    fe = attrs.get("for_each")
-                    if fe is None:
-                        raise _Unres("json")
-                    binds = _bindings(fe[3], ctx)
-                for b in binds:
-                    ctx.each = b
-                    val, src = _eval(raw, ctx)
-                    if not val:
-                        raise _Unres("interpolation")
-                    w = "%s:%d" % src if src is not None else where
-                    if (typ, val, w) not in got:
-                        got.append((typ, val, w))
-            except _Unres as exc:
-                bad = exc.reason
-            finally:
-                ctx.each = None
-            if bad is not None:
-                uncounted.append({"type": typ, "attribute": attr, "expression": _flat(raw), "reason": bad,
-                                  "where": where})
+                v = _ev(n, env)
+            except (TypeError, ValueError, KeyError, IndexError, AttributeError, ZeroDivisionError):
+                continue
+            if not isinstance(v, Unk):
+                return v
+            last = v
+        return last
+    fn = _FUNCS.get(name)
+    if fn is None:
+        return Unk("unevaluated")
+    args = [_ev(n, env) for n in argnodes]
+    u = _first_unk(*args)
+    if u is not None:
+        return u
+    return fn(args)
+
+
+# ---- one folder of .tf files, and the scopes that read it -------------------------------------------------------
+
+class _Folder(object):
+    """The static read of one folder: its locals, variables, outputs, resources and module calls."""
+
+    def __init__(self, directory, label, tf_names=None, json_names=None):
+        self.directory, self.label = directory, label
+        names = sorted(tf_names) if tf_names is not None else sorted(f for f in os.listdir(directory) if f.endswith(".tf"))
+        self.json_names = sorted(json_names) if json_names is not None else sorted(
+            f for f in os.listdir(directory) if f.endswith(".tfvars.json") or f.endswith(".tfvars"))
+        self.texts = {}
+        for fn in names:
+            try:
+                with open(os.path.join(directory, fn), encoding="utf-8", errors="replace") as fh:
+                    self.texts[fn] = fh.read().replace("\r\n", "\n")
+            except OSError:
+                continue
+        self.locals, self.variables, self.outputs, self.resources, self.modules = {}, {}, {}, [], {}
+        self.res_types, self.res_by_addr = set(), {}
+        for fn in sorted(self.texts):
+            t, path = self.texts[fn], label + "/" + fn
+            for it in opal_naming._tf_items(t, 0, len(t)):
+                if it[0] != "block":
+                    continue
+                kind, labels, line = it[1], it[2], opal_naming._line_of(t, it[3])
+                inner = opal_naming._tf_items(t, it[4], it[5])
+                attrs = dict((a[1], (a[3], opal_naming._line_of(t, a[2]))) for a in inner if a[0] == "attr")
+                if kind == "locals" and not labels:
+                    for a in inner:
+                        if a[0] == "attr":
+                            self.locals.setdefault(a[1], (a[3], path, opal_naming._line_of(t, a[2])))
+                elif kind == "variable" and len(labels) == 1:
+                    d = attrs.get("default")
+                    self.variables[labels[0]] = (d[0], path, d[1]) if d else None
+                elif kind == "output" and len(labels) == 1 and "value" in attrs:
+                    self.outputs[labels[0]] = (attrs["value"][0], path, attrs["value"][1])
+                elif kind == "resource" and len(labels) == 2:
+                    res = {"type": labels[0], "name": labels[1], "attrs": attrs, "path": path, "line": line, "file": fn,
+                           "bind": "for_each" if "for_each" in attrs else ("count" if "count" in attrs else None)}
+                    self.resources.append(res)
+                    self.res_types.add(labels[0])
+                    self.res_by_addr.setdefault((labels[0], labels[1]), res)
+                elif kind == "module" and len(labels) == 1:
+                    self.modules[labels[0]] = {"attrs": attrs, "path": path, "line": line, "file": fn}
+        self.tfvars = {}
+        for fn in self.json_names:
+            if fn.endswith(".tfvars.json"):
+                self._json_vars(fn)
+            elif fn.endswith(".tfvars"):
+                self._hcl_vars(fn)
+
+    def _json_vars(self, fn):
+        try:
+            with open(os.path.join(self.directory, fn), encoding="utf-8", errors="replace") as fh:
+                text = fh.read().replace("\r\n", "\n")
+            doc = json.loads(text)
+        except (OSError, ValueError):
+            return
+        path = self.label + "/" + fn
+
+        def conv(v, keypath):
+            src = [(path, _json_line(text, keypath))]
+            if isinstance(v, str):
+                return _s(v, src)
+            if isinstance(v, dict):
+                return dict((_s(k, [(path, _json_line(text, keypath + [k]))]), conv(x, keypath + [k])) for k, x in v.items())
+            if isinstance(v, list):
+                return [conv(x, keypath) for x in v]
+            return v
+        if isinstance(doc, dict):
+            for k, v in doc.items():
+                self.tfvars[k] = conv(v, [k])
+
+    def _hcl_vars(self, fn):
+        try:
+            with open(os.path.join(self.directory, fn), encoding="utf-8", errors="replace") as fh:
+                t = fh.read().replace("\r\n", "\n")
+        except OSError:
+            return
+        path = self.label + "/" + fn
+        empty = _Scope(self)
+        for a in opal_naming._tf_items(t, 0, len(t)):
+            if a[0] == "attr":
+                self.tfvars[a[1]] = _run(a[3], path, opal_naming._line_of(t, a[2]), _Env(empty))
+
+
+class _ModCall(object):
+    """One module call of a scope: its folder, its meta-arguments and the instances it makes."""
+
+    def __init__(self, scope, name):
+        self.scope, self.name = scope, name
+        self.block = scope.f.modules[name]
+        self.kind = "for_each" if "for_each" in self.block["attrs"] else ("count" if "count" in self.block["attrs"] else None)
+        self.folder, self.reason = None, None
+        src = self.block["attrs"].get("source")
+        lit = opal_naming._tf_literal(src[0]) if src else None
+        if not lit or not lit.startswith(("./", "../")):
+            self.reason = "external-module"
+        else:
+            target = os.path.normpath(os.path.join(scope.f.directory, lit))
+            if scope.depth >= 6:
+                self.reason = "unevaluated"
+            elif not os.path.isdir(target):
+                self.reason = "external-module"
             else:
-                resolved += [{"plane": "repo", "type": a, "current": b, "where": c} for a, b, c in got]
-    _SCAN_CACHE[key] = (literal, resolved, uncounted)
-    return _SCAN_CACHE[key]
+                self.folder = _folder_of(target)
+        self._inst = {}
+
+    def pairs(self):
+        """[(kind, key, value)] one per instance, or an Unk."""
+        a = self.block["attrs"]
+        env = _Env(self.scope)
+        return self.scope.bindings({"attrs": a, "path": self.block["path"], "bind": self.kind}, env)
+
+    def instance(self, key):
+        if self.folder is None:
+            return Unk(self.reason)
+        if self.kind is None:
+            b = (None, None, None)
+        else:
+            pairs = self.pairs()
+            if isinstance(pairs, Unk):
+                return pairs
+            t = _text_of(key)
+            b = None
+            for bk, bv in pairs[1]:
+                if _text_of(bk) == t:
+                    b = (pairs[0], bk, bv)
+            if b is None:
+                return Unk("unevaluated")
+        return self.make(b)
+
+    def make(self, b):
+        ck = (b[0], _text_of(b[1]))
+        if ck not in self._inst:
+            kind, bk, bv = b
+            env = _Env(self.scope, each=({"key": bk, "value": bv} if kind == "for_each" else None),
+                       count=(bk if kind == "count" else None))
+            args = {}
+            for name, row in self.block["attrs"].items():
+                if name not in _MODULE_META:
+                    args[name] = _Thunk(row[0], self.block["path"], row[1], env)
+            sc = _Scope(self.folder, args=args, depth=self.scope.depth + 1, is_module=True, root_dir=self.scope.root_dir)
+            self._inst[ck] = _ModInst(sc)
+        return self._inst[ck]
 
 
-def _module_unstated(directory, source):
-    """True when the module a call names builds names the call's folder cannot read: its source is not a local folder, the
-    folder is unreadable, or its own scan has an uncounted name."""
-    if not source or not source.startswith(("./", "../")):
-        return True
-    target = os.path.normpath(os.path.join(directory, source))
-    if not os.path.isdir(target):
-        return True
+class _Scope(object):
+    """One reading of a folder: the root of a scan (its own tfvars) or one instance of a module (its call's arguments)."""
+
+    def __init__(self, folder, args=None, depth=0, is_module=False, root_dir=None):
+        self.f, self.depth, self.is_module = folder, depth, is_module
+        self.root_dir = root_dir or folder.directory
+        self.args = args if args is not None else {}
+        self.reusable = "/modules/" in ("/" + folder.label + "/")
+        self.memo, self.calls, self.vmemo, self.busy = {}, {}, {}, set()
+        self.attr_map = opal_naming._census_tf_attr()
+
+    def local(self, name):
+        if name in self.memo:
+            return self.memo[name]
+        row = self.f.locals.get(name)
+        if row is None:
+            return Unk("unevaluated")
+        self.memo[name] = Unk("unevaluated")  # a cycle reads unevaluated
+        v = _run(row[0], row[1], row[2], _Env(self, depth=1))
+        self.memo[name] = v
+        return v
+
+    def var(self, name):
+        if name in self.vmemo:
+            return self.vmemo[name]
+        if name in self.args:
+            v = self.args[name].get()
+        elif not self.is_module and name in self.f.tfvars:
+            v = self.f.tfvars[name]
+        elif self.f.variables.get(name) is not None:
+            row = self.f.variables[name]
+            v = _run(row[0], row[1], row[2], _Env(self, depth=1))
+        else:
+            v = Unk("module-input" if (self.reusable and not self.is_module) else "var-unset")
+        self.vmemo[name] = v
+        return v
+
+    def output(self, name):
+        row = self.f.outputs.get(name)
+        if row is None:
+            return Unk("unevaluated")
+        return _run(row[0], row[1], row[2], _Env(self, depth=1))
+
+    def module_call(self, name):
+        if name not in self.calls:
+            self.calls[name] = _ModCall(self, name)
+        return self.calls[name]
+
+    def bindings(self, res, env=None):
+        """(kind, [(key, value)]) a resource or module call runs over, (None, [(None, None)]) when it runs once, or an Unk."""
+        bind = res["bind"]
+        if bind is None:
+            return (None, [(None, None)])
+        row = res["attrs"][bind]
+        env = env or _Env(self)
+        v = _run(row[0], res["path"], row[1], env)
+        if isinstance(v, Unk):
+            return v
+        if bind == "count":
+            if isinstance(v, bool):
+                v = int(v)
+            if isinstance(v, float) and v == int(v):
+                v = int(v)
+            return ("count", [(i, i) for i in range(v)]) if isinstance(v, int) and 0 <= v <= 1000 else Unk("open-key-domain")
+        if isinstance(v, dict):
+            return ("for_each", list(v.items()))
+        if isinstance(v, (list, tuple)):
+            return ("for_each", [(x, x) for x in v])
+        return Unk("open-key-domain")
+
+
+_FOLDERS = {}
+
+
+def _folder_of(target):
+    target = os.path.abspath(target)
+    if target not in _FOLDERS:
+        _FOLDERS[target] = _Folder(target, _label_of(target))
+    return _FOLDERS[target]
+
+
+def _label_of(target):
     try:
         rel = os.path.relpath(target, REPO).replace("\\", "/")
     except ValueError:  # another drive
         rel = ".."
     if rel.startswith(".."):
         rel = os.path.basename(target)
-    return bool(scan_dir(target, rel)[2])
+    return rel
+
+
+# ---- the scan ---------------------------------------------------------------------------------------------------
+
+_SCAN_CACHE = {}
+
+
+def _name_expr(res, scope, attr, env):
+    """(raw expression text, line) of a resource's name attribute, or None when the resource states none or states one
+    literal (the census counts that); the tags.Name form is read from the tags map."""
+    attrs = res["attrs"]
+    if attr == "tags.Name":
+        tags = attrs.get("tags")
+        if not tags:
+            return None
+        m = _NAME_TAG_RE.search(tags[0])
+        if m and opal_naming._tf_literal(m.group(1)) is not None:
+            return None
+        return ("tags", tags[1])
+    row = attrs.get(attr)
+    if row is None or opal_naming._tf_literal(row[0]) is not None:
+        return None
+    return row
+
+
+def _where_of(val, label, anchor):
+    cand = sorted(set(s for s in _srcs_of([val]) if s[0] == label or s[0].startswith(label + "/")))
+    return "%s:%d" % cand[0] if len(cand) == 1 else anchor
+
+
+def _scan_scope(scope, label, resolved, uncounted, call_anchor=None):
+    """Count or leave uncounted every graded resource of one scope, then follow its module calls."""
+    attr_map = scope.attr_map
+    for res in scope.f.resources:
+        if res["type"] not in attr_map:
+            continue
+        typ, attr = attr_map[res["type"]]
+        row = _name_expr(res, scope, attr, None)
+        if row is None:
+            continue
+        anchor = call_anchor or "%s:%d" % (res["path"], res["line"])
+        b = scope.bindings(res)
+        got, bad = [], None
+        if isinstance(b, Unk):
+            bad = b.reason
+        else:
+            for bk, bv in b[1]:
+                kind = b[0]
+                env = _Env(scope, each=({"key": bk, "value": bv} if kind == "for_each" else None),
+                           count=(bk if kind == "count" else None))
+                if attr == "tags.Name":
+                    tv = _run(res["attrs"]["tags"][0], res["path"], row[1], env)
+                    val = tv if isinstance(tv, Unk) else (tv.get("Name") if isinstance(tv, dict) else Unk("unevaluated"))
+                else:
+                    val = _run(row[0], res["path"], row[1], env)
+                if isinstance(val, Unk):
+                    bad = val.reason
+                    break
+                if val is None or val == "":
+                    continue
+                if not isinstance(val, str):
+                    bad = "unevaluated"
+                    break
+                w = _where_of(val, label, anchor)
+                if (typ, str(val), w) not in got:
+                    got.append((typ, str(val), w))
+        if bad is not None:
+            raw = row[0] if attr != "tags.Name" else "tags.Name"
+            if attr == "tags.Name":
+                m = _NAME_TAG_RE.search(res["attrs"]["tags"][0]) or re.search(r'Name\s*=\s*([^\n]+)', res["attrs"]["tags"][0])
+                raw = m.group(1) if m else res["attrs"]["tags"][0]
+            u = {"type": typ, "attribute": attr, "expression": _flat(raw), "reason": bad, "where": anchor}
+            if u not in uncounted:
+                uncounted.append(u)
+        else:
+            resolved += [{"plane": "repo", "type": a, "current": b_, "where": c} for a, b_, c in got]
+    for name in sorted(scope.f.modules, key=lambda n: scope.f.modules[n]["line"]):
+        call = scope.module_call(name)
+        anchor = call_anchor or "%s:%d" % (call.block["path"], call.block["line"])
+        if call.folder is None:
+            _module_gap(call, call.reason, anchor, resolved, uncounted, label)
+            continue
+        pairs = call.pairs()
+        if isinstance(pairs, Unk):
+            _module_gap(call, pairs.reason, anchor, resolved, uncounted, label)
+            continue
+        for bk, bv in pairs[1]:
+            inst = call.make((pairs[0], bk, bv))
+            _scan_scope(inst.scope, label, resolved, uncounted, anchor)
+
+
+def _module_gap(call, reason, anchor, resolved, uncounted, label):
+    """A module call that makes no instance to read: the graded names its folder states without a literal are UNCOUNTED at
+    the call, with the reason the call gives."""
+    if call.folder is None:
+        if call.reason == "external-module":
+            uncounted.append({"type": "module", "attribute": "source", "expression": _flat(
+                call.block["attrs"].get("source", ("", 0))[0]), "reason": reason, "where": anchor})
+        return
+    sc = _Scope(call.folder, args={}, depth=call.scope.depth + 1, is_module=True, root_dir=call.scope.root_dir)
+    gap = Unk(reason)
+    for name, row in call.block["attrs"].items():
+        if name not in _MODULE_META:
+            t = _Thunk("null", call.block["path"], row[1], _Env(call.scope))
+            t.done, t.val = True, gap
+            sc.args[name] = t
+    tmp = []
+    _scan_scope(sc, label, tmp, uncounted, anchor)
+
+
+def scan_dir(directory, label, tf_names=None, json_names=None):
+    """(literal, resolved, uncounted) of the .tf files in ONE folder (a Terraform configuration: its locals, its
+    .tfvars / .tfvars.json files and the module folders it calls are read with it).
+      literal    the names census_repo() counts (read here by the census's own reader, for a test to read once);
+      resolved   the names the census cannot read that the repository resolves to a literal: items
+                 {plane, type, current, where}, `where` the line that gives the literal;
+      uncounted  one dict {type, attribute, expression, reason, where} per graded name the repository does not decide,
+                 `reason` one of UNCOUNTED_REASONS.
+    label is the repository-relative folder path that prefixes every `where`."""
+    directory = os.path.abspath(directory)
+    key = (directory, label, tuple(sorted(tf_names)) if tf_names is not None else None,
+           tuple(sorted(json_names)) if json_names is not None else None)
+    if key in _SCAN_CACHE:
+        return _SCAN_CACHE[key]
+    folder = _Folder(directory, label, tf_names, json_names)
+    literal, resolved, uncounted = [], [], []
+    for fn in sorted(folder.texts):
+        names_, _exprs = opal_naming.census_tf_names(label + "/" + fn, folder.texts[fn])
+        literal += [{"plane": "repo", "type": a, "current": b, "where": c} for a, b, c in names_]
+    scope = _Scope(folder)
+    _FOLDERS.clear()
+    _scan_scope(scope, label, resolved, uncounted)
+    seen, once = set(), []
+    for i in resolved:  # two resources that take one name from one line (a record pair) are one name at one place
+        k = (i["type"], i["current"], i["where"])
+        if k not in seen:
+            seen.add(k)
+            once.append(i)
+    _SCAN_CACHE[key] = (literal, once, uncounted)
+    return _SCAN_CACHE[key]
 
 
 def root_extra(root):
@@ -580,7 +1611,7 @@ def root_extra(root):
             by_dir.setdefault(d, []).append(fn)
     jfiles = {}
     for f in _files():
-        if f.endswith(".tfvars.json") and _under(f, r):
+        if (f.endswith(".tfvars.json") or f.endswith(".tfvars")) and _under(f, r):
             d, fn = f.rsplit("/", 1)
             jfiles.setdefault(d, []).append(fn)
     resolved, uncounted = [], []
@@ -592,8 +1623,9 @@ def root_extra(root):
 
 
 def root_names(root, map_path=None):
-    """(items, uncounted, stats): root_items() plus the names the root's own files resolve to a literal (BF-v-4), and the
-    names it builds that they do not resolve. A root whose items and uncounted are both empty has nothing to name."""
+    """(items, uncounted, stats): root_items() plus the names the root's own files and the module folders it calls resolve to
+    a literal (BF-v-4, BF-w-2), and the names it builds that they do not resolve. A root whose items and uncounted are both
+    empty has nothing to name."""
     items, stats = root_items(root, map_path)
     resolved, uncounted = root_extra(root)
     return list(items) + resolved, uncounted, stats

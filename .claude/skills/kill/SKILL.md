@@ -57,6 +57,12 @@ process still resolving its parent link during spawn is never mistaken for an or
   (b) not comms infra, (c) not a Bash-tool shell-snapshot shell, (d) older than the
   age floor. These are orphaned gold runs, dead `inbox-watch` remnants from crashed
   sessions, abandoned diagnostic loops -- real reclaimable memory.
+- **Never a scripts target -- a DELIBERATE detached job:** launch a job that must outlive
+  the Monitor cap as `nohup bash .tools/detached-job.sh run --owner <serial> --purpose "<why>"
+  --max-hours <h> -- <command> > job.log 2>&1 &` (`declare --winpid <pid>` marks one already
+  running; markers live in `<git common dir>/detached-jobs/`, max 48 h). Anything whose command
+  line or cwd is in a WORKER worktree (linked, leaf or branch `wk-*`) is exempt too. Every run
+  prints the MARKER and EXEMPT lines.
 - **apps**: a process whose name matches the bloat list (`msedge`, `chrome`,
   `chromium`, `ms-teams`/`Teams`,
   `mscopilot`/`copilot`, `Spotify`, `Slack`, `Discord`, `Zoom`, `WhatsApp`, `Skype`,
