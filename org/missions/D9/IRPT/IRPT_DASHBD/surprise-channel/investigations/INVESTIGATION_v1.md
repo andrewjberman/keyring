@@ -3982,3 +3982,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W51-S1 -- The R35 packet's 'Terraform root has 0 changed files' no longer holds: the round-36 rollback restored the root and the source map to pre-release bytes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W51-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~51",
+  "surfaced_at": "2026-10-09T06:45:00Z",
+  "one_line": "The R35 packet's 'Terraform root has 0 changed files' and its source-map facts no longer hold at HEAD: the round-36 rollback restored iam.tf, locals.tf, lambda.tf and the source-map entry to pre-release bytes, so the R37 apply also needs the three Terraform files restored to efeb21df71.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-74 step 2: 'Re-cut the packet ... from the R35 packet. Keep its structure and reasoning where it holds. Re-derive what changed: the realized key, the file list, the pins, and the sizing.' The R35 packet says the Terraform root has 0 changed files since the round-26 packet, so its expected plan (0 to add, 3 to change, 0 to destroy) stands, and that the source-map entry names last_deployed_commit 829e46ed7f.",
+  "world_is": "MEASURED by git at HEAD 3026d29bbb: commits 0709c0a960 (rollback step 2) restored infra/aws/terraform/investor-reporting/reporting-gold/{iam.tf,locals.tf,lambda.tf} to their 4c34d86104 bytes (sha256 at HEAD equals 4c34d86104's; differs from efeb21df71's), bfd71e73c9 restored the source-map entry irpt-49f-reporting-gold-lambda staged_from and files to 01661cf0da (10 of 15 staged_from rows carry a sha256 that differs from HEAD's bytes), and 310380d8cd recorded last_deployed_commit 440f89bb56 and the live CodeSha256 Mex71Y5g... as the rollback anchor. So the R37 apply needs the three Terraform files back at the efeb21df71 bytes (unchanged through ec9c251de8) in addition to the pins, or the plan shows only the function change. The packet states this as precondition 2 with the three sha256 pairs and a STOP rule; this cell did not edit the root or the source map (outside its grant). Also: account_activity_lots.py's HEAD bytes (c0afa6f55e, DB-b-73) are on box/dell2 and not on origin/CLOUD (local ref 3195077755, no fetch), so its pin is the box/dell2 commit as the face directs; 17 of 18 pins are on origin/CLOUD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf @0709c0a960",
+      "infra/aws/lambda/ci/lambda-source-map.json @bfd71e73c9",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~51/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R37.md precondition 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
