@@ -3,7 +3,9 @@
 **Author:** `2.0.0_SA_COO~R`, drafted 2026-10-09 ~02:1xZ at `box/laptop` `b77d4a950b`. **Status: DRAFT.** It is signed only when
 (1) site Z's gateway release r29 is live and its `2.0.0_SA_COO~O` has sent the MAIL_BEARER secret reference (msg 32236: "applies
 NO EARLIER than 11:00Z 2026-10-09"), and (2) round 11's cell CA-d-1 (the wiring, `var.chat_assist_mail_bearer_secret_arn`) is
-merged with its two plans read. **The one field left open:** `<SECRET_ARN>`, the reference site Z hands over. **Counterpart
+merged with its two plans read. **(2) is MET:** merged `3005ccc5f9` ~02:2xZ. Its read-only plans: empty `0/2/0` (package hash only),
+probe ARN set `0/3/0` (`MAIL_BEARER_SECRET` on both functions plus one ARN in the secret read). **The channel routes' scopes:** site Z
+reads `MS_INGEST_IDENTITY` as unscoped (msg 32269; row `COMM_ASSIST-S2`), to be confirmed at r29's ENV read-back. **The one field left open:** `<SECRET_ARN>`, the reference site Z hands over. **Counterpart
 owed:** a CTO half. **Authority:** PRD v0.2 FWD-4, C-MAIL, C-PACKAGE; `1.0.0_SA_CTO` msgs 107513, 107564.
 
 ## The act
