@@ -47,7 +47,7 @@ Separately, the adapter `data/assets/scripts/silver/commonwealth_account_return_
 
 **Your item.** No S3 write and no deploy.
 
-1. **Tests:** replace each real id with a synthetic one, e.g. `TST000001`, consistently within each test. The tests stay green.
+1. **Tests:** replace each real id with a synthetic one, e.g. `SYN_ACCT_01` (a form no account-id pattern matches), consistently within each test. The tests stay green.
 2. **Trace scripts** (`*_div_dating_trace.py`, `*_scale_trace.py`): their accounts become CLI arguments, or are read from the order's
    own evidence outside the repo. They are never literals. Each script must still run, given the accounts.
 3. **Runtime rule data** (`commonwealth_sweeps.py`, `commonwealth_asf_source.py`):
