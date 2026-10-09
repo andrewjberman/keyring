@@ -133,11 +133,11 @@ disarm evidence.
     "fabric": "laptop",
     "class": "OBSERVATION",
     "hazard_standing": "INERT",
-    "mechanism": "The crosswalk never scores a Commonwealth account whose last activity is before 2026-04-22. One such account, B3S775239, left in kind on 2026-04-07. Seventeen NOT_MATCHED accounts score 0.65 to 0.8 against one candidate and wait for a person.",
+    "mechanism": "The crosswalk never scores a Commonwealth account whose last activity is before 2026-04-22. One such account, acct#a2618be7, left in kind on 2026-04-07. Seventeen NOT_MATCHED accounts score 0.65 to 0.8 against one candidate and wait for a person.",
     "evidence": [
-      "adjudication row ADVI_COTBKF-C-S6 (ADJUDICATION_v2.md): 11 of 758 closed-before rows end in 2026; B3S775239's seven lo rows on 2026-04-07"
+      "adjudication row ADVI_COTBKF-C-S6 (ADJUDICATION_v2.md): 11 of 758 closed-before rows end in 2026; acct#a2618be7's seven lo rows on 2026-04-07"
     ],
-    "remedy": "P3: score every account whose final rows are an in-kind exit, whatever its date, and list the 17 near-matches for Andrew's or the advisor's read. REMEDIATED when the crosswalk line is re-read with B3S775239 scored.",
+    "remedy": "P3: score every account whose final rows are an in-kind exit, whatever its date, and list the 17 near-matches for Andrew's or the advisor's read. REMEDIATED when the crosswalk line is re-read with acct#a2618be7 scored.",
     "owner": "2.0.0_SA_COO~C",
     "round": "v4",
     "remediation": {

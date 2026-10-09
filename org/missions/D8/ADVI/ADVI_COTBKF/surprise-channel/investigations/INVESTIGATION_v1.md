@@ -107,13 +107,13 @@ round.** Never edit an existing row.
       "boto3+pyarrow over s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/date=2026-06-23/ (14 partitions, 1,415,137 rows): 1,533 accounts; first trade in 2013: 311; last trade in 2026: 769; both: 0",
       "the 311 accounts whose first trade is in 2013: latest last trade 2017-12-29; 0 of them trade after 2020-12-31",
       "distinct accounts per trade year: 2013 311, 2014 348, 2015 381, 2016 768, 2017 465, 2018 489 ... 2025 810, 2026 769 (2016 roughly doubles: an overlap year)",
-      "longest spans: D49141617 2016-01-25 to 2026-06-22 (3,532 rows), 0QF879095, 0QF879142, E1202062, B3S605728 (all from 2016-01-2x); span quantiles p50 2.82y, p90 10.32y, max 10.41y",
-      "the account-number form differs across the break: 2013 rows carry 11-digit numbers (01001355831, 00074413503); the 2016+ long histories carry alphanumeric ones (D49141617, 0QF879095)"
+      "longest spans: acct#0e4ff3a3 2016-01-25 to 2026-06-22 (3,532 rows), acct#4d8fe4a0, acct#16e4c123, E1202062, acct#1114066b (all from 2016-01-2x); span quantiles p50 2.82y, p90 10.32y, max 10.41y",
+      "the account-number form differs across the break: 2013 rows carry 11-digit numbers (acct#c9405219, acct#21a12aa6); the 2016+ long histories carry alphanumeric ones (acct#0e4ff3a3, acct#4d8fe4a0)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "PRD v0.3 FWD-1: 'An analyst picks one Cottonwood account and reads its whole transaction history, 2013 to June 2026, from Opal's own store'.",
-  "world_is": "Read per account number, the store holds at most 10.4 years for one account; the 2013-2017 history sits under different account numbers. FWD-1 was exercised on D49141617 (2016-01-25 to 2026-06-22, three rows traced); the full 2013 span for one client needs an old-number to new-number link, which the delivery may carry (the CRM files, round 3) or which FWD-8's crosswalk must build.",
+  "world_is": "Read per account number, the store holds at most 10.4 years for one account; the 2013-2017 history sits under different account numbers. FWD-1 was exercised on acct#0e4ff3a3 (2016-01-25 to 2026-06-22, three rows traced); the full 2013 span for one client needs an old-number to new-number link, which the delivery may carry (the CRM files, round 3) or which FWD-8's crosswalk must build.",
   "notes": "Cause INFERRED, not shown: a custodian or platform conversion around 2016-2017 renumbered accounts. Not read: whether the CRM export or the positions file links old and new numbers. Bronze keeps every byte, so nothing is lost; this is a read-path question for the CTO's round-1 analysis (FWD-1's wording, or FWD-8 moving up the backlog)."
 }
 ```
@@ -135,7 +135,7 @@ round.** Never edit an existing row.
     "evidence": [
       "python over the member read from %USERPROFILE%/Downloads/Files.zip: split on LF, 1,416,500 physical data lines, 1,415,139 distinct, 1,361 line-level repeats",
       "csv.reader(delimiter='|') over the same bytes: 1,416,497 records, every one exactly 20 fields, 1,415,137 distinct, 1,360 record-level repeats",
-      "the 6 physical lines that are not a whole 20-field record: 156036+156037, 156038+156039, 156040+156041 -- three Dividend Received rows of account B3S688184 (2023-12-28) whose quoted Transaction_Note carries a CRLF; the tails 156037 and 156039 are the identical text 'Adjusted to LO Date\"|2026-06-23', which is the line-level 1,361 vs record-level 1,360",
+      "the 6 physical lines that are not a whole 20-field record: 156036+156037, 156038+156039, 156040+156041 -- three Dividend Received rows of account acct#1059baa6 (2023-12-28) whose quoted Transaction_Note carries a CRLF; the tails 156037 and 156039 are the identical text 'Adjusted to LO Date\"|2026-06-23', which is the line-level 1,361 vs record-level 1,360",
       "silver as written (CB-a-2 @04ca7e3556): rows_out 1,415,137 = 1,416,497 records - 1,360 record-level repeats; unexplained=0 (worker row ADVI_COTBKF-W2-S1)"
     ]
   },
@@ -404,8 +404,8 @@ round.** Never edit an existing row.
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "s3://opal-data-cot/gold/canonical/holdings/ (130 files, 2026-04-22 to 2026-10-05), columns read per file: cusip is null on 100% of the 2026-04 and 2026-05 lines, 16.7% of 2026-06, about 2.7% after; the first populated date of account z0926757531 is 2026-05-26 and its 18 lines there carry units with ticker and cusip both null (asset_name only)",
-      "first-dated lines of accounts opened on 2026-06-08 (z0927183571) list the securities with units null until a later date; 968 of 994 accounts have a quantity-bearing line, 97 of them on a date after their earliest listing",
+      "s3://opal-data-cot/gold/canonical/holdings/ (130 files, 2026-04-22 to 2026-10-05), columns read per file: cusip is null on 100% of the 2026-04 and 2026-05 lines, 16.7% of 2026-06, about 2.7% after; the first populated date of account acct#d1e40d0d is 2026-05-26 and its 18 lines there carry units with ticker and cusip both null (asset_name only)",
+      "first-dated lines of accounts opened on 2026-06-08 (acct#f1e58e8c) list the securities with units null until a later date; 968 of 994 accounts have a quantity-bearing line, 97 of them on a date after their earliest listing",
       "commonwealth_crosswalk.py name_cusip_map + current_first_holdings; the first cut that dropped the name-only lines matched 34 of 1,533, the cut that resolves them through the asset_name's single CUSIP matches 439"
     ]
   },
@@ -431,9 +431,9 @@ round.** Never edit an existing row.
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "639 of 1,533 accounts rebuild to no security position with last activity on or after 2026-04-22; their last lines are Transaction_Type lo ('Withdrawal from Asset', Amount 0.00) on non-cash CUSIPs, e.g. B3S782653 on 2026-05-20",
+      "639 of 1,533 accounts rebuild to no security position with last activity on or after 2026-04-22; their last lines are Transaction_Type lo ('Withdrawal from Asset', Amount 0.00) on non-cash CUSIPs, e.g. acct#5b2b4bec on 2026-05-20",
       "validation of the signed rebuild on the real 2026-06-23 positions: 381 of 381 security (account, CUSIP) pairs equal within 0.001 (REBUILD-CHECK line of the run)",
-      "an account matched this way: B3S717438 -> z0927158721, 17 of 17 positions equal within 0.001 (evidence column of crosswalk.csv)"
+      "an account matched this way: acct#a046af4d -> acct#10a58be9, 17 of 17 positions equal within 0.001 (evidence column of crosswalk.csv)"
     ]
   },
   "spec_asserts": "CB-c-3 worker face R2: 'its holdings at its last activity rebuilt from its transactions' (for an account without 2026-06-23 positions).",
@@ -486,8 +486,8 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "run output of CB3c3-AC2: not_matched reasons AMBIGUOUS 36, CLOSED_BEFORE_CURRENT_HISTORY 758, NO_CURRENT_ACCOUNT_HOLDS_POSITIONS 263, NO_SECURITY_POSITIONS 37; R1 matched 0 (no Commonwealth number equals a current z09... id)",
-      "of the 263, 214 have no current account equal on any position by quantity and 49 have a best candidate scoring 0.05 to 0.786 (e.g. B3S606724 -> z0927980101 11 of 14 = 0.786, reason column of crosswalk.csv)",
-      "ambiguous examples: 0QF878978 and RGY006839 both reach z0926741471 (19 of 21 = 0.905); cv0QF879181 and cv47440283 and 0QF879181 reach z0926724981"
+      "of the 263, 214 have no current account equal on any position by quantity and 49 have a best candidate scoring 0.05 to 0.786 (e.g. acct#f13c4faf -> acct#7e490d62 11 of 14 = 0.786, reason column of crosswalk.csv)",
+      "ambiguous examples: acct#fe5298e3 and acct#ffedbdff both reach acct#0d01cb20 (19 of 21 = 0.905); cvacct#eea1157e and cvacct#4ebd86ba and acct#eea1157e reach acct#08367bde"
     ]
   },
   "spec_asserts": "CB-c-3: every Commonwealth account is matched with its rule or listed not matched with the reason; no match is guessed.",
@@ -569,7 +569,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "TO CB-c-4 link rule: 'A's holdings at its end (rebuilt from A's own transactions up to its last trade) are moved in kind into B'; reason 'closed to cash' for an account that sold out.",
-  "world_is": "A rebuild through the last trade is empty after the move, because the move itself is a `lo` (Withdrawal from Asset) or trfo/trco row on each CUSIP at the last trade (account cvB3S605688 ends 2016-02-04 with 100+ lo rows). Literal run: 455 of 459 old accounts 'closed to cash', 4 'no in-kind receiver', 0 linked (.scratch/run1.txt). The build adds back the in-kind exit rows (lo/trfo/trco on a non-cash CUSIP) dated within 10 trading days before the last trade, so the positions are those held just before the exit; an account with no such rows is rebuilt as is and stays 'closed to cash' (90 of 459). Result: linked 180, not_linked 279 (ambiguous 13, below threshold 77, closed to cash 90, no in-kind receiver 99). The add-back is a reading of 'moved in kind', not the TO's words; CB3c4-AC3 grades it."
+  "world_is": "A rebuild through the last trade is empty after the move, because the move itself is a `lo` (Withdrawal from Asset) or trfo/trco row on each CUSIP at the last trade (account cvacct#0e06eba4 ends 2016-02-04 with 100+ lo rows). Literal run: 455 of 459 old accounts 'closed to cash', 4 'no in-kind receiver', 0 linked (.scratch/run1.txt). The build adds back the in-kind exit rows (lo/trfo/trco on a non-cash CUSIP) dated within 10 trading days before the last trade, so the positions are those held just before the exit; an account with no such rows is rebuilt as is and stays 'closed to cash' (90 of 459). Result: linked 180, not_linked 279 (ambiguous 13, below threshold 77, closed to cash 90, no in-kind receiver 99). The add-back is a reading of 'moved in kind', not the TO's words; CB3c4-AC3 grades it."
 }
 ```
 
@@ -593,7 +593,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "TO CB-c-4: 'every OLD account gets exactly one row ... a chain (A -> B -> C) is followed and printed as the client's line.'",
-  "world_is": "Rows exist for the 459 old accounts only, so a chain continues only where B is itself an old account (5 chains of three accounts, e.g. cvB3S606716 -> B3S606716 -> 0QF886265). Of the 176 distinct LINKED targets, 148 are not old accounts; 46 of those have a last trade before 2026-01-01 (earliest B3S606708, 2018-01-03), so a client line that ends at such a B may continue to a later account this table does not test. The rule is not applied to non-old accounts, because the TO gives them no row and a row for them would break 'exactly one row per old account'."
+  "world_is": "Rows exist for the 459 old accounts only, so a chain continues only where B is itself an old account (5 chains of three accounts, e.g. cvacct#e3f1271c -> acct#e3f1271c -> acct#1b9c5f5a). Of the 176 distinct LINKED targets, 148 are not old accounts; 46 of those have a last trade before 2026-01-01 (earliest acct#b6e6c913, 2018-01-03), so a client line that ends at such a B may continue to a later account this table does not test. The rule is not applied to non-old accounts, because the TO gives them no row and a row for them would break 'exactly one row per old account'."
 }
 ```
 
@@ -918,7 +918,7 @@ round.** Never edit an existing row.
  "fabric": "laptop",
  "surfaced_by": "3.0.0_SA_CVO",
  "surfaced_at": "2026-10-07T08:45Z",
- "one_line": "The account-links script gives different answers on the laptop and on dell2 over the same silver table: 3 of 1,450 rows differ (laptop 212 LINKED, dell2 211). Two links whose evidence holds on the transactions (0QF879348 -> B3S606523, B3S780328 -> B3S782287) read NOT_LINKED 'closed to cash' on dell2, and cv0QF879185 is AMBIGUOUS on the laptop and LINKED on dell2.",
+ "one_line": "The account-links script gives different answers on the laptop and on dell2 over the same silver table: 3 of 1,450 rows differ (laptop 212 LINKED, dell2 211). Two links whose evidence holds on the transactions (acct#b777d6dc -> acct#e5077da3, acct#6c5d660c -> acct#03cd2494) read NOT_LINKED 'closed to cash' on dell2, and cvacct#1c3da532 is AMBIGUOUS on the laptop and LINKED on dell2.",
  "class": "BLOCKING",
  "hazard_standing": "ARMED",
  "grounding": {
@@ -926,7 +926,7 @@ round.** Never edit an existing row.
   "evidence": [
    "deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (the laptop worker's run, committed): LINKED 212, NOT_LINKED 1,238 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
    ".scratch/advi_cotbkf/account_links_r4/account_links.csv (the issuer's dell2 real run, untracked): LINKED 211, NOT_LINKED 1,239; row-by-row against the laptop file, 3 rows differ (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
-   "transactions (.scratch/advi_cotbkf/tx_cache, 1,416,497 rows): 0QF879348's and B3S780328's printed in-kind receipts are present at the printed quantities and dates (part of the 123 of 123 items in the round-4 L9 grade) (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "transactions (.scratch/advi_cotbkf/tx_cache, 1,416,497 rows): acct#b777d6dc's and acct#6c5d660c's printed in-kind receipts are present at the printed quantities and dates (part of the 123 of 123 items in the round-4 L9 grade) (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
    "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError (row W12-S1: lib/trading_calendar falls back to a 2024-2027 holiday list); the exits that differ are dated 2023-02-14 and 2023-12-22 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)"
   ]
  },
@@ -954,7 +954,7 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "python <scratchpad>/s9_calendar_probe.py (extends tc.NYSE_HOLIDAYS_FALLBACK in-process with 127 rule-derived NYSE holidays 2010-2023, then runs data/assets/scripts/silver/commonwealth_account_links.py --out .scratch/advi_cotbkf/s9_probe) on dell2 at 08:4xZ: ACCOUNT-LINKS ended_accounts=1450 linked=212 not_linked=1238 ambiguous=14",
-      "csv compare keyed on old_account: probe vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (laptop, pmc present): 0 of 1,450 rows differ; unpatched dell2 r4 run vs the same file: 11 rows differ (0QF879185, 0QF879348, B3S605712, B3S606523, B3S780328, ...)",
+      "csv compare keyed on old_account: probe vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (laptop, pmc present): 0 of 1,450 rows differ; unpatched dell2 r4 run vs the same file: 11 rows differ (acct#1c3da532, acct#b777d6dc, acct#3a59ec7d, acct#e5077da3, acct#6c5d660c, ...)",
       "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError; holidays and exchange_calendars also absent",
       "consumers: 91 .py files under lib/, data/, infra/ import trading_calendar (token census)"
     ]
@@ -1149,7 +1149,7 @@ round.** Never edit an existing row.
     "evidence": [
       "calendar_source() on dell2 = NYSE/hardcoded-fallback-2010-2027 (lib/trading_calendar.py @83ab7192ee via dell2 merge 0a73ed06a0)",
       "ledger advi-cotbkf-e2-account-links-apply-20261007 CLOSED 1/1: applied 10:19:07Z, VersionIds ogf8Q2zk... -> OQ9YHJ3h..., JqEXeGJY... -> JY3f29AV...",
-      "independent read-back of s3://opal-data-assets/commonwealth/cottonwood/silver/account_links/date=2026-06-23/account_links.csv vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv: 1,450 rows each, differ on (status,new_account) 0, differ on any column 0; 0QF879348->B3S606523 LINKED, B3S780328->B3S782287 LINKED, cv0QF879185 NOT_LINKED"
+      "independent read-back of s3://opal-data-assets/commonwealth/cottonwood/silver/account_links/date=2026-06-23/account_links.csv vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv: 1,450 rows each, differ on (status,new_account) 0, differ on any column 0; acct#b777d6dc->acct#e5077da3 LINKED, acct#6c5d660c->acct#03cd2494 LINKED, cvacct#1c3da532 NOT_LINKED"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -1227,13 +1227,13 @@ round.** Never edit an existing row.
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "crosswalk.parquet evidence for 04003450617: current account z0927272491's first holdings (2026-06-30)",
-      "silver positions (2026-06-23) holds no current-side account id (z0927272491: 0 rows); FWD8_READ.md cites the holdings date it used"
+      "crosswalk.parquet evidence for acct#cdf76705: current account acct#efafd1dc's first holdings (2026-06-30)",
+      "silver positions (2026-06-23) holds no current-side account id (acct#efafd1dc: 0 rows); FWD8_READ.md cites the holdings date it used"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Order cell step 2: the new account's positions are 'today's positions on 2026-06-23'.",
-  "world_is": "Current-side holdings for z0927272491 begin 2026-06-30; the read uses them (the matching rule's basis) and states the date."
+  "world_is": "Current-side holdings for acct#efafd1dc begin 2026-06-30; the read uses them (the matching rule's basis) and states the date."
 }
 ```
 
@@ -1358,7 +1358,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "FWD-6: the delivery's performance file covers every transacting account.",
-  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, B3S728493, RGY006662, VUL1019560 and ten cv-prefixed accounts).",
+  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, acct#1db6cb1a, acct#2f400a83, VUL1019560 and ten cv-prefixed accounts).",
   "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
 }
 ```
@@ -1551,7 +1551,7 @@ round.** Never edit an existing row.
 }
 ```
 
-## ADVI_COTBKF-D2-S22 -- FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True
+## ADVI_COTBKF-D2-S22 -- FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); acct#0e4ff3a3 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True
 
 ```json
 {
@@ -1560,16 +1560,16 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "2.0.0_SA_COO~C2",
   "surfaced_at": "2026-10-07T14:17Z",
-  "one_line": "FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True",
+  "one_line": "FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); acct#0e4ff3a3 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "python data/assets/scripts/analysis/commonwealth_account_history.py --account D49141617 --trace 1 (rc 0, 12 s): HISTORY rows=3537 first=2016-01-25 last=2026-06-22; TRACE row=1 line=159882 sha256_ok=True line_match=True",
-      "same, --account cv46440182 --trace 25 (rc 0, 6 s): HISTORY rows=56 first=2013-04-29 last=2013-09-10; TRACE row=25 line=410952 sha256_ok=True line_match=True",
-      "vs deliverables/2.0.0_SA_COO~C/FWD1_REAL_RUN_D49141617_20261006.txt (rows=3532, pre-C-SILVER silver): 3,532 of 3,532 old rows present and unchanged; 5 extra rows, source_lines 161765, 161767, 161773, 161780, 161784 (2022-12-15 SBR sales), each an exact repeat of an earlier row; cv46440182: 56 of 56 equal",
-      "the same two accounts through the applied tables: account_links cvD49141617 -> D49141617 LINKED, cv46440182 NOT_LINKED; crosswalk 2 + 1 rows NOT_MATCHED; documents D49141617 29 (CLNT 14, STMT 12, TXRP 3), cv46440182 0",
+      "python data/assets/scripts/analysis/commonwealth_account_history.py --account acct#0e4ff3a3 --trace 1 (rc 0, 12 s): HISTORY rows=3537 first=2016-01-25 last=2026-06-22; TRACE row=1 line=159882 sha256_ok=True line_match=True",
+      "same, --account cvacct#922b43dd --trace 25 (rc 0, 6 s): HISTORY rows=56 first=2013-04-29 last=2013-09-10; TRACE row=25 line=410952 sha256_ok=True line_match=True",
+      "vs deliverables/2.0.0_SA_COO~C/FWD1_REAL_RUN_acct#0e4ff3a3_20261006.txt (rows=3532, pre-C-SILVER silver): 3,532 of 3,532 old rows present and unchanged; 5 extra rows, source_lines 161765, 161767, 161773, 161780, 161784 (2022-12-15 SBR sales), each an exact repeat of an earlier row; cvacct#922b43dd: 56 of 56 equal",
+      "the same two accounts through the applied tables: account_links cvacct#0e4ff3a3 -> acct#0e4ff3a3 LINKED, cvacct#922b43dd NOT_LINKED; crosswalk 2 + 1 rows NOT_MATCHED; documents acct#0e4ff3a3 29 (CLNT 14, STMT 12, TXRP 3), cvacct#922b43dd 0",
       "outputs kept at deliverables/2.0.0_SA_COO~C2/fwd1_retrace_20261007/"
     ]
   },
@@ -1652,7 +1652,7 @@ round.** Never edit an existing row.
    "commonwealth_crosswalk.SIGN (imported): 17 types, no 'leu' and no 'ileu' (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
    "deliverables/0.9.0_WK_ADVI_COTBKF~28/snapshot_differences.csv: 13 rows; for each, the sum of that (account, cusip)'s leu quantities in the silver transactions equals the residual, 13 of 13 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
    "silver transactions: leu 515 rows, all with a quantity, 69 accounts; ileu 267 rows, 1 with a quantity, 97 accounts (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
-   "example B3S706372 / 78462F103 (SPY): li 40.324, sl 40, leu 0.324 (2021-01-15/20); li 21.581, sl 21, leu 0.581; li 53.095, sl 53, leu 0.095; the rebuild holds 1.000 after 2023-02-23 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)"
+   "example acct#3b5864a2 / 78462F103 (SPY): li 40.324, sl 40, leu 0.324 (2021-01-15/20); li 21.581, sl 21, leu 0.581; li 53.095, sl 53, leu 0.095; the rebuild holds 1.000 after 2023-02-23 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)"
   ]
  },
  "disposition": "UNDER_INVESTIGATION",
@@ -1764,7 +1764,7 @@ round.** Never edit an existing row.
 }
 ```
 
-## ADVI_COTBKF-D2-W30-S1 -- All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair; RGY007151's single li is classed SOURCE_GAP by structure
+## ADVI_COTBKF-D2-W30-S1 -- All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair; acct#2f33cbcc's single li is classed SOURCE_GAP by structure
 
 ```json
 {
@@ -1773,20 +1773,20 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~30",
   "surfaced_at": "2026-10-07T16:40Z",
-  "one_line": "All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair, so none is a rebuild error; the order's three classes name a delivery defect, and RGY007151's single li is classed SOURCE_GAP by structure (no row takes it out) though nothing is shown missing",
+  "one_line": "All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair, so none is a rebuild error; the order's three classes name a delivery defect, and acct#2f33cbcc's single li is classed SOURCE_GAP by structure (no row takes it out) though nothing is shown missing",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
       "python data/assets/scripts/analysis/commonwealth_residuals_explain.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~30 -> RESIDUALS explained=5 of 5 sign_gap=0 vendor_rounding=4 source_gap=1; each pair line ends 'snapshot holds <q> (equal to the rebuild)': 0.029, 0.02, 0.00086, 0.00086, 0.003",
-      "B3S605716 and B3S622848: CAF rows sum to 20479.60514 (5 decimals) and the closing lo is 32000.164 (3 decimals) against 32000.16486 held before it; B37631286 and B3S706372: the 2026-05-29 dvr (3.485 / 2.458) re-books a cancelled dvr (DVRX 3.456 / 2.438) by 0.029 / 0.020 more, and the 2026-06-02 sl (861.008 / 607.405) is the position before the re-booking"
+      "acct#9bd1ed4d and acct#87772861: CAF rows sum to 20479.60514 (5 decimals) and the closing lo is 32000.164 (3 decimals) against 32000.16486 held before it; acct#fa82ce1d and acct#3b5864a2: the 2026-05-29 dvr (3.485 / 2.458) re-books a cancelled dvr (DVRX 3.456 / 2.438) by 0.029 / 0.020 more, and the 2026-06-02 sl (861.008 / 607.405) is the position before the re-booking"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "TO CB-n-1: each of the 5 residuals is a SIGN_GAP, VENDOR_ROUNDING (quantities delivered do not net to zero) or SOURCE_GAP (a row the pair needs is not in the delivery).",
-  "world_is": "The snapshot, a second custodian record, holds the same fractions, so the rebuild reproduces the custodian's figure on all 5 and no sign change is indicated (sign_gap=0; the snapshot is 381 of 381 equal, not re-run because commonwealth_signs.py is unchanged). Four pairs are VENDOR_ROUNDING (two sales sized to the position before a dvr re-booking; two final lo rows delivered to 3 decimals against 5-decimal CAF rows). RGY007151 (TOIXX, one li of 0.003 on 2025-10-08, held in the snapshot) has no out row and nothing implies a missing one; SOURCE_GAP is the only class whose definition fits an inbound-only pair, and the report says so.",
-  "notes": "A grader who reads RGY007151 as a real 0.003 holding rather than a gap can re-class it; the script's rule is structural (every signed row inbound)."
+  "world_is": "The snapshot, a second custodian record, holds the same fractions, so the rebuild reproduces the custodian's figure on all 5 and no sign change is indicated (sign_gap=0; the snapshot is 381 of 381 equal, not re-run because commonwealth_signs.py is unchanged). Four pairs are VENDOR_ROUNDING (two sales sized to the position before a dvr re-booking; two final lo rows delivered to 3 decimals against 5-decimal CAF rows). acct#2f33cbcc (TOIXX, one li of 0.003 on 2025-10-08, held in the snapshot) has no out row and nothing implies a missing one; SOURCE_GAP is the only class whose definition fits an inbound-only pair, and the report says so.",
+  "notes": "A grader who reads acct#2f33cbcc as a real 0.003 holding rather than a gap can re-class it; the script's rule is structural (every signed row inbound)."
 }
 ```
 
@@ -1987,7 +1987,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "TO CB-q-1 item 4: one account-month containing a valued zero-Amount transfer, fully priced, blank before and computed and graded after.",
-  "world_is": "Most months holding a zero-Amount row stay blank for another reason (an unpriced holding, or 15,386 rows with no same-day price). The only months that become fully priced are 6, all lo/li (securities in or out of the account); the worked month is B3S703388 2025-09 (lo of 21 shares of 594918104 at 508.037384 = -10668.785065, UNGRADABLE -> DIFF computed 0.7664 vs reported 0.84). Also: the transactions cache (cache/transactions.parquet) has no Amount, so the returns script reads Account_Number, Trade_Date, Transaction_Type, Amount, Cusip, Quantity from S3 (read-only) as before."
+  "world_is": "Most months holding a zero-Amount row stay blank for another reason (an unpriced holding, or 15,386 rows with no same-day price). The only months that become fully priced are 6, all lo/li (securities in or out of the account); the worked month is acct#e29efebe 2025-09 (lo of 21 shares of 594918104 at 508.037384 = -10668.785065, UNGRADABLE -> DIFF computed 0.7664 vs reported 0.84). Also: the transactions cache (cache/transactions.parquet) has no Amount, so the returns script reads Account_Number, Trade_Date, Transaction_Type, Amount, Cusip, Quantity from S3 (read-only) as before."
 }
 ```
 
@@ -2033,7 +2033,7 @@ round.** Never edit an existing row.
     "evidence": [
       "FLOW-DIFF-CLASSES diff_flow_months=857 classes=8 largest=lo/over 10% largest_months=252 examples=3 (deliverables/0.9.0_WK_ADVI_COTBKF~39/flow_diff_classes.md)",
       "single-lo months of the class with a computed flow day: 106; value drop == 2 x |flow| (within 1% + 0.05): 74; == 1 x |flow|: 2",
-      "0QF879352 2023-07-14: lo 455.68 CFNCASH qty 455.68 and sl 455.68 FDIC66606 qty 455.68; value 1395.47 -> 484.11, drop 911.36 = 2 x 455.68; day return -0.326542 vs reported month -0.18"
+      "acct#05dd4a9d 2023-07-14: lo 455.68 CFNCASH qty 455.68 and sl 455.68 FDIC66606 qty 455.68; value 1395.47 -> 484.11, drop 911.36 = 2 x 455.68; day return -0.326542 vs reported month -0.18"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -2211,8 +2211,8 @@ round.** Never edit an existing row.
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md trace sweep_balance D49141714 2019-02: value before 4061.90 / after 51.04 on every no-trade day, D = -4010.86; reported 0.04 pct, before 0.0416, after 3.3111",
-      "silver transactions of D49141714 (local cache): FDIC66606 buys minus sells on or before 2019-02-28 = 4010.86, equal to -D; the funding of the 2019-01-24 sweep buy of 3840.59 is a SALE of 30306A436 (a non-sweep security, 562 shares), and commonwealth_sweeps.sweep_cash_rows adds cash legs for listed-sweep trades only",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md trace sweep_balance acct#c7081e97 2019-02: value before 4061.90 / after 51.04 on every no-trade day, D = -4010.86; reported 0.04 pct, before 0.0416, after 3.3111",
+      "silver transactions of acct#c7081e97 (local cache): FDIC66606 buys minus sells on or before 2019-02-28 = 4010.86, equal to -D; the funding of the 2019-01-24 sweep buy of 3840.59 is a SALE of 30306A436 (a non-sweep security, 562 shares), and commonwealth_sweeps.sweep_cash_rows adds cash legs for listed-sweep trades only",
       "mover_causes.parquet (this deliverable): 106 of 147 `neither` movers have s < 0 (the before arm sat above the after arm), 41 s > 0; 72 sweep_balance, 75 other:sweep_trade_day, offsetting 0 (only 2 of 147 months carry a nonzero flow-component error e_f)"
     ]
   },
@@ -2256,14 +2256,14 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "3.0.0_SA_CVO",
   "surfaced_at": "2026-10-08T19:02:48Z",
-  "one_line": "L9 CB21u1-AC3 MET: the rule is printed before the counts with fixed constants and an ordered first-fit, ties are never forced, and each class's traced month shows its mechanism in the printed day values (re-derived by this seat). Beyond the criterion: BOTH traces show the same mechanism as W42-S1. The after arm's value steps down by the sweep buy (-4,010.86 carried from before the month; -199.98 then -188.14 on RGY005018's two sweep-trade days) and never steps back, so the 72/75 split is WHERE the missing cash credit lands, not two causes.",
+  "one_line": "L9 CB21u1-AC3 MET: the rule is printed before the counts with fixed constants and an ordered first-fit, ties are never forced, and each class's traced month shows its mechanism in the printed day values (re-derived by this seat). Beyond the criterion: BOTH traces show the same mechanism as W42-S1. The after arm's value steps down by the sweep buy (-4,010.86 carried from before the month; -199.98 then -188.14 on acct#65b3b3ea's two sweep-trade days) and never steps back, so the 72/75 split is WHERE the missing cash credit lands, not two causes.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
       "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md lines 5-114 (rule, counts, both traces)",
-      "this seat's re-derivation: D49141714 2019-02-28 after 52.73/51.04-1 = 0.033111, before 4063.59/4061.9-1 = 0.000416; RGY005018 2024-12-10 after 21808.25/21852.77-1 = -0.002037, before 22008.23/21852.77-1 = 0.007114",
+      "this seat's re-derivation: acct#c7081e97 2019-02-28 after 52.73/51.04-1 = 0.033111, before 4063.59/4061.9-1 = 0.000416; acct#65b3b3ea 2024-12-10 after 21808.25/21852.77-1 = -0.002037, before 22008.23/21852.77-1 = 0.007114",
       "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_21_L9_GRADE_20261008.md"
     ]
   },
@@ -2291,9 +2291,9 @@ round.** Never edit an existing row.
     "evidence": [
       "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~43/sweep_regrade.md 'The 163 round-19 movers under three verdicts': back to MATCH 25 of 163; neither cause sweep_balance 25 of 72, other:sweep_trade_day 0 of 75; core 0 of 16; BEFORE arm (v1, cash leg r19) reproduces the unrepaired DIFF verdict on 163 of 163",
       "worker scratch read of the silver transactions (Amount column, S3 read-only) joined to month_grades_after.parquet and mover_causes.parquet: of the 122 `neither` movers still DIFF, 94 carry a non-sweep row on a day the account traded a listed sweep: man only 53, dv only 28, dv+man 7, fch 1, 12b1 with man or dv 3, li with man 2; the other 28 carry an earlier month's unfunded balance and have no such row in the month. No non-sweep sale (sl) falls on a sweep-trade day inside any of the 147 `neither` mover months themselves, so the 25 that returned are carried-balance months: an EARLIER month's sale-funded sweep buy is what the credit repaired",
-      "RGY005018 2024-12 stays DIFF (computed -8.8079, reported -8.02): its two sweep-trade days are a dv of 199.98 on 30231G102 that funds by FDIC66606 199.98 on 2024-12-10, and man -11.84 on CFNCASH paid by sl FDIC66606 11.84 on 2024-12-11; the step -199.98 then -188.14 = -199.98 + 11.84 is an income credit and a fee debit missing, not a sale",
-      "D49141714 2019-02 returns to MATCH (computed 0.0128, reported 0.04): its 2019-01-24 sweep buy 3840.59 = sale of 30306A436 3836.32 + dv 4.27, the credit covers the sale part",
-      "sweep_regrade.md 'Months that moved MATCH -> DIFF between the arms': 23 months, 19 of them in 0QF879130 (2025-05..10) and 0QF879352 (2023-05..2024-11); cause not measured here (0QF879130's 2025-04-07 trade is a 100000 bond sale paying a 102495.34 sweep buy, then a 100000 sweep sale buying 316067107); named in the md, not forced"
+      "acct#65b3b3ea 2024-12 stays DIFF (computed -8.8079, reported -8.02): its two sweep-trade days are a dv of 199.98 on 30231G102 that funds by FDIC66606 199.98 on 2024-12-10, and man -11.84 on CFNCASH paid by sl FDIC66606 11.84 on 2024-12-11; the step -199.98 then -188.14 = -199.98 + 11.84 is an income credit and a fee debit missing, not a sale",
+      "acct#c7081e97 2019-02 returns to MATCH (computed 0.0128, reported 0.04): its 2019-01-24 sweep buy 3840.59 = sale of 30306A436 3836.32 + dv 4.27, the credit covers the sale part",
+      "sweep_regrade.md 'Months that moved MATCH -> DIFF between the arms': 23 months, 19 of them in acct#c42b98c0 (2025-05..10) and acct#05dd4a9d (2023-05..2024-11); cause not measured here (acct#c42b98c0's 2025-04-07 trade is a 100000 bond sale paying a 102495.34 sweep buy, then a 100000 sweep sale buying 316067107); named in the md, not forced"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -2349,7 +2349,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "CB22v1-AC3: one general cash-leg rule, the 72 and 75 counted back from the persisted grades, every month still DIFF named, not forced.",
-  "world_is": "Met. Unmeasured lead for the 23 MATCH -> DIFF regressions (19 in 0QF879130 and 0QF879352): the rule credits cash whenever a non-sweep sale and a sweep buy share a day, so if the vendor already posts a cash leg for some of those sales, the synthetic credit counts it twice. A per-month check for an existing CFNCASH row on the credited days decides it."
+  "world_is": "Met. Unmeasured lead for the 23 MATCH -> DIFF regressions (19 in acct#c42b98c0 and acct#05dd4a9d): the rule credits cash whenever a non-sweep sale and a sweep buy share a day, so if the vendor already posts a cash leg for some of those sales, the synthetic credit counts it twice. A per-month check for an existing CFNCASH row on the credited days decides it."
 }
 ```
 
@@ -2370,8 +2370,8 @@ round.** Never edit an existing row.
     "evidence": [
       "real run of the AC2 invocation (r19 -> conditional, list v1 both arms): months_after=2103/1520/78970 control_same=True regressions=23 movers_back=25; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md section 'Round 22's 23 regressions' (classes: other:cfncash_row_not_the_sale_cash=13, other:no_cfncash_row_on_credit_day=10, double_credit=0; 0 of 23 MATCH under conditional)",
       "funding_credit_rows over the whole transactions table (1,416,497 rows): 2703 credit days unconditional, 2703 conditional -- 0 dropped. Only 310 of the 2703 credit days carry any CFNCASH row at all; of 451 (credit day, CFNCASH row) pairs, 3 have |Amount| equal to the sale proceeds and all 3 are type lo (a withdrawal, debit sign), none a credit-signed row",
-      "0QF879352 (13 of the 23): on the credit days 2021-07-16, 2021-07-20, 2022-07-18 the CFNCASH row is the withdrawal lo (12788.22 / 10000.00 / 7034.39) paired with a sweep sl of the same amount; the stock sale (13000 / 10000 / 24,560.55 over six securities) funds the sweep buy. Skipping every credit day that carries ANY CFNCASH row (a wider condition than the order's, tried in a scratch probe on the six accounts of the 23, not shipped) removes those 13 months and leaves 10 regressions, so no CFNCASH-row condition reaches regressions=0",
-      "the other 10 (0QF879130 2025-05..2025-10, B3S691415 2023-10, B3S748567 2025-07, B3S808881/B3S808882 2025-01): no CFNCASH row on any credit day. In a scratch probe of those accounts under r19, on 9 of the 10 months the account value on the day before a credit day is blank (holdings 3-4, priced 2-3: the sold bond/bill/fund has no price) and the sale day is the first complete day; the credit then adds the sale's proceeds to a value that never held the sold security (0QF879130 2025-04-07: r19 24,239.68, repaired 239,239.68, the difference 215,000 = the three earlier credits). B3S748567 2025-07 is the exception: its sold fund (316067107) was priced and the value fell by the credit under r19. Lead only, not a claim: a credit conditioned on the sold security having been valued the day before"
+      "acct#05dd4a9d (13 of the 23): on the credit days 2021-07-16, 2021-07-20, 2022-07-18 the CFNCASH row is the withdrawal lo (12788.22 / 10000.00 / 7034.39) paired with a sweep sl of the same amount; the stock sale (13000 / 10000 / 24,560.55 over six securities) funds the sweep buy. Skipping every credit day that carries ANY CFNCASH row (a wider condition than the order's, tried in a scratch probe on the six accounts of the 23, not shipped) removes those 13 months and leaves 10 regressions, so no CFNCASH-row condition reaches regressions=0",
+      "the other 10 (acct#c42b98c0 2025-05..2025-10, acct#c093546d 2023-10, acct#57e741a5 2025-07, acct#99b947c2/acct#62a9544e 2025-01): no CFNCASH row on any credit day. In a scratch probe of those accounts under r19, on 9 of the 10 months the account value on the day before a credit day is blank (holdings 3-4, priced 2-3: the sold bond/bill/fund has no price) and the sale day is the first complete day; the credit then adds the sale's proceeds to a value that never held the sold security (acct#c42b98c0 2025-04-07: r19 24,239.68, repaired 239,239.68, the difference 215,000 = the three earlier credits). acct#57e741a5 2025-07 is the exception: its sold fund (316067107) was priced and the value fell by the credit under r19. Lead only, not a claim: a credit conditioned on the sold security having been valued the day before"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -2389,26 +2389,26 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
   "surfaced_at": "2026-10-08T20:42Z",
-  "one_line": "CB23w1-AC2 not met under AMENDMENT 1: (a)+(b)+(c) leaves regressions=1 (B3S748567 2025-07) but loses all 25 round-22 recovered movers; no variant measured has regressions=0 and the 25 kept",
+  "one_line": "CB23w1-AC2 not met under AMENDMENT 1: (a)+(b)+(c) leaves regressions=1 (acct#57e741a5 2025-07) but loses all 25 round-22 recovered movers; no variant measured has regressions=0 and the 25 kept",
   "class": "BLOCKING",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "real run of the AC2 invocation with the shipped `conditional` = (a) sold security valued the day before + (b) no credit-signed CFNCASH row equal to the proceeds + (c) no CFNCASH row of any type equal to a same-day sweep sale: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md; one 0QF879352 month traced before the change in trace_0QF879352.md @86a13267df",
-      "classes of the 23 (sum 23): double_credit 0; vendor_cfncash_leg_of_sweep_sale 13 (0QF879352 2023-05,06,08,09,11,12, 2024-02,03,05,06,08,09,11: on all three credit days 2021-07-16, 2021-07-20, 2022-07-18 a CFNCASH lo equals the same-day sweep sale 12788.22 / 10000.00 / 7034.39; the credits total 32678.95 and sit in the level from the first complete day 2022-07-18: r19 17640.53, repaired 50319.48); sold_security_not_valued_day_before 9 (0QF879130 2025-05..10, B3S691415 2023-10, B3S808881 and B3S808882 2025-01); other:credit_kept_by_every_condition 1 (B3S748567 2025-07). Now: 22 of 23 MATCH",
+      "real run of the AC2 invocation with the shipped `conditional` = (a) sold security valued the day before + (b) no credit-signed CFNCASH row equal to the proceeds + (c) no CFNCASH row of any type equal to a same-day sweep sale: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md; one acct#05dd4a9d month traced before the change in trace_acct#05dd4a9d.md @86a13267df",
+      "classes of the 23 (sum 23): double_credit 0; vendor_cfncash_leg_of_sweep_sale 13 (acct#05dd4a9d 2023-05,06,08,09,11,12, 2024-02,03,05,06,08,09,11: on all three credit days 2021-07-16, 2021-07-20, 2022-07-18 a CFNCASH lo equals the same-day sweep sale 12788.22 / 10000.00 / 7034.39; the credits total 32678.95 and sit in the level from the first complete day 2022-07-18: r19 17640.53, repaired 50319.48); sold_security_not_valued_day_before 9 (acct#c42b98c0 2025-05..10, acct#c093546d 2023-10, acct#99b947c2 and acct#62a9544e 2025-01); other:credit_kept_by_every_condition 1 (acct#57e741a5 2025-07). Now: 22 of 23 MATCH",
       "variants measured with the same invocation (scratch driver patching funding_credit_rows, caches shared, control_same=True in each): (a)+(b) as ordered: regressions=14 movers_back=0; (b)+(c) without (a): regressions=10 movers_back=25 months_after=2116/1507/78970; (a)+(b)+(c): regressions=1 movers_back=0. Credit days kept of 2703: (b)+(c) 2671, (a)+(b)+(c) 793",
-      "the 25 recovered movers are lost by (a), not by (c): their five accounts (0QF879238 2017-07..2018-06, B3S605725 2018-01, B3S804888 2024-02/08 2025-02/08, D49141608 2019-02..09, D49141714 2019-02) have 0 of their credit days with a sold security valued the day before, the same state as the 9 that (a) clears, so the condition cannot tell a credit that restores the level (the 25) from one that inflates it (the 9). The credit is right for the 25 and wrong for the 9 and the 13 by the evidence of the reported returns; the variable that separates them is not in (a), (b) or (c)",
-      "the remaining month B3S748567 2025-07 (computed 0.0535, reported 0.12): sold security the money-market fund 316067107 (rule (b) candidate, off in list v1, priced), credit days 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70), each paired with a sweep buy of the same amount and no CFNCASH row that day; r19 value 2025-07-31 9816.72 vs credited 21692.42, the difference 11875.70; the month's interest base matches r19 (0.12 pct of 9.8k)"
+      "the 25 recovered movers are lost by (a), not by (c): their five accounts (acct#5aa91f68 2017-07..2018-06, acct#ab0c6781 2018-01, acct#cce589ab 2024-02/08 2025-02/08, acct#0f2f0af8 2019-02..09, acct#c7081e97 2019-02) have 0 of their credit days with a sold security valued the day before, the same state as the 9 that (a) clears, so the condition cannot tell a credit that restores the level (the 25) from one that inflates it (the 9). The credit is right for the 25 and wrong for the 9 and the 13 by the evidence of the reported returns; the variable that separates them is not in (a), (b) or (c)",
+      "the remaining month acct#57e741a5 2025-07 (computed 0.0535, reported 0.12): sold security the money-market fund 316067107 (rule (b) candidate, off in list v1, priced), credit days 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70), each paired with a sweep buy of the same amount and no CFNCASH row that day; r19 value 2025-07-31 9816.72 vs credited 21692.42, the difference 11875.70; the month's interest base matches r19 (0.12 pct of 9.8k)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Order CB-w-1 AMENDMENT 1 (issuer ruling on row D2-W45-S1): a credit conditioned on (a) the sold security valued the day before and (b) no equal credit-signed CFNCASH row, with a general condition for the 13 shipped only if it keeps round 22's 25 MATCH and the control unchanged, gives regressions=0.",
-  "world_is": "(a)+(b) leaves 14 regressions and loses the 25; (c) clears the 13 and keeps the 25 (measured without (a)); (a) clears 9 of the other 10 but loses the 25; one month (B3S748567 2025-07) is untouched by every condition. regressions=0 with the 25 kept is not reached by any combination of (a), (b), (c). The shipped default is (a)+(b)+(c) as the order directs; the issuer may rule (a) out, which gives regressions=10 with the 25 kept. The test is not weakened."
+  "world_is": "(a)+(b) leaves 14 regressions and loses the 25; (c) clears the 13 and keeps the 25 (measured without (a)); (a) clears 9 of the other 10 but loses the 25; one month (acct#57e741a5 2025-07) is untouched by every condition. regressions=0 with the 25 kept is not reached by any combination of (a), (b), (c). The shipped default is (a)+(b)+(c) as the order directs; the issuer may rule (a) out, which gives regressions=10 with the 25 kept. The test is not weakened."
 }
 ```
 
-## ADVI_COTBKF-D2-W45-S3 -- CB23w1-AC2 not met under AMENDMENT 2: regressions=1 (B3S748567 2025-07); the blank relabels 2110 already-UNPRICED days and moves no verdict
+## ADVI_COTBKF-D2-W45-S3 -- CB23w1-AC2 not met under AMENDMENT 2: regressions=1 (acct#57e741a5 2025-07); the blank relabels 2110 already-UNPRICED days and moves no verdict
 
 ```json
 {
@@ -2417,7 +2417,7 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
   "surfaced_at": "2026-10-08T21:00Z",
-  "one_line": "CB23w1-AC2 not met under AMENDMENT 2: (a')+(b)+(c) leaves regressions=1 (B3S748567 2025-07, core candidate 316067107, row D2-S30); the blank changes no verdict (2110 of 2111 blank days were already UNPRICED) and round 22's 25 are 0 MATCH / 25 DIFF / 0 UNGRADABLE",
+  "one_line": "CB23w1-AC2 not met under AMENDMENT 2: (a')+(b)+(c) leaves regressions=1 (acct#57e741a5 2025-07, core candidate 316067107, row D2-S30); the blank changes no verdict (2110 of 2111 blank days were already UNPRICED) and round 22's 25 are 0 MATCH / 25 DIFF / 0 UNGRADABLE",
   "class": "BLOCKING",
   "hazard_standing": "INERT",
   "grounding": {
@@ -2426,13 +2426,13 @@ round.** Never edit an existing row.
       "real run of the AC2 invocation with the shipped AMENDMENT 2 rule (b)+(c) credit, (a') unvalued funding sale blanked: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0 (rc 0, 5m47s under timeout 1500); report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md sections 'CB-w-1 AMENDMENT 2' and 'Round 22's 23 regressions'. Classes of the 23 (sum 23): vendor_cfncash_leg_of_sweep_sale 13, unvalued_funding_sale 9, other:credit_kept_by_every_condition 1; 22 of 23 now MATCH",
       "variant table, all measured with the same invocation: round 22 repaired 23/25 (regressions/movers_back, months_after 2103/1520/78970); (b)+(c) 10/25 (2116/1507/78970); (a)+(b) 14/0 (2045/1538/79010); (a)+(b)+(c) 1/0 (2058/1525/79010); (a')+(b)+(c) 1/0 (2058/1525/79010). Credit days posted of 2703: (b)+(c) 2671; (a')+(b)+(c) 560 with 2111 blank days",
       "the blank moves no verdict: of 2111 credit days with an unvalued funding sale, 2110 are on the value grid and all 2110 were already blank (reason UNPRICED) under the same values with no blank list (daily_returns run with and without blank_days on the persisted after values: 2110 reasons changed UNPRICED -> UNVALUED_FUNDING_SALE, 0 computed days changed); the 1797 months holding one were already UNGRADABLE; no month of the 23 or of round 22's 25 holds a blank day (their credit days are in earlier months)",
-      "round 22's 25 by new verdict: MATCH 0, DIFF 25, UNGRADABLE 0 (0QF879238 2017-07..12, 2018-01..06; B3S605725 2018-01; B3S804888 2024-02/08, 2025-02/08; D49141608 2019-02..09; D49141714 2019-02). Not crediting leaves their accounts' level at r19 (DIFF); a one-day blank on the credit day cannot reach the later months that carry the level",
-      "the remaining MATCH -> DIFF month: B3S748567 2025-07 (computed 0.0535, reported 0.12). Sold security 316067107 is held (bought 45000 on 2024-05-02) and priced 1.00, so (a') does not blank it; credits 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70) each pay a same-day sweep buy, no CFNCASH row on those days, so (b) and (c) drop nothing; value 2025-07-31 r19 9816.72 vs credited 21692.42. The reported return has the r19 base: consistent with the vendor not carrying the fund in its performance base (inference), i.e. the parked core candidate of row D2-S30"
+      "round 22's 25 by new verdict: MATCH 0, DIFF 25, UNGRADABLE 0 (acct#5aa91f68 2017-07..12, 2018-01..06; acct#ab0c6781 2018-01; acct#cce589ab 2024-02/08, 2025-02/08; acct#0f2f0af8 2019-02..09; acct#c7081e97 2019-02). Not crediting leaves their accounts' level at r19 (DIFF); a one-day blank on the credit day cannot reach the later months that carry the level",
+      "the remaining MATCH -> DIFF month: acct#57e741a5 2025-07 (computed 0.0535, reported 0.12). Sold security 316067107 is held (bought 45000 on 2024-05-02) and priced 1.00, so (a') does not blank it; credits 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70) each pay a same-day sweep buy, no CFNCASH row on those days, so (b) and (c) drop nothing; value 2025-07-31 r19 9816.72 vs credited 21692.42. The reported return has the r19 base: consistent with the vendor not carrying the fund in its performance base (inference), i.e. the parked core candidate of row D2-S30"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Order CB-w-1 AMENDMENT 2 (issuer ruling on row D2-W45-S2): a funding sale of a security not valued the day before blanks the credit day (UNVALUED_FUNDING_SALE, month UNGRADABLE), (b) and (c) stay, and AC2 stays regressions=0; round 22's 25 are reported by new verdict.",
-  "world_is": "The rule is built as stated and does not reach regressions=0: B3S748567 2025-07 passes every condition because its sold fund is held and priced (a row-type or valuation condition cannot tell a core cash fund from any held fund; it needs the D2-S30 designation). The blank is a relabel, not a verdict mover: every blank day was already UNPRICED, so round 22's 25 land DIFF, not UNGRADABLE. The test is not weakened; the order stays open."
+  "world_is": "The rule is built as stated and does not reach regressions=0: acct#57e741a5 2025-07 passes every condition because its sold fund is held and priced (a row-type or valuation condition cannot tell a core cash fund from any held fund; it needs the D2-S30 designation). The blank is a relabel, not a verdict mover: every blank day was already UNPRICED, so round 22's 25 land DIFF, not UNGRADABLE. The test is not weakened; the order stays open."
 }
 ```
 
@@ -2452,11 +2452,11 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "real run of the AC2 invocation as written (before conditional, after divfee, list v1 both arms, --out .../0.9.0_WK_ADVI_COTBKF~45/divfee): months_before=2058/1525/79010 months_after=2121/1438/79034 control_same=True regressions=95 movers_back=78 (rc 0, 8m11s under timeout 1500); report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/divfee/sweep_regrade.md section 'CB-w-2' and its table 'Months that moved MATCH -> DIFF between the arms'. Transitions (82593 months): DIFF->MATCH 181, MATCH->DIFF 95, MATCH->UNGRADABLE 23, DIFF->UNGRADABLE 14, UNGRADABLE->DIFF 13",
-      "the 95 by what the month carries: fch_fee_leg_in_month (30): 0QF878979 2017-11; 0QF878981 2020-11; 0QF879231 2017-11,2018-11,2019-11; 0QF879353 2020-11,2022-11,2023-11,2024-11,2025-11; 0QF895828 2018-11,2019-11; 0QF895984 2018-11; 0QF927346 2022-05; B3S661358 2018-11,2019-11; B3S749464 2023-11,2024-11; B3S782299 2022-11,2023-11; D49146094 2019-11,2020-11,2021-11,2022-11,2023-11,2024-11; H2Y365503 2023-11; H2Y365888 2023-11; RGY004120 2025-11; RGY005715 2025-11 | dividend_leg_in_month (28): 0QF878956 2023-08,2024-08,2025-02,2026-03; 0QF879143 2021-08; 0QF879353 2022-05,2022-08,2023-02,2023-05,2023-08,2024-02,2024-08,2025-02,2025-05,2026-02; 0QF899639 2024-11; B3S786844 2022-12; B3S798436 2024-08,2024-09,2024-12,2025-02,2025-11,2025-12; B3S804888 2025-12; B3S808045 2026-01; RGY003587 2025-06,2025-09; RGY007351 2026-03 | level_from_earlier_legs (28): 0QF878981 2022-04; 0QF879181 2020-10,2021-01,2021-04; 0QF879353 2021-12,2022-09,2022-10,2022-12,2023-01; 0QF880505 2021-02,2022-01,2022-07,2022-10; 0QF911558 2022-08,2023-02; B3S670862 2021-08,2021-09,2023-02; B3S670865 2021-08,2021-09,2022-09,2023-02; B3S703388 2024-05,2024-11; RGY004120 2025-03,2025-05,2025-06,2025-09 | man_fee_leg_in_month (7): 0QF878956 2025-04; 0QF880505 2024-04; B3S670862 2021-10; B3S703388 2023-07; B3S808881 2025-01; B3S808882 2025-01; RGY004222 2024-10 | man_fee_and_dividend_legs_in_month (2): 0QF878956 2025-01; RGY007351 2025-12",
+      "the 95 by what the month carries: fch_fee_leg_in_month (30): acct#48f4ec93 2017-11; acct#f6c79f45 2020-11; acct#0170b28b 2017-11,2018-11,2019-11; acct#04ebe1d1 2020-11,2022-11,2023-11,2024-11,2025-11; acct#a86ff8ff 2018-11,2019-11; acct#72890bf0 2018-11; acct#248f2de0 2022-05; acct#cc3d9601 2018-11,2019-11; acct#602ce60b 2023-11,2024-11; acct#3345c43a 2022-11,2023-11; acct#b529d0c1 2019-11,2020-11,2021-11,2022-11,2023-11,2024-11; acct#da970705 2023-11; acct#9d0bbc8f 2023-11; acct#a011b5f7 2025-11; acct#8148a2c4 2025-11 | dividend_leg_in_month (28): acct#aaeb760c 2023-08,2024-08,2025-02,2026-03; acct#03836058 2021-08; acct#04ebe1d1 2022-05,2022-08,2023-02,2023-05,2023-08,2024-02,2024-08,2025-02,2025-05,2026-02; acct#f74da374 2024-11; acct#1f02bee1 2022-12; acct#16f4eae3 2024-08,2024-09,2024-12,2025-02,2025-11,2025-12; acct#cce589ab 2025-12; acct#9727ac87 2026-01; acct#83c764b4 2025-06,2025-09; acct#ed5f47fe 2026-03 | level_from_earlier_legs (28): acct#f6c79f45 2022-04; acct#eea1157e 2020-10,2021-01,2021-04; acct#04ebe1d1 2021-12,2022-09,2022-10,2022-12,2023-01; acct#fa488a0b 2021-02,2022-01,2022-07,2022-10; acct#2d4385bf 2022-08,2023-02; acct#5944e1e8 2021-08,2021-09,2023-02; acct#25880078 2021-08,2021-09,2022-09,2023-02; acct#e29efebe 2024-05,2024-11; acct#a011b5f7 2025-03,2025-05,2025-06,2025-09 | man_fee_leg_in_month (7): acct#aaeb760c 2025-04; acct#fa488a0b 2024-04; acct#5944e1e8 2021-10; acct#e29efebe 2023-07; acct#99b947c2 2025-01; acct#62a9544e 2025-01; acct#6834d5a2 2024-10 | man_fee_and_dividend_legs_in_month (2): acct#aaeb760c 2025-01; acct#ed5f47fe 2025-12",
       "variants measured with the same invocation shape (scratch driver, FEE_TYPES / DIVIDEND_TYPES patched; regressions / movers_back / sweep_trade_day back of 75): ordered man+fch & dv 95/78/58; man & dv 78/80/60; man only 32/42/35; man+fch no dividend 91/40/33; dividend only 70/32/20; control_same=True in all. No variant reaches 0",
-      "fch: of the months carrying an fch fee leg and no dividend leg, 24 stay DIFF, 0 become MATCH, 25 MATCH become DIFF, 6 stay MATCH; man: 174 stay DIFF, 112 become MATCH, 11 become UNGRADABLE, 7 MATCH become DIFF, 22 stay MATCH. Example 0QF879231 2017-11: fch -35.00 paid by a 35.00 sweep sale, reported 0.00, computed 0.0026 before and -4.586 after",
-      "dividend: of the months carrying a dividend leg and no fee leg, 349 stay DIFF, 46 become MATCH, 28 MATCH become DIFF, 6 stay MATCH. Example 0QF879143 2021-08: dv 90.00 (stock 293792107) with a 90.00 sweep buy the same day, reported -2.59, computed -2.556 before and -1.595 after. Sweep purchase B equals dividend D on 29127 of 39788 dividend days with a sweep buy, so the pairing is real where it holds",
-      "23 months leave MATCH for UNGRADABLE (not counted by regressions): 22 are 0QF879352 2023-05..2025-12 (every day NON_POSITIVE_BASE under the fee debit) and B3S765083 2022-08 (17 of 23 days)"
+      "fch: of the months carrying an fch fee leg and no dividend leg, 24 stay DIFF, 0 become MATCH, 25 MATCH become DIFF, 6 stay MATCH; man: 174 stay DIFF, 112 become MATCH, 11 become UNGRADABLE, 7 MATCH become DIFF, 22 stay MATCH. Example acct#0170b28b 2017-11: fch -35.00 paid by a 35.00 sweep sale, reported 0.00, computed 0.0026 before and -4.586 after",
+      "dividend: of the months carrying a dividend leg and no fee leg, 349 stay DIFF, 46 become MATCH, 28 MATCH become DIFF, 6 stay MATCH. Example acct#03836058 2021-08: dv 90.00 (stock 293792107) with a 90.00 sweep buy the same day, reported -2.59, computed -2.556 before and -1.595 after. Sweep purchase B equals dividend D on 29127 of 39788 dividend days with a sweep buy, so the pairing is real where it holds",
+      "23 months leave MATCH for UNGRADABLE (not counted by regressions): 22 are acct#05dd4a9d 2023-05..2025-12 (every day NON_POSITIVE_BASE under the fee debit) and acct#921b5169 2022-08 (17 of 23 days)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -2508,7 +2508,7 @@ round.** Never edit an existing row.
     "evidence": [
       "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md, section 'The control: months with no listed position' and the last line: control_same=False; 667 control months, 52 same verdict and same computed return (1e-09); by verdict move MATCH->MATCH 465, MATCH->UNGRADABLE 101, UNGRADABLE->MATCH 25, DIFF->MATCH 18, MATCH->DIFF 6; 517 of 667 keep their verdict",
       "465 MATCH->MATCH months: 464 have a reported 0.0 (accounts holding almost nothing) and the computed return moved a median 0.00165 and at most 0.0465 pct points; the method posts every cash movement of every account (fees, trades, dividends); the round-23 chain posted fees and dividends not at all and a trade's cash only as a funding credit on a sweep-purchase day",
-      "101 MATCH->UNGRADABLE months (13 accounts, all NON_POSITIVE_BASE): under the method the account holds nothing, value 0.0; the round-23 chain carried a constant phantom cash level in them (00085401932 2023-09: value 78,848.46 every day, return 0.0, a MATCH against a reported 0.0). The 40-account positions snapshot check (sweep_regrade.md 'The ledger against the 2026-06-23 positions snapshot') equals the ledger to the cent on 40 of 40, which the round-23 level did not",
+      "101 MATCH->UNGRADABLE months (13 accounts, all NON_POSITIVE_BASE): under the method the account holds nothing, value 0.0; the round-23 chain carried a constant phantom cash level in them (acct#9b5537ed 2023-09: value 78,848.46 every day, return 0.0, a MATCH against a reported 0.0). The 40-account positions snapshot check (sweep_regrade.md 'The ledger against the 2026-06-23 positions snapshot') equals the ledger to the cent on 40 of 40, which the round-23 level did not",
       "the before arm reproduces round 23's baseline exactly (months_before=2058/1525/79010, as ~45's run), so the movement is the method's, not the baseline's"
     ]
   },
@@ -2562,7 +2562,7 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md, section 'The method, row type by row type' (rows by line class and the treatment of each of the 61 types) and '### What the 98 MATCH -> DIFF months hold': 35 months hold an unlisted charge/tax type (ftax 30, cbf 3, fco 1, stax 1, stp 1), 45 hold a dividend row, 24 neither; 25 accounts",
-      "specimen 0QF879431 2016-03 (20 of the 98 months are this account): sl 648.19 on the sweep = lo 518.56 + ftax 129.63 on CFNCASH, reported 0.00; the lo is a flow, the ftax is not named, so it stays a drag and the month computes -0.1616",
+      "specimen acct#47bd9af5 2016-03 (20 of the 98 months are this account): sl 648.19 on the sweep = lo 518.56 + ftax 129.63 on CFNCASH, reported 0.00; the lo is a flow, the ftax is not named, so it stays a drag and the month computes -0.1616",
       "the CRO table row 'other charges' lists fch, genmain, fee, misc, csltfee, pcf; its section 1 says 'every other charge is a withdrawal'; the order lists the same six and says unlisted types are reported, never silently treated",
       "ManCheck (124 rows) is read as ManAltT (a drag on the owing account, no cash debit: fee paid outside the account): no snapshot account carries one, so it is untested, as the CRO says. ci is read as a flow code because the CRO's flows row names it: no graded month holds a ci row (0 of 119 ci months), so it moved no grade"
     ]
@@ -2616,14 +2616,14 @@ round.** Never edit an existing row.
     "evidence": [
       "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/levels/sweep_regrade.md, section 'Round 24's 39 carried-level regressions traced': per account the checks on the method's level (ledger closure over the account's life, running level, unmatched sales, positions still held, the 2026-06-23 snapshot) and on the baseline's; per month its first differing level, the step by row type and the result. Printed by the AC2 run: CARRIED-LEVELS months=39 supported=39 accounts=13",
       "the method's ledger closes to 0.00 on 13 of 13 accounts (each closed: no security still held, absent from the 2026-06-23 positions snapshot, last row 2026-02-10 to 2026-06-18), no sale of an unheld security (0 of 13), and the running level is never below -0.5 in any of the 39 months; the baseline (conditional) cash level closes at -238786.38 to +134287.28 on the same 13",
-      "four runs of days with the method's running level below -0.5 exist (0QF879353 2018-11-19 to 2018-11-21, lowest -9.78; B3S703388 2024-04-05 to 2024-04-24, lowest -138.63, and 2025-04-07 to 2025-04-10; RGY004222 2025-01-23 to 2025-01-24, lowest -909.67): a debit posted before its credit, recovered, and none in a regression month",
-      "the baseline's departure by kind (decided from the first step's row types): postings it never makes (security-line purchases and sales, dividends, fees, taxes) 23 months, a ManAltF payment made for another account 14 (D49141625 2017-10-09: sl 105.20 pays ManAltF -30.84 and -74.36 for two other accounts), a sweep sale that funds a non-sweep purchase 2 (RGY004222 2024-04-08: sl 140000 on the sweep funds by 140000 of 316067107; B3S808045 2023-03-29: sl 995277.78 funds by 995000 + man 277.78)",
-      "the baseline's agreement with Commonwealth is isolated in 11 of the 13 accounts (graded months MATCH under conditional: 0QF878956 6 of 54, 0QF878981 4 of 69, 0QF879143 1 of 70, 0QF879181 5 of 69, 0QF880505 11 of 47, 0QF899639 1 of 21, B3S703388 14 of 69, B3S798436 6 of 22, B3S804888 2 of 34, B3S808045 1 of 31, RGY004222 1 of 12); the other two are 0QF879353 (50 of 68) and D49141625 (35 of 67)"
+      "four runs of days with the method's running level below -0.5 exist (acct#04ebe1d1 2018-11-19 to 2018-11-21, lowest -9.78; acct#e29efebe 2024-04-05 to 2024-04-24, lowest -138.63, and 2025-04-07 to 2025-04-10; acct#6834d5a2 2025-01-23 to 2025-01-24, lowest -909.67): a debit posted before its credit, recovered, and none in a regression month",
+      "the baseline's departure by kind (decided from the first step's row types): postings it never makes (security-line purchases and sales, dividends, fees, taxes) 23 months, a ManAltF payment made for another account 14 (acct#08d09234 2017-10-09: sl 105.20 pays ManAltF -30.84 and -74.36 for two other accounts), a sweep sale that funds a non-sweep purchase 2 (acct#6834d5a2 2024-04-08: sl 140000 on the sweep funds by 140000 of 316067107; acct#9727ac87 2023-03-29: sl 995277.78 funds by 995000 + man 277.78)",
+      "the baseline's agreement with Commonwealth is isolated in 11 of the 13 accounts (graded months MATCH under conditional: acct#aaeb760c 6 of 54, acct#f6c79f45 4 of 69, acct#03836058 1 of 70, acct#eea1157e 5 of 69, acct#fa488a0b 11 of 47, acct#f74da374 1 of 21, acct#e29efebe 14 of 69, acct#16f4eae3 6 of 22, acct#cce589ab 2 of 34, acct#9727ac87 1 of 31, acct#6834d5a2 1 of 12); the other two are acct#04ebe1d1 (50 of 68) and acct#08d09234 (35 of 67)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "CB-y-2: the earliest month in which the method's carried cash level departs from what the account's own rows support can be traced for each of the 39 carried-level regressions; where one general rule fixes a traced cause it ships as method_r25b.",
-  "world_is": "No month of these 13 accounts is a wrong month of the METHOD's level: each account's own rows close to zero under the method's ledger and break under the baseline's. What the 39 months have in common is that the baseline's level differs from the method's from a first month (printed per month) and that the baseline's reproduces Commonwealth's reported return in that month; whether Commonwealth's own level equals the ledger is not testable from the rows (only its reported returns exist), and the baseline's agreement is isolated in most of these accounts. So there is nothing general to fix in the method's level: method_r25b is method_r25 and regressions=0 trivially. Whether these months are noise, a small-base artifact (D49141625: a 0.058 pct point difference on a base of 37.95) or a Commonwealth convention is the CTO's call at the round-N analysis."
+  "world_is": "No month of these 13 accounts is a wrong month of the METHOD's level: each account's own rows close to zero under the method's ledger and break under the baseline's. What the 39 months have in common is that the baseline's level differs from the method's from a first month (printed per month) and that the baseline's reproduces Commonwealth's reported return in that month; whether Commonwealth's own level equals the ledger is not testable from the rows (only its reported returns exist), and the baseline's agreement is isolated in most of these accounts. So there is nothing general to fix in the method's level: method_r25b is method_r25 and regressions=0 trivially. Whether these months are noise, a small-base artifact (acct#08d09234: a 0.058 pct point difference on a base of 37.95) or a Commonwealth convention is the CTO's call at the round-N analysis."
 }
 ```
 
@@ -2642,14 +2642,14 @@ round.** Never edit an existing row.
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/dividends/sweep_regrade.md, section 'The 22 dividend months graded at the pay date and at the ex-date': MATCH under pay 0, under ex 2; DIFF 22 and 20; graded in both arms 22 of 22; total swing -0.2381 pct points; verdict changes 2 (RGY003587 2025-06 swing -0.1233 and 2025-09 swing -0.1149, both DIFF to MATCH); the other 20 swing 0.0 (ex-date and pay date in the same month, no flow between them)",
-      "the same run's 'Months that moved MATCH -> DIFF between the arms': 6 (0QF878981, 0QF879181, RGY005018, each 2025-06 and 2025-09), cause cash_leg_difference on the XOM pay day (2025-06-10, 2025-09-10: the arms' values differ by -3960.54, -108.9, -199.98 on that day); printed by the run: DIVIDEND-MONTHS months=22 graded=22 swing=-0.2381 abs_swing=0.2381 verdict_changes=2, and SWEEP-REGRADE ... regressions=6 dividend_both=22/22",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/dividends/sweep_regrade.md, section 'The 22 dividend months graded at the pay date and at the ex-date': MATCH under pay 0, under ex 2; DIFF 22 and 20; graded in both arms 22 of 22; total swing -0.2381 pct points; verdict changes 2 (acct#83c764b4 2025-06 swing -0.1233 and 2025-09 swing -0.1149, both DIFF to MATCH); the other 20 swing 0.0 (ex-date and pay date in the same month, no flow between them)",
+      "the same run's 'Months that moved MATCH -> DIFF between the arms': 6 (acct#f6c79f45, acct#eea1157e, acct#65b3b3ea, each 2025-06 and 2025-09), cause cash_leg_difference on the XOM pay day (2025-06-10, 2025-09-10: the arms' values differ by -3960.54, -108.9, -199.98 on that day); printed by the run: DIVIDEND-MONTHS months=22 graded=22 swing=-0.2381 abs_swing=0.2381 verdict_changes=2, and SWEEP-REGRADE ... regressions=6 dividend_both=22/22",
       "ex-date input: org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/EXDATES_ADVI_COTBKF_20261009.csv (39 rows, 16 CUSIPs, all measured; read from origin/box/dell1, untracked, never staged); only XOM 30231G102 has the ex-date in a different month from the pay date (pay 2025-06-10 / ex 2025-05-15, pay 2025-09-10 / ex 2025-08-15); across the whole delivery 548 dividend rows have an ex-date and 50 of those (XOM, in the accounts holding it) are cross-month"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "CB-y-2 AC4 (amendment 1): the 22 dividend_row months are graded at the pay date and at the ex-date on method_r25b with each swing printed; neither date is adopted as the default.",
-  "world_is": "The 22 months grade both ways, but the ex-date moves only 2 of them (the 2 XOM months of RGY003587, DIFF to MATCH); the other 20 hold a dividend whose ex-date and pay date share a calendar month, so the chained monthly return cannot change. The ex arm on the whole grade is not better: it turns 6 MATCH months DIFF (the same XOM dividend in three other accounts) against the 2 it turns MATCH, so on this evidence the pay date is not worse than the ex-date for the one cross-month security measured. The source holds 39 (CUSIP, pay date) keys on 16 CUSIPs and only XOM has a cross-month key, so the dividends of every other security in the delivery carry no ex-date and are graded at the pay date only. Neither date is adopted; the default stays pay."
+  "world_is": "The 22 months grade both ways, but the ex-date moves only 2 of them (the 2 XOM months of acct#83c764b4, DIFF to MATCH); the other 20 hold a dividend whose ex-date and pay date share a calendar month, so the chained monthly return cannot change. The ex arm on the whole grade is not better: it turns 6 MATCH months DIFF (the same XOM dividend in three other accounts) against the 2 it turns MATCH, so on this evidence the pay date is not worse than the ex-date for the one cross-month security measured. The source holds 39 (CUSIP, pay date) keys on 16 CUSIPs and only XOM has a cross-month key, so the dividends of every other security in the delivery carry no ex-date and are graded at the pay date only. Neither date is adopted; the default stays pay."
 }
 ```
 
@@ -2848,14 +2848,14 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
   "surfaced_at": "2026-10-09T04:01Z",
-  "one_line": "The closes the chain reads are split-adjusted over their whole history while the quantity rebuilt from the rows is as traded, so a month before a split values the position at 1/k and a split day shows a ghost return (B3S605610 2025-11-17 +274.9% against a reported -2.67)",
+  "one_line": "The closes the chain reads are split-adjusted over their whole history while the quantity rebuilt from the rows is as traded, so a month before a split values the position at 1/k and a split day shows a ghost return (acct#f0b52456 2025-11-17 +274.9% against a reported -2.67)",
   "class": "OBSERVATION",
   "hazard_standing": "ARMED",
   "disarm_owner": "2.0.0_SA_COO~C2",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md section 'One traced month per cause': B3S605610 2025-11, NFLX 64110L106: 68 shares and a stored close of 111.22 on 2025-11-14 (10 times that, 1,112, as traded, if the 10-for-1 ratio holds), a QA row of +612 shares on 2025-11-17 (10-for-1), the stored close continuous across the day (115.42 -> 111.22 -> 110.29); the account value goes 24,498 -> 91,844; with the closes before the split scaled x10 the month is -2.5150 against reported -2.67 (D was +279.4650)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md section 'One traced month per cause': acct#f0b52456 2025-11, NFLX 64110L106: 68 shares and a stored close of 111.22 on 2025-11-14 (10 times that, 1,112, as traded, if the 10-for-1 ratio holds), a QA row of +612 shares on 2025-11-17 (10-for-1), the stored close continuous across the day (115.42 -> 111.22 -> 110.29); the account value goes 24,498 -> 91,844; with the closes before the split scaled x10 the month is -2.5150 against reported -2.67 (D was +279.4650)",
       "diff_trace.parquet: 59 months with sub_kind split over 6 securities (02079K107, 02079K305, 023135106, 64110L106, 808524102, 88160R101) and 8 accounts; the split ratios come from the QA rows of every account (same ratio in every account that shows the day), 14 confirmed events",
       "python data/assets/scripts/silver/commonwealth_diff_trace.py (the AC2 invocation): DIFF-TRACE months=512 traced=73 untraced=439 classes=3"
     ]
@@ -2866,7 +2866,7 @@ round.** Never edit an existing row.
 }
 ```
 
-## ADVI_COTBKF-D2-W50-S2 -- CB-aa-1: an in-kind contribution (li) can carry the cost as its Amount, so the flow is valued at cost and the return takes the difference (B3S793726 2025-11: Amount 5,302 against shares worth 14,453)
+## ADVI_COTBKF-D2-W50-S2 -- CB-aa-1: an in-kind contribution (li) can carry the cost as its Amount, so the flow is valued at cost and the return takes the difference (acct#f78e8ecd 2025-11: Amount 5,302 against shares worth 14,453)
 
 ```json
 {
@@ -2875,20 +2875,20 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
   "surfaced_at": "2026-10-09T04:01Z",
-  "one_line": "An li row that delivers shares can carry the cost basis as its Amount, so the flow the chain subtracts is below the value the shares add to the account and the day returns the difference (B3S793726 2025-11-20 +8.30%)",
+  "one_line": "An li row that delivers shares can carry the cost basis as its Amount, so the flow the chain subtracts is below the value the shares add to the account and the day returns the difference (acct#f78e8ecd 2025-11-20 +8.30%)",
   "class": "OBSERVATION",
   "hazard_standing": "ARMED",
   "disarm_owner": "2.0.0_SA_COO~C2",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "transactions cache (silver with Amount): B3S793726 2025-11-20 li GOOGL 02079K305 Quantity 50 Amount 5302.475; the day's close x 50 = 14,452.87; the day's value steps 99,206 -> 112,741 with flow 5,302.48 recorded, return +8.2991%",
+      "transactions cache (silver with Amount): acct#f78e8ecd 2025-11-20 li GOOGL 02079K305 Quantity 50 Amount 5302.475; the day's close x 50 = 14,452.87; the day's value steps 99,206 -> 112,741 with flow 5,302.48 recorded, return +8.2991%",
       "diff_trace.md: with the flow set to the shares' value the month is 2.9946 against reported 2.22 (D was +10.3632, remainder +0.7746); the second li month, 2026-02 (two rows, Amounts 5,282.60 and 14,436.70 against 16,729.65 and 25,301.95) stays untraced: the repair leaves +1.04 of D +20.05"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "commonwealth_flows.py EXTERNAL: li is a contribution whose flow is direction x |Amount|; the CB-q-1 rule values a ZERO Amount from quantity x price, which assumes a non-zero Amount is the value.",
-  "world_is": "A non-zero Amount on an in-kind li is taken as the value of what entered. In two B3S793726 months it is well below the shares' value (a cost basis is the reading; the rows do not say). The trace names this as flow_value in one month and measures it in a second; it does not change the flow rule (the order's bounds forbid it) and it does not know how many other in-kind rows across the 82,593 months carry a cost."
+  "world_is": "A non-zero Amount on an in-kind li is taken as the value of what entered. In two acct#f78e8ecd months it is well below the shares' value (a cost basis is the reading; the rows do not say). The trace names this as flow_value in one month and measures it in a second; it does not change the flow rule (the order's bounds forbid it) and it does not know how many other in-kind rows across the 82,593 months carry a cost."
 }
 ```
 
@@ -2901,14 +2901,14 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
   "surfaced_at": "2026-10-09T04:01Z",
-  "one_line": "On a dvr day the position's value steps twice, once by the reinvested shares and once by a close that rises by about the distribution per share instead of falling by it (RGY004120 2025-12-05 FCNTX +5.04% close, +42.5 shares)",
+  "one_line": "On a dvr day the position's value steps twice, once by the reinvested shares and once by a close that rises by about the distribution per share instead of falling by it (acct#a011b5f7 2025-12-05 FCNTX +5.04% close, +42.5 shares)",
   "class": "OBSERVATION",
   "hazard_standing": "ARMED",
   "disarm_owner": "2.0.0_SA_COO~C2",
   "grounding": {
     "status": "INFERRED",
     "evidence": [
-      "transactions cache: RGY004120 2025-12-05 dvlt 1019.65 and dvr Quantity 42.539 of 316071109; the stored close 22.7407 (2025-12-04) -> 23.8867 (2025-12-05), 1.1460 a share against a distribution of about 1.09 a share; the day returns +9.74% (price +5.00, shares +4.74) and the month is 11.2855 against reported 1.65",
+      "transactions cache: acct#a011b5f7 2025-12-05 dvlt 1019.65 and dvr Quantity 42.539 of 316071109; the stored close 22.7407 (2025-12-04) -> 23.8867 (2025-12-05), 1.1460 a share against a distribution of about 1.09 a share; the day returns +9.74% (price +5.00, shares +4.74) and the month is 11.2855 against reported 1.65",
       "diff_trace.parquet: 13 months with sub_kind distribution (4 are the RGY accounts of 316071109 in 2025-12); with the day's whole position step taken out of the value from that day on the month is within 0.11 of reported",
       "INFERRED: the store is not shown to be total-return adjusted; the sign and size of the close step are measured, the cause of it is not"
     ]
@@ -3013,13 +3013,13 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "data/assets/scripts/silver/commonwealth_fwd3_serve.py@4d4d00aa6f (choose_account, _year_pick, reported_index)",
-      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~52/dry_run_ac2.log (ANALYST-READ account=RGY004256)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~52/dry_run_ac2.log (ANALYST-READ account=acct#cf292cea)",
       "python read of silver performance Month/Year/InceptionToDate at the performance_prefix builder address: 80709 / 6425 / 1520 rows"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "The order asks for the one-account read of 'a MATCHED, living client' and for the yearly figure 'beside' the computed month.",
-  "world_is": "Of 3,098 MATCH months only 35 are on the 83 accounts open in the delivery's positions (4 of them on a non-flat security with a reported move of 0.5 pct or more); the read account is the open account with the most such months, RGY004256 (4 MATCH, 2 DIFF, 21 UNGRADABLE of 27 months, 547 days of which 160 carry a return), chosen by a stated rule (choose_account) and overridable with --account. Commonwealth's Year rows are calendar years, parts of a year, or an account's single cross-year span (560 of 6,425 cross a year end); the builder carries the Year row whose span overlaps the month with its start and end shown: 80,508 months have a Year figure, 1,901 months have none (no Year row covers the month, reported_note says so), InceptionToDate is present for 81,989 months, absent for 289 months and in conflict (two disagreeing rows) for 17."
+  "world_is": "Of 3,098 MATCH months only 35 are on the 83 accounts open in the delivery's positions (4 of them on a non-flat security with a reported move of 0.5 pct or more); the read account is the open account with the most such months, acct#cf292cea (4 MATCH, 2 DIFF, 21 UNGRADABLE of 27 months, 547 days of which 160 carry a return), chosen by a stated rule (choose_account) and overridable with --account. Commonwealth's Year rows are calendar years, parts of a year, or an account's single cross-year span (560 of 6,425 cross a year end); the builder carries the Year row whose span overlaps the month with its start and end shown: 80,508 months have a Year figure, 1,901 months have none (no Year row covers the month, reported_note says so), InceptionToDate is present for 81,989 months, absent for 289 months and in conflict (two disagreeing rows) for 17."
 }
 ```
 
@@ -3093,7 +3093,7 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/run1_pre_continuity/ac2_stdout.log: months_after=3078/893/78622 regressions=61, R28-REPAIRS splits_applied=36 disagreements=1",
-      "run 1 regressions by account: 0QF880382 30, B3S804888 22, B3S804864 5, B3S728506 2, B3S728504 2; the first three hold 464287614 / 464287481 (store-sourced); 0QF880382's value on 2021-02-25 went 302,074.91 -> 596,039.55 under method_r28 against method_r26 (the same day, same cache)",
+      "run 1 regressions by account: acct#8b1d7784 30, acct#cce589ab 22, acct#0f2d2c45 5, acct#4a890dd1 2, acct#79d02c2c 2; the first three hold 464287614 / 464287481 (store-sourced); acct#8b1d7784's value on 2021-02-25 went 302,074.91 -> 596,039.55 under method_r28 against method_r26 (the same day, same cache)",
       "the order says a disagreement between the account rows and the store is printed and a split that cannot be confirmed is left as it is, named; the rows-sourced path required a continuous close across the day (commonwealth_diff_trace.confirm_splits), the store-sourced path did not -- an omission in this worker's rule, found through the grade, not through a second look at the stored closes first",
       "commit 8137a94e91 message: states the correction follows run 1 and is the only change after it; commits 8fe7ffd558, 34a595ecc0, 2ef83474dd preceded run 1"
     ]
@@ -3104,7 +3104,7 @@ round.** Never edit an existing row.
 }
 ```
 
-## ADVI_COTBKF-D2-W53-S3 -- CB-ab-1: CB28ab1-AC2 NOT MET -- the AC2 invocation ends regressions=4 (B3S728504 and B3S728506, 2023-05 and 2023-06), not 0
+## ADVI_COTBKF-D2-W53-S3 -- CB-ab-1: CB28ab1-AC2 NOT MET -- the AC2 invocation ends regressions=4 (acct#79d02c2c and acct#4a890dd1, 2023-05 and 2023-06), not 0
 
 ```json
 {
@@ -3120,8 +3120,8 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "last line of the AC2 run (rc 0) @8137a94e91: SWEEP-REGRADE sweeps=2 rejected=517 double_drop_months=0 fixed=0 months_before=3098/886/78609 months_after=3133/838/78622 control_same=True regressions=4 movers_back=139 year_chain_same=True r22_named=25/25 dividend_both=NA",
-      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/sweep_regrade.md: the four months, MATCH under method_r26 and DIFF under method_r28 (computed before -> after, reported): B3S728504 2023-05 0.1418 -> 0.1813 (0.10), 2023-06 4.8344 -> 5.2399 (4.81); B3S728506 2023-05 0.1493 -> 0.1894 (0.11), 2023-06 4.8943 -> 5.2853 (4.86)",
-      "the two accounts hold 808524102 (splits 2022-03-11 x2 and 2024-10-11 x3, rows-sourced, close continuous) and 808524839 (2024-10-11 x3): the repair raises B3S728504's value on 2023-04-28 from 11,121.73 to 27,199.01; the month's MATCH under method_r26 was within 0.0418 of the 0.05 band",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/sweep_regrade.md: the four months, MATCH under method_r26 and DIFF under method_r28 (computed before -> after, reported): acct#79d02c2c 2023-05 0.1418 -> 0.1813 (0.10), 2023-06 4.8344 -> 5.2399 (4.81); acct#4a890dd1 2023-05 0.1493 -> 0.1894 (0.11), 2023-06 4.8943 -> 5.2853 (4.86)",
+      "the two accounts hold 808524102 (splits 2022-03-11 x2 and 2024-10-11 x3, rows-sourced, close continuous) and 808524839 (2024-10-11 x3): the repair raises acct#79d02c2c's value on 2023-04-28 from 11,121.73 to 27,199.01; the month's MATCH under method_r26 was within 0.0418 of the 0.05 band",
       "INFERRED, not measured: the larger weight now exposes a dividend-dating difference (pay date against ex-date; the cross-month dividend months are NOT GRADED, no ex-date source) that the smaller weight hid; no other repair of the three touches these accounts (the dvr rule only blanks, producing UNGRADABLE, and MATCH -> UNGRADABLE is 0)"
     ]
   },
@@ -3305,7 +3305,7 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "the order's step 3: 'From the drained trunk, after CB-ab-1 drains VALID with regressions=0'",
-      "the order's own later paragraph, which disagrees with it: 'The build to apply carries method_r28 with exactly 4 account-months ABSENT (B3S728504, B3S728506; 2023-05, 2023-06): your --dry-run must print the same 4 and absent_months=4, or stop'",
+      "the order's own later paragraph, which disagrees with it: 'The build to apply carries method_r28 with exactly 4 account-months ABSENT (acct#79d02c2c, acct#4a890dd1; 2023-05, 2023-06): your --dry-run must print the same 4 and absent_months=4, or stop'",
       "CTO half AMENDMENT 1 @478334e021: 'condition 1 relaxed to regressions = 4 NAMED and BLANKED'; COO half section 3 gives on that same basis",
       "CB-ab-1's own AC2 was amended @5c9e31b2be to EXPECT regressions=4 (a fifth voids the amendment), and it delivered @15e50bfbc1 on that expectation",
       "this seat's re-grade at its own HEAD, rc 0: SWEEP-REGRADE ... control_same=True regressions=4 year_chain_same=True"
@@ -3313,7 +3313,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "TO CB-ac-1 step 3: the mint proceeds after CB-ab-1 drains VALID with regressions=0.",
-  "world_is": "regressions=0 is unreachable for method_r28 by RULING, not by defect. The order carries both readings at HEAD; the act was graded against the pair and the order's later paragraph, which agree with each other and with the measured world (regressions=4, absent_months=4, the four being exactly B3S728504 and B3S728506 at 2023-05 and 2023-06, each served BLANKED with reason REGRESSED_UNDER_R28 and never valued). Nothing was weakened and nothing was waited on. The stale clause cost this seat nothing because it read the pair first, but a seat reading step 3 alone would hold a SERVED act forever on a condition no build at the chain's own default cash leg can meet."
+  "world_is": "regressions=0 is unreachable for method_r28 by RULING, not by defect. The order carries both readings at HEAD; the act was graded against the pair and the order's later paragraph, which agree with each other and with the measured world (regressions=4, absent_months=4, the four being exactly acct#79d02c2c and acct#4a890dd1 at 2023-05 and 2023-06, each served BLANKED with reason REGRESSED_UNDER_R28 and never valued). Nothing was weakened and nothing was waited on. The stale clause cost this seat nothing because it read the pair first, but a seat reading step 3 alone would hold a SERVED act forever on a condition no build at the chain's own default cash leg can meet."
 }
 ```
 
@@ -3379,7 +3379,7 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "3.0.0_SA_CVO",
   "surfaced_at": "2026-10-09T08:35:55Z",
-  "one_line": "Two findings from this seat's L9 read. (1) The split re-count's 'continuous' (W56-S1) is measured on the store's close_served, which is split-ADJUSTED by construction and so always continuous across a split; round 28's rule tests the CHAIN's stored close, the series the repair scales. The two tests measure different series, so the re-count does not contradict round 28 on 464287614 or 00162Q866. (2) On B3S728504 and B3S728506, method_r28's day values are 2.43-2.47x method_r26's on EVERY valued day, not only in the 4 regressed months. A constant ratio barely moves a month's return, so month grades can still MATCH while the served account_day_value carries a level that differs from r26 by that factor; which level is right is unmeasured.",
+  "one_line": "Two findings from this seat's L9 read. (1) The split re-count's 'continuous' (W56-S1) is measured on the store's close_served, which is split-ADJUSTED by construction and so always continuous across a split; round 28's rule tests the CHAIN's stored close, the series the repair scales. The two tests measure different series, so the re-count does not contradict round 28 on 464287614 or 00162Q866. (2) On acct#79d02c2c and acct#4a890dd1, method_r28's day values are 2.43-2.47x method_r26's on EVERY valued day, not only in the 4 regressed months. A constant ratio barely moves a month's return, so month grades can still MATCH while the served account_day_value carries a level that differs from r26 by that factor; which level is right is unmeasured.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
@@ -3405,7 +3405,7 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~57",
   "surfaced_at": "2026-10-09T09:10:00Z",
-  "one_line": "CB-ad-1: the factor on B3S728504 and B3S728506 is wholly the two equity CUSIPs 808524102 (close28/close26 = 3.0000) and 808524839 (2.0000), each equal to the product of the APPLIED plan splits dated 2024-10-11 (rows source) on all 5 scaled sample days per account; implied cash is identical under r26 and r28 (not the cash leg). The pre-written rule needs an outside price to choose a level, and the delivery has none: the two CUSIPs enter only as li/trfi/QA/dv/lo rows (Amount 0 on the position rows), no by/sl, so 0 of 10 carrier-days per account have a trade price within 5 days. Both accounts class untraced:0 carrier-days with an outside price. Not a class: the plan applied the split because the chain close was continuous across 2024-10-11, and S45 (1) records the store close as split-adjusted by construction, which would put r26 short by the factor (r28 right) -- an inference from the series' construction, not an outside value. The first run raised a pandas TypeError in outside_price (date vs Timestamp); fixed in the same file, rule untouched.",
+  "one_line": "CB-ad-1: the factor on acct#79d02c2c and acct#4a890dd1 is wholly the two equity CUSIPs 808524102 (close28/close26 = 3.0000) and 808524839 (2.0000), each equal to the product of the APPLIED plan splits dated 2024-10-11 (rows source) on all 5 scaled sample days per account; implied cash is identical under r26 and r28 (not the cash leg). The pre-written rule needs an outside price to choose a level, and the delivery has none: the two CUSIPs enter only as li/trfi/QA/dv/lo rows (Amount 0 on the position rows), no by/sl, so 0 of 10 carrier-days per account have a trade price within 5 days. Both accounts class untraced:0 carrier-days with an outside price. Not a class: the plan applied the split because the chain close was continuous across 2024-10-11, and S45 (1) records the store close as split-adjusted by construction, which would put r26 short by the factor (r28 right) -- an inference from the series' construction, not an outside value. The first run raised a pandas TypeError in outside_price (date vs Timestamp); fixed in the same file, rule untouched.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
@@ -3816,7 +3816,7 @@ round.** Never edit an existing row.
 }
 ```
 
-## ADVI_COTBKF-D2-S53 -- ABSENT under the as-traded re-mint: 0QF878956 2022-03
+## ADVI_COTBKF-D2-S53 -- ABSENT under the as-traded re-mint: acct#aaeb760c 2022-03
 
 ```json
 {
@@ -3825,7 +3825,7 @@ round.** Never edit an existing row.
  "fabric": "dell2",
  "surfaced_by": "2.0.0_SA_COO~C2",
  "surfaced_at": "2026-10-09T12:27:20Z",
- "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): 0QF878956 2022-03 was MATCH on the store basis (computed 4.7777%, diff -0.0423 pp) and is DIFF on the as-traded basis (computed 4.6451%, diff -0.1749 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#aaeb760c 2022-03 was MATCH on the store basis (computed 4.7777%, diff -0.0423 pp) and is DIFF on the as-traded basis (computed 4.6451%, diff -0.1749 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
  "class": "OBSERVATION",
  "hazard_standing": "INERT",
  "grounding": {
@@ -3837,11 +3837,11 @@ round.** Never edit an existing row.
  },
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
- "world_is": "0QF878956 2022-03 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+ "world_is": "acct#aaeb760c 2022-03 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
 }
 ```
 
-## ADVI_COTBKF-D2-S54 -- ABSENT under the as-traded re-mint: 0QF878956 2022-08
+## ADVI_COTBKF-D2-S54 -- ABSENT under the as-traded re-mint: acct#aaeb760c 2022-08
 
 ```json
 {
@@ -3850,7 +3850,7 @@ round.** Never edit an existing row.
  "fabric": "dell2",
  "surfaced_by": "2.0.0_SA_COO~C2",
  "surfaced_at": "2026-10-09T12:27:20Z",
- "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): 0QF878956 2022-08 was MATCH on the store basis (computed -1.0270%, diff 0.0330 pp) and is DIFF on the as-traded basis (computed -1.1561%, diff -0.0961 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#aaeb760c 2022-08 was MATCH on the store basis (computed -1.0270%, diff 0.0330 pp) and is DIFF on the as-traded basis (computed -1.1561%, diff -0.0961 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
  "class": "OBSERVATION",
  "hazard_standing": "INERT",
  "grounding": {
@@ -3862,11 +3862,11 @@ round.** Never edit an existing row.
  },
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
- "world_is": "0QF878956 2022-08 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+ "world_is": "acct#aaeb760c 2022-08 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
 }
 ```
 
-## ADVI_COTBKF-D2-S55 -- ABSENT under the as-traded re-mint: B3S793726 2026-03
+## ADVI_COTBKF-D2-S55 -- ABSENT under the as-traded re-mint: acct#f78e8ecd 2026-03
 
 ```json
 {
@@ -3875,7 +3875,7 @@ round.** Never edit an existing row.
  "fabric": "dell2",
  "surfaced_by": "2.0.0_SA_COO~C2",
  "surfaced_at": "2026-10-09T12:27:20Z",
- "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): B3S793726 2026-03 was MATCH on the store basis (computed -5.3477%, diff -0.0477 pp) and is DIFF on the as-traded basis (computed -5.4343%, diff -0.1343 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#f78e8ecd 2026-03 was MATCH on the store basis (computed -5.3477%, diff -0.0477 pp) and is DIFF on the as-traded basis (computed -5.4343%, diff -0.1343 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
  "class": "OBSERVATION",
  "hazard_standing": "INERT",
  "grounding": {
@@ -3887,11 +3887,11 @@ round.** Never edit an existing row.
  },
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
- "world_is": "B3S793726 2026-03 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+ "world_is": "acct#f78e8ecd 2026-03 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
 }
 ```
 
-## ADVI_COTBKF-D2-S56 -- ABSENT under the as-traded re-mint: D49151054 2021-07
+## ADVI_COTBKF-D2-S56 -- ABSENT under the as-traded re-mint: acct#df101fce 2021-07
 
 ```json
 {
@@ -3900,7 +3900,7 @@ round.** Never edit an existing row.
  "fabric": "dell2",
  "surfaced_by": "2.0.0_SA_COO~C2",
  "surfaced_at": "2026-10-09T12:27:20Z",
- "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): D49151054 2021-07 was MATCH on the store basis (computed -1.8551%, diff -0.0151 pp) and is DIFF on the as-traded basis (computed -2.4174%, diff -0.5774 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#df101fce 2021-07 was MATCH on the store basis (computed -1.8551%, diff -0.0151 pp) and is DIFF on the as-traded basis (computed -2.4174%, diff -0.5774 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
  "class": "OBSERVATION",
  "hazard_standing": "INERT",
  "grounding": {
@@ -3912,11 +3912,11 @@ round.** Never edit an existing row.
  },
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
- "world_is": "D49151054 2021-07 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+ "world_is": "acct#df101fce 2021-07 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
 }
 ```
 
-## ADVI_COTBKF-D2-S57 -- ABSENT under the as-traded re-mint: D49151054 2021-10
+## ADVI_COTBKF-D2-S57 -- ABSENT under the as-traded re-mint: acct#df101fce 2021-10
 
 ```json
 {
@@ -3925,7 +3925,7 @@ round.** Never edit an existing row.
  "fabric": "dell2",
  "surfaced_by": "2.0.0_SA_COO~C2",
  "surfaced_at": "2026-10-09T12:27:20Z",
- "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): D49151054 2021-10 was MATCH on the store basis (computed 4.4117%, diff 0.0117 pp) and is DIFF on the as-traded basis (computed 3.7866%, diff -0.6134 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#df101fce 2021-10 was MATCH on the store basis (computed 4.4117%, diff 0.0117 pp) and is DIFF on the as-traded basis (computed 3.7866%, diff -0.6134 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
  "class": "OBSERVATION",
  "hazard_standing": "INERT",
  "grounding": {
@@ -3937,7 +3937,7 @@ round.** Never edit an existing row.
  },
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
- "world_is": "D49151054 2021-10 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+ "world_is": "acct#df101fce 2021-10 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
 }
 ```
 
@@ -3979,14 +3979,14 @@ round.** Never edit an existing row.
  "fabric": "dell2",
  "surfaced_by": "2.0.0_SA_COO~C2",
  "surfaced_at": "2026-10-09T13:07:13Z",
- "one_line": "control_same=False on the round-34 re-grade is the BASIS CHANGE: the run's two arms differ only in price basis (store -> as_traded; same sweep list v1/v1, same cash leg method_r28), so the sweep control has no no-change arm. Of 566 control months, 7 moved; every security-day whose price changed in those 7 account-months is a re-priced cottonwood-silver-canonical-prices point (21-189 cusip-days each); no moved month has another cause. Largest move: RGY005018 2024-11, -0.8300 pp (DIFF -> MATCH).",
+ "one_line": "control_same=False on the round-34 re-grade is the BASIS CHANGE: the run's two arms differ only in price basis (store -> as_traded; same sweep list v1/v1, same cash leg method_r28), so the sweep control has no no-change arm. Of 566 control months, 7 moved; every security-day whose price changed in those 7 account-months is a re-priced cottonwood-silver-canonical-prices point (21-189 cusip-days each); no moved month has another cause. Largest move: acct#65b3b3ea 2024-11, -0.8300 pp (DIFF -> MATCH).",
  "class": "OBSERVATION",
  "hazard_standing": "INERT",
  "grounding": {
   "status": "GROUNDED",
   "evidence": [
    "issuer re-ran the tool's own control_months() on .scratch/advi_cotbkf/r34_out/month_grades_{before,after}.parquet with the run's transactions and sweep list: control 566, same 559, moved 7",
-   "moved (computed pct before -> after): B3S762431 2021-10 5.6330->5.5314 (DIFF->MATCH); B3S786844 2022-09 -21.6921->-21.9164 (DIFF->MATCH); D49151054 2021-06 -5.29715->-5.29713 (MATCH->MATCH); D49151054 2021-07 -1.8551->-2.4174 (MATCH->DIFF, now ABSENT row D2-S56); RGY004256 2024-05 -2.5702->-2.5912 (MATCH->MATCH); RGY005018 2024-10 -0.37535->-0.37536 (MATCH->MATCH); RGY005018 2024-11 1.8405->1.0104 (DIFF->MATCH)",
+   "moved (computed pct before -> after): acct#e9c58478 2021-10 5.6330->5.5314 (DIFF->MATCH); acct#1f02bee1 2022-09 -21.6921->-21.9164 (DIFF->MATCH); acct#df101fce 2021-06 -5.29715->-5.29713 (MATCH->MATCH); acct#df101fce 2021-07 -1.8551->-2.4174 (MATCH->DIFF, now ABSENT row D2-S56); acct#cf292cea 2024-05 -2.5702->-2.5912 (MATCH->MATCH); acct#65b3b3ea 2024-10 -0.37535->-0.37536 (MATCH->MATCH); acct#65b3b3ea 2024-11 1.8405->1.0104 (DIFF->MATCH)",
    "cause check: .scratch/advi_cotbkf/r34/{before,after}/security_day_price.parquet -- in each moved account-month every held cusip-day with a changed price has after-store cottonwood-silver-canonical-prices (the substituted basis); the 703 security-days store-wide that changed to another store were canonical before and fell back when unbracketed days dropped (price_basis.json days_dropped_unbracketed=3962), also the basis change",
    "r34 price_basis.json: substituted_tickers=911, points_replaced=1049193, days_rederived=477980"
   ]
@@ -4217,7 +4217,7 @@ round.** Never edit an existing row.
   "fabric": "dell2",
   "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
   "surfaced_at": "2026-10-09T13:55:00Z",
-  "one_line": "CB-al-1: on 2026-06-15 the neighbour has 707 rows (ids like z0925724581) and FWD-3 has 121 (ids like 0QF878955, 04003450617): 0 in common, and 0 matched rows over all 75 neighbour days, so NO_HOLDINGS_ROW means 'no row under this id string', not 'the holdings table is empty' for those days (an account crosswalk, if one exists, was not applied). Separately, thresholds=None (no measured Cottonwood band or tolerance exists), so the producer's plausibility band did not run: 207 of 107,316 MEASURED rows have |total_return_daily| > 1 (max 3960, FWD-3's own value) and stay MEASURED.",
+  "one_line": "CB-al-1: on 2026-06-15 the neighbour has 707 rows (ids like acct#7d2371a7) and FWD-3 has 121 (ids like acct#03b1818c, acct#cdf76705): 0 in common, and 0 matched rows over all 75 neighbour days, so NO_HOLDINGS_ROW means 'no row under this id string', not 'the holdings table is empty' for those days (an account crosswalk, if one exists, was not applied). Separately, thresholds=None (no measured Cottonwood band or tolerance exists), so the producer's plausibility band did not run: 207 of 107,316 MEASURED rows have |total_return_daily| > 1 (max 3960, FWD-3's own value) and stay MEASURED.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
