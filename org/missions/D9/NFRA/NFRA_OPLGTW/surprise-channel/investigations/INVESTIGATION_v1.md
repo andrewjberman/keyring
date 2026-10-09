@@ -10493,3 +10493,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not fixed here, deliberately. OG-ap-2 (@15349fa639) does authorise this seat to touch lambda-source-map.json, but only to register trading_calendar.py for the 49F dispatcher, in its own commit; that authority does not extend to rewriting this converter's deploy fields, and the two edits are kept apart. Whoever owns the update should set artifact_sha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE= and a last_deployed_commit naming the applied tree. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, but that form is UNREPRESENTABLE to SURPRISE_ID_RE in .tools/proof-of-spec-check.py:1206, whose optional infix is a SINGLE letter plus digits -- a two-letter 'AE' cannot match, so the row would not exist to the gate (proof-of-spec SURPRISES limb, ENFORCE for a tree TO). This project already hit and settled exactly this: an earlier seat exercised NFRA_OPLGTW-Z-OG-S1 against the same regex, got NO MATCH, and continued the Z-S series instead. Following that precedent this row is Z-S69 (max in channel was Z-S67, read over all 86 hits, not off one page). A gate stands and is not overridden; the order's row-id instruction is what needs correcting, and 2.0.0_SA_COO~O is told."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-09T04:03:16Z",
+  "one_line": "Row Z-S68 option (c) is built: the new rule's name is now schwab-canonical-si2-08403355-pull-daily from the HCL builder, but the signed COO half and the ask still name canonical-schwab-si2-08403355-daily-pull.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python: lib/opal_naming.py name('schwab', None, 'canonical-si2-08403355-pull', 'daily') -> schwab-canonical-si2-08403355-pull-daily; grade(.., 'EVENT_RULE') -> CONFORMANT.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/plans/canonical-schwab-ec2.A3.txt (2 to add, 0 to change, 0 to destroy) and plans/canonical-schwab-ec2.A3.naming-gate.txt (new rule CONFORMANT as an ADDITION, siblings WARN existing, rc 0).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/tm1_A3_rule_name.result.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment A3 (ruling on row Z-S68): only the new rule's name changes; the signed halves' blast radius names the rule and target 'canonical-si2-08403355-daily-pull' style (COO half section 1: canonical-schwab-si2-08403355-daily-pull).",
+  "world_is": "The resource set is the same (one rule and one target for 08403355, same cron, same SSM document and instance); only the rule's name string differs from the signed text. I did not edit the signed ask or half. tm1.AC1 already resolves the rule by the new name (A3).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "If the CTO half is still unsigned, its text can name the builder name; if signed, the issuer may state in the apply order that the name in the half is superseded by A3."
+}
+```
