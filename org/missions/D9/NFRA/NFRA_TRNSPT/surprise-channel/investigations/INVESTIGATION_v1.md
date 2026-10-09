@@ -1506,6 +1506,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "cloud-ops DEPLOYMENT RULES 4 ('Every Lambda has an entry in infra/aws/lambda/ci/lambda-source-map.json') and 6 ('git tag -a {pipeline}-v{X.Y.Z} + git push --follow-tags after every 0-diff apply').",
     "world_is": "Both are unmet for this root, and three of the four functions predate TO-APPLY-p18. Neither file is inside the order's <paths> (deliverables, logs, change_management), so the applier cannot land either fix: the owned-paths hook refuses the source-map edit, and rule 6 would need a version number minted for a pipeline whose version space nobody has established -- the root has been applied before, untagged, so v1.0.0 is a judgment the issuer owns, not a mechanical next step. Rule 4's own text warns that the map PAIRS a function with a dir and never compares deployed bytes, so its absence hid nothing here: this apply resolved the deployed bytes by CONTENT instead (live CodeSha256 taFbGTCU... equals the built zip's base64 sha256).",
     "notes": "Owner: 2.0.0_SA_COO~T2 to cut a cell that adds the four source-map entries and decides the tag, or the CTO to rule the root exempt. Routed in the p18 report. One entry per function is the whole fix; the tag is one decision."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T12:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-m21: the commit-time naming gate refuses the 'pipeline' field the sibling entries carry when its value is 'transcripts' (3 REFUSE, lambda-source-map.json), so the three new entries omit that optional field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at the first attempt of TO-TR-m21: [naming-gate] NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6727, :6741, :6755 transcripts -> lookup('transcripts') -- hand-kept carrier of 'transcripts' outside every permitted context; NAMING-GATE: REFUSE 3 graded",
+        "r21_checks.py m21 keys only on tf_file, tf_resource, artifact_sha256, last_deployed_commit and _artifact_note; it does not read 'pipeline'; after removing the field it prints R21-M21-OK 3 of 3 resources mapped"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-m21 step 1: copy the shape of an existing entry (mdpf-gold-lambda), whose optional 'pipeline' field names the owning pipeline.",
+    "world_is": "The gate treats the literal 'transcripts' in a new source-map value as a hand-kept carrier and refuses the commit, so the shape cannot be copied whole for this system. Nothing in the three entries is lost for CI: source_dir, files, tf_file, tf_resource and iam_role are present. Pin note: outlook-global-transcripts-pull-lambda's last_deployed_commit is 8f82af62816ee2280ac820cb78168a07fc743fe7, the apply-1 code pin in ledger nfra-trnspt-c3-driven-positive-arm-20261007 (apply 2 at 2026-10-07T23:59:05Z changed WINDOW_DAYS only; live CodeSha256 VGIq85Xx... unchanged and equals the ledger's); the earlier mail-pull-schedule ledger names e3707e911f, which is the superseded code.",
+    "notes": "Owner: the issuer or the naming-gate owner, to say whether a registry row should let 'pipeline' carry this system. This seat added nothing typed to get past the gate; it dropped the field."
   }
   ,
   {

@@ -1129,3 +1129,51 @@
   for the same decryption reason, and returns the booleans plus the link's sha256 and expiry (never
   the link). The alternative is the issuer naming an existing request id and an identity authorized
   to read it.
+
+### IRPT_ANLREQ-D2-S9 -- TO-APPLY-V12 is world-done but its `<status>` still reads `pending`
+
+- **owner:** `2.0.0_SA_COO~V2` (the issuer sets a terminal status; the assignee cannot alone)
+- **disarm_owner:** n/a -- INERT, nothing degrades while it waits
+- **state:** OBSERVATION / INERT
+- **surfaced_by:** `0.7.0_AE_CloudOps~AR2`
+- **surfaced_at:** 2026-10-09T11:45Z
+- **spec_asserts:** `IRPT_ANLREQ.TO-APPLY-R13b` objective: "Run it AFTER `IRPT_ANLREQ.TO-APPLY-V12` is
+  complete." And `org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_ANLREQ.TO-APPLY-V12.ticket-package-principal-code-dell2.md:7`
+  reads `<status>pending</status>`.
+- **world_is:** V12 is world-done and already graded, so the prerequisite was met and the `<status>` is
+  stale rot, not an open order. Measured at ~11:31Z, before R13b built anything: the DEPLOYED
+  `lambda_function.py` of `opal-ticket-api` (downloaded via `lambda get-function` `Code.Location`, 1 zip
+  entry) hashed `04f5727bebf83e7c19493f944bc1c8ed2f7a28404b5137d6cf2cb32b699f9a38` -- V12's exact file --
+  at `LastModified 2026-10-09T08:22:45Z`; `3.0.0_SA_CVO` graded V12 AC2 MET @afcd9c3e4a, and row
+  `IRPT_ANLREQ-D2-S7` records the close 5/5 of ledger `irpt-anlreq-v12-pkgprincipal-20261009`. R13b
+  therefore proceeded on the ARTIFACT, per "logs and commits are ground truth; `<status>` is a claim"
+  (`org/XXX.md` Step 2b).
+- **what this is NOT:** not a claim that V12 has unfinished work, and not a blocker R13b routed around.
+  The only act owed is the issuer flipping one `<status>` field.
+
+### IRPT_ANLREQ-D2-S10 -- a TCKT_VNEXT ledger entry is OPEN past its window on the same Lambda IRPT_ANLREQ deploys
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (the entry's author)
+- **disarm_owner:** `2.0.0_SA_COO~V2` (it holds the TCKT_VNEXT ~V2 lane as well as this one)
+- **state:** OBSERVATION / INERT -- nothing is half-landed on the TF root; the open leg is a secret mint
+- **surfaced_by:** `0.7.0_AE_CloudOps~AR2`
+- **surfaced_at:** 2026-10-09T11:50Z
+- **spec_asserts:** CLAUDE.md NEVER-2: "NEVER leave a confirmed deploy half-landed ... ledger entry
+  opened at start, closed at completion", and an entry left OPEN past its window BLARES.
+- **world_is:** `org/critical_paths/.open_deploys/tckt-vnext-f10-d1-mint-20261009.json` reads
+  `"status": "OPEN"`, `opened_at 2026-10-09T00:56:24Z`, `window_hours 4.0` -- about 10.6h elapsed at
+  surfacing. Of its 4 legs, 3 are closed with proof (`opal-ticket-api` tf-lambda, `D2` activation, `V1`
+  verify, all at 01:06:4xZ) and `M1` (mint `svc-commentary`, store `opal/ticketing/svc-commentary`) has
+  `"proof": null, "closed_at": null`. The entry is carried on THREE live worktree HEADs
+  (`/c/dev/wk-irpt-bckend-190`, `/c/dev/wk-y75-pin`, `/c/tmp/wk-irpt-custdy-18`) and is absent from the
+  shared `box/dell2` tree, which is why a shared-tree read of `.open_deploys/` does not show it -- the
+  per-tree union of `git worktree list --porcelain` plus `ls-tree` was required to see it at all.
+- **why this did NOT block R13b, measured rather than assumed:** the open leg is a Secrets Manager mint,
+  not a change in `infra/aws/terraform/ticket-center`. That entry's own closed legs record a 0-diff
+  replan of the whole ticket-center root at 01:06:45Z, and this seat's independent pre-apply plan read
+  the root clean at ~11:4xZ (`0 to add, 1 to change, 0 to destroy`, the one change being this release's
+  own code attributes). So the root was settled and R13b's branch-A control had nothing foreign to catch.
+- **what this is NOT:** not a claim that the mint failed, and not a finding this seat may dispose of --
+  the entry belongs to TCKT_VNEXT. It is rowed here because it was found while working IRPT_ANLREQ on the
+  same function, and because an entry OPEN past its window is exactly what NEVER-2 asks a reader to
+  measure before acting.
