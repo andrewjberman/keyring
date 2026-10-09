@@ -700,3 +700,28 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W41-S16 (worker 0.9.0_WK_IRPT_ANLREQ~41, AR-t-12) -- <owned_cells> still names AR-t-13 after AMENDMENT 5
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W41-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+  "surfaced_at": "2026-10-09T07:40:00Z",
+  "one_line": "proof-of-spec-check still refuses the order after AMENDMENT 5: <owned_cells>AR-t-12 AR-t-13</owned_cells> names AR-t-13, no criterion cites it now that AR13-t-AC1 cites AR-t-12, so the order cannot flip to complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 5: AR13-t-AC1 cites cell AR-t-12 (the decomposition holds no AR-t-13); the proof instance validates, proof-of-spec-check rc 0, before the flip.",
+  "world_is": "python .tools/proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1 prints `VIOLATION: alignment: declared cell 'AR-t-13' is named in the TO's <owned_cells> but NO criterion references it -- the TO claims a cell it never discharges` and exits 1; it is the only violation (violations=1; 2/2 criteria carry a cell_ref, 1/1 cell_refs resolve in the decomposition's 10 ids). The fix is the issuer's one token (<owned_cells>AR-t-12</owned_cells>) in the order's decomp_ref block, which the worker did not edit because the order's spec is the issuer's to amend. Both criteria pass: AR1-T12-OK 10 passed, AR1-T13-OK 10 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.md <owned_cells> line @deeaecc263",
+      "python .tools/proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1 -> INVALID (rc=1), one VIOLATION line @ deeaecc263 (instance pinned to 3fc99be70f)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
