@@ -31,9 +31,9 @@ re-graded UNEXPLAINED) -- the honest result; DB-b-102's emit_method_row(src=None
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.0.0_AB_MSTR~DELL2",
-      "at": null
+      "at": "2026-10-09T15:59:45Z"
     }
   },
   {
