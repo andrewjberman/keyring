@@ -1,12 +1,12 @@
 {
   "prd": "MDPF_SECHIST_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "e6d185ecef4934e8b36c8209693d3797294f208c",
+  "prd_version": "v0.3",
+  "prd_pin": "847e1e265ed1a1e785dd96ae2568df6607c93157",
   "half": "ratified-text",
-  "half_hash": "3b9c1bf45d227a3ffaab8ad190a3ccccbfb1f4306f155305cbc27359bf9131b2",
+  "half_hash": "5fe296d5aae645722d6c37ae80d006b9dc29d01bb2642ac9ecc9fcfe85642c46",
   "endpoint_hash": "e018e044ae2ac00b6e672bb0427f939a0bf0f59ac8e4ca5b4c5ccb9ac8e8b4af",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECHIST_v0.1_AND_SECCLASS_v0.12_RATIFIED_TEXT_REVIEW_20261006.md@b7fd39f49c",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECHIST_PRD_V03_RATIFIED_TEXT_REVIEW_20261009.md@cc57bafcdb",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-06T18:27:47Z"
+  "signed_at": "2026-10-09T16:14:17Z"
 }
