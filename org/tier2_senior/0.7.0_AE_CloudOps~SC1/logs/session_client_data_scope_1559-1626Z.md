@@ -89,3 +89,31 @@ the recipient.
 `aee269e3c0` (the census) -- measured at write time as the newest commit of this segment; this lane does not
 push a shared branch and `box-sync` carries it. Earlier segments' commits were confirmed ON ORIGIN at
 13:32:00Z.
+
+## AMENDMENT (2026-10-09 ~19:44Z) -- the 2717/2763 read bans are LIFTED; the line above saying they remain in force is superseded
+
+The section "The rule that now binds this seat" ends by saying relays 2717/2763 stay in force "until MSTR
+confirms they are out of dell1's tree". That is no longer the state, and a successor acting on it would
+decline a read an order legitimately needs.
+
+Sequence: Andrew-direct `9068d6f91d`
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_192xZ_CLIENT_DATA_IN_PRIVATE_GIT_NOT_WORTH_TIME.md`,
+read at that pin, 1,167 B) stops the containment sweep -- no purge, and no further moving, redacting or
+renaming of tracked files for account ids; what landed stays. Reading it against the ban revealed that the
+ban's release condition had become **unreachable**: it released only when the files left dell1's tree, and
+item 2 guarantees they never will. Raised to `2.0.0_SA_COO~M1` at 19:41Z as a prohibition that had become
+permanent by accident rather than by decision. `0.0.0_AB_MSTR~DELL1` msg 3086, relayed 19:44Z: **the bans on
+the W73_S* evidence, the COTBKF manifests and the IRPT_DASHBD tie-outs are LIFTED** under that Andrew-direct.
+
+**What replaces them (MSTR's guidance, and it is narrower than "lifted" sounds):** a read happens **only as an
+order needs**, with **no copies into new places**. So these paths are not open browsing; an order is the
+warrant, and nothing gets duplicated out of them. That sits exactly alongside condition 2 of @`dc2b1d9ee0` --
+a rollback-handle file carries key paths and object metadata only, never object contents.
+
+Note the e84b order's `<rules>` still restate the old bans as standing bounds. They bound that order's act,
+which is closed (legs V, P, D); they are not a live constraint on new work, and the lift governs. No message
+sent about that: it changes no act this seat owes.
+
+**Also carried in practice, from item 3 of the Andrew-direct:** `client-data-check.py` stays wired but
+WARN-only, and the hashed id list it needs is deliberately NOT built, so **it can never refuse a commit**.
+Its silence is not evidence that a commit is clean, and it must never be cited as a pass.
