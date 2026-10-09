@@ -201,3 +201,27 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The invocation is environment-sensitive: with FORCE_COLOR set it fails on real passing tests, so a grader running in a coloured shell would read a false BAD for every R3 cell. I did not edit the check (barred by the order) and ran it with FORCE_COLOR unset for the recorded output."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W7-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~7",
+  "surfaced_at": "2026-10-09T14:45:00Z",
+  "one_line": "TO-SH-t8 asks for ONE total-return level field and names none; the pull now requests TOT_RETURN_INDEX_GROSS_DVDS, a field name chosen from vendor knowledge and not confirmed on the terminal (no Bloomberg call is permitted this cell).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D8/MDPF/MDPF_SECHIST/task-orders/MDPF_SECHIST.TO-SH-t8.pull-fill-and-total-return-field.md:29 says 'gains ONE total-return level field (route 2a)'; a search of org/missions/D8/MDPF for the field name found only DAY_TO_DAY_TOT_RETURN_GROSS_DVDS (the daily return, already pulled) and no level field.",
+      "FILE integrations/bloomberg/pipeline/etf_daily_pull.py TOTAL_RETURN_LEVEL_FIELD = 'TOT_RETURN_INDEX_GROSS_DVDS' (one constant; HISTORY_FIELDS = PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, that constant).",
+      "FILE integrations/bloomberg/mcp/blp_client.py:309-322 historical_data builds each row from the fields the response HAS (point.hasElement(f)); an invalid field name raises nothing at the default on_response_error='ignore', so a wrong name lands as an absent column, not a failed pull (rc stays 0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order names the cell (a total-return level field, route 2a) and its test (test_history_request_carries_total_return_level); it does not name the Bloomberg mnemonic.",
+  "world_is": "The mnemonic is a one-constant edit. Its first real confirmation is the first live history_topup carrying a non-null column of that name (the site-Z take is a separate WORLD act). If the terminal rejects the name, gold's C-MMF rule (TO-SH-t7) finds no level and blanks the day, which is its stated behaviour for a day with neither input."
+}
+```
