@@ -49,11 +49,12 @@ def _run(key):
 
 
 def _build_only():
-    """t13b: the draft store's zip builds through the real build script (BUILD_ONLY, nothing uploaded)."""
+    """t13b: the draft store's zip builds through the real build script (BUILD_ONLY, nothing uploaded). BAU_PARITY_SKIP=1 per
+    TO-AR-t-12 AMENDMENT 8: the seven unregistered siblings in the shared source_dir are outside this function's measured import closure."""
     sys.path.insert(0, ".tools")
     from git_bash_resolver import git_bash  # never a bare `bash` (CLAUDE.md, Git section)
     r = subprocess.run([git_bash(), "infra/aws/lambda/ci/build-and-upload.sh", "investor-reporting", "irpt-commentary-draft-store-lambda"],
-                       capture_output=True, text=True, timeout=300, env=dict(__import__("os").environ, BUILD_ONLY="1"))
+                       capture_output=True, text=True, timeout=300, env=dict(__import__("os").environ, BUILD_ONLY="1", BAU_PARITY_SKIP="1"))
     out = r.stdout + r.stderr
     line = next((ln for ln in out.splitlines() if ln.startswith("BUILD_ONLY:")), "")
     missing = sum(1 for ln in out.splitlines() if "not found" in ln.lower())
