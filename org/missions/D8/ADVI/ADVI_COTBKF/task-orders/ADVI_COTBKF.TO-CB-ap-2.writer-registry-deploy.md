@@ -44,6 +44,15 @@ The cot gold run syncs only `s3://opal-data-cot/code/gold/`. The deployed writer
 8. **The proof that closes D2-S62** is the next silver-prep census: `source_firm=cottonwood` on every row and `BREACH=0`. It is the
    issuer's post-deploy item, run on the next manual silver-prep under its own pair. It is not this order's act.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~14:4xZ) -- the COO half is GIVEN. This order waits ONLY on the CTO half.**
+
+- **COO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R42_WRITER_REGISTRY_DEPLOY_COO_HALF.md`.
+- **CB-ap-1 drained** @7ae9de1d21. The registry file is `scopes.json`, git blob `261c0cf8adf46ade84fefd1144092c5665df7477`, and it
+  goes to the key `code/gold/scopes.json`, which MINTS (head-object 404).
+- **The writer's sha256 at HEAD** is `3ac0a502...7f6682`.
+- **The registry bytes** are `git cat-file -p 261c0cf8adf46ade84fefd1144092c5665df7477`, sha256 `13947f7f...edeaade`.
+- The order is released by AMENDMENT 2, citing the CTO half.
+
 ### ACCEPTANCE
 
 <criterion id="CB42ap2-AC1" cell_refs="CB-ap-2"><invocation>python -m pytest data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py -q</invocation><expect>passed</expect></criterion>
