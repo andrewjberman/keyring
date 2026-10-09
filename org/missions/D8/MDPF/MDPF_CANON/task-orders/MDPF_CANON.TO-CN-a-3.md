@@ -122,7 +122,7 @@ criterion, the commit hash, and any row.
 **ISSUER NOTES:** round 1 = THE THREAD (FWD-1) over PRD v2.9 @12adb87963 (ADMITTED; the CVO's L6 condition, msg 3000, is arm 1 and arm
 5 of `r1_iam.py`). Base box/dell1. LF only. Checks positive-controlled against a reference tree before the cut.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <to_id>MDPF_CANON.TO-CN-a-3</to_id>
 <slot>~3</slot>
