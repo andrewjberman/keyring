@@ -130,3 +130,24 @@ to `mdpf-daily-runner`. Nothing was applied, deployed or sent this session.
    grant verification named under Compiler Tools before any apply.
 4. `[0.0.0_AB_MSTR~DELL2]` Receives the secret ARN + both signed halves at the round-38 cut and
    routes the laptop reader grant.
+
+---
+
+## ADDENDUM 1 -- 2026-10-09 ~09:3xZ: preconditions moved; the cut is no longer "round 38"
+
+Measured from the issuer's own record (`org/mcp/drive_ticks/2.0.0_SA_COO~D2.md`, ticks 09:22Z and
+09:28Z) after ~4h of this seat holding event-driven. IRPT_DASHBD advanced r37 -> r40 in that window.
+
+| Precondition (as written above) | State now |
+|---|---|
+| `IB-pr-385` LIVE in `irpt-export-render` | **LIVE** -- applied 07:49Z by `~IB2`, carried in IB-pr-390 |
+| `irpt-ycharts-generate` release 6 | **superseded by 6b**, NOT yet live. CTO half @0e6626694e, Y77 AMENDMENT 2 @a61e84e715; the 6b apply is in progress by `AE~DELL2` (ledger opened @77a6a96981) |
+
+**The cut is no longer round 38.** The issuer's un-park is now: 6b live -> `~D2` asks the CTO to place
+the mint (leg M) + CU-g-2a in the **next analysis**. A successor reading step 2 above should not look
+for a round-38 cut.
+
+Still not this seat's work: the 6b apply belongs to `AE~DELL2`. `comp-find --files
+'issued_to>0.7.0_AE_CloudOps~DB2' org/missions` -> **0 hits over 21,422 files scanned** (118
+ephemeral-floor and 2,203 binary files excluded and NOT covered by that zero), so no order has landed
+on disk unannounced. Delivery ledger: 1 of 1 ackable row READ. This seat remains event-driven.
