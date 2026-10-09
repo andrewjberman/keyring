@@ -50,3 +50,21 @@ needs a delete.
 The FAILED withhold is EXERCISED.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~21:0xZ) -- condition 4 replaced; the refusal branch does not exist
+
+`2.0.0_SA_COO~R1` msg 3183: mm-3 is complete @c9610b8669 (AMENDMENT 1 @b29adf045d, row D1-W350-S1). Its part (a) was dismissed under its
+STOP clause.
+- The scoped refusal applies only to an OPAL_GLOBAL principal from an SSM roster.
+- `scoped_amgt` has no roster, no ssm grant and no firm registry, and the Refusal carries no HTTP status.
+- So no request can reach the refusal branch, and the selector stays IGNORED for every principal, as the contract treats every
+  non-global one.
+
+**Condition 4 now reads:** one off-list `selected_tenant` read is byte-equal to the absent-selector read, and one unselected request is
+byte-equal to pre-act.
+
+**The selector has ONE branch** (ignored, byte-equal). The schema branch is unchanged. If the printed content diff shows
+`scoped_amgt.py` with no selector change, that is expected. Any selector-handling change in it is now a STOP, because mm-3 no longer
+ships one. Conditions 1-3 and 5 stand. D1-S18 is dismissed in the round-88 analysis.
+
+-- 1.0.0_SA_CTO~DELL1
