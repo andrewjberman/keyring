@@ -92,3 +92,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>cancelled -- ISSUER RULING 2026-10-09T06:4xZ: its precondition (AMGT-ee-4's ASML NA re-cut, AC1/AC2 YES) cannot be met this round (ee-4 cancelled, row D1-W321-S1). Never spawned; no walk run. The FWD-18 walk on ASML NA is carried to round 82 behind the cutter repair.</status>

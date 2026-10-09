@@ -238,13 +238,26 @@ NAPPLY_ENFORCE=0
 if [ "${NAMING_GATE_ENFORCE:-}" = "1" ] || [ -e "$SCRIPT_DIR/../org/mcp/naming-gate.enforce" ]; then
   NAPPLY_ENFORCE=1
 fi
+# THE PLACEMENT SWITCH (LGIC_BLANKFIX FWD-6, cell BF-x-3, rows W1-S19 and W1-S20). While org/mcp/naming-place.enforce is
+# present, a refusal from the gate's PLACEMENT step blocks the apply (pre-plan stage: exit 6; plan stage: exit 7) whatever
+# naming-gate.enforce says. The gate tells it apart from the older limb's REFUSE by the line `NAMING-PLACE: REFUSE <n>`. The
+# older limb's warn window is unchanged. The plan stage hands the gate the tree it plans (--root), so the placement step reads
+# the root rather than finding it by an added resource's name. No environment value turns this switch on or off.
+NAPPLY_PLACE=0
+if [ -e "$SCRIPT_DIR/../org/mcp/naming-place.enforce" ]; then
+  NAPPLY_PLACE=1
+fi
 NAPPLY_OUT=""; NAPPLY_RC=0
 if [ -f "$NAPPLY_GATE" ]; then
   NAPPLY_OUT="$(python "$NAPPLY_GATE" "$NAPPLY_TREE" 2>&1)" || NAPPLY_RC=$?
 else
   NAPPLY_OUT="NAMING ERROR the safe-apply naming limb is absent at $NAPPLY_GATE"; NAPPLY_RC=2
 fi
-if [ "$NAPPLY_ENFORCE" -eq 1 ] && [ "$NAPPLY_RC" -ne 0 ] && [ "$SA_SCOPED" -eq 0 ]; then
+NAPPLY_PLACE_HIT=0
+if [ "$NAPPLY_PLACE" -eq 1 ] && [ "$NAPPLY_RC" -ne 0 ] && printf '%s\n' "$NAPPLY_OUT" | grep -q '^NAMING-PLACE: REFUSE '; then
+  NAPPLY_PLACE_HIT=1
+fi
+if { [ "$NAPPLY_ENFORCE" -eq 1 ] || [ "$NAPPLY_PLACE_HIT" -eq 1 ]; } && [ "$NAPPLY_RC" -ne 0 ] && [ "$SA_SCOPED" -eq 0 ]; then
   printf '%s\n' "$NAPPLY_OUT" | sed 's/^/  [naming-apply-gate] /' >&2
   echo "safe-apply: BLOCKED by the naming limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=$NAPPLY_RC). Nothing was planned or applied." >&2
   exit 6
@@ -281,12 +294,14 @@ elif "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} plan -input=false -lock=
 fi
 if [ "$NPLAN_RENDERED" -eq 1 ]; then
   if [ -f "$NAPPLY_GATE" ]; then
-    NPLAN_OUT="$(python "$NAPPLY_GATE" --plan-json "$NPLAN_TMP.json" 2>&1)"; NPLAN_RC=$?
+    NPLAN_OUT="$(python "$NAPPLY_GATE" --plan-json "$NPLAN_TMP.json" --root "$NAPPLY_TREE" 2>&1)"; NPLAN_RC=$?
   else
     NPLAN_OUT="NAMING ERROR the safe-apply naming plan limb is absent at $NAPPLY_GATE"; NPLAN_RC=2
   fi
   printf '%s\n' "$NPLAN_OUT" | sed 's/^/  [naming-plan-gate] /' >&2
   if [ "$NAPPLY_ENFORCE" -eq 1 ] && [ "$NPLAN_RC" -ne 0 ]; then
+    NPLAN_BLOCKED=1
+  elif [ "$NAPPLY_PLACE" -eq 1 ] && [ "$NPLAN_RC" -ne 0 ] && printf '%s\n' "$NPLAN_OUT" | grep -q '^NAMING-PLACE: REFUSE '; then
     NPLAN_BLOCKED=1
   fi
 else

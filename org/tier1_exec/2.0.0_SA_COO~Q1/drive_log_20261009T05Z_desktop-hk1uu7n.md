@@ -1,0 +1,12 @@
+# /canonical-drive log -- 2.0.0_SA_COO~Q1 on desktop-hk1uu7n, 2026-10-09T05Z-06Z
+
+## tick 17 -- 2026-10-09T05:06:25Z | MDPF_DEMQUE | L7 | 4 | 4/5 | EMPTY: t14 [STUCK] escalated 04:56Z, no reply/commit; /next-calls --drive: 0 calls, 0 FREE options | result=nothing |
+## tick 18 -- 2026-10-09T05:16:35Z | MDPF_DEMQUE | L7 | 4 | 4/5 | since last tick: request state address (fold 1751) written then re-pointed to PRD v0.4 @9c779bccf1; stray-delete act queued for Andrew (dell1-20261009T051507Z-f23d); t14 still [STUCK] at ~ZQ | result=work |
+## tick 19 -- 2026-10-09T05:26:36Z | MDPF_DEMQUE | L7 | 4 | 4/5 | EMPTY: t14 [STUCK] at ~ZQ (escalated 04:56Z, no reply); /next-calls --drive: 0 calls, 0 FREE | result=nothing |
+## tick 20 -- 2026-10-09T05:36:47Z | MDPF_DEMQUE | L7 | 4 | 4/5 | follow-up WITH MSTR~DELL1 (05:35Z): did 1670/1739/1743 cross to site Z, bus id, is ~ZQ live (Andrew: cross-box asks go through the box MSTR); uploader still absent on box/sitez | result=work |
+## tick 21 -- 2026-10-09T05:51:02Z | MDPF_DEMQUE | L7 | 4 | 4/5 | since last tick: t14 delivered as crossbox ORDER XB-20261009T054219Z-fbb0 (committed by CTO @97a03a8d86; MSTR carries); Andrew TR direction recorded @cb023aa95f + CTO line; card A quoted+ranked @b4b3357e76 | result=work |
+## tick 22 -- 2026-10-09T06:02:30Z | MDPF_DEMQUE | L7 | 4 | 4/5 | EMPTY at the limb (t14 crossbox in transit) -> /next-calls --drive FREE: round-5 TR comparison prepped -- stored Bloomberg TR history measured (1y for ED/BX/CSCO..., 30-34d for KO/JNJ/T/VZ/MO/XOM), request filed + quoted 15,720 cells | result=work |
+## tick 23 -- 2026-10-09T06:08:11Z | MDPF_DEMQUE | L7 | 4 | 4/5 | EMPTY: XB-20261009T054219Z-fbb0 SENT 14 min ago (bus 08cfcbee), NOT ACKED by site Z; order file on box/sitez; uploader absent. Next tick unacked -> follow up with MSTR~DELL1 | result=nothing |
+## tick 24 -- 2026-10-09T06:17:04Z | MDPF_DEMQUE | L7 | 4 | 4/5 | NUDGE via MSTR~DELL1: XB fbb0 SENT 23 min, NOT ACKED; uploader absent on box/sitez | result=work |
+## 2026-10-09T06:22:01Z Andrew ~06:2xZ: ~Z* lanes dead; MSTR~DELL1 msg 1890 asked site Z MSTR to re-seat or name live holders for every ~Z* order (fbb0 on ~ZQ). Re-address t14 on site Z's answer.
+## tick 25 -- 2026-10-09T06:27:04Z | MDPF_DEMQUE | L7 | 4 | 4/5 | since last tick: Andrew ~06:2xZ ~Z* lanes dead -> live site-Z seat asked via MSTR (msg 1890 covers all four lanes); t14 re-address waits on site Z | result=work |
