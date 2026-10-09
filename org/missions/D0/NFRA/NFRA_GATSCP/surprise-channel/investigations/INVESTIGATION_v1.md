@@ -502,3 +502,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The validator cannot run; GS-f-1's criterion GF1-AC1 passes by its own output (GS-F1-POINTER ok=True arms=2 failed=0) but the instance cannot be validated, so the order's status stays pending. Outside the grant: the schema is not mine to edit; owner 1.0.0_SA_CTO."
 }
 ```
+
+## NFRA_GATSCP-D1-W9-S1 -- proof-of-spec-check.py cannot validate any instance: the schema's commit_or_etag "type" is a sentence
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W9-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~9",
+  "surfaced_at": "2026-10-09T14:03Z",
+  "one_line": "python .tools/proof-of-spec-check.py exits rc=2 (UnknownType) on every instance, including a round-2 sibling that validated before, because org/standards/PROOF_OF_SPEC.schema.json line 157 gives commit_or_etag a \"type\" holding a prose sentence (from e7c10e5b4b); the GF2-AC1 flip is blocked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json:157 \"type\": \"string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO, row IRPT_DASHBD-S41): ...\"; git log: e7c10e5b4b",
+      "proof-of-spec-check.py on my instance (45ed3b65b2) and on 0.9.0_WK_NFRA_GATSCP~3's GE1 instance: jsonschema.exceptions.UnknownType, 'NOT-A-VERDICT ... rc=2'",
+      "GF2-AC1 itself: r3_crlf.py last line 'GS-F2-CRLF ok=True arms=3 failed=0', rc 0; to-pipeline-gate --self-test 0 failed of 117"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "proof-of-spec-check.py returns rc 0 or 1 on a well-formed instance.",
+  "world_is": "It returns rc=2 on all. The schema is outside my write grant; the order stays pending (status not flipped) and the instance is committed unvalidated. Owner of the schema change: 1.0.0_SA_CTO."
+}
+```
