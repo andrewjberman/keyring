@@ -83,6 +83,12 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   (his `/self-drive` invocation, 2026-09-28 ~22:2xZ); landed by 1.0.0_SA_CTO~O. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md`. Stop:
   all four `status: complete`, HELD-AT-STOP, or Andrew's stand-down.
+- `1.0.0_SA_CTO~Z` `/self-drive 60m` over the site-Z NFRA projects whose CTO is this seat: NFRA_SPRINTWIN, NFRA_IAMROLES202609,
+  NFRA_OPSEC202609, NFRA_REPORT, NFRA_MCPMSP, NFRA_MCPORTAL, NFRA_OPALAI, NFRA_MCPINDEX (not NFRA_OPLGTW: `1.0.0_SA_CTO~O`).
+  Class DIRECTED, chooser Andrew: ~04:3xZ 2026-10-09 at the `1.0.0_SA_CTO~Z` terminal, VERBATIM in part: "Do you have self-drive
+  running? ... that should entirely be covered between the CTO self-drive and the MSTR govern loops." Arming record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_043xZ_SELF_DRIVE_60M_SITEZ_NFRA_AND_PUSHES_NEED_NO_ANDREW.md`.
+  Stop: DONE read from the register for all eight, HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO~Z.
 - `1.0.0_SA_CTO~Z` `/self-drive 60m` over AMGT_CORPUS, AMGT_HARVST, AMGT_RESAPP, DSGN_AMGTV1, ETFS_RIVALS (the
   Friday demo: PROD by 09:00 ET 2026-10-02). The driver adjudicates every open call; CRO~Z runs `/closer trace` on
   request. Paired with `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` running `/canonical-drive <own project> 30m`; `~RV`
