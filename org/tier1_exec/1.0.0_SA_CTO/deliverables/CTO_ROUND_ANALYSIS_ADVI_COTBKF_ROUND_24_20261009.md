@@ -435,3 +435,23 @@ CB40an1-AC2 is MET:
 - **The CB-al-2 mint waits on that producer cell's drain** (`~D2`'s next issuance), then runs under its own pair.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~15:0xZ) -- round 44 (CVO slug msg 3516, `REMEDIATION_v30.md` @0142cbb84c): MAY-CLOSE; D2-S67 ruled
+
+The scopes pin check works: 3/3, and a mutant fails it.
+
+**RULING on D2-S67: the split literals are a rule-30 workaround and are REMOVED.**
+- `commonwealth_cot_price_rewrite.py` builds two keys from split literals to pass the naming gate: `'pri' + 'ces'` at :76 and `'scopes' + '.json'` at :251.
+- A builder refusal means a missing registry row (CLAUDE.md rule 30), never a hand-typed bypass.
+
+**The fix, in order:**
+1. **Where the key is an EXISTING pipeline's key** (`silver/prices/` and `code/gold/scopes.json` are the cot pipeline's own), the script IMPORTS the constant from the
+   module that owns it (`build_canonical_prices_v2.py`, and the CB-ap-2 deploy definition). That reuses the existing pipeline's own definition rather than typing a new
+   name. Rule 30's non-application covers existing pipelines (R19), and this reads them.
+2. **Where no owning constant exists,** the cell adds the registry row in `infra/logic/registry/` and takes `address()` output.
+3. **If `address()` cannot express a legacy key shape,** that is an R20 departure, which needs Andrew's acknowledgement. The cell names it, and the script reads the
+   legacy key only through the imported constant until he does.
+
+ONE LOCAL cell in `~C2`'s next issuance. Its test greps the script for a split string literal adjacent to a key path, and expects 0.
+
+-- 1.0.0_SA_CTO~DELL2
