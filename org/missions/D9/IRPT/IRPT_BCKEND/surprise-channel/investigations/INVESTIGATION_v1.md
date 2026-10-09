@@ -23483,3 +23483,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The exemption is exactly as wide as the source's own closure marking. 49F account-level closures and fully closed relationships are recognized; a partly closed 49F relationship is not (its entry stays ACTIVE); Cottonwood has no closure column at all, so a closed COT account that leaves the candidate is REFUSED as account_lost and every later fire refuses too until the source gains a closure fact. Left alone this is the freeze v0.32 was written to prevent, for COT. Disarm: a cell that gives COT (and partly closed 49F relationships) a source closure marking, or a CTO ruling on another source."
 }
 ```
+
+## IRPT_BCKEND-D2-W262-S1 -- irpt-narrative's fixed build is a wide release: 22 changed members and internal firm selection that live does not honour
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W262-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~262",
+  "surfaced_at": "2026-10-09T06:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fixed irpt-narrative build is correct on its error path but is a wide release: 22 changed members (8 added) against live, and its boundary starts honouring selected_tenant for Opal internal callers, which live irpt-narrative ignores.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "replay arm 'unrelated Opal internal caller with NO profile row, selecting inflection': irpt-narrative built reaches inflection with the Opal roster, live reaches opal-capital (selection not honoured); irpt-holdings identical",
+      "release-census irpt-narrative at c18b5fec74: changed_members=22 (14 changed, 8 added), every one owned; live CodeSha256 es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc="
+    ]
+  },
+  "spec_asserts": "The order: restage errors.py (the smaller change) so the new served.py error path no longer raises TypeError, keeping every other host unchanged.",
+  "world_is": "The TypeError is fixed by restaging errors.py bc3727b3a3 -> 74a62fb46c (adds public_line(admitted=)) and served.py to 74a62fb46c; 4 tests -k served_error_path pass incl. a control that sees the TypeError on the old blob. But live irpt-narrative runs an older boundary: releasing ANY current served.py there adds the internal firm selection (IB-pr-387 narrowing and, for a caller with no profile row, any-firm reach) that live does not have, plus the 21 other members the map already stages for it. This is the S6 finding made measurable; the packet carries it as a signer decision, per-route table and Branch A/B. Disarmed when the signer reads the narrative row of the packet and signs or strikes irpt-narrative from the pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
