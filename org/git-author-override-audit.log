@@ -46092,3 +46092,17 @@ REFUSED_20261008)
 2026-10-09T14:05:05Z LANDED-2P  3.0.0_SA_CVO  5c363d0c76  paths=4  validate=34.36s  wait=0.08s  hold=1.15s  build=0.67s  ref=0.45s  post-commit=2.70s  attempt=1
 2026-10-09T14:05:30Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
 2026-10-09T14:05:38Z LANDED-2P  1.0.0_SA_CTO~DELL2  023be3c879  paths=1  validate=7.69s  wait=0.09s  hold=1.23s  build=0.79s  ref=0.41s  post-commit=3.13s  attempt=1
+2026-10-09T14:05:57Z PASS  2.0.0_SA_COO~D2  5  (all paths in-lane)
+2026-10-09T14:05:58Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T14:06:02Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=3  secs=0.17  skipped=overlap holder=2382084
+2026-10-09T14:06:05Z LANDED-2P  0.0.0_AB_MSTR~DELL2  7ddb05ad36  paths=1  validate=6.69s  wait=0.07s  hold=1.13s  build=0.63s  ref=0.47s  post-commit=3.32s  attempt=1
+2026-10-09T14:06:08Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=18.50  held=conflict cloud=f1b3385398
+2026-10-09T14:06:12Z LANDED-2P  2.0.0_SA_COO~D2  f68c21ea8c  paths=5  validate=25.97s  wait=0.08s  hold=1.31s  build=0.83s  ref=0.44s  post-commit=2.61s  attempt=1
+2026-10-09T14:06:13Z PASS  0.9.0_WK_ADVI_COTBKF~68  3  (all paths in-lane)
+2026-10-09T14:06:25Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T14:06:31Z LANDED-2P  1.0.0_SA_CTO~DELL2  9326a48990  paths=1  validate=6.22s  wait=0.07s  hold=0.98s  build=0.60s  ref=0.36s  post-commit=2.30s  attempt=1
+2026-10-09T14:07:18Z PASS  2.0.0_SA_COO~V2  1  (all paths in-lane)
+2026-10-09T14:07:40Z LANDED-2P  2.0.0_SA_COO~V2  eff411394f  paths=1  validate=9.01s  wait=0.10s  hold=16.41s  build=1.52s  ref=14.76s  post-commit=3.38s  attempt=1
+2026-10-09T14:08:03Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=7.65  graded=0/10 fast-lane  args=(wk-IRPT_BCKEND-273)  first=(none)
+2026-10-09T14:08:05Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T14:08:12Z LANDED-2P  0.0.0_AB_MSTR~DELL2  1e381fae41  paths=1  validate=6.39s  wait=0.06s  hold=1.85s  build=0.94s  ref=0.88s  post-commit=2.63s  attempt=1
