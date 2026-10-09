@@ -1,13 +1,12 @@
 {
   "prd": "IRPT_ANLREQ_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "5dd6c2422b5733ef52c23688e740d8634d16b395",
+  "prd_version": "v0.2",
+  "prd_pin": "97ef783e9a1068831bd9e79843377421d9d60906",
   "half": "brief",
-  "half_hash": "ddc626f124b6847f04cc744d4432e7d1e0dd1c200742020391c461820a4e4ad8",
-  "endpoint_hash": "0ea30b97676014773da94137a3a48290276bcc85676ce202a593f34c6705e9da",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.1_BRIEF_HALF_20261009.md@5e8b383ce6",
+  "half_hash": "f540cb78cd33484327f6439d1ba866ce08d523cd77f1a9f8fc511386600d6a60",
+  "endpoint_hash": "fe9bc2c2bc2c44ca7be91f0a4759273d8d1e81e520372f3db9f2c16034e38b38",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/L4R_REVIEW_IRPT_ANLREQ_v0.2_BRIEF_HALF_20261009.md@83fccbad87",
   "signed_by": "4.0.0_SA_CRO~DELL2",
-  "signed_at": "2026-10-09T04:30:03Z",
-  "reason": "R1: the brief's compression into ONE project is not carried -- S3-S5 stay with other projects' lanes and hops 4/6 park on their cells; R2 swap misread; R3 coverage by pointer"
+  "signed_at": "2026-10-09T04:34:58Z"
 }
