@@ -22898,3 +22898,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Also seen: a short complete sentence that starts a paragraph (under 60 chars, ends in final punctuation) is still read as a heading and dropped, as it was before; and Item 4.B coverage reads 102.4% on r83_passages.py because that check divides joined-text chars (which carry the added single spaces) by stripped line chars."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W332-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~332",
+  "surfaced_at": "2026-10-09T09:52:57Z",
+  "one_line": "fetch.py:417 stamps the source object's `language` from document.detect_language over the HEAD of the whole document (the cover page), so an English 20-F is labelled pt (BABA) or es (SAP); analyze then writes the whole draft in that language and the verbatim gate holds all 40 sentences. BABA was rolled back; SAP was not run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order AMGT-hh-4 and the pair expect each of BABA, NU and SAP to produce a new silver part, analysis and draft whose served sentences cite the business section, the same as ASML NA; a name whose model run fails or refuses is rolled back.",
+  "world_is": "BABA: fetch 09:42:53Z wrote source.json language=pt (detect_language over the full document head: en 0 hits, pt 13); detect_language over BABA's own excerpt returns en (1501 en hits). analyze 2.1.0 forwards the declared language and writes the prompt rule 'THE FILING IS WRITTEN IN Portuguese'; the analysis (analysis.json language=pt) and draft (VersionId _Io_yi0xEdFc6XV7uN76WcFZurKS4xB5, 85255 B) are Portuguese, sentences served 0, held_no_span 40, no thesis driver. The run did not fail or refuse, but the draft would serve nothing, so BABA was rolled back in the same act (analysis yIcDOS4HT5Q6_gLfUt0lbYCj90Qm1tPR and drafting qUdrTs_2twkBesSoTueePYoDsVGcWite byte-equal to the priors; silver part-20261009T094719Z re-carries the prior row). A read-only local fetch of SAP (no --write-pool) gives language=es and of NU gives en. SAP was therefore NOT fetched with --write-pool and not analyzed (a run would only be rolled back); NU was fetched, analyzed (38 of 40 sentences on span, USD 0.8039) and landed. The ASML run is unaffected (language=en).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/fetch.py:417 (\"language\": document.detect_language(text)[\"language\"], text = the whole document)",
+      "lib/research/filings/analyze.py:1419-1433 _source_language (trusts source_object['language'])",
+      "deliverables/0.9.0_WK_AMGT_RESAPP~332/diff_BABA_US_Equity.txt and after_rollback_BABA_US_Equity.json",
+      ".scratch/analyze_BABA_US_Equity.log (worker worktree; not committed): PASS1 71 citations, DRAFTING sentences 40 verbatim_PASS 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because a rerun of fetch+analyze for BABA or SAP (or any 20-F whose cover page tallies a foreign stopword set) writes a non-English draft over the served one. The repair is in the producer (detect over the excerpt, or analyze re-detecting) and outside this order's paths. NU's prior silver row, analysis and draft are untouched by the rollback; its new keys stand."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W332-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~332",
+  "surfaced_at": "2026-10-09T09:52:57Z",
+  "one_line": "The drafting_build --splice-driver step was not re-run on ASML NA's new draft: its dry-run moves only the provenance key, because analyze 2.1.0 already writes the analysis's own thesis_driver into the draft.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "ee-4 step 4: if the splice ran on the name's prior draft, re-run it on the new draft and say so. The prior ASML draft (iaClXu9Z) carried thesis_driver_provenance, so a splice had run on it.",
+  "world_is": "The new ASML draft (AHblHQYsQKRuezgUjaX9aNuVzcqgpI6A) thesis_driver equals the new analysis's thesis_driver (True); `drafting_build --splice-driver --only-keys ASML_NA_Equity --dry-run` prints moved_keys=['thesis_driver_provenance'] and wrote nothing. A live splice would add only that provenance key (one more drafting write). BABA's and NU's prior drafts carried no provenance key. Not re-run; AC2 reads YES without it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/drafting_build.py:585-604 splice_driver, :614-700 _splice_driver_pool",
+      "deliverables/0.9.0_WK_AMGT_RESAPP~332/PRE_ACT_RECORD.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the provenance key is wanted on the served draft, one splice write on ASML NA's drafting key is the remainder."
+}
+```
