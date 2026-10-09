@@ -2382,3 +2382,23 @@ Checks:
 | `IB-pr-391` | release packet: svc-commentary composition-read Lambda (IB-pr-386) | NFRA_TRNSPT FWD-10 H2 | WORLD | IB-pr-386 drained | P97-d |
 
 fanout: 4 of 4 chains, cap 8, reason: independent artifacts. Assignees: 0.9.0_WK_IRPT_BCKEND~199, ~200, ~201, ~202.
+
+## 91. ROUND 98, WORKSTREAM ~P (2026-10-09 ~06:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 2621 and 2655)
+
+Two cells:
+- **H1 is WITHDRAWN** (CTO msg 2621, rescinding msg 2507 (a), on ~Y2 msg 2610). IRPT_ANLREQ's I3 queue is the one trigger, so IB-pr-388's
+  mapping and grant are removed before any apply. Nothing was ever planned or applied.
+- **FWD-14, the holdings publish gate**, is admitted at v0.32 with both halves signed (CTO msg 2655; Andrew-direct @f8e7d992dd). It is
+  folded into ~P after the ~M Holdings workstream closed. S392 retires once FWD-14 is deployed and its first scheduled fire is read; until
+  then today's manual read stands (armed, 14:47Z).
+
+Workers come from ~P's agreed block ~260..~299 (~M2 msg 2557, ~Y2 msg 2560). Checks: `deliverables/2.0.0_SA_COO~P2/checks/r98/p98_h1_withdraw.py`
+(AC1 FAILs at base, AC2 PASSes) and `.../r98/p98_fwd14.py` (AC1 and AC2 FAIL at base).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-392` | H1 withdrawn: delete ready_trigger.tf (mapping + kms grant) | NFRA_TRNSPT FWD-10 | WORLD | IB-pr-388 drained | P98-a |
+| `IB-pr-393` | FWD-14 holdings publish gate: WORSE does not re-point; refusal record at address(); closed account listed | FWD-14 | WORLD | none | P98-b |
+
+fanout: 2 of 2 chains, cap 8, reason: independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~260 and ~261. The FWD-14 deploy is a never-widen
+pair after the cell.
