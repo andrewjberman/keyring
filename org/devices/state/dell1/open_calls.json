@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T03:28:44Z",
- "written_by": "2.0.0_SA_COO~V1",
+ "written_at": "2026-10-09T04:38:00Z",
+ "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
    "id": "dell1-20261008T175521Z-abbb",
@@ -390,7 +390,7 @@
    "source": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/CALL_SWITCH_ON_ROUTE_UNDER_EGRESS_LAW_20261009.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T03:28:44Z",
    "kind": "fork",
    "context": "R24 approved a standing daily draw up to 20,000/run by the 11:00Z vehicle; the 10-09 law routes every Bloomberg draw through Q1's queue, whose requests are one-off. Gates act 3 only.",
@@ -415,6 +415,278 @@
       "infra/aws/ec2/opal-gateway/app/server.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
       "infra/aws/ec2/opal-gateway/app/server.py overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/ec2/opal-gateway)"
      ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T04:37:57Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261009T0342Z_XA-20261009T033809Z-8c1a.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T033809Z-8c1a"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T033809Z-8c1a",
+    "at": "2026-10-09T03:38:09Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261009T034602Z-9a16",
+   "project": "MDPF_SECCLASS",
+   "subject": "SC-e-71 release: sign the CTO half for one re-seed (15 rows, 12 names clean, 0 class moves); the re-seed drops low_confidence on the 15 remap-b rows",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_SEED_NAMES_E71_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T03:46:02Z",
+   "kind": "fork",
+   "context": "e71's 12 seed-source names reach the table only through seed-etf-classifications.py --accept-module-truth. Measured delta: 15 rows, updated_by + low_confidence drop on all, name on 12, no class field. COO half SIGNED @cfafff5b14. Gates the e71 release.",
+   "rec": "(a) accept the low_confidence drop: these rows' classes are the module's under Andrew's rule B, and a plain re-seed today already rewrites the same 15 rows",
+   "scope": {
+    "measured_at": "2026-10-09T03:46:02Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of LGIC_ENFORCE placed on laptop (data/assets/scripts/gold/investor_reporting/holdings_snapshot.py)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T04:37:59Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261009T0354Z_XA-20261009T034916Z-ccd1.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T034916Z-ccd1"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T034916Z-ccd1",
+    "at": "2026-10-09T03:49:16Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261009T034603Z-51b6",
+   "project": "MDPF_SECCLASS",
+   "subject": "MDPF_SECCLASS e60 (BD D_04 Unclassified line) and e63 (E_18 canonical caller): built VALID, never released, absent from round-12's count -- release or retire?",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/L8_DRAIN_END_PACKET_R12_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T03:46:03Z",
+   "kind": "fork",
+   "context": "Measured by content at box/dell1 03:4xZ: D_04 and both E_18 are at merge-base bytes; e63's _shared copy caf18d79 is behind the shipped 40ffa3fa. Round 12 section 1 counts only the AI legs as unreleased. Gates any e60/e63 act.",
+   "rec": "Retire e63 as superseded (e65b shipped the module; a re-port conflicts). Release e60 under a fresh half after the e75 G read at the 04:00Z BD fire (same served firm file).",
+   "scope": {
+    "measured_at": "2026-10-09T03:46:03Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of LGIC_ENFORCE placed on laptop (data/assets/scripts/gold/investor_reporting/holdings_snapshot.py)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T04:38:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261009T0354Z_XA-20261009T034917Z-0eb1.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T034917Z-0eb1"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T034917Z-0eb1",
+    "at": "2026-10-09T03:49:17Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261009T042652Z-813c",
+   "project": "MDPF_SECHIST",
+   "subject": "May round 3 modify integrations/bloomberg/pipeline/etf_daily_pull.py for (a) the FWD-5 gap record + widened next-run request and (b) one added total-return level field (FWD-9 route 2a)?",
+   "asked_by": "2.0.0_SA_COO~H1",
+   "source": "org/tier1_exec/2.0.0_SA_COO~H1/drive_log_20261009T04Z_desktop-hk1uu7n.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T04:26:52Z",
+   "kind": "fork",
+   "context": "Andrew's 2026-10-06 ~20:1xZ no-modify order still covers integrations/bloomberg/pipeline/ (his only lift was the SH-t-4 edit). The CTO pre-draft's PASS items 1 and 4 land in that file. Gates those two round-3 cells; the rest of round 3 does not need it.",
+   "rec": "Yes for both, each one build cell landing after a scheduled pull under the never-widen pair and the site-Z take, as SH-t-1 did; the pull is the only writer of the history request.",
+   "scope": {
+    "measured_at": "2026-10-09T04:26:52Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T04:31:46Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/MDPF/MDPF_SECHIST/ledger/ROUND_ANALYSIS.round2.PREDRAFT.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261009T043224Z-0d26",
+   "project": "MDPF_STRATID",
+   "subject": "C-MUNI-VERIFY: is Rebalancer model Opal_Muni_Income (6 muni ETFs, 1 account, $64.1M) the 'Muni SMA' under ALT Strategies? Same for Opal_Muni_Sleeve ($0.55M)",
+   "asked_by": "2.0.0_SA_COO~S1",
+   "source": "org/tier1_exec/4.0.0_SA_CRO~DELL1/deliverables/MDPF_STRATID_S07_MUNI_VERIFY_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T04:32:24Z",
+   "kind": "fork",
+   "context": "S07 read (CRO~DELL1 @67e20ee89f, UB-d866 Track A) is UNDETERMINED by data: SMA flags false. Gates FWD-3 (Muni as an ALT strategy at Cottonwood and Global); PRD C-MUNI-VERIFY bars any Muni dollar counting at Global before a person verifies.",
+   "rec": "Andrew answers per object: yes -> map to registry member muni; no -> stays Custom with the reason recorded. Until answered both stay Custom and Opal_Muni_Income goes on the S08 unidentified list.",
+   "scope": {
+    "measured_at": "2026-10-09T04:32:24Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T04:38:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261009T043409Z-b186",
+   "project": "MDPF_SECHIST",
+   "subject": "Lift the 2026-10-06 no-modify order on integrations/bloomberg/pipeline/ for two round-3 edits to etf_daily_pull.py",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/MDPF/MDPF_SECHIST/ledger/ROUND_ANALYSIS.round2.PREDRAFT.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T04:34:09Z",
+   "kind": "act",
+   "context": "FWD-5 gap fill + widened next-run request; FWD-9 total-return level field. Held by Andrew's order ANDREW_DIRECT_20261006_201xZ (Unchanged: pipeline/). Neither is cut before the round-2 FWD-1 read.",
+   "rec": "Yes to both edits, each under 1.0.0_SA_CTO~Z's never-widen half and a DEMQUE quote before first run",
+   "scope": {
+    "measured_at": "2026-10-09T04:34:09Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261009T043711Z-9afb",
+   "project": "MDPF_STRATID",
+   "subject": "Confirm whether Opal_Muni_Income ($64.1M, one Cottonwood account) is Opal's Muni SMA, or exclude it with a reason (C-MUNI-VERIFY)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T04:37:11Z",
+   "kind": "act",
+   "context": "S07 read UNDETERMINED by data: an Opal Rebalancer model of six third-party muni ETFs, SMA flags false (CRO S07 read @67e20ee89f). Until a person confirms, no Muni dollars count at Global and the account stays on the unidentified list.",
+   "rec": "A person who knows the Cottonwood book confirms; no default either way",
+   "scope": {
+    "measured_at": "2026-10-09T04:37:11Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
      "placement": [],
      "resources": [],
      "shared": []

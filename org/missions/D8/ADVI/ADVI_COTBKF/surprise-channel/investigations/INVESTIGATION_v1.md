@@ -3022,3 +3022,31 @@ round.** Never edit an existing row.
   "world_is": "Of 3,098 MATCH months only 35 are on the 83 accounts open in the delivery's positions (4 of them on a non-flat security with a reported move of 0.5 pct or more); the read account is the open account with the most such months, RGY004256 (4 MATCH, 2 DIFF, 21 UNGRADABLE of 27 months, 547 days of which 160 carry a return), chosen by a stated rule (choose_account) and overridable with --account. Commonwealth's Year rows are calendar years, parts of a year, or an account's single cross-year span (560 of 6,425 cross a year end); the builder carries the Year row whose span overlaps the month with its start and end shown: 80,508 months have a Year figure, 1,901 months have none (no Year row covers the month, reported_note says so), InceptionToDate is present for 81,989 months, absent for 289 months and in conflict (two disagreeing rows) for 17."
 }
 ```
+
+## ADVI_COTBKF-D2-S40 -- L9 CB27aa1-AC3 NOT MET; CB27aa2-AC3, CB27aa3-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S40",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T04:44:16Z",
+  "one_line": "L9 CB27aa1-AC3 NOT MET as written; CB27aa2-AC3 MET; CB27aa3-AC3 MET. CB27aa1-AC3 fails on 'nothing forced': REACH_CAP_PCT was moved 0.5 -> 1.0 after exploratory runs on the same 512 months (traced 70 -> 73, the worker's own disclosure), and the three months it admits include the ONLY flow_value month, so one of the three classes exists by a constant tuned on the outcome. The other two clauses hold (rule commit 4624627872 precedes the run; each class shown on a traced month's day values; 439 left untraced with what each cause leaves).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/ADVI_COTBKF.TO-CB-aa-1.trace-512.proof_of_spec.json controls.determinism ('the exploratory run before the reach cap moved from 0.5 to 1.0 gave traced=70')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md:15-21 (the rule states the cap 1.0, not that it moved), :87-166 (one traced month per class)",
+      "data/assets/scripts/silver/commonwealth_price_need.py tier_of :115-121 against the CRO rule RESEARCH_20261008_COTTONWOOD_YAHOO_PRICE_BACKFILL_STRUCTURE.md:126-131",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~52/dry_run_ac2.log :1-6 (schemas) and the one-account read",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_27_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB27aa1-AC3, CB27aa2-AC3, CB27aa3-AC3 (the three judgment criteria of round 27).",
+  "world_is": "CB27aa1-AC3: two of three clauses met, 'nothing forced' not met for the three months between the 0.5 and 1.0 caps. Remedy: re-run at the pre-registered 0.5, or keep 1.0 and label those three months 'traced at a cap set after the results'; either way flow_value is not an earned class until a month reaches under a cap fixed before it was seen. CB27aa2-AC3 and CB27aa3-AC3 met, with notes in the grade file."
+}
+```
