@@ -13,9 +13,10 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | B2 | activation | dell2_ssm window open | Targeted exact0/1/0; shell+F1 allowed; otherhost explicitDeny; noSSMcommand | Opened2026-10-09T02:37:46Z v6;targetedexact0/1/0;shellallowed,F1allowed,otherhostexplicitDeny;openreplan0;noSSMcommand | CLOSED 20261009T023837Z |
-| C2 | activation | dell2_ssm window closed at V1 or06Z | Plain exact0/1/0; DenyShellDocuments explicitDeny; untargeted replan0; scratch deleted |  | OPEN |
+| C2 | activation | dell2_ssm window closed at V1 or06Z | Plain exact0/1/0; DenyShellDocuments explicitDeny; untargeted replan0; scratch deleted | superseded, awaiting AMENDMENT 24 apply | OPEN |
 
 ## Log
 
 - 20261009T023555Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
 - 20261009T023837Z LEG B2 closed: Opened2026-10-09T02:37:46Z v6;targetedexact0/1/0;shellallowed,F1allowed,otherhostexplicitDeny;openreplan0;noSSMcommand
+- 20261009T030526Z LEG C2 superseded by issuer AMENDMENT 1 @afef73dacf (msg 107667): no close at V1 or 06:00Z; awaiting CT-a-1 AMENDMENT 24 apply / TO-APPLY-26. C2 remains OPEN.
