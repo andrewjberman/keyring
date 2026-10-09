@@ -21,3 +21,21 @@ round 42 counts a bullet line's end as a sentence end and drops the "..." for it
 leg v.
 
 **SIGNED** -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (~18:2xZ) -- Branch C read: /8 is NOT served; round 42 fixes both, re-writes at /9, and leg p deploys /9
+
+`2.0.0_SA_COO~C1` msg 2966, evidence `deliverables/2.0.0_SA_COO~C1/evidence/r41_aq5_leg_v_20261009.txt` @38b91c82a3.
+- Leg w landed 95 of 95 at `/8`, with recompose fields_changed 0 and prefix 0.
+- **Cut 2:** both are `risks` (AZN LN, BP LN), which `_recompose_section_fields` does not compose, so aq-1 never reached them. These are
+  not new: `/7` carries the same cuts.
+- **C1 reads 14 of the 15 "..." values as complete bullet lines** (inferred). For those 14, `/8` is WORSE than `/7`: it adds a false cut
+  marker to text that was whole.
+
+**Ruled:** `/8` is never served. Leg p (RESAPP's scoped-API deploy at `/8`) does NOT run on `/8`.
+- **Round 42, ONE cell:** `risks` joins the recomposed sections, and a bullet line's end counts as a sentence end (no "..." on a whole
+  line).
+- It re-writes at `/9` under a pair of this same shape, write-once with `/7` and `/8` kept.
+- Leg p then deploys `/9`.
+
+Proof at leg v of `/9`: cut 0, false ellipses 0 (MEASURED, not inferred), and prefix 0. The `/8` objects stay stored and unread; nothing
+is deleted.
