@@ -101,3 +101,56 @@
   "notes": "CN-a-2's apply legs are PROVEN and nothing is half-landed: the code and env are live and verified (CodeSha256 equal to the prediction made before the upload, env carrying the three GOLD_WRITER_ROLE_ARN_* and MDPF_GOLD_COMMIT 55c3cc4642, 0-diff re-plan). A rollback does NOT clear this hazard: the previous live package ff1a8867a6 carries the same import, so only the builder fix or a rollback past R2's deploy would, and the latter is another order's landed work. The run_class=backfill invocation (C4) is HELD rather than run, because it would write 49financial and inflection partitions while cottonwood and global failed -- a partial dated history the order's error-0 arm does not describe."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T20:26:43Z",
+  "one_line": "Four 2-row SYNTHETIC composite parquet partitions sit in the new gold home -- opal-data-mdpf mdpf/global/gold/{account_distribution,account_units,aggregate_aua_timeseries,aum_metrics}/date=2026-10-08/data.parquet, written 2026-10-09T19:10:38-39Z, before any apply or deploy, two minutes before 0.9.0_WK_MDPF_CANON~2's commit; its order forbade any AWS write.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 -- removal of the four keys is an S3 delete, which needs a human's confirmation (RESERVED card to 0.0.0_AB_MSTR~DELL1 for Andrew); until then the backfill skips them as present (plan() excludes existing partitions) and global 10-08 holds fixture rows, never the composite's figures",
+  "spec_asserts": "CN-a-2's bounds: no AWS write of any kind by a worker; DEC-2: history is never rewritten, so whatever sits in a dated partition stands.",
+  "world_is": "head-object: 1037 B each, application/vnd.apache.parquet, no metadata. Rows (pyarrow): aum_metrics = {period: 2026-10-08, total.aum: <num>}, account_units = {count: <num>, value_date: 2026-10-08} -- records_for's (path, value_num, value_text) shape with 2 rows each, a fixture, not the composite (whose aum_metrics carries far more figures). Firm buckets carry only TAXSMA's 9+9 objects; inflection 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws s3api list-objects-v2 --bucket opal-data-mdpf --prefix mdpf/global/gold/ (6 keys: the 4 above + 2 ai_classified_securities index.json)",
+      "pyarrow read of two of the four (scratch copies), 2 rows each",
+      "git -C C:/Dev/wt-canon-w2 log: 4fc14f14cd 15:12:22-04:00 (19:12Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the issuer at the round-1 real run; CloudOps told the backfill will plan 0 for global 10-08 on these four."
+}
+```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S5",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T20:41:00Z",
+  "one_line": "With opal_unidentified packaged (F2), the cottonwood scope now BUILDS and emits a new field unidentified_strategies, and the L-1 key-set identity assertion raises SystemExit on it -- the run dies BEFORE the A4 emission loop, so the next scheduled fire would emit NOTHING on all four scopes rather than the 8 of 16 the broken package emitted.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~S1 (the field is MDPF_STRATID's ST-w-7 and the remedy is its contract's to write: either an R2_RULED_EXTRAS entry for aggregate-aua-timeseries carrying unidentified_strategies with its citation, or emit the field on all four scopes). 0.7.0_AE_CloudOps~DELL1 can disarm in minutes the other way on either issuer's word -- roll mdpf-gold-lambda back to the last GREEN package, CodeSha256 0gPc5/kUo+sE8BnvhKg5wO+IXiDCB4vRK5cvy1ac+2I= at artifact VersionId .lLLFYib9VWTgbndCYqKes9qWk47YoYK (metadata content-sha256 d203dce7f914a3eb), which is the pre-R2 build that read 16 of 16 errors=none on 2026-10-08 and 2026-10-09.",
+  "spec_asserts": "MDPF_STRATID.TO-APPLY-R2's forward fix F2 (2.0.0_SA_COO~S1 msgs 3132/3144) states the acceptance read as 'qa_local reading 16/16, errors []'. CN-a-2's C3 expects a response carrying status and a4_objects_built. Both presume that packaging opal_unidentified.py makes the cycle whole.",
+  "world_is": "It makes the cottonwood scope WHOLE and the cycle WORSE. F2 landed (package 44 modules / 45 members, opal_unidentified.py a member at 6b9c1d7f, live CodeSha256 06aIPiKcSoENnMEpf512CPhkvSI+iUnB0Re1B6fyfgk= equal to the prediction made before the upload, MDPF_GOLD_COMMIT 79e30151a6, 0-diff re-plan). The 20:37:11Z qa_local invocation then returned StatusCode 200 with FunctionError Unhandled and body {\"errorType\":\"Runtime.ExitError\",\"errorMessage\":\"... Runtime exited with error: exit status 1\"}. The log shows cottonwood building correctly for the first time -- 'COTTONWOOD MDPF PAIR', 'IDENTITIES PASS: (i) decomposed==dim to the penny, (ii) model+non_model==firm, (iii) bridge complete', 'global composition gate PASS', category-views built on all four scopes -- and then the last line before END: 'L-1 KEY-SET IDENTITY FAILED for aggregate-aua-timeseries -- a field on one scope and absent on a sibling is a FAILURE, not a warning: cottonwood: only-here=[unidentified_strategies] missing=[] (vs 49financial)'. SEVERITY READ FROM THE SOURCE, not guessed: mdpf_gold_consolidator.py:2827 calls assert_keyset_identity BEFORE the '---- A4 emission ----' loop at :2839, and :1080 raises SystemExit, so a real run reaches no put at all. The broken package at least emitted 8 of 16; these bytes would emit 0 of 16 and leave every served A4 artifact a day stale. The assertion was DEFERRED on the pre-F2 run ('not all scopes built this cycle') precisely because cottonwood had died first -- the import gap was MASKING this one. ZERO WRITES from this run, measured as a set difference over the 16 gold prefixes: 0 keys added, 16 of 16 prefixes read, 0 UNREADABLE. THE SANCTIONED SHAPE FOR THE REMEDY ALREADY EXISTS: R2_RULED_EXTRAS at :289 enumerates exactly this case (today one entry, inflection_non_model_aua, carrying 'CONTRACT section B3 @a3106d585: ruled NOT canonical ... serves until Andrew rules retirement'), so a ruled extra is a one-entry change with a citation -- and the citation is the issuer's to write, not this seat's to invent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws lambda invoke --function-name mdpf-gold-lambda --payload '{\"qa_local\": true}' at 20:37:11Z (FunctionError Unhandled, Runtime.ExitError)",
+      ".tools/aws logs filter-log-events --log-group-name /aws/lambda/mdpf-gold-lambda (326 events; the L-1 line is the last before END)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py:289 R2_RULED_EXTRAS, :1065-1083 assert_keyset_identity, :2827 the call, :2839 the A4 emission loop",
+      "the 16-prefix gold census before and after the invocation (0 keys added, denominators printed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This row does NOT retract MDPF_CANON-D1-S3: packaging opal_unidentified.py was correct and is what let cottonwood build. It records that the fix uncovered the next defect in the same chain, which is the honest order of discovery. Both ledger entries (mdpf-canon-r1-gold-redeploy-backfill-dell1-20261009 and mdpf-opal-unidentified-forward-fix-dell1-20261009) carry their apply legs CLOSED with proof and nothing half-landed: the artifact and env are live and verified both times. CN-a-2's C4 backfill stays HELD -- a backfill cannot run at all through an assertion that precedes every put. ID COLLISION AVOIDED: this row was first written as D1-S4 and renumbered to D1-S5 after a mid-write census found 2.0.0_SA_COO~D1 had committed its own D1-S4 @4e66c34616 (the four synthetic composite partitions) seconds earlier -- a different finding, not this one. The census printed the denominator (6 blocks in the worktree against 5 at HEAD), which is how the clash was seen."
+}
+```
