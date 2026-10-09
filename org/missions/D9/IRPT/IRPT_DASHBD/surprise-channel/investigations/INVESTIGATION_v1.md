@@ -4449,3 +4449,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W64-S1 -- verify-persisted can no longer re-read the report blob: the owned read IB-pr-405 serves the report INDEX ({report_id, revision, retention_ref}) and no blob location, so the check narrows from content to index agreement
+
+```json
+{
+  "id": "IRPT_DASHBD-W64-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~64",
+  "surfaced_at": "2026-10-09T12:40:00Z",
+  "one_line": "DB-b-85's verify-persisted re-read the persisted object from S3 (version-pinned from the index row) and checked its sha256 against the revision, its report_kind, its as_of_date and its composition_sha256 binding. IB-pr-405 returns the index only, so DB-b-89's verify-persisted checks that the route's report_index names the same report_id and revision as the refs, bound to the same artifact_id and composition_sha256; the blob is not re-read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-89: verify-persisted still prints `PERSISTED kind=CUSTODY_REPORT revision=<n> ref=<ref>`, taking its values through the owned route and never irpt-requests.",
+  "world_is": "persist_inputs has exactly four members and report_index has exactly {report_id, revision, retention_ref} (OwnedAnalysisRequest.schema.json, additionalProperties false); no bucket, key or version id is served. The S3 blob read therefore has no input without a direct index-row read, which the CTO ruled out (ADDENDUM 9.2). The index row is written only by the persist, so index agreement is evidence the persist landed; it is not a re-read of the report's content. DB-b-86's read-back criteria that expect a content-level check of the persisted object would need a further owned read. Separately: the contract fixture types revision as an integer (1) where owned_report.py serves a string; the runner compares str() of both and records the revision under the refs key `revision`, which the no-figure guard already allows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json:88-106",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:196-226",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/OwnedAnalysisRequest.persist_inputs.valid.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
