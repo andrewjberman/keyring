@@ -25,3 +25,20 @@ serves only where a corporate-action row already exists, so Tokio Marine (Andrew
    - a lookup failure leaves the price UNADJUSTED and flagged on the row. It never blocks publish and never guesses a ratio.
    - Acceptance: on the first sweep after deploy, Tokio Marine's split is found, written as a row and applied on the served page. Negative
      arm: a name with no discontinuity makes 0 vendor calls.
+
+## ADDENDUM 7 (~14:3xZ) -- RIV-wi-1 reads the EXISTING Bright Data secret, option (a) (`2.0.0_SA_COO~V1` msg 2552)
+
+**Ruled (a), REC accepted.** The daily Lambda gets `secretsmanager:GetSecretValue` on the ONE existing ARN
+`find-insure/bright-data/api-key` (suffix `-7ojPkd`). `RIVALFUNDS_SERP_SECRET` is set to that ARN, and `BD_SERP_ZONE=serp_opal` is plain
+environment.
+
+Why not (b), a copy: it is the same vendor credential. A copy doubles every rotation and lets the two drift apart, so one of them fails
+silently on the day the key is rotated. A copy would also mint a new resource name, which needs a builder row (CLAUDE.md rule 30) only to
+hold a duplicate. The OpenAI copy is not followed here. The cross-project read is a shared vendor credential, not another firm's data
+(the cross-firm NEVER does not apply).
+
+Conditions, carried into the wi-1 pair:
+- the grant names exactly that ARN, with no wildcard, no other action and no KMS key beyond the secret's own default;
+- the secret's owner (FIND_INSURE's seat) is told by a surprise row in this project's channel that it now has a second consumer, so a
+  rotation reaches both;
+- the generated policy diff in the pair shows exactly one new statement.

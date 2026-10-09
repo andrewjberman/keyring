@@ -1,0 +1,13 @@
+{
+  "request_id": "MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009",
+  "channel": "history",
+  "cells": {
+    "bloomberg_history": 1
+  },
+  "quoted_at": "2026-10-09T14:3xZ",
+  "finish_date": "2026-10-10",
+  "finish_date_claim": "measured",
+  "claim": "held",
+  "basis": "bbg_quote.py --quote --today 2026-10-09 at the dell1 base (@4c6a16ded6 rule: history quoted over non-trading days); tier 1, so it may also draw against the production reserve on a trading day (row MDPF_DEMQUE-D1-S5)",
+  "frozen_by": "2.0.0_SA_COO~Q1"
+}
