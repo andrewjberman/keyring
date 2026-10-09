@@ -6119,3 +6119,77 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "ETFS_RIVALS owns infra/aws/terraform/opal-gateway/rivalfunds-iam.tf; its issuer decides whether the generated role name is counted or the test's case moves."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-W1-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+  "surfaced_at": "2026-10-09T16:19:55Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The r20 census report carries 121 of its 478 carded (NOT-JUDGED) entries whose name grade() no longer RAISES on at the same registry, so the run files them as unjudged and the ranked list omits names the check can read.",
+  "spec_asserts": "FWD-5 (PRD line 132) and R-29: a name the check cannot read STOPS the run unless carded; a card exists only because grade() RAISES on that name, so every name the check CAN read is judged and ranked.",
+  "world_is": "Measured from the worktree HEAD (registry hash f936f6350cc5c404, equal to the r20 report's): of the 478 not_judged entries in org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NAMING_CENSUS_REPORT.r20.md (268 distinct (name, type)), grade(name, type) RAISES for 357 entries (212 distinct) and returns a verdict for 121 entries (56 distinct): 56 live + 65 repo; the verdicts are OUT-OF-PATTERN for 50 distinct and CONFORMANT for 6. Examples: (opal-data-news-av, S3_BUCKET) -> OUT-OF-PATTERN opal-data-news; (opal-news-articles, DYNAMODB_TABLE) -> OUT-OF-PATTERN news-articles-table. Their cards still say 'unresolved token' / B2 V2 for 'news', which is a PRODUCT key in systems.json at HEAD (added 93790c036e, 2026-09-21), so the card text is stale against the registry the run read. lib/opal_naming.py census_judge() cards on (plane, name) alone (nj_index) and never re-grades a carded name, so the stale card is not caught. Found while reading the machine side of EN-z-2: hand-compare.r20.result.md records opal-data-news-av as a difference whose machine side is grade() at HEAD, not an r20 row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Count run from the worktree root: for each r20 not_judged entry, lib/opal_naming.py grade(name, type): 478 entries, 121 return a verdict, 357 raise; distinct (name, type): 268, 56 return a verdict, 212 raise.",
+      "lib/opal_naming.py census_judge() builds nj_index = set((plane, name)) from the --not-judged list and skips grade() for a carded item (lines 2782-2808 at HEAD).",
+      "infra/logic/registry/systems.json at HEAD carries {key: news, class: PRODUCT}; at 54659987c0 'news' is in the unresolved list (read in build_hand_compare_r20.py)."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here and not edited here: NOT_JUDGED_R20.json and the r20 report are EN-z-1's output and outside this order's paths. The remedy (re-card against a fresh RAISE check, or have census_judge() verify a card still RAISES) is the issuer's to cut; until then the r20 ranked list omits these 56 names and FWD-5's 'every name' is short by them."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W2-S152",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+ "surfaced_at": "2026-10-09T16:27:12Z",
+ "one_line": "The commit gate printed 'NAMING-GATE: PASS 0 graded' and no NAMING line for a planted per-firm stored-file prefix that place() places as PATTERN: a pattern name is neither graded nor reported as skipped.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Commit a09b284984 on qa/lgic-enforce-r20-s12 (never merged): infra/aws/lambda/zz-lgic-enforce-r20-s12/probe.py adds PROBE_PREFIX = os.environ.get('IRPT_DIRECTORY_PREFIX', 'investor-reporting/directory'), the shape of infra/aws/lambda/investor-reporting/directory/handler.py:53; safe-commit rc=0, gate output 'NAMING-GATE: PASS 0 graded', denominator 1 path in the diff, 1 seen, 0 unseen.",
+   "place('investor-reporting/directory','S3Key','investor-reporting/directory') returns kind PATTERN (run from the worktree root at 9f96f3739d).",
+   "A first attempt planting the same line at infra/aws/lambda/investor-reporting/directory/zz_qa_pattern_probe.py (a MAPPED root) printed the same 'NAMING-GATE: PASS 0 graded' before the lane gate refused that path as outside the order's <paths>; no commit was made there. Not measured: whether the gate's zero is because it skips a PATTERN, because the literal sits in an os.environ.get default, or because the post-image has no new stored name."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FWD-5 / D1-W2-S12: place() returns PATTERN for the per-firm names and the commit-gate behaviour on such a name is measured; a name the check cannot grade is reported, not silent.",
+ "world_is": "On one planted commit the gate graded nothing for the PATTERN name and printed no line saying it skipped it, so the grade_line of PATTERN_COMMIT_R20.json is NONE. The count '0 graded' is the only trace. Whether that is by design (a pattern is not a name) is the gate owner's to say."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W2-S153",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+ "surfaced_at": "2026-10-09T16:30:01Z",
+ "one_line": "check_en_r20.py s12 cannot pass a grade_line NONE record: its row_id regex LGIC_ENFORCE-[A-Z0-9]+-S\\d+$ rejects every worker row id, which the row gate requires to carry W<n>, so Z5R20-AC1 FAILs on a true NONE.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~B1/fixed_inputs/r20/check_en_r20.py arm_s12: need(re.match(r'LGIC_ENFORCE-[A-Z0-9]+-S\\d+$', rec.get('row_id')), 'grade_line NONE needs a surprise row_id'). Run at 91f73a0f52 from the worktree root: 'FAIL-R20-S12: grade_line NONE needs a surprise row_id', rc=1, with row_id LGIC_ENFORCE-D1-W2-S152.",
+   ".tools/surprise-row-gate.py line 648: a worker's NEW row without W<n> is refused ('a worker mints <CODE>-W<n>-S<k>'); the order's refusal clause names the id form LGIC_ENFORCE-D1-W<n>-S<k>. The regex admits LGIC_ENFORCE-D1-S152 (no W) and refuses LGIC_ENFORCE-D1-W2-S152 (the row actually filed).",
+   "The planted commit, the PATTERN place kind, the commit on the QA branch only and the NONE grade_line are each true and each passed the arm's earlier needs; the arm fails only at the row_id shape. The arm and its expected value are not edited here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order: grade_line NONE with a row_id of the surprise row filed, id LGIC_ENFORCE-D1-W<n>-S<k>; criterion Z5R20-AC1 expects PASS-R20-S12.",
+ "world_is": "The arm accepts no row id a worker may mint, so a gate that grades nothing for the planted name (the measured case) can never pass Z5R20-AC1. Left open for the issuer to amend the arm's regex or the order; the arm is not edited by this worker."
+}
+```
