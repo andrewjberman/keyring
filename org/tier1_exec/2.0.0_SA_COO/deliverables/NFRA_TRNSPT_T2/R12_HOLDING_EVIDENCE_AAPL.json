@@ -1,0 +1,19 @@
+{
+ "_provenance": {
+  "as_of": "2026-10-07",
+  "bucket": "opal-data-portal-v2",
+  "caveat": "SERVE-WITH-CAVEAT -- widened on Andrew's word (@dc75ddbe32), read-only, already portal-served. Opal-internal: the object carries all four funds under one key with NO firm or scope segment, so a firm principal is never served it. NEVER sum or blend funds: AUM, allocation and holdings are per fund, ea",
+  "key": "platinum/etfs/positioning_data.json",
+  "read_by": "2.0.0_SA_COO~T2 (dell2), 2026-10-08",
+  "tool": "opal gateway etfs_get_positioning (getEtfPositioningData catalog row)"
+ },
+ "evidence": [
+  {
+   "fund": "PFDE",
+   "holding_index": 1,
+   "name": "Apple Inc",
+   "ticker": "AAPL",
+   "weight": 0.0647
+  }
+ ]
+}

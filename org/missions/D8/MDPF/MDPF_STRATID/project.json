@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-08",
   "registered_under_tree": "2026-10-08",
   "placement": "DELL1",
@@ -24,15 +24,51 @@
   "description": "Andrew-direct 2026-10-08 ~18:3xZ at the 1.0.0_SA_CTO~DELL1 terminal (Cottonwood SMA dollars ADDITIVE to Global; 'we need to make sure we have a system that gets those identified and sent over for counting in the global aggregate'; record @4672605201), restated ~20:1xZ (ETF Strategies are Opal-managed SMA sleeves named after an Opal ETF, by ticker or full name, in SmartX, Rebalancer and Eclipse, aggregated into the SMA taxonomy category under the ETF Strategies drill-down; SMA strategies Tax and Muni under ALT Strategies; record @8e4b5037b4). Feeds MDPF_GLOBAL; any change to Global's served output takes the laptop's never-widen pair (laptop 1.0.0_SA_CTO msg 107101).",
   "brief_ref": "docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_STRATEGY_IDENTIFICATION_INTO_GLOBAL_20261008.md",
-  "prds": [],
-  "prd_lineage": [],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "prds": [
+    {
+      "path": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
+      "version": "v0.3",
+      "status": "ADMITTED"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1"
+    },
+    {
+      "version": "v0.2",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1",
+      "note": "CVO findings F1 (default additive basis) and F2 (pair seats named); wording under the contracts, endpoint unchanged"
+    },
+    {
+      "version": "v0.3",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1",
+      "note": "CVO finding F3: the default basis is per firm population (additive where non-model dollars sit outside Global, carve-out where inside); endpoint unchanged"
+    }
+  ],
+  "decompositions": [
+    {
+      "path": "org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP.md",
+      "round": 1,
+      "status": "ISSUED"
+    }
+  ],
+  "decomposition_lineage": [
+    {
+      "round": 1,
+      "date": "2026-10-08",
+      "author": "2.0.0_SA_COO~S1"
+    }
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (L2-L4, L10)",
     "cro": "4.0.0_SA_CRO~DELL1 (L1, brief @68aa9dbe9e)",
-    "coo": "UNSEATED -- seated when a dell1 COO lane frees (laptop placement msg 107101)"
+    "coo": "2.0.0_SA_COO~S1 (dell1), spawned ~20:45Z by 0.0.0_AB_MSTR~DELL1 on Andrew-direct ~20:4xZ \"yes, spawn the fourth COO for MDPF_STRATID\" (record @aea2b86eae)"
   },
   "placement_ruling": "Placed on dell1 by laptop 1.0.0_SA_CTO msg 107101 (relayed MSTR~DELL1 msg 1049), as MDPF_GLOBAL owner: seated when a dell1 COO lane frees; changes to Global's served output take the laptop's never-widen pair.",
-  "coo_lane": null
+  "coo_lane": "2.0.0_SA_COO~S1"
 }

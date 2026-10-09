@@ -5683,3 +5683,91 @@ by dell1 or by this seat.
   "notes": "Not decided here; the evidence column of S11_ROW_SET_20261008.tsv carries one phrase per line and the half request lists what was deliberately left unmoved."
 }
 ```
+
+## MDPF_SECCLASS-D1-W67-S3 -- SC-e-77 amendment 2: OXYWS (group B) landed by the e49 runner at 2026-10-08T20:08:38Z, so AC2 reads refused_present=2, not 1
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W67-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~67",
+  "surfaced_at": "2026-10-08T20:22:54Z",
+  "one_line": "SC-e-77 amendment 2: OXYWS (group B, $4,958) is now ALSO present in etf-classifications (e49 model runner, 2026-10-08T20:08:38Z, equity/Energy) -- AC2 reads refused_present=2, not the amended 1; RAL is no longer the only refused key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py -> 'REFUSED_PRESENT OXYWS live=equity/Energy by=mdpf-secclass-model' and 'REFUSED_PRESENT RAL live=equity/Information Technology by=mdpf-secclass-model' then 'S11-ROWS-DRY-RUN new=104 remap=34 refused_present=2 refused_stale=0 puts=0', rc=1 (at 2026-10-08T20:22Z, after the 23 amendment-2 REMAP lines were appended).",
+      "get-item (consistent) ticker=OXYWS: asset_class equity, sub_asset_class Energy, classified_by model, updated_by mdpf-secclass-model, classification_confidence 0.72, low_confidence true, last_updated 2026-10-08T20:08:38.201415+00:00. The set's NEW line for OXYWS reads equity (the same class), so a put would change nothing, as with RAL (row MDPF_SECCLASS-D1-W67-S1).",
+      "The 23 amendment-2 REMAP lines are not the cause: every one read structured/Hedge, updated_by mdpf-secclass-model at the get_item, and none is refused (refused_stale=0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-77 AC2 as amended by Amendment 1 and restated in Amendment 2: refused_present=1 refused_stale=0 puts=0, the one refused key being RAL; any other refused key still fails AC2.",
+  "world_is": "The e49 model runner landed a second group-B ticker (OXYWS) after the trace and after Amendment 1, so the dry run refuses two keys. The test is not weakened: AC2 is recorded FAIL at refused_present=2 and the order is left open. The fix is the issuer's: amend AC2 to admit OXYWS beside RAL (refused_present=2), or drop the two lines from the set and re-cut AC1's denominator to 104. More group-B tickers may land before the signing; the issuer re-reads at signing.",
+  "notes": "Filed by the worker; no change made to the grant. The writer's REFUSED_PRESENT path is doing its job (a put on an existing key is refused)."
+}
+```
+
+## MDPF_SECCLASS-D1-S15 -- a run wrapper that timestamps stdout blinds ai_leg_verify's anchored UNRESOLVED parser -- 387 reason lines read as zero
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S15",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T21:36Z",
+  "one_line": "A RUN WRAPPER THAT TIMESTAMPS THE RUNNER'S STDOUT SILENTLY BLINDS THE CLOSE CHECK. ai_leg_verify's read_unresolved requires line.startswith('UNRESOLVED '); my e49 wrapper prefixed every line with '[+   154.0s] ', so the first AC1 pass over SIX logs holding 387 real reason lines read refused_final=0 refused_transport=0 -- a confident, well-formed, WRONG verdict that would have made landed+refused miss planned by 179 and sent the leg back for work already done. The e32 wrapper did not stamp, so e32's close was unaffected and the defect arrived with a convenience I added between the two orders.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.7.0_AE_CloudOps~SD",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ai_leg_verify.py read_unresolved(): 'for line in ...: if line.startswith(\"UNRESOLVED \") and \": \" in line' -- an anchored test, so a prefixed line is not merely mis-parsed, it is INVISIBLE.",
+      "Measured per log, before and after removing the prefix: run1 0/0, run2 0 then 80, run3 0 then 98, run4 0 then 61, run5 0 then 145, run6 0 then 3, run7 0 then 3. 387 reason lines were unreadable and the tool reported no error.",
+      "First AC1 pass: 'ok=False planned=956 landed=771 refused_final=0 refused_transport=0 unresolved=179 problems=6'. Second pass, same table state, stripped logs: 'refused_final=175 refused_transport=4'. Only the log TEXT changed between them.",
+      "WHY IT IS NOT MERELY COSMETIC: refused_final=0 satisfies no grade, but it is also not an ERROR -- the run exits 0 and prints a full line, so a reader checking rc or skimming for ok=False learns nothing about WHY. The tell was that 179 unresolved keys produced 0 reasons, which is arithmetically impossible if any log was parsed at all."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "msg 925 and TO-AI-e32 amendment 7 item 4 make the executor's stdout the close check's INPUT: the tool distinguishes a FINAL model-stated refusal from a transport failure only by the reason text on those lines. CLAUDE.md 22a: an instrument's silence is not a measurement.",
+  "world_is": "Preserved stdout serves two masters that pull apart: a human reading elapsed time, and a parser reading anchored line prefixes. Adding the timestamp served the first and broke the second with no signal. The remedy taken here is to keep BOTH -- the timestamped original as the capture, plus a `.stripped.log` sidecar whose only transformation is removing the prefix -- and to pass the sidecars to the grader. Both are committed at f81718aa17.",
+  "notes": "DISARMED for this order: all seven logs now have sidecars and the close reads them. The general trap is live for anyone who wraps a graded runner. CANDIDATE REMEDIES, not proposed as built: (i) the wrapper writes the raw stream to the log and timestamps only its own stdout copy, so the artifact a grader reads is never the decorated one -- cheapest and the one I would pick; (ii) read_unresolved tolerates a leading prefix via a search rather than a startswith, which widens a parser to accommodate decoration and invites the next variant; (iii) the grader REFUSES when it is handed logs yielding zero reason lines while absent keys exist, turning a silent blindness into a loud one -- that is the arithmetic tell above and it is decidable from data the tool already has. (iii) is the one worth having regardless of (i)."
+}
+```
+
+## MDPF_SECCLASS-D1-S16 -- ai_leg_verify's landed test is stricter than the contract, so a sibling act's in-contract rows can hold a grade open (first draft corrected)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S16",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T21:38Z",
+  "one_line": "ai_leg_verify's `landed` test is STRICTER THAN THE CONTRACT, so an in-contract row written by a sibling act over the graded act's planned keys makes the grade unreachable. Six of TO-AI-e49's planned keys (ASFYX, BINC, GSRTX, PQTIX, SCGK1, SCII1) were written by SC-e-77 as classified_by=scheduled with sub_asset_class ABSENT. The contract expressly admits that shape. AC1 counts a present planned key as landed only when classified_by=='model' AND a confidence field exists AND the sub-class is in values_by_class, so it books all six as `problems`, and e49 -- whose conditional put correctly refused keys that already existed -- can neither land them nor repair them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MDPF_SECCLASS_CONTRACT.json fields.sub_asset_class.absent: 'a row with no sub_asset_class stays absent; no value is defaulted or inferred (231 fixed_income and 34 equity rows today)'. An absent sub-class is a DECLARED, MEASURED, legitimate state, not a violation.",
+      "Same field, .bound: 'A DIRECT or AI VERDICT lands if its sub_asset_class is a member of values_by_class[asset_class]...'. The closed-list bound governs VERDICTS, not every row, so a scheduled-classifier row with no sub-class is outside its scope entirely.",
+      "ai_leg_verify.py: a present planned key counts as landed only on (classified_by == 'model') and ('classification_confidence' in it) and (sub_asset_class in closed[asset_class]); anything else falls to `probs`. All six fail all three predicates while breaching no contract clause.",
+      "ConsistentRead get_item per key at 21:2xZ: ASFYX alternatives/absent, BINC fixed_income/absent, GSRTX alternatives/absent, PQTIX alternatives/absent, SCGK1 fixed_income/absent, SCII1 fixed_income/absent -- all classified_by=scheduled, updated_by=mdpf-secclass-s11-rows, no confidence field.",
+      "e49 did not land them and never breached its own condition: landed_outside_contract read 0 on every chunk of all seven runs, and the CTO half's per-chunk STOP never fired.",
+      "Timing: SC-e-77 wrote 'new=103 of 103, remap=34 of 34' at 20:32Z, inside e49's run5 window, which is why these keys moved from planned-absent to present mid-run."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "TO-AI-e49 AC1 expects 'AI-LEG-VERIFY act=e49 ok=True', and the CTO half's condition 2 makes an outside-contract LANDING a per-chunk STOP. CTO round-8 ruling 2.5 sets the closed list as the bound for a DIRECT or AI verdict.",
+  "world_is": "The contract and the grader disagree about what a legitimate row looks like. The contract admits a row with no sub-class and scopes its closed list to verdicts; the grader's landed predicate admits only model verdicts carrying an in-list sub-class. Both are defensible alone -- the grader is measuring THIS act's work, not the table's legality -- but together they mean a sibling act writing perfectly legal rows over the graded act's planned keys can hold the grade open, and the act that is graded second always loses.",
+  "notes": "THIS ROW'S FIRST DRAFT WAS WRONG AND IS CORRECTED HERE BEFORE IT WAS EVER COMMITTED. I asserted the six rows were OUTSIDE the contract's values_by_class, which conflated a ROW's state with a VERDICT's bound and would have put a false BLOCKING claim against another seat's act. Issuer msg 1176 corrected it -- 'the contract's absent clause admits no sub-class, and the closed-list bound binds only DIRECT and AI verdicts' -- and reading the contract's own `absent` and `bound` text confirms the issuer, not me. What survives is narrower and is about the GRADER, not the contract. RULING APPLIED: msg 1176 @7f8dc1ed54 amends AC1 to admit these six plus the one transport-terminal key, and e49 closes on planned=956 EXACT with snapshot_keys_gone=0. CANDIDATE REMEDY for the general shape, not proposed as built: the landed predicate could count a present planned key written by any DECLARED writer of the table (the COO half counts nine or ten) and report it in its own column, so a grade measures what the act achieved without being hostage to who reached the key first. ENUM DISCIPLINE, recorded because the gate had to catch it: I first wrote disposition='RESOLVED_BY_RULING', which is not in the ratified enum ['UNDER_INVESTIGATION','GRADUATED','DISMISSED_WITH_REASON','DECOMP_INVALIDATING']. surprise-row-gate refused the commit. CLAUDE.md Rule 24 is explicit that a value-enum proposal arrives with its four-postulate record and a word-boundary token census or it is not a proposal -- I had neither, so the right move is the existing member, not a new one. DISMISSED_WITH_REASON is the accurate fit: this row's BLOCKING premise (a contract violation) is dismissed as false, and the reason is on the record. The surviving grader-vs-contract observation is left in these notes as a candidate rather than re-raised as an open blocker.",
+  "dismissal_reason": "The BLOCKING premise of this row's first draft -- that SC-e-77's six rows sit OUTSIDE the contract's values_by_class closed list -- is FALSE, and the contract says so in its own text. fields.sub_asset_class.absent reads 'a row with no sub_asset_class stays absent; no value is defaulted or inferred (231 fixed_income and 34 equity rows today)', and .bound scopes the closed list to 'a DIRECT or AI VERDICT'. I conflated a ROW's state with a VERDICT's bound and would have put a false violation against another seat's act; issuer msg 1176 corrected it and the contract confirms the issuer, not me. Dismissed as a contract finding. For THIS order the consequence is settled too: amendment @7f8dc1ed54 widens AC1 to admit the six plus one transport-terminal key, and e49 closes on planned=956 EXACT with snapshot_keys_gone=0. What is NOT dismissed, and is left in notes as a candidate for the gate's owner rather than re-raised as an open blocker, is the narrower grader-vs-contract observation: ai_leg_verify's landed predicate is stricter than the contract, so a sibling act writing legal rows over a graded act's planned keys can hold a grade open, and the act graded second always loses."
+}
+```

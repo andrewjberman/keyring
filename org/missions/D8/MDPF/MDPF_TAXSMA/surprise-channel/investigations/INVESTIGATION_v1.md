@@ -618,6 +618,27 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "A served historical point is stable once published: the next day's document carries the same values for every date it shares with the prior one (the V2 leg of mdpf-gold-healgap-hookup-20261001 reads 'everything else unchanged').",
     "world_is": "The newest point is computed on a different basis from an interior point, so each roll rewrites the prior day: the account counts switch source (Cottonwood loses its count; Inflection and global gain accounts) and the model/non-model split moves while the total holds. A reader that cached yesterday's newest point disagrees with today's document at that date.",
     "notes": "INERT for this project: totals never move and the Tax identities hold. Found while closing V2 of mdpf-gold-healgap-hookup-20261001, which it does not block (the same change on the two pre-deploy rolls rules out the hookup as its cause). For the MDPF series owner: decide whether the frontier point should use the interior basis, or whether the series should mark its newest point provisional."
+  },
+  {
+    "id": "MDPF_TAXSMA-Z-S1",
+    "project": "MDPF_TAXSMA",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-10-08T22:40:00Z",
+    "one_line": "A real client account number is committed in source: the docstrings of data/mdpf/scripts/gold/taxsma_sources.py (lines 24 and 107) use a live Tax SMA account's full eight-digit Black Diamond Account Number as their worked example.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/gold/taxsma_sources.py:24 and :107 at site-Z HEAD, read 2026-10-08 ~22:3xZ.",
+        "The eight digits equal roster slot 12's Account Number in the Tax SMA roster workbook named by MDPF_TAXSMA_DATA_CONTRACT.json workbook.item_id, and the account is present in blackdiamond/cottonwood/silver/fact_holdings date=2026-10-07 (count-only read, 4.0.0_SA_CRO~Z)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MDPF_TAXSMA_DATA_CONTRACT.json identity and taxsma_reconcile.py AC14: no full account key appears on a reporting or log surface; worker cells build with synthetic full keys only ('worker bound: no real account number').",
+    "world_is": "Source code carries one real client's full account number in two docstrings, so every clone, worktree and push of the repository carries it. A synthetic eight-digit example serves the docstring equally.",
+    "notes": "INERT: no act fires on it. For the MDPF_TAXSMA issuer: replace both examples with a synthetic number in a normal edit. Whether git history also needs scrubbing is the owner's call. Found while mapping Tax account sources for the NFRA_OPLGTW v2.1 midstream brief (CTO~O msg 32043)."
   }
 ]
 ```

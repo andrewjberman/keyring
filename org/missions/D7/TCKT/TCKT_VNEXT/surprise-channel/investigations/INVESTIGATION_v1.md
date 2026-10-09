@@ -231,6 +231,121 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "spec_asserts": "A multi-account file is turned back before anyone at Opal sees it (FWD-3).",
     "world_is": "Round 1 does not check it; the door does not either (PRD R8).",
     "notes": "By design for round 1."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-08T22:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S6",
+    "one_line": "FWD-6 says the draft appears on the SAME ticket and the ticket shows who sent the final commentary and when; workstream F10 (CTO scope msg 1789: svc-commentary CREATE-only) puts the draft on a NEW analysis_request ticket and builds no sent-by/sent-at field.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (carried to the CTO in the F10 slug: an append-to-existing-ticket route needs the report to know its ticket, contract O2)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_VNEXT/prd/TCKT_VNEXT_PRD.md:57 (FWD-6 text)",
+        "1.0.0_SA_CTO~DELL2 msg 1789 (scope: CREATE-only on analysis_request, the two fields, the 08-12 read)",
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md section 6 O2"
+      ]
+    },
+    "spec_asserts": "The draft lands on the same ticket as the request, and the ticket records who sent the final commentary and when (FWD-6).",
+    "world_is": "After F10 the draft lands on a new ticket created by svc-commentary; report_ref lives on the ticket only, so the service cannot find the request's own ticket; no sent-by/sent-at field is built.",
+    "notes": "Not built in F10 by scope; FWD-6 grades PARTIAL until a later cell closes both clauses."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_TCKT_VNEXT~3",
+    "surfaced_at": "2026-10-08T23:10:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-W3-S1",
+    "one_line": "The order words the svc-commentary principal as sub == svc-commentary; the handler resolves every service subject from the authorizer context key email, so the new class matches email == svc-commentary AND userType == service.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (F10-d-1 / F10-r-1: the svc-commentary token the authorizer mints must carry the subject in the context field the handler reads as email, as svc-ticket-form and svc-analyst-intake do)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ticket_center/lambda_function.py principal_class: email = actor.get('email'); if email == SVC_TICKET_FORM ... (the existing two service subjects, same key)",
+        "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py SVC_FORM / SVC_INTAKE contexts carry the subject in email",
+        "org/missions/D7/TCKT/TCKT_VNEXT/task-orders/TCKT_VNEXT.TO-F10-l1.svc-commentary-draft-write.md WORKER FACE item 1 (sub wording)"
+      ]
+    },
+    "spec_asserts": "principal_class resolves sub == svc-commentary AND userType == service to the new class (TO-F10-l1 item 1).",
+    "world_is": "The handler has no sub key; the authorizer context field that holds a service subject is email. The class was built on that existing key. Also: AMENDMENT 1 (coordinator message) moved svc-commentary's firm check to env COMMENTARY_ALLOWED_FIRMS; built as a module constant, the order file text itself left unedited because the order's write grant is status flip only.",
+    "notes": "If the authorizer mints svc-commentary with the subject only in sub, the class is UNRESOLVABLE and every create is a 403 - the O1 token-mint question in the contract."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-08T22:52:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S7",
+    "one_line": "infra/aws/terraform/ticket-center/build-and-upload.sh has no BUILD_ONLY mode: BUILD_ONLY=1 still uploaded the F10 package (OuTw3w...) over ticket-center/opal-ticket-api.zip at 22:50:01Z while opal-ticket-api ran y0UF...; the issuer restored the 10-07 version (y0UF..., new version ZBF40mIM...) at ~22:51Z.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (disarmed same turn by the restore; the script fix is the script owner's, carried in the F10 slug)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions ticket-center/opal-ticket-api.zip: ICKV1ztn... 2026-10-08T22:50:01Z latest, lx44Hu0g... 2026-10-07T19:16:29Z",
+        "copy-object of lx44Hu0g... -> ZBF40mIM..., head-object content-sha256 y0UFtRIfZxu3x6BCFSGLjXsNgScCl/GPuWNHbmZV7BI= = live CodeSha256",
+        "grep BUILD_ONLY infra/aws/terraform/ticket-center/build-and-upload.sh: 0 hits",
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/TV_D1_DEPLOY_PACKET_20261007.md section 1 cites BUILD_ONLY=1 as a build-only run (it was not)"
+      ]
+    },
+    "spec_asserts": "A build-only read of the package hash writes nothing to the artifact bucket; the artifact key holds what is deployed until the applier's upload.",
+    "world_is": "The script always uploads; any later terraform plan on ticket-center would have seen a code change nobody applied.",
+    "notes": "Window ~1 min; the Lambda never moved (CodeSha256 y0UF... read before and after). The F10 apply order builds and uploads in its own leg."
+  },
+  {
+      "project": "TCKT_VNEXT",
+      "fabric": "dell2",
+      "surfaced_by": "0.9.0_WK_TCKT_VNEXT~3",
+      "surfaced_at": "2026-10-08T23:25:00Z",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "TCKT_VNEXT-D2-W3-S2",
+      "one_line": "Adding the PACKAGE action to MATRIX, as the order says, fails the pre-existing test_authz_matrix.py layer-coverage test (9 != 8 actions); that file is outside the order's <paths>, so F10-l3-AC3 cannot pass.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py:289-292 @c3721347e2: authorized = set(re.findall(r'authorize[(]\"([A-Z-]+)\"', src)); assertEqual(authorized, set(mod.MATRIX)); assertEqual(len(authorized), 8, 'a new one must land in MATRIX AND here')",
+              "pytest -q infra/aws/lambda/ticket_center/tests with PACKAGE in MATRIX and authorize(\"PACKAGE\", ...) in package_ticket: 1 failed (test_layer_coverage_every_route_behind_the_matrix_and_actions_match: 9 != 8), 117 passed, 43 subtests passed; baseline before the change 108 passed 0 failed",
+              "no spelling satisfies both the order and that test: the set-equality needs the authorize literal, the len==8 needs it absent from a 9-key MATRIX"
+          ]
+      },
+      "spec_asserts": "WORKER FACE item 1: add a PACKAGE action to MATRIX; F10-l3-AC3: the whole ticket_center/tests directory passes at no fewer than the pre-cut count and 0 failed; <paths> excludes test_authz_matrix.py.",
+      "world_is": "test_authz_matrix.py pins the route table at exactly 8 actions (and ROUTES at 8 routes) and fails at 9. The worker kept the order's design (PACKAGE in MATRIX as an empty row, authorize call in the route) and did not edit or weaken that test. The fix is a one-line count change plus the package route in ROUTES, in a file the issuer or a later order must grant.",
+      "notes": "Every other test passes: 117 passed, the 10 new ones included."
+  }
+,
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_TCKT_VNEXT~3",
+    "surfaced_at": "2026-10-08T23:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-W3-S3",
+    "one_line": "Resolves TCKT_VNEXT-D2-W3-S2: AMENDMENT 1 (commit 6751522799) granted test_authz_matrix.py; the package route is in ROUTES, the pinned action count is 9, and f10-regress now passes. Also: the order file in this worktree was found holding a truncated uncommitted copy and was restored byte-for-byte from 6751522799 before the status flip.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/F10_CHECKS/f10_checks.py f10-regress: F10-REGRESS-OK passed=118 failed=0",
+        "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py: ROUTES gains POST /api/scoped/tickets/TCK-20260820-aaaa1111/package; assertEqual(len(authorized), 9, ...); no other line changed",
+        "git diff of the order file in the worktree before restore: 71 lines vs 131 at 6751522799 (cell text and acceptance block missing, uncommitted)"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 1: two changes only to test_authz_matrix.py (ROUTES entry, count 8 to 9); F10-l3-AC3 passes at no fewer than the pre-cut count with 0 failed.",
+    "world_is": "Both changes landed as specified; 118 passed 0 failed (pre-cut 108 plus the 10 new tests). The worktree copy of the order file was a damaged uncommitted version; it was rewritten from the issuer's commit, not edited by hand.",
+    "notes": "Resolves D2-W3-S2; that row is not rewritten."
   }
 ]
 ```

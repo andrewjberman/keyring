@@ -5095,6 +5095,28 @@
     "spec_asserts": "Order section 2: every neighbouring AI check must still end PASS 0 failures; the cell: one more chat for an item with a wording defect",
     "world_is": "pd-3.AC1's stub holds exactly two replies, 'TXUE added to its book.' and 'The trend is borne out.', neither with its window dates, so under the new rule both items are defective and the correction is a third and fourth chat. The check only passes because run_chain catches an exception from the correction chat, stores the first reply graded FAIL (wording:) with corrections 0 and correction_error in the manifest, and returns both rows. A raising correction therefore no longer re-runs the fund (run_day's retry)",
     "notes": "Owner of the choice: 2.0.0_SA_COO~RV. Existing assertions changed in three tests are listed in the worker report."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S78",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-08T21:35:00Z",
+    "one_line": "The surprise-row gate's ACCEPTANCE note reads a new remediation row's `round` as the task-order round, but this project's slugs write the remediation FILE version there (v21 for round 28), so the round-28 slug's acceptance sweep graded round 21's order (RIV-pl-1)",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/surprise-row-gate.py:2656-2669 (_acc_round = _round_num(row.get('round')); the comment says the round is the new remediation row's own `round`)",
+        "remediations/REMEDIATION_v21.Z.md ETFS_RIVALS-Z-C-S85 round 'v21' (round-28 slug); remediations/REMEDIATION_v19.Z.md ETFS_RIVALS-Z-C-S80 round 'v19' (round-27 slug): the convention predates this slug",
+        "safe-commit output for the round-28 slug, 2026-10-08 ~21:25Z: 'ACCEPTANCE (round 21, the slug's own): PASS 1 / FAIL 0 / UNVERIFIABLE 1 of 2 criteria over 1 order(s) ... RIV-pl-1...:J1'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The gate's acceptance sweep reports the slug's own round's orders; the staleness limb measures rounds against `remediation.round`",
+    "world_is": "In ETFS_RIVALS the remediation rows' `round` holds the file version (vN), not the task-order round, so the acceptance note names the wrong round's orders and the staleness limb counts file versions. Both are notes, never refusals, so no slug is blocked; the note is simply about the wrong object",
+    "notes": "Owner of the call: 1.0.0_SA_CTO~Z (which value `round` carries); the write is this project's slug author (3.0.0_SA_CVO~RV) or the gate's author. Changing new rows to the task-order round alone would mix two units in the staleness limb's comparison."
   }
 ]
 ```

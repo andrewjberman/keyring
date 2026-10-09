@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-08T16:18:06.104084+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / EventBridge rule cot-rebalancer-runner-daily cron(0 6 * * ? *) scheduled fire 2026-10-09T06:00Z + 07:00Z satellites (L4 reads it; re-measured 23:1xZ: CodeSha256 NFG8dbEL.. LastModified 16:19:41Z, rule ENABLED) (held since 2026-10-08T23:08:18.084185+00:00)
 **Deploy:** MDPF_HEALGAP R2 act 1: cot-rebalancer-runner code (HG-t-3 per-feed result + PartialDay + drop-feed induce) at CLOUD 1fdab25b2b; halves COO ab41a7d1d8, CTO d2b90c937d. Branch B history: rebalancer_model_detail missing 2026-08-31..09-10 (11 of 80 dates); under this code each would read PARTIAL, no stamp, no silver. Rollback: artifact version uNNJvohJ8HVjIlEcIjEmpouzIRxLROD8, CodeSha256 QxLvPLTMO5YSkS+vaRXEkhaA78ZAr1arTyS0ADOOMvk=
 **Authored by:** 2.0.0_SA_COO~G1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -23,3 +23,4 @@
 - 20261008T162017Z LEG L1 closed: build-and-upload opal-assets cot-rebalancer-runner 16:18Z: s3://opal-313476888478-lambda-artifacts/opal-assets/cot-rebal
 - 20261008T162017Z LEG L2 closed: targeted plan: 0/1/0, aws_lambda_function.this only: source_code_hash QxLvPL..->NFG8db.., s3_object_version uNNJ..->8wJO
 - 20261008T162018Z LEG L3 closed: get-function-configuration 16:20Z: CodeSha256 NFG8dbELEHHI34OSdq49kTBNHdtKyeRrUNZ9K0uzMZY= equals build input; LastModif
+- 20261008T230818Z HELD-SOVEREIGN-GATED gate=external/EventBridge rule cot-rebalancer-runner-daily cron(0 6 * * ? *) scheduled fire 20

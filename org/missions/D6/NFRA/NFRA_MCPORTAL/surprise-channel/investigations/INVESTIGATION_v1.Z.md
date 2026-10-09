@@ -773,6 +773,116 @@
     "spec_asserts": "NFRA_MCPORTAL-Z-S10 is ARMED: the first WRITTEN item would store the owner-key value.",
     "world_is": "The deployed writer stores the claim name and email only, so the G-CLOSE narrow and widen write no owner-key value. Z-S11 had disarmed on the plan (MP-b-3 shipped through MP-a-2); this row is the measurement on the running bytes.",
     "notes": "Re-measured because a second project's cell redeployed the same function after MP-a-2's drain."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S18",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-08T21:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "PRD v0.5 C11 gives the portal a read grant on two globgrph-bucket prefixes; the portal is served by the gateway process (C3), so that grant lands on opal-gateway-role, which graph-read.tf:4-8 says holds NOTHING on the globgrph bucket under NFRA_CLDGRPH's R3 control (CG-s-12).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md @8de5b2dc76 v0.5 addendum C11: 'The portal holds a read grant on those two prefixes only, Terraform-applied under C10.' (s3://opal-313476888478-globgrph/fabric/activity/v1/ and .../fabric/open-calls/v1/)",
+        "same PRD C3: 'The built pages are static assets served by the gateway application at /. The admin API handlers live with the gateway'; app/server.py:1126 mounts admin_api.admin_app at /api/admin.",
+        "infra/aws/terraform/opal-gateway/graph-read.tf:4-8: 'the gateway is a THIN PROXY ... It holds NOTHING on the globgrph S3 bucket ... the moment opal-gateway-role needs s3:GetObject there, R3 has been broken (CG-s-12, deliverable 0.7.0_AE_CloudOps~P B.3(iii))'.",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/prd/NFRA_CLDGRPH_PRD.md:200 R3 (Andrew-direct 2026-09-02): the gateway is 'a THIN PROXY ... and never the host' of the graph SERVING PLANE; R3's text names the serving plane, the bucket-wide 'nothing' is CG-s-12's implementation of it."
+      ]
+    },
+    "spec_asserts": "C11: the portal reads the activity and open-calls stores with a prefix-scoped read grant.",
+    "world_is": "The only principal that can hold the portal's grant is opal-gateway-role, whose standing control (graph-read.tf, CG-s-12) is no grant of any kind on the globgrph bucket. Applying C11 as written breaks that control as written. Not acted on: no Terraform written, no grant applied.",
+    "notes": "Holds only the grant cell of round 4 (FWD-14's store read). Ruling owner: 1.0.0_SA_CTO~O (contract text). Options named in the ask, issuer's rec first: (a) a prefix-scoped read on fabric/activity/v1/ and fabric/open-calls/v1/ only, with the graph-read.tf control text amended to carve out fabric/ (outside warehouse/, never the served graph); (b) the two stores move to a bucket the gateway may read; (c) the gateway proxies the reads through the projection service."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W6-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~6",
+    "surfaced_at": "2026-10-08T22:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The worker's sparse worktree did not carry paths the workspace commit gates read (org/modules/graph, org/projects, infra/logic, and the sibling project trees under org/missions), so safe-commit refused three times before passing; the order's face names none of them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit 1st refusal: commit_gate_runner.py:96 ModuleNotFoundError comp_constants_cli (file is org/modules/graph/comp_constants_cli.py at HEAD, absent from the sparse cone).",
+        "2nd/3rd refusal: missions-tree-check INDEX-MISSING org/projects/NFRA_MCPORTAL.json, then 45 INDEX-ORPHAN violations for sibling project trees under org/missions.",
+        "git sparse-checkout list at start: .claude, .tools, infra/aws/ec2/opal-gateway, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/ref, org/standards. Worker ran `git sparse-checkout add org/modules/graph org/projects infra/logic org/missions org/surprise_channel` (worktree-local config, no repo write); the commit then passed (1fa09c0cc0, 0 violations)."
+      ]
+    },
+    "spec_asserts": "The worker face says the worktree is a sparse checkout sufficient to commit a proof instance via safe-commit.",
+    "world_is": "The cone as cut cannot pass the commit gates; five directories had to be added (org/surprise_channel as well, for the row gate). A later sparse worker would repeat it.",
+    "notes": "Issuer's call whether the cut should widen the cone. Nothing was reconstructed beyond the four cone additions."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S19",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-08T22:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Decomposition v4 R4.4 planned to cut MP-x-3, MP-x-4 and MP-x-5 into round 4 by issuer amendment after the issuance; to-pipeline-gate's ONE-ISSUANCE limb refuses any new order file in a round that already has an issuance, and reads no override. The three cells move to round 5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "decompositions/NFRA_MCPORTAL_DECOMP.md @202c512520 R4.4: 'MP-x-3, MP-x-4 and MP-x-5 are cut into this round by issuer amendment when their gates land'.",
+        "safe-commit of NFRA_MCPORTAL.TO-MP-x-3.gateway-fabric-read-grant.md, 2026-10-08 ~22:0xZ: '[to-pipeline-gate] REFUSED ... round 4 of NFRA_MCPORTAL already has an issuance at HEAD (2 order(s) ...); ONE ISSUER PER ROUND is keyed to the ROUND ... A re-cut into the first issuance MODIFIES its orders and adds no file ... this limb reads no override.' The '# pipeline-override' line was taken for the other limbs and did not lift this one.",
+        "G-R3 is ruled (a) (laptop 1.0.0_SA_CTO msg 107359, relay 32030); the MP-x-3 order is drafted and its checks x3.AC1-3 are committed under deliverables/2.0.0_SA_COO~MP/round4/checks/ (dry-run at 202c512520: all FAIL)."
+      ]
+    },
+    "spec_asserts": "R4.4: gated round-4 cells are cut into round 4 when their gates land.",
+    "world_is": "A round's cells are cut in its one issuance or not in that round. MP-x-3 (G-R3 ruled), MP-x-4 (G-REL) and MP-x-5 (G-SEE) go on the round-5 enrichment list at round 4's L10; round 4 is MP-x-1 and MP-x-2. Cost: MP-x-3's apply waits for round 4's close; MP-x-4 already waits on MP-x-1, MP-x-2 and gateway r29.",
+    "notes": "Issuer's practice from here: a gated cell is issued STAGED in the first issuance, with <placeholders> where its criteria await a ruling."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W5-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~5",
+    "surfaced_at": "2026-10-08T22:10Z",
+    "one_line": "The worker worktree's sparse cone omits org/modules/graph, so .tools/commit_gate_runner.py (import comp_constants_cli) failed closed on the first commit; I added the one cone path with git sparse-checkout add and the commit then passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh first attempt in C:/tmp/mp-r4-5 printed: 'ModuleNotFoundError: No module named comp_constants_cli' at .tools/commit_gate_runner.py:96 and 'ERROR: BLOCKED -- commit-gate failed'; org/modules/graph/comp_constants_cli.py exists at HEAD 202c512520 but the cone listed only .claude, .tools, infra/aws/ec2/opal-gateway, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/ref, org/standards.",
+        "After `git sparse-checkout add org/modules/graph` (408 tracked files, ~19 MB; no tracked content changed) the same safe-commit passed: commit 06bfb80b54 on wk-NFRA_MCPORTAL-r4-5."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker's sparse worktree carries every path its commit needs; the order names no cone addition.",
+    "world_is": "The cone the issuer cut lacks org/modules/graph, which every .py commit's gate imports. Any later worker cut with the same cone fails its first .py commit identically. Also absent from the cone: org/surprise_channel/ (the row schema path the worker contract names), org/mcp/.",
+    "notes": "Issuer fix: add org/modules/graph (and org/surprise_channel/schemas) to the cone the spawn recipe uses. No repo content was changed by the workaround; only this worktree's checkout."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W5-S2",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~5",
+    "surfaced_at": "2026-10-08T22:50Z",
+    "one_line": "A cone-mode sparse worktree cannot commit any org/missions path through safe-commit: the surprise-row gate and missions-tree-check read every project's channel, register, PRD and ledger files, and the hook index that git commit --only builds hides the skip-worktree rows the checker's sparse fallback relies on (tree=2 in the hook, tree=46 run by hand).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Four safe-commit refusals at C:/tmp/mp-r4-5, each from a different missing path: surprise-row-gate 'standing corpus pass could not run (FileNotFoundError ... NFRA_CLDGRPH ... INVESTIGATION_v1.md)', then NFRA_CTLPLN, then remediations/REMEDIATION_v1.md; missions-tree-check 'tree=2 project(s) ... 44 violation(s)' (INDEX-ORPHAN), then 'could not run (rc=2) ... org/missions/MACROS.yaml', then four [R6] CLOSED-project refusals (PRD header, ledger/COMPLETION_*.json).",
+        "Same checker run by hand in the same worktree: 'tree=46 project(s) ... 42 valid ... RESULT: 0 violation(s)'. In the hook it printed tree=2. GIT_TRACE shows the hook ran with GIT_INDEX_FILE=.git/worktrees/mp-r4-5/next-index-26912.lock; SAFE_COMMIT_TWO_PHASE=0 changed nothing.",
+        "Workaround that landed commit 7d25a4d8c1 with no override: git sparse-checkout converted to non-cone (MSYS_NO_PATHCONV=1, else every pattern is rewritten to C:/Program Files/Git/...), adding /org/missions/*/*/*/project.json, .../surprise-channel/{investigations,remediations}/*, /org/missions/*.yaml, and the prd/ and ledger/ dirs of NFRA_OPSEC202609, LGIC_NAMING, POSN_AGGFIX, POSN_ASTTAX. The first attempt without MSYS_NO_PATHCONV un-materialised the worktree (tracked files untouched; reversed by the second call)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker whose order names paths under org/missions can commit them from its sparse worktree.",
+    "world_is": "Not without widening the cone by the set above; the cell's own cone (the order's paths) is not enough. The CLOSED-project R6 limb and the channel corpus pass read files that no cone-mode cone of a worker can hold except by listing 41 project directories (836 MB, 20933 files).",
+    "notes": "Issuer fix: cut worker worktrees with the non-cone pattern list above (or one the issuer owns), or give missions-tree-index.py and surprise-row-gate.py the index-read fallback inside the hook environment (the checker already has one at _index_only_projects, which returns [] under the hook's index). The orders' proof step cannot be committed from a bare cone worktree."
   }
 ]
 ```

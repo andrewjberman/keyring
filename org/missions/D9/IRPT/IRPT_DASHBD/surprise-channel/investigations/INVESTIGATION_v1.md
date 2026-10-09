@@ -2993,6 +2993,80 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-S35 -- corrects W30-S1: the right-half gap is the tie-out's additive fee add-back (compounded: 1,334 of 1,527 tie)
+
+```json
+{
+  "id": "IRPT_DASHBD-S35",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T21:17:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Corrects IRPT_DASHBD-W30-S1 and this seat's ADJUDICATION_v15 lead: the 1,528 'real misses' are mostly the tie-out's ADDITIVE fee add-back, not Opal vs BD. Compounding BD's add-back ((1+net)(1+add-back)-1) instead of adding it moves the median right-half gap from +0.567 pp to +0.043 pp and the tied count from 0 to 1,334 of 1,527.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~28/TIEOUT_SPLIT_E1.json (per-half bd_net_return, bd_fee_addback, bd_return = gross with additive add-back; this seat's computation, dell2, 2026-10-08 ~21:1xZ)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~13/tieout_e2_gross.py:27-31 (add-back = fees / ((bmv + emv) / 2), added to BD's net TWR)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:25 and :1276 (Opal's daily is GROSS by design; fee_amount null with FEE_RAIL_UNUSED)"
+    ]
+  },
+  "spec_asserts": "ADJUDICATION_v15 / REMEDIATION_v13 (W30-S1): Opal's fee_amount is 0 because Opal does not deduct an advisory fee BD deducts; the fix is Opal's fee feed.",
+  "world_is": "Wrong on both counts. (1) Opal's account_return_daily is gross of fees BY DESIGN (fee_amount null, reason FEE_RAIL_UNUSED); right_gap_e2 counted the null as 0. There is no broken fee feed. (2) The split tie-out already compares Opal gross to BD gross, where BD gross = BD net TWR + fees/average balance, ADDED. 1,527 of the 1,528 right halves carry an add-back (median 2.388 pp; the halves are long, median 629 days vs 183 for the tied left halves), and the gap is a steady fraction of it (gap/add-back median 0.25, p10 0.15, p90 0.34). An additive add-back omits the fee-times-return interaction over a long, positive period (median BD net 22.7%). Compounding it: median gap +0.043 pp (p10 -0.096, p90 +0.244), within 0.35 pp on 1,334 of 1,527 (was 0). About 193 accounts remain off after the correction."
+}
+```
+
+## IRPT_DASHBD-W34-S1 -- TO-DB-b-53's chain test cannot hold to 1e-9 with the unchanged linear add-back (fees / average balance); it ho
+
+```json
+{
+  "id": "IRPT_DASHBD-W34-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~34",
+  "surfaced_at": "2026-10-08T22:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-DB-b-53's chain test cannot hold to 1e-9 with the unchanged linear add-back (fees / average balance); it holds only when the range's reported fees are the compounded daily fee drag.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~34/test_tieout_compound.py (range_inputs docstring; test_compounded_gross_of_adjacent_ranges_chains_to_the_whole, test_additive_gross_does_not_chain)"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-53 item 2: on a synthetic account with constant daily net return and constant daily fee rate, the two halves' compounded gross chained as (1+a)(1+b)-1 equals the whole within 1e-9, with the add-back unchanged.",
+  "world_is": "With the add-back fees/((bmv+emv)/2) and fees proportional to days (constant daily fee rate f over N days gives add-back N*f), the chained halves differ from the whole by N1*N2*f^2 (about 3.9e-4 at f=4e-5 daily, 120 and 130 days), far above 1e-9. The test therefore builds the range's reported fees as ((1+f)^N - 1) * average balance, so the unchanged add-back equals the compounded daily fee drag and the compounded gross chains exactly; the additive form then misses by about 5e-4. Consequence: the compounded basis is exact for a fee that accrues geometrically and is a first-order approximation for BD's real linear fee accrual; the residual is of order N1*N2*f^2, which is small against the 0.35 pp tolerance for realistic fee rates."
+}
+```
+
+## IRPT_DASHBD-W34-S2 -- Compounding the fee add-back moves 2,224 round-18 OUTSIDE segments to WITHIN but also 181 round-18 WITHIN segm
+
+```json
+{
+  "id": "IRPT_DASHBD-W34-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~34",
+  "surfaced_at": "2026-10-08T22:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Compounding the fee add-back moves 2,224 round-18 OUTSIDE segments to WITHIN but also 181 round-18 WITHIN segments to OUTSIDE; FLOW_TIMING outside rises 333 -> 370.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~34/TIEOUT_COMPOUND_E1.json verdict_moves_vs_round18, before_outside_by_reason, after_outside_by_reason"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-53 / S35: compounding the add-back brings BD gross closer to Opal; the order expected a drop in misses.",
+  "world_is": "On the 9,078 graded segments the compounded basis nets 5,416 -> 7,459 within (+2,043): 2,224 OUTSIDE->WITHIN, 181 WITHIN->OUTSIDE, 6,673 unchanged. The 181 reversals are segments the additive form tied by offsetting error; the order does not ask for their cause and it was not measured. After-outside by reason: UNEXPLAINED 1,203 (was 3,279), FLOW_TIMING 370 (333), INCOME_DATE 40 (44), COVERAGE_DAYS 5 (5), MISSING_PRICE 1 (1); the extra FLOW_TIMING rows are newly outside segments whose alternate-flow re-link lands within tolerance."
+}
+```
+
 ## IRPT_DASHBD-W33-S1 -- The dell2 process reaper killed two of this order's runs mid-lots-stage; killed runs are not timings.
 
 ```json

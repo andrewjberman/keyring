@@ -2183,3 +2183,59 @@ graded for doubled words and stacked articles): 2 of 3 at the base (the ~114 tre
 **Real run:** `round51/walk/walk51.mjs` on dbeb6764 against the live function, BA US and BP/ LN: 8 of 8 reads PASS
 (`round51/walk/read-20261008T123449Z/`); every drawn line naming the team's pack is printed in `round52/ROUND52_CLOSE.md`.
 **Fan-out:** 0 orders (`fanout: 0`, one direct act).
+
+## v53 -- ROUND 53 (issuer, 2026-10-08 ~21:4xZ) -- THREE CELLS: THE SEEKING ALPHA STATES; THE SEGMENT TABLE + THE FIVE NOTE SECTIONS; THE BUILT ANALYSIS'S NAME IN THE POSTURE CITES
+
+**Rectangle:** PRD v0.18 @9a07662460 rows SAUX-41 (FWD-27), SAUX-42 and SAUX-43 (FWD-4), each "after COO~Z serves it (AMGT_RESAPP round
+79)", plus the carried rename of decomposition v52 (the CTO's ruling msg 31721: the built thing is "the analysis built for this name").
+**The hold is met, measured by this seat:** AMGT_RESAPP cc-7 redeploy @42700562a4 (2026-10-08 20:16Z); `r79_deployed.py` against the
+deployed function ~21:1xZ: "R79 DEPLOYED: YES 1 of 1". Live bodies captured by `round53/capture_served.py` into `round53/served/`:
+`/freshness?view=page` 95 covered rows, Seeking Alpha read 13 / checked 15 / no_record 67 (snapshot 2026-10-08T18:08Z); `/thesis` for AMD
+(table 6x5, sections 0/5), ASML (12x5, 5/5), NU (none, 3/5), 8766 JP (6x5, 1/5), HD (none, 0/5). **Base:** portal DEV 38cc0ecf (origin,
+ls-remote read ~21:1xZ).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zze-1` (SAUX-41) | FWD-27 (the Seeking Alpha column draws read / checked / no record apart, in the served words) | `api/endpoints/amgt-lead-panel.ts`, `pages/Freshness/freshnessRows.ts`, `pages/Freshness/Freshness.tsx`, `pages/Freshness/Freshness.test.tsx` | ~115 (worker-light) |
+| `AV-zze-2` (SAUX-42, SAUX-43) | FWD-4 (the segment table with its periods and citation; the five research-note sections with their openers or reasons) | `SecurityAnalysis/components/SegmentTable.tsx` (new), `SecurityAnalysis/components/DossierSections.tsx` (new), `SecurityAnalysis/tabs/ThesisTab.tsx`, `SecurityAnalysis/types.ts` | ~116 (worker) |
+| `AV-zze-3` DIRECT ACT (SAUX-40 carried) | FWD-27 (two packs, two phrases) | `SecurityAnalysis/postureCites.ts` | ~117 (worker-light) |
+
+**L5 decisions:**
+- SAUX-41: the cell prints the served `seeking_alpha.sentence` verbatim and carries `data-sa-state`; the stale rule stays the server's.
+- SAUX-42: the five sections sit together on the Thesis tab directly under the research team's pillars, one block "The research team's
+  notes", each under its served heading with the pillars' opener; an absent one prints its served reason.
+- SAUX-43: the table sits on the Thesis tab directly above the filing's segment prose; a served reason is drawn in its place. Both draw
+  whatever the drafting state is.
+- The rename: "names" becomes "calls" in two sentences, so none reads "the analysis built for this name names".
+
+**Checks** (each dry-run at the base, then green on a scratch reference edit; the tree was not left edited):
+- `round53/checks/r53a.cjs`: base 2 of 3 (arm 1 FAIL as expected); reference edit 3 of 3.
+- `round53/checks/r53b.cjs`: base 1 of 4 (arms 1-3 FAIL as expected; arm 4 PLANTED passes); reference components 4 of 4.
+- `round53/checks/r53c.cjs`: base 2 of 3 (arm 1 FAIL as expected); scratch edit 3 of 3, reverted.
+- `round29/checks/battery29.sh` at the base (slot ~116 tree): ALL PASS (0 skipped).
+Each order carries two criteria: its check and the battery.
+**Chains:** 3, no edge and no shared product file (zze-2 and zze-3 may both touch `__harness__/`; merged in order at the drain).
+**Fan-out:** 3 of 3 (`fanout: 3`). **Risk:** LOCAL.
+**Then:** the drain, battery29 with no skip on the combined candidate, `bun test` of the Freshness page, the one real run on a local build
+against the live function (AMD and ASML Thesis tab; /freshness on BA, a checked row and a no-record row), CTO review, and ONE DEV push on
+Andrew's word.
+
+## v54 -- ROUND 54 (issuer, 2026-10-08 ~22:5xZ) -- ONE BATCHED REPAIR CELL ON THE FRESHNESS PAGE (DIRECT ACT)
+
+**Rectangle:** the CTO's round-53 verdict (msg 32088) and the rows it routed to this round. This is the round-54 list in
+`round53/ROUND53_CLOSE.md` @4a5b10aaf3:
+- the finding: a no_record Seeking Alpha cell carries data-state "collected";
+- DSGN_AMGTV1-Z-S25: the day cells wrap;
+- DSGN_AMGTV1-Z-S26: the head "Research pack" names the built analysis.
+
+**Base:** the round-53 candidate portal 84e13d0f, CTO-approved for DEV. Its DEV push waits on Andrew's word.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzf-1` DIRECT ACT (three repairs batched; under the size floor; `<risk>LOCAL</risk>`) | FWD-27 (the cell carries the served state; a day on one line; two packs, two phrases) | `pages/Freshness/Freshness.tsx`, `pages/Freshness/freshnessRows.ts`, `pages/Freshness/Freshness.test.tsx` | ~118 (worker-light) |
+
+**L5 ruling (S26):** the column head is "Built analysis". This is the head form of "the analysis built for this name".
+**Check:** `round54/checks/r54.cjs`. At the base 84e13d0f it reads 1 of 4: arms 1-3 FAIL as expected, PLANTED passes. On a scratch
+reference edit it reads 4 of 4, and `round53/checks/r53a.cjs` still reads 3 of 3 there.
+**Chains:** 1. **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL.
+**Then:** the drain, battery29 and the Freshness bun test on the stacked candidate, a /freshness real run, and CTO review.

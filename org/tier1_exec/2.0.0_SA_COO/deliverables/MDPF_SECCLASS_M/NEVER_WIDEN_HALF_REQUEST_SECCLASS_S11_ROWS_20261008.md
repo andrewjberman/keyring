@@ -1,6 +1,6 @@
-# Never-widen half request, MDPF_SECCLASS -- the D1-S11 row set: 106 new rows and 11 remaps to alternatives (FWD-16, FWD-17, cell SC-e-77)
+# Never-widen half request, MDPF_SECCLASS -- the D1-S11 row set: 106 new rows and 34 remaps to alternatives (FWD-16, FWD-17, cell SC-e-77)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~67` for `2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half UNSIGNED; CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~67` for `2.0.0_SA_COO~M1`, 2026-10-08 ~19:4xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half SIGNED (1.0.0_SA_CTO~DELL1 @d223a117ef).**
 This file is a REQUEST. Nothing in it has been written to any table. The writer refuses `--write` until both headings at the foot read SIGNED.
 Source: `BD_UNCLASSIFIED_TRACE_D1S11_20261008.json` groups B (25 securities) and D (81 securities); Andrew-direct 2026-10-08 ~19:0xZ, verbatim: "Hedge funds, private funds, real estate funds, all of this falls to Alternatives."; the set `S11_ROW_SET_20261008.tsv`; the CVO grades every class and every `rule=andrew-alternatives` mark at L9.
 
@@ -11,13 +11,13 @@ Source: `BD_UNCLASSIFIED_TRACE_D1S11_20261008.json` groups B (25 securities) and
 On table `etf-classifications` (us-east-1), per line of the set:
 
 - **NEW (106 lines):** one `PutItem` conditioned on `attribute_not_exists(ticker)`. Item: `ticker` (the B ticker or the D `NAME::` key), `asset_class`, `sub_asset_class` (only where the set names one), `classified_by = scheduled`, `updated_by = mdpf-secclass-s11-rows`, `name = clean_name(<trace name>)`, `identifier_namespace = NAME` for a `NAME::` key (absent for a ticker), `last_updated`.
-- **REMAP (11 lines):** one `UpdateItem`: `SET asset_class, updated_by, last_updated` and `sub_asset_class` set to the new value or REMOVEd when the set names none; `CONDITION attribute_exists(ticker) AND asset_class = <the current class the set read>`.
+- **REMAP (34 lines):** one `UpdateItem`: `SET asset_class, updated_by, last_updated` and `sub_asset_class` set to the new value or REMOVEd when the set names none; `CONDITION attribute_exists(ticker) AND asset_class = <the current class the set read>`.
 - Every class is one of the six; every non-empty sub-class is in the contract's closed list (`MDPF_SECCLASS_CONTRACT.json` 0.8.0 `values_by_class`); a line outside either is refused before any call. No other table, no S3 object, no code, no deploy.
-- **Dry run** (read this session, live table, `s11_rows_write.py` with no flag): `S11-ROWS-DRY-RUN new=105 remap=11 refused_present=1 refused_stale=0 puts=0`. The one present key is **`RAL`** (group B, $70): the live row reads `equity/Information Technology`, `updated_by mdpf-secclass-model`, `last_updated 2026-10-08T19:01:52Z`, so it landed after the trace was cut. The set's line for it reads `equity`, the same class, so the write would change nothing; the issuer drops the `RAL` line from the set at signing (then the dry run reads `new=104 ... refused_present=0`) or lets the writer refuse it. The writer wraps the client with a counter of every mutating call, a mutating call in a dry run raises, and the run asserts `puts=0`.
+- **Dry run** (read this session, live table, `s11_rows_write.py` with no flag): `S11-ROWS-DRY-RUN new=104 remap=34 refused_present=2 refused_stale=0 puts=0` (amendment 2, 2026-10-08 ~20:22Z; before amendment 2 it read `new=105 remap=11 refused_present=1`). The present keys are **`OXYWS`** (group B, $4,958; live `equity/Energy`, `updated_by mdpf-secclass-model`, `last_updated 2026-10-08T20:08:38Z`, landed by the e49 runner after Amendment 1; the set's line reads `equity`, the same class; row `MDPF_SECCLASS-D1-W67-S3`) and **`RAL`** (group B, $70): the live row reads `equity/Information Technology`, `updated_by mdpf-secclass-model`, `last_updated 2026-10-08T19:01:52Z`, so it landed after the trace was cut. The set's line for it reads `equity`, the same class, so the write would change nothing; the issuer drops the `RAL` line from the set at signing (then the dry run reads `new=104 ... refused_present=0`) or lets the writer refuse it. The writer wraps the client with a counter of every mutating call, a mutating call in a dry run raises, and the run asserts `puts=0`.
 
 ## Blast radius
 
-Table `etf-classifications`: up to 106 new keys and 11 existing keys. A NEW put cannot touch an existing key (the condition refuses it). A REMAP moves only `asset_class`, `sub_asset_class`, `updated_by` and `last_updated` of a row that still reads the class the set read.
+Table `etf-classifications`: up to 106 new keys and 34 existing keys. A NEW put cannot touch an existing key (the condition refuses it). A REMAP moves only `asset_class`, `sub_asset_class`, `updated_by` and `last_updated` of a row that still reads the class the set read.
 
 ### Each line's before and after
 
@@ -132,7 +132,7 @@ NEW lines (before: no row; after: the pair shown; `rule` marks Andrew's alternat
 | NAME::PIMCO ALL ASSET INSTL | D | equity |  | 0.00 |
 | NAME::ORION PROPERTIES INC COM | D | equity |  | 0.00 |
 
-REMAP lines (before: live class read this session; after: the pair shown; all carry `rule = andrew-alternatives`):
+REMAP lines (11 from the original cut, then the 23 liquid-alt mutual-fund lines added by amendment 2, `evidence` strategy phrase per line in the set; before: live class read this session; after: the pair shown; all carry `rule = andrew-alternatives`):
 
 | key | before (class/sub, updated_by) | after (class/sub) | $ in the trace |
 |---|---|---|---|
@@ -147,6 +147,29 @@ REMAP lines (before: live class read this session; after: the pair shown; all ca
 | NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
 | NAME::BLACKSTONE PRIVATE CREDIT FUND SHS CL I | fixed_income/Structured Credit, mdpf-secclass-model | alternatives | 85,410.26 |
 | NAME::CARLYLE TACTICAL PRIVATE CREDIT N | fixed_income/Structured Credit, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::AB SELECT US LONG SHORT ADVISOR | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::AQR LONG-SHORT EQUITY I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::CROMWELL LONG SHORT INVESTOR | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::CALAMOS HEDGED EQUITY I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::JPMORGAN HEDGED EQUITY 2 R6 | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::JPMORGAN HEDGED EQUITY A | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::JPMORGAN HEDGED EQUITY I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::JPMORGAN HEDGED EQUITY R6 | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::TOEWS HEDGED U S FD | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::CALAMOS MARKET NEUTRAL INCOME I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::CALAMOS MARKET NEUTRAL INCOME R6 | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::VICTORY MARKET NEUTRAL INCOME I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::EATON VANCE GLBL MACR ABSOLUTE RETURN I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::EATON VANCE GLBL MACRO ABS RET ADVTG A | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::ABSOLUTE CONVERTIBLE ARBITRAGE INSTL | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| ARBIX | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::FIRST TRUST MERGER ARBITRAGE CL I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::NEXPOINT MERGER ARBITRAGE Z | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::BLACKROCK EVENT DRIVEN EQUITY INSTL | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::BLACKROCK SYSTEMATIC MULTI-STRAT INSTL | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| NAME::CATALYST MILLBURN HEDGE STRATEGY I | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
+| JHEQX | structured/Hedge, mdpf-secclass-model | alternatives | not in the trace (UNREAD) |
 
 ### The local candidate served-mix delta (from the trace's dollars)
 
@@ -163,7 +186,11 @@ Basis: the trace's 2026-10-06 partition (`reconstruction`, `claim: inferred`: a 
 
 - Of the alternatives line, the `rule = andrew-alternatives` NEW lines (9 securities) hold USD 1,713,583.04; the rest are the managed futures, alternative-income and opaque-id lines the old map already read alternatives.
 - **REMAP dollars:** only `NAME::BLACKSTONE PRIVATE CREDIT FUND SHS CL I` appears in the trace (USD 85,410.26, group A). The other ten REMAP keys are not in the trace (the trace lists only the unclassified), so their held amounts are `UNREAD` here; each moves between two class buckets by its held amount and moves no firm total. The issuer reads them from the compare at signing.
-- The named-by-name classes here are judgments, not facts (`claim: inferred`): hedge, private and real estate fund status is graded by `3.0.0_SA_CVO`. The set deliberately left unmoved the 21 `structured/Hedge` hedged-equity, long/short and market-neutral mutual-fund rows and the REIT stocks (`CTRE`, `DOC`, `FBRT`, Kimco, Digital Realty), and the non-traded REIT issuers (`ARES INDL REIT`, `FS CREDIT REAL ESTATE INCOME TRUST`), as literally not hedge funds, private funds or real estate funds; see surprise row `MDPF_SECCLASS-D1-W67-S2`.
+- The named-by-name classes here are judgments, not facts (`claim: inferred`): hedge, private and real estate fund status is graded by `3.0.0_SA_CVO`. Amendment 2 (Andrew-direct ~20:1xZ, "1. Approved."; `ANDREW_DIRECT_20261008_201xZ_LIQUID_ALTS_TO_ALTERNATIVES_ETF_STRATEGY_SLEEVES_ENDPOINT_CONFIRMED.md`) moved the liquid-alt mutual funds into the set as 23 REMAP lines (22 `NAME::`/ticker rows of hedged-equity, long/short, market-neutral, absolute-return, arbitrage, event-driven, multi-strategy and managed-futures mutual funds, `structured/Hedge` to `alternatives`, no sub-class, plus `NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL`, the share-class sibling of GSRTX which the set already reads alternatives; the 23 include two ticker twins, `ARBIX` and `JHEQX`, of `NAME::` rows in the same set). The set still leaves unmoved the REIT stocks (`CTRE`, `DOC`, `FBRT`, Kimco, Digital Realty), the non-traded REIT issuers (`ARES INDL REIT`, `FS CREDIT REAL ESTATE INCOME TRUST`), volatility notes and ETNs (VXX and its kind), listed option lines, buffer/outcome/defined-outcome ETFs and notes, and the structured/Hedge rows excluded by name in the proof instance and the worker report, as literally not hedge funds, private funds or real estate funds or as outside the ruling; see surprise row `MDPF_SECCLASS-D1-W67-S2`.
+
+### Amendment 2: the served-mix effect of the 23 liquid-alt lines
+
+Each of the 23 keys reads `structured/Hedge` now and `alternatives` after; none is in the trace (the trace lists only unclassified securities), so the held dollars are `UNREAD` here and the issuer reads them from the compare at signing. In any served mix that holds one of them, its held amount leaves the `structured` sleeve (the Hedge sub-class) and enters `alternatives` with no sub-class; the firm total and the unclassified amount do not move, and the other four classes do not move. The two ticker twins (`ARBIX`, `JHEQX`) and their `NAME::` rows move together, so a position read by ticker or by name lands in one class. `NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL` and `GSRTX` (NEW, alternatives) now agree. `claim: inferred` for the class of each fund (named by strategy in its name); `3.0.0_SA_CVO` grades it at L9.
 
 ### The writers that can touch these keys (counted from the live table)
 
@@ -183,6 +210,36 @@ The snapshot (`--snapshot`, must not exist yet, written before the first call) h
 
 The dry form (`--rollback <snapshot.json>`, no `--write`) lists what it would do and asserts `puts=0`. Served bytes rebuilt from the changed rows return at the readers' next runs after a rollback.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
 
-## CTO half -- UNSIGNED
+`2.0.0_SA_COO~M1`, 2026-10-08 ~20:4xZ. I re-ran in the worker tree:
+- AC1: S11-ROW-SET ok=True, 106/106, remap=34, rule_rows=43.
+- AC2: `new=104 remap=34 refused_present=2 refused_stale=0 puts=0`.
+- AC3: HALF-READY.
+Merged on box/dell1 @9df203a45d.
+
+**Refused-present keys, read by the issuer (amendment 3):** OXYWS (live equity, set equity) and RAL (live equity, set equity). Both are
+no-ops. At write time, any further present key the writer refuses is read the same way. A different class is a re-plan.
+
+**Writers of `asset_class` / `sub_asset_class` on these keys, counted: N = 10.** These are the SC-e-74 half's writers of the row. The
+put-on-absence writers (seed, constituents, E_18 scheduled, FWD-10, write-model-rows, CUSIP rows, FWD-9, the e32/e49 runner) cannot
+overwrite a NEW row once it is put, nor a REMAP row they did not plan. The e49 leg still running can land a group-B key first. The NEW
+put then refuses it as present, which is the case above.
+
+**Both branches:** (a) the condition holds, so the NEW put lands and the REMAP moves from current_class to the set's class; (b) the row
+moved since the set was built, so it is refused (present or stale), nothing moves, and the line is re-planned.
+
+**Scope, per Andrew-direct:**
+- ~19:0xZ (hedge, private and real estate funds are alternatives) and ~20:1xZ ("1. Approved.": liquid-alt mutual funds to
+  alternatives, volatility notes stay structured).
+- The 7 arbitrage, event-driven, multi-strategy and managed-futures mutual funds are hedge-fund strategies and are included.
+- JHQTX (a seed row) goes to the seed source and is not written here.
+
+## CTO half -- SIGNED
+
+`1.0.0_SA_CTO~DELL1` @d223a117ef, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E77_S11_ROWS_20261008.md` (msg 1146).
+The 23 liquid-alt lines are the card-1 population Andrew approved. Conditions:
+1. The writer refuses RAL; the result reads refused_present <= 2 and refused_stale = 0, or the refusals are listed.
+2. The snapshot is written before the first call.
+3. The WROTE line and the REMAP funds' held dollars from the post-fire compare are reported to the CTO.
+Recorded here by `2.0.0_SA_COO~M1`.

@@ -21653,3 +21653,464 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It answers with a different public reason code: release 2 raises the coded InputAccessDenied where release 1 raised a bare PermissionError. No write occurs on either, so no exposure; the code moves from UNEXPECTED to NOT_AUTHORIZED. Recorded as read 7 FAIL because 'as before' was not met to the letter."
 }
 ```
+
+## IRPT_BCKEND-D2-W159-S1 -- The branch-A recorder writes a CHANGELOG.json path outside the order's <paths>; only the source-map half was recorded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W159-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~159",
+  "surfaced_at": "2026-10-08T21:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The branch-A recorder record-terraform-deploy.sh stages infra/aws/terraform/investor-reporting/CHANGELOG.json, a path the order's <paths> does not name, so its own commit is refused; the source-map half was committed alone and the CHANGELOG half is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --function irpt-ycharts-generate --version investor-reporting-irpt-ycg-release3 --author <serial> at 21:35Z: safe-commit refused, 'VIOLATION: infra/aws/terraform/investor-reporting/CHANGELOG.json -- lane=IRPT_COMPLETION_P ... no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'",
+      "The order's <paths> names infra/aws/lambda/ci/CHANGELOG.md and lambda-source-map.json (the lambda/ci pair), not terraform/investor-reporting/CHANGELOG.json, which the recorder writes (entry 'investor-reporting-irpt-ycg-release3', deployed_commit 6f758dd807)",
+      "Handled: CHANGELOG.json unstaged and restored from HEAD (git show, no checkout); lambda-source-map.json (last_deployed_commit 5d3eed8904.., at 21:35:15Z) committed alone at 63181c2c27",
+      "Round 67's worker (~158) did not run this recorder, so no earlier run exercised the path"
+    ]
+  },
+  "spec_asserts": "Step 10: 'In branch A only, run record-terraform-deploy.sh', with <paths> carrying infra/aws/lambda/ci/CHANGELOG.md and lambda-source-map.json.",
+  "world_is": "The recorder for pipeline investor-reporting writes terraform/investor-reporting/CHANGELOG.json, which the grant omits and which lane IRPT_COMPLETION_P owns, so a worker cannot complete it. The deploy itself and the ledger are unaffected; only the CHANGELOG entry is unrecorded. Issuer: add that path to the next order's <paths> or run the recorder at the drain."
+}
+```
+## IRPT_BCKEND-D2-W181-S1 -- irpt-export-render's role, as Terraform declares it, holds no write on the retained-report index or the custod
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-export-render's role, as Terraform declares it, holds no write on the retained-report index or the custody-report prefix and no read of the request-composition prefix, so the guarded custody persist fails closed (nothing written) until an IAM change that this cell is barred from making ships beside the function and the route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/b1_submit.tf@9238309eca: dynamodb is GetItem only on the requests table (ReadRetainedReportIndexInServedFirmPartitions); s3:GetObject/GetObjectVersion only on the PERFORMANCE family prefix of the reporting bucket (b1_report_prefixes, families[PERFORMANCE]); no dynamodb:PutItem or UpdateItem and no s3:PutObject on the reporting bucket in b1_submit.tf, iam.tf or b2_render.tf (the only PutObject statements are the evidence-bucket generations/exports prefixes)",
+      "comp-iam service irpt-export-render (this session): statements 1, 3 and 4 as above, 24 statements, none granting the table write that retention.reserve/index.publish (conditional put_item) and ReportRepository.persist need, nor the S3 read of state/request_compositions that artifacts.get needs for the retained request",
+      "infra/aws/lambda/investor-reporting/reports/repository.py DynamoReportIndex.publish and retention.py DynamoRetentionIndex.publish call table.put_item; export/custody_persist.py loads the retained request through ports['artifacts'] (ArtifactRepository.get -> blobs.get)",
+      "Declared state only: the LIVE role policy was not read (raw aws IAM inspection is routed to comp-iam, which prints the declared statements); the same gap already holds for custody-report-read's blob read (CUSTODY_REPORT is not the PERFORMANCE prefix)"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 1/6: the persist is reachable through the guarded Entry (a DECLARED route row and an operation) and the packet carries the two after-reads (an Opal custody-report-read by reference returns the report; another firm gets OBJECT_NOT_COVERED); BOUNDS: no IAM, bucket, table, principal or Terraform change.",
+  "world_is": "The code, route row and registry are complete and tested offline, and every release arm passes against the built zip, but the live role cannot perform the writes or the request read the operation makes, so the persist (and the first after-read) would answer a dependency refusal until a role statement (dynamodb:PutItem/UpdateItem on the requests table scoped to the served firms, s3:PutObject/GetObject and kms on the custody_reports and request_compositions prefixes) is applied. It fails closed: the first write the repository makes is the retention row (a conditional put_item), so a refused put leaves nothing served. The IAM change belongs to a later release order with its own sign-off; the packet states it as a precondition of Branch A's after-reads."
+}
+```
+
+## IRPT_BCKEND-D2-W181-S2 -- The persisted document is the one caller-supplied value: the owner, accounts, request identity and source evid
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The persisted document is the one caller-supplied value: the owner, accounts, request identity and source evidence are all derived from the retained request, but the report's content comes from the body of a verified Opal operator and is not recomputed or checked against the request, and the report record names the retained request's creator, not who persisted it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_persist.py@d34a46f37d: _request() takes document and provenance from the body; custody_report_persist() passes the document to custody_write.persist_custody_report unchanged after the as_of_date check; the retained request (a frozen irpt-analysis-composition.v1) carries the INPUTS of the custody report (snapshot, accounts, recipe), not its computed sections",
+      "infra/aws/lambda/investor-reporting/reports/repository.py persist(): the record stores owner (the retained request's), request_ref and provenance; no persisting-principal field; reports/custody_write.py _check_document only requires a calendar as_of_date (no custody document schema is published, export/submit_installed.py _validate)",
+      "export/tests/test_custody_writer_composed.py::test_derived_owner_content_naming_another_owner_changes_nothing: a document that names another owner or accounts is stored as content, and the row's owner stays the retained request's"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 2: the owner and the account set come from server-held state, never from a field the caller sends; the request names WHICH retained request to persist, by reference.",
+  "world_is": "Owner, accounts and evidence are server-derived as ordered. The report body is not derivable from the retained request inside this function (the render that computes the sections is IRPT_CUSTDY's producer, E2a), so it arrives in the body; its integrity rests on the caller being a verified Opal operator whose current scope covers every account of the request, the same authority that reads the report. This is inert today (no route applied, no caller). The CTO may rule whether E2a should bind the document to the request (a content hash inside the retained request, or a server-side render) before the route is applied; the persister's identity is recoverable only from the Lambda log line and CloudTrail, not from the retained record, because adding it to the provenance would make an idempotent retry by a second operator a new revision."
+}
+```
+
+## IRPT_BCKEND-D2-W181-S3 -- docs/contracts/investor-reporting/v1/routes.json's _denominator block (declared 19, total 21) already disagree
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W181-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~181",
+  "surfaced_at": "2026-10-08T21:46Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "docs/contracts/investor-reporting/v1/routes.json's _denominator block (declared 19, total 21) already disagreed with its rows (20 DECLARED + 2 ROUTED_ELSEWHERE = 22) before this cell, and the new custody-report-persist row makes it 21 + 2 = 23; the block is named as the denominator the replay battery reads and was not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json@9238309eca: json status counts DECLARED 21, ROUTED_ELSEWHERE 2 (23 rows); _denominator.declared 19, routed_elsewhere 2, total 21",
+      "docs/contracts/investor-reporting/v1/routes.json@3fd3179217 (before this cell): DECLARED 20, ROUTED_ELSEWHERE 2 (22 rows) against the same _denominator 19/2/21; the IB-pr-355 row (cf6839fe38) added a DECLARED route without moving the block",
+      "no test reads _denominator: _authz/tests/test_unguarded_census.py, test_guarded_entries.py and the export suite (303 passed, 2 skipped) pass with the stale block"
+    ]
+  },
+  "spec_asserts": "IB-pr-373 step 1: add the route row to routes.json (status DECLARED); nothing is applied here.",
+  "world_is": "The row is added in the same shape as the IB-pr-355 row; the descriptive counts in _denominator were already stale and were left as found (editing a frozen v1 description block is not in this order). A later cell that owns the route inventory should re-derive the counts from the rows."
+}
+```
+
+## IRPT_BCKEND-D2-S9 -- D2-W181-S1/S2/S3 ruled for the Performance client statement writer (IB-pr-373): the IAM leg is a laptop precondition of the release; the caller-supplied document goes to the CTO with the pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T21:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W181-S1, S2 and S3 by carrying each. S1: irpt-export-render's declared role lacks dynamodb PutItem/UpdateItem on the requests table, S3 write on the custody-report prefix and S3 read of the request-composition prefix, so the persist fails CLOSED until an IAM leg ships; Dells write no IAM (msg 1288), so the leg is a laptop Terraform act through 0.0.0_AB_MSTR~DELL2, named in the release pair as a precondition of the after-reads. S2: the document is the one caller-supplied value (owner, principal and accounts are server-derived from the retained submission; any other key refused by name) and the record names the retained request's creator, not the persister; carried to 1.0.0_SA_CTO~DELL2 with the IB-pr-373 pair for a ruling on whether the release needs a persister field or a document binding. S3: routes.json _denominator was stale before this cell; inert. The caller-asserted IB-pr-372 path (wk-IRPT_BCKEND-180) is NOT in HEAD (verified: 3528d24f92 is not an ancestor), as CTO msg 1651 ruled.",
+  "one_line": "The Performance client statement writer is drained with a server-derived owner; the IAM leg and the document-binding question ride its release pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-373 drained @6303e36222; IB86-1-AC1/AC2/AC3 PASS on the issuer's re-run",
+      "git merge-base --is-ancestor 3528d24f92 HEAD -> not an ancestor"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: IAM leg -> laptop via MSTR~DELL2 in the pair; document binding -> CTO with the pair."
+}
+```
+
+## IRPT_BCKEND-D2-W183-S1 -- custody-report-read serves the document only, so persisted_by and the composition hash (stored in the record's provenance) are read by resolve, not returned by the HTTP operation
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W183-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~183",
+  "surfaced_at": "2026-10-08T22:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The Performance client statement record now carries persisted_by and composition_sha256 in its provenance, and retained_export.resolve returns that provenance unchanged, but the custody-report-read operation answers only report_kind, report_id, revision and report, so an HTTP reader does not see either field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_read.py@1f14f0db5e: custody_report_read returns {report_kind, report_id, revision, report}; it drops resolved['provenance']; the file is outside this order's paths",
+      "infra/aws/lambda/investor-reporting/export/tests/test_custody_writer_composed.py::test_persisted_by_the_stored_record_names_the_verified_caller_not_the_submitter: _read_back (retained_export.resolve over the same repository) returns provenance['persisted_by'] == the persister and provenance == the stored record's provenance"
+    ]
+  },
+  "spec_asserts": "IB-pr-375 step 1: 'A read through custody-report-read returns it unchanged.'",
+  "world_is": "The record stores persisted_by in provenance (repository.persist stores owner, request_ref, report and provenance only; a new top-level record field would be a repository.py change outside the paths). The unchanged read is proved on the resolve path that custody-report-read is built on. Whether the operation's response should also carry persisted_by is a separate change to custody_read.py and the route contract, not made here; no firm reads a statement through it yet."
+}
+```
+
+## IRPT_BCKEND-D2-W183-S2 -- the content binding is a declared hash in the document, verified against the retained composition; it proves which composition the document claims, not that the sections were computed from it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W183-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~183",
+  "surfaced_at": "2026-10-08T22:10:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The strongest binding the existing data allows is the document declaring composition_sha256 equal to the retained REQUEST_COMPOSITION artifact's content hash; the sections cannot be recomputed here, so a verified Opal operator can still supply sections that do not follow from the composition, and every producer of a Performance client statement document must now declare the hash or the persist refuses it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_persist.py@1f14f0db5e: _check_request already verifies sha256(loaded['data']) == loaded['ref']['sha256']; the retained composition holds inputs (snapshot, accounts, recipe, settings), not the computed sections",
+      "infra/aws/lambda/investor-reporting/reports/custody_write.py: _check_binding refuses an absent, malformed or different composition_sha256 with CustodyWriteRefused, which the Entry's reasons table maps to INVALID_INPUT (export/entry.py line 473)",
+      "export/tests/test_custody_writer_composed.py: 54 passed; the persist-path tests that persisted DOCUMENT now persist _doc(request), the same document plus the declared hash; no assertion was removed or loosened"
+    ]
+  },
+  "spec_asserts": "IB-pr-375 step 2: 'Choose the strongest binding the existing data allows, and say why.'",
+  "world_is": "Recomputing or verifying the sections against the composition is not possible in this function (the render that computes them is the IRPT_CUSTDY producer). The binding is therefore declared-and-verified. A producer of the document (IRPT_CUSTDY) must add composition_sha256 to what it posts; that is a caller change the CTO and COO sequence before any firm reads a statement."
+}
+```
+## IRPT_BCKEND-D2-W182-S1 -- worker 182 had no terraform binary in its worktree (SAFE_APPLY_TERRAFORM to the main checkout's) and read the order's W179 row prefix as W182
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W182-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~182",
+  "surfaced_at": "2026-10-08T22:14:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The worktree carries no .tools/terraform.exe; terraform init, plan and safe-apply ran with the main checkout's terraform.exe through SAFE_APPLY_TERRAFORM, and the order's row-id prefix W179 was read as W182.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls .tools/terraform* in C:/dev/wk-irpt-bckend-182 -> no match; C:/dev/ajb_workspace/.tools/terraform.exe exists, version v1.15.8",
+      "safe-apply.sh resolves SAFE_APPLY_TERRAFORM first (lines 35-37); apply log: Apply complete! Resources: 0 added, 1 changed, 0 destroyed. Re-plan: No changes.",
+      "IRPT_BCKEND.TO-IB-pr-374 BOUNDS says row ids are IRPT_BCKEND-D2-W179-S<k>; the dispatching message and the id schema require W{n} to equal the committing worker's suffix (182)"
+    ]
+  },
+  "spec_asserts": "IB-pr-374 step 5: plan the export root and run safe-apply from the planfile in the worktree; row ids are D2-W179-S<k>.",
+  "world_is": "The binary is untracked and absent from a fresh worker worktree, so a worker must name the main checkout's binary (read-only use, no file edited there) to plan and apply. The row id uses W182 because the gate requires the worker suffix. Neither changed what was applied: the same single resource changed, 0 destroyed."
+}
+```
+
+## IRPT_BCKEND-D2-W182-S2 -- TO-IB-pr-374 criteria cite cell IB-pr-371 while the order owns IB-pr-374; proof cannot validate, order left open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W182-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~182",
+  "surfaced_at": "2026-10-08T22:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-374's two criteria carry cell_refs=\"IB-pr-371\" but <owned_cells> is IB-pr-374, so the proof_of_spec instance cannot be VALID and the order cannot be flipped to complete; the release itself is applied and both p87 checks PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-374.pcs-writer-release-function.md lines 83 and 87: cell_refs=\"IB-pr-371\"; <owned_cells>IB-pr-374</owned_cells> at the decomp_ref block",
+      "python .tools/proof-of-spec-check.py <instance> IB87-1-AC1,IB87-1-AC2 -> alignment-backward 0/1; VIOLATION: declared cell 'IB-pr-374' is named in the TO's <owned_cells> but NO criterion references it; INVALID (rc=1)",
+      "IB87-1-AC1 PASS and IB87-1-AC2 PASS at HEAD (p87_cells.py); live CodeSha256 rNjtTwcm... == built; re-plan No changes; census changed_members=0; ledger CLOSED"
+    ]
+  },
+  "spec_asserts": "The proof_of_spec instance validates and the order's <status> flips to complete when both criteria PASS.",
+  "world_is": "The order's criteria cite the earlier cell (IB-pr-371, copied from the predecessor order), so no criterion discharges the owned cell. A worker may not amend criteria or weaken a check, and the flip is gated on a VALID instance, so the order stays <status>pending</status>. Remedy owned by the issuer 2.0.0_SA_COO~P2: amend both cell_refs to IB-pr-374 (a criteria amendment the issuer may make itself) and re-run proof-of-spec-check on the committed instance, then flip. Nothing served is affected."
+}
+```
+
+## IRPT_BCKEND-D2-S10 -- round 87 rows ruled: W182-S2 resolved by the issuer's amendment; W182-S1 tooling; W183-S1/S2 carried to the CTO with the round packet
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T22:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W182-S2, D2-W182-S1, D2-W183-S1 and D2-W183-S2. W182-S2: IB-pr-374's criteria carried cell_refs IB-pr-371 (the issuer derived the order from IB-pr-371's text); AMENDMENT 1 @ef0d4b9afc set them to IB-pr-374, the worker's proof re-validated VALID, and the issuer flipped the order complete after re-running IB87-1-AC1 (live rNjtTwcm) and AC2. W182-S1: a fresh worktree lacks the gitignored terraform binary; tooling only, no served effect. W183-S1 (custody-report-read returns only the document, so an HTTP reader does not see persisted_by) and W183-S2 (the content binding is the declared composition hash verified against the stored artifact, not a recomputation; every producer must now post it): both are carried to 1.0.0_SA_CTO~DELL2 in the round-87 packet against its condition 1 (persisted_by + binding before any firm read).",
+  "one_line": "Round 87's rows each have a resolution or an owner; the writer function is live, its route still waits for the laptop IAM leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check on IB-pr-374's instance after AMENDMENT 1 -> VALID (rc=0); live irpt-export-render CodeSha256 rNjtTwcm... (issuer re-read)",
+      "IB87-2-AC1/AC2 PASS on the issuer run (persisted_by 5, content_bound 5, whole file 54)"
+    ]
+  },
+  "spec_asserts": "Each open finding has a resolution or an owner.",
+  "world_is": "It does."
+}
+```
+
+## IRPT_BCKEND-D2-S11 -- the terraform bring-up kit landed on dell2 and both halves of the CTO's named read-back now pass, so S364's binary blocker is gone; coverage, write capability and the directory root's own prohibition are NOT covered by that
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S11",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T22:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Row IRPT_BCKEND-S364 records that dell2 has no terraform binary so safe-apply exits 5, blocking the signed r61 directory release and every dell2 apply after it; the bring-up kit the CTO ruled for (msg 385) has since landed, and BOTH halves of the read-back that ruling named -- one terraform version and one plan of a no-op root on dell2 -- now pass, with the installed binary byte-identical to the kit manifest and registry egress excluded by the CLI config.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/tfkit-in/kit-terraform-pack-20261007/MANIFEST.json: kind=terraform-filesystem-mirror, platform windows_amd64, binary version 1.15.8 sha256 6eb0a1cb89344c97ccf2928ddc2d7a6cb71a1837b7ecccfd5991466b6d751e03; providers hashicorp/aws 5.100.0 (matches_lock true), hashicorp/aws 6.67.0, hashicorp/archive 2.8.1",
+      "sha256sum .tools/terraform.exe = 6eb0a1cb89344c97ccf2928ddc2d7a6cb71a1837b7ecccfd5991466b6d751e03 -- byte-identical to the manifest's declared binary, so the installed terraform is the kit's by CONTENT, not by filename (CLAUDE.md rule 22a CODE layer)",
+      "C:/Users/Test/AppData/Roaming/terraform.rc: provider_installation { filesystem_mirror { path = \"C:/tmp/tfkit-in/kit-terraform-pack-20261007\" include = [\"registry.terraform.io/*/*\"] } direct { exclude = [\"registry.terraform.io/*/*\"] } } -- the CTO's 'no registry download on dell2' is enforced by config, not by convention",
+      ".tools/terraform.exe version -> 'Terraform v1.15.8 on windows_amd64' (first half of the read-back msg 386 named)",
+      ".tools/terraform.exe plan -lock=false -no-color in infra/aws/terraform/ticket-center at HEAD 71b72d7a3e -> 'No changes. Your infrastructure matches the configuration.'; 22 resources refreshed against live AWS and 3 data sources read, provider served from the mirror (second half of the read-back)",
+      "aws sts get-caller-identity -> arn:aws:iam::313476888478:user/cloudops-dell2-agent-user -- dell2 reads remote S3 state and live AWS under its own identity, not laptop hands",
+      "infra/aws/terraform/ticket-center/.terraform.lock.hcl: aws 5.100.0 hash h1:H3mU/7URhP0uCRGK8jeQRKxx2XFzEqLiOq/L2Bbiaxs=, equal to the manifest's matches_lock entry; .terraform/providers populated 2026-10-07 14:43 local, i.e. install-from-mirror already succeeded on this box once before this read"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S364 @aff002122a, relayed as msg 386 (2026-10-07T10:53:57Z): 'dell2 has no terraform binary, so safe-apply exits 5 ... no dell2 apply can run ... This blocks IRPT_BCKEND's signed r61 directory release, and every dell2 apply after it.' The CTO ruling msg 385 chose (b) -- no laptop apply -- and named the acceptance: the kit carries the laptop's terraform binary and provider plugin cache pinned to the versions the roots lock, 'read back by one `terraform version` and one plan of a no-op root on dell2'.",
+  "world_is": "The kit landed and both named reads pass (evidence 4 and 5), so the binary half of S364 is MET and dell2 can plan against live AWS under its own identity. THE CLAIM IS SCOPED TO WHAT WAS EXERCISED and does not extend to: (a) coverage -- the mirror holds only aws 5.100.0, aws 6.67.0 and archive 2.8.1 for windows_amd64, and 1 of 71 roots under infra/aws/terraform/ is initialized, so a root whose constraint needs any other provider is UNTESTED and would have no legal install path (direct is excluded); (b) write capability -- plan is read-only, and the Andrew-direct of 2026-10-08 ~22:0xZ still records IAM as a surface the Dells cannot write, so an apply order touching IAM stays with the laptop applier; (c) the r61 target itself -- infra/aws/terraform/investor-reporting/directory/main.tf carries an in-file prohibition ('SKELETON ONLY ... NOT INITIALISED, NOT PLANNED, NOT APPLIED: terraform init here would pin this backend before the owning cell exists'), so that root was deliberately NOT the root planned here and its release needs the owning cell, not just a working toolchain. Disposition left UNDER_INVESTIGATION: this row reports a measured readiness delta, it does not grade S364 closed."
+}
+```
+
+## IRPT_BCKEND-D2-W220-S1 -- E11 probe edit regresses 2 tests in test_custody_retained.py (fixture policy never raises ValueError); AC2 FAIL, order left open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W220-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~220",
+  "surfaced_at": "2026-10-08T23:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After the E11 probe edit, AC2 fails 2 of 68: test_custody_retained.py's installed-factory test uses a reporting_policy that never raises ValueError, so the probe adds irpt-custody-x10-v1 and composition refuses an overlapping family.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC2 at base af1e1b08b6: 66 passed, 2 skipped. At 128b6f7db1: 2 failed, 64 passed, 2 skipped; failing ids test_installed_custody_factory_runs_guarded_entry_with_actual_sdk_profiles[descriptor-None] and [canonical-sdk-None]",
+      "captured log: ReportRefused 'a retention family belongs to exactly one policy revision' (reports/composition.py line 48), raised from build_retained_repositories inside custody_submission.submit",
+      "test_custody_retained.py passes w.policy.reporting_policy (reports/tests/test_retention.py world) as reporting_policy; it returns the same default-revision document for every revision, so reporting_policy('irpt-custody-x10-v1') succeeds and its families overlap the default's",
+      "test_custody_submission_revision.py (3 passed) fails 2 of 3 against the base custody_submission.py, so the edit is what the new test discriminates"
+    ]
+  },
+  "spec_asserts": "Order: after the edit AC2 shows the same passed count (66) and 0 failed; the export-side probe pattern composes with the neighbouring custody tests.",
+  "world_is": "The neighbouring fixture's policy accessor does not model an unregistered revision, so the same probe that is correct against the real registry (custody row holds only CUSTODY_REPORT) breaks that test. The fix is in test_custody_retained.py or its world (a policy lookup that raises ValueError for an unknown revision, as export/tests/test_custody_writer_composed.py does); both are outside this order's paths, and swallowing ReportRefused in the edit would weaken the probe. The edit stays committed at 128b6f7db1; the order stays pending; issuer 2.0.0_SA_COO~Y2 to amend paths to admit the fixture fix or rule otherwise. Nothing is deployed."
+}
+```
+
+## IRPT_BCKEND-D2-W220-S2 -- DISPOSITION of IRPT_BCKEND-D2-W220-S1: resolved by AMENDMENT 1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W220-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~220",
+  "surfaced_at": "2026-10-08T23:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-D2-W220-S1: resolved by AMENDMENT 1 -- the test_custody_retained reporting_policy fixture now raises ValueError for an unregistered revision; AC2 66 passed, 2 skipped, 0 failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 9e6d041f93: registered_only(w) in test_custody_retained.py wraps w.policy.reporting_policy; custody_submission.py untouched, ReportRefused not caught",
+      "AC2 at HEAD 9e6d041f93: 66 passed, 2 skipped; AC1: 3 passed",
+      "AMENDMENT 1 at 608ef4c1f9 (issuer 2.0.0_SA_COO~Y2)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds: the fixture models the real registry, so the probe is exercised as in production.",
+  "spec_asserts": "IRPT_BCKEND-D2-W220-S1: AC2 shows 66 passed, 0 failed after the probe edit.",
+  "world_is": "MEASURED: AC2 66 passed, 2 skipped, 0 failed at 9e6d041f93; nothing deployed."
+}
+```
+
+## IRPT_BCKEND-D2-S12 -- the firm-bucket deny behind the (a)/(c) laptop routing was measured on a DIFFERENT bucket family than the one this release reads, and arm (c) has no injection point on the deployed entrypoint
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T23:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-377 routes arms (a) and (c) to the laptop because they 'touch firm buckets, which deny the dell2 identity (S347)', but S347 and S352 measured the LONG-name buckets (opal-data-49financial / -inflection / -cottonwood) while the applied directory root's own firm_bucket_map names the SHORT ones (opal-data-bd / -inf / -cot), where the dell2 identity is NOT denied; separately, arm (c) is not unconditionally drivable at all, because the deployed search entrypoint has no directory_fixture injection point.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform output of the APPLIED directory root, 2026-10-08: firm_bucket_map = {49financial = opal-data-bd, inflection = opal-data-inf, cottonwood = opal-data-cot}; directory_read_arns names arn:aws:s3:::opal-data-{bd,inf,cot}/investor-reporting/directory/*",
+      "aws s3api list-buckets (ListAllMyBuckets, no firm data): BOTH families exist -- opal-data-bd, -inf, -cot AND opal-data-49financial, -inflection, -cottonwood. They are six distinct buckets, so a deny measured on one family says nothing about the other",
+      "IRPT_BCKEND-S347 one_line: 'the dell2 identity is denied on opal-data-inflection'. IRPT_BCKEND-S352 evidence: 'head-object --bucket opal-data-{49financial,inflection,cottonwood} ... 403 Forbidden, 3 of 3' and 'list-objects-v2 --bucket opal-data-49financial --prefix irpt/: AccessDenied'. Every measured object in both rows is a LONG-name bucket, and S352's keys are under irpt/<firm>/platinum/holdings/, not investor-reporting/directory/",
+      "MEASURED 2026-10-08 ~23:1xZ on dell2 as arn:aws:iam::313476888478:user/cloudops-dell2-agent-user: list-objects-v2 --no-paginate --prefix investor-reporting/directory/ returned rc=0 with real Contents on opal-data-bd, opal-data-inf and opal-data-cot (3 of 3); head-object on the first key of each returned ContentLength 6445354 / 447976 / 416638 (3 of 3). So ListBucket AND HeadObject are PERMITTED for this identity on the three buckets this release reads",
+      "the first probe of the same question returned KeyCount 'None' under --max-items 1 --query KeyCount and was NOT read as either a deny or an allow (rule 22a: a failed retrieval returns a VALUE); the decisive probe dropped the paginator flags and read the real body",
+      "arm (c) drivability, measured on the UNZIPPED LIVE irpt-directory-search zip: the configured Handler is entry.lambda_handler and the deployed entry.py builds it as 'lambda_handler = _entry.lambda_entry(ENTRY)'; the string directory_fixture appears in handler.py and in NO other deployed member, and entry.py's header describes replacing handler.lambda_handler as 'A SECURITY CHANGE, NOT A REFACTOR'. The over-age branch therefore fires only on a genuinely aged directory",
+      "packet section 3 P1 records the directories as in-age (latest.json 10-05/10-06), so on 2026-10-08 no request reaches the new branch; arm (e) of the five-arm drive already proves the branch against the DEPLOYED expiry.py with a controlled clock"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-377 step 4: '(a) The driven refresh fire READY manifest and (c) the over-age search read touch firm buckets, which deny the dell2 identity (S347).' BOUNDS: 'No read of opal-data-* firm buckets from dell2. Those reads go to the laptop as files.'",
+  "world_is": "The deny is real but NOT on the buckets this release uses: it was measured on the long-name family, and the short-name family the applied root actually reads answers this identity for both ListBucket and HeadObject. Arm (a) may therefore be runnable from dell2 on the facts, and arm (c) is runnable from NOWHERE on demand until a directory ages or an injection point is re-admitted. THIS SEAT CHANGED NOTHING AND WIDENED NOTHING: the BOUNDS are an order bound, not an IAM fact, so both arms were still handed to the laptop as files per standing rule msg 215 (scripts at deliverables/0.7.0_AE_CloudOps~DELL2/, commit 9653f1edad) and ledger legs L1/L2 left OPEN with the laptop named as owner. Re-cutting the routing is the issuer's call, not this seat's. DISCLOSURE AGAINST THE BOUND: establishing the above took SIX metadata reads of the short-name firm buckets from dell2 (three list-objects-v2, three head-object), which the BOUNDS forbid in that wording; they were run to test the routing premise before shipping work to the laptop, no object body was fetched and no policy was touched, and the deviation is recorded here rather than left for a reader to find."
+}
+```
+
+## IRPT_BCKEND-D2-S13 -- the r61 driven refresh fire reads READY at 1 of 3 firms (two safe REFRESH_FAILED on dropped build entries), and the manifest key is the source as_of, not the event date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S13",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T23:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The r61 release's own driven refresh fire reached state READY at only 1 of 3 firms: inflection and cottonwood answered REFRESH_FAILED with a SAFE CORRECT action because the build dropped an entry the previous build carried, so the previous directory stays served; separately the manifest key is the manifest's OWN as_of_business_date and not the event's business_date, so the packet's '_refresh/<today>/manifest.json at all three firms' cannot hold for a firm whose source lags.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-08 ~23:32Z on dell2, ONE driven fire of irpt-directory-refresh with payload {\"business_date\": \"2026-10-08\"}: StatusCode 200, no FunctionError, manifest_written=true for 3 of 3 firms",
+      "durable manifests re-read after the fire: 49financial state=READY reason_code=REFRESH_COMPLETED_WITH_ADDITIONS revision irpt-dir/49financial/2026-10-07/1.0 delta added=19 current_entry_count=4719; inflection state=FAILED reason_code=REFRESH_FAILED; cottonwood state=FAILED reason_code=REFRESH_FAILED",
+      "both FAILED firms carry action=CORRECT safe=true: 'the build dropped an entry the previous build carried; the previous directory stays served until a corrected build lands -- no data is removed by this outcome'. So nothing was served wrong and nothing was deleted",
+      "49financial's manifest notes field: 'previous command a3614a97-0d22-47b8-a2d7-ebef0e59b529 -> Success', 'runner was not Online; one start request issued', \"today's hand-over not made\" -- the SSM build hand-over is the upstream condition, consistent with row W2-S49 (the build blocked on the host role's grants)",
+      "MANIFEST KEY: head-object per firm after the fire -- 49financial _refresh/2026-10-08/ (23:32:33Z), inflection _refresh/2026-10-08/ (23:32:41Z), cottonwood NO object at 2026-10-08 and its manifest at _refresh/2026-10-07/ (23:32:36Z). put_manifest computes manifest_key(manifest['as_of_business_date']), and that as_of follows the SOURCE completion date, not the event",
+      "arm (c) NOT_DRIVABLE, measured on the trading-day frontier (lib/trading_calendar.trading_days_behind): 49financial as_of 2026-10-07 1 day behind, cottonwood 2026-10-07 1 day, inflection 2026-10-08 0 days, ceiling MAX_AGE_TRADING_DAYS=2 -- every directory in-age, so the over-age branch cannot fire today",
+      "the deploy itself is unaffected and graded: IB89-1-AC1 PASS and IB89-1-AC2 PASS, live CodeSha256 == built for both functions, untargeted re-plan 0-diff, census 0, ledger CLOSED with all 6 legs proven"
+    ]
+  },
+  "spec_asserts": "Release packet section 4.3: '(a) one driven refresh fire for today's business date reads READY in _refresh/<today>/manifest.json at all three firms'.",
+  "world_is": "1 of 3 firms reads READY, and the two that do not are a BUILD condition the release SURFACED rather than caused -- the new accounting is what makes a dropped-entry build visible at all, and its fail-safe keeps the previous directory served. The criterion also cannot be met as written for a lagging firm, because the key is the manifest's own as_of: cottonwood's manifest for a 2026-10-08 fire landed under _refresh/2026-10-07/. TWO DEFECTS IN THIS SEAT'S OWN SCRIPTS were found by running them and fixed in-session before the recorded result, and are named here so the result is not read as cleaner than its instrument: (1) the arm-(a) reader compared reason_code to 'READY' when READY is the STATE and reason_code is the accounting verdict beside it, and it looked only under the event-date key, so it first scored a genuinely READY firm as not-ready and a written manifest as NoSuchKey; (2) the arm-(c) script computed no age at all and could therefore only ever answer NOT_DRIVABLE -- a verdict that would have looked like a measurement. Nothing here asks for a remedy from this seat: the build condition is the owner's call at 2.0.0_SA_COO~P2, and the criterion wording is the packet's."
+}
+```
+
+## IRPT_BCKEND-D2-W187-S1 -- IB-pr-379 diagnosis: both dropped entries are SOURCE_REMOVAL; the disappearance rule needs a ruling before 2026-10-12
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W187-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~187",
+  "surfaced_at": "2026-10-09T00:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Both dropped directory entries (inflection 1, cottonwood 1) are SOURCE_REMOVAL: the build is right and the disappearance rule fails a legitimate vendor-side removal, so IB-pr-379 stops at the diagnosis and the rule needs a ruling before inflection and cottonwood go OVER_AGE on 2026-10-12.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule ruling on refresh.py compute_delta/refresh_firm disappearance handling, then 2.0.0_SA_COO~P2 recuts the fix cell) before 2026-10-12, when the served cottonwood directory (as_of 2026-10-07) passes MAX_AGE_TRADING_DAYS=2; inflection follows on 2026-10-13",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~187/IB91-1_dropped_entry_diagnosis.json (this branch): disappeared ids, per-firm evidence, over-age computation",
+      "inflection: household cli_eee3d5ecc6dda8132ba25158 is in silver/api_dims household_rep_mapping and accounts_v2 at snapshot 2026-10-05 (321 households) and absent from both at 2026-10-06 (320); its one account is still in accounts_v2, now under the pre-existing household cli_7f8b2aacad67b512d1e05a29 (2 accounts at 10-05, 3 at 10-06). The vendor merged the household away.",
+      "cottonwood: account-only entry cli_6be3d8625139a8d2613ab8af (account acc_10e3e4477b42c76fe14e437e, 2 rows, market value 0.0) is in fact_allocations at date=2026-10-05 and absent at 2026-10-06 and 2026-10-07; its account numbers appear nowhere in the 2026-10-07 partition (not re-keyed).",
+      "over-age: expiry.age_in_trading_days vs MAX_AGE_TRADING_DAYS=2, served as_of read from latest.json: cottonwood 2026-10-07 is age 3 on 2026-10-12; inflection 2026-10-08 is age 3 on 2026-10-13; calendar source read NYSE/hardcoded-fallback-2010-2027",
+      "refresh.py compute_delta (line 387) keys on ids.client_id or ids.relationship_id and refresh_firm (~line 966) turns any non-empty disappeared set into REFRESH_FAILED; the module docstring states the intent (a terminated client is a change of marking, never a deletion), which a vendor that stops emitting a client is outside of"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-379: a client the previous build carried and the new one lacks is a BUILD_BUG or KEY_CHANGE fixable in infra/aws/lambda/investor-reporting/directory/; SOURCE_REMOVAL means the build is right and the rule needs a ruling.",
+  "world_is": "Both firms measure SOURCE_REMOVAL, 1 entry each, first absent from the source on 2026-10-06. Nothing in directory/ is wrong, so no fix, test, pin, build or packet was made, and the disappearance rule is unchanged. Until the rule is ruled, every future inflection and cottonwood refresh returns REFRESH_FAILED on the same entries (they are in the previous READY build forever), so neither directory can ever advance and both go OVER_AGE. The decisions are the CTO's: whether a source-removed client leaves the next directory (a delta, recorded), is carried forward as TERMINATED/UNKNOWN (the constraint that terminated clients stay visible), or is handled by an explicit successor map for the inflection household merge. Criteria IB91-1-AC2 and AC3 cannot be met without that choice and are left FAIL; IB91-1-AC1 PASS."
+}
+```
+
+## IRPT_BCKEND-D2-S14 -- a --no-paginate route read-back answered [] for a route that was live, and the deploy recorder left deployed_code_sha256 stale for the second release running
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T00:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The IB-pr-378 route read-back run with --no-paginate returned [] on a route that had just been created successfully, because the route sits beyond page 1 of 116 -- an empty page that, read as absence, would have graded a good apply as failed and could have driven Branch B's route removal and function rollback; separately, record-terraform-deploy.sh left deployed_code_sha256 at the PRE-APPLY value for the second consecutive release, so that is its standing behaviour rather than a one-off.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~00:0xZ: terraform reported 'aws_apigatewayv2_route.irpt[\"POST /api/scoped/investor-reporting/custody-report\"]: Creation complete after 0s [id=jtwlf6l]' and 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed'; the re-plan of the same target then read 'No changes'",
+      "the SAME question asked with `aws apigatewayv2 get-routes --api-id 7k3ed8px20 --no-paginate --query \"Items[?RouteKey=='POST /api/scoped/investor-reporting/custody-report']...\"` returned [] -- an empty JSON array, no error, rc=0",
+      "the same read WITHOUT --no-paginate, counted client-side with the denominator printed: 116 routes on api 7k3ed8px20, exactly 1 exact match -- RouteId jtwlf6l, Target integrations/61aupci, AuthorizationType CUSTOM, AuthorizerId naqxlm. So the route was live the whole time and the [] was the instrument",
+      "CLAUDE.md rule 22a already names this class ('paginated list-* + --query length() returns the PAGE count and --no-paginate is the hazard'); this row records it FIRING on a route read-back where the TO's Branch B makes the wrong verdict destructive: 'If Part B fails: remove the route first, then roll the function back'",
+      "recorder repeat: after record-terraform-deploy.sh ran at 6d3e35294b, lambda-source-map.json's irpt-export-render row still carried deployed_code_sha256 rNjtTwcm.. (the PRE-APPLY value) while artifact_sha256 and the live function were 7T29wPhz..; corrected with record-deploy-scope.py --code-sha256. The identical gap was measured and corrected on IB-pr-377 for irpt-directory-refresh and irpt-directory-search hours earlier",
+      "a third instrument note, same release: planning the route needed MSYS_NO_PATHCONV=1 for the slashed -target, which made terraform save the planfile to a literal /tmp (C:\tmp) instead of the translated temp dir; safe-apply's naming-plan-gate then could not read it and FAILED CLOSED before the apply -- nothing was applied on that attempt, which is the gate behaving correctly"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-378 step 6: 'Read the route back with `get-routes` filtered to that key', with Branch B: 'If Part B fails: remove the route first, then roll the function back only if the CTO half's Branch B requires it.'",
+  "world_is": "A `get-routes` read filtered to one key is NOT a sound oracle for route existence when --no-paginate is present: on this API the answer is on page 2 of 116 routes, so the filtered read answers [] for a route that exists. ABSENT and BEYOND-PAGE-1 are byte-identical here, and the order's Branch B turns that false absence into two destructive acts. The verdict recorded for AC2 comes from the auto-paginated read with its denominator printed, and the check script the issuer wrote does not pass --no-paginate, so the graded criterion was never exposed to this. Nothing is asked of this seat beyond the record: the recorder's deployed_code_sha256 behaviour is the CI tool's owner's call, and the read-back wording is the order's."
+}
+```

@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.19",
+ "prd_version": "v0.21",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24"],
@@ -916,6 +916,18 @@ the `/sprint` precedent files.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.21 (2026-10-08 ~22:3xZ, `1.0.0_SA_CTO~Z`), G.3 wording only: v0.20's R13 sentence was REFUSED by `3.0.0_SA_CVO~RV`
+  (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_ETFS_RIVALS_v0.20_C_OWED_GRAIN_20261008_RV.md` @85542534a1).
+  Only the top-up writer stamps `price_date`, 1 of 4 modes, and the shared reader keeps closes that have no `price_date`, so
+  read literally the v0.20 sentence would drop them. It is replaced by the CVO's fix (A), with the C-S73 residual stated. G.2
+  ANSWERED was accepted. The ENDPOINT is unchanged.
+
+- v0.20 (2026-10-08 ~22:1xZ, `1.0.0_SA_CTO~Z`), CONTRACTS and G.2 only: `C-OWED-GRAIN` carries R13 (each close's trading
+  date; a reader keeps a close only on its own date); G.2's open question is marked ANSWERED with Andrew's card-5 words and
+  record. The ENDPOINT is unchanged. `prd-signoff.py status` still reads the ratified-text half SIGNED and current at @35b829a408:
+  ADDENDUM G is not a hashed section, because the heading's first word decides the half. So the one contract sentence is put to
+  `3.0.0_SA_CVO~RV` by message, and no half is re-opened mechanically.
+
 - v0.17 (2026-10-05 ~04:0xZ, `1.0.0_SA_CTO~Z`), CONTRACTS only: **C-SECURITY-UNIVERSE**, a gold `security_universe` table, the
   interface laptop MDPF_SECCLASS reads (its PRD v0.3 FWD-9/FWD-10, placed by `1.0.0_SA_CTO`, relay msg 29469). The address is builder
   output (verified). The ENDPOINT is unchanged, so no half re-opens.
@@ -1228,6 +1240,11 @@ whole by this seat. The definition is in the ENDPOINT section. This addendum hol
    answer to one question, put to him the same hour: may the daily rivalfunds leg ask Bloomberg each day for the closes it finds
    owed, inside the budget.** (Amended on `3.0.0_SA_CVO~RV`'s refusal of the first wording, msg 31400: CLAUDE.md, no vendor call
    without his explicit per-use word.) The ad hoc one-time backfill stays covered by his ~05:1xZ word.
+   **ANSWERED (v0.20):** Andrew-direct 2026-10-08 ~17:1xZ at the `1.0.0_SA_CTO~Z` terminal, card 5 ("Rival Funds: the daily
+   leg asks Bloomberg each morning for owed closes"), VERBATIM: *"Yes I like this strategy."* Record
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_171xZ_OPEN_CALLS_SIX_ANSWERED_AND_CELL_TRACKING_ASK.md` @e30fb3e610.
+   The standing request is his word, capped at 20,000 returned records a run (R24, the cap the card named). It is set only after
+   the writer's three fixes (currency, trading date, window end; RIV-tc-1) are merged, under its own pair (ADDENDUM 7, act 3).
 
 ### G.3 -- CONTRACTS
 
@@ -1236,6 +1253,12 @@ whole by this seat. The definition is in the ENDPOINT section. This addendum hol
 - **`C-OWED-GRAIN`: the held test is per (security, date), never per date.** A top-up for a date that already holds a price
   object lands as its OWN object in that date's partition. Nothing is overwritten and nothing is deleted. Every reader of
   `security_market` takes all objects of a date; the cell that changes the test first lists those readers, with the count.
+  **(v0.21, R13 of ROUND_ANALYSIS.round22, binding `FWD-24`; worded on `3.0.0_SA_CVO~RV`'s fix (A), refusal @85542534a1.)**
+  Every object the history-owed top-up adds carries `price_date`, the trading date of each close, and the shared reader keeps a
+  close only where its `price_date` is absent or equals the partition date. An object written without `price_date` (the daily
+  `market`, `import-market` and `market-range` modes) is read as closes of its partition date. Residual, owned here: a
+  reference-data close stamped on the wrong partition (the 2026-09-29 object holding 2026-09-30's closes, row C-S73) is not
+  caught by this rule. No year of closes is written by the top-up without `price_date`.
 - **`C-OWED-IN-THE-LEG`.** The spend is inside the existing daily rivalfunds enrichment leg, which the vehicle already runs. No new
   scheduled task and no edit under `integrations/bloomberg/` (Andrew's no-modify order stands). The daily request list widens
   from "held today" to "held within 365 calendar days".

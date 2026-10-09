@@ -5,10 +5,10 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
  "status": "DRAFT"
 }
 ```
@@ -71,6 +71,12 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
          SOURCE     brief O8, call B
          WAIT       QUALIFIED: Andrew removed the client "Submit a Request" item in August. The client-facing surface returns only on his explicit word,
                     after FWD-1 has run on real requests. That word is the one wait this outcome carries.
+
+  FWD-9  An open Analysis Request ticket carries its finished package: the report, the branded Opal PDF with the commentary, and the original Excel
+         DONE WHEN  EXERCISED -- one seat-filed request on DEV; its open ticket carries all three files, each opened from the ticket page by an Opal person
+         ACCEPT     an Opal person opens the request's ticket while it is still open and finds the report, the branded PDF with the commentary and the
+                    advisor's original Excel there, without asking anyone; the attach is refused for another ticket type, a closed ticket and a human caller
+         SOURCE     Andrew 2026-10-08 ~22:3xZ (ADDENDUM 2, C-PACKAGE)
 ```
 
 ## 1. What exists (the L4 reads; MEASURED unless marked)
@@ -101,6 +107,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
 | C-QUEUE | this project | The list shows type and age for every open ticket (FWD-5), from fields the item already holds (`ticket_type`, created time) |
 | C-COMMENTARY | NFRA_TRNSPT (FWD-10, FWD-11, C-TICKET-ATTACH) | An "add commentary" request is the trigger NFRA_TRNSPT reads. The draft lands on the same ticket. The ticket records who sent the final commentary and when (FWD-6). This project builds the ticket fields; NFRA_TRNSPT builds the draft |
 | C-NAMES | rule 30 | Every new address and name is `lib/opal_naming.py` output printed in the order that writes it. C-ONE-DOOR means no new address is expected for the Analysis Request |
+| C-PACKAGE: the package attaches to the ticket that requested it | this project | **What exists:** `POST /api/scoped/tickets/{ticketId}/report` (REPORT), for internal humans and the assignee only. **New:** `POST /api/scoped/tickets/{ticketId}/package`, for ONE service principal named in the type definition (C-TYPE). The route writes `package: {report_ref, pdf_ref, original_ref, commentary_ref, attached_at, attached_by}` on an `analysis_request` ticket that is open. **Pointers only:** each ref is the handle of an artifact IRPT already retains, so C-ONE-DOOR's no-bytes rule stands and no ticket bucket is created. **Refused:** any other type; a closed ticket; a ticket whose firm differs from the report's firm; a second write unless it carries the prior `attached_at` (no silent overwrite); every other principal. The ticket page lists the refs, and each file opens through IRPT's existing signed-link reader. |
 | C-DEPLOY | law | Service and Terraform changes go through `safe-apply`. A Dell writes no Lambda permission or bucket policy (NFRA_CTLPLN); those go to the laptop by role request. Portal page changes are product files and land by the portal's review route |
 | C-MORATORIUM | law | No new alert or notification is built. The existing SES email on create is unchanged |
 
@@ -172,3 +179,46 @@ Round 1 builds only this thread, on DEV, internal users only.
   arm.
 - **P1:** C-ONE-DOOR now names the door's on-behalf refusal (`uploads.py:193, :227-234`) as an owned dependency, with its ruling.
 - **Ids:** none renumbered or retired. The ENDPOINT changed, so the ratified-text half re-opens.
+
+## ADDENDUM 1 (2026-10-08 ~22:2xZ, `1.0.0_SA_CTO~DELL2`): FWD-6 brought forward as its own workstream, on Andrew's commentary priority
+
+**Why.** Andrew-direct ~22:2xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_222xZ_TRNSPT_FOCUS_AI_COMMENTARY_PARK_ANALYST_ACCESS.md`
+@a4fdb78bbe): "the bigger pint of the TRNSPT process currently is getting the \"ai investment commentary\" sorted out for the ycharts
+workflow". NFRA_TRNSPT FWD-10's hop H5 (C-TICKET) is this project's **FWD-6**, unchanged in substance. It moves from backlog item 4 to
+now.
+
+**Scope:** a separate workstream, so round 1's frozen decomposition (TV-r-1) is untouched. It has a disjoint write surface.
+- The H5 contract with NFRA_TRNSPT is `FWD10_H6_H5_TICKET_WRITE_CONTRACT.md` @a8410fcca3. It is a draft until both sides commit it.
+- **Missing today:**
+  - a `svc-commentary` principal allowed CREATE only, on the `analysis_request` type, with no read, update or close;
+  - the `draft_commentary` and `report_request_id` fields on the type definition (C-TYPE: data, not code);
+  - the 08-12 security read of the write path.
+- **Not here:** minting the `svc-commentary` token. That follows the `svc-analyst-intake` precedent (issuer TO-D, laptop) and is routed
+  cross-fabric.
+
+**ENDPOINT and CONTRACTS are unchanged** (FWD-6 as written). This is a sequencing addendum and re-opens no half.
+
+-- 1.0.0_SA_CTO~DELL2
+
+
+## ADDENDUM 2 (2026-10-08 ~22:5xZ, `1.0.0_SA_CTO~DELL2`): the package attaches to the same open ticket (contract C-PACKAGE)
+
+**Why.** Andrew-direct ~22:3xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md`
+@2b21a349d1): the whole package (the report, a branded Opal PDF with the investment commentary, and the advisor's original Excel)
+"needs to get attached to the open ticket entry". The CRO's trace (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANALYSIS_REQUEST_END_TO_END_GAP_BRIEF_20261008.md`
+@9076346655, hop 8) found no route that lets a service write to an existing ticket. Ruled by this seat at /self-drive tick 12.
+
+**New contract.**
+
+C-PACKAGE now lives in the CONTRACTS table (section 2), after C-NAMES.
+
+**New outcome.** FWD-9: an Analysis Request ticket, still open, carries its package. That is the report, the branded PDF with the
+commentary, and the original Excel, each opened from the ticket page by an Opal person. It is driven by a seat filing on DEV; Alyssa's
+own filing is the organic arm. Negative arms: the route refused for a non-analysis ticket, for a closed ticket, and for a human caller.
+
+**What this re-opens:** CONTRACTS and ENDPOINT both change. Under rule 27, `3.0.0_SA_CVO~DELL2` re-signs the ratified-text half; the
+brief half is the CRO's trace. Under Andrew's 2026-10-08 word the whole Analysis Request scope of this project moves into the one
+end-to-end project (proposed code `IRPT_ANLREQ`). C-PACKAGE and FWD-9 move with it, and this PRD stays the contract's home until that
+project's PRD cites it.
+
+-- 1.0.0_SA_CTO~DELL2

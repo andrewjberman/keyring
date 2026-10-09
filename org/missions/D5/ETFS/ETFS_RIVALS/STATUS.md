@@ -83,8 +83,25 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
 ## 2026-10-08 ~20:2xZ -- round 28, and THE ORDER OF ACTS FOR 2026-10-09
 
 - Issuance 222194aee0; AMENDMENT 1 to RIV-tc-1 @8d50ab6e32 (cap 20,000). Packet `deliverables/2.0.0_SA_COO~RV/round28/L8_PACKET_ROUND28.md`
-  @954c16bb49. **PARKED:** msg 31984 to 3.0.0_SA_CVO~RV is QUEUED, not read; owner 3.0.0_SA_CVO~RV; un-parks when that seat
-  is live (it is not among the live seats at 20:2xZ, nor is 1.0.0_SA_CTO~Z).
+  @954c16bb49. Msg 31984 to 3.0.0_SA_CVO~RV READ by that seat at 2026-10-08T21:02:03Z (`get_delivery_state`, read 21:1xZ);
+  L9 is the CVO's. The 20:2xZ park is closed.
+- **Round-28 analysis: ADDENDUM 7 @0820f6b0b7 (CTO msg 32023, ~21:35Z).** Round 29 cuts nothing. Round 28 closes on three
+  paired acts: (1) the aw-1 Lambda deploy (R31); (2) the tc-1 merge after tw-1's J1; (3) the switch-on (R24). R32 (row
+  Z-S78): from the next slug, `round` is the task-order round; that header note is 3.0.0_SA_CVO~RV's write.
+- **R31 COO half SIGNED** `round28/NEVER_WIDEN_HALF_COO_R28_AW1_DEPLOY.md` @d3d6c3e73f, pin 39889dd4d7.
+  - Measured: 0 of 28 addresses differ; 0 of 26 served items change their recheck verdict.
+  - CTO half SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_ETFS_RIVALS_R28_AW1_DEPLOY_20261008.md`
+    @a0ee589cc2 (msg 32046, 22:06Z): the pair is WHOLE; the five conditions stand unchanged.
+  - Window: 2026-10-09, after the 11:00Z chain's REPORT lines and before 12:55Z.
+  - **PARKED, the apply:** owner 0.7.0_AE_CloudOps~Z, site Z's applier, seated 22:1xZ by 0.0.0_AB_MSTR~Z. Andrew-direct
+    ~22:0xZ, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`,
+    msg 32058. Order `task-orders/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.md` @137fb33429.
+    - Steps 1-3 are DONE (msg 32094, 22:53Z). Plan `C:/tmp/rv_apply28.tfplan` in `C:/tmp/rv-r8` at the exact pin reads
+      0/5/0: BRANCH A.
+    - This seat read `C:/tmp/rv_plan28.json` itself: 45 changes, 40 no-op and 5 update; each update changes only
+      `source_code_hash` and `last_modified`; the daily function's environment is identical.
+    - The second GO (apply) is this seat's to send on 2026-10-09, after the 11:00Z REPORT lines are read, inside
+      11:15Z-12:55Z.
 - RIV-aw-1 MERGED (branch tip a2283fc349). Merged CLOUD: suite 919 passed, 3 skipped; 40 of 42 checks PASS (tc-1.AC1 and
   tw-1.AC1 arm e grade the unmerged tc-1).
 - RIV-tc-1 complete on `wk-ETFS_RIVALS-22` @b0b65368fb (worktree `C:/tmp/wk-riv-r28-22`), NOT merged.

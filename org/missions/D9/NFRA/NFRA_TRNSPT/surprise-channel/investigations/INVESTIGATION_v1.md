@@ -1014,6 +1014,117 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "PRD FWD-5 ACCEPT: an analyst who now opens a file to find what was said about one company gets it without opening the file; round-9 analysis E1: given a company, return its speaker turns.",
     "world_is": "The read works (NVIDIA: 8 turns in 5 meetings) but the stored text has lost most company names to the mail wipe, so the read is blind to them; some loss is also from held-out rows.",
     "notes": "Counts only; no transcript text read into any record. The issuer's round-8 ruling chose the mail wipe for the text; that choice is the cause."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T21:13:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "The securities allowlist (TR-a-11) widens wipe.Assets.allow with 7,343 tokens, of which 738 are also given-name/surname dictionary words (544 capitalised, e.g. Allison, Apollo, Ally, Abbott, Alger; Apple is itself a dictionary surname); the wipe checks the allowlist first, so a bare person name equal to such a token is no longer wiped outside a salutation/title or neighbouring-name context.",
+    "disarm_owner": "2.0.0_SA_COO~T2 (TR-b-11 re-fold: decide whether the 738 overlap tokens stay allowlisted, or are restricted to tickers and a curated issuer subset, before the re-write of the 29 silver objects)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/securities_allowlist.json @bf7ec25d8f: tokens=7343; set intersection with wipe.load_assets() given_names|surnames|name_words (capitalize() match), tokens not already in the base allow = 738, capitalised-only 544; counts only, no transcript text",
+        "data/transcripts/scripts/outlook/wipe.py:_token (allowlist first, name context only via _dict_name_context) and wipe.py module docstring rule 4",
+        "dry re-fold of research_transcripts/structured/*.json after the change: 29 files, 20,473 rows, 0 failures, held_out 3,644"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-a11 build step 1: tokens = every ticker plus each issuer name's distinctive first word; the planted gate keeps a person name (not an issuer) wiped.",
+    "world_is": "The gate holds for names that are not issuer tokens, but the rule as specified allowlists 738 dictionary-name words (issuer first words such as Allison, Apollo, Alger), so a person with such a name written bare in a transcript survives the wipe; the planted test cannot show this by construction.",
+    "notes": "Built exactly as ordered; not changed by the worker. Counts only."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T22:10:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "AMENDMENT 1 excludes 'Apple' from the allowlist (556 name tokens excluded, 6,787 tokens remain) while criterion TR11-a11-AC1's checker r11_checks.py a11-list still requires the token 'apple' in NEED: AC1 prints R11-A11-LIST-FAIL missing tokens: apple. The amendment forbids re-adding Apple, so AC1 cannot pass as written and the order stays in_progress.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R11_CHECKS/r11_checks.py a11-list -> R11-A11-LIST-FAIL missing tokens: apple (rc 1); a11-gate -> R11-A11-GATE-OK 5 passed",
+        "r11_checks.py NEED set line 24 names apple; task order AMENDMENT 1 'this includes Apple' as the accepted stated loss"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMENDMENT 1: the allowlist excludes every dictionary-colliding name token, Apple is the stated loss; AC1 expects R11-A11-LIST-OK, whose checker requires apple among the tokens.",
+    "world_is": "Both cannot hold. The worker followed the amendment and did not re-add Apple; the issuer owns the checker's NEED set (outside the worker's paths).",
+    "notes": "Counts only. Disarm/resolution owner: 2.0.0_SA_COO~T2 (drop apple from NEED, or rule otherwise)."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T22:40:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-e12 needs account_type, themes, holdings category weights and household from the retained composition, but request_composition.py and the browser/resolved shape name none of them; the contract marks all four 'unknown -- producer to confirm' and entry.py reads them from an optional commentary_basis (null/[]/{} when absent). Also unconfirmed: that stream ref.request_ref equals the composition's request id.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/request_composition.py:1-260 read in full: keys used are browser.{comparison_keys,input_id,account_ids,client_id,snapshot_id,report_title,prepared_for,variant} and resolved.{owner,profile,comparison_catalog,input_ref,document,holdings.snapshot_id}; no account_type, themes, category weights or household",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/H1_READY_PRODUCER_FACTS_20261008.md @6061d0e274: stream item hands over tenant, ref.{report_id,revision,report_kind,request_ref}, blob; owner withheld"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-e12: the abstract request carries account_type, themes and holdings category weights read from the retained composition by request id.",
+    "world_is": "The retained composition is not measured to carry those fields; the producer (IRPT_BCKEND ~P2) must say where they live or add them. Until then the abstract request emits account_type null, themes [] and holdings_categories {}, so the slicer ranks on variant and comparison_keys only.",
+    "notes": "Built to the order; no source invented. Owner of the answer: 2.0.0_SA_COO~P2 via the contract agreement."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T22:55:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "FWD-10 thread seam H4 -> H6 breaks: the drafter's output carries no generated_at, which ~V2's ticket-write contract v0.1 section 2 requires in draft_commentary, so write_draft_ticket dead-letters every draft (action dead_letter, error missing required value: 'generated_at').",
+    "disarm_owner": "2.0.0_SA_COO~T2 (round 13's first cell: the drafter stamps generated_at, ISO-8601 UTC, at the model call)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R12_THREAD_TRACE.json: H2 OK, H4 (simulated gate, fake model) DRAFT, H6 against the section-5 stub ok=false action=dead_letter",
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md section 2: draft_commentary {text, model, generated_at, status}",
+        "data/transcripts/scripts/commentary/drafter.py draft() output keys: request_id, draft_text, provenance, status (no generated_at)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition round 12: the close trace strings H2 -> H3 -> H4 -> H6 as one journey; the ticket write follows the agreed contract.",
+    "world_is": "Each cell passes its own tests, but the drafter and the ticket client disagree on one required field, so the journey stops at H6.",
+    "notes": "Found by the issuer's end-to-end trace, not by any cell's criteria (each cell built against its own fake)."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T23:03:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "FWD-10 H6 will dead-letter every REAL report: ~V2's ticket-write contract v0.1 section 2 REQUIRES answers.household, but the IRPT analysis composition has no household (~P2 msg 1849: 'account_type, themes and household are ABSENT from irpt-analysis-composition.v1'). The synthetic trace passes only because its fixture supplies one.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 with 2.0.0_SA_COO~V2 (make household optional or name its true source in the ticket contract), then 2.0.0_SA_COO~T2 adapts H2/H6",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md section 2: answers.household listed as required",
+        "~P2 msg 1849 (docs/contracts/investor-reporting/v1/RequestComposition.schema.json: 0 matches for household)",
+        "data/transcripts/scripts/tests/test_commentary_entry.py composition(): household planted under commentary_basis (synthetic only)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-TICKET: the draft lands on a ticket for the requester; the ticket-write contract's body is buildable from what H1/H2 supply.",
+    "world_is": "One required body field has no producer; account_type and themes are also absent (they only weaken ranking and the prompt).",
+    "notes": "Holdings category weights are derivable from the normalized-input artifact (~P2 msg 1849); that is an H2 enhancement, not a blocker."
   }
 ]
 ```

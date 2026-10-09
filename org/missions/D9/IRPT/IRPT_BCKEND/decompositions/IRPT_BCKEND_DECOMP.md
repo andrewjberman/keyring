@@ -2180,3 +2180,104 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r84/p84_cells.py`, dry-run at base c0
 | `IB-pr-371` | release irpt-export-render at 0a57f3c0e9 (E9, five members) from a clean worktree; replay before apply | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-370 (drained) | P84-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Slot ~179.
+
+## 79. ROUND 86, WORKSTREAM ~P (2026-10-08 ~21:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1651: RECUT E10)
+
+IB-pr-372 (round 85, branch wk-IRPT_BCKEND-180 @3528d24f92) reached the custody writer through a caller-asserted direct-invoke event
+(row D2-W180-S2, ARMED). The CTO ruled: do NOT drain it (draining would put the write path in HEAD for any later release), and recut so
+the persist takes no principal from its caller. That branch is never drained; its section 78 and order never reach HEAD; this round
+replaces it. Check `deliverables/2.0.0_SA_COO~P2/checks/r86/p86_cells.py`, dry-run at base b012511132: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-373` | E10 recut: server-derived owner + accounts; trigger via the guarded Entry or in-function schedule; no direct-invoke path; packaging + ACTIVE row + census + BUILD_ONLY + packet | FWD-8 / CUSTDY S07 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-371 (live) | P86-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one writer entry and its packet. Slot ~181.
+
+## 80. ROUND 87, WORKSTREAM ~P (2026-10-08 ~22:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves of IB-pr-373 and CTO msg 1719)
+
+The CTO gave its half of IB-pr-373 (release as is) with conditions: the replay at release; re-read live PbyqmHBQ; the IAM leg (row
+D2-W181-S1) is its own laptop sign-off owed BEFORE the route; and before any firm reads a Performance client statement, a cell adds
+persisted_by and binds the content to the retained composition hash (row D2-W181-S2). This round: the function-only release, and that
+cell, in disjoint write sets. The route is a later order after the IAM leg. Check `deliverables/2.0.0_SA_COO~P2/checks/r87/p87_cells.py`,
+dry-run at base ece42ad420: all four criteria FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-374` | release irpt-export-render at 9238309eca (function only, no route); replay before apply | FWD-8 / CUSTDY S07 | WORLD | IB-pr-373 (drained) | P87-a |
+| `IB-pr-375` | persisted_by + content bound to the retained composition hash; tests | FWD-8 / CUSTDY S08 | WORLD (floor: infra/; code only) | IB-pr-373 (drained) | P87-b |
+
+fanout: 2 of 2 chains, cap 8, reason: disjoint write sets (P87-a: export tf, source map, ledger, deliverables ~182; P87-b: two source
+files + tests + deliverables ~183). Slots ~182, ~183.
+
+## 81. ROUND 88, WORKSTREAM ~P (2026-10-08 ~22:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO half of IB-pr-373 condition 1)
+
+IB-pr-375 (persisted_by + the composition-hash binding) is drained; the CTO requires it live before any firm reads a Performance client
+statement. custody_persist.py ships from the source dir; custody_write.py is a staged row pinned at d34a46f37d, so the release repins it.
+This round writes the packet; the release goes to 0.7.0_AE_CloudOps~DELL2 (Andrew-direct msg 1756), function only (the route waits for
+the IAM leg pair @77440a907b). Check `deliverables/2.0.0_SA_COO~P2/checks/r88/p88_cells.py`, dry-run at base 7c08fe294e: AC1, AC2 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-376` | IB-pr-375 release packet: custody_write.py repin, census, clean BUILD_ONLY, never-widen packet | FWD-8 / CUSTDY S08 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-375 (drained) | P88-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~184.
+## 82. ROUND 89, WORKSTREAM ~P (2026-10-08 ~22:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the r61 directory release halves and msg 1832)
+
+The r61 directory release (signed 2026-10-07, both gates met per row S364) never applied: dell2 had no terraform (S364). Row D2-S11
+(0.7.0_AE_CloudOps~DELL2) verifies terraform on dell2. Live CodeSha256 of both directory functions still equals the packet's "live", and
+the census at 4710b8007b equals the signed member lists; entry.py differs from the packet pin only by IB-pr-341's P1 fix (4850c85632).
+The directory root's "NOT INITIALISED" header is stale (state object 195,705 bytes, 2026-10-06). The apply goes to the dell2 applier.
+Check `deliverables/2.0.0_SA_COO~P2/checks/r89/p89_cells.py`, dry-run at base 4710b8007b: AC1, AC2 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-377` | apply the r61 directory release (refresh then search), at 4710b8007b, by 0.7.0_AE_CloudOps~DELL2 | FWD-7 | WORLD | D2-S11 | P89-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Assignee: 0.7.0_AE_CloudOps~DELL2 (a seat, not a worker slot).
+
+## 83. ROUND 90, WORKSTREAM ~P (2026-10-08 ~23:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IB-pr-376 halves + CTO sequencing ruling)
+
+The IAM leg for the Performance client statement writer applied at 22:47:14Z (laptop). The CTO half of IB-pr-376 (@b97fa248b2) ruled the
+order: the function with persisted_by and the binding (pin 49bc13131d, built 7T29wPhz) first, then the custody-report-persist route only
+after a live read shows that sha, so no persist is served without them. One apply order to 0.7.0_AE_CloudOps~DELL2. The real persist
+and the owner/other-firm reads follow IRPT_CUSTDY E2a. Check `deliverables/2.0.0_SA_COO~P2/checks/r90/p90_cells.py`: AC1, AC2 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-378` | release irpt-export-render at 49bc13131d (replay first), then apply the custody-report-persist route | FWD-8 / CUSTDY S07-S08 | WORLD | IB-pr-376 (drained), IAM leg (applied) | P90-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release then one route, ordered. Assignee: 0.7.0_AE_CloudOps~DELL2.
+
+## 84. ROUND 91, WORKSTREAM ~P (2026-10-08 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1949)
+
+IB-pr-377 (round 89) graded PASS at dc3ff4c2c9: the r61 directory release is live (refresh RbpsijC2, search IV7P2AL4). Its driven refresh
+was READY at 49financial and REFRESH_FAILED+SAFE at inflection and cottonwood, because clients the previous build carried are absent (row
+D2-S13). The CTO ordered this cell FIRST in the round, landed before those served directories go OVER_AGE (expiry.py: over 2 trading days).
+The cell measures the cause per firm (BUILD_BUG, KEY_CHANGE or SOURCE_REMOVAL), fixes a build or key fault at its root without weakening the
+disappearance rule, and packages the release for the applier. SOURCE_REMOVAL stops at the diagnosis with a row to the CTO. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-379` | diagnose and fix the dropped entries in the inflection and cottonwood builds; package the refresh release | FWD-7 | WORLD | IB-pr-377 (PASS) | P91-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one fault, one cell; the release order follows its packet. Assignee: 0.9.0_WK_IRPT_BCKEND~187.
+
+## 85. ROUND 92, WORKSTREAM ~P (2026-10-09 ~00:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1959)
+
+IB-pr-379 (round 91) stopped at its diagnosis, as its SOURCE_REMOVAL clause requires. Both dropped entries are source removals, one each:
+an inflection household the vendor merged away, and a cottonwood zero-value account no longer emitted. The build is right, and the
+disappearance rule fails them indefinitely (row D2-W187-S1, BLOCKING, ARMED). The CTO ruled the rule:
+- an entry absent from both the build and the source is carried forward as TERMINATED + source_removed_on, and the build goes READY;
+- an entry in the source but missing from the build stays REFRESH_FAILED, and that is the negative arm, run on both firms' real cases;
+- each refresh prints its TERMINATED count.
+
+The release goes under its own pair and must be live before cottonwood's OVER_AGE on 2026-10-12, so by Friday 10-09's close. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r92/p92_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-380` | carry source-removed entries forward as TERMINATED; real-case replay with the negative arm; package the refresh release | FWD-7 | WORLD | IB-pr-379 (diagnosis drained) | P92-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one rule, one cell; the release order follows its pair. Assignee: 0.9.0_WK_IRPT_BCKEND~188.
