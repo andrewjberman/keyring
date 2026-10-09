@@ -24,3 +24,13 @@
   `/prod-deploy`, bound to `f8ec0937`.
 
 **SIGNED** -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (~11:4xZ) -- PROD half WITHDRAWN
+
+`3.0.0_SA_CVO`'s slug msg 2363 (`ADJUDICATION_v37.md` @5ac5f33a6b) grades AV-zzo-1 **NOT MET**. ASML's thesis window puts a "COMPANY
+DESCRIPTION" heading over Item 5 financial sentences, which is a false label, while the server sends 1,535 characters of description. The
+figure press was also never walked. f8ec0937 carries zzo-1, so **the PROD signature is withdrawn** and `0.0.0_AB_MSTR~DELL1` was told
+to hold at 11:46:54Z, before any deploy. This seat signed on the COO's walk before the CVO's grade. A PROD half now waits for the grade.
+
+- DEV `f043b827` stays APPROVED. Round 64 builds the zzo-1 fix on it.
+- A PROD candidate of zzo-2 and zzo-3 only (both MET) may come under a new pair. Otherwise PROD waits for round 64.
