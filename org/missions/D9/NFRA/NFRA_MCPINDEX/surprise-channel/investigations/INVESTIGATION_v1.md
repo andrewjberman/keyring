@@ -5876,6 +5876,35 @@ carries none.
     "spec_asserts": "The order's <paths> admit the proof instance, the investigation file and the order flip, and the worker commits them on its worktree branch.",
     "world_is": "Those three paths cannot be committed from this base. The files are written and validated in the worktree (proof-of-spec-check rc=0, c6.AC1/AC2/AC3 PASS) but uncommitted, and the order's status flip is held back to in_progress: it is not terminal until they are committed.",
     "notes": "Cure: base the worktree on a commit carrying ac148d7eb9, or the issuer commits the three uncommitted paths after the drain. Not attempted by the worker: org/projects/ is outside its write grant and --force does not bypass a gate failure."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S86",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T07:33Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W28-S1",
+      "NFRA_MCPINDEX-Z-W28-S2",
+      "NFRA_MCPINDEX-Z-W28-S3",
+      "NFRA_MCPINDEX-Z-W29-S1",
+      "NFRA_MCPINDEX-Z-W29-S2"
+    ],
+    "one_line": "RULES the five round-8 worker rows at the MX-d-7 (@e9545d6823) and MX-c-6 (@dc3435a65f) drains: W28-S3 and W29-S2 DISARMED (each branch merged box/sitez carrying the ADVI_BILLING index fix ac148d7eb9 -- @407ae3578f and @f8bf16549e -- and then committed its close); W28-S1 and W28-S2 CONFIRMED as judged under contract 4 (held prose dates no longer pose as served as-of; silver and non-servable rows read absent with an error_class); W29-S1 CONFIRMED: the worktree's own tracked census is the correct emitter input, and a future catalog cell's face names it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-d-7 re-graded at the drain on wk-NFRA_MCPINDEX-28 @9f51c11617: d7.AC1 3 of 3 tests, d7.AC2 3 of 3 datasets stated as-of equals served (claim measured), d7.AC3 routing 24 of 27 (floor 24); proof-of-spec-check VALID rc=0.",
+        "MX-c-6 re-graded at the drain on wk-NFRA_MCPINDEX-29 @5a7edfb8ab: c6.AC1 29 of 29 entries 0 violations, c6.AC2 3 of 3 tests, c6.AC3 4 of 4 tool sets 15 named 0 unknown; proof-of-spec-check VALID rc=0.",
+        "Both closes committed through safe-commit after the merge, so missions-tree-check no longer refuses on either base: the BLOCKING hazard is gone."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner; the issuer rules every row inside its own decomposition at the drain.",
+    "world_is": "Both round-8 build cells MX-d-7 and MX-c-6 are on box/sitez with their proofs; no round-8 row remains ARMED. MX-d-8 and MX-r-9 are next on the chain.",
+    "notes": "W29-S1 face amendment applies to the next catalog-writing cell (the emitter's --census-dir points at the worktree's own tracked census, never the main tree). No silver-row reversal of W28-S2 is wanted: a silver row has no served artifact, so absent is the true answer."
   }
 ]
 ```
