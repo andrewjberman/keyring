@@ -23980,3 +23980,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W269-S1 -- BLOCKING: the 49F bundle with e56 + IB-pr-403 is REFUSED by its own FWD-14 gate on real inputs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W269-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~269",
+  "surfaced_at": "2026-10-09T12:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-406's built 49F bundle (e56 + IB-pr-403) makes the FWD-14 gate REFUSE on real inputs (classified_security_lost 53); IB107-1-AC2 cannot read identical.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/IB107-1_49f_bundle_replay.json arm fwd14_gate_unchanged: base (IB-pr-402 bytes 3f2e738f) PUBLISHED, conditions none, 193 puts; built (f8bd6f66) REFUSED classified_security_lost 53, 1 put; same served index, business_date 2026-10-08, 155,019 node ids both sides; evaluate_publish_gate byte-identical in both members",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/IB107-1_49f_class_transitions.json: of the 115,412 SmartX model-asset nodes that newly carry a CUSIP, class state base->built classified->classified 101,520 and classified->unclassified 13,892; display.symbol present on base and absent on built at 115,412 of 115,412; canonical CUSIP key hit 1 of 115,412; 87 custody CUSIP nodes change, 32 newly classified, 0 lost",
+      "holdings_snapshot.py fill_display (member sha256 a9fe965f9e5ada7fe9b2278e2e596c32d48ae96e43df90ec90a22211e921ec62): symbol = fact('ticker=') or (security_id.value if namespace == 'TICKER' else ''); IB-pr-403 (dfa9b72cc9) sets namespace CUSIP, so symbol is empty and classify_security asks the table with no ticker",
+      "the first uncached real run and the memoised re-run both REFUSED with the same condition and count (53); the gate's own rule applied to (built candidate, base nodes as the stand-in served) names 53 CUSIP keys, all carried by a SmartX node and all classified on a custody node of the built candidate",
+      "census: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/IB107-1_49f_bundle_census.json (build rc 0, tree clean, built twice identical, changed members exactly holdings_snapshot.py + holdings_49f.py, base 3f2e738f equals the live object); packet org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-406.md"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-406 criterion 6: `fwd14_gate_unchanged` identical -- the publish gate's outcome and conditions are the same on both trees; IB107-1-AC2 requires that arm to read identical. The order treats the two additions as classification-additive for 49F.",
+  "world_is": "The gate's outcome is NOT the same: base PUBLISHES, built REFUSES. IB-pr-403's CUSIP security_id removes the ticker that fill_display and classify_security read, so 13,892 SmartX nodes that the ticker table classified on base are unclassified on built (101,520 more fall from the table to a name alias; 6,689 change class value) and the gate refuses on 53 securities. Landed as built, 49F's served holdings would stop moving (every fire REFUSES, the prior publication ages). The worker recorded the arm as FAIL, not identical or expected-diff, and did not relabel it: IB107-1-AC2 therefore prints FAIL and the order stays pending. Inferred, NOT tested: e56 alone, or IB-pr-403 with the ticker kept visible to display/classification (a ticker= fact beside the CUSIP id), would not drop the ticker-table hits. ONE EDIT by the owner of IB-pr-403's holdings_49f.py (or a CTO ruling on the pair) plus a re-cut of this cell clears it; it is outside this worker's grant.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W269-S2 -- e56's CUSIP-key fallback is uncached: producer wall time x9 on the real 49F run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W269-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~269",
+  "surfaced_at": "2026-10-09T12:59:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "e56's CUSIP-key fallback adds one UNCACHED DynamoDB GetItem per symbol miss: 3,907 s vs 443 s on the same real 49F run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real 49financial run, same inputs and served index: base tree 443.4 s PUBLISHED; built tree 3,907.5 s (first run, canonical misses uncached, run log 115,921 'Classification not found' lines, mostly CUSIP:<id> keys); the same built tree with canonical_lookup memoised in the replay driver 330.7 s, 238,727 calls, 2,047 distinct keys",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py get_classification: a hit is cached in self._cache, a miss logs a warning and returns None without caching, so every repeat of a missing key is a fresh table.get_item",
+      "built classify_security (git 01e843ce2e, holdings_snapshot.py) asks canonical_lookup(CUSIP:<id>) for every node whose symbol misses; with IB-pr-403 that is all 115,412 SmartX model-asset nodes on 49F"
+    ]
+  },
+  "spec_asserts": "SC-e-56 is described as a fallback after a symbol miss; nothing in the order or the 402 packet states a run-time cost for the producer's fire.",
+  "world_is": "Measured from the laptop (network latency to DynamoDB), the uncached fallback multiplies the 49F producer's wall time about 9x on the real run. The production factor is NOT measured here: the host the scheduled fire runs on, its latency to the table and the SSM command timeout were not read. Memoising canonical misses (one dict in the canonical client or the classifier wrapper) would remove it; that edit is not in this order's grant and not made."
+}
+```
