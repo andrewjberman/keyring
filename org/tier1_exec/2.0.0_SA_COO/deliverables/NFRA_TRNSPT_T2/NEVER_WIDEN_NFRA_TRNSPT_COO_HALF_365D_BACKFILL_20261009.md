@@ -8,8 +8,10 @@ state on the manual path (CLAUDE.md NEVER-1), its write set and its rollback. Pr
 
 ## The act -- exactly this, nothing wider
 
-ONE run, by the laptop identity that holds encrypt on the transcripts key (`0.7.0_AE_CloudOps`; dell2's grant is Decrypt-only), from a pinned
-commit of this repository:
+ONE run, by `0.7.0_AE_CloudOps~DELL2` (amended 2026-10-09 ~03:0xZ; was laptop `0.7.0_AE_CloudOps`), from a pinned commit of this repository.
+Executor change only, on laptop `1.0.0_SA_CTO` frame 24e5ac25 item (3) relayed by `0.0.0_AB_MSTR~DELL2` msg 2229 (Andrew-direct ~02:5xZ: "the
+Dells run their own scripts"): "If your write to opal-data-transcripts is refused, the same amendment grants exactly those prefixes." The act,
+write set, both branches and rollback below are unchanged. The run is issued only after MSTR relays the laptop's stand-down, so it runs once.
 
 1. `python data/transcripts/scripts/outlook/pull.py --gateway --days 365 --apply` -- the EXISTING pull's manual path (`pull.py:201` `--days`,
    `:217` floor 1, no ceiling), admitted-only (the gateway path's default), the same sender table (`criterion.load_tables()`), the same
