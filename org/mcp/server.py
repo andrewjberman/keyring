@@ -90,7 +90,8 @@ TIER_DIRS = {
 
 # Liveness thresholds (seconds)
 STALE_THRESHOLD = 120      # 2 min without heartbeat = stale
-DEAD_THRESHOLD = 600       # 10 min = presumed dead, cleaned on next access
+DEAD_THRESHOLD = 600       # 10 min = presumed dead, cleaned on next access once its PID is gone
+DEAD_HARD_CAP = 86400      # 24 h = cleaned even if the PID resolves (a recycled PID)
 
 log = logging.getLogger("opal-agent-comms")
 
@@ -201,12 +202,19 @@ def _locked_liveness(write=False):
 
 
 def _clean_stale(data: dict) -> None:
-    """Remove entries that exceed DEAD_THRESHOLD. Mutates data in place."""
+    """Remove entries past DEAD_THRESHOLD whose server process is gone. Mutates data in place.
+
+    A quiet seat (no heartbeat for 10 min) whose server PID is still alive keeps its row: it reads
+    STALE/OFFLINE by last_seen, but a heartbeat still lands and the seat is not reported NOT REGISTERED.
+    This matches broker.py, which drops an agent only when its PID dies. DEAD_HARD_CAP bounds a
+    recycled PID. Measured at site Z 2026-10-08: a quiet seat pruned 3 times in 2 h with its PID unchanged.
+    """
     now = time.time()
-    dead = [
-        serial for serial, info in data.items()
-        if now - info.get("last_seen_epoch", 0) > DEAD_THRESHOLD
-    ]
+    dead = []
+    for serial, info in data.items():
+        idle = now - info.get("last_seen_epoch", 0)
+        if idle > DEAD_HARD_CAP or (idle > DEAD_THRESHOLD and not _pid_alive(info.get("pid") or 0)):
+            dead.append(serial)
     for serial in dead:
         del data[serial]
 
