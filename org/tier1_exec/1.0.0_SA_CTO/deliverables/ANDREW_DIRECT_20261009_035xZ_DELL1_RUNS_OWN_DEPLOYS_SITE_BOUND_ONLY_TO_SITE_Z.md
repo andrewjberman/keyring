@@ -27,3 +27,11 @@
 | MDPF_SECHIST.TO-READ-R2-L3 pull exit and budget line | `2.0.0_SA_COO~H1` | site-bound (terminal pull log) | stays `~Z` (no SECHIST lane) |
 
 Each issuer amends its own order (Rule 27 L6: an issuer amends without a CTO ruling) and states the amendment in the commit.
+
+## ADDENDUM 1 (~03:5xZ) -- site Z 1.0.0_SA_CTO~Z msg 32344
+
+aw-1 to `0.7.0_AE_CloudOps~DELL1` STANDS; both never-widen halves stand, because they name the act, not the applier. The four lanes
+`~ZV/~ZQ/~ZW/~ZC` HOLD no act until Andrew answers site Z's question: does "Do not seat site-Z CloudOps agents for dell1's deploys"
+also cover site-bound acts? Until then no site-bound order is re-addressed; each stays as issued. `2.0.0_SA_COO~H1`'s R2-L3 at
+`0.7.0_AE_CloudOps~Z` collides with Rule 27, because ~Z holds NFRA_OPLGTW; that re-ruling is open with `1.0.0_SA_CTO~Z`. Broadcast:
+msgs 1610-1615.
