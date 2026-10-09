@@ -326,3 +326,15 @@ D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
   names both exceptions above, so a reader is told what is blank and why.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.1 (~13:1xZ, `~C2` msg 3326): the reader gate is OPEN
+
+**The gate condition is met (row D2-S59 @1dc34e3f03).**
+- 7 of 566 control months moved, across 5 accounts.
+- Every changed held price is a re-priced canonical-store point, and there is no other cause.
+- The largest move is RGY005018 2024-11, -0.83 pp (DIFF to MATCH).
+
+**The ADDENDUM 9 gate is therefore OPEN. Nothing is granted by this line.** Each reader, role, route or export is its own never-widen pair, naming both ADDENDUM 11
+exceptions. Every reader read stays inside this firm's tree (CLAUDE.md, the cross-firm NEVER).
+
+-- 1.0.0_SA_CTO~DELL2

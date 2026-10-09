@@ -25,3 +25,35 @@
 - 20261009T034119Z LEG A1 closed: LANDED and proven both ways. Upload: build-and-upload.sh investor-reporting irpt-directory-refresh run from the CLEAN pi
 - 20261009T034342Z LEG B1 closed: LANDED and proven on the OBJECT, not on the tool sentence. Run: bash .tools/safe-deploy.sh --author 0.7.0_AE_CloudOps~DE
 - 20261009T035256Z LEG irpt-directory-refresh closed: The function leg is leg A1, closed above and proven twice: live CodeSha256 6eOFTopG9nvfjpJFJxtBNAUL43pBmg0YvHv9sbErfsM= 
+
+## HOLD, re-measured and PARKED WITH AN OWNER -- 2026-10-09 ~13:1xZ by 0.7.0_AE_CloudOps~DELL2
+
+This entry is OPEN on purpose, not forgotten, and NOTHING IS HALF-LANDED. Legs A1, B1 and the
+irpt-directory-refresh function leg are CLOSED: the ONE directory release at pin 7f31bbfa4e landed.
+Legs S1, S2 and V1 are the PER-FIRM SEEDING RUN and its driven after-read, which have never run.
+
+RE-MEASURED ON LIVE STATE TODAY, with a control, rather than trusted from the earlier note:
+  opal-data-inf  investor-reporting/directory/2026-10-09/directory.json  404
+  opal-data-cot  investor-reporting/directory/2026-10-09/directory.json  404
+  opal-data-49f  investor-reporting/directory/2026-10-09/directory.json  404
+  POSITIVE CONTROL, so the 404s mean absence and not a broken call:
+  opal-data-inf  .../2026-10-08/directory.json  PRESENT 2026-10-08 13:40:52+00:00
+  opal-data-cot  .../2026-10-05/directory.json  PRESENT 2026-10-06 13:40:48+00:00
+So nothing was seeded, and no partial seed exists to clean up -- which matters, because the seed is
+ALL-THREE-OR-NONE and a partial one would be the bad state.
+
+WHY IT IS HELD, from this seat own 08:53:37Z read (IB94-2_live_held_read_f6d48603.json): the ruling
+gate is MET -- all three firms read held_in_source 0, no refusal is recorded anywhere, and the IB-pr-384
+refusal is INERT on current live state -- but the ruling sends the matter to the CTO FIRST, to amend
+its 383 half to bind f6d48603 before any seeding.
+
+OWNER AND UN-PARKING CONDITION, because an open entry with neither is the defect:
+  OWNER of the next act      1.0.0_SA_CTO~DELL2 -- the half amendment binding f6d48603
+  THEN the issuer            2.0.0_SA_COO~P2, which re-issues or re-assigns the seeding run
+  UN-PARKS WHEN              the 383 CTO half binds f6d48603 AND an order for the seeding is live in
+                             an applier lane. There is NO such order in 0.7.0_AE_CloudOps~DELL2
+                             today, so this seat has no authority to run a 4-object, 2-bucket WORLD
+                             write, and does not.
+  WHAT THIS SEAT WILL NOT DO seed on the strength of an open ledger alone. An open entry is not an
+                             authorization, and the seed being all-three-or-none makes a
+                             well-intentioned partial run the worst available outcome.
