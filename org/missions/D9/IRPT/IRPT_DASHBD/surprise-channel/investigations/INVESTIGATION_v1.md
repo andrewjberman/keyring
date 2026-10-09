@@ -3212,3 +3212,52 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W38-S2 -- The criteria bind REGRADE_E1.json's reader_sha256 to the reader at HEAD, but DB-b-61 edits the reader after DB-b-60 commits; REGRADE_E1.json was regenerated under the final reader.
+
+```json
+{
+  "id": "IRPT_DASHBD-W38-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~38",
+  "surfaced_at": "2026-10-09T01:08:00Z",
+  "one_line": "DB32-1-AC2 and DB32-2-AC2 both require REGRADE_E1.json's reader_sha256 to equal the reader's bytes at HEAD, while DB-b-61 must edit the reader (FLOW_CONVENTION) after DB-b-60 commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-60/61: REGRADE_E1.json carries reader_sha256 = sha256 of tieout_reader.py at the DB-b-60 commit; the checks p32_round32.py DB32-1-AC2 and DB32-2-AC2 compare it with the reader at HEAD.",
+  "world_is": "MEASURED: DB-b-61 changes tieout_reader.py (FLOW_CONVENTION = \"start\", the guard), so the sha recorded at the DB-b-60 commit (096c2a2f76) no longer equals HEAD's, and DB32-1-AC2 and DB32-2-AC2 (which reads REGRADE_E1.json through the same sha limb) would FAIL at the DB-b-61 commit. REGRADE_E1.json was therefore regenerated with the final reader (--flow end, the reader's explicit end-of-day option): 9,078 segments, within 8,088, byte-identical grades; only reader_sha256 differs from the DB-b-60 commit's copy. All four criteria print PASS at the DB-b-61 commit. The DB-b-60 proof's recorded outputs are the values at 096c2a2f76.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r32/p32_round32.py regrade()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W38-S3 -- The flow-start near-zero guard threshold (2%) was chosen from the project's existing near-zero boundary after 1% let two 97 and 117 pp artifacts through; within moves 8,310 to 8,319 across 1% to 10%.
+
+```json
+{
+  "id": "IRPT_DASHBD-W38-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~38",
+  "surfaced_at": "2026-10-09T01:08:30Z",
+  "one_line": "A first guard at 1% of the prior value missed two segments (flow -98.9% of the prior value, denominator 1.05% and 1.07%) that read 117 and 97 pp at flow-start; the guard is 2%.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-61: guard the near-zero START divisor with a stated rule, never a silent fill.",
+  "world_is": "MEASURED on the 9,078: the rule is V_(t-1) + F_t >= GUARD_FRAC * |V_(t-1)|, else the day keeps its served return and is counted (guard_days). At 1% the guard covered 491 days and two segments still read 116.5 and 97.4 pp (denominator 1.07% and 1.05% of the prior value, end value about 0.1% of it). GUARD_FRAC = 2% is round 31's NEAR_ZERO_BOUNDARY (unexplained_classes.py); it covers 533 days in 446 segments. Sensitivity of the within count: 1% 8,310; 2% 8,315; 5% 8,315; 10% 8,319. The threshold is a convention of this reader, not a measurement of BD; the CTO may re-set it, the number is a module constant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_reader.py guarded_days",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~38/REGRADE_FLOWSTART_E2.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

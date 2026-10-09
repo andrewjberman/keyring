@@ -14,7 +14,7 @@ FLOW_CONVENTION is the reader's daily re-link convention (a reconciliation conve
   "end"   the served behaviour: the segment is linked from the served total_return_daily (external flow at the END of its day).
   "start" a flow day's external flow is invested for that day: r = V_t / (V_(t-1) + F_t) - 1 (round 17's link_alt_flow START, used as it is;
           the segment's first day keeps its served return). GUARD (stated rule, never a silent fill): the START denominator
-          V_(t-1) + F_t must be at least GUARD_FRAC (1%) of |V_(t-1)|; a day below that (a flow of about -100% of the prior value, or more)
+          V_(t-1) + F_t must be at least GUARD_FRAC (2%, the project's near-zero boundary of round 31's classifier) of |V_(t-1)|; a day below that (a flow of about -100% of the prior value, or more)
           is NOT re-linked: it keeps its served return, and the day is counted in the row's `guard_days` and in the record.
 
 Usage: python tieout_reader.py <repo_root> [--cache <pickle>] [--flow end|start] --record <REGRADE_*.json> [--prior <REGRADE_E1.json>]
@@ -36,8 +36,8 @@ _spec.loader.exec_module(r30)
 r18 = r30.r18
 r17 = r30.r17
 TOLERANCE_PP = r30.TOLERANCE_PP
-FLOW_CONVENTION = "end"
-GUARD_FRAC = 0.01
+FLOW_CONVENTION = "start"
+GUARD_FRAC = 0.02          # = round 31 unexplained_classes.py NEAR_ZERO_BOUNDARY (2%): the project's existing near-zero threshold
 LARGE_FLOW = 0.25
 FILES_READ = {"reader_of_record": "org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_reader.py",
               "round17_reader": "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~12/tieout_e2.py",
@@ -163,8 +163,11 @@ def key(s):
 
 def move_reason(prior_row, now_row):
     """A traced reason for a segment WITHIN at the end-of-day convention and OUTSIDE at flow-start: the category and the numbers read."""
-    nums = "%d flow day(s), largest flow %.1f%% of the prior day's value, %d guarded day(s); abs_diff %.4f pp at end-of-day -> %.4f pp at flow-start" % (
-        now_row["flow_days"], now_row["max_flow_ratio"] * 100.0, now_row["guard_days"], prior_row["abs_diff_pp"], now_row["abs_diff_pp"])
+    shift = (now_row["opal_return"] - prior_row["opal_return"]) * 100.0
+    nums = ("%d flow day(s), largest flow %.1f%% of the prior day's value, %d guarded day(s); the flow-start re-link moves Opal's linked "
+            "return by %+.4f pp, so abs_diff to BD gross goes %.4f pp -> %.4f pp" % (
+                now_row["flow_days"], now_row["max_flow_ratio"] * 100.0, now_row["guard_days"], shift,
+                prior_row["abs_diff_pp"], now_row["abs_diff_pp"]))
     if now_row["guard_days"]:
         cat = "START_GUARD_DAY"
     elif now_row["max_flow_ratio"] >= LARGE_FLOW:
