@@ -991,3 +991,53 @@
   }
 ]
 ```
+
+## IRPT_ANLREQ-D2-W22-S1 -- the one envelope parser has no IR_DATA_ADAPTER entry for analysis-request-original, and that file is outside this order's write grant
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W22-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~22",
+  "surfaced_at": "2026-10-09T09:30:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The new client method getAnalysisRequestOriginal reaches parseIrEnvelope, which throws EnvelopeMismatch('operation') because IR_DATA_ADAPTER (src/pages/InvestorReporting/contracts/envelope.ts:181) has no 'analysis-request-original' key; the PDF operation already had its entry from item 93, the original operation has none, and envelope.ts is not in the order's write paths. The required test 'the real client opens the original file through analysis-request-original' therefore fails, so v21-page reads pass=4 fail=1.",
+  "spec_asserts": "AMENDMENT 2 cell item 1: add the operation to the union and IR_ROUTE_TABLE and the client method, mirroring d06ae384 (which touched only investor-reporting.ts, AnalysisRequestParts.tsx, tickets.ts and the test), expecting V21-PAGE-OK pass=5.",
+  "world_is": "d06ae384 needed no parser edit because analysis-request-pdf was already in IR_DATA_ADAPTER (envelope.ts:197) and RESPONSE_STATUS_REQUIRED/operations list (wire/responses.ts:455,481). For 'original' neither exists and no response schema docs/contracts/investor-reporting/v1/responses/analysis-request-original.response.schema.json exists. The minimum fix is one line in envelope.ts reusing adaptAnalysisRequestPdf (same envelope), outside this worker's grant; the order stays open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/TicketCenter: 40 pass, 1 fail; EnvelopeMismatch analysis-request-original field 'operation' at envelope.ts:384",
+      "portal wk-irpt_anlreq-v21b src/pages/InvestorReporting/contracts/envelope.ts:181-197"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W22-S2 -- the order is issued_to ~21, so the lane gate refuses ~22 the proof instance under deliverables/0.9.0_WK_IRPT_ANLREQ~21
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W22-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~22",
+  "surfaced_at": "2026-10-09T09:45:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "safe-commit refuses ~22 the amended proof instance (lane TREE_DELIVERABLES, ADHC_OWNPTH.005): the order's <issued_to> is 0.9.0_WK_IRPT_ANLREQ~21, and a worker's grant is the non-terminal order issued to its own serial. The amended proof and the status flip are therefore uncommitted in the worktree; the order stays pending.",
+  "spec_asserts": "Cell text: update the proof instance under deliverables/0.9.0_WK_IRPT_ANLREQ~21/, flip the status line, and commit both in the workspace worktree as ~22.",
+  "world_is": "IRPT_ANLREQ.TO-AR-v21 line 5 reads issued_to ~21; AMENDMENT 2 did not re-issue it to ~22. The amended proof JSON validates (proof-of-spec-check rc 0, AC2 FAIL with status_reason) and sits modified in C:/tmp/anlreq-v21b; the issuer re-issues the order to ~22 or commits it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output: VIOLATION ... agent=0.9.0_WK_IRPT_ANLREQ~22 not in permitted_agents (ADHC_OWNPTH.005)",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.md:5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
