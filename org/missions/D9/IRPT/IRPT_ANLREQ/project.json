@@ -5,7 +5,7 @@
   "fabric": "dell2",
   "pipeline": "irpt_anlreq",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-09",
   "registered_under_tree": "2026-10-09",
   "placement": "DELL2",

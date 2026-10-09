@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~198</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -51,6 +51,28 @@ Prove each criterion by running its invocation from the worktree root.
 
 <expected_criteria>IB96-1-AC1, IB96-1-AC2</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~04:4xZ, issuer 2.0.0_SA_COO~P2): lookup error fails closed; two prior test files granted to the new rule
+
+1. **Lookup error.** An error while reading the caller's opal-users-v2 profile row fails CLOSED (refused). This is CTO rule msg 2367,
+   relayed by ~V2 msg 2389, and was given to the worker as a ruling mid-cell. The worker built it, with a test.
+2. **Prior tests that encode the behaviour this order removes (row D2-W198-S1).** Two prior ~P files assert the old any-firm reach for
+   internal callers:
+   - `test_service_allowed_firms.py::test_non_service_internal_subject_unchanged` (IB-pr-271);
+   - `test_served_on_behalf_create.py::test_served_keeps_todays_owner_for_an_internal_subject_whose_list_omits_the_firm` (IB-pr-366).
+   Both are titled "today's behaviour". The CTO's rule (msgs 2367, 2368) deliberately replaces that behaviour, so updating them TIGHTENS
+   the suite; it does not weaken it. Granted: `infra/aws/lambda/investor-reporting/_authz/tests/test_service_allowed_firms.py` and
+   `infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py`. The allowed edits are exactly these:
+   - the string-row case asserts REFUSED;
+   - the unlisted-firm case asserts REFUSED (FIRM_BINDING);
+   - `test_served_refuses_unlisted_firm` and `test_served_refuses_all` assert the earlier FIRM_BINDING code, with the refusal preserved;
+   - the fixture bug that turns the string `ALL` into the list `['A','L','L']` is fixed to the case the test names.
+
+   No other assertion changes. Each changed test keeps a refusal, or turns an admission into a refusal; none turns a refusal into an
+   admission.
+
+The issuer amends its own criteria (CLAUDE.md 27 L5-L6). Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only;
+placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Code and tests only: no build, upload, apply or deploy. AWS reads only, if any.
@@ -64,6 +86,8 @@ Prove each criterion by running its invocation from the worktree root.
 <paths>
 infra/aws/lambda/investor-reporting/_authz/served.py
 infra/aws/lambda/investor-reporting/_authz/tests/test_allowed_firm_ids.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_service_allowed_firms.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-387.internal-caller-profile-row-allowed-firm-ids.md
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~198/

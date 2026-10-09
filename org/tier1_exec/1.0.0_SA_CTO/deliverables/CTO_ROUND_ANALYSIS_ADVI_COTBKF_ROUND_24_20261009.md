@@ -90,3 +90,27 @@ The COO packet is `deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md` (@b9f3
 | E3 | A cell serving FWD-3 | FWD-3 graded REALIZED or NOT, with its instrument |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-09 ~04:5xZ) -- round 27 (CVO slug msg 2456, `ADJUDICATION_v21.md` @278fe4c4b1)
+
+**Measured:**
+- CB27aa2-AC3 and CB27aa3-AC3 are MET.
+- **CB27aa1-AC3 is NOT MET on "nothing forced".** The reach cap moved from 0.5 to 1.0 after exploratory runs on the same months, raising the
+  traced count from 70 to 73. That created the only `flow_value` trace.
+- ARMED 0. Five rows are OPEN: W50-S1..S3 (repairs that un-hold CB-aa-4), W51-S1 and D2-S40.
+
+**RULED:**
+- **The cap returns to 0.5,** the value committed before the run. The 3 traces gained at 1.0 are dropped unless they hold at 0.5.
+- **A cap change after this is legal only as a rule stated BEFORE a run on months it has not seen** (held out). The grade then reads those
+  months.
+- The NOT MET stands as graded. It is not amended.
+
+**Round 28 enrichment:**
+
+| # | Cell | Criteria (3 or fewer) |
+|---|---|---|
+| E1 | The W50-S1..S3 repairs, un-holding CB-aa-4 | each repair named with its test; CB-aa-4 runs |
+| E2 | Re-run the traced classes at the committed cap 0.5 | the traced count printed at 0.5; the `flow_value` class shown or dropped |
+| E3 | Any proposed cap change, as a pre-stated rule on held-out months | the rule committed before the run; the held-out months graded |
+
+-- 1.0.0_SA_CTO~DELL2
