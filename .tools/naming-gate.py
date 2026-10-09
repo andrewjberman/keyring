@@ -52,6 +52,21 @@ grade, RAISE, REFUSE, or SKIP for a plan file), an indented `why:` line under ea
 `NAMING-GATE: <PASS|WARN|REFUSE> <n> graded`. Every verdict line is appended to
 org/mcp/naming-gate-verdicts.log (runtime state; gitignored; never committed).
 
+THE PLACEMENT STEP (LGIC_BLANKFIX FWD-6, round 8 BF-w-1; design FWD6_DESIGN_round6.md). For every NEW stored name in a
+root, and for every root the diff touches, the commit limb asks lib/opal_naming_rootcheck.py place(), which is the root
+check's own decision for the name, on the post-image of the diff:
+    a name the canon places as FIX or HOLE in a MAPPED root         REFUSE, printing the name to use or what is owed and to whom
+    a NEW wrong name in an UNMAPPED root                            grade()'s REFUSE stands; place()'s text replaces the bare blank
+    a root whose HOLE count, post-image against HEAD (both run      REFUSE, printing the new HOLE lines and what each is owed
+      now), is larger than at HEAD
+    a name outside every root, RIGHT, NOT-ASKED, PATTERN, CARDED    grade() alone
+The mode is the switch file org/mcp/naming-place.enforce (beside naming-gate.enforce; this build does not create it):
+PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says); ABSENT -> it prints the same lines, marks them
+would-refuse and the verdict is unchanged. There is no date and no ramp, and no environment value turns the step off.
+A root's files live under infra/aws/ (its .tf folder and its Lambda folders), so a commit with no .tf file and no NEW stored
+name under infra/aws/ never loads the placement step; one that does costs about 13 s per root (at most 8 roots are placed).
+If the step cannot run it prints NAMING PLACE ERROR and, with the switch present, refuses.
+
 Standard library only. ASCII only.
 """
 from __future__ import annotations
@@ -76,6 +91,11 @@ OPAL_PATH = os.path.join(REPO, "lib", "opal_naming.py")
 SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
+PLACE_FILE = os.path.join(REPO, "org", "mcp", "naming-place.enforce")  # the placement step's switch: present = refuse
+PLACE_PREVIEW = os.environ.get("NAMING_PLACE_PREVIEW") == "1"  # run the step while the switch is absent (its rows only WARN)
+PLACE_MAP = "infra/logic/registry/root_map.json"
+PLACE_PATH_PREFIX = "infra/aws/"
+PLACE_ROOT_CAP = 8  # roots placed per commit; each costs about two root-check runs (about 10 s)
 REGISTRY_PREFIX = "infra/logic/registry/"
 GRADED_EXT = (".py", ".js", ".mjs", ".ts", ".tf", ".json", ".yaml", ".yml")
 # THE GATE'S DOMAIN (R-11/R-13, round-3 EN-n-1): a resource is MINTED where the applied plane is
@@ -1780,6 +1800,7 @@ def grade_file(nm, f, post_from_index):
             if post_lines and post_lines[-1] == "":
                 post_lines.pop()
     first_added = min(added)
+    _note_file(path, pre_text, post_text)
     rows = []
 
     # the generated-file check: before every exclusion, so a generated file under */tests/* is checked too
@@ -1851,7 +1872,140 @@ def grade_file(nm, f, post_from_index):
         j = judge(nm, path, lit, pre_text, waivers)
         if j:
             rows.append((j[0], path, lit.line, lit.value, j[1], j[2], j[3]))
+            _note_place(nm, path, lit, pre_text, j)
     return rows
+
+
+# --------------------------------------------------------------------------- the placement step (FWD-6)
+_PLACE = {"cands": [], "files": {}}
+_NOT_A_NAME_VERDICTS = ("DECLARED-EXCEPTION", "NOT-GRADED", "RAISE", "RAISE-EXISTING", "WAIVED-READ", "SKIP")
+
+
+def place_enforcing():
+    """True while the switch file is present. There is no environment value and no argument that turns the step off."""
+    return os.path.exists(PLACE_FILE)
+
+
+def _place_reset():
+    _PLACE["cands"] = []
+    _PLACE["files"] = {}
+
+
+def _note_file(path, pre_text, post_text):
+    _PLACE["files"][path] = (pre_text, post_text)
+
+
+def _note_place(nm, path, lit, pre_text, j):
+    """Remember a NEW stored name that was graded as a name (not a carrier, not a declared exception) for the step."""
+    if j is None or j[0] in _NOT_A_NAME_VERDICTS or nm.carrier(lit.value):
+        return
+    typ, _graded_as = nm.classify(lit.value, lit.hint)
+    if typ is None:
+        return
+    if pre_text is None or not _in_pre(lit, pre_text):
+        _PLACE["cands"].append({"path": path, "line": lit.line, "value": lit.value, "typ": typ})
+
+
+def _rootcheck():
+    lib = os.path.join(REPO, "lib")
+    if lib not in sys.path:
+        sys.path.insert(0, lib)
+    import opal_naming_rootcheck as rcm
+    return rcm
+
+
+def amend_row(row, res, on):
+    """The row of a NEW name after place() answered `res`. row = (verdict, path, line, string, canonical, why, counts-as).
+    FIX or HOLE in a MAPPED root: a REFUSE row naming the form and what is owed; counts-as PLACE-REFUSE while the switch is
+    present, else WARN (an old REFUSE keeps its own counts-as). In an UNMAPPED root only an old REFUSE is amended, with the
+    text, and keeps its counts-as unless the switch is present. Any other kind leaves the row as it is."""
+    verdict, path, line, s, canon, why, counts = row
+    if res["kind"] not in ("FIX", "HOLE"):
+        return row
+    old_refuse = counts == "REFUSE"
+    if not res["mapped"] and not old_refuse:
+        return row
+    form, text = _rootcheck().refusal_text(res)
+    if on:
+        new_counts = "PLACE-REFUSE"
+    else:
+        new_counts = counts if old_refuse else "WARN"
+    return ("REFUSE", path, line, s, form, "%s [grade() said: %s]" % (text, why), new_counts)
+
+
+def ratchet_row(root_res, on):
+    """The row of a root whose HOLE count grew."""
+    return ("REFUSE", root_res["root"], 0, "<hole-count-ratchet>", "-", _rootcheck().ratchet_text(root_res),
+            "PLACE-REFUSE" if on else "WARN")
+
+
+def decide_exit(rows, enforce):
+    """(summary, refused, warned, place_refused, exit code) of the graded rows. A PLACE-REFUSE row exits 1 whatever the older
+    switch says; a REFUSE row exits 1 only while the older switch is on."""
+    refused = sum(1 for r in rows if r[6] == "REFUSE")
+    place_ref = sum(1 for r in rows if r[6] == "PLACE-REFUSE")
+    warned = sum(1 for r in rows if r[6] == "WARN")
+    if (refused and enforce) or place_ref:
+        summary = "REFUSE"
+    elif refused or warned:
+        summary = "WARN"
+    else:
+        summary = "PASS"
+    return summary, refused, warned, place_ref, 1 if ((refused and enforce) or place_ref) else 0
+
+
+def place_step(rows, meta):
+    """Ask place() for the NEW names of the diff and run the ratchet on the roots it touches. Returns the amended rows; notice
+    lines go to `meta`. Never raises: a step that cannot run adds an error row (refusing only while the switch is present)."""
+    if not any(p.startswith(PLACE_PATH_PREFIX) and (p.endswith(".tf") or any(c["path"] == p for c in _PLACE["cands"]))
+               for p in _PLACE["files"]):
+        return rows
+    on = place_enforcing()
+    if not on and not PLACE_PREVIEW:
+        # Row LGIC_BLANKFIX-W1-S22 (1.0.0_SA_CTO ruling 2026-10-09): with the switch absent the step's rows can only WARN, and the
+        # root census costs ~13 s per root on every seat's .tf commit; skip it. NAMING_PLACE_PREVIEW=1 runs it anyway (FWD-6 arm G).
+        meta.append("NAMING PLACE-NOTICE placement step skipped: org/mcp/naming-place.enforce is absent (NAMING_PLACE_PREVIEW=1 runs it)")
+        return rows
+    try:
+        if _diff_repo() != REPO:
+            return rows
+        rcm = _rootcheck()
+        by_root, order = {}, []
+        for path in sorted(_PLACE["files"]):
+            wants = [c for c in _PLACE["cands"] if c["path"] == path]
+            if not path.startswith(PLACE_PATH_PREFIX) or (not wants and not path.endswith(".tf")):
+                continue  # a root's files (its .tf folder, its Lambda folders) live under infra/aws/: nothing else pays the census
+            root = rcm.root_of_path(path)
+            if root is None:
+                continue
+            if root not in by_root:
+                by_root[root] = []
+                order.append(root)
+            by_root[root] += wants
+        post_texts = dict((p, t[1]) for p, t in _PLACE["files"].items())
+        head_texts = dict((p, t[0] if t[0] is not None else "") for p, t in _PLACE["files"].items())
+        index = dict(((r[1], r[2], r[3]), i) for i, r in enumerate(rows))
+        extra = []
+        if len(order) > PLACE_ROOT_CAP:
+            meta.append("NAMING PLACE-NOTICE %d roots touched; the first %d were placed, these were NOT: %s"
+                        % (len(order), PLACE_ROOT_CAP, ", ".join(order[PLACE_ROOT_CAP:])))
+        for root in order[:PLACE_ROOT_CAP]:
+            wants = [(c["value"], c["typ"], "%s:%d" % (c["path"], c["line"])) for c in by_root[root]]
+            rr = rcm.place_root(root, PLACE_MAP, wants, post_texts, head_texts, ratchet=True)
+            for c, res in zip(by_root[root], rr["results"]):
+                k = (c["path"], c["line"], c["value"])
+                if k in index:
+                    rows[index[k]] = amend_row(rows[index[k]], res, on)
+            if rr["mapped"] and rr["head_holes"] is not None and rr["post_holes"] > rr["head_holes"]:
+                extra.append(ratchet_row(rr, on))
+            elif not rr["mapped"] and rr["names_head"] is not None:
+                meta.append("NAMING PLACE-NOTICE UNMAPPED %s names=%d (HEAD %d); an unmapped root is not ratcheted"
+                            % (rr["root"], rr["names_post"], rr["names_head"]))
+        return rows + extra
+    except Exception as exc:  # the step never raises into the gate: it says so, and refuses only while the switch is present
+        line = "NAMING PLACE ERROR the placement step could not run: %s: %s" % (type(exc).__name__, exc)
+        meta.append(line)
+        return rows + [("REFUSE", "<placement-step>", 0, "<error>", "-", line, "PLACE-REFUSE" if on else "WARN")]
 
 
 # --------------------------------------------------------------------------- output
@@ -1901,9 +2055,75 @@ def run(args):
     except Exception as exc:
         raise GateError("lib/opal_naming.py or the registry cannot be loaded: %s: %s" % (type(exc).__name__, exc)) from None
     rows = []
+    _place_reset()
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
-    return rows, domain_meta(files)
+    meta = domain_meta(files)
+    rows = place_step(rows, meta)
+    return rows, meta
+
+
+def place_self_test():
+    """The placement step's arms on plain data (no root check is run): what each answer of place() does to a row, the exit, the
+    ratchet row and the switch. Prints one line per arm; returns True when all hold."""
+    import tempfile
+    fix = {"kind": "FIX", "detail": "irpt-x-daily", "form": "irpt-x-daily", "mapped": True, "owed": [],
+           "fills": ['the cadence word "daily" is read from the schedule (b)']}
+    hole = {"kind": "HOLE", "detail": "partial form {system}-x-lambda; could not fill {system}: no map entry for this root",
+            "form": "{system}-x-lambda", "mapped": True, "fills": [],
+            "owed": [("4.0.0_SA_CRO", "a root-map entry for the root a/b (infra/logic/registry/root_map.json)")]}
+    right = {"kind": "RIGHT", "detail": "x", "form": None, "mapped": True, "fills": [], "owed": []}
+    good_row = ("CONFORMANT", "f.tf", 3, "x", "x", "CONFORMANT as LAMBDA", "PASS")
+    bad_row = ("REFUSE", "f.tf", 3, "x", "x-{cadence}", "NEW and OUT-OF-PATTERN as SCHEDULE: REFUSE", "REFUSE")
+    on_fix, off_fix = amend_row(good_row, fix, True), amend_row(good_row, fix, False)
+    on_hole = amend_row(good_row, hole, True)
+    um = dict(hole, mapped=False)
+    um_bad_off, um_good = amend_row(bad_row, um, False), amend_row(good_row, um, True)
+    grew = {"root": "infra/aws/terraform/a/b", "post_holes": 2, "head_holes": 1,
+            "new_holes": [("SCHEDULE", "s", "partial form s-{cadence}; could not fill {cadence}: minute field 0/7: not a single minute", "a/b/x.tf:1")]}
+    saved = globals()["PLACE_FILE"]
+    sw_on = sw_off = env_ignored = None
+    try:
+        with tempfile.TemporaryDirectory(prefix="naming_gate_selftest_") as td:
+            globals()["PLACE_FILE"] = os.path.join(td, "switch")
+            sw_off = not place_enforcing()
+            with open(globals()["PLACE_FILE"], "w") as fh:
+                fh.write("x")
+            sw_on = place_enforcing()
+            saved_env = os.environ.get("NAMING_PLACE_ENFORCE")
+            os.environ["NAMING_PLACE_ENFORCE"] = "0"
+            env_ignored = place_enforcing()
+            if saved_env is None:
+                del os.environ["NAMING_PLACE_ENFORCE"]
+            else:
+                os.environ["NAMING_PLACE_ENFORCE"] = saved_env
+    finally:
+        globals()["PLACE_FILE"] = saved
+    arms = [
+        ("FIX in a mapped root, switch present -> REFUSE, PLACE-REFUSE, names the form",
+         on_fix[0] == "REFUSE" and on_fix[6] == "PLACE-REFUSE" and on_fix[4] == "irpt-x-daily" and "Owed: use irpt-x-daily" in on_fix[5]),
+        ("the same, switch absent -> same text, counts WARN (verdict unchanged)",
+         off_fix[6] == "WARN" and off_fix[4] == on_fix[4] and off_fix[5] == on_fix[5]),
+        ("HOLE, switch present -> REFUSE naming the owner and the row owed",
+         on_hole[6] == "PLACE-REFUSE" and "4.0.0_SA_CRO" in on_hole[5] and "root-map entry" in on_hole[5]),
+        ("RIGHT -> the row is untouched", amend_row(good_row, right, True) == good_row),
+        ("unmapped root, a name the matrix already refuses -> text added, counts REFUSE kept, switch absent",
+         um_bad_off[6] == "REFUSE" and "4.0.0_SA_CRO" in um_bad_off[5]),
+        ("unmapped root, a well-formed name -> untouched even with the switch present", um_good == good_row),
+        ("exit: PLACE-REFUSE exits 1 without the older switch; a would-refuse WARN row and an old REFUSE row exit 0 without it",
+         decide_exit([on_fix], False)[4] == 1 and decide_exit([off_fix], False)[4] == 0 and decide_exit([bad_row], False)[4] == 0
+         and decide_exit([bad_row], True)[4] == 1 and decide_exit([good_row], False)[4] == 0),
+        ("ratchet row: grown count -> REFUSE, PLACE-REFUSE present / WARN absent, names the new HOLE line and its owner",
+         ratchet_row(grew, True)[6] == "PLACE-REFUSE" and ratchet_row(grew, False)[6] == "WARN"
+         and "2 HOLE line(s) now, 1 at HEAD" in ratchet_row(grew, True)[5] and "minute field 0/7" in ratchet_row(grew, True)[5]),
+        ("switch: absent file -> off, present file -> on, an environment value of 0 does not turn it off",
+         sw_off is True and sw_on is True and env_ignored is True),
+    ]
+    ok = True
+    for label, held in arms:
+        ok = ok and bool(held)
+        print("SELF-TEST place arm %s: %s" % (label, "ok" if held else "FAIL"))
+    return ok
 
 
 def self_test():
@@ -1918,6 +2138,7 @@ def self_test():
         ok = ok and arm
         print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
                                                     "ok" if arm else "FAIL"))
+    ok = place_self_test() and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
@@ -1951,21 +2172,18 @@ def main(argv=None):
         verdict_lines.append(vl)
         print(vl)
         print("  why: %s" % why)
-    refused = sum(1 for r in rows if r[6] == "REFUSE")
-    warned = sum(1 for r in rows if r[6] == "WARN")
-    if refused and enforce:
-        summary = "REFUSE"
-    elif refused or warned:
-        summary = "WARN"
-    else:
-        summary = "PASS"
+    summary, refused, warned, place_ref, rc = decide_exit(rows, enforce)
     if refused and not enforce:
         print("  (WARN window: %d REFUSE verdict(s) did not block; ENFORCE is --enforce, NAMING_GATE_ENFORCE=1 or"
               " org/mcp/naming-gate.enforce)" % refused)
+    would = sum(1 for r in rows if r[0] == "REFUSE" and r[6] == "WARN")
+    if would:
+        print("  (placement step: %d would-refuse verdict(s) did not block; the step refuses while org/mcp/naming-place.enforce"
+              " exists, and that switch is absent)" % would)
     last = "NAMING-GATE: %s %d graded" % (summary, len(rows))
     print(last)
     log_lines(verdict_lines + [last], mode)
-    return 1 if (refused and enforce) else 0
+    return rc
 
 
 if __name__ == "__main__":

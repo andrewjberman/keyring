@@ -109,6 +109,13 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   and carry `bloomberg_unscoped` (true), `bloomberg_class_probes` (the count probed, at least 4),
   `bloomberg_class_probes_allowed` (equal to it) and `bloomberg_m365_state` (`answers` or `reconsent_named`). AC3's body
   gains `bloomberg_grant_mirrors_andrew` (true) and `bloomberg_prior_grant_recorded` (true).
+- **AMENDMENT A6 (issuer, 2026-10-09 ~03:4xZ; `1.0.0_SA_CTO~O` msg 32327) -- r29 CARRIES NO BLOOMBERG-ACCOUNT CHANGE.**
+  Andrew-direct ~03:3xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_033xZ_BBG_CONCIERGE_OPAL_USERS_ONLY_GATE.md`):
+  the A5 mirror ships ONLY together with an @opalinvest.com gate on that principal's Teams reads and sends, "same release
+  or neither". The issuer HOLDS the mirror and its gate for r30 (a separate build cell), so r29 keeps its four-cell scope
+  and its 11:00Z window. A2, A3, A4 and A5 are WITHDRAWN: no allowlist row added or removed, `_SEED` untouched, no
+  Bloomberg grant write, no Bloomberg field in AC2 or AC3. Any Bloomberg edit already made on your branch is reverted
+  before the release commit.
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -133,15 +140,14 @@ principal, rollback = the prior reach per key (CTO ruling msg 32087). Commit and
    "instance_id"}`, the host printing `RL15_DIGEST <sha256>` of `json.dumps(body, sort_keys=True)`. Body fields,
    exactly: `served_release`, `installed_code: true`, `asker_query_class`, `asker_query_write_class`,
    `unclassified_registered_tools`, `send_gate_in_oauth_as`, `calendar_months_max`, `contract_version`,
-   `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `bloomberg_unscoped`,
-   `bloomberg_class_probes`, `bloomberg_class_probes_allowed`, `bloomberg_m365_state`, `grants_written: 0` (A5).
+   `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `grants_written: 0`
+   (A6: no Bloomberg field).
    Re-read the standing floor into `W/RL15_FLOOR.json` per the form.
 2. The grant write, under the signed halves only: Andrew's and Alyssa's principals' grants gain `calendar_months: 13`;
    record each key's prior reach first. Then `W/RL15_GRANTS.json`, the host printing `RL15G_DIGEST <sha256>`, body
    fields exactly: `served_release`, `principals_changed`, `fields_changed`, `calendar_months_after` (list),
    `other_principals_changed`, `prior_reach_recorded`, `thirteen_month_read_available_dates_min` (the smallest count of
-   available dates a 13-month availability read returns for either principal on either master),
-   `bloomberg_grant_mirrors_andrew`, `bloomberg_prior_grant_recorded` (A5). Never print a tid, oid
+   available dates a 13-month availability read returns for either principal on either master). Never print a tid, oid
    or email; principals are named by role (`andrew`, `alyssa`).
 3. Phase D (form step 13): drain-back of the release branch's gateway files to box/sitez in your own worktree.
 4. Run the criteria one after the other.
@@ -213,6 +219,9 @@ Report once per phase.
 - A5 (2026-10-09, CTO msg 32320, Andrew ~03:2xZ): SUPERSEDES A2-A4 -- the Bloomberg account is UNSCOPED (seed entry and
   its two overlay rows removed), its data grants mirror Andrew's; attest rules updated in the same commit. Graded by no
   gate limb as a modification.
+- A6 (2026-10-09, CTO msg 32327, Andrew ~03:3xZ): the Bloomberg mirror needs an @opalinvest.com gate in the same
+  release; held for r30 with its gate; A2-A5 withdrawn; attest rules back to the four-cell body. Graded by no gate limb
+  as a modification.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).

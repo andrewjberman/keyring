@@ -2,13 +2,13 @@
   "project_code": "LGIC_BLANKFIX",
   "macro_code": "LGIC",
   "directive": "D14",
-  "fabric": "laptop",
+  "fabric": "dell1",
   "pipeline": "naming-check-blank-fixes",
   "status": "active",
   "dep_stage": "EXECUTING",
   "created": "2026-10-07",
   "registered_under_tree": "2026-10-07",
-  "placement": "LAPTOP",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "LGIC_ENFORCE",
@@ -120,5 +120,6 @@
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~G (seated on 1.0.0_SA_CTO msg 106179)"
   },
-  "placement_ruling": "LAPTOP: directive D14 is placed on the laptop (Andrew 2026-09-12, DIRECTIVES.yaml D14 placement); the registry it edits is written by the laptop's 4.0.0_SA_CRO alone."
+  "placement_ruling": "LAPTOP: directive D14 is placed on the laptop (Andrew 2026-09-12, DIRECTIVES.yaml D14 placement); the registry it edits is written by the laptop's 4.0.0_SA_CRO alone.",
+  "phase": "2026-10-09 ~04:0xZ (1.0.0_SA_CTO, L3): PLACEMENT LAPTOP -> DELL1 on Andrew-direct ~03:0xZ \"Once COO~G finishes its most recent round i think you can move it over to DELL1\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_030xZ_LGIC_BLANKFIX_MOVES_TO_DELL1_AFTER_ROUND_8.md). Round 8 closed on the laptop (5 of 5; hole 285 -> 10, uncounted 301 -> 17; handoff deliverables/2.0.0_SA_COO~G/ROUND8_DRAIN_END_AND_DELL1_HANDOFF.md @85ba7c79b2). Next: 3.0.0_SA_CVO's round-8 slug (BW1-AC4), then this seat's round-8 analysis; a dell1 COO lane cuts round 9 from it. || "
 }

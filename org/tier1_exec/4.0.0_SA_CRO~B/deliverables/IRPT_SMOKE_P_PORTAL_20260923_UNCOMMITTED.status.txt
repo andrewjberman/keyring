@@ -1,5 +1,5 @@
 # irpt-smoke-p-portal-20260923 at base e0531491 (branch irpt-opal-scope-p-portal-20260923, on origin, not in DEV)
-# 24 M entries: line-ending only (git diff HEAD --ignore-cr-at-eol is empty); 2 AD entries: staged then deleted from the tree, saved in the .patch (git diff --cached)
+# 19 M entries (corrected from 24 by 3.0.0_SA_CVO's review): line-ending only (git diff HEAD --ignore-cr-at-eol is empty); 2 AD entries: staged then deleted from the tree, saved in the .patch (git diff --cached)
 # git status --porcelain:
 AD src/pages/InvestorReporting/__tests__/opal-scope/README.md
 AD src/pages/InvestorReporting/__tests__/opal-scope/mounted.html
@@ -41,3 +41,6 @@ AD src/pages/InvestorReporting/__tests__/opal-scope/mounted.html
 .runtime/update-browse-tests.py
 reviewer-parser.test.ts
 reviewer-wire.json
+# CORRECTION (3.0.0_SA_CVO review REVIEW_DESK_CLEANUP_20261009.md): reviewer-parser.test.ts and reviewer-wire.json are an
+# independent reviewer's test and its captured API response, not scratch. Copied outside git (the capture may hold client
+# directory data) to C:\Users\AndrewBerman\desk_cleanup_archive_20261009\irpt-smoke\ before the delete; sha256 matched.

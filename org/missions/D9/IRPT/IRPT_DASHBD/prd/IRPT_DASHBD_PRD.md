@@ -5,10 +5,10 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
  "status": "RATIFIED"
 }
 ```
@@ -114,6 +114,18 @@ outcomes verbatim.
                     window before the news data starts are each explained on screen in a sentence;
                     no state is hidden inside an average
          SOURCE     backend Part V.1 (the coverage vocabulary), V.3; frontend F8, Part V.3
+
+  FWD-11 Every client firm, not only 49 Financial: an Inflection account and a Cottonwood account each get the same daily
+         total return, activity and lots, and class mix as a 49 Financial account, from their own custodian data
+         DONE WHEN  EXERCISED -- one Inflection account and one Cottonwood account opened on the live portal, each reading
+                    its own gold tables (returns, class, activity, realized, unrealized) through its own adapter
+         ACCEPT     a person opens an Inflection account and a Cottonwood account and sees the same page as for 49 Financial;
+                    where a firm's source cannot supply a figure (for example Inflection lots before Eclipse tax lots are
+                    shown populated) the page says so in a sentence instead of showing a number; each firm's return is tied
+                    out against its own reported source, named by the first cell's read, as 49 Financial's is (FWD-8)
+         SOURCE     Andrew-direct 2026-10-09 ~03:3xZ, verbatim: "You should be doing this not just for 49 Financial, but for
+                    all clients, inflection and cottonwood too." (record
+                    org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/ANDREW_DIRECT_20261009_033xZ_ALL_CLIENTS_NOT_ONLY_49F.md @9a0a87676b)
 ```
 
 ## ENDPOINT PROVENANCE (outside the ratified section)
@@ -476,3 +488,17 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
     dedup. The 0.034 pct upper bound (1,099 of 3,209,771 rows) is a stated limitation of the method, not a defect of this
     project. Whether the raw Schwab CRS record carries a key that silver drops is an upstream question. It is PARKED with
     `1.0.0_SA_CTO` until a project owning `fact_trn`'s Schwab silver is seated, and it is never a cell here.
+
+## ADDENDUM (2026-10-09 ~03:4xZ, `1.0.0_SA_CTO~DELL2`): FWD-11, every client firm (Andrew-direct ~03:3xZ)
+
+- **New outcome FWD-11 (in ENDPOINT):** Inflection and Cottonwood get what 49 Financial gets, each through its own adapter (C-ADAPTERS
+  already names all three).
+- **Tie-out source per firm (CVO L4-R msg 2330):** each firm ties out against its own reported source, named by the first cell's read.
+  Cottonwood's registered master IS Black Diamond (z09), so a BD tie-out would be circular. Commonwealth is the unregistered
+  candidate, and the first cell's read names it (CVO note, msg 2350; review @abf4a55e14).
+- **The 49 Financial activity-and-lot release (R35, both halves GIVEN) proceeds as signed.** FWD-11 does not hold it.
+- **Each firm's gold release is its own never-widen pair.** A firm's bucket, prefixes and role are separate, and they never share a write set
+  with another firm. Addresses come from `address()` output per firm (C-NAMES).
+- **ENDPOINT changed.** The CVO re-signs the ratified-text half. The brief half is accepted, since Andrew's word is the source.
+
+-- 1.0.0_SA_CTO~DELL2

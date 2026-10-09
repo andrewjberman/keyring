@@ -2326,3 +2326,23 @@ AC1-AC2 FAIL at base).
 
 fanout: 2 of 2 chains, cap 8, reason: independent chains (directory release; custody ports). Assignees: 0.7.0_AE_CloudOps~DELL2 (383),
 0.9.0_WK_IRPT_BCKEND~190 (382). The S4 refuse-drop cell is cut after 383 lands.
+
+## 88. ROUND 95, WORKSTREAM ~P (2026-10-09 ~03:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2351)
+
+IB-pr-383 (round 94) is live through leg A1: irpt-directory-refresh reads 6eOFTopG (03:40:03Z). The bundle, the seeding and the
+after-read follow. IB-pr-382 (the custody ports) is complete and drained @3998906069, and handed to ~Y2 for release 6.
+
+The CTO ruled (msg 2351) that the three code-only cells start now and that their releases follow 383's after-read under their own pairs.
+H1 (Terraform for the applier) waits as ruled (msg 2192).
+
+Checks: `deliverables/2.0.0_SA_COO~P2/checks/r95/p95_s4.py`, `p95_svc.py` and `p95_svccom.py`. The new-test and surface criteria FAIL at
+base; the suite criteria PASS as controls.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-384` | runner refuses a build that drops a source entry; stale directory root header removed (D2-S23) | FWD-7 | WORLD | none (release after 383) | P95-a |
+| `IB-pr-385` | verified_internal_subject admits ONE firm-bound svc-custody-statement | FWD-8 / CUSTDY E2a | WORLD | none | P95-b |
+| `IB-pr-386` | svc-commentary read-only REQUEST_COMPOSITION via get(), tenant-bound, one callable surface | NFRA_TRNSPT FWD-10 H2 | WORLD | none | P95-c |
+
+fanout: 3 of 3 chains, cap 8, reason: three independent code-only cells. Assignees: 0.9.0_WK_IRPT_BCKEND~195, ~196, ~197. H1 is cut after
+IB-pr-383 closes.

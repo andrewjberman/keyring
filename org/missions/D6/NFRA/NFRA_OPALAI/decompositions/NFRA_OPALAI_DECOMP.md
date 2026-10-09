@@ -601,3 +601,10 @@ measurement only. R5 names persistence as OA-f-11's sixth arm, read at the next 
 precondition. Site Z booted 2026-10-08T20:56:05Z, after the apply (OA-f-11 AC3 2026-10-02T03:02Z), and bbcomm listens
 on 127.0.0.1:8194, so the operator control discriminates. Chain: alone, slot `~26` respawned, no nested checkout. It does
 not precede the item-0 close run and gates nothing.
+
+## ADDENDUM R2-A14 -- the Analyst starts with a first prompt (row Z-S63; issuer ruling, obligation 7)
+
+No new cell. `OA-f-9` gains AC4 (its order's ISSUER AMENDMENT 2): `opal_ai/opal/runtime/launcher.ps1`'s Analyst command
+line ends with a one-sentence first prompt naming `prompt.md`'s "On launch" steps, so the identity gate and the Teams arm
+run unattended. LOCAL, one line, nested base `de5ce25fa3`. Chain: alone, slot `~24` respawned. The release is a later
+push by `0.0.0_AB_MSTR~Z` on Andrew's word; Z-S63's interim disarm (the operator types one first turn) stands until then.

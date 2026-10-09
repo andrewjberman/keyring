@@ -119,3 +119,21 @@ lane: the <paths> block IS the grant; the two AWS writes are the product path's 
 
 Source: round-7 ADDENDUM 2 (this issuer, 2026-10-09); IRPT_BCKEND ADDENDA 9-11 (msgs 1475, 1513, CTO 1416); ~P2 packets a59adb446a
 (writer) and 18d4c45c1d (live + the owed reads). Gate: release 5 live (issuer reads it before the spawn).
+
+## AMENDMENT 1 (issuer, 2026-10-09 ~03:4xZ) -- HELD: the executor moves to dell2's applier; do NOT spawn this order as written
+
+The worker on this order, `0.9.0_WK_IRPT_CUSTDY~18`, stopped before any AWS write (row W18-S1, @c562748b71), and CTO rulings
+2123/2296/2310 change how the cell runs:
+
+- The writes go through ONE named service subject, `svc-custody-statement`. Its firm comes from the token claim (`cottonwood`). It is
+  admitted on custody-report-persist, POST /analysis and POST /export by `2.0.0_SA_COO~P2`'s writer cell (ruling (b), msg 2310).
+- Its token is minted under the never-widen pair
+  `deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md` (COO half unsigned until that cell drains). Only
+  `0.7.0_AE_CloudOps~DELL2` reads the token.
+- So the two writes and the live re-reads (CU21-AC1/AC2) are an APPLY act by `0.7.0_AE_CloudOps~DELL2`. They are cut as an apply order
+  in that seat's folder, with a GO, after: (1) irpt-ycharts-generate release 6 is live (TO-APPLY-Y77), (2) ~P2's writer cell drains,
+  (3) the mint pair lands.
+- CU21-AC3 (the offline no-identity / no-figure test) stays a worker build and is folded into that cut.
+
+**Graded by:** no gate limb. This amendment changes neither `<paths>` nor `<placeholders>`, and to-pipeline-gate grades only on a new
+order or a declared placeholder. This order stays `pending` and unspawned until the recut supersedes it.
