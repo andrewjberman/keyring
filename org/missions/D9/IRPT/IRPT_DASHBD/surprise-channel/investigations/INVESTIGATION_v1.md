@@ -4159,3 +4159,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W55-S2 -- The 2026-10-07 returns manifest differs from the prior function's in one line (calendar_source); the data is byte-equal
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W55-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~55",
+  "surfaced_at": "2026-10-09T08:30:00Z",
+  "one_line": "The 2026-10-07 returns manifest.json rewritten by the R37 function differs from the one the prior function wrote in one line, calendar_source; the returns data.parquet is byte-equal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The R37 packet: the returns prefix is written exactly as before, byte-identically, and A4 reads DELTA=0 on the returns partition.",
+  "world_is": "MEASURED: account_return_daily/date=2026-10-07/data.parquet sha256 eb3e2627722db6a44d904abe155eb7692ffd9d11c891ee742c9b7f3acf569d3b before (version SvarXXMC..., 2026-10-08T11:42:19Z) and after (version aduYeE6E..., 2026-10-09T08:18:31Z) the backfill fe78f9ad-2bb7-4b51-b7be-46be579745c8. manifest.json sha256 319b3ac0... -> 04dc0209...; diff is one line: calendar_source NYSE/hardcoded-fallback-2024-2027 -> NYSE/hardcoded-fallback-2010-2027, the label of the re-pinned lib/trading_calendar.py (pin 4b766e4e2d). No data byte moved. A consumer that reads the manifest's calendar_source as a string sees the new label on any returns day the new function writes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/A4_RESULT_20261007.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/R37_APPLY_RECORD.json (first_fire.a4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
