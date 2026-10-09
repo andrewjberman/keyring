@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T09:33:18.594111+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / Opal_Terminal real GetObject ADMITTED plus dell2 irpt-ycharts-runner-role real GetObject REFUSED, status-only (held since 2026-10-09T10:02:46.804410+00:00)
 **Deploy:** NFRA_TRNSPT a18 second named reader apply from integrated pin f7a4fb5d04efb908b96ab3b8d86277c9b9f982ad carrying f8c4859407, 04313a7e39, dc5032abde
 **Authored by:** 0.7.0_AE_CloudOps
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,36 +12,11 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| APPLY | activation | Terraform targets aws_iam_role.second_reader, aws_iam_policy.second_reader, aws_iam_role_policy_attachment.second_reader, aws_kms_key.transcripts | safe-apply receipt and exact 3 create plus 1 update result |  | OPEN |
+| APPLY | activation | Terraform targets aws_iam_role.second_reader, aws_iam_policy.second_reader, aws_iam_role_policy_attachment.second_reader, aws_kms_key.transcripts | safe-apply receipt and exact 3 create plus 1 update result | safe-apply SUCCESS 2026-10-09T09:55Z: 3 added, 1 changed, 0 destroyed; pin f7a4fb5d04; plan gate commit 5d27fc36a7; tag override audit id 20261009T095303Z-3890779 after direct comp-tagauthz rc=0 and tombstone rc=0 | CLOSED 20261009T100241Z |
 | VERIFY | verify | Named reader role, key-policy one-principal delta, admitted/refused S3 proof | role readback, full key-policy diff, ADMITTED and REFUSED statuses only |  | OPEN |
 
 ## Log
 
 - 20261009T093318Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
-
-## Pre-apply plan gate — 2026-10-09T09:44Z
-
-- Apply pin: `f7a4fb5d04efb908b96ab3b8d86277c9b9f982ad`; required ancestors `04313a7e39` and `dc5032abde` both present.
-- Targeted plan: `3 to add, 1 to change, 0 to destroy`.
-- Changed addresses only: `aws_iam_role.second_reader`, `aws_iam_policy.second_reader`, `aws_iam_role_policy_attachment.second_reader`, `aws_kms_key.transcripts`.
-- No Lambda resource change.
-- Semantic key-policy comparison: only `NamedReadersUseTheKey` changes; exactly one role principal is added; no principal is removed; `DellAgentUsersGenerateDataKey` is byte-equivalent before/expected-after.
-
-Full key-policy diff:
-
-```diff
---- kms-key-policy.before.json
-+++ kms-key-policy.expected-after.json
-@@ -35,7 +35,8 @@
-       "Effect": "Allow",
-       "Principal": {
-         "AWS": [
--          "arn:aws:iam::313476888478:user/Andrew_Berman"
-+          "arn:aws:iam::313476888478:user/Andrew_Berman",
-+          "arn:aws:iam::313476888478:role/teams-global-transcripts-second-reader-role"
-         ]
-       },
-       "Resource": "*",
-```
-
-Evidence: `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/nfra_trnspt_a18_20261009/`.
+- 20261009T100241Z LEG APPLY closed: safe-apply SUCCESS 2026-10-09T09:55Z: 3 added, 1 changed, 0 destroyed; pin f7a4fb5d04; plan gate commit 5d27fc36a7; tag 
+- 20261009T100246Z HELD-SOVEREIGN-GATED gate=external/Opal_Terminal real GetObject ADMITTED plus dell2 irpt-ycharts-runner-role real G

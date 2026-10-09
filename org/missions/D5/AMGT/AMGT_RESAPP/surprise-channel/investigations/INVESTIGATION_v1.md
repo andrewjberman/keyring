@@ -22950,3 +22950,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "If the provenance key is wanted on the served draft, one splice write on ASML NA's drafting key is the remainder."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S12",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T10:04:00Z",
+  "one_line": "DISARM of AMGT_RESAPP-D1-W332-S1 (ARMED): no order of round 83 re-runs BABA, SAP or PBR; BABA was rolled back byte-equal and SAP never written, so no non-English draft can replace a served one. The language-stamp repair is carried to round 84.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W332-S1 is ARMED: fetch.py:417 stamps a source's language from the head of the whole document (BABA reads pt, SAP es), so a re-run of fetch and analyze on either writes a non-English draft over the served one.",
+  "world_is": "Issuer ruling at hh-4's close: BABA_US_Equity, SAP_GY_Equity and PBR_US_Equity are HELD -- no store half runs them until the language stamp is repaired and proven on their stored filings. BABA's analysis and drafting were re-written to their prior bytes with the prior silver row re-carried; SAP's keys equal the pre-act record; PBR was not touched. The repair (fetch.py, a site-Z producer path) is round83/CARRIED_TO_ROUND84.md item 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_AMGT_RESAPP~332/diff_BABA_US_Equity.txt and after_rollback_BABA_US_Equity.json (merged @f39219d33f)",
+      "org/critical_paths/change_management/ entry amgt-resapp-r83-hh4-store-half-dell1 CLOSED (L2 rolled back, L4 not executed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms AMGT_RESAPP-D1-W332-S1 by a new item, as the row gate requires for an investigation row."
+}
+```

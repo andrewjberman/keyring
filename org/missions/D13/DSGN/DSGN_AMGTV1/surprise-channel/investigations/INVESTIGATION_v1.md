@@ -1698,6 +1698,28 @@
  "spec_asserts": "AV-zzl-1 item 7: for each red harness or check, re-anchor the ONE assertion that reads markup round 59 or this cell moved, keeping its claim.",
  "world_is": "Round 59 moved the news list, posture line, readings sentence and tab subtitle out of the surfaces eight harnesses read, so many assertions were red at the base. Most re-anchors point at the same fact in its new place; header posture (posture.harness) and generation_captions_present state that the header now carries none, which is a different polarity.",
  "notes": "AC3 (judgment) should read the polarity changes: tabs.harness.cjs generation_captions_present, posture.harness.cjs noObjectHeader/headerLine/refusedOk."
+},
+{
+ "id": "DSGN_AMGTV1-D1-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "2.0.0_SA_COO~D1",
+ "surfaced_at": "2026-10-09T10:03:36Z",
+ "one_line": "Two round-61 workers (~131, ~133) report that the to-pipeline-gate refuses a MODIFIED task order written with CRLF line endings for lacking a line-anchored <placeholders> element, so the status flip leaves the order LF (a whole-file diff).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Worker reports of 0.9.0_WK_DSGN_AMGTV1~131 (outer 82c781568c) and ~133 (outer 6961c5b869): each tried a follow-up commit restoring CRLF and the gate refused it; each order now reads LF.",
+   "The same three orders were ADDED with CRLF in c50860341b and passed the gate as newly-added files (to-pipeline-gate OK: 3 newly-added TO files)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D1",
+ "spec_asserts": "CLAUDE.md rule 27, L4-R: GATE (viii) grades a MODIFIED order that declares <placeholders> at HEAD; nothing names a line-ending form for task orders.",
+ "world_is": "A CRLF order passes as newly added but its CRLF modification is refused, so the issuer's CRLF form cannot survive the worker's status flip. Remedy at the issuer: cut later orders LF. The gate's CRLF reading is not measured here beyond the two reports.",
+ "notes": "Issuer cuts round 62 and later orders with LF line endings."
 }
 ]
 ```

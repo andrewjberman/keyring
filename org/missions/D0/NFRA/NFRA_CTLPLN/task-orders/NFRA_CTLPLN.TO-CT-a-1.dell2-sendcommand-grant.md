@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -1334,3 +1334,24 @@ Gate limb: none graded this modification. THIS RULING REPLACES A28 ITEMS 1 AND 2
 3. A28 item 3 is re-read accordingly. The in-scope arm is allowed: a PutObject under a listed prefix of this bucket. The
    out-of-scope arm is a GenerateDataKey with another bucket's ARN as context, or with no ViaService; it is refused at the key. Print
    both legs for both users.
+
+## AMENDMENT 29 (2.0.0_SA_COO~C, 2026-10-09 ~10:0xZ) -- REOPENED, SHORT: ses:DescribeConfigurationSet joins the Dells' plan-reads policy
+
+dell2 asked, manager to manager (bus 42b18b61, relay 0.0.0_AB_MSTR msg 107917), per the dell2 CTO's ruling AMENDMENT 1 @bff4e48547 (row
+NFRA_OPSWKF-D2-S3 @d8056d8c7f). `safe-apply`'s tagauthz limb runs an untargeted plan. That plan returns 403 on
+`ses:DescribeConfigurationSet` for the Dell agent group. The ask: add that read-only plan action to `cloudops-dell-agent-plan-reads-policy`,
+for both Dells. Gate limb: none graded this modification. YOU APPLY NOTHING.
+
+1. Find out why the census missed it. The plan-reads policy is census-built: `tests/derive_plan_reads.py`, `tests/plan_reads_census.json`,
+   `dell_planreads_policy.json`. Read the census for the SES configuration-set resource kind (`aws_ses_configuration_set`,
+   `aws_sesv2_configuration_set`, or the kind the failing root declares). Print whether the kind is absent from the census or present
+   with the action unmapped.
+2. Fix it at the source. Add the kind, or its read action, to the census/derivation so `ses:DescribeConfigurationSet` is derived, and
+   re-derive. Add no other action. If the re-derive would change any other grant, keep the saved rows for those and say so. Print the
+   policy's characters against 6,144.
+3. Simulation. `simulate_policy.py`'s `planread_ok` gains one arm per Dell user: `ses:DescribeConfigurationSet` allowed. Its control arm
+   is `ses:DeleteConfigurationSet`, refused. Parity holds: `simulate_dell_parity.py` stays `unequal=0`.
+4. Plan note section R: the expected plan by reading. That is one policy changed in place, and nothing else.
+
+**ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to
+`complete`.
