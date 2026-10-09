@@ -1202,3 +1202,32 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
   4. `render.py` `CAL_STATUSES` and `page_theme.py` show `regressed` with its own label and color; the page keeps ONE script.
 - Out of bounds: `gold_trade_schedule.py`, `publish_page.py`, `price_series.py`, `enrichment_bloomberg.py`; no S3, no
   deploy (WS2 guards).
+
+### `RIV-wg-1` -- the Direction Verdict leads with what is particular to the fund; a below-tolerance row is never offered to the model as a trade (WS3 item 8; row W26-S1's ai_accounts half) -- APPENDED 2026-10-09, revision 1.24
+- Measured: on the served 2026-10-08 page, 13 of 19 distinct Direction Verdicts open "The last thirty days ..."
+  (`ws3_item8_prep/verdict_openers_check.py`: FAIL, limit one quarter). Andrew-direct comment 7: "when every single
+  fund is saying the same thing, its not very interesting for the reader ... We may need to give more token budget or
+  more specific prompting". `P_DIRECTION` (ai_accounts.py ~line 90) asks four questions in a fixed order and SYSTEM caps
+  every item at 120-180 words. Row W26-S1: `fact_pack`'s trade facts (~line 170) keep `below_tolerance` rows (RIV-wd-1),
+  so on a fixture a below-tolerance row is trade fact T1, ahead of the real buy and sell.
+- Interface:
+  1. `P_DIRECTION` asks the verdict to OPEN with the single finding most particular to this fund (a named security,
+     sector or trade and its fact), and never with a sentence about the periods agreeing or disagreeing in general. The
+     verdict's `text` budget is 180-260 words; the 30-day account keeps 120-180.
+  2. `wording_check` (or a sibling the chain calls for the `direction_verdict` item only) names a GENERIC OPENING as a
+     defect: the text's first sentence begins with a period phrase ("the last thirty days", "the last 30 days", "over the
+     last", "these trades", "the trades") followed within its first twelve words by one of "add to", "support",
+     "contradict", "borne out", "bear out", "bore out", "confirm"; OR the first sentence begins with the period's dates
+     ("From <date> to <date>", "Between <date> and <date>", "Over <date> to <date>") -- the lead the live prompt
+     a1-chain/7 produced on 2026-10-09 for both funds of the issuer's two-fund base run (CGIC, IDVZ), and on the
+     served 13:00Z sweep for 13 of 13 funds (row D1-S8). The two dates are
+     still stated once in `text` (RIV-aw-1), just not as the lead. The ONE correction already in `run_chain` sends it back
+     quoting the opening. A generic opening never sets grounding FAIL by itself: after the correction the reply stands.
+  3. `fact_pack` drops trade rows whose `action` is `below_tolerance`, as `publish_page` already does for the trade log.
+  4. `PROMPT_VERSION` moves to `a1-chain/8`.
+- Out of bounds: `publish_page.py`, `render.py`, `gold_trade_schedule.py`, `enrichment_bloomberg.py`; no vendor call, no S3,
+  no deploy (WS2 guards). The real-model read is the issuer's, at the drain.
+- Checks: `ws3_item8_prep/item8_generic_opener_check.py` (AC1; base FAIL 3 on arms A and C, control arm B PASS) and
+  `ws3_item8_prep/w26s1_ai_below_tolerance_check.py` (AC2; base FAIL 1, control arm PASS). J1 (CVO): on the issuer's real
+  run over the 13 funds, no opening leads more than a quarter of the verdicts (`verdict_openers_check.py`), and the
+  verdicts read as fund-specific.
