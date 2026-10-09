@@ -6553,3 +6553,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "An order whose remaining criteria are the issuer's dated reads leaves the executor idle by design; seat-liveness reads it HUNG and /govern would run /unstick on a healthy seat (the peek-first rule caught it here). Remedy for the owner: a carve-out for orders whose open criteria are issuer reads, or a dated-wait field the limb reads."
 }
 ```
+
+## NFRA_CTLPLN-D1-S7 -- round-close-check counts only order-level judgment criteria; a graded never-widen pair condition reads judgment=0
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T18:38Z",
+  "one_line": "round-close-check.py (C-SEATS clause 7, cell CT-s-8) counts only order-level judgment criteria, so AMGT_RESAPP round 86's CVO grade of kk-3 condition 4 (a never-widen pair condition) is invisible and the round reads judgment=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round86.md section 1 (cited by 1.0.0_SA_CTO~DELL1 msg 2989)",
+      ".tools/round-close-check.py header: NFRA_CTLPLN workstream SEATS, cell CT-s-8; contract C-SEATS clause 7",
+      "routed here because NFRA_GATSCP (which last built the tool) is CLOSED @45f5fc4fd9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A round may count finished only when every judgment it owes is graded by the CVO (C-SEATS clause 7).",
+  "world_is": "A pair-condition grade lives outside any order's criteria, so the tool neither requires nor sees it. Close (1.0.0_SA_CTO~DELL1): a pair-condition grade appears in the round's judgment count."
+}
+```
