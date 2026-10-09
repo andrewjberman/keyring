@@ -1077,6 +1077,18 @@ def _self_test():
          lambda: _risk_violations(tree, "<risk>SERVED</risk>\n" + v3) == []),
         ("risk: a flat-root order is NOT graded",
          lambda: _risk_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v3) == []),
+        # THE LAST TAG GOVERNS (1.0.0_SA_CTO ruling msg 107528): the complete-flip limb's read.
+        ("last-tag: deleting a stale 'pending' above 'complete' is NOT a flip",
+         lambda: _is_terminal_flip("<status>pending</status>\n<status>complete</status>\n",
+                                   "<status>complete</status>\n") is None),
+        ("last-tag: pending -> complete IS a flip",
+         lambda: _is_terminal_flip("<status>pending</status>\n", "<status>complete</status>\n") == "complete"),
+        ("last-tag: 'complete' then 'pending' reads pending (not terminal), whatever the first tag says",
+         lambda: _is_terminal_flip(None, "<status>complete</status>\n<status>pending</status>\n") is None),
+        ("last-tag: 'pending' then 'complete' on a new file reads complete (graded)",
+         lambda: _is_terminal_flip(None, "<status>pending</status>\n<status>complete</status>\n") == "complete"),
+        ("last-tag: a re-edit that keeps the same tags is still graded (only a REMOVED duplicate is exempt)",
+         lambda: _is_terminal_flip("<status>complete</status>\n", "<status>complete</status>\nmore\n") == "complete"),
     ]
     failed = 0
     for name, fn in arms:
@@ -2914,7 +2926,44 @@ def check_file(root, rel):
 
 
 STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
+STATUS_LINE_RE = re.compile(r"^[ \t]*<status>\s*([A-Za-z_-]+)", re.I | re.M)
 DONE_WORDS = ("complete", "completed", "closed", "done")
+# THE LAST TAG GOVERNS (1.0.0_SA_CTO gate-owner ruling, msg 107528, 2026-10-09): an order's status is its LAST
+# line-anchored <status> tag. A stale earlier duplicate (pending above complete) must not read as the status.
+# A change that only REMOVES an earlier duplicate while the last tag is unchanged is NOT a flip.
+
+
+def _last_status(text):
+    """(word or None, count of line-anchored tags). The LAST line-anchored tag; with none, the old first-match read."""
+    found = list(STATUS_LINE_RE.finditer(text or ""))
+    if found:
+        return found[-1].group(1).lower(), len(found)
+    m = STATUS_RE.search(text or "")
+    return (m.group(1).lower() if m else None), 0
+
+
+def _is_terminal_flip(head_text, staged_text):
+    """(terminal word or None). None = not a flip this limb grades. PURE.
+
+    A staged order whose last tag is terminal is graded, EXCEPT when HEAD's last tag is the same word and the change
+    removed one or more earlier tags (a stale duplicate deleted; ruling msg 107528)."""
+    word, n_staged = _last_status(staged_text)
+    if word not in DONE_WORDS:
+        return None
+    if head_text is not None:
+        head_word, n_head = _last_status(head_text)
+        if head_word == word and n_staged < n_head:
+            return None
+    return word
+
+
+def _head_blob(root, rel):
+    """The HEAD content of rel, or None (a new file, or unreadable)."""
+    try:
+        out = subprocess.run(["git", "show", "HEAD:" + rel], cwd=root, capture_output=True, timeout=30)
+    except Exception:  # noqa: BLE001
+        return None
+    return out.stdout.decode("utf-8", errors="replace") if out.returncode == 0 else None
 
 
 def _staged_blob(root, rel):
@@ -2995,9 +3044,9 @@ def check_complete_flip(root, rel):
     staged = _staged_blob(root, rel)
     if staged is None:
         return []  # not staged (or unreadable as a blob) -- other arms own that
-    m = STATUS_RE.search(staged)
-    if not m or m.group(1).lower() not in DONE_WORDS:
-        return []  # not a flip to a terminal state
+    flip_word = _is_terminal_flip(_head_blob(root, rel), staged)
+    if flip_word is None:
+        return []  # not a flip to a terminal state (or only a stale earlier duplicate removed; ruling msg 107528)
 
     import json
     code, rel_json, err = _project_row_rel(root, rel)
@@ -3029,7 +3078,7 @@ def check_complete_flip(root, rel):
     if inst is None:
         return ["%s: flips to '%s' on PIPELINE-REGISTERED project %s, and NO proof-of-spec "
                 "instance was found beside it. Layer 1: no VALID instance, no complete flip."
-                % (rel, m.group(1), cand)]
+                % (rel, flip_word, cand)]
     chk = os.path.join(root, ".tools", "proof-of-spec-check.py")
     if not os.path.isfile(chk):
         return ["%s: proof-of-spec-check.py is MISSING -- fail-closed rather than pass a flip "
@@ -3049,7 +3098,7 @@ def check_complete_flip(root, rel):
         head = (r.stdout or r.stderr or "").strip().splitlines()
         why = head[-1][:160] if head else "rc=%d" % r.returncode
         out = ["%s: flips to '%s' but its instance is NOT VALID (rc=%d) -- %s"
-               % (rel, m.group(1), r.returncode, why)]
+               % (rel, flip_word, r.returncode, why)]
         # NAME WHAT REFUSED, not only the verdict line: the verdict reads "INVALID (rc=1)" for every cause, so a seat
         # reading this refusal could not tell a binding refusal from any other (FE-s-37).
         viol = [ln.strip()[len("VIOLATION: "):] for ln in (r.stdout or "").splitlines()

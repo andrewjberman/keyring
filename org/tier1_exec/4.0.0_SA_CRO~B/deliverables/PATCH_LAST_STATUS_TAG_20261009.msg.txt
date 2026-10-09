@@ -1,0 +1,17 @@
+fix(4.0.0_SA_CRO~B): an order's status is its LAST <status> tag; deleting a stale earlier duplicate is not a flip
+
+1.0.0_SA_CTO gate-owner ruling, msg 107528: "an order's status is its LAST <status> tag; a change that removes an earlier
+duplicate while the last tag is unchanged is not a flip."
+
+- .tools/surprise-row-gate.py (3.0.0_SA_CVO's row gate): _to_status_match() reads the LAST line-anchored tag at both
+  readers (the open-seat census and the slug's open-order census). Self-test 230/230 (1 new arm).
+- .tools/to-pipeline-gate.py (complete-flip limb): _is_terminal_flip(head, staged) grades a staged order whose LAST tag
+  is terminal, except when HEAD's last tag is the same word and the change removed earlier tags. Self-test 116/116
+  (5 new arms: duplicate delete not a flip; pending->complete a flip; last tag wins both ways; a same-tags re-edit still graded).
+- .tools/owned-paths-validate.py: _TO_STATUS_RE, the named duplicate carrier of the row gate's pattern, moved the same way.
+  Self-test 16/16.
+
+Real bytes: NFRA_CTLPLN.TO-DELL-1 (lines 7-8 pending, complete) read 'pending' by the old first-match and 'complete'
+now; deleting line 7 reads not-a-flip.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

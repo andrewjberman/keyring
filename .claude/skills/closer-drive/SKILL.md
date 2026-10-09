@@ -19,7 +19,9 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
    `python .tools/drive-mode.py status` for overlapping claims. A project with several FAST seats keys one lease per
    seat, `<CODE>~<lane>`, on disjoint surfaces: each seat reads its own key and writes `<project home>/STATUS~<lane>.md`.
 2. **Pick ONE item.** A defect that breaks the live thread comes first; otherwise take the top of the next-list,
-   which is the enrichment backlog in order. Claim it in STATUS.md's Write claims before building.
+   which is the enrichment backlog in order. Claim it in STATUS.md's Write claims before building. **An empty next-list
+   is an EMPTY TICK: with `open-calls.py mode get --part empty_tick` reading `state=on` (`/keep-driving`), run `/next-calls <CODE> --drive` and build its SEQUENCE (NOW + WHILE WAITING), queueing each call
+   with `open-calls.py add`, until it returns no FREE option** (Andrew-direct 2026-10-09 ~00:0xZ).
 3. **Build it** in the seat's own worktree, across frontend and backend as the item needs. Do not spawn a subagent.
 4. **Check it.** That is the whole bar:
    - the item's own test (write one if cheap);
