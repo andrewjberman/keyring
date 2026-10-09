@@ -1,0 +1,17 @@
+{
+  "request_id": "SITEZ-SIGNIN-PREFLIGHT-REFDATA-20261009",
+  "tier": 1,
+  "reason": "The ONE site-Z Terminal sign-in pre-flight before 10:45Z serving the 11:00Z ETFS_RIVALS vehicle, MDPF_SECHIST's 11:00Z pull and the AMGT 13:00Z fire: bbg_credentials.py --check, bloomberg_health, then ONE reference_data read (integrations/bloomberg/READ_HERE.md section 2). bloomberg_health and the port read are not draws; the reference_data read is. Booked as a tier-1 production draw (C-RESERVE: production is ledgered as a RESERVE draw).",
+  "page": "production daily pulls (pre-flight)",
+  "vendor": "bloomberg",
+  "channel": "reference",
+  "securities": [{"cusip": null, "cusip_reason": "site Z names the one security at the pre-flight (fold record section 0)", "symbol": "named-by-site-Z"}],
+  "fields": ["one reference_data field, named by site Z"],
+  "start": null,
+  "end": null,
+  "quote": {"cells": {"bloomberg_reference": 1}, "basis": "reference = securities x fields = 1 x 1 (bbg_quote.py rule, DQ-t-9)"},
+  "runs_at": "site Z, before 10:45Z 2026-10-09; the ask goes 2.0.0_SA_COO~V1 -> 0.0.0_AB_MSTR~DELL1 -> 0.0.0_AB_MSTR~Z",
+  "filed_by": "2.0.0_SA_COO~Q1",
+  "filed_for": "ETFS_RIVALS, MDPF_SECHIST, AMGT_CORPUS (one shared pre-flight)",
+  "authority": "1.0.0_SA_CTO~DELL1 fold record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_UNBLOCK_RIVALS_CORPUS_SECHIST_20261009.md section 0 (msg 1632, @79c8d84e65)"
+}

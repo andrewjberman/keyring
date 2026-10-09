@@ -1,0 +1,19 @@
+{
+  "request_id": "ETFS_RIVALS-HISTORY-OWED-DAILY",
+  "standing": true,
+  "tier": 3,
+  "reason": "Rival Funds history owed (ETFS_RIVALS act 3, R24 standing daily request): the 11:00Z vehicle's enrichment leg asks up to HISTORY_OWED_CAP owed closes a run, checked against bbg_budget before any request. Andrew ~22:4xZ 2026-10-08: Rival Funds history is tier 3, 'on BBG ... daily little jobs'.",
+  "page": "rival funds (ETFS_RIVALS)",
+  "vendor": "bloomberg",
+  "channel": "history",
+  "securities": "the day's history_owed.owed set (changes daily; 742 securities / 184,600 units on 2026-10-08)",
+  "fields": ["close"],
+  "start": null,
+  "end": null,
+  "cap_cells_per_run": 20000,
+  "quote": {"cells": {"bloomberg_history": 20000}, "claim": "held", "basis": "the run cap HISTORY_OWED_CAP = 20,000 points (R24); an upper bound per run, not a per-security quote -- bbg_quote cannot price a standing request whose set changes daily (round-5 candidate)"},
+  "runs_at": "site Z, the 11:00Z vehicle, in-process under bbg_budget (R24); actuals reach the queue's ledger through the site-Z demand-ledger uploader (DQ-t-14) and are recorded beside this quote",
+  "filed_by": "2.0.0_SA_COO~Q1",
+  "filed_for": "ETFS_RIVALS",
+  "authority": "laptop cross-adjudication XA-20261009T033809Z-8c1a ruled (a), relayed by 1.0.0_SA_CTO~DELL1 msg 1611; open call dell1-20261009T032844Z-8276 (2.0.0_SA_COO~V1, org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/CALL_SWITCH_ON_ROUTE_UNDER_EGRESS_LAW_20261009.md option A); law edit 4d77a9c3ea"
+}
