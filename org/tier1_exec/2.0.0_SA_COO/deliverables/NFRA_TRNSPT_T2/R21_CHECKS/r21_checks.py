@@ -46,7 +46,8 @@ def m21():
 
 
 R21_TEST = Path("data/transcripts/scripts/tests/test_silver_reader_role.py")
-R21_NAMES = ["test_policy_reads_silver_only", "test_no_bronze_prefix_granted", "test_trust_admits_nobody_without_holder"]
+R21_NAMES = ["test_policy_reads_silver_only", "test_no_bronze_prefix_granted", "test_trust_admits_nobody_without_holder",
+            "test_research_meeting_prefix_denied"]
 
 
 def r21():

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~2</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -47,6 +47,13 @@ Privacy is held by the KMS key (`main.tf` header and key policy): a principal wi
 If a silver object carries held-out rows whose text is NOT wiped (read the Research silver writer `teams/research_fold.py` and
 `teams/holdout.py`; do not read S3), file a surprise row (`NFRA_TRNSPT-D2-W2-S<k>`, next unused across every document under
 `surprise-channel/`). A silver-only role would read those rows' bytes. Then keep going.
+
+**AMENDMENT 1 (issuer, 2026-10-09 ~12:1xZ; row D2-W2-S10 ruled by D2-S13 @728d223ddc).** Research silver keeps held-out rows' text; only the
+reader filters them. Until the writer blanks that text:
+6. `readers.tf`: add to `aws_iam_policy.silver_reader` one statement `DenyResearchMeetingSilver` -- `Effect = "Deny"`, `s3:GetObject` on
+   `teams/transcripts/silver/research_meeting/*`, plus `s3:ListBucket` Deny conditioned on `s3:prefix` `teams/transcripts/silver/research_meeting/*`.
+7. In the same test file add `test_research_meeting_prefix_denied`: the Deny statement exists, and it names exactly that prefix.
+Base for this amendment: box/dell2 728d223ddc, where the check reads `R21-R21-FAIL missing test_research_meeting_prefix_denied`.
 
 ### ACCEPTANCE
 
