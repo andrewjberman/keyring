@@ -188,6 +188,8 @@ def compose(device: str, target: str, cto_absent: bool, due: list, closeout: lis
             lines.append("  - %s | %s | %s | age %dm | %s | source %s" % (r["id"], r["project"], r["scope"].get("verdict", "?"),
                                                                          age_min(r["opened_at"], now), r["subject"][:160],
                                                                          r["source"]))
+            lines.append("      CONTEXT: %s" % (r.get("context") or "(none: written before the context field; read the source)"))
+            lines.append("      REC: %s" % (r.get("rec") or "(none)"))
         if len(due) > LIST_CAP:
             lines.append("  ... and %d more: python .tools/open-calls.py list" % (len(due) - LIST_CAP))
         lines.append("")
@@ -340,13 +342,14 @@ def selftest() -> int:
         oc.write_list(dev, doc, "t")
         line, _ = run_pass(dev, False, now, probe)
         rec("acts-and-closed-rows-nudge-nobody", "due=0" in line and "sent=no:nothing-due" in line, line)
-        doc["rows"].append(row("c-fork"))
+        doc["rows"].append(row("c-fork", context="why c-fork exists and what it gates", rec="(a) c-fork, because"))
         oc.write_list(dev, doc, "t")
         line, hb = run_pass(dev, False, now, probe)
         files = os.listdir(inbox_dir("1.0.0_SA_CTO~DELL1"))
         rec("an-open-fork-nudges-the-box-cto", "due=1" in line and "sent=yes" in line and len(files) == 1, line)
         body = open(os.path.join(inbox_dir("1.0.0_SA_CTO~DELL1"), files[0]), encoding="utf-8").read()
         rec("the-file-names-the-call-and-the-three-outcomes", "c-fork" in body and "xadj.py open" in body and "hold" in body)
+        rec("the-file-carries-context-and-rec", "CONTEXT: why c-fork" in body and "REC: (a) c-fork" in body, body[-300:])
         rec("heartbeat-says-cto-live", hb["cto_live"] and hb["cto_serial"] == "1.0.0_SA_CTO~DELL1")
         line, _ = run_pass(dev, False, now + datetime.timedelta(minutes=10), probe)
         rec("unchanged-within-30m-is-not-resent", "sent=no:unchanged" in line, line)
