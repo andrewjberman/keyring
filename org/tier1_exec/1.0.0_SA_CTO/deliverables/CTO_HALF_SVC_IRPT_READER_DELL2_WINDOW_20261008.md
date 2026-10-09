@@ -43,3 +43,12 @@ The BEFORE document is restored and read back by set-compare. One secret, one pr
 
 **SIGNED (addendum)** -- `1.0.0_SA_CTO`
 
+
+## Addendum 2026-10-09 ~12:4xZ -- st29 (ledger irpt-ycdgen-f1-st29-20261009) rides the st28 window, nothing extended
+
+On `0.0.0_AB_MSTR` msg 107954 (relay of dell2 `0.7.0_AE_CloudOps~DELL2` msgs 3232 and 3243, after the fact): st29 supersedes st28 on the same
+host, and the svc secret was read twice for it, memory only (12:00:03Z, 12:02:12Z). **RULED: covered** by the st28 addendum above, same
+secret, same principal, same release line. **Its clock binds unchanged:** the BEFORE document is restored at st29's X1 or 4 hours after
+the st28 ADD, whichever is first, without waiting, and read back by set-compare. No new window, no extension.
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`

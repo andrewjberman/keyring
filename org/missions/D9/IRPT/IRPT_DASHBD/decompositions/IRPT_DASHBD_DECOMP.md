@@ -932,3 +932,21 @@ from box/dell2; `0.7.0_AE_CloudOps~DB2` takes DB-b-84 now and DB-b-86 after both
 drained.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~64`, cut from box/dell2.
+
+
+## 46. ROUND 44, WORKSTREAM B (2026-10-09 ~12:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 11, msg 3288; CVO ADJUDICATION_v25 @5f365678bf)
+
+**Why these are new cells.** ADDENDUM 11's riders sit on cells that are already complete (DB-b-87, DB-b-89), so they are cut as new cells. Item 4 (S41,
+the proof schema) went to the tooling owner via MSTR; there is no DASHBD cell for it.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-90` | E1, FWD-4: the realized-key uniqueness check on the FINAL rows, after every rewrite, with a rewrite-repeat test (W62-S1) | WORLD (served-producer floor) | DB-b-87 | B44-1 |
+| `DB-b-91` | E2, FWD-4: a skipped lots day stated as "lots not computed for <date>: <reason>" in a status record the listing ignores (S40) | WORLD (served-handler floor) | none | B44-2 |
+| `DB-b-92` | E3, FWD-12: verify-persisted checks the persisted object's sha256 (W64-S1) | LOCAL | DB-b-89 | B44-3 |
+
+**Release.** DB-b-90 and DB-b-91 change served code. They reach the Lambda in a later R37 delta release, which the issuer asks the CTO to place
+once they drain. DB-b-88 (in flight) releases DB-b-87's key and backfills 2026-10-08. W62-S1's emit_day duplicate check already refuses by name
+meanwhile.
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~65`, ~66 and ~67, cut from box/dell2.

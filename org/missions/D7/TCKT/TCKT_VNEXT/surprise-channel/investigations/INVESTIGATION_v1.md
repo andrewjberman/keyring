@@ -656,3 +656,51 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "The IRPT routes.json _denominator mismatch (19 vs 21) inside the source remains a documentation defect in that file, not a census gap."
 }
 ```
+
+### TCKT_VNEXT-D2-S2 -- TO-APPLY-SA1 is STALE THREE WAYS; running it as written would REVERT two later releases of opal-ticket-api
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2`
+- **disarm_owner:** `2.0.0_SA_COO~V2` (the issuer; it chooses re-pin or withdraw -- this seat cannot)
+- **state:** BLOCKING-CANDIDATE. Nothing degrades while it waits, because the correct act is to NOT
+  deploy. The hazard is that the order still reads `pending` and its branch A looks runnable.
+- **spec_asserts:** TO-APPLY-SA1 deploys `opal-ticket-api` at `box/dell2 6e19a53535` with
+  `lambda_function.py` sha256 `21fe06e0...`; STOP 1 is that
+  `git diff --name-only 6e19a53535 HEAD -- infra/aws/lambda/ticket_center infra/aws/terraform/ticket-center`
+  is EMPTY, and the BEFORE read expects live `CodeSha256` `RFRuryx...`.
+- **world_is:** three independent staleness facts, each measured:
+  1. **STOP 1 is NOT empty: 6 files differ**, and one of them is `lambda_function.py` itself -- the
+     very file whose hash the order pins. (Control: the same diff over `org/tier2_senior` returns
+     241 files, so the command works and an empty result would have meant something.)
+  2. **SA1's pin is OLDER than the pin already released.** `merge-base --is-ancestor 6e19a53535
+     86454002bf` returns rc 0 and the reverse does not, so SA1's pin PRECEDES TO-APPLY-V12's, which
+     was applied and graded MET by its issuer. The per-file hashes line the three up in order:
+     SA1 `21fe06e0`, V12 `04f5727b`, HEAD `670686262068`. Deploying SA1 would put the OLDEST of the
+     three onto the function.
+  3. **The BEFORE expectation is already false.** Live `opal-ticket-api` reads
+     `HK82TEd0SQWeGqWEEG7HV10QK8agPizblDoXkvITRJA=`, which is neither SA1's expected `RFRuryx...`
+     nor V12's `IMJsVN6U`. So the function has moved at least once since V12 as well.
+- **why this is the dangerous shape rather than a nuisance:** every one of SA1's own guards would
+  have caught it -- STOP 1, the BEFORE read, and the zip hash check. The order is well built. The
+  hazard is that a seat under time pressure reads "branch B" as a formality and re-pins forward to
+  make the diff empty, which is precisely how the oldest artifact wins. Branch B here means STOP,
+  not "adjust the pin until it passes".
+- **cross-project note worth the issuer's attention:** `opal-ticket-api` is now targeted by TWO
+  projects -- TCKT_VNEXT (this order, D7) and IRPT_ANLREQ (V12 applied, and R13 re-issued to an
+  MSTR-seated CloudOps lane under ruling @5ff94852a6 item 2, D9). One function, two projects, two
+  appliers. Nothing in either order's bounds mentions the other, so neither would see the clash.
+- **acts NOT taken:** no ledger opened, no build, no upload, no plan, no apply. Nothing of SA1 ran.
+
+- **RESOLVED 2026-10-09 ~12:5xZ, and the cause was narrower than this row first implied.** Issuer
+  `2.0.0_SA_COO~V2` (msg 3281) confirmed the STOP was right and ruled the order WORLD-DONE: SA1 had
+  ALREADY been applied by `0.7.0_AE_CloudOps~DELL2` at 04:57:46Z, ledger
+  `tckt-vnext-sa1-clamp-20261009` CLOSED 05:01:11Z, branch A, deployed file `21fe06e0...` -- and was
+  simply never flipped out of `pending`. So the three staleness facts are exactly what an
+  already-executed order looks like once HEAD moves on, not a defect in the order. STOP 1 held when
+  it mattered: its own after-reads record `changed_paths_pin_to_head=0` beside a
+  `positive_control_org_paths=142`, so the zero was a real absence at the time.
+  **What this row got right and is worth keeping:** the hazard of a world-done-but-unflipped order is
+  RE-EXECUTION, and the tempting fix -- re-pin forward until the diff is empty -- is precisely how the
+  oldest artifact wins. That is NEVER-2's rule in the general case: world-done closes SUPERSEDED,
+  never re-executes. Disposition: the order is flipped `complete -- SUPERSEDED`, its proof instance
+  is VALID rc=0, and cell SA-k-1 lives on in TO-APPLY-V12 and R13b. The two-project overlap on
+  `opal-ticket-api` is acknowledged by the issuer, which owns both lines, so it is not an open call.
