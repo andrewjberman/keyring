@@ -5155,3 +5155,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S5 -- client account data committed to git (one file already on the remote)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:56:03Z",
+  "one_line": "Client account data is committed to git: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/W73_S2_EVIDENCE.json (121 distinct 10-digit account numbers with begin/end values, balances, fees and flows) is on origin box/dell2 AND origin CLOUD (github Opal-Capital/ajb_workspace); org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json (74 accounts, values, fees, gains) is committed locally @f5645bb6e9 and goes out at the next box-sync push. The issuer's own packet asked whether this is acceptable; it is not -- the estate keeps client figures out of the repo (ADVI_BILLING held its real render outside git for exactly this reason).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files: both paths tracked (169,592 and 134,559 bytes)",
+      "this seat's parse: account-like keys n=74 and n=121, fields beginning_value, ending_value, fees, gain, net_gains, amount, dust_balance, max_balance",
+      "git merge-base --is-ancestor 1ba8eafcda origin/box/dell2 and origin/CLOUD: TRUE; f5645bb6e9 origin/box/dell2: FALSE (after git fetch, ~15:5xZ)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND49_B_DRAIN_END_20261009.md @dfba2660aa (msg 3603)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2 (hold the box-sync push of f5645bb6e9; remove both files from the tree) and 1.0.0_SA_CTO~DELL2; purging them from origin's history is destructive git and Andrew's word",
+  "spec_asserts": "Client figures (account numbers with balances, fees and flows) do not enter the repository or its remote.",
+  "world_is": "One file with 121 accounts is already on the remote on two branches; a second with 74 accounts is one push away."
+}
+```
