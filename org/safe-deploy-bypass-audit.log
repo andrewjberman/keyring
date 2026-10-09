@@ -139,6 +139,8 @@
 2026-10-09T07:26:11Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_method.py  reason=no-open-ledger-names-it
 2026-10-09T07:26:11Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_split_repair.py  reason=no-open-ledger-names-it
 2026-10-09T07:26:11Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_unlisted_types.py  reason=no-open-ledger-names-it
+2026-10-09T09:20:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/lib/etf_classifier.py  reason=no-open-ledger-names-it
+2026-10-09T09:20:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/tests/test_etf_classifier_name_key.py  reason=no-open-ledger-names-it
 2026-10-09T07:52:35Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/commonwealth_split_recount.py  reason=no-open-ledger-names-it
 2026-10-09T07:56:16Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/commonwealth_split_recount.py  reason=no-open-ledger-names-it
 2026-10-09T07:57:46Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/commonwealth_split_recount.py  reason=no-open-ledger-names-it

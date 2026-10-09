@@ -191,7 +191,7 @@ d60b4e0 is LOCAL on branch `wk-NFRA_MCPORTAL-r4-6-mcportal`, the commit MP-x-4 r
 README commit fa1ff96. Provisioned with `wk-provision.sh --nested mcportal=d60b4e0`. Checks dry-run at base 2851a9190d: AC1
 FAIL (`src/pages/open-calls` absent), AC2 FAIL (same). No gate. Lives through MP-r-2.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <slot>~11</slot>

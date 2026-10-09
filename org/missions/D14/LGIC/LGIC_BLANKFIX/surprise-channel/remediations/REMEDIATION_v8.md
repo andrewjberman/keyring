@@ -20,7 +20,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T07:40:00Z. Graduated at ADJUDICATION_v8
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v10"
     },
@@ -29,7 +29,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T07:40:00Z. Graduated at ADJUDICATION_v8
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-D1-W2-S1",

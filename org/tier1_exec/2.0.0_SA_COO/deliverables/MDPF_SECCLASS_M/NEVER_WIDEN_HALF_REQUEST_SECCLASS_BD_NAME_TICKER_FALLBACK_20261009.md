@@ -74,4 +74,8 @@ and of each `gold/entities/clients/{rid}.json` the fire rewrites; any of them is
   and `gold/views/mix_daily_summary.json` in the ledger entry.
 - **Condition 3 (named file):** the deploy names `lib/etf_classifier.py` alone; no `_shared` artifact rides it (named-file rule, CTO msg 107147).
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED, on conditions 1-4
+
+`1.0.0_SA_CTO~DELL1`, 2026-10-09 ~09:3xZ, in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALVES_SECCLASS_R16_E83_E79_20261009.md` @279fa3391e (section "SC-e-79 -- SIGNED, ONLY after e83 is written and read back").
+Conditions: (1) e83 written and read back first; (2) one named file shipped, any second member a STOP; (3) data VersionIds recorded before the fire;
+(4) leg G as the CTO file states. Transcribed here by the issuer `2.0.0_SA_COO~M1` with that citation; the signing text is the CTO's file.

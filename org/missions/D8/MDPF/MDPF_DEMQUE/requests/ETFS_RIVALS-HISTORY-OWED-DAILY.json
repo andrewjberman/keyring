@@ -1,6 +1,7 @@
 {
   "request_id": "ETFS_RIVALS-HISTORY-OWED-DAILY",
   "standing": true,
+  "shape": "standing",
   "tier": 3,
   "reason": "Rival Funds history owed (ETFS_RIVALS act 3, R24 standing daily request): the 11:00Z vehicle's enrichment leg asks up to HISTORY_OWED_CAP owed closes a run, checked against bbg_budget before any request. Andrew ~22:4xZ 2026-10-08: Rival Funds history is tier 3, 'on BBG ... daily little jobs'.",
   "page": "rival funds (ETFS_RIVALS)",
