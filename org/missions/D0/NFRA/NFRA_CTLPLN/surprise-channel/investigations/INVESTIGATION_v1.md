@@ -5660,3 +5660,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: commit those three paths from the worktree under your own author (or re-seat the order to a numeric slot and re-spawn); the lane gate will admit either."
 }
 ```
+
+## NFRA_CTLPLN-S36 -- W36-S2 handed to NFRA_TRNSPT, the owner of the transcripts-pull package
+
+```json
+{
+  "id": "NFRA_CTLPLN-S36",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-09T00:10:32Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-W36-S2: handed to NFRA_TRNSPT (owner of infra/aws/lambda/transcripts-pull/) as a row file from the laptop, on 1.0.0_SA_CTO msg 107481; COMM_ASSIST carries it by reference.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/ROWS_FROM_LAPTOP_COMM_ASSIST_TRANSCRIPTS_PULL_LINE_ENDINGS_20261008.md (merged 15afb82392)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W36-S2's disarm owner is 2.0.0_SA_COO~R; the surface is not COMM's.",
+  "world_is": "The finding now sits on NFRA_TRNSPT's channel for its owner (2.0.0_SA_COO~T2, dell2) to mint; W36-S2 stays ARMED in its own bytes (append-only).",
+  "notes": "Proposed disposition for the CVO: W36-S2 resolved by handover. COMM_ASSIST-S1's note names this row S35 in error; S35 was already minted by 2.0.0_SA_COO~C."
+}
+```
