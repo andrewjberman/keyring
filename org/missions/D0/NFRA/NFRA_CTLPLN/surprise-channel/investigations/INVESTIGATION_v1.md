@@ -6312,3 +6312,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "On dell1 it is not clean: it moves click DOWN from 8.5.0 to 8.3.1 and breaks one core dependency requirement (huggingface_hub needs >=8.4.2). The cell is still executable exactly as written -- this row does not refuse it and does not widen the bounds -- but the issuer owns the call on whether a downgrade that unsatisfies huggingface_hub is wanted on this box, and the order was cut on the laptop where the installed version may differ. CORRECTION WORTH RECORDING: a first pass over the requirement set counted 3 breaking dists (adding httpx2>=8.4.2 and scipy<8.3.0); both are gated behind extras (cli, dev) and are NOT core constraints, so the honest number is ONE. The instrument that fixes this is reading each Requirement's marker, not just its specifier. SCOPE: declared metadata only -- it does not exercise huggingface_hub against 8.3.1, so 'unsatisfied requirement' is a declared conflict, not an observed runtime failure."
 }
 ```
+
+## NFRA_CTLPLN-W14-S49 -- the transcripts key-policy renderer cannot load local.named_reader_arns from readers.tf, so CTa1-AC5 and the closing line of CTa1-AC7 cannot print
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T10:29:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S49",
+  "one_line": "check_transcripts_dell_decrypt.py cannot render the transcripts key policy since commit 0693227a69: main.tf now reads local.named_reader_arns, declared in readers.tf, which the checker's one-file render does not load; CTa1-AC5 and the final line of CTa1-AC7 (simulate_dell_parity imports the same renderer) cannot print.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/main.tf:103 'Principal = { AWS = local.named_reader_arns }'; infra/aws/terraform/transcripts/readers.tf:25 declares it (concat(var.reader_principal_arns, [aws_iam_role.second_reader.arn])). 0693227a69 (2026-10-09 04:32 -0400, NFRA_TRNSPT TO-TR-p18) added readers.tf.",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> rc=1, JSONDecodeError; terraform console stderr: 'Reference to undeclared local value ... named_reader_arns' (render_expression, check_transcripts_dell_decrypt.py:173-189, writes only main.tf's expression into a scratch root).",
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_dell_parity.py -> prints 'ARMS policy-documents: simulated=1500 equal=1500 unequal=0 ... unread=0', then raises the same JSONDecodeError at simulate_dell_parity.py:392 (ctd.render_expression) before the DELL-PARITY line. Neither file was edited by this amendment on that path.",
+      "Not fixed here: the render needs readers.tf's role ARN (a builder-minted name) resolved, which changes what the checker asserts about the reader statement; that is the transcripts workstream's call, not a rider on AMENDMENT 29."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 29 ACCEPTANCE: the seven ids CTa1-AC1..AC7 as stated after AMENDMENT 26, CTa1-AC5 reading the check's final line 'ok=True' and CTa1-AC7 reading 'DELL-PARITY arms=.. equal=.. unequal=0 ok=True'.",
+  "world_is": "Both lines are unobtainable at HEAD b681bbcd5a regardless of the SES change: the checker dies before its last line. The AMENDMENT 29 arms themselves read: planread_ok=428/428 all_ok=True; parity arms equal=1500 unequal=0 (printed before the crash)."
+}
+```
