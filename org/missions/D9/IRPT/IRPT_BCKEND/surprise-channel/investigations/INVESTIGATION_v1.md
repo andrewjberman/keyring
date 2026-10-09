@@ -22171,3 +22171,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both halves of the order's own evidence set were satisfied EXCEPT the import census, and the two disagree by construction: the suites exercise the module against a sys.path where `composition` carries CUSTODY_POLICY_REVISION, and the package ships a composition.py that does not. A green pytest run is therefore NOT evidence that a packaged module imports, whenever the package and the test path can resolve the same module name to different files -- and this function packages 62 modules, so the shadow is cheap to create and invisible until an in-package census runs. The remedy is a code decision this seat does not own: either custody_submission.py stops importing the name from `composition` (take it from where it is defined, or stage reports/composition.py as a packaged member the way trading_calendar.py is staged elsewhere), or the generate tree's composition.py defines it. Reads 3-7 were never reached, so no test filer, no on-behalf upload, no upload records, no resolve_upload message and no YCharts securities_info resolution were made; nothing is stranded and no S3 version was deleted. ONE RESIDUE IS LEFT DELIBERATELY VISIBLE: build-and-upload moved the source map's artifact_sha256 to emzWWzrR.. at step 2 and the deploy recorder was not run, so the map now disagrees with the live Un0wVZqj.. That is true and is left standing because the next act on this function is the fix, not a re-record."
 }
 ```
+
+## IRPT_BCKEND-D2-W188-S1 -- The IB-pr-380 rule is correct in the refresh Lambda but cannot operate in production from directory/ alone: the artifact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W188-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~188",
+  "surfaced_at": "2026-10-09T00:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule the runner cell) then 2.0.0_SA_COO~P2 (cut it): data/assets/scripts/gold/investor_reporting/directory_runner.py must land source_client_ids in the directory artifact and carry the previous build's source-removed entries into the landed directory.json, before cottonwood goes OVER_AGE on 2026-10-12",
+  "one_line": "The IB-pr-380 rule is correct in the refresh Lambda but cannot operate in production from directory/ alone: the artifact states no source snapshot (fail-closed REFRESH_FAILED stays) and the Lambda cannot write the carried TERMINATED entries into the served directory.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory_runner.py run_firm builds the payload (~line 930): top-level keys are schema, firm_id_opaque, directory_revision, as_of_business_date, source_completion_date, source_revision, census (counts), entries ... none carries the source's client keys; refresh.py SsmBuildDispatcher.__call__ can only read what the artifact holds.",
+      "infra/aws/terraform/investor-reporting/directory/schedule.tf: the refresh role has s3:GetObject on the directory prefix and s3:PutObject ONLY on _refresh/* (refresh_manifest_arns, lines ~212-233), so the Lambda cannot rewrite directory.json; the search readers read latest.json -> directory.json.",
+      "Consequence at 8953eccfca: refresh_firm carries the entry in the build dict it was handed (tests and real-case replay show READY + terminated_count 1 at both firms, deliverables/0.9.0_WK_IRPT_BCKEND~188/IB92-1_terminated_replay.json), but with the landed artifact as it is today the field source_client_ids is absent, so every disappeared entry stays REFRESH_FAILED, and a READY build would not make the entry visible to readers because the carried copy is never written to S3."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-380 and CTO ruling msg 1959: implement the rule in infra/aws/lambda/investor-reporting/directory/; the build goes READY and readers still see the entry marked TERMINATED; the after-read is a driven refresh READY at all 3 firms with terminated_count 1 at inflection and cottonwood.",
+  "world_is": "Built to the paths granted (directory/ and the source map), the rule is complete and proven offline, and it is fail-closed: an artifact that states no source_client_ids changes nothing. The directory_runner (outside this order's paths, minted into the host bundle irpt_runner_bundle_uri) must emit source_client_ids (the keys the source snapshot holds, same key space as ids.client_id/relationship_id) and must carry forward the previous build's source-removed entries as TERMINATED into the landed artifact, or no refresh after this release can go READY at inflection and cottonwood, and no reader sees a carried entry. The packet names this as the precondition of the after-read. This release alone does not change the live outcome."
+}
+```
+
+## IRPT_BCKEND-D2-W188-S2 -- From a fire dated 2026-10-09 the refresh's previous-state read (last_manifest, limit 10 trading days) no longer sees inf
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W188-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~188",
+  "surfaced_at": "2026-10-09T00:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule how the previous-state read must behave when the last accounted-completion manifest is older than the walk window), then 2.0.0_SA_COO~P2 recuts the cell, before the next inflection fire after 2026-10-08",
+  "one_line": "From a fire dated 2026-10-09 the refresh's previous-state read (last_manifest, limit 10 trading days) no longer sees inflection's last READY build (2026-09-25), so previous_entries is None and the disappearance check, and with it the TERMINATED carry-forward, goes dark.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read live with the live zip's own refresh.last_manifest (client = s3, AWS reads): inflection at 2026-10-08 -> manifest 2026-09-25 (directory_key .../2026-09-25/directory.json); at 2026-10-09 -> None. Cottonwood (last READY 2026-10-05) and 49financial are unaffected: 2026-10-09 -> found.",
+      "inflection _refresh/ holds REFRESH_FAILED manifests for every fire from 2026-09-29 to 2026-10-08 and no READY after 2026-09-25 (the manifest list printed from the live bucket this session).",
+      "refresh.py last_manifest: days[-limit:] with limit=10 trading days; 2026-09-25 is the 11th trading day back from 2026-10-09.",
+      "With previous_entries None, compute_delta reports every entry as added and 0 disappeared, so the build goes REFRESH_COMPLETED_WITH_ADDITIONS (294 added) and the dropped household leaves the served directory without being carried."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-380 after-read: a driven refresh READY at all 3 firms with terminated_count 1 at inflection, read at each manifest's own as_of; the fire compares the new build to the last READY build.",
+  "world_is": "The replay was run with fire date 2026-10-08 because that is the last date on which the live code can see inflection's previous READY build. A scheduled fire on or after 2026-10-09 compares against nothing at inflection: READY with a false 294 additions and terminated_count 0, not the specified 1. A driven refresh with event business_date 2026-10-08 would still see it. The window is outside this order's rule and was not widened."
+}
+```
+
+## IRPT_BCKEND-D2-W188-S3 -- DirectoryEntry.schema.json has no home for source_removed_on (termination and the entry are additionalProperties false),
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W188-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~188",
+  "surfaced_at": "2026-10-09T00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DirectoryEntry.schema.json has no home for source_removed_on (termination and the entry are additionalProperties false), so the marker is written to termination.effective_date plus a capability_facts string.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json: termination.properties = indicator, effective_date; termination.additionalProperties false; the entry root additionalProperties false with ten declared properties.",
+      "refresh.py SOURCE_REMOVED_FACT_PREFIX / carry_forward_terminated at 8953eccfca; test_terminated_carry_forward_carried_entry_stays_schema_valid validates a carried entry against the schema."
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 1959: the carried entry is marked TERMINATED with source_removed_on.",
+  "world_is": "A literal termination.source_removed_on key would make every served carried entry schema-invalid, and the contract is not in this order's paths. The date is therefore effective_date (when the termination took effect) and a capability_facts marker 'source_removed_on=YYYY-MM-DD ...', which the next refresh reads back to keep the first date. A named contract field is a contract change for the CTO and the contract's owner."
+}
+```
