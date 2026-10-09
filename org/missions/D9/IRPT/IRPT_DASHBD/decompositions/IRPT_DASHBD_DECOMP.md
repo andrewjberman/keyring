@@ -23,7 +23,7 @@ under C-LEASE and is not decomposed here. Workstream F has its own decomposition
   "cells_round1": 4,
   "cell_id_shape": "DB-b-<n> (workstream B); workstream F's decomposition uses its own prefix",
   "executors": "0.4.0_DS_ClientPlatform~S (the DS-lane cells, rule 13) and 0.9.0_WK_IRPT_DASHBD~<slot> (the Lambda/Terraform cells)",
-  "thread_account": "0027265115 (49 Financial, Schwab master 08335338; Black Diamond relationship 22596361 in blackdiamond/49f/_ops/taxsma_roster.json), with the roster's other four active accounts as the round-1 sample",
+  "thread_account": "acct#e7ab8585 (49 Financial, Schwab master 08335338; Black Diamond relationship 22596361 in blackdiamond/49f/_ops/taxsma_roster.json), with the roster's other four active accounts as the round-1 sample",
   "cut_head": "stated in the issuance commit"
 }
 ```
@@ -44,8 +44,8 @@ gold `address("irpt","49financial","gold","account_return_daily","date=2026-09-2
 `s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-29`;
 `address("irpt","49financial","gold","dim_return_method","method_version=1")` ->
 `s3://opal-data-49financial/irpt/49financial/gold/dim_return_method/method_version=1`;
-platinum `address("irpt","49financial","platinum","reporting","account=0027265115","series.json.gz")` ->
-`s3://opal-data-49financial/irpt/49financial/platinum/reporting/account=0027265115/series.json.gz` (and `manifest.json`);
+platinum `address("irpt","49financial","platinum","reporting","account=acct#e7ab8585","series.json.gz")` ->
+`s3://opal-data-49financial/irpt/49financial/platinum/reporting/account=acct#e7ab8585/series.json.gz` (and `manifest.json`);
 names `name("irpt","49financial","reporting-publish","lambda")` -> `irpt-49f-reporting-publish-lambda`,
 `("irpt","49financial","reporting-publish","daily")` -> `irpt-49f-reporting-publish-daily`,
 `("irpt","49financial","reporting-publish","role")` -> `irpt-49f-reporting-publish-role`,
@@ -104,7 +104,7 @@ list section 3 read as this round's rectangle. PRD v0.6 @aabc054e89, both halves
 | cell | serves | risk | depends on | chain |
 |---|---|---|---|---|
 | `DB-b-5` | E1, FWD-1 (the served leg): apply both planned roots -- `infra/aws/terraform/investor-reporting/reporting-publish/` (7 to add; the Lambda `irpt-49f-reporting-publish-lambda`, its roles and policies, schedule `irpt-49f-reporting-publish-daily` `cron(15 8 ? * MON-FRI *)` America/New_York, the production trigger; the gold it reads is T-1) and `infra/aws/terraform/investor-reporting/reporting-read/` (8 to add; `irpt-49f-reporting-read-lambda`, read-only on `opal-data-49financial/irpt/49financial/platinum/reporting/*`, its route on the IRPT API) -- under ONE packet with both never-widen halves and ONE ledger. THE ISSUER'S SERVED ACT, not a worker order (as round 1 said of both applies). Acceptance: workstream F's signed-in page fetches one account's series through `GET /api/scoped/investor-reporting/reporting/{account_id}/{which}` -- that fetch is FWD-1's real run (F's hop, `2.0.0_SA_COO~D` under C-LEASE). | WORLD | round 1 (merged @9000ce5a08) | C |
-| `DB-b-6` | E3, FWD-8 enrichment (PRD v0.6 ruling 25): name the leg behind the 1,498.38 USD flow residual on 0027265115 -- an in-kind leg valued differently, or a leg classed internal here and external at the vendor -- from the LANDED responses (Schwab silver, Black Diamond bronze); no vendor call. Read cell, one record. | LOCAL | none | D |
+| `DB-b-6` | E3, FWD-8 enrichment (PRD v0.6 ruling 25): name the leg behind the 1,498.38 USD flow residual on acct#e7ab8585 -- an in-kind leg valued differently, or a leg classed internal here and external at the vendor -- from the LANDED responses (Schwab silver, Black Diamond bronze); no vendor call. Read cell, one record. | LOCAL | none | D |
 
 **E2 is a row, not a cell** (the analysis): the retention family for `series.json.gz` (row W1-S1) goes to the registry's owner as
 row `IRPT_DASHBD-S12`. **Carried, not cut:** like-day tie-out windows (Andrew's per-use vendor word, ruling 23); FWD-8's tolerance
@@ -194,7 +194,7 @@ fanout: 1 of 2 chains, cap 8, reason: one worktree (disk 7.0 GB free); DB-b-11 t
 ## 6. ROUND 6, WORKSTREAM B (2026-10-02 ~19:2xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 181 @57e16650b5 and batch 182 @ff0acc0bc5)
 
 FWD-8's tolerance is ruled at 0.35 pp per like-day window. Of round 4's 14 pairs, 11 are within it and 3 are beyond. FWD-8 grades
-REALIZED once each is dispositioned: S22 (0027265115 06-25, the short-account income sign) is fixed and re-measured, and the other
+REALIZED once each is dispositioned: S22 (acct#e7ab8585 06-25, the short-account income sign) is fixed and re-measured, and the other
 two carry a stated reason. The tolerance is written into `dim_return_method` by its producer. The ruling says "the next round-4
 cell"; GATE (x) refuses a new file into rounds 4 and 5, so this is ROUND 6 (IRPT_BCKEND row S267).
 

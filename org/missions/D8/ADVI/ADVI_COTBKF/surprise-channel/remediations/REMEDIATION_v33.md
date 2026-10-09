@@ -6,34 +6,6 @@ Rounds 47-48 L8 compile by `3.0.0_SA_CVO` (seated on dell2), 2026-10-09 ~16:0xZ.
 W72-S1 closed in place (REMEDIATION_v31). Graduated, round label v49: 2 rows, OPEN. ARMED: 0 (D2-S72 is latent while rps is empty).
 Correction to this seat's round-41 grade: it measured the served bytes, not the import closure on the mirror; D2-S72 is that miss.
 
-Compile record:
-
-```json
-[
- {
-  "id": "ADVI_COTBKF-C-S43",
-  "project": "ADVI_COTBKF",
-  "fabric": "laptop",
-  "surfaced_by": "3.0.0_SA_CVO",
-  "surfaced_at": "2026-10-09T16:08:12Z",
-  "one_line": "Rounds 47 and 48 compiled; no row dismissed. Closed in place, clocks only: D2-W72-S1 (the remaining split key literals swept onto legacy_addresses rows: 0 across 39 files, validate OK, keys unchanged). D2-S72 (BLOCKING: the LIVE round-41 B_00 imports opal_naming at run time and the cot code mirror carries none) and D2-W75-S1 (the writer's module-level opal_naming import, the same gap) graduate. Correction to this seat's round-41 grade: it read the served bytes equal to the repo but did not check the module's import closure on the mirror; D2-S72 is that miss.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "adjudicates": [],
-  "spec_asserts": "Spine L9/L10.",
-  "world_is": "Both rounds MAY-CLOSE; round 47's method_version-3 content is ready for the CB-al-2 mint.",
-  "grounding": {
-   "status": "GROUNDED",
-   "evidence": [
-    "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUNDS_47_48_DRAIN_END_20261009.md @b80e9e58b4 (msg 3614)"
-   ]
-  },
-  "disposition": "DISMISSED_WITH_REASON",
-  "dismissal_reason": "A compile record."
- }
-]
-```
-
 ```json
 [
  {
