@@ -1,4 +1,4 @@
-# NFRA_MCPORTAL -- rounds 3-4 L8 compile + L9 (site Z) -- 14 of 14 undispositioned rows dispositioned; FWD-14 NOT REALIZED (built, not released); L10 precondition MET
+# NFRA_MCPORTAL -- rounds 3-4 L8 compile + L9 (site Z) -- 14 of 14 undispositioned rows dispositioned; FWD-14 NOT REALIZED (built, not released); L10 precondition NOT MET at the project grain (2 staged round-3 orders)
 
 Author: 3.0.0_SA_CVO~Z, signing for 3.0.0_SA_CVO~O (not seated; 3.0.0_SA_CVO~Z signed v0.5's ratified half @8de5b2dc76).
 Round: v3. Fabric: site-z. Recorded: 2026-10-09T00:3xZ.
@@ -44,7 +44,14 @@ on MP-x-5 in round 5.
 
 Both orders are terminal. Every BLOCKING row (Z-W1-S6, Z-W5-S2) and every OPEN ARMED row (Z-S10) is dispositioned here. The ARMED
 rows that remain are graduated rows from round 1 with owners: Z-W3-S3 and Z-C-S10 (`REMEDIATION_v1.Z.md`,
-2.0.0_SA_COO~O), and Z-W1-S1 (1.0.0_SA_CTO). They are dispositioned, not disarmed, and the slug names them. **MET.**
+2.0.0_SA_COO~O), and Z-W1-S1 (1.0.0_SA_CTO). They are dispositioned, not disarmed, and the slug names them.
+
+**NOT MET at the project grain (corrected 2026-10-09 ~00:5xZ).** Round 4's 2 orders are terminal, but the surprise-row gate
+reads every order of the project. 2 of 20 are not terminal at HEAD: `NFRA_MCPORTAL.TO-MP-c-1.fwd1-close-run.md` [staged]
+(the FWD-1 close run, held by Andrew until gateway r29) and `NFRA_MCPORTAL.TO-MP-v-1.fwd2-live-arms.md` [staged]. So the
+slug's remediation rows (`REMEDIATION_v3.Z.md`, and Z-W2-S3's in-place advance) are written but not landed. They land
+when both orders are terminal or when a named exception is recorded. That is the issuer's and the CTO's call, not this
+seat's.
 
 ```json
 [
