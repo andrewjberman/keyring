@@ -47284,3 +47284,19 @@ REFUSED_20261008)
 2026-10-09T16:29:25Z PASS  0.7.0_AE_CloudOps~MP  3  (all paths in-lane)
 2026-10-09T16:29:36Z PASS  0.7.0_AE_CloudOps~MP  3  (all paths in-lane)
 2026-10-09T16:31:59Z PASS  3.0.0_SA_CVO~Z  1  (all paths in-lane)
+2026-10-09T16:33:14Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:33:30Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:33:38Z PASS  3.0.0_SA_CVO~Z  1  (all paths in-lane)
+2026-10-09T16:34:07Z LANDED-2P  0.0.0_AB_MSTR~Z  5b36980631  paths=1  validate=72.21s  wait=0.95s  hold=7.18s  build=4.24s  ref=2.18s  post-commit=16.33s  attempt=1
+2026-10-09T16:34:14Z LANDED-2P  3.0.0_SA_CVO~Z  ab2d669439  paths=1  validate=242.15s  wait=1.38s  hold=6.42s  build=4.52s  ref=1.47s  post-commit=14.84s  attempt=1
+2026-10-09T16:35:04Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=14.39  graded=n/a  args=(--verify-merge e1ceb5234c72e789ce36c4f5f19c681c6ea0aba9)  first=(none)
+2026-10-09T16:35:17Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=190.45  held=dirty-overlap graded=2/295
+2026-10-09T16:35:23Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T16:35:24Z PASS  0.9.0_WK_NFRA_OPLGTW~48  5  (all paths in-lane)
+2026-10-09T16:35:39Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T16:35:46Z PASS  0.9.0_WK_NFRA_OPLGTW~48  5  (all paths in-lane)
+2026-10-09T16:36:08Z LANDED-2P  2.0.0_SA_COO~ZZ  0ef79d6bf9  paths=1  validate=61.97s  wait=0.48s  hold=4.41s  build=2.32s  ref=1.86s  post-commit=12.94s  attempt=1
+2026-10-09T16:38:10Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=0  secs=20.52  graded=0/5 fast-lane  args=(wk-NFRA_OPLGTW-33-48 -m drain(NFRA_OPLGTW.TO-OG-tl-1 Phase C, 2.0.0_SA_COO~O): merge worker ~48 @2fa7afd9ec -- TL1_READ host-attested on c97232408d: allowlist 4 ids (sha bd206c96...), only TRANSCRIPT_MEETING_ALLOWLIST changed (basis recorded outside the body); proof VALID)  first=(none)
+2026-10-09T16:40:10Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:40:24Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T16:40:52Z LANDED-2P  0.0.0_AB_MSTR~Z  d1c68bcb32  paths=1  validate=49.08s  wait=0.50s  hold=4.01s  build=2.66s  ref=1.28s  post-commit=11.58s  attempt=1
