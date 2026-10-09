@@ -5117,6 +5117,32 @@
     "spec_asserts": "The gate's acceptance sweep reports the slug's own round's orders; the staleness limb measures rounds against `remediation.round`",
     "world_is": "In ETFS_RIVALS the remediation rows' `round` holds the file version (vN), not the task-order round, so the acceptance note names the wrong round's orders and the staleness limb counts file versions. Both are notes, never refusals, so no slug is blocked; the note is simply about the wrong object",
     "notes": "Owner of the call: 1.0.0_SA_CTO~Z (which value `round` carries); the write is this project's slug author (3.0.0_SA_CVO~RV) or the gate's author. Changing new rows to the task-order round alone would mix two units in the staleness limb's comparison."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S79",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-10-09T02:26Z",
+    "one_line": "RIV-tw-1's J1 reads the \"2026-10-08 and later\" vehicle logs for \"the enrichment leg's lines and exit code unchanged with the switch unset\", and the 2026-10-08 11:00Z scheduled log cannot answer it: the enrichment leg died at vendor-session start (blpapi could not reach 127.0.0.1:8194, Terminal signed out; session pool state=Failed, 3 attempts) and exited 97 -- nothing written -- before any `daily` code path ran. So that log's ZERO HISTORY OWED lines is evidence the leg NEVER EXERCISED THE SWITCH, not evidence the switch is off. Graded as-is it is a FALSE PASS on the only criterion of the cell that the instrument cannot settle, and J1's own wording invites it by naming a DATE RANGE rather than a run that reached the leg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The criterion, verbatim at org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-tw-1.the-daily-leg-asks-for-owed-closes-request-off-by-default.md:88 -- \"**J1** (judgment, graded by 3.0.0_SA_CVO~RV on the issuer's real read, never by you): the 2026-10-08 and later vehicle logs show the enrichment leg's lines and exit code unchanged with the switch unset.\" (printed at the cited line, 2026-10-09T02:2xZ).",
+        "The log: C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261008_070001.log, 11932 bytes / 137 lines, written by Scheduled Task OPAL_BBGTML_daily_pull (Get-ScheduledTaskInfo: lastRun 10/8/2026 7:00:01 AM local = 11:00Z, LastTaskResult 50).",
+        "DENOMINATOR over the whole file: \"HISTORY OWED\" occurs 0 times; \"STEP\"/\"EXIT CODE\" lines are exactly 3 -- L86 \"RIVALFUNDS BLOOMBERG LEG EXIT CODE: 93 -- nothing written. Other legs UNAFFECTED.\", L87 \"RIVALFUNDS ENRICHMENT STEP (RIV-e-1)\", L137 \"RIVALFUNDS ENRICHMENT EXIT CODE: 97 -- nothing written.\"",
+        "THE CAUSE, which is what voids the zero (L129-L136): repeated \"WARN apicm_apiconnector.cpp:367 ... Failed to connect to 127.0.0.1:8194, status=1, error 8 connect event failed\"; \"session pool state=Failed\"; \"Platform failed 3 consecutive times, stopped trying to reconnect\"; \"ERROR blpapi_sessionimpl.cpp:2913 ... Failed to start session\"; and the leg's own result JSON: {\"status\": \"FAILED\", ... \"failures\": {\"batch-0\": \"BloombergError: could not start blpapi session to 127.0.0.1:8194 (is the Terminal running + logged in?)\"}, \"responses\": 0} with \"market\": {... \"unreachable\": true, \"session_attempts\": 3 ...}.",
+        "The leg's own contract makes the absence structural, not behavioural: the same task order at :67 states the job runs `python -m rivalfunds.enrichment_bloomberg --mode daily` from the working tree and that with the switch OFF \"Nothing may be added to the OFF path, not an import, not a log line\". A run whose vendor session never starts produces the OFF path's line set AND the broken path's line set identically for this criterion's purposes -- the two are indistinguishable on the printed evidence alone, which is the defect.",
+        "Not a one-off of that morning only: the upstream leg on the same fire also failed differently (L85 result JSON \"status\": \"SKIPPED\" with \"captures\": {\"2026-10-07\": \"BAD-ANCHOR\"}, exit 93), so the 2026-10-08 fire is a degraded day on two legs, not a clean baseline on either."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "J1 (:88): the 2026-10-08 and later vehicle logs show the enrichment leg's lines and exit code UNCHANGED WITH THE SWITCH UNSET -- i.e. the scheduled daily fire exercised the OFF path and printed what the pre-change module printed.",
+    "world_is": "The 2026-10-08 11:00Z fire never reached the OFF path: blpapi could not start a session to the Terminal (signed out), the leg exited 97 with nothing written, and 0 HISTORY OWED lines were printed because no leg code ran, not because the switch is off. ABSENT is not EXERCISED-AGAINST. The criterion is therefore UNVERIFIABLE on 2026-10-08 and stays so until a fire reaches the leg; the next candidate is the 2026-10-09 11:00Z fire (OPAL_BBGTML_daily_pull, nextRun 10/9/2026 7:00:00 AM local, state Ready), and that fire is itself conditional on the Terminal being signed in at 07:00 local -- bloomberg_health read ok:true at 2026-10-09T01:1xZ, which is a reading about 01:1xZ and not a promise about 11:00Z.",
+    "notes": "SURFACED, NOT DISPATCHED, and nothing here grades J1 -- the grade is 3.0.0_SA_CVO~RV's on the issuer's real read (:88) and this seat is expressly not its grader. The ARMED standing is about the NEXT NORMAL ACT: a J1 read that takes the date range at face value consumes a non-exercising run as a pass, and the disarm is one sentence from the issuer -- that J1 is read on the first fire that REACHED the enrichment leg, not on the earliest date in the range. Hence disarm_owner 2.0.0_SA_COO~RV (the issuer of RIV-tw-1), not the CVO and not this seat. Durable form of the fix, for whoever takes it: J1's evidence predicate should name a REACHED-LEG condition (the leg's own exit code being the normal one, or the step line present with a non-97 exit) rather than a calendar date, so that a vendor-down morning reads UNVERIFIABLE instead of PASS. This seat's own act on the ask it received is the verbatim transcription under deliverables/0.0.3_BG_BBGTerminal/, which carries this caveat in the file so the transcription cannot be read as a pass."
   }
 ]
 ```
