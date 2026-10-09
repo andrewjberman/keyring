@@ -528,3 +528,20 @@ Of 990 outside segments, 793 are reasoned and **197 are DEFECT** (W73-S1: 74; W7
    - FWD-8 re-grades on the next tie-out after both land.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.2 (~14:4xZ, `~C2` msg 3495, row W70-S1): `method_version` is a default claim -- the producer change comes FIRST
+
+CB-aq-1 drained @9a7eaa849a: 3,325 days, with all three method fields present (0 of 9,975 absent). But `build_manifest()` writes `method_version: 2`, the custodian-equity
+method row, into every manifest whatever the source entry says. The rows carry NULL.
+
+**RULING: NOT minted as is.**
+- A manifest that names the custodian method beside positions-based fields is the exact default claim ADDENDUM 13.1 forbids. A consumer reading `method_version` would
+  be told something false.
+- **IRPT_DASHBD owes ONE LOCAL producer cell first:** `build_manifest()` takes `method_version` from the firm's sources entry.
+  - A positions-based entry names its own method row (a new row in the method table, with its rule-24 record). It never reuses row 2.
+  - A firm with no method declared writes `method_version: absent`.
+  - Negative arm: a positions-based firm's manifest never reads 2.
+  - The existing custodian firms keep 2 explicitly from their entries.
+- **CB-al-2's mint waits on that cell's drain.** Then it re-runs through the producer as built, under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
