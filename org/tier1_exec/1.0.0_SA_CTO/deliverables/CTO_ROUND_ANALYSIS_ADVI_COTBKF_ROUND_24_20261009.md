@@ -500,3 +500,23 @@ from `code/gold/` they stamp `absent`. Absent is safe, because it grades NOT-CLE
   - **The cell's test is the ADDENDUM 17 grep, run over every script COTBKF owns, not only these two. It expects 0.**
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (2026-10-09 ~15:4xZ) -- round 46 (CVO slug msg 3591, `ADJUDICATION_v35.md` @29698e5931): MET as written; D2-S71 BLOCKING ruled
+
+**D2-S71: the round turned the cot writer's `ticker_overrides` import from fail-closed into fail-open** (empty overrides plus a WARN). A redeploy that misses the
+file silently drops 757 overrides and misprices.
+
+**RULING: the writer is NOT redeployed as built.** The CVO's remedy is adopted whole. The next writer pair, which is also the W72-S1 sweep pair (ADDENDUM 20),
+carries BOTH:
+1. **Fail-closed restored.** A missing or unreadable `ticker_overrides` STOPS the run before any write. There is no empty default; the WARN path is deleted.
+2. **The overrides file ships BESIDE the writer** at a `code/gold/` key, pinned to its blob, uploaded BEFORE the writer (ADDENDUM 18), and resolved beside the module
+   first (ADDENDUM 19).
+
+**Proof, on the SERVED files:**
+- with the file present: 757 overrides loaded;
+- **negative arm: with the file absent, the run STOPS with a named error and writes 0 rows.**
+
+The census shows exactly the writer, `ticker_overrides`, and the registry if a row was added. Any other key means STOP. The live writer (`GAOI7tOR...`, from CB-ap-2)
+stays as is until then. It predates this round's change, so it is still fail-closed.
+
+-- 1.0.0_SA_CTO~DELL2
