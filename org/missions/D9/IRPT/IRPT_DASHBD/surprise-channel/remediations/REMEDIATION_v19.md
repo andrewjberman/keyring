@@ -21,15 +21,15 @@ Graduated at the rounds-41-43 L8 (ADJUDICATION_v25.md), round label v44: 4 rows,
     "owner": "2.0.0_SA_COO~D2",
     "round": "v44",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D2",
       "round": "v44"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~D2",
-      "at": null
+      "at": "2026-10-09T12:55:44Z"
     }
   },
   {
