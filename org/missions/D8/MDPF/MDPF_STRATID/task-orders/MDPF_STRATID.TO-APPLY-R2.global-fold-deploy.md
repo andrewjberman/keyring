@@ -25,9 +25,21 @@ decompositions/MDPF_STRATID_DECOMP_R2.md, under the signed never-widen pair. -->
 - **CTO half:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_STRATID_R2_COTTONWOOD_OUTSIDE_20261009.md` @07ee308141, signed by
   laptop `1.0.0_SA_CTO` with five conditions. This order carries conditions 3 and 4; the issuer carries 1, 2 and 5 at the real-run
   read.
-- **Pin:** `f1deec74b1`.
+- **Pin:** the issuer's drain merge commit on box/dell1, named in the step-2 message. It carries two chains:
+  - `wk-MDPF_STRATID-r2-7` (tip `f1deec74b1`, round 2, under the pair);
+  - `wk-MDPF_STRATID-w2-7` (tip `22e11fae54`, ST-w-7, decomposition W2 amendment A10).
+
+  ST-w-7 adds the key `unidentified_strategies` to the per-firm Cottonwood slice. It moves no figure and sits outside C-GLOBAL-PAIR;
+  it ships in the same act under the same entry. The issuer re-ran it at `22e11fae54`: w2_7_tests/seam, w2_3 and w2_4 OK, 758 tests
+  passed, ruff clean. The one failure is `test_cotbkf_no_account_ids`, ADVI_COTBKF's client-data containment test over that project's
+  own files; it is unrelated to this chain.
+- **Rollback handles** (current VersionIds, read 2026-10-09 ~17:4xZ):
+  - `code/scripts/gold/mdpf_gold_consolidator.py` `8sZntN5G7HuzCaybxkmSnH3d3CKZWNCY`;
+  - `code/scripts/gold/mdpf_category_registry.py` `2cCTChC_fGrf7ZXmlt4rvnWScPdFSex.`;
+  - `code/scripts/assets_gold/build_cottonwood_mdpf_slice.py` `Xki2TZ7vXhS6btiNeg3Hl5ASuf3Fq89i` (84,601 B, 2026-10-08T22:03:48Z).
 - **Two homes:**
-  - **D1:** `s3://opal-data-mdpf/code/scripts/gold/{mdpf_gold_consolidator,mdpf_category_registry}.py`, via the box/dell1 push gate.
+  - **D1:** `s3://opal-data-mdpf/code/scripts/gold/{mdpf_gold_consolidator,mdpf_category_registry}.py` and
+    `s3://opal-data-mdpf/code/scripts/assets_gold/build_cottonwood_mdpf_slice.py`, via the box/dell1 push gate.
   - **D2:** `mdpf-gold-lambda`, via `build_package.py` at the pin plus a targeted `safe-apply`.
 
 ## Condition 3 -- import closure (read by the issuer 2026-10-09 ~17:3xZ; re-read it yourself before D1)
@@ -45,15 +57,15 @@ decompositions/MDPF_STRATID_DECOMP_R2.md, under the signed never-widen pair. -->
 ## THE ACT, in this order
 
 1. **Open the change-management entry** (condition 4; NEVER-2), as yourself, before anything ships:
-   `python .tools/deploy_ledger.py open --slug mdpf-stratid-r2-global-fold --title "MDPF_STRATID round 2: Cottonwood OUTSIDE + held-out stated (pin f1deec74b1)" --author 0.7.0_AE_CloudOps~DELL1 --leg "L1|s3-code|data/mdpf/scripts/gold/mdpf_gold_consolidator.py|s3 sha256 == git show f1deec74b1" --leg "L2|s3-code|data/mdpf/scripts/gold/mdpf_category_registry.py|s3 sha256 == git show f1deec74b1" --lambda mdpf-gold-lambda --leg "L4|verify|next scheduled mdpf-scheduled-floor fire|issuer's r2_run_read.py prints R2-RUN-READ PASS"`.
+   `python .tools/deploy_ledger.py open --slug mdpf-stratid-r2-global-fold --title "MDPF_STRATID round 2 + ST-w-7: Cottonwood OUTSIDE, held-out stated, unidentified list on the slice" --author 0.7.0_AE_CloudOps~DELL1 --leg "L1|s3-code|data/mdpf/scripts/gold/mdpf_gold_consolidator.py|s3 sha256 == git show <merge>" --leg "L2|s3-code|data/mdpf/scripts/gold/mdpf_category_registry.py|s3 sha256 == git show <merge>" --leg "L3|s3-code|data/assets/scripts/gold/build_cottonwood_mdpf_slice.py|s3 sha256 == git show <merge>" --lambda mdpf-gold-lambda --leg "L4|verify|next scheduled mdpf-scheduled-floor fire|issuer's r2_run_read.py prints R2-RUN-READ PASS"`.
    Commit it, then tell `2.0.0_SA_COO~S1`, citing this order, that the entry is open. Do nothing more until step 2 lands.
-2. **The issuer merges** the chain `wk-MDPF_STRATID-r2-7` (tip `f1deec74b1`) into box/dell1, and `0.0.0_AB_MSTR~DELL1`'s box push carries
-   both files through the push gate (D1).
-3. **After the push**, read back each D1 key: the S3 object's sha256 must equal `git show f1deec74b1:<path>`'s, and its LastModified
-   must be after the entry's open time. Close legs L1 and L2 with that proof.
-4. **D2:** `build_package.py` at `--pin f1deec74b1`, the upload, and a targeted `safe-apply` on the function per the package's own
+2. **The issuer merges** both chains into box/dell1 and names the merge commit to you. `0.0.0_AB_MSTR~DELL1`'s box push then carries
+   the three files through the push gate (D1).
+3. **After the push**, read back each D1 key: the S3 object's sha256 must equal `git show <merge>:<path>`'s, and its LastModified
+   must be after the entry's open time. Close legs L1, L2 and L3 with that proof.
+4. **D2:** `build_package.py` at `--pin <merge>`, the upload, and a targeted `safe-apply` on the function per the package's own
    README.
-   - Read back the deployed package's manifest: both changed files' sha256 must equal the pin's.
+   - Read back the deployed package's manifest: the three changed files' sha256 must equal the pin's.
    - Then invoke nothing. The scheduled fire is the run.
    - Close the tf-lambda leg.
 5. Leg L4 (the scheduled run) stays the issuer's.
@@ -76,8 +88,8 @@ decompositions/MDPF_STRATID_DECOMP_R2.md, under the signed never-widen pair. -->
 <criterion id="APPLY-R2-AC1" cell_refs="ST-u-1"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/R2_CHECKS/st_u1_seam.py</invocation><expect>SEAM-OK</expect></criterion>
 `APPLY-R2-AC1` -- run against the box/dell1 tree after the merge and before D2, so the code you package passes the seam on real data.
 <criterion id="APPLY-R2-AC2" cell_refs="ST-u-1" judgment="true"/>
-`APPLY-R2-AC2` -- both D1 keys and the D2 package equal the pin by content. Legs L1, L2 and the tf-lambda leg are closed with that
-proof.
+`APPLY-R2-AC2` -- the three D1 keys and the D2 package equal the pin by content. Legs L1, L2, L3 and the tf-lambda leg are closed
+with that proof.
 
 <expected_criteria>APPLY-R2-AC1 APPLY-R2-AC2</expected_criteria>
 
@@ -102,5 +114,5 @@ risk: WORLD -- a code upload the scheduled pipeline executes.
 direct_act: true -- an executor apply order, round-less, no cell.
 </preflight>
 
-**REPORT:** the entry path, both D1 sha256 pairs and VersionIds (before and after), the D2 manifest read, and each leg closed.
+**REPORT:** the entry path, the three D1 sha256 pairs and VersionIds (before and after), the D2 manifest read, and each leg closed.
 </task_order>
