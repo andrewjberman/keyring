@@ -78,6 +78,67 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "An issuer opens a crossbox ORDER and commits it so the other box pulls it (crossbox-call.py NEXT line).",
     "world_is": "The lane on org/devices/** refuses a COO's commit of the ORDER file; the file sits uncommitted until a permitted seat commits it.",
     "notes": "Worked around by asking 1.0.0_SA_CTO~DELL1 to commit the two files; the order files themselves (e9fe72e427, e3b33d03c4) are committed. Remedy owner: the NFRA_CTLPLN lane's grantor (a lane-ANY carve-out for org/devices/crossbox/), not this seat."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~25",
+    "surfaced_at": "2026-10-09T06:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-D1-W25-S1",
+    "one_line": "RIV-wc-1 cannot keep two script-size caps green: test_r24cu1_chart_frame_ticks_tip.py::test_script_shape (<= 7369+3000 = 10369 bytes) and test_r25mr1_marker_readout.py::test_script_growth_bound (<= 9348+600 = 9948 bytes) cap CHART_SCRIPT, which is 9502 bytes at the base and 10595 with the cell; neither test is in the order's <paths>",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order says 'every other test stays green' and its <paths> name only test_r21pl1 and test_r18tl1 as tests to update.",
+    "world_is": "The cell (tradehead, a windowed tradelines, putTrades with the empty-window sentence, adjwords and the dialog line) adds 1093 bytes to the one script. r25mr1's cap (9948) leaves 446 bytes of growth and r24cu1's (10369) leaves 867; the 9502-byte base was already above r24cu1's pre-r25 figure of growth. AC1 passes; the rivalfunds suite ends at 3 failed, 918 passed, 6 skipped, and these two are 2 of the 3.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest -q rivalfunds/tests from data/etfs/scripts at branch wk-ETFS_RIVALS-25: 'assert 10595 <= (7369 + 3000)' and 'assert 10595 <= (9348 + 600)'",
+        "len(CHART_SCRIPT.encode()) at box/dell1 base render.py = 9502"
+      ]
+    },
+    "notes": "Not edited: the two tests are outside <paths>. Remedy for the issuer: widen both caps to the new figure (a one-number edit each) in a later order or at the merge, or rule that the cell must shrink. Owner: 2.0.0_SA_COO~V1."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~25",
+    "surfaced_at": "2026-10-09T06:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-D1-W25-S2",
+    "one_line": "test_r15md1_chart_frame_and_script.py:63 pins the static placeholder \"The fund's trades over the last 365 days load with the chart.\", which the order's own interface item 1 ('No static text names 365 days') and AC1 arm (a) forbid; the test is not in <paths>",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Item 5 lists test_r21pl1 and test_r18tl1 as the only tests that pin the old heading, and says every other test stays green.",
+    "world_is": "AC1 arm (a) fails if '365 days' appears anywhere in _trade_list([]), so the placeholder had to become \"The fund's trades load with the chart.\"; test_r15md1::test_the_trades_are_in_the_frame_in_words_and_a_fund_without_one_says_so asserts the old sentence and now fails (third of the 3 suite failures).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "render.py HEADP / _trade_list at this branch; test_r15md1_chart_frame_and_script.py:63"
+      ]
+    },
+    "notes": "Not edited (outside <paths>). The one-line fix is to replace the old sentence with the new one in that assertion. Owner: 2.0.0_SA_COO~V1."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~25",
+    "surfaced_at": "2026-10-09T06:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-D1-W25-S3",
+    "one_line": "Interface item 2 says tradelines returns the lines 'oldest first ... worded as today's tradelines', but today's tradelines is newest first with a trailing 'and n earlier trades' line capped at 20; the two cannot both hold",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tradelines(markers, from) -> trade lines oldest first, worded as today's.",
+    "world_is": "Chosen: the window's markers are capped at the 20 most recent, shown oldest first, and the 'and n earlier trade(s) in the last <window>.' line LEADS (the omitted trades are earlier than the listed ones); an empty window returns [] and putTrades writes 'No trades in the last <n> days.'. test_r18tl1 was re-pinned to this shape. AC1 does not grade the order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "render.py CHART_SCRIPT tradelines; tests/test_r18tl1_trade_list_from_markers.py; tests/test_ws2_wc1_trade_list_scope.py"
+      ]
+    },
+    "notes": "J1 (CVO) sees the shipped order. If newest-first was meant, a one-line change to the sort."
   }
 ]
 ```
