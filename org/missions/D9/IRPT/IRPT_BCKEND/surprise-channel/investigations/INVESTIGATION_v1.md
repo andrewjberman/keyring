@@ -22056,3 +22056,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "1 of 3 firms reads READY, and the two that do not are a BUILD condition the release SURFACED rather than caused -- the new accounting is what makes a dropped-entry build visible at all, and its fail-safe keeps the previous directory served. The criterion also cannot be met as written for a lagging firm, because the key is the manifest's own as_of: cottonwood's manifest for a 2026-10-08 fire landed under _refresh/2026-10-07/. TWO DEFECTS IN THIS SEAT'S OWN SCRIPTS were found by running them and fixed in-session before the recorded result, and are named here so the result is not read as cleaner than its instrument: (1) the arm-(a) reader compared reason_code to 'READY' when READY is the STATE and reason_code is the accounting verdict beside it, and it looked only under the event-date key, so it first scored a genuinely READY firm as not-ready and a written manifest as NoSuchKey; (2) the arm-(c) script computed no age at all and could therefore only ever answer NOT_DRIVABLE -- a verdict that would have looked like a measurement. Nothing here asks for a remedy from this seat: the build condition is the owner's call at 2.0.0_SA_COO~P2, and the criterion wording is the packet's."
 }
 ```
+
+## IRPT_BCKEND-D2-W187-S1 -- IB-pr-379 diagnosis: both dropped entries are SOURCE_REMOVAL; the disappearance rule needs a ruling before 2026-10-12
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W187-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~187",
+  "surfaced_at": "2026-10-09T00:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Both dropped directory entries (inflection 1, cottonwood 1) are SOURCE_REMOVAL: the build is right and the disappearance rule fails a legitimate vendor-side removal, so IB-pr-379 stops at the diagnosis and the rule needs a ruling before inflection and cottonwood go OVER_AGE on 2026-10-12.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule ruling on refresh.py compute_delta/refresh_firm disappearance handling, then 2.0.0_SA_COO~P2 recuts the fix cell) before 2026-10-12, when the served cottonwood directory (as_of 2026-10-07) passes MAX_AGE_TRADING_DAYS=2; inflection follows on 2026-10-13",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~187/IB91-1_dropped_entry_diagnosis.json (this branch): disappeared ids, per-firm evidence, over-age computation",
+      "inflection: household cli_eee3d5ecc6dda8132ba25158 is in silver/api_dims household_rep_mapping and accounts_v2 at snapshot 2026-10-05 (321 households) and absent from both at 2026-10-06 (320); its one account is still in accounts_v2, now under the pre-existing household cli_7f8b2aacad67b512d1e05a29 (2 accounts at 10-05, 3 at 10-06). The vendor merged the household away.",
+      "cottonwood: account-only entry cli_6be3d8625139a8d2613ab8af (account acc_10e3e4477b42c76fe14e437e, 2 rows, market value 0.0) is in fact_allocations at date=2026-10-05 and absent at 2026-10-06 and 2026-10-07; its account numbers appear nowhere in the 2026-10-07 partition (not re-keyed).",
+      "over-age: expiry.age_in_trading_days vs MAX_AGE_TRADING_DAYS=2, served as_of read from latest.json: cottonwood 2026-10-07 is age 3 on 2026-10-12; inflection 2026-10-08 is age 3 on 2026-10-13; calendar source read NYSE/hardcoded-fallback-2010-2027",
+      "refresh.py compute_delta (line 387) keys on ids.client_id or ids.relationship_id and refresh_firm (~line 966) turns any non-empty disappeared set into REFRESH_FAILED; the module docstring states the intent (a terminated client is a change of marking, never a deletion), which a vendor that stops emitting a client is outside of"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-379: a client the previous build carried and the new one lacks is a BUILD_BUG or KEY_CHANGE fixable in infra/aws/lambda/investor-reporting/directory/; SOURCE_REMOVAL means the build is right and the rule needs a ruling.",
+  "world_is": "Both firms measure SOURCE_REMOVAL, 1 entry each, first absent from the source on 2026-10-06. Nothing in directory/ is wrong, so no fix, test, pin, build or packet was made, and the disappearance rule is unchanged. Until the rule is ruled, every future inflection and cottonwood refresh returns REFRESH_FAILED on the same entries (they are in the previous READY build forever), so neither directory can ever advance and both go OVER_AGE. The decisions are the CTO's: whether a source-removed client leaves the next directory (a delta, recorded), is carried forward as TERMINATED/UNKNOWN (the constraint that terminated clients stay visible), or is handled by an explicit successor map for the inflection household merge. Criteria IB91-1-AC2 and AC3 cannot be met without that choice and are left FAIL; IB91-1-AC1 PASS."
+}
+```
