@@ -95,7 +95,7 @@ Report once: the exact diff, the output line of every criterion and of tsc, the 
     back a year. The walker's "Earlier month" control check expects the older design.
 - **Base:** portal 0008ddd3.
 
-<status>pending</status>
+<status>complete</status>
 <round>57</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzi-2</to_id>
 <slot>~122</slot>
