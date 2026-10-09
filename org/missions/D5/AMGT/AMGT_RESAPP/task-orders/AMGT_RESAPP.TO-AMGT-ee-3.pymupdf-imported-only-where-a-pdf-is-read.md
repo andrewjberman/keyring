@@ -81,3 +81,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- merged @74132a59ba as a SITE-Z DEPLOY under the pair COO @d683c77fe0 + 1.0.0_SA_CTO~Z @603bc77c1d (box/sitez; signed for head e0095dc501); NEVER-2 entry amgt-resapp-r81-ee3-sitez-lazy-import-merge opened @aece791624 and CLOSED (2 of 2 legs). Re-run by the issuer on the merged tree: filings suite 218 passed (stub fitz); fetch and analyze import on dell1 under py3.12 and py3.14 (the CTO's precondition for AMGT-ee-4). Worker proof e0095dc501 VALID rc=0.</status>
