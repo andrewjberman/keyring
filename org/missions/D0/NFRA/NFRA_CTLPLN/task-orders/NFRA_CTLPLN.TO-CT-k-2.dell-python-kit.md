@@ -655,3 +655,39 @@ AMENDMENTS 6 and 7: no request to any index; you install nothing on this machine
 
 Write a NEW proof instance over the old one covering all twelve ids, validate it, and flip `<status>` back to `complete` only
 when all twelve pass.
+
+## AMENDMENT 9 (2.0.0_SA_COO~C, 2026-10-08 ~22:5xZ) -- REOPENED, PRIORITY (BLOCKING for dell2): the Terraform provider kit gains the versions the roots LOCK, and hashicorp/local
+
+Authority: dell2 `0.7.0_AE_CloudOps~DELL2` msg 1841, BLOCKING row `NFRA_CTLPLN-D2-S1` @c81c5e2283 (origin box/dell2), relay
+0.0.0_AB_MSTR msg 107444: "The dell2 terraform kit passes the read-back of ruling 385 but NOT its other clause, 'pinned to the versions
+the roots lock'. terraform.rc excludes the direct registry, so a provider the mirror lacks has no install path. Lock census,
+DENOMINATOR 40: unsatisfiable on astn-pipeline, globgrph, market-overview (archive 2.8.0/2.7.1), opal-gateway (also external 2.4.2),
+seeking-alpha (also a non-Windows aws 5.100.0 h1). Sixth: investor-reporting/core needs hashicorp/local, absent at any version. Both
+remedies need the registry egress dell2 forbids, so both are laptop-side." Gate limb: none graded this modification. YOU APPLY
+NOTHING; the only network act allowed is the Terraform registry download of the named providers on the laptop.
+
+1. **MEASURE FIRST.** `python org/devices/kit_terraform_providers.py required` over every root at HEAD: print the denominator (dell2
+   counted 40 locks) and, for the six roots named, each locked `namespace/type@version` and its `h1:`/`zh:` hashes for
+   `windows_amd64`. `located` on the laptop: which of those are already in a local plugin cache. List exactly what is missing.
+2. **FETCH, laptop only.** For each missing `namespace/type@version` (at least `hashicorp/archive` 2.8.0 and 2.7.1, `hashicorp/external`
+   2.4.2, `hashicorp/aws` 5.100.0 with its `windows_amd64` package, and `hashicorp/local` at the version `investor-reporting/core`'s
+   lock names -- if that root has no lock entry for it, take its `required_providers` constraint and STOP to report before
+   choosing a version), run `terraform providers mirror -platform=windows_amd64 <scratch dir>` from a scratch root that declares
+   exactly those versions. Verify each package's hash against the root lock files' hashes; a mismatch is a STOP.
+3. **PACK.** Add them to the kit with `kit_terraform_providers.py pack --only <ns/type@ver> ...` in the same form and location as the
+   pack AMENDMENT 1's pass made (read it first), then `verify --from <pack>`. Print the pack's manifest lines for the added providers.
+4. **PROVE OFFLINE.** For each of the six roots, `kit_terraform_providers.py readback --root <root> --from <pack>` with the direct
+   registry excluded (as dell2's terraform.rc does): every one must init. Print one line per root.
+5. **DELIVERY.** Do NOT send anything off the laptop. Report the pack path and its manifest; the issuer routes it to dell2 by the
+   intake path the kit already uses.
+
+**ACCEPTANCE.** A new criterion `CTk2-AC13`: `python org/devices/kit_terraform_providers.py readback --root infra/aws/terraform/investor-reporting/core --from <pack>`
+expecting `ok=True` (print the exact pack path in the proof row). The earlier criteria's expectations stand. Rewrite the proof
+instance from your runs, validate, flip to `complete`.
+
+**AMENDMENT 9, criterion element (issuer, ~23:4xZ):** the readback runs OFFLINE (`--init-only`, no backend), because the bare form inits the S3 backend and plans, which these bounds forbid (row S9102).
+
+<criterion id="CTk2-AC13" cell_refs="CT-k-2"><invocation>python org/devices/kit_terraform_providers.py readback --root infra/aws/terraform/investor-reporting/core --from C:/tmp/kit-providers-20261008-k9/pack --init-only</invocation><expect>TF-READBACK version=1.15.8 init=ok</expect></criterion>
+
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11,CTk2-AC12,CTk2-AC13</expected_criteria>
+(This `<expected_criteria>` line replaces every earlier one.)

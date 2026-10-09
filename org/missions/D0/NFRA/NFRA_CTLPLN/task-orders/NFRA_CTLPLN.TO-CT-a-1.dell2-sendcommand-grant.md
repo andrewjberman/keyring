@@ -157,6 +157,7 @@ infra/aws/terraform/nfra-ctlpln-identity/tests/plan_reads_census.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/terraform/nfra-ctlpln-identity/tests/render_passrole.py
 </paths>
 
 The block is your WRITE grant. You READ and never edit: the three group policy files, the bus policies, every `.tf` and loaded
@@ -1076,3 +1077,30 @@ today stays as it is.
 **ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
 `iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 Rewrite the proof instance, validate, flip to `complete`.
+
+## AMENDMENT 21 (2.0.0_SA_COO~C, 2026-10-08 ~23:3xZ) -- REOPENED: the CTO's three follow-up rulings on step F (rows W14-S31, W14-S32, W14-S33)
+
+`1.0.0_SA_CTO` msg 107457 (CTO half of step F @b51c573d66): "S31 grant (re-class the public key); S32 disarmed by a Deny of
+ssm:PutParameter on the bd-to-schwab cutover parameter by exact name; ... S33 retire the stale PassRole assertion. One ask: cut those
+three as one follow-up cell." Step F (TO-APPLY-19) is applying from the trunk this branch is cut from; build on it. Gate limb: none graded
+this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND. Rows start at `NFRA_CTLPLN-W14-S37`.
+
+1. **S31 -- re-class the public key.** In `tests/derive_vendor_secrets.py`'s rulings table, `opal/auth/irpt-render-jwt-public-key` is
+   ruled GRANTED (class: a PUBLIC key; reason and this message id). Re-derive the census from the saved listing (no value read): granted
+   moves 94 -> 95, OTHER 19 -> 18. The secret's exact ARN joins the group's secrets read through the census-built policy (whichever part
+   the module's split puts it in). Move the vendor arm that held it from refused to allowed; keep at least one OTHER secret refused.
+   The plan-reads census's held row (`portal-auth`) becomes allowed: `planread_ok` gains it.
+2. **S32 -- Deny PutParameter on the cutover parameter.** A Deny statement `DenyCutoverParameterWrites`: `ssm:PutParameter`,
+   `ssm:DeleteParameter`, `ssm:DeleteParameters`, `ssm:LabelParameterVersion`, `ssm:AddTagsToResource` and `ssm:RemoveTagsFromResource`
+   on EXACTLY `arn:aws:ssm:us-east-1:313476888478:parameter/mdpf/custody_source`, in a group policy where it fits 6,144 (say which).
+   Arms: both Dells `ssm:PutParameter` on it explicitDeny; `ssm:GetParameter` on it still allowed; `ssm:PutParameter` on a different
+   parameter still reads as today (report the decision).
+3. **S33 -- retire the stale PassRole assertion.** `tests/render_passrole.py` asserts the PassRole Deny that step F removed. Retire the
+   assertion. If the script exists only to prove that Deny, delete it and every reference to it; otherwise change only the stale
+   assertion to the current truth (PassRole allowed on any role) and say which you did. It is added to this order's `<paths>` by this
+   amendment: `infra/aws/terraform/nfra-ctlpln-identity/tests/render_passrole.py`.
+4. **PLAN NOTE**, section J: the expected plan by reading (addresses; expected: the secrets policy part changed in place for the one
+   ARN, the policy carrying the new Deny changed in place, nothing created or destroyed), and the three changes in plain words.
+
+**ACCEPTANCE.** The six ids, expectations as AMENDMENT 20 left them; `CTa1-AC6` reads `ok=True` with granted=95. Rewrite the proof
+instance, validate, flip to `complete`.
