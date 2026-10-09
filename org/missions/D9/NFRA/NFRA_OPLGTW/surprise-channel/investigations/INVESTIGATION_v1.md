@@ -11306,3 +11306,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Resolves NFRA_OPLGTW-Z-W48-S1. Row S2 (json absent from base) stands."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T14:12:19Z",
+  "one_line": "Z-W42-S2 measured: a COLD 13-month availability read for Alyssa's grant costs about 221-235 s per master (443-470 s for both masters, 8 master/dataset combos) on the host; the other datasets of the same master then read warm in 0.2 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN deliverables/0.9.0_WK_NFRA_OPLGTW~43/r29_ssm_grant.py real pre (SSM d1bcf9ab-44e0-4f34-88f2-c7ddea8fd686, 2026-10-09T13:47Z, BEFORE the write, catalog.availability with calendar_months=13): 'RL15G_MASTER m0 seconds=222.2 cache_entries=274; m1 seconds=220.6; RL15G_TIMING total_seconds=442.8 combos=8 min_available_dates=274'. Output r29_grant_pre.out.",
+      "RUN same program, mode after (SSM 426082eb-154d-4a5b-9567-048716d5abc1, 2026-10-09T14:00Z, the gateway's own SchwabService._availability under the stored revision-4 grant): 'm0 seconds=235.3 m1 seconds=235.0 RL15G_TIMING total_seconds=470.3 min_available_dates=274'. Output r29_grant_after.out.",
+      "FILE r29_grant_host.py.txt: the host harness uses an in-memory state store (ga1_host_prelude.py.txt MemStore), so no persisted snapshot exists and every date is a first-seen S3 validation; the real service persists snapshots in the state store (catalog.persist), so a warm service may be faster. NOT measured against the real service."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Z-W42-S2 (ARMED): the 13-month I/O cost is unmeasured; the AC3 read is its first live measurement. Phase C: record the 13-month read's elapsed time.",
+  "world_is": "Measured on the host with an empty snapshot store: 274 qualified dates in the window (2025-09-08 to 2026-10-08) per master and dataset, 0.8 s per first-seen date, sequential; one dataset per master pays it, the other three read warm. A schwab_list_files / query request builds a fresh per-request cache, so its own latency on a date the real store has never persisted is bounded below by this figure; whether the real service's persisted snapshots, the ALB idle timeout or the MCP client timeout make that a user-visible failure is not measured here. No cache or cap was changed.",
+  "notes": "Not done here: any call through the real service as Alyssa (no principal impersonation); any change to the catalog. The grant itself is written and read back (RL15_GRANTS.json)."
+}
+```
