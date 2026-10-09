@@ -116,3 +116,12 @@ lane: the <paths> block IS the grant (worker RULING 1); nothing in the prose gra
 
 Source: `org/missions/D14/LGIC/LGIC_ENFORCE/ledger/FWD5_GRADE_FROM_BLANKFIX_FWD9_20261008.md` re-grade 2026-10-09 ~15:2xZ (`1.0.0_SA_CTO~DELL1`, msg 2639), round-20 list; decomposition section 0u. Base dry-run at
 the cut, by the issuer at base 133bf5f7a4: Z5R20-AC1 base: FAIL as expected (PATTERN_COMMIT_R20.json absent).
+
+## AMENDMENT 1 (2026-10-09 ~16:4xZ, issuer 2.0.0_SA_COO~B1) -- the s12 arm's row_id shape
+
+Row `LGIC_ENFORCE-D1-W2-S153` (BLOCKING): the `s12` arm required `row_id` to match `LGIC_ENFORCE-[A-Z0-9]+-S\d+$`, which no
+worker row id (`LGIC_ENFORCE-D1-W<n>-S<k>`, the id this order itself requires) can match. The defect is the issuer's check, not
+the cell. Ruled: the arm now reads `LGIC_ENFORCE-(?:[A-Z0-9]+-)+S\d+$` AND requires that id to be a row in the channel. The
+criterion, its invocation and its expectation are unchanged. Re-run by the issuer before the commit: the worker's committed record
+(e572a18bce) PASSES the amended arm; the pre-amendment arm FAILS it; the base still FAILS (record absent). Gate limb that grades
+this modification: none (to-pipeline-gate grades a NEWLY-ADDED order; this order declares `<placeholders>NONE</placeholders>`).

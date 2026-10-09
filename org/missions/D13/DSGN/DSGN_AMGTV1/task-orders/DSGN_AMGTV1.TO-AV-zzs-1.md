@@ -110,7 +110,7 @@ Report once: the diff (per file, one line each), the output line of every criter
 **ISSUER NOTES:** round 68 = `ledger/ROUND_ANALYSIS.round67.md` @a06920d917 section 2 item 1, one cell. Base portal 32835ce5
 (= origin DEV, round 67). LF only. Item 2's producer row is AMGT_RESAPP-D1-S14 @d30938fb2d (already filed).
 
-<status>pending</status>
+<status>complete</status>
 <round>68</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzs-1</to_id>
 <slot>~142</slot>

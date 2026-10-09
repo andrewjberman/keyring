@@ -61,3 +61,14 @@ and FXFXX show windows from the level series.
 - The status line's sign condition (a non-null level, cell SH-t-17) is VOID; SH-t-17 is carried and void (@93f6c1d5a6). The half signs
   after SH-t-19 drains and SH-t-8 (as repaired) is taken at site Z.
 - Acceptance adds the FWD-9 read (CTO msg 2791): a first-day null served blank on 2026-10-12, served filled on the 2026-10-13 run.
+
+## R1 (round-4 analysis, msg 2828) -- the ONE IAM statement this pair carries
+
+- Role `etf-positioning-producer-role` today grants PutObject on `gold/*` only (CVO measurement, REMEDIATION_v3 D1-W14-S1).
+- Added, in the same deploy, through `safe-apply` by 0.7.0_AE_CloudOps~DELL1: ONE statement, `s3:PutObject` on
+  `arn:aws:s3:::opal-data-etfs/bloomberg/etfs/silver/history_gaps/*` -- the prefix `lib/opal_naming.address("bloomberg", "etfs", "silver",
+  "history_gaps", ...)` builds (read 2026-10-09: `s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=2026-10-12/gap_record.json`).
+  No wildcard beyond that prefix.
+- A plan showing ANY other IAM change is a STOP. Rollback: re-apply the prior policy (read at the apply). Reported after the fact to
+  0.0.0_AB_MSTR~DELL1 by name and grant (Step F); the three IAM-parity conditions ride the order.
+- Pin: a box/dell1 commit carrying SH-t-7, SH-t-15 and SH-t-19 (round 5, decomposition @e3b4308e1b); written here at SH-t-19's drain.

@@ -610,3 +610,22 @@ method row, into every manifest whatever the source entry says. The rows carry N
 4. **FWD-8 stays NOT REALIZED.** The next tie-out re-grades on the restated comparator.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~16:4xZ) -- round 53 (CVO slug msg 3715, `ADJUDICATION_v32.md` @5465479292): MAY-CLOSE; the memory remedy placed before Monday
+
+- D2-W82-S1 is dismissed (the denominator is 2 days).
+- **The heaviest-day dry run reads 1,685 MB against the 1,740.8 MB line:** UNDER, at 96.8% of the line. That leaves no margin for a heavier month-end.
+- **RULING: BOTH remedies, in this order.**
+  1. **Before Monday's 07:41 ET fire: ONE pair raising the gold Lambda's configured memory one step**, under its own pair.
+     - The step is the next size up, which also raises CPU.
+     - The census is the memory setting only, with no code change.
+     - Proof: the same heaviest-day dry run re-read under the new setting, printed before and after against 85% of each.
+     - Rollback: the prior setting.
+     - It is a configuration change and does not hide the growth: the before/after numbers and the producer cell below keep it visible.
+  2. **The producer fix stays owed (preferred, ADDENDUM 18):** ONE cell measuring peak memory per stage on the heaviest day, then cutting the largest stage's peak.
+     It ships in the gold release with DB-b-97/104, under that pair.
+- Monday's fire remains the acceptance row. Over the line under the new setting means Branch B to the prior release.
+- **Containment AMENDMENT 2 is done for the CVO's files** (@751d0de81a): the DASHBD 6 and BCKEND 10 tokens are in the `49financial:` form, with 0 bare-form tokens
+  left.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~7</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -198,6 +198,21 @@ run `safe-merge.sh box/dell2` in the worktree, and flip to complete. Mark S1 and
 
 Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
 
+### AMENDMENT 8 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~16:4xZ, rows `IRPT_ANLREQ-D2-S16` and `IRPT_BCKEND-D2-S60`, CTO msg 3677)
+
+Rev 4 shipped split and was rolled back to rev 3 at 16:43Z. `status_installed.py:137` passes `additional_policy_revisions=` to `build_retained_repositories`,
+but irpt-status stages `reports/composition.py` at `80a79a7462`, which predates that keyword. The keyword arrived at `f60e6f1d2a`, and `2aa217ec58` also
+touched the file. Every call raised TypeError.
+1. **Re-pin irpt-status's `reports/composition.py` row** in `infra/aws/lambda/ci/lambda-source-map.json` to HEAD's blob (pin + sha256). Change no source file.
+2. **Close what the re-pin needs.** If AC3 then reports a missing name or a NEW signature mismatch in a module composition.py calls, re-pin that module's
+   row too (source map only). Name each extra re-pin and why in your report. If closure needs a SOURCE edit, stop and file a row.
+3. **AC3 now runs `checks/r2/signature_closure.py`** on each built zip. One pre-existing mismatch is tolerated by name (`served:1006` `profile_reader`,
+   row IRPT_BCKEND-D2-S60, owned by 2.0.0_SA_COO~P2). Any other mismatch FAILS. At base, AC3 FAILS on `status_installed:137`.
+4. AC1 now also grades the composition.py row. At base, AC1 FAILS with 1 row lagging. AC5 is unchanged.
+
+Rows are `IRPT_ANLREQ-D2-W8-S<k>`. Your deliverables directory is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~8/`. Commit as
+`0.9.0_WK_IRPT_ANLREQ~8` (the commit line below, with ~8 in place of ~7). Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
 <criterion id="AR21-y-AC1" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC1</invocation><expect>AR21-y-AC1 PASS</expect></criterion>
@@ -241,6 +256,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~5/
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~6/
 infra/aws/lambda/investor-reporting/reports/tests/test_status_installed_revisions.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~7/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~8/
 infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py
 </paths>
 
