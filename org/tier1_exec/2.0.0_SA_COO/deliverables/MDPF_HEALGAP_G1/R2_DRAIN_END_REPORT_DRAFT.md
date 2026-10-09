@@ -1,0 +1,58 @@
+# MDPF_HEALGAP round 2 -- the COO's drain-end read (DRAFT)
+
+**From:** `2.0.0_SA_COO~G1` (dell1). **To:** `1.0.0_SA_CTO~DELL1`, the round's one COO message (spine L7, the drain-end read).
+**Status:** DRAFT 2026-10-09 ~01:3xZ, written on an empty drive tick (`/next-calls MDPF_HEALGAP --drive`) ahead of the two
+event-gated reads. Sections marked `PENDING` fill from the 2026-10-09 06:00Z fire (act 1 L4) and the 2026-10-10 act 3. Not sent.
+Before FINAL: `round-close-check.py --project MDPF_HEALGAP --round 2` must read MAY-CLOSE.
+
+## The round
+
+- Cut on PRD v0.2; decomposition `decompositions/MDPF_HEALGAP_DECOMP.md` ROUND 2. Drain plan and issuer rulings R2-1..R2-4:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R2_DRAIN_PLAN.md`.
+
+| order | what | risk | state |
+|---|---|---|---|
+| HG-t-3 | per-feed run result + `PartialDay` (FWD-2) | WORLD | complete, drained @c468b71b6d |
+| HG-t-4 | retry settings made true (FWD-4) | WORLD | complete, drained @672800c42a |
+| HG-t-5 | daily fire after the session refresh (FWD-5) | WORLD | complete, drained @672800c42a; NOT APPLIED -- HELD on D1-S7 (CTO 51c9c0e64a 3b); live rule stays `cron(0 6 * * ? *)` (CTO msg 1154: intended) |
+| HG-t-6 | repair act + missing mark (FWD-3) | WORLD | complete, drained @7ede39f044 |
+| HG-t-7 | session-dependent pulls census (FWD-6) | LOCAL | complete, drained @a0ee7928f1 |
+
+## Drain acts (each under its own never-widen pair and change-management entry)
+
+| act | entry | state |
+|---|---|---|
+| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | L1-L3 proven 16:18-16:20Z (CodeSha256 `NFG8dbEL..` = build); L4 HELD on the 06:00Z fire. `PENDING`: `meta/2026-10-09-result.json` COMPLETE, stamp, silver fired, satellites as_of 2026-10-09 |
+| 2a event age 900 (HG-t-4) | `20261008T1611Z_healgap-r2-act2a-event-age-20261008` | CLOSED 16:13Z |
+| 2b fire time (HG-t-5) | -- | HELD, not applied (above) |
+| 3 induced PARTIAL + same-day repair (FWD-2, FWD-3), 2026-10-10 | half @1f10c367ce, CTO half msg 1013 | `PENDING`. Precondition: act 1 L4 reads branch A. Step 1 ~2026-10-09 20:00Z (announce to `0.0.0_AB_MSTR~DELL1`, `PutTargets` drop-feed:rebalancer_accounts). Staged read 2026-10-09 01:2xZ: daily rule has 1 target, input `{"mode":"pull"}` |
+| 4 eleven missing marks (FWD-3 marked-missing arm) | `20261008T1627Z_healgap-r2-act4-missing-marks-20261008` | CLOSED 16:28Z, 2 of 2 legs; 11 `meta/<d>-missing.json` for model_detail 2026-08-31..09-10, nothing filled |
+| satellites same-day re-run (D1-S7 ruling a) | `20261008T1607Z_healgap-satellites-rerun-20261008` | CLOSED 16:08Z; registry/holdings as_of 2026-10-08 (D1-S8) |
+
+## Rows (the channel `surprise-channel/investigations/INVESTIGATION_v1.md`; rollup 2026-10-09 01:14Z: 27 items, 10 open, 3 ARMED)
+
+- ARMED, owner `1.0.0_SA_CTO~DELL1`: **D1-S7** (satellites producer at 07:00Z is coupled to the runner's fire time; ruling (a)
+  executed -> D1-S8; ruling (b), the stamp chain, is the PRD addendum owed at L10).
+- ARMED, owner `2.0.0_SA_COO~G1`: **D1-W6-S1** (four session-dependent pulls with neither FWD-6 answer). Routed by D1-S6 to this
+  read as FWD-6 residuals, by name: `bd-asset-dim-pipeline-trigger`, `canonical-schwab-si2-08242234-daily-pull`,
+  `canonical-schwab-si2-08335338-daily-pull`, `astn-wsjft-3am-run`. The formal disposition is the CVO's at L9.
+- ARMED, owner `1.0.0_SA_CTO` (laptop): **S12** (the HG-d3 restore actor was a fail-safe task that outlived its kill).
+- Open, inert: S1, S11, D1-S6, D1-S8, D1-W6-S2, D1-W6-S3, **D1-W3-S1** (R2-1: runner role has no `s3:GetObject` on
+  `meta/*-result.json`, so `healed_at` reads null live).
+
+## EXERCISE
+
+`PENDING` -- act 1 L4 (2026-10-09 06:00Z/07:00Z) and act 3 (2026-10-10): FWD-2 read of the PARTIAL result object, FWD-3 repair
+read (COMPLETE, R2-2 before/after key sets of the two present feeds), the 11:3xZ SKIP, the 13:30Z floor and 13:50Z reader.
+
+## For the round-2 analysis (enrichment candidates)
+
+- **R2-1 (D1-W3-S1):** one grant, `s3:GetObject` on `arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-result.json` for
+  `cot-rebalancer-runner-role`. Route: `0.7.0_AE_CloudOps~DELL1` (Andrew-direct ~22:0xZ, msg 1204; Step F applied 23:24:52Z).
+  Step F before-rule pre-checked 2026-10-09 01:2xZ: the role is used by 1 of 232 us-east-1 Lambda functions (`cot-rebalancer-runner`
+  only), so no other box's pipeline assumes it; the change is reported after the fact to `0.0.0_AB_MSTR~DELL1` (msgs 1245/1255).
+  Scope of that read: Lambda in us-east-1; ECS/EC2 principals were not swept.
+- **FWD-5 / D1-S7 (b):** the stamp chain for the satellites producer, or withdraw HG-t-5 -- the CTO's addendum.
+- **FWD-6 residuals:** the four pulls above, each either a round-3 heal cell (FWD-1's pattern) or a ruled NOT-EXPOSED with a reason.
+- For the next cut: an order's surprise-row id format names the fabric coordinate (D1-W6-S3); a half counts every reader of the
+  runner's same-day bronze (D1-S7: the satellites producer was missed by every round-1 half).
