@@ -10,12 +10,16 @@
  "subject": "NFRA_TRNSPT FWD-5 reader holders: close-both on your ruling @374553467d",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CALL_886a_NFRA_TRNSPT_FWD5_HOLDERS_CLOSE_BOTH_20261009.md",
  "opened_at": "2026-10-09T12:53:23Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T13:21:38Z",
   "bus_message_id": "ebd1b34f-eb42-4703-b164-63772ad219ad"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T13:32:47Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "17134a49-520f-4b0d-a6ce-0540bb785ffd"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
