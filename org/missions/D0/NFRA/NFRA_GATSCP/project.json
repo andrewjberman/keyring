@@ -9,7 +9,7 @@
   "fabric_ruling": "a NEW project, not a workstream of NFRA_CTLPLN (brief Part II's L3 question): NFRA_CTLPLN already carries 24 live outcomes; this one has its own boundary (the refusal scope of three gates, index regeneration at commit, the cross-box issuance hook) and relies on NFRA_CTLPLN's crossbox-call.py without redesigning it.",
   "pipeline": "gitops-gates-scoped-to-the-act",
   "status": "active",
-  "dep_stage": "ROUND_CLOSE",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-09",
   "registered_under_tree": "2026-10-09",
   "pods": [],
@@ -34,7 +34,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~N1",
   "workstreams": [],
-  "phase": "2026-10-09 ~15:xxZ (2.0.0_SA_COO~N1): round 3 ROUND_CLOSE -- six remediation orders complete and drained @b600261e98; FWD-1..7 REALIZED since round 2; close record deliverables/2.0.0_SA_COO~N1/TRACE_round3.md. Round 3's analysis is the project's close read.",
+  "phase": "2026-10-09 ~16:1xZ (2.0.0_SA_COO~N1): round 4 issued in one commit over ROUND_ANALYSIS.round3.md ADDENDUM 1 (FWD-8 on PRD v0.4): GS-h-1 attribution replay, GS-h-2 act-keyed audit lines, GS-h-3 reset-both-ways.",
   "blocking": null,
   "last_updated": "2026-10-09",
   "leads_dell1": {
