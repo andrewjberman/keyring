@@ -28,6 +28,9 @@
   (`test_analysis_request.py::test_four_existing_types_unchanged`, `::test_requester_claims_and_completes_own_ticket`) come from
   `~O2`'s granted TYPE_DEFINITIONS edit @a10f3f8271, which typed `trade_request`. They were not caused by this round. `~O2`'s
   worker changes the two loops under my grant (msg 2694 answered); I re-run regress on that commit.
+  **Update ~06:4xZ:** `~O2`'s ee1d0edb8d landed (merged @a07ad764da). Issuer re-run: `REGRESS-OK passed=141 failed=0`.
+- **AR-v-12's apply order was amended** (AMENDMENT 1 @09b119c454). HEAD's `lambda_function.py` moved under `~O2`'s OW-l-1, so the
+  applier builds and applies in a detached worktree at the pin. The deployed bytes are still `04f5727b...`.
 - **Row IRPT_ANLREQ-D2-S1 (open):** the PDF reader is absent from the portal client. FWD-1's last hop needs it; it is not a cell
   of this round.
 - **The I1 sequence has not run against live.** AR-v-11 is LOCAL; its live run is FWD-1's end-to-end trace, after the deploy
