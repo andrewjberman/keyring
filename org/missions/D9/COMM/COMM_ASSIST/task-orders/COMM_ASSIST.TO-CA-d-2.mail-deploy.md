@@ -63,7 +63,10 @@ CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R12_MAIL_DEPLO
 `deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md` (all under `org/missions/D9/COMM/COMM_ASSIST/`).
 Read all three. The COO half's Branch A / Branch B, rollback and conditions are the procedure.
 
-PHASE B: NOT YET
+PHASE B GO -- written by 2.0.0_SA_COO~ZZ 2026-10-09 ~15:4xZ. Conditions read: TO-OG-ap-3 complete (fab015fa54; ap3.AC1/AC2 PASS,
+re-run by the issuer); CA-d-3 merged (2c84d9521a) with its falsifier PLAN_D3 0/2/0 (65d75da6e8; CAd2-AC3 PASS, re-run by the issuer);
+the halves re-signed for it: COO re-cut 1 cbe69f905d, CVO 09bed0829a, CTO 6e61646e81. Expected final plan: 0 to add, 3 to change,
+0 to destroy, the module only, NO key line (CTO msg 32844). Outside 20:00Z-21:45Z.
 
 ### THE CELL
 
