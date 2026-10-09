@@ -22914,3 +22914,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both host functions already package them; the release replay arm proves it from the built bytes."
 }
 ```
+
+## IRPT_BCKEND-D2-W198-S1 -- IB96-1-AC2 collides with 4 drained tests that assert internal callers keep any-firm reach
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W198-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~198",
+  "surfaced_at": "2026-10-09T04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB96-1-AC2 (whole _authz/tests suite passes) cannot be met as written: 4 drained tests in files outside this order's paths assert the very internal-caller behaviour IB-pr-387 removes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p96_cells.py . IB96-1-AC2 -> 'FAIL: _authz suite rc 1: 4 failed, 299 passed'; at base 89fe99c780 the suite passes; with served.py changed and test_allowed_firm_ids.py added, IB96-1-AC1 PASS (12 passed)",
+      "tests/test_service_allowed_firms.py::test_non_service_internal_subject_unchanged:84-85 -- a user-type internal caller whose row is the STRING 'cottonwood' selects inflection and is expected ADMITTED; the order says a non-list value is refused",
+      "tests/test_served_on_behalf_create.py::test_served_keeps_todays_owner_for_an_internal_subject_whose_list_omits_the_firm:277-285 -- an internal filer whose list is [OTHER] selecting FIRM is expected ADMITTED; the order says an unlisted firm is refused",
+      "tests/test_served_on_behalf_create.py::test_served_refuses_unlisted_firm:191-194 and ::test_served_refuses_all:197-199 -- expect public_reason_code INVALID_INPUT (uploads.py rule); with the narrowing the same requests are refused earlier as FIRM_BINDING (listed_world(allowed='ALL') builds list('ALL') = ['A','L','L'], a non-empty list)"
+    ]
+  },
+  "spec_asserts": "Order IB-pr-387: extend the profile-row narrowing to internal callers; the whole _authz/tests suite still passes; edit only the granted paths (served.py, test_allowed_firm_ids.py).",
+  "world_is": "The narrowing is implemented (served.py Entry._internal_allowed_firms + the else branch in handle; amendment 1 lookup-error fail-closed included; 12 allowed_firm_ids tests pass), but 4 pre-existing tests encode the old any-firm reach for internal callers (IB-pr-366 and IB-pr-271 vintage). Their files are not in <paths>, and the refusal clause forbids weakening a test. Needs the issuer to grant those two test files (expectations to FIRM_BINDING / refused) or to rule a carve-out for the on-behalf-create operation. Status left open; nothing weakened."
+}
+```
