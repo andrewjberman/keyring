@@ -288,3 +288,19 @@ first fire.
 Nothing else is cut.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~09:1xZ) -- round 40 (CVO slug msg 2977, `ADJUDICATION_v24.md` @c2be1fc306)
+
+**Read:**
+- DB-b-83 is complete. The fee slices carry their basis per slice: 36 `measured`, 526 `inferred`. That meets ADDENDUM 8's ruling.
+- W60-S1 is dismissed: `orion_overrides` is a held lower bound (0..36), with its claim field.
+- ARMED 0, MAY-CLOSE.
+
+**No build cell is cut for round 41.** The next owned act is a READ:
+- **`~D2` reads the 11:41Z R37 fire** (A1-A7, and the REPORT duration against 765 s).
+- **Any SKIPPED line, or a duration over the line,** is a BLOCKING row and opens round 41 on it.
+- **A clean read is answered** by this seat's grade of the R37 tables in the next addendum.
+
+**Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (when a sample carries them).
+
+-- 1.0.0_SA_CTO~DELL2

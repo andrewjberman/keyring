@@ -23760,3 +23760,86 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The scheduled holdings fire runs three per-firm bundles; the release is re-pointed there, narrowed to the FWD-14 member."
 }
 ```
+
+## IRPT_BCKEND-D2-S38 -- Resolves and disarms D2-S36: the CTO chose (a), the parity skip scoped to the reader build; IB-pr-397 AMENDMENT 2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S38",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:02:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and DISARMS IRPT_BCKEND-D2-S36. CTO ruling msg 2952 (ADDENDUM 14.1 @13645d01d6) chose (a): BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only, scoped to that build invocation, with the built zip's symbol closure at missing=0 and the build equal to ZZmWOFSA, else STOP. The issuer amended TO-IB-pr-397 (AMENDMENT 2) the same tick. Option (b), the 23-member pTdVgXqp artifact, is not released; both halves stay valid as signed.",
+  "one_line": "CTO ruled (a); IB-pr-397 AMENDMENT 2 permits the scoped parity skip with a symbol-closure check; D2-S36 disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 2952: '(1) D2-S36: BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only'",
+      "TO-IB-pr-397 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1: no parity skip of any kind, and the build equals ZZmWOFSA.",
+  "world_is": "The two cannot both hold (D2-S36); the CTO narrowed the skip ban for this one function and the order now carries that."
+}
+```
+
+## IRPT_BCKEND-D2-S39 -- IB102-2-AC1's arms_ok admits two verdicts while the IB-pr-394 harness emits four, so the criterion REFUSES the replay record both halves signed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S39",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T09:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The world is right and the instrument is narrow: holdings is live at the built sha, narrative is unmoved, the replay re-run is byte-identical to the signed packet record -- and the criterion still reads FAIL because two of that record's own verdict values are outside its allowlist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p102_cells.py:62 arms_ok(arms, n=1) returns len(arms) >= n and all(x['verdict'] in ('identical','expected-diff')) -- a TWO-value allowlist",
+      "the IB-pr-394 harness emits FOUR verdict values, measured over the packet's own IB99-1_release_replay.json: ['WIDENS irpt-narrative', 'admitted', 'expected-diff', 'identical']",
+      "DECISIVE CONTROL: arms_ok applied to the PACKET'S OWN SIGNED record returns False, exactly as it does for my re-run. The criterion therefore refuses the artifact the COO and CTO halves signed, so the FAIL is the instrument and not the world.",
+      "the two rejected values are 'admitted' (arm 4: internal caller with row [cottonwood] selecting cottonwood, admitted through both zips) and 'WIDENS irpt-narrative' (arm 6), which the packet EXPRESSLY admits: 'A WIDENS verdict is expected for irpt-narrative only'",
+      "the world, measured: irpt-holdings live CodeSha256 CKpZUMD5RVWyY/2oyo8zZwN7Ss8J2FbkeNFr2XYbXD8= EQUALS the packet built value (LastModified 2026-10-09T09:11:24Z); irpt-narrative live es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc= UNCHANGED to the same LastModified second; AC1's first two limbs both pass and only the arms limb fails",
+      "the re-run is byte-identical to the signed record: sha256 es6YSTEXcnQeGvyv3wy64HshoAiZBC+tR0Ph4iCctmw= on both files; 9 arms, 5 negative controls, 9 of 9 verdicts matching the packet arm for arm, ZERO arms whose verdict is UNEXPECTED, no HARNESS_* code on the built error path, and the negative control did raise HARNESS_TypeError on 2 of 2 routes",
+      "the deploy itself is complete and not half-landed: ledger 20261009T0906Z_irpt-holdings-release-394-20261009 CLOSED with 5 of 5 legs proven, sentinel removed; the plan was 0 add / 1 change / 0 destroy with zero lines outside the signed radius; re-plan reads No changes"
+    ]
+  },
+  "spec_asserts": "IB102-2-AC1 -- live irpt-holdings == CKpZUMD5...; live irpt-narrative unchanged; after-reads A2: ledger CLOSED stating pin + sha256; replay arms re-run. Base: FAIL.",
+  "world_is": "Every clause of that sentence is satisfied and the criterion still prints FAIL, because its arms_ok helper carries the IB-pr-390-era two-value vocabulary while the IB-pr-394 harness that the pair signed emits four. The applier did NOT make the criterion pass: dropping or relabelling the 'admitted' and 'WIDENS irpt-narrative' arms would have bought a PASS by deleting the single most safety-relevant line in the record -- the one saying the live narrative boundary does not honour firm selection -- so the arms are recorded VERBATIM and the criterion is reported FAIL with its cause. <status> is left pending for that reason; nothing is half-landed, because the release is applied, read back and its ledger closed. ONE EDIT by the issuer clears it: widen arms_ok for the r102 holdings limb to the vocabulary its own harness emits (admit 'admitted', and admit a 'WIDENS <host>' verdict only for a host the order does NOT release), or re-cut IB102-2-AC1 against the four-value vocabulary. A one-line narrowing is NOT equivalent: an arms_ok that silently admits any WIDENS would stop discriminating the case it exists for.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W267-S1 -- BLOCKING: SmartX fact_allocation_positions carries no CUSIP column; IB-pr-403 cannot be built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W267-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~267",
+  "surfaced_at": "2026-10-09T09:24:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Live smartx/platform/silver/fact_allocation_positions has no CUSIP column and no CUSIP-shaped value; the order stops per its own clause.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/smartx/platform/silver/fact_allocation_positions/date=2026-10-08/data.parquet: 122164 rows, columns allocation_id, owner_id, as_of, run_date, ticker, symbol_id, symbol_alias_id, company, asset_type, industry, quantity, price, multiplier, market_value, value, last_seen_date, _ingested_at",
+      "symbol_id and symbol_alias_id: 160 distinct values each, all 36 characters long (UUID shape), 0 of 122164 match a 9-character CUSIP pattern; ticker 160 distinct, 2-5 characters",
+      "No code written; no census file written; order left open"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 cell: the fact_allocation_positions row holds a CUSIP in some column; 'If no column carries a CUSIP, STOP and file a row.'",
+  "world_is": "No column in the live fact_allocation_positions carries a CUSIP. AC1 and AC3 (with_cusip >= 1) cannot be met from this table; a CUSIP would need a join to another source (e.g. fact_model_holdings or a security master), which the order does not name."
+}
+```

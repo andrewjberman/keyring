@@ -176,3 +176,80 @@ loop's continuity record -- cannot be committed from this seat without the audit
   stands: the Bloomberg guardrails' PREFERRED path is the already-paid-for served artifact, and
   this seat cannot reach it, so every data question burns a live terminal read.
 - Not blocked on me: the 10:45Z pre-flight (MSTR, 10:15Z checkpoint) and the 11:00Z fire.
+
+---
+
+# ADDENDUM 08:3x-08:4xZ -- SECTION 3 IS WRONG, AND THE DEFECT IS THE ONE THIS LOG ALREADY NAMES TWICE
+
+**Section 3 above claims 2026-10-08 "has no recovery log at all" and that its ETF + constituents
+captures are "PERMANENT[ly]" lost. Both claims are FALSE.** Corrected to `0.0.0_AB_MSTR~Z`
+@20261009T083925Z. The log body above is left standing unedited so the error and its correction
+are both readable; this addendum governs.
+
+## What is actually true, measured
+
+The pull chain for 2026-10-08 **fully recovered and published**. Seven `bbg_recovery_*` logs,
+11:43Z to 12:23Z, sat in `C:\Users\Opal Bloomberg\opal_bbg_logs\` -- **the same directory I
+censused.**
+
+| leg | verdict read in its own log |
+|---|---|
+| pull | `RESULT: PASS -- both PKLs safe to send`; model as-of 2026-10-07 |
+| publish | `RESULT: PUBLISHED 2026-10-07 -- verified by content, not by self-report`; served `data_as_of 2026-10-07`, `generated_at 2026-10-08T12:04:14Z`; 1D matches the PKL for all five models |
+| constituents | `[etf_constituents] EXIT 0` -- landed under `bbg/2026-10-07/constituents/` |
+| ETF | `[etf_daily] EXIT 0` -- landed under `bbg/2026-10-07/` |
+| price | as-of 2026-10-07, 30-day window |
+| rivalfunds + collector | `status: OK`, corporate actions + security_market written for date=2026-10-07 |
+
+**And the backstop limb worked exactly as designed.** `OPAL_BBGTML_freshness_check` (07:30 ET =
+11:30Z, `freshness_check.cmd` contract `0 fresh / 2 stale-summoned / 3 check-error-summoned`)
+returned **2** on 10-08 -- STALE DETECTED, SUMMONED. Recovery began 11:43Z, 13 minutes after the
+summons; served and content-verified at 12:04Z. **1h04m from missed fire to verified serve.**
+Andrew's 2026-08-20 design ("only then are you summoned") fired, and the summons was answered.
+
+## THE DEFECT, and it is the third instance in one session
+
+My census filter was `bbg_tplus1_*.log`. The recovery family is `bbg_recovery_*`. **The filter
+excluded the answer by construction, and the zero it returned was indistinguishable from "no
+recovery happened."** I printed a denominator -- "30 retained logs" -- and that denominator was
+TRUE and bounded the WRONG POPULATION: 30 of 30 scheduled-wrapper logs, when the question was
+about delivery, which has a second producer. A real denominator over the whole directory reads
+**37 files in 8 families**, 7 of them the ones I needed.
+
+⛔ **This is the same defect as the unquoted-path census (section 3) and the ~ZV liveness read
+(section 5): an instrument scoped narrower than the claim, returning a clean zero.** Three times
+in one session, on three planes, and I had **already written the lesson up twice in this very log
+and once into memory** before committing it the third time. Knowing the class does not catch it;
+only asking "what else writes this?" at the moment of the filter does.
+
+⭐ **The specific question that would have caught it, and it is cheap:** before reading absence
+from a filtered census, **count the writers of the thing you are asking about.** Delivery here has
+TWO producers -- the scheduled wrapper and the recovery path -- and I filtered to one. CLAUDE.md
+NEVER#1's sibling rule already says this for sign-offs ("first count the writers of the named
+property: N writers = N rules read, and N is printed"). It applies to censuses, not just
+sign-offs.
+
+⚠ **Also corrected: the framing, not just the fact.** "6 of 30 rc=50" grades the SCHEDULED limb
+and is not a delivery failure rate. A system that misses a fire and self-heals to a
+content-verified serve in 1h04m is a system with a working backstop, not a 20%-failure pipeline.
+I handed the MSTR the alarming reading of a healthy mechanism while it was weighing a
+time-windowed ownership call.
+
+## What stands from section 3
+
+- `OPAL_BBGTML_daily_pull` LastResult=50 on 10-08 is real: the 07:00 ET fire did not run, DAPI
+  down, pull not attempted. That is why the 10:45Z sign-in pre-flight exists and is worth owning.
+- The rc=50 count (6 of 30) is a real read OF THE SCHEDULED LIMB and is a fair input to the
+  pre-flight question.
+- No 10-05 07:00 wrapper log exists.
+- The `:precond_down` -> `:prune` path does skip the ETF/constituents/price legs **within that
+  run**; what is false is the inference that the day's captures were therefore lost, because the
+  recovery path reaches them all.
+
+## Compiler Tools (addendum)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| `Get-ScheduledTask` over the whole box | find the backstop the wrapper's prose cites | PASS -- 13 Opal/BBG tasks, denominator 213; found `OPAL_BBGTML_freshness_check`, which the wrapper's prose calls "the 07:15 backstop" while its trigger reads **07:30** |
+| `ls | sed | sort | uniq -c` over the log dir | the denominator I should have taken first | PASS -- 37 files, 8 families; the whole correction |
+| per-leg verdict read of 7 recovery logs | verify before correcting | PASS -- did not replace one unverified claim with another |

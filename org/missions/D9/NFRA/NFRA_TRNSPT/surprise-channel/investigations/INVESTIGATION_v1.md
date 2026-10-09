@@ -1307,6 +1307,51 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TO-TR-w19: the order's <paths> block names data/transcripts/scripts/tests/test_parse_silver.py as the grant for the existing parse_silver tests.",
     "world_is": "The existing parse_silver tests live in test_teams_parse_silver.py, not in the grant; changing COLUMNS or always adding held_out would break them (and research_fold.STORE_COLUMNS = COLUMNS + held_out), so I kept COLUMNS and made the column conditional. The full tests directory is green (393 passed, test_eod_voice.py ignored: pre-existing collection error).",
     "notes": "Not a defect found in the product; a path-name mismatch in the order and a design choice for the issuer to ratify. If the issuer wants held_out always present in write(), test_teams_parse_silver.py needs one line changed."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W3-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~3",
+    "surfaced_at": "2026-10-09T09:30:00Z",
+    "one_line": "Storing the listing snapshot on apply makes two existing assertions in test_teams_pull.py (7 puts; one /state/ key) fail; the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (amend a later order's paths to admit test_teams_pull.py, or direct the two assertions to 8 puts and two /state/ keys; this worker may not edit the file)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_pull.py:44 asserts len(s3.puts) == 7 (2 transcripts x 3 objects + the run record) and :77 unpacks exactly one key containing /state/; pytest test_teams_pull.py: 24 passed at the base, 2 failed after pull.run writes the listing snapshot (8 puts; 2 /state/ keys: pull_runs and listing_snapshots)",
+        "data/transcripts/scripts/teams/pull.py run(): the snapshot is written beside the run record behind the same apply flag, as TR-e-19 build step 1 directs; r19_checks.py e4 prints R19-E4-OK and test_listing_snapshot_expired.py + test_completeness.py pass (17 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-e-19 build step 1: each pull stores its listing as one snapshot behind the existing apply flag, with no other change named.",
+    "world_is": "The write adds an eighth put and a second /state/ key on an applied pull, so two older assertions in test_teams_pull.py that count puts and state keys are now stale; a drain-time run of that file goes red until they are updated.",
+    "notes": "Not worked around: the snapshot write was not made opt-in and the older test file was not edited."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T09:08:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The Teams pull cannot land a meeting even if applied: its gateway transport is a STUB that raises GatewayToolsAbsent on every call, and pull.tf names a bearer secret (teams/global/gateway-token) that does not exist; TO-APPLY-p18 stopped at step 1 on the secret.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the cell: a real Teams gateway transport + the owner-named bearer in pull.tf), then 2.0.0_SA_COO~T2 cuts it",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/gateway_client.py:5 and :81 -- 'a GatewayTransport STUB that raises'; 'each method raises GatewayToolsAbsent naming the route it would call; no network call'",
+        "infra/aws/terraform/transcripts/pull.tf local pull_secret_name = teams/global/gateway-token; applier msg 2964 @7d2c8c8c53: describe-secret ResourceNotFoundException (list-secrets visible: 115; nearest gateway/teams/bearer, gateway/transcripts/bearer)",
+        "the live mail pull reads its owner-named bearer gateway/mail/bearer (mail_pull.tf:28-30, gateway_mail.py:39) through a real transport (outlook/gateway_mail.py)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ADDENDUM 7: the Teams pull apply proves FWD-2 on its first scheduled research_meeting landing.",
+    "world_is": "Applied as written, the function would run hourly and land nothing (stub transport), and its bearer secret is absent. The apply is the wrong next act; the transport and the secret name come first.",
+    "notes": "The applier did not read a neighbouring secret (a valid expiry from the wrong secret is a false pass). KMS CreateGrant limb PASSED."
   }
 ]
 ```
