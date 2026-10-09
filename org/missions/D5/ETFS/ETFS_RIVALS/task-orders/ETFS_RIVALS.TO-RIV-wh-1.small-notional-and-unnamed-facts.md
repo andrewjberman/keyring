@@ -106,7 +106,8 @@ PASS. Rides the WS2/WS3 deploy pair as one pair.
 
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 ~14:0xZ by 2.0.0_SA_COO~V1 @eeba3cad15: AC1 PASS (issuer re-grade, 6 of 6 checks); ITEM8 and W26-S1 checks PASS; worker ~31 proof VALID; suite on the merged tree 982 passed, 6 skipped. J1 is the CVO's, on the issuer's real 13-fund run. -->
 <round>28</round>
 <workstream>3f</workstream>
 <slot>~31</slot>
