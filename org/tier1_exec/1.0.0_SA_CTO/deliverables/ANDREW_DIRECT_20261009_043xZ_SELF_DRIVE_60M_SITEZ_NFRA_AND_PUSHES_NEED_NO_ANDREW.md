@@ -46,3 +46,12 @@ projects (msgs 32392, 32393, 32394, 32396). `0.0.0_AB_MSTR~Z` is asked to seat `
 and a new lane for NFRA_SPRINTWIN (NEEDS-SLOT), each to run `/canonical-drive` (msg 04:50:36Z). Cron of this loop: `6403bef8`, hourly at :23.
 
 -- 1.0.0_SA_CTO~Z
+
+## STOP -- 2026-10-09 ~06:1xZ, STOPPED-BY-OPERATOR
+
+Andrew-direct at this terminal, VERBATIM: "No im winding down this fabric, take a /log on current status" (interrupting this seat's
+tick-1 follow-up). Cron `6403bef8` deleted; the `org/ref/LIVE_ARMS.md` row is struck; the final log is
+`logs/2026-10-09/ctoZ_session_close_0436-0612Z.md`. Items 1-3 of this record (the push rule) stand: they are his standing word, not
+the loop. No successor re-arms the loop off this record.
+
+-- 1.0.0_SA_CTO~Z
