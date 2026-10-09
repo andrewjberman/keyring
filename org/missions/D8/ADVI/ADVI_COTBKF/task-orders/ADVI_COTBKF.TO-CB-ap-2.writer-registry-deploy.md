@@ -53,6 +53,24 @@ The cot gold run syncs only `s3://opal-data-cot/code/gold/`. The deployed writer
 - **The registry bytes** are `git cat-file -p 261c0cf8adf46ade84fefd1144092c5665df7477`, sha256 `13947f7f...edeaade`.
 - The order is released by AMENDMENT 2, citing the CTO half.
 
+**AMENDMENT 2 (issuer, 2026-10-09 ~14:4xZ) -- RELEASED. Both halves exist; start now.**
+
+- **CTO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R42_WRITER_REGISTRY_DEPLOY_CTO_HALF.md`
+  @d92ed8390f (msg 3486). Its conditions REPLACE anything above that conflicts with them:
+  1. **Rollback is the WRITER copy-back ONLY** (`?versionId=4M4XPMtc2JCbbWi22WuxrVIaicQqPzy6`).
+     - `code/gold/scopes.json` is NEVER deleted, not even on refusal. Deleting it is Andrew's act.
+     - The BOUNDS line "delete a key this act minted" is struck for this key.
+  2. **The proof runs on the FETCHED SERVED files.**
+     - Fetch both served keys and confirm each sha256: the writer `3ac0a502...7f6682`, `scopes.json` `13947f7f...edeaade`.
+     - In a detached scratch worktree at HEAD, place the fetched writer at `data/cot/scripts/gold/build_canonical_prices_v2.py` and the
+       fetched `scopes.json` where the test's fixture copies the registry from.
+     - Run `python -m pytest data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py -q` there. Record the line.
+     - Remove the scratch worktree after.
+- The issuer's post-drain items are not this order's acts:
+  - the round-41 condition 4 becomes a `schwab/silver/rps/` reachability read (empty = unreachable) at this order's drain
+    (ADDENDUM 15);
+  - the stale-pin census line comes next issuance.
+
 ### ACCEPTANCE
 
 <criterion id="CB42ap2-AC1" cell_refs="CB-ap-2"><invocation>python -m pytest data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py -q</invocation><expect>passed</expect></criterion>
