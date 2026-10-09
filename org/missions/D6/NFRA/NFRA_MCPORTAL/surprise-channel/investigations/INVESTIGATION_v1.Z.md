@@ -883,6 +883,34 @@
     "spec_asserts": "A worker whose order names paths under org/missions can commit them from its sparse worktree.",
     "world_is": "Not without widening the cone by the set above; the cell's own cone (the order's paths) is not enough. The CLOSED-project R6 limb and the channel corpus pass read files that no cone-mode cone of a worker can hold except by listing 41 project directories (836 MB, 20933 files).",
     "notes": "Issuer fix: cut worker worktrees with the non-cone pattern list above (or one the issuer owns), or give missions-tree-index.py and surprise-row-gate.py the index-read fallback inside the hook environment (the checker already has one at _index_only_projects, which returns [] under the hook's index). The orders' proof step cannot be committed from a bare cone worktree."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S20",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T02:08Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-W3-S3",
+      "NFRA_MCPORTAL-Z-C-S8",
+      "NFRA_MCPORTAL-Z-C-S10",
+      "NFRA_MCPORTAL-Z-W3-S2"
+    ],
+    "one_line": "DISARMS Z-W3-S3 / Z-C-S8 (the writer cannot import from its own zip), Z-C-S10 (the writer assumes an oid/iat claim) and Z-W3-S2 (no record of Andrew's Entra oid). These are the round-1 ARMED rows transferred to this issuer by the CTO's R-18 (ROUND_ANALYSIS.round4.md @460bc0af2f). Each premise was overtaken by a later round's measured act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W3-S3 / Z-C-S8: round 2's MP-b-1 (staged build, complete) builds the writer package that imports at /var/task; row Z-S17 measured the DEPLOYED mcportal-grant-writer-lambda zip (11 entries, lambda_function.py = CLOUD HEAD) answering a live no-header invoke REFUSED NO-OWNER-HEADER, which requires the handler to import inside the zip.",
+        "Z-C-S10: E1 (deliverables/2.0.0_SA_COO~MP/round3/E1_G-HDR_READ.md @c8b42c8913) measured the header's keys email,exp,family_name,given_name,iss,name,picture,sub -- no oid, no iat; PRD C4 was re-signed for the sub branch (v0.3 @963fff9f5a, @24ef97a3b7) and MP-a-2 applied MCPORTAL_OWNER_KEY_CLAIM=sub (complete, ledger 20260929T0412Z CLOSED).",
+        "Z-W3-S2: the oid record it asked for is no longer an input -- the owner key is Andrew's sub from /api/admin/whoami, given off-repo (G-SUB, deliverables/2.0.0_SA_COO~MP/round3/ANDREW_DIRECT_20260929_04xxZ_G-SUB_GIVEN.md), and MP-a-2's apply consumed it."
+      ]
+    },
+    "spec_asserts": "Z-W3-S3, Z-C-S8, Z-C-S10, Z-W3-S2 ARMED (round-1 thread hazards).",
+    "world_is": "All four premises were overtaken by measured acts: the staged build, E1's header read, the sub-branch apply and the deployed writer's live refusal. None is a live hazard. Each row's remediation-plane flip is the CVO's act.",
+    "notes": "Filed by the issuer under the CTO's R-18 transfer. The CTO's R-18 places the W1-S1 / C-S3 remediation flip with the CVO; this row does not cover it."
   }
 ]
 ```

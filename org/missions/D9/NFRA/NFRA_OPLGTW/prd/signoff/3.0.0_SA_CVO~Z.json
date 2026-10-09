@@ -1,14 +1,14 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v2.1",
-  "prd_pin": "8dccd20fa2983d72ba7a7fcba275330244cb0f6c",
+  "prd_version": "v2.2",
+  "prd_pin": "1825ea34725c1b09b7d94d88c9b0abae1df3414f",
   "half": "ratified-text",
-  "half_hash": "0121932260a9f2c9034ca272885711049e6c232e95f34ff4f91ec287e5f9769e",
-  "endpoint_hash": "be52a62a19f1ad751e8edc37eb995c8f7fcfac73afbdaa392ce2e1e68e2c50fd",
+  "half_hash": "471621f461edd4c532ae848ff493b29b1ecf44ff3020bd89235793a34618d264",
+  "endpoint_hash": "3b655164f45133b352606f8755be3f1aac3c9dbb4b51a8ecd3972908f0be0061",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v2.1_RATIFIED_TEXT_20261008_Z.md@a675e3ed86",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_NFRA_OPLGTW_v2.2_RATIFIED_TEXT_20261009_Z.md@c12ad43f2f",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-08T23:49:33Z",
+  "signed_at": "2026-10-09T02:20:36Z",
   "substitute_for": "3.0.0_SA_CVO~O",
-  "reason": "FWD-14..19 are reads at the width of Andrew's ~22:0xZ words; carried notes in the review"
+  "reason": "any account, any source for Andrew and Alyssa on his ~01:5xZ words; reviewed at 1825ea3472"
 }

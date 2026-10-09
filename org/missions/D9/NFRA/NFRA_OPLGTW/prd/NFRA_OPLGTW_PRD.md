@@ -853,9 +853,13 @@ SIGN-OFF).
 1. **Item 3 of v2.1 widens.** Black Diamond is a source for ANY Black Diamond account, not only the Tax roster's. FWD-18's
    ACCEPT and A30 are amended above. The roster still names which accounts are Tax accounts (FWD-14 to FWD-17). It no longer
    bounds the grant.
-2. **The grants of the connected principals reach every account in every source the gateway serves.** The connected
-   principals are Andrew, Alyssa and the Bloomberg concierge account `opalbloomberg`. Today the sources are Schwab masters
-   08242234, 08335338 and 08403355, and Black Diamond. A source the gateway adds later joins these grants without a new word.
+2. **Andrew's and Alyssa's grants reach every account in every source the gateway serves.** Today the sources are Schwab
+   masters 08242234, 08335338 and 08403355, and Black Diamond. A source the gateway adds later joins these grants without a
+   new word. His words name Alyssa as the one user ("nobody uses mcp right now aside from alyssa"). The Bloomberg concierge
+   account `opalbloomberg`, which answers Teams requests from other people, gets NO data grant from this addendum. It gets
+   only item 5's five tool rows. A data grant for it needs its own word. (Corrected before the ratified-text signature, on
+   `4.0.0_SA_CRO~Z`'s v2.2 note: the first text named `opalbloomberg` as a connected principal, which was this seat's
+   reading, not his words.)
 3. **Per-user scoping is DEFERRED, not removed.** The C2 machinery stays: per-principal grants, the revision check, the audit
    record and the hidden field classes. Each grant is still an operator act. The scoping is applied when a further user
    connects, on that user's own word.

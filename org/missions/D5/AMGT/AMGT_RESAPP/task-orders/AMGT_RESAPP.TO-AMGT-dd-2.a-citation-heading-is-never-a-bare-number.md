@@ -110,3 +110,4 @@ producer path while site Z's -FilingsAnalyzer task stays disabled (1.0.0_SA_CTO~
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @a06f7f9c20 (worker build be1966317b, proof 982274ab01 VALID rc=0; branch row withdrawn @91465662e7 and carried as AMGT_RESAPP-D1-S2). AC1 FAILed on P6 alone, an issuer check defect; AMENDMENT 1 fixed r80_dd2.py P6 (None returned unchanged, as the order says). Re-run by the issuer on the shared tree: R80 R2 AC1, AC2 (0 of 272 served letterless; 41 of 1122 stored), AC3 (4 changed, drift 0) all SERVED: YES. api suite on the branch 2 failed (pypdf absent on dell1), 896 passed. Served on the live function only through dd-4.</status>

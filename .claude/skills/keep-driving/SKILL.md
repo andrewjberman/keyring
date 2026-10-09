@@ -12,8 +12,8 @@ Record: `org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_005xZ
 mode itself: `org/tier1_exec/4.0.0_SA_CRO~B/deliverables/DESIGN_KEEP_WORK_DRIVING_20261009.md`. Owner 4.0.0_SA_CRO~B.
 
 **The switch:** `s3://opal-313476888478-globgrph/fabric/open-calls/v1/mode.json`, beside each box's `open_calls.json`.
-Two parts: `scan` (the 10-minute nudge, `.tools/open-calls-scan.py`) and `empty_tick` (a COO's empty `/canonical-drive` or
-`/closer-drive` tick runs `/next-calls --drive`). A box override beats the global value. **Absent or unreadable reads ON** (his
+Two parts: `scan` (the 10-minute nudge, `.tools/open-calls-scan.py`, which also carries the `/unblock` steps to the CRO, CTO,
+CVO and COO) and `empty_tick` (a COO's empty `/canonical-drive` or `/closer-drive` tick runs `/next-calls --drive`). A box override beats the global value. **Absent or unreadable reads ON** (his
 standing order), so the switch can pause the mode but never stop it by accident.
 
 ## Forms
