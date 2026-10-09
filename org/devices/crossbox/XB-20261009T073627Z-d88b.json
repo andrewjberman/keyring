@@ -10,12 +10,16 @@
  "subject": "PROD readiness + page class: ADVI_BILLING fee panel, IRPT_ANLREQ, NFRA_OPSWKF in promote to 3ea5d0f9",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CALL_PORTAL_PROD_PROMOTE_R58_60_READINESS_20261009.md",
  "opened_at": "2026-10-09T07:36:27Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T07:39:13Z",
   "bus_message_id": "1ed584d2-9686-43a2-9aa0-eb330e04586b"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T07:56:53Z",
+  "by": "1.0.0_SA_CTO~DELL2",
+  "bus_message_id": "90e221b4-3ad0-4eca-af45-a7a756b3a8f8"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
