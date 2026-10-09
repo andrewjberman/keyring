@@ -101,7 +101,7 @@ Rows: id `NFRA_OPLGTW-Z-W45-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Pre-cut: pf1.AC1 base FAIL as expected (test file absent); pf1.AC2 base PASS as expected (query 27, admin_grants 5,
   entitlement_admin 9, none removed; guard 1 failed = test_ogz1_ac08 only).
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>ENTITLE-R33</workstream>
 <slot>~45</slot>

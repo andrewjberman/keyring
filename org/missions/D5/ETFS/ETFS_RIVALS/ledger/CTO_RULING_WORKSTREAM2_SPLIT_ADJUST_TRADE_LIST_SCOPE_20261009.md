@@ -53,3 +53,21 @@ issued by `2.0.0_SA_COO~V1` as its own issuance and carrying all three WS2 guard
   prompting. It touches `ai_accounts.py`, which round 28's aw-1 deploy carries. A cell merged before aw-1's J1 read would change what
   that read grades, so item 8 is cut only after the read, as WS3's second issuance. Its prompt change is an OpenAI call path; egress is
   open (law 4d77a9c3ea).
+
+## ADDENDUM 2 (~07:3xZ) -- row ETFS_RIVALS-D1-S5 @82800edf8a: CGIC's report date -- the SIDECAR's claim is the as-of; the row date is fixed (`2.0.0_SA_COO~V1` msg 1981)
+
+A holdings report states positions as of the prior trading day's close and is DELIVERED the next trading day. CLAUDE.md: "Everything is
+T-1 unless declared". The 10-05 (Monday) capture's claim of 10-02 (Friday) is exactly one trading day earlier
+(`lib/trading_calendar.py`), which is the delivery lag, not an error. Ruling:
+- **`canonical_shape` stamps `source_report_date` with the sidecar's `claimed_report_date`** wherever that is present, and keeps the delivery
+  day as its own field (`delivered_on`). The calendar is already right ("repeat" reads the claim).
+- **Every CGIC trade window re-reads from the corrected dates.** A trade inferred between two reports is dated by their as-of days, not
+  their delivery days.
+- **Proof in the cell:**
+  - for the 10-02..10-06 CGIC captures, every row's `source_report_date` equals the sidecar claim, and the trade windows move one
+    trading day earlier, printed before and after;
+  - negative control: a fund whose sidecar claim equals its delivery day keeps its dates byte-equal.
+- Where a sidecar carries no claim, the delivery day minus one trading day is used, and the row carries `claim: inferred` (A VALUE MUST
+  CARRY ITS CLAIM).
+- This is a WS2-class cell under the WS2 guards. A redeploy of the canonical shape waits for the round-28 J1 reads, and it needs its own
+  pair, since served trade windows move.

@@ -119,7 +119,8 @@ grade_merge() {
 }
 
 # resolve_known P1 P2 T0 -> prints the resolved tree when EVERY conflicted path is a known multi-writer class (a surprise-
-# channel section union, or a regenerated generated index entry: .tools/merge-resolve-known.py); returns 1 otherwise.
+# channel section union, a regenerated generated index entry, or an append-only log: .tools/merge-resolve-known.py);
+# returns 1 otherwise. CLOUD_SIDE (ours in integrate, theirs in box) tells an append-only log which tail is CLOUD's.
 # The conflicted paths come from `git merge-tree --name-only`; T0 is the tree it wrote (markers and all).
 resolve_known() {
   local p1="$1" p2="$2" t0="$3" mb res idx k path blob how mode tr
@@ -127,7 +128,7 @@ resolve_known() {
   while IFS= read -r path; do [ -n "$path" ] && cps+=("$path"); done < <(git merge-tree --write-tree --name-only --no-messages "$p1" "$p2" 2>/dev/null | tail -n +2)
   [ "${#cps[@]}" -gt 0 ] || return 1
   mb="$(git merge-base "$p1" "$p2" 2>/dev/null)" || return 1
-  res="$(python "$ROOT/.tools/merge-resolve-known.py" --base "$mb" --ours "$p1" --theirs "$p2" --tree "$t0" "${cps[@]}" 2>&1)" \
+  res="$(python "$ROOT/.tools/merge-resolve-known.py" --base "$mb" --ours "$p1" --theirs "$p2" --tree "$t0" --cloud "$CLOUD_SIDE" "${cps[@]}" 2>&1)" \
     || { printf '%s\n' "$res" | sed 's/^/    resolver: /' >&2; return 1; }
   idx="$(git rev-parse --path-format=absolute --git-dir)/resolve-known-$$.index"
   rm -f "$idx"
@@ -145,7 +146,7 @@ resolve_known() {
 
 # make_merge P1 P2 MESSAGE -> sets MERGE_OUT (the merge commit) and GRADED_NOTE; rc 4 on conflict, 1 on refusal.
 # Called directly, never inside $( ): a subshell would lose GRADED_NOTE and the private dir path the EXIT trap cleans.
-MERGE_OUT=""; GRADED_NOTE=""
+MERGE_OUT=""; GRADED_NOTE=""; CLOUD_SIDE="ours"
 make_merge() {
   local p1="$1" p2="$2" msg="$3" out t m
   MERGE_OUT=""
@@ -197,10 +198,36 @@ BOX="${AGENTBUS_DEVICE:-}"
 [ -n "$BOX" ] || BOX="$(bash "$ROOT/.tools/agentbus-sqs.sh" device 2>/dev/null | sed -n 's/^device: *//p' | head -1)"
 [ -n "$BOX" ] && [ "$BOX" != "UNKNOWN" ] || { echo "box-sync: REFUSED -- this box's name is unknown (AGENTBUS_DEVICE)" >&2; ROWNOTE="box=unknown"; row 1; exit 1; }
 B="box/$BOX"
+CLOUD_SIDE="theirs"   # box mode merges (box tip, CLOUD): CLOUD is the second parent
 CUR_BR="$(git symbolic-ref -q --short HEAD 2>/dev/null || echo '')"
 [ "$CUR_BR" = "$B" ] || { echo "box-sync: REFUSED -- this shared tree is on '${CUR_BR:-detached}', not $B: the box has not switched" >&2; ROWNOTE="not-switched=${CUR_BR:-detached}"; row 1; exit 1; }
 CLOUD_TIP="$(git rev-parse --verify -q refs/remotes/origin/CLOUD)" || { ROWNOTE="no-origin-CLOUD"; row 1; exit 1; }
 LOCK_DIR="${GITDIR}/commit-queue.lock"   # the lock safe-commit lands under (legacy and two-phase)
+
+# APPEND-ONLY LOGS, UNCOMMITTED (0.0.0_AB_MSTR msg 107817; dell1 06:5xZ, laptop 07:0xZ): every manager spawn, /govern reaper
+# run and law edit appends a line to one of these files in the shared tree, so the land below (`read-tree -m -u`) HELD on
+# them whenever CLOUD changed the same file. When the working copy extends the box tip's blob byte for byte, commit it
+# first through safe-commit under this serial (LD-0639 grants the spawn audit to box managers); the merge then resolves the
+# file as base + CLOUD tail + box tail (merge-resolve-known.py). Anything else -- staged by a seat, an earlier line edited,
+# a lane refusal -- is left alone, and the land HOLDS as before.
+for _p in $(python -c 'import importlib.util as u,sys;s=u.spec_from_file_location("m",sys.argv[1]);m=u.module_from_spec(s);s.loader.exec_module(m);print(" ".join(m.APPEND_ONLY))' "$ROOT/.tools/merge-resolve-known.py"); do
+  _mb="$(git merge-base "refs/heads/$B" "$CLOUD_TIP" 2>/dev/null)" || break
+  git diff --quiet "$_mb" "$CLOUD_TIP" -- "$_p" && continue        # CLOUD did not change it: the land cannot overlap
+  git diff --quiet -- "$_p" && continue                            # nothing uncommitted
+  git diff --cached --quiet -- "$_p" || { echo "box-sync: $_p is staged by a seat -- left to that seat"; continue; }
+  python "$ROOT/.tools/merge-resolve-known.py" --extends "refs/heads/$B" "$_p" \
+    || { echo "box-sync: $_p is not a pure append of the box tip -- left; the land may HOLD on it"; continue; }
+  if [ "$DRY" -eq 1 ]; then echo "box-sync: DRY RUN -- would commit the uncommitted appends of $_p"; continue; fi
+  _msg="$(mktemp)"
+  python -c 'import sys;open(sys.argv[1],"w",encoding="utf-8",newline="\n").write("chore(%s): commit the uncommitted appends of %s before taking CLOUD (box-sync, append-only log)\n\nThe working copy extends the box tip byte for byte; CLOUD changed the same file, so the land would HOLD on it\n(0.0.0_AB_MSTR msg 107817).\n" % (sys.argv[2], sys.argv[3]))' "$_msg" "$SERIAL" "$_p"
+  if _out="$(bash "$ROOT/.tools/safe-commit.sh" --author "$SERIAL <$SERIAL@opal.agent>" -F "$_msg" -- "$_p" 2>&1)"; then
+    echo "box-sync: committed the uncommitted appends of $_p ($(git rev-parse --short=10 "refs/heads/$B"))"
+  else
+    echo "box-sync: safe-commit refused the appends of $_p -- left; the land may HOLD on it. Its last lines:"
+    printf '%s\n' "$_out" | tail -3 | sed 's/^/    /'
+  fi
+  rm -f "$_msg"
+done
 TOOK="none"
 for attempt in 1 2 3; do
   P1="$(git rev-parse "refs/heads/$B")"

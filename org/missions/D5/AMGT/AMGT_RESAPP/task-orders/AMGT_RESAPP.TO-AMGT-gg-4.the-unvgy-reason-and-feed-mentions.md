@@ -86,3 +86,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @df9568bf85 (build 7ed6e1de21, proof 4aa0085247 VALID rc=0; mutant control restores the false text). Re-run by the issuer on the branch: R82 UNVGY AC1 SERVED: YES ("no forecast figure is served: no BEST_PERIOD_END_DATE for this period (FY1, FY2, FY3)"), R82 FEED AC1 SERVED: YES (AMD 22 of 22, BA 75 of 75 items with integer mentions; basis named; order unchanged, newest first). ISSUER RULING on the worker's finding: mentions is None (not 0) where the gold row stores no count, and the ABSENT basis text stays for a feed with no counts. api folder 2 failed (pypdf absent on dell1), 880 passed. Served only through AMGT-gg-7.</status>

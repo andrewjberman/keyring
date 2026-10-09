@@ -5987,3 +5987,31 @@ by dell1 or by this seat.
 }
 ```
 
+
+## MDPF_SECCLASS-D1-S22 -- safe-deploy's OPEN-DEPLOY limb is unresolvable during any concurrent worktree removal: it lists a worktree, then ls-trees one that is already gone
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S22",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T07:13Z",
+  "one_line": "crossbox-deploy-check.py's OPEN-DEPLOY limb reads `git worktree list --porcelain` and then ls-trees each worktree it listed. The two reads are not atomic, so a worktree another seat's drain removes in between returns rc=128 and the limb reports 'not readable, not clear' naming a path that no longer exists. It is correct not to call that clear -- the defect is that on a box running concurrent drains the limb is unresolvable by construction, and its message points the reader at a path they cannot inspect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09T07:07:36Z on box/dell1 during TO-SC-e60b's ship. safe-deploy printed: \"[seat-gates] STOP: 1 hit(s) in OPEN-DEPLOY -- first: OPEN-DEPLOY: worktree C:/dev/drain-dell1-audit3: ls-tree rc=128 (not readable, not clear)\" and \"[seat-gates] mode=WARN CROSSBOX-DEPLOY ... open_deploy=hit verdict=STOP\", then \"WARN [seat-gates] would stop under ENFORCE ( crossbox-deploy:data/black_diamond ); WARN mode proceeds.\"",
+      "Measured minutes later: C:/dev/drain-dell1-audit3 is ABSENT from disk (`test -d` false), ABSENT from .git/worktrees/, and ABSENT from `git worktree list --porcelain` -- which is the gate's own instrument (.tools/crossbox-deploy-check.py:326-327 lists, :333-335 ls-trees and appends the 'not readable, not clear' hit). So the worktree existed at the list and was gone at the ls-tree.",
+      "The churn is independently visible: two successive `git worktree list --porcelain` reads minutes apart returned 37 then 38 live worktrees on this box. A foreign drain had also held a merge in the shared worktree ~20 minutes earlier (safe-commit refused on MERGE_HEAD fa1dc46e9d, 0.9.0_WK_ETFS_RIVALS~26), so concurrent drains are the normal state here, not an edge case.",
+      "The question the limb could not answer was then answered completely, the NEVER-2 way: every live worktree ls-tree'd with the per-tree denominator printed -- 38 worktrees, 0 UNREADABLE, 63 distinct sentinels, 42 of them on a worktree branch and not in the shared tree. Sentinels naming D_04, client_portal, bd-gold, gold-layer or e60: ZERO. The gate's hit was an instrument race and not a world conflict, and e60b's ship was clean on a 188-key pre/post watch set (MOVED=1, the target)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The OPEN-DEPLOY limb returns either clear or a real contention, so a deploy is gated on world state and a gate verdict is reproducible by its reader.",
+  "world_is": "On a box running concurrent drains the limb can return 'not clear' for a worktree that no longer exists, and the reader cannot reproduce the hit because the named path is gone. Today that is INERT: the limb is in WARN mode and the deploy proceeds. IT ARMS THE MOMENT THE MODE FLIPS TO ENFORCE -- then any deploy racing any drain is STOPPED by a vanished worktree, and the operator's only way forward is an override, which is the shape that trains people to override a gate that is sometimes right. The fix is small and belongs to the tool, not to its callers: treat an ls-tree rc=128 on a worktree that `git worktree list` no longer reports as PRUNED-NOT-UNREADABLE and re-list once before calling it unclear.",
+  "notes": "SURFACED, NOT CHASED, and not absorbed as a passing WARN: a could-not-check is not a checked-clean, so this seat resolved the limb's question itself before closing leg D, and leg D's proof records both the hit and its resolution. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S4]] is the same family -- deploy_ledger grading a foreign device's entry against the local fetch -- and [[MDPF_SECCLASS-D1-S14]] is the ledger's missing state for an entry held behind a gate."
+}
+```
