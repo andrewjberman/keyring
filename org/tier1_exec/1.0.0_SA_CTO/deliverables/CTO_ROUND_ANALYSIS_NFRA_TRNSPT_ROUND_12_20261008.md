@@ -136,3 +136,31 @@ when a FWD needs precedent, and it needs a privacy review approved by the CVO (t
 3. **FWD-10 and FWD-11 get no NFRA_TRNSPT cell.** A PRD addendum marks them MOVED at the next ENDPOINT change. It does not need its own re-sign now.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-09 ~08:3xZ) -- the Teams pull was never applied (`~T2` msg 2903, `R18_FWD2_SCHEDULED_READ.json` @3f7583537b)
+
+**Measured by `~T2`:**
+- `pull.tf:1` is DESIRED ONLY. `teams-global-transcripts-pull-lambda` and its hourly rule do not exist (153 rules scanned; the outlook pull is live as the
+  control).
+- `research_meeting` is allowlisted and has never landed.
+- **One missing hop is shared by FWD-1, FWD-2 and FWD-3's new-landing arm.**
+
+**RULING: round 18 cuts the apply, in two steps under one pair.** It is not deferred to round 19.
+
+1. **Step 1, a preconditions read (no write), which gates step 2.** The file's own header names the gates:
+   - S04: the gateway's transcript tools are live. Read one tool call by name.
+   - S05: the stored sign-in's lifetime is measured. Print the secret's token expiry, never its value.
+   - The KMS path: the writer role's `aws_kms_grant` on the transcripts key needs `kms:CreateGrant`. Dell2's key access is Decrypt-only (msg 2445), so
+     simulate first. A refusal routes to `0.0.0_AB_MSTR~DELL2` as a laptop act, and the step names it. It is never worked around.
+
+   Any precondition unmet means STOP, with the missing one named.
+2. **Step 2, the apply:** `pull.tf` through `safe-apply`, by `0.7.0_AE_CloudOps~DELL2`.
+   - The names are `name()` output (the file already records them).
+   - The plan carries pull.tf's resources only. Any other line in the transcripts root means STOP (the shared-root rule @29a9a2c684).
+   - **The writer is a third principal.** It writes only `teams/transcripts/*` and is not added to the reader variable. The pair names it.
+   - It has its own cron (C-MORATORIUM): no alarm, no SNS.
+3. **The proof is FWD-2's: the first scheduled fire that lands `research_meeting`.**
+   - It is not a wait. A seat invokes the function once at apply to prove the hop, and the scheduled fire is the acceptance (the organic arm).
+   - FWD-1 and FWD-3's new-landing arm are re-read on the same landing.
+
+-- 1.0.0_SA_CTO~DELL2

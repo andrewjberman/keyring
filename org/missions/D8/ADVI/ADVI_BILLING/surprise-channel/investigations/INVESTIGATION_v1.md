@@ -337,3 +337,81 @@
   "world_is": "Met; notes in the grade file."
 }
 ```
+
+## ADVI_BILLING-D2-W4-S1 -- The 5 advisorKeys hold no account in any role in the source, so adding them to the map gives them present-but-EMPTY entries: the 'not in ownership map
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W4-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~4",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The 5 advisorKeys hold no account in any role in the source, so adding them to the map gives them present-but-EMPTY entries: the 'not in ownership map' refusal is cured, a per-household grant is not (and 2 of the 5 are firmRole admin, already bypassing the check)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OWNERSHIP_GAP_R2.json (this worker's folder): relationships_per_added_advisor 0 x5; accounts 0 x5",
+      "jd2 dim_advisor_fee_role: none of the 5 slugs appears in any role column of any of 53 partitions sampled (first, middle, 2026-09-28)",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:469-470 (isAdmin = role admin or firmRole admin) so luke_winskowski and test_regression_49f bypass the check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO face: the 5 advisors 'are refused their own books'; the fix makes the 5 keys appear and counts their relationships.",
+  "world_is": "The advisors own no household in the source (account-team assignment), so 'their own books' is empty. After the fix, dan_wohlgemuth, lizah_okoniewski, test_regression_49f_adv are present with empty lists (still 403 on any relationship, now 'not authorized' rather than 'not in map'). Granting them households needs an account-team assignment in the source, not a producer change. Key format matches (advisorName slug == advisorKey) except the two test_regression keys, which have no name-derived form."
+}
+```
+
+## ADVI_BILLING-D2-W4-S2 -- The served map is produced by the legacy D_00.portal_aggregates (z-id grammar, 191 advisors, generated today), not by d08; the d08 fix reaches the ser
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W4-S2",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~4",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The served map is produced by the legacy D_00.portal_aggregates (z-id grammar, 191 advisors, generated today), not by d08; the d08 fix reaches the served map only at the cutover, and D_00 has the same universe law",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live map generated_at 2026-10-09T05:27Z, 191 advisors, relationship ids z-form; d08 produces rel_ hash ids and 149 advisors on the same day's inputs",
+      "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:550-607 _build_advisor_ownership_map (melts the 5 role columns, drops advisors with no account/relationship)",
+      "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py module docstring: identity-spine divergence declared by design"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO face: 'the map is produced by d08_firm_ownership_map.py' and the issuer regenerates the served map after the fix.",
+  "world_is": "d08's output cannot replace the served map as-is: it is on a different id grammar (canonical spine) than the z-ids the edge compares, and every relationship list differs by design. The served map is written by the legacy D_00 builder, which drops a no-account advisor in the same way. The issuer's regeneration must either run D_00 with the same union or apply the 5 empty entries to the served bytes under the never-widen pair; the producer I was granted does not change the served bytes by itself."
+}
+```
+
+## ADVI_BILLING-D2-W4-S3 -- The shape differ in d_publisher_base has no empty-list tolerance (an empty id list reads as type 'empty' != census 'string'), so an advisor served wit
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W4-S3",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~4",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The shape differ in d_publisher_base has no empty-list tolerance (an empty id list reads as type 'empty' != census 'string'), so an advisor served with empty lists is REFUSED by the shape check; d08 grades the populated advisors and asserts the empty shape itself",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "d_publisher_base.py _schema_of/_diff_schema: empty list -> {'__array__':'empty'} compared to census 'string' -> diff",
+      "before the workaround: SHAPE CHECK REFUSED with diffs on /advisors/<key>/accounts and /relationships for the 5 keys",
+      "after: d08 _shape_view leaves only the exact {accounts:[],relationships:[]} entries out of the census grade; SHAPE CHECK PASS diffs=0, TAMPER GUARD PASS 149 advisors"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Wanted: the fix passes the census shape check without editing the base or the census (both outside the grant).",
+  "world_is": "d08 asserts the empty entry's exact keys itself and withholds only those entries from the census grade. A durable fix is empty-list tolerance in the base differ (an empty list satisfies any element contract, as an empty map already does)."
+}
+```
