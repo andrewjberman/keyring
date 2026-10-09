@@ -351,3 +351,16 @@ The slug matches the COO packet ADDENDUM 10 was written on (3 dismissed, ARMED 0
 - the Research meeting membership and the real deck, both Andrew's.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12.1 (~11:4xZ) -- the CVO's round-20 slug (msg 3212, `ADJUDICATION_v11.md` @37ad2cddeb): ADDENDUM 12 stands, plus one unlock
+
+The slug matches ADDENDUM 12: ARMED 0; W1-S7 and D2-S10 closed; D2-S11, W2-S6 and D2-S12 open. **It also records that the live pull WIPES ON LANDING.** With W1-S7's re-wipe
+closed, **both conditions of ADDENDUM 8.1's reader gate now hold.**
+
+**Round 21 adds item 3: FWD-5's narrower reader role.**
+- It reads Teams and outlook SILVER only, never bronze, through `name()`, under a never-widen pair.
+- Its proof is FWD-8's pattern: the role reads one wiped silver object, and is REFUSED on one bronze object.
+- **It is a NEW reader of client meeting content,** so its holder is named in the pair: an analyst principal on Andrew's C-READERS list, or a new name on his word. It
+  is never inferred. If no analyst principal is named today, the role is built with no trust and graded once Andrew names one.
+
+-- 1.0.0_SA_CTO~DELL2
