@@ -44570,3 +44570,22 @@ REFUSED_20261008)
 2026-10-09T12:02:49Z LANDED-2P  2.0.0_SA_COO~AI  442d24e01d  paths=5  validate=124.24s  wait=0.59s  hold=4.64s  build=2.93s  ref=1.62s  post-commit=9.80s  attempt=1
 2026-10-09T12:03:03Z LANDED-2P  2.0.0_SA_COO~ZZ  2934fa13c8  paths=1  validate=40.49s  wait=0.30s  hold=2.93s  build=1.80s  ref=1.06s  post-commit=8.59s  attempt=1
 2026-10-09T12:07:39Z PASS  0.9.0_WK_NFRA_OPLGTW~48  4  (all paths in-lane)
+2026-10-09T12:26:48Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T12:26:58Z LANDED-2P  0.0.0_AB_MSTR~DELL2  742ec2cc17  paths=1  validate=9.78s  wait=0.13s  hold=1.60s  build=0.99s  ref=0.56s  post-commit=4.37s  attempt=1
+2026-10-09T12:27:05Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=2.52  graded=n/a  args=(--verify-merge b6e80b28f6566d77764f4d39d8006efae89299cd)  first=(none)
+2026-10-09T12:27:08Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=63.53  held=conflict cloud=41b6f7a039
+2026-10-09T12:27:14Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=5.13  held=conflict cloud=41b6f7a039
+2026-10-09T12:27:58Z PASS  2.0.0_SA_COO~C2  2  (all paths in-lane)
+2026-10-09T12:28:22Z LANDED-2P  2.0.0_SA_COO~C2  e075588a6c  paths=2  validate=39.33s  wait=0.09s  hold=1.38s  build=0.86s  ref=0.46s  post-commit=3.81s  attempt=1
+2026-10-09T12:29:12Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=4  secs=8.96  graded=n/a  args=(origin/CLOUD -m drain(0.0.0_AB_MSTR~DELL2): box/dell2 takes CLOUD 41b6f7a039; audit-log line union)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T12:29:32Z PASS  2.0.0_SA_COO~P2  3  (all paths in-lane)
+2026-10-09T12:29:39Z PASS  0.7.0_AE_CloudOps~DELL2  1  (all paths in-lane)
+2026-10-09T12:29:42Z PASS  0.0.0_AB_MSTR~DELL2  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T12:29:49Z LANDED-2P  0.7.0_AE_CloudOps~DELL2  fb8f6fb039  paths=1  validate=9.28s  wait=0.11s  hold=1.41s  build=0.80s  ref=0.54s  post-commit=4.70s  attempt=1
+2026-10-09T12:30:25Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=4.98  graded=0/3 fast-lane  args=(wk-P-r106)  first=(none)
+2026-10-09T12:30:35Z PASS  2.0.0_SA_COO~C2  1  (all paths in-lane)
+2026-10-09T12:30:43Z LANDED-2P  2.0.0_SA_COO~C2  513fcb47f3  paths=1  validate=10.25s  wait=0.12s  hold=1.20s  build=0.70s  ref=0.43s  post-commit=3.35s  attempt=1
+2026-10-09T12:31:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=101.93  graded=2/105  args=(--continue -m drain(0.0.0_AB_MSTR~DELL2): box/dell2 takes CLOUD 41b6f7a039; audit-log line union)  first=(none)
+2026-10-09T12:31:41Z PASS  0.9.0_WK_IRPT_DASHBD~64  5  (all paths in-lane)
+2026-10-09T12:32:16Z PASS  0.9.0_WK_IRPT_DASHBD~62  7  (all paths in-lane)
+2026-10-09T12:32:21Z PASS  2.0.0_SA_COO~C2  3  (all paths in-lane)
