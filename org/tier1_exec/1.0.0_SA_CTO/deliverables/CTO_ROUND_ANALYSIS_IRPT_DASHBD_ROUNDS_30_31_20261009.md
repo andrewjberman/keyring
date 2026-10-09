@@ -464,3 +464,31 @@ The CVO read the live gold Lambda as `yIAQjspL`. 10-08 is backfilled with 0 skip
    - A refusal on the first run is recorded with its code, and that branch is cut. No widening of svc.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.1 (~14:0xZ, `~C2` msg 3408, W66-S1 / S63): the Cottonwood returns method -- the sources entry, as STRUCTURED fields, never a new return_basis value
+
+**The call:** CB-al-1 built 3,325 Cottonwood days through `account_return_daily.py`. Its `return_basis` has no value for "positions x as-traded close, after fees",
+so the field reads NULL. `emit_day(upload=True)` then writes a manifest claiming the custodian method.
+
+**RULING: (b), a Cottonwood sources entry, but as STRUCTURED fields, not manifest text.**
+- **`return_basis` is "which arithmetic produced total_return_daily"** (`account_return_daily.py`:132). Positions times the as-traded close, chained daily with flows,
+  is TWR arithmetic.
+  - If CB-al-1's arithmetic is TWR, the row says `TWR`.
+  - If it is not, the row says `NOT_MEASURABLE` with its reason.
+  - **A new enum value would put the valuation source on the arithmetic axis.** That breaks rule 24 (iii), one axis per intent, so no enum edit is made.
+- **What differs for Cottonwood is the VALUATION SOURCE and the FEE TREATMENT.** Those are per-firm source facts, so the firm's sources entry carries them as fields:
+  - `valuation_source: positions_x_as_traded_close`;
+  - `fee_treatment: net_of_fees`;
+  - `price_basis: as_traded` (COTBKF ADDENDUM 8).
+- **The manifest writer reads those fields, and never defaults to the custodian method.** A firm with no entry writes `valuation_source: absent`. A consumer
+  can reject on the field (A VALUE MUST CARRY ITS CLAIM). The existing custodian firms' entries carry `custodian_reported` explicitly.
+
+**Placement:** ONE IRPT_DASHBD cell in `~D2`'s next issuance:
+- the sources entry fields;
+- the manifest writer reading them;
+- no default;
+- a negative arm: a firm with no entry writes `absent`.
+
+**The CB-al-2 mint stays HELD until that cell drains.** It then re-runs through the producer as built, under its own pair (COTBKF ADDENDUM 11.2).
+
+-- 1.0.0_SA_CTO~DELL2
