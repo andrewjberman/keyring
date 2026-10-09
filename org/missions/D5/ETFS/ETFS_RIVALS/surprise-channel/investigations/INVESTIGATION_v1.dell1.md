@@ -402,6 +402,69 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "spec_asserts": "Andrew-direct comment 1 (@9d08dd64d4): a dramatic move triggers a web search for a corporate action and an automatic refactoring of historical prices by the split multiple.",
       "world_is": "The lookup and the adjustment exist in code and were exercised only by the issuer's local real run; production has no caller, no key and no staged search client.",
       "notes": "Placement asked of 1.0.0_SA_CTO~DELL1: which Lambda runs the lookup (the sweep after canonical, or publish-page before price_series), the key as a Secrets Manager read (IAM limb) and serp.py staged. Owner: 2.0.0_SA_COO~V1."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W32-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~32",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "The daily Lambda walks run_dag, not run_sweep: RIV-wi-1 item 2 names only run_sweep, and a call there alone would never run in production",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep run_sweep|run_dag under data/etfs/scripts: run_dag at sweep.py handler_entry; run_sweep only in tests/test_d1_sweep.py",
+        "wi1_wiring_check.py reads run_sweep only (AC2 PASS), so it cannot see the run_dag wiring; tests/test_riv_wi1_sweep_lookup.py::test_run_dag_runs_the_lookup_once_before_the_first_publish does"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 2: sweep.run_sweep calls dramatic_move.run_for_day after the canonical / trade-schedule stages and before the day's publish.",
+    "world_is": "sweep.handler_entry calls run_dag (data/etfs/scripts/rivalfunds/sweep.py handler_entry); run_sweep has callers only in tests. The lookup was wired into BOTH: run_sweep before its publish-page stage (AC2's literal read), and run_dag inside run_one(\"publish-page\"), once per walk, recorded in the outcome and in handler_entry detail.dramatic_move.",
+    "notes": "Issuer: confirm the J1 read is on a run that goes through handler_entry/run_dag."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W32-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~32",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "serp.py cannot be staged alone: it imports _util.py and harvest.py from its own directory at module load, so STAGED stages the directory data/find/dualbiz/scripts",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py:30-32",
+        "tests/test_riv_wi1_sweep_lookup.py::test_a_staged_lambda_tree_finds_and_imports_the_search_client copies STAGED into a temp tree and imports serp from _serp_dir() in a subprocess: PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 4: STAGED stages data/find/dualbiz/scripts/serp.py.",
+    "world_is": "data/find/dualbiz/scripts/serp.py lines 30-32 insert its own directory in sys.path then `from _util import fetch` and `from harvest import ...` (both stdlib-only files in that directory). A lone serp.py in a Lambda tree raises ImportError. rivalfunds_package.STAGED now carries the directory (13 files, 156K, stdlib-only) to the same relative path; wi1_wiring_check (b) accepts the file or its directory.",
+    "notes": "The package zip grows by the directory's 156K (tests excluded by _IGNORE only for a directory named tests; test_registry.py rides along)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W32-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~32",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "serp.py reads the SERP ZONE from a second Secrets Manager secret unless BD_SERP_ZONE is set, so the deploy pair needs that variable (or a second ARN) as well as RIVALFUNDS_SERP_SECRET",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py:213-242 and 413-414",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py serp_search"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 3: the key comes from BRIGHT_DATA_API_KEY or the secret named by RIVALFUNDS_SERP_SECRET (one GetSecretValue).",
+    "world_is": "serp._bd_serp_zone() (serp.py:230-242) calls GetSecretValue on find-dualbiz/bright-data/serp when neither the cache nor BD_SERP_ZONE is set; dramatic_move.serp_search passes BD_SERP_ZONE through when present. Without it the Lambda role needs a read on that second secret too, else every search raises and counts as failed (no crash, no write).",
+    "notes": "Applier contract: set RIVALFUNDS_SERP_SECRET (name or ARN of the key secret; raw string or JSON with api_key / bright_data_api_key / BRIGHT_DATA_API_KEY), grant the one-ARN secretsmanager:GetSecretValue, and set BD_SERP_ZONE (serp.py's own default zone is serp_opal) on the Lambda that runs the sweep (the daily one). Not set by this cell (out of bounds)."
   }
 ]
 ```
