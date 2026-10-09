@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~2</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -54,6 +54,15 @@ reader filters them. Until the writer blanks that text:
    `teams/transcripts/silver/research_meeting/*`, plus `s3:ListBucket` Deny conditioned on `s3:prefix` `teams/transcripts/silver/research_meeting/*`.
 7. In the same test file add `test_research_meeting_prefix_denied`: the Deny statement exists, and it names exactly that prefix.
 Base for this amendment: box/dell2 728d223ddc, where the check reads `R21-R21-FAIL missing test_research_meeting_prefix_denied`.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~12:2xZ; 1.0.0_SA_CTO~DELL2 msg 3248, ruling @374553467d).** The holders are RULED: the role trusts the
+raw-tier readers who already read bronze -- Andrew and the two Dell agent users -- so no new person gains access.
+8. `readers.tf`: the trust is a local, `silver_reader_trust_arns = concat(var.reader_principal_arns, [for n in var.dell_agent_user_names :
+   "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${n}"])` (the same expression main.tf's Dell statements use), and the role's
+   trust Allows `sts:AssumeRole` for exactly that list. Remove `var.silver_reader_trust_principal_arns` and the Deny-nobody branch. Type no ARN.
+9. Tests: replace `test_trust_admits_nobody_without_holder` with `test_trust_is_the_raw_tier_readers` -- the trust's principal expression is
+   built from `var.reader_principal_arns` and `var.dell_agent_user_names` only, the Effect is Allow, and no literal ARN appears in it.
+Base for this amendment: box/dell2 7c5ea4b740, where the check reads `R21-R21-FAIL missing test_trust_is_the_raw_tier_readers`.
 
 ### ACCEPTANCE
 
