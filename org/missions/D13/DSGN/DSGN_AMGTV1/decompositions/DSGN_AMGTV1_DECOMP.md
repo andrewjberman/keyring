@@ -2471,3 +2471,18 @@ Producer rows for AMGT_RESAPP, filed at the close walk if still seen:
 **Base:** portal 2726bbe7 (= origin DEV). **Check:** `deliverables/2.0.0_SA_COO~D1/round67/checks/r67.cjs`, base 1 of 6.
 
 **Fan-out:** 1 of 1.
+
+## v68 -- ROUND 68 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~15:5xZ) -- ONE SERVED FIELD PER MEASURE
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round67.md` @a06920d917 section 2. Item 1 is `AV-zzs-1`. Item 2 (an EV served without its
+currency) is already filed to AMGT_RESAPP as row `AMGT_RESAPP-D1-S14` (@d30938fb2d), which names 992 HK's subject EV. Item 3 is the
+close walk (992 HK plus ASML) for the CVO.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzs-1` one field per measure (LOCAL) | FWD-27 | `SA/tabs/PeersTab.tsx` | ~142 (worker-light) |
+
+**Base:** portal 32835ce5 (= origin DEV, round 67, landed 15:4xZ). **Check:** `deliverables/2.0.0_SA_COO~D1/round68/checks/r68.cjs`,
+base 3 of 5, on a real render.
+
+**Fan-out:** 1 of 1.
