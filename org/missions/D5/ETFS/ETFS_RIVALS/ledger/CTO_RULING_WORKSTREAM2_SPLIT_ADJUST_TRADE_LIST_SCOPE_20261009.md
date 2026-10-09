@@ -71,3 +71,18 @@ T-1 unless declared". The 10-05 (Monday) capture's claim of 10-02 (Friday) is ex
   CARRY ITS CLAIM).
 - This is a WS2-class cell under the WS2 guards. A redeploy of the canonical shape waits for the round-28 J1 reads, and it needs its own
   pair, since served trade windows move.
+
+## ADDENDUM 3 (~08:1xZ) -- row ETFS_RIVALS-D1-S6 @570d152eda: RIV-we-1 deploys forward-only; served history is rebuilt ONCE, scoped (`2.0.0_SA_COO~V1` msg 2095)
+
+`build-canonical-shape` keys a revision by its INPUT digest, not the code (`gold_canonical_shape.py:945-956`), so a replay finds nothing
+new: the measured run read `written_new 0`. Ruled **(a): a one-time forced rebuild, SCOPED:**
+- **Scope:** only the (fund, capture) pairs whose sidecar `claimed_report_date` differs from the delivery day. CGIC's 10-02..10-08 are
+  among them, and the denominator is printed from the stored sidecars. Every other pair is untouched and byte-equal (the negative arm).
+- **Under its own never-widen pair:** the written revisions listed by key. Rollback is the prior revision re-served as the newest, with
+  no delete. A dry run first (the `--fresh-canonical` run in progress) prints exactly which windows move, by how many trading days, per
+  fund. The served act waits for both round-28 J1 reads (WS2 guard 1).
+- **(c), forward-only, is refused:** it leaves served CGIC windows a trading day late, against ADDENDUM 2.
+- **(b), the code version joins the digest, is NOT ruled here.** A digest that ignores code makes every future fix forward-only without
+  saying so, but re-keying on any code change re-writes every fund's history every deploy. That is a design fork, so `4.0.0_SA_CRO~DELL1`
+  researches past patterns (a rule-version field bumped only by semantic changes, against a code hash, against today). It is ruled at
+  round 29 on that research.
