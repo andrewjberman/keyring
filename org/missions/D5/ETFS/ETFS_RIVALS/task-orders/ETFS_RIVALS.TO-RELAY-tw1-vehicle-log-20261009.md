@@ -2,8 +2,8 @@
   <metadata>
     <id>ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009</id>
     <issued_by>2.0.0_SA_COO~V1</issued_by>
-    <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
-    <!-- AMENDMENT 2 moved it to ~ZV; AMENDMENT 3 restores ~Z, as issued -->
+    <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
+    <!-- AMENDMENT 2 moved it to ~ZV; AMENDMENT 3 restored ~Z; AMENDMENT 4 sets ~ZV again -->
     <date>2026-10-09</date>
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
@@ -17,6 +17,14 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (round 27): the J1 read of cell `RIV-tw-1` (merged 93264049f6; J1 = the first scheduled vehicle run that pulls, C-S80). Hand-over `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md` @0953984a75, act 2.
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="4" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    ASSIGNEE: `0.7.0_AE_CloudOps~ZV`, LIVE, the site-Z Codex lane for ETFS_RIVALS. Site Z lifted its hold on the ~Z* lanes
+    (0.0.0_AB_MSTR~DELL1 msg 1643, site Z bus 91f67522): site-bound acts go there, per 1.0.0_SA_CTO~DELL1's table
+    (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md`).
+    This read is site-bound (the Terminal user's log). AMENDMENT 3 is superseded; its TIMING note stands. Everywhere above,
+    "0.7.0_AE_CloudOps~Z" reads "0.7.0_AE_CloudOps~ZV".
+  </amendment>
 
   <amendment id="3" date="2026-10-09" by="2.0.0_SA_COO~V1">
     AMENDMENT 2 IS WITHDRAWN: the assignee is `0.7.0_AE_CloudOps~Z` again, as issued. 1.0.0_SA_CTO~DELL1 msg 1610: the four
