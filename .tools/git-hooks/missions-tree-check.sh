@@ -21,10 +21,14 @@
 # path is staged and the generator is missing or cannot run (its rc 2), that is a DENY. A gate that
 # vanishes silently reads exactly like its approval.
 #
-# BOUND, stated: `check` reads the WORKTREE, not the staged index. A file staged differently from
-# its worktree copy is validated as the worktree has it. The step-6 gate's limb 5 reads the staged
-# index for the same reason this one does not yet: the generator has no --staged mode. Named here
-# so it is a known hole, not a discovered one.
+# READS THE STAGED BYTES, SCOPED TO THE ACT (NFRA_GATSCP GS-t-2): the run is `check --staged --act-from-env`.
+# --staged reads every input from the git index git resolves (GIT_INDEX_FILE / GIT_DIR honoured), never the
+# working tree, so a file staged differently from its working copy is graded as staged and another seat's
+# unsaved edit is not graded inside this commit. --act scopes the refusal: a violation in a project the staged
+# list does not touch is printed as `STANDING <CODE> ...` and does not refuse; a violation in a project the list
+# touches refuses as before. A staged DIRECTIVES.yaml / MACROS.yaml / contract puts every project in the act.
+# No rule (R1-R6, ROW-*, INDEX-*) changed. Without OWNED_PATHS_STAGED_FILES the act also carries the staged
+# DELETIONS, so removing a tree row cannot leave its orphaned index entry as someone else's STANDING.
 #
 # rc: 0 = clean or not-applicable | 1 = DENY (violations, or the gate could not evaluate itself).
 # Rule 16: Git Bash default utilities only. ASCII only.
@@ -60,7 +64,12 @@ fi
 # direct hook run: last line was the surprise-row gate's OK). A silent refusal reads like a broken
 # hook, and a silent pass would read like approval; neither is a gate.
 RC=0
-OUT="$(cd "$ROOT" && python "$TOOL" check 2>&1)" || RC=$?
+ACT_LIST="$STAGED"
+if [ -z "${OWNED_PATHS_STAGED_FILES:-}" ]; then
+    ACT_LIST="$ACT_LIST
+$(git -C "$ROOT" diff --cached --name-only --diff-filter=D 2>/dev/null || true)"
+fi
+OUT="$(cd "$ROOT" && MTC_ACT_PATHS="$ACT_LIST" python "$TOOL" check --staged --act-from-env MTC_ACT_PATHS 2>&1)" || RC=$?
 
 # NFRA_CTLPLN CT-s-8 -- a round is not counted finished without a reviewer on the box and a grade by it. When a staged
 # org/missions/D*/*/<CODE>/project.json moves dep_stage TO ROUND_CLOSE or CLOSED, .tools/round-close-check.py runs for that
@@ -126,6 +135,8 @@ EOF
 
 case "$RC" in
     0)
+        printf '%s
+' "$OUT" | grep -E '^STANDING ' || true
         close_gate || exit 1
         echo "OK: missions-tree-check -- $(printf '%s\n' "$HITS" | grep -c .) tree/register path(s) staged; $(printf '%s\n' "$OUT" | grep -E '^RESULT' | head -1)"
         exit 0 ;;
