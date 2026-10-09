@@ -24415,3 +24415,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The 13 arms re-run unchanged by name and verdict (13 of 13), with the pre-binding control's source pinned to a fixed commit instead of pin^, copied into this worker's replay/ directory."
 }
 ```
+
+## IRPT_BCKEND-D2-S51 -- a cleanup list deleted a shared content-addressed retention row; three later test requests now refuse
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S51",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T13:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Y75 cleanup list (issuer-derived DDB keys, deleted 10:10Z under Andrew @35fabf20c8) included the CONTENT-ADDRESSED retention row RETENTION#RET-021c9f6b...c5b7 (NORMALIZED_PORTFOLIO), which three LATER synthetic requests (TO-APPLY-Y77 reads 4-5: REQ-3d76e5b4, REQ-9d59d4d2, REQ-f7ddede9) share because they re-used the same test input; those three now refuse RetentionExpired. No real request is affected (4 of 7 tenant requests' chains are live).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release1/Y1_laptop_reads_3_5_result.json (sha256 13aa6be20e54), root_cause_one_shared_dependency",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_admit_keys_v3.json (the derived keys; note: RET- and ART- share one digest)",
+      "laptop 2.0.0_SA_COO~C msg 107972 via MSTR msg 3357"
+    ]
+  },
+  "spec_asserts": "A cleanup list deletes only what one test upload made.",
+  "world_is": "Content-addressed rows are SHARED by every upload of the same bytes; a list derived from one upload deleted a row later requests still reference. Rule for this lane's future cleanups: walk the retention dependency tree (RETENTION#<id> rows, as the laptop's principal-free walk did) and exclude any row another live request references, before naming a key. Ruling 2026-10-09 ~13:3xZ: no PITR restore (test requests only); Y1 reads 3a/4_route/5 re-run on a fresh synthetic request; the three broken test requests join the next cleanup list under Andrew's word."
+}
+```
