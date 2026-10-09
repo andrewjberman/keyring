@@ -287,3 +287,27 @@ write: **1 row** (`S1`).
   "notes": "WHY IT IS FILED HERE RATHER THAN AGAINST THE TOOL'S OWN PROJECT: it BOUNDS THIS PROJECT'S CENSUSES. ADVI_FIRMBKTS F1 is a census cell and its PRD names the aws corpus among the reading instruments; a cell that asks 'does this firm bucket exist' through the corpus gets a clean, denominator-bearing NO for exactly the two buckets this project is about. The tool defect is not this project's to repair and its owner is unchanged; the BOUND is this project's and needs a carrier here. WHAT IT COST ME, recorded because the near-miss is the evidence: I ran the corpus read FIRST and it returned zero. Had I stopped there I would have told Andrew the two buckets do not exist -- the exact mirror, in the opposite direction, of telling him two hours earlier that root was the only path to them. BOTH ERRORS HAVE ONE SHAPE: a faithful instrument answering a question about a population it could not see, with nothing in the output to say so. THE ONLY THING THAT SEPARATED THEM WAS THE POSITIVE CONTROL, and it cost one call. DISARM CONDITION, measurable: the corpus holds a node for each of the two buckets, or the corpus documents which resource classes its build can miss and under what condition, so a zero from it can be read correctly. UNTIL EITHER HOLDS: any ADVI_FIRMBKTS census over --corpus aws states in its own output that the corpus is not authoritative for bucket EXISTENCE and names the live-plane read it was corroborated against."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S11",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-09T01:45Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "A READY PATCH FOR build_canonical_prices_v2.py (tolerant load of two absent inputs, plus an optional S_00 step) WAITS FOR THIS PROJECT, BECAUSE THE NAMING GATE REFUSES ANY OTHER PROJECT'S DIFF TO THAT FILE",
+  "spec_asserts": "CLAUDE.md rule 30 (as amended @c55a7b39cd): the commit-time naming gate REFUSES names today; an existing pipeline reaches conformance through its own migration project (R19). This file's existing literal places it on ADVI_FIRMBKTS's remediation surface (row MDPF_DEMQUE-D1-W7-S2).",
+  "world_is": "dell1 2.0.0_SA_COO~Q1 (msg 1370, relayed by 0.0.0_AB_MSTR msg 107595) built org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/ADVI_FIRMBKTS_INPUT_S00_TOLERANT_LOAD.patch @091ccbafa2 (origin box/dell1; reaches CLOUD at the 02:00Z integrate): a call-site _load_tier2() so the build survives absent silver/historical_prices.parquet and config/ticker_lookup.json, and an optional S_00 step ahead of A_00 in the cot-pipeline SSM terraform. Both checks passed in the worker's tree (dell1's statement, not re-run by this seat). It is not landed, because the gate refuses the diff while the file keeps its literal.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 107595, verbatim relay of dell1 msg 1370 (bus 3ab4a338)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INPUT FOR L5, NOT A CUT. ADVI_FIRMBKTS holds L4-R ADMITTED with no COO lane seated (SEQUENCE.yaml slot order). The decomposition that seats it carries this patch into the cell that renames build_canonical_prices_v2.py's literal, so the rename and the tolerant load land in one diff. The S_00 step touches the cot-pipeline's SSM terraform, a served change: it rides that cell's never-widen pair. Disposition closes when that cell's merge carries the patch or the decomposition rules it out with its reason."
+}
+```
