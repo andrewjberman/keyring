@@ -2571,3 +2571,33 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Met on the live launch: step 1 (identity gate) ran without anyone typing and the Analyst moved on to step 2. Not yet exercised: the Analyst serving a Teams message, which waits on r29 and the CTO~Z close-before-Teams condition."
 }
 ```
+
+## NFRA_OPALAI-Z-S66 -- Makes Z-S57's disarm (recorded in prose by Z-S60 @90db6922a4) machine-readable for the round-2 close.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S66",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T10:47Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by its disarm_owner on 2026-10-06: row Z-S60 (commit 90db6922a4) records the disarm, after OA-f-14 A1 named every non-tool get_token caller (AC1 7 of 7, 10 call sites, 0 unmapped) and gateway r25 went live with it. Z-S60 carries no adjudicates field, so the channel census still counted Z-S57 open; this row only makes the disposition machine-readable.",
+  "adjudicates": [
+    "NFRA_OPALAI-Z-S57"
+  ],
+  "one_line": "Makes Z-S57's disarm (recorded in prose by Z-S60 @90db6922a4) machine-readable for the round-2 close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-surprise --project NFRA_OPALAI --json at 10:4xZ: 129 items; open BLOCKING/ARMED rows not named by any adjudicates field = 2 (Z-S57, Z-S62)",
+      "git log 90db6922a4: row(NFRA_OPALAI Z-S60, 2.0.0_SA_COO~AI): Z-S57 DISARMED by its disarm_owner",
+      "OA-f-14 order CLOSE record: AC1 7 of 7 (get_token callers outside tools.py: 10, 0 unmapped), closed @d76ea69096; released in gateway r25 (240ac2fe5a)"
+    ]
+  },
+  "spec_asserts": "L10: every BLOCKING or ARMED row of the round is dispositioned before the slug.",
+  "world_is": "Z-S57 was disarmed on 10-06 but read open to the census; Z-S62 stays ARMED until r29 serves (its disarm)."
+}
+```
