@@ -27,13 +27,18 @@ no household (~P2 msg 1849), but `data/transcripts/scripts/commentary/ticket_cli
 "household", "report_type", "add_commentary")` (:13), the body reads `ctx["household"]` (:25) and the title is "Draft commentary -- %s (%s)" %
 (household, report_type) (:32); `stub_post` checks `_REQUIRED_ANSWERS` (:96).
 
-**Build (issuer ruling until ~V2 records contract v0.2):**
-1. `ticket_client.py`: `household` is OPTIONAL -- when the ticket context has none (missing, None or empty), omit the `household` key from
-   `answers`; the title becomes "Draft commentary -- <report_type> (<report_request_id>)". When a household IS present, keep today's body and title
-   exactly. `stub_post` accepts a body without `answers.household` and still refuses every other missing required value. Nothing else changes.
+**Build -- to ~V2's contract v0.2 @20784c5462 (`org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/FWD10_H6_H5_TICKET_WRITE_CONTRACT.md`
+section 8, "what shipped"; ~V2 msg 2214), which supersedes the issuer's interim rule:**
+1. `ticket_client.py`: `household` is OPTIONAL for svc-commentary -- when the ticket context has none (missing, None or empty), OMIT the
+   `household` key from `answers` (no placeholder); when one is present it may be sent as before. The TITLE is ALWAYS "Draft commentary --
+   <firm> (<report_type>)" and is NEVER built from household (v0.2 section 8: "never put client identity in the title"; at most 300 characters).
+   `stub_post` accepts a body without `answers.household`, rejects a title over 300 characters, and still refuses every other missing required
+   value. Nothing else changes.
 2. `data/transcripts/scripts/tests/test_commentary_ticket_client.py`: add `test_household_optional_for_svc_commentary` (no household -> the body has
-   no household key, the title has the report_request_id, the stub returns 201 and `action: done`); keep every existing test green.
-3. `data/transcripts/scripts/tests/test_commentary_seam.py`: if a seam test relies on the synthetic household, leave it; add nothing else.
+   no household key, the title is "Draft commentary -- <firm> (<report_type>)", the stub returns 201 and `action: done`); update ONLY existing
+   assertions that expected the household in the title; keep every other test green.
+3. Read the token from the secret named in v0.2 (`opal/ticketing/svc-commentary`, its `.token`) only through the injected `token_reader` -- no
+   secret read in this cell.
 
 ### ACCEPTANCE
 
