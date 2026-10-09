@@ -4729,3 +4729,81 @@ round.** Never edit an existing row.
  "world_is": "It would raise ImportError: opal_naming is not deployed beside the cot gold scripts. Latent while rps is empty."
 }
 ```
+
+
+## ADVI_COTBKF-D2-W77-S1 -- existing gold tests encode the fail-open behavior the ruling reverses
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W77-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~77",
+ "surfaced_at": "2026-10-09T17:20:00Z",
+ "one_line": "Eleven existing gold tests fail BY DESIGN once the writer and B_00 fail closed: they encode the behavior CTO ADDENDA 21 and 22 reverse, and all sit outside this order's paths grant. Failing (measured, gold suite 36 passed 4 failed 7 errors; silver suite 754 passed 11 skipped, unchanged): test_b00_ff_carry_claim.py x3 (runs _ff_worker with __file__ = the repo gold dir, which has no scopes.json beside it, and relied on opal_naming to find the firm); test_canonical_prices_input_resolution.py::test_c_neither_present_unresolved_and_absent (asserts WARN and an empty-default overrides load); test_canonical_prices_source_firm.py x7 (the fixtures copy the writer and scopes.json but NOT ticker_overrides.py, so the writer now raises at import; test_g additionally asserts the writer RUNS to an upload with scopes.json absent, the opposite of ruling item 1). The order's bound 'both suites stay green' cannot be met without editing those three files.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest data/cot/scripts/gold/tests -q -> 4 failed, 36 passed, 7 errors (this worktree)",
+   "git show 2b4531d4a8 shows the new test; data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py:_load_writer copies only the writer and scopes.json",
+   "data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py:test_c asserts 'WARN' in output"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ax-1 BOUNDS: both suites stay green; and the ruling: scopes.json missing STOPs before any write, ticker_overrides missing STOPs.",
+ "world_is": "The new test passes (4 of 4) and the silver suite is green, but data/cot/scripts/gold/tests carries 4 failed and 7 errors in 3 files not in the paths grant. Each failure is a fixture or assertion of the old fail-open behavior: add ticker_overrides.py beside the writer in the source_firm fixtures; give the b00 carry-claim test a scopes.json beside a copy of B_00; invert test_g and test_c to the STOP arms (which test_cot_gold_failclosed.py already covers). The order is left OPEN for the COO to amend the paths or recut."
+}
+```
+
+## ADVI_COTBKF-D2-W77-S2 -- override/correction counts differ from the order text
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W77-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~77",
+ "surfaced_at": "2026-10-09T17:20:00Z",
+ "one_line": "The order text says the repo ticker_overrides.py loads 757 overrides and 1 correction; the file loads 757 overrides and 104 corrections (TICKER_CORRECTIONS has 104 entries, many mapped to None).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -c import ticker_overrides; len(YF_OVERRIDES), len(TICKER_CORRECTIONS) -> 757 104",
+   "data/cot/scripts/gold/lib/ticker_overrides.py:803 TICKER_CORRECTIONS dict"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ax-1 item 3(d): with the file present, 757 overrides and 1 correction load (the repo file's own counts).",
+ "world_is": "Measured by importing data/cot/scripts/gold/lib/ticker_overrides.py: len(YF_OVERRIDES)=757, len(TICKER_CORRECTIONS)=104. The test asserts the measured 757 and 104 and prints them; the '1' in the order is not what the file holds."
+}
+```
+
+## ADVI_COTBKF-D2-W77-S3 -- naming gate refuses the writer's plain legacy keys (R20 case needed)
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W77-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~77",
+ "surfaced_at": "2026-10-09T17:40:00Z",
+ "one_line": "The commit-time naming gate (LGIC_ENFORCE, ENFORCE mode) REFUSES the writer's three plain legacy S3 key constants, so the price-writer half of CB-ax-1 is not committed: build_canonical_prices_v2.py:121 'silver/transactions/' is NEW and OUT-OF-PATTERN as S3Key (REFUSE); :122 'silver/historical_prices.parquet' is EXISTING and OUT-OF-PATTERN in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS (REFUSE unless the diff removes it); :123 'code/gold/' is EXISTING, touched, OUT-OF-PATTERN (WARN). The order says STOP this branch and name the R20 case; no bypass with parts, no naming-place-override.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit.sh output: NAMING-GATE: REFUSE 3 graded (data/cot/scripts/gold/build_canonical_prices_v2.py:121-123)",
+   "the fail-closed writer diff is saved at C:/dev/wk-cotbkf-77/.scratch/writer_failclosed_plain_keys.patch (96 lines, untracked scratch; it applies with git apply)",
+   "the R20 kind: .tools/naming-gate.py R20_KIND (a declared exception: register_ref a conformance-ledger row id, occurrences, cutoff or PERMANENT), which needs Andrew's acknowledgement"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ax-1 item 1: write each S3 key as ONE plainly typed module constant; if the commit-time naming gate refuses a plain legacy key, STOP that branch and file a BLOCKING row naming the R20 case.",
+ "world_is": "The R20 case needed: a declared exception for the three occurrences in data/cot/scripts/gold/build_canonical_prices_v2.py (the keys silver/transactions/, silver/historical_prices.parquet, code/gold/ as plain legacy constants, values equal to the legacy_addresses.json rows before and after), register_ref a ledger row id, cutoff PERMANENT or the ADVI_FIRMBKTS close date; Andrew acknowledges the departure (infra/logic/02_DOCTRINE.md R20). Until it lands, the writer still imports opal_naming at module level and cannot run from the mirror (D2-S72/W75-S1 stand for it). B_00's half IS committed (7b85e1a074)."
+}
+```
