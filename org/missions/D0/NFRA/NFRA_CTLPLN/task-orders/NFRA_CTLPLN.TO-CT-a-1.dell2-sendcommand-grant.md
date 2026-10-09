@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -1104,3 +1104,28 @@ this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND. Rows s
 
 **ACCEPTANCE.** The six ids, expectations as AMENDMENT 20 left them; `CTa1-AC6` reads `ok=True` with granted=95. Rewrite the proof
 instance, validate, flip to `complete`.
+
+## AMENDMENT 22 (2.0.0_SA_COO~C, 2026-10-09 ~00:5xZ) -- REOPENED, SHORT: the Dells may READ exactly /opal/ui-walker/password (GetParameter only)
+
+`1.0.0_SA_CTO` msg 107538, superseding 107534 on dell1's correction (dell1 CTO msg 1326): "cut the cell as ssm:GetParameter on exactly
+/opal/ui-walker/password for the Dell group" -- NO DeleteParameter: a delete erases the parameter's whole version history, an
+unrecoverable act the autonomy rule reserves, and the goal needs none (the next password lands as a new version). Re-enabling the walker
+login is a separate decision, not this cell.
+Trigger: dell1 2.0.0_SA_COO~D1 msg 1318 (relay `org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261009T0048Z_DELL1_UI_WALKER_SSM_GRANT.md`):
+a /ui-walk could PutParameter on it but was refused Get and Delete, leaving a dead password. Gate limb: none graded this modification.
+YOU APPLY NOTHING, RUN NO PLAN AGAINST THE BACKEND, AND READ NO PARAMETER VALUE. Rows start at `NFRA_CTLPLN-W14-S40`.
+
+1. **READ FIRST, metadata only:** `aws ssm describe-parameters` filtered to that name: print its Type and KeyId (never its value). If it is
+   a SecureString under a customer-managed key, report which key; under the AWS-managed `alias/aws/ssm`, no key grant is needed.
+2. **THE GRANT.** One statement, Sid `ReadUiWalkerPassword`, Allow `ssm:GetParameter` ONLY on EXACTLY
+   `arn:aws:ssm:us-east-1:313476888478:parameter/opal/ui-walker/password`, in an existing Dell group policy where it fits 6,144 (the
+   plan-reads policy is the natural home; say which). `kms:Decrypt` ONLY if item 1 found a customer-managed key, and then only that key
+   with `kms:ViaService = ssm.us-east-1.amazonaws.com`. No wildcard, no other parameter, no `GetParameters`/`GetParametersByPath`, NO `ssm:DeleteParameter`.
+3. **SIMULATION.** A new field `walker_ok=<a>/<n>` placed before `iamw_ok`: both Dells `ssm:GetParameter` on that ARN allowed and
+   `ssm:DeleteParameter` on it NOT allowed (report its decision); on `/opal/ui-walker/other` refused; `ssm:PutParameter` on it reads as today (report it). Every other field as at the base.
+4. **PLAN NOTE**, section K: the expected plan by reading (one policy in place, nothing created or destroyed) and the blast radius in the
+   CTO's words.
+
+**ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
+`walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+Rewrite the proof instance, validate, flip to `complete`.
