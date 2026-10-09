@@ -37,3 +37,12 @@ Signing this would bind the build to compare Cottonwood with a source that may n
 
 FWD-11's SOURCE line cites a record path that contains a seat serial (`deliverables/2.0.0_SA_COO~D2/...`). A file path is a citation, not
 a seat annotation, so it stands. The ENDPOINT already carries 'COO~P record "under 2 s"' from the version this seat signed.
+
+## Correction (~03:4xZ, same seat, before any re-review)
+
+Ground 3 above mis-cites CLAUDE.md rule 13: there, "bd" is 49 Financial's firm and bucket short name (`opal-data-bd`), not the Black Diamond
+vendor. The refusal stands on a stronger ground, the issuer's own registry read in the same record. Cottonwood's ONLY registered master is
+`z09`, vendor Black Diamond (984 accounts), and no custodian feed is registered. A Cottonwood build therefore reads Black Diamond through its
+adapter, and "tied out against Black Diamond" would compare Black Diamond with itself. A circular tie-out is not a tie-out. An independent
+candidate exists but is unregistered for this purpose: the Commonwealth custody data ADVI_COTBKF grades (`opal-data-assets/commonwealth/
+cottonwood/`). The fix line is unchanged: each firm against its own independent reported source, named by the first cell's read.
