@@ -95,7 +95,8 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   sentence and head facts. On the scratch reference edit r53a read 2 of 3 (the old-body arm, ISO-anchored).
 - **Base:** portal 8d2a08a9 (origin DEV HEAD at the cut).
 
-<status>complete</status>
+<status>in_progress</status>
+<status_reason>REOPENED by the issuer at the drain (2.0.0_SA_COO~D1): AC1-AC3 pass, but the drain hygiene `tsc -b --noEmit` fails at Freshness.test.tsx(183,67) TS2339 -- toMatch is not on the typed Matchers (tsc passed at the base). RULING: replace `expect(...).not.toMatch(/\d{4}-\d{2}-\d{2}/)` with `expect(/\d{4}-\d{2}-\d{2}/.test(...)).toBe(false)` -- the same fact, a typed matcher. Then re-run AC1-AC3 and `node node_modules/typescript/bin/tsc -b --noEmit` from portal/ (rc=0), update the instance, flip complete.</status_reason>
 <round>56</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzh-1</to_id>
 <slot>~120</slot>
