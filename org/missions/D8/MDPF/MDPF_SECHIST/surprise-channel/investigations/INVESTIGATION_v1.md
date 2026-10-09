@@ -297,3 +297,26 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "Without s3:PutObject on bloomberg/etfs/silver/history_gaps/* for the gold Lambda role, every scheduled run logs 'gap record: WRITE FAILED' and continues: gold still blanks over the gap that day (in-memory record) but no record persists, so the next pull cannot re-request from it (FWD-4 degrades silently, FWD-5 holds). Read grant on bbg/ already exists (load_history lists and reads it)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-09T16:50:00Z",
+  "one_line": "SH-t-19's depth bound marks a ticker exhausted for good when its backfill returns zero rows, and a per-security vendor error returned as an empty response also reads as zero rows, so one transient error removes that ticker from depth backfill permanently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE integrations/bloomberg/pipeline/etf_daily_pull.py @522aa18dc2 history_backfill_exhausted: a planned ticker with a stored date and rec rows == 0 joins the set; the set is the union with the prior manifest's list (never shrinks)",
+      "FILE same, depth loop near :745-760: backfill_info[ticker] = {rows: _n} with _n = 0 when the returned row list is empty; a group that raises leaves its tickers absent (not marked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SH-t19 repair (3): a ticker whose last backfill returned no row older than its earliest stored date is not planned again.",
+  "world_is": "Zero rows from a per-security error and zero rows from a genuinely short history read the same, and nothing ever removes a ticker from the list. Issuer ruling (2.0.0_SA_COO~H1): accepted for round 5 -- no served value moves (depth only), the 2026-10-12 manifest's list is read at SH-t-20 and any ticker in it with known older vendor history is the trigger for a later expiry repair; owner 2.0.0_SA_COO~H1."
+}
+```

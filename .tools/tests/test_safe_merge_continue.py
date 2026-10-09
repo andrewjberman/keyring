@@ -84,6 +84,7 @@ def build(base_dir, name):
     for f in base:
         write(wt, f, "r1\nr2\nr3\nFEAT-" + f + "\n")
     write(wt, "clean.txt", "feature-only file\n")
+    write(wt, "third.txt", "third file, changed only on the other branch\n")
     git(wt, "add", "-f", SCR)
     git(wt, "commit", "-q", "--no-verify", "-m", "feat")
     git(wt, "checkout", "-q", ours)
@@ -136,11 +137,17 @@ def main():
         for f in ("c1.txt", "c2.txt"):
             resolve_union(wt, f)
         git(wt, "restore", "--staged", "--", "%s/c2.txt" % SCR)
+        # GS-h-3 (D1-W13-S1): also reset the CLEAN third.txt the merge brought in, in the index AND the working copy
+        git(wt, "reset", "-q", "HEAD", "--", "%s/third.txt" % SCR)
+        tp = os.path.join(wt, SCR, "third.txt")
+        if os.path.exists(tp):
+            os.remove(tp)
         head_before = git(wt, "rev-parse", "HEAD").stdout.strip()
         rc, out = sm(wt, "--continue")
         refused = [ln for ln in out.splitlines() if "REFUSED -- the merge commit lacks" in ln]
         case("b2 --continue exits non-zero (7)", rc == 7, "rc=%s" % rc)
         case("b3 the REFUSED line names the unstaged path", bool(refused) and "%s/c2.txt" % SCR in refused[0], refused[0] if refused else "no REFUSED line")
+        case("clean-path-reset-both-ways-refused", rc == 7 and bool(refused) and "%s/third.txt" % SCR in refused[0], "rc=%s" % rc)
         case("b4 the REFUSED line does not name the carried path", bool(refused) and "c1.txt" not in refused[0])
         case("b5 the commit landed and was not rewritten (merge commit over the old HEAD)",
              parents(wt) == 2 and git(wt, "rev-parse", "HEAD^1").stdout.strip() == head_before)
@@ -158,6 +165,8 @@ def main():
         git(wt, "add", "-f", "--", "%s/c2.txt" % SCR)
         rc, out = sm(wt, "--continue")
         case("c2 --continue exits 0 and names no lost path", rc == 0 and "REFUSED -- the merge commit lacks" not in out, "rc=%s" % rc)
+        case("conflicted-keep-ours-admitted", rc == 0 and "REFUSED -- the merge commit lacks" not in out, "rc=%s (GS-h-3 negative arm: a CONFLICTED path kept at the first parent's bytes)" % rc)
+        case("c3 the kept-ours path is not in the merge's diff against the first parent", "%s/c2.txt" % SCR not in merged_paths(wt) and "%s/c1.txt" % SCR in merged_paths(wt))
     except Exception as exc:  # noqa: BLE001 -- a harness failure is a failed run, printed
         case("harness ran without raising", False, repr(exc))
     finally:
