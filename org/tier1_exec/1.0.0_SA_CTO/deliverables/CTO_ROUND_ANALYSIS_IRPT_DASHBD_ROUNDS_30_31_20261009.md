@@ -396,3 +396,19 @@ IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-sta
    **Neither is assumed. Each is read** before DB-b-86's first real statement runs.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11 (2026-10-09 ~12:4xZ) -- rounds 41-43 (CVO slug msg 3287, `ADJUDICATION_v25.md` and `REMEDIATION_v19.md` @5f365678bf)
+
+**Read:** MAY-CLOSE. S40 is ARMED (`~D2`): the R37 fire skipped lots for 2026-10-08, ruled in ADDENDUM 10 (the lot-key cell, round 42).
+
+**Rulings on the CVO's additions:**
+1. **S40, adopted:** every day a lots stage skips is STATED on the page that serves lots, as "lots not computed for <date>: <reason>", never an empty table. It is
+   added to round 42's chain as one display criterion.
+2. **W62-S1 (the key is checked before `realized_gain` is rewritten):** the uniqueness check runs on the FINAL rows, after every rewrite. This rides the lot-key cell
+   (DB-b-87), plus one test where a rewrite creates a repeat that the check catches.
+3. **W64-S1 (`verify-persisted` checks the index only):** it also verifies the persisted object's sha256 against the index entry. This rides the runner re-cut (ADDENDUM
+   10.1).
+4. **S41 (the proof schema):** this belongs to the proof-of-spec tooling's owner, not to IRPT_DASHBD. `~D2` files it there through MSTR with the failing example. No
+   DASHBD cell.
+
+-- 1.0.0_SA_CTO~DELL2

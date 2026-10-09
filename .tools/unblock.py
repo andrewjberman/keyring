@@ -11,8 +11,14 @@ the third tick they do this if nothing has opened up." and "CRO figures out the 
 to synthesize that into the workflow, and it needs a sign off by the CVO." Owner 4.0.0_SA_CRO~B.
 
     python .tools/unblock.py tick --serial <COO serial> --project <CODE> --result nothing|work
+                                  [--owed-ledger <open_deploys slug> --owed-owner <serial>]
         the drive tick's count of consecutive `/next-calls --drive` ticks that found nothing; LAST line
-        UNBLOCK-TICK serial=<s> project=<CODE> empty=<n> verdict=<KEEP-DRIVING|THIRD-EMPTY-TICK|WAITING <UB id> <state>|RESUME <UB id>>
+        UNBLOCK-TICK serial=<s> project=<CODE> empty=<n> verdict=<KEEP-DRIVING|THIRD-EMPTY-TICK|WAITING <UB id> <state>|RESUME <UB id>
+                                                              |WAITING OWED <slug> <owner> UNTIL <time>>
+        --owed-*: the tick's only block is ONE owed act named in the project's record, owned by another seat. It reads WAITING,
+        not empty, only while (a) the owner is LIVE, (b) that act's deploy-ledger entry is OPEN on any live worktree (NEVER-2's
+        union read), and (c) the act is inside its declared window_hours, or 4h from opened_at when none is declared. Failing
+        any one, the tick counts as before, so a hung apply still opens a case (3.0.0_SA_CVO~Z ruling @23f60a21df).
     python .tools/unblock.py open --project <CODE> --by <COO serial> --body <position.md>     (COO, on THIRD-EMPTY-TICK)
     python .tools/unblock.py propose --id <UB> --by <CRO serial> --body <approach.md>         (CRO)
     python .tools/unblock.py fold --id <UB> --by <CTO serial> --ref <PRD addendum | round-N analysis | ruling path>   (CTO)
@@ -227,10 +233,66 @@ def latest_wait(docs: list, serial: str, project: str, now):
     return d["id"], wait_of(d)
 
 
-def tick_verdict(empty_before: int, result: str, active, waiting=None) -> tuple:
+OWED_DEFAULT_WINDOW_H = 4.0   # no declared window: 4h from the ledger entry's opened_at (3.0.0_SA_CVO~Z @23f60a21df)
+
+
+def parse_utc(s: str):
+    """An ISO time ('...Z' or '...+00:00', fractional seconds allowed) as an aware UTC datetime, or None."""
+    try:
+        t = datetime.datetime.fromisoformat(str(s).strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return (t if t.tzinfo else t.replace(tzinfo=datetime.timezone.utc)).astimezone(datetime.timezone.utc)
+
+
+def owed_in_progress(owner_live: bool, entry, now) -> tuple:
+    """PURE. (True, until) when an owed act counts the tick as WAITING; (False, reason) otherwise. The CVO's bound: LIVE owner,
+    an OPEN ledger entry for the act, and still inside the act's window (declared window_hours, else 4h from opened_at), because
+    LIVE plus ledger-open is also what a hung apply looks like."""
+    if not owner_live:
+        return False, "owner-not-live"
+    if not isinstance(entry, dict) or str(entry.get("status", "")).upper() != "OPEN":
+        return False, "ledger-not-open"
+    opened = parse_utc(entry.get("opened_at", ""))
+    if opened is None:
+        return False, "ledger-opened_at-unreadable"
+    try:
+        hours = float(entry["window_hours"]) if entry.get("window_hours") not in (None, "") else OWED_DEFAULT_WINDOW_H
+    except (TypeError, ValueError):
+        hours = OWED_DEFAULT_WINDOW_H
+    until = opened + datetime.timedelta(hours=hours)
+    if now >= until:
+        return False, "outside-window"
+    return True, stamp(until)
+
+
+def open_ledger_entry(slug: str) -> tuple:
+    """(newest OPEN entry dict or None, live worktrees read). NEVER-2's union read: the entry FILE on disk in every live
+    worktree (`git worktree list`), which also sees an entry still uncommitted on a worker branch."""
+    try:
+        out = subprocess.run(["git", "-C", ROOT, "worktree", "list", "--porcelain"], capture_output=True, text=True,
+                             timeout=30).stdout
+    except (OSError, subprocess.SubprocessError):
+        out = ""
+    trees = [ln[len("worktree "):].strip() for ln in out.splitlines() if ln.startswith("worktree ")] or [ROOT]
+    best = None
+    for t in trees:
+        p = os.path.join(t, "org", "critical_paths", ".open_deploys", slug + ".json")
+        try:
+            e = json.load(open(p, encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(e, dict) and str(e.get("status", "")).upper() == "OPEN" and \
+                (best is None or str(e.get("opened_at", "")) > str(best.get("opened_at", ""))):
+            best = e
+    return best, len(trees)
+
+
+def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None) -> tuple:
     """PURE. (new empty count, verdict). A tick that found work resets the count; a SIGNED file means resume on it. With no
     file in flight, a resumed file's named event time still ahead (`waiting` = (id, until)) holds the count at 0 and reads
-    WAITING, so a dated wait already folded never re-fires; the count restarts once the time has passed."""
+    WAITING, so a dated wait already folded never re-fires; the count restarts once the time has passed. An owed act in
+    progress (`owed` = (slug, owner, until), only when owed_in_progress() said so) reads WAITING the same way."""
     if active is not None and active["state"] == "SIGNED":
         return 0, "RESUME %s" % active["id"]
     if result == "work":
@@ -240,6 +302,8 @@ def tick_verdict(empty_before: int, result: str, active, waiting=None) -> tuple:
         return n, "WAITING %s %s" % (active["id"], active["state"])
     if waiting is not None:
         return 0, "WAITING %s UNTIL %s" % waiting
+    if owed is not None:
+        return 0, "WAITING OWED %s %s UNTIL %s" % owed
     return n, ("THIRD-EMPTY-TICK" if n > EMPTY_TICKS_BEFORE else "KEEP-DRIVING")
 
 
@@ -258,7 +322,18 @@ def cmd_tick(args) -> int:
     except Exception as exc:  # noqa: BLE001 -- the store being down never blocks a tick; it is named
         active = None
         print("WARN: unblock store unreadable (%s); counting without it" % type(exc).__name__)
-    n, verdict = tick_verdict(before, args.result, active, waiting)
+    owed = None
+    if args.owed_ledger and args.result == "nothing" and active is None and waiting is None:
+        scan = load_mod("opal_scan_for_unblock", ".tools/open-calls-scan.py")
+        live = scan.is_live(scan.liveness().get(args.owed_owner), now_dt().timestamp())
+        entry, trees = open_ledger_entry(args.owed_ledger)
+        ok, why = owed_in_progress(live, entry, now_dt())
+        print("OWED: slug=%s owner=%s live=%s ledger=%s trees=%d counts=%s %s" % (
+            args.owed_ledger, args.owed_owner, live, "OPEN" if entry else "absent", trees, "WAITING" if ok else "EMPTY",
+            ("until=" + why) if ok else ("reason=" + why)))
+        if ok:
+            owed = (args.owed_ledger, args.owed_owner, why)
+    n, verdict = tick_verdict(before, args.result, active, waiting, owed)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump({"empty": n, "at": stamp(now_dt()), "verdict": verdict}, fh)
@@ -487,6 +562,24 @@ def selftest() -> int:
         rec("hung-at-ten-minutes-per-1k-tokens", hung_verdict(10, 1000)[0] == "HUNG" and hung_verdict(9, 1000)[0] == "WORKING"
             and hung_verdict(10, parse_tokens("1.2k"))[0] == "WORKING" and hung_verdict(25, parse_tokens("2k"))[0] == "HUNG")
         rec("zero-tokens-after-time-is-hung-zero-time-is-not", hung_verdict(3, 0)[0] == "HUNG" and hung_verdict(0, 0)[0] == "WORKING")
+        # the owed-act bound (3.0.0_SA_CVO~Z @23f60a21df): WAITING only while LIVE + ledger OPEN + inside the window
+        ent = {"slug": "s", "status": "OPEN", "opened_at": stamp(now - datetime.timedelta(hours=1)), "window_hours": 2.0}
+        ok_w = owed_in_progress(True, ent, now)
+        rec("owed-act-live-open-in-window-reads-waiting", ok_w[0] and tick_verdict(2, "nothing", None, None, ("s", "o", ok_w[1]))
+            == (0, "WAITING OWED s o UNTIL %s" % ok_w[1]))
+        rec("owed-act-owner-not-live-counts-empty", owed_in_progress(False, ent, now) == (False, "owner-not-live"))
+        rec("owed-act-no-open-ledger-counts-empty", owed_in_progress(True, None, now)[1] == "ledger-not-open"
+            and owed_in_progress(True, dict(ent, status="CLOSED"), now)[1] == "ledger-not-open")
+        rec("owed-act-past-its-window-counts-empty-so-a-hung-apply-opens-a-case",
+            owed_in_progress(True, dict(ent, window_hours=0.5), now) == (False, "outside-window")
+            and tick_verdict(2, "nothing", None, None, None) == (3, "THIRD-EMPTY-TICK"))
+        und = dict(ent, window_hours=None, opened_at=stamp(now - datetime.timedelta(hours=3)))
+        rec("owed-act-without-a-window-gets-four-hours", owed_in_progress(True, und, now)[0]
+            and owed_in_progress(True, dict(und, opened_at=stamp(now - datetime.timedelta(hours=5))), now)[1] == "outside-window")
+        rec("owed-act-fractional-iso-opened-at-parses", owed_in_progress(
+            True, dict(ent, opened_at=(now - datetime.timedelta(minutes=5)).isoformat()), now)[0])
+        rec("an-open-unblock-file-still-wins-over-an-owed-act", tick_verdict(5, "nothing", d, None, ("s", "o", "t"))[1]
+            == "WAITING %s OPEN" % d["id"])
         rec("record-carries-all-four-voices", all(s in render(check(g, "g")) for s in
                                                   ("The COO's position", "The CRO's approach", "The CTO's fold",
                                                    "The CVO's sign-off")))
@@ -511,6 +604,8 @@ def main(argv: list) -> int:
     t.add_argument("--serial", required=True)
     t.add_argument("--project", required=True)
     t.add_argument("--result", required=True, choices=("nothing", "work"))
+    t.add_argument("--owed-ledger", default="", help="slug of the owed act's org/critical_paths/.open_deploys/ entry")
+    t.add_argument("--owed-owner", default="", help="serial of the seat that owes the act")
     o = sub.add_parser("open")
     o.add_argument("--project", required=True)
     o.add_argument("--by", required=True)

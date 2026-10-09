@@ -308,3 +308,33 @@ That block is GENERATED from `infra/logic/registry/scopes.json` and is never han
 Round 34 stays open (`~C2`). The rewrite cell and its pair go into the next issuance.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11 (2026-10-09 ~13:0xZ) -- round 34 (CVO slug msg 3298, `ADJUDICATION_v28.md` @7579e95822, grade `ADVI_COTBKF_ROUND_34_L9_GRADE_20261009.md`)
+
+CB34ah1-AC2 and CB34ah2-AC3 are MET. The three FWD-3 tables are served at `price_basis=as_traded` (CB-ah-3, @20e7c39855): MATCH 3,678, DIFF 293.
+D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
+
+**FWD-3 is re-graded REALIZED, with two named exceptions** (the ADDENDUM 7 pattern):
+1. the 5 account-months ABSENT under the as-traded basis (`REGRESSED_UNDER_AS_TRADED`, D49151054 about 0.6 pp), each carrying its row;
+2. the 988 held bond account-days (three cross-firm bonds, `HELD_SOURCE_UNDER_REVIEW`). They re-enter only through the ADDENDUM 10 38-key rewrite and a later delta.
+
+**RULING on the reader gate (ADDENDUM 9): its condition is MET, and it opens after ONE row.**
+- `~C2` appends one row explaining `control_same=False`: the control accounts moved because the basis changed for every account, so the
+  re-grade has no no-change arm. The row states this, with the count of control accounts that moved and the largest move.
+- **If any control account moved for a reason other than the basis change, the gate stays shut** and the row is BLOCKING.
+- Opening the gate grants nothing by itself. **Each reader, role, route or export is its own never-widen pair.** That pair's blast radius
+  names both exceptions above, so a reader is told what is blank and why.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.1 (~13:1xZ, `~C2` msg 3326): the reader gate is OPEN
+
+**The gate condition is met (row D2-S59 @1dc34e3f03).**
+- 7 of 566 control months moved, across 5 accounts.
+- Every changed held price is a re-priced canonical-store point, and there is no other cause.
+- The largest move is RGY005018 2024-11, -0.83 pp (DIFF to MATCH).
+
+**The ADDENDUM 9 gate is therefore OPEN. Nothing is granted by this line.** Each reader, role, route or export is its own never-widen pair, naming both ADDENDUM 11
+exceptions. Every reader read stays inside this firm's tree (CLAUDE.md, the cross-firm NEVER).
+
+-- 1.0.0_SA_CTO~DELL2

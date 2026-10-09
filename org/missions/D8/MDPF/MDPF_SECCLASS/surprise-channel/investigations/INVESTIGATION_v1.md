@@ -6095,3 +6095,33 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found at the SC-e-84 drain. The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route alongside D1-S19. SC-e-84's pair names this test as the one pre-existing failure."
 }
 ```
+
+## MDPF_SECCLASS-D1-S25 -- ADDENDUM to MDPF_SECCLASS-D1-S23: the same unrelated call flags a SECOND root, the actor's OWN open ledger self-hits, and one slug is counted up to three times
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S25",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T12:13Z",
+  "one_line": "ADDENDUM TO MDPF_SECCLASS-D1-S23, widening its count and adding two limbs its first exercise could not see. Shipping TO-SC-e84b (three keys, root data/cot) drew 'STOP: 15 hit(s)' where the e79b ship drew 4 on data/black_diamond. Again 0 of 15 contend for the keys moved. New: (a) the SAME unrelated crossbox call now flags a SECOND root, so one call's body document arms every root whose token it quotes; (b) the deploy's OWN open ledger entry -- opened before the act exactly as the NEVER law requires -- is counted as contention against itself; (c) one slug is counted up to three times, once per status it has held, so the hit COUNT is not a count of distinct contentions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09T12:08:21Z on box/dell1 shipping three keys under s3://opal-data-cot/code/gold/. safe-deploy printed '[seat-gates] STOP: 9 hit(s) in OPEN-CALL, OPEN-DEPLOY -- first: OPEN-CALL: org/devices/crossbox/XB-20261009T093642Z-9ec5.json (state OPEN, laptop -> dell1) names the root (token data/cot)'; the gate run directly, `python .tools/crossbox-deploy-check.py --root data/cot`, reports 'STOP: 15 hit(s) in OPEN-CALL, OVERLAP, OPEN-DEPLOY' -- OPEN-CALL hit (8), OVERLAP hit (1), OPEN-DEPLOY hit (6), UPSET clear.",
+      "LIMB (a), the strongest new evidence: XB-20261009T093642Z-9ec5 is the SAME call that produced the OPEN-CALL hit on root data/black_diamond during the e79b ship 2 hours earlier (row S23). It is a 2.0.0_SA_COO~C -> 0.7.0_AE_CloudOps~CT1 order about committing NFRA_CTLPLN rows CT1-S1/S2, and its JSON names neither root. Both matches come out of the body document it points at, which quotes paths in prose. One unrelated call therefore arms at least two independent deploy roots, and the number of roots it can arm is the number of path tokens anyone ever quotes in that channel.",
+      "LIMB (b): of the six OPEN-DEPLOY hits, one is 'open deploy secclass-e84-cot-name-port-sc1-20261009 (author 0.7.0_AE_CloudOps~SC1, status OPEN, opened 2026-10-09T11:56:48Z) names the root (token data/cot)' -- this act's OWN ledger entry, which the NEVER-leave-a-deploy-half-landed law requires be opened BEFORE the act. So complying with the ledger law manufactures a contention hit against yourself, and the more correctly a seat behaves the more hits its own deploy draws.",
+      "LIMB (c): the other five OPEN-DEPLOY hits are TWO distinct slugs. secclass-cot-repoint-m-20261002 appears three times and secclass-e67-cot-c06-retired-class-m1-20261009 twice, each repeated under both 'status OPEN' and 'status HELD-SOVEREIGN-GATED'. So 6 hits = 3 distinct slugs, one of them the actor's own. A reader who treats the printed count as a number of contentions overstates it by 2x here.",
+      "RESOLUTION OF ALL 15, which is why this stays INERT: seven OPEN-CALL hits and the one OVERLAP hit resolve to project IRPT_BCKEND, and the OVERLAP limb names its actual file -- data/cot/scripts/gold/runners_cot/runner_common.py on dell2 -- which is none of the three keys shipped (lib/etf_classifier.py, C_06.client_mix_timeseries.py, D_03.composition_artifacts.py). e67 is signed for rather than a conflict: the COO half names its bytes ea7e6700 as this act's C_06 rollback target and records its leg G closed clean at the 2026-10-09 COT run. The ship itself was clean on a time sweep of all 107 current versions under code/gold/: exactly 3 written in the ship window, and they are the three named.",
+      "The limb's own denominator at this read: '41 worktree(s), 836 sentinel read(s), 120 distinct (path, blob), vanished=0'. The vanished=0 is worth recording beside row S22, whose exercise caught a worktree that vanished mid-read: at THIS read none did, so S22's race is intermittent and not a standing state."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy gate's hit count is a count of distinct work that actually contends for the write surface the deploy moves.",
+  "world_is": "It is a count of root-token matches, inflated three ways: by prose in referenced documents, by the actor's own compliant ledger entry, and by one slug being counted once per status it has held. Measured on two roots two hours apart: 4 hits of which 0 contended, then 15 hits of which 0 contended. INERT while the limb is WARN. UNDER ENFORCE it is worse than S23 alone suggested, because limb (b) means a seat cannot clear the gate by behaving correctly -- opening the ledger first, as the law demands, guarantees at least one hit on its own root. The fix S23 names still covers this: match the deploy's actual shipped keys, which safe_deploy_core already computes, against a claim's named paths; and additionally exclude the acting entry's own slug and de-duplicate by slug before counting.",
+  "notes": "SURFACED, NOT CHASED. All 15 hits were enumerated and resolved before leg D closed, and leg D's proof records each one. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. PARENT: [[MDPF_SECCLASS-D1-S23]], which this addendum does not replace -- it adds limbs (a), (b) and (c) and a second measured root. SIBLING: [[MDPF_SECCLASS-D1-S22]], the same tool's vanished-worktree race, which read vanished=0 at this exercise and is therefore intermittent."
+}
+```

@@ -2655,3 +2655,33 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Step 1 (whoami) now runs unattended (Z-S65), but step 2's pin selects no token, so the watcher exits [TEAMS-IDENTITY-FAIL] rc=2 and no organic message is ever served. The deliberate step-4 run does not go through the watcher, so it is not blocked by this. Disarm: OA-f-15 (cut @ this issuance), drained and pushed to opal_ai DEV/PROD."
 }
 ```
+
+## NFRA_OPALAI-Z-S69 -- DISARMS Z-S67 and Z-S68: OA-f-15's port (oid pin, timeout 1770, Andrew's sender gate) is live on opal_ai PROD 13bc631.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S69",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T12:35Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by their disarm_owner. Z-S68: the Analyst's watcher pin is the Opal Bloomberg oid on opal_ai PROD 13bc631 (0 name pins left). Z-S67: the five post-move edits are ruled per commit (four and a half PORTED by OA-f-15, now live on opal_ai DEV and PROD; the P3 row RETIRED as workspace-only), so the OA-t-1 r2 cutover merge resolves its two modify/delete conflicts by taking the branch's deletions without losing content.",
+  "adjudicates": [
+    "NFRA_OPALAI-Z-S67",
+    "NFRA_OPALAI-Z-S68"
+  ],
+  "one_line": "DISARMS Z-S67 and Z-S68: OA-f-15's port (oid pin, timeout 1770, Andrew's sender gate) is live on opal_ai PROD 13bc631.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C opal_ai ls-remote origin DEV PROD at 12:3xZ: both 13bc6317cab35c8e3a08a5bc026b482b73929d90 (0.0.0_AB_MSTR~Z msg 32748: fast-forward from c9983bd2ac, 2 files +43/-7)",
+      "OA-f-15 issuer re-grade: f15.AC1 PASS (name pins left=0; skill oid pins=3; RELAUNCH oid pins=1; bounded arm line=1; sender gate before ACK=yes); f15.AC2 PASS (19 of 19 lines byte-equal to workspace@33837fdea8); drained @ad6682bc89, complete @ca9c4e5391"
+    ]
+  },
+  "spec_asserts": "OA-t-1: move, never copy; PRD C11: the cutover drops nothing silently.",
+  "world_is": "Met for the two conflicted files. Not yet exercised: the Analyst's watcher arming live on the oid pin (the organic serve), which the post-r29 step-4 run and the cutover sitting will show."
+}
+```
