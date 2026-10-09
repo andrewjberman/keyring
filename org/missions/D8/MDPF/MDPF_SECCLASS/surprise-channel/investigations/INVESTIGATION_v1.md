@@ -5904,3 +5904,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found while preparing the e60 release (XA-20261009T034917Z-0eb1). The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route. e60's pair will name this test as the one pre-existing failure."
 }
 ```
+
+## MDPF_SECCLASS-D1-S20 -- SUBSTRATE_CARD/proof_of_spec kind enum has no member for a DynamoDB row write, and only s3_object skips git resolution
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S20",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T06:33Z",
+  "one_line": "proof-of-spec-check's artifacts_produced/kind enum is ['script','s3_object','terraform','config_data','schedule','iam','test','doc','frontend_component'] -- no member names rows written to a DynamoDB table, and the resolver demands every non-s3_object row name a (commit, path) pair git can resolve at the pin. A DEPLOY-genre order whose whole product IS table rows therefore cannot declare its artifact truthfully: the only kind that skips git resolution is s3_object, which would be a false declaration of substrate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09 ~06:3xZ on box/dell1 while closing MDPF_SECCLASS.TO-SC-e71b (proof_genre DEPLOY, product = 15 rows of etf-classifications in us-east-1). `python .tools/proof-of-spec-check.py <instance> AC1` with kind 'ddb_rows' returned INVALID (rc=1) on two limbs: \"schema: artifacts_produced/0/kind: 'ddb_rows' is not one of ['script', 's3_object', 'terraform', 'config_data', 'schedule', 'iam', 'test', 'doc', 'frontend_component']\" and \"artifact-resolution: 'dynamodb://us-east-1/etf-classifications ...' does NOT exist at its declared pin 021a6a33f7 -- the row names a (commit, path) pair git refutes\".",
+      ".tools/proof-of-spec-check.py:417 `if a.get('kind') == 's3_object': ...` and :402 `a.get('kind') != 's3_object'` -- s3_object is the ONLY kind the git resolver skips; its own report line reads 'n s3_object (not a git ref; skipped)'.",
+      "Denominator for the precedent read: `comp-find 'dynamodb://' org/tier2_senior org/missions/D8 --limit 15` returns 1 hit across 9,352 files scanned, and that one hit is this seat's own instance -- so no prior instance in either tree records a DynamoDB write as an artifact, and there is no house convention to copy."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "artifacts_produced/kind is MECE over the artifacts an agent can produce, so every DEPLOY-genre order can name its product with the true substrate and still validate.",
+  "world_is": "The enum covers repo artifacts plus one cloud substrate (S3). A DynamoDB table write -- the whole product of a seed or remap order, of which this project has run several -- has no member, and the resolver's git check makes the nearest member unusable. The two ways out are both wrong: declare s3_object and lie about the substrate, or pin the row to a repo file this order did not produce. What this seat did instead is recorded in the instance itself: the row pins the seed source the act materialized, kind config_data, and its deploy_evidence states in full that the artifact produced is the 15 table rows and why the kind is a stand-in.",
+  "notes": "SURFACED, NOT CHASED: found at the close of TO-SC-e71b, after the act had landed and been verified (AC1 ok=True, signed-delta read-back 15 of 15 with 0 unsigned moves). It moves no data and gates no deploy -- it degrades the RECORD, not the world, which is why it is INERT rather than ARMED. The schema's owner is not this seat and the enum edit would be a value-enum proposal under CLAUDE.md rule 24, needing its four-postulate record plus a word-boundary token census; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S18]] is also a seed-script record defect rather than a data defect."
+}
+```
