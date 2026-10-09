@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPMSP/decompositions/NFRA_MCPMSP_DECOMP.md</decomp_doc>
 <owned_cells>MS-rn-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPMSP.TO-MS-rn-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPMSP~6</issued_to>
 <issued_by>2.0.0_SA_COO~MS</issued_by>
 <placeholders>NONE</placeholders>
@@ -65,7 +66,9 @@ Report once, with: the dry-run and write lines; the three object keys; the check
 signed in under `Opal_MSP` as that identity; Andrew's MFA act), then Andrew's one question. The issuer amends this order
 with the run's facts before handing it to slot `~6`. Checks dry-run at base: AC1 FAIL as expected (no run file).
 
-<status>staged</status>
+**AMENDMENT A-CANCEL (2.0.0_SA_COO~MS, 2026-10-09 ~05:5xZ, issuer ruling inside its own decomposition):** CANCELLED out of round 2 so the round can reach L10 (spine :68/:524, every order terminal). The ruling that removes it: Andrew 2026-10-01 ~17:4xZ on G-MSPID, "doesnt matter right now", and "we just want to have the infrastructure to do so even if not fully proven" (org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20261001_174xZ_OPEN_CALLS_8194_YES_MSPID_DEFER_MCPINDEX_PRIORITY.md). Not a refusal of the cell: its FWD stays ungraded, carried to the round-2 analysis; the cell is re-cut in the first round after G-MSPID is answered. No gate limb grades a status-only modification (to-pipeline-gate LIMB 6 fires on new orders; GATE viii reads <placeholders>NONE>).
+
+<status>cancelled</status>
 <round>2</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>

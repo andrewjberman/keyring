@@ -1,0 +1,455 @@
+{
+ "schema_version": "1.0",
+ "claim_field": "Each finding carries cause.claim = measured | inferred. 'measured' = seen in the screenshot (and, where cited, a code line); 'inferred' = the named cause is not yet checked in code.",
+ "source": {
+  "reviewer": "Andrew-direct 2026-10-09 ~05:0xZ-05:1xZ (record org/tier1_exec/2.0.0_SA_COO~D1/deliverables/ANDREW_DIRECT_20261009_051xZ_SECURITY_ANALYSIS_UI_WALK_SPINE_NEWS_DISCLAIMERS.md @1725deb826)",
+  "compiled_by": "2.0.0_SA_COO~D1",
+  "build_observed": "localhost:5174 dev:live build of portal 2d42e9b7 (= origin DEV) for the deep walk 20261009T051244Z; the 04:18Z walk ran a6b75e25 (the same SecurityAnalysis files on 0008ddd3)",
+  "walks": [
+   "tmp/ui-walk/20261009T051244Z (deep; AMD, ASML typed, Lenovo; 121 shots)",
+   "tmp/ui-walk/20261009T041800Z (AMD tabs; 36 shots)"
+  ],
+  "names_walked": [
+   "Advanced Micro Devices Inc (AMD US)",
+   "Lenovo Group Ltd (992 HK)",
+   "ASML Holding NV (typed; not-found path)"
+  ],
+  "screenshots_local_only": true
+ },
+ "outcomes": {
+  "O1": "The news timeline spine is high-signal and easy to operate: it shows what moved the name, not how the collector ran.",
+  "O2": "News reads as a compelling, ranked, de-duplicated story about THIS company, not a haphazard pile.",
+  "O3": "Each fact is said once, briefly, where it matters; collection and absence plumbing does not sit on the analyst's face.",
+  "O4": "The page leads with what a PM needs: identity and tabs near the top, supporting material folded.",
+  "O5": "Each tab reads as a designed view, not a dump of every served field."
+ },
+ "findings": [
+  {
+   "id": "SAW-01",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "news timeline (spine)",
+   "observed": "The legend reads \"searched / partly searched / not searched\" and the bars are coloured by collection state. Under backfill, this tells the reader how the collector ran, not what happened to the company (Andrew-direct ~05:1xZ: \"there is no searched this day, partial searched ... that is kind of irrelevant in the context of backfill\").",
+   "outcome": "O1",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "DESIGN.md C5 (meaning per colour)",
+   "cause": {
+    "claim": "measured",
+    "text": "TimelinePanel colours bars by status via barOpacity(status) and draws the three-state legend.",
+    "evidence": "portal/src/pages/SecurityAnalysis/components/TimelinePanel.tsx:201-205,611 (code map 0008ddd3)"
+   },
+   "acceptance": "The spine carries no searched/partly/not-searched legend or colouring; bar colour means one thing about the company (e.g. article volume or sentiment), named in one legend item."
+  },
+  {
+   "id": "SAW-02",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "news timeline (spine)",
+   "observed": "Nine months of thin 1-2-article bars at near-uniform height (AMD, Jan 1 to Oct 8). Nothing marks the days that mattered: no price line, no labelled events, and for AMD no event layer at all (walker timeline:no-event-element on AMD, ASML and Lenovo). Lenovo shows three unlabelled circles.",
+   "outcome": "O1",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The spine plots article counts per day only; the event layer is absent or unlabelled.",
+    "evidence": null
+   },
+   "acceptance": "The spine overlays the price line (or the daily move) and marks, with a short label, the days with the biggest moves and the heaviest news, so a PM sees at a glance what moved the stock."
+  },
+  {
+   "id": "SAW-03",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "news timeline (spine)",
+   "observed": "Operating the spine means hitting a ~2px bar to open a day. There is no hover summary, no range selection and no way to jump to the top days; the opened day dialog is a separate modal (\"Not searched on this day / No articles this day\" for an empty day).",
+   "outcome": "O1",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "Day selection is a click target the width of one bar; no keyboard or hover affordance.",
+    "evidence": null
+   },
+   "acceptance": "Hovering a day shows its count and top headline; the reader can select a range or jump to the top-N days; an empty day is not offered as a click target."
+  },
+  {
+   "id": "SAW-04",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "news timeline (spine)",
+   "observed": "\"Earnings dates are not on file for this company yet, so no earnings marker is drawn.\" sits under the chart on every name.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "A served/page absence sentence printed under the chart.",
+    "evidence": null
+   },
+   "acceptance": "An absent earnings date draws nothing and says nothing on the face; at most one line in a folded \"About this data\"."
+  },
+  {
+   "id": "SAW-05",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "recent news",
+   "observed": "The same story (\"Nasdaq rises nearly 2% in September...\") appears three times above the tabs: as the first Recent News item, again in the separate \"In the news on October 1st, 2026\" card, and on the spine.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Three components each draw the newest article independently.",
+    "evidence": null
+   },
+   "acceptance": "One news surface; a headline appears once on the page."
+  },
+  {
+   "id": "SAW-06",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "recent news",
+   "observed": "Recent News lists 22 headlines newest-first with no relevance ranking. Most are generic market round-ups (\"... and More Stocks That Explain Today's Market\" x4, Meta and Nvidia stories), not about AMD. For Lenovo the lead item is \"Treasury Yields Resume Their Rise\".",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The list is ordered by date only; the served per-article relevance (mention_count) is not used to rank or filter.",
+    "evidence": null
+   },
+   "acceptance": "News is ranked by relevance to the company (served mention count / match strength), round-ups that only mention the name are grouped or folded, and the first items are about the company itself."
+  },
+  {
+   "id": "SAW-07",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "recent news",
+   "observed": "Each item is a bare headline plus \"Source -- Month Nth, YYYY, h:mma ET\". There is no summary, no reason it matters, no grouping by theme and no link to the spine day. The header range says \"September 10th to October 9th\" while the newest item is October 1st.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Rows render title + publisher + timestamp only.",
+    "evidence": null
+   },
+   "acceptance": "Each news item (or theme group) carries a one-line why-it-matters or theme tag and links to its spine day; the stated range matches the items shown."
+  },
+  {
+   "id": "SAW-08",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "news word cloud",
+   "observed": "\"Words in the headlines\" is a word cloud of ~45 tokens including noise (\"amzn\", \"calls\", \"plans\", \"strong\", \"explain\", \"headlines\", \"picks\"). It is drawn for every name and adds no decision value.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Headline tokens are counted and sized without a stop list or entity filter.",
+    "evidence": null
+   },
+   "acceptance": "The word cloud is removed, or replaced by at most 5 named themes/entities with counts."
+  },
+  {
+   "id": "SAW-09",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "\"In the news\" card",
+   "observed": "A standalone \"In the news on October 1st, 2026\" card repeats one headline, adds \"Mentioned 2 times\" and \"no social source is admitted yet\".",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "A second news component with its own absence line.",
+    "evidence": null
+   },
+   "acceptance": "The card is folded into the one news surface; \"no social source is admitted yet\" is not on the face."
+  },
+  {
+   "id": "SAW-10",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "Thesis tab",
+   "observed": "The Thesis says one fact seven times: \"the research team's pack is not on file for this security\", five \"No research report we hold for this company has a 'X' section.\" lines (Company description, Why we own it, Positives, Negatives, Special items), and \"No drafted prose for this name yet.\"",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Each research-note slot draws its own absence sentence even when the whole pack is absent.",
+    "evidence": null
+   },
+   "acceptance": "When the research pack is absent, the Thesis says so once, in one line, and draws no per-section empty slots."
+  },
+  {
+   "id": "SAW-11",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/036-Advanced-Micro-Devices-Inc-Posture.png",
+   "surface": "Posture tab + overlay",
+   "observed": "Posture says \"No fund of record: no report's recommendation line names a fund; no last stated position: no report carries a non-empty recommendation line.\" and \"No call on this name yet as of October 9th, 2026, 12:19a ET\" and \"no posture has been drafted for this name yet; the research team adds one\". The same lines are repeated in the overlay's \"Posture, research dossier and readings\" fold above the tabs.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The overlay fold and the Posture tab each render the posture absence block.",
+    "evidence": null
+   },
+   "acceptance": "An absent posture is said once (\"No call on this name yet\") on the Posture tab only; the overlay does not repeat it."
+  },
+  {
+   "id": "SAW-12",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "\"Where this page's data comes from\"",
+   "observed": "A full panel above the tabs lists five collection inputs with timestamps and \"-- Worked\", plus \"nothing has been read from this input for this name yet\" and \"No company filing has been read for this name yet, so nothing on this page comes from one.\" This is operator plumbing on the analyst face.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Input provenance is drawn open between the overlay and the tabs.",
+    "evidence": null
+   },
+   "acceptance": "Data provenance moves to one folded \"About this data\" disclosure at the page end (or the Freshness page); nothing between the overlay and the tabs."
+  },
+  {
+   "id": "SAW-13",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "source/date footers",
+   "observed": "Nearly every block ends in its own date + source line (\"October 8th, 2026, 9:02a ET | Source: Bloomberg.\", \"October 1st, 2026, 2:34a ET | Source: Seeking Alpha, Bloomberg, Barron's and The Wall Street Journal.\", \"Source: Bloomberg product segments, pulled October 7th, 2026\", ...). The page carries three different as-of days (identity \"October 7th\", data \"October 8th\", page end \"Data as of October 7th\").",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Each panel renders its own CardFooter.",
+    "evidence": null
+   },
+   "acceptance": "One as-of line for the page and a source only where it differs from the page default; the identity, tiles and page end agree on one as-of."
+  },
+  {
+   "id": "SAW-14",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "Chatter / Breakout strip",
+   "observed": "Under the overlay: \"Readings of October 2nd, 2026 and October 7th, 2026 (4 trading days behind the day asked for). chatter: 43 of 95 covered names collected this month; price: ranked October 7th, 2026 from Bloomberg (94 names)\" -- collection plumbing in a sentence.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The strip prints its read-vintage sentence.",
+    "evidence": null
+   },
+   "acceptance": "The strip shows the two readings (chatter count, breakout rank) and nothing about collection coverage."
+  },
+  {
+   "id": "SAW-15",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/015-Advanced-Micro-Devices-Inc-Exec-Management.png",
+   "surface": "Exec Management tab",
+   "observed": "The tab says the filing roster did not resolve four times (subtitle, \"The research team on management: no management section, because neither ...\", the table caption \"(NO FILING ROSTER COULD BE READ)\", \"This table is the Bloomberg fallback: the filing roster did not resolve.\"). Then each of 25 rows reads \"not stated\", \"not stated\" and \"per Bloomberg, not the filing\", and the columns Role start, Tenure and Profile are empty for every row. A footnote follows: \"Average tenure: none stated (0 of 25 officer(s) carry a role start); the pool not stated ...\".",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Every unserved field renders \"not stated\", and each fallback layer adds its own sentence.",
+    "evidence": null
+   },
+   "acceptance": "The table shows only columns with at least one value (Officer, Role); the source is named once (\"From Bloomberg's officer list\"); no per-row repetition of the source or \"not stated\"."
+  },
+  {
+   "id": "SAW-16",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "Peers tab",
+   "observed": "Peers carries \"currency not stated\" under the price header, \"Not averaged: currency not stated\" in the Average row, \"5 of 17 columns are shown; 12 are not available for these peers. 5 of the shown columns carry a value for each peer. Summary rows are computed on this page over the member values, n shown.\", an \"Absent columns (12)\" fold, a DERIVED badge and \"(n=12)\" on every summary cell.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The table explains its own absences in-line.",
+    "evidence": null
+   },
+   "acceptance": "The peer table shows its columns and summary rows; absence notes live in at most one folded line."
+  },
+  {
+   "id": "SAW-17",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/074-Lenovo-Group-Ltd-overlay.png",
+   "surface": "header tiles (non-US name)",
+   "observed": "On Lenovo, three of seven tiles hold sentences instead of figures: \"Not shown: Bloomberg does not confirm this figure's currency\" (Enterprise Value, Net Debt) and \"Bloomberg returned no value for short interest for this name in the latest stored pull.\"",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Absence reasons render inside the tile body.",
+    "evidence": null
+   },
+   "acceptance": "An unavailable tile shows a dash (or is omitted); its reason is on hover/focus only."
+  },
+  {
+   "id": "SAW-18",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "segment notes",
+   "observed": "Under the segment tables: four note lines (\"Figures are in millions of USD...\", \"A column is named with a fiscal year where...\", \"Period 2, Period 3, Period 4, Period 5: The rows of this column do not add up...\", \"Source: Bloomberg product segments, pulled ...\") and then the filing box's absence sentence (round 58 AV-zzj-1 covers that box). Columns named \"Period 2..Period 5\" mean nothing to a reader.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "known",
+   "known_ref": "DSGN_AMGTV1 round 58 AV-zzj-1 (the filing box only)",
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Served notes printed verbatim; unlabelled periods.",
+    "evidence": null
+   },
+   "acceptance": "At most one unit line under the table; periods without a fiscal year are labelled by their served end date or folded; the filing box (AV-zzj-1) does not contradict the table."
+  },
+  {
+   "id": "SAW-19",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/008-Advanced-Micro-Devices-Inc-Thesis-press-O-opal-ui-walker-opa.png",
+   "surface": "Print preview",
+   "observed": "The print preview is titled \"PRINT PREVIEW -- AMD_US_EQUITY\" (a raw security key; walker raw-code on 43 steps), says \"Printed 2026-10-09\" (ISO), and every one of ~20 header lines ends \"- date not stored with this figure - Bloomberg\".",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "FWD-15 (no raw code on the face)",
+   "cause": {
+    "claim": "measured",
+    "text": "The print header uses the key and appends the date-absence clause to each line.",
+    "evidence": null
+   },
+   "acceptance": "The preview title uses the company name and ticker; the date is in the house long form; \"date not stored\" appears at most once."
+  },
+  {
+   "id": "SAW-20",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "page structure",
+   "observed": "Everything sits above the tabs: identity, description (printed twice -- truncated, then again in full under \"About the company\"), seven tiles, 22 news items, the spine, the word cloud, the posture fold, the chatter strip, the \"In the news\" card and the data-sources panel. On AMD the tabs start about 2,000 px down; the tabs are the page's main content.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "SecurityOverlay renders all lead material open above TabNavigation.",
+    "evidence": null
+   },
+   "acceptance": "The tabs start within the first screen at 1440x900; the description is printed once; news and the spine sit in their own tab or one folded section."
+  },
+  {
+   "id": "SAW-21",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/016-Advanced-Micro-Devices-Inc-Peers.png",
+   "surface": "repeated identity",
+   "observed": "The ticker \"AMD US\" is printed as a heading in the identity band and again at the top of every tab body; \"a machine's view for a person to accept or reject\" repeats as each tab subtitle.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Each tab renders its own subject heading and subtitle.",
+    "evidence": null
+   },
+   "acceptance": "The subject is named once (the identity band); tab bodies start with their content."
+  },
+  {
+   "id": "SAW-22",
+   "screenshot": "tmp/ui-walk/20261009T041800Z/shots/019-Advanced-Micro-Devices-Inc-Model-expanded.png",
+   "surface": "Model tab",
+   "observed": "Model is a wall: a \"What changed\" table printing figures to full precision (\"12,276,538,360.00\"), each row trailed by an explanatory paragraph (\"Full figures: Earlier version 86.75... Later version ... Bloomberg consensus (BEST) estimate of the price/earnings ratio ...\"), then a ~70-row raw financial grid (2016-2028E) of Bloomberg field names (\"Enterprise value to trailing EBITDA (multiple)\", \"Highest price to cash flow per share (closing price)\"...) with no grouping by what a PM reads, then \"The research team has no Base case / Upside case / Downside case for this name yet. The research team fills it in.\" three times.",
+   "outcome": "O5",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "The tab renders every served field and each version-diff explanation in full.",
+    "evidence": null
+   },
+   "acceptance": "Model opens on a short curated summary (the 8-12 lines a PM uses, grouped), with the full grid behind one fold; What changed shows changes in display units with explanations on demand; absent cases are said once."
+  },
+  {
+   "id": "SAW-23",
+   "screenshot": "tmp/ui-walk/20261009T051244Z/shots/004-Advanced-Micro-Devices-Inc-overlay.png",
+   "surface": "check-hits dispositioned",
+   "observed": "Walker hits kept as-is from earlier rounds: format:money (the \"$\" is in quoted headlines -- not a page defect), design:contrast (HeroDialog header on the navy band -- false positive), layout:clipped (empty chart tspan -- false positive), walker:control-missing \"Earlier month\" (removed by design, AV-zi-1), tab not found on ASML (typed name, not-found panel by design).",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D1",
+   "status": "known",
+   "known_ref": "decomposition v57; CTO ruling @a9fc745d69",
+   "design_rule": null,
+   "cause": {
+    "claim": "measured",
+    "text": "Rulings: decomposition v57; CTO ruling @a9fc745d69.",
+    "evidence": null
+   },
+   "acceptance": "No action; recorded so the register covers every check hit."
+  }
+ ],
+ "coverage": {
+  "walker_check_hits": {
+   "raw-code": "SAW-19",
+   "format:money": "SAW-23",
+   "design:contrast": "SAW-23",
+   "layout:clipped": "SAW-23",
+   "layout:truncated": "AV-zzi-2 (round 57, focus) -- label still truncated at rest, SAW-20 layout pass",
+   "timeline:no-event-element": "SAW-02",
+   "timeline:no-day-bar": "SAW-23 (ASML not-found)",
+   "walker:control-missing": "SAW-23"
+  }
+ },
+ "coverage_rule": "Every finding id is cited by the brief and, later, by the PRD addendum or round analysis that cuts it (docs/briefs/irpt-ui-review-coverage-check.py)."
+}
