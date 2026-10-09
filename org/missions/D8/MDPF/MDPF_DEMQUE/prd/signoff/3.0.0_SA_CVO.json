@@ -1,12 +1,12 @@
 {
   "prd": "MDPF_DEMQUE_PRD.md",
   "prd_version": "v0.3",
-  "prd_pin": "e90c4d47561e6b7856bbcbb4ee4e1c7a17ade930",
+  "prd_pin": "fe3d0659ad9c47e31704d7374c65653fcf30a59c",
   "half": "ratified-text",
-  "half_hash": "7102348e62da577befac25632c7e77d090a7ee92e8f4ca16077e3437022dcf19",
-  "endpoint_hash": "0a7133b950dcab71a943f5a4ec44a01f0090983342f121baf21d8ef18c80c8d4",
+  "half_hash": "4f0a5b197ad8b5d07267300388563475d0d841546cf9abb4cc4d1664d84fe2d4",
+  "endpoint_hash": "5bb427c0c0f3fe3765f14e102a92cba07242d07cf29b5058c8b52919f998a9e2",
   "verdict": "SIGNED",
   "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_DEMQUE_PRD_V03_RATIFIED_TEXT_REVIEW_20261009.md@a9da1441f9",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-09T01:10:09Z"
+  "signed_at": "2026-10-09T01:16:19Z"
 }
