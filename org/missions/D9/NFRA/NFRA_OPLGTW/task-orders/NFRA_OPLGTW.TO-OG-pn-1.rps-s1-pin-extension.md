@@ -102,6 +102,14 @@ ask's path, commits, rows.
   suites in a different order than `ls` prints them; the expect now matches the printed order (issuer's defect, the
   check unchanged). Graded by GATE (viii) on the modified order (<placeholders>NONE</placeholders>).
 
+- A2 (issuer, 2026-10-09 ~19:1xZ, CTO half C1 @d66a0fb956): BEFORE the package is built, a file whose scanned tables carry
+  the SAME routed section tag must RAISE (a duplicate routed section), never let the second writer silently replace the
+  first; add one test pinning it (`test_ogpn1_ac04_duplicate_tag_raises`, outside AC1's three named tests). None of the
+  six files has this shape. Halves: COO @d41a3068cd, CTO @d66a0fb956 (supersedes AMENDMENT 1's pin-extension wording).
+  Phase B (the applier's) follows: Terraform through safe-apply, prior VersionId and hash recorded (CTO C2); one ledger
+  opened before the apply (C3) -- the 12:15Z sweep converts the six dates after the deploy, so the apply IS the served
+  move. Graded by GATE (viii) on the modified order (placeholders NONE).
+
 <status>pending</status>
 <round>33</round>
 <workstream>RPS-PIN</workstream>
