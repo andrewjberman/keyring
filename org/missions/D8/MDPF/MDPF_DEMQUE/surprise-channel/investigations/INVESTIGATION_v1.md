@@ -148,6 +148,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "PRD C-IDENTITY: a client security's mapping is LOCKED, per date range, only when its prices agree with the client's own trade prices.",
     "world_is": "The rule as built accepts a 61% agreement as measured. A pass-rate floor (e.g. >= 90% of checked dates, by asset type) is a round-3 pilot-readout candidate; the rule is DQ-t-1's spec (dell2 research s.1) and is not changed mid-round."
+  },
+  {
+      "id": "MDPF_DEMQUE-D1-W9-S1",
+      "project": "MDPF_DEMQUE",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~9",
+      "surfaced_at": "2026-10-09T03:40:00Z",
+      "one_line": "DQ4-t10-AC1 cannot pass as written: bbg_quote.quote() does not expose the reserve claim, so the fourth named test must be xfail, and the AC1 checker requires every named test PASSED.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/mdpf/scripts/demque/bbg_quote.py quote(): the result keys are request_id, page, breakdown, cells, finish_date, allowance_gap; _figure() reads only value and claim-absent, and no claim is carried out (printed result for a held reserve: {'request_id': 'r1', 'cells': {'bloomberg_bql': 5}, 'finish_date': '2026-10-05', 'allowance_gap': None})",
+              "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R2_CHECKS/_pytest_dir.py run(): a required test counts only when its pytest -v line contains PASSED; an XFAIL line does not",
+              "2026-10-09T03:39Z dq_t10_tests.py: RESERVE-BAD not-passed=test_quote_finish_date_carries_held_when_reserve_is_held; three tests PASSED, the fourth XFAIL (strict, reason cites this row); dq_t10_seam.py: RSEAM-OK bql.reserve=1875"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Worker face DQ-t-10 item 5: the fourth test asserts quote() exposes the held claim; if it does not, file a row and mark the test xfail, never editing bbg_quote.py. AC1 expects RESERVE-OK.",
+      "world_is": "quote() does not expose the claim, so the xfail branch applies and AC1 prints RESERVE-BAD for that one test. Needs an issuer decision: add the claim to quote()'s result (a bbg_quote.py edit in another order, after which the strict xfail flips to a pass and its marker comes off), or amend AC1 to accept an XFAIL citing this row."
   }
 ]
 ```

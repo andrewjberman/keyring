@@ -1,0 +1,15 @@
+# /canonical-drive MDPF_STRATID -- 2.0.0_SA_COO~S1, hour 2026-10-09T03Z
+
+Armed on Andrew-direct ~03:1xZ (MSTR~DELL1 msg 1545); cron b9e40fab, 10m.
+
+- 2026-10-08T21:06:50Z MDPF_STRATID | L5->L6 | R1 | TOs 0/4 | cells 4/4 FWD-1 | thread n | DRIVE FORWARD: decomp @412b4ce03d, issuance @f3cc1552bf, 3 workers spawned (~1 t1, ~2 t2->t3, ~3 t4); writer census written
+- 2026-10-08T21:10:09Z MDPF_STRATID | L7 drain | R1 | TOs 1/4 | TO-ST-t2 VALID @93de0c2336 (chain B, merge at chain end); TO-ST-t3 handed to ~2 by continuation
+- 2026-10-08T21:11:44Z MDPF_STRATID | L7 drain | R1 | TOs 2/4 | chain C merged @0f8a0ce3b0 (TO-ST-t4 NONE-FOUND/1363); slot 3 torn down
+- 2026-10-08T21:24:20Z MDPF_STRATID | L7 drain done | R1 | TOs 4/4 merged (C 0f8a0ce3b0, A f19805106e, B 148f715f8c) | thread trace pre-deploy THREAD-OK | pair COO half signed @ff5d1b8dc6; CTO half asked of CTO~DELL1; push asked of MSTR~DELL1
+- 2026-10-08T21:30:36Z MDPF_STRATID | pair | CTO half: laptop signs from bus relay 4a608416 (blob of ff5d1b8dc6; 4b436db750 adds only the D1-rides-push paragraph, no blast-radius change). D2 also waits on CRO~A's ledger-named-deploy gate (laptop ruling 107342) before the push
+- 2026-10-08T21:38:53Z MDPF_STRATID | deploy | ledger OPEN @9502c55004; GO sent to MSTR~DELL1 (push = D1). D2 prepared: zip at pin 148f715f8c sha256 d203dce7...cfb62 (b64 0gPc5/kU...+2I=), 4 modules present. Rollback point: live CodeSha256 BZAtvS5m...XAypA= (2026-10-01T22:05Z), artifact version gtsG7OieL_BKVfc3pTlFYaPobymZTeQn content-sha256 05902dbd...
+- 2026-10-08T21:42:46Z MDPF_STRATID | D2 | REFUSED by safe-apply tag-authz (full plan needs ssm:GetParameter /mdpf/custody_source; cloudops-dell1-agent-user denied) + APPLY-WHO WARN (COO does not apply). Rolled back: artifact restored to prior bytes (new version nW1fCrNSWaa512AwF31vG2rM0WEfB74Y, sha 05902dbd...); function unchanged BZAtvS5m.... L3 open; routed to CTO~DELL1
+- 2026-10-08T21:48:02Z MDPF_STRATID | D1-alone read for CTO 1190: served global/ writer = mdpf-gold-lambda only (13:30Z floor); EC2 runs new slice + aum_metrics to staging; old lambda code builds Global identical with/without new field (2,121,436,476.36); old vs new aum_metrics on live staging IDENTICAL 3/3. Decision ACCEPT, no hold. D2 routed to laptop 0.7.0_AE_CloudOps via MSTR
+- 2026-10-09T03:24Z tick 1 | MDPF_STRATID | L8 | R1 | TOs 4/4 | cells 4/4 | thread y (drain trace THREAD-OK) | DRIVE FORWARD: L8 packet @997bc2aca0 sent to 3.0.0_SA_CVO; ledger L4 HELD @3b0a77bfc7 on the 13:30Z fire; cron b9e40fab 10m
+- 2026-10-09T03:42Z tick 2 | MDPF_STRATID | L9 done (C-S1 MET, 5 rows dispositioned), round-close MAY-CLOSE, FINAL waits on 13:30Z | TOs 4/4 | cells 4/4 | thread y | EMPTY -> /next-calls --drive: 0 calls; WHILE-BLOCKED: pre-fire snapshot + l4_read.py @bbc5058e30 (control discriminates); 0 FREE left
+- 2026-10-09T03:47Z tick 3 | MDPF_STRATID | L8/L9 done, FINAL waits on 13:30Z fire | TOs 4/4 | cells 4/4 | thread y | EMPTY -> /next-calls --drive: 0 calls, 0 FREE (snapshot + l4_read landed tick 2); unblock nothing
