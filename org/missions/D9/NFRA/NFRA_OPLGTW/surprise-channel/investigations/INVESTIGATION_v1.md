@@ -10678,3 +10678,102 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not ARMED: the ask itself. Recorded so the release step does not discover it."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W45-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~45",
+  "surfaced_at": "2026-10-09T05:10:14Z",
+  "one_line": "OG-pf-1 step 6 says only test_ogz1_ac07 pins the old confinement rule, but 8 other tests of the guard suite pin it too and fail under the ruling; each was re-pinned to the new arm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python -m pytest tests/test_data_entitlement_guard.py at base: 1 failed (ac08), 11 passed; with the rule changed and no test edit: 10 failed (ac02, ac03, ac04, ac05, ac06, ac07, ac08, ac09, ac11, ac12), 2 passed (ac01, ac10).",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py @worker branch -- the asserts that moved: ac02 (discovery set, /teams/poll and /query/v0 403 -> 200), ac03 (discovery set, /query/v0 403 -> 200), ac04 (member discovery set), ac05 (classified-legacy tool for the restricted profile: denied -> served), ac06 (discovery sets), ac07 (the CTO-named arm), ac09 (/query/v0 403 -> catalog gate answers 200; a pending profile still 403), ac11 (restricted discovery [] -> equals the unprofiled twin's), ac12 (the unlisted path no longer closed for a profile)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 6 and AC2: change ONLY test_ogz1_ac07's expectation; the guard suite fails nothing beyond the base's ac08.",
+  "world_is": "AC2 cannot hold without moving the other pinned expectations, which are in the same file (in <paths>) and assert the same retired rule. I re-pinned each minimally, kept every non-expectation line, left ac08 untouched (it fails before reaching a route at line 726 at base and after), and the full guard suite is 11 passed, 1 failed (ac08).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "If the issuer wants the other eight left failing, AC2 would be unmeetable; the re-pin diff is in the commit, one hunk per test."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W45-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~45",
+  "surfaced_at": "2026-10-09T05:10:14Z",
+  "one_line": "The Black Diamond data tool is classified legacy and is NOT denied to an unprofiled principal today, so 'an unprofiled principal is still denied every family tool' is false for blackdiamond_list_fees; I kept it unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/data_entitlement.py INDEX_TOOLS (blackdiamond_list_fees, class legacy) and decide(): a non-restricted principal is denied only CLASS_SCHWAB tools.",
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py:14-20, :374-382 -- the tool's own firm-scope gate (check_scope) decides for the unprofiled principal; the integration is DORMANT (not in ENABLED_INTEGRATIONS)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell step 2 and AC1 arm (02): an UNPROFILED principal is still denied every family tool, 'every Black Diamond data tool' included (C2 fail-closed); bound: no change to what an unprofiled principal can reach.",
+  "world_is": "The two statements conflict for blackdiamond_list_fees only. I followed the bound: unprofiled passes to the tool's own gate exactly as before, and test_ogpf1_ac02 pins that (decide None, equal to the old rule's answer); the five Schwab tools stay denied. A profiled principal is denied the tool unless a grant names it, which no grant can, as before.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Denying the tool to unprofiled principals is a one-line addition in decide() if the CTO wants it; it would change dormant-integration behaviour for unprofiled users, so I did not."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W45-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~45",
+  "surfaced_at": "2026-10-09T05:10:14Z",
+  "one_line": "decide() keeps a NON-ACTIVE profile (pending, revoked, or grant not active) denied every tool and route; the ruling's 'a profile confines only the data tools' is read as applying to an active profile.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/tests/test_data_entitlement_guard.py ac01 (revoked principal: whoami -> entitlement_denied, discovery []) and ac06 (pending and revoked -> 0 tools) are base-passing pins of the tombstone rule and still pass.",
+      "FILE infra/aws/ec2/opal-gateway/app/data_entitlement.py module docstring: 'a principal with ANY profile record is restricted. Nothing reactivates the legacy path for it'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling msg 32383 / cell step 2: a restricted profile confines ONLY the data-grant family; non-data tools and REST routes are never confined by a profile.",
+  "world_is": "Read literally, a revoked tombstone would regain every non-data tool. I kept a non-active profile deny-all (new helper _profile_active). Consequence for the report: an ACTIVE portal-only grant (no Schwab master) now also passes the non-data tools to the existing gates, as an unprofiled principal does.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "If the CTO intends a revoked principal to fall to the unprofiled baseline, change _profile_active's use in decide() and route_denial() and re-pin ac01/ac06/ac09."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W45-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~45",
+  "surfaced_at": "2026-10-09T05:10:14Z",
+  "one_line": "tests/test_portal_grant.py fails 2 tests at the cut base (asker_sender_domain), independent of this cell; AC2 does not name that file but the cell's step 7 asks for its total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python -m pytest tests/test_portal_grant.py with app/data_entitlement.py restored to HEAD bytes: 2 failed, 5 passed (test_asker_portal_scope_admits_granted_channel, test_asker_portal_scope_refuses_other_channel: code asker_sender_domain). With this cell: the same 2 failed, 5 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 7: run test_portal_grant.py and state its total.",
+  "world_is": "The 2 failures name the asker's sender-domain gate, not an entitlement denial; they are identical at the base and with the cell. Not fixed (outside <paths>).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Environmental or test-data drift in app/asker_scope.py's sender domain list; for whoever owns OPALAI/asker."
+}
+```
