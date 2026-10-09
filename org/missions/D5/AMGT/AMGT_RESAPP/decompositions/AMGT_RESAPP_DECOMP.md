@@ -9429,3 +9429,57 @@ fanout:
   no_s3_deletes: true
   egress: hh-2 (one model run), hh-4 (SEC EDGAR + one model run per name); no Bloomberg call in any order
 ```
+
+## 92. ROUND 84 -- THE LANGUAGE STAMP, THE RUNNING-HEADER STRIP, THE STORE HALF FOR BABA, SAP AND PBR, THE FWD-18 WALK ON NU. Four orders
+
+**Input:** the CTO~DELL1 round-83 analysis `ledger/ROUND_ANALYSIS.round83.md` (R1-R2, enrichment items 1-4; FWD-18 holds on DEV for
+ASML NA). Grounded in `deliverables/2.0.0_SA_COO~R1/round84_prep/` (GROUP_LANGUAGE_NOTES, GROUP_HEADER_NOTES).
+
+### 92a. MEASURED AT THE CUT
+
+- **Language stamp (row D1-W332-S1):** `fetch.py:417` detects on the first 40,000 chars of the whole filing -- the XBRL header in every
+  cached 20-F: BABA `pt`, SAP `es`, 3 of 5 `en`; the same detector reads `en` on all 15 cut sections. r84_language AC1 NO at the base.
+- **Running headers:** 612 header lines inside the 15 cut sections (ASML 235, BABA 100, NU 128, PBR 69, SAP 80); no passage cited by a
+  served ASML or NU sentence carries one (0 of 22, 0 of 34), so neither needs a store re-run. r84_header AC1 NO at the base (H2 3 of 3).
+- **Served state:** NU's live /thesis: 39 locations, 4 from its business item, 98% English (r84_store YES, the positive control); BABA,
+  SAP, PBR: r84_store AC1 NO 0 of 3.
+
+### 92b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-ii-1` | the language stamp from the cut sections (R2, item 2) | `~334` | worker-light | LOCAL (merge: site-Z deploy) | `filings/fetch.py`, one test | FWD-18 for BABA, SAP (through ii-3) |
+| `AMGT-ii-2` | the cutter strips running page headers (R1 item 3, item 1) | `~335` | worker | LOCAL (merge: site-Z deploy) | `filings/document.py`, its test | cited passages (through ii-3) |
+| `AMGT-ii-3` | the store half for BABA, SAP, PBR under a NEW pair | `~336` | worker | WORLD | four keys per name; ledger | FWD-18 for three names |
+| `AMGT-ii-4` | the FWD-18 walk on NU_US_Equity (item 3) | `~337` | worker | LOCAL (a read) | own deliverables | FWD-18 on a second name (CVO AC3) |
+
+**Not cut:** FWD-16 (Andrew's hold); the page defects R1 routes to DSGN_AMGTV1 (company description, the caption, the figure press);
+the key rotation (Andrew's act). Carried rows D1-S7 (recorder key) and D1-W332-S2 (provenance splice) stay carried: no CloudOps act
+this round.
+
+### 92c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: enrichment items 1-4 + R1 item 3 + R2. Item 1 / R1-3 -> ii-2 (+ ii-3 for re-serving); item 2 / R2 -> ii-1 (+ ii-3);
+  item 3 -> ii-4; item 4 -> not cut (Andrew's hold). Uncovered: FWD-16 only.
+- **(ii) Same grain:** one module or one act per cell.
+- **(iii) Intent:** ii-1 is the only writer of `fetch.py`, ii-2 the only writer of `document.py`.
+- **(iv) What a cell does NOT move:** ii-1 moves no cut and not `detect_language`; ii-2 moves no 10-K or fixture cut and no PBR section
+  start; ii-3 writes four keys per name for three names and never ASML or NU; ii-4 is read-only.
+- **Write sets:** ii-1 and ii-2 are disjoint files. 0 overlaps.
+
+### 92d. EDGES AND FAN-OUT
+```
+ii-1 --+
+       +--> ii-3
+ii-2 --+
+ii-4 (independent)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 2
+  wave_0: [ii-1 ~334, ii-2 ~335, ii-4 ~337]   # 3 roots, cap 8
+  wave_1: [ii-3 ~336 (staged: ii-1 and ii-2 merged under 1.0.0_SA_CTO~Z's halves + a NEW pair COO + 1.0.0_SA_CTO~DELL1)]
+  merge_hold: ii-1 (fetch.py), ii-2 (document.py) -- both site-Z producer paths
+  no_s3_deletes: true
+  egress: ii-3 only (SEC EDGAR + one model run per name); no Bloomberg call in any order
+```
