@@ -105,7 +105,13 @@ so the deletions lose nothing. Re-run the merge dry-run to confirm.
 
 SPAWN ONLY WHEN: at the cut. Slot `~25`, worker-light, nested `opal_ai=c9983bd2ac`.
 
+**DRAIN (issuer, 2026-10-09 ~12:3xZ):** worker `~25` nested `13bc631` (2 files, +43/-7), proof @be2fa80dfb, drained
+@ad6682bc89. Issuer re-grade from the worker tree: AC1 PASS (`name pins left=0; skill oid pins=3; RELAUNCH oid pins=1;
+bounded skill arm line=1; sender gate before ACK=yes; other files 0`), AC2 PASS (19 of 19 lines byte-equal); the P3 row
+is untouched. Release: `13bc631` (parent `c9983bd`, a fast-forward) to opal_ai DEV and PROD by `0.0.0_AB_MSTR~Z`.
+
 <status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~25</slot>
 <fabric>site-z</fabric>

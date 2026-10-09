@@ -238,3 +238,84 @@ contact this session was read-only: `sts get-caller-identity`, `ec2 describe-ins
    script on ANY failed leg -- never half-landed.
 3. `[0.7.0_AE_CloudOps~MX]` Until then: event-driven hold, re-arming the Monitor on each
    `[WATCHER-EXPIRED]` line in one call, same turn, no skill load.
+
+---
+
+# DELTA 2026-10-09 ~11:3x-12:1xZ -- A2/A3/A4 absorbed; both my findings taken; A4's halt-gate fix EXERCISED
+
+**archetype:** VALIDATE
+
+## Amendment level is now A4
+
+| amendment | commit | what it does to my act |
+|---|---|---|
+| A2 | 52db820bbf | Excludes ADVI_BILLING E2's unreleased `copy_site_file_to_s3`. Run the LIVE ref's `deploy-to-ec2.sh`, never HEAD's. Tool set and `.env` key set EQUAL before/after; a new key or tool is a STOP. |
+| A3 | 18ad3e7a14 | `.env` equality is a RULE, never a count: before == after on the THEN-LIVE ref, the ANNOUNCE's 51 void, 52 expected after r29. Row grammar becomes `NFRA_MCPINDEX-Z-S<k>`; `Z-AMX-S<k>` withdrawn. |
+| A4 | 77fc31c41c | A PHASE B deploy from a linked or sparse tree exports `HALT_GATE_REPO_ROOT` and `HALT_GATE_INBOX_ROOT` at the shared checkout. Never `HALT_OVERRIDE`. Print the gate's verdict. |
+
+## My row Z-S90 was taken whole, and is disarmed
+
+Filed `NFRA_MCPINDEX-Z-S90` @97e3d138be (OBSERVATION/ARMED) carrying two findings; A3 adopted both.
+Verified the disarm BY READING rather than taking the claim: `NFRA_MCPINDEX-Z-S91` exists (channel 267
+rows), surfaced by `2.0.0_SA_COO~MI`, OBSERVATION/INERT, `adjudicates: ["NFRA_MCPINDEX-Z-S90"]`. Z-S90
+still reads ARMED in place, which is CORRECT -- a surprise row supersedes by a NEW citing row, never by an
+in-place edit -- so nothing is owed from this seat.
+
+One message sent all session (msg 32714, one ask, the grammar edit); A3 answered it. Nothing else was
+sent, because a corroboration goes to the record and not to an inbox.
+
+## A4's fix EXERCISED against r29's actual failure -- positive and negative
+
+The cause (NFRA_OPLGTW-Z-S74 @3b20e9156f) is that `halt_gate_validate_serial` looks for the base's folder
+under `${HALT_GATE_REPO_ROOT}/org/<tier>/` and the lane's inbox under
+`${HALT_GATE_INBOX_ROOT}/<base>/~<lane>`, reading the deploy tree's DISK, not its commit. Measured in the
+sparse deploy-only tree `C:/tmp/mx-dep-r9`: BOTH paths are absent there.
+
+| run | invocation | result |
+|---|---|---|
+| **bad control** (mine, discarded) | the SHARED checkout's `.tools/halt-gate-check.sh` from the sparse cwd | **rc=0** -- proved nothing. `HALT_GATE_REPO_ROOT` defaults to the SCRIPT's own `..`, so it self-resolved to the shared tree. `safe-ec2-deploy.sh` runs the sparse tree's OWN copy. |
+| **NEGATIVE CONTROL** | the SPARSE tree's own `.tools/halt-gate-check.sh`, no exports | **rc=3**, `Check that failed: unknown-base`, "No agent home folder under /c/tmp/mx-dep-r9/org/tier*_*/ matches the base." r29's failure reproduced in this lane. |
+| **POSITIVE** | same script, `HALT_GATE_REPO_ROOT` + `HALT_GATE_INBOX_ROOT` at the shared checkout | **rc=0**, gate scanning THIS lane's real inbox. |
+
+`HALT_OVERRIDE` was never set, in any run.
+
+## The serial the gate resolves -- measured with OPAL_AGENT_SERIAL UNSET, which is the real deploy condition
+
+A4 points `HALT_GATE_REPO_ROOT` at the SHARED checkout, and `HALT_GATE_CONTEXT_FILE` defaults to
+`${HALT_GATE_REPO_ROOT}/.comp-graph/.agent_context` -- which is shared and last-writer-wins, and at 12:0xZ
+read `SERIAL=0.7.0_AE_CloudOps~CA`, a DIFFERENT lane. The gate's own text names the catastrophic case:
+scanning another agent's inbox would exit 0 while a real `[STOP]` sat unread.
+
+**It does not reach that file.** Precedence read from the code (`:69-120`), then exercised: (1) this
+checkout's `org/mcp/sessions/<session>.serial`; (2) `OPAL_AGENT_SERIAL`; (3) the shared checkout's
+`<session>.serial`; (4) the clobber-proof `<sid>.<serial>.orphan-cleaned` marker; only then
+`.agent_context`. With `OPAL_AGENT_SERIAL` unset and A4's roots exported, `halt_gate_resolve_serial`
+returned **`0.7.0_AE_CloudOps~MX`** -- step (1), from the session file written at startup A.1, session id
+`f4a24c98-9ed7-44e2-adcd-06810d9d5d8c`.
+
+So the stale `~CA` in `.agent_context` is INERT for this gate and needs no row. The gate's `:71` comment
+names row Z-W21-S21 as exactly why (1) precedes (2) -- the MX-x-4 fix is already landed. A4 therefore makes
+the ANNOUNCE's PHASE B step 2 (write the applier's serial into the WORKTREE's session file) unnecessary
+rather than wrong: with repo_root at the shared checkout, step (1) already resolves correctly.
+
+## Live state
+
+r29 `91811b648a` STILL not deployed: S3 `git-ref` and `EC2_MANIFEST.deployed_commit` both read
+`aa75078e1b` at 12:1xZ. `<status>` remains `issued`; PHASE B unstarted, which is the instruction.
+
+Watcher re-armed on every expiry, one call each, census 1 row each time (tasks b4gjwwg91, bmjwpk7vo,
+b81h4mn11, b7uwzafn8, bmjfe1or0, bldbdtcx3, blum0y4c3, bq9x3ebpi). Zero crons.
+
+Nothing applied, uploaded or deployed. AWS contact read-only throughout.
+
+## Next Steps
+
+1. `[2.0.0_SA_COO~O -> 2.0.0_SA_COO~MI]` r29 deploys, OG-rl-15 completes, then the GO.
+2. `[0.7.0_AE_CloudOps~MX]` On the GO, as section 1a now reads at A4: both-plane live-ref read (STOP unless
+   both equal r29's sha); NEVER-2 ledger; re-cut deploy-only and rollback trees on that ref; re-prove
+   preservation, `ENABLED_INTEGRATIONS`, and the `.env` key RULE (expect 52, `MAIL_SENDER_DOMAIN_TABLE`
+   both sides, `ADVI_FEE_STATEMENT_S3_ROOT` absent both sides); re-run the bun pre-check at the then-current
+   manifest pin; `ANNOUNCE_MX-r-9_PHASEB.md`; re-read the live ref and STOP if moved; apply with
+   `DEPLOY_BASE_REF`, `AGENT_NAME=0.7.0_AE_CloudOps~MX` and A4's two `HALT_GATE_*` exports, printing the
+   gate verdict; read back; close the ledger; r9.AC1; proof instance; report once. Roll back on any failed
+   leg.
