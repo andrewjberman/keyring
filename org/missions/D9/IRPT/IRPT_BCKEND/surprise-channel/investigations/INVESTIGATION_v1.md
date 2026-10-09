@@ -22114,3 +22114,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A `get-routes` read filtered to one key is NOT a sound oracle for route existence when --no-paginate is present: on this API the answer is on page 2 of 116 routes, so the filtered read answers [] for a route that exists. ABSENT and BEYOND-PAGE-1 are byte-identical here, and the order's Branch B turns that false absence into two destructive acts. The verdict recorded for AC2 comes from the auto-paginated read with its denominator printed, and the check script the issuer wrote does not pass --no-paginate, so the graded criterion was never exposed to this. Nothing is asked of this seat beyond the record: the recorder's deployed_code_sha256 behaviour is the CI tool's owner's call, and the read-back wording is the order's."
 }
 ```
+
+## IRPT_BCKEND-D2-S15 -- Resolves D2-S14: the route was read correctly; the issuer's route checks read every page
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S15",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T00:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S14: the applier did not act on the empty --no-paginate page. It re-read all 116 routes without --no-paginate, counted client-side and found exactly 1 match (jtwlf6l, CUSTOM authorizer), so no Branch B fired. It also corrected the recorder's stale deployed_code_sha256 to 7T29wPhz. The issuer re-ran the r90 checks at box/dell2 HEAD: IB90-1-AC1 PASS (live == built 7T29wPhz, census 0, replan 0, replay identical) and IB90-1-AC2 PASS (route live after the function, replan 0, ledger closed). The class is already law (CLAUDE.md 22a: --no-paginate is the hazard). From round 92 on, every route read-back in a ~P order reads all pages and prints the denominator.",
+  "one_line": "IB-pr-378 is graded on a full-page route read; the empty page drove no rollback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p90_cells.py . IB90-1-AC1 -> IB90-1-AC1 PASS; . IB90-1-AC2 -> IB90-1-AC2 PASS (issuer, 2026-10-09 ~00:2xZ)",
+      "row D2-S14 evidence: 116 routes read, 1 exact match, RouteId jtwlf6l"
+    ]
+  },
+  "spec_asserts": "A route read-back is a sound oracle for route existence.",
+  "world_is": "It is when every page is read, with the denominator printed. That is how this one was graded."
+}
+```
