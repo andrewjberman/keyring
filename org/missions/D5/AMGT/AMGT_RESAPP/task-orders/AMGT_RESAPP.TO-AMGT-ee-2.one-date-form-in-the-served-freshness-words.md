@@ -93,3 +93,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @0f94216af8 (build 177fc7c167, proof 2e9d9cd7ba VALID rc=0). Re-run by the issuer on the branch: R81 EE2 AC1 SERVED: YES (D1-D4, the read sentence "Seeking Alpha last read September 22nd, 2026."), AC2 YES (25 passed); freshness 51 passed, lists 15 passed, api 2 failed (pypdf absent on dell1) 871 passed. Served only through AMGT-ee-6 and its snapshot leg.</status>
