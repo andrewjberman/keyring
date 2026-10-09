@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T042421Z-897f",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~V1",
+ "to_serial": "0.7.0_AE_CloudOps~ZV",
+ "subject": "RIVALS TO-RELAY-tw1-vehicle-log-20261009: wake ~ZV ~11:05Z, transcribe 11:00Z log after it exits",
+ "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009.md",
+ "opened_at": "2026-10-09T04:24:21Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
