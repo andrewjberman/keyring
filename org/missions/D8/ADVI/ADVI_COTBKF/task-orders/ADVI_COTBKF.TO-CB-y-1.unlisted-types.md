@@ -36,7 +36,7 @@ position; carried levels propagated). The runner's LAST line ends `... regressio
 Round 24's real run (`conditional` -> `method`): `months_after=3059/925/78609 year_chain_same=True regressions=98`, every regression
 named in `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md`. 35 of them hold a row type the CRO's
 table does not name, kept INTERNAL by default (row W46-S3): `ftax` 29, `ftax+stax` 1, `cbf` 3, `fco` 1, `stp` 1. The full unlisted set
-is ASF, bcf, cbf, fco, stp, term, ftax, stax, frntax. Specimen: 0QF879431 2016-03, a withdrawal that includes an `ftax` of 129.63;
+is ASF, bcf, cbf, fco, stp, term, ftax, stax, frntax. Specimen: acct#47bd9af5 2016-03, a withdrawal that includes an `ftax` of 129.63;
 reported 0.00, computed -0.1616.
 
 **Your item (the CTO's round-24 analysis, E1).**

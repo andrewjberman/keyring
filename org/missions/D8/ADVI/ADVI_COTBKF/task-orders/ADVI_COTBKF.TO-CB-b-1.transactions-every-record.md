@@ -33,7 +33,7 @@ everything that is not named below: the CLI, the typing, the lineage columns, th
 **The input, measured.** `$HOME/Downloads/Files.zip` (READ ONLY) holds
 `Cottonwood Capital Advisors_Portfolio_Accounting_Performance_ClientDelivery.zip`; its member
 `CFN_SCTASK0548380_Portfolio_Accounting_Performance/CFN_SCTASK0548380_Historical_Transactions_20260623_102751.txt` holds 1,416,497
-records (a `csv.reader(delimiter='|')` parse: every record 20 fields) on 1,416,500 physical lines -- three records of account B3S688184
+records (a `csv.reader(delimiter='|')` parse: every record 20 fields) on 1,416,500 physical lines -- three records of account acct#1059baa6
 each span two lines (156036+156037, 156038+156039, 156040+156041) through a CRLF inside a quoted `Transaction_Note`. 1,360 records are
 exact repeats of an earlier record. 1,533 accounts; trade dates 2013-04-03 to 2026-06-22.
 

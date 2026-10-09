@@ -4730,7 +4730,6 @@ round.** Never edit an existing row.
 }
 ```
 
-
 ## ADVI_COTBKF-D2-W77-S1 -- existing gold tests encode the fail-open behavior the ruling reverses
 
 ```json
@@ -4805,5 +4804,84 @@ round.** Never edit an existing row.
  "disposition": "UNDER_INVESTIGATION",
  "spec_asserts": "TO CB-ax-1 item 1: write each S3 key as ONE plainly typed module constant; if the commit-time naming gate refuses a plain legacy key, STOP that branch and file a BLOCKING row naming the R20 case.",
  "world_is": "The R20 case needed: a declared exception for the three occurrences in data/cot/scripts/gold/build_canonical_prices_v2.py (the keys silver/transactions/, silver/historical_prices.parquet, code/gold/ as plain legacy constants, values equal to the legacy_addresses.json rows before and after), register_ref a ledger row id, cutoff PERMANENT or the ADVI_FIRMBKTS close date; Andrew acknowledges the departure (infra/logic/02_DOCTRINE.md R20). Until it lands, the writer still imports opal_naming at module level and cannot run from the mirror (D2-S72/W75-S1 stand for it). B_00's half IS committed (7b85e1a074)."
+}
+```
+
+## ADVI_COTBKF-D2-W78-S1 -- census counted 0 account-id filenames; 3 paths and the census file carried ids
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W78-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~78",
+ "surfaced_at": "2026-10-09T17:00:00Z",
+ "one_line": "The round-51 census counted 0 account-id filenames; 3 tracked paths under deliverables/ carried an account id in a directory or file name, and the census file itself carried ids in its path column. All 4 were tokenised in CB-ay-1.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git ls-files of the project at the base commit: 3 tracked paths matched the account patterns (2 directories, 1 file); test_cotbkf_no_account_ids.py now scans paths as well as bytes",
+   "base test run: 163 files with hits vs the census 162 (80 evidence + 82 doc/lane); the extra file is the census document (paths with tokens now)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Census 3b0dda2cb0: 627 files, 179 hits, 0 filenames are account ids.",
+ "world_is": "3 tracked paths and the census document carried account ids; renamed to acct#<sha8> tokens (git mv) and redacted in the CB-ay-1 commits. Origin history still carries the old paths (Andrew's purge)."
+}
+```
+
+## ADVI_COTBKF-D2-W78-S2 -- order patterns cover Commonwealth shapes only; Cottonwood-shaped ids remain
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W78-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~78",
+ "surfaced_at": "2026-10-09T17:00:00Z",
+ "one_line": "The order's three patterns cover Commonwealth-shaped ids only; Cottonwood-side account shapes (z plus 10 digits, and a leading-zero 11-digit form) remain in non-channel ADVI_COTBKF files: 120 and 45 matches in 8 and 15 of 442 files.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python count over git ls-files (excluding surprise-channel/) at the CB-ay-1 redaction commit: z+10-digit 120 matches in 8 files; 0+10-digit 45 matches in 15 files; denominator 442 files",
+   "CTO ruling @0e8209c33c item 6: no client account id in any tracked file; the order's patterns (and so test_cotbkf_no_account_ids.py) do not match these shapes; not redacted here because the order names the three patterns only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB51ay1-AC1 passing means 0 client account ids remain in the non-channel files.",
+ "world_is": "AC1 passes on the three Commonwealth shapes only; the Cottonwood shapes above are still tracked and are neither redacted nor tested. The next containment cell needs the shapes added to the patterns."
+}
+```
+
+## ADVI_COTBKF-D2-W78-S3 -- AC1 blocked: the TO gate refuses redaction of 7 completed orders whose proof instances were moved
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W78-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~78",
+ "surfaced_at": "2026-10-09T17:30:00Z",
+ "one_line": "CB51ay1-AC1 cannot pass as written: the TO issuance gate refuses any edit to 7 completed task orders whose proof-of-spec instances the order's own MOVE step took out of the repo, so 28 account-shaped matches remain in those 7 files.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit layer 2 (to-pipeline-gate.py:3050-3100, check for a complete flip): a modified order whose last status tag is complete needs a valid proof-of-spec instance beside it; 7 refusals of 7 on the redaction commit, reason 'NO proof-of-spec instance was found beside it'",
+   "the 7 instances are among the 19 proof_of_spec.json files in the 80 evidence moves (census class evidence); a token-redacted copy restored beside each fails proof-of-spec-check (rc 1 or 2: artifact paths resolve to moved files, 7 of 7 invalid); the restored copies were deleted",
+   "'# pipeline-override:' on the 7 orders did not clear the refusal (the arm at :3050 does not read it); the override lines were removed again",
+   "python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py: 442 files scanned, 7 files with hits, 28 hits; the 7 token-redacted order texts are kept in the worker worktree .scratch/redacted_TOs/ (untracked)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-ay-1: redact every doc in place, including task orders (diff = token substitutions only), and AC1 expects 0 hits.",
+ "world_is": "Redaction of a completed order is refused by the L6 neck unless a valid instance sits beside it; moving the instance and redacting the order cannot both land. The 7 orders need a ruling: gate exemption for a containment redaction, or an issuer-side route that does not edit completed orders."
 }
 ```
