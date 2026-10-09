@@ -4528,3 +4528,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W67-S1 -- the owned read IB-pr-405 serves no sha256 for the persisted object (report_index is {report_id, revision, retention_ref}, additionalProperties false), so verify-persisted's sha256 check has nothing to compare today
+
+```json
+{
+  "id": "IRPT_DASHBD-W67-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~67",
+  "surfaced_at": "2026-10-09T14:10:00Z",
+  "one_line": "TO-DB-b-92 asks verify-persisted to compare the persisted object's sha256, as IB-pr-405's response or index entry exposes it, to the sha256 recorded at run. The contract at 2f6fe31ad8 exposes none: persist_inputs has four members and report_index three, both closed. The runner now compares index.sha256 to refs persisted.sha256 whenever the index carries one (mismatch prints PERSISTED MISMATCH, rc 1) and keeps the index check when it does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-92 item 1: verify-persisted compares the persisted object's sha256, as IB-pr-405's response or its index entry exposes it, to the sha256 the refs recorded at run; if the route exposes none, file a row naming the missing field and keep the index check.",
+  "world_is": "Missing field: report_index.sha256 (the persisted object's sha256). OwnedAnalysisRequest.schema.json persist_inputs.report_index is oneOf null or {report_id, revision, retention_ref} with additionalProperties false, so a live answer cannot carry it and read_persist_inputs' exact-key validation would refuse one that did. The only persisted-object sha256 the runner holds is the persist POST's answer sha256, recorded at run in refs persisted.sha256. Consequence: against the live route verify-persisted's sha256 limb is dormant (index check only) until IB-pr-405's index serves the field; the two new tests exercise it by standing a sha256 in the index through a monkeypatch of read_persist_inputs, because the recorded fixture may carry only contract-defined fields.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json:88-106 @2f6fe31ad8",
+      "data/assets/scripts/gold/irpt_custody/tests/fixtures/persist_inputs_route_fixture.json",
+      "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py persisted_sha256_agrees()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
