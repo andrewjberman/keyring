@@ -23126,3 +23126,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The move is now covered by both halves after the fact, its ledger is closed, and its live behaviour is measured as identical/fail-safe."
 }
 ```
+
+### IRPT_BCKEND-D2-W260-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W260-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~260",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The CTO ruling file the worker face names is not in the worktree; read from commit 19c5067e12 instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_IB_pr_388_H1_WITHDRAWN_20261009.md in the worktree: No such file",
+      "git ls-tree -r 19c5067e12 lists the file; git show 19c5067e12:<path> read in full: no instruction to remove the stream or the requests_stream_arn output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling file is at org/tier1_exec/1.0.0_SA_CTO/deliverables/ in the worktree.",
+  "world_is": "The worktree branch does not carry the file; it exists at 19c5067e12. The stream and requests_stream_arn output were therefore kept."
+}
+```
