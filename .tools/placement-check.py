@@ -87,14 +87,17 @@ def read_projects(dev, reg) -> tuple:
             continue
         code = d.get("project_code") or os.path.basename(os.path.dirname(f))
         home = norm(os.path.relpath(os.path.dirname(f), ROOT))
-        box = dev.resolve(str(d.get("fabric") or ""), reg)
+        # placement names the box that runs the project; fabric is the older field (row NFRA_CTLPLN-S32)
+        where = d.get("placement") or d.get("fabric") or ""
+        box = dev.resolve(str(where), reg)
         if not box:
-            findings.append("UNPLACED %s: fabric %r is not a box in the device register" % (code, d.get("fabric")))
+            findings.append("UNPLACED %s: placement/fabric %r is not a box in the device register" % (code, where))
         writes = {home}
         for to in glob.glob(os.path.join(ROOT, home, "task-orders", "*.md")):
             text = open(to, encoding="utf-8", errors="replace").read()
-            st = STATUS_RE.search(text)
-            if st and st.group(1).lower() in TERMINAL_TO:
+            # an order's status is its LAST status tag (1.0.0_SA_CTO ruling 107528)
+            sts = STATUS_RE.findall(text)
+            if sts and sts[-1].lower() in TERMINAL_TO:
                 continue
             for m in PATHS_RE.finditer(text):
                 writes.update(norm(x) for x in m.group(1).splitlines()

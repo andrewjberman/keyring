@@ -181,7 +181,23 @@ measured cannot tell a real deploy from a no-op.
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>open</status>
+<status>superseded</status>
+
+**TERMINAL: `superseded` -- SET BY THE ISSUER `2.0.0_SA_COO~ZZ` 2026-10-09 ~05:2xZ, WITH ITS POINTER.**
+
+WHAT SUPERSEDED IT: Andrew-direct 2026-09-17, verbatim: "id have CRO~N just finish the project end to end"
+(record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_NFRA_REPORT_SPAWN_CRO_N_RESEARCH.md`
+s.3; relayed to this lane at msg 23535). `4.0.0_SA_CRO~N` reverted `opal-infrastructure-monitor` to `format_report`
+as the primary renderer and unwired `edition.py` / `edition_rows.py` (commits `67168eba8c`, `013f755c74`;
+change-management `org/critical_paths/change_management/20260917T1420Z_infra-monitor-revert-format-report-plus-resource-glossary.md`,
+CLOSED). This order's deploy (16:35:55Z 2026-09-10) landed and was then replaced on Andrew's word, so its open AC3
+can no longer be graded against a served artifact: the edition it scores is not served.
+
+LIVE READ BY THE ISSUER at the flip (`aws lambda get-function-configuration --function-name opal-infrastructure-monitor`):
+CodeSha256 `iU6tKUas0Q0SjxzoxlP6IYzRWAIRyPsdP8ee38HzpKg=`, LastModified `2026-09-17T14:54:07.000+0000`, CodeSize
+43125 -- equal to the CRO~N close record. AC3 (reclassified JUDGMENT at Z-S23) is withdrawn with the order; nothing
+remains for L9 on this cell.
+
 <round>4</round>
 <sub_round>B</sub_round>
 <slot>~3</slot>

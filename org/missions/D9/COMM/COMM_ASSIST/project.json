@@ -2,10 +2,10 @@
   "project_code": "COMM_ASSIST",
   "macro_code": "COMM",
   "directive": "D9",
-  "fabric": "laptop",
-  "placement": "LAPTOP",
+  "fabric": "site-z",
+  "placement": "SITEZ",
   "placement_ref": "D9 is LAPTOP as a whole (DIRECTIVES.yaml, Andrew 2026-09-10); the assistant's root, applier and COO lane are on the laptop",
-  "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-08; site Z's gateway routes and mail admission (NFRA_OPLGTW) are dependencies, not placement",
+  "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-09 ~06:1xZ: SITEZ on Andrew-direct \"Yeah that workstream should be done on sitez not on here\" (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_061xZ_COMM_ASSIST_MOVES_TO_SITEZ.md). Its gateway routes and mail admission (NFRA_OPLGTW) live on site Z. || superseded: LAPTOP, 2026-10-08.",
   "fabric_ruling": "laptop",
   "pipeline": null,
   "status": "active",
@@ -34,9 +34,9 @@
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO"
   },
-  "coo_lane": "2.0.0_SA_COO~R",
+  "coo_lane": null,
   "workstreams": null,
-  "phase": "EXECUTING -- registered 2026-10-08 from NFRA_CTLPLN workstream INBOUND rounds 1-7 (history stays in NFRA_CTLPLN's tree); rounds 6 and 7 APPLIED 21:48Z / 22:32Z, not yet EXERCISED; next: the 2026-10-09 ~22:00Z full-day read (FWD-3)",
+  "phase": "2026-10-09 ~06:1xZ (1.0.0_SA_CTO, L3): PLACEMENT LAPTOP -> SITEZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_061xZ_COMM_ASSIST_MOVES_TO_SITEZ.md). 2.0.0_SA_COO~R taken offline by Andrew; rounds 6-11 drained on the laptop, deploy parked on OG-md-1 (round 9 drain end deliverables/2.0.0_SA_COO~R/ROUND9_DRAIN_END_20261009.md). A site Z COO lane picks it up. || EXECUTING -- registered 2026-10-08 from NFRA_CTLPLN workstream INBOUND rounds 1-7 (history stays in NFRA_CTLPLN's tree); rounds 6 and 7 APPLIED 21:48Z / 22:32Z, not yet EXERCISED; next: the 2026-10-09 ~22:00Z full-day read (FWD-3)",
   "blocking": null,
   "last_updated": "2026-10-08"
 }

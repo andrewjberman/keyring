@@ -154,7 +154,19 @@ AC5  Sha=r/bjjp5dJMcxw4NnzSNFsUCpYlWrH+sJsVJu+JiWxs8=
 
 <!-- ============ RECORD FACE -- does NOT travel to the worker ============ -->
 
-<status>open</status>
+<status>superseded</status>
+
+**TERMINAL: `superseded` -- SET BY THE ISSUER `2.0.0_SA_COO~ZZ` 2026-10-09 ~05:2xZ, WITH ITS POINTER.**
+
+WHAT SUPERSEDED IT: the same Andrew-direct word as RP-s-23 (2026-09-17, "id have CRO~N just finish the project end
+to end"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_NFRA_REPORT_SPAWN_CRO_N_RESEARCH.md`
+s.3). This cell compared the edition against `format_report` and triggered one manual send. Andrew read the edition
+and it failed (row `NFRA_REPORT-Z-S24`, commit `2a2cf12a01`); `4.0.0_SA_CRO~N` then restored `format_report` as the
+served body (commits `67168eba8c`, `013f755c74`), which removes the "nothing was lost" question this cell asked.
+CRO~N deliberately sent no manual email; the scheduled 13:00Z fire is the acceptance. The served bytes were read live
+by the issuer at the flip and match the CRO~N close record (CodeSha256 `iU6tKUas0Q...`, LastModified
+2026-09-17T14:54:07Z, CodeSize 43125).
+
 <round>4</round>
 <sub_round>C</sub_round>
 <slot>~4</slot>

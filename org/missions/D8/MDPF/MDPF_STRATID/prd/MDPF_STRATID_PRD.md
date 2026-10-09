@@ -230,3 +230,17 @@ The ENDPOINT and CONTRACTS sections are not edited. Source: the CRO's approach (
   muni ETFs with SMA flags false. Under C-MUNI-VERIFY a person decides. Until then the S03 Muni rule is DATA with no member, and the
   account stays on the S08 unidentified list. No Muni dollars count. The person's check is listed as an act on this box's open calls.
 - FWD-2 and FWD-6 share round 1's write surface and stay sequenced behind the round-1 analysis.
+
+## ADDENDUM v0.5 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~05:3xZ) -- note only: C-MUNI-VERIFY answered for `Opal_Muni_Income`
+
+**Word:** Andrew-direct ~05:3xZ at the `2.0.0_SA_COO~S1` terminal, VERBATIM: "no that is a custom model, we should not be putting that in
+ALT Strategies." Record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`
+@07c19a9d0e. ENDPOINT and CONTRACTS are not edited.
+
+- **FWD-3 stands as written.** Its ACCEPT already provides for this result: the large Muni Income account "was checked by a person and
+  ... kept out with the reason written down". `Opal_Muni_Income` ($64.1M) stays a Custom model under Cottonwood Models, is excluded from
+  ALT Strategies, and leaves the unidentified list as an identified Opal Model.
+- **What FWD-3 still needs: the real Muni SMA's dollars.** `Opal_Muni_Sleeve` ($0.55M) was not named in his answer and stays open under
+  C-MUNI-VERIFY. The next read is a CRO census of sleeves or accounts named Muni across SmartX, Rebalancer and Eclipse (a read, S07),
+  with the denominator printed. If that census finds no Muni SMA dollars at any firm, FWD-3 cannot be EXERCISED. That is then a
+  re-entry on this outcome, which this seat raises; FWD-3 is not quietly retired.

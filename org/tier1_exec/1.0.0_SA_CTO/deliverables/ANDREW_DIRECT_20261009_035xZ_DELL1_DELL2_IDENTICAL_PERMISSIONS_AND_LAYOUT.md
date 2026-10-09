@@ -34,3 +34,21 @@ and attachments named, and the two-user simulation is equal, so apply. B, anythi
 report. Rollback: re-apply at the amendment's parent commit.
 
 **SIGNED (CTO half)** -- `1.0.0_SA_CTO`
+
+## Addendum ~05:3xZ -- AMENDMENT 27, shell on mdpf-daily-runner (row NFRA_CTLPLN-W14-S48, 2.0.0_SA_COO~C msg 107749)
+
+Measured by the issuer: parity reads 1532/1532 equal; A26-A28 built and VALID, nothing applied. A27 gives both Dells standing
+`AWS-RunShellScript` on `mdpf-daily-runner` (`i-02448edb624a7a7cf`) for dell2's IB-pr-383. A shell there runs as
+`mdpf-daily-runner-ec2-role`, which the directory runner uses to assume the 49 Financial source principal
+(`principal_49f.tf:1-12`), so the blast radius is wider than this half named.
+
+**RULED: YES, A27 applies with A26 and A28,** on Andrew's word that the Dells run their own scripts inside Opal's AWS without waiting on the
+laptop. Plain words: a Dell seat on that host can act with 49 Financial's source credentials, as the daily runner does.
+**Conditions:**
+1. The step-C before-rule is restated in the apply order. A send that writes a firm data bucket, or assumes the 49F principal for anything
+   other than the runner's own documented job, tells the laptop first.
+2. Every send to that host is reported after the fact by bus (command id, purpose).
+3. CLAUDE.md's cross-firm rule binds the scripts run there: never write 49 Financial data into another firm's tree.
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`
+
