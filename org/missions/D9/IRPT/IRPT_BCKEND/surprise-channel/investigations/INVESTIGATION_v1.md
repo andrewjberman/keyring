@@ -24223,3 +24223,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S49 -- Resolves and disarms D2-S48: IB-pr-401 held pre-upload; CTO ruled FIX; IB-pr-409 rebuilds narrative with the no-row caller UNKNOWN
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S49",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T12:46:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-S48. The hazard is a narrative release that classes a no-row Opal caller OPAL_GLOBAL (built QiNRKpaC) where live classes it UNKNOWN. It cannot fire: IB-pr-401 is held before upload (nothing uploaded, no ledger), and the CTO ruled FIX in ADDENDUM 18.1 (msg 3284, @9cc7fd49c0): no widening accepted, no client-data enumeration. Cell IB-pr-409 (round 110 @bd9c06d2fb, worker ~272) rebuilds narrative so a no-row Opal caller stays UNKNOWN, with a 14-arm replay in which the enforcer-scope arm must read identical; the CTO re-signs on that packet and IB-pr-401 is re-pointed to it.",
+  "one_line": "D2-S48 disarmed: IB-pr-401 held pre-upload; CTO ruled FIX; IB-pr-409 rebuilds with the no-row caller UNKNOWN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-narrative live CodeSha256 es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc= at 12:4xZ (unchanged)",
+      "CTO ADDENDUM 18.1 @9cc7fd49c0",
+      "TO-IB-pr-409 at box/dell2 bd9c06d2fb"
+    ]
+  },
+  "spec_asserts": "No served move widens a caller's reach (never-widen).",
+  "world_is": "The widening build was stopped before upload; the fix is a cut cell under a CTO ruling."
+}
+```
