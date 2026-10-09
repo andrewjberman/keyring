@@ -54,6 +54,27 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T18:27:00Z. L8 packet: 2.0.0_SA_COO~C1 m
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "D1-W1-S1 (BLOCKING) dismissed: the aq-1/aq-2 control arms compared the whole value; the issuer's check AMENDMENT 1 @2ceea5883b makes each control grade its own edge, and aq-2 was re-proved on it in-round."
+  },
+  {
+    "id": "AMGT_CORPUS-D1-C-S7",
+    "project": "AMGT_CORPUS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-09T18:29:00Z",
+    "one_line": "Pointer for row AMGT_CORPUS-D1-C-S5: judgment criterion AC3 of AMGT_CORPUS.TO-CRPS-aq-3.feed-matches-real-terms-only is graded MET there (the order carries no <to_id>, so its id is its filename stem).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "spine L9: a judgment criterion is graded by a seat that did none of the work.",
+    "world_is": "Pointer for row AMGT_CORPUS-D1-C-S5: judgment criterion AC3 of AMGT_CORPUS.TO-CRPS-aq-3.feed-matches-real-terms-only is graded MET there (the order carries no <to_id>, so its id is its filename stem).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row AMGT_CORPUS-D1-C-S5 in this file",
+        "org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-aq-3.feed-matches-real-terms-only.md (no <to_id> tag)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A pointer to an L9 grade record, not a hazard."
   }
 ]
 ```
