@@ -710,3 +710,30 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Proven by the difference: same gate code, schema fixed, 0 failed. Five round-3 orders were built and passed but could not flip at their base; the issuer flipped them after re-validation on the merged tree. D1-S13 can close."
 }
 ```
+
+## NFRA_GATSCP-D1-S15 -- the missions-tree close gate grades every round, not the round being closed
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S15",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T16:30Z",
+  "one_line": "The missions-tree close gate runs round-close-check across ALL rounds (no --round), so a close of a fully graded round reads REFUSED whenever any earlier round has an ungraded judgment; it passes today only because the gate is in WARN mode.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/missions-tree-check.sh close_gate (:101): python .tools/round-close-check.py --project \"$code\" --staged -- no --round",
+      "LGIC_BLANKFIX round 14 close 96a8832de7 replayed through the hook in a private git dir: orders=69 judgment=14 graded=14 verdict=REFUSED; round-close-check --round 14 --staged reads orders=3 verdict=MAY-CLOSE",
+      "1.0.0_SA_CTO~DELL1 msg 2776: AMGT_CORPUS round 40 read 111 orders, 31 judgment, graded 0 through the gate",
+      "AMGT_CORPUS round 40's grades are in ADJUDICATION_v47.md, untracked in the shared tree at 2026-10-09T16:5xZ, so a staged read of round 40 alone also reads ungraded; the replay uses LGIC_BLANKFIX round 14 instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A round close is graded on the round being closed (round-close-check --round <n>; canonical-drive obligation 3).",
+  "world_is": "The commit-time gate grades every round of the project; under ENFORCE every close of a project with any ungraded earlier judgment is refused. Remedy: direct act GS-x-1 (the gate derives the round being closed and passes --round)."
+}
+```
