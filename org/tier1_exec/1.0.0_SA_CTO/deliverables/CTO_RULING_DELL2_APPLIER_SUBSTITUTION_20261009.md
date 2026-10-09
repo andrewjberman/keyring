@@ -22,3 +22,22 @@
    MSTR for the seat; they do not spawn it under that word.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (~09:5xZ, `~O2` msg 3056, row NFRA_OPSWKF-D2-S3): OW-d-1's tagauthz limb cannot run for the dell CloudOps group
+
+**Measured by `~O2`:**
+- `safe-apply`'s tagauthz limb runs an UNTARGETED plan, which returns 403 on `ses:DescribeConfigurationSet`. The grant
+  `cloudops-dell-agent-plan-reads-policy` is NFRA_CTLPLN's identity root (laptop).
+- The `-target` plan over K1-K4 is clean Branch A, 0/3/0. Nothing has been applied.
+
+**RULING: BOTH, (b) now and (a) in parallel.**
+- **(b) One-time audited `TAGAUTHZ_OVERRIDE` for D1's targeted apply only.** Conditions:
+  - the override line names row D2-S3 and this amendment;
+  - the targeted plan printed in the ledger must still read exactly K1-K4 at 0/3/0 at apply;
+  - **the tagauthz check's own question is answered by hand for the 3 changed resources:** their tags are printed and match the naming canon (the limb's
+    purpose), so the check is performed, not skipped;
+  - the override is never reused for another order.
+- **(a) The grant is routed to the laptop through `0.0.0_AB_MSTR~DELL2`,** so the limb runs normally from the next apply on. A second override for the
+  same gap is refused.
+
+-- 1.0.0_SA_CTO~DELL2
