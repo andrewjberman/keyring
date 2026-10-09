@@ -23509,3 +23509,169 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S31 -- a signed release's built bytes go stale for every LATER pair on the same host: Y77 would revert IB-pr-390 on irpt-ycharts-generate
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S31",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-09T08:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "TO-APPLY-Y77 (release 6 custody, irpt-ycharts-generate) is signed against built V6EiBNcJ and live_before 5FRkux2o; IB-pr-390 landed on that host at 07:49Z (live ZA0QJ5Wt, plus the declared AWSSDKPandas layer), so applying Y77's signed bytes would silently revert ALL-never-admits and the profile narrowing on that host.",
+  "spec_asserts": "A never-widen pair binds a blast radius whose rollback and before-state are the live bytes at apply; a later release never moves a host backwards past an earlier signed release.",
+  "world_is": "Measured 08:0xZ: get-function-configuration irpt-ycharts-generate CodeSha256 ZA0QJ5Wt (07:49:20Z), layers irpt-common:5 + AWSSDKPandas-Python312:16 (declared at infra/aws/terraform/investor-reporting/ycharts/generate.tf:398); IB-pr-395 ledger CLOSED @1af3b71371. Y77 step 0 expects 5FRkux2o.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live CodeSha256 ZA0QJ5Wt equals IB-pr-390 packet's built value for irpt-ycharts-generate",
+      "commit 1af3b71371 (0.7.0_AE_CloudOps~IB2): IB-pr-390 LANDED on 6 of 8 hosts, ledger CLOSED",
+      "2.0.0_SA_COO~Y2 msg 2832: Y77 step 0 expects live 5FRkux2o; signed build V6EiBNcJ"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_BCKEND-D2-S32 -- the census pin carries the PRE-AMENDMENT packet and an 8-host replay, so "run the replay scripts at the pin" grades the wrong arm set and passes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S32",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "At the census pin the packet is blob a88bb3e04c83 (8 hosts, no ALL arm); the signed blob be15b61188 and its 6-host scripts land after the pin, so the pin's own replay passes while grading a different claim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 71e9aacf27:...~201/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-390.md = a88bb3e04c83, HEAD = be15b61188 (the blob both halves name)",
+      "run_replay.py FUNCS at the pin lists 8 hosts incl. irpt-holdings and irpt-narrative; at HEAD it lists the 6 released hosts",
+      "first run, from the pin's scripts: 9 arms, '22 of 22 routes', NO AMENDMENT 1 ALL arm, and lookup resolved from '6 of 8 built trees' incl. irpt-holdings -- rc 0, i.e. it PASSED while describing the pre-amendment release",
+      "re-run from the HEAD scripts against the same uploaded zips: 10 arms, 4 negative controls, '21 of 21 routes', output BYTE-IDENTICAL to the packet's IB97-3_release_replay.json (sha256 PupboWdRBV9UqkXJ59lqPdYmq+4yFaTXcqM8eHup3Zw= both sides)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-395 step 1: re-run the packet's replay, the scripts being under deliverables/0.9.0_WK_IRPT_BCKEND~201/replay/, and build/apply from a clean tree at the census pin.",
+  "world_is": "Those two instructions point at two different script versions. The census pin predates AMENDMENT 1, so a worktree cut at the pin carries the 8-host pre-amendment replay AND the pre-amendment packet; running them returns rc 0 with every arm identical-or-expected-diff, so nothing in the output announces that the ALL-never-admits arm -- the amendment the CTO's half is conditioned on -- was never exercised. A rc-and-verdict reader cannot tell the two runs apart. The build is unaffected: the six served.py source-map rows are byte-identical at the pin and at HEAD and the six built sha256 equal the packet table. Disarmed for this order by driving the replay from the amendment scripts; the general fix is for a packet to pin the replay scripts by blob, so the applier compares script identity by CONTENT rather than by path (CLAUDE.md 22a).",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S33 -- a signed CODE-ONLY apply on a SHARED Terraform root carries other releases' pending lines, and a 0-add/1-change/0-destroy count cannot see a same-resource attribute
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S33",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two of the six roots hold other cells' unapplied resources, and the ycharts plan also carried release 6's layer line on the SAME resource -- which a resource-count guard reads as a clean 0/1/0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "untargeted plan at the census pin: reporting-read, directory, performance, ops each 0 add / 1 change / 0 destroy; export 6 to add (commentary-composition reader: lambda, log group, 2 roles/policies, invoke policy -- cell AR-t-13 / IB-pr-397); ycharts 1 to add (aws_iam_role_policy.generate_custody_factory)",
+      "targeted plan (-target=module.<name>.aws_lambda_function.this) made all six 0 add / 1 change / 0 destroy",
+      "the SAVED ycharts plan body carried '~ layers = [ \"...irpt-common:5\", + \"...AWSSDKPandas-Python312:16\" ]' INSIDE that same 1 change -- generate.tf:398, added @0ee21c796f by IB-yr-761 (row D2-S19), release 6's declared line",
+      "audit of all 6 saved plan bodies (denominator printed): exactly ONE attribute outside last_modified + s3_object_version + source_code_hash, in exactly one root -- layers on ycharts",
+      "CloudTrail via MSTR msg 2839 / COO msg 2852 reported the attach at 07:49:10Z; live irpt-ycharts-generate reads ZA0QJ5Wt with irpt-common:5 + AWSSDKPandas:16"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-395 BOUNDS: the only served change is the six functions' code, with no IAM, route, schedule, env or other function change; refusal clause: a plan touching anything else is a STOP.",
+  "world_is": "Both halves describe a code-only act, but the deploy path is a SHARED root whose config also holds other releases' pending changes, so the signed act cannot be applied by a whole-root apply without exceeding its own sign-off. Targeting held the ADDS out of all six applies. It did NOT hold out a same-resource attribute: the applier's guard graded the resource COUNT (0/1/0) and grepped only s3_object_version and source_code_hash, and a '~ layers' line is neither an added resource nor a grepped key, so it passed a guard that was never looking at it -- the plan text DID print it. The layer is ruled KEEP by 1.0.0_SA_CTO~DELL2 (half AMENDMENT 1 @29a9a2c684, msg 2862: AWS-managed, read-only, no IAM/route/data, and release 6 re-adds it; Y77 re-baselines to live with it present, row D2-S31) and the CTO records no row against the applier. Mechanism now in force for IB-pr-397/-398/-399 (COO msg 2863): on any shared root print the plan LINE BY LINE against the signed half's blast radius before applying, STOP with a row and the plan text on any line belonging to another release, and record the printed comparison in the order's after-reads file. The residual hazard is that the export root's 6 adds and the ycharts root's 1 add are still pending for the next apply on either root.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S34 -- AMENDMENT 1 asks for "the four on blob a8eb91e7d4c5"; three of the six released hosts carry it, and no census holds four
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S34",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The count in the amendment is four; the measured answer is three, in the released census and in the pre-amendment census alike.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 item 2: 'including the four on blob a8eb91e7d4c5'",
+      "released 6-host census (packet blob be15b61188): served.py live_sha256_prefix a8eb91e7d4c5 on irpt-49f-reporting-read-lambda, irpt-directory-search, irpt-export-render = 3",
+      "pre-amendment census at the pin, denominator printed: 7 artifacts scanned, 3 on a8eb91e7d4c5 -- the same three",
+      "measured from the RETAINED S3 rollback versions, before -> after: a8eb91e7d4c5 -> 87d9ecc49747 (x3), 455cd77ea46e -> 87d9ecc49747, 4a9d374c9806 -> 87d9ecc49747, 570f79caa35d -> 87d9ecc49747"
+    ]
+  },
+  "spec_asserts": "The after-reads census names each function's served.py blob BEFORE and AFTER, including the four on blob a8eb91e7d4c5.",
+  "world_is": "Three hosts carry that blob, not four, under either census; the fourth member the sentence implies does not exist in the released set. The requirement is met by measurement rather than by the count -- all six hosts' before and after blobs are recorded in IB100-1_authz_release_after_reads.json, each before value measured from the retained rollback artifact rather than inherited from the packet. Harmless here because the deliverable is the per-host census, not the count; recorded because a count asserted beside a denominator that does not hold it is the CLAUDE.md rule-24 tell.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S35 -- disposition of D2-S31: disarmed by the release-6b re-cut of TO-APPLY-Y77
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S35",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T08:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarmed for release 6b: the CTO half (msg 2888) measured served.py at pin 66207bce7d equal to 74a62fb46c, so 6b reverts nothing of IB-pr-390; TO-APPLY-Y77 AMENDMENT 2 applies 6b (built tdpterTM, rollback ZA0QJ5Wt) and never V6EiBNcJ.",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S31 (Y77 signed against V6EiBNcJ / live_before 5FRkux2o after IB-pr-390 landed): disarmed by the release-6b re-cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/release6_custody/NEVER_WIDEN_PAIR_RELEASE6B_CUSTODY.md @ba6fcb1c14",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_RELEASE6B_CUSTODY_CTO_HALF.md (msg 2888)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_BCKEND.TO-APPLY-Y77.irpt-ycharts-generate-release6-custody.md AMENDMENT 2"
+    ]
+  },
+  "spec_asserts": "Y77 applies a signed build that carries the live served.py.",
+  "world_is": "After the re-cut it does: 6b at 66207bce7d carries 390's served.py byte-equal; V6EiBNcJ is never applied."
+}
+```
+
+## IRPT_BCKEND-D2-W264-S1 -- irpt-narrative: opal-capital binding held, but the built boundary hands the Enforcer an Opal roster that live does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W264-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~264",
+  "surfaced_at": "2026-10-09T08:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Even with the opal-capital binding held, the built irpt-narrative hands the Enforcer an Opal roster of the caller's email for every internal caller (class OPAL_GLOBAL in opal-capital) where live hands none; the no_row arm is identical on bound firm and code only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB102-3_release_replay.json arm no_row_internal_selects_other_firm: built opal-capital/UNEXPECTED roster ['ops@opalinvest.com'], live opal-capital/UNEXPECTED roster null (same bound firm and code)",
+      "served.py Entry.handle at 74a62fb46c: principals = frozenset([trusted['x-user-email']]) when verified_internal_subject(headers) is not None, else self.opal_principal_ids; _scope/resolve.py classify_principal: an email on the roster is OPAL_GLOBAL (branch 2), before FIRM_OPERATIONS/FIRM_ADVISOR/UNKNOWN",
+      "the same roster delta is in IB-pr-394's own replay data (0.9.0_WK_IRPT_BCKEND~262/IB99-1_release_replay.json routes[irpt-narrative].noRow: built roster ['ops@opalinvest.com'], live roster null); narrative entry.NarrativeEntry at cabad9008c drops only the selection, by order, and does not touch the roster"
+    ]
+  },
+  "spec_asserts": "The order: a no-row internal caller stays bound to opal-capital as live binds it; the arm no_row_internal_selects_other_firm reads IDENTICAL live versus built.",
+  "world_is": "The arm is identical on the firm the boundary binds to (opal-capital) and on the public code. It is NOT identical on the Opal roster handed to enforcer_for: live (served.py from before IB-pr-385) hands none, so the Enforcer classifies an internal caller by its headers; the built boundary hands the caller's own email, so the same caller is classified OPAL_GLOBAL inside opal-capital. Whether that changes the accounts a narrative request may name was not measured here (the order binds the firm only; the shared served.py is outside the grant). The packet states the delta beside the arm and the verdict is defined on firm plus code, with the roster recorded. Disarmed when the signer reads the roster line of the packet and signs, or the CTO rules the roster for narrative.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

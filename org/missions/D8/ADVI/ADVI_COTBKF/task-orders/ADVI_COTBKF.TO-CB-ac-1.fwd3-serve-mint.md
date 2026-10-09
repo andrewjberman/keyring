@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -38,6 +38,8 @@ served output. Round 27 withdrew this act (CB-aa-4) because split, distribution 
 4. Run `--apply`, then `--verify`. Close the ledger with the read-back.
 
 **The pair is complete:** CTO half `deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R27_FWD3_SERVE_CTO_HALF.md` with AMENDMENT 1 @478334e021 (conditions met: the CVO graded the continuity rule a FIX @f56ada849d; CTO ADDENDUM 4, msg 2789), and COO half `deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R27_FWD3_SERVE_COO_HALF.md` GIVEN (section 3). The build to apply carries `method_r28` with exactly 4 account-months ABSENT (B3S728504, B3S728506; 2023-05, 2023-06): your `--dry-run` must print the same 4 and `absent_months=4`, or stop.
+
+**AMENDMENT 1 (issuer, 2026-10-09 ~08:0xZ; MSTR msg 2864).** Your ledger files `org/critical_paths/.open_deploys/advi-cotbkf-fwd3-serve-mint-cb-ac-1-20261009.json` and `org/critical_paths/change_management/20261009T0743Z_advi-cotbkf-fwd3-serve-mint-cb-ac-1-20261009_deploy_completion.md` have sat STAGED and uncommitted in the shared index since 07:43Z, which makes every other seat's safe-merge refuse. COMMIT THEM NOW, as OPEN, with `bash .tools/safe-commit.sh --author "0.7.0_AE_CloudOps~CB2 <0.7.0_AE_CloudOps~CB2@opal.agent>" -F <msgfile> -- <the two paths>`, and commit each ledger leg the moment it closes; never leave a ledger file staged between steps (NEVER-2: opened at the start, committed as it moves).
 
 ### ACCEPTANCE
 
