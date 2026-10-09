@@ -142,8 +142,9 @@ Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_000xZ_K
 
 `/next-calls <CODE> --drive` is the same assessment, scoped to the project, with three differences:
 1. **Nobody answers in the session.** Every genuinely open call is written to the box's queue the same tick (`python
-   .tools/open-calls.py add --project <CODE> --subject "<the card's top line> REC <rec>" --asked-by <serial> --source
-   <file holding the call>`); the 10-minute scan makes the box CTO rule it. A call already on the queue is not re-added.
+   .tools/open-calls.py add --project <CODE> --subject "<the card's top line>" --asked-by <serial> --source
+   <committed file holding the call> --context "<what created it, what it gates>" --rec "<the card's REC>"`); the
+   10-minute scan makes the box CTO rule it. A call already on the queue is not re-added.
 2. **The seat proceeds with the SEQUENCE**: its `NOW` and `WHILE WAITING` lines, in order, through the drive's own limbs
    (a COO under FULL cuts and spawns, never builds; under FAST it builds). A gated option waits on its queued call only.
 3. **It repeats** after each act until an assessment returns zero FREE options. Only then is the tick a true NO-OP, and

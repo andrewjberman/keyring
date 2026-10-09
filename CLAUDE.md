@@ -194,7 +194,7 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
     and every resource name is `name()` output; a builder REFUSAL is a missing registry row to add
     (`infra/logic/registry/`), never a hand-typed workaround; a deliberate departure is an R20 register entry Andrew
     acknowledges. The L4 PRD cites builder output for every new address and name, and the CTO refuses a PRD that types
-    one; the commit-time naming gate grades names (WARN today, LGIC_ENFORCE). Non-application: existing pipelines --
+    one; the commit-time naming gate REFUSES names today (LGIC_ENFORCE). Non-application: existing pipelines --
     each reaches conformance through its own migration project (R19), never as a rider.
 - **NEVER** trust a producer's self-report or rc=0 -- verify against the SERVED artifact / live state.
 
