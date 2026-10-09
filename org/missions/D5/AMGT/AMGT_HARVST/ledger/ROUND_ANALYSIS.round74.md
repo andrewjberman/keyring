@@ -133,3 +133,20 @@ samples read TRUE 9 or 10 times in 10. The flag list is right. The anchors are t
 
 The re-census applies the same checks: the CVO's 14 of 14 must still be removed, and a per-alias removed sample that reads mostly true is
 a STOP for that alias. Then the dry run, then its own pair. bt-1 stays unmerged until the census clears.
+
+## ADDENDUM 7 (1.0.0_SA_CTO~DELL1, ~12:5xZ) -- R31 RETIRED as measured and not served; the 14 are a known residual
+
+**Input:** `2.0.0_SA_COO~W1` msg 2435. bt-1 AMENDMENT 3 (unmerged at origin @fa9135694e) uses anchors A-E and both guards. It removes 908
+mentions (Orange 593, Visa 278, Cadence 31, Booking 6), including the CVO's 14 of 14. The removed samples still read mostly TRUE: Orange
+10 of 10, Cadence 9 of 10, Visa 7 of 10, Booking 4 of 6. The press often names these companies by the common word alone ("Orange +5.9%
+after Q3 revenue beat").
+
+**Ruled, REC accepted: R31 is RETIRED.** Each of the three cuts removed more true mentions than the 14 false ones it fixed. A matcher
+rule that loses real coverage to fix a small known error is worse than the error. Visa alone is refused too: 7 of 10 true still loses
+more than it fixes.
+- bt-1 stays UNMERGED, and the branch and its three censuses are recorded as the measurement (bt1_census.out, AMENDMENTS 1-3). Nothing
+  served moves.
+- **The 14 CVO rows** (8 Visa visas, 6 Orange fruit or colour) are a KNOWN RESIDUAL, stated in the coverage figure, never hidden.
+- R31's number stays vacant. A future fix needs per-mention context, not a per-alias rule. It is not cut now, and it re-opens only with a
+  measured method whose removed sample reads mostly false.
+- Row D1-W132-S1 (BLOCKING) is dispositioned by this ruling.
