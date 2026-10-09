@@ -5763,6 +5763,73 @@ carries none.
     "spec_asserts": "MX-h-3 put YCharts in the index; FWD-8 says long history and market data come back on demand through the index.",
     "world_is": "The time-series path is refused upstream (403) while the session is live, so history from YCharts is not on demand. The snapshot path answers but loses the symbol key, so a multi-symbol call cannot be attributed per symbol. One symbol was tested per tool; other metrics and symbols were not.",
     "notes": "INERT: no served artifact reads these tools. It arms the moment discover routes a history or snapshot question to them; the route would return nothing, or a value with no symbol. Input to the PRD v0.7 re-cut (CTO~O msg 32333, CRO~Z midstream brief); not a mid-round cell. Denominator: 1 call per tool."
-  }
+  },
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPINDEX-Z-W28-S1",
+  "one_line": "Two existing tests in tests/test_opal_discover.py asserted the defect MX-d-7 removes (latest_value claim held); the order says every existing test still passes, so both assertions were rewritten to the contract-4 value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_opal_discover.py@46ef2cbb70 line 98-99: latest_value == 2026-08-10 claim held (test_discover_names_catalogued_dataset).",
+      "tests/test_opal_discover.py@46ef2cbb70 line 322: latest_value claim held value 2026-01-02 (test_served_written_at_is_measured_from_one_head).",
+      "Both now inject get= and assert measured with the served value; the prose date is asserted as freshness.held_at_certification. 23 passed in the file."
+    ]
+  },
+  "spec_asserts": "Order section 1 item 5: every existing test in tests/test_opal_discover.py still passes.",
+  "world_is": "Two of them asserted claim held, which PRD v0.7 contract 4 forbids, so they could not pass unchanged beside the act. Both are in the order's own paths. Added an autouse fixture so no test makes a live S3 read unless it injects get=.",
+  "notes": "INERT: the file is in the order paths and the change is recorded here. Denominator: 2 assertions changed, 21 tests untouched."
+},
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPINDEX-Z-W28-S2",
+  "one_line": "The order is silent on rows with no served artifact: silver_datasets rows and non-servable artifact rows also stated a held latest_value; they now read absent with an error_class and the prose date moves to held_at_certification.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integration.py@46ef2cbb70 _silver_answer and _answer_row both called _latest_value(row) (held prose date) for rows that are never read.",
+      "Live run after the change: 'model portfolio timeseries' returns 10 matches; the 3 non-servable rows read latest_value absent/not_servable_to_principal; silver rows read absent/silver_row_has_no_served_artifact."
+    ]
+  },
+  "spec_asserts": "PRD v0.7 contract 4: a held certification value is never shown as the as-of; order item 2 names the failed-read, pattern-key and unresolved-path cases only.",
+  "world_is": "Applying contract 4 to every row leaves no held latest_value anywhere. A caller that read latest_value of a silver or non-servable row as a date now reads None; no consumer in this worktree does (test file and routing harness read only servable rows).",
+  "notes": "INERT: judged under contract 4 as written. If the issuer wants a silver row to keep its held date in latest_value, that is a one-line reversal in _silver_answer. Latency measured live: 1 match 0.75s, 10 matches 1.41s, 8 matches 0.66s."
+},
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+  "surfaced_at": "2026-10-09T06:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "id": "NFRA_MCPINDEX-Z-W28-S3",
+  "one_line": "Every commit that stages a path under org/missions/D*/ is REFUSED on this worktree's base 46ef2cbb70 by missions-tree-check: org/projects/ADVI_BILLING.json index dep_stage PRD against tree DECOMP; the fix is outside the order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit rc=1 twice (proof + status flip + rows): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/ADVI_BILLING.json: dep_stage: index=PRD tree=DECOMP'.",
+      "python .tools/missions-tree-index.py check at HEAD 6584b623fa prints the same single violation (1 of 49 tree projects).",
+      "The fix exists as 66844d4f96 / ac148d7eb9 on box/sitez ('regenerate org/projects/ADVI_BILLING.json ... tree moved at b3c6b8ae1f'); neither is an ancestor of this branch (git branch --contains ac148d7eb9 lists box/sitez, not wk-NFRA_MCPINDEX-28).",
+      "The code commit 6584b623fa (two files outside org/missions) was accepted by the same safe-commit: the check fires only on a staged org/missions/D*/ or org/projects path."
+    ]
+  },
+  "spec_asserts": "Order section 5: write the proof instance, validate it, then flip complete and commit instance, deliverables and flip together.",
+  "world_is": "The proof (valid, rc=0), the rows and the complete flip sit in this worktree UNCOMMITTED because org/projects/ADVI_BILLING.json is not in the order's paths and a bypass is forbidden by the hook's own remedy text. Code is committed at 6584b623fa.",
+  "notes": "ARMED until the base carries the index fix: no worker on a base before 66844d4f96 can land a proof. disarm_owner 2.0.0_SA_COO~MI: carry the ADVI_BILLING index fix to this base (or have the integrator commit the three staged-ready missions files). Denominator: 1 violation of 49 tree projects."
+}
 ]
 ```
