@@ -58,6 +58,17 @@ serves a metadata path (asked via MSTR), the CTO ruled: fetch content VTT only; 
    `test_silver_wallclock_null_with_absent_basis`; `test_no_wallclock_derived_from_created` (a transcript whose createdDateTime is set still lands
    NULL wall-clock). Update `test_teams_parse_silver.py` only where it pins `COLUMNS`. Keep the whole tests directory green.
 
+### AMENDMENT 2 (issuer, 2026-10-09 ~10:5xZ) -- disarms ARMED row NFRA_TRNSPT-D2-W2-S7
+
+Adding `wallclock_basis` to `parse_silver.COLUMNS` makes `research_fold.py` refuse every row (`research_fold.py:95-96` requires exactly
+`COLUMNS + held_out`), turning 10 tests red. Your AMENDMENT 1 build (@66a76c26cb) stays.
+
+7. `data/transcripts/scripts/teams/research_fold.py`: every folded row carries `wallclock_basis`, set from the row itself and NEVER derived:
+   `"observed (metadata VTT)"` when the structured row already carries a non-null `start_utc`, else `"absent (metadata path not served)"`.
+   Nothing else in the fold changes (the wipe, held_out, the store schema built from `parse_silver._schema()`).
+8. Update ONLY the assertions in `test_research_fold.py`, `test_research_store.py` and `test_securities_allowlist.py` that pin the old column set.
+   The whole tests directory (excluding `test_eod_voice.py`) passes, and both criteria stay OK.
+
 ### ACCEPTANCE
 
 <criterion id="TR20-t20-AC1" cell_refs="TR-t-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R20_CHECKS/r20_checks.py t20</invocation><expect>R20-T20-OK</expect></criterion>
@@ -85,6 +96,10 @@ data/transcripts/scripts/teams/pull.py
 data/transcripts/scripts/teams/parse_silver.py
 data/transcripts/scripts/tests/test_wallclock_absent.py
 data/transcripts/scripts/tests/test_teams_parse_silver.py
+data/transcripts/scripts/teams/research_fold.py
+data/transcripts/scripts/tests/test_research_fold.py
+data/transcripts/scripts/tests/test_research_store.py
+data/transcripts/scripts/tests/test_securities_allowlist.py
 </paths>
 
 The block is your WRITE grant (your deliverables folder is granted by the tree convention). Everything else named here you READ.
