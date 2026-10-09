@@ -259,6 +259,11 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
 **Egress is open on every channel, except Bloomberg.** Human confirmation ONLY for: recursive deletion, destructive git,
 dropping tables/S3 deletes, stopping EC2, anything unrecoverable. Deleting a ref already contained in its trunk loses no
 commit and is not destructive git (`ANDREW_DIRECT_20261009_035xZ_GOVERN_ADJUDICATES_YES_TO_BOTH.md`, tier0_exec).
+- **PUSHES NEED NO WORD FROM ANDREW -- agents push at will** (workspace `box/*` and `CLOUD`; portal, `opal_ai` and `mcportal`
+  `DEV` and `PROD`). ONE exception: a portal `PROD` push that changes a CLIENT-FACING page (one a partner-firm or client login
+  can open) waits on his word; an Opal-internal page (staff-only, e.g. Portfolio Management, Security Analysis) does not. Unsure =
+  client-facing; the push receipt names the pages changed and their class. Who may push where stays with
+  `.tools/hooks/never-rules-gate.sh`. Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_044xZ_PUSHES_NEED_NO_APPROVAL_EXCEPT_CLIENT_FACING_PROD.md`.
 - **Bloomberg pulls go only through their queue; other vendor APIs need no per-use word.** Per-user entitlement
   scoping waits for a second MCP user. Order: `ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_*` (tier0_exec).
 
@@ -313,10 +318,10 @@ is current-day-only; never mint `data/bloomberg/`).
   resolve bun via profile, don't bake a path.
 - **A portal candidate touching NO product file lands on DEV by its author** as a fast-forward with a one-line
   receipt (Andrew-direct 2026-09-24); the CTO reviews only candidates that touch a product file; VALGATE runs on
-  every push; `0.0.0_AB_MSTR` pushes trunks on Andrew's word as before, except that a CTO-approved DEV fast-forward
-  is landed by the box manager under `/govern` without waiting on Andrew (`ANDREW_DIRECT_20261009_035xZ_*`, tier0_exec).
+  every push; trunks are pushed at will under the push law (Agent Autonomy), a CTO-approved DEV fast-forward landed by
+  the box manager under `/govern` (`ANDREW_DIRECT_20261009_035xZ_*`, tier0_exec); only a PROD push changing a client-facing page waits on Andrew.
 - **Under a live FAST lease, the lease's seat lands product changes on portal DEV itself** (CI running; no CTO go-ahead,
-  no integrator push; DEV only, PROD gated). Mechanism: `.tools/hooks/never-rules-gate.sh` admits a DEV push from a
+  no integrator push; DEV only, PROD by `/prod-deploy` under the push law). Mechanism: `.tools/hooks/never-rules-gate.sh` admits a DEV push from a
   live lease's seat only (`.tools/drive-mode.py`); `/closer-drive` step 5 checks the payload. Order:
   `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md`.
 

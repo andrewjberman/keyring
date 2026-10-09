@@ -28,17 +28,24 @@ if (-not (Test-Path $ajb)) { Log "ERROR: ajb.ps1 not found at $ajb"; return }
 
 $rx = '"\s*([0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)'
 $wt = Get-Command wt.exe -ErrorAction SilentlyContinue
-foreach ($s in $Serials) {
+# An entry is "<serial>" or "<serial>=<TAB>". A COO tab names its project (Andrew-direct 2026-10-09 ~04:3xZ at dell2 and
+# ~04:4xZ at site Z: "uses project name in the powershell tab ... should be a rule across all boxes"), so a COO entry
+# carries "=<PROJECT_CODE>"; Tier-0/1/2 seats keep the full serial. The tab title reaches ajb.ps1 as OPAL_TAB_TITLE.
+foreach ($entry in $Serials) {
+    $s, $tab = $entry -split '=', 2
+    if (-not $tab) { $tab = $s }
+    if ($tab -notmatch '^[A-Za-z0-9_.~-]+$') { Log "ERROR: tab '$tab' for $s has characters outside A-Za-z0-9_.~-; skipped"; continue }
+    if ($tab -eq $s -and $s -match '^2\.[0-9]+\.0_SA_COO') { Log "WARN: COO $s has no =<PROJECT_CODE>; its tab shows the serial" }
     $live = @(Get-CimInstance Win32_Process -Filter "Name='claude.exe'" |
               Where-Object { $_.CommandLine -match $rx -and $matches[1] -eq $s })
     if ($live.Count -gt 0) { Log "SKIP: $s already running (claude.exe PID $($live[0].ProcessId))"; continue }
-    Log "launching $s (headless)"
+    Log "launching $s (headless, tab $tab)"
     # Single-quoted literals so a space-in-root path survives.
-    $inner = "`$env:OPAL_WS_ROOT='$root'; . '$ajb'; ajb -Headless $s"
+    $inner = "`$env:OPAL_WS_ROOT='$root'; `$env:OPAL_TAB_TITLE='$tab'; . '$ajb'; ajb -Headless $s"
     # wt treats ';' as its action separator: escape each one so the whole statement reaches powershell.exe.
     $innerForWt = $inner -replace ';', '\;'
     if ($wt) {
-        Start-Process wt.exe -ArgumentList @('new-tab', '--title', $s, 'powershell.exe', '-NoProfile', '-NoExit', '-Command', $innerForWt)
+        Start-Process wt.exe -ArgumentList @('new-tab', '--title', $tab, 'powershell.exe', '-NoProfile', '-NoExit', '-Command', $innerForWt)
     } else {
         Start-Process powershell.exe -ArgumentList @('-NoProfile', '-NoExit', '-Command', $inner)
     }

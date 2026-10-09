@@ -172,6 +172,24 @@ def _index_paths(root: str):
         return None
 
 
+def _read_doc(root: str, path: str, rel: str) -> str:
+    """A document's text: the working tree when the file is there, else the INDEX blob.
+
+    The path list is the index (`_index_paths`). Under box-sync the index is the MERGED index
+    (GIT_INDEX_FILE), which can hold a file the merge brings in before the working tree has it, so a
+    bare open() raised FileNotFoundError and fail-closed the whole pass (0.0.0_AB_MSTR msg 107739).
+    `git cat-file -p :<path>` reads the staged blob and honors GIT_INDEX_FILE; a read that fails there
+    too still raises, so an unreadable document is never graded as empty."""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            return fh.read()
+    p = subprocess.run(["git", "cat-file", "-p", ":" + rel], cwd=root, capture_output=True)
+    if p.returncode != 0:
+        raise FileNotFoundError("%s: absent on disk and not in the index (%s)"
+                                % (rel, p.stderr.decode("utf-8", "replace").strip()))
+    return p.stdout.decode("utf-8", "replace")
+
+
 def _tuple(doc: str, row: dict, err) -> list:
     ptr = "/" + "/".join(str(p) for p in err.path) if err.path else "/"
     digest = hashlib.sha256(err.message.encode("utf-8")).hexdigest()[:12]
@@ -194,8 +212,7 @@ def sweep(root: str):
     for path in docs:
         stats["documents"] += 1
         rel = os.path.relpath(path, root).replace("\\", "/")
-        with open(path, encoding="utf-8", errors="replace") as fh:
-            rows, bad = _rows(fh.read(), raw_json=path.lower().endswith(".json"))
+        rows, bad = _rows(_read_doc(root, path, rel), raw_json=path.lower().endswith(".json"))
         stats["malformed_blocks"] += bad
         validator = validators[_kind(path)]
         for row in rows:
