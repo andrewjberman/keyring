@@ -24167,3 +24167,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "True again at HEAD."
 }
 ```
+
+## IRPT_BCKEND-D2-W270-S1 -- AC3 does not follow $ref to the persist_inputs definition
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W270-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~270",
+  "surfaced_at": "2026-10-09T12:05:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB108-1-AC3 reads the response schema file's own properties and does not follow $ref, but persist_inputs lives in data (OwnedAnalysisRequest); the response schema also carries a data-level properties sibling pointing at it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p108_cells.py props(): 'local refs are not followed'; with only OwnedAnalysisRequest.schema.json edited, IB108-1-AC3 printed 'FAIL: response schema declares no persist_inputs property'",
+      "fix: analysis-request-read.response.schema.json data gains properties.persist_inputs $ref OwnedAnalysisRequest#/properties/persist_inputs; AC3 then PASS"
+    ]
+  },
+  "spec_asserts": "Declaring persist_inputs in the response schema or the schema it $refs satisfies AC3.",
+  "world_is": "The check reads only the response schema file; the declaration was added there as a $ref to the one definition (no duplicate constraint)."
+}
+```
