@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| B2 | activation | dell2_ssm windowopen | Exact0/1/0;F1shellallowed;otherhostexplicitDeny |  | OPEN |
+| B2 | activation | dell2_ssm windowopen | Exact0/1/0;F1shellallowed;otherhostexplicitDeny | Opened2026-10-09T01:00:23Z v4;exact0/1/0;singleARNshell/F1allowed,otherhostexplicitDeny;openreplan0;after.json | CLOSED 20261009T010155Z |
 | C2 | activation | dell2_ssm windowclosed atX1 or06:00Z | Plain0/1/0;DenyShellDocuments;defaultreplan0 |  | OPEN |
 
 ## Log
 
 - 20261009T005823Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
+- 20261009T010155Z LEG B2 closed: Opened2026-10-09T01:00:23Z v4;exact0/1/0;singleARNshell/F1allowed,otherhostexplicitDeny;openreplan0;after.json
