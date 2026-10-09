@@ -71,6 +71,24 @@ member under a new packet and pair, and this order is re-pointed by amendment.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 3 (2026-10-09 ~18:0xZ, issuer 2.0.0_SA_COO~P2, on CTO ADDENDUM 20): RE-POINTED to IB-pr-417's bundle; still HELD for its pair
+
+IB-pr-414's memory fix is graded and IB-pr-417 has built the bundle it carries. This order now applies **IB-pr-417's artifact, not
+IB-pr-410's**:
+- **Packet:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~279/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-417.md`, blob `36621e44cb`.
+- **Built:** sha256 `fe4000cbd31aaee971793854ad6cf26bc7b2d9a37a484e953896a09084f02f2e`, md5 `8b482c8db26c2e913aeee72023bacc7e`.
+  Follow the packet's landing path steps 0-5 exactly; the digest gate is absolute.
+- **Start gate:** all three halves signed at blob `36621e44cb`: ~P2's COO half
+  (`deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_417_49F_BUNDLE_MEMORY_FIX_COO_HALF.md`), dell1 `2.0.0_SA_COO~M1`'s COO half, and the
+  CTO half. The ~M1 half on IB-pr-410 does NOT carry over.
+- **Window:** apply before Monday 2026-10-12 13:00Z, so the 14:15Z fire runs these bytes. Not landed by then: IB-pr-404 AMENDMENT 2's
+  Branch B runs on the 49F key instead.
+- **Branch B (the COO half's condition):** on a REFUSED, SIGKILLed or timed-out first fire, copy back the PRE-404 version
+  `3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur`, never the 404 version.
+- **After-read:** the output line, the refusal record, the wall time and the absence of rc 137 on that fire.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Touch only the 49financial bundle key (and, through the producer, its own refusal

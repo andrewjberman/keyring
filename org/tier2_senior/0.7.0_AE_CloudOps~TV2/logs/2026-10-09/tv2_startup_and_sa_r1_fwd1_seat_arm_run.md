@@ -206,3 +206,87 @@ judged unnecessary, then for two precise schema violations (`controls` admits on
 under the BUILD branch, and a non-PASS `status` requires `status_reason`). I folded both negative controls
 into `mutant` rather than setting `genre: DEPLOY` to unlock arbitrary control names, which would have been
 gaming the schema to pass a gate.
+
+---
+
+# Delta: SA-r-1b runs 3 and 4 -- the FWD-1 journey finally ran
+
+**archetype:** MIXED
+
+Order @`68642d02e9` AMENDMENT 4 (watchlist NOT a STOP by code read; leak = a differing off-list payload OR
+code that reads the selector). GO msg 3756. Ledger opened BEFORE run 3, as the issuer required after the
+run-2 lapse. Records @`66bfdf5c2e`. Order flipped `complete`.
+
+## What happened
+
+**The census passed on both attempts.** 82 of 91 live `/api/scoped` routes armed, 9 data-refresh skipped,
+live denominator 119 against the source census's 117. Zero off-list admits; zero leaks on limb 1 and zero
+on limb 2 with zero UNKNOWN. AMENDMENT 1's CREATE arms reached the firm clamp and both off-list arms were
+refused 400 with the body NAMING the firm -- the thing SA-r-1's attachment-less arm could not establish.
+
+Limb 2 is carried as a verified code-read TABLE rather than a source-dir walk, because the walk
+**understates**: `irpt-holdings` counts 0 occurrences of the selector in its own dir yet refuses off-list
+targets through the shared `_authz` boundary bundled in from outside it. A walk would have cleared a route
+that does read the selector.
+
+**Run 4 ran the whole journey:** (a) 200 NORMALIZED on poll 1, (b) 201 `TCK-20261009-67ab7f27`, (c) 200,
+(d) 200 accepted with the `request_id` echoed, (e) 60 polls, (f) 200, (g) ticket 200 + request read 200
+with `report_ref` present. A direct `ConsistentRead` of `opal-tickets` corroborates it independently.
+
+## Four defects of mine, in order, and what each cost
+
+1. **Run 3's hop (d)** sent 2 fields where `AnalysisSubmissionRequest` requires 8 with
+   `additionalProperties: false` -- refused `MISSING_REQUEST_FIELD`, typed cause visible only in CloudWatch.
+   Cost: one whole run. Fix: read the published contract, rebuild the body, and **validate it offline
+   against the schema before re-running** (run 3 body = 8 violations, run 4 body = valid).
+2. **The upload state oracle** read `status.state` where the result carries `state`, so run 3 polled all 14
+   times although the `input_id` landed on poll 2. Cost: ~60s and a misleading log.
+3. **`save()` keyed every later run to a fixed `run_2` slot**, so run 3 overwrote run 2's trace section.
+   Cost: nothing measurable -- run 2 was recovered from its own commit `e2c7f7b25a`. Fix: next free `run_N`,
+   reusing a run's own slot; both properties verified on a scratch file.
+4. **Hop (e) polled `state`** and read `UNAVAILABLE`, a value absent from the contract's progress enum
+   (`AnalysisRequest.stage`: RECEIVED | PARSED | NEEDS_CORRECTION | READY | SUBMITTING | GENERATED |
+   RELEASED | FAILED). So (e) named itself a failure on its own blindness. Fixed to read `stage`.
+
+The pattern across all four, and across runs 1-2's two false STOPs: **I kept writing oracles without a
+control, and the fix each time was a check that costs nothing** -- validate the body against its schema,
+replay the classifier against recorded data, verify the slot allocator on a scratch file. By run 4 I was
+doing that first, which is why run 4's changes worked on the first attempt.
+
+## What is NOT claimed
+
+The analysis's real `stage` is **UNVERIFIABLE-BY-INSTRUMENT** from this seat: a narrow `begins_with` query
+of `irpt-requests` on this run's own `request_id` was AccessDenied on `kms:Decrypt`, and the order's bounds
+forbid an IAM change. A `report_ref` is a reference, not a report. AC2 is CVO judgment at L9, so the proof
+instance states the evidence and withholds the verdict.
+
+## Rows filed
+
+- **`TCKT_VNEXT-D2-S18`** -- irpt-status 500s on 7 routes after its 15:43:11Z deploy. Repaired in the world
+  by the Branch B rollback, which I measured (limb 3 passed; the 6 clamped routes refuse off-list firms
+  again). Disarming stays its owner's call.
+- **`TCKT_VNEXT-D2-S20`** -- the pair's stated rollback "remove the row" does not narrow the token, it
+  **WIDENS** it: the row is the narrowing, and with it gone `_internal_allowed_firms` returns None, which
+  the boundary reads as no restriction. Each token's reach was wider after its cleanup than during its run;
+  only `exp` bounds it. INERT in fact (the tokens lived only in process memory) but wrong as written.
+
+## Blockers
+
+None at this seat. The order is `complete`; `superseded`/re-cut and the L9 grade are others' calls.
+
+## Compiler Tools (delta)
+
+| tool | invocation | result |
+|---|---|---|
+| `jsonschema` | `AnalysisSubmissionRequest.schema.json` against both bodies | run 3: 8 violations; run 4: valid -- offline, before spending a run |
+| `jsonschema` | `PROOF_OF_SPEC.schema.json` against the instance | caught `determinism.status` needing STABLE, not FIRED-AS-EXPECTED, before the gate did |
+| `apigatewayv2` | `get_apis` + `get_routes` + `get_integrations`, paginated client-side | 119 live vs 117 source; 91 scoped across 14 Lambdas |
+| `dynamodb` | `ConsistentRead` of `opal-tickets`; narrow `begins_with` query of `irpt-requests` | the ticket corroborated; the request record AccessDenied on KMS |
+| `logs filter_log_events` | irpt-ycharts-generate; opal-data-refresh-api both arms | `MISSING_REQUEST_FIELD` as (d)'s typed cause; 3 matches in the control window, 0 in the proof windows |
+| `deploy_ledger.py` | 6 legs for runs 3+4 | CLOSED, opened BEFORE the run |
+
+**What failed, and what it taught.** The ledger's HOP proof was passed to the tool **through the shell** with
+field names in backticks, so bash ran them as command substitution and elided both words -- the proof read
+"it polled  and read UNAVAILABLE". That is the execution-vector trap CLAUDE.md names for commit messages
+(`-F` from a non-shell writer, never `-m` with special characters), and it applies to any proof text handed to
+a tool through a shell. Repaired in the entry with the repair disclosed in its own Log, written by a file.

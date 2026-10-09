@@ -17,6 +17,22 @@
 <owned_cells>RIV-tc-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    STEP 5 UNDER SITE Z'S COMMIT LOCK (your report 1a5097b26a: the amended gates PASS twice -- 1015 passed, 3 skipped on
+    f453cdd6bd and on f231d52983 -- then your HEAD-equality guard refused because box/sitez moved to 69ed90b9cd; about 20
+    seats commit there). Take 0.0.0_AB_MSTR~Z's commit-lock window and, INSIDE it, at the locked HEAD:
+    a. `git merge-tree --write-tree HEAD b0b65368fb` -> a tree id, no conflict;
+    b. in a scratch worktree at the locked HEAD with `git merge --no-ff --no-commit b0b65368fb`: tc-1.AC1, tw-1.AC1,
+       tw-1.AC2 PASS; aw-1.AC1 fails ONLY arm (a) on `a1-chain/8` (AMENDMENT 1); item8_generic_opener_check PASS;
+    c. the suite is NOT re-run when `git diff --stat f231d52983 HEAD -- data/etfs/scripts infra/aws/lambda/etfs-pipeline`
+       prints nothing (your last full pass covers those bytes); if it prints anything, re-run
+       `python -m pytest -q rivalfunds/tests` under the lock (0 failed) or release the lock and report;
+    d. re-read RIVALFUNDS_HISTORY_OWED (unset or empty) and the 1.0.0_SA_CTO~Z half (none, or not refused);
+    e. `git merge --no-ff b0b65368fb` in the vehicle's working tree; confirm `git merge-base --is-ancestor b0b65368fb
+       HEAD` rc 0; release the lock.
+    Never inside 10:55Z-11:15Z; before 2026-10-10 10:45Z. The pair is unchanged. Gate limb: none grades this modification.
+  </amendment>
+
   <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
     STEP 2, THE aw-1.AC1 CHECK, RULED (your report @c8126238a0, STOPPED at step 2 -- correctly). aw-1.AC1's arm (a)
     pins `PROMPT_VERSION == "a1-chain/7"`. RIV-wg-1, merged on dell1 and in box/sitez since your base 99d0d5cea8, moved it

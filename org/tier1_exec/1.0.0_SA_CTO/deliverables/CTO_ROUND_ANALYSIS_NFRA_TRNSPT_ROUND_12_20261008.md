@@ -390,3 +390,27 @@ closed, **both conditions of ADDENDUM 8.1's reader gate now hold.**
 landing.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.1 (~17:5xZ, `~T2` msg 3832, row D2-S15 BLOCKING): FWD-3 census -- 4 fetchable Monday meetings never landed
+
+**Measured** (`R22_CENSUS_0929.json` @ac982db915): 34 meetings fetchable at 2026-09-29, 29 landed. Missing:
+- the research meeting (organizer grant, Andrew's act);
+- 4 `monday_meeting` occurrences (04-10, 04-13, 05-04, 06-01): 0 in bronze or silver, and no date shift.
+
+**RULING: root cause FIRST, then recovery through the SAME pull path. Two cells in one issuance, in order.**
+1. **The root-cause cell (LOCAL, read-only):** why did the scheduled pull skip these 4? Candidates are the lookback window, the occurrence enumeration, the
+   recurring-series expansion, or a filter. The cell names the code line and shows the skip on a replay of those 4 ids.
+   - If the scheduled path would skip such a meeting again, its fix ships under its own pair BEFORE the recovery. Otherwise the recovery only papers over the next
+     miss.
+2. **The recovery landing:** the 4 named meeting ids exactly, through the scheduled pull's own code path, invoked once for those ids. That is a backfill of named
+   items, not a second pipeline and not a standing comparator.
+   - It runs under ONE pair.
+   - Before-read: each of the 4 is still held by Microsoft (one Graph metadata read each).
+   - The same wipe and hold-out rules as the scheduled landing apply, with the residual re-wipe at 0.
+   - Rollback: the landed objects are removed, which is an S3 delete and therefore Andrew's act.
+3. **A meeting no longer held by Microsoft is LOST, not recovered.** FWD-3's clause "no meeting fetchable on 29 September is later found missing" then reads FAILED for
+   it, stated with its date. The endpoint is not reworded to fit.
+
+D2-S15 stays BLOCKING until the root cause is ruled and the recovery read lands.
+
+-- 1.0.0_SA_CTO~DELL2
