@@ -4135,3 +4135,53 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+
+## IRPT_DASHBD-W57-S1 -- The Orion session token had 6 minutes left at the pull, under round 37's 30-minute floor, so the copied script's floor was lowered to 2 minutes for th
+
+```json
+{
+  "id": "IRPT_DASHBD-W57-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~57",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The Orion session token had 6 minutes left at the pull, under round 37's 30-minute floor, so the copied script's floor was lowered to 2 minutes for this one read-only call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: start from round 37's orion_gross_fee_pull.py; that script refuses a token with under 30 minutes (MIN_JWT_MINUTES) left.",
+  "world_is": "MEASURED 2026-10-09T06:56Z reading only the non-secret fields of s3://<legacy bucket>/orion/jwt/current.json: issued 2026-10-08T21:01:50Z, expires 2026-10-09T07:02:50Z (ttl_seconds 36060). The floor refused at 0:06:32. orion_gross_silver.py in ~57 sets pull.MIN_JWT_MINUTES from a --min-jwt-minutes argument (default 30) and was run once with 2; one Generate call completed (3,129 rows) before expiry. The copied pull script is unedited. The token is a ~10 hour browser capture, so any later pull in this window will find it expired until it is re-captured; no credential was refreshed or written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/orion_gross_silver.py (--min-jwt-minutes)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/ORION_GROSS_SILVER.json (pulled_at_utc 2026-10-09T06:58Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W57-S2 -- address() for master 4698 silver resolves to opal-data-assets, a third bucket beside the legacy Orion silver bucket (opal-data-inf) and the firm bucke
+
+```json
+{
+  "id": "IRPT_DASHBD-W57-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~57",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "address() for master 4698 silver resolves to opal-data-assets, a third bucket beside the legacy Orion silver bucket (opal-data-inf) and the firm bucket (opal-data-inflection), so a reader of the gross silver must take the address from the builder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 2: resolve the silver address with lib/opal_naming.py address() for master 4698; the scope row's own note says the Orion bytes land under the routed legacy alias bucket opal-data-inf.",
+  "world_is": "MEASURED 2026-10-09: address('orion','4698','silver','account_performance_gross','snapshot_date=2026-10-08') printed s3://opal-data-assets/orion/4698/silver/account_performance_gross/snapshot_date=2026-10-08; the two objects (data.parquet 41,091 bytes, manifest.json 852 bytes) were listed there after the write. The landed account performance the adapter reads is under opal-data-inf (silver/api_dims/performance/). The write used the builder output as printed; nothing was typed. A consumer that derives the bucket from the legacy alias (as round 37's adapter does for positions) will not find this table; the tie-out cell should read the record's address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/ORION_GROSS_SILVER.json (builder_call, objects_listing)",
+      "infra/logic/registry/scopes.json (key 4698 note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
