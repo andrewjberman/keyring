@@ -11,10 +11,15 @@ THE RULE (one class per linked worktree):
             a `drain-*` worktree.
   ACTIVE    git activity (commit, checkout, or an edited file) within --clean-hours (24 h).
   CLEAN     HEAD is merged into the trunk, nothing modified or untracked, no ignored files beyond build caches,
-            idle >= 24 h  ->  removed by --go (`git worktree remove`, never --force). Nothing is lost: every
-            committed byte is already in the trunk.
-  HELD      anything with unlanded work (modified, untracked, unmerged commits, or non-cache ignored files),
-            idle >= 24 h  ->  NEVER touched. It has an OWNER (the serial that authored its newest unlanded commit;
+            idle >= 24 h  ->  removed by --go (`git worktree remove`). Nothing is lost: every committed byte is
+            already in the trunk.
+  MERGED    HEAD is merged, but the tree holds modified, untracked or non-cache ignored files, idle >= 24 h  ->
+            removed by --go with `git worktree remove --force`; the discarded counts are written to the audit line.
+            Andrew-direct 2026-10-08 ~23:0xZ, VERBATIM: "Force-removing merged worktrees is mandatory, if that is
+            already merged it should be gotten rid of" (record ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_
+            CALLS_ANSWERED.md @86d85ab4a5, 1.0.0_SA_CTO; relayed by 0.0.0_AB_MSTR msg 107453). A LOCKED worktree
+            stays SKIP and an ACTIVE one stays ACTIVE: the force reaches only the merged and idle.
+  HELD      unmerged commits (with or without uncommitted files), idle >= 24 h  ->  NEVER touched. It has an OWNER (the serial that authored its newest unlanded commit;
             else a serial named in its branch or path; else the box's MSTR). The owner is told at its next
             registration (--hook-notice, wired on register_agent) and assesses it while online.
   ESCALATE  HELD, idle >= --held-hours (48 h), and the owner is not live  ->  still never touched; the box's MSTR
@@ -27,7 +32,8 @@ org/mcp/agent-spawn-audit.log. State lives in <git-common-dir>/opal-worktree-gc.
 
 Usage:
   python .tools/worktree_gc.py                 # dry run: the table, nothing changed
-  python .tools/worktree_gc.py --go            # remove CLEAN, prune PRUNABLE, log, write state
+  python .tools/worktree_gc.py --go            # remove CLEAN, force-remove MERGED, prune PRUNABLE, log, write state
+  python .tools/worktree_gc.py --selftest      # temp repo: merged+dirty -> removed, unmerged+dirty -> kept
   python .tools/worktree_gc.py --held-for S    # held/escalated worktrees owned by serial S (reads state; fast)
   python .tools/worktree_gc.py --hook-notice   # PostToolUse(register_agent) hook: stdin JSON -> notice for that serial
 """
@@ -185,6 +191,10 @@ def classify(wt: dict, trunk: str, clean_h: float, held_h: float, live: set[str]
     if merged and not dirty and not ignored:
         row.update({"class": "CLEAN", "reason": f"merged into {holders[0]}, nothing uncommitted, idle {idle_h} h"})
         return row
+    if merged:
+        row.update({"class": "MERGED", "reason": f"merged into {holders[0]}; --force discards {len(dirty)} "
+                    f"uncommitted/untracked and {len(ignored)} ignored non-cache path(s); idle {idle_h} h"})
+        return row
     # HELD: find the owner
     owner = ""
     if not merged:
@@ -236,11 +246,12 @@ def run(args: argparse.Namespace) -> int:
     removed = failed = 0
     if args.go:
         for r in rows:
-            if r["class"] == "CLEAN":
-                res = git(["worktree", "remove", r["path"]], cwd=str(ws_root()))
+            if r["class"] in ("CLEAN", "MERGED"):
+                force = ["--force"] if r["class"] == "MERGED" else []
+                res = git(["worktree", "remove", *force, r["path"]], cwd=str(ws_root()))
                 if res.returncode == 0:
                     removed += 1
-                    audit(f"REMOVED  path={r['path']}  branch={r['branch']}  reason={r['reason']}")
+                    audit(f"REMOVED{'-FORCE' if force else ''}  path={r['path']}  branch={r['branch']}  reason={r['reason']}")
                 else:
                     failed += 1
                     print(f"  WARN: git worktree remove refused {r['path']}: {res.stderr.strip()[:200]}")
@@ -250,7 +261,8 @@ def run(args: argparse.Namespace) -> int:
             state_path().write_text(json.dumps({"written": now, "held": held_out}, indent=1), encoding="utf-8")
         except OSError as exc:
             print(f"WARN: state write failed: {exc}", file=sys.stderr)
-    counts = {c: sum(1 for r in rows if r["class"] == c) for c in ("CLEAN", "HELD", "ESCALATE", "ACTIVE", "SKIP", "PRUNABLE")}
+    counts = {c: sum(1 for r in rows if r["class"] == c)
+              for c in ("CLEAN", "MERGED", "HELD", "ESCALATE", "ACTIVE", "SKIP", "PRUNABLE")}
     print("SUMMARY: " + "  ".join(f"{k}={v}" for k, v in counts.items())
           + (f"  removed={removed} failed={failed}" if args.go else "  (dry run: nothing removed)"))
     return 0
@@ -279,6 +291,46 @@ def hook_notice() -> int:
     return 0
 
 
+def selftest() -> int:
+    """A throwaway repo: one merged+dirty worktree (removed by --go) and one unmerged+dirty worktree (kept)."""
+    import shutil
+    import tempfile
+    global _REPO
+    base = Path(tempfile.mkdtemp(prefix="wtgc_"))
+    main_tree, wa, wb = base / "main", base / "wk-merged", base / "wk-unmerged"
+    ok = []
+    try:
+        def g(*a, cwd=main_tree):
+            git(["-c", "user.name=t", "-c", "user.email=t@t", *a], cwd=str(cwd), check=True)
+        main_tree.mkdir()
+        g("init", "-q", "-b", "CLOUD")
+        (main_tree / "org" / "mcp").mkdir(parents=True)   # the audit line lands in the temp repo
+        (main_tree / "f.txt").write_text("x\n", encoding="ascii")
+        g("add", "f.txt")
+        g("commit", "-q", "-m", "c0")
+        g("worktree", "add", "-q", "-b", "wk-a", str(wa), "CLOUD")
+        g("worktree", "add", "-q", "-b", "wk-b", str(wb), "CLOUD")
+        (wb / "g.txt").write_text("y\n", encoding="ascii")
+        g("add", "g.txt", cwd=wb)
+        g("commit", "-q", "-m", "unlanded", cwd=wb)
+        for t in (wa, wb):   # uncommitted edits in both
+            (t / "f.txt").write_text("edited\n", encoding="ascii")
+            (t / "scratch.tmp").write_text("u\n", encoding="ascii")
+        _REPO = str(main_tree)
+        ns = argparse.Namespace(go=True, trunk="CLOUD", clean_hours=0.0, held_hours=48.0)
+        run(ns)
+        ok.append(("merged+dirty -> removed", not wa.exists()))
+        ok.append(("unmerged+dirty -> kept (HELD)", wb.is_dir() and (wb / "scratch.tmp").exists()))
+    finally:
+        _REPO = None
+        shutil.rmtree(base, ignore_errors=True)
+    for name, res in ok:
+        print(f"  {'PASS' if res else 'FAIL'}  {name}")
+    passed = sum(1 for _, r in ok if r)
+    print(f"WORKTREE-GC-SELFTEST cases={passed}/{len(ok)} ok={passed == len(ok) == 2}")
+    return 0 if passed == len(ok) == 2 else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--go", action="store_true", help="remove CLEAN worktrees, prune, log, write state")
@@ -287,10 +339,13 @@ def main() -> int:
     ap.add_argument("--held-hours", type=float, default=48.0)
     ap.add_argument("--held-for", default="")
     ap.add_argument("--hook-notice", action="store_true")
+    ap.add_argument("--selftest", action="store_true", help="exercise MERGED (force-removed) and HELD (kept) on a temp repo")
     ap.add_argument("--repo", default="", help="operate on this repository (exercise); default: the one holding this script")
     args = ap.parse_args()
     global _REPO
     _REPO = args.repo or None
+    if args.selftest:
+        return selftest()
     if args.hook_notice:
         return hook_notice()
     if args.held_for:
