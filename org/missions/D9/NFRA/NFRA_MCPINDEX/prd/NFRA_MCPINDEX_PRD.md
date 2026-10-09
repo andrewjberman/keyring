@@ -120,8 +120,9 @@ and PROOF -- and only the SOURCE line is dropped.** The endpoint document remain
                     build the index, routes correctly
          ACCEPT     a discover family is loaded in every session and answers from ONE catalog
                     (never a second): which property and dataset holds the fact, its freshness,
-                    its firm scope, its caveats, and the next tool to call; a question about a
-                    property that is not catalogued says so and names nothing
+                    its firm scope, its caveats, and the next tool to call; a need with no tool
+                    is a GAP entry naming its owner or "unowned" (v0.7); a question about a
+                    property absent from every entry says so and names nothing
          PROOF      a named question set run in a live session by a non-author, with the count
                     routed correctly over the count asked, and every wrong route listed
 
@@ -185,16 +186,19 @@ and PROOF -- and only the SOURCE line is dropped.** The endpoint document remain
          ACCEPT     the long-history path returns a bounded answer over a span the Gateway's
                     in-process engine cannot hold, and says which substrate served it; the
                     vendor reads (YCharts; Bloomberg where its own standing word allows)
-                    appear in the SAME index rather than as a separate world; no new vendor
-                    egress beyond Andrew's standing per-use word
+                    appear in the SAME index rather than as a separate world; egress is open
+                    on every channel except Bloomberg, which reads through its queue (v0.7:
+                    CLAUDE.md law edit @4d77a9c3ea)
          PROOF      one answer per half with its substrate named and its cost/time recorded
 
   FWD-9  Andrew admits staff to the beta one person at a time, and each person sees only the
          tools and data he granted
          DONE WHEN  EXERCISED -- one admission and one removal, both observed
          ACCEPT     a person not admitted sees NO data tools; an admitted person sees exactly
-                    their granted set, and a phrasing that asks for another firm's or master's
-                    data is refused; removal takes effect without a redeploy
+                    their granted set; once a second user beyond Andrew and Alyssa is
+                    admitted, a phrasing that asks for another firm's or master's data outside
+                    that person's grant is refused (v0.7: until then per-user scoping waits,
+                    Andrew-direct @0035550443); removal takes effect without a redeploy
          PROOF      two sessions (admitted, not admitted) with the tool lists each sees, one
                     refusal transcript, and the roster change with its timestamp
 
