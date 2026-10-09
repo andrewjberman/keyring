@@ -38,3 +38,18 @@ disjoint from those acts. Each item is a build cell with at most three mechanica
    WS2-b are a served write. The vehicle is a site-Z producer, so any change its run imports also needs `1.0.0_SA_CTO~Z`'s half.
 
 The round-29 pre-draft (`ledger/ROUND_ANALYSIS.round29.PREDRAFT.md`) is unchanged: WS2 is not in it.
+
+## ADDENDUM 1 (~05:5xZ) -- Andrew's comments 4-8 (record @588865eef8; `2.0.0_SA_COO~V1` msg 1851) become WORKSTREAM 3
+
+WS2 is issued (@8b87a0166b, three workers live), so its issuance is frozen like a round's. Comments 4-8 are a new scope, WORKSTREAM 3,
+issued by `2.0.0_SA_COO~V1` as its own issuance and carrying all three WS2 guards. It may not take a file a live WS2 order owns.
+- **Now:**
+  - (4) the audit's money-market exclusion line is placed so it reads as its own line, never as naming the trade below it;
+  - (5) a "flow adjusted" trade is not printed where the share count is unchanged within Andrew's 20 bps tolerance. That tolerance is
+    applied wherever a share change is read as a trade, with a check over the 12 CGIC rows;
+  - (6) no trade is drawn on a day marked BBG repeat;
+  - (7) the header Period bar is removed.
+- **Item 8, after aw-1's J1 read (the 13:00Z sweep):** the Direction Verdict accounts' opening lines get deeper, fund-specific
+  prompting. It touches `ai_accounts.py`, which round 28's aw-1 deploy carries. A cell merged before aw-1's J1 read would change what
+  that read grades, so item 8 is cut only after the read, as WS3's second issuance. Its prompt change is an OpenAI call path; egress is
+  open (law 4d77a9c3ea).

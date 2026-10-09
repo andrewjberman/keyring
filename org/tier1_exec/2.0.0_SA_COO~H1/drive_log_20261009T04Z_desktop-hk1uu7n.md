@@ -26,3 +26,14 @@ Why: FWD-5 and FWD-9 cannot be met anywhere else -- the pull is the only writer 
 (`etf_daily_pull.py:425-441`, `:472`); gold-only work cannot re-request a day.
 If no: PASS round 3 cuts FWD-3 (entry), FWD-6 census and the Cottonwood join read only; FWD-5 hop B (gold blanks a listed day)
 can still be cut, but it has no gap record to read.
+
+## 05Z ticks (05:04Z-05:46Z)
+
+- 05:2xZ: call b186 redundant -- Andrew lifted no-modify on `etf_daily_pull.py` 2026-10-08 ~23:0xZ (record
+  `ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_CALLS_ANSWERED.md`, lines printed); closed by the CTO (amendment 4 @6ed604ec24).
+- 05:3xZ: Andrew-direct "This can go into the BBG queue system that MDPF_DEMQUE is for" -- card A released; request
+  `MDPF_SECHIST-CARD-A-COT-BBG-HISTORY` @f3b5715e06; call deae closed ruled-by andrew; Q1/CTO/MSTR told (msgs 1782-1784).
+- 05:4xZ: TO-READ-R2-L3 amended @08fff6f8a5 with the IAM-parity conditions (CTO msg 1818).
+- 05:46Z WIDTH check (obligation 2): round-2 item 3 (`SH-t-5`) is un-parked by Andrew's release, but it has an UNMET dependency --
+  the queue's quote and first paced draw (Q1) and the Cottonwood id map (234 of 4,545 ids match a table key; round-3 chain C).
+  Not cut this tick; it rides the round-3 issuance as chain G, as told to Andrew.

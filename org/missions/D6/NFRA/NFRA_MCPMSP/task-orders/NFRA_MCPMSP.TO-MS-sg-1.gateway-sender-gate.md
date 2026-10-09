@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPMSP/decompositions/NFRA_MCPMSP_DECOMP.md</decomp_doc>
 <owned_cells>MS-sg-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPMSP.TO-MS-sg-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPMSP~3</issued_to>
 <issued_by>2.0.0_SA_COO~MS</issued_by>
 <placeholders>NONE</placeholders>

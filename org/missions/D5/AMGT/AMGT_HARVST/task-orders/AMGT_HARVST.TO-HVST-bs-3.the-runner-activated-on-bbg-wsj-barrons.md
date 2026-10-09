@@ -51,6 +51,14 @@ Both halves of this act's pair are signed. Start once your tree carries c1be67f5
 7. Anything odd: append one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z
    number>`, minted over every channel document of the project.
 
+## STANDING CONDITIONS (every order to a 0.7.0_AE_CloudOps lane; `1.0.0_SA_CTO~DELL1` @947dd446e5, ADDENDUM 3)
+
+1. A send that writes a firm data bucket, or assumes the 49F principal outside the runner's own job, is told to the laptop FIRST.
+2. Every send to mdpf-daily-runner is reported after the fact, with its command id and purpose.
+3. 49 Financial data never goes into another firm's tree.
+
+This order touches none of them as written. If an act would, stop and report it first.
+
 <paths>
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md

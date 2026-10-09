@@ -1,6 +1,6 @@
 """MDPF_STRATID workstream 2, W2-3 criterion AC2 (SEAM, real data): the recorded unidentified list for Cottonwood on its latest
-Rebalancer date exists with SOURCE, DENOMINATOR and RESULT lines, and carries the known control `Opal_Muni_Income` (S07: a rule
-with no member until a person verifies it). W23-SEAM-OK, else W23-SEAM-BAD. Run from the repo (worktree) root."""
+Rebalancer date exists with SOURCE, DENOMINATOR and RESULT lines, and carries the control `Opal_Muni_Sleeve` (a rule with no member until a person
+verifies it) and does NOT list `Opal_Muni_Income` (A7: Andrew-direct ~05:3xZ, a Custom model). W23-SEAM-OK, else W23-SEAM-BAD. Run from the repo (worktree) root."""
 from __future__ import annotations
 
 import re
@@ -20,8 +20,11 @@ def main() -> int:
         if not re.search(r"^" + line, text, re.M):
             print("W23-SEAM-BAD no %s line" % line)
             return 1
-    if "Opal_Muni_Income" not in text:
-        print("W23-SEAM-BAD the control Opal_Muni_Income is not listed")
+    if "Opal_Muni_Sleeve" not in text:
+        print("W23-SEAM-BAD the control Opal_Muni_Sleeve is not listed")
+        return 1
+    if any("Opal_Muni_Income" in ln for ln in text.splitlines() if ln.startswith("|")):
+        print("W23-SEAM-BAD Opal_Muni_Income is listed; it is a Custom model (A7, Andrew-direct ~05:3xZ)")
         return 1
     print(re.search(r"^RESULT:.*$", text, re.M).group(0))
     print("W23-SEAM-OK")

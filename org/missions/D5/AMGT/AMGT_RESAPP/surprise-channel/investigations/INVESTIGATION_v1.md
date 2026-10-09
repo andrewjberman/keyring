@@ -22581,3 +22581,62 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Ledger amgt-resapp-r80-dd4-scoped-api-dell1: L1,L2,L3,L4,L5,L7 closed with proof; L6 alone open and NOT closed, because the record it names is half absent. The deploy is NOT half-landed -- the function is live, correct and independently verified; L6 is bookkeeping, so the open leg should not be read as a live deploy hazard. infra/aws/terraform/harvest/CHANGELOG.json is deliberately left UNTRACKED in the shared tree so the recorder's entry for this deploy is not lost before someone adds the registry row. For the issuer: the artifact_sha256 gap looks like a defect in reconcile-deployed's parity classification for a NULL recorded sha, which would affect every one of the 41 no-record functions, not just this one."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S7",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T05:45Z",
+  "one_line": "record-terraform-deploy.sh structurally cannot move last_deployed_commit for opal-amgt-scoped-api on a code-only deploy: it sets the field from the function's source_dir, and this function's real code is the vendored delegate under lib/research/, which source_dir does not contain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ee-6's deploy itself is complete and independently verified -- this row is about the RECORD only. Live CodeSha256 moved OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs= -> aAkcp2l1TkaeMnZKjpeg/U6og+p0WR12O1YKp53Pvyc= at 2026-10-09T05:23:48Z, untargeted re-plan 'No changes', AC1 R81 DEPLOYED: YES 2 of 2, AC2 R80 YES 1 of 1 and R79 YES 1 of 1.",
+      "The recorder RAN, scoped by the applied plan: bash infra/aws/lambda/ci/record-terraform-deploy.sh harvest --plan C:/tmp/ee6-build/ee6.tfplan --author 0.7.0_AE_CloudOps~RA1 --deploy-ledger amgt-resapp-r81-ee6-scoped-api-dell1 --code-sha256 aAkcp2l1... -> rc=0, committed @5abece293838b0e6413bbfe47a2791f37db0453b, 3 files changed 43 insertions 3 deletions.",
+      "WHAT LANDED, read back from the entry: artifact_sha256 aAkcp2l1TkaeMnZKjpeg/U6og+p0WR12O1YKp53Pvyc=, deployed_code_sha256 the same, last_deployed_at 2026-10-09T05:31:17Z, deploy_ledger amgt-resapp-r81-ee6-scoped-api-dell1, recorded_by record-terraform-deploy.sh.",
+      "WHAT DID NOT: last_deployed_commit still reads 271e8f8b432f811c548f065d88981583eb0f1f91 -- dd-4's value -- naming neither this deploy nor its build pin 881540dcfd. The recorder's commit SUBJECT reads 'ci: record deploy harvest @ 447e4af8', so the subject's figure and the field's figure are two different things and the subject is the misleading one to quote.",
+      "THE MECHANISM, read from the script's own head rather than inferred: ':2. Sets last_deployed_commit = the last commit touching that function's source_dir -- NOT HEAD, NOT the ledger commit, NOT a files[]-derived value (verify-local.sh:136 diffs over source_dir, so files[] makes it report non-packaged deploy-relevant files as undeployed change).' The entry's source_dir is infra/aws/lambda/research/scoped_amgt_api.",
+      "WHY THAT CANNOT WORK FOR THIS FUNCTION: all five members ee-6 moved live under lib/research/ -- scoped_amgt.py, filings/section_coverage.py, freshness/collector_record.py, lists/owner_line.py, freshness/long_day.py (ADDED). None is under source_dir. The entry's own _note says so in as many words: 'source POINTS AT THE VENDORED DELEGATE ON PURPOSE ... The package entrypoint deliberately holds no boto3: every AWS call this function makes originates in lib/research/api/scoped_amgt.py, which is vendored into the zip.' So source_dir holds the 1-file entrypoint and the code that actually ships is elsewhere by design.",
+      "SCOPE OF THE CLAIM, stated rather than widened: this is measured on ONE function. Whether other entries whose 'source' key points outside 'source_dir' share the shape was NOT swept, and no denominator for that population is printed here.",
+      "SIDE READ, relevant to row D1-S6: the naming limb that REFUSED dd-4's recorder commit on infra/aws/terraform/harvest/CHANGELOG.json did NOT fire this run -- '[naming-gate] DENOMINATOR: 2 path(s) ... NAMING-GATE: PASS 0 graded' -- and CHANGELOG.json committed normally. And artifact_sha256 DID land here where it did not at dd-4, because --code-sha256 was passed explicitly, which does not go through the NULL-recorded-sha 'already-in-parity' branch D1-S6 describes: reconcile printed '0 reconciled, 1 first-recorded, 0 HELD, 0 left unrecorded, 0 already-in-parity' with [FIRST-RECORD] opal-amgt-scoped-api: none -> aAkcp2l1TkaeMnZK.. (live == S3 artifact). That narrows where D1-S6 bites; it does not repair it, and D1-S6 stays with its owner."
+    ]
+  },
+  "spec_asserts": "CTO half NEVER_WIDEN_ROUND81_EE6_CTO_HALF.md@1e8dff07a6 condition 5: 'The deploy runs record-terraform-deploy.sh so the source-map entry carries last_deployed_commit.'",
+  "world_is": "The recorder ran and the entry carries last_deployed_commit, so the condition's text is met -- but the VALUE is dd-4's, not this deploy's, and no invocation of this tool can change that for this function. The field tracks commits under source_dir; this function's shipped code is the vendored delegate under lib/research/, which source_dir excludes on purpose. For opal-amgt-scoped-api, last_deployed_commit is therefore a stale-by-construction field on any code-only deploy, while artifact_sha256 and deployed_code_sha256 do pin the exact deployed bytes. A reader who treats last_deployed_commit as 'the commit this function is running' will be wrong for this entry, and verify-local.sh's source_dir diff will read no undeployed change while lib/research/ has moved.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Nothing is half-landed and nothing is owed on ee-6's behalf: ledger amgt-resapp-r81-ee6-scoped-api-dell1 is CLOSED with all 9 legs proven, leg L7 closing with this gap named rather than glossed. No fix attempted and no name or field hand-edited -- the remedy is a decision, not an edit: either the entry grows a second field naming the build pin of the last applied artifact, or last_deployed_commit's rule gains a vendored-closure arm, or the field is documented as source_dir-scoped so no reader reads it as code currency. For the issuer: CLAUDE.md rule 22a's CODE layer already says to diff deployed bytes against the BUILD INPUT and never by filename, and this field is exactly the filename-shaped instrument that rule warns about -- which is why the sha fields, not this one, are cited as ee-6's currency evidence."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S8",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T05:45Z",
+  "one_line": "The /cloud-ops skill's on-box wrapper table names the deploy recorder at .tools/record-terraform-deploy.sh, a path that does not exist; the script lives at infra/aws/lambda/ci/record-terraform-deploy.sh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The skill's text, quoted from .claude/skills/cloud-ops/SKILL.md's 'THE ON-BOX WRAPPER SET' table: '| deploy-completion ledger | org/critical_paths/change_management/ |' sits beside '| Terraform apply (HALTGT checkpoint) | .tools/safe-apply.sh |', and the Failure-handling section names the recorder as 'record-terraform-deploy.sh tooling failure: known issue (CHANGELOG.json writer + owned-paths-hook on Andrew identity)' with no path, while CLAUDE.md's own wrapper discussion and the skill's commit-hygiene section place every wrapper under .tools/.",
+      "Measured absence with a named-path read, not a search: `ls -la .tools/record-terraform-deploy.sh` -> 'cannot access: No such file or directory'. A directory listing of .tools/ filtered for 'record' returns exactly one row, mstr-record-check.py.",
+      "The real location, found in one comp-find round-trip: comp-find 'record-terraform-deploy' --files -> HEAD band (query in the FILE NAME) lists infra/aws/lambda/ci/record-terraform-deploy.sh, with DENOMINATOR 5868 hits across 73193 files scanned printed beside it. A sibling recorder infra/aws/lambda/ci/record-resource-deploy.sh exists at the same home.",
+      "It is the right script: it ran from that path and did the work (rc=0, commit @5abece2938, source-map entry updated), so this is a wrong-path claim and not a missing tool.",
+      "SCOPE OF THE CLAIM: measured on this one entry of that table. The table's other rows -- .tools/safe-apply.sh, .tools/safe-deploy.sh, infra/aws/ec2/safe-ec2-deploy.sh, infra/aws/ec2/verify-ec2.sh -- were NOT each stat'd, so no denominator is printed for 'how many rows of that table are wrong'."
+    ]
+  },
+  "spec_asserts": "/cloud-ops is the canonical home of the deployment rules and is loaded at launch by every AE cloud seat; its wrapper table is the place a seat looks up which tool to run and where it lives. Its own header says 'THIS SECTION IS CANONICAL -- it is not a refresher and not a mirror.'",
+  "world_is": "One row of that canonical table points at a path with nothing on it. A seat that trusts it gets a 'No such file or directory' at the moment it is trying to close a deploy record, which is the worst moment to be hunting for a tool. The class is the one that skill already carries a correction for in its own text -- the watcher line that instructed a banned relaunch and read as authoritative because it was scoped and specific. Cost of the miss here was one comp-find round-trip and no deploy risk.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Not fixed by this seat: .claude/skills/cloud-ops/SKILL.md is outside this order's <paths>, and the skill is a shared launch surface whose edit belongs to whoever owns it (its own refresh line names 1.0.0_SA_CTO~X, Andrew-direct 2026-08-25). Filed and kept working, per the surprise-channel rule. Suggested minimal edit, for whoever owns it: name the recorder's real path in the wrapper table beside the ledger row, and stat the table's other four rows while in there so the fix carries a denominator rather than a single-row patch."
+}
+```
