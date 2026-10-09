@@ -1183,14 +1183,19 @@ Round 7 stays open on MX-s-19 alone. MX-s-19 shares no path with these cells, so
 | Cell | Serves | What | Base | Risk |
 |---|---|---|---|---|
 | `MX-d-7` | FWD-11 (the thread), FWD-13; contract 4 | discover's `latest_value` is READ from the served artifact's own as-of field at answer time, claim `measured`; a held certification value is never shown as the as-of. Proven on three datasets: model benchmarks (held 2026-08-10, served 2026-10-07 at L5), `aum-metrics`, `aggregate-aua-timeseries`. Plus the thread route: "how did <model> do against its benchmark <period>" reaches `mdpf_get_model_benchmarks` with that true date | CLOUD | WORLD (infra floor) |
-| `MX-c-6` | FWD-12, FWD-15, FWD-17, FWD-18; contracts 1, 5, 6 | the catalog holds all 29 needs as entries: need, source, status (SERVED / PARTIAL / GAP / DENIED), tool or none, owner or `unowned`, the browser workflow it retires (C# / W#), read or write class. GAP rows are a declared row type the catalog gate admits. The YCharts tools are vendor entries reading PARTIAL with their live error (Z-S85). The 8 unowned gaps are catalogued, never built. Written through the catalog's ONE writer (C1) | CLOUD | WORLD (infra floor) |
+| `MX-c-6` | FWD-12, FWD-15, FWD-17, FWD-18; contracts 1, 5, 6 | the catalog holds all 29 needs as entries: need, source, status (SERVED / PARTIAL / GAP / DENIED), tool or none, owner or `unowned`, the browser workflow it retires (C# / W#), read or write class. GAP rows are a declared row type the catalog gate admits. The YCharts tools are vendor entries reading PARTIAL with their live error (Z-S85). The 8 unowned gaps are catalogued, never built. Written through the catalog's ONE writer (C1) | after MX-d-7 | WORLD (infra floor) |
 | `MX-d-8` | FWD-14, FWD-17, FWD-1 change (contract 1) | discover answers a GAP entry with its owner, and a write-class entry with its class and whether the CALLER's grant allows it. Alyssa's six phrasings ("account counts by partner", "cost basis", "statement", "stress test", "download the attachment", "S&P YTD") and the three write asks each reach their entry on the first try in the routing harness. No phrasing lands on a dataset whose meaning is a different need | after MX-d-7 and MX-c-6 | WORLD (infra floor) |
 | `MX-r-9` | FWD-11, FWD-13, FWD-14, FWD-17 live | the gateway release of MX-d-7, MX-c-6 and MX-d-8 through the opal-gateway release train (`2.0.0_SA_COO~O` holds the queue). PHASE A: plan and ANNOUNCE by the worker. PHASE B: apply by a site-Z CloudOps lane under never-widen halves. Then the live reads: FWD-13's three comparisons, FWD-14's six discover calls, FWD-17's three answers | after MX-d-8 drains | WORLD |
 
-**Chains (fan-out 2 of 2 chains at the cut, cap 8):** [MX-d-7 -> MX-d-8 -> MX-r-9] and [MX-c-6 -> MX-d-8]. MX-d-7 and
-MX-d-8 both write `app/integrations/opal_discover/`. MX-c-6 writes `app/refs/DATA_CATALOG.yaml` and the catalog gate's
-row-type admission. So MX-d-7 and MX-c-6 run in parallel, and MX-d-8 needs both. MX-r-9 is one release of all three:
-two gateway releases would each re-test the whole service.
+**Chains (fan-out 1 of 1 chain, cap 8):** [MX-d-7 -> MX-c-6 -> MX-d-8 -> MX-r-9], one write set.
+- Measured at L5: only 24 of the catalog's 37 artifact rows state their as-of field in parseable text ("THE vintage is"
+  followed by a backticked field). aum-metrics' field is a nested path (`_provenance.source_vintages['global/aum-metrics']`). So MX-d-7
+  adds a structured `vintage_field` to the artifact rows in `app/refs/DATA_CATALOG.yaml`. MX-c-6 adds the 29 need
+  entries to the same file. Both write the catalog, and C1 makes it ONE catalog with ONE writer, so they serialize.
+- MX-d-8 writes `app/integrations/opal_discover/` after both. MX-r-9 is one release of all three, because two gateway
+  releases would each re-test the whole service.
+- The serial order is the CTO's own: FWD-11 (the thread) first, then FWD-13 and FWD-14, then FWD-12, FWD-15 and FWD-17.
+  A second chain would exist only with a second write set, and v0.7 names none.
 
 **The thread (FWD-11) at close.** Alyssa, in her own words, asks how a model did against its benchmark for a period; the
 transcript is read beside the served artifact's date and the opalinvest.dev page. It is her act, graded at L9 by the
