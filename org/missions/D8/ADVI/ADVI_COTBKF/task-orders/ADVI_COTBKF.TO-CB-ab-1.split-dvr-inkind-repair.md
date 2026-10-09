@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~53</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -50,6 +50,8 @@ named repair per defect, each stated (and committed) before the real run:
 Re-grade `--before-cash-leg method_r26 --after-cash-leg method_r28`; print the 73 round-27 traced months with their new verdict and the
 whole grade; regressions must be 0.
 
+**AMENDMENT 1 (CTO ruling msg 2671, 2026-10-09 ~06:1xZ; CTO half AMENDMENT 1 @478334e021).** "CB-ab-1 closes on 4 named regressions, BLANKED in the mint." AC2 expects `regressions=4`, the four being exactly B3S728504 and B3S728506, 2023-05 and 2023-06 (a fifth, or a different four, voids this amendment: refuse). Add to `commonwealth_fwd3_serve.py` an ABSENT list, built from the persisted grades as the months MATCH under `method_r26` and DIFF under `method_r28`: in the three tables those account-months read ABSENT (no value, no return, no verdict, reason `REGRESSED_UNDER_R28`), never valued; `--dry-run` prints them and its LAST line gains `absent_months=<n>`. Add a stub test for it in `test_commonwealth_fwd3_serve.py`. Rows W53-S2..S4 stay BLOCKING until explained (the CTO). No repair rule changes.
+
 Tests `data/assets/scripts/silver/tests/test_commonwealth_split_repair.py` (stubs): a 10-for-1 split day returns the true move, not
 +900%; a day before the split is valued as-traded; a `dvr` day counts the distribution once; an understated `li` is valued from the shares
 or blanked with its reason; `method_r26` is unchanged.
@@ -59,13 +61,16 @@ or blanked with its reason; `method_r26` is unchanged.
 <criterion id="CB28ab1-AC1" cell_refs="CB-ab-1"><invocation>python -m pytest -q data/assets/scripts/silver/tests/test_commonwealth_split_repair.py</invocation><expect>passed</expect></criterion>
 `CB28ab1-AC1` -- each repair on a stub of its defect; `method_r26` unchanged.
 
-<criterion id="CB28ab1-AC2" cell_refs="CB-ab-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg method_r26 --after-cash-leg method_r28 --data-dir .scratch/advi_cotbkf/r28 --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53</invocation><expect>regressions=0</expect></criterion>
+<criterion id="CB28ab1-AC2" cell_refs="CB-ab-1"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg method_r26 --after-cash-leg method_r28 --data-dir .scratch/advi_cotbkf/r28 --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53</invocation><expect>regressions=4</expect></criterion>
 `CB28ab1-AC2` -- the repairs regress no month that matched under `method_r26`.
+
+<criterion id="CB28ab1-AC4" cell_refs="CB-ab-1"><invocation>python data/assets/scripts/silver/commonwealth_fwd3_serve.py --dry-run --data-dir .scratch/advi_cotbkf/r28 --out .scratch/advi_cotbkf/fwd3_serve</invocation><expect>absent_months=4</expect></criterion>
+`CB28ab1-AC4` -- (AMENDMENT 1) the serve build reads the 4 named regressed account-months ABSENT, never valued, and the dry run prints them.
 
 <criterion id="CB28ab1-AC3" cell_refs="CB-ab-1" judgment="true"/>
 `CB28ab1-AC3` -- JUDGMENT, graded by 3.0.0_SA_CVO at L9 and never self-graded: each repair is named with its test, decided from the rows or the store's split history before the run, never from the reported return; a day that cannot be repaired is blank with its reason.
 
-<expected_criteria>CB28ab1-AC1,CB28ab1-AC2,CB28ab1-AC3</expected_criteria>
+<expected_criteria>CB28ab1-AC1,CB28ab1-AC2,CB28ab1-AC3,CB28ab1-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -91,6 +96,8 @@ data/assets/scripts/silver/tests/test_commonwealth_carried_levels.py
 data/assets/scripts/silver/tests/test_commonwealth_daily_valuation.py
 data/assets/scripts/silver/tests/test_commonwealth_daily_returns.py
 data/assets/scripts/silver/tests/test_commonwealth_unlisted_types.py
+data/assets/scripts/silver/commonwealth_fwd3_serve.py
+data/assets/scripts/silver/tests/test_commonwealth_fwd3_serve.py
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -102,10 +109,10 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CB28ab1-AC1, CB28ab1-AC2, CB28ab1-AC3. Instance at
+Criterion ids: CB28ab1-AC1, CB28ab1-AC2, CB28ab1-AC3, CB28ab1-AC4. Instance at
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/ADVI_COTBKF.TO-CB-ab-1.split-dvr-inkind-repair.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> CB28ab1-AC1,CB28ab1-AC2,CB28ab1-AC3` BEFORE the flip. Mechanical:
-CB28ab1-AC1, CB28ab1-AC2; a judgment criterion is recorded as PENDING-ADJUDICATION, never PASS.
+validated with `python .tools/proof-of-spec-check.py <instance> CB28ab1-AC1,CB28ab1-AC2,CB28ab1-AC3,CB28ab1-AC4` BEFORE the flip. Mechanical:
+CB28ab1-AC1, CB28ab1-AC2, CB28ab1-AC4; a judgment criterion is recorded as PENDING-ADJUDICATION, never PASS.
 </proof_of_spec>
 
 **REPORT:** the SWEEP-REGRADE line, each repair (file and line, its test), the 73 by new verdict, any split disagreement, commits.
