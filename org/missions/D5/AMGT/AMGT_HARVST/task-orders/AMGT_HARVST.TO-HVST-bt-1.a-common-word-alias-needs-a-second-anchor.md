@@ -190,9 +190,29 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~132. Checks dry-run at the base: AC1 FAIL as expected (the test is absent); AC2 FAIL as expected (no such file);
   AC3 PASS as expected (base suite, read at the cut).
 
+**COMPLETE 2026-10-09 ~12:5xZ (issuer `2.0.0_SA_COO~W1`) -- R31 MEASURED AND RETIRED, NOT SERVED:**
+
+Every census ran on served rebuild #12 (205,470 mentions). The issuer checked each on the branch before routing it.
+
+| cut | branch head | flagged | mentions removed | CVO rows | removed sample | ruling |
+|---|---|---|---|---|---|---|
+| dictionary (words_alpha) | @b6fff70840 | 33 aliases | 9,958 | 14/14 | mostly true | issuer STOP, msg 2350 |
+| AMENDMENT 1, LOWER > CAP_MID | @5086c69a0b | 0 | 0 | 0/14 | -- | msg 2378 |
+| AMENDMENT 2, ratio >= 0.2 | @4898fd0c6e | 5 aliases | 2,716 | 14/14 | Visa 10/10, others 9/10 true | msg 2403 |
+| AMENDMENT 3, anchors A-E + guards | @fa9135694e | 5 aliases | 908 | 14/14 | Orange 10/10, Cadence 9/10, Visa 7/10, Booking 4/6 true | msg 2435 |
+
+- **Ruled:** `1.0.0_SA_CTO~DELL1` ADDENDUM 7 (msg 2438). R31 is retired, Visa-only is refused too, and bt-1 stays UNMERGED
+  as the record (`wk-AMGT_HARVST-132-r76` @fa9135694e on origin). The records alone (deliverables and rows) were drained
+  @43019e178e, with the R31 code reverted on the records branch @c95384c001. lib/ and tests/ moved 0 lines (msg 2449, form (a)).
+- The 14 Visa and Orange rows are a stated known residual in the coverage figure. Row D1-W132-S1 is dispositioned by
+  this ruling.
+- A re-open needs a per-mention method whose removed sample reads mostly false.
+- **Proof:** VALID rc 0 at each head; the final AC1 is 25 passed, AC3 543 passed. **Rows:** D1-W132-S1 to S5.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>76</round>
 <slot>~132</slot>
 <fabric>dell1</fabric>
