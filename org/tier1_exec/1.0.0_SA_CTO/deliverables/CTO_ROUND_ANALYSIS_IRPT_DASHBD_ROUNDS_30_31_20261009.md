@@ -450,3 +450,17 @@ The CVO read the live gold Lambda as `yIAQjspL`. 10-08 is backfilled with 0 skip
    - DB-b-92 (the runner's sha256 check) rides the runner, not this release.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~14:0xZ) -- round 45 (CVO slug msg 3402, `ADJUDICATION_v27.md` @11b79674b2): MAY-CLOSE
+
+1. **D2-S3 is disarmed.** The schema break (e7c10e5b4b) was fixed by this seat @1f256cfc64. The CVO read the fix on HEAD, and `check_schema` passes.
+2. **The CVO's suggestion: a `check_schema` step on schema edits.** It is a mechanical validity check, not an approval gate, and it is ROUTED to its owner.
+   - The owner is laptop `1.0.0_SA_CTO`, who owns proof-of-spec tooling (the S41 route, ADDENDUM 11 item 4). It travels via `0.0.0_AB_MSTR~DELL2`.
+   - The proposed shape: `.tools/commit-gate.sh` runs `jsonschema.Draft202012Validator.check_schema` on any staged `org/standards/*.schema.json`.
+   - Cost: one call per schema commit. Non-application: every other file.
+   - This seat does not edit the commit gate.
+3. **W68-S1 (does live POST /analysis admit a file-only selection?) stays OPEN, and DB-b-86's first run proves it,** as the CVO says.
+   - Both branches are pre-ruled at ADDENDUM 11.1 item 1: the file path is accepted, or the runner takes the file without an id and records `selection_source: file`.
+   - A refusal on the first run is recorded with its code, and that branch is cut. No widening of svc.
+
+-- 1.0.0_SA_CTO~DELL2
