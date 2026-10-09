@@ -1,0 +1,26 @@
+{
+  "request_id": "AMGT_RESAPP-107a-ABNB-MODEL-BLOCK",
+  "channel": "model_block",
+  "reason": "FWD-2: ABNB's model-block pull, the remainder of the first pull of a never-covered company (CTO~Z round-77 analysis ruling 7). Carried from rounds 78 and 79: deliverables/2.0.0_SA_COO~Z/round79/DRAIN_END_PACKET.md item 2 and round78/DRAIN_END_PACKET.md item 2.",
+  "securities": [
+    {
+      "cusip": "009066101",
+      "symbol": "ABNB",
+      "security_key": "ABNB_US_Equity",
+      "bloomberg": "ABNB US Equity"
+    }
+  ],
+  "fields": [
+    "model_block"
+  ],
+  "fields_note": "the model-block field set integrations/bloomberg/research/model_block_pull.py pulls per name (AMGT_CORPUS's fire spends 8 calls per name); the producer quotes the exact cells before drawing",
+  "start": null,
+  "end": null,
+  "filed_by": "2.0.0_SA_COO~R1",
+  "filed_for": "AMGT_RESAPP",
+  "vendor": "bloomberg",
+  "tier": 4,
+  "page": "research",
+  "authority": "Andrew-direct ~01:4xZ 2026-10-09 YES to site Z REC @10e525c7de (laptop 1.0.0_SA_CTO msg 107644, verbatim 'also tell sitez yes to their bbg data request'); site Z 1.0.0_SA_CTO~Z msg 32281 via MSTR~DELL1 msg 1468; 1.0.0_SA_CTO~DELL1 msg 1462 (the queue route, one-queue rule)",
+  "runs_at": "site Z (the Terminal), by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws"
+}

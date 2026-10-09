@@ -97,3 +97,4 @@ AC2 is round 79's regression arm.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T02:5xZ by the issuer. Build pin 65532d8a7b exactly (carries dd-2 @a06f7f9c20, not dd-1). Wheel folder C:/tmp/r80-wheels on dell1: 6 of 6 sha256 equal to round78/BB18_WHEEL_FOLDER_SHA256_20261008.txt (re-hash before the build). Pair: COO half @db906ef3d1, CTO half @f35ac7640a (its conditions: package files outside the COO half list STOP; live package downloaded and hash-checked as the rollback, both halves sha256 in the ledger; after the apply 0 letterless of the served citations, else roll back the same session). r80_deployed_cells.txt holds 1 line (r80_dd4_served.py --where deployed): base reads R80 DD4 SERVED: NO (4 of 271), the tree at the pin YES (0 of 271).</status>
