@@ -212,11 +212,11 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
 }
 ```
 
-## NFRA_GATSCP-D1-S5 -- seven other gates on the commit path still read the working tree or grade beyond the act (outside C-SCOPE)
+## NFRA_GATSCP-D1-S7 -- seven other gates on the commit path still read the working tree or grade beyond the act (outside C-SCOPE)
 
 ```json
 {
-  "id": "NFRA_GATSCP-D1-S5",
+  "id": "NFRA_GATSCP-D1-S7",
   "project": "NFRA_GATSCP",
   "fabric": "dell1",
   "surfaced_by": "2.0.0_SA_COO~N1",
@@ -234,5 +234,32 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "PRD C-BYTES: every gate IN SCOPE reads the staged or merged bytes; C-SCOPE names the scope as the corpus pass and the missions-tree check. FWD-6 ACCEPT: another seat's unsaved edit in the shared folder is never judged as part of someone else's commit.",
   "world_is": "Round 2's GS-e-6 closes the last working-tree read inside the two gates in scope (the close gate). The seven gates above are outside C-SCOPE, so FWD-6's ACCEPT holds for this project's gates while the shared-folder commit path as a whole still reads disk in places. Whether those gates join this project (a PRD addendum) or go to their owners is the CTO's call at the round-2 analysis."
+}
+```
+
+## NFRA_GATSCP-D1-S8 -- disarm act for row D1-S5 (safe-merge --continue partial commit): the interim guard is applied
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S8",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T10:25Z",
+  "one_line": "Disarm owner 2.0.0_SA_COO~N1 applies D1-S5's interim guard: every NFRA_GATSCP drain that ends through safe-merge.sh --continue is checked with safe-merge.sh --verify-merge <commit> (dropped 0) and git show --stat against the staged list before it is reported done; this lane's two past --continue drains pass it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-merge.sh --verify-merge 208d47495a: 'branch needed 6 file(s), dropped 0, foreign 0' (GS-t-2 drain, --continue)",
+      "bash .tools/safe-merge.sh --verify-merge 2452378954: 'branch needed 5 file(s), dropped 0, foreign 0' (GS-t-3 drain, --continue)",
+      "per-path read of both merges against their branch parent: every branch path present; the only differing paths are the conflict files resolved as unions (the channel file; .tools/box-sync.sh)",
+      "msg 2258 1.0.0_SA_CTO~DELL1: disarm D1-S5 this tick with the interim guard; the fix (--continue exits non-zero unless every staged path is committed, planted-partial negative arm) is cut at the next issuance after round 2's cut"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D1-S5 (ARMED, disarm_owner 2.0.0_SA_COO~N1): until the fix lands, every drain using --continue reads git show --stat HEAD against the staged path list before it reports done.",
+  "world_is": "Applied by this lane to its own drains, retroactively to the two it made today. The fix itself is not built: it is cut at the next issuance after round 2's cut (CTO msg 2258). The DISARMED clock on D1-S5 is the CVO's to write."
 }
 ```
