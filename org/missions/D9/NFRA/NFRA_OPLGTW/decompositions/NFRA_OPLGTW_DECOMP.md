@@ -1828,3 +1828,6 @@ Label `<round>32</round>`, ONE issuance, eight cells in six chains.
   dispatcher skips a non-T-1 record); Phase D writes 08335338 after Y. **OG-tm-1 A1/A2** (@f49624438b, @3998bbe5a7):
   slm-only difference proceeds (CTO 32147); the data/assets/scripts/silver mirror (row S4) before Leg C; both halves
   signed (COO @3998bbe5a7, CTO @4149c01c23).
+- **OG-ap-1 CUT as workstream APPLY-TM1** (2026-10-09 ~01:4xZ, issued to `0.7.0_AE_CloudOps~Z`): OG-tm-1's Phase B legs
+  C, B, A and the gateway roles, by `-target` only, under the signed pair (COO @3998bbe5a7, CTO @4149c01c23), after row
+  S4's mirror drained @b831326e39. The QA pull stays with worker ~39.
