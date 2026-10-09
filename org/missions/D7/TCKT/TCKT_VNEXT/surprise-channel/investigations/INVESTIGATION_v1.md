@@ -793,3 +793,60 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S18 -- irpt-status 500s on 7 live routes after its 15:43:11Z redeploy (TypeError in build_retained_repositories); 6 of the 27 ungradeable and FWD-1's hop (e) blocked
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S18",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-09T16:32:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "irpt-status answers HTTP 500 on 7 live routes after its 2026-10-09T15:43:11Z redeploy: TypeError build_retained_repositories() got an unexpected keyword argument 'additional_policy_revisions'. 6 of the 27 clamped routes therefore cannot be graded for the firm clamp at HEAD, and FWD-1 cannot complete because hop (e) polls one of them. Measured before and after: the same routes answered 200 with sane refusal envelopes at 15:40Z.",
+  "disarm_owner": "the IRPT_BCKEND release line that deployed irpt-status at 15:43:11Z, routed via 2.0.0_SA_COO~V2 to the owning COO/CTO; TCKT_VNEXT builds nothing on it and this seat changes no code",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED LIVE 16:19Z through CloudFront (run SA-r-1b-2026-10-09T16:19:13Z): HTTP 500 on GET /api/scoped/investor-reporting/status, /status/{jobId}, /analysis/requests, /analysis/requests/{requestId}, /analysis/requests/{requestId}/pdf, /analysis/{jobId}/sections, and the live-only /analysis/requests/{requestId}/original -- for the own firm AND both off-list firms, so the clamp is not reached",
+      "THE HOST'S OWN LOG: /aws/lambda/irpt-status, 47 matching events over 16:18-16:26Z: '[ERROR] TypeError: build_retained_repositories() got an unexpected keyword argument additional_policy_revisions', Traceback /var/task/read_memo.py line 93 in scoped then /var/task/served...",
+      "DEPLOYED STATE: irpt-status CodeSha256 VC/r14kaXm6FqaZOOFm3fT+8qngsyGI5Yr7U+DgYx64=, LastModified 2026-10-09T15:43:11Z (get-function-configuration)",
+      "BEFORE/AFTER BRACKET: at 15:40Z (run SA-r-1-2026-10-09T15:40:57Z, trace committed @e652ac4d3e) the same routes answered 200 with refusal envelopes -- own firm NOT_FOUND / INVALID_INPUT, cottonwood FIRM_BINDING. The 15:43:11Z deploy sits inside the window between the two measurements",
+      "WHY reread_27.py STILL READS CLAMPED: it hashes the deployed served.py member (87d9ecc4) and those clamp bytes ARE present. A member-hash check cannot see a runtime TypeError raised on the way to that code, so 'CLAMPED' and '500' are both true at once -- the member hash is not a liveness oracle"
+    ]
+  },
+  "spec_asserts": "The 27 formerly-MORE_THAN_ONE routes are clamped and answer: each serves its one firm and refuses an off-list firm (reread_27.py READ27 27/27 rc 0, measured 16:18Z). Pair v2.2 step 4 grades every firm-scoped route on that answer, and FWD-1's hop (e) polls GET /analysis/requests/{requestId} to READY.",
+  "world_is": "7 irpt-status routes raise before any firm logic runs and return 500 to every caller, so 6 of the 27 are ungradeable at HEAD and hop (e) cannot reach READY. The clamp itself is not implicated -- it was measured working on these same routes 39 minutes earlier; what changed is a deploy that landed a call site without the signature it calls. This is the half-landed-deploy shape, found from outside by a seat that deployed nothing.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## TCKT_VNEXT-D2-S19 -- SA-r-1b run 2 ran before its ledger entry was opened (NEVER-2); the self-start clause in the issuer's AMENDMENT 3 invited it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S19",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T17:02:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "SA-r-1b run 2 (a live write: a users-table row and a test ticket) self-started under AMENDMENT 3's 'no new GO needed' clause and opened its NEVER-2 ledger only after the act (entry labelled RETROSPECTIVE). The issuer's own clause removed the GO checkpoint that would have put the ledger first.",
+  "disarm_owner": "2.0.0_SA_COO~V2 (AMENDMENT 4 @ae01a5d96b gates run 3 on an explicit GO with the ledger opened first; CTO msg 3751)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 943caa24dd: deploy-ledger(open) tckt-vnext-sa-r1b-run2-RETROSPECTIVE-20261009, after the run 2 act",
+      "0.7.0_AE_CloudOps~TV2 msg 3739: 'run 2 ran with no ledger entry (retrospective one filed, labelled)'",
+      "TO-RUN-SA-r-1b AMENDMENT 3 @a10101dc7a: 'Run 2 ... with NO new GO needed'",
+      "CTO msg 3751: breach of NEVER-2 (ledger at start); file the row; run 3 gated on an explicit GO with its ledger opened first"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md NEVER-2: a deploy or live-write act opens its ledger entry in org/critical_paths/change_management/ at START and closes it at completion.",
+  "world_is": "Run 2 wrote and removed the row and created and completed a ticket before any ledger entry existed. The retrospective entry records the act, and cleanup was verified (row absent, ticket completed). No residue, but the at-start control did not hold for one run.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

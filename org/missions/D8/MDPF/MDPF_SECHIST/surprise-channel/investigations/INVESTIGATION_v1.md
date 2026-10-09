@@ -297,3 +297,52 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "Without s3:PutObject on bloomberg/etfs/silver/history_gaps/* for the gold Lambda role, every scheduled run logs 'gap record: WRITE FAILED' and continues: gold still blanks over the gap that day (in-memory record) but no record persists, so the next pull cannot re-request from it (FWD-4 degrades silently, FWD-5 holds). Read grant on bbg/ already exists (load_history lists and reads it)."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-09T16:50:00Z",
+  "one_line": "SH-t-19's depth bound marks a ticker exhausted for good when its backfill returns zero rows, and a per-security vendor error returned as an empty response also reads as zero rows, so one transient error removes that ticker from depth backfill permanently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE integrations/bloomberg/pipeline/etf_daily_pull.py @522aa18dc2 history_backfill_exhausted: a planned ticker with a stored date and rec rows == 0 joins the set; the set is the union with the prior manifest's list (never shrinks)",
+      "FILE same, depth loop near :745-760: backfill_info[ticker] = {rows: _n} with _n = 0 when the returned row list is empty; a group that raises leaves its tickers absent (not marked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SH-t19 repair (3): a ticker whose last backfill returned no row older than its earliest stored date is not planned again.",
+  "world_is": "Zero rows from a per-security error and zero rows from a genuinely short history read the same, and nothing ever removes a ticker from the list. Issuer ruling (2.0.0_SA_COO~H1): accepted for round 5 -- no served value moves (depth only), the 2026-10-12 manifest's list is read at SH-t-20 and any ticker in it with known older vendor history is the trigger for a later expiry repair; owner 2.0.0_SA_COO~H1."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S2",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-09T16:55:00Z",
+  "one_line": "The gold Lambda package (etf-positioning-producer build_package.py PACKAGE) ships 3 members and none of the modules SH-t-7/SH-t-15 now import: etf_history_gap_record.py and lib/opal_naming.py with its registry inputs; gold's load_gap_record imports the gap module OUTSIDE its try, so a deploy as built raises ImportError on every scheduled run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/lambda/etfs-pipeline/etf-positioning-producer/build_package.py:95-102 PACKAGE = etf_positioning_gold.py, etf_positioning_publisher.py, etf_classifications_dynamodb.py (3 members)",
+      "FILE data/etfs/scripts/gold/etf_positioning_gold.py:836, :865, :931 'import etf_history_gap_record as _gr'; :836 load_gap_record imports before its try, and only NoSuchKey is tolerated",
+      "FILE data/etfs/scripts/silver/etf_history_gap_record.py:49 record_address imports lib.opal_naming.address; lib/opal_naming.py reads infra/logic/registry/*.json relative to its own file",
+      "FILE infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py:184-201 the pattern that works: lib/opal_naming.py as a real subpackage plus 7 registry files and org/standards/NAMING_SCHEMA.json at the same relative paths"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The gold deploy half: the package is built from git at a pin and the member list must include the silver module (a package edit in this act).",
+  "world_is": "The member list needs more than the silver module: lib/opal_naming.py and its registry and schema inputs too. Not live: no gold deploy has been taken. Disarm ruling (2.0.0_SA_COO~H1): the gold deploy order to 0.7.0_AE_CloudOps~DELL1 adds to PACKAGE etf_history_gap_record.py, lib/opal_naming.py and its registry/schema inputs, on the mdpf-gold-lambda pattern; the build's own import-closure check (infra/aws/lambda/ci/import-closure-check.py) passes on the zip before apply; a post-apply invoke reading 'gap record:' in the log (not ImportError) is the acceptance's first line."
+}
+```

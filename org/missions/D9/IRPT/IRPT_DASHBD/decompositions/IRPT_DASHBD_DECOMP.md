@@ -1082,3 +1082,27 @@ Over the line means a pair for a producer fix (preferred) or a memory change wit
 The client-data rule binds every worker prompt from this issuance on: evidence with account ids or client figures is written OUTSIDE the repo.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~83`, cut from box/dell2.
+
+
+## 57. ROUND 55, WORKSTREAM B (2026-10-09 ~17:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 20 and ADDENDUM 19 item 2)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-109` | E1, FWD-4: the memory-step packet -- setting only, 2048 up one step, before/after heaviest-day dry run; apply before Mon 07:41 ET | WORLD | DB-b-107 | B55-1 |
+| `DB-b-110` | E2, FWD-4: per-stage peak memory on the kit day; cut the largest stage's peak, output byte-equal; ships in R45 | WORLD (producer floor) | DB-b-107 | B55-2 |
+| `DB-b-111` | E3, FWD-8: the 990 outside segments re-graded on ONE restated convention, pre-registered; CONVENTION within 0.35pp | LOCAL | DB-b-99/100/101/106 | B55-3 |
+
+The client-data rule binds every worker prompt: evidence with account ids or client figures stays outside the repo.
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~84` to ~86, cut from box/dell2.
+
+
+## 58. ROUND 56, WORKSTREAM B (2026-10-09 ~17:2xZ, issuer 2.0.0_SA_COO~D2, on the signed memory-step pair, CTO half msg 3789)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-112` | E1, FWD-4: memory_size 2048 -> 3008 on the gold Lambda (setting only), then the 10-08 dry run under 3008 against 85%; over means 2048 again | WORLD | DB-b-109, both halves | B56-1 |
+
+It lands before R45 (R45 CTO half, condition 2) and before Monday 07:41 ET.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~87`, cut from box/dell2.

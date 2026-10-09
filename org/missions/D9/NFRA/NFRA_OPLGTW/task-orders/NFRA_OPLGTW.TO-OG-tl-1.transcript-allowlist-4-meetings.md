@@ -107,7 +107,7 @@ PASS. Report once per phase: literal outputs, commits, rows.
   meeting_allowlist.json, row Z-W48-S2) so AC1 measures the one script change; the applier's `DEPLOY_BASE_REF` stays
   the host's live ref. Graded by no gate limb as a modification (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>TRNSPT-ALLOWLIST</workstream>
 <slot>~48</slot>

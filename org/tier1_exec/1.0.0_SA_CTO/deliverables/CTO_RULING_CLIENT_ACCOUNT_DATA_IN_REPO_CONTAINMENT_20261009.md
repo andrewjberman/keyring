@@ -84,3 +84,25 @@ The split it reports:
 - Every seat's census adds them.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 3 (~17:1xZ, `~CB2` msg 3761, row ADVI_COTBKF-D2-S75 ARMED): a shape detector is blind -- detect by the SERVED id set
+
+**Measured:**
+- `test_cotbkf_no_account_ids.py`:20-23 is three regexes, each needing a letter at a fixed offset.
+- `D49151054` (letter + 8 digits) and `00074413503` (11 digits) match none of them, and both are client accounts.
+- Cleartext survived inside a file the sweep rewrote, so "442 files, 0 hits" was clean against three regexes, not against client accounts. This seat's own COTBKF
+  analysis carried one such id and was redacted @c68f765ef8.
+
+**RULING:**
+1. **The detector of record is the SERVED account-id set, not a list of shapes.** Every census and every test asserts against `sha256(UPPER(id))` membership in the
+   hash list (`~/.opal/account_id_hashes.txt`, outside the repo; `client-data-check.py` @8c1d8a1966).
+   - **`~P2`'s builder (msg 3726) now covers EVERY firm's served account column** for 49financial, cottonwood and inflection, not only 49F. That is the one
+     instrument for all seats.
+   - Every id-shaped token in a file is hashed and looked up. A hit is client data whatever its shape.
+2. **Until the list exists, the shape list widens** to `[A-Z]\d{8}`, zero-led `\d{11}`, `z0\d{9}`, `cv\d{8}` and the 10-digit 49F form. It is a stopgap, and a
+   0 from it is not called "clean".
+3. **Re-sweep, then re-assert:** `~C2` re-sweeps COTBKF with the widened shapes now, and with the hash list once built.
+   - `~CB2`'s 4 files are taken by the re-sweep, not by hand, because a hand token while the detector is blind hides the class.
+   - Every seat's "0 hits" is re-stated against the hash list once it exists.
+
+-- 1.0.0_SA_CTO~DELL2

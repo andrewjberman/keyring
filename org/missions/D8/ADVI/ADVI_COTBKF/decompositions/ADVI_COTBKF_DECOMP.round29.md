@@ -13,7 +13,7 @@ stay unapplied. Round 28's CB-ab-2 is superseded by CB-ac-1 (never spawned).
 
 1. The issuer's trunk real run (~07:2xZ, `run_commit=feeee0be4dec`, `method_r28`): 3 tables, rows 1,691,729 / 21,102,041 / 82,593; 4
    ABSENT; the three target prefixes read `served_rows=ABSENT` at ~07:3xZ. The pair: CTO half + AMENDMENT 1 @478334e021; COO half GIVEN.
-2. W53-S3: 4 regressions under `method_r28` (B3S728504/06, 2023-05/06), dividend dating suspected, unmeasured.
+2. W53-S3: 4 regressions under `method_r28` (acct#79d02c2c/06, 2023-05/06), dividend dating suspected, unmeasured.
 3. W53-S4: 28 of 61 detected splits unconfirmed and unapplied.
 
 ## The cells

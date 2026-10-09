@@ -1,0 +1,16 @@
+# drive log 2.0.0_SA_COO~W1 -- 2026-10-09 15Z-16Z (desktop-hk1uu7n)
+
+- 2026-10-09T15:17:22Z | AMGT_HARVST | L7 | 77/77B | no ~ZW commit since 48864ff38b; bu-2/proof copy/bs-4 owed at site Z (sent 15:0xZ), sign-in CALL with MSTR~Z; next-calls: 0 FREE | NOTHING-LEFT: site Z acts
+- 2026-10-09T15:21:45Z | AMGT_HARVST | L7 | 77/77B | MSTR~Z msg 2643: asks to ~ZW must be crossbox ORDERs -> XB-db6a (bs-4 close) + XB-00c3 (bu-1 proof copy) opened, bodies @7b8c82b0f1/@908b66157b; XB-dcce sign-in = Andrew's act (site Z open call 9f24); site Z box pass HELD (OG-tl-1 deploy) | DRIVE FORWARD
+- 2026-10-09T15:27:24Z | AMGT_HARVST | L7 | 77/77B | XB-7534/db6a/00c3 committed, wait on CLOUD + site Z box pass (HELD for OG-tl-1); sign-in = Andrew's act (sitez 9f24); next-calls: 0 FREE | NOTHING-LEFT: site Z pass
+- 2026-10-09T15:37:21Z | AMGT_HARVST | L7 | 77/77B | unchanged: 3 orders to ~ZW await site Z's held box pass; next-calls: 0 FREE | NOTHING-LEFT: site Z pass
+- 2026-10-09T15:47:54Z | AMGT_HARVST | L7 | 77/77B | site Z box pass ran 15:42Z (d35acd102a): XB commits 5f77b2935d + 29708ba1cc now IN box/sitez -> the 3 orders are deliverable to ~ZW; no ~ZW commit yet | NOTHING-LEFT: ~ZW executes
+- 2026-10-09T15:48:39Z | AMGT_HARVST | L7 | 77/77B | THIRD-EMPTY-TICK -> /unblock chase first: delivery+ACK of XB-7534/db6a/00c3 asked of MSTR~DELL1 (nudge 1) | NUDGE (chase)
+- 2026-10-09T15:58:48Z | AMGT_HARVST | L7 | 77/77B | ~ZW @6e5290eafb: bu-2 read (bbg 88 no_new, 3 errors -> publisher stopped, 151 never started; no error text, no runner log); bs-4 r47 STOPPED-INCOMPLETE 134/242; bu-1 proof copy at gate path -> REC build cell (error detail, cycle continues past pair errors, runner log) to CTO~DELL1 | RULE (routed)
+- 2026-10-09T16:06:39Z | AMGT_HARVST | L6/L7 | 78 | CTO msg 2724 yes (+5-consecutive guard) -> round 78 bv-1 issued @878f9466df, worker ~133 spawned in C:/Dev/wk-harvst-133; bu-1/bu-2 flips wait on 6e5290eafb in box/dell1 | PARALLELIZE
+- 2026-10-09T16:10:58Z | AMGT_HARVST | L7 | 77/78 | bu-1 + bu-2 flipped complete @e7fcfeccda (proofs VALID at gate path); bv-1 worker ~133 running (no commit yet); client-data notices 2750/2769 acked (worker scope is lib/opal_data_harvest only) | DRIVE FORWARD
+- 2026-10-09T16:17:27Z | AMGT_HARVST | L7 | 78 | worker ~133 committed build d68e68d25d, filing a row (channel staged), report pending | DRIVE FORWARD: none fireable (worker live)
+- 2026-10-09T16:23:57Z | AMGT_HARVST | L7 | 78 | worker ~133 report: AC1 7 passed, AC2 53 passed, suite 4 failed before/after (same 4), mutant OK, proof VALID @3b262d1809; row D1-W133-S1 (failed pairs never re-asked) -> AMENDMENT 1 @8e2cbd8196 (re-queue with failed window); fresh worker ~133 spawned on it (resume had no transcript) | RULE (amend)
+- 2026-10-09T16:27:31Z | AMGT_HARVST | L7 | 78 | worker ~133 on AMENDMENT 1; WHILE WAITING: drafted bv-1 merge COO half (round78/NEVER_WIDEN_HALF_COO_BV1_MERGE.md, DRAFT, uncommitted) | DRIVE FORWARD
+- 2026-10-09T16:36:44Z | AMGT_HARVST | L7 | 78 | bv-1 AMENDMENT 1 done (worker 4b0475b646, rows W133-S1/S2): issuer re-run AC1 10 passed, AC2 53 passed, proof VALID; branch pushed; COO merge half SIGNED @8ccf65f68c; CTO~Z half asked via MSTR~DELL1 | DRIVE FORWARD
+- 2026-10-09T16:37:55Z | AMGT_HARVST | L7 | 78 | CTO~Z half for bv-1 merge not yet (relay asked 16:36Z); WHILE WAITING: 15Z-16Z drive log | DRIVE FORWARD

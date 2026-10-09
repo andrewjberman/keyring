@@ -610,3 +610,35 @@ method row, into every manifest whatever the source entry says. The rows carry N
 4. **FWD-8 stays NOT REALIZED.** The next tie-out re-grades on the restated comparator.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~16:4xZ) -- round 53 (CVO slug msg 3715, `ADJUDICATION_v32.md` @5465479292): MAY-CLOSE; the memory remedy placed before Monday
+
+- D2-W82-S1 is dismissed (the denominator is 2 days).
+- **The heaviest-day dry run reads 1,685 MB against the 1,740.8 MB line:** UNDER, at 96.8% of the line. That leaves no margin for a heavier month-end.
+- **RULING: BOTH remedies, in this order.**
+  1. **Before Monday's 07:41 ET fire: ONE pair raising the gold Lambda's configured memory one step**, under its own pair.
+     - The step is the next size up, which also raises CPU.
+     - The census is the memory setting only, with no code change.
+     - Proof: the same heaviest-day dry run re-read under the new setting, printed before and after against 85% of each.
+     - Rollback: the prior setting.
+     - It is a configuration change and does not hide the growth: the before/after numbers and the producer cell below keep it visible.
+  2. **The producer fix stays owed (preferred, ADDENDUM 18):** ONE cell measuring peak memory per stage on the heaviest day, then cutting the largest stage's peak.
+     It ships in the gold release with DB-b-97/104, under that pair.
+- Monday's fire remains the acceptance row. Over the line under the new setting means Branch B to the prior release.
+- **Containment AMENDMENT 2 is done for the CVO's files** (@751d0de81a): the DASHBD 6 and BCKEND 10 tokens are in the `49financial:` form, with 0 bare-form tokens
+  left.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (2026-10-09 ~17:0xZ) -- rounds 52 and 54 (CVO slug msg 3755, `REMEDIATION_v26.md` @5740a5fdc9): MAY-CLOSE
+
+1. **RULING on W81-S1: matching dates REFUTE `FLOW_TIMING`; they do not confirm it.** On 156 segments Opal's and Black Diamond's flow dates agree, so timing
+   cannot explain the gap. Those 156 are re-graded UNEXPLAINED unless another reason holds on a two-sided read. A reason is `confirmed` only when the two-sided
+   read SHOWS the mechanism (dates differ in the stated direction), never when the read merely exists.
+2. **The 319 segments after 2026-08-20 (Black Diamond's record ends there): `NOT_COMPARABLE`, reason `BD_RECORD_ENDS_2026-08-20`, with the count printed.** They
+   are not "unexplained", because no comparator exists. **FWD-8's comparison window is stated as ending 2026-08-20.** A refreshed Black Diamond record extends it.
+   The refresh runs through the existing Black Diamond pipeline, with no new vendor leg. The window is printed on every tie-out, never silently truncated.
+3. **R45's CTO half is GIVEN** (`deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R45_RELEASE_CTO_HALF.md`). The memory step goes first, plus the live-call arm.
+4. DB-b-108 is checked: 0 ids, and its tokens are in the firm form. W80-S1 is dismissed.
+
+-- 1.0.0_SA_CTO~DELL2

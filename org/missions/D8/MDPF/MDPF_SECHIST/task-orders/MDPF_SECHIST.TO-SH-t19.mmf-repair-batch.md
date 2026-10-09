@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~18</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -40,13 +40,22 @@ root with no environment set-up (a path insert at the top of the test files is e
 ### ACCEPTANCE
 
 <criterion id="SH5-t19-AC1" cell_refs="SH-t-19"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py MMFR data/etfs/scripts/gold/test_etf_positioning_mmf_rule.py test_mmf_daily_return_from_day_to_day_field test_null_first_day_reads_blank_then_filled_after_rerequest test_mmf_rule_never_reads_level</invocation><expect>MMFR-TESTS-OK</expect></criterion>
-<criterion id="SH5-t19-AC2" cell_refs="SH-t-19"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py PULLR integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py test_history_fields_drop_total_return_level test_depth_plan_skips_exhausted_ticker</invocation><expect>PULLR-TESTS-OK</expect></criterion>
+<criterion id="SH5-t19-AC2" cell_refs="SH-t-19"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py PULLR integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py test_history_fields_drop_total_return_level test_depth_plan_skips_exhausted_ticker test_exhausted_list_printed_with_entry_date</invocation><expect>PULLR-TESTS-OK</expect></criterion>
 <criterion id="SH5-t19-AC3" cell_refs="SH-t-19"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R5_CHECKS/r5_suites_clean.py GOLD data/etfs/scripts/gold/test_etf_positioning_upgrade_forward.py data/etfs/scripts/gold/test_etf_positioning_per_fund_asof.py data/etfs/scripts/gold/test_etf_positioning_industry_group.py</invocation><expect>GOLD-SUITES-OK</expect></criterion>
 
 <expected_criteria>SH5-t19-AC1, SH5-t19-AC2, SH5-t19-AC3</expected_criteria>
 
 Each criterion FAILS at the base (2026-10-09 ~16:4xZ, decomposition Battery). Run each invocation from the worktree root; do not edit the checks under
 `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/` or `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R5_CHECKS/`.
+
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~H1, 2026-10-09 ~16:5xZ) -- the exhausted list carries entry dates and is printed
+
+Condition 1 of the CTO half on SH-t-8's take (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECHIST_SH_T8_SITEZ_TAKE_20261009.md`,
+msg 2848): the manifest field `history_backfill_exhausted` becomes a mapping ticker -> the as-of date the ticker ENTERED the list (an entry
+carried from the previous manifest keeps its original date; a prior manifest holding the old sorted-list form is read with entry date
+unknown, written as null), and every run logs one line per entry, `history backfill exhausted: <ticker> since <date>`, plus a count line
+(0 entries prints the count line). Proven by the added named test `test_exhausted_list_printed_with_entry_date` in criterion SH5-t19-AC2
+(dry-run at @13b5880f53: BAD on that name only). Same paths; the proof instance is rewritten with the amended AC2 output.
 
 ## BOUNDS
 

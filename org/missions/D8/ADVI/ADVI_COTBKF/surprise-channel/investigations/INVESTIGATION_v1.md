@@ -4729,3 +4729,289 @@ round.** Never edit an existing row.
  "world_is": "It would raise ImportError: opal_naming is not deployed beside the cot gold scripts. Latent while rps is empty."
 }
 ```
+
+## ADVI_COTBKF-D2-W77-S1 -- existing gold tests encode the fail-open behavior the ruling reverses
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W77-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~77",
+ "surfaced_at": "2026-10-09T17:20:00Z",
+ "one_line": "Eleven existing gold tests fail BY DESIGN once the writer and B_00 fail closed: they encode the behavior CTO ADDENDA 21 and 22 reverse, and all sit outside this order's paths grant. Failing (measured, gold suite 36 passed 4 failed 7 errors; silver suite 754 passed 11 skipped, unchanged): test_b00_ff_carry_claim.py x3 (runs _ff_worker with __file__ = the repo gold dir, which has no scopes.json beside it, and relied on opal_naming to find the firm); test_canonical_prices_input_resolution.py::test_c_neither_present_unresolved_and_absent (asserts WARN and an empty-default overrides load); test_canonical_prices_source_firm.py x7 (the fixtures copy the writer and scopes.json but NOT ticker_overrides.py, so the writer now raises at import; test_g additionally asserts the writer RUNS to an upload with scopes.json absent, the opposite of ruling item 1). The order's bound 'both suites stay green' cannot be met without editing those three files.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest data/cot/scripts/gold/tests -q -> 4 failed, 36 passed, 7 errors (this worktree)",
+   "git show 2b4531d4a8 shows the new test; data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py:_load_writer copies only the writer and scopes.json",
+   "data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py:test_c asserts 'WARN' in output"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ax-1 BOUNDS: both suites stay green; and the ruling: scopes.json missing STOPs before any write, ticker_overrides missing STOPs.",
+ "world_is": "The new test passes (4 of 4) and the silver suite is green, but data/cot/scripts/gold/tests carries 4 failed and 7 errors in 3 files not in the paths grant. Each failure is a fixture or assertion of the old fail-open behavior: add ticker_overrides.py beside the writer in the source_firm fixtures; give the b00 carry-claim test a scopes.json beside a copy of B_00; invert test_g and test_c to the STOP arms (which test_cot_gold_failclosed.py already covers). The order is left OPEN for the COO to amend the paths or recut."
+}
+```
+
+## ADVI_COTBKF-D2-W77-S2 -- override/correction counts differ from the order text
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W77-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~77",
+ "surfaced_at": "2026-10-09T17:20:00Z",
+ "one_line": "The order text says the repo ticker_overrides.py loads 757 overrides and 1 correction; the file loads 757 overrides and 104 corrections (TICKER_CORRECTIONS has 104 entries, many mapped to None).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -c import ticker_overrides; len(YF_OVERRIDES), len(TICKER_CORRECTIONS) -> 757 104",
+   "data/cot/scripts/gold/lib/ticker_overrides.py:803 TICKER_CORRECTIONS dict"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ax-1 item 3(d): with the file present, 757 overrides and 1 correction load (the repo file's own counts).",
+ "world_is": "Measured by importing data/cot/scripts/gold/lib/ticker_overrides.py: len(YF_OVERRIDES)=757, len(TICKER_CORRECTIONS)=104. The test asserts the measured 757 and 104 and prints them; the '1' in the order is not what the file holds."
+}
+```
+
+## ADVI_COTBKF-D2-W77-S3 -- naming gate refuses the writer's plain legacy keys (R20 case needed)
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W77-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~77",
+ "surfaced_at": "2026-10-09T17:40:00Z",
+ "one_line": "The commit-time naming gate (LGIC_ENFORCE, ENFORCE mode) REFUSES the writer's three plain legacy S3 key constants, so the price-writer half of CB-ax-1 is not committed: build_canonical_prices_v2.py:121 'silver/transactions/' is NEW and OUT-OF-PATTERN as S3Key (REFUSE); :122 'silver/historical_prices.parquet' is EXISTING and OUT-OF-PATTERN in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS (REFUSE unless the diff removes it); :123 'code/gold/' is EXISTING, touched, OUT-OF-PATTERN (WARN). The order says STOP this branch and name the R20 case; no bypass with parts, no naming-place-override.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit.sh output: NAMING-GATE: REFUSE 3 graded (data/cot/scripts/gold/build_canonical_prices_v2.py:121-123)",
+   "the fail-closed writer diff is saved at C:/dev/wk-cotbkf-77/.scratch/writer_failclosed_plain_keys.patch (96 lines, untracked scratch; it applies with git apply)",
+   "the R20 kind: .tools/naming-gate.py R20_KIND (a declared exception: register_ref a conformance-ledger row id, occurrences, cutoff or PERMANENT), which needs Andrew's acknowledgement"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-ax-1 item 1: write each S3 key as ONE plainly typed module constant; if the commit-time naming gate refuses a plain legacy key, STOP that branch and file a BLOCKING row naming the R20 case.",
+ "world_is": "The R20 case needed: a declared exception for the three occurrences in data/cot/scripts/gold/build_canonical_prices_v2.py (the keys silver/transactions/, silver/historical_prices.parquet, code/gold/ as plain legacy constants, values equal to the legacy_addresses.json rows before and after), register_ref a ledger row id, cutoff PERMANENT or the ADVI_FIRMBKTS close date; Andrew acknowledges the departure (infra/logic/02_DOCTRINE.md R20). Until it lands, the writer still imports opal_naming at module level and cannot run from the mirror (D2-S72/W75-S1 stand for it). B_00's half IS committed (7b85e1a074)."
+}
+```
+
+## ADVI_COTBKF-D2-W78-S1 -- census counted 0 account-id filenames; 3 paths and the census file carried ids
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W78-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~78",
+ "surfaced_at": "2026-10-09T17:00:00Z",
+ "one_line": "The round-51 census counted 0 account-id filenames; 3 tracked paths under deliverables/ carried an account id in a directory or file name, and the census file itself carried ids in its path column. All 4 were tokenised in CB-ay-1.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git ls-files of the project at the base commit: 3 tracked paths matched the account patterns (2 directories, 1 file); test_cotbkf_no_account_ids.py now scans paths as well as bytes",
+   "base test run: 163 files with hits vs the census 162 (80 evidence + 82 doc/lane); the extra file is the census document (paths with tokens now)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Census 3b0dda2cb0: 627 files, 179 hits, 0 filenames are account ids.",
+ "world_is": "3 tracked paths and the census document carried account ids; renamed to acct#<sha8> tokens (git mv) and redacted in the CB-ay-1 commits. Origin history still carries the old paths (Andrew's purge)."
+}
+```
+
+## ADVI_COTBKF-D2-W78-S2 -- order patterns cover Commonwealth shapes only; Cottonwood-shaped ids remain
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W78-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~78",
+ "surfaced_at": "2026-10-09T17:00:00Z",
+ "one_line": "The order's three patterns cover Commonwealth-shaped ids only; Cottonwood-side account shapes (z plus 10 digits, and a leading-zero 11-digit form) remain in non-channel ADVI_COTBKF files: 120 and 45 matches in 8 and 15 of 442 files.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python count over git ls-files (excluding surprise-channel/) at the CB-ay-1 redaction commit: z+10-digit 120 matches in 8 files; 0+10-digit 45 matches in 15 files; denominator 442 files",
+   "CTO ruling @0e8209c33c item 6: no client account id in any tracked file; the order's patterns (and so test_cotbkf_no_account_ids.py) do not match these shapes; not redacted here because the order names the three patterns only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB51ay1-AC1 passing means 0 client account ids remain in the non-channel files.",
+ "world_is": "AC1 passes on the three Commonwealth shapes only; the Cottonwood shapes above are still tracked and are neither redacted nor tested. The next containment cell needs the shapes added to the patterns."
+}
+```
+
+## ADVI_COTBKF-D2-W78-S3 -- AC1 blocked: the TO gate refuses redaction of 7 completed orders whose proof instances were moved
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W78-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~78",
+ "surfaced_at": "2026-10-09T17:30:00Z",
+ "one_line": "CB51ay1-AC1 cannot pass as written: the TO issuance gate refuses any edit to 7 completed task orders whose proof-of-spec instances the order's own MOVE step took out of the repo, so 28 account-shaped matches remain in those 7 files.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit layer 2 (to-pipeline-gate.py:3050-3100, check for a complete flip): a modified order whose last status tag is complete needs a valid proof-of-spec instance beside it; 7 refusals of 7 on the redaction commit, reason 'NO proof-of-spec instance was found beside it'",
+   "the 7 instances are among the 19 proof_of_spec.json files in the 80 evidence moves (census class evidence); a token-redacted copy restored beside each fails proof-of-spec-check (rc 1 or 2: artifact paths resolve to moved files, 7 of 7 invalid); the restored copies were deleted",
+   "'# pipeline-override:' on the 7 orders did not clear the refusal (the arm at :3050 does not read it); the override lines were removed again",
+   "python -m pytest data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py: 442 files scanned, 7 files with hits, 28 hits; the 7 token-redacted order texts are kept in the worker worktree .scratch/redacted_TOs/ (untracked)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-ay-1: redact every doc in place, including task orders (diff = token substitutions only), and AC1 expects 0 hits.",
+ "world_is": "Redaction of a completed order is refused by the L6 neck unless a valid instance sits beside it; moving the instance and redacting the order cannot both land. The 7 orders need a ruling: gate exemption for a containment redaction, or an issuer-side route that does not edit completed orders."
+}
+```
+
+## ADVI_COTBKF-D2-S73 -- disarms D2-W78-S2: residual id shapes owned by a planned all-shapes cell
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S73",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T16:52:44Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W78-S2 (its disarm_owner, same turn): the cot id shapes the round-51 patterns miss (z0+9, cv+8, 11-digit zero-led; containment AMENDMENT 2) are already censused by the issuer @14c7a0e16f (79 of 637 files, 14 added-only) and placed in ONE residual all-shapes cell, cut when round 52 (~79) drains (they edit overlapping files). No new copy of any id is made; the ids already sit in history, whose purge is Andrew's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deliverables/2.0.0_SA_COO~C2/ACCOUNT_ID_CENSUS_HEAD_20261009.md re-census section @14c7a0e16f",
+   "round 51 drained @bc0bb85599"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner.",
+ "world_is": "W78-S2's hazard is owned by a planned cell with its census; nothing further is written meanwhile."
+}
+```
+
+## ADVI_COTBKF-D2-S74 -- disarms D2-W78-S3: 7 completed orders' redaction routed to the gate owner
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S74",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T16:52:44Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W78-S3 (its disarm_owner, same turn): 7 completed task orders could not be redacted because the TO issuance gate refuses an edit to a completed order whose proof instance was MOVED out (the proof instances carried ids). The redacted texts are kept OUTSIDE the repo (C:/dev/_cotbkf_private_evidence_20261009/redacted_TOs/, 7 files) and the gate question is routed to 1.0.0_SA_CTO~DELL2 (the gate's owner) for a containment route; nothing is bypassed meanwhile.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round 51 drained @bc0bb85599 (80 moved, 76 docs redacted, 3 paths renamed)",
+   "test_cotbkf_no_account_ids.py: 443 files, 7 with hits (the 7 orders)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner.",
+ "world_is": "W78-S3 is routed to the gate owner with the redacted texts held outside the repo."
+}
+```
+
+## ADVI_COTBKF-D2-S75 -- CB-ay-1: the redaction detector's three regexes miss two real account shapes; cleartext survives inside files the sweep redacted
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S75",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T15:40:00Z",
+  "one_line": "The CB-ay-1 redaction's detector is three regexes that all require letters in fixed positions, so two real Cottonwood account shapes -- letter+8digits and 11digits -- are invisible to it; cleartext of both survives INSIDE files the sweep itself redacted, and its test will keep reading 0 hits on them",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py:20-23 -- PATTERNS = [ [A-Z0-9]{2}[A-Z]\\d{6} , \\d[A-Z]{2}\\d{6} , [A-Z]{3}\\d{6} ]; every one requires a letter at a fixed offset",
+      "measured, 3 patterns x 6 tokens with the denominator printed: B3S728504, 0QF878956, RGY004256 and B3S793726 each match at least one pattern and were duly redacted; D49151054 (letter + 8 digits) and 00074413503 (11 digits) match NONE",
+      "cleartext D49151054 survives in a file the sweep REDACTED: deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md still carries it (1 hit) alongside 2 lines of acct# tokens it did substitute",
+      "D49151054 is an ACCOUNT, not a security: it appears as an account-month in that half's own 5-row ABSENT list (D49151054 2021-07 and 2021-10) and in the FWD3-ABSENT lines account=D49151054",
+      "00074413503 is an ACCOUNT: read live out of the served month_grades 'account' column during this seat's CB-ac-1 and CB-ah-3 mutants, and it survives in this seat's two proof_of_spec instances and two session logs",
+      "the sweep's own test run now reads FAILED, 28 account-shaped hits in 7 files -- those 7 are the task orders the commit documents as held back by the TO gate, so the test is honestly red on THAT remainder and silent on this one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-ay-1 @b4aafe78f4: '76 documents carrying client account ids rewritten to acct#<sha8> tokens', with its test extended to scan tracked paths as well as bytes and 'Denominator: 442 files, 0 hits'.",
+  "world_is": "The 0 is clean against THREE REGEXES, never against 'client account ids' -- the classic narrower-denominator-than-the-sentence shape. Two account shapes present in the swept corpus match none of the patterns, so the sweep could not see them, did not substitute them, and its test will keep passing over them however many times it runs. At least one instance sits inside a file the sweep itself rewrote, which is what makes this a detector gap rather than a missed-file gap: re-running the same sweep will not find it. This seat did NOT hand-redact its own four affected files. The token is derivable (acct# plus the first 8 hex of sha256('cottonwood:' + account), published in the sweep's commit message), but substituting by hand while the detector stays blind would make the record LOOK clean, correlate with a key held outside the repo that this seat cannot verify against, and leave the class open -- the worse outcome. The remedy is the detector's owner's: widen PATTERNS to cover a leading-letter+digits and an all-digit account, re-run the sweep over the full corpus, and only then re-assert the 0. The affected files this seat can name are deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md plus this seat's ADVI_COTBKF.TO-CB-ac-1 and TO-CB-ah-3 proof_of_spec instances and its fwd3_serve_mint.md and fwd3_astraded_remint.md; a widened detector will find whatever else is out there, which is the point of fixing the detector rather than the four files."
+}
+```
+
+## ADVI_COTBKF-D2-W79-S1 -- data/assets/scripts/silver/commonwealth_signs.py line 71 holds one client account id inside a message string, 
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W79-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~79",
+  "surfaced_at": "2026-10-09T17:05:00Z",
+  "one_line": "data/assets/scripts/silver/commonwealth_signs.py line 71 holds one client account id inside a message string, after a lowercase 'cv' prefix; it is in none of the order's <paths>, so CB52az1-AC1 cannot reach 0 hits.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/silver/tests/test_cotbkf_code_no_account_ids.py -q -s (committed e3c4c40707 at base: 71 files, 24 hits; after this worker's edits: 72 files, 1 hit, file commonwealth_signs.py line 71, token acct#80dbe306)",
+      "ACCOUNT_ID_CENSUS_HEAD_20261009.md lists 6 code files and not commonwealth_signs.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-az-1: the 6 code files listed carry every real account id in this project's commonwealth_*.py scripts and tests; moving them gives 0 hits.",
+  "world_is": "A seventh file carries one id (the census word-boundary read missed it: the id sits inside a 'cv<id>' token). The criterion needs commonwealth_signs.py edited (replace the id in the message with a synthetic or acct#<sha8> token); this worker's write grant excludes it. The test was not weakened; every other hit is cleared (24 -> 1). Needs a one-path grant (commonwealth_signs.py) on a new order or an amendment of this order's <paths>."
+}
+```
+
+## ADVI_COTBKF-D2-W79-S2 -- The three account-id shapes are a partial detector: of 1533 accounts in the private ard manifest, 924 match on
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W79-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~79",
+  "surfaced_at": "2026-10-09T17:06:00Z",
+  "one_line": "The three account-id shapes are a partial detector: of 1533 accounts in the private ard manifest, 924 match one of the shapes and 609 match none; and the unbounded shapes fire on 14 date-stamped document ids in test_commonwealth_document_index.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "private manifest first_data_date keys (1533) tested with anchored forms of the three shapes: 924 match, 609 do not",
+      "unbounded scan of the 69 commonwealth_* code and test files: 14 hits in test_commonwealth_document_index.py (STMT/REPR/NCSD stamps), 0 once the left boundary (?<![A-Z0-9]) and right (?!\\d) are added"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-az-1 / ruling item 6: the three shapes find a client account id; 0 hits means no id.",
+  "world_is": "0 hits proves absence of the three shapes only. The test bounds the shapes (no hit inside a longer capital/digit run) to drop the 14 document-id false positives; that is stated in its docstring. The tracked manifest was additionally checked by a different instrument: 0 of the private manifest's 1533 account keys occur in its text. Also: commonwealth_asf_source.py held no runtime literal (one docstring example), so it needed no private config; the runtime literal moved to config is a rejected-candidate security identifier in commonwealth_sweeps.py whose shape is account-like."
+}
+```

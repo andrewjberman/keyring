@@ -21,11 +21,11 @@ Graduated at round 20's L8 (ADJUDICATION_v11.md), round label v21: 4 rows, OPEN.
     "owner": "0.0.0_AB_MSTR~DELL2 (cross-fabric to site Z, msg 3189)",
     "round": "v21",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.0.0_AB_MSTR~DELL2 (cross-fabric to site Z, msg 3189)",
       "round": "v21"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-D2-W2-S6",
@@ -84,11 +84,11 @@ Graduated at round 20's L8 (ADJUDICATION_v11.md), round label v21: 4 rows, OPEN.
     "owner": "2.0.0_SA_COO~T2",
     "round": "v21",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~T2",
       "round": "v21"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

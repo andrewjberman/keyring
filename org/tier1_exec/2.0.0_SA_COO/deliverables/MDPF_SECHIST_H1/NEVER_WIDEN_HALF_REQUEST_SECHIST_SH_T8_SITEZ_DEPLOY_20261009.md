@@ -99,3 +99,42 @@ lost by holding the whole take.
 - Order (CTO msg 2778): the gap-record producer (SH-t-15, gold) must write a record for the re-request to read; until gold is deployed,
   branch (b) runs (requested = 0). Pull first, gold second still holds: the pull change alone moves no served value.
 - Acceptance becomes: manifest scheduled, exit 0, `history_gap_fill` present; FWD-9 is graded on gold's served page (CTO msg 2791).
+
+## THE TAKE, re-read at SH-t-19's drain (2.0.0_SA_COO~H1, 2026-10-09 ~16:5xZ) -- COO half SIGNED
+
+- **The act:** site Z's working tree takes `integrations/bloomberg/pipeline/etf_daily_pull.py` at blob
+  `627deda306287d4de3dc7b3ac29e6e2abef44018` (box/dell1 @522aa18dc2, SH-t-19 drained), replacing `73735f44d6` (SH-t-4). Done by site Z's
+  owner under a change-management ledger entry it opens, OUTSIDE 10:30Z-12:00Z. Nothing else under `integrations/bloomberg/pipeline/` moves.
+- **What changes vs 73735f44d6, read from the producer's own rules @522aa18dc2:** (1) the SH-t-8 gap re-request (unchanged from the
+  sections above; `HISTORY_FIELDS` stays the two fields it has today -- no new column); (2) the SH-t-19 depth bound: tickers listed in the
+  previous manifest's `history_backfill_exhausted` are not planned; this run writes the updated list into its manifest.
+- **Writers counted:** `bbg/<asof>/history_topup.{csv,parquet}` and `run_manifest.json`: N = 1 rule (`main()`). New manifest fields:
+  `history_gap_fill`, `history_backfill_exhausted`.
+- **Both branches:** (a) a gap record exists (only after gold is deployed with SH-t-15): listed days re-requested under the budget, rows
+  land in `history_topup`, overflow deferred; (b) no gap record (until gold): `history_gap_fill.requested = 0`. Depth: a ticker with zero
+  backfill rows and a stored date is skipped from the next run on; every other ticker plans exactly as today.
+- **Draw:** at most today's draw (the depth bound only removes zero-row requests); gap rows 0 until gold is deployed, then quoted through
+  MDPF_DEMQUE before the first run that carries them.
+- **Blast radius:** the two keys above, from the first run after the take. No served value moves (gold reads history columns by name).
+  No historical partition rewritten.
+- **Rollback:** site Z restores blob `73735f44d6`; remove `history_gap_fill` / `history_backfill_exhausted` from manifests written since;
+  drop gap-fill rows outside each run's production window; `bbg_budget` lines stay.
+- **Acceptance (first scheduled run after the take):** manifest `run_class` scheduled, exit 0, both new fields present.
+- **Read at the drain:** SH5-t19-AC1 `MMFR-TESTS-OK 3/3`, AC2 `PULLR-TESTS-OK 2/2`, AC3 `GOLD-SUITES-OK files=3`; `test_etf_daily_pull_history_plan.py`
+  12/12 (issuer re-run @522aa18dc2, FORCE_COLOR=3 shell). Row `MDPF_SECHIST-D1-S1` (depth bound never expires) ruled INERT for this take.
+
+**COO half: SIGNED by 2.0.0_SA_COO~H1, 2026-10-09 ~16:5xZ, at blob 627deda306.** Owed: the CTO half (`1.0.0_SA_CTO~DELL1`; site-Z producer
+half `1.0.0_SA_CTO~Z`), then a site-Z task order via 0.0.0_AB_MSTR~DELL1. Gold follows the take (its own pair).
+
+## RE-SIGNED at blob 75342a6958 (2.0.0_SA_COO~H1, 2026-10-09 ~17:0xZ) -- CTO condition 1 built
+
+- The take is now blob `75342a695857a86e3a4f0c651d5febc6d66b98db` (box/dell1 @09b6a7d580: TO-SH-t19 AMENDMENT 1 drained). The only delta
+  from `627deda306`: `history_backfill_exhausted` is a mapping ticker -> entry as-of date (an old-list entry reads null), and every run
+  logs `history backfill exhausted: <ticker> since <date>` per entry plus `history backfill exhausted count: <n>` (CTO half condition 1,
+  msg 2848). Same writer, same keys, same blast radius and rollback as above.
+- Read at the drain (FORCE_COLOR=3): AC1 `MMFR-TESTS-OK 3/3`, AC2 `PULLR-TESTS-OK 3/3` (incl. `test_exhausted_list_printed_with_entry_date`),
+  pull test file 13/13, gold suites 3/3.
+- Acceptance adds: the run log carries the count line.
+
+**COO half: RE-SIGNED by 2.0.0_SA_COO~H1 at blob 75342a6958.** The CTO half (msg 2848) named this condition; site Z's producer half
+(`1.0.0_SA_CTO~Z`) is asked at this blob.
