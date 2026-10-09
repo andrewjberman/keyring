@@ -252,3 +252,26 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W4-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~4",
+  "surfaced_at": "2026-10-09T22:51:00Z",
+  "one_line": "CN-b-1 census cannot see the portal front-end: portal/ is an empty directory in this worktree, so any browser-side reader of json/portfolios/aum-timeseries.json is unseen.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order asks for an UNSCOPED census over the whole corpus including the portal source (readers of the stale served key).",
+  "world_is": "portal/ holds 0 entries and git ls-files portal returns nothing in wk-MDPF_CANON-4; Grep over portal/ and mcportal/ returned 0 hits. The census row for the front-end is excluded-with-reason (absence not established) and INSTRUMENT clause (c) says so. Retiring the stale served key needs a portal-repo read the cell could not do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~4/READER_CENSUS.md INSTRUMENT line (c)",
+      "git ls-files portal on wk-MDPF_CANON-4 returned 0 lines, 2026-10-09T22:50Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
