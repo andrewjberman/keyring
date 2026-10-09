@@ -1448,6 +1448,70 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "Two registries now hold the same answer for two keys and can drift apart; the registry owner (4.0.0_SA_CRO) rules whether the census should also read key_rulings.json (by key alone where the bucket is unknown) or name_rulings.json's _about should admit a stored-file path. Not done here: neither is in this order's paths."
+  },
+  {
+   "id": "LGIC_CANON-D1-W1-S31",
+   "project": "LGIC_CANON",
+   "fabric": "dell1",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-10-09T19:21:21Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "one_line": "portal/src/lib/firmAccess.ts FIRM_ALLOWED_PATHS holds a 'demo' firm (10 pages) whose scope row is tenant.kind demo with no tenant.pages, so the order's '--check for every firm in the map' cannot both pass live and grade demo.",
+   "spec_asserts": "TO LGIC_CANON.TO-CN-q-3 PART A build 2: for every firm in FIRM_ALLOWED_PATHS every granted page must be in that firm's derived set, a page that is not STOPs; criterion Q4R5-AC1: --check passes live. ADDENDUM 1: the core is derived for every CLIENT firm with the portal on.",
+   "world_is": "MEASURED 2026-10-09. scopes.json FIRM rows: 49financial, inflection, cottonwood (kind client, tenant.pages written by 4.0.0_SA_CRO @a15fb36a4c) and demo (kind demo, surfaces portal true, no tenant.pages). firmAccess.ts grants demo 10 pages. Graded literally, --check STOPs 10 times on demo and rc is 1 live. lib/opal_portal_paths.py --check therefore grades kind client firms (3 firms, 25 pages) and prints 'SKIP demo -- tenant.kind=demo, not a client firm (10 granted pages not graded)' with the denominators (4 firms, 35 pages). No check value was weakened; the skip is printed, not silent.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python lib/opal_portal_paths.py --check at wk-LGIC_CANON-1: 'CHECK: firms=4 pages=35 graded_firms=3 skipped_firms=1 stops=0 OK'",
+     "infra/logic/registry/scopes.json demo row: tenant.kind demo, no pages key",
+     "portal/src/lib/firmAccess.ts :114-125 demo allowlist"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "For the CTO/registry owner: either rule that the demo tenant is outside the client-page rule (the skip stands), or have 4.0.0_SA_CRO write tenant.pages for demo (the 10 pages less the 7 core = /attribution /factor-tilts /trade-submission, plus kind would have to be client for the core), after which the skip can be dropped. Not done here: scopes.json is not in this order's paths."
+  },
+  {
+   "project": "LGIC_CANON",
+   "fabric": "dell1",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-10-09T19:27:05Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disposition": "UNDER_INVESTIGATION",
+   "id": "LGIC_CANON-D1-W1-S32",
+   "one_line": "Q3R5-AC1's check demands reached + carded == 16 while the order splits step 14 into 14a and 14b, so a truthful record has 17 units and the check cannot pass.",
+   "spec_asserts": "TO LGIC_CANON.TO-CN-q-3 PART B: 'Step 14 is split into 14a and 14b'; CANON_RUN_R5.json 'reached ... with step 14 as 14a and 14b'; grade 'reached + carded == steps'; check_cn_r5.py arm_run: steps == 16 and len(reached) + len(carded) == steps.",
+   "world_is": "MEASURED 2026-10-09. The checklist has 16 steps (10_ONBOARDING_CHECKLIST.md STEP 1..16). With 14 as two units the graded set is 1-9, 10, 11, 12, 13, 14a, 14b, 15, 16 = 17. Recorded truthfully: 15 reached + 2 carded (10, 16) = 17; `check_cn_r5.py run` prints 'steps=16 reached=15 carded=2' then 'FAIL-R5-RUN: reached + carded != 16'. Round 4's 12 + 4 = 16 held because step 14 was one unit. Nothing was dropped or merged to reach 16, and the check was not edited. Separately the order expects 14b carded under the firm-bucket carve-out (owner ADVI_FIRMBKTS); the evidence is that 14b is REACHED for this subject (partner table exists and X8 declares it) and a partner table is not a firm-bucket matter.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~B1/fixed_inputs/r5/check_cn_r5.py run -> FAIL-R5-RUN: reached + carded != 16",
+     "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/CANON_RUN_R5.json: units 17, reached 15, carded 2"
+    ]
+   },
+   "notes": "REMEDY for the issuer (2.0.0_SA_COO~B1 amends its own criteria): make the check's total 17 (or count step 14 once), then re-run `check_cn_r5.py run` against the committed CANON_RUN_R5.json, which needs no change."
+  },
+  {
+   "project": "LGIC_CANON",
+   "fabric": "dell1",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-10-09T19:27:05Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disposition": "UNDER_INVESTIGATION",
+   "id": "LGIC_CANON-D1-W1-S33",
+   "one_line": "The committed generated views lag the registry for scopes other than 49financial, and the checklist's Step 14 portal-paths text and Step 4 view count predate PART A and the 13-file generator.",
+   "spec_asserts": "Checklist Step 4: 'The step is done when, after the commit, running generate --out . again leaves git status clean'; 'the seven DEC-5 views'. Step 14 portal-paths bullet and INPUTS row: derived paths = each page a surface the row sets to true carries.",
+   "world_is": "MEASURED 2026-10-09 at wk-LGIC_CANON-1. `generate --out .scratch/gen_preview` writes 13 files and all 13 differ from the committed bytes: the registry-hash header in every file, plus rows for scope 4698, vendors commonwealth and yahoo in generated_locals.tf, vectors.json, opal_name.tftest.hcl and vendorDisplayNames.generated.ts. Every 49financial/49f/master-id line (153) is identical, so the subject's step 4 is unaffected. Step 4's prose still says seven views. Step 14's portal-paths bullet still describes only the surface-to-page mapping, not the 7-page core and tenant.pages that PART A added.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python lib/opal_naming.py generate --out .scratch/gen_preview -> GENERATE: 13 written, 0 skipped at registry@5b98192dc286ddde",
+     "diff of each of 13 files against the committed bytes (CR stripped): 2 to 74 differing lines each, none with a 49financial line"
+    ]
+   },
+   "notes": "Not done here: the checklist and the generated views are outside this order's paths. A later cell holding them regenerates the views and edits Step 4 and Step 14."
   }
 ]
 ```

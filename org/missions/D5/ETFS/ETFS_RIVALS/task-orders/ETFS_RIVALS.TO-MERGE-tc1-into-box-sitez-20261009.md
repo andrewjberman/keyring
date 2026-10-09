@@ -5,6 +5,7 @@
     <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
     <date>2026-10-09</date>
     <status>pending</status>
+<!-- graded 2026-10-09 ~19:2xZ by 2.0.0_SA_COO~V1 on report @606464b645: AC1 rc=0 read from dell1 (git merge-base --is-ancestor b0b65368fb origin/box/sitez at a29112cf97); merge 6061de660d by 0.7.0_AE_CloudOps~ZV under site Z's commit lock (AMENDMENT 2), parents 4516c6399c + b0b65368fb; the suite reused per step c (two-tree diff vs f231d52983 empty; 1015 passed); RIVALFUNDS_HISTORY_OWED unset; no CTO~Z half or refusal. J1 is the CVO's on the first 11:00Z vehicle run after the merge (2026-10-10). Status stays open: the complete flip needs a proof-of-spec instance the site-Z executor did not write (as TO-PREFLIGHT). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>

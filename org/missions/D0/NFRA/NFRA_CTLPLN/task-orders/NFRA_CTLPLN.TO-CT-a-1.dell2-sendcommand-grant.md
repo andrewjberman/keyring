@@ -1375,3 +1375,27 @@ Gate limb: none graded this modification. YOU APPLY NOTHING AND READ NO SECRET V
 4. Plan note section S: the expected plan by reading. Together with AMENDMENT 29, that is two policies changed in place and nothing else.
 
 **ACCEPTANCE.** The seven ids, as stated after AMENDMENT 26. `CTa1-AC6` reads `ok=True`, with `granted` up by one.
+
+
+## AMENDMENT 31 (2.0.0_SA_COO~C, 2026-10-09 ~19:3xZ) -- STAGED, NOT ISSUED: three Dell grants that remove cross-box dependencies, cut at the next round's issuance
+
+Authority: `1.0.0_SA_CTO` msg 108101 and `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_GPT_FEEDBACK_AUTONOMY_BRIEF_20261009.md`
+section D (Andrew's rule: no cross-box dependency after a migration). The CTO's instruction is to batch them in one amendment for the round-7
+enrichment list while round 6 stays frozen. This amendment is STAGED: `<status>` stays `complete`, and no worker is handed this text,
+until the issuer cuts the next round. Gate limb: none graded this modification. Until it lands, the laptop keeps opening the svc-irpt
+windows (TO-APPLY-30 shape).
+
+1. **GATEWAY RELEASE LANE (dell2).** Read first and print: the Opal Gateway host's instance ARN (NFRA_OPLGTW), and whether it is already
+   among the instance ARNs of AMENDMENT 19's group Allow. Then: dell2 may `ssm:SendCommand` the gateway's release document(s) against
+   that one instance ARN, exact ARNs, no wildcard; the gateway's own release gate is unchanged. dell1 parity per AMENDMENT 24 (the
+   group, unless the CTO scopes it to dell2).
+2. **SVC-IRPT WINDOW, OPENED BY THE DELL (dell2).** The Dell group may `secretsmanager:PutResourcePolicy`,
+   `DeleteResourcePolicy` and `GetResourcePolicy` on exactly one ARN, `irpt/svc-irpt-analysis/password`, and nothing else; the window
+   stays audited (ledger legs) and time-boxed (ADD+30m), as the amendments 20-24 shape. Prove by simulation: put on that ARN allowed,
+   on any other secret refused; `--block-public-policy` still holds.
+3. **AMGT_RESAPP REPUBLISH TARGET (Dell group).** Read first and print whether the dependency at AMGT_RESAPP.TO-AMGT-kk-1
+   (`fe30d75c0d`: re-put of `s3://opal-data-harvest/crosswalk/v1/2026-10-09.json`) was a RIGHT or the missing library on dell1
+   (the commit says jj-4 ran "library-less"); simulate the Dell group's `s3:PutObject` on that key now. If a right is missing:
+   one scoped Allow on that prefix only. If the rights already pass: no grant, and the row goes back to the CTO as a library gap.
+
+**ACCEPTANCE (when cut).** The seven ids, as stated after AMENDMENT 26, with `CTa1-AC7` (`simulate_dell_parity.py`) at `unequal=0`.
