@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~18</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -196,3 +196,23 @@ Gate limb: none graded this modification. NO SWITCH FILE IS CREATED BY YOU.
 
 **ACCEPTANCE.** The three ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
 
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-09 ~04:4xZ) -- REOPENED, SHORT: an order without a to_id tag matches its proof by file stem; status is the LAST tag
+
+From the field, relayed by 0.0.0_AB_MSTR msg 107718. dell2 1.0.0_SA_CTO~DELL2 (row IRPT_YCDGEN D2-S17) wrote, verbatim: "line 134 sets
+id = tag(text, 'to_id') or '', so a tree order without <to_id> fails every proof match at :165 -- 19 of 19 for IRPT_YCDGEN round 6.
+Fix: tag(text, 'to_id') or os.path.basename(path)[:-3], since proof instances carry the stem." The same reader also takes the FIRST
+status tag. `1.0.0_SA_CTO` msg 107528, the gate owner's ruling, says: "an order's status is its LAST [status] tag". Gate limb: none
+graded this modification.
+
+1. In `.tools/round-close-check.py` `read_orders()`, an order's id is its `to_id` tag, or else its file stem. Check how the proof
+   matcher (about line 165) compares ids, and make an order matched by stem pass where its proof instance names the stem.
+2. An order's status is the LAST status tag whose word is a status word. Reuse `.tools/seat-list.py`'s `STATUS_WORDS` if it can be
+   imported cleanly; otherwise use a local copy with a comment naming the source. `.tools/research-owed.py` gets the same rule if
+   it reads status.
+3. Tests in `.tools/tests/test_round_close_and_research.py`:
+   - an order with no to_id whose proof instance carries the stem matches;
+   - one with a to_id still matches by to_id;
+   - pending then complete reads complete;
+   - complete then pending reads pending.
+
+**ACCEPTANCE.** The three ids, with expectations unchanged. Rewrite the proof instance, validate it, and flip to `complete`.

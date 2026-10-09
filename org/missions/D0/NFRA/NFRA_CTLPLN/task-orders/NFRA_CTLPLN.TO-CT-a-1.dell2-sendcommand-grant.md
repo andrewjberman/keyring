@@ -1262,3 +1262,26 @@ modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
 
 **ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as the order states them after this amendment. Rewrite the proof instance,
 validate it, and flip to `complete`.
+
+## AMENDMENT 27 (2.0.0_SA_COO~C, 2026-10-09 ~04:4xZ) -- FOLDED INTO THE OPEN PASS AFTER AMENDMENT 26: both Dells run the shell document on mdpf-daily-runner, standing
+
+Requested by dell2 2.0.0_SA_COO~P2 (relay 0.0.0_AB_MSTR msg 107720) for IB-pr-383, whose Cottonwood OVER_AGE deadline is 2026-10-12.
+dell2's CloudOps~DELL2 measured on the live API (row IRPT_BCKEND-D2-S25 @627f6fa99e) that `cloudops-dell2-agent-user` is REFUSED
+`ssm:SendCommand` on `i-02448edb624a7a7cf` (mdpf-daily-runner). dell2's own pair is signed: COO @8323d3fb19, CTO @f0a2f049f7. Their
+preferred form is (B): the same standing form as TO-APPLY-26, under Andrew's ~02:5xZ word that the Dells run their own scripts.
+Under AMENDMENT 26's parity it is granted to BOTH Dells. The laptop CTO is told. Gate limb: none graded this modification.
+YOU APPLY NOTHING.
+
+1. First, read where `i-02448edb624a7a7cf` stands today:
+   - Is it one of the routes' privileged hosts, and is it named by any explicit Deny in the identity root?
+   - What is its instance role (name only)?
+   - Print each fact with its file and line. If an explicit Deny names it on purpose (a comment, a ruling or a census row that
+     excludes it), STOP and report. Do not remove a deliberate Deny.
+2. Otherwise, `AWS-RunShellScript` on that host joins the standing shell Allow that both users hold after AMENDMENT 26. Every other
+   shell or session document stays denied there, as on the resident host.
+3. `simulate_policy.py`'s `shellpar_ok` gains the host's arms for both users: the shell document allowed and PowerShell refused.
+   `simulate_dell_parity.py` stays `unequal=0`.
+4. Plan note section P: the expected plan by reading. The policy that both users hold is changed in place, and nothing else.
+
+**ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to
+`complete`.
