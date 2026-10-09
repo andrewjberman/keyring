@@ -357,6 +357,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "RIV-aw-1: the two dates of the period are stated once in text. Andrew-direct comment 7: the verdicts should not all lead the same way.",
     "world_is": "The model meets the dates rule by opening with them, so every verdict may lead 'From <date> to <date>, ...'.",
     "notes": "Remedy in RIV-wg-1 (WS3 item 8, cut after the 13:00Z read): the generic-opening rule names a dated lead too; the dates stay in text, not as the lead. Read at the 13:00Z page with verdict_openers_check.py (dates collapse to one token). Owner: 2.0.0_SA_COO~V1."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S9",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T13:30Z",
+      "one_line": "AI accounts print a small notional as '$0.0 million': WCMG and ETFT verdicts carry it three times each on the issuer's real run -- a figure that reads as zero for a real trade",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Real run 20261009T132214Z-ai (a1-chain/8, merged @3bd0c7c023, local writes): WCMG 'leaned away by $0.0 million' and two more; ETFT three; 0 of the other 11 funds",
+              "ai_accounts._mn shows a notional in millions at one decimal, so any |v| < 50,000 displays as $0.0 million and the model copies the display form (SYSTEM rule 1)",
+              "Denominator: 13 Direction Verdicts of one run; the 30-day accounts not counted"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A figure in an AI account is the fact's display form and reads as the trade it names.",
+      "world_is": "A sub-$50,000 notional displays as $0.0 million, which reads as no trade.",
+      "notes": "Remedy candidates: _mn falls back to thousands ($42 thousand) under $0.05 million, or such trades are left out of the facts. A round-29 enrichment item; owner 2.0.0_SA_COO~V1."
   }
 ]
 ```

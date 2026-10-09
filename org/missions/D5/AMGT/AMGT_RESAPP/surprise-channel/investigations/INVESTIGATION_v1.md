@@ -23254,3 +23254,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W339-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~339",
+  "surfaced_at": "2026-10-09T13:20:18Z",
+  "one_line": "My first put of NU's repaired draft (VersionId bl_O3NCt4.nTV9MlX.vMAlEKfeICF9XR) carried the PRIOR object's document-sha256 metadata over onto the new bytes; I corrected it with a second put of the same bytes (VersionId I.NWiDvQCJPaU6FLUMRycOhwkVGzWxUb), so NU's drafting key has two new versions, not one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order step 4: 'one versioned put of the repaired document'; CTO ADDENDUM 2: the drafting key is written once as a versioned overwrite. The repo convention (lib/research/corpus/gold.py:81-91) is Metadata document-sha256 = sha256 of the body bytes.",
+  "world_is": "My put script copied the live object's Metadata dict, including document-sha256 51e02173... (the prior bytes), so the first new version had a stale digest. I caught it at once, before AC2/AC3, and re-put the same 107028 bytes with document-sha256 f6b95671... (read back equal). Latest = I.NWiDvQCJPaU6FLUMRycOhwkVGzWxUb; bl_O3NC... is a non-latest version with identical body bytes and a stale digest; xe0hxE3l... (the prior) is untouched and is the rollback target. No other key changed (listing_diff.txt: 2 added versions, both NU).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~339/listing_diff.txt",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~339/put_repaired.py",
+      "lib/research/corpus/gold.py lines 81-91"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W339-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~339",
+  "surfaced_at": "2026-10-09T13:20:18Z",
+  "one_line": "r85_sentences/r85_repair read two adjacent genuine filing sentences as one fact twice whenever both carry the years 2025 and 2024 (the figure rule counts bare 3-digit-plus numbers), so 3 of NU's 38 repaired sentences (6, 11, 19) were cut to the first filing sentence to read YES.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "r85_sentences.py FIGURE_RE: 'numbers carrying a decimal point, a thousands comma, or three or more digits' as the shared-figure test of S1/K2; the intended target is a paraphrase followed by the filing's sentence repeating the same measures.",
+  "world_is": "With the filing's full sentence kept, K2 read restated 3 of 38 (sentences 6, 11, 19): the pairs share only the tokens '2025' and '2024' while stating different facts (credit-card receivables vs loans; gross profit vs gross margin; customer count vs activity rate). I cut those three to the filing sentence that holds the span's start (build_repaired.py --first-only 6,11,19); K1 38 kept, K3 38 of 38 verbatim, K4 38 of 38 evidence intact, AC1 YES. The dropped second sentences are each still in the filing; the citation (evidence list) is unchanged. A year-aware figure rule would have kept them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_sentences.py FIGURE_RE and restated()",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~339/build_repaired.py --first-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
