@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T08:46:28Z",
+ "written_at": "2026-10-09T08:56:03Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -858,7 +858,7 @@
    "source": "org/critical_paths/.open_deploys/secclass-bd-thread-r3-m-20261001.json",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T07:40:07Z",
    "kind": "fork",
    "context": "SC-e-59 in PROD bf780f94 (B4 gate opened). Walk on PROD tree: 49F firm Mix tiles = served mix_summary to the dollar; z08327149 served composition VXX structured/Hedge etf-classifications; GLD/PHYS not held there (table: commodities/Metals); run class_source 0 bd-securities. Gates the B4 and S closes.",
@@ -894,7 +894,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-09T08:56:02Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T074836Z-96fb"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261009T074836Z-96fb",
@@ -911,7 +918,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round9.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T07:46:02Z",
    "kind": "fork",
    "context": "Round 9 graded MET (SWITCH-ON 11/11); round-9 analysis R1. Cross-box because the switch file is tracked and reaches every box via CLOUD; on top of XA-20261009T005240Z-625e.",
@@ -942,7 +949,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-09T08:56:03Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round9.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T074741Z-3003"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261009T074741Z-3003",

@@ -3420,3 +3420,30 @@ round.** Never edit an existing row.
   "world_is": "The delivery holds no market or position value (silver positions: quantity only) and no trade price for 808524102 or 808524839 (no by/sl rows in 2020-08-21..2026-05-27); the level question needs a source outside the delivery (a vendor close as traded on a pre-split day)."
 }
 ```
+
+## ADVI_COTBKF-D2-S46 -- L9 CB30ad1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S46",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:04:24Z",
+  "one_line": "L9 CB30ad1-AC2 MET: each account's class (untraced) follows from the printed per-CUSIP rows by the rule committed @3d3ddbceb5 before the first run (the only later change, @816400901c, is a one-line date-type conversion, no rule); the rows show the factor carried by 808524102 (close ratio 3.0000, x3 2024-10-11) and 808524839 (2.0000, x2 2024-10-11), cash identical, and no outside trade price within 5 days. No 'which level is right' claim is made as measured: the r28-is-right reading is labelled an INFERENCE (W57-S1), and the settling outside value (an as-traded close) is proposed for round 31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~57/scale_trace.md",
+      "git diff 3d3ddbceb5 816400901c -- data/assets/scripts/silver/commonwealth_scale_trace.py (one line)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_30_DRAIN_END_20261009.md @6a163e8b24",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_30_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB30ad1-AC2: each account's class follows from the printed per-CUSIP rows by the script's pre-written rule, and the 'which level is right' statement rests on an outside value where one exists.",
+  "world_is": "Met. An outside value exists outside the delivery (an as-traded close from MDPF_DEMQUE or Yahoo) and was not read in this read-only cell; D2-S45 stays OPEN until it is."
+}
+```

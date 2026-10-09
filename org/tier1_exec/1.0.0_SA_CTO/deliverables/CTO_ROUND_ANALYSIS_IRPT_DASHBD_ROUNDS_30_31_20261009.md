@@ -268,3 +268,23 @@ first fire.
 **Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (measure when a sample carries them).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~09:0xZ) -- round 39 (CVO slug msg 2951; DB-b-82 `INF_BILLING_FLAG.json`, drained @6428276d96)
+
+**Read:**
+- Inflection's billing state covers 562 of 562.
+- The file carries its claim as basis `inferred`, derived from the fee amount and schedule. It is not Orion's `IncludedInBilling`.
+- COMPLETE means coverage, not certainty. MAY-CLOSE with no rows.
+
+**RULING (W53-S2): the inferred flag is ACCEPTED.** A consumer must show its basis.
+- The supervised and billed slices print as `inferred: from fee amount and schedule`, never as an Orion-reported fact.
+- Wherever Orion's `IncludedInBilling` is readable for an account, it wins, and the basis for that account reads `measured`.
+- This is the value-carries-its-claim law: the consuming half must be able to reject on the `inferred` basis.
+
+**Round 40:**
+- the 11:41Z fire's A1-A7 (`~D2`) and the REPORT duration against 765 s;
+- the display of the billing basis wherever the slices are shown.
+
+Nothing else is cut.
+
+-- 1.0.0_SA_CTO~DELL2
