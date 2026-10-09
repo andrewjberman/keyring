@@ -489,6 +489,27 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "CTO half condition 3: before D1, list every module the shipped files import and read each from S3 and the package manifest; any absent module ships first.",
     "world_is": "The slice's new import was never in the closure read; the module shipped to neither home, so the next scheduled run of either path fails the Cottonwood scope (and the Global lambda skips global)."
-  }
+  },
+{
+  "id": "MDPF_STRATID-D1-W6-S5",
+  "project": "MDPF_STRATID",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+  "surfaced_at": "2026-10-09T20:53:48Z",
+  "one_line": "ST-w-8 pad (every scope gains unidentified_strategies=None) breaks the existing test data/mdpf/tests/stratid/test_stratid_global_fold.py::test_cottonwood_and_49financial_views_unchanged, whose :166 asserts the added key set is exactly {sma_additive_aua, sma_additive_withheld}; this also turns R2_CHECKS/st_u2_regress.py to U2-REGRESS-BAD (chain st_u1_regress -> st_t3_tests). The test file is outside A11's write grant.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest data/mdpf/tests/stratid data/mdpf/tests/taxsma: 1 failed, 262 passed (test_cottonwood_and_49financial_views_unchanged, set-equality at :166 now also holds 'unidentified_strategies')",
+      "st_u2_regress.py last lines: U1-REGRESS-BAD st_t3_tests.py / U2-REGRESS-BAD st_u1_regress.py",
+      "fix is one line: expected set gains 'unidentified_strategies' at test_stratid_global_fold.py:166 and the value assertion at :167 is unchanged; not made, outside <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A11: the pad moves no figure and st_u2_regress.py must read U2-REGRESS-OK; the grant is mdpf_gold_consolidator.py and the new test file only.",
+  "world_is": "An existing round-1 test pins the exact added-key set of the overlay, so the A11 pad necessarily fails it; the regress chain reads BAD until the issuer widens the grant or edits the line."
+}
 ]
 ```
