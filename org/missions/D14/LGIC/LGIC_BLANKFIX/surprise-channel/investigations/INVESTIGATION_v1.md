@@ -1651,3 +1651,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The census holds (still_zero=0; the 3 still unmapped read above zero). The instrument assumed the roots stay unmapped; once mapped they print ROOT lines it does not read. Round-8 input: read a mapped root's ROOT line (items) as well. Owner 2.0.0_SA_COO~G; un-parks at the round-7 drain-end message."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S6 -- the all command prints UNCOUNTED lines for mapped roots only (instrument, not census)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-09T00:14:46Z",
+  "one_line": "The all command prints one UNCOUNTED line only for a mapped root; an unmapped root prints a count (UNMAPPED <root> names=N uncounted=N) and no line, so a by-reason count of its UNCOUNTED lines cannot be read from that output alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/ALL_ROOTS_round7.txt -- 24 UNMAPPED lines (for example 'UNMAPPED infra/aws/terraform/mdpf-pipeline names=64 uncounted=10') and 242 UNCOUNTED lines against uncounted=301 on the ALL-ROOTS line; 301 - 242 = 59, the sum of the UNMAPPED uncounted= fields",
+      "lib/opal_naming_rootcheck.py lines 739-763 @HEAD -- emit_uncounted() runs for mapped roots only; the unmapped branch adds len(r_unc) to uncounted_all and prints the count",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/check_uncounted_delta.py -- reads the unmapped roots' names with opal_naming_scope.root_names and checks lines + unmapped counts == the live uncounted field (live run: 13 printed + 4 unmapped = 17)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-w-2 item 4: the script runs the all command once, counts the residual UNCOUNTED lines by reason and prints residual_reasons and bare_reasons.",
+  "world_is": "The all output carries the reason only on the 242 round-7 lines of mapped roots (13 of the 17 residual now); the other names sit behind a count. The script counts them by calling root_names for each UNMAPPED root, a second read of the same repository at the same bytes, not a second all run. Round-8 input for the lane of opal_naming_rootcheck.py: print the unmapped roots' UNCOUNTED lines too, or the by-reason count of the estate stays a two-source read."
+}
+```
