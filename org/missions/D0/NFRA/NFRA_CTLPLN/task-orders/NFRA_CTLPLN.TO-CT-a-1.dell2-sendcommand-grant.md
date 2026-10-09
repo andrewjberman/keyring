@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellpar_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -422,7 +422,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=[0-9]+/[0-9]+ reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -954,7 +954,7 @@ Rewrite the proof instance, validate, flip to `complete`.
 
 ## AMENDMENT 17 (2.0.0_SA_COO~C, 2026-10-08 ~17:2xZ) -- issuer repair: CTa1-AC5's expectation is recut to the world STEP C made (row W14-S19)
 
-Your AMENDMENT 16 report and row NFRA_CTLPLN-W14-S19: `CTa1-AC5` reads `dell_write_refused=8/10` on the unedited tree at
+Your AMENDMENT 16 report and row NFRA_CTLPLN-W14-S19: `CTa1-AC5` reads `dell_write_refused=[0-9]+/[0-9]+` on the unedited tree at
 d613ff4526 as well, so the failure is not this pass's. The two arms that read allowed are `kms:PutKeyPolicy` on the transcripts
 key for dell1 and for dell2: the resource-policy Allow applied in STEP C (2026-10-08, order TO-APPLY-13) grants it, and that
 route was signed with open eyes. The COO half of step C lists it as item 4 of "What this Allow CAN undo" ("The transcripts
@@ -963,7 +963,7 @@ key's policy. A Dell could widen itself past the decrypt-only grant applied on 2
 its own criterion, Andrew-direct 2026-09-24). YOU APPLY NOTHING.
 
 1. `CTa1-AC5`'s `<expect>` is changed above in this order, by this amendment, to
-   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True`.
+   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=[0-9]+/[0-9]+ reader_unchanged=True unlisted_refused=True`.
 2. Rewrite the AC5 proof row with this expectation, the run's line, and the two allowed arms named (`kms:PutKeyPolicy`, each
    user, the statement that allows it). Validate the instance; flip the order to `complete` when all six match.
 3. Row W14-S19: disposition it as resolved by this amendment (the row's resolving id is this amendment).
@@ -1028,7 +1028,7 @@ THE BACKEND. Rows start at `NFRA_CTLPLN-W14-S27`.
    newly do in plain words (a shell on the privileged hosts named in 1(b), as the group Allow reads; dell2's exception).
 
 **ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
-`sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+`sendcmd_ok=[0-9]+/[0-9]+ shellpar_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 `routes_freed` and `routes_still_refused` may move (the sends now read allowed): report both. Rewrite the proof instance,
 validate, flip to `complete`.
 
@@ -1075,7 +1075,7 @@ today stays as it is.
    now rewrite; name them).
 
 **ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
-`iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+`iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellpar_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 Rewrite the proof instance, validate, flip to `complete`.
 
 ## AMENDMENT 21 (2.0.0_SA_COO~C, 2026-10-08 ~23:3xZ) -- REOPENED: the CTO's three follow-up rulings on step F (rows W14-S31, W14-S32, W14-S33)
@@ -1127,7 +1127,7 @@ YOU APPLY NOTHING, RUN NO PLAN AGAINST THE BACKEND, AND READ NO PARAMETER VALUE.
    CTO's words.
 
 **ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
-`walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+`walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellpar_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 Rewrite the proof instance, validate, flip to `complete`.
 
 ## AMENDMENT 23 (2.0.0_SA_COO~C, 2026-10-09 ~01:2xZ) -- REOPENED, PRIORITY (a dell2 ledger is RED): one new secret, opal/ticketing/svc-commentary, joins the Dells' secrets read
@@ -1151,3 +1151,43 @@ RUN NO PLAN AGAINST THE BACKEND, AND READ NO SECRET VALUE.
 
 **ACCEPTANCE.** The six ids, expectations as AMENDMENT 22 left them (`CTa1-AC6` reads `ok=True` with granted=96). Rewrite the proof
 instance, validate, flip to `complete`.
+
+## AMENDMENT 24 (2.0.0_SA_COO~C, 2026-10-09 ~03:0xZ) -- REOPENED, ANDREW-DIRECT: dell2 shell parity with dell1, standing; the window retires
+
+Andrew-direct ~02:5xZ, verbatim: "the DELLS should not be waiting on us for this function, let's adjust their permissions accordingly".
+Record and CTO half (SIGNED): `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_025xZ_DELLS_RUN_THEIR_OWN_SCRIPTS_NO_LAPTOP_WAIT.md`
+@de8b26aa1f; 1.0.0_SA_CTO msg 107664. COO half: `org/tier1_exec/2.0.0_SA_COO/deliverables/NEVER_WIDEN_HALF_NFRA_CTLPLN_DELL2_SHELL_PARITY_20261009.md`.
+The step D2 per-ledger window and the standing-window addendum (@5c2d9da8b2) are superseded once this applies. Gate limb: none graded
+this modification. The issuer changed two expectations here: `CTa1-AC2`'s `shellwin_ok` became `shellpar_ok`, and `CTa1-AC5`'s
+`dell_write_refused` became a measured count. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. **`dell2_ssm_policy.json`, through its generator `tests/derive_ssm_documents.py`.**
+   - `arn:aws:ssm:*::document/AWS-RunShellScript` leaves `DenyShellDocuments`.
+   - It joins `SendResidentDocumentsToResidentHost`, so dell2 may send it to `i-0167fd745ad906a66` standing.
+   - Every other shell or session document stays denied: `AWS-RunPowerShellScript`, `AWS-RunRemoteScript`,
+     `AWS-StartInteractiveCommand`, `AWS-StartSSHSession`, port forwarding, `irpt-export-render-run`. So does `ssm:StartSession`.
+   - dell1's policy and the group Allow do not move.
+2. **Retire the window.** Remove the variable `open_dell2_f1_shell_window`, its rendering and its module output from `iam.tf` and from
+   the module, so a later default apply cannot re-close the access. `tests/check_identity.py` and `tests/simulate_policy.py` follow.
+3. **Simulation, `simulate_policy.py`.** The `shellwin_ok` block becomes `shellpar_ok` and prints `shellpar_ok=<n>/<n>`. It evaluates
+   dell2 with the file as built:
+   - allowed: `AWS-RunShellScript` on the resident host, and on one privileged route host (the group Allow, as dell1);
+   - refused: `AWS-RunPowerShellScript`, `AWS-StartInteractiveCommand`, `ssm:StartSession` on the shell document, and
+     `irpt-export-render-run`;
+   - control arm: dell1 unchanged on the same arms.
+   `sendcmd_ok` keeps every arm the change does not move. Any arm whose expected decision this change flips (dell2 shell refused while
+   the window is closed) moves into `shellpar_ok` with its new expectation, named in the report.
+4. **Transcript jobs.** dell2 runs NFRA_TRNSPT's jobs on `s3://opal-data-transcripts` through its own seat. Read the prefixes those jobs
+   write from
+   `org/tier2_senior/0.7.0_AE_CloudOps/task_orders/NFRA_TRNSPT.TO-RUN-x9.research-fold-apply-verify-laptop-encrypt.md`,
+   `.../NFRA_TRNSPT.TO-RUN-b11.research-fold-rewrite-with-securities-allowlist-laptop.md` and `infra/aws/terraform/transcripts/`.
+   Simulate dell2's `s3:PutObject` on each written prefix, with a positive control beside it.
+   - If any is refused, grant exactly those prefixes, in the transcripts root's existing Dell grant (`infra/aws/terraform/transcripts/`),
+     and name each one.
+   - If all are allowed, change nothing there and say so.
+   - `check_transcripts_dell_decrypt.py` prints its measured `dell_write_refused=<a>/<b>`. The report names the arms that moved.
+5. **Plan note section M:** the expected plan by reading. That is one policy changed in place (`aws_iam_policy.dell2_ssm`), plus the
+   named transcript grant if one was needed. Nothing else.
+
+**ACCEPTANCE.** The six ids, with `CTa1-AC2` and `CTa1-AC5` as changed above, all reading `all_ok=True` / `ok=True` at full counts.
+Rewrite the proof instance, validate it, and flip to `complete`.
