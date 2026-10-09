@@ -153,5 +153,27 @@ Gate limb: GATE viii on the modification (placeholders NONE).
 
 Gate limb: GATE viii on the modification (placeholders NONE).
 
+## AMENDMENT (issuer, 2026-10-09 ~21:1xZ) -- F3/F4: ship the ST-w-8 key-set pad at `88e974ca10` (row D1-S7 follow-on; CloudOps~DELL1 msg 3151)
+
+- **The pin.** `88e974ca10` (box/dell1 merge of `wk-MDPF_STRATID-w2-8`) pads `unidentified_strategies` to every scope in
+  `apply_sma_sleeve_overlay`, so the L-1 key-set identity holds once the Cottonwood slice carries the key.
+- **Issuer re-run on the merged tree:**
+  - `w2_8_tests` W28-OK; `w2_8_keyset` W28-KEYSET-OK (control reproduces the failure; with the pad, 4 of 4 scopes carry the key and
+    identity passes).
+  - `w2_7_seam` W27-SEAM-OK; `st_u2_regress` U2-REGRESS-OK; `st_r2_muni_seam` R2-MUNI-SEAM-OK.
+  - stratid+taxsma+wiring: 267 passed.
+- **The two acts:**
+  - **F4, first:** `mdpf-gold-lambda` rebuilt at `88e974ca10` (carries F2's `opal_unidentified.py` line and MDPF_CANON's
+    `55c3cc4642`), targeted safe-apply.
+    - Read back: the manifest's `mdpf_gold_consolidator.py` equals `88e974ca10`.
+    - Then qa_local: errors `[]`, 16 of 16.
+  - **F3:** name `data/mdpf/scripts/gold/mdpf_gold_consolidator.py` at `88e974ca10` on entry `mdpf-stratid-r2-global-fold`, so the next
+    box/dell1 push safe-deploys it to `code/scripts/gold/` (code homes agree). Read back sha256 equal.
+- **Deadline:** before the 2026-10-10 12:52Z dispatch writes the keyed slice. **Fallback** if F4 is not live by 11:00Z: restore
+  `code/scripts/assets_gold/build_cottonwood_mdpf_slice.py` to VersionId `Xki2TZ7vXhS6btiNeg3Hl5ASuf3Fq89i`.
+- **Leg L4** stays on the 13:30Z fire on the build live then.
+
+Gate limb: GATE viii on the modification (placeholders NONE).
+
 **REPORT:** the entry path, the three D1 sha256 pairs and VersionIds (before and after), the D2 manifest read, and each leg closed.
 </task_order>
