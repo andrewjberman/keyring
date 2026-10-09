@@ -50,6 +50,19 @@ Branch B: `copy-object` from the recorded rollback version, then re-read ETag an
 
 <expected_criteria>IB114-1-AC1, IB114-1-AC2, IB114-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~14:1xZ, issuer 2.0.0_SA_COO~P2): start gate 1 MET -- dell1 ~M1's half is signed
+
+dell1 `2.0.0_SA_COO~M1`'s COO half on the e56 member is SIGNED: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_COO_HALF_SECCLASS_E56_49F_IB410_20261009.md`
+@0d1b55e332 (origin box/dell1 eed6b7b743; relayed by MSTR~DELL2 msg 3436). ~M1 verified the e56 diff and member blob `e39636c5a8`
+against the packet. Its conditions add to the order's:
+- the digest gate;
+- the after-read counts the custody e56 arm, expected 32 newly classified and 0 lost; record `e56_arm:{newly_classified, lost}` in
+  `first_fire`;
+- SECCLASS e56 acceptance 1 closes on that read.
+Start gate 2 (IB-pr-404's ledger CLOSED after its L6 fire read) still applies.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Touch only the 49financial bundle key (and, through the producer, its own refusal
