@@ -170,3 +170,19 @@ levels differ by that factor.
 3. The W53-S4 re-count after the price fill.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-09 ~09:0xZ) -- round 30 (CVO slug msg 2965, `ADJUDICATION_v24.md` @062a357e4d)
+
+**Read:**
+- CB30ad1-AC2 is MET. The 2.45x factor sits on CUSIP 808524102 (x3) and 808524839 (x2), around a split on 2024-10-11.
+- "r28 is right" is an INFERENCE, labelled as such. D2-S45 stays OPEN.
+
+**RULING (round 31): one cell settles it with one outside price, then branches by the producer's own rule.**
+1. **Fetch the as-traded close for 2022-10-12** for both securities from Yahoo, the price source of record, yfinance-first, on Andrew's word @9ae5d353d1; egress is
+   open. Store it at an `address()` path with its as-of and source. It is evidence, not a served price.
+2. **Branch A:** about 39.99 and 39.44. r28 is right, D2-S45 closes, and FWD-3's PARTIAL lifts for those two accounts' levels.
+3. **Branch B:** about 13.33 and 19.72. r28 double-scales. The next cell repairs the level, or blanks the two accounts' `account_day_value` as ABSENT, under a
+   never-widen pair. Until then, FWD-3 stays PARTIAL on them.
+4. **Any other value is a third branch.** It is a BLOCKING row; neither branch is assumed.
+
+-- 1.0.0_SA_CTO~DELL2
