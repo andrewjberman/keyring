@@ -71,7 +71,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T13:16:00Z. Graduated at ADJUDICATION_v3
     "owner": "0.0.0_AB_MSTR~DELL1",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.0.0_AB_MSTR~DELL1",
       "round": "v3"
     },
@@ -80,7 +80,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T13:16:00Z. Graduated at ADJUDICATION_v3
       "owner": "0.0.0_AB_MSTR~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

@@ -4468,3 +4468,212 @@ round.** Never edit an existing row.
   "world_is": "Two keys are hand-built by fragment to pass the gate; the gate's purpose (every new address from the builder) is defeated for both."
 }
 ```
+
+## ADVI_COTBKF-D2-S68 -- L9 CB42ap1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S68",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:07:32Z",
+  "one_line": "L9 CB42ap1-AC2 MET: the writer reads ONE registry file, REGISTRY_FILE = 'scopes.json' at Path(__file__).resolve().parent, with the opal_naming / repo-registry search removed and no fallback (a missing or bad file returns (None, reason)); absent is never the own firm (round 40's rule, unchanged); the removed share-class check filtered on 't1_transaction_observed', a source the writer never emits, so it was unreachable (W68-S1). Both served keys equal the repo bytes (this seat's read). Note: repo-file inputs resolve their tree from Path(__file__).parents[3], the repo root only when run from the repo; from code/gold/ it resolves elsewhere and stamps absent -- safe, NOT-CLEAN for those inputs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff f30ad987a6 1111ec9b9b -- data/cot/scripts/gold/build_canonical_prices_v2.py",
+      "this seat's reads ~15:0xZ: s3://opal-data-cot/code/gold/build_canonical_prices_v2.py sha256 3ac0a502798b5382 = data/cot/scripts/gold/build_canonical_prices_v2.py; s3://opal-data-cot/code/gold/scopes.json sha256 13947f7f2b35c6c9 = infra/logic/registry/scopes.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_42_DRAIN_END_20261009.md @0dd3bad9eb (msg 3540)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_42_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB42ap1-AC2: exactly one registry file, read from the writer's own directory, with no fallback path; absent is never the own firm; the removed check was unreachable.",
+  "world_is": "Met; one note on repo-file inputs."
+}
+```
+
+## ADVI_COTBKF-D2-W72-S1 -- the split-literal pattern outside the rewrite script: counts per file
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W72-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~72",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "Same split-literal pattern, counted not changed: commonwealth_bd_txn_provenance.py 2 sites (:37 PFX = '/'.join(['silver','pri'+'ces']) -- the identical key; :103 re.search('pri'+'ce|...')); data/cot/scripts/gold/build_canonical_prices_v2.py 1 site (:65 '/'.join(['silver','']) ); 0 in the other 36 commonwealth_*.py files (38 files scanned incl. the writer; 2 carry it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:37",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:103",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:65",
+      "ast scan with _split_literals from data/assets/scripts/silver/tests/test_cot_price_rewrite_no_split_literals.py at f317f82c20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-as-1 item 4: count the pattern in the other commonwealth scripts and the cot writer; change none.",
+  "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
+}
+```
+
+## ADVI_COTBKF-D2-S69 -- L9 CB45as1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S69",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:21:38Z",
+  "one_line": "L9 CB45as1-AC2 MET: both keys now come from validated registry rows -- data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76 PFX = legacy_address(OWN + '-silver-prices-prefix') and :251 PIN_KEY = legacy_address(OWN + '-code-gold-scopes-pin'), the rows added to infra/logic/registry/legacy_addresses.json (bucket opal-data-cot, templates silver/prices/ and code/gold/scopes.json, no firm token in the code); 'python lib/opal_naming.py validate' reads OK, 0 warnings (this seat's run); the templates give the same keys as before; no split literal and no bypass (the worker's typed-token first commit was refused by the gate and fixed). Note: the rows are read through legacy_address(), the canon's legacy-shape builder, not address() -- the criterion's 'validated registry row' branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76, :251",
+      "git diff f317f82c20 845411827e -- infra/logic/registry/legacy_addresses.json (two rows)",
+      "python lib/opal_naming.py validate: OK 54 system rows, 14 scope rows, 0 warnings",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_45_DRAIN_END_20261009.md @a6f57849df (msg 3558)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_45_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB45as1-AC2: the keys come from address() via a validated registry row, OR a named R20 departure with one plain constant and no bypass; the resulting keys are unchanged.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S1 -- the old repo-root was parents[3] of the file = data/, not the repo root; lib.ticker_overrides lives under data/cot/scripts/gold/lib
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "build_canonical_prices_v2.py at base used Path(__file__).resolve().parents[3] as the repo root; for data/cot/scripts/gold/<file> that is data/ (parents[0]=gold,[3]=data), so resolve_repo_file_firm's rel path began 'cot/...' and could never match the tree dir 'data/cot/'. The ticker_overrides module is data/cot/scripts/gold/lib/ticker_overrides.py (no top-level lib/ticker_overrides.py exists); the base import 'from lib.ticker_overrides' raised ModuleNotFoundError from a dir without the gold lib/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py at 14a6fd3343:189",
+      "data/cot/scripts/gold/lib/ticker_overrides.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 premise: the repo root is parents[3] and the import's behaviour from code/gold/ is unmeasured.",
+  "world_is": "Measured: a bare dir holding only the writer: ModuleNotFoundError: No module named 'lib.ticker_overrides' at import (before main's FATAL handler). The base repo-file firm could not have resolved even in the repo. Fixed in d7e292e4b6 (_HERE.parents[3] from the directory)."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S2 -- registry stays beside-only: test h forbids a repo-root path for scopes.json
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "ADDENDUM 19 says every input resolves beside the module then at the repo root, but the round-42 test (test_canonical_prices_source_firm.py::test_h) asserts the writer source holds no 'infra/logic/registry' path, and test g requires an absent registry to read absent. scopes.json therefore resolves beside_module or unresolved only; in the repo (nothing beside) the registry is unresolved and every firm reads absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py::test_h_writer_has_no_second_path_to_lib_or_repo_registry",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py REPO_FILE_INPUTS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 item 1: one resolver, beside then repo root, for EVERY repo-file input.",
+  "world_is": "scopes.json has repo=None in REPO_FILE_INPUTS; test (b) asserts it unresolved in the repo. A repo-root fallback for it needs the CTO to lift test h; not done (outside the paths grant, and I did not build the path from split parts to dodge the test)."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S3 -- unresolved ticker_overrides degrades to empty dicts + WARN rather than failing
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "The 7 pre-existing source_firm tests copy only the writer (+ scopes.json) into a temp dir with no ticker_overrides beside it, so a hard failure on an unresolved ticker_overrides would break them; the writer instead applies no YF overrides/corrections, prints WARN, and stamps the input absent (census NOT-CLEAN). In production this would silently drop 757 overrides + 1 correction from the ticker mapping if the file is not shipped beside code/gold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py _load_ticker_overrides",
+      "757 YF overrides measured in the gold lib file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 item 1: unresolved reads absent with a WARN; (e) existing tests stay green.",
+  "world_is": "Chosen: empty + WARN + absent in the resolution table. The deploy cell must ship ticker_overrides.py beside the writer (pair) or the gold run loses the overrides; a refuse-on-unresolved variant needs the old fixtures edited."
+}
+```
+
+## ADVI_COTBKF-D2-S70 -- L9 CB46at1-AC2 MET as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S70",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:44:00Z",
+  "one_line": "L9 CB46at1-AC2 MET as written: one resolver, resolve_repo_file, takes every repo-file input (scopes.json beside-only by round 42's test h; ticker_overrides, the import included, beside then repo path); an unresolved input reads absent, never the own firm; the census prints each resolved path from the served file's opal_input_resolution metadata, and a key without it prints INPUT-RESOLUTION absent (NOT-CLEAN). But see D2-S71: the same change turned the ticker_overrides import from fail-closed into fail-open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 14a6fd3343 8bd569d91e -- data/cot/scripts/gold/build_canonical_prices_v2.py (resolve_repo_file, _load_ticker_overrides, the census INPUT lines)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_46_DRAIN_END_20261009.md @f723ea78df (msg 3587)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_46_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB46at1-AC2: beside-module first, then repo root, for EVERY repo-file input, the import included; unresolved is never the own firm; the census prints each resolved path from the served file's own metadata.",
+  "world_is": "Met as written; the fail-open change is a separate BLOCKING row."
+}
+```
+
+## ADVI_COTBKF-D2-S71 -- ticker_overrides went from fail-closed to fail-open
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S71",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:44:00Z",
+  "one_line": "The cot price writer's ticker_overrides went from FAIL-CLOSED to FAIL-OPEN: the base did 'from lib.ticker_overrides import YF_OVERRIDES, TICKER_CORRECTIONS' (an import error stops the run); _load_ticker_overrides() now returns empty dicts plus a WARN when the file is unresolved. A redeploy that misses ticker_overrides.py beside the writer (the deployed mirror holds it at code/gold/lib/, not code/gold/) would silently drop 757 overrides and 1 correction and price those tickers wrong.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 14a6fd3343 8bd569d91e -- data/cot/scripts/gold/build_canonical_prices_v2.py: the removed 'from lib.ticker_overrides import' and the new _load_ticker_overrides() 'Unresolved -> empty dicts + WARN'",
+      "the issuer's measurement in the packet: code/gold/lib/ticker_overrides.py present, the resolver looks beside the writer",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_46_DRAIN_END_20261009.md @f723ea78df (msg 3587)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A production writer that cannot load the inputs it prices with stops loudly; a degraded run is never served as a normal one (fail closed).",
+  "world_is": "Not live (the writer is not redeployed), so INERT today; it becomes a live mispricing on the first redeploy that misses the file."
+}
+```
