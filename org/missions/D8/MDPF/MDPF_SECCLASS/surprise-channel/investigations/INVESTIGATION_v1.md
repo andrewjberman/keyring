@@ -5931,3 +5931,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found at the close of TO-SC-e71b, after the act had landed and been verified (AC1 ok=True, signed-delta read-back 15 of 15 with 0 unsigned moves). It moves no data and gates no deploy -- it degrades the RECORD, not the world, which is why it is INERT rather than ARMED. The schema's owner is not this seat and the enum edit would be a value-enum proposal under CLAUDE.md rule 24, needing its four-postulate record plus a word-boundary token census; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S18]] is also a seed-script record defect rather than a data defect."
 }
 ```
+
+## MDPF_SECCLASS-D1-S21 -- the e75 pair censused multi_asset only; C_06's retained reclass moves every class outside the six (one relationship outside the signed set moved)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S21",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T06:42Z",
+  "one_line": "The e75 never-widen pair (COO half by 2.0.0_SA_COO~M1, CTO half @0ca2c444c7) censused only the retired class multi_asset (141 holdings / 36 envelopes), but C_06 reclassify_retained moves ANY retained holding whose class is outside SERVED_HOLDING_CLASSES. The 2026-10-09 04:00Z fire reclassed 298 holdings: the predicted 141 plus 157 'other'->commodities (PDBC) in z08296368, a relationship outside the signed set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run log gold_incremental_2026-10-09_20261009_061917.log: 'C06-RETAINED-RECLASS entries=262 holdings=298', COMPLETE exit 0.",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py reclassify_retained (:273-307): `bad = [h for h in entry.get('holdings', []) if h.get('asset_class') not in SERVED_HOLDING_CLASSES]` -- any non-served class.",
+      "R13_CHECKS/e75_retained_reclass_diff.py over 18,176 envelopes vs previous version: changed_envelopes=37, in_signed_set=36, outside_signed_set=1; transitions multi_asset->equity 84, multi_asset->fixed_income 57, other->commodities 157 (all gold/entities/clients/z08296368.json, PDBC); record E75_RETAINED_RECLASS_DIFF_20261009.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A never-widen pair's blast radius counts every key the producer's own rule can move, read from that rule at signing (CLAUDE.md NEVER-1).",
+  "world_is": "The census was keyed on the targeted class (multi_asset) while the writer keys on the complement of the served set; one relationship outside the signed 36 moved. Ruled KEEP after the fact by 1.0.0_SA_CTO~DELL1 (CTO half ADDENDUM 1 @786720019c, msg 1918) with a matching COO addendum; the move is correct (PDBC is a commodity ETF).",
+  "notes": "Named seat, per the ruling: 2.0.0_SA_COO~M1 signed the COO half with the single-class census. Forward rule: later pairs over this writer census every class outside the six. (Id D1-S20 was already taken by another row; this is D1-S21.)"
+}
+```
