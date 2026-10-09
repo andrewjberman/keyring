@@ -156,3 +156,27 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "HEAD carries SH-t-4; the running vehicle does not. The deploy's artifact for this cell is an UNCOMMITTED working-tree state, which makes the delta itself load-bearing: any routine 'git checkout --' , 'git stash', clean or merge on this tree would restore HEAD's hunk and MOVE the deployed bytes with nothing recorded, which is why this is filed ARMED rather than as a note. ARMED WITHOUT A LIVE OWNER, stated rather than hidden: 2.0.0_SA_COO~H1 reads NOT REGISTERED on the broker (lane never registered), so it cannot disarm same-turn and this row is the parked carrier. CONDITION THAT UN-PARKS IT: ~H1 registering, or any seat holding the mdpf-sechist-sh-t1 ledger ruling whether the vehicle should carry the reland before the next fire. I changed nothing: the order's rules forbid this seat editing anything under integrations/bloomberg/pipeline/, and restoring the hunk would move a producer's bytes hours before its scheduled fire with no sign-off. CONSEQUENCE FOR L3, bounded: the backfill ledger line and the manifest are unaffected, so L3's AC1 is not at risk from this; only SH-t-4's own remainder log line will be absent from the 11:00Z run. SEPARATELY and not caused by this: the 10-08 07:00 fire exited 50 (DAPI precondition failed, pull NOT attempted, fallback aborted at zero Bloomberg attempts per C:\\opal-elev\\bbg_fallback_ESCALATION.txt), and on the rc=50 path the .cmd jumps to :prune and SKIPS the ETF leg entirely -- so a repeat would leave L3's manifest ABSENT. Transport is UP as of 08:0xZ (bbcomm pid 36400 since 03:13 local, 127.0.0.1:8194 LISTENING with an ESTABLISHED link to the vendor), and 0.0.3_BG_BBGTerminal reports bloomberg_health ok:true, so entitlement is believed live; this seat did not test it, because an agent-turn Bloomberg call is barred by R-21."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W8-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~8",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "one_line": "The R3 named-test check (r3_named_tests.py) reports TESTS-BAD on passing tests whenever FORCE_COLOR is set in the environment, because pytest colours the PASSED token and the check's regex expects 'name PASSED'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (shell with FORCE_COLOR=3) python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py ENTRY data/mdpf/scripts/silver/test_security_entry_depth.py <3 names> -> pytest prints '5 passed' with '::test_each_source_depth \u001b[32mPASSED' and the last line is ENTRY-TESTS-BAD not-passed=<all three>, rc=1 (2026-10-09, worktree wk-mdpf_sechist-r3-9)",
+      "RUN the same command under env -u FORCE_COLOR -> last line ENTRY-TESTS-OK passed=3/3, rc=0; the check at r3_named_tests.py line ~33 matches the text '::<name> PASSED' with no ANSI strip",
+      "env | grep -i color in the dell1 worker shell -> FORCE_COLOR=3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Each R3 criterion invocation, run from the worktree root, prints <LABEL>-TESTS-OK when the named tests pass (order MDPF_SECHIST.TO-SH-t9 ACCEPTANCE).",
+  "world_is": "The invocation is environment-sensitive: with FORCE_COLOR set it fails on real passing tests, so a grader running in a coloured shell would read a false BAD for every R3 cell. I did not edit the check (barred by the order) and ran it with FORCE_COLOR unset for the recorded output."
+}
+```
