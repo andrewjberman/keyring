@@ -2661,3 +2661,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r115/p115_cells.py`: AC1 and AC3 FAIL
 | `IB-pr-414` | 49F producer peak RSS on 4 trees + FWD-14 gate memory fix + gate-decision replay at 3 firms | FWD-14 | WORLD | none | P115-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~276.
+
+## 109. ROUND 116, WORKSTREAM ~P (2026-10-09 ~15:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 20 (@c3fd5df57a))
+
+ADDENDUM 20 places three open rows. (1) The 9x e56 cost joins IB-pr-414's harness: TO-IB-pr-414 AMENDMENT 1 adds wall time and table
+lookups on all four trees. (2) The safe-deploy summary goes to the laptop tooling owner via MSTR (not this seat). (3) The wrong-parent
+negative control is one LOCAL fix cell here: IB-pr-399's replay driver derives its control from pin^, which at a later pin is the bound
+entry itself.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r116/p116_cells.py`: both criteria FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-415` | ~264's replay driver: control re-pointed to cabad9008c^ and shown to fail on its defect | FWD-2 (replay integrity) | LOCAL | none | P116-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~277.

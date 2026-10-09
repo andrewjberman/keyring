@@ -62,6 +62,17 @@ never materialises both full node lists at once.
 
 <expected_criteria>IB115-1-AC1, IB115-1-AC2, IB115-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~15:0xZ, issuer 2.0.0_SA_COO~P2, on CTO ADDENDUM 20 item 1 (@c3fd5df57a))
+
+The 9x e56 fallback cost (row W269-S2) joins this harness. For EACH of the four trees, the memory census also records:
+- `wall_time_s`: the producer's run, same harness;
+- `table_lookups`: the count of security-table lookups, CUSIP-key fallbacks included.
+The CTO grades the SIGKILL fix and the e56 cost together. IB-pr-410/413 stays HELD until both read under the line on `b410` rebuilt with
+your fix: peak RSS under 85% of 4 GiB, and wall time no worse than `pre404` x 2. If the e56 cost cannot be brought under that line inside
+the gate code you may touch, say so in a row; the e56 code itself is dell1's. `p115_cells.py` IB115-1-AC1 is amended to read both fields.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Code, tests and offline measurement; no upload, apply or deploy. AWS reads only.
