@@ -280,6 +280,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "demand_ledger dt=2026-10-08 history cells 5858 (s3://opal-data-assets/bloomberg/global/bronze/demand_ledger/dt=2026-10-08/ledger.jsonl)"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S3",
+    "one_line": "Yahoo's dividend list misses some cash Bloomberg's total return carries (LNVGY, DIVZ, IDVZ), and Yahoo shows money-market funds at a 0 total return where Bloomberg accrues interest daily.",
+    "spec_asserts": "PRD ADDENDUM v0.5 / C-PRICES: every stored Yahoo row carries the as-traded price, the dividend/interest cash on its ex-date and a total-return value; the TR column is built by the method DQ-t-17 fixes.",
+    "world_is": "DQ-t-17 (TR_COMPARISON.md @0aa91a7a96): on 36 comparable ex-dates Yahoo cash matches Bloomberg to 0.075 bp, but Bloomberg's TR carries payments Yahoo does not list -- LNVGY 2025-12-11 (85.8 bp), DIVZ 2026-09-29 (12.5 bp), IDVZ 2026-09-29 (21.8 bp) -- and FXFXX/SALXX accrue about 1 bp a day (3-4 bp over a weekend) in Bloomberg while Yahoo shows a $1.00 close and no dividend (TR 0). A Yahoo-only TR column would understate those names; interest-accruing funds need Bloomberg or an explicit accrual.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-09T09:41:06Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~15/TR_COMPARISON.md",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~15/TR_COMPARISON.json",
+        "dq_t17_run.py re-run at dell1 base @0aa91a7a96: TRCMP-OK 3 names"
+      ]
+    }
   }
 ]
 ```
