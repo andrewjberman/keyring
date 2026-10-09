@@ -23666,3 +23666,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Carried to the round-86 analysis as a candidate cell (refuse an off-list selected_tenant like the other scoped routes); no cell cut mid-round (the decomposition is frozen)."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~AMG",
+  "surfaced_at": "2026-10-09T17:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "An OPAL_RESEARCH_LIBRARY_ROOT that does not exist is SILENTLY IGNORED: library_root() falls through to the next candidate and the build reads a DIFFERENT library than the operator pinned.",
+  "class": "OBSERVATION",
+  "spec_asserts": "AMGT_RESAPP.TO-AMGT-kk-1 s.1 offers the override as the way to run elsewhere: 'run WHERE THE RESEARCH LIBRARY IS READABLE (the laptop's Opal Research folder, or OPAL_RESEARCH_LIBRARY_ROOT pointed at a synced copy -- the GO names the box and the root)'. round86_prep/GROUP_REPUBLISH_NOTES.md s.1 describes library_root() as looking 'in order, at env OPAL_RESEARCH_LIBRARY_ROOT, env OneDriveCommercial + ..., then ~\\\\OneDrive - Opal Capital\\\\...'.",
+  "world_is": "lib/research/corpus/library.py _resolve_root() (:60-71) returns the FIRST candidate that `os.path.isdir(path)`, and _candidates() (:43-58) appends the env override as merely the first of three. So a set-but-nonexistent override is skipped with no warning and no error, and the build proceeds against the next candidate that happens to exist. MEASURED on this box: with OPAL_RESEARCH_LIBRARY_ROOT=C:/no/such/research/library/positive-control, _research_folders_for_disclosure() returned 102 folders and root 'C:\\\\Users\\\\AndrewBerman\\\\OneDrive - Opal Capital\\\\Shared - Documents\\\\Asset Management\\\\Research' -- the OneDrive candidate, NOT the path given. LibraryAbsentError is raised only when NO candidate is a directory, so its message ('looked for: ...') is the only place the skip is ever visible, and only in the failure case. Detectable after the fact, because research_universe.source does record which root was used; NOT detectable at the call site by the operator who set the override.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/library.py:43-58 (_candidates) and :60-71 (_resolve_root: first isdir wins)",
+      "exercised on the laptop 2026-10-09 ~17:3xZ: bogus OPAL_RESEARCH_LIBRARY_ROOT -> 102 folders from the OneDrive candidate, root printed",
+      "s3://opal-data-harvest/crosswalk/v1/2026-10-09.json VersionId d3y5Cbs6ygTMvKj28fSvbR4ciDsyPv.9 (research_universe.source records the root actually used)"
+    ]
+  },
+  "notes": "Found while trying to exercise the new AC3 guard end to end: the intended absent-library condition was never created, so the first exercise proved the setup wrong rather than the guard. The guard was then exercised correctly by raising LibraryAbsentError from library_root with write_pool mocked, and it REFUSED (rc=2, no put) against the live served count of 102. Not a defect in this order's act and it blocks nothing: this box resolves the right library either way. It matters for the NEXT box told to use the override -- a typo or an unmounted path yields a silently different library rather than a refusal, which is the same publish-the-wrong-thing shape AC3 exists to stop. Candidate remedy for the owner: refuse when the override is SET but is not a directory, rather than falling through."
+}
+```
