@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_STRATID~6</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -99,6 +99,15 @@ your worktree's files by relative path).
 <criterion id="W2-4-AC2" cell_refs="ST-w-4"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_4_seam.py</invocation><expect>W24-SEAM-OK</expect></criterion>
 `W2-4-AC2` -- SEAM on real data: the re-made record lists neither `Opal Satellite 50` nor `Opal Short-Term`, still lists
 `Opal_Muni_Income` as `RULE_NOT_COUNTED`, and carries the four lines. On your branch now: `W24-SEAM-BAD no EXCLUDED-AS-MODEL: line`.
+
+### AMENDMENT A7 (issuer, 2026-10-09 ~05:5xZ) -- Andrew-direct: Opal_Muni_Income is a Custom model
+
+Andrew-direct ~05:3xZ, VERBATIM: "no that is a custom model, we should not be putting that in ALT Strategies." (record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`).
+Re-make the Cottonwood record with the Muni rule in its cfg narrowed to `Opal_Muni_Sleeve` (member `null`), so `Opal_Muni_Income` is
+an Opal Model excluded as one (it appears in EXCLUDED-AS-MODEL) and is not listed; `Opal_Muni_Sleeve` stays listed `RULE_NOT_COUNTED`.
+Correct the EXCLUDED-AS-MODEL line to say the set is the roster+definition `is_opal` union (ruling A6). Code and tests do not change.
+`W2-3-AC2` and `W2-4-AC2` now require `Opal_Muni_Income` NOT listed and `Opal_Muni_Sleeve` listed; re-run all four criteria and re-flip
+`<status>` to `complete` only when all pass.
 
 ## BOUNDS
 
