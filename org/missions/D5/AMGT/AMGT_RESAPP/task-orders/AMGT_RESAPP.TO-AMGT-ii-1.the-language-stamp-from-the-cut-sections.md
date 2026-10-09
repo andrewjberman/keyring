@@ -80,3 +80,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- issuer close 2026-10-09T11:0xZ: merged @acb31d3592 (wk-AMGT_RESAPP-334 @52ff9036c4, 4 paths) as a SITE-Z DEPLOY under COO @50dc4b1053 + 1.0.0_SA_CTO~Z @344af2c348; NEVER-2 entry amgt-resapp-r84-ii1-sitez-language-stamp-merge CLOSED 2 of 2. On the merged tree: r84_language AC1 YES (5 of 5 cached English 20-F filings stamped en; the planted Portuguese filing pt); r82_cut AC2 YES; filings 251 passed. battery.py:414 and document.py:1510 keep the whole-text stamp (off the store half's path; declared).</status>
