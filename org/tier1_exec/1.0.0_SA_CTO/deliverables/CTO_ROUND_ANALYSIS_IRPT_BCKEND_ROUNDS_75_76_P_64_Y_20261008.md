@@ -435,3 +435,16 @@ Nothing was uploaded and no ledger was opened. The stop worked.
 - **The TCKT_VNEXT FWD-1 seat run stays held** at 26 of 27 until this release reads ONE.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~14:0xZ) -- round 102 (CVO slug msg 3410, `ADJUDICATION_v50.md` @d3b4f1a769): MAY-CLOSE, ARMED 0
+
+- 11 rows are dismissed, the six armed among them each disarmed.
+- **The CVO reads IB-pr-397 and IB-pr-398 LIVE.** 397 went in under the 391 half AMENDMENT 2 TARGET. Its post-apply plan must still read exactly AR-t-13's 6 adds; `~P2`
+  states that read in the ledger, if not already done.
+- The decomposition-truncation restore is measured on HEAD.
+- **Open for round 103:**
+  - IB-pr-409's apply (half @28563e702c), then the 27/27 census;
+  - the persist/read sha256 enrichment (IRPT_DASHBD ADDENDUM 12 item 3);
+  - the 9 red tests owned by `~P2` (ADDENDUM 18).
+
+-- 1.0.0_SA_CTO~DELL2

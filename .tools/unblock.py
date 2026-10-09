@@ -17,7 +17,8 @@ to synthesize that into the workflow, and it needs a sign off by the CVO." Owner
                                                               |WAITING OWED <slug> <owner> UNTIL <time>>
         --owed-*: the tick's only block is ONE owed act named in the project's record, owned by another seat. It reads WAITING,
         not empty, only while (a) the owner is LIVE, (b) that act's deploy-ledger entry is OPEN on any live worktree (NEVER-2's
-        union read), and (c) the act is inside its declared window_hours, or 4h from opened_at when none is declared. Failing
+        union read; a linked worktree counts it only if its own commits touched it or it is uncommitted there, never a copy
+        inherited at branch cut, msg 32766), and (c) the act is inside its declared window_hours, or 4h from opened_at when none is declared. Failing
         any one, the tick counts as before, so a hung apply still opens a case (3.0.0_SA_CVO~Z ruling @23f60a21df).
     python .tools/unblock.py open --project <CODE> --by <COO serial> --body <position.md>     (COO, on THIRD-EMPTY-TICK)
     python .tools/unblock.py propose --id <UB> --by <CRO serial> --body <approach.md>         (CRO)
@@ -266,23 +267,45 @@ def owed_in_progress(owner_live: bool, entry, now) -> tuple:
     return True, stamp(until)
 
 
+def entry_counts_on_tree(is_shared_tree: bool, own_commits_touched: bool, uncommitted: bool) -> bool:
+    """PURE. Whether an OPEN entry file seen in a worktree is that tree's OWN record. The shared tree is the box's record;
+    a linked worktree counts it only if its branch's own commits touched it or it is uncommitted there. A copy inherited
+    by cutting the branch while the ledger was open does not count (1.0.0_SA_CTO~Z msg 32766, amending UB-fafc)."""
+    return is_shared_tree or own_commits_touched or uncommitted
+
+
+def _git_out(args: list) -> str:
+    try:
+        return subprocess.run(["git"] + args, capture_output=True, text=True, timeout=30).stdout
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
 def open_ledger_entry(slug: str) -> tuple:
     """(newest OPEN entry dict or None, live worktrees read). NEVER-2's union read: the entry FILE on disk in every live
-    worktree (`git worktree list`), which also sees an entry still uncommitted on a worker branch."""
-    try:
-        out = subprocess.run(["git", "-C", ROOT, "worktree", "list", "--porcelain"], capture_output=True, text=True,
-                             timeout=30).stdout
-    except (OSError, subprocess.SubprocessError):
-        out = ""
+    worktree (`git worktree list`), which also sees an entry still uncommitted on a worker branch -- counted only where
+    entry_counts_on_tree() says the tree owns it."""
+    out = _git_out(["-C", ROOT, "worktree", "list", "--porcelain"])
     trees = [ln[len("worktree "):].strip() for ln in out.splitlines() if ln.startswith("worktree ")] or [ROOT]
+    shared = os.path.normcase(os.path.abspath(trees[0]))   # git lists the main (shared) worktree first
+    shared_head = _git_out(["-C", trees[0], "rev-parse", "HEAD"]).strip()
+    rel = "org/critical_paths/.open_deploys/%s.json" % slug
     best = None
     for t in trees:
-        p = os.path.join(t, "org", "critical_paths", ".open_deploys", slug + ".json")
+        p = os.path.join(t, *rel.split("/"))
         try:
             e = json.load(open(p, encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        if isinstance(e, dict) and str(e.get("status", "")).upper() == "OPEN" and \
+        if not (isinstance(e, dict) and str(e.get("status", "")).upper() == "OPEN"):
+            continue
+        is_shared = os.path.normcase(os.path.abspath(t)) == shared
+        own = dirty = False
+        if not is_shared:
+            dirty = bool(_git_out(["-C", t, "status", "--porcelain", "--", rel]).strip())
+            base = _git_out(["-C", t, "merge-base", "HEAD", shared_head]).strip() if shared_head else ""
+            own = bool(base) and bool(_git_out(["-C", t, "log", "--format=%H", "%s..HEAD" % base, "--", rel]).strip())
+        if entry_counts_on_tree(is_shared, own, dirty) and \
                 (best is None or str(e.get("opened_at", "")) > str(best.get("opened_at", ""))):
             best = e
     return best, len(trees)
@@ -578,6 +601,9 @@ def selftest() -> int:
             and owed_in_progress(True, dict(und, opened_at=stamp(now - datetime.timedelta(hours=5))), now)[1] == "outside-window")
         rec("owed-act-fractional-iso-opened-at-parses", owed_in_progress(
             True, dict(ent, opened_at=(now - datetime.timedelta(minutes=5)).isoformat()), now)[0])
+        rec("an-inherited-branch-copy-of-a-ledger-does-not-count", entry_counts_on_tree(True, False, False)
+            and entry_counts_on_tree(False, True, False) and entry_counts_on_tree(False, False, True)
+            and not entry_counts_on_tree(False, False, False))
         rec("an-open-unblock-file-still-wins-over-an-owed-act", tick_verdict(5, "nothing", d, None, ("s", "o", "t"))[1]
             == "WAITING %s OPEN" % d["id"])
         rec("record-carries-all-four-voices", all(s in render(check(g, "g")) for s in

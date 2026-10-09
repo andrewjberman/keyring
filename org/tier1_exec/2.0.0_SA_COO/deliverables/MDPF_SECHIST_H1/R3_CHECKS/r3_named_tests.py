@@ -21,9 +21,12 @@ def main(argv: list[str]) -> int:
     if not os.path.isfile(test_file):
         print(f"{label}-TESTS-BAD missing-file={test_file}")
         return 1
-    run = subprocess.run([sys.executable, "-m", "pytest", "-v", "-p", "no:cacheprovider", test_file],
-                         capture_output=True, text=True)
-    out = run.stdout + run.stderr
+    # --color=no and FORCE_COLOR/PY_COLORS removed: an exported FORCE_COLOR put ANSI codes between the test id and
+    # PASSED and made a passing suite read BAD (row MDPF_SECHIST-D1-W5-S1). ANSI is stripped as a second guard.
+    env = {k: v for k, v in os.environ.items() if k not in ("FORCE_COLOR", "PY_COLORS")}
+    run = subprocess.run([sys.executable, "-m", "pytest", "-v", "--color=no", "-p", "no:cacheprovider", test_file],
+                         capture_output=True, text=True, env=env)
+    out = re.sub(r"\x1b\[[0-9;]*m", "", run.stdout + run.stderr)
     print(out[-4000:])
     passed, bad = [], []
     for n in names:
