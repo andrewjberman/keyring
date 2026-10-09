@@ -79,3 +79,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T13:0xZ by the issuer: AMGT-jj-3 merged @37677d8c5f (code + schema), r85_crosswalk YES on its local list. Pair COO @263271c6db + CTO @29112515f4 (msg 2410): publish under TODAY's date only; BEFORE the put, print the pre-publish diff against crosswalk/v1/2026-10-07.json (at least 243 records; every prior record byte-equal apart from issuer) and name the same-day rollback in the entry (a newer dated key re-carrying 2026-10-07.json's document, never a delete); AFTER the put, read that a typed ASML still answers two candidates on the deployed function (its code ignores issuer until jj-5) and r84_store AC2 reads 5 of 5. Worktree ~341 cut from box/dell1 after this line. Graded by no gate limb (a modification).</status>
