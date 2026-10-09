@@ -6369,3 +6369,81 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Neither verify nor prove could run, because a pack never arrived -- twice now in this one batch, for both of its files. No MANIFEST was authored on the receiver to make the tool pass: the MANIFEST is the SENDING machine's attestation (intake_check.py pack writes it), so a receiver-written one would have the tool verify the receiver's own copy against the receiver's own hashes -- a circular pass indistinguishable in the record from a real receipt. The bytes installed ARE the signed, checked bytes, and three independent readings say so; what is missing is the receiving tool's RECEIPT, which is the artifact the pack mechanism exists to produce. What would close it: the laptop runs intake_check.py pack (now possible -- the c6=failed hold that blocked it is cleared, the record reads verdict=checked with c6=not_applicable) and Taildrops the PACK, not the wheel. That is the sender's act, not this seat's."
 }
 ```
+
+## NFRA_CTLPLN-W14-S49 -- the transcripts key-policy renderer cannot load local.named_reader_arns from readers.tf, so CTa1-AC5 and the closing line of CTa1-AC7 cannot print
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T10:29:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S49",
+  "one_line": "check_transcripts_dell_decrypt.py cannot render the transcripts key policy since commit 0693227a69: main.tf now reads local.named_reader_arns, declared in readers.tf, which the checker's one-file render does not load; CTa1-AC5 and the final line of CTa1-AC7 (simulate_dell_parity imports the same renderer) cannot print.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/main.tf:103 'Principal = { AWS = local.named_reader_arns }'; infra/aws/terraform/transcripts/readers.tf:25 declares it (concat(var.reader_principal_arns, [aws_iam_role.second_reader.arn])). 0693227a69 (2026-10-09 04:32 -0400, NFRA_TRNSPT TO-TR-p18) added readers.tf.",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> rc=1, JSONDecodeError; terraform console stderr: 'Reference to undeclared local value ... named_reader_arns' (render_expression, check_transcripts_dell_decrypt.py:173-189, writes only main.tf's expression into a scratch root).",
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_dell_parity.py -> prints 'ARMS policy-documents: simulated=1500 equal=1500 unequal=0 ... unread=0', then raises the same JSONDecodeError at simulate_dell_parity.py:392 (ctd.render_expression) before the DELL-PARITY line. Neither file was edited by this amendment on that path.",
+      "Not fixed here: the render needs readers.tf's role ARN (a builder-minted name) resolved, which changes what the checker asserts about the reader statement; that is the transcripts workstream's call, not a rider on AMENDMENT 29."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 29 ACCEPTANCE: the seven ids CTa1-AC1..AC7 as stated after AMENDMENT 26, CTa1-AC5 reading the check's final line 'ok=True' and CTa1-AC7 reading 'DELL-PARITY arms=.. equal=.. unequal=0 ok=True'.",
+  "world_is": "Both lines are unobtainable at HEAD b681bbcd5a regardless of the SES change: the checker dies before its last line. The AMENDMENT 29 arms themselves read: planread_ok=428/428 all_ok=True; parity arms equal=1500 unequal=0 (printed before the crash)."
+}
+```
+
+## NFRA_CTLPLN-W14-S50 -- S49 fixed in the renderer, by a reading the issuer's ruling left open: the reader statement is measured against the render at the a18 commit (0693227a69), and the live key policy is accepted when it equals either the before25-with-post-edit-reader render or the render after this edit.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T11:05:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S50",
+  "one_line": "S49 fixed in the renderer, by a reading the issuer's ruling left open: the reader statement is measured against the render at the a18 commit (0693227a69), and the live key policy is accepted when it equals either the before25-with-post-edit-reader render or the render after this edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py: render_expression now reads every .tf file of the root (locals_blocks, local_expression, root_texts) and stubs aws_iam_role.second_reader.arn from NAMES.json second_reader.role.name (git show HEAD: when data/ is absent from the sparse worktree); the stub equals a principal of the live NamedReadersUseTheKey statement (printed, True).",
+      "live key policy (kms get-key-policy 44a2284f-1e14-4ea1-b6cb-f6121bfde35a) holds 4 statements and NamedReadersUseTheKey has 2 principals; the check prints 'equals the before25 render with the post-edit reader: False ; equals the render after this edit: True'.",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> rc=0, last line 'dell_decrypt=2/2 dell_write_refused=6/10 dell2_generate_ok=True dell1_generate_ok=True reader_unchanged=True unlisted_refused=True statements_added=1 ok=True'; simulate_dell_parity.py -> 'DELL-PARITY arms=1533 equal=1533/1533 unequal=0 ok=True'."
+    ]
+  },
+  "spec_asserts": "The issuer's ruling (S49 task): 'reader_unchanged compares against the POST-EDIT render, per the CTO's ruling on row W14-S40'; the Dell statements' assertions unchanged.",
+  "world_is": "'POST-EDIT render' was read as the render of main.tf and readers.tf at the a18 commit 0693227a69 (the last edit that changed the reader statement), not as the current file (which would make the comparison compare a file with itself). The before25 baseline used for the added/removed/in-place diff takes its reader statement from that render. dell_write_refused moved 8/10 -> 6/10 in the line (kms:GenerateDataKey allowed to both Dells, by design since amendments 25 and 26; the AC5 expectation is the regex [0-9]+/[0-9]+). If the issuer meant another baseline, only A18_COMMIT and the live_post clause change."
+}
+```
+
+## NFRA_CTLPLN-W14-S51 -- terraform fmt -check on infra/aws/terraform/transcripts reports commentary.tf as not canonically formatted; the file belongs to another cell and is outside this order's paths.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T11:05:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S51",
+  "one_line": "terraform fmt -check on infra/aws/terraform/transcripts reports commentary.tf as not canonically formatted; the file belongs to another cell and is outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check -recursive infra/aws/terraform/nfra-ctlpln-identity infra/aws/terraform/transcripts -> prints infra/aws/terraform/transcripts/commentary.tf, rc=3; nfra-ctlpln-identity prints nothing.",
+      "git status of the worktree: commentary.tf is not modified by this branch (last touched by the cell row W14-S46 names)."
+    ]
+  },
+  "spec_asserts": "The order says keep Terraform fmt/validate clean for the files this order changes.",
+  "world_is": "The files this order changes (transcripts/tests/*.py and the nfra-ctlpln-identity census, tests and plan note) are fmt-clean; the one unformatted file is another cell's undeployed commentary.tf. Not edited. INERT: formatting does not change a plan."
+}
+```

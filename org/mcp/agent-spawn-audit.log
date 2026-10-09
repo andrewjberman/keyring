@@ -18846,6 +18846,7 @@
 2026-10-09T10:57:01.456003+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=5124
 2026-10-09T10:57:01.803302+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZC pid=29840
 2026-10-09T10:57:01.906707+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZW pid=12768
+2026-10-09T11:05:46Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=102  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=25  msys_joined=14  ms=1660
 2026-10-09T10:49:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL2  host=DESKTOP-N8RJV0A  sessions=40  session_pids=644  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=74  msys_joined=32  ms=1230
 2026-10-09T11:02:07.230295+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZG pid=35220
 2026-10-09T10:57:18.216687+00:00 IDENTITY_CROSS_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=16712 reason='-' conflict='IDENTITY CONFLICT -- NOT REGISTERED. PID 16712 is currently 2.0.0_SA_COO~W1 (live 13s ago); you claimed 3.0.0_SA_CVO. A process cannot hold two identities. If you compacted and re-derived your serial from .comp-graph/.agent_context, that file is SHARED and is NOT an identity source -- you are 2.0.0_SA_COO~W1. Legitimate override: register_agent(..., identity_override="<reason>") (audited).'
