@@ -384,6 +384,89 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Row D1-S4: the deployed rebalancer_schemas.py imports a module absent from S3.",
     "world_is": "Both modules are present and import; the hazard is disarmed. Whether the next scheduled silver run reads the S3 list cleanly is ledger L3."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S1",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:30:57Z",
+    "spec_asserts": "TO-ST-u1 R4: declaring Cottonwood OUTSIDE re-points ONE round-1 test (test_undeclared_firm_member_not_counted in test_stratid_global_fold.py); 'Weaken no other round-1 test'; the order's <paths> grants test_stratid_global_fold.py and the new round-2 test file and no other test file.",
+    "world_is": "A second round-1 test asserts Cottonwood undeclared and fails once the registry row lands: data/mdpf/tests/stratid/test_stratid_basis.py::test_undeclared_firm_population_is_not_counted asserts 'cottonwood' not in reg.SMA_FIRM_POPULATION and sma_global_basis_of('divz','cottonwood') is None (lines 53-58, the cottonwood half). The file is outside this order's <paths>, so it is left unedited and RED. Its inflection half still holds. The criteria do not run it (AC3 runs st_t3_tests.py, which is test_stratid_global_fold.py only).",
+    "one_line": "ST-u-1's registry change (SMA_FIRM_POPULATION['cottonwood']='outside') turns round 1's test_stratid_basis.py::test_undeclared_firm_population_is_not_counted red; the file is outside TO-ST-u1's <paths>, so it is left for the issuer to grant and re-point (cottonwood half to 'declared outside').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: python -m pytest data/mdpf/scripts/gold/tests/test_category_views_null_tail_guard.py data/mdpf/tests/taxsma data/mdpf/tests/stratid -> '1 failed, 260 passed'; the one failure is test_stratid_basis.py::test_undeclared_firm_population_is_not_counted, AssertionError: assert 'cottonwood' not in {'49financial': 'inside', 'cottonwood': 'outside'}",
+        "the same file's test_member_firm_row_overrides_firm_default passes (it monkeypatches cottonwood outside itself), and every other test under those three paths passes at the ST-u-1 change",
+        "the failing line is test_stratid_basis.py:54 at the worktree HEAD of this branch; the registry edit is data/mdpf/scripts/gold/mdpf_category_registry.py SMA_FIRM_POPULATION, required by criterion ST2-u1-AC2 arm 'build'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Id uses the D1 fabric coordinate as the existing worker rows of this channel do (the order text names MDPF_STRATID-W7-S<k>). Suggested re-point for the file's owner: replace the cottonwood half with sma_global_basis_of('divz','cottonwood') == additive and SMA_FIRM_POPULATION['cottonwood'] == 'outside' (the new test_cottonwood_declared_outside already asserts both); keep the tax/cottonwood line (None only because tax is a scope-row member, check before keeping)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S2",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:31:58Z",
+    "spec_asserts": "TO-ST-u1 R2: 'Every Cottonwood cohort_class sma member is either counted or named withheld on every Global date it has a value'; seam arm A reads the SERVED Cottonwood slice, which carries two sma members (divz, pfde).",
+    "world_is": "In the real build, apply_taxsma_overlay runs before apply_sma_sleeve_overlay and puts a Cottonwood `tax` leaf (cohort_class 'sma', source_basis carve_out, no overlap_model_value) into the Cottonwood by_model. With Cottonwood OUTSIDE its firm default makes that leaf ADDITIVE, so the sleeve fold would take it as a candidate and name it OVERLAP_UNMEASURED on every date (counted nothing, but a flood of false held-out rows); the served-slice seam cannot see it because the slice is read before the Tax overlay. Resolved inside the order's paths: the sleeve fold skips TAXSMA_TAX_MEMBER_ID (Tax's own fold owns that leaf at every firm), pinned by test_cottonwood_tax_leaf_is_the_tax_folds_not_the_sleeve_folds. A reading of R2 that counts the Tax leaf as one of 'every Cottonwood sma member' is the opposite call; the issuer decides.",
+    "one_line": "ST-u-1 declares Cottonwood outside, which would make the post-TaxSMA Cottonwood `tax` leaf a sleeve-fold candidate; the seam (served slice, pre-Tax) cannot see it. The fold now skips the Tax leaf, owned by the Tax fold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mdpf_gold_consolidator.py: build order is apply_taxsma_overlay (line 2506) then apply_sma_sleeve_overlay (line 2508); apply_taxsma_overlay writes c['by_model']['tax'] = _taxsma_by_model_entry(cown, ccov, fcot) for Cottonwood, which returns cohort_class 'sma', source_basis from sma_basis_of('tax','cottonwood') = carve_out, and no overlap key",
+        "measured by the new test: without the skip, a Cottonwood tax leaf in the overlay input yields sma_additive_withheld rows with member_id 'tax'; with it, none and sma_additive_aua is unchanged",
+        "the seam's served slice carries exactly two sma members (arm A prints divz and pfde), so it is blind to the post-Tax leaf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:40:04Z",
+    "spec_asserts": "TO-ST-u2 build step 2: 'A carve-out-only member (49financial) states False, and its by_firm basis says why'; TO-ST-u1 R1: by_firm firm_id is 49financial for an entry with no firms at Global. TO-ST-u2's <paths> grant the consolidator and its own test file only.",
+    "world_is": "ST-u-1 as committed (fab599bcea) emitted by_firm only for a member with a firm-listed entry, so a carve-out-only row (49financial divz/pfoe) had none, and ST-u-1's own test test_fully_overlapped_member_held_out_by_name_not_added asserted its absence. ST-u-2 needs it, so the consolidator now emits by_firm at Global for every carve-out no-firms entry (firm_id 49financial) and the one ST-u-1 test assertion became the stronger by_firm == [{49financial, carve_out, 30.0}]. That edits data/mdpf/tests/stratid/test_stratid_round2_firm_basis.py, an ST-u-1 file outside TO-ST-u2's <paths>, in the same commit. The Tax leaf (a no-firms ADDITIVE entry summing 49financial and Cottonwood) is deliberately given no by_firm: no single firm owns the amount.",
+    "one_line": "ST-u-2 needs by_firm on carve-out-only Global rows; that reverses ST-u-1's absence assertion in its own test file, which TO-ST-u2's <paths> do not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: with the consolidator change and the ST-u-1 test unchanged, test_fully_overlapped_member_held_out_by_name_not_added fails on `'by_firm' not in {...}` (1 failed, 19 passed across the three stratid test files)",
+        "the ST-u-1 criteria still pass after the change: st_u1_tests U1-OK, st_u1_seam SEAM-OK, st_u1_regress U1-REGRESS-OK (st_u2_regress re-runs all three)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S4",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:40:04Z",
+    "spec_asserts": "TO-ST-u2 build step 2: tree row `inside_model_figure` is 'a bool on the frontier date. It is True if any part of the member's dollars is held out as inside a Model, and False otherwise.'",
+    "world_is": "A held-out entry has two reasons. OVERLAP is a measured overlap > 0 (inside a Model). OVERLAP_UNMEASURED is a sleeve held out whole because nobody measured whether it is inside a Model. A bool cannot carry 'unknown', so the order's text leaves the unmeasured case undecided. Implemented: inside_model_figure is True only for a held-out entry with reason OVERLAP; an OVERLAP_UNMEASURED entry is named in `held_out` with its own reason and leaves the bool False (pinned by test_tree_member_names_held_out_amounts). A reader who reads the bool alone sees False for a sleeve that may be inside a Model; the `held_out` entry beside it carries the reason. The alternative reading (any held-out entry makes it True) is a one-line change in _state_inside_model; the issuer decides. The by_model entry's own inside_model_figure is tri-state (None when unmeasured), as the order says.",
+    "one_line": "The tree row's bool inside_model_figure cannot express an unmeasured overlap; implemented as True only for a measured overlap, with the unmeasured case named in held_out under its own reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "apply_sma_sleeve_overlay already emits two reasons into sma_additive_withheld: SMA_WITHHELD_OVERLAP and SMA_WITHHELD_UNMEASURED (mdpf_gold_consolidator.py), so both can reach a tree row's frontier-date held_out",
+        "the order's by_model rule for the same field is explicitly tri-state (True / False / None when unmeasured); the tree row's rule is bool-only, so the two fields differ in what they can say"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
