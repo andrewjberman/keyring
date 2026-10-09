@@ -103,6 +103,20 @@ def _step(field, period):
     return None
 
 
+def _hour_list(field):
+    """The sorted distinct hours 0-23 of a comma list of single hours (two or more), or None when the field is anything else."""
+    parts = field.split(",")
+    if len(parts) < 2 or not all(_INT_RE.match(p) and int(p) <= 23 for p in parts):
+        return None
+    hours = sorted(set(int(p) for p in parts))
+    return hours if len(hours) >= 2 else None
+
+
+def _gaps(hours):
+    """The gaps in hours between consecutive fires of a day, the last one wrapping to the first fire of the next day."""
+    return [(hours[(i + 1) % len(hours)] - h) % 24 for i, h in enumerate(hours)]
+
+
 def _cron(fields, expr):
     if len(fields) != 6:
         return None, "cron has %d fields, not 6: not read" % len(fields)
@@ -135,7 +149,19 @@ def _cron(fields, expr):
             return _interval(n * 60, expr, "every %d hours" % n)
         if hr == "*":
             return None, "hour is every hour but days are restricted: not read as a cadence word"
-        return None, "hour field %s: more than once a day" % hr
+        hours = _hour_list(hr)
+        if hours is None:
+            return None, "hour field %s: more than once a day, not a list of single hours: not a fixed interval" % hr
+        gaps = _gaps(hours)
+        if len(set(gaps)) != 1:
+            return None, ("%d fires a day at hours %s, gaps of %s hours: uneven, so no cadence word (R1: an uneven day "
+                          "has no word and is never given the word the name carries)"
+                          % (len(hours), ",".join(str(h) for h in hours), ", ".join(str(g) for g in gaps)))
+        if not (every_dom and days is not None and len(days) >= 5):
+            return None, "%d evenly spaced fires a day on %s days of the week: no cadence word" % (
+                len(hours), "no" if days is None else len(days))
+        return _interval(gaps[0] * 60, expr, "%d fires a day, %d hours apart%s" % (
+            len(hours), gaps[0], "" if len(days) == 7 else " (a weekday restriction is a calendar)"))
     # a single minute and a single hour: once a day at most
     if _INT_RE.match(dom):
         if dow in ("?", "*"):

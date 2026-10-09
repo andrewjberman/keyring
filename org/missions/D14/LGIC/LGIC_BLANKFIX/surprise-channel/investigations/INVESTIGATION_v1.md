@@ -2399,3 +2399,30 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Two meanings of 'owner' live in the repository: the ruling row's mover and the address's scope (whose file it is). The line prints the second, as FWD-4 says 'whose it is'. The ruling's mover text is long prose and stays on the ruling."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S9 -- BAC1-AC1 cannot read ok=True inside the grant: six of the ten S8 list lines still carry the old word because lib/opal_naming_rootcheck.py decide() keeps a carried cadence word when the expression decides none; the partial form is built there, not in opal_naming_cadence.py
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T12:45:00Z",
+  "one_line": "BAC1-AC1 cannot read ok=True inside the grant: six of the ten S8 list lines still carry the old word because lib/opal_naming_rootcheck.py decide() keeps a carried cadence word when the expression decides none; the partial form is built there, not in opal_naming_cadence.py",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence_r14.py: FWD4-CADENCE-R14 ok=False schedules=180 agree=148 partial=26 mismatch=0 carried_over=6 (negative arm: 9 of 9 planted lines landed where planted)",
+      "the four evenly spaced S8 rows now read 12h from their expressions (cron(45 9,21..), cron(15 10,22..), cron(45 10,22..), cron(0 8,20..)) and the list prints -12h; the six that stay carried over: fear-greed-daily-update cron(30 14,21 * * ? *), trending-topics-portal-publisher-daily cron(10 14,21 * * ? *), keyword-drilldown-generator-daily cron(25 12,21 * * ? *), finbert-scoring-post-ingestion-45min cron(55 0,13,20 * * ? *) (gaps 13, 7, 4 hours), teams-global-transcripts-pull-hourly cron(0 13-22 ? * MON-FRI *), fred-ingestion-monthly-early cron(0 15 ? * 6#1 *); each prints FIX/RIGHT with its old word",
+      "lib/opal_naming_rootcheck.py decide(): the rebuild runs only on `cad.get(\"agrees\") is False and cad.get(\"word\")`; with no word the graded CONFORMANT/FIX name is returned as it stands. The partial form of a blank, `HOLE partial form X-{cadence}; could not fill {cadence}: <basis>`, is built only when the graded canonical already holds {cadence} (a name with no cadence word); H14 in HOLE_OWED names that hole's owner",
+      "no cadence.py field reaches that path: decide reads only canonical (a brace-free canonical is a final name), agrees+word (a truthy word is written into the name) and basis"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-ac-1 and ROUND_ANALYSIS.round13 R1: uneven fires have no word and the row prints its partial form with the reason; the list never carries over the old word; built in lib/opal_naming_cadence.py and its test only.",
+  "world_is": "opal_naming_cadence.py decides the word or the reason correctly for all 180 rows, but the line the root check prints is made by decide() in lib/opal_naming_rootcheck.py, outside this order's paths, so an undecided row with a carried word keeps it. Needed there (not done, outside the grant; the lane of BF-ac-2 and BF-ac-3, slot ~2): in decide(), when cad.get(\"word\") is None, the row states an expression (cad.get(\"expression\") not None) and cad.get(\"carried\") is a cadence word not starting with on-, rebuild the canonical with _rebuild_on_word(base, carried, \"{cadence}\") so the existing {cadence} branch prints the HOLE with cad[\"basis\"] as the reason. Consequence to expect: six holes appear in the census (hole=6), each with its reason and an owner already named by H14. No weakening: the checker counts those six as carried_over and fails; the expected value is unchanged."
+}
+```
