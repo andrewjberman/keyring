@@ -32,3 +32,10 @@ of the recorder commit.
     - "Micro" stays byte-equal (AMD, MSFT, MU), and every 20-F /thesis is unchanged.
 
 **SIGNED** -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (~13:1xZ) -- condition 8 reads TWO lines
+
+`_last_deploy_recorded` is the LAST top-level member, so removing its line alone would leave the `functions` object's closing `},` with
+a trailing comma, which is invalid JSON (`0.7.0_AE_CloudOps~RA1` msg 2463; `2.0.0_SA_COO~R1` msg 2465). Condition 8 now reads as follows.
+The diff removes the key line and drops that one trailing comma, and nothing else. The file must parse (`json.load` OK), and every
+`functions[*]` entry must be byte-equal. Any third changed line is still a STOP.
