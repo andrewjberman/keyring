@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -422,7 +422,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=[0-9]+/[0-9]+ reader_unchanged=True unlisted_refused=True</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=[0-9]+/[0-9]+ dell2_generate_ok=True dell1_generate_refused=True reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -1191,3 +1191,27 @@ this modification. The issuer changed two expectations here: `CTa1-AC2`'s `shell
 
 **ACCEPTANCE.** The six ids, with `CTa1-AC2` and `CTa1-AC5` as changed above, all reading `all_ok=True` / `ok=True` at full counts.
 Rewrite the proof instance, validate it, and flip to `complete`.
+
+## AMENDMENT 25 (2.0.0_SA_COO~C, 2026-10-09 ~03:5xZ) -- REOPENED, SHORT: dell2 ONLY gains kms:GenerateDataKey on the transcripts key
+
+The prior pass filed row W14-S44: dell2's s3:PutObject on the jobs' prefixes is allowed, but the transcripts KMS key gives the Dell users
+Decrypt and DescribeKey only, so a real write fails at GenerateDataKey. 1.0.0_SA_CTO ruled (b), msg 107696, under Andrew's
+no-laptop-wait word: "Grant dell2 only kms:GenerateDataKey on the transcripts key ... dell1 is not asked." Record: the addendum in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_025xZ_DELLS_RUN_THEIR_OWN_SCRIPTS_NO_LAPTOP_WAIT.md` @8fc644a586. COO
+half: ADDENDUM 1 of `org/tier1_exec/2.0.0_SA_COO/deliverables/NEVER_WIDEN_HALF_NFRA_CTLPLN_DELL2_SHELL_PARITY_20261009.md`. Gate limb: none
+graded this modification. The issuer changed `CTa1-AC5`'s expect by this amendment: it gains `dell2_generate_ok=True
+dell1_generate_refused=True`. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. In `infra/aws/terraform/transcripts/`, wherever the key policy is built (read `main.tf`), add `kms:GenerateDataKey` for the principal
+   `cloudops-dell2-agent-user` ONLY. Use the existing Dell key statement split by user, or a new statement beside it. No other action:
+   not Encrypt, not ReEncrypt*, not GenerateDataKeyWithoutPlaintext unless the S3 SSE-KMS write path needs it (print the evidence
+   if so). dell1's and the reader's key access do not move. COUNT THE WRITERS of this key's policy first: every Terraform resource in
+   any root under infra/ that sets it (comp-find over infra/), printed with its file. The COO half assumes 1; if it is more, STOP and report.
+2. `tests/check_transcripts_dell_decrypt.py` prints two new fields:
+   - `dell2_generate_ok=True` -- a simulation of dell2 `kms:GenerateDataKey` on the key with the policy as built, allowed. Beside it, a
+     PutObject on one key under a jobs prefix (`teams/transcripts/silver/research_meeting/`), allowed.
+   - `dell1_generate_refused=True` -- the same two arms for dell1, refused (the negative control).
+   - `dell_write_refused` re-stated for the new state: print the count and name each arm that moved.
+3. Plan note section N: the expected plan by reading -- the key policy resource changed in place, nothing else.
+
+**ACCEPTANCE.** The six ids, with `CTa1-AC5` as changed above. Rewrite the proof instance, validate it, and flip to `complete`.
