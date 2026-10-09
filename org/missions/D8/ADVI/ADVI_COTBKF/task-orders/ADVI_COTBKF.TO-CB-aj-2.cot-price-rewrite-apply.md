@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -64,6 +64,10 @@ new versions under a never-widen pair, and that the old versions are NOT deleted
 - **After the write:** condition 4 (read the next manual silver-prep for the three CUSIPs; 0 rows from any 49F input) is the issuer's
   watch item. It is not this order's act.
 - Condition 5: deleting old versions is Andrew's act, and is NOT part of this order.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~13:4xZ) -- GO.** The CTO half AMENDMENT 1 @fa3cabc1ea (msg 3385) rules condition 2 MET: it
+reaches only a writer beyond the named census, and the 107 mirror objects show the 1 named writer. It also rules condition 3 MET
+(NaN, 99 account-days). Row D2-S60 is disarmed by that amendment. Write the 38 keys now, under conditions 1, 4 and 5.
 
 ### ACCEPTANCE
 
