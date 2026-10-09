@@ -35,6 +35,20 @@ subject value. On 992 HK the Enterprise Value tile reads "--" (the header serves
 3. **One formatter.** The cells keep printing through `formatStatValue` with the figure's own served currency, so a header figure with
    no currency reads "<figure> currency not stated" exactly as its tile does. Nothing is converted or guessed.
 
+4. **AMENDMENT 1 (after the close walk 16:07Z; the issuer's diagnosis was incomplete).** On 992 HK the subject row still reads
+   "60.91B currency not stated" and the EV tile still reads "--". The 60.91B is the HEADER's own served CURR_ENTP_VAL, not the peer
+   set's: the header serves it with a `currency_basis` beginning `UNMEASURED`, and the tile withholds such a money figure (CRPS-ao-3,
+   FWD-20; `components/HeaderCards.tsx` `resolveFigure` passes the figure's `unit` and `figureBasis(figure)` to `formatStatValue`,
+   which returns null, and the tile body is a dash with the reason on hover). The subject row calls `formatStatValue` WITHOUT the unit
+   and the basis, so it skips that rule.
+   - In `tabs/PeersTab.tsx`, the subject row's header-served cells pass the header figure's own `unit` and `figureBasis(figure)` (import
+     it from `../components/StatTile`) to `formatStatValue`, exactly as the tile does; a null or `UNIT_NOT_RESOLVED_WORDS` display
+     prints "--". The row then withholds whenever the tile withholds, and prints whatever the tile prints. Member rows are untouched.
+   - Optional, in the same file: the withheld subject cell may carry the tile's reason as its `title` (hover); no new visible words.
+   - Your item 1-3 change stays as built (portal 2be8455f is your base).
+   - AC1 is `r68.cjs`, which now has 6 arms; its new arm 5 (UNMEASURED) fails at 2be8455f. Then re-run AC2, rewrite your proof instance,
+     and flip `<status>` to `complete` in the same commit.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install (`bun install`, `bun add`, `npm`, `npx` are refused here), no push, no deploy.
@@ -61,7 +75,7 @@ Read-only: the whole repository; in particular `components/HeaderCards.tsx`, `co
 ## 4. PROOF OF SPEC (literal; timeout 1800)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AV-zzs-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round68/checks/r68.cjs"; echo "exit=$?"</invocation><expect>ROUND 68 ONE FIELD PER MEASURE: 5 of 5 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AV-zzs-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round68/checks/r68.cjs"; echo "exit=$?"</invocation><expect>ROUND 68 ONE FIELD PER MEASURE: 6 of 6 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AV-zzs-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/battery29.sh" "$(git rev-parse --show-toplevel)"; echo "exit=$?"</invocation><expect>BATTERY29: ALL PASS (0 skipped) -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AV-zzs-1" judgment="true"/>
 </proof_of_spec>
@@ -78,10 +92,12 @@ Report once: the diff (per file, one line each), the output line of every criter
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~16:2xZ):** REOPENED. The close walk (tmp/ui-walk/20261009T160722Z shot 011) shows 992 HK's EV still split: the row prints the header's UNMEASURED-basis CURR_ENTP_VAL that the tile withholds (CRPS-ao-3, FWD-20). Item 4 makes the row apply the tile's rule; r68 gains arm 5 (5 of 6 at 2be8455f). Issuer ruling: one rule, the tile's -- the row withholds; the tile is not changed (FWD-20 stands). Graded by no gate limb at cut (a modification).
+
 **ISSUER NOTES:** round 68 = `ledger/ROUND_ANALYSIS.round67.md` @a06920d917 section 2 item 1, one cell. Base portal 32835ce5
 (= origin DEV, round 67). LF only. Item 2's producer row is AMGT_RESAPP-D1-S14 @d30938fb2d (already filed).
 
-<status>complete</status>
+<status>pending</status>
 <round>68</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzs-1</to_id>
 <slot>~142</slot>
