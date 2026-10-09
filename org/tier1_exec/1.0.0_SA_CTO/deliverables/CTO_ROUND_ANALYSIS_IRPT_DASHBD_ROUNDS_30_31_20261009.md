@@ -575,3 +575,18 @@ method row, into every manifest whatever the source entry says. The rows carry N
    - **Until that cell drains, FWD-8 stays NOT REALIZED on these reasons,** on top of the 197 DEFECTs.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (2026-10-09 ~15:5xZ) -- round 50 (CVO slug msg 3593, `ADJUDICATION_v31.md` @e6298fbcf4): MAY-CLOSE, ARMED 0
+
+1. **R44's dry-run sizing reads UNDER both lines:** 377 s of 765, and 1,661 MB of 1,740.8 MB. Memory sits at 95.4% of its line. The ledger closes, per the R44
+   half's AMENDMENT 1.
+   - **One sample is not a margin. That gets measured now, not waited for:** ONE more ad-hoc dry run (no writes) on the HEAVIEST lots day in the last 90 days,
+     chosen by the largest lot-row count, printed with its denominator. Month-end 2026-09-30 is a candidate.
+   - Over the 85% line on that day: a pair for EITHER a producer fix (preferred) or a memory-configuration change, the latter with its own measured before/after.
+     Monday 07:41 ET's fire stays the acceptance row.
+2. **W73-S2 (123 segments):**
+   - **98 are BD-side by a two-sided read: `confirmed`.**
+   - **25 are BD-side only by exclusion: `inferred`, and they do NOT count toward FWD-8** (ADDENDUM 15 item 3, ADDENDUM 17).
+   - The ADDENDUM 17 two-sided date cell reads them too. Any that stay exclusion-only are graded UNEXPLAINED.
+
+-- 1.0.0_SA_CTO~DELL2
