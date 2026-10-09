@@ -23044,3 +23044,178 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Only the unlisted-firm case is FIRM_BINDING. The 'ALL' case remains a refusal with INVALID_INPUT because ALL alone is unchanged by design; served.py cannot change, so that test asserts INVALID_INPUT (still a refusal, no admission)."
 }
 ```
+
+## IRPT_BCKEND-D2-W201-S1 -- AMENDMENT 1 (ALL never admits an internal caller) cannot be committed: served.py and two test files are in no non-terminal order's <paths> at HEAD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The lane gate refuses the amendment-1 code commit (owned-paths, ADHC_OWNPTH.005), so there is no new pin; the packet is built at the pre-amendment pin 389b61b222 and the order is left open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output, rc=1: three VIOLATION lines naming the three paths",
+      "git rev-parse HEAD still 389b61b2227d51f164ab393bf1386684014b4e18 after the refusal"
+    ]
+  },
+  "spec_asserts": "Coordinator amendment 1 (CTO msg 2569): three files are added to the grant, the code commit is the new pin, and the order text is recorded at the drain.",
+  "world_is": "safe-commit refused served.py, test_allowed_firm_ids.py and test_served_on_behalf_create.py: lane IRPT_LIVE_SCOPE_P, 'no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The order text is not amended until the drain and the worker may not edit it. The change was made and tested in the worktree (suite 303 passed, 1 failed, see S3), saved as org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~201/amendment1_ALL_never_admits.patch, and the three files were restored to HEAD. Needs: the issuer amends <paths> (or commits the patch itself), then the census, BUILD_ONLY and replay re-run at the new pin with replay/make_census.py and replay/run_replay.py (the candidate map's served.py pin and sha256 move to the new commit). The packet must not be signed as the final pair before that. Nothing is applied, so the standing state is unchanged."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S2 -- The stale _denominator named by amendment 1 item 3 is not in infra/aws/terraform/investor-reporting/api/routes.json; it is in docs/contracts/investor-reporting/v1/routes.json
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The granted routes.json is the retired stub (no _denominator); the stale counts are in the contract file, which is outside the grant and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python json load of docs/contracts/investor-reporting/v1/routes.json at 389b61b222: _denominator.total 21, len(routes) 23",
+      "python json load of infra/aws/terraform/investor-reporting/api/routes.json: keys _retired_as_a_carrier .. _retired_by, no _denominator"
+    ]
+  },
+  "spec_asserts": "Amendment 1 item 3: infra/aws/terraform/investor-reporting/api/routes.json `_denominator` states 19 and the file holds 21 routes.",
+  "world_is": "The terraform file is an 8-key retired-carrier stub (its text says 'the same 12 entries'). The stale block is docs/contracts/investor-reporting/v1/routes.json `_denominator`: declared 19, routed_elsewhere 2, total 21, functions_targeted 7, while the file holds 23 routes (21 DECLARED + 2 ROUTED_ELSEWHERE, counted from the rows at 389b61b222; handlers of the DECLARED rows = 7 functions). The true block is declared 21, routed_elsewhere 2, no_handler_at_head 0, total 23, functions_targeted 7. Not edited: that path is outside the grant."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S3 -- Amendment 1 collides with IB-pr-385's own test: test_svc_custody_statement_does_not_change_opal_or_dev_admission gives its Opal caller a profile row 'ALL' and expects the any-firm selection
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With 'ALL never admits' applied, the _authz tests give 303 passed and 1 failed; the failing test file is outside the grant and a test is never weakened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest tests -q in _authz with the patch applied: 1 failed, 303 passed; failing id as above"
+    ]
+  },
+  "spec_asserts": "Amendment 1: the full _authz suite must pass.",
+  "world_is": "tests/test_svc_custody_statement.py::_run injects load_service_profile=lambda email: {'allowedFirmIds': 'ALL'} for every caller, including the Opal caller of test_svc_custody_statement_does_not_change_opal_or_dev_admission (selected inflection, expects reached[0] == 'inflection'). Under the amendment that caller is refused FIRM_BINDING, which is the intended new behaviour. The fix is a one-line fixture change in that file (give the non-svc caller a row without ALL, keep ALL for the svc subject, whose point is that ALL does not widen it). Needs the issuer to grant tests/test_svc_custody_statement.py."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S4 -- The live source map pins _authz/served.py at older blobs in all 8 functions that package it: a build at the pin does not carry IB-pr-385/387 and would record a green release of unchanged bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "release-census at the box/dell2 pin shows served.py UNCHANGED against live in 6 functions and an unrelated older blob (not HEAD's) in the other 2, because every staged_from row for served.py names an old pin and sha256; a candidate map restaging them is a deliverable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "release-census at dea0f53252: irpt-export-render changed_members=0; irpt-49f, directory-search, holdings 0",
+      "candidate-map census at 389b61b222: served.py changed in all 8 (built e1db29d5eb5b)"
+    ]
+  },
+  "spec_asserts": "The order: a release packet for IB-pr-385 + IB-pr-387, built from the pin.",
+  "world_is": "infra/aws/lambda/ci/lambda-source-map.json carries served.py staged_from pins d8d8e7d868 (49f-reporting-read, directory-search, export-render, holdings), f9a00f732c (performance-adapter), f6c6b56f40 (narrative), 0642c9d004 (status), 038b35d676 (ycharts-generate); none is the HEAD blob e1db29d5eb5b. The source map is outside the grant. The worker built from org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~201/lambda-source-map.candidate.json (committed at 389b61b222; exactly 8 staged_from rows differ, 32 diff lines) through BAU_SOURCE_MAP_OVERRIDE, which build-and-upload.sh supports. The applier must land that restage (and re-record artifact_sha256) before the build, or the release is a no-op that reads green. ARMED because an apply of an unrestaged build leaves the ledger green on unchanged bytes.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W201-S5 -- irpt-holdings cannot be built at the pin: ADHC_DRIFTD.002 refuses (holdings_publication_port.py is in source_dir and not in files[])
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "BUILD_ONLY for irpt-holdings fails at the real map and the candidate map; the function is censused (1 changed member) but has no built artifact, and its replay uses a would-be zip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build log: ERROR: ADHC_DRIFTD.002 parity check failed; PARTIAL -- 0 built, 1 failed: irpt-holdings",
+      "git log -3 -- holdings/holdings_publication_port.py: 73075a9048"
+    ]
+  },
+  "spec_asserts": "The order: build every function that packages served.py, twice, byte-identical.",
+  "world_is": "BUILD_ONLY=1 build-and-upload.sh investor-reporting irpt-holdings exits 1: 'Files present in source_dir but NOT in lambda-source-map.json files[]: + holdings_publication_port.py' (added by 73075a9048, IB-m35-351, never registered). Registering it would also add that member to the holdings zip (a different cell's change), so the worker did not add it to the candidate map and did not use BAU_PARITY_SKIP. The replay for holdings uses the live holdings zip with served.py replaced by the pinned blob (labelled would_be)."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S6 -- The new served.py breaks irpt-narrative's error path (staged errors.py predates errors.public_line(admitted=)), and live irpt-narrative runs a boundary with no internal selection at all
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "In the candidate build of irpt-narrative, every refusal that records an internal error raises TypeError in served._record; the function is also 27 served.py commits and 21 members behind, so it should not be in this pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "replay JSON defects_not_counted_in_arms: irpt-narrative built codes FIRM_BINDING, HARNESS_TypeError",
+      "release-census irpt-narrative with the candidate map: changed_members=21"
+    ]
+  },
+  "spec_asserts": "The order: census every function that packages served.py; the release carries IB-pr-385/387 only.",
+  "world_is": "replay: built irpt-narrative, route GET /narrative/{reportId}: HARNESS_TypeError from served.py:107 `_errors.public_line(..., admitted=BOUNDARY_REASONS)` ('unexpected keyword argument'); the same tree's staged errors.py is the older blob. Live irpt-narrative served.py (ba0cea6d4246) has no selected_tenant / internal selection: releasing HEAD served.py there would ADD any-firm selection for Opal internals to a function that has none, besides the 21 changed members (8 added). Recommendation: leave irpt-narrative out of this pair; it needs its own restage of errors.py/loaders.py/resolve.py and its own release. ARMED while narrative stays in the pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W201-S7 -- The release of served.py also carries IB-pr-366 and IB-pr-357, which the live served.py of four functions predates
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Four functions (49f-reporting-read, directory-search, export-render, holdings) run served.py blob a8eb91e7d4c5; its successors fff1b0395a (IB-pr-366, CTO ruling msg 1402 option c: the served CREATE guard) and db8161f46e (IB-pr-357: internal_correlation_id dropped) are not live there, so the packet's owner list names four commits, not two.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "make_census.py owners: b4b544fb15, 7e0bfc3222, fff1b0395a, db8161f46e for the four functions"
+    ]
+  },
+  "spec_asserts": "The order: every changed member must be owned by its cell's commit.",
+  "world_is": "Owners of served.py per function are in IB97-3_release_census.json (owner_commits). The replay covers the narrowing and svc arms, not IB-pr-366's on-behalf create guard nor IB-pr-357's envelope field; the signer should read them as part of the release."
+}
+```
