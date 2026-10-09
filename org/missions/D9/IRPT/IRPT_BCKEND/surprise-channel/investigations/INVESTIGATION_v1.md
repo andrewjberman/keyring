@@ -22964,3 +22964,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The Lambda, its role and policy, and the caller's invoke policy are declared in the export root (aws_iam_policy.commentary_composition_invoke, output commentary_composition_invoke_policy_arn). Two acts remain for the release pair: registering the zip in lambda-source-map.json, and attaching the invoke policy to the commentary role from the transcripts root (which should also drop that role's standing kms:Decrypt on the irpt key, unused by this read)."
 }
 ```
+
+## IRPT_BCKEND-D2-S27 -- the one-attempt probe after TO-APPLY-26 is still refused, and the policy read names the exact missing resource
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S27",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T04:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The single read-only SendCommand probe MSTR asked for (msg 2432 via 2.0.0_SA_COO~P2 msg 2436) was REFUSED after NFRA_CTLPLN.TO-APPLY-26 applied at 03:52:21Z, so the standing shell parity does NOT cover i-02448edb624a7a7cf; the identity policy read shows exactly why and exactly what is missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm send-command --instance-ids i-02448edb624a7a7cf --document-name AWS-RunShellScript --parameters commands=[\"true\"] -> AccessDeniedException: no identity-based policy allows the ssm:SendCommand action (04:4xZ, after the 03:52:21Z apply)",
+      "the identity carries 2 attached policies and 0 inline: cloudops-dell2-agent-bus-policy and cloudops-dell2-agent-ssm-policy",
+      "cloudops-dell2-agent-ssm-policy default version v7, 4 statements; the only SendCommand ALLOW is Sid SendResidentDocumentsToResidentHost whose Resource list is exactly 4 entries: instance/i-0167fd745ad906a66, document/irpt-ycharts-deploy, document/irpt-ycharts-run, document/AWS-RunShellScript",
+      "the Deny statement DenyShellDocuments lists 7 documents and does NOT include AWS-RunShellScript, so no Deny is what blocks this send"
+    ]
+  },
+  "spec_asserts": "MSTR msg 2432, relayed as P2 msg 2436: the laptop applied standing shell parity (aws_iam_policy.dell2_ssm, 0/1/0) at 03:52:21Z, and one attempt would settle whether it covers the runner host.",
+  "world_is": "It does not cover it. The refusal is unchanged and the cause is now exact rather than inferred: the single SendCommand ALLOW names ONE instance, the ycharts resident host, and the runner host is absent from that Resource list. Two things follow that a bare retry would not have shown. First, the blocker is an ABSENT ALLOW and not a DENY -- AWS-RunShellScript is explicitly allowed in the same statement and appears in no Deny -- so the minimal fix is adding arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf to that Resource list, with no Deny to unwind. Second, the statement is NAMED SendResidentDocumentsToResidentHost and its three document ARNs are ycharts-specific, so widening it to a second, unrelated host may be the wrong shape; a separate statement for the runner host would keep the existing Sid honest. That choice belongs to the laptop seat that owns the policy, not to this applier. IB-pr-383 legs S1, S2 and V1 stay parked and its ledger stays RED, per MSTR instruction.",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2"
+}
+```
