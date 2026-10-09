@@ -135,6 +135,11 @@ Checks dry-run at base, 2026-10-09 ~01:4xZ: all three FAIL.
 - r29 touches none of MP-x-1's four files (issuer diff, tick 5).
 Was: staged
 
+**RULING (issuer, 2026-10-09 ~14:5xZ, row Z-S25 disarming Z-S24):** the pre-act record that step 4 asks for "in the entry"
+is satisfied by `deliverables/0.7.0_AE_CloudOps~MP/MP-x-4_PRE_ACT_RECORD.md` @0b4deae4f4 plus the entry's pointer. The
+post-act proofs go to that file too. If a later `close-leg` drops the pointer, that is expected and is not a defect: the
+drain reads the file. HELD-PRE-APPLY on OG-ap-4's ledger close (CTO~Z msg 32788) stands.
+
 <status>pending</status>
 <round>5</round>
 <slot>0.7.0_AE_CloudOps~MP</slot>
