@@ -6094,3 +6094,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
  "world_is": "On one planted commit the gate graded nothing for the PATTERN name and printed no line saying it skipped it, so the grade_line of PATTERN_COMMIT_R20.json is NONE. The count '0 graded' is the only trace. Whether that is by design (a pattern is not a name) is the gate owner's to say."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W2-S153",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+ "surfaced_at": "2026-10-09T16:30:01Z",
+ "one_line": "check_en_r20.py s12 cannot pass a grade_line NONE record: its row_id regex LGIC_ENFORCE-[A-Z0-9]+-S\\d+$ rejects every worker row id, which the row gate requires to carry W<n>, so Z5R20-AC1 FAILs on a true NONE.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~B1/fixed_inputs/r20/check_en_r20.py arm_s12: need(re.match(r'LGIC_ENFORCE-[A-Z0-9]+-S\\d+$', rec.get('row_id')), 'grade_line NONE needs a surprise row_id'). Run at 91f73a0f52 from the worktree root: 'FAIL-R20-S12: grade_line NONE needs a surprise row_id', rc=1, with row_id LGIC_ENFORCE-D1-W2-S152.",
+   ".tools/surprise-row-gate.py line 648: a worker's NEW row without W<n> is refused ('a worker mints <CODE>-W<n>-S<k>'); the order's refusal clause names the id form LGIC_ENFORCE-D1-W<n>-S<k>. The regex admits LGIC_ENFORCE-D1-S152 (no W) and refuses LGIC_ENFORCE-D1-W2-S152 (the row actually filed).",
+   "The planted commit, the PATTERN place kind, the commit on the QA branch only and the NONE grade_line are each true and each passed the arm's earlier needs; the arm fails only at the row_id shape. The arm and its expected value are not edited here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order: grade_line NONE with a row_id of the surprise row filed, id LGIC_ENFORCE-D1-W<n>-S<k>; criterion Z5R20-AC1 expects PASS-R20-S12.",
+ "world_is": "The arm accepts no row id a worker may mint, so a gate that grades nothing for the planted name (the measured case) can never pass Z5R20-AC1. Left open for the issuer to amend the arm's regex or the order; the arm is not edited by this worker."
+}
+```
