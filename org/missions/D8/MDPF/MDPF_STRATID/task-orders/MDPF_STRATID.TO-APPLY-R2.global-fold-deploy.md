@@ -114,5 +114,19 @@ risk: WORLD -- a code upload the scheduled pipeline executes.
 direct_act: true -- an executor apply order, round-less, no cell.
 </preflight>
 
+
+## AMENDMENT (issuer, 2026-10-09 ~19:3xZ) -- leg L4 re-pointed at `55c3cc4642` (CloudOps~DELL1 msg 3048)
+
+- **The trigger.** MDPF_CANON's order 2 redeploys `mdpf-gold-lambda` at `55c3cc4642`, which descends from this order's pin
+  `ff1a8867a6`.
+- **The consolidator diff between the pins.** It is additive only: 0 lines removed and 4 hunks (an import, a helper after `a4_key`,
+  and parquet/backfill emits in `build_all`). No round-2 function changes. `mdpf_category_registry.py` and the slice are the same
+  blob.
+- **Re-run on that consolidator.** `st_u1_seam` SEAM-OK, `st_u2_seam` SEAM-OK, `st_r2_muni_seam` R2-MUNI-SEAM-OK, U1-OK, U2-OK.
+- **Ruling.** L4 reads the 2026-10-10 13:30Z fire on the lambda live then, `55c3cc4642` included, and order 2 is not held. The read
+  records the live CodeSha256 and the pin it was built from.
+
+Gate limb: GATE viii on the modification (placeholders NONE).
+
 **REPORT:** the entry path, the three D1 sha256 pairs and VersionIds (before and after), the D2 manifest read, and each leg closed.
 </task_order>
