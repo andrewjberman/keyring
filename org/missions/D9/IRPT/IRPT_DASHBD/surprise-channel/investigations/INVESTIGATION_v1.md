@@ -3904,3 +3904,79 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W53-S1 -- Orion's gross return is landed nowhere in S3 and is not a contextChange path of the saved query; it is read by overriding the performance option object in the G
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W53-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~53",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Orion's gross return is landed nowhere in S3 and is not a contextChange path of the saved query; it is read by overriding the performance option object in the Generate body (feeMethod Gross Of Fees).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-76 face: gross vs net is a query-level performanceOptionId in contextChange (PATH_DISCOVERY.md:124); read the gross figure from S3 if landed, otherwise pull it read-only from Orion's query API.",
+  "world_is": "Not landed: silver/api_dims/performance/ carries twr_fee_method 'Net of Fees' only, and silver/performance_dim/ carries gross_or_net 'net' on all 95,364 rows (listed 2026-10-09). The saved query 'Performance Dim' defines performance options 1 (TWR, feeMethod Net Of Fees), 2 (Simple) and 3 (IRR) and no gross option, so contextChange.performanceOptionId has no gross id to select. A Generate body that appends the performance 1 option object with feeMethod 'Gross Of Fees' and prompt 'Always' to requiredOptions returned FeeMethod 'Gross of Fees' on 3129 of 3129 rows, window 2023-10-09 to 2026-10-08. The unchanged read of the same query agrees with the landed net twr_value within 0.35 pp on 558 of 562 sample accounts (median gap 0.06 pp: a live read after the landed snapshot). One Generate for 'Unified Account Dim' answered 400 'CloudActivityAssetInformationProvider was not primed before use' and succeeded on the immediate retry. No write call was made to Orion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/orion_gross_fee_pull.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json net_control",
+      "data/inf/manual_api/PATH_DISCOVERY.md:124"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W53-S2 -- Orion has no field named supervised, and Asset.IncludedInBilling is unreadable for 526 of the 562 sample accounts, so the supervised and billed slices rest on a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W53-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~53",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Orion has no field named supervised, and Asset.IncludedInBilling is unreadable for 526 of the 562 sample accounts, so the supervised and billed slices rest on a flag and a partial read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-76 face: Orion slices fees advised/supervised vs non-advised/unsupervised and billed/unbilled/total as Black Diamond does (Andrew @669ab7d677); Asset.IncludedInBilling is flagged broken for some accounts (PATH_DISCOVERY.md:158).",
+  "world_is": "No path or column named supervised was found in PATH_DISCOVERY.md, PATH_DISCOVERY_MSTAR.md or the landed silver dims (searched data/inf for supervised/unsupervised: no file). The nearest vendor flag is the account-level managed flag, silver/api_dims/accounts_v2 is_managed (850 True, 12 False of 862): supervised 483 accounts, unsupervised 11, and 68 sample accounts absent from that snapshot (their fees are reported apart, not guessed). Asset.IncludedInBilling reads 'Error:Not supported' for 526 of 562 sample accounts (2882 of 3129 database-wide); the 36 readable ones are all 'Included in Billing', so billed is partial and unbilled is 0 over the readable subset. Billing.FeeAmount exists for 509 accounts and is printed as an alternative cut. Orion's Advisory Fees Paid sum 4,246,172.01 against the ledger Management Fee plus Fee Credit sum 4,126,954.76 for the same accounts and window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json fee_detail",
+      "data/inf/manual_api/PATH_DISCOVERY.md:158"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W53-S3 -- On the ratified taxonomy Opal's gross matches Orion's gross on 291 of 562; treating the two departing classes as flows lifts it to 418, the same size as round 3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W53-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~53",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "On the ratified taxonomy Opal's gross matches Orion's gross on 291 of 562; treating the two departing classes as flows lifts it to 418, the same size as round 36's net result.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-76 face: map flows by the ratified taxonomy (CTO ADDENDUM 5, W49-S3) and flag the two departing classes with counts.",
+  "world_is": "Measured by orion_account_return_daily.py on 562 account-windows, 0.35 pp, trading days / 252: ratified flow set (NNA plus the advisory fee added back) 291 within; plus the Internal Account Journal pair and Federal/State Tax Withheld as flows 418 within (127 of the 271 misses are exactly that class); adding the Return-bucket trading and administrative fees back lowers the count (282 on the ratified set, 405 with the departing classes), so Orion's gross does not add them back. Flagged counts over the sample accounts, window and status Complete: Internal Account Journal 764 rows on 144 accounts; Federal/State Tax Withheld 1855 rows on 105 accounts. Round 36's net comparison with the departing classes read 421 within. This is the measured input to DB-b-77, not a ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json flow_variant_within, flagged_classes",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
