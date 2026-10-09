@@ -5259,3 +5259,78 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W86-S1 -- ADDENDUM 21's NOT_COMPARABLE set is stated two ways that do not coincide: the date test (segment end after 2026-08-20) selects 549 of the 990, the 319
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W86-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~86",
+  "surfaced_at": "2026-10-09T17:30:00Z",
+  "one_line": "ADDENDUM 21's NOT_COMPARABLE set is stated two ways that do not coincide: the date test (segment end after 2026-08-20) selects 549 of the 990, the 319 DB-b-106 flagged share only 197 of them; the worker applied the date test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Ruling 2 (2.0.0_SA_COO~D2, relaying ADDENDUM 21): segments falling after 2026-08-20 (BD's transaction record ends there; the 319 DB-b-106 flagged) are NOT_COMPARABLE, reason BD_RECORD_ENDS_2026-08-20.",
+  "world_is": "Measured over the 990 outside segments and the 475 DB-b-106 rows: 549 segments end after 2026-08-20; 319 are DB-b-106 UNEXPLAINED; 197 are both; 352 end after the date and DB-b-106 had them in the 156 confirmed (43) or in the 515 segments DB-b-106 did not grade (309); 122 of the 319 end on or before 2026-08-20 (their flag is DATE_SETS_DIFFER or an absent day, not the record end). The worker applied the date test (end > window end, first in the order), so by_reason carries BD_RECORD_ENDS_2026-08-20 = 549. The 122 stay in their reason (UNEXPLAINED after ruling 1). If the issuer meant the 319, the cut changes 352 segments from NOT_COMPARABLE to their reason and 122 from their reason to NOT_COMPARABLE; the per-segment private record carries both flags (end_after_window, d106_verdict), so a recut needs no re-read. The rule file's section 4 names the key NOT_COMPARABLE; the ruling's key prevails and the repo record says so under rulings_applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/RESTATED_TIEOUT.json (not_comparable_vs_d106_flagged)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/restated_tieout.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W86-S2 -- A per-segment convention shift exists for only 74 of the 990 outside segments; the rest were not restated, so CONVENTION is 9 (14 before the 2026-08-2
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W86-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~86",
+  "surfaced_at": "2026-10-09T17:30:00Z",
+  "one_line": "A per-segment convention shift exists for only 74 of the 990 outside segments; the rest were not restated, so CONVENTION is 9 (14 before the 2026-08-20 window test) and is a floor, not the convention's whole effect.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The face expects every outside segment to be re-graded on a restated convention using only both sides' own figures.",
+  "world_is": "The records the face names hold a two-sided measure of the two declared conventions (service fee as a flow, income on cash receipt) for the 74 W73-S1 segments only (~75 return_read.restated_return, claim INFERRED, labelled 'shown for the reader'); the V2 record carries no service-fee or income dollars, and the ~76 evidence carries fee-timing and flow-timing envelopes, which are not the two declared conventions. The pre-registered rule therefore restated 74 and left 916 unrestated (not imputed as zero). Result: within 0.35 pp after restatement 14 of 74 (9 inside the window, 5 end after 2026-08-20 and are NOT_COMPARABLE). 60 of the 74 stay outside; they are not explained by convention. Where a segment is unrestated, the reading is 'not measured', not 'not convention'. Restating the other 916 needs the custodian service-fee rows and income rows per segment (an S3 re-read of fact_trn the face allowed only if a figure must be re-read); that was not done under this order.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/RESTATEMENT_RULE.md (section 2, scope)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~86/RESTATED_TIEOUT.json (restated_segments, not_restated_segments, within_after_restatement)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W86-S3 -- client-data-check blocks any commit of INVESTIGATION_v1.md: three served account ids sit in rows IRPT_DASHBD-S22, IRPT_DASHBD-W1-S20 and IRPT_DASHBD-W
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W86-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~86",
+  "surfaced_at": "2026-10-09T17:25:00Z",
+  "one_line": "client-data-check blocks any commit of INVESTIGATION_v1.md: three served account ids sit in rows IRPT_DASHBD-S22, IRPT_DASHBD-W1-S20 and IRPT_DASHBD-W2-S1 that landed before the hash list grew; this worker committed its rows with the audited CLIENT_DATA_ALLOW override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order bound: no account number in a committed .md; the repo carries counts, sha256 and reason codes only.",
+  "world_is": "Measured with the gate's own TOKEN_RE and hash list (29121 hashes) over the whole file as staged: 3 hits, at the section starts of rows S22, W1-S20 and W2-S1 (one 10-digit token each); 0 hits in the lines this worker added (the three rows W86-S1..S3, checked token by token). The rows are other seats' and an existing row is never edited by a worker, so they are not redacted here. The commit was made with CLIENT_DATA_ALLOW naming this row; the override is audited by safe-commit. Every later worker row to this file will meet the same block until the three tokens are redacted by an owner with the grant (the CVO or the CTO under the containment ruling of 2026-10-09).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md (hits at the S22, W1-S20 and W2-S1 sections; tokens not printed)",
+      ".tools/git-hooks/client-data-check.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
