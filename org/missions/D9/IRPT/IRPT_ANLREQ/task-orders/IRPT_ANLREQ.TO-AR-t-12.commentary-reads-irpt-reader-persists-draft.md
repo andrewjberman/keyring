@@ -70,12 +70,47 @@ composition reader; report-level surfaces are carried to round 2 as enrichment.
    `test_draft_persisted_then_one_commentary_ready` (one persist, then exactly one send; a second READY for the same pair makes no model call and
    no second send). Update `test_commentary_live_ports.py` for the removed and added names. Keep every `test_commentary_*.py` green.
 
+### AMENDMENT 4 (issuer, 2026-10-09 ~05:5xZ) -- RE-OPENED: cell AR-t-13, the DRAFT store (one round-1 issuance per workstream: the pipeline gate
+refuses a new order file, so the cell rides here). Read `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_ANLREQ_SVC_COMMENTARY_ONE_NAMED_WRITER_20261009.md`
+@ca645f8410 in full; it binds. Your first build (AC1) is merged @9eb1ee6eba and stays as is.
+
+5. `infra/aws/lambda/investor-reporting/reports/repository.py`: a `SERVICE_WRITERS` table with exactly ONE entry
+   `{"svc-commentary": frozenset({"ANALYSIS_COMMENTARY"})}`; `put()` admits a service principal ONLY through it, tenant-bound (`firm_id ==
+   owner.firm_id`, never `global`/`opal-capital`), logical id = `request_id`, and refuses a second put on the same logical id (never overwrites).
+   Every other service subject stays read-only; every other family stays refused to a service subject. Driver AMENDMENT 5 (~Y2 msg 2606): ONE
+   `SERVICE_READERS` entry for the `package_principal` named by ~V2's AR-v-12, family `ANALYSIS_COMMENTARY` only; if AR-v-12 has not named it at
+   your base, leave it out and file the row.
+6. `infra/logic/registry/reporting_policies.json`: ONE additive policy row `irpt-anlreq-x10-v1` registering family `ANALYSIS_COMMENTARY` (copy
+   the shape of an existing row such as `irpt-ycdgen-research-v1`; edit no other row); wire it as `reports/composition.py` wires
+   `additional_policy_revisions` where the store builds its repositories.
+7. `infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py` (new; mirror ~P2's `reports/commentary_composition.py`): a
+   direct-invoke handler, request keys refused by name beyond these: `{"op":"put","tenant","request_id","draft"}` ->
+   `{status:"OK", commentary_ref:{artifact_id, sha256, version_id}}`; `{"op":"get_ref","tenant","request_id"}` -> `{status:"OK", commentary_ref|null}`;
+   else `{status:"REFUSED", reason}`. The SERVER builds `service_principal("svc-commentary", <tenant from the request record analysis#<request_id>#1>)`;
+   a body tenant is never trusted. After a successful put, set `commentary_ref` ONCE on that request record by a conditional update
+   (`attribute_not_exists(commentary_ref)`) in this module; do not edit `ycharts/generate/acceptance.py`.
+8. `infra/aws/terraform/investor-reporting/export/commentary_draft_store.tf` (new, DESIRED; mirror `commentary_composition.tf`): the function
+   (`lib/opal_naming.py name('irpt', None, 'commentary-draft-store', 'lambda')`), its role (scoped to the ANALYSIS_COMMENTARY prefix of the served
+   firms and the requests table), and an invoke policy (`name('irpt', None, 'commentary-draft-store-invoke', 'policy')`) for the commentary role.
+   Register the zip in `infra/aws/lambda/ci/lambda-source-map.json` as the reader is registered.
+9. Commentary side: the live `persist_draft` invokes the store with `op: put`, the live `existing_draft` with `op: get_ref`; env
+   `DRAFT_STORE_FUNCTION` from `NAMES.json` (`draft_store` key, builder call recorded); `commentary.tf` attaches the store's invoke policy by a data
+   source on the builder name; the commentary role gains no S3 or KMS grant. Driver AMENDMENT 6 (@27d4996a37, ~Y2 msg 2628): for an
+   analysis_ready run the drafter posts NO separate svc-commentary ticket (the DRAFT reaches the request's ticket only as commentary_ref); the mail
+   uses of `ticket_client` do not move.
+10. Tests, `infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store.py` (new, fakes only), the CTO ruling's four, one
+   each: `test_other_service_subject_refused`, `test_other_family_refused`, `test_second_put_same_request_refused`, `test_body_tenant_ignored`; plus
+   a happy path. Keep every `test_commentary_*.py` and `infra/aws/lambda/investor-reporting/reports/tests` green.
+
 ### ACCEPTANCE
 
 <criterion id="AR12-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t12</invocation><expect>AR1-T12-OK</expect></criterion>
 `AR12-t-AC1` -- the three named tests pass, the file is green, and `DecryptWithTheIrptKey` is gone from commentary.tf.
 
-<expected_criteria>AR12-t-AC1</expected_criteria>
+<criterion id="AR13-t-AC1" cell_refs="AR-t-13"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13</invocation><expect>AR1-T13-OK</expect></criterion>
+`AR13-t-AC1` -- the four named refusal tests pass and the store test file is green (dry-run at box/dell2 29125b907d: `AR1-T13-FAIL absent`).
+
+<expected_criteria>AR12-t-AC1 AR13-t-AC1</expected_criteria>
 
 Dry-run at the base (box/dell2 c5d73485ca): `AR1-T12-FAIL absent: data/transcripts/scripts/tests/test_commentary_composition_port.py` -- FAIL
 as expected.
@@ -98,17 +133,25 @@ data/transcripts/scripts/tests/test_commentary_live_ports.py
 data/transcripts/scripts/tests/test_commentary_entry.py
 data/transcripts/scripts/tests/test_commentary_lambda.py
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/investor-reporting/reports/repository.py
+infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py
+infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store.py
+infra/aws/lambda/investor-reporting/reports/tests/test_repository.py
+infra/logic/registry/reporting_policies.json
+infra/aws/terraform/investor-reporting/export/commentary_draft_store.tf
+infra/aws/lambda/ci/lambda-source-map.json
+data/transcripts/scripts/commentary/ticket_client.py
 </paths>
 
 The block is your WRITE grant (your deliverables folder is granted by the tree convention). Everything else named here you READ.
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R1.md</decomp_doc> (round 1), cell `AR-t-12`.
-<owned_cells>AR-t-12</owned_cells>
+<owned_cells>AR-t-12 AR-t-13</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR12-t-AC1. Instance at `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~41/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.proof_of_spec.json`,
+Criterion ids: AR12-t-AC1, AR13-t-AC1. Instance at `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~41/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> AR12-t-AC1` BEFORE the flip. Commit code first, then pin each artifact to a
 commit that contains it.
 </proof_of_spec>

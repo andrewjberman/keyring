@@ -16,6 +16,8 @@
 # log-on while the seat is up never makes a duplicate.
 # =============================================================================
 param([Parameter(Mandatory = $true)][string[]]$Serials)
+# Accept "a,b" as one string as well as an array (powershell -File binds a comma list as one string).
+$Serials = @($Serials | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 $ErrorActionPreference = 'Continue'
 $root = Split-Path -Parent $PSScriptRoot
