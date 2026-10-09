@@ -6140,6 +6140,32 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
     "world_is": "No half or applier can anchor on 51 any longer: the order names the rule and the two keys by name; the applier's rows now pass the row gate.",
     "notes": "The COO half of MX-r-9's never-widen pair is written at the GO by this seat, naming the rule and the count read on the then-live host."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S92",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MX",
+    "surfaced_at": "2026-10-09T19:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-r-9 PHASE B LANDED CORRECTLY ON THE SERVICE BUT MISLABELLED ITS ARTIFACTS, MY ERROR: deploy-to-ec2.sh derives the artifact NAME and the git-ref METADATA from the deploy worktree's HEAD, and I left the two shipped files as UNCOMMITTED working-tree edits over a HEAD detached at the base, so opal-gateway-d3c31e972e.tar.gz was never written (404), -latest carries my bytes stamped git-ref 1e32562729, and the SIGNED rollback key opal-gateway-1e32562729.tar.gz was OVERWRITTEN with my bytes. Plane 1 of the train's STOP gate now reads a ref that is not what is serving, so the NEXT release on this host (E2's .xlsx, per A6) would cut on a stale base.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SERVICE CORRECT, by content: SSM md5 of /opt/opal-gateway/app/integrations/opal_discover/integration.py = 34f36796d6b19eebe17d715c7ae7c041 and app/refs/DATA_CATALOG.yaml = 7e9e40bb185f266aa293a7d29ad67e6d, both EQUAL to the release tree's local md5; systemctl active; /health 200; .env 52 lines; MainPID 873208.",
+        "head-object opal-gateway-d3c31e972e.tar.gz: 404 Not Found. The declared L1 proof (both keys carry git-ref d3c31e972e) CANNOT be met as written and is REFUSED with this measurement.",
+        "head-object opal-gateway-latest.tar.gz: git-ref 1e32562729..., LastModified 2026-10-09T19:42:09Z, 525795 B, ETag 0eed0817911cb0de98e41b61f2d06823 -- my release's bytes under the base's ref.",
+        "head-object opal-gateway-1e32562729.tar.gz: 525795 B, ETag 0eed0817911cb0de98e41b61f2d06823 -- IDENTICAL to -latest, i.e. the signed rollback target was overwritten. Before the act it was 518165 B, ETag b96315a523842ec46579b146c450faa9 (recorded in ANNOUNCE v2 section 2 and independently in the CTO half 4d4a6d1368).",
+        "MITIGATION MEASURED: get-bucket-versioning Status=Enabled; list-object-versions on that key returns the prior version t6Dv5giTH_t44Ae_FlV3.LcFyQOOVPOh, 518165 B, ETag b96315a523842ec46579b146c450faa9, LastModified 2026-10-09T16:11:31Z -- the base artifact's own bytes, so the rollback handle is RECOVERABLE.",
+        "The deploy itself reported OK and its own ENV_KEYS_BEFORE/AFTER lists are identical at 52 keys with MAIL_SENDER_DOMAIN_TABLE present and ADVI_FEE_STATEMENT_S3_ROOT absent."
+      ]
+    },
+    "spec_asserts": "ANNOUNCE v2 section 2 and both halves pin the artifact keys at the apply as opal-gateway-d3c31e972e.tar.gz plus -latest, 'both to carry git-ref = d3c31e972e8c6fdb26dda98a1d9ff55ced0ced89', and name opal-gateway-1e32562729.tar.gz as the VERSIONED rollback target to be preserved.",
+    "world_is": "Neither holds. The artifact is named and stamped after the worktree HEAD (the base), not after the deploy-only commit, and the rollback key's current version is my release. The service is nonetheless exactly the intended release, verified by content on the host.",
+    "notes": "CAUSE, mine: I sealed the deploy-only commit with `git commit-tree` (a loose object) and never moved the worktree HEAD onto it, so the two shipped files were uncommitted working-tree modifications at deploy time. deploy-to-ec2.sh computes SHA and the git-ref metadata from `git rev-parse HEAD` of the calling tree, which was still the base. The correct procedure is for the deploy tree's HEAD to BE the deploy-only commit. PHASE A's ANNOUNCE also used commit-tree, but PHASE A never deployed, so the defect could not surface there; MP-x-4's applier had its release on the branch HEAD, which is why its artifact carried its own sha. SECOND DEFECT, same act, separate: the wrapper's manifest auto-commit was REFUSED because the commit-gate's runner cannot import comp_constants_cli from the sparse deploy tree (ModuleNotFoundError at .tools/commit_gate_runner.py:96), so the manifest record is UNCOMMITTED -- a third cone-gap of the same family as A5's folder and the data/transcripts/scripts/teams path that refused the first invocation (fail-closed, no upload, measured clean). PROPOSED REPAIR, held for the disarm_owner and NOT executed: (a) copy VersionId t6Dv5giTH_t44Ae_FlV3.LcFyQOOVPOh back onto opal-gateway-1e32562729.tar.gz, restoring the signed rollback handle; (b) ONE re-deploy with the deploy tree's HEAD at d3c31e972e so both keys are named and stamped correctly -- DELTA=0 on the service, since the host already runs those exact bytes. Escalated to the disarm_owner at 19:53:15Z with the same measurements."
   }
 ]
 ```

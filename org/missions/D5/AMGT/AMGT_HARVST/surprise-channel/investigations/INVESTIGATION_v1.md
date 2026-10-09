@@ -8445,6 +8445,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-Z-S110",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+  "surfaced_at": "2026-10-09T19:59:19Z",
+  "one_line": "bw1 installer derives STOP from RepoRoot, not carried RuntimeRoot; initial comp-schedule read exhausted its budget.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 2 C-g requires deletion of the old STOP before restart; ordered installer invocation carries old StateDir and RuntimeRoot.",
+  "world_is": "Pinned installer defaults StopFile from RepoRoot. Ordered invocation will point at new-pin STOP. Old STOP deletion and absence of both STOP paths are checked before restart. Initial comp-schedule budget90 read was PARTIAL_OR_BLIND; retried budget360, not assumed green. No installer changes or widened publisher scope.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_preflight.out",
+      "lib/opal_data_harvest/install-cycle-schedule.ps1 @b5a7a3a4b6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
