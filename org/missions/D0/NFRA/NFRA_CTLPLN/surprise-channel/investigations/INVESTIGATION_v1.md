@@ -5931,3 +5931,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A False from this guard has a second cause that needs no apply: principal-list order. A False read before the fix was therefore not by itself evidence that the key policy had been applied. Fixed in tests/check_transcripts_dell_decrypt.py (norm_statement); the guard is unchanged otherwise."
 }
 ```
+
+## NFRA_CTLPLN-W14-S48 -- A shell on mdpf-daily-runner runs as mdpf-daily-runner-ec2-role, whose census verdict is NO (own policies only) but which the directory runner uses to assume the 49 Financial source principal role; and IAM lets both Dells send the
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T05:21:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S48",
+  "one_line": "A shell on mdpf-daily-runner runs as mdpf-daily-runner-ec2-role, whose census verdict is NO (own policies only) but which the directory runner uses to assume the 49 Financial source principal role; and IAM lets both Dells send the two resident documents to the same host beside the shell (cross-pair).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json:1679-1694 (host i-02448edb624a7a7cf, role mdpf-daily-runner-ec2-role, NO-ROUTE-FOUND) and :6046-6060 (the role's row: status READ, no iam/trail/delete reach).",
+      "infra/aws/terraform/investor-reporting/directory/principal_49f.tf:1-12: the 49 Financial source set 'reads through THIS role, assumed by the host for that firm only', because the host role itself must never hold those reads (cross-firm fence).",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment28.a27_cross_pairs.outputs.txt: both Dells, irpt-ycharts-run and irpt-ycharts-deploy sent to i-02448edb624a7a7cf -> allowed (per-resource allowed, allowed); a group-Allow document to the same host -> implicitDeny."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 27 item 2: 'AWS-RunShellScript on that host joins the standing shell Allow'; item 1: STOP only if an explicit Deny names the host on purpose. The census verdict NO for the host's role is the grant's precondition as ruled for the resident host (resident_host_role=NO).",
+  "world_is": "No Deny names the host (read at nfra-ctlpln-identity: no instance ARN in any Deny of any policy file or in routes.tf/modules/routes_policy), so the grant was written as ruled. Two facts a signer may want beside it: (1) the census verdict reads the role's own attached policies, and a shell on the host also holds whatever the host can assume (principal_49f.tf), which the census does not follow; (2) the new statement names the instance and the shell document, and IAM authorises instance and document separately, so irpt-ycharts-run and irpt-ycharts-deploy (fixed-text resident documents) can now be sent to this host as well; a shell makes that moot in power, not in record. Nothing is applied: INERT until the apply."
+}
+```
