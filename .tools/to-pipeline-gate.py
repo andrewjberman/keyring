@@ -1124,6 +1124,14 @@ def _self_test():
         ("redaction: an id inside a path (FLOW_RESIDUAL_<id>_R2.json) -> token is a pure redaction (dell2 msg 3820)",
          lambda: _is_pure_redaction("<status>complete</status>\nfile FLOW_RESIDUAL_12345678_R2.json on 2026-10-09\n",
                                     "<status>complete</status>\nfile FLOW_RESIDUAL_acct#0a1b2c3d_R2.json on 2026-10-09\n")),
+        ("rename: an account-number filename -> acct#<8hex> filename is a redaction rename (dell2 msg 3850)",
+         lambda: _redaction_rename_ok("org/x/task-orders/IRPT_DASHBD.TO-DB-b-6.12345678-tieout.md",
+                                      "org/x/task-orders/IRPT_DASHBD.TO-DB-b-6.acct#0a1b2c3d-tieout.md")),
+        ("rename: a rename that changes other text is NOT a redaction rename",
+         lambda: not _redaction_rename_ok("org/x/task-orders/IRPT_DASHBD.TO-DB-b-6.12345678-tieout.md",
+                                          "org/x/task-orders/IRPT_DASHBD.TO-DB-b-7.acct#0a1b2c3d-tieout.md")),
+        ("rename: a rename with no acct# token is NOT a redaction rename",
+         lambda: not _redaction_rename_ok("org/x/task-orders/A.TO-1.12345678.md", "org/x/task-orders/A.TO-1.redacted.md")),
         ("redaction: a marker standing where a NON-digit word stood is NOT a redaction",
          lambda: not _is_pure_redaction("<status>complete</status>\nresult PASS\n",
                                         "<status>complete</status>\nresult acct#0a1b2c3d\n")),
@@ -2225,9 +2233,45 @@ def _newly_added(root):
             continue
         code = parts[0].strip()
         path = parts[-1].strip()
+        if code.startswith("R") and len(parts) == 3 and _is_redaction_rename(root, code, parts[1].strip(), path):
+            print("NOTE: %s: a pure redaction RENAME of a terminal order (%s, account id -> acct#<8hex> in the name only); "
+                  "not an issuance." % (path, parts[1].strip()), file=sys.stderr)
+            continue
         if code.startswith("A") or code.startswith("R"):
             added.add(path)
     return added
+
+
+def _redaction_rename_ok(old_path, new_path):
+    """PURE: the new path differs from the old ONLY by digit-bearing tokens becoming acct#<8hex>, at least one of them."""
+    if old_path == new_path or not _REDACT_TOKEN_RE.search(new_path):
+        return False
+    parts = _REDACT_ANY_MARK_RE.split(new_path)
+    return bool(re.fullmatch(_REDACT_ID_PAT.join(re.escape(p) for p in parts), old_path))
+
+
+def _is_redaction_rename(root, code, old_path, new_path):
+    """dell2 1.0.0_SA_CTO~DELL2 msg 3850 via 0.0.0_AB_MSTR 108074 (containment ruling @0e8209c33c): a rename of a TERMINAL order whose
+    content is byte-identical (git similarity R100) and whose name changes only by an account id -> acct#<8hex> is not an issuance."""
+    if code != "R100" or not _redaction_rename_ok(old_path, new_path):
+        return False
+    head = _head_blob(root, old_path)
+    return head is not None and _last_status(head)[0] in DONE_WORDS
+
+
+def _staged_redaction_renames(root):
+    """{new path} of pure redaction renames in the index (empty on any read failure: the ordinary limbs then grade it)."""
+    try:
+        out = subprocess.run(["git", "diff", "--cached", "--name-status", "-M"], cwd=root, capture_output=True, text=True,
+                             encoding="utf-8", errors="replace", timeout=30)
+    except Exception:  # noqa: BLE001
+        return set()
+    found = set()
+    for line in (out.stdout or "").splitlines():
+        parts = line.split("\t")
+        if len(parts) == 3 and _is_redaction_rename(root, parts[0].strip(), parts[1].strip(), parts[2].strip()):
+            found.add(parts[2].strip())
+    return found
 
 
 def _check_preflight(body):
@@ -3162,6 +3206,10 @@ def check_complete_flip(root, rel):
     staged = _staged_blob(root, rel)
     if staged is None:
         return []  # not staged (or unreadable as a blob) -- other arms own that
+    if rel in _staged_redaction_renames(root):
+        print("NOTE: %s: a pure redaction RENAME of a terminal order (byte-identical content); not re-graded as a flip." % rel,
+              file=sys.stderr)
+        return []
     head = _head_blob(root, rel)
     flip_word = _is_terminal_flip(head, staged)
     if flip_word is None:
