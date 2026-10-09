@@ -22823,3 +22823,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "The key value sits in this worker's transcript only (no committed file, no S3). Rotation, if wanted, is the issuer's call."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S10",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T08:41:49Z",
+  "one_line": "DISARM of AMGT_RESAPP-D1-W323-S1 (ARMED): PBR's wrong-scope business and MD&A cuts were never written, so nothing wrong can be served; the remedy is carried to round 83.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W323-S1 is ARMED: the repaired cutter would write PBR_US_Equity's business from 'About us' and its MD&A from a liquidity sub-heading if gg-2 re-cut PBR.",
+  "world_is": "gg-2 AMENDMENT 1 (@8d0bf2eed2) held PBR, and the gg-2 act (report merged @f00cb74f1d) made no fetch and no write for PBR -- one read-only listing only. The hazard cannot reach a served key. The correct PBR cut is carried as round82/CARRIED_TO_ROUND83.md item 2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/AMGT_RESAPP.TO-AMGT-gg-2.the-store-half-with-the-repaired-cutter.md AMENDMENT 1 status line",
+      "gg-2 worker report (merged @f00cb74f1d): PBR held; its prefixes listed read-only at the close"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms AMGT_RESAPP-D1-W323-S1 by a new item, as the row gate requires for an investigation row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S11",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T08:41:49Z",
+  "one_line": "DISARM of AMGT_RESAPP-D1-W324-S1 (ARMED): ASML NA was rolled back byte-equal and no other name was touched, so nothing served moved; gg-2 and gg-3 are cancelled for round 82 and the T3 defect is carried to round 83.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W324-S1 is ARMED: the ASML gate read NO (AC1 S3, AC2 T3) on a freshly written ASML analysis and draft.",
+  "world_is": "The worker re-wrote the prior analysis and drafting VersionIds (byte-equal) and re-appended the prior silver row; BABA, NU and SAP listings equal their pre-act record; 0 keys outside the four prefixes; NEVER-2 entry amgt-resapp-r82-gg2-store-half-dell1 CLOSED. Issuer ruling: gg-2 and gg-3 cancelled this round; T3 (0 of 11 served locations cite Item 4.B) carried as round82/CARRIED_TO_ROUND83.md item 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_AMGT_RESAPP~324/diff_ASML_NA_Equity_after_rollback.txt",
+      "org/critical_paths/change_management/20261009T0822Z_amgt-resapp-r82-gg2-store-half-dell1_deploy_completion.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms AMGT_RESAPP-D1-W324-S1 by a new item, as the row gate requires for an investigation row."
+}
+```
