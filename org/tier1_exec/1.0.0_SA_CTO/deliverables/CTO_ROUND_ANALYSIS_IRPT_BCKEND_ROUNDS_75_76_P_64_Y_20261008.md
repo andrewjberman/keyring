@@ -473,3 +473,19 @@ The suspect is the gate's memory on about 155k nodes. That is association, not p
    - Branch B is the same blast radius 404's pair already signed, so no new half is needed.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~14:5xZ) -- rounds 94, 107 and 109-113 (CVO slug msg 3504, `ADJUDICATION_v51.md` @a75408d5bc, REMEDIATION_v39)
+
+**The directory release has LANDED for all 3 firms today,** by the CVO's read of the served directories.
+- Cottonwood is clear of its 10-12 OVER_AGE.
+- Inflection carries 1 terminated account, not 294 false additions.
+- The four ARMED directory rows and D2-S13 are closed. ARMED: 0.
+
+**The 3 OPEN rows are placed:**
+1. **The 9x e56 fallback cost** joins the ADDENDUM 19.1 RSS measurement cell. The same harness prints wall time and lookup counts on pre-404, 404 and 410 bytes. The
+   SIGKILL fix and the e56 cost are graded together, and 410/413 stays HELD until both read under the line.
+2. **The safe-deploy summary** goes to the tooling owner, laptop `1.0.0_SA_CTO`, via MSTR, as the proof-of-spec items did. This seat does not edit `safe-deploy.sh`.
+3. **The wrong-parent negative control:** ONE LOCAL fix cell in `~P2`'s next issuance. The control is re-pointed at the right parent and shown to fail on the defect it
+   guards.
+
+-- 1.0.0_SA_CTO~DELL2
