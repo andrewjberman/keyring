@@ -10521,3 +10521,105 @@ name the one known failure instead of silently inheriting it.
   "notes": "Benign, surfaced rather than waved through. Two cheap follow-ups for whoever owns them, neither mine under this order: commit a BUILD_MANIFEST.json in the dispatcher's package dir if the T2a stamp is actually wanted for this function, and correct the _build_note, which today asserts a member the zip does not carry. ID FORM: the order prescribes NFRA_OPLGTW-Z-AE-S<k>, which SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) cannot match because its optional infix is a single letter plus digits; exercised both ways, Z-S70 matches and Z-AE-S3 does not. Continuing the Z-S series per this project's own Z-OG-S1 precedent, as for Z-S68 and Z-S69."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W44-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~44",
+  "surfaced_at": "2026-10-09T04:46:19Z",
+  "one_line": "AC2 cannot pass as written: tests/test_teams_reader_fallback.py (a Teams suite the criterion requires green and unedited) pins the concierge in identity_scope._SEED, which the order tells the cell to empty, and that file is not in the order's <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN cd infra/aws/ec2/opal-gateway && python -m pytest tests/test_teams_reader_fallback.py -q: 1 failed, 4 passed; FAILED test_image_reader_is_registered_read_only -- KeyError: 'opalbloomberg@opalinvest.com' at tests/test_teams_reader_fallback.py:75.",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_teams_reader_fallback.py:75 @71695b288f reads identity_scope._SEED['opalbloomberg@opalinvest.com'].",
+      "FILE the order's <paths> list names test_identity_scope.py, test_identity_scope_status_row.py, test_scoped_consent_r253.py and no test_teams_*.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-tg-1 item 3 removes the concierge from _SEED; AC2 requires test_teams_reader_fallback.py pytest rc=0 with no test removed or renamed; item 5 names only test_identity_scope.py, test_identity_scope_status_row.py and test_scoped_consent_r253.py as the tests whose pinned expectation moves.",
+  "world_is": "test_image_reader_is_registered_read_only (infra/aws/ec2/opal-gateway/tests/test_teams_reader_fallback.py:75) asserts 'read_chat_message_images' in identity_scope._SEED['opalbloomberg@opalinvest.com']; with the key gone it raises KeyError, so that suite fails 1 of 5. I did NOT edit the file (outside <paths>) and did not keep a concierge key in _SEED (that would contradict item 3). Every other Teams suite passes (test_teams_format 35, test_teams_route 21). AC2 therefore grades FAIL on the test_teams_reader_fallback.py line until the line-75 expectation is moved by the issuer or a worker whose <paths> name that file (the line asserts the image tool is on the seed; the unscoped state satisfies the intent, the assertion should read the tool's classification only, which lines 71-73 already do).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not ARMED: nothing runs differently in production; the cost is that AC2's third Teams-suite clause cannot be met by this order. The proof instance records AC2 FAIL honestly and the order stays open."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W44-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~44",
+  "surfaced_at": "2026-10-09T04:46:19Z",
+  "one_line": "Graph's from.user carries no UPN, and the consented Graph scopes cannot read one for a channel sender, so sender_upn is the chat-member email on chat paths and is null on every channel path until User.ReadBasic.All is consented.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/config.py:61-71 @71695b288f GRAPH_SCOPES carries User.Read, Chat.ReadWrite, ChatMessage.Send, Team.ReadBasic.All, Channel.ReadBasic.All, ChannelMessage.Read.All, ChannelMessage.Send and no User.ReadBasic.All, User.Read.All, ChannelMember.Read.All or TeamMember.Read.All.",
+      "FILE infra/aws/ec2/opal-gateway/app/sender_gate.py:sender_address and app/asker_scope.py:read_chat_members @71695b288f are the existing read of a chat sender's address from /chats/{id}/members.",
+      "RUN tests/test_opal_users_gate.py::test_ogtg1_ac02 and ::test_ogtg1_ac03 (6 of 6 pass): channel reads with /users answered 403 leave sender_upn null and the concierge's channel read returns an empty page; the Graph is a fake, so no live read was made (BUILT and HELD, no AWS or Graph call)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-tg-1 item 1: each message returns the sender's Entra UPN and tenant id 'taken from Graph's from.user (the fields Graph returns there; if the UPN needs a second Graph read, do it per distinct sender, bounded, and name the call)'.",
+  "world_is": "from.user (chatMessageFromIdentitySet user) returns id, displayName and tenantId and no UPN, so sender_tenant_id is from.user.tenantId and the UPN needs a second read. Chat paths (poll, read_chat_messages): GET /chats/{id}/members (Chat.ReadWrite, consented), matched on userId = from.user.id; the value is the member's email, the same read and match as app/sender_gate.py, which Graph documents as the user's email address and which for an Opal user is their address (not guaranteed to be the UPN string for a user whose mail differs from the UPN). Channel path (read_channel_messages): GET /users/{id}?$select=userPrincipalName needs User.ReadBasic.All, which config.GRAPH_SCOPES does not carry, so the call is made once and, on the first 401/403, no further call is made that run; both fields' sender_upn is null and the concierge gate drops every channel message (unreadable = external), and the channel-send gate (GET /teams/{t}/channels/{c}/members, ChannelMember.Read.All, also not consented) refuses every channel send for the concierge. Both fail closed. Opening the concierge's channel path is a consent and Entra permission decision, not code.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not ARMED: fail-closed. A release should know the concierge's channel serve set is closed (reads empty, sends refused) until the permission is consented."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W44-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~44",
+  "surfaced_at": "2026-10-09T04:46:19Z",
+  "one_line": "Two more tests outside the order's <paths> pin the concierge as a scoped identity and fail after the mirror: test_transcript_tools.py::test_scoped_and_restricted_principals_denied and test_login_admit_r24.py::test_oglg1_ac05.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN infra/aws/ec2/opal-gateway: python -m pytest tests/test_transcript_tools.py -q -> 1 failed, 7 passed (test_scoped_and_restricted_principals_denied); tests/test_login_admit_r24.py -q -> 1 failed, 6 passed (test_oglg1_ac05).",
+      "RUN one single-process run of the whole tests dir at this branch: 37 failed, 644 passed, 34 subtests passed (271.95 s), not graded by any criterion. Of those, the two named above are the ones I tied to the mirror; the rest I did not triage. Measured control: test_asker_binding, test_asker_scope, test_data_entitlement_guard and test_portal_grant run together WITHOUT the new test file already fail 3 (test_ogz1_ac08 and two in test_portal_grant) and pass when run alone, so the single-process run has order-dependent failures of its own."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-tg-1 item 5: 'any other [test] that fails ONLY because the concierge's seed or rows are gone: change ONLY the pinned expectation' -- but only the three named identity-scope test files are in <paths>.",
+  "world_is": "Both tests assert identity_scope.check('opalbloomberg@opalinvest.com', <tool>) is not None (they use the concierge as the scoped identity: infra/aws/ec2/opal-gateway/tests/test_transcript_tools.py:24 SCOPED, infra/aws/ec2/opal-gateway/tests/test_login_admit_r24.py:39 ANALYST). After the mirror the check returns None, so each fails: test_transcript_tools 1 failed of 8, test_login_admit_r24 1 failed of 7. They are not edited; same fix shape as the three moved files (a fixture identity carrying the former seed). The scope-1 tests test_asker_safe_tool, test_asker_scope, test_asker_binding and test_mcpmsp_sender_gate pass.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not ARMED. A whole-suite run at the drain will show these two red until their expectations move."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W44-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~44",
+  "surfaced_at": "2026-10-09T04:46:19Z",
+  "one_line": "Consequence of the mirror, not a choice: the concierge's next /login consent asks the full GRAPH_SCOPES envelope (it was the narrow Teams-plus-User.Read union), and the client-qualified upload (limited to the operator's client) and every denied tool become reachable by that principal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN tests/test_opal_users_gate.py::test_ogtg1_ac06: identity_scope.consent_scopes('opalbloomberg@opalinvest.com') is None and identity_scope.check(...) is None for send_email, ycharts_search, opal_data_refresh_upload and opal_data_refresh_status.",
+      "FILE infra/aws/ec2/opal-gateway/app/identity_scope.py consent_scopes: 'UNSCOPED identity -> None (its consent stays the full config.GRAPH_SCOPES envelope, untouched)'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-tg-1 item 3: the concierge is UNSCOPED like Andrew's identity; 'the client-qualified upload row's purpose is then gone: state that in your report as a consequence'.",
+  "world_is": "identity_scope.consent_scopes(concierge) is now None (the unscoped consent: config.GRAPH_SCOPES, including Mail.Send, Mail.ReadWrite, Calendars.ReadWrite, Files.ReadWrite.All, Notes.ReadWrite.All), where it was the sorted union of its allowlisted tools' scopes plus User.Read. The tier model (tier.py), data_entitlement and the guard still decide each tool as for any unscoped identity; the data-grant half of the mirror is the release-time operator write that sets how much data the principal can actually read. A release should plan a re-consent for the principal.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not ARMED: the ask itself. Recorded so the release step does not discover it."
+}
+```
