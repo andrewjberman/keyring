@@ -209,6 +209,29 @@
 
 ```json
 {
+  "id": "MDPF_CANON-D1-W5-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~5",
+  "surfaced_at": "2026-10-09T21:57:30Z",
+  "one_line": "BLOCKING: CN-b-2's required output path deliverables/X2_GLOBAL_BASIS.md is outside the order's <paths> grant; the lane gate refuses it (ADHC_OWNPTH.004/005).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order tells the worker to write org/missions/D8/MDPF/MDPF_CANON/deliverables/X2_GLOBAL_BASIS.md, and check r2_checks.py basis reads exactly that path.",
+  "world_is": "The order's <paths> grants only deliverables/0.9.0_WK_MDPF_CANON~5/, the ledger and the investigation file. safe-commit refused a commit of deliverables/X2_GLOBAL_BASIS.md: lane TREE_DELIVERABLES permits only the serial-named sub-folder. The file and the ledger X2 citation are written and r2_checks.py basis reads 3 of 3 in the worktree, but not committed; the order was not flipped complete and no proof instance was committed. A copy of the basis sits at deliverables/0.9.0_WK_MDPF_CANON~5/X2_GLOBAL_BASIS.md. The issuer lands the top-level file (or amends <paths>) and the ledger edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal text, ADHC_OWNPTH.005, 2026-10-09T21:56Z on wk-MDPF_CANON-5",
+      "org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-b-2.md section 3 <paths>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
   "id": "MDPF_CANON-D1-W7-S1",
   "project": "MDPF_CANON",
   "fabric": "dell1",
