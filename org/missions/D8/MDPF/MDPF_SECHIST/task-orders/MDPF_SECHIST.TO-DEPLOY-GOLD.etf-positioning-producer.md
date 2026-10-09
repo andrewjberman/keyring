@@ -2,13 +2,13 @@
   <metadata>
     <id>MDPF_SECHIST.TO-DEPLOY-GOLD.etf-positioning-producer</id>
     <issued_by>2.0.0_SA_COO~H1</issued_by>
-    <issued_to>0.7.0_AE_CloudOps~SC1</issued_to>
+    <issued_to>0.7.0_AE_CloudOps~SH1</issued_to>
     <date>2026-10-09</date>
     <status>issued</status>
     <project_code>MDPF_SECHIST</project_code>
   </metadata>
 <direct_act>true</direct_act>
-<!-- RE-SEATED to 0.7.0_AE_CloudOps~SC1 (0.0.0_AB_MSTR~DELL1 msg 2997: seating, one project per seat; ~DELL1 holds ETFS_RIVALS + MDPF_STRATID). Round-less by design: a deploy act under a signed never-widen pair, not a cell (decomposition R5 row 2; gold FIRST on the fold of
+<!-- RE-SEATED to 0.7.0_AE_CloudOps~SH1, a fresh lane spawned for MDPF_SECHIST (0.0.0_AB_MSTR~DELL1 msg 3055). ~DELL1 (ETFS_RIVALS + MDPF_STRATID) and ~SC1 (3 open MDPF_SECCLASS orders, msg 3008) each held another project; ~SC1 started nothing. Round-less by design: a deploy act under a signed never-widen pair, not a cell (decomposition R5 row 2; gold FIRST on the fold of
 UB-20261009T181517Z-1155, 1.0.0_SA_CTO~DELL1 msg 2973). -->
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
@@ -48,7 +48,7 @@ SH-t-15 + SH-t-19 to the `etf-positioning-producer` Lambda with R1's one IAM sta
     3. The gate before apply: unzip the package into an empty directory, put only that directory and the calendar layer on the path, and
        run `import etf_positioning_gold, etf_history_gap_record; print(etf_history_gap_record.record_address('2026-10-12'))`.
        - It must print `s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=2026-10-12/gap_record.json`.
-       - Write the output to `org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.7.0_AE_CloudOps~SC1/evidence/gold_import_smoke_20261009.txt`.
+       - Write the output to `org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.7.0_AE_CloudOps~SH1/evidence/gold_import_smoke_20261009.txt`.
        - `import-closure-check.py` is NOT this gate, because it grades top-level imports only.
     4. L2, IAM + apply: add ONE statement to `etf-positioning-producer-role`:
        - `s3:PutObject` on `arn:aws:s3:::opal-data-etfs/bloomberg/etfs/silver/history_gaps/*`, in
@@ -84,7 +84,7 @@ risk: WORLD.
 </preflight>
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="SH-t-15"><invocation>grep -c 'history_gaps/as_of=2026-10-12/gap_record.json' org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.7.0_AE_CloudOps~SC1/evidence/gold_import_smoke_20261009.txt</invocation><expect>1</expect></criterion>
+  <criterion id="AC1" cell_refs="SH-t-15"><invocation>grep -c 'history_gaps/as_of=2026-10-12/gap_record.json' org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.7.0_AE_CloudOps~SH1/evidence/gold_import_smoke_20261009.txt</invocation><expect>1</expect></criterion>
   <criterion id="AC2" cell_refs="SH-t-15" judgment="true"/><!-- the plan shows the code change and exactly ONE added IAM statement (R1), nothing else -->
   <criterion id="AC3" cell_refs="SH-t-15" judgment="true"/><!-- a send that writes a firm data bucket, or assumes the 49F principal outside the runner's own job, is told to the laptop FIRST -->
   <criterion id="AC4" cell_refs="SH-t-15" judgment="true"/><!-- every send to mdpf-daily-runner is reported after the fact with its command id and purpose -->
