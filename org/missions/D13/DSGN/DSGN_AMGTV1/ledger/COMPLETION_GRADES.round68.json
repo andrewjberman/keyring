@@ -1,0 +1,193 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "DSGN_AMGTV1",
+ "round": 68,
+ "graded_by": "1.0.0_SA_CTO~DELL1",
+ "graded_utc": "2026-10-09T17:20Z",
+ "report_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/COMPLETION_REPORT.round68.json@4ca1f1092e",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~105/DSGN_AMGTV1.TO-AV-zv-1.driver-passage-and-segments.proof_of_spec.json@874f3e21fa",
+   "state_observed": "EXERCISED",
+   "note": "MET on the signed-in seat walk to Valero's Recommendation (ADJUDICATION_v40 @eed6b7b743; fold UB-1152). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~78/DSGN_AMGTV1.TO-AV-ze-1.every-bar-and-bubble-carries-its-served-identity.proof_of_spec.json@a58cadb7a8",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~116/DSGN_AMGTV1.TO-AV-zze-2.segment-table-and-five-research-note-sections.proof_of_spec.json@c277c02b99",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~98/DSGN_AMGTV1.TO-AV-zn-2.repairs-list-type-tooltip-zero-move.proof_of_spec.json@2a479b850a",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-4.the-model-says-whose-base-case.proof_of_spec.json@265ebcd388",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~16/DSGN_AMGTV1.TO-AV-w-4.exec-management-band-and-detail.proof_of_spec.json@7f14a161a9",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the round-66 re-grade walk: NG/ and BP/ officer lists with source, CEO then CFO (ADJUDICATION_v41 @5af8db0ccd). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~141/DSGN_AMGTV1.TO-AV-zzr-1.proof_of_spec.json@078b1e2f1e",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on three names in round 67: tickers or names, every money cell with its currency, '(local)' headings (ADJUDICATION_v42 @e252f0964b). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-7.the-model-reads-the-served-words.proof_of_spec.json@475c583149",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~99/DSGN_AMGTV1.TO-AV-zo-1.repairs-edge-labels-currency-nocall-date.proof_of_spec.json@c40a740ab9",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~121/DSGN_AMGTV1.TO-AV-zzi-1.security-not-found.proof_of_spec.json@8450419a83",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~113/DSGN_AMGTV1.TO-AV-zzc-1.one-statement-of-inputs-and-coverage-sentence.proof_of_spec.json@e1ca492bc9",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~103/DSGN_AMGTV1.TO-AV-zt-1.header-reason-full-value-exec-words.proof_of_spec.json@a4e902b9db",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~79/DSGN_AMGTV1.TO-AV-zf-1.render-check-reads-the-ruled-designs.proof_of_spec.json@d5aee3a88d",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~79/DSGN_AMGTV1.TO-AV-zf-1.render-check-reads-the-ruled-designs.proof_of_spec.json@d5aee3a88d",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~110/DSGN_AMGTV1.TO-AV-zz-1.render-check-purple-fill-clause.proof_of_spec.json@475083ba5a",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~112/DSGN_AMGTV1.TO-AV-zzb-1.render-check-three-designed-states.proof_of_spec.json@15d565fcab",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~112/DSGN_AMGTV1.TO-AV-zzb-1.render-check-three-designed-states.proof_of_spec.json@15d565fcab",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~99/DSGN_AMGTV1.TO-AV-zo-1.repairs-edge-labels-currency-nocall-date.proof_of_spec.json@c40a740ab9",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~88/DSGN_AMGTV1.TO-AV-zi-1.rolling-windows-presets.proof_of_spec.json@d777905f53",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-23",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~87/DSGN_AMGTV1.TO-AV-zh-2.repairs-tokens-controls-served-values.proof_of_spec.json@85c63e60bd",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-24",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~67/DSGN_AMGTV1.TO-AV-x-1.the-identity-card-shows-the-served-company-name.proof_of_spec.json@463d13e3fd",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-25",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~94/DSGN_AMGTV1.TO-AV-zm-1.what-changed-in-words.proof_of_spec.json@e571b65df4",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-26",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~90/DSGN_AMGTV1.TO-AV-zj-1.lead-panel-words-every-window.proof_of_spec.json@0556c7fb66",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED on the CVO's round-46 grades, countersigned in ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md (board line 9 and line 199), not regressed in rounds 47-68 (each later round's slug read). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  },
+  {
+   "fwd_id": "FWD-27",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~142/DSGN_AMGTV1.TO-AV-zzs-1.proof_of_spec.json@107c89d08b",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED in round 68: one format per measure; 992 HK EV '--' in tile and row with the tile's reason under FWD-20; ASML EV EUR 626B both (ADJUDICATION_v43 @04725034ee). Close read: ledger/ROUND_ANALYSIS.round68.md @7f0af91492."
+  }
+ ]
+}

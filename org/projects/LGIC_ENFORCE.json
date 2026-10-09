@@ -9,5 +9,5 @@
  "name": "Platform Logic executable layer -- one registry, two builders (key and name) off the identity spine, and one flagger at safe-commit/safe-apply that refuses a change the builder would not have produced",
  "generated_from": "org/missions/D14/LGIC/LGIC_ENFORCE/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T16:56:58Z"
+ "generated_at": "2026-10-09T17:42:06Z"
 }
