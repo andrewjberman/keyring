@@ -503,3 +503,30 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The two sources disagree on a sub-field changed on one side only. Built so BOTH checks hold: a sent/ack/closed block changed on one side takes that side (three-way on the block); a block both ends wrote folds sub-field by sub-field with crossbox-call's rule (null ignored, two different non-null values refuse). Effect: a receiver that rewrites an existing non-null sub-field (ack.by) while the sender also touched the ack block is refused for a person; a block changed on one side only is never refused. Check unedited."
 }
 ```
+
+## NFRA_GATSCP-D1-W11-S2 -- the proof checker reads rc=2 here: the schema at this branch's base is the broken one
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W11-S2",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~11",
+  "surfaced_at": "2026-10-09T14:10Z",
+  "one_line": "proof-of-spec-check.py exits rc=2 (TOOL-ERROR UnknownType) in this worktree because org/standards/PROOF_OF_SPEC.schema.json at its base carries e7c10e5b4b's bad type value; the fix 6b65ca5a52 is on the base checkout, not on this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> GF4-AC1,GF4-AC2 -> rc=2 'NOT-A-VERDICT: this is a tool failure (rc=2)', schema line 157 'type': 'string aws_resource ADDED ...'",
+      "git log in /c/Dev/ajb_workspace: 6b65ca5a52 fix(proof-of-spec schema, 1.0.0_SA_CTO~DELL1): commit_or_etag type back to string",
+      "same command on the older GS-t-1 instance (0.9.0_WK_NFRA_GATSCP~1) also rc=2 here",
+      "diagnostic only: the tool loaded at its own path with SCHEMA_PATH pointed at `git show 6b65ca5a52:org/standards/PROOF_OF_SPEC.schema.json` graded the GS-f-4 instance 'VALID (rc=0)', acceptance rows=2, violations=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "proof-of-spec-check.py <instance> GF4-AC1,GF4-AC2 returns rc 0 or 1 and the order's status flips to complete on rc 0.",
+  "world_is": "rc=2 here. The schema is outside this order's paths, so it is not patched on this branch; the order status stays pending and the flip waits on the schema fix reaching the branch (a re-run of the one command, after the drain or a rebase onto a base with 6b65ca5a52). Both criteria PASS by their own output."
+}
+```
