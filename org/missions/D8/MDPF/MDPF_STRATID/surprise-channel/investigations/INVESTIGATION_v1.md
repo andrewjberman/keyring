@@ -467,6 +467,28 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-S7",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T20:30:00Z",
+    "one_line": "ARMED: the deployed build_cottonwood_mdpf_slice.py (ST-w-7, ff1a8867a6) imports opal_unidentified at module level, which is in neither home -- the mdpf-gold-lambda package (cottonwood scope fails, global skipped, qa_local 20:14:51Z) nor s3://opal-data-mdpf/code/scripts/{silver,assets_gold,gold}/ (runner step 6d). The issuer's CTO-condition-3 import closure covered the consolidator and registry, not the slice.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps~DELL1 under MDPF_STRATID.TO-APPLY-R2 forward-fix amendment (F1 first-mint to runner silver, F2 one package line + redeploy), before the 2026-10-10 12:52Z dispatch",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudOps~DELL1 msg 3129 / row MDPF_CANON-D1-S3 @7ce182e0ca: qa_local invoke 20:14:51Z errors [cottonwood, global], 8 of 16 A4 objects, 'ModuleNotFoundError: No module named opal_unidentified'",
+        "issuer read 20:2xZ: head-object 404 for opal_unidentified.py under code/scripts/silver, assets_gold, gold (3 of 3); build_package.py lists opal_strategy_matcher.py (:170) but not opal_unidentified.py",
+        "build_cottonwood_mdpf_slice.py:130-136 imports opal_unidentified at module level; opal_unidentified.py imports only __future__ and re"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO half condition 3: before D1, list every module the shipped files import and read each from S3 and the package manifest; any absent module ships first.",
+    "world_is": "The slice's new import was never in the closure read; the module shipped to neither home, so the next scheduled run of either path fails the Cottonwood scope (and the Global lambda skips global)."
   }
 ]
 ```

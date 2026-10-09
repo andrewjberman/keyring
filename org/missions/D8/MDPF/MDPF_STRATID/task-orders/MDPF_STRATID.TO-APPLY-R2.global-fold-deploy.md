@@ -128,5 +128,30 @@ direct_act: true -- an executor apply order, round-less, no cell.
 
 Gate limb: GATE viii on the modification (placeholders NONE).
 
+## AMENDMENT (issuer, 2026-10-09 ~20:3xZ) -- FORWARD FIX NOW: `opal_unidentified.py` is missing from both homes (CloudOps~DELL1 msg 3129, row MDPF_CANON-D1-S3 @7ce182e0ca)
+
+- **The defect (the issuer's).** ST-w-7 made `build_cottonwood_mdpf_slice.py` import `opal_unidentified` at module level
+  (`:130-136`). The CTO half's condition-3 closure was read for the consolidator and the registry only, not for the slice. The
+  module is in neither home:
+  - `build_package.py` does not list it, so the qa_local invoke at 20:14:51Z read `SCOPE FAILED (isolated): cottonwood --
+    ModuleNotFoundError`, and global was skipped behind it;
+  - it is absent at `s3://opal-data-mdpf/code/scripts/{silver,assets_gold,gold}/` (3 of 3 head-object 404, read 20:2xZ). The
+    runner's step 6d (`mdpf-daily-dispatch.sh:547-556`) imports the slice, so the next dispatch (12:52Z or any accelerator
+    trigger) fails there too.
+- **Its own closure:** `opal_unidentified.py` imports only `__future__` and `re`. Nothing further is missing.
+- **ONE act, now, in this order** (rollback is not needed: nothing reads the new key yet, and both fixes are additive):
+  - **F1, runner home:** first-mint `git show ff1a8867a6:data/assets/scripts/silver/opal_unidentified.py` (sha256 `6b9c1d7f..`,
+    unchanged to HEAD) to `s3://opal-data-mdpf/code/scripts/silver/opal_unidentified.py`. This one manual `aws s3 cp` is
+    authorized for this one key (safe-deploy SKIPs a first-mint). Read back sha256 equal.
+  - **F2, lambda package:** add `("opal_unidentified.py", "data/assets/scripts/silver/opal_unidentified.py"),` beside the
+    `opal_strategy_matcher.py` line (`build_package.py:170`), rebuild at that commit, and run the targeted safe-apply.
+    - Coordinate with `2.0.0_SA_COO~D1`: its MDPF_CANON build is the live one, so F2 rebuilds on top of `55c3cc4642` plus this
+      line.
+    - Read back: the deployed manifest carries `opal_unidentified.py`.
+    - Re-run the qa_local invoke: errors `[]`, 16 of 16.
+  - Record F1 and F2 as legs on entry `mdpf-stratid-r2-global-fold`.
+
+Gate limb: GATE viii on the modification (placeholders NONE).
+
 **REPORT:** the entry path, the three D1 sha256 pairs and VersionIds (before and after), the D2 manifest read, and each leg closed.
 </task_order>

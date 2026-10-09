@@ -23719,3 +23719,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Found at this order's drain, not by inspection. Blocks nothing and cost this act nothing. It matters because the two logs are cited the same way but behave differently: a reader auditing deletions from the shared log will see none of the work done in worktrees, which is where CLAUDE.md 14b sends every multi-file act while other seats are live -- so the log under-reports exactly the population it exists to cover, and an absence in it reads identically to 'no mass deletion happened'. Candidate remedy for the owner: resolve the log path via `git rev-parse --git-common-dir` (as safe-commit.sh effectively does) so the append lands in the shared tree, per 14b's append-only inversion. Owner is the gate's owner, 1.0.0_SA_CTO; filed here because this project's drain is where it surfaced."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S19",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T20:38:35Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "one_line": "The round-87 redeploy (AMGT-ll-3, live b7Lj1J since 19:51:25Z) was not recorded in the lambda source map: opal-amgt-scoped-api still reads the round-85 deploy (HZoC2x, 13:45:16Z, ledger amgt-resapp-r85-jj5-scoped-api-dell1).",
+  "spec_asserts": "Row D1-S6's condition: after the ll-3 redeploy the record step writes the function's entry (deployed_code_sha256, last_deployed_commit, last_deployed_at) in infra/aws/lambda/ci/lambda-source-map.json.",
+  "world_is": "At box/dell1 HEAD (which carries ll-3's close 7f0ecf440c and RA1's re-pin 74ff460f61) the entry reads last_deployed_at 2026-10-09T13:45:16Z, deployed_code_sha256 HZoC2x..., last_deployed_commit 271e8f8b43, recorded_by record-terraform-deploy.sh, deploy_ledger amgt-resapp-r85-jj5-scoped-api-dell1; the live CodeSha256 is b7Lj1J... The file was last changed 14 min before this read by another seat (d49af8a50b), not by ll-3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions['opal-amgt-scoped-api'] at HEAD",
+      "aws lambda get-function-configuration opal-amgt-scoped-api: CodeSha256 b7Lj1J/KKhDtg+mvN/vmu4VAoaExU055uB78roHiHfM= LastModified 2026-10-09T19:51:25Z",
+      "row AMGT_RESAPP-D1-S6 (ll-4 ledger, CARRIED to this seat)"
+    ]
+  },
+  "notes": "Folded into AMGT-mm-4 by AMENDMENT 1: that redeploy's record step must write the entry and its report shows the entry after. D1-S6 stays open until a recorded deploy reads back."
+}
+```
