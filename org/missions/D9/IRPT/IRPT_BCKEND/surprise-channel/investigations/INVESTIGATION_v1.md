@@ -22544,3 +22544,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "INERT today: no live importer reaches the custody path (generate_installed.py:172 raises CUSTODY_FACTORY_REQUIRED before any decode). Disarmed by ruling: release 6 cannot land without the layer (its census + an after-read that decodes one custody row); if the layer exceeds the 250 MB unzipped limit, release 6 passes read_rows instead and this row re-opens."
 }
 ```
+
+## IRPT_BCKEND-D2-S20 -- release 6 would fail symbol_closure on the port's publication fallback (false positive)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S20",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T02:42:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Release 6 of irpt-ycharts-generate will FAIL the symbol-closure check on a false positive: round 35's port keeps a `try: from holdings_publication import HoldingsPublication / except ImportError: from publication import HoldingsPublication` fallback, and in that function `publication` is ycharts' own module, which defines no HoldingsPublication, so symbol_closure.py flags the fallback line even when the right module is staged.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/holdings_publication_port.py:8-11 (the fallback)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/publication.py (classes: PublicationRefused only; no HoldingsPublication)",
+      "this seat's synthetic zip staged as release 6 stages it (the port, holdings/publication.py AS holdings_publication.py, ycharts' publication.py): org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/checks/r71/symbol_closure.py -> 'MISSING holdings_publication_port.py:11 imports HoldingsPublication from publication', modules=3 pairs=2 missing=1, FAIL"
+    ]
+  },
+  "spec_asserts": "Release 6's built zip passes symbol_closure (the release-4 lesson, asked of release 6's pair at round 34).",
+  "world_is": "It cannot as staged: the check reads the fallback branch. At runtime the fallback is safe (it would raise ImportError, not bind ycharts' module), so the defect is the check's view of a fallback, not a wrong binding."
+}
+```
