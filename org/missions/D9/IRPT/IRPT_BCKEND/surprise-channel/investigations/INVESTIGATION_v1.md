@@ -22755,3 +22755,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The header predates the owning cells; the root is applied, and the pair governs."
 }
 ```
+
+## IRPT_BCKEND-D2-W196-S1 -- The naming gate refused a typed 'cottonwood' in served.py, so the subject's firm is read through lib/opal_naming lookup(); a release zip without lib/ and the re
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W196-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~196",
+  "surfaced_at": "2026-10-09T04:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The naming gate refused a typed 'cottonwood' in served.py, so the subject's firm is read through lib/opal_naming lookup(); a release zip without lib/ and the registry admits nobody (fails closed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit naming-gate REFUSE infra/aws/lambda/investor-reporting/_authz/served.py:265 cottonwood -> lookup('cottonwood') (LGIC_ENFORCE DEC-6), first commit attempt 2026-10-09 ~04:0xZ",
+      "served.py _svc_custody_statement_firm() resolves lookup('cottonwood')['long'] by the maintained_sources._comparison_firms pattern (lib/ found in the tree or beside the module in a flat zip); the commit 7e0bfc3222 passes the gate; with lib/ absent the test control fails 5 of 23 (measured in a scratch copy without lib/)"
+    ]
+  },
+  "spec_asserts": "The TO says admit the named subject with its firm from the verified token claim (cottonwood); it does not say the firm literal must come from the registry.",
+  "world_is": "A hand-typed firm id in a lambda module is refused at commit. The subject is therefore admitted only where lib/opal_naming.py and infra/logic/registry are reachable from served.py. Armed for the release pair: the irpt-export-render and irpt-ycharts-generate zips must carry lib/opal_naming.py and the registry, or svc-custody-statement is refused on all three routes (loud NOT_AUTHORIZED, no widening)."
+}
+```
+
+## IRPT_BCKEND-D2-W196-S2 -- Admission in verified_internal_subject also puts the subject on the Opal principal roster for its own firm, which is what custody_persist needs; the K2 mint pai
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W196-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~196",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Admission in verified_internal_subject also puts the subject on the Opal principal roster for its own firm, which is what custody_persist needs; the K2 mint pair's separate roster row (REC (a)) is not needed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served.py Entry.handle: principals = frozenset([x-user-email]) when verified_internal_subject is non-None, so the svc is OPAL_GLOBAL bound to the verified cottonwood tenant only; test_svc_custody_statement_cottonwood_admitted_on_each_route asserts (cottonwood, {svc-custody-statement}) reaches enforcer_for",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md section 0 REC (a) vs alternative (b)"
+    ]
+  },
+  "spec_asserts": "K2 mint pair section 0: the token needs ONE extra row on the export function's Opal principal roster as a rider, or the writer must admit a named service class (alternative b).",
+  "world_is": "The code admits the named class (alternative b), in served.py rather than in the writer, so no roster row is applied. Not exercised live: the persist read-back is the E2a apply."
+}
+```
