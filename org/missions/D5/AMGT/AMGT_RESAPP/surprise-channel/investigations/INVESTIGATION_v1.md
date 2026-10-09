@@ -23204,3 +23204,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Form only; the issuer may widen to a blanket space if mid-sentence blocks are judged out of scope."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W341-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~341",
+  "surfaced_at": "2026-10-09T12:50:37Z",
+  "one_line": "The published crosswalk/v1/2026-10-09.json carries research_universe = {absent: ...} and no denominators.research_folders_live, where 2026-10-07.json carried the research library's 97 folders: the CLI built on dell1 with no research-folder argument.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The GO's pre-publish condition is 'every prior record byte-equal apart from issuer'; it grades records. The prior document's document-level fields were built on a device that read the research library (research_universe.folders 97, denominators.research_folders_live 97, coverage_vintage.snapshot_stale_against_live true).",
+  "world_is": "Records: 243 of 243 prior records equal apart from issuer, 0 dropped. Document level: research_universe went from {source, read_at, folders: 97} to {absent: 'no research_folders argument given to build_crosswalk (the caller did not read the research library)'}; denominators.research_folders_live 97 -> absent; coverage_vintage.snapshot_stale_against_live dropped. The schema validated and the put succeeded, so this is the designed honest-absent form (crosswalk.py :981-987), not a defect; the live reader reads records only. Whoever next publishes from a device that reads the library restores the fields.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~341/prepublish_diff.out",
+      "lib/research/identity/crosswalk.py lines 981-987 (research_universe absent form)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W341-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~341",
+  "surfaced_at": "2026-10-09T12:50:37Z",
+  "one_line": "The named same-day rollback has two forms: the task order and spawn say 'a newer dated key re-carrying 2026-10-07.json', the CTO half (condition 3) says re-write TODAY's key with 2026-10-07.json's bytes because a newer key would be future-dated; the second is not a crosswalk CLI path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order s.1 and the COO half: 'Rollback, never a delete: a newer dated key re-carrying the prior document.' CTO half cond. 1 forbids a future-dated key and cond. 3 states the rollback is a re-write of today's key with the 2026-10-07.json document bytes (versioned, bad version kept) and says the issuer states which entry point writes it.",
+  "world_is": "I recorded the CTO form in the change-management entry (the narrower, signed condition; it adds no future key). No entry point named: write_pool is put-if-absent by date, so the re-write would be a direct versioned s3 put of the 2026-10-07.json bytes (VersionId XledA4XthVEOE3snOolYp7lkbarhPNkx), outside the crosswalk path. The rollback did not fire: C1 read YES (243 of 243).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND85_JJ4_CTO_HALF.md conditions 1 and 3",
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND85_JJ4_COO_HALF.md BLAST RADIUS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
