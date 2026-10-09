@@ -1193,6 +1193,31 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "C-KIMI/C-TICKET (PRD v0.3 @1a298a7f6c): with the vendor hold ended, the Lambda's apply is held only by its never-widen pair.",
     "world_is": "The Terraform the pair would bind to is incomplete; a pair signed on these bytes would sign a function that cannot write a ticket.",
     "notes": "Round 16 is mid-round (frozen); the completion is a round-17 cell. gold_rows returns [] (no precedent) by design until C-WIPE-GATE gold exists."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T03:40:00Z",
+    "one_line": "The retained IRPT composition is not one S3 object per request id, so COMPOSITION_BUCKET and COMPOSITION_KEY_PREFIX were left empty and composition_reader still has no source.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py:136-139@5074835d70: ArtifactRepository.put(principal, owner, 'REQUEST_COMPOSITION', rid + '-' + content_sha256, ...) -- the logical id carries the content sha, not the bare request id",
+        "infra/aws/lambda/investor-reporting/reports/composition.py:51-52 and reports/repository.py:460-470@5074835d70: the bucket and key come from M's reporting_destination(firm, family, identity, sha), per firm, and the read is by VersionId (repository.py:485-488), not by prefix + request_id + '.json'",
+        "data/transcripts/scripts/commentary/lambda_handler.py:56-61: composition_reader reads Key = prefix + request_id + '.json' with no version and no firm",
+        "NAMES.json composition key records bucket '' and key_prefix '' with the refusal; no address() call was made because no per-request-id object exists to address; commentary.tf emits the s3:GetObject statement only when both are set",
+        "test_commentary_live_ports.py: 4 passed (3 named tests plus the NAMES.json composition-key check); R17-C17-OK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-c-17: the composition is retained as one object per request id, so prefix + request_id + '.json' is the object composition_reader reads, and address() yields its bucket and prefix.",
+    "world_is": "IRPT retains the composition as a firm-placed, content-addressed, versioned artifact behind its retention policy. A commentary read needs either an IRPT-side per-request-id copy or a composition_reader that resolves through the artifact repository (firm, logical id, version); both are outside this order's paths. Until then every record lands in failed at NO_COMPOSITION_SOURCE and no ticket is written.",
+    "disarm_owner": "2.0.0_SA_COO~T2 (cut the composition-source cell with IRPT_BCKEND's owner); the irpt kms:Decrypt statement in commentary.tf is already in place",
+    "notes": "The other four env names, the svc-commentary secret read, the irpt kms:Decrypt and the .token read are done in this order. terraform was not resolved on this worktree, so fmt and validate were not run."
   }
 ]
 ```

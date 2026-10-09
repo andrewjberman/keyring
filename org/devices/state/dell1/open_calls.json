@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T01:08:07Z",
- "written_by": "1.0.0_SA_CTO~DELL1",
+ "written_at": "2026-10-09T03:28:44Z",
+ "written_by": "2.0.0_SA_COO~V1",
  "rows": [
   {
    "id": "dell1-20261008T175521Z-abbb",
@@ -288,6 +288,139 @@
     "ruled_by": "cto",
     "xadj": null
    }
+  },
+  {
+   "id": "dell1-20261009T013038Z-4101",
+   "project": "AMGT_RESAPP",
+   "subject": "AMGT_RESAPP: two Bloomberg calls held for Andrew's per-use word -- ABNB pull and ICT identity read (run at site Z where the Terminal is)",
+   "asked_by": "2.0.0_SA_COO~Z",
+   "source": "org/tier1_exec/2.0.0_SA_COO~Z/handoffs/AMGT_RESAPP_TO_DELL1_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T01:30:38Z",
+   "kind": "act",
+   "scope": {
+    "measured_at": "2026-10-09T01:30:38Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "lib/research/api/scoped_amgt.py overlaps the write set of AMGT_CORPUS placed on sitez (lib/research/api/scoped_amgt.py)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_REPORT placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ETFS_RIVALS placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/filings/drafting_build.py is on the shared branch (lib)",
+      "lib/research/filings/tests is on the shared branch (lib)",
+      "lib/research/drafting is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T03:27:48Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261009_014xZ_SITEZ_BBG_YES_AND_NICK_HOLDINGS_TADROP_TO_DELL2.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
+  },
+  {
+   "id": "dell1-20261009T032427Z-deae",
+   "project": "MDPF_SECHIST",
+   "subject": "FWD-2 card A (client-depth Bloomberg draw) goes to MDPF_DEMQUE as a queue request instead of waiting on site Z ruling 31292",
+   "asked_by": "2.0.0_SA_COO~H1",
+   "source": "org/tier1_exec/2.0.0_SA_COO~H1/drive_log_20261009T03Z_desktop-hk1uu7n.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T03:24:27Z",
+   "kind": "fork",
+   "context": "Round 2 did not cut card A: site Z ruling 31292 held it until AMGT_CORPUS and ETFS_RIVALS record in bbg_budget. Since then the 02:4xZ egress law (CTO~DELL1 msg 1507) routes every Bloomberg draw through COO~Q1's DEMQUE queue. Gates FWD-2's cell.",
+   "rec": "Yes: file card A as a DEMQUE request at round 3; the queue is now the one budget route 31292 waited for.",
+   "scope": {
+    "measured_at": "2026-10-09T03:24:27Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "SERVED",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T03:28:08Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "Andrew's named hold: card A (FWD-2) -- 'I will handle that with sitez' (2026-10-08 ~17:5xZ, H1 record cooH1_ANDREW_DIRECT_20261008_175xZ). REC to Andrew: route it as a MDPF_DEMQUE tier-2 request, quoted first."
+   }
+  },
+  {
+   "id": "dell1-20261009T032844Z-8276",
+   "project": "ETFS_RIVALS",
+   "subject": "Act 3 switch-on: R24 standing vehicle draw, or the MDPF_DEMQUE queue under law 4d77a9c3ea?",
+   "asked_by": "2.0.0_SA_COO~V1",
+   "source": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/CALL_SWITCH_ON_ROUTE_UNDER_EGRESS_LAW_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T03:28:44Z",
+   "kind": "fork",
+   "context": "R24 approved a standing daily draw up to 20,000/run by the 11:00Z vehicle; the 10-09 law routes every Bloomberg draw through Q1's queue, whose requests are one-off. Gates act 3 only.",
+   "rec": "A: one standing request on the queue's books; the vehicle keeps drawing under bbg_budget; no code change",
+   "scope": {
+    "measured_at": "2026-10-09T03:28:44Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/etfs-rivalfunds"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/ec2/opal-gateway/app/rivalfunds_view.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "infra/aws/ec2/opal-gateway/app/rivalfunds_view.py overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/ec2/opal-gateway)",
+      "infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/ec2/opal-gateway)",
+      "infra/aws/ec2/opal-gateway/app/server.py overlaps the write set of NFRA_MCPINDEX placed on sitez (infra/aws/ec2/opal-gateway/**)",
+      "infra/aws/ec2/opal-gateway/app/server.py overlaps the write set of NFRA_OPLGTW placed on sitez (infra/aws/ec2/opal-gateway)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
   }
  ]
 }
