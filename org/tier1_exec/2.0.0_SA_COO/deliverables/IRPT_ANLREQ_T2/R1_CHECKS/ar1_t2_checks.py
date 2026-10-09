@@ -48,12 +48,24 @@ def _run(key):
     return (r.returncode == 0 and passed >= len(names)), tail
 
 
-TOKENS = {"t13lg": "AR1-T13LG", "t11": "AR1-T11", "t12": "AR1-T12", "t13": "AR1-T13"}
+def _build_only():
+    """t13b: the draft store's zip builds through the real build script (BUILD_ONLY, nothing uploaded)."""
+    sys.path.insert(0, ".tools")
+    from git_bash_resolver import git_bash  # never a bare `bash` (CLAUDE.md, Git section)
+    r = subprocess.run([git_bash(), "infra/aws/lambda/ci/build-and-upload.sh", "investor-reporting", "irpt-commentary-draft-store-lambda"],
+                       capture_output=True, text=True, timeout=300, env=dict(__import__("os").environ, BUILD_ONLY="1"))
+    out = r.stdout + r.stderr
+    line = next((ln for ln in out.splitlines() if ln.startswith("BUILD_ONLY:")), "")
+    missing = sum(1 for ln in out.splitlines() if "not found" in ln.lower())
+    return (r.returncode == 0 and bool(line) and missing == 0), (line or "rc=%d file-not-found=%d" % (r.returncode, missing))
+
+
+TOKENS = {"t13b": "AR1-T13B", "t13lg": "AR1-T13LG", "t11": "AR1-T11", "t12": "AR1-T12", "t13": "AR1-T13"}
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2 or sys.argv[1] not in SPEC:
-        print("usage: ar1_t2_checks.py {%s}" % "|".join(SPEC))
+    if len(sys.argv) != 2 or (sys.argv[1] not in SPEC and sys.argv[1] != "t13b"):
+        print("usage: ar1_t2_checks.py {%s|t13b}" % "|".join(SPEC))
         sys.exit(2)
-    ok, why = _run(sys.argv[1])
+    ok, why = _build_only() if sys.argv[1] == "t13b" else _run(sys.argv[1])
     print("%s-%s %s" % (TOKENS[sys.argv[1]], "OK" if ok else "FAIL", why))
     sys.exit(0 if ok else 1)
