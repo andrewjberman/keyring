@@ -83,3 +83,54 @@
   "world_is": "The SMFEE debits imply about 0.0039 annually. The sum of the two order constants is 0.0036145, still not 0.0039, so neither the labels nor the constants are established as this book's per-account rates; the SMArtX statement (SharePoint, not readable by the worker) is the authority and the issuer's rate read may be one allocation row. The builder carries the order's constants and names the rate gap per component; it also means the valuation-date test (step 3) is dominated by the rate gap and separates the candidates by under 1 percent."
 }
 ```
+
+## ADVI_BILLING-W1-S4 -- Amendment 1's pick rule is met by no household when every account's fee line must fall in July 2026; the thread household uses the latest earlier fee line for one account
+
+```json
+{
+  "id": "ADVI_BILLING-W1-S4",
+  "project": "ADVI_BILLING",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~1",
+  "surfaced_at": "2026-10-09T06:45Z",
+  "one_line": "BD fee lines are sparse (201 lines in the 31 July 2026 partitions), so no 1-4 account served summary has a July 2026 bps>0 line on every account; four households meet the rule only by reading an account's latest earlier 2026 line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/gold/advi_billing/fee_quarter.py --pick (run at ef273b0404+ base bab1baa62f): 'rule ... 0 households with every account's fee line in 2026-07, 4 accepting the latest earlier line'",
+      "silver/fees/2026-07-*.parquet: 31 partitions, 201 lines, 36 with basis_points > 0; silver/fees/2026-*.parquet up to 07-31: 212 partitions, 228,369 lines",
+      "the four households (accounts): z08219260 (2), z08351415 (2), z08132190 (3), z08361443 (3); thread household z08219260: ...8814 has a July line (partition 2026-07-25, '49F - Flat 1', 100 bps), ...3738 has none in July (latest earlier line carries the same label and 100 bps)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 A2 pick rule: 1-4 accounts, EVERY account with a July 2026 BD fee line with basis_points > 0 and a TPFEE row on 2026-07-07; the issuer measured candidates meeting it.",
+  "world_is": "No household of 1-4 accounts meets the rule as worded. The builder accepts, for an account with no July line, its latest earlier 2026 fee line (same schedule label), emits that account's schedule_claim as inferred (not measured) and names the partition in schedule_source. The thread household (z08219260, the first by fewest accounts then id) therefore carries one measured and one inferred account. The issuer decides whether the rule is to be read this way or the wording amended."
+}
+```
+
+## ADVI_BILLING-W1-S5 -- The contract gains a component-level schedule_claim, and the household debited_fee is like-for-like with the computed fee
+
+```json
+{
+  "id": "ADVI_BILLING-W1-S5",
+  "project": "ADVI_BILLING",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~1",
+  "surfaced_at": "2026-10-09T06:45Z",
+  "one_line": "A3 asks for a null PLATFORM rate with 'schedule_claim absent', but schedule_claim is an account-level field that stays measured/inferred for the ADVISOR schedule; the contract adds schedule_claim to each component, and the household debited_fee sums only components that have a computed fee.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/ADVI_BILLING_FEE_QUARTER_CONTRACT.json at bab1baa62f: components[].schedule_claim (additive, enum measured|inferred|held|absent); household.debited_fee meaning",
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/checks/r1/r1_checks.py validate_contract_shape: checks required keys only, so the extra key passes AB1-1-AC1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 A3: rate and computed_fee null only when schedule_claim is absent; household computed totals sum the non-null components. The contract field list carries one schedule_claim per account.",
+  "world_is": "With a null PLATFORM rate beside an account whose schedule_claim is measured, the contract's null-only-when-absent rule cannot be read off the account field, so each component carries its own schedule_claim (ADVISOR = the account's, PLATFORM = absent). The amendment is silent on the household debited total; summing the SMFEE debits against a computed total that excludes the platform portion would put a number in difference that means nothing, so the household compares the ADVISOR components with their own TPFEE debits and says so in steps. AB-t-3's fixture and AB-t-2's reader must carry the added key or ignore it."
+}
+```
