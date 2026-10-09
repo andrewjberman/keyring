@@ -24250,3 +24250,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The widening build was stopped before upload; the fix is a cut cell under a CTO ruling."
 }
 ```
+
+## IRPT_BCKEND-D2-W271-S1 -- IB-pr-408: 5 of 9 red _contracts tests fixed in grant, 4 named
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W271-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~271",
+  "surfaced_at": "2026-10-09T12:56:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-408: of 9 red _contracts tests 5 FIXED in grant (2 stale denominators, 2 stale ExportReceipt fixtures, 1 worktree-blind portal resolver); 4 NAMED -- three DECLARED routes (custody-report-read, custody-report-persist, analysis-request-original) publish no response schema file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base e783f333cc: pytest _contracts -rf 9 failed 176 passed 13 skipped; in a linked worktree test_the_consumer_fixture_source_is_named_and_non_empty fails because portal/ is an empty gitlink; in the primary checkout (47dd74455f) the other 8 fail and it passes",
+      "routes.json _denominator.declared stayed 21 across eb70303e8f (AR-y-22 added analysis-request-original): walk over routes.json commits, test green at 71e9aacf27, red at eb70303e8f; the same count was also red a414382a19..d34a46f37d and was corrected by 71e9aacf27, so the history is NOT monotone and the first_red_commit is the start of the CURRENT red streak",
+      "docs/contracts/investor-reporting/v1/responses holds 19 *.response.schema.json for 22 DECLARED routes; custody-report-read/-persist rows carry response_schema null by choice (commit 60f7d8f4c8, row W167-S1: the portal wire generator skips only an explicit null); analysis-request-original row carries null with an absent_reason (eb70303e8f)",
+      "ExportReceipt.valid.json and .invalid.json (_contracts/fixtures) both gained facts.covered_account_ids ['ACCT-1']: the invalid fixture lacked it too, so it would have been refused for the wrong reason (the control would have been vacuous); after the edit it is refused only for vendor_signed_url_exposed (jsonschema: 'False was expected')"
+    ]
+  },
+  "spec_asserts": "The order lists the known members and says a fix is a stale count or fixture in _contracts/ or a declaration in v1/; it names no edit to the seam test's portal resolver and no edit to the invalid fixture.",
+  "world_is": "Two extra edits were needed, both inside _contracts/: test_seam_paired.py portal_root() now also tries the primary checkout DERIVED from git rev-parse --git-common-dir (a linked worktree's portal/ is empty, the design comment already says the primary checkout is the only place its files exist); this un-skips 13 tests in a linked worktree, which pass as they do in the primary checkout. ExportReceipt.invalid.json got the same covered_account_ids so its stated refusal reason is the only one. The 4 NAMED reds need a response schema authored per route and a non-null response_schema in routes.json, which moves what the portal wire generator renders (gen-wire.ts) -- a cross-product change outside this grant.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
