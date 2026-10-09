@@ -73,6 +73,7 @@ lib/research/filings/fetch.py
 lib/research/filings/section_census.py
 lib/research/filings/section_coverage.py
 lib/research/filings/tests/test_document.py
+lib/research/filings/tests/test_section_coverage.py
 lib/research/filings/tests/test_section_census.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~315/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -120,3 +121,4 @@ site-Z deploy under a never-widen pair and waits for 1.0.0_SA_CTO~Z's half.
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>in_progress -- REOPENED by the issuer 2026-10-09T02:1xZ at the drain (AMENDMENT 1). The worker's commit 12e33085f3 reads VALID, but the drain's hygiene run on its branch FAILS lib/research/filings/tests/test_section_coverage.py::test_wanted_table_equals_the_producers: section_coverage._WANTED (the Lambda's copy of fetch.EXCERPT_ITEMS) lacks the new 20-F business key. Grant added to paths: lib/research/filings/section_coverage.py. Graded by no gate limb (a modification; LIMB 6 fires on newly-added orders only). Served effect: at the next redeploy (dd-4) each 20-F name's passage_coverage lists Item 4.B as wanted; dd-4's pair names it.</status>
+<status>in_progress -- AMENDMENT 2 by the issuer 2026-10-09T02:4xZ on row AMGT_RESAPP-D1-W315-S1: grant lib/research/filings/tests/test_section_coverage.py; test_one_section_lists_the_other_as_not_covered's 20-F expectation lists business before mdna, which follows from the wanted table the producer now carries. Graded by no gate limb (a modification).</status>
