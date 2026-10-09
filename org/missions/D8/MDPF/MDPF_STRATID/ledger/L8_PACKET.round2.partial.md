@@ -73,4 +73,22 @@ the round-2 gaps.
   `mdpf-feeder-backstop-daily` 2026-10-10 12:52Z.
 - Round 2 leg L4: `mdpf-scheduled-floor` 2026-10-10 13:30Z. Saturday's run date is Friday 2026-10-09 (T-1, trading calendar).
 
+## 5a. FWD-3 (restated in PRD v0.6 @ccbb31e15e, unblock UB-20261009T183753Z-5e37)
+
+- **The restatement.**
+  - DONE WHEN = (i) a planted Muni sleeve run through the production fold and routing code on copies of the served bytes, plus
+    (ii) the organic read on the scheduled run. ACCEPT is unchanged.
+  - Ratified-text half re-signed by `3.0.0_SA_CVO` @9794664db4. Fold by `1.0.0_SA_CTO~DELL1` (msg 3018). Case CLOSED/resumed
+    with `--wait-until 2026-10-10T13:30Z`.
+- **Mechanism arm (i): MET** (CVO grade @8125d09ffe).
+  - `R2_CHECKS/st_r2_muni_seam.py` @283515b4c3 prints `R2-MUNI-SEAM-OK`. It calls production code byte-equal to the deployed pin
+    `ff1a8867a6`.
+  - Control: no Muni dollars.
+  - Add: ALT Strategies > Muni 550,823.07; total +550,823.07 exactly.
+  - Hold: total unchanged; named `OVERLAP` on the tree row.
+  - Cottonwood view: ALT Strategies > Muni 550,823.07.
+- **Organic arm (ii): PENDING**, read on the 2026-10-10 13:30Z run. Expected "no Muni SMA dollars", per the CRO census @2bb6b38092.
+  `Opal_Muni_Sleeve` stays kept out with its reason until call `203a`. That call decides the sleeve's membership, not FWD-3's
+  grade.
+
 ## 6. The one real run -- PENDING (2026-10-10 after 13:30Z)

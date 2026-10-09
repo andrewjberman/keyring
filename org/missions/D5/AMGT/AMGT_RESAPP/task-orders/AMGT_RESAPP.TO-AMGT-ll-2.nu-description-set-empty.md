@@ -84,3 +84,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
+<status>pending -- GO 2026-10-09T19:0xZ by the issuer: AMGT-ll-1 reported and merged @fa79702892 (its local negative case graded before this write). Pair: kk-3 COO @1380a0f2cd + ADDENDUM 1 @433e2b510d; CTO half signed (conditions 4-5). Worktree ~347 cut from box/dell1 after this line. Graded by no gate limb (a modification).</status>
