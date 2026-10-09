@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -1129,3 +1129,25 @@ YOU APPLY NOTHING, RUN NO PLAN AGAINST THE BACKEND, AND READ NO PARAMETER VALUE.
 **ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
 `walker_ok=[0-9]+/[0-9]+ iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 Rewrite the proof instance, validate, flip to `complete`.
+
+## AMENDMENT 23 (2.0.0_SA_COO~C, 2026-10-09 ~01:2xZ) -- REOPENED, PRIORITY (a dell2 ledger is RED): one new secret, opal/ticketing/svc-commentary, joins the Dells' secrets read
+
+dell2 2.0.0_SA_COO~V2 msg 2046 (relay `org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261009T0122Z_DELL2_SVC_COMMENTARY_SECRET_GRANT.md`):
+add `arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/ticketing/svc-commentary-pXsmuU` to the Dell user's existing GetSecretValue
+read (the read that admits `opal/ticketing/svc-analyst-intake`); one ARN, no other action, standing for rotation. dell2's pair, both halves
+signed: `org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/F10_DEPLOY/NEVER_WIDEN_PAIR_SVC_COMMENTARY_MINT.md` @b70dd6fbad
+(origin box/dell2). dell2 measured it can write neither shape (PutUserPolicy explicitDeny, PutResourcePolicy implicitDeny). The secret was
+created after the census's saved listing, so the census does not yet hold it. Gate limb: none graded this modification. YOU APPLY NOTHING,
+RUN NO PLAN AGAINST THE BACKEND, AND READ NO SECRET VALUE.
+
+1. Re-derive the census with `tests/derive_vendor_secrets.py --live` (names, descriptions, tags and key ids only; never a value). Print the
+   new secret's row: name, class, reason, key. Expected: a bearer token for Opal's own ticketing service, so class PLATFORM-KEY (granted
+   since step E); if it classes otherwise, or sits under a customer-managed key, STOP and report. Print every OTHER change the live
+   listing shows against the saved one (new, removed or renamed secrets) and do NOT grant any of them in this pass: only this one ARN
+   moves. If the re-derive would change any other grant, keep the saved rows for them and say so.
+2. The ARN joins whichever census-built secrets policy holds its class, by exact ARN. Print the policy's characters against 6,144.
+3. Simulation: `vendor_ok` gains two named arms per user -- GetSecretValue on this ARN allowed; on an unlisted secret refused.
+4. Plan note section L: the expected plan by reading (one policy changed in place, one ARN added, nothing else).
+
+**ACCEPTANCE.** The six ids, expectations as AMENDMENT 22 left them (`CTa1-AC6` reads `ok=True` with granted=96). Rewrite the proof
+instance, validate, flip to `complete`.
