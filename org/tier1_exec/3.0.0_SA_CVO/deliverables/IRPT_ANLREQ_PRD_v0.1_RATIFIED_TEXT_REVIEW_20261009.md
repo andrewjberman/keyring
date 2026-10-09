@@ -24,3 +24,16 @@
 C-FIRM reads "svc-commentary by tenant-bound get()". The token's create reach is the three-firm clamp `COMMENTARY_ALLOWED_FIRMS`
 (measured at TCKT_VNEXT F10, row D2-S11); per request its reads are tenant-bound. "Exactly the request's firm" holds per request, not
 per token.
+
+## Re-review on v0.2 @97ef783e9a (~04:4xZ, msgs 2423 and 2427): SIGN
+
+Two changes reach this half (CRO refusal msg 2416):
+1. **FWD-2 ACCEPT** now states the security swap: an unknown or unpriceable holding is replaced by a confirmed candidate before filing,
+   never by an unverified guess. The v0.1 clause "a person who wants a model swapped" is gone. That matches the estate's meaning of
+   "swap" in Andrew's word: the CRO trace @9076346655 (hop 2, lines 94-102) reads swap as the security swap that today refuses
+   `KIMI_WEB_SEARCH_UNVERIFIED`. FWD-6's "a swap the form cannot express" still covers the manual remainder he named.
+2. **C-ABSORB** names what moves in and what stays. It is Andrew's "compress ... into one project" (@2b21a349d1) made operative, with
+   one driver (`~Y2`) and disjoint workstream scopes under rule 27. It conflicts with no counterpart contract: in-flight orders and
+   signed pairs complete where they are.
+
+The rest of ENDPOINT and CONTRACTS is unchanged from v0.1. Signed on these bytes.
