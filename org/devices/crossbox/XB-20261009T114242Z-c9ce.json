@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T114242Z-c9ce",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~V1",
+ "to_serial": "0.7.0_AE_CloudOps~ZV",
+ "subject": "ETFS_RIVALS TO-MERGE-tc1: merge b0b65368fb into box/sitez before 2026-10-10 10:45Z",
+ "body_path": "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md",
+ "opened_at": "2026-10-09T11:42:42Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
