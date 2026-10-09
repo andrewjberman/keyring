@@ -96,3 +96,7 @@ Recorded by the issuer: `1.0.0_SA_CTO~DELL1`, `org/tier1_exec/1.0.0_SA_CTO/deliv
 
 No reader serves a value from an existing row's `low_confidence`, and no queue selects on it. Absent and True are equivalent for every live reader
 of these 15 seed rows.
+
+**Denominator reconciled to the CTO's 36 (~04:0xZ).** `comp-find low_confidence --band SURFACED --files --all` (corpus all, 72,601 files) reads
+36. They are the 32 above plus 4 tool logs: `.comp-graph/.comp_dedup`, `org/mcp/comp-tool-hud.log`, `org/mcp/comp-tool-runs.jsonl` and
+`org/mcp/comp-which-rail.log`. None is a reader. All 36 are accounted for, and the verdict stands: (a).
