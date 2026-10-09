@@ -6,7 +6,7 @@ Andrew's word (2026-10-07 ~16:3xZ): the CTO of a fabric accrues every open call 
 their fabric, does not interfere with any other projects resources or materials" it adjudicates; one that touches more goes
 through its manager. "Touches only its fabric" is a MEASUREMENT here, never a judgment.
 
-    python .tools/open-calls.py add --project <CODE> --subject <text> --asked-by <serial> --source <path>
+    python .tools/open-calls.py add --project <CODE> --subject <text> --context <2-3 lines> --rec <rec> --asked-by <serial> --source <path>
                                     [--orders <order file> ...] [--roots <dir> ...]
     python .tools/open-calls.py list [--device <d> | --all] [--cloud] [--include-closed]
     python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
@@ -77,7 +77,12 @@ ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls/1"
 TOP_KEYS = {"schema", "device", "written_at", "written_by", "rows"}
 ROW_KEYS = {"id", "project", "subject", "asked_by", "source", "orders", "roots", "state", "opened_at", "scope", "closed",
-            "kind", "escalation"}
+            "kind", "escalation", "context", "rec"}
+# `context` + `rec` (Andrew-direct 2026-10-09 ~01:1xZ, "yes, build the context and rec fields"; record
+# org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_011xZ_OPEN_CALL_CONTEXT_AND_REC_FIELDS.md): what created
+# the call and what it gates, and the asking seat's recommendation. Required on a NEW fork (context on a new act); rows written
+# before carry neither and read as before.
+CONTEXT_MIN, CONTEXT_MAX = 40, 600
 KINDS = ("fork", "act")
 NO_PROJECT = "NONE"
 CLOUD_BUCKET = "opal-313476888478-globgrph"
@@ -445,6 +450,9 @@ def validate_doc(doc, device: str, where: str) -> dict:
             raise BadFile("%s: row %s lacks %s" % (where, row.get("id", i), ", ".join(missing)))
         if row["state"] not in STATES:
             raise BadFile("%s: row %s state %r is not one of %s" % (where, row["id"], row["state"], "/".join(STATES)))
+        for fld in ("context", "rec"):
+            if fld in row and not isinstance(row[fld], str):
+                raise BadFile("%s: row %s `%s` is not text" % (where, row["id"], fld))
         if "kind" in row and row["kind"] not in KINDS:
             raise BadFile("%s: row %s kind %r is not one of %s" % (where, row["id"], row["kind"], "/".join(KINDS)))
         esc = row.get("escalation")
@@ -723,7 +731,25 @@ def public_scope(res: dict) -> dict:
             "evidence": {k: v[:CAP] for k, v in res["evidence"].items()}}
 
 
+def check_call_text(kind: str, context, rec, source: str) -> None:
+    """Refuse a new call that does not carry its own context (and, for a fork, its REC), or whose source is box-local mail."""
+    context, rec = (context or "").strip(), (rec or "").strip()
+    if not context:
+        raise Refused("REFUSED: --context is required: 2-3 lines on what created the call and what it gates (Andrew-direct "
+                      "2026-10-09 ~01:1xZ). The subject is the decision; the context is why it exists.")
+    if not CONTEXT_MIN <= len(context) <= CONTEXT_MAX:
+        raise Refused("REFUSED: --context is %d characters; it must be %d-%d (2-3 lines, not a pointer and not a report)" % (
+            len(context), CONTEXT_MIN, CONTEXT_MAX))
+    if kind == "fork" and not rec:
+        raise Refused("REFUSED: --rec is required on a fork: the asking seat's recommendation and its one-sentence why")
+    norm_src = source.replace("\\", "/")
+    if "org/mcp/inbox/" in norm_src:
+        raise Refused("REFUSED: the source %s is an inbox message, which lives on one box only; the adjudicating box cannot "
+                      "read it. Cite a committed file (the record, decomposition, ruling or deliverable that holds the call)." % source)
+
+
 def cmd_add(args) -> int:
+    check_call_text(args.kind, args.context, args.rec, args.source)
     ctx = real_ctx()
     device = this_box(ctx["dev"], ctx["reg"])
     if args.device and ctx["dev"].resolve(args.device, ctx["reg"]) != device:
@@ -747,6 +773,7 @@ def cmd_add(args) -> int:
         "orders": [rel_to_root(o, ctx["root"]) for o in (args.orders or [])],
         "roots": [norm(rel_to_root(r, ctx["root"])) for r in (args.roots or [])],
         "state": "OPEN", "opened_at": now_utc(), "kind": args.kind,
+        "context": args.context.strip(), "rec": (args.rec or "").strip(),
         "scope": public_scope(res) if args.project != NO_PROJECT else dict(res, measured_at=now_utc()), "closed": None})
     written = write_list(device, doc, writer_serial(args.asked_by))
     print("ADDED id=%s kind=%s file=%s open=%d" % (cid, args.kind, written,
@@ -873,6 +900,9 @@ def cmd_list_cloud(args, dev, reg) -> int:
                     print("      %s [%s] %-4s opened %s (%s) | %s | scope=%s | %s" % (
                         r["id"], r["state"], kind, r["opened_at"], age_text(r["opened_at"]), r["subject"],
                         r["scope"].get("verdict", "?"), r["source"]))
+                    print("        CONTEXT: %s" % (r.get("context") or "(none: written before the context field)"))
+                    if kind == "fork":
+                        print("        REC: %s" % (r.get("rec") or "(none)"))
     for box, why in refused:
         print("\n[%s] REFUSED: %s" % (box, why))
     print("\nOPEN-CALLS-CLUSTER boxes=%d read=%d absent=%s refused=%s open=%d (fork %d, act %d) closed=%d" % (
@@ -1090,6 +1120,23 @@ def close_path_cases(device: str) -> list:
         except Refused:
             refused = True
         out.append(("a malformed escalation is refused", refused))
+        # context + rec (Andrew-direct 2026-10-09 ~01:1xZ)
+        ctx_ok = "Created by round 8's drain; gates BF-w-2's cut and the FWD-6 switch."
+
+        def refuses(*a):
+            try:
+                check_call_text(*a)
+                return False
+            except Refused:
+                return True
+        out.append(("a fork with context and rec from a committed file is admitted",
+                    not refuses("fork", ctx_ok, "(a) yes, because x", "org/missions/D1/X/X/ledger/R.md")))
+        out.append(("a call with no context is refused", refuses("fork", "", "(a)", "org/x.md")))
+        out.append(("a one-word context is refused (too short to be context)", refuses("fork", "see file", "(a)", "org/x.md")))
+        out.append(("a fork with no rec is refused; an act needs none", refuses("fork", ctx_ok, "", "org/x.md")
+                    and not refuses("act", ctx_ok, "", "org/x.md")))
+        out.append(("an inbox-message source is refused (box-local mail)",
+                    refuses("fork", ctx_ok, "(a)", "org/mcp/inbox/1.0.0_SA_CTO/~DELL2/read/m.md")))
         # the keep-driving switch
         os.environ["OPAL_MODE_LOCAL"] = os.path.join(base, "mode.json")
         doc0, src0 = mode_read()
@@ -1241,6 +1288,9 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--orders", nargs="+", default=[])
     add.add_argument("--roots", nargs="+", default=[])
     add.add_argument("--device", help="refused unless it is this box (one writer per box)")
+    add.add_argument("--context", required=True,
+                     help="2-3 lines (%d-%d chars): what created the call and what it gates" % (CONTEXT_MIN, CONTEXT_MAX))
+    add.add_argument("--rec", help="the asking seat's recommendation and its why (required on a fork)")
     add.add_argument("--kind", choices=KINDS, default="fork",
                      help="fork = a decision with options (default); act = an act only Andrew can do")
     lst = sub.add_parser("list", help="print the list(s) with each file's age")

@@ -592,3 +592,12 @@ Chain: alone, slot `~29`, direct act, base CLOUD @821fca2410. The ruling is
 (`ROUND_ANALYSIS.round20.md:72`). The silent-acquire bound is the issuer's decomposition judgment (the order's record
 face states why). The drain waits on NFRA_OPLGTW OG-rl-9 being terminal, because that release names the whole gateway
 tree. The release of this cell is a later order under CTO+COO+CVO halves.
+
+## ADDENDUM R2-A13 -- R5's persistence arm: the DAPI 8194 wall after a reboot (`1.0.0_SA_CTO~O` ruling R5 @9d6fbe3e97; issuer ruling, obligation 7)
+
+No new cell. `OA-f-11` gains AC4 (its order's ISSUER AMENDMENT 2): the AC3 probe re-run after a reboot that followed the
+apply (TCP connect only, as Opal_Agent, Opal_MSP and the operator), recorded as `F11_PERSISTENCE.json`. LOCAL,
+measurement only. R5 names persistence as OA-f-11's sixth arm, read at the next natural reboot, and not a close
+precondition. Site Z booted 2026-10-08T20:56:05Z, after the apply (OA-f-11 AC3 2026-10-02T03:02Z), and bbcomm listens
+on 127.0.0.1:8194, so the operator control discriminates. Chain: alone, slot `~26` respawned, no nested checkout. It does
+not precede the item-0 close run and gates nothing.
