@@ -23026,3 +23026,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Row W333-S1 stays as filed (rows are never edited); this row is its sequel."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W335-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~335",
+  "surfaced_at": "2026-10-09T10:51:07Z",
+  "one_line": "AMGT-ii-2 AC3 (r83_pbr.py --crit AC1) cannot pass while AC1 passes: its P4 holds the other four names' 12 cells to the base chars and sha256, and stripping header lines changes both on every cell by design (all 12 starts and all PBR P1-P3 held).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ii-2 face AC3 expects 'PBR's three sections still start at the sections its cross-reference table names and the other four names' starts hold; R83 PBR AC1: YES; exit=0'. The check's P4 (round83_prep/checks/r83_pbr.py, BASELINE) requires the 12 cells of ASML, BABA, NU and SAP to equal the base (start, chars, sha256[:16]).",
+  "world_is": "With the strip in document.py, r83_pbr.py --crit AC1 prints PASS P1, PASS P2, PASS P3 (PBR business start 319061, risk 209708, mdna 549928 unchanged) and FAIL P4 'the other four names' cells unchanged: 0 of 12', verdict R83 PBR AC1: NO, exit 1. Every MOVED line has the same start offset as BASELINE; chars and sha differ (e.g. ASML business 60000 -> 58257, BABA mdna 80000 -> 79494, SAP risk 33745 -> 33640). Removing running-header lines from a cut section must change its chars and hash, so P4 as written contradicts AC1 of this order (r84_header.py AC1 prints R84 HEADER AC1: YES, exit 0). The worker did not edit the check (outside its paths).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=worktree python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_pbr.py --crit AC1 (exit=1, 12 MOVED lines, start offsets equal BASELINE on all 12)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_pbr.py BASELINE table and the P4 line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A P4 that compares only the start offset (and PBR P1-P3) would grade the order's stated expectation. The 'strip before the cap slice' variant would keep the capped sections at their cap length but their sha would still differ, so no cutter variant passes P4 as written. AC3 is reported FAIL by output, not waived."
+}
+```
