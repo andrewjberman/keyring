@@ -976,3 +976,18 @@ after `yIAQjspL`, under one pair (item 5).
 The apply is a later cell, after both halves are signed. DB-b-92 rides the runner (item 3); its sha256 limb stays dormant.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~69`, cut from box/dell2.
+
+
+## 49. ROUND 47, WORKSTREAM B (2026-10-09 ~14:1xZ, issuer 2.0.0_SA_COO~D2, on the R44 CTO half @fa8d2c2961 and ADDENDUM 13.1, msg 3413)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-95` | E1, FWD-4: apply the R44 release (DB-b-90 + DB-b-91, ONE gold Lambda release over yIAQjspL) under the signed pair | WORLD | DB-b-94, both halves | B47-1 |
+| `DB-b-96` | E2, FWD-11: sources.json carries valuation_source / fee_treatment / price_basis; the returns manifest reads them, with an absent arm (W66-S1) | WORLD (served-producer floor) | none | B47-2 |
+| `DB-b-97` | E3, FWD-4: the backfill path clears landed days from the lots status record (W69-S2) | WORLD (served-handler floor) | DB-b-91 | B47-3 |
+
+**Isolation.** DB-b-95 builds at its own worktree base (handler blob `7c9bb9dcdc5b`) and does not merge box/dell2 before the build, so DB-b-97's
+handler edit cannot ride the R44 release. DB-b-96 and DB-b-97 ship later under their own pairs. ADVI_COTBKF's CB-al-2 mint is held until DB-b-96
+drains (ADDENDUM 13.1).
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~70`, ~71 and ~72, cut from box/dell2.
