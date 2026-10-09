@@ -23155,3 +23155,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The move is now covered by both halves after the fact, its ledger is closed, and its live behaviour is measured as identical/fail-safe."
 }
 ```
+
+## IRPT_BCKEND-D2-W202-S1 -- The new function has no entry in lambda-source-map.json at the pin, so release-census.py exits 2 for it and BUILD_ONLY needs a scratch-map override pl
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W202-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~202",
+  "surfaced_at": "2026-10-09T05:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The new function has no entry in lambda-source-map.json at the pin, so release-census.py exits 2 for it and BUILD_ONLY needs a scratch-map override plus BAU_PARITY_SKIP=1; the built sha256 is of a DRAFT entry the release pair must register unchanged.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-commentary-composition-read-lambda --pin 9c995243f7c41d0850024a451b71a4536d6dd91e -> 'ERROR: function ... is not in the source map at 9c995243f7' rc=2",
+      "aws lambda get-function --function-name irpt-commentary-composition-read-lambda -> ResourceNotFoundException (live_before ABSENT)",
+      "BUILD_ONLY=1 BAU_PARITY_SKIP=1 BAU_SOURCE_MAP_OVERRIDE=<scratch map outside the worktree> bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-commentary-composition-read-lambda -> rc 0 twice, byte-identical; source_dir infra/aws/lambda/investor-reporting/reports holds 7 other top-level modules (build_resident_package, currency_authority, custody_write, generate_installed, request_composition, resident_installed, status_installed) the ADHC_DRIFTD.002 parity check would flag",
+      "Draft entry (16 members, 12 staged_from rows pinned at the last commit touching each path) beside the census: deliverables/0.9.0_WK_IRPT_BCKEND~202/IB97-4_source_map_entry.json; companion row IRPT_BCKEND-D2-W197-S2 (registration is outside the cell-386 paths)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-391 step 1-2: run release-census.py for every function the code reaches and BUILD_ONLY the artifacts at the pin; the new function is built by the repo's builder.",
+  "world_is": "The builder and census read only the committed source map, which has no row for the new function (W197-S2 left registration to the release pair). The worker built it from a copy of the map with one drafted entry, kept outside the worktree, with BAU_PARITY_SKIP=1 because source_dir is the shared reports/ package. The built zip (16 members, 136840 bytes) is reproducible only if the pair registers that exact entry (files[], staged_from rows and pins) and builds with the parity skip or lists the seven other modules; any other member set builds a different sha256. The packet states the entry and the condition."
+}
+```
+
+## IRPT_BCKEND-D2-W202-S2 -- The IB-pr-386 repository.py change reaches NO existing function at the pin: all four functions that package reports/repository.py stage it from an old
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W202-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~202",
+  "surfaced_at": "2026-10-09T05:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The IB-pr-386 repository.py change reaches NO existing function at the pin: all four functions that package reports/repository.py stage it from an older pinned blob, so the census of 'every existing function whose packaged repository.py changed' is empty.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "release-census.py at 9c995243f7: irpt-export-render changed_members=0; irpt-performance-adapter 2 changed (holdings_gold.py, loaders.py); irpt-ycharts-generate 5 (generate_installed.py + 4 added custody modules); irpt-status 4 (canonical_profile_reads.py, loaders.py, maintained_sources.py, served.py) -- none is repository.py",
+      "staged_from pins for reports/repository.py in lambda-source-map.json: irpt-performance-adapter b905df2c60, irpt-ycharts-generate 605c4cd4ac, irpt-export-render 2aa217ec58, irpt-status 80a79a7462; live repository.py sha256 prefixes f255335beb26 (status, performance) and f01fcf549e8e (export-render, ycharts) equal their pinned blobs"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-391: census every existing function whose packaged reports/repository.py changed.",
+  "world_is": "None changed: the staged rows pin the blob, so the new rule in repository.py/retention.py ships only in the new function until a cell re-pins one of the four rows. The other changed members the census prints belong to other cells (not this release) and are not listed as this release's changed members. A later re-pin of any of the four is a separate release with its own pair."
+}
+```
