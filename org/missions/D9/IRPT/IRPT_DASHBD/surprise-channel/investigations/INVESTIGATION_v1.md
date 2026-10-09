@@ -3066,3 +3066,51 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "world_is": "On the 9,078 graded segments the compounded basis nets 5,416 -> 7,459 within (+2,043): 2,224 OUTSIDE->WITHIN, 181 WITHIN->OUTSIDE, 6,673 unchanged. The 181 reversals are segments the additive form tied by offsetting error; the order does not ask for their cause and it was not measured. After-outside by reason: UNEXPLAINED 1,203 (was 3,279), FLOW_TIMING 370 (333), INCOME_DATE 40 (44), COVERAGE_DAYS 5 (5), MISSING_PRICE 1 (1); the extra FLOW_TIMING rows are newly outside segments whose alternate-flow re-link lands within tolerance."
 }
 ```
+
+## IRPT_DASHBD-W33-S1 -- The dell2 process reaper killed two of this order's runs mid-lots-stage; killed runs are not timings.
+
+```json
+{
+  "id": "IRPT_DASHBD-W33-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~33",
+  "surfaced_at": "2026-10-09T00:11:00Z",
+  "one_line": "The dell2 process reaper killed two of this order's runs mid-lots-stage; killed runs are not timings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-55 item 1: each run is one process that runs to its DONE line or to the runner's 3,600 s cap.",
+  "world_is": "MEASURED: run 3 (planned at 2,000) last progress line at 360.0 s, 2026-10-08T21:48:14Z, killed 21:48:23Z; run 13 (at 1,500) last progress line at 630.3 s, killed 22:23:31Z; both in the lots stage, neither wrote a record or a DONE line, neither is the runner's cap. Times per the issuer's ruling (2.0.0_SA_COO~D2, 22:3xZ: the dell2 /govern reaper; now paused). Neither is entered as a timing; both are in LOTS_P95_E3.json interrupted_runs. Completed runs: 2 at 2,000, 5 at 1,500, 5 at 1,000. This worker's own stop of the loop after run 3 found no live process.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~33/LOTS_P95_E3.json interrupted_runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W33-S2 -- The 1,500 default failed the p95 bar on spread alone: five completed runs read 655 to 955 s, and 1,000 read 608 to 659 s.
+
+```json
+{
+  "id": "IRPT_DASHBD-W33-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~33",
+  "surfaced_at": "2026-10-09T00:11:00Z",
+  "one_line": "The 1,500 default failed the p95 bar on spread alone: five completed runs read 655 to 955 s, and 1,000 read 608 to 659 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-55: the default is lowered until p95 of five or more runs is <= 750 s; round 29 read one 1,500 run at 627.25 s.",
+  "world_is": "MEASURED (7,604 accounts, 2026-10-06, one process at a time, 16-core box with another worker's light S3 analysis): 2,000: 824.30 s, 835.42 s (two runs, loop stopped by this worker after the second since two runs at that size already forced p95 over 750 s); 1,500: 672.24, 655.47, 955.01, 905.77, 782.71 s (p95 945.16); 1,000: 625.42, 607.93, 608.27, 659.12, 621.07 s (p95 652.38, lots peak max 1,763.4 MB against 2,048). The 1,500 spread (300 s) is larger than any between-size difference, so box load, not batch size alone, moved those runs; the 2,000 runs here are 70 to 140 s slower than round 29's three at the same size. The served Lambda was not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~33/LOTS_P95_E3.json runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

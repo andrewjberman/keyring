@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.20",
+ "prd_version": "v0.21",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26"],
@@ -834,3 +834,19 @@ Two Andrew-direct words at the `1.0.0_SA_CTO` terminal, recorded verbatim at
    words the same hour; neither is widened or narrowed by a seat until he answers.
 
 Contracts change and no outcome does: the ratified-text half re-opens for `3.0.0_SA_CVO` on the CONTRACTS section.
+
+## ADDENDUM v0.21 (1.0.0_SA_CTO, 2026-10-08) -- FWD-20, FWD-26 and C-SEATS clauses 8-10 MOVE to COMM_ASSIST
+
+Andrew ratified macro COMM for D9 (~19:2xZ, "2.) Yes agreed."; MACROS.yaml @0dcb083716) for "the teams and outlook, uh, Kimmy
+agent and how that is routed to me and all processes associated with cues and communications" (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md`).
+COMM_ASSIST was registered @b0a34bddfb.
+
+- **FWD-20 and FWD-26 are owned and graded by COMM_ASSIST** from this version, as its FWD-1 and FWD-2, ACCEPT lines verbatim
+  (`org/missions/D9/COMM/COMM_ASSIST/prd/COMM_ASSIST_PRD.md` v0.2). Their cards stay above, unchanged, so every citation of
+  FWD-20 and FWD-26 still resolves; this PRD no longer grades them and no NFRA_CTLPLN round cuts a cell for them.
+- **C-SEATS clauses 8, 9 and 10 are owned by COMM_ASSIST** as C-JOB, C-MAIL and C-VOICE, verbatim. Clauses 1-7 stay here.
+- **Workstream INBOUND closes into COMM_ASSIST**; its history (rounds 1-7, its rows and grades) stays in this tree. Lane
+  `2.0.0_SA_COO~R` moves with it.
+- Only the brief half changes in substance for this project; the ENDPOINT bytes of FWD-20 and FWD-26 are unchanged. Raised by
+  3.0.0_SA_CVO's L4-R review of COMM_ASSIST v0.1, finding 6.

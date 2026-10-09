@@ -22056,3 +22056,87 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "1 of 3 firms reads READY, and the two that do not are a BUILD condition the release SURFACED rather than caused -- the new accounting is what makes a dropped-entry build visible at all, and its fail-safe keeps the previous directory served. The criterion also cannot be met as written for a lagging firm, because the key is the manifest's own as_of: cottonwood's manifest for a 2026-10-08 fire landed under _refresh/2026-10-07/. TWO DEFECTS IN THIS SEAT'S OWN SCRIPTS were found by running them and fixed in-session before the recorded result, and are named here so the result is not read as cleaner than its instrument: (1) the arm-(a) reader compared reason_code to 'READY' when READY is the STATE and reason_code is the accounting verdict beside it, and it looked only under the event-date key, so it first scored a genuinely READY firm as not-ready and a written manifest as NoSuchKey; (2) the arm-(c) script computed no age at all and could therefore only ever answer NOT_DRIVABLE -- a verdict that would have looked like a measurement. Nothing here asks for a remedy from this seat: the build condition is the owner's call at 2.0.0_SA_COO~P2, and the criterion wording is the packet's."
 }
 ```
+
+## IRPT_BCKEND-D2-W187-S1 -- IB-pr-379 diagnosis: both dropped entries are SOURCE_REMOVAL; the disappearance rule needs a ruling before 2026-10-12
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W187-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~187",
+  "surfaced_at": "2026-10-09T00:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Both dropped directory entries (inflection 1, cottonwood 1) are SOURCE_REMOVAL: the build is right and the disappearance rule fails a legitimate vendor-side removal, so IB-pr-379 stops at the diagnosis and the rule needs a ruling before inflection and cottonwood go OVER_AGE on 2026-10-12.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule ruling on refresh.py compute_delta/refresh_firm disappearance handling, then 2.0.0_SA_COO~P2 recuts the fix cell) before 2026-10-12, when the served cottonwood directory (as_of 2026-10-07) passes MAX_AGE_TRADING_DAYS=2; inflection follows on 2026-10-13",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~187/IB91-1_dropped_entry_diagnosis.json (this branch): disappeared ids, per-firm evidence, over-age computation",
+      "inflection: household cli_eee3d5ecc6dda8132ba25158 is in silver/api_dims household_rep_mapping and accounts_v2 at snapshot 2026-10-05 (321 households) and absent from both at 2026-10-06 (320); its one account is still in accounts_v2, now under the pre-existing household cli_7f8b2aacad67b512d1e05a29 (2 accounts at 10-05, 3 at 10-06). The vendor merged the household away.",
+      "cottonwood: account-only entry cli_6be3d8625139a8d2613ab8af (account acc_10e3e4477b42c76fe14e437e, 2 rows, market value 0.0) is in fact_allocations at date=2026-10-05 and absent at 2026-10-06 and 2026-10-07; its account numbers appear nowhere in the 2026-10-07 partition (not re-keyed).",
+      "over-age: expiry.age_in_trading_days vs MAX_AGE_TRADING_DAYS=2, served as_of read from latest.json: cottonwood 2026-10-07 is age 3 on 2026-10-12; inflection 2026-10-08 is age 3 on 2026-10-13; calendar source read NYSE/hardcoded-fallback-2010-2027",
+      "refresh.py compute_delta (line 387) keys on ids.client_id or ids.relationship_id and refresh_firm (~line 966) turns any non-empty disappeared set into REFRESH_FAILED; the module docstring states the intent (a terminated client is a change of marking, never a deletion), which a vendor that stops emitting a client is outside of"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-379: a client the previous build carried and the new one lacks is a BUILD_BUG or KEY_CHANGE fixable in infra/aws/lambda/investor-reporting/directory/; SOURCE_REMOVAL means the build is right and the rule needs a ruling.",
+  "world_is": "Both firms measure SOURCE_REMOVAL, 1 entry each, first absent from the source on 2026-10-06. Nothing in directory/ is wrong, so no fix, test, pin, build or packet was made, and the disappearance rule is unchanged. Until the rule is ruled, every future inflection and cottonwood refresh returns REFRESH_FAILED on the same entries (they are in the previous READY build forever), so neither directory can ever advance and both go OVER_AGE. The decisions are the CTO's: whether a source-removed client leaves the next directory (a delta, recorded), is carried forward as TERMINATED/UNKNOWN (the constraint that terminated clients stay visible), or is handled by an explicit successor map for the inflection household merge. Criteria IB91-1-AC2 and AC3 cannot be met without that choice and are left FAIL; IB91-1-AC1 PASS."
+}
+```
+
+## IRPT_BCKEND-D2-S14 -- a --no-paginate route read-back answered [] for a route that was live, and the deploy recorder left deployed_code_sha256 stale for the second release running
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T00:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The IB-pr-378 route read-back run with --no-paginate returned [] on a route that had just been created successfully, because the route sits beyond page 1 of 116 -- an empty page that, read as absence, would have graded a good apply as failed and could have driven Branch B's route removal and function rollback; separately, record-terraform-deploy.sh left deployed_code_sha256 at the PRE-APPLY value for the second consecutive release, so that is its standing behaviour rather than a one-off.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~00:0xZ: terraform reported 'aws_apigatewayv2_route.irpt[\"POST /api/scoped/investor-reporting/custody-report\"]: Creation complete after 0s [id=jtwlf6l]' and 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed'; the re-plan of the same target then read 'No changes'",
+      "the SAME question asked with `aws apigatewayv2 get-routes --api-id 7k3ed8px20 --no-paginate --query \"Items[?RouteKey=='POST /api/scoped/investor-reporting/custody-report']...\"` returned [] -- an empty JSON array, no error, rc=0",
+      "the same read WITHOUT --no-paginate, counted client-side with the denominator printed: 116 routes on api 7k3ed8px20, exactly 1 exact match -- RouteId jtwlf6l, Target integrations/61aupci, AuthorizationType CUSTOM, AuthorizerId naqxlm. So the route was live the whole time and the [] was the instrument",
+      "CLAUDE.md rule 22a already names this class ('paginated list-* + --query length() returns the PAGE count and --no-paginate is the hazard'); this row records it FIRING on a route read-back where the TO's Branch B makes the wrong verdict destructive: 'If Part B fails: remove the route first, then roll the function back'",
+      "recorder repeat: after record-terraform-deploy.sh ran at 6d3e35294b, lambda-source-map.json's irpt-export-render row still carried deployed_code_sha256 rNjtTwcm.. (the PRE-APPLY value) while artifact_sha256 and the live function were 7T29wPhz..; corrected with record-deploy-scope.py --code-sha256. The identical gap was measured and corrected on IB-pr-377 for irpt-directory-refresh and irpt-directory-search hours earlier",
+      "a third instrument note, same release: planning the route needed MSYS_NO_PATHCONV=1 for the slashed -target, which made terraform save the planfile to a literal /tmp (C:\tmp) instead of the translated temp dir; safe-apply's naming-plan-gate then could not read it and FAILED CLOSED before the apply -- nothing was applied on that attempt, which is the gate behaving correctly"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-378 step 6: 'Read the route back with `get-routes` filtered to that key', with Branch B: 'If Part B fails: remove the route first, then roll the function back only if the CTO half's Branch B requires it.'",
+  "world_is": "A `get-routes` read filtered to one key is NOT a sound oracle for route existence when --no-paginate is present: on this API the answer is on page 2 of 116 routes, so the filtered read answers [] for a route that exists. ABSENT and BEYOND-PAGE-1 are byte-identical here, and the order's Branch B turns that false absence into two destructive acts. The verdict recorded for AC2 comes from the auto-paginated read with its denominator printed, and the check script the issuer wrote does not pass --no-paginate, so the graded criterion was never exposed to this. Nothing is asked of this seat beyond the record: the recorder's deployed_code_sha256 behaviour is the CI tool's owner's call, and the read-back wording is the order's."
+}
+```
+
+## IRPT_BCKEND-D2-S15 -- Resolves D2-S14: the route was read correctly; the issuer's route checks read every page
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S15",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T00:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S14: the applier did not act on the empty --no-paginate page. It re-read all 116 routes without --no-paginate, counted client-side and found exactly 1 match (jtwlf6l, CUSTOM authorizer), so no Branch B fired. It also corrected the recorder's stale deployed_code_sha256 to 7T29wPhz. The issuer re-ran the r90 checks at box/dell2 HEAD: IB90-1-AC1 PASS (live == built 7T29wPhz, census 0, replan 0, replay identical) and IB90-1-AC2 PASS (route live after the function, replan 0, ledger closed). The class is already law (CLAUDE.md 22a: --no-paginate is the hazard). From round 92 on, every route read-back in a ~P order reads all pages and prints the denominator.",
+  "one_line": "IB-pr-378 is graded on a full-page route read; the empty page drove no rollback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p90_cells.py . IB90-1-AC1 -> IB90-1-AC1 PASS; . IB90-1-AC2 -> IB90-1-AC2 PASS (issuer, 2026-10-09 ~00:2xZ)",
+      "row D2-S14 evidence: 116 routes read, 1 exact match, RouteId jtwlf6l"
+    ]
+  },
+  "spec_asserts": "A route read-back is a sound oracle for route existence.",
+  "world_is": "It is when every page is read, with the denominator printed. That is how this one was graded."
+}
+```

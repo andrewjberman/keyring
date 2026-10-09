@@ -1,0 +1,13 @@
+{
+ "project_code": "COMM_ASSIST",
+ "home": "org/missions/D9/COMM/COMM_ASSIST",
+ "directive": "D9",
+ "macro_code": "COMM",
+ "fabric": "laptop",
+ "dep_stage": "EXECUTING",
+ "status": "active",
+ "name": "Andrew's Teams and Outlook assistant: every message addressed to him reaches his phone, drafted in his voice, answered by text",
+ "generated_from": "org/missions/D9/COMM/COMM_ASSIST/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-10-08T23:40:50Z"
+}

@@ -408,7 +408,10 @@ directives:
       subgroups: []
       projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY,
                  IRPT_FNTEND, IRPT_BCKEND, NFRA_OPLGTW, NFRA_SPMOVE, NFRA_MCPINDEX, NFRA_TRNSPT,
-                 IRPT_DASHBD, IRPT_YCDGEN, IRPT_CUSTDY, NFRA_OPSWKF]
+                 IRPT_DASHBD, IRPT_YCDGEN, IRPT_CUSTDY, NFRA_OPSWKF, COMM_ASSIST]
+      members_note_comm: "COMM_ASSIST ADDED 2026-10-08 by 1.0.0_SA_CTO at L3: Andrew's Teams and Outlook assistant (LDO-001), macro COMM
+        (ratified @0dcb083716), lane 2.0.0_SA_COO~R, from NFRA_CTLPLN INBOUND rounds 1-7 (record
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md)."
       members_note_q1q3: "IRPT_CUSTDY (Q-1) and NFRA_OPSWKF (Q-3) ADDED 2026-10-06 by 1.0.0_SA_CTO at L3 (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_210xZ_SEVEN_CALLS_RDP_LOCK_Q1_Q2_Q3_CONFIRMED_NO_BD_SHAPE.md). NFRA_OPSWKF sits under NFRA, not a new trade macro: it builds on OPLGTW and the MCP family; MACROS.yaml unchanged."
       members_note: "PER-MEMBER PLACEMENT EXCEPTIONS -- THE SECOND AND THIRD (the first is DSGN_AMGTV1 under D13). Recorded
         2026-10-01 by 0.0.0_AB_MSTR (register owner) on 1.0.0_SA_CTO's ask msg 103593
