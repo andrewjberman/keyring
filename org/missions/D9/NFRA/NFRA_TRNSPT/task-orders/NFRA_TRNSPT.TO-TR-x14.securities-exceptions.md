@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~3</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>in_progress</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
