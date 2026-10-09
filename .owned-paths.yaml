@@ -825,6 +825,14 @@ lanes:
       - 1.0.0_SA_CTO
       - 2.0.0_SA_COO~C
     description: "The cross-box call records FOLDER ONLY -- org/devices/crossbox/**. Added 2026-10-09 by 0.0.0_AB_MSTR as GRANTOR, on the project owner's concurrence (2.0.0_SA_COO~C, NFRA_CTLPLN, msg 107723) and dell1's finding (0.0.0_AB_MSTR~DELL1, bus ccbda63a: commits of XB-20261009T042736Z-eb6d and XB-20261009T042421Z-897f refused). WHY: .tools/crossbox-call.py (NFRA_CTLPLN.TO-CT-s-6) makes each box manager write its sent/receive records here, and org/devices/** (NFRA_CTLPLN_FAST_C) admits no manager. 0.0.0_AB_MSTR base admits its box lanes. INCUMBENTS RE-ASSERTED: this longest-match rule displaces org/devices/** for this folder, so 1.0.0_SA_CTO and 2.0.0_SA_COO~C are listed. SCOPE: this one folder; DEVICES.json and the rest of org/devices/** stay NFRA_CTLPLN_FAST_C."
+  MCP_SPAWN_AUDIT:
+    permitted_agents:
+      - 0.0.0_AB_MSTR
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO
+      - 3.0.0_SA_CVO
+      - 4.0.0_SA_CRO
+    description: "The spawn audit FILE ONLY -- org/mcp/agent-spawn-audit.log. Added 2026-10-09 by 0.0.0_AB_MSTR as GRANTOR on 1.0.0_SA_CTO's decision (msg 107816, answering 107812 via 2.0.0_SA_COO~C) and dell1's finding (0.0.0_AB_MSTR~DELL1, bus a2276cde: uncommitted lines in this file HELD dell1's box-sync). WHY: every box manager's /mstr-spawn and the /govern reaper (kill-maint KILL-MAINT-RUN) append to this file, but org/mcp/** is BASE_EXEC, which admits no manager. 0.0.0_AB_MSTR base admits its box lanes. The file stays append-only. INCUMBENTS RE-ASSERTED: this longest-match rule displaces org/mcp/** BASE_EXEC for this file, so all four BASE_EXEC members are listed. SCOPE: this one file; the rest of org/mcp/** stays BASE_EXEC."
   DEMQUE_REQUESTS:
     permitted_agents:
       - 0.0.0_AB_MSTR
@@ -2106,6 +2114,10 @@ paths:
   "org/mcp/comp_ferry_queue.json":
     lane: MSTR_ARTIFACT_PATHS
     note: "MSTR-owned comp-ferry empirical-test queue. Per LD-0119 Andrew sovereign 2026-05-27T~19:25Z + CL CVO ARCHITECTURAL DESIGN ASK 19:30Z + MSTR LD-0119 materialization. Expansion-class precedent per MSTR_ARTIFACT_PATHS scope. ws COO YAML amend per MSTR [OWNED-PATHS AMEND ASK] 19:48Z per feedback_tilde_lane_owned_paths_gap_route_to_coo discipline."
+
+  "org/mcp/agent-spawn-audit.log":
+    lane: MCP_SPAWN_AUDIT
+    note: "Spawn and reaper audit appended by every box manager (/mstr-spawn, /govern kill-maint) -- MSTR (all box lanes) + BASE_EXEC incumbents re-asserted. Granted 2026-10-09 by 0.0.0_AB_MSTR on 1.0.0_SA_CTO msg 107816; displaces org/mcp/** for this file only."
 
   "org/mcp/**":
     lane: BASE_EXEC

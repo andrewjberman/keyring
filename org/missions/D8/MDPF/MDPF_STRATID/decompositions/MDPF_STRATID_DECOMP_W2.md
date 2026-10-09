@@ -142,3 +142,21 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
   data is never written into another firm's tree. Also carried: Step F (msgs 1246, 1256) -- IAM applies via `0.7.0_AE_CloudOps~DELL1`,
   reported after the fact by name and grant; a role another box's pipeline assumes goes to the laptop BEFORE the act. The drain's S3
   write of `etf_universe.json` and the runner wiring (W5) are issued with these lines on the order face.
+
+## DRAIN SEQUENCE (staged 2026-10-09 ~07:0xZ on the CRO's approach in UB-20261009T063738Z-0bc9; nothing below starts before step 0)
+
+0. **Gate:** the FWD-1 read of the 13:30Z `mdpf-scheduled-floor` fire is committed (`l4_read.py` verdict + ledger L4 closed or
+   re-opened). Nothing below runs before it (ruling W1).
+1. **Merge**, issuer, `safe-merge.sh`, in this order (no file overlaps between them): `wk-MDPF_STRATID-w2-4` (@8ef4e5be15, ST-w-1+A7),
+   `wk-MDPF_STRATID-w2-6` (@614bf6e1a8, ST-w-3/ST-w-4+A6/A7), `wk-MDPF_STRATID-w2-5` (@c42ecc0fa5, ST-w-2+ST-w-5; never without ST-w-5,
+   A5). After the last: run all W2 checks on the merged tree (`w2_2_seam` graded here on ST-w-1's real file), the silver suite once,
+   flip TO-W2-2 to complete, disarm row `D1-W5-S1` (ST-w-5 landed).
+2. **A2 names:** confirm each fund's CURRENT legal name for the four tickers from an owned source (the holdings carry
+   `OPAL INTERNATIONAL DIVIDEND INCOME ETF` and `POLEN DIVIDEND INCOME ETF`); `full_names` carries the current name, a former name may
+   ride as a rule row. Issuer act; a one-file commit.
+3. **S3 write of the list (CloudOps, `MDPF_STRATID.TO-APPLY-W2-a`)**: `infra/aws/etfs/config/etf_universe.json` at the merged tip to
+   `s3://opal-data-etfs/config/etf_universe.json` under a change-management entry, read back by content; the three ETFS loaders read
+   the same 4 tickers; rollback = the prior object version. Plus the runner role's read of that key, measured, granted if missing
+   (Step F, after-the-fact report). Carries A8.
+4. **Wiring (a build cell, cut after step 3):** the running silver/slice path calls `set_strategy_config(load_strategy_config())` so
+   `opal_sma_member_of` reads the S3 list; fail closed. Then the next scheduled run reads the same answers (FWD-4/FWD-5 on the real path).

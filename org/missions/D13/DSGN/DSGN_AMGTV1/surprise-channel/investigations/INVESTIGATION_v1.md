@@ -1634,6 +1634,48 @@
  "spec_asserts": "Two packs, two phrases: 'the research team's pack' for the team's document, 'the analysis built for this name' for the built thing (PRD v0.18 SAUX-40; decomposition v52).",
  "world_is": "One page still calls the built thing 'Research pack'.",
  "notes": "Same class as round 53's AV-zze-3; candidate for the next DSGN round, wording to be ruled with it."
+},
+{
+ "id": "DSGN_AMGTV1-D1-W128-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~128",
+ "surfaced_at": "2026-10-09T06:46Z",
+ "one_line": "The cell AV-zzk-5 text drops only 'Not averaged: currency not stated' from the Peers Average row, but the r59.cjs E grader refuses every 'Not averaged:' string, so the sibling 'Not averaged: currencies differ' is dropped too.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round59/checks/r59.cjs line 64: /Not averaged:/ on PeersTab.tsx."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Only the currency-not-stated Average cell is emptied; a mixed-currency Average cell keeps its served words.",
+ "world_is": "Both not-averaged Average cells (mixed and unstated currency) are now empty in PeersTab.tsx; the mixed-currency case no longer says why it is blank.",
+ "notes": "Issuer to rule whether the mixed-currency reason belongs inside the absence fold."
+},
+{
+ "id": "DSGN_AMGTV1-D1-W126-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~126",
+ "surfaced_at": "2026-10-09T06:51:59Z",
+ "one_line": "Cell AV-zzk-3 item 1 and item 2 together leave the identity header with NO description: the only full description ('About the company') is drawn by HeaderBrief, which item 1 moves to the News tab.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx @c0c6f570 lines 43-69 and 215-219: DescriptionLine (summary 'About the company') is a non-exported function mounted only inside HeaderBrief.",
+   "portal/src/pages/SecurityAnalysis/components/TopBand.tsx @c0c6f570 line 98: CompanyLine, the one-line description, which item 2 stops mounting."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D1",
+ "spec_asserts": "Task order AV-zzk-3 section 1: the identity header keeps 'one description'; item 2 stops CompanyLine and 'the full description stays behind About the company'.",
+ "world_is": "After item 1 (HeaderBrief out of IdentityHeader) and item 2 (CompanyLine unmounted), the description renders only on the News tab, inside HeaderBrief's About the company fold; the header shows none. Worker did not reach into HeaderBrief.tsx (cell B's file) to export DescriptionLine.",
+ "notes": "Issuer's merge wiring: either export DescriptionLine from HeaderBrief and mount it once in IdentityHeader, or accept the description on the News tab. The structural floor r59.cjs C passes either way."
 }
 ]
 ```
