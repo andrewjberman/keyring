@@ -206,3 +206,26 @@
   "notes": "Resolves MDPF_CANON-D1-S3, MDPF_CANON-D1-S4, MDPF_CANON-D1-S5, MDPF_CANON-D1-S6. Filed at the round-1 close; the four rows' hazards are spent."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-W7-S1",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_CANON~7",
+  "surfaced_at": "2026-10-09T21:54:34Z",
+  "one_line": "CN-b-4 AC1 is unsatisfiable by any valid Terraform: r2_checks.py extracts ARNs with a no-quote regex but demands scope_bucket[\"key\"] inside the ARN string.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A composite ARN written as \"arn:aws:s3:::${module.<m>.scope_bucket[\"mdpf\"]}/...\" passes r2_checks.py builder (3 of 3) and leaves r1_iam.py at 6 of 6.",
+  "world_is": "r2_checks.py:256 extracts ARNs with re.findall(r'\"(arn:aws:s3:::[^\"]*)\"', body); the double quotes inside scope_bucket[\"mdpf\"] end the capture at 'scope_bucket[', so r2 builder reads 1 of 3 (BUILDER and EQUALS fail on a truncated string) and r1_iam.py GLOBAL, which passed at base, now reads no Put on the composite prefixes (5 of 6). Line 272 then requires the double-quoted key. Terraform has no escape for a quote inside an interpolation, and single quotes do not match line 272. The edit itself is correct and the effect unchanged (module mdpf_scope_buckets, scope_bucket[\"mdpf\"] = opal-data-mdpf in generated_locals.tf, which is the builder's PRODUCT-scope bucket mapping, so no registry row). Worker did not edit the check; edit left uncommitted in the worktree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round2/checks/r2_checks.py:256,272",
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf:65-79 @01d8169f27"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
