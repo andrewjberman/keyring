@@ -103,7 +103,8 @@ checked out; equal after normalization). Applied only by the RIV-wi-1 deploy pai
 
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 ~14:4xZ by 2.0.0_SA_COO~V1 @16e2e5df28: AC1 PASS on the issuer re-grade in the worker tree AND on the merged tree; worker ~33 proof VALID. Not applied: the RIV-wi-1 deploy pair applies the statement and the environment. Row D1-S11 filed by the issuer @c388dade58. -->
 <round>28</round>
 <workstream>3h</workstream>
 <slot>~33</slot>
