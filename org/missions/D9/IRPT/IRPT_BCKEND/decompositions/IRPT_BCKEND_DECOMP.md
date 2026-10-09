@@ -2545,3 +2545,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r107/p107_cells.py`: every criterion 
 | `IB-pr-406` | 49F narrow bundle: e56 member + IB-pr-403 member on IB-pr-402's built bytes; packet + replay | FWD-2 (SECCLASS e56 acceptance 1) | WORLD | IB-pr-402, IB-pr-403 drained (base = 402's built bytes; apply after 404) | P107-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~269.
+
+## 101. ROUND 108, WORKSTREAM ~P (2026-10-09 ~11:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 17 (msg 3220))
+
+IB-pr-405 is graded 3/3 and drained @6f51e09a79. ADDENDUM 17 ruled (a), sequenced: IB-pr-405's irpt-status release is built narrow on
+IRPT_ANLREQ release 1's live bytes, AFTER release 1 lands (~Y2), so it is event-gated and not cut here. The routes/schema publication
+cell can be cut now; it must pass the unguarded census.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r108/p108_cells.py`: AC1 and AC3 FAIL at base; AC2 is the control (PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-407` | publish include=persist_inputs in routes.json + the read's response schema + contract tests | FWD-2 (IRPT_DASHBD DB-b-85) | WORLD | IB-pr-405 drained | P108-a |
+| (event-gated) | IB-pr-405 narrow irpt-status release + pair | FWD-2 | WORLD | IRPT_ANLREQ release 1 LIVE | -- |
+
+fanout: 1 of 1 chains, cap 8, reason: one cuttable cell. Assignee: 0.9.0_WK_IRPT_BCKEND~270.

@@ -24115,3 +24115,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The built irpt-status zip carries 7 other cells' members; no apply is cut, so nothing ships until the pair rules."
 }
 ```
+
+## IRPT_BCKEND-D2-S46 -- 9 _contracts tests fail at HEAD from other cells' in-flight work
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S46",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "9 investor-reporting _contracts tests fail at box/dell2 HEAD: the public-route count (21 vs 22, the AR-y-22 /original route), the paired-seam response contracts, and export-receipt fixtures missing covered_account_ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean worktree at box/dell2 HEAD ~11:5xZ: pytest _contracts -> 9 failed, 171 passed, 13 skipped",
+      "test_owned_request_contracts.py::test_public_routes_are_declared_against_the_installed_status_handler: assert 21 == 22",
+      "test_seam_paired.py control: covered_account_ids is a required property (export-receipt, submit-export)"
+    ]
+  },
+  "spec_asserts": "The contract suite passes at the trunk.",
+  "world_is": "Nine contract tests fail at HEAD from other cells' in-flight work (AR-y-22's /original route; the export receipt's covered_account_ids). Found while baselining IB-pr-407; that cell's control is scoped to its own surfaces.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S47 -- Resolves D2-S43: the unguarded census passes at HEAD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S47",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S43. _authz/tests/test_unguarded_census.py passes at box/dell2 HEAD (9 passed, ~11:5xZ): the /original route is now declared by its entry (IRPT_ANLREQ AR-y-22, eb70303e8f). p106_cells.py's excuse by name is moot.",
+  "one_line": "D2-S43 resolved: the unguarded census passes at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest _authz/tests/test_unguarded_census.py at HEAD: 9 passed"
+    ]
+  },
+  "spec_asserts": "Every in-lane published route is declared by the entry that serves it.",
+  "world_is": "True again at HEAD."
+}
+```
+
+## IRPT_BCKEND-D2-W270-S1 -- AC3 does not follow $ref to the persist_inputs definition
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W270-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~270",
+  "surfaced_at": "2026-10-09T12:05:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB108-1-AC3 reads the response schema file's own properties and does not follow $ref, but persist_inputs lives in data (OwnedAnalysisRequest); the response schema also carries a data-level properties sibling pointing at it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p108_cells.py props(): 'local refs are not followed'; with only OwnedAnalysisRequest.schema.json edited, IB108-1-AC3 printed 'FAIL: response schema declares no persist_inputs property'",
+      "fix: analysis-request-read.response.schema.json data gains properties.persist_inputs $ref OwnedAnalysisRequest#/properties/persist_inputs; AC3 then PASS"
+    ]
+  },
+  "spec_asserts": "Declaring persist_inputs in the response schema or the schema it $refs satisfies AC3.",
+  "world_is": "The check reads only the response schema file; the declaration was added there as a $ref to the one definition (no duplicate constraint)."
+}
+```
