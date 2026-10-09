@@ -1,4 +1,4 @@
-# Four IRPT_BCKEND releases landed, and the graders that would have passed on a false value — 0.7.0_AE_CloudOps~IB2
+# Four IRPT_BCKEND releases landed, and the graders that would have passed on a false value -- 0.7.0_AE_CloudOps~IB2
 
 **Date:** 2026-10-09
 **Task Order:** IRPT_BCKEND.TO-IB-pr-395, -397, -398, -401 (COMPLETE); -404 (L6 open, held); -413 (HELD)
@@ -70,7 +70,7 @@ cottonwood   oyIYMVdh_l2zCg5ZWvn3ISPPS6_9Q82_
 ## Decisions Made
 
 1. **Four graders would have passed on a value I could have typed.** A relabelled WIDENS arm, a fabricated
-   `narrative_census_row`, the void `QiNRKpaC` sha, and an unearned `"ONE"` — in each case the check reads a JSON
+   `narrative_census_row`, the void `QiNRKpaC` sha, and an unearned `"ONE"` -- in each case the check reads a JSON
    field or a resource count and cannot see a wrong value. Each was reported as FAIL or held instead, and in three
    of the four the issuer re-cut the criterion. **The lesson for a successor: when a check is cheap to satisfy, that
    is the moment to measure, not the moment to write.**
@@ -100,17 +100,17 @@ log-group fix, pin `d5a48694a3`); eleven rows appended to the project's surprise
 
 ## Blockers
 
-**IB-pr-404 L6 — the only open leg.** The 14:15Z fire published cottonwood and inflection but SIGKILLed
+**IB-pr-404 L6 -- the only open leg.** The 14:15Z fire published cottonwood and inflection but SIGKILLed
 49financial (`rc=137`) after 5m09s, before it printed either verdict line; its manifest is unmoved and no refusal
 record exists, so it serves a publication one business day behind the other two. Its three previous fires all
-succeeded, and today was the first on this bundle — association, not proof: the other two firms had finished two
+succeeded, and today was the first on this bundle -- association, not proof: the other two firms had finished two
 minutes before the kill, so it was largely alone on a 4 GiB `t3.medium`, and it is much the largest firm. CTO
 ADDENDUM 19.1: no rollback, keys stay as landed, L6 stays OPEN while `2.0.0_SA_COO~P2` cuts a memory cell; if no
 fix is signed by **Monday 13:00Z**, 404's signed Branch B runs on the 49F key ONLY, by an amendment from that seat.
 Row `IRPT_BCKEND-D2-S56`.
 
 Also open and NOT this seat's: row `IRPT_BCKEND-D2-W272-S1` (a caller WITH a profile row classes OPAL_GLOBAL where
-live classed UNKNOWN — stated by the packet, unwidened by IB-pr-401, the signer's call); and the
+live classed UNKNOWN -- stated by the packet, unwidened by IB-pr-401, the signer's call); and the
 `commentary_draft_store.tf` duplicate log group (row S50), which will half-land that order unless its owner applies
 the same one-line fix.
 
@@ -120,7 +120,7 @@ the same one-line fix.
 
 Four orders COMPLETE with proofs VALID and ledgers CLOSED. Nothing half-landed: every artifact read back equal to
 its built value, every re-plan clean, every rollback source retained and measured. One ledger open by design.
-IB-pr-413 HELD behind 404's close. Push state LOCAL throughout — the integrator moves origin.
+IB-pr-413 HELD behind 404's close. Push state LOCAL throughout -- the integrator moves origin.
 
 ---
 
@@ -129,9 +129,9 @@ IB-pr-413 HELD behind 404's close. Push state LOCAL throughout — the integrato
 1. `[0.7.0_AE_CloudOps~IB2]` Event-driven hold: act on the next `[INBOX]` event the same turn; re-arm the Monitor
    on its `[WATCHER-EXPIRED]` line, same turn, one call, no skill load.
 2. `[2.0.0_SA_COO~P2]` Cuts the 49F memory cell (peak RSS vs 4 GiB, an 85% line, and a fix). This seat does not
-   chase it and does not re-run the producer ad hoc — a re-run would be a production publish off its own clock.
+   chase it and does not re-run the producer ad hoc -- a re-run would be a production publish off its own clock.
 3. `[0.7.0_AE_CloudOps~IB2]` On a signed fix: close 404's L6 against the next scheduled fire's output line and
-   refusal record, never the SSM status, then close the ledger — which is IB-pr-413's start gate 2.
+   refusal record, never the SSM status, then close the ledger -- which is IB-pr-413's start gate 2.
 4. `[0.7.0_AE_CloudOps~IB2]` If Monday 13:00Z passes with no fix: expect the issuer's amendment and run Branch B on
    the 49F key only, by `copy-object` from `3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur`, never through a WORSE window.
 5. `[0.7.0_AE_CloudOps~IB2]` A durable output sink for the holdings commands is worth asking for: no S3, CloudWatch
