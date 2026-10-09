@@ -2978,3 +2978,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED: irpt-status rolled back to rev 3: get-function-configuration CodeSha256 t6OJTCcm..., LastModified 2026-10-09T16:43:21Z (Branch B, applied by 0.7.0_AE_CloudOps~AR2 per CTO msg 3691 after ~DELL2 restored the rev-3 S3 bytes @21cad53292). CloudWatch filter 'additional_policy_revisions' since 16:43:30Z: 0 events. Re-cut rev 4 (composition.py co-staged) is 2.0.0_SA_COO~Y2's, row IRPT_ANLREQ-D2-S16."
 }
 ```
+
+## IRPT_YCDGEN-D2-S24 -- rev 5 R4: retention.py reference() arity split inside irpt-status; REQ-5e41 still not served
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S24",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T18:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "irpt-status rev 5 R4: the Opal 49financial report REQ-5e4149d2 is still not served -- TypeError RetentionPolicy.reference() takes 3 positional arguments but 4 were given (a caller passes policy_revision to a staged retention.py that predates it)",
+  "spec_asserts": "Rev 5 (reader registers OPAL_RESEARCH_REVISION, composition.py co-staged) serves the owner read of the Opal-produced 49financial report.",
+  "world_is": "MEASURED. Window 5: R3 at 17:57:56Z, svc owner GET .../analysis/requests?selected_tenant=cottonwood answered HTTP 200 through rev 5 (DZOdwUOG). R4 at 17:59:1xZ with svc on 49financial: status-job and analysis-report HTTP 200 ok:false UNAVAILABLE/UNEXPECTED. CloudWatch /aws/lambda/irpt-status corr-e741ded02b38 (status-job) and corr-1ce44087948e (analysis-report): TypeError 'RetentionPolicy.reference() takes 3 positional arguments but 4 were given'. HEAD retention.py reference(owner, family, logical_id, policy_revision=...) takes 4, so the staged retention.py is older than its caller in rev 5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch irpt-status corr-e741ded02b38, corr-1ce44087948e",
+      "R4_OWNER_READ_REV5_20261009.json (scrubbed)",
+      "reports/retention.py reference() signature at HEAD"
+    ]
+  },
+  "notes": "Not a 5xx and not every caller (R3 answered 200), so per CTO msg 3781 this is R4 failing alone: recorded, no rollback. Remedy is ~Y2's: co-stage reports/retention.py at the pin its callers expect in the next irpt-status revision. FWD-1 stays ungraded until that serves REQ-5e41."
+}
+```
