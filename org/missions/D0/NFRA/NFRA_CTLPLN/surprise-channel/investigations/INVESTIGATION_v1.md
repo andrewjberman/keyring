@@ -6396,3 +6396,54 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Both lines are unobtainable at HEAD b681bbcd5a regardless of the SES change: the checker dies before its last line. The AMENDMENT 29 arms themselves read: planread_ok=428/428 all_ok=True; parity arms equal=1500 unequal=0 (printed before the crash)."
 }
 ```
+
+## NFRA_CTLPLN-W14-S50 -- S49 fixed in the renderer, by a reading the issuer's ruling left open: the reader statement is measured against the render at the a18 commit (0693227a69), and the live key policy is accepted when it equals either the before25-with-post-edit-reader render or the render after this edit.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T11:05:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S50",
+  "one_line": "S49 fixed in the renderer, by a reading the issuer's ruling left open: the reader statement is measured against the render at the a18 commit (0693227a69), and the live key policy is accepted when it equals either the before25-with-post-edit-reader render or the render after this edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py: render_expression now reads every .tf file of the root (locals_blocks, local_expression, root_texts) and stubs aws_iam_role.second_reader.arn from NAMES.json second_reader.role.name (git show HEAD: when data/ is absent from the sparse worktree); the stub equals a principal of the live NamedReadersUseTheKey statement (printed, True).",
+      "live key policy (kms get-key-policy 44a2284f-1e14-4ea1-b6cb-f6121bfde35a) holds 4 statements and NamedReadersUseTheKey has 2 principals; the check prints 'equals the before25 render with the post-edit reader: False ; equals the render after this edit: True'.",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> rc=0, last line 'dell_decrypt=2/2 dell_write_refused=6/10 dell2_generate_ok=True dell1_generate_ok=True reader_unchanged=True unlisted_refused=True statements_added=1 ok=True'; simulate_dell_parity.py -> 'DELL-PARITY arms=1533 equal=1533/1533 unequal=0 ok=True'."
+    ]
+  },
+  "spec_asserts": "The issuer's ruling (S49 task): 'reader_unchanged compares against the POST-EDIT render, per the CTO's ruling on row W14-S40'; the Dell statements' assertions unchanged.",
+  "world_is": "'POST-EDIT render' was read as the render of main.tf and readers.tf at the a18 commit 0693227a69 (the last edit that changed the reader statement), not as the current file (which would make the comparison compare a file with itself). The before25 baseline used for the added/removed/in-place diff takes its reader statement from that render. dell_write_refused moved 8/10 -> 6/10 in the line (kms:GenerateDataKey allowed to both Dells, by design since amendments 25 and 26; the AC5 expectation is the regex [0-9]+/[0-9]+). If the issuer meant another baseline, only A18_COMMIT and the live_post clause change."
+}
+```
+
+## NFRA_CTLPLN-W14-S51 -- terraform fmt -check on infra/aws/terraform/transcripts reports commentary.tf as not canonically formatted; the file belongs to another cell and is outside this order's paths.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T11:05:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S51",
+  "one_line": "terraform fmt -check on infra/aws/terraform/transcripts reports commentary.tf as not canonically formatted; the file belongs to another cell and is outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check -recursive infra/aws/terraform/nfra-ctlpln-identity infra/aws/terraform/transcripts -> prints infra/aws/terraform/transcripts/commentary.tf, rc=3; nfra-ctlpln-identity prints nothing.",
+      "git status of the worktree: commentary.tf is not modified by this branch (last touched by the cell row W14-S46 names)."
+    ]
+  },
+  "spec_asserts": "The order says keep Terraform fmt/validate clean for the files this order changes.",
+  "world_is": "The files this order changes (transcripts/tests/*.py and the nfra-ctlpln-identity census, tests and plan note) are fmt-clean; the one unformatted file is another cell's undeployed commentary.tf. Not edited. INERT: formatting does not change a plan."
+}
+```
