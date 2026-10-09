@@ -102,3 +102,4 @@ Read-only: the whole repository, in particular `org/missions/D5/AMGT/AMGT_CORPUS
 <round>44</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
