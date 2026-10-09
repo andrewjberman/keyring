@@ -23044,3 +23044,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Only the unlisted-firm case is FIRM_BINDING. The 'ALL' case remains a refusal with INVALID_INPUT because ALL alone is unchanged by design; served.py cannot change, so that test asserts INVALID_INPUT (still a refusal, no admission)."
 }
 ```
+
+## IRPT_BCKEND-D2-W200-S1 -- The live runner bundle is already the built refuse-drop bundle (W2Wragr), not OxaIJns0
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W200-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~200",
+  "surfaced_at": "2026-10-09T05:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order names the live runner bundle as version OxaIJns0 (IB-pr-383), but the live object is already W2WragrP52i8M7MfL22oXVPuHsTjyVLO (04:16:44Z), byte-identical to the bundle built at the pin: the IB-pr-384 refuse-drop runner is already in the world with no signed pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-object-versions opal-data-mdpf code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz at 2026-10-09T05:1xZ: latest W2WragrP52i8M7MfL22oXVPuHsTjyVLO 2026-10-09T04:16:44Z 112861 bytes ETag 5547fa5e6601c042beef7146c0064def; previous OxaIJns0x1vkrd924gLPTyOMGzL_KQxK 03:42:25Z 112575 bytes",
+      "get-object of W2Wragr: sha256 f6d48603a6496f78733312e49b0e279b0907288db3423575f735835e896a0118 == the bundle built twice at pin 45c061c282 with safe_deploy_core.build_bundle_payload (byte-identical); its member directory_runner.py sha256 23b7eaf6f278 == git blob of HEAD, while OxaIJns0 carries 08e5e1abc92a (the IB-pr-381 runner)",
+      "org/safe-deploy-bypass-audit.log: HELD-DEPLOY lines for test_directory_runner_refuse_drop.py at 2026-10-09T04:16:26Z (18 s before the put); the repo does not name the actor that minted W2Wragr",
+      "replay: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~200/IB97-2_release_replay.json -- live_current vs built identical on all 9 arms; live_prior (OxaIJns0) vs built differs only on the drop fixture (lands 2 puts without the entry; built refuses with 0 puts)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-389: the live bundle is version OxaIJns0 (from IB-pr-383); the built bundle changes member directory_runner.py against it; the release is signed as a pair after IB-pr-383 closes; nothing is applied.",
+  "world_is": "The refuse-drop runner is already the live bundle, so against live_before W2Wragr the build has 0 changed members and Branch A is a no-op at the object. The packet records live_before = W2Wragr, records the OxaIJns0 comparison (changed member directory_runner.py, owner c7b401e8f7) beside it, and replays both. The refusal can only narrow what the runner lands (no landing differs while nothing is dropped, 9 of 9 arms). Who minted W2Wragr and under which ledger entry is not in the repo; the issuer or the CTO decides whether the pair is still signed or closed as already applied."
+}
+```
