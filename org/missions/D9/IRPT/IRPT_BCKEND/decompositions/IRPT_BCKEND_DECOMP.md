@@ -2281,3 +2281,21 @@ The release goes under its own pair and must be live before cottonwood's OVER_AG
 | `IB-pr-380` | carry source-removed entries forward as TERMINATED; real-case replay with the negative arm; package the refresh release | FWD-7 | WORLD | IB-pr-379 (diagnosis drained) | P92-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one rule, one cell; the release order follows its pair. Assignee: 0.9.0_WK_IRPT_BCKEND~188.
+
+## 86. ROUND 93, WORKSTREAM ~P (2026-10-09 ~00:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1988)
+
+IB-pr-380 (round 92) is graded 3/3 PASS (P 8953eccfca, built xGc9a2m7; the replay is READY with terminated 1 at both firms, and the live
+and negative arms are REFRESH_FAILED). Its rows show the release alone is fail-closed with no gain:
+- D2-W188-S1: the runner writes the served directory and emits no source_client_ids;
+- D2-W188-S2: inflection's previous READY manifest is outside the 10-trading-day window, so a 10-09 fire reads false additions.
+
+The CTO ruled: (a) count every writer of latest.json and directory.json FIRST, because a served as_of of 10-08 after a failed refresh
+means a second writer until proven otherwise, and the pair names every writer; then (b) the runner carries; (c) the previous state is
+the served directory; (d) no contract change (S3). 380 and 381 ship as ONE release under one pair, live before cottonwood's 10-12
+OVER_AGE. Check `deliverables/2.0.0_SA_COO~P2/checks/r93/p93_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-381` | writer census; runner carry + source_client_ids; previous state = served directory; one release packet for 380 + 381 | FWD-7 | WORLD | IB-pr-380 (PASS, drained) | P93-a |
+
+fanout: 1 of 1 chains, cap 8, reason: (a) gates (b)-(c), and one release covers both. Assignee: 0.9.0_WK_IRPT_BCKEND~189.
