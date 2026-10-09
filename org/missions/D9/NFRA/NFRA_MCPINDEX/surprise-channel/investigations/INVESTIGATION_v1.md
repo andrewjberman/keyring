@@ -6021,6 +6021,51 @@ carries none.
     "spec_asserts": "The drain runs the touched surface's suite once; a red there is a row under the COO's serial.",
     "world_is": "The red predates round 8 and sits outside NFRA_MCPINDEX's cells (Schwab and entitlement surfaces). MX-r-9's release must not read it as its own regression, and its owner must be named.",
     "notes": "Owner to name at the round-8 slug: the opal-gateway release-train holder 2.0.0_SA_COO~O. Not a gate on MX-r-9; MX-r-9 PHASE A reads the same denominator before and after."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S7",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T09:43Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "one_line": "MX-r-9 PHASE A pins are valid only while the live ref is aa75078e1b, and a second release is already cut on that same base: NFRA_OPLGTW's OG-rl-15 (branch rel-nfra-oplgtw-r29 @91811b648a, parent aa75078e1b). If it lands first, this release's pins, deploy-only and rollback trees are void and re-cut on its ref.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live ref read 3 ways at 2026-10-09T09:42Z: S3 opal-gateway-latest git-ref aa75078e1b72a28219e6148d3ec8e9bf705ea111 (LastModified 2026-10-07T21:48:40Z), CLOUD and box/sitez EC2_MANIFEST deployed_commit the same, host /opt/opal-gateway 100 of 100 files equal to that artifact (probes_r9/live_ref_reread_FINAL.txt).",
+        "git worktree list: C:/tmp/og-rel29 on rel-nfra-oplgtw-r29 @91811b648a, `git log aa75078e1b..91811b648a` = 1 commit, subject 'release(NFRA_OPLGTW OG-rl-15, rel-nfra-oplgtw-r29): live aa75078e1b (r28) + the four cells...'.",
+        "57 other gateway-path commits sit between the live ref and box/sitez HEAD 8f05cbe2c9 (60 total, 3 ours), all excluded by content (probes_r9/census_gateway_commits_since_live_PHASEA.txt)."
+      ]
+    },
+    "spec_asserts": "Order MX-r-9 item 1: if another seat's release lands between the two reads, STOP and report; whichever lands second re-cuts on the first's ref; the ISSUER agrees the slot with 2.0.0_SA_COO~O.",
+    "world_is": "Nothing has landed between my two reads (09:42Z and the PHASE A read at 08:34Z-08:40Z); the hazard is the queue: two releases are cut on one base. DEPLOY_BASE_REF at PHASE B refuses a stale base at upload, so the guard catches it, but the pins would be void.",
+    "notes": "Disarm: the issuer agrees the slot with 2.0.0_SA_COO~O before PHASE B, and PHASE B re-reads the ref first."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S8",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T09:43Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The suite BEFORE figure on the sparse release trees is 38 failed / 600 passed / 4 errors (642 collected), not Z-S88's 34 / 657 (a different tree). Release: 38 / 606 / 4, the same 38 ids plus the 6 new discover tests passing. Run 1 read 2 extra schwab failures on the release that run 2 did not; they pass in isolation and after test_opal_discover.py, so they are order or load dependent, not this release.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "probes_r9/tests_full_compare_PHASEA.txt: run1 live 38F/600P, release 40F/604P (new: test_schwab_denial_envelope::test_ogz4_ac01, test_schwab_engine::test_ogq1_ac03); run2 live 38F/600P, release 38F/606P, NEW 0, fixed 0.",
+        "probes_r9/isolation_ogz4_ogq1_PHASEA.txt: both files alone and behind tests/test_opal_discover.py, in both trees: only test_ogq1_ac07 fails (FileNotFoundError), identically at the live ref and the release.",
+        "My first sweeps ran on trees sparse-checked-out to infra/aws/ec2 only and read 20 errors (no org/standards/NFRA_OPLGTW_CONTRACT.json, no lib/); both were added to the cone (git sparse-checkout add org/standards lib) and every result quoted is from the corrected trees; the invalid files were deleted."
+      ]
+    },
+    "spec_asserts": "Z-S88: the base suite is red outside this project; PHASE A prints the pass/fail denominator before and after.",
+    "world_is": "The denominator depends on the tree the suite runs in (642 collected here against a larger set at 27b37e99b3 that carries CLOUD-only tests), so the figures are comparable only as a pair. This release shipped 5 gateway files; 2 are in the artifact.",
+    "notes": "Artifacts built here carry the LIVE artifact's dashboard/ directory (mcportal a3bff71ffa is unchanged); the real dashboard build (bun) runs only at PHASE B and its bun-cache pre-check is the applier's device's."
   }
 ]
 ```
