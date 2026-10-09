@@ -78,6 +78,30 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "An issuer opens a crossbox ORDER and commits it so the other box pulls it (crossbox-call.py NEXT line).",
     "world_is": "The lane on org/devices/** refuses a COO's commit of the ORDER file; the file sits uncommitted until a permitted seat commits it.",
     "notes": "Worked around by asking 1.0.0_SA_CTO~DELL1 to commit the two files; the order files themselves (e9fe72e427, e3b33d03c4) are committed. Remedy owner: the NFRA_CTLPLN lane's grantor (a lane-ANY carve-out for org/devices/crossbox/), not this seat."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W26-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~26",
+    "surfaced_at": "2026-10-09T06:35Z",
+    "one_line": "Two G5 readers outside RIV-wd-1's paths do not skip the new `below_tolerance` action: publish_page.py's audit window loop lists every G5 row (only no_shares_moved and cash-equivalent rows are set aside) and ai_accounts.py's trade facts take every row with an est_notional_base; publish_page also pairs windows by consecutive report labels, not by gold_trade_schedule's last-new-report anchor",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py:535-545 (branch wk-ETFS_RIVALS-26): `for r in rows: if no_shares_moved(r) ... if cash_equivalent_trade(r, names) ... out.append(r)` -- no test on r['action']; render._trades then prints the action as the row's label (render.py:446)",
+        "data/etfs/scripts/rivalfunds/ai_accounts.py:169-181: `trades = [r for r in _fund_rows(g5, fund_id) if ... _num(r.get('est_notional_base')) is not None ...]` -- no action filter, and the fact text prints `{r.get('action')}`",
+        "gold_buying_trend.py:246 (`_SIGN.get(action)`), trade_markers.py:39 (`_SIDE.get(action)`) and render.py:2029 (`_TRADE_ACTIONS`) already skip an action outside entry/add/trim/exit, so those three need no edit; tests/test_wd1_tolerance_and_repeat.py::test_readers_skip_a_below_tolerance_row covers trade_markers",
+        "publish_page.py:529-531 pairs `dates[i-1] -> dates[i]` (consecutive report labels); gold_trade_schedule.infer_windows now pairs a new report with the LAST NEW report (a repeat date is never a prior), so a G5 row's window_start can precede publish_page's d0 for the same window_end"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-wd-1 interface item 4: readers that count trades skip the rows items 1-3 exclude.",
+    "world_is": "Three of the five readers skip by action already; publish_page.py (the audit page's window list and its per-window trade count) and ai_accounts.py (the T-facts) do not, and both are outside this order's <paths>. Once a G5 built at gold_trade_schedule/4 is served, a below_tolerance row would list as a trade on the audit and could enter an AI-prose fact.",
+    "notes": "Hookup for the issuer (not edited here): in publish_page.py's row loop `continue` on action == 'below_tolerance' (counting it for RIV-wc-2's exclusion line), and in ai_accounts.py add `and str(r.get('action')) != 'below_tolerance'` to the `trades` list; decide whether publish_page shows the G5 row's window_start for a window after a repeat. No G5 at /4 is served before the merge, so the hazard is armed only for the merge-and-deploy order."
   }
 ]
 ```
