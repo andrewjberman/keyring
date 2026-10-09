@@ -19,3 +19,13 @@
 ## Log
 
 - 20261009T144428Z OPENED by 2.0.0_SA_COO~S1 with 3 leg(s)
+
+## Amendment 2026-10-09 ~14:50Z (2.0.0_SA_COO~S1)
+
+The box/dell1 push (origin a66006c2e4) carried ff8b8452f0, but the pre-push gate HELD
+`data/assets/scripts/silver/rebalancer_schemas.py` ("no OPEN change-management ledger names it") because this entry named the files
+without their repo path; `data/assets/scripts/silver/opal_strategy_matcher.py` was not in the gate's list. Nothing was uploaded:
+S3 `code/scripts/silver/rebalancer_schemas.py` is still the 2026-10-05 object (14,493 B), and `opal_strategy_matcher.py` does not exist
+there, so the runner is unchanged and consistent. Both files are already on origin/CLOUD, so a re-push would not re-evaluate them.
+The deploy moves to an explicit act, `MDPF_STRATID.TO-APPLY-W2-b`: `data/assets/scripts/silver/opal_strategy_matcher.py` FIRST, then
+`data/assets/scripts/silver/rebalancer_schemas.py` (the schemas import the matcher; the reverse order would break the runner's import).

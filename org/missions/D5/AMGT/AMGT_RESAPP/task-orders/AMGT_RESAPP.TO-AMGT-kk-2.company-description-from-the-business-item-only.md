@@ -74,3 +74,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-09T15:0xZ: merged @246654e7a6 (wk-AMGT_RESAPP-342 @bf2a9252de, proof VALID). AC1 YES (9 of 9: a business-cited item kept; Item 5 and 3.D dropped; no business text drafts empty; other sections unchanged); AC2 YES (filings + drafting 291 passed). Rule in FilingsProducer.draft: a company_description item is kept only if every cited passage sits in the business item (20-F Item 4 / 4.B, 10-K Item 1), by the passage map's location label. Negative control: rule off, 4 of 9 fail. Future drafts only; the stored five move under AMGT-kk-3.</status>
