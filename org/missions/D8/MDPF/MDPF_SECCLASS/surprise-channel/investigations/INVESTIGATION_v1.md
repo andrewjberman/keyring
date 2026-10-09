@@ -2690,6 +2690,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed by the worker; no consumer was changed."
 }
 ```
+
 ## MDPF_SECCLASS-W24-S1 -- industry-group values are vendor-truncated at 30 characters
 
 ```json
@@ -2715,6 +2716,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed by the worker on the record's own finding; not a premise failure of the order."
 }
 ```
+
 ## MDPF_SECCLASS-W22-S1 -- iv-e-26 wire-regen byte-identity arm fails on the SC-e-23 hand edit until SC-e-22; the test regenerates wire files in place
 
 ```json
@@ -2741,6 +2743,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed by worker ~22 on dell1 (fabric field = the project register fabric). The two AC checks do not run iv-e-26 or iv-e-17; neither is weakened."
 }
 ```
+
 ## MDPF_SECCLASS-W23-S1 -- TO-SC-e24 says ETF_GEOGRAPHY_MAPPING begins at line 96 of yang-generate-positioning/lambda_function.py; at bas
 
 ```json
@@ -2817,6 +2820,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Tool availability only; no criterion affected."
 }
 ```
+
 ## MDPF_SECCLASS-W25-S1 -- the served per-firm Holdings objects are unreadable from this device (explicit deny), so TO-SC-e26's held read is a local producer build, not the served bytes
 
 ```json
@@ -2898,6 +2902,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: every later worker spawn of this round states 'no package install and no download of any kind'; the scratch venv is left in place, uncommitted, for 0.0.0_AB_MSTR~DELL1 to inspect or remove."
 }
 ```
+
 ## MDPF_SECCLASS-W28-S1 -- PRD S13 writes four short paths; none of the four exists at the depth written
 
 ```json
@@ -2997,6 +3002,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "S26 is FWD-16's geography (no home decided), which the PRD already says; S15's held claim names a different 'classification'."
 }
 ```
+
 ## MDPF_SECCLASS-W24-S2 -- SC-e-27 declares gics_sector with the 10 MEASURED values; SC-e-25's record proposed 11 (Real Estate held, never measured)
 
 ```json
@@ -3023,6 +3029,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Other stated choices: contract 0.5.0; the key form is declared as identifier_namespace value NAME (definition carries the PROPOSED KEY FORM line verbatim, rule24 record under key_form_rule24_record_NAME), which also changes the identifier_namespace values and the stale 'remainder is empty' text in its existing rule24_record is left as it was. test_model_classifier.py:245-248 (pins 0.3.0, SC-e-31's file) is red at the cut and  Ruff 0.16.10 on this box refused pre-existing UP031 at test_classified_by_v2.py:81 (a percent-format assert message); changed to the equivalent f-string, same message, no runtime change."
 }
 ```
+
 ## MDPF_SECCLASS-W23-S4 -- TO-SC-e33 cannot be met as written: the served Holdings builds sit in firm buckets that deny the order's principal
 
 ```json
@@ -3236,6 +3243,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The Lambda's name (a module block, not an aws_ resource) is not read by the checker in either case."
 }
 ```
+
 ## MDPF_SECCLASS-W26-S2 -- test_model_classifier.py pinned `contract_version == "0.3.0"`; the contract is past it and moves again in SC-e-27
 
 ```json
@@ -3314,6 +3322,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The box's ruff version is a device matter; other seats on this device see the same refusal on any old shared file. Not widened."
 }
 ```
+
 ## MDPF_SECCLASS-W28-S5 -- clean_name() mis-cases acronyms, tickers used as names, and small words
 
 ```json
@@ -3444,6 +3453,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Recorded so the half request does not read as closing FWD-15; the half names the 1,046."
 }
 ```
+
 ## MDPF_SECCLASS-W25-S3 -- comp-find --corpus aws is BLOCKED for this principal, so the order's live-plane census was read directly with boto3 instead
 
 ```json
@@ -3469,6 +3479,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The issuer's check does not read the aws figure. A seat with the graph bearer can re-run the one comp-find line to add the node count."
 }
 ```
+
 ## MDPF_SECCLASS-W25-S4 -- PRD surface S22 (semantic-news-layer3-curation) is a reader in code only: its schedules are deleted, it has no trigger and no log stream; the live news curation function does not read the table
 
 ```json
@@ -3495,6 +3506,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Switching or deleting the old list does not change any served news output. Whether to retire the dormant function and its layer3-bd-securities-read grant is outside this cell."
 }
 ```
+
 ## MDPF_SECCLASS-W25-S5 -- the census command misses readers that spell the table at run time, readers in data/black_diamond, and roles with a blanket DynamoDB grant
 
 ```json
@@ -3521,6 +3533,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "A reader that builds the name from the registry elsewhere would escape the census too; the live IAM scan in the trace (five role-inline grants and one managed policy on two roles) is the cross-check, and it names no role the code census did not already cover."
 }
 ```
+
 ## MDPF_SECCLASS-W25-S6 -- no producer can give a security first held after the old-list writers stop a canonical row: the canonical producer's only wired input is the old list, and the Cottonwood detection path cannot read it
 
 ```json
@@ -3576,6 +3589,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: both keys read ETag 3a033c04... after the explicit deploy (COO condition 2). The deploying seat is a DS-lane seat routed by 1.0.0_SA_CTO~DELL1; this box seats none."
 }
 ```
+
 ## MDPF_SECCLASS-W21-S1 -- after the module edit the seed run only strips low_confidence and re-attributes 15 rows; it moves no class
 
 ```json
@@ -3760,6 +3774,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The tests pass before and after (6 passed)."
 }
 ```
+
 ## MDPF_SECCLASS-W35-S1 -- the W28-S5 acronym rule makes the vendor-suffix remainder SHS stay upper, so "ETF SHS COM" is no longer idempotent
 
 ```json
@@ -3837,6 +3852,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 by the worker of TO-SC-e48."
 }
 ```
+
 ## MDPF_SECCLASS-W31-S1 -- the Black Diamond E_18 cannot resolve any security through the old list by construction, so its 0 canonical rows are not explained by a denied scan
 
 ```json
@@ -3943,6 +3959,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "INERT today (the table exists); it becomes load-bearing at the table-removal act. The deployed gold_dispatch.sh on the runner is UNREAD (firm bucket denied, row W25-S1)."
 }
 ```
+
 ## MDPF_SECCLASS-W36-S1 -- The round-8 issuer check issuer_check_sc_e27.py now prints SC-E27-CONTRACT ok=False agains
 
 ```json
@@ -4182,6 +4199,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Re-minted from S55 to S58 per 1.0.0_SA_CTO~DELL1 ruling msg 405 (the laptop minted its own S55 on the trunk). A cross-cell effect of SC-e-64 on a round-9 artifact; no worker is owed an act. Filed on dell1."
 }
 ```
+
 ## MDPF_SECCLASS-W41-S1 -- the worker face says dell1's principal is denied the firm S3 buckets; it reads opal-data-bd
 
 ```json
@@ -4318,6 +4336,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Write set limited to composition.ts and its test; neither types.ts nor the panel was edited."
 }
 ```
+
 ## MDPF_SECCLASS-S55 -- the CTO half of SC-e-42's never-widen sign-off is unreachable from the laptop: its pin and its file were never pushed
 
 ```json
@@ -5077,6 +5096,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Grade is re-run at e32's close. Id form: the TO named MDPF_SECCLASS-W62-S<k>; the surprise-row-gate requires the dell1 coordinate, so the id is MDPF_SECCLASS-D1-W62-S1. The 17 fixed_income/Cash rows are counted, not hidden; whether they are legacy rows the V3 set re-plans or rows outside it was not measured here."
 }
 ```
+
 ## MDPF_SECCLASS-W59-S1 -- the identifier_namespace backfill's planned set is empty: every CUSIP: and NAME:: row already carries it
 
 ```json
@@ -5155,6 +5175,7 @@ future reader should take rather than re-derive:
 Nothing about the four acts was measured by this seat at any point, and nothing is claimed about
 them. Rulings 811, 813 and 815 all land the same way: leave them in `check --red`, nothing owed
 by dell1 or by this seat.
+
 ## MDPF_SECCLASS-D1-S5 -- 52 COT-held keys (USD 6.06M) absent from the canonical table and from FWD-15's UNPLACED census
 
 ```json
@@ -5235,6 +5256,7 @@ by dell1 or by this seat.
   "notes": "Not a regression and not fixed here. Whether a NAME::-only placement satisfies FWD-15 for a security that has a symbol or CUSIP is a CTO call; the JSON carries every absent key with its route so either reading can be graded."
 }
 ```
+
 ## MDPF_SECCLASS-D1-S6 -- Cottonwood already serves CASH as cash before the e68 write; condition 3's predicted -5.48M move and fixed total cannot be the grade
 
 ```json
@@ -5261,6 +5283,7 @@ by dell1 or by this seat.
   "notes": "Proposed grade for the ~11:36Z read, sent to 1.0.0_SA_CTO~DELL1: rebuilt after 03:12:55Z; CASH key class cash in every listing client with no CASH line in fixed_income; firm mix internally consistent (sum of mix market_value == composition.total_market_value within USD 1.00). Whether the 5 fixed_income listings (all at 0.00) are the 7 stale-dated clients was not measured."
 }
 ```
+
 ## MDPF_SECCLASS-D1-S7 -- e42 L2: a07 switch effective at the 09:47Z run; 55 unlisted moves trace to post-snapshot signed table writes; no 49F served mix
 
 ```json
@@ -5769,5 +5792,31 @@ by dell1 or by this seat.
   "world_is": "The contract and the grader disagree about what a legitimate row looks like. The contract admits a row with no sub-class and scopes its closed list to verdicts; the grader's landed predicate admits only model verdicts carrying an in-list sub-class. Both are defensible alone -- the grader is measuring THIS act's work, not the table's legality -- but together they mean a sibling act writing perfectly legal rows over the graded act's planned keys can hold the grade open, and the act that is graded second always loses.",
   "notes": "THIS ROW'S FIRST DRAFT WAS WRONG AND IS CORRECTED HERE BEFORE IT WAS EVER COMMITTED. I asserted the six rows were OUTSIDE the contract's values_by_class, which conflated a ROW's state with a VERDICT's bound and would have put a false BLOCKING claim against another seat's act. Issuer msg 1176 corrected it -- 'the contract's absent clause admits no sub-class, and the closed-list bound binds only DIRECT and AI verdicts' -- and reading the contract's own `absent` and `bound` text confirms the issuer, not me. What survives is narrower and is about the GRADER, not the contract. RULING APPLIED: msg 1176 @7f8dc1ed54 amends AC1 to admit these six plus the one transport-terminal key, and e49 closes on planned=956 EXACT with snapshot_keys_gone=0. CANDIDATE REMEDY for the general shape, not proposed as built: the landed predicate could count a present planned key written by any DECLARED writer of the table (the COO half counts nine or ten) and report it in its own column, so a grade measures what the act achieved without being hostage to who reached the key first. ENUM DISCIPLINE, recorded because the gate had to catch it: I first wrote disposition='RESOLVED_BY_RULING', which is not in the ratified enum ['UNDER_INVESTIGATION','GRADUATED','DISMISSED_WITH_REASON','DECOMP_INVALIDATING']. surprise-row-gate refused the commit. CLAUDE.md Rule 24 is explicit that a value-enum proposal arrives with its four-postulate record and a word-boundary token census or it is not a proposal -- I had neither, so the right move is the existing member, not a new one. DISMISSED_WITH_REASON is the accurate fit: this row's BLOCKING premise (a contract violation) is dismissed as false, and the reason is on the record. The surviving grader-vs-contract observation is left in these notes as a candidate rather than re-raised as an open blocker.",
   "dismissal_reason": "The BLOCKING premise of this row's first draft -- that SC-e-77's six rows sit OUTSIDE the contract's values_by_class closed list -- is FALSE, and the contract says so in its own text. fields.sub_asset_class.absent reads 'a row with no sub_asset_class stays absent; no value is defaulted or inferred (231 fixed_income and 34 equity rows today)', and .bound scopes the closed list to 'a DIRECT or AI VERDICT'. I conflated a ROW's state with a VERDICT's bound and would have put a false violation against another seat's act; issuer msg 1176 corrected it and the contract confirms the issuer, not me. Dismissed as a contract finding. For THIS order the consequence is settled too: amendment @7f8dc1ed54 widens AC1 to admit the six plus one transport-terminal key, and e49 closes on planned=956 EXACT with snapshot_keys_gone=0. What is NOT dismissed, and is left in notes as a candidate for the gate's owner rather than re-raised as an open blocker, is the narrower grader-vs-contract observation: ai_leg_verify's landed predicate is stricter than the contract, so a sibling act writing legal rows over a graded act's planned keys can hold a grade open, and the act graded second always loses."
+}
+```
+
+## MDPF_SECCLASS-D1-W57-S1 -- C_06 publishes a mix that omits a class outside MIX_ASSET_CLASSES while its sum check counts it
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W57-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~57",
+  "surfaced_at": "2026-10-08T03:06:00Z",
+  "one_line": "C_06 drops a held class that is not in MIX_ASSET_CLASSES from the stored mix without a sign: its pct-sum check includes it, its mix list does not, so the stored mix of a date holding multi_asset sums below 1.0 and is published as is.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/C_06.client_mix_timeseries.py process_date: mix_agg = grp.groupby('asset_class')[...].sum(); pct_sum over ALL classes in mix_agg is checked against 1.0 (PCT_TOL); then mix = {ac: ... for ac in MIX_ASSET_CLASSES} keeps only the eight listed keys. A class outside the list passes the check and leaves the mix.",
+      "Served instance: platinum/clients/z09305621/concentration.json date 2026-10-05 holds SGIIX as multi_asset (market_value 25862.98 of a book of about 269,630 (market_value / pct)); the same date's stored mix carries no multi_asset key by construction of MIX_ASSET_CLASSES, so its share is absent from the mix. Read-only GET 2026-10-08; only two relationships (z09305621, z09305679) of 453 gold client files carry the word.",
+      "Not changed by TO-SC-e67 (its paths grant covers the concentration list only); named in the half request's Blast radius as 'not touched: the mix series'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06's own docstring: 'pct sum validation: per (date, relationship_id) mix must sum to 1.0 (+-0.001). Dates failing validation are excluded from the JSON output.' The stored mix of a published date is expected to sum to 1.0.",
+  "world_is": "The validation sums every class present in the data, then the published mix keeps only MIX_ASSET_CLASSES, so a date holding a class outside that list (multi_asset, for SGIIX on two relationships) is published with a mix summing below 1.0 and no skip. The word's holding is now reclassified in the concentration list by SC-e-67, but those dates' stored mix is not recomputed."
 }
 ```
