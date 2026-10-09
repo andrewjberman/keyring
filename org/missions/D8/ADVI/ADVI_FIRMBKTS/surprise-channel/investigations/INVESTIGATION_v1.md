@@ -435,3 +435,29 @@ write: **1 row** (`S1`).
   "notes": "For the cell that moves keys: a destination-collision check over the mapping is owed before any copy; round 1 moves nothing."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S3",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~F1",
+  "surfaced_at": "2026-10-09T21:18:46Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~F1",
+  "one_line": "READER B OPENED A FILE ITS FACE FORBADE (worker ~1's FB-t-1 PROOF INSTANCE, UNDER THE PROJECT FOLDER), AND BOTH READERS ANSWERED BY SCRIPT, SO ROUND 1's READING IS A PARSE OF THE STRING AND ITS 'contents' FIELD MEASURES THE SCRIPT AS MUCH AS THE LOCATION",
+  "spec_asserts": "ADVI_FIRMBKTS.TO-FB-t-4 section 2 bound 1: read nothing but reading_list.json, nothing else under org/missions/D8/ADVI/ADVI_FIRMBKTS/. FWD-1 ACCEPT: two people who have never worked together each say which system, which firm, how finished and what it holds.",
+  "world_is": "Reader B's report (0.9.0_WK_ADVI_FIRMBKTS~3, commit 1a188f21fe) says it used ADVI_FIRMBKTS.TO-FB-t-1.proof_of_spec.json as a format template. That file carries census counts and the census criteria, not the arm map, the mapping table or reader A's answers. Both readers answered with a script over reading_list.json. At close (r1_agree.py): canonical arm 209 of 209 agree on system, firm and tier; legacy arm 19 of 209 agree on all three (system unknown in 143, firm unknown in 102). The contents pairs diverge in kind: reader A's script described the date partition ('2026 10 08 data') where reader B's named the table ('positions cube').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~F1/round1/R1_CLOSE_RUN.txt",
+      "deliverables/2.0.0_SA_COO~F1/round1/R1_CLOSE_PAIRS.json",
+      "worker ~3 final report (commit 1a188f21fe)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Does not move the system/firm/tier result: the opened file holds no answer and no arm. It bounds the 'contents' clause, which round 1 does not grade mechanically. Enrichment candidate for round 2: a reader face that withholds the project folder from the reader's worktree (a sparse checkout of reading_list.json alone) and asks for answers written without a parser, or graded on the table slot."
+}
+```
