@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T172645Z-2ed2",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~H1",
+ "to_serial": "1.0.0_SA_CTO~Z",
+ "subject": "MDPF_SECHIST SH-t-8 site-Z take: producer half at blob 75342a6958",
+ "body_path": "org/tier1_exec/2.0.0_SA_COO~H1/r5_staged/XB_CALL_SH_T8_PRODUCER_HALF.md",
+ "opened_at": "2026-10-09T17:26:45Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
