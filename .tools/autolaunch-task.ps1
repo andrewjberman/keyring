@@ -10,6 +10,9 @@
 # logs on. No elevation needed. Record: see .tools\autolaunch-agents.ps1 header.
 # =============================================================================
 param([string[]]$Serials, [switch]$Status, [switch]$Teardown)
+# `powershell -File ... -Serials a,b` binds ONE string "a,b" (an array literal only binds in-process), so a multi-seat
+# roster registered only its first seat (dell1 manager, bus b0081fa0). Split every entry on commas so both forms work.
+$Serials = @($Serials | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 $TaskName = 'OPAL_autolaunch_agents'
 $engine   = Join-Path $PSScriptRoot 'autolaunch-agents.ps1'

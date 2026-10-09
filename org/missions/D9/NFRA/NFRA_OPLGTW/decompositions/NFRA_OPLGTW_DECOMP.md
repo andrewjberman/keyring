@@ -1849,3 +1849,6 @@ round-33 cell with tests."
 | `OG-pf-1` | -- | `decide()` confines a profiled principal only on the five schwab_* tools and the Black Diamond data tools; unprofiled still denied data; Alyssa's data reach unchanged. | WORLD | ~45 | worker |
 
 **fanout:** 1 start, cap 8. r30 carries OG-pf-1 and OG-tg-1 plus the two grant writes (Andrew's profile; the mirror).
+- **OG-da-1 CUT as workstream DATA-REFRESH-ADMIT** (2026-10-09 ~05:3xZ, issued to `0.7.0_AE_CloudOps~Z`, CTO~Z ruling
+  32354): the data_refresh admission fails closed (Dev or Opal-internal; empty/null and no-authorizer refused). Measured at
+  the cut: the live function already differs from HEAD; Phase A names that drift before any deploy.

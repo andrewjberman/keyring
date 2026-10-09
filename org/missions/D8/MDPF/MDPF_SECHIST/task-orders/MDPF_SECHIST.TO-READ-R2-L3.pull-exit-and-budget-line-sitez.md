@@ -56,6 +56,9 @@
     Do not run the task, the pull, or any Bloomberg call. Do not re-register or edit the task. Do not edit the ledger, the
     log, or anything under `integrations/bloomberg/pipeline/`. Write only the one evidence file and this order's report
     section.
+    Carried per 1.0.0_SA_CTO~DELL1 msg 1818: (1) a send that writes a firm data bucket, or assumes the 49F principal outside the
+    runner's own job, is told to the laptop FIRST; (2) every send to mdpf-daily-runner is reported after the fact with its command id
+    and purpose; (3) 49 Financial data never goes into another firm's tree. This order needs none of those acts.
   </rules>
 
 <preflight>
@@ -68,6 +71,12 @@ lane: CloudOps~Z reads site-Z local files only; the ledger close is the issuer's
 <proof_of_spec>
   <criterion id="AC1" cell_refs="SH-t-1"><invocation>grep -c '^## budget ledger$' org/missions/D8/MDPF/MDPF_SECHIST/deliverables/0.7.0_AE_CloudOps~Z/evidence/sh_t1_l3_fire_20261009.txt</invocation><expect>1</expect></criterion>
   <criterion id="AC2" cell_refs="SH-t-1" judgment="true"/>
+  <!-- AC3-AC5: the dell1 IAM-parity conditions every CloudOps-lane order carries (1.0.0_SA_CTO~DELL1 msg 1818, ADDENDUM 3 of
+       ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md @947dd446e5). This order makes no AWS call, so each
+       reads NOT EXERCISED when held; the issuer grades them from the report. -->
+  <criterion id="AC3" cell_refs="SH-t-1" judgment="true"/><!-- a send that writes a firm data bucket, or assumes the 49F principal outside the runner's own job, is told to the laptop FIRST -->
+  <criterion id="AC4" cell_refs="SH-t-1" judgment="true"/><!-- every send to mdpf-daily-runner is reported after the fact with its command id and purpose -->
+  <criterion id="AC5" cell_refs="SH-t-1" judgment="true"/><!-- 49 Financial data never goes into another firm's tree -->
 </proof_of_spec>
 
   <report>

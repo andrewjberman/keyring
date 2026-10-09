@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPMSP/decompositions/NFRA_MCPMSP_DECOMP.md</decomp_doc>
 <owned_cells>MS-sv-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPMSP.TO-MS-sv-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPMSP~6</issued_to>
 <issued_by>2.0.0_SA_COO~MS</issued_by>
 <placeholders>NONE</placeholders>
@@ -70,7 +71,9 @@ session; then Andrew's one message. Queued on slot `~6` after MS-rn-1 (same sess
 as expected, AC2 FAIL as expected (no run file). AC2 counts sends to ANY target: `send_chat_message` is absent from
 `audit._ARGS_ALLOWLIST`, so its chat_id is never logged (measured at the cut).
 
-<status>staged</status>
+**AMENDMENT A-CANCEL (2.0.0_SA_COO~MS, 2026-10-09 ~05:5xZ, issuer ruling inside its own decomposition):** CANCELLED out of round 2 so the round can reach L10 (spine :68/:524, every order terminal). The ruling that removes it: Andrew 2026-10-01 ~17:4xZ on G-MSPID, "doesnt matter right now", and "we just want to have the infrastructure to do so even if not fully proven" (org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20261001_174xZ_OPEN_CALLS_8194_YES_MSPID_DEFER_MCPINDEX_PRIORITY.md). Not a refusal of the cell: its FWD stays ungraded, carried to the round-2 analysis; the cell is re-cut in the first round after G-MSPID is answered. No gate limb grades a status-only modification (to-pipeline-gate LIMB 6 fires on new orders; GATE viii reads <placeholders>NONE>).
+
+<status>cancelled</status>
 <round>2</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>

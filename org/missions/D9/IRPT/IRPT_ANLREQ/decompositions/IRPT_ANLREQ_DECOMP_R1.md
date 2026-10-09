@@ -90,6 +90,34 @@ its poll. I3 and I4 fixed the messages, but no cell made I4's transport.**
   (`opal_packager.handle_commentary_ready`). ~G2 releases it in its own release cell.
 - One Terraform home for both pipeline queues; each lane writes only its own surface.
 
+**AMENDMENT 5 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:3xZ): two rulings.**
+1. **Hop 4b is served by I3 ONLY** (on `2.0.0_SA_COO~T2` msg 2567 and row `IRPT_ANLREQ-D2-S2`). `AR-t-11` (the `analysis_ready` queue
+   to the commentary Lambda, merged @30bed477ad) is the one trigger.
+   - ~P2's H1 (IB-pr-388 `ready_trigger.tf`: the `irpt-requests` stream mapped to the same Lambda, plus a `kms:Decrypt` grant to the
+     commentary role) would run the drafter twice per READY and re-open the grant CTO msg 2341 forbids.
+   - H1 is directed by CTO msg 2507 in IRPT_BCKEND, so its withdrawal (the mapping and the policy) before any apply is asked of
+     `1.0.0_SA_CTO~DELL2`. Until ruled, no apply pairs H1 with the commentary Lambda.
+2. **I1's client half goes to `2.0.0_SA_COO~V2`** (on ~V2 msg 2573 and row `D2-W11-S1`).
+   - `portal/src/pages/InvestorReporting/contracts/submission-request.ts` joins ~V2's write surface for `AR-v-11` (a modification
+     of ~V2's own issuance).
+   - `readSubmissionRequest` admits `ticket_id` (`^TCK-\d{8}-[0-9a-f]{8}$`) only beside `input_id`. The wire type follows the
+     contract `AnalysisSubmissionRequest.schema.json` as drained @3ad7526e06.
+   - The schema stays ~Y2's; the TypeScript reader follows it.
+3. **The packager's read grant on `ANALYSIS_COMMENTARY` goes to `2.0.0_SA_COO~T2`, in `AR-t-12`** (on `2.0.0_SA_COO~G2` msg 2575
+   and row `D2-W62-S1`, at ~G2's REC).
+   - ~T2 owns the family, so ~T2 adds ONE `SERVICE_READERS` entry in `reports/repository.py`. It admits exactly the
+     `package_principal` subject that `AR-v-12` names, for `ANALYSIS_COMMENTARY` only, so no other family widens.
+   - `reports/repository.py` joins `AR-t-12`'s write surface for that one entry.
+   - The subject id is the single constant `AR-v-12` writes into the type definition. ~T2 reads it there, never types its own.
+
+**AMENDMENT 6 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:5xZ, on `2.0.0_SA_COO~T2` msg 2620 and row `D2-W41-S3`): no separate commentary
+ticket in this journey.**
+- The DRAFT reaches the request's OWN ticket ONLY as `commentary_ref`, through I4s (the store) and I5 (the packager).
+- The drafter's `ticket_client` post of a separate `svc-commentary` ticket is NOT called for an `analysis_ready` run. It is also
+  refused by TCKT_VNEXT contract v0.2 (`answers.advisor`), since `advisor` is None here.
+- NFRA_TRNSPT's other uses of that client (the mail commentary, FWD-1..9) do not move.
+- **H1 (CTO ruling @19c5067e12, msg 2622):** withdrawn. Hop 4b is I3 alone; row `D2-S2` item 1 is disposed against it.
+
 ## Cells (round 1, FWD-1)
 
 | hop | state | cell | lane | what EXISTS at the end |

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~11</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -82,7 +82,35 @@ update it only to the new sequence, and say so in your report.
   edited.
 - LOCAL: never push, never call the live API, and run dev servers on port 5174 only. No non-ASCII.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~05:4xZ; rules row IRPT_ANLREQ-D2-W11-S2).** Replace the date gate
+(`I1_FILING_SINCE = 2026-10-09T00:00:00Z`) with a marker the ticket stores.
+- **The marker.** The I1 filing's ticket CREATE sends `source: "ticketcenter:i1"`. The service already accepts any `source` except
+  the reserved `dashboard_form:` prefix (`ticket_center/lambda_function.py:1101`), so this needs no backend change.
+- **The button.** "Request report" hides ONLY on a ticket whose `source` is `ticketcenter:i1`. Old-form tickets keep it, whatever
+  their date. Remove the date constant.
+- **The retry.** When step 3 (the `POST /analysis`) failed, the form shows "Retry analysis request". It re-sends step 3 with the SAME
+  body and `ticket_id`, and never re-uploads or re-creates the ticket. The same retry appears on an `ticketcenter:i1` ticket that has
+  no `report_ref`.
+- **One new test**, named exactly `retries the analysis step without refiling`.
+- The order stays HELD from landing until row W11-S1 (the portal client admitting `ticket_id`) is fixed by its owner.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~05:5xZ; decomposition AMENDMENT 5 @2bd14c3fbc, `~Y2` msg 2607). Row W11-S1 is now THIS cell's.**
+1. **Re-base first.** Portal DEV moved to `c34ff9c0` (AR-v-13 landed). Put your commits onto a branch from `origin/DEV`; both
+   touch `AnalysisRequestParts.tsx`, so resolve any overlap by keeping BOTH behaviours.
+2. **Client reader.** `src/pages/InvestorReporting/contracts/submission-request.ts` (`readSubmissionRequest`, `:13-38`) admits
+   `ticket_id` ONLY beside `input_id`, matching `^TCK-\d{8}-[0-9a-f]{8}$`. Any other `ticket_id` shape, or `ticket_id` without
+   `input_id`, is refused as today. Every other rule is unchanged.
+3. **Wire type.** `src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts` is GENERATED. Regenerate it with its
+   own generator (`src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts`) from the schema at the workspace root
+   (`docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json`, which carries `ticket_id` since `~Y2`'s
+   AR-y-11 @3ad7526e06). Never hand-edit it; the header's source sha256 must match the schema. If the generator cannot reach
+   the schema from the portal worktree, STOP and report.
+4. **One more test** in your test file, named exactly `the client admits ticket_id only beside input_id`.
+5. With the reader fixed, the form is no longer HELD on W11-S1. W11-S1 resolves on your drain.
+
 <paths>
+portal/src/pages/InvestorReporting/contracts/submission-request.ts
+portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts
 portal/src/pages/TicketCenter/TicketCenter.tsx
 portal/src/pages/TicketCenter/AnalysisRequestParts.tsx
 portal/src/pages/TicketCenter/analysisRequest.ts

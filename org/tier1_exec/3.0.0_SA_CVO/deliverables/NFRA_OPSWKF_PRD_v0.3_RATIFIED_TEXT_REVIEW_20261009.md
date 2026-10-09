@@ -28,3 +28,8 @@ What changed since the signed v0.1, read against Andrew's two records (`org/miss
 
 FWD-1's organic arm reads "the operations lead's own first real request grades it again". In this flow an ADVISOR files and the operations
 lead works the ticket. The organic arm is the first real advisor request he works. Worth one word at the next touch.
+
+## Re-stamp on @57dd6256e1 (~05:5xZ, msg 2614)
+
+The only change in the PRD is FWD-1's organic arm, which now reads "an advisor's first real request, worked by the operations lead", as
+this seat's note asked. Signed on these bytes.
