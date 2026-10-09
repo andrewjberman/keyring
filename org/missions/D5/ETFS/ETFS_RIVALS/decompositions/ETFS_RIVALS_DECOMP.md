@@ -1148,3 +1148,23 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
   2. The header's PERIOD row is removed from the main page. The ranking panels' period controls and the 30/90/365 data stay.
      No other header row changes; the page keeps exactly ONE inline script.
 - Out of bounds: no S3, no deploy, no other module.
+
+### `RIV-we-1` -- a Bloomberg canonical row's report date is the vendor's claimed as-of date; the delivery day is kept as `delivered_on` (WS3 item 6, the repeat-day remedy; CTO ruling ADDENDUM 2 @9f0a957c00, row ETFS_RIVALS-D1-S5) -- APPENDED 2026-10-09, revision 1.21
+- Measured: for every CGIC capture 2026-10-02..10-06 the Bloomberg bronze sidecar's `claimed_report_date` is one trading day
+  BEFORE the delivery (requested) date (10-05 capture claims 10-02; 10-06 claims 10-05), while
+  `gold_canonical_shape.build_bloomberg_rows` stamps `extra_attributes.bloomberg.source_report_date` from the silver row
+  (= the delivery date). The calendar (`gold_holdings_coverage`) reads the claim and so marks those days `repeat`; the trade
+  windows (`gold_trade_schedule.infer_windows`, RIV-wd-1) read `source_report_date`. Ruled: the claim is the as-of (the
+  delivery carries a one-trading-day lag); `source_report_date` takes it.
+- Interface (`gold_canonical_shape.py` only, plus tests; NOT loaded by the site-Z vehicle, so no site-Z half):
+  1. `build_bloomberg_rows(..., claimed_report_date=None)`: `extra_attributes["bloomberg"]` carries `source_report_date` =
+     the claim (ISO), `delivered_on` = the function's `report_date` (the delivery day), `report_date_claim` = `"MEASURED"`.
+  2. No claim (None): `source_report_date` = the trading day before `delivered_on` (`lib.trading_calendar`),
+     `report_date_claim` = `"INFERRED"`.
+  3. The caller (around line 894) passes the claim of the capture it read: the bronze sidecar's
+     `claimed_report_date[fund]` for that silver object (the sidecar `_bbg_latest` selected), so every Bloomberg row carries it.
+  4. The canonical `report_date` column (the partition / delivery day) is unchanged; only the attributes above move. Existing
+     tests stay green except those pinning the old `source_report_date` (each named in the report).
+- Out of bounds: `gold_trade_schedule.py`, `gold_holdings_coverage.py`, `render.py`, `publish_page.py`,
+  `enrichment_bloomberg.py`; no S3, no deploy. The proof that CGIC's windows move a trading day earlier (and a control fund
+  stays byte-equal) is the issuer's real run at the drain; the deploy follows the round-28 J1 reads under its own pair.
