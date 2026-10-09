@@ -703,3 +703,23 @@ deploy lane.
 | `DB-b-62` | E3: LARGE_FLOW_DAY 170 traced by sub-class, each fixed or named | LOCAL | DB-b-58 (merged) | B32-2 |
 
 fanout: 2 of 2 chains, cap 8, reason: E2 edits the reader E1 creates (one chain, one worker in order); E3 reads round 31's records only. Workers 0.9.0_WK_IRPT_DASHBD~38 (DB-b-60 then DB-b-61) and ~39, cut from box/dell2.
+
+## 35. ROUND 33, WORKSTREAM BD (2026-10-09 ~01:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-32 ADDENDUM 1 @78928255f6, on ADJUDICATION_v17)
+
+Round 32 is closed: the reader of record is `tieout/tieout_reader.py` (one fee-base writer), and flow-start gives 8,315 of 9,078. The CTO's
+rulings:
+- adopt both W39-S1 reader fixes;
+- measure the activity-and-lot release on the SERVED pandas 2.2.3 by one ad-hoc QA invoke, or report the measured refusal; a kit request
+  follows only a refusal.
+
+Issuer pre-read at cut (no invoke): the deployed function `irpt-49f-reporting-gold-lambda` was last modified 2026-10-03 on layer
+`irpt-performance-native-layer:1`. Its declared package (lambda-source-map) does NOT list `account_activity_lots.py`. DB-b-64 reads the
+deployed bytes and takes the branch rule.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-63` | E1: both W39-S1 fixes in the reader of record; 9,078 re-graded, within >= 8,315; every IN->OUT named | LOCAL | DB-b-61, DB-b-62 (merged) | B33-1 |
+| `DB-b-64` | E2: the served pandas 2.2.3 read -- deployed package + layer; one dry_run invoke only if the lots producer is packaged, else a measured REFUSED | WORLD | none open | B33-2 |
+| `DB-b-65` | E3: NEAR_ZERO_BALANCE 153 traced by sub-class, each fixed or named | LOCAL | DB-b-58 (merged) | B33-3 |
+
+fanout: 3 of 3 chains, cap 8, reason: disjoint surfaces -- E1 edits the reader, E2 reads the deployed function, E3 reads round 31's records. Workers 0.9.0_WK_IRPT_DASHBD~40, ~41, ~42, cut from box/dell2.

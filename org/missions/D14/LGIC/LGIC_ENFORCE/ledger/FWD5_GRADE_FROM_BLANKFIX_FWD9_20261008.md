@@ -27,3 +27,24 @@ FWD-5's ACCEPT (`LGIC_ENFORCE_PRD.md`, the FWD-5 card), clause by clause:
 2. The live plane: one census over the live AWS plane, denominator printed, beside the repository totals.
 3. The hand-ranking compare: the run's totals set beside the naming work's hand ranking, each difference explained.
 4. The loud stop: one planted name the check cannot read, which must stop the run (a positive control).
+
+## Re-grade 2026-10-09 ~01:2xZ, owed by LGIC_BLANKFIX ROUND_ANALYSIS.round7.md:18-19 (BLANKFIX FWD-5 REALIZED)
+
+**The run graded:** `3.0.0_SA_CVO`'s re-run at `45e2856e41`
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_BLANKFIX_ROUND7_L9_GRADE_BV2_BV3_20261008.md:23-24` @5e7cd9edbe):
+`ALL-ROOTS ok=True roots_total=87 mapped=63 unmapped=24 completed=63 stopped=0 items=1598 ... hole=285 ... uncounted=301`, rc 0 in 29.5 s.
+Not re-run by this seat.
+
+### Grade: NOT_REALIZED (advanced: 63 of 87 roots mapped, up from 13)
+
+| Clause | Read at `45e2856e41` | Verdict |
+|---|---|---|
+| everything, stored code and what is running | stored code: 63 of 87 roots; 24 unmapped, 301 items uncounted, 285 holes. Live plane: not in the run | NOT MET |
+| a ranked list of every breaking name with its correct form, totals shown | totals shown over 63 roots; "every" fails on 24 roots and the 301 uncounted | NOT MET (mapped scope met) |
+| totals agree with the hand ranking | not attempted | NOT MET (not attempted) |
+| an unreadable name stops the run loudly | `stopped=0`; the 285 holes are filed as holes, not stops. No planted unreadable name was run | NOT SHOWN |
+
+**What moved:** clause 1's stored-code half, from 13 to 63 roots. BLANKFIX round 8 (E1-E5, order: uncounted to 0 first, then holes, largest
+root first) moves it further. **What stays this project's own:** the live-plane census, the hand-ranking compare and the planted-name
+positive control (items 2-4 above); none is a BLANKFIX cell. Next re-grade: when BLANKFIX's census reads `unmapped=0 uncounted=0`.
+

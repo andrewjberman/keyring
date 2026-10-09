@@ -147,8 +147,9 @@ A CTO running this skill on its box ends the sweep by writing EACH card to the b
 list's path (`org/devices/state/<device>/open_calls.json`, one writer per box, the device from `AGENTBUS_DEVICE`):
 
 ```
-python .tools/open-calls.py add --project <CODE> --subject "<the call as the card's top line>" --asked-by <serial> \
-    --source <path of the file that holds the call> [--orders <order file> ...] [--roots <terraform root dir> ...]
+python .tools/open-calls.py add --project <CODE> --subject "<the call as the card's top line>" \
+    --context "<the card's 2 context lines: what created the call, what it gates>" --rec "<the card's REC and its why>" \
+    --asked-by <serial> --source <committed file that holds the call> [--orders <order file> ...] [--roots <terraform root dir> ...]
 python .tools/open-calls.py list            # this box's list, with the file's age; --all reads every box's file
 python .tools/open-calls.py close --id <id> --by <serial> --ruling <path of the ruling>
 ```

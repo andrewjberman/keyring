@@ -1021,3 +1021,31 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The tool decodes the escape before writing, so the file holds the character itself. A worker who needs a non-ASCII constant in a .py file must write chr() or build the escape with chr(92) after the write, and byte-scan the file before commit."
 }
 ```
+
+## IRPT_CUSTDY-W18-S1 -- the live generate function has no custody submission path: CUSTODY_FACTORY_REQUIRED on every non-prospect body
+
+```json
+{
+  "id": "IRPT_CUSTDY-W18-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~18",
+  "surfaced_at": "2026-10-09T01:46:00Z",
+  "one_line": "The live irpt-ycharts-generate (release 5, CodeSha256 4HEH1aDN) refuses every non-prospect submission with CUSTODY_FACTORY_REQUIRED: no live path creates a retained custody submission, so CU-g-5 cannot start and no AWS write was made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live read, 2026-10-09 ~01:4xZ: aws lambda get-function irpt-ycharts-generate -> CodeSha256 4HEH1aDNa39+vwLFK24SldMOBit/hiBKF4aQjlsU1zk=, Handler generate_installed.lambda_handler, LastModified 2026-10-09T01:34:40Z; the code zip downloaded and read (100 members)",
+      "live zip generate_installed.py, class RoutedSubmissionService.submit: 'input_id' in payload -> prospect branch, else 'raise CustodyFactoryRequired(\"CUSTODY_FACTORY_REQUIRED\")' (1 raise site); the docstring says 'the custody branch, which still refuses CustodyFactoryRequired'",
+      "live zip: custody_submission.py is a member and carries additional_policy_revisions (1 site, the E11 edit of TO-IB-yr-691), but 0 other zip members import custody_submission; generate_installed.py has 0 occurrences of additional_policy_revisions, so its repositories() (the one the handler uses) requests no irpt-custody-x10-v1 revision either",
+      "repo box/dell2 3fbfac4179: custody_submission / build_accepted_custody_entry referenced only by ycharts/generate/tests and export/tests/test_custody_writer_composed.py; AcceptedCustodyReader / AcceptedCustodyNormalizer have no runtime installer (intake/custody_portfolio.py, _scope/accepted_custody.py are read by tests and by generate_installed's docstring only)",
+      "docs/contracts/investor-reporting/v1/routes.json @3fbfac4179: the only submission route is POST /api/scoped/investor-reporting/analysis (irpt-ycharts-generate); the persist route POST .../custody-report needs a retained REQUEST_COMPOSITION custody artifact (custody_persist.py _check_request: schema irpt-analysis-composition.v1, lane CUSTODY, owner schema custody-owner-v1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CU-g-2a and decomp addendum 2: 'irpt-ycharts-generate release 5 (E11) LIVE: submissions request irpt-custody-x10-v1'; 'Find how a submission is created and retained in the live stack'; the gate state measured by the issuer says the submission path is live.",
+  "world_is": "Release 5 is live, but E11 edited custody_submission.py, a module the deployed handler never installs. The live handler routes a body without input_id to CustodyFactoryRequired, a named NOT_READY refusal, and its own retained repositories request no custody revision. So there is no product path that retains a custody submission, and the persist route has nothing to be pointed at (its retained_request must be a custody-owner-v1 / CUSTODY-lane composition). Nothing was written to AWS: not the submission (the path is a known refusal, so the call was not made) and not the persist. Also unread: how an Opal-operator bearer for the CUSTOM authorizer is obtained; the after-reads cited in the order (IB90-1, p90_cells) read AWS control-plane state and send no authenticated scoped request, and the render-token pattern (auth_p2_foreign_token_probe.py) mints a render principal, not an Opal operator. What would unblock: IRPT_BCKEND wires a custody service into generate_installed (an accepted-custody reader, build_accepted_custody_entry, the custody revision on its repositories) and releases it, and names the operator-credential route for a scoped POST. Criteria CU21-AC1 and CU21-AC2 cannot be met as written; CU21-AC3 (offline) was not built, to avoid a verifier for a path that does not exist."
+}
+```
