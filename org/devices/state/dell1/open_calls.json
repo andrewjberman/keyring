@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T05:55:57Z",
+ "written_at": "2026-10-09T08:46:28Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -785,6 +785,217 @@
      "resources": [],
      "shared": [
       ".tools/safe_deploy_core.py is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261009T063803Z-4f63",
+   "project": "MDPF_SECCLASS",
+   "subject": "e75 widened by ONE relationship outside the signed 36: z08296368 PDBC other->commodities on 157 retained dates -- keep or roll back?",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/E75_RETAINED_RECLASS_DIFF_20261009.json",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T06:38:03Z",
+   "kind": "fork",
+   "context": "Leg G criteria met (0 multi_asset over 3,354 concentration keys; reclass line present). reclassify_retained moves ANY class outside the six; the half counted multi_asset only. 298 = 141 multi_asset in the signed 36 + 157 other->commodities in z08296368. Rollback VersionIds in the ledger (HELD). Gates the e75 close.",
+   "rec": "Keep: the new class is correct (PDBC is a commodity ETF) and a rollback re-serves the non-six 'other'; record it as an accepted one-relationship widening.",
+   "scope": {
+    "measured_at": "2026-10-09T06:38:03Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of LGIC_ENFORCE placed on laptop (data/assets/scripts/gold/investor_reporting/holdings_snapshot.py)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by LGIC_ENFORCE on laptop",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T07:23:16Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/critical_paths/cross_adjudication/20261009T0652Z_XA-20261009T065105Z-2797.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T065105Z-2797"
+   },
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T065105Z-2797",
+    "at": "2026-10-09T06:51:05Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261009T074007Z-9547",
+   "project": "MDPF_SECCLASS",
+   "subject": "thread-r3 B4 + cot-repoint S: the UI walker cannot open one relationship (no client search) nor select a firm before pressing -- close on served bytes + the walked firm page?",
+   "asked_by": "2.0.0_SA_COO~M1",
+   "source": "org/critical_paths/.open_deploys/secclass-bd-thread-r3-m-20261001.json",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T07:40:07Z",
+   "kind": "fork",
+   "context": "SC-e-59 in PROD bf780f94 (B4 gate opened). Walk on PROD tree: 49F firm Mix tiles = served mix_summary to the dollar; z08327149 served composition VXX structured/Hedge etf-classifications; GLD/PHYS not held there (table: commodities/Metals); run class_source 0 bd-securities. Gates the B4 and S closes.",
+   "rec": "Close B4 on the served bytes plus the walked firm page; close S on the scheduled 10:30Z COT run's served reads plus the same walk; record the walker limits as a surprise row.",
+   "scope": {
+    "measured_at": "2026-10-09T07:40:07Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of LGIC_ENFORCE placed on laptop (data/assets/scripts/gold/investor_reporting/holdings_snapshot.py)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by LGIC_ENFORCE on laptop",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T074836Z-96fb",
+    "at": "2026-10-09T07:48:36Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261009T074602Z-68a7",
+   "project": "LGIC_BLANKFIX",
+   "subject": "Switch ON the placement refusal (org/mcp/naming-place.enforce, a tracked file: every box)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round9.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T07:46:02Z",
+   "kind": "fork",
+   "context": "Round 9 graded MET (SWITCH-ON 11/11); round-9 analysis R1. Cross-box because the switch file is tracked and reaches every box via CLOUD; on top of XA-20261009T005240Z-625e.",
+   "rec": "ON: one commit, announced to every box manager; first read is FWD-6's live exercise; rollback = delete the file",
+   "scope": {
+    "measured_at": "2026-10-09T07:46:02Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/logic/10_ONBOARDING_CHECKLIST.md overlaps the write set of LGIC_CANON placed on laptop (infra/logic/10_ONBOARDING_CHECKLIST.md)",
+      ".tools/naming-gate.py overlaps the write set of LGIC_ENFORCE placed on laptop (.tools/naming-gate.py)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_naming_rootmap.py is on the shared branch (lib)",
+      "lib/tests/test_opal_naming_rootmap.py is on the shared branch (lib)",
+      "lib/opal_naming_rootcheck.py is on the shared branch (lib)",
+      "lib/tests/test_opal_naming_rootcheck.py is on the shared branch (lib)",
+      "lib/tests/test_opal_naming_keyfill.py is on the shared branch (lib)",
+      "lib/opal_naming_scope.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null,
+   "escalation": {
+    "to": "xadj",
+    "ref": "XA-20261009T074741Z-3003",
+    "at": "2026-10-09T07:47:41Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": null
+   }
+  },
+  {
+   "id": "dell1-20261009T084628Z-86a2",
+   "project": "AMGT_RESAPP",
+   "subject": "Rotate anthropic-api-key (mint a new key in the Anthropic console, swap the secret)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T08:46:28Z",
+   "kind": "act",
+   "context": "A worker printed the key in cleartext into its LOCAL dell1 session transcript (row AMGT_RESAPP-D1-W324-S3 @f00cb74f1d). Measured: 0 hits in any commit, the scratch log redacted, nothing sent to the vendor. Rotation needs vendor console access.",
+   "rec": "Rotate now; then swap the secret via comp-secrets and re-read one analyze call",
+   "scope": {
+    "measured_at": "2026-10-09T08:46:28Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_DASHBD placed on dell2 (org/critical_paths/change_management)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/filings/drafting_build.py is on the shared branch (lib)",
+      "lib/research/filings/tests is on the shared branch (lib)",
+      "lib/research/drafting is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
      ]
     }
    },

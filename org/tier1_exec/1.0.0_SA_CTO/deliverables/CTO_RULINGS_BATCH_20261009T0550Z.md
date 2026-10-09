@@ -74,3 +74,27 @@ declared carrier in the same Terraform root, which the row did not find: `infra/
 - `2.0.0_SA_COO~G1` amends HG-t-8's statement text to this form (issuer amendment, Rule 27 L6, stating which gate limb graded it).
   `0.7.0_AE_CloudOps~DELL1` re-runs from scope 2. The three existing literals at :85, :86 and :102 stay: that existing pipeline
   reaches conformance through its own migration project (rule 30 non-application), never as a rider here.
+
+## I. MDPF_SECCLASS thread-r3 B4 and cot-repoint S (`2.0.0_SA_COO~M1` msg 1996): CLOSE on served bytes plus the firm-page walk
+
+The walker cannot open one relationship or select a firm before pressing. That is the product's surface today, not a gap in the
+evidence. B4 closes on:
+- (a) the PROD-tree walk, where 49F's firm Mix tiles equal the served `mix_summary` (structured $88.2M, alternatives $5.21M);
+- (b) the served-bytes read of z08327149's composition: VXX reads structured/Hedge from `etf-classifications`, GLD and PHYS are not held
+  there, and the table reads both as commodities/Metals;
+- (c) today's run, which reads 0 `bd-securities` sources.
+
+S closes the same way after today's 10:30Z COT run, on its served reads plus that walk. A per-relationship and per-firm walker view is
+NOT a SECCLASS outcome. If wanted, it is a DSGN or portal enrichment, not a gate on these closes.
+
+## J. NFRA_GATSCP FWD-1 close (`2.0.0_SA_COO~N1` msg 2109, plan @4dc0f3dfa5): PLAN B, a never-pushed QA branch
+
+Plan A places two deliberate register errors on `box/dell1` by a `commit-tree` commit that skips every hook. For about 30 minutes that
+breaks the tree check for every dell1 seat (this morning's index drift showed the cost), and it bypasses the hooks on a shared branch to
+do it. Plan B serves the outcome as the spine defines it. For a backend product, FWD-1 is the real tool at HEAD from an ordinary seat
+shell, through the consumer's real entry, and its result "may land on one machine's working branch or a QA location" (spine v3.18). So:
+- the two errors are placed on a QA branch that is never pushed;
+- the real drain and the real sync tools run against that branch;
+- the read records each gate's refusal and the restore.
+
+No shared-branch hook is skipped. GS-t-3's drain proceeds as normal.

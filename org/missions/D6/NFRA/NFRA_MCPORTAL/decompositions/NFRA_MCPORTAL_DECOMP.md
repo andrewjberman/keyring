@@ -553,3 +553,257 @@ land; MP-x-4 and MP-x-5 follow within chain A.
 2. FWD-15 to FWD-19 are subtracted (analysis section 5): FWD-15 to FWD-17 are cut the round after FWD-14 grades REALIZED.
 3. Z-S14 belongs to NFRA_OPLGTW (R-17). The round-1 ARMED rows C-S8, C-S10 and W3-S3 are this issuer's by transfer (R-18),
    and W3-S2 is re-read at this cut; those are row acts, not cells.
+
+# WORKSTREAM CP2, ROUND 1 -- FWD-15, FWD-16, FWD-17 ON THE CONTROL PLANE (L5, v6)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v6",
+ "step": 5,
+ "workstream": "CP2",
+ "round": 1,
+ "input": "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round6/R6_DECOMP_DRAFT.md@54c2fd91b6 (Q1-Q3 RULED (a), 1.0.0_SA_CTO~O msg 32404) + the producers @5bf8350baa (4.0.0_SA_CRO, read back from S3 on all four boxes 2026-10-09 07:28Z)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@cecf26d2c9 (v0.5: FWD-15..17, C11, C13, C14, A15..A17; ratified-text half signed @8de5b2dc76)",
+ "authority": "org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/ANDREW_DIRECT_20261009_060xZ_CP2_WORKSTREAM_APPROVED_START_POST_REBOOT.md",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 7,
+ "chains": 5,
+ "join_cells": 2,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~MP`, re-instantiated after the site Z reboot. **Authority:** Andrew approved this seat's ask at
+~06:0xZ 2026-10-09: FWD-15 to FWD-17 issue NOW as a second workstream, `CP2`, while round 5 waits on NFRA_OPLGTW r29 and his
+gates ("i approve your ask, you can start there when you are reinstantiated"). That word overrides the round-4 analysis's
+sequencing line ("FWD-15 to FWD-17 are cut the round after FWD-14 grades REALIZED"). It does not override the release order:
+CP2's release follows MP-x-4. Every order carries `<workstream>CP2</workstream>` beside `<round>1</round>`, so the
+one-issuance limb keys CP2 apart from round 5 (`to-pipeline-gate.py` GATE (x), row IRPT_BCKEND-S179). Rounds 1 to 5 above
+stay frozen.
+
+## CP2.0 WHY THE CELLS ARE GATEWAY-SIDE ONLY (the ruling)
+
+The gateway host holds no git, no checkout and no box's working tree. Its fabric data is the S3 read MP-x-3 granted (LIVE):
+`fabric/activity/v1/` and `fabric/open-calls/v1/`. `1.0.0_SA_CTO~O` ruled (a) on Q1-Q3 (msg 32404). The three producers
+are other owners' and are LIVE on all four boxes (read 2026-10-09 07:28Z):
+
+| FWD | producer (writer) | S3 key | schema |
+|---|---|---|---|
+| 15 | `.tools/open-calls-scan.py` every pass | `fabric/open-calls/v1/box=<B>/open_deploys.json` | `open-deploys/1` |
+| 16 | `.tools/fabric-gitstate.py` from `box-sync.sh` | `fabric/activity/v1/gitstate/box=<B>/<stamp>.json` + `latest.json` | `fabric-gitstate/1` |
+| 17 | `.tools/open-calls.py` (list), `.tools/open-calls-scan.py` (applies requests) | `fabric/open-calls/v1/box=<B>/open_calls.json`; requests `.../requests/<id>.json`; results `.../request_results/<id>.json` | `open-calls/1`; `open-calls-close-request/1`; `open-calls-close-result/1` |
+
+So this project builds three read handlers, one write of a close REQUEST, the page panels, the one PutObject grant, the
+release and the close run. The producers are not cells. A box with no record reads "absent" or "not recorded".
+
+## CP2.1 THE CELLS -- 7
+
+| Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-o-1` | FWD-15, C13, A15 | `app/refs/overlap_rules.json` (kinds and the deploy rule, versioned) + `GET /fabric/overlap` per CP2.3-O + tests (planted Terraform-with-open-deploy rated above planted shared log; the real capture) | worker `~8` | `app/admin_fabric_overlap.py`, `app/refs/overlap_rules.json`, `tests/test_admin_fabric_overlap.py` (all new) | WORLD (live only through MP-r-2) |
+| `MP-s-1` | FWD-16, C14, A16 | `GET /fabric/gitstate` per CP2.3-G + tests | worker `~9` | `app/admin_fabric_gitstate.py`, `tests/test_admin_fabric_gitstate.py` (new) | WORLD (via MP-r-2) |
+| `MP-k-1` | FWD-17, C11, A17 | `GET /fabric/calls` + `POST /fabric/calls/close` (writes ONE request object) per CP2.3-K + tests | worker `~10` | `app/admin_fabric_calls.py`, `tests/test_admin_fabric_calls.py` (new) | WORLD (via MP-r-2) |
+| `MP-p-2` | FWD-15..17 on the page (S14, S15) | mcportal: Overlap and Git state panels on Control Plane; the Open Calls page with the close form; client functions; tests | worker `~11` | mcportal `src/pages/control-plane/*`, `src/pages/open-calls/*` (new), `src/api/admin.ts`, `src/api/admin.test.ts`, `src/App.tsx`, `src/shell/pages.ts`, `src/shell/sidebar.test.ts` | WORLD (via MP-r-2) |
+| `MP-k-2` | FWD-17 hop (the write grant) | `gateway-mcportal-close-request-write-policy`: `s3:PutObject` on `fabric/open-calls/v1/box=*/requests/*` ONLY; never-widen pair (CTO `1.0.0_SA_CTO~O` + COO `2.0.0_SA_COO~MP`) signed against the applier's ASK before the apply; `safe-apply`; NEVER-2; simulation read-back | `0.7.0_AE_CloudOps~MP` | `infra/aws/terraform/opal-gateway/mcportal_close_request_write.tf` (new), ledger paths | WORLD |
+| `MP-r-2` | FWD-15..17 live | the gateway release on MP-x-4's live base: the three handlers + the merge-time route lines + the MP-p-2 bundle; NEVER-2; manifest; on-host read-back | `0.7.0_AE_CloudOps~MP` | `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths | WORLD |
+| `MP-q-1` | FWD-15..17 DONE WHEN | the close run: Andrew reads one real overlap and one box's git state on the page and closes ONE real call with his ruling; the worker reads the store for each and the close's RESULT object back; carries the workstream's JUDGMENT criterion | worker `~12` | its deliverables only | WORLD |
+
+**The hookup belongs to no cell** (report 2 C10). `app/admin_api.py` gets four route lines at the merge, in ONE issuer
+commit: `/fabric/overlap` GET, `/fabric/gitstate` GET, `/fabric/calls` GET, `/fabric/calls/close` POST. Each handler cell
+exports its handler and names its line in its report.
+
+## CP2.2 SHARED READ CODE
+
+`app/admin_fabric.py` (MP-x-1, drained) already holds `BUCKET`, `_s3_client()`, `_roster()`, `_list_keys()`,
+`_read_records()`, `_cache_put()` and the `run_in_threadpool` + 503 discipline. The three handler cells IMPORT these and
+never edit `admin_fabric.py`. A cell that needs a variant writes it in its own module.
+
+## CP2.3 THE CONTRACTS (fixed here so the four build chains run in parallel)
+
+Every route sits under `/api/admin` behind `owner_gate.owner_only`. A store failure that is not a plain absence answers
+**503** `{"error": "store unreadable", "reason": "<ExceptionClass: message>"}` and never a 200 with an empty list. A
+missing object (`NoSuchKey` / 404) is an ABSENCE and is labelled, never a zero.
+
+### CP2.3-O `GET /api/admin/fabric/overlap?hours=N` (FWD-15)
+
+N is an integer from 1 to 24, default 6; anything else is 400.
+```
+{ "window": {"hours": N, "start": "<ISO Z>", "end": "<ISO Z>"},
+  "read_at": "<ISO Z>", "records_scanned": <int>, "records_skipped": <int>,
+  "source": "s3://opal-313476888478-globgrph/fabric/activity/v1/",
+  "rules": {"file": "app/refs/overlap_rules.json", "version": "<string>"},
+  "deploys": [ {"box": "<roster name>", "status": "read" | "absent", "published_at": "<ISO Z>" | null, "open": <int> | null} ],
+  "overlaps": [ { "surface": "<surface key>", "cls": "INFRA" | "CODE" | "REGISTRY" | "TOOL" | "RECORD" | "APPEND",
+                  "boxes": [ {"box": "<name>", "commits": <int>, "seats": ["<serial>"], "last": "<ISO Z>"} ],
+                  "last": "<ISO Z>",
+                  "deploys_open": [ {"box": "<name>", "slug": "<slug>", "status": "<status>", "opened_at": "<ISO>"} ],
+                  "rating": <int>, "label": "<text>" } ] }
+```
+- **Records:** the window's activity records, read and deduplicated exactly as MP-x-1 does (by `sha`, the measured claim
+  wins; `when` at or after the start).
+- **An overlap** is a surface `key` (from each record's `surfaces[]`) touched by two or more distinct ROSTER boxes in the
+  window. Every class is listed, APPEND and RECORD included, because A15 rates a shared log BELOW a Terraform surface and
+  must show both.
+- **The rule file** `app/refs/overlap_rules.json` holds:
+  - `version`;
+  - `kinds`: per class, its `rank` and its `label`. The order is INFRA ("Terraform") > CODE > REGISTRY > TOOL > RECORD >
+    APPEND ("shared log"): PRD C13's order, with the activity writer's two extra classes below it;
+  - `deploy_uplift`: an integer larger than the whole kind range;
+  - `deploy_open_statuses`: `["OPEN", "HELD-SOVEREIGN-GATED"]`, the two statuses the producer emits for a sentinel still
+    on disk;
+  - `names`: per surface-key prefix, the needle templates that say an open-deploy entry NAMES that surface. For example,
+    `"tf:": ["infra/aws/terraform/{name}/"]` and `"lambda-src:": ["infra/aws/lambda/{name}/"]`, where `{name}` is the key
+    after its prefix.
+- **Naming:** an entry names a surface when a needle is a substring of the entry's `title`, `entry_path` or any leg
+  `target`. A prefix with no `names` row is never deploy-matched and is rated by kind alone.
+- **Rating:** `rating = kinds[cls].rank + (deploy_uplift if deploys_open else 0)`. `label` is the kind label, plus
+  " -- deploy open" when uplifted.
+- **Order:** `overlaps` sorts by rating descending, then box count descending, then `last` descending.
+- **`deploys`:** one row per roster box, from `fabric/open-calls/v1/box=<B>/open_deploys.json`. NoSuchKey gives `"absent"`
+  and `open` null. A read gives `"read"`, `published_at`, and `open` = the count of entries whose status is in
+  `deploy_open_statuses`.
+
+### CP2.3-G `GET /api/admin/fabric/gitstate` (FWD-16)
+
+```
+{ "read_at": "<ISO Z>", "source": "s3://opal-313476888478-globgrph/fabric/activity/v1/gitstate/",
+  "trunk": {"head": "<12>" | null, "first_seen": "<ISO Z>" | null, "claim": "inferred", "basis": "<text>"},
+  "boxes": [ { "box": "<roster name>", "status": "recorded" | "not recorded", "at": "<ISO Z>" | null,
+               "box_branch": "<text>" | null, "box_head": "<12>" | null, "origin_box_head": "<12>" | null,
+               "trunk_head": "<12>" | null, "unpushed": <int> | null, "pushed_not_on_trunk": <int> | null,
+               "behind_trunk": <int> | null,
+               "state": "committed, not pushed" | "pushed, not on trunk" | "on trunk" | "not recorded",
+               "unread": ["<text>"],
+               "last_pass": {"mode": "<text>", "rc": <int>, "note": "<text>", "serial": "<text>"} | null,
+               "integration_refused": {"at": "<ISO Z>", "note": "<text>"} | "not recorded" } ] }
+```
+- **Source:** `boxes` has one row per roster box, from `gitstate/box=<B>/latest.json`. NoSuchKey gives
+  `status` "not recorded", `state` "not recorded", and every other field null (`unread` empty).
+- **`state`:**
+  - `unpushed.count > 0` -> "committed, not pushed";
+  - else `pushed_not_on_trunk.count > 0` -> "pushed, not on trunk";
+  - else a null head or count (the producer names an unreadable ref null) -> "not recorded";
+  - else "on trunk".
+- **Field mapping:** `unpushed` and `pushed_not_on_trunk` carry the record's `.count`. Shas are cut to 12 characters.
+- **`trunk`:**
+  - `head` is the `trunk_head` of the newest `latest.json`, by `at`.
+  - `first_seen` is the earliest `at` among that box family's history records (`gitstate/box=<B>/<stamp>.json`, every
+    box, the last 48 hours by key stamp) that carry that head.
+  - `claim` is always "inferred". `basis` says so: the first record seen carrying the head, not the push time, which C14
+    says has no home yet.
+- **`integration_refused`:** the newest history record of that box whose `pass.mode` is "integrate" and whose
+  `pass.rc` is not 0. If there is none, the literal "not recorded".
+
+### CP2.3-K `GET /api/admin/fabric/calls?state=open|all` and `POST /api/admin/fabric/calls/close` (FWD-17)
+
+GET (default `state=open`; any other value is 400):
+```
+{ "read_at": "<ISO Z>", "source": "s3://opal-313476888478-globgrph/fabric/open-calls/v1/",
+  "boxes": [ {"box": "<roster name>", "status": "published" | "absent", "written_at": "<ISO Z>" | null,
+              "written_by": "<serial>" | null, "scanned_at": "<ISO Z>" | null, "open": <int> | null} ],
+  "calls": [ {"box": "<name>", "id": "<id>", "project": "<CODE>", "subject": "<text>", "asked_by": "<serial>",
+              "opened_at": "<ISO Z>", "state": "<OPEN|CLOSED|...>", "source": "<path>",
+              "request": {"id": "<rid>", "state": "PENDING" | "APPLIED" | "REFUSED", "requested_at": "<ISO Z>",
+                          "detail": "<text>" | null} | null } ] }
+```
+- **Boxes:** one row per roster box, from `box=<B>/open_calls.json` (`rows[]`) and `box=<B>/scan.json` (`scanned_at`).
+  An absent `open_calls.json` gives `"absent"`, `open` null, and no calls.
+- **Calls:** `state=open` keeps rows whose `state` is "OPEN". `calls` sorts by `opened_at`, oldest first.
+- **Requests:** list `box=<B>/requests/` and read each request. Its result is `request_results/<id>.json`; NoSuchKey
+  means PENDING. The NEWEST request per `call_id` attaches to its call.
+
+POST, JSON body `{"box": "<roster name>", "call_id": "<id>", "ruling": "<text>"}`:
+- **Validation:**
+  - a box not on the roster -> 400;
+  - an empty `ruling` (after strip) or one over 4000 characters -> 400;
+  - a `call_id` that is not an OPEN row of that box's `open_calls.json`, read NOW -> 409 `{"error": "call not open on
+    that box"}`, and the same 409 when the list is absent.
+- **The write:** ONE `put_object` to `fabric/open-calls/v1/box=<B>/requests/<rid>.json`, `ContentType`
+  `application/json`.
+  - `rid` = `<YYYYMMDDTHHMMSSZ>-<8 hex>` (the scan's `^[A-Za-z0-9._-]{1,80}$`).
+  - The body is `{"schema": "open-calls-close-request/1", "id": rid, "call_id", "ruling" (stripped, otherwise verbatim),
+    "ruled_by": "andrew", "requested_at", "requested_by": "andrew", "owner": request.state.owner_email}`.
+- **Answer:** 202 `{"request_id": rid, "key": "<key>", "state": "PENDING"}`. A failed put -> 503
+  `{"error": "request not written", "reason": ...}`.
+- **Bound:** this is the gateway's ONLY write to the bucket. The box's scan applies it through `open-calls.py close
+  --ruled-by andrew` and writes the result. The page never edits a list (C11).
+
+## CP2.4 THE PAGE (MP-p-2, against CP2.3)
+
+- **Control Plane** (`/control-plane`, MP-x-2's page) gains two panels below the boxes table: **Overlap** (rated rows,
+  the deploy-open ones marked, each with its boxes and age; the `deploys` row per box, "absent" where absent) and **Git
+  state** (one row per box: state, heads, counts, age; "not recorded" verbatim; the trunk head with "first seen" and its
+  claim). Both re-fetch on MP-x-2's 60 s refresh.
+- **Open Calls** (`/open-calls`, new, sidebar entry after Control Plane): every call with box, project, asking seat and
+  age; an absent box reads "absent", never an empty list; a Close form per OPEN call (a ruling text box and a Close
+  button) that POSTs CP2.3-K and then shows the request as PENDING, later APPLIED or REFUSED with its detail.
+
+## CP2.5 DEPENDENCY EDGES AND CHAINS
+
+```
+chain O   MP-o-1 --\
+chain G   MP-s-1 ---+--> MP-r-2 --> MP-q-1     the release ships every handler and the bundle; the close run reads the live page
+chain K   MP-k-1 ---+
+chain P   MP-p-2 --/
+chain W   MP-k-2 --/                           the close's write needs the grant APPLIED before MP-r-2's read-back can POST
+joins     MP-r-2 (o-1, g-1, k-1, p-2 drained + routes hooked up + k-2 applied + G-REL2)    MP-q-1 (r-2 drained + G-SEE2)
+```
+
+**Fan-out:** `N = 4 of M = 5 chains, cap 8` at the issuance: workers `~8` (MP-o-1), `~9` (MP-s-1), `~10` (MP-k-1) and `~11`
+(MP-p-2). Chain W is the applier seat `0.7.0_AE_CloudOps~MP`, which gets its GO by message because it is a seat, not a
+worker. MP-r-2 and MP-q-1 are issued STAGED (row Z-S19: a round's cells are cut in its one issuance).
+
+## CP2.6 GATES
+
+- **MP-o-1, MP-s-1, MP-k-1, MP-p-2:** none. They start at the issuance.
+- **MP-k-2:** none to start the build and the ASK. The apply waits on the never-widen pair signed against the ASK at its
+  commit: CTO half `1.0.0_SA_CTO~O` and COO half `2.0.0_SA_COO~MP`. This is the CTO's ruling on Q3 (msg 32404).
+- **G-REL2 (MP-r-2):**
+  - MP-x-4 (round 5) is drained and live;
+  - the four build cells are drained, and the issuer's route hookup has landed;
+  - MP-k-2 is applied.
+
+  Holder: the issuer. MP-x-4's own gate is G-REL, NFRA_OPLGTW r29 live.
+- **G-SEE2 (MP-q-1):** MP-r-2 is drained. The issuer cards Andrew ONCE. He reads one overlap, reads one box's git state,
+  and closes one real OPEN call with his ruling. Holder: Andrew.
+
+## CP2.7 RULE 24 RECORD (the three new value sets)
+
+- **`state` (CP2.3-G)** is over the domain "a roster box's latest gitstate record, or its absence":
+  - MECE by construction: absent -> "not recorded"; then unpushed > 0; then pushed-not-on-trunk > 0; then a null field ->
+    "not recorded"; then "on trunk".
+  - Same grain: one box at one record.
+  - One axis: where the box's newest commit sits.
+  - State coherence: re-running box-sync moves a box out of "committed, not pushed"; integration moves it out of
+    "pushed, not on trunk". Neither remedy moves a "not recorded" box, which needs the producer.
+- **`status` "read" | "absent" and "published" | "absent"** are over "the per-box object exists". They are MECE (a read
+  either returns the object or NoSuchKey; any other failure is the 503 arm, outside the set).
+- **The overlap classes** are the producer's six (`fabric-activity.py` `CLS_RANK`), adopted unchanged. They are not a
+  new enum.
+- **Token census:** none of `not recorded`, `absent`, `PENDING`, `APPLIED` or `REFUSED` is new to the estate. Each is
+  the PRD's or the producer's own word.
+
+## CP2.8 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The real overlap count, the gitstate history size and the open-call count are read by the cells,
+   from the capture and from the live store at MP-r-2.
+2. **The capture:** the seam fixture is a VERBATIM capture of the live store,
+   `deliverables/2.0.0_SA_COO~MP/cp2/fixtures/s3_capture_20261009T0728Z.json`. It holds 944 objects: every
+   `open-calls/v1` object, every `gitstate` object, and the activity records stamped 04:00Z-07:59Z on 2026-10-09. It is
+   a fixture of REAL shapes, not live evidence. Live evidence is MP-r-2's read-back and MP-q-1.
+3. **Not measured:** that the producer's `trunk_head` agrees across boxes at one instant. Each box fetches on its own
+   clock. The page shows each box's own trunk head and age, and the `trunk` row is "inferred".
+4. **Out of scope:** push and fetch EVENTS (C14's "no readable home") stay "not recorded" beyond what the gitstate record
+   carries. Giving them a home is `4.0.0_SA_CRO~A`'s GitOps work.
+5. **Subtracted:** FWD-18 and FWD-19 go to the next workstream round.
+
+## CP2.9 AMENDMENT 1 (issuer, before any spawn): the git-state cell is `MP-s-1`
+
+The issuance cut the git-state cell as `MP-g-1`. That id is round 2's claims-capture cell (R2.1, order
+`NFRA_MCPORTAL.TO-MP-g-1.claims-capture-and-history.md`, `<to_id>NFRA_MCPORTAL.TO-MP-g-1</to_id>`, complete). Two cells
+under one id is the two-allocators-one-sequence class: a rollup resolves the id to whichever it reads last. The CP2
+cell is renamed `MP-s-1` here and in its order. The ORDER FILE keeps its path
+(`NFRA_MCPORTAL.TO-MP-g-1.fabric-gitstate-handler.md`), because a renamed file is a newly-added order and GATE (x)
+refuses a second issuance into CP2 round 1. The order now answers to `<to_id>NFRA_MCPORTAL.TO-MP-s-1</to_id>` and to
+its filename stem (`proof-of-spec-check.py:758`). The checks keep their file names `g1.AC*.sh`.

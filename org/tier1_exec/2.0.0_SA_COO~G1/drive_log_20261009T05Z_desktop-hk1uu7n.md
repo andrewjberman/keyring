@@ -1,0 +1,12 @@
+# drive log 2.0.0_SA_COO~G1, 2026-10-09 05Z-08Z (desktop-hk1uu7n) -- MDPF_HEALGAP
+
+This file holds only the substantive events.
+
+## event 2026-10-09T05:3xZ operator at this terminal: "If there's things you're already expecting to do downstream, why not just do them now?" ... "go ahead". R2-1 pulled forward as cell HG-t-8 (decomposition round 2 amendment A1); the tree order was refused by to-pipeline-gate (ONE ISSUER PER ROUND) and carried as ADHOC.healgap-r2-1-runner-reads-own-result to 0.7.0_AE_CloudOps~DELL1 @15091a3a96 (override audited). partner_roster order amended A2 (msg 1814 CloudOps conditions). Early decision asks to CTO~DELL1 on D1-S7(b) and the FWD-6 residuals
+## event 2026-10-09T05:5xZ CTO batch @6c538a0bfd: D (satellites keeps cron(0 7) + a 12:00Z stamp-reading fire; HG-t-5 freed) and E (FWD-6: heal asset-dim + ASTN FT in round 3; Schwab SI2 a known manual exposure). Recorded in R2_DRAIN_END_REPORT_DRAFT @9e7f96e03f
+## tick 2026-10-09T06:13Z act-1 L4 partial: result COMPLETE (the first live result object), stamp, silver 06:01:03Z. CloudOps~DELL1 unregistered with an unread GO -> /mstr-spawn (1pt 0/36, markers 0, conc 17/20) -> LIVE PID 27028
+## tick 2026-10-09T07:13Z act 1 L4-OK (satellites as_of 10-09 07:00:19Z); ledger healgap-r2-act1 CLOSED 4/4 @aef4030219. Act 3 precondition MET
+## event 2026-10-09T07:2xZ R2-1 refused by the naming limb (typed 'cottonwood', row D1-S9). CTO ruling H @1af255b7da: firm via ${one(local.monolith_source_scopes.blackdiamond)}; issuer measured naming-gate PASS 0 graded; order amendment A1 @83028dca8a; re-GO
+## event 2026-10-09T07:5xZ R2-1 LANDED (edit ba88934f7b). Issuer read the live policy: 4 statements, ReadOwnRunResult s3:GetObject on .../cottonwood/meta/*-result.json, 49f Deny intact. Simulation denied to the dell1 principal (re-measured, row D1-S10) -> amendment A2 @37ce04cf93: C5a deny arms from the live policy; C5b allow arm EXERCISED at act 3 (healed_at). hg_r2_act3.py --repaired now requires healed_at non-null @416f30cd67
+## event 2026-10-09T07:5xZ msg 2040: staged ledger files blocking dell1 safe-merges -- measured cleared (0 staged; committed 2dc50a181e); told 2.0.0_SA_COO~V1
+## tick 2026-10-09T08:13Z R2-1 order reads `complete` in the working tree, but the close is uncommitted and the proof instance at HEAD validates INVALID (the C5a script is untracked). Not accepted; validation waits on the assignee's commit and report

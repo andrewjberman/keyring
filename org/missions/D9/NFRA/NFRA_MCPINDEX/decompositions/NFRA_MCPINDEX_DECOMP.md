@@ -1220,3 +1220,42 @@ served catalog, by a reader who is not the author.
 - no tool ships without its catalog entry and class (C2);
 - egress is open except Bloomberg (law edit @4d77a9c3ea), but no cell calls a vendor beyond the live reads named;
 - discover still reads NO body except the as-of field FWD-13 requires, and that read is the served object's own field.
+
+# ROUND 9 -- PRD v0.8: THE OPERATIONS LEAD'S READERS, FWD-19 (L5, 2.0.0_SA_COO~MI, 2026-10-09)
+
+Source: PRD v0.8 @0eff9e0e6d, landed @a71e82b221 (`1.0.0_SA_CTO~O`, msgs 32485 and 32502), FWD-19 and the v0.8 addendum's
+contract changes 1-5. ADMITTED at L5: ratified-text SIGNED by `3.0.0_SA_CVO~Z` (current), brief SIGNED (auto).
+Shape: OW-k-1's fixtures `tools/ops_kit/fixtures/trade_rec.json` and `billing.json` @cc539738c6 (12 rows each, top-level
+`as_of` + `rows`). The trade_rec fields are `account custodian trade_date symbol side quantity opal_status
+custodian_status matched`. The billing fields are `account household billing_period aum fee_rate_bps fee_amount status`.
+**Issued in ONE issuance after round 8 drains** (the addendum's Order), and after MX-r-9 has left the release queue.
+The write surface is disjoint from round 8's: new reader modules plus new catalog entries. The only shared file is the
+catalog, and it has ONE writer, cut last.
+
+| Cell | Serves | What | Base | Risk |
+|---|---|---|---|---|
+| `MX-o-1` | FWD-19 (trade rec); contracts 1-3 | FIRST the source census (C1's bar): every candidate producer of a per-trade Opal status and a custodian status, each with its denominator, and the surviving source read once. Candidates named by the PRD, which are candidates only: the trade engine's statuses and the custodian silver transactions. Then the reader: one gateway tool returning fixture-field rows inside the C4 envelope (firm or master scope, as-of read from the served object, completeness). C7 isolation applies: no row and no sum crosses a firm or master. The tool name is builder output (rule 30). The fixture is a test input only. If no source survives the census, the cell ships a GAP finding naming the owner and builds no tool | after round 8 drains | WORLD (reads live served data) |
+| `MX-o-2` | FWD-19 (billing); contracts 1-3 | the same two acts for billing. Candidate: the Black Diamond fees read behind `blackdiamond_list_fees` (`app/integrations/blackdiamond/integration.py:48`). Census first, then a fixture-field reader or a GAP finding | after round 8 drains | WORLD |
+| `MX-c-7` | FWD-19 catalog; contract 4 | the catalog's ONE writer adds six entries. The two readers' entries are SERVED with tool and class read, or GAP with the owner MX-o-1 or MX-o-2 named. The four items carried as GAP, `unowned`, with no tool: post model update rec, high cash account alert FA, assets transfer alert FA, restricted account alert FA. The three FA alerts are under the standing moratorium, so this cell builds nothing for them | after MX-o-1 and MX-o-2 | WORLD (infra floor) |
+| `MX-r-10` | FWD-19 live | the gateway release of MX-o-1, MX-o-2 and MX-c-7 through the opal-gateway release train (`2.0.0_SA_COO~O` queue; PHASE A by the worker, PHASE B by a site-Z CloudOps lane under never-widen halves). Then, under an ALREADY ADMITTED principal, the on-demand live read of each SERVED reader: rows carry the fixture fields, and the envelope states scope, as-of and completeness | after MX-c-7 drains and MX-r-9 has released | WORLD |
+
+**Chains (fan-out 2 of 2 chains at the cut, cap 8):** [MX-o-1 -> MX-c-7 -> MX-r-10] and [MX-o-2 -> MX-c-7].
+- MX-o-1 and MX-o-2 each write their own new integration folder and its tests, so the write sets are disjoint. The one
+  shared line, the tool registry hookup, is added at the merge (C10, `/dispatch` Step 5), never by a cell.
+- MX-c-7 waits on both readers because an entry's status (SERVED or GAP) and its tool name come from the census outcome.
+
+**Close.** FWD-19 is proven on demand at MX-r-10's live read under an admitted principal. The operations lead's own
+session is the organic arm, not the proof. His admission is Andrew's act (C8). FWD-9's per-user scoping binds from that
+admission, and his grant is written before his first data call. A reader that ends GAP leaves FWD-19 NOT done, and the
+L10 slug says so.
+
+**Not cells:**
+- Trade-request intake and its C-NO-SEND fence belong to NFRA_OPSWKF (dell2).
+- The ops kit's adapter swap from fixture to live read belongs to NFRA_OPSWKF FWD-7. dell2 is told the date through
+  `0.0.0_AB_MSTR~Z` (target drain 2026-10-12).
+- No alert, notification or monitor is built (moratorium; contract 4).
+- The operations lead's admission and grant are Andrew's (C8).
+
+**Bounds inlined at L6:** every round-8 bound (ONE catalog writer; builder-output names; no tool without its catalog
+entry and class; vendor calls limited to the named reads). Also: a fixture value is never served as data; every answer
+carries the C4 envelope.

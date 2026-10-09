@@ -57,8 +57,9 @@ consumer is re-pointed in the same change.
 **In the parent (your worktree):** remove `org/tier0_utility/0.0.3_BG_BBGTerminal/prompt.md`, its 7 top-level `refs/` files
 (`refs/census/` STAYS, byte-equal to the cut),
 its `tools/portal_lookup.py`, and `.claude/skills/bbg-teams-assist/SKILL.md`. Re-point every code/config consumer. In
-`infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` re-point exactly ONE line, `:1241` `guardrails_ref`, to
-`opal_ai/opal/agent/refs/BLOOMBERG_GUARDRAILS.md`; its 30 `census_ref` lines stay byte-unchanged. The file is committed
+`infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` re-point exactly ONE line, the file's only `guardrails_ref:` line (`:1287` at CLOUD `52baa04913`; find it by
+the key, because NFRA_MCPINDEX moves the line numbers), to
+`opal_ai/opal/agent/refs/BLOOMBERG_GUARDRAILS.md`; every `census_ref` line (39 at `52baa04913`) stays byte-unchanged. The file is committed
 with CRLF line endings: preserve every CR byte, so the diff against the cut is one line removed and one added. The seat's `README.md`, `threads/`, `logs/` and `deliverables/` STAY (state, C5).
 **Not yours:** `.tools/hooks/bg-concierge-gate.sh` and its test (OA-t-3), `.claude/skills/teams-assist/**` (OA-t-4),
 `.claude/settings.json` and `.tools/ajb.ps1` (the issuer's cutover hookups).
@@ -73,7 +74,8 @@ with CRLF line endings: preserve every CR byte, so the diff against the cut is o
   Round 1's parent commits were made on a branch from before the history rewrite. NEVER merge, cherry-pick or read
   `wk-NFRA_OPALAI-1`, and never touch `C:/tmp/oa-1` or `C:/tmp/oa-3`. Redo the parent half here.
 - **The catalog moved since round 1's cut** (NFRA_MCPINDEX `2c25c4c831`, `bc0cde67f0`: +61/-3 lines). The
-  `guardrails_ref` line is still at `:1241` at this cut, and the file is still CRLF (1396 CR bytes in 1396 lines). AC2
+  `guardrails_ref` line was at `:1241` at this cut, and is at `:1287` at `52baa04913`; the file is still CRLF (2023 CR
+  bytes in 2023 lines at `52baa04913`). AC2
   therefore reads the one-line diff against the ROUND-2 cut, not round 1's.
 
 ## 2. BOUNDS

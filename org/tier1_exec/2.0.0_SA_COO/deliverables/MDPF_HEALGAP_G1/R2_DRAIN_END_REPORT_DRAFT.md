@@ -49,7 +49,12 @@ read (COMPLETE, R2-2 before/after key sets of the two present feeds), the 11:3xZ
 
 - **R2-1 (D1-W3-S1) -- PULLED FORWARD, not round 3:** decomposition round 2 amendment A1 (cell HG-t-8), carried by
   `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.healgap-r2-1-runner-reads-own-result.md` @15091a3a96 (operator's word at
-  this terminal ~05:3xZ; the round-2 issuance was closed to new files). Apply after 07:10Z, before act 3. `PENDING`: the apply's proof.
+  this terminal ~05:3xZ; the round-2 issuance was closed to new files). LANDED 2026-10-09 ~07:4xZ (edit ba88934f7b, close 74b0ca41c8):
+  live `cot-rebalancer-runner-write-cot` 4 statements, `ReadOwnRunResult` s3:GetObject on `.../cottonwood/meta/*-result.json` (firm read via
+  `one(local.monolith_source_scopes.blackdiamond)`, CTO ruling H, after the naming limb refused the typed firm -- row D1-S9). Issuer
+  validated: live policy read, `hg_t8_iam.py` IAM-OK, proof-of-spec C1-C8 VALID rc=0. C5a over all five identity carriers (allow /
+  implicitDeny x2 / explicitDeny). C5b, the EXERCISED allow arm, is act 3's `--repaired` read (healed_at non-null). Rows D1-S10, D1-S11:
+  iam:SimulatePrincipalPolicy is denied to the dell1 principal.
 - **D1-S7 (b) -- RULED** (CTO batch @6c538a0bfd section D): the satellites producer keeps cron(0 7) and gains ONE scheduled 12:00Z fire
   that reads the runner's completion stamp and rebuilds only when today's bronze has landed (else one log line, nothing served).
   HG-t-5 is freed under it. Round-3 cells: the 12:00Z fire (producer owner 0.6.2_AE_PartnerETL's code; apply by

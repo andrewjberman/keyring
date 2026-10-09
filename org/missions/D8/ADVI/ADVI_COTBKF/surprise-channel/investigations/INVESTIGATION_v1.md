@@ -3237,3 +3237,109 @@ round.** Never edit an existing row.
   "world_is": "CB28ab1-AC3: fix, not fit -- the condition for CB-ab-2's mint (CTO msg 2671) reads FIX. The literal clause fails for one disclosed rule. CB28ab3-AC3 met."
 }
 ```
+
+## ADVI_COTBKF-D2-W56-S1 -- CB-ac-3: 3 of 28 unconfirmed splits are confirmable on the store's own close; 25 CUSIPs are not in the store (32 rows, newest as_of 2026-06-23); the 3 were unconfirmed because the chain's close, not the store's, failed continuity
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W56-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~56",
+  "surfaced_at": "2026-10-09T07:40Z",
+  "one_line": "SPLIT-RECOUNT unconfirmed=28 now_confirmable=3 store_rows=32 store_as_of=2026-06-23: 00162Q866 (2020-05-18 x0.2), 464287614 (2026-04-29 x4), 464288646 (2018-08-08 x2) are in the store, its splits.parquet names the split, and the store's close_served is continuous across the day; the other 25 splits' CUSIPs are not in the store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~56/split_recount.md, from python data/assets/scripts/silver/commonwealth_split_recount.py (rc 0)",
+      "the same 3 were already store-sourced in the round-28 plan and failed continuity there on the chain's own nine-store close series (commonwealth_daily_valuation.split_plan), which the price fill does not change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-ac-3: print for each of the 28 whether the continuity condition would now hold, i.e. whether the split is now confirmable.",
+  "world_is": "The recount tests continuity on the store's close_served, the only series the fill adds. The apply-time condition in split_plan tests the chain's series (the nine stores), so now_confirmable=3 is an upper bound: those 3 become applicable only if the chain reads the store's close for them. Nothing was applied."
+}
+```
+
+## ADVI_COTBKF-D2-W55-S1 -- CB-ac-2: no source holds the ex-dates of 808524102 / 808524839; the 4 months are untraced by the rule
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W55-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~55",
+  "surfaced_at": "2026-10-09T08:00:00Z",
+  "one_line": "CB-ac-2: neither ex-date source holds the two dividend CUSIPs of the 4 regressed months (808524102, 808524839), so the ex-dated return cannot be computed; all 4 months class untraced by the pre-committed rule",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~55/div_dating_trace.md (DIV-TRACE months=4 dividend_dating=0 other=0 untraced=4)",
+      "git show 9de2bd74ef (the class rule, committed before the run)",
+      "EXDATES_ADVI_COTBKF_20261009.csv: 39 rows, no 8085 CUSIP; dell1 price_history store: 32 cusip= partitions listed, none 8085*"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell: ex-dates are available from dell1's price store and the 39-row EXDATES csv, so the month's return at the ex date can be computed.",
+  "world_is": "Neither source holds 808524102 or 808524839, the only two dividend CUSIPs of both accounts in the window. Also read: r28/r26 account day value ratio is 2.44-2.47 in all four months (a split-scaled position since 2022-10-12), and the largest pay-ex gap in the csv is 26 days, which widens the candidate bound to about 0.41 pp against regressions of 0.04-0.41 pp. Ex-dates for the two Schwab CUSIPs would settle the dating question."
+}
+```
+
+## ADVI_COTBKF-D2-S42 -- CB-ac-1: step 3's regressions=0 precondition is stale; the pair and the order's own later paragraph require regressions=4 NAMED and BLANKED
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S42",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T08:20:00Z",
+  "one_line": "TO CB-ac-1 step 3 still gates the mint on CB-ab-1 draining with regressions=0, a precondition the round-28 rulings and both halves of its own never-widen pair had already replaced with regressions=4 NAMED and BLANKED; read literally the step is an unsatisfiable wait",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order's step 3: 'From the drained trunk, after CB-ab-1 drains VALID with regressions=0'",
+      "the order's own later paragraph, which disagrees with it: 'The build to apply carries method_r28 with exactly 4 account-months ABSENT (B3S728504, B3S728506; 2023-05, 2023-06): your --dry-run must print the same 4 and absent_months=4, or stop'",
+      "CTO half AMENDMENT 1 @478334e021: 'condition 1 relaxed to regressions = 4 NAMED and BLANKED'; COO half section 3 gives on that same basis",
+      "CB-ab-1's own AC2 was amended @5c9e31b2be to EXPECT regressions=4 (a fifth voids the amendment), and it delivered @15e50bfbc1 on that expectation",
+      "this seat's re-grade at its own HEAD, rc 0: SWEEP-REGRADE ... control_same=True regressions=4 year_chain_same=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-ac-1 step 3: the mint proceeds after CB-ab-1 drains VALID with regressions=0.",
+  "world_is": "regressions=0 is unreachable for method_r28 by RULING, not by defect. The order carries both readings at HEAD; the act was graded against the pair and the order's later paragraph, which agree with each other and with the measured world (regressions=4, absent_months=4, the four being exactly B3S728504 and B3S728506 at 2023-05 and 2023-06, each served BLANKED with reason REGRESSED_UNDER_R28 and never valued). Nothing was weakened and nothing was waited on. The stale clause cost this seat nothing because it read the pair first, but a seat reading step 3 alone would hold a SERVED act forever on a condition no build at the chain's own default cash leg can meet."
+}
+```
+
+## ADVI_COTBKF-D2-S43 -- CB-ac-1: the order's WCB2 row-id form is unparseable by proof-of-spec-check.py's SURPRISE_ID_RE
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S43",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T08:22:00Z",
+  "one_line": "TO CB-ac-1's refusal clause names the row id form ADVI_COTBKF-D2-WCB2-S<k>, which proof-of-spec-check.py's SURPRISE_ID_RE cannot parse, so a row filed exactly as the order instructs makes the instance INVALID and blocks the complete flip",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the order's refusal clause: 'a NEW surprise row (id ADVI_COTBKF-D2-WCB2-S<k>, \"fabric\": \"dell2\")'",
+      ".tools/proof-of-spec-check.py:1206 SURPRISE_ID_RE = ^\\s*([A-Z0-9_]+-(?:(?!W[0-9]*-|C-)[A-Z][0-9]*-)?(?:W[0-9]+-|C-)?S[0-9]+)\b -- the W arm is W[0-9]+, so W followed by letters does not match",
+      "measured both forms against that regex: ADVI_COTBKF-D2-WCB2-S1 REJECTED, ADVI_COTBKF-D2-S42 PARSES",
+      "channel census, denominator printed: 125 row ids in ADVI_COTBKF's channel, of which 21 are the non-worker D2-S<n> form, max n = 41"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A row this seat files under the order's named id form is a valid citation in the proof-of-spec instance.",
+  "world_is": "It is not. SURPRISE_ID_RE admits a lane segment only as a single letter plus digits ([A-Z][0-9]*) or as W<digits> / C, so WCB2 falls outside both arms and the checker reports 'surprises[0] carries NO row id'. The gate is the mechanical authority named in the order's own <proof_of_spec> block, so these two rows were filed in the project's existing non-worker namespace (D2-S42, D2-S43) rather than under the order's prose form, and this row records the departure instead of silently renaming. The order's intent -- a NEW row from this seat, fabric dell2 -- is met. A future ~<lane> seat told to mint W<non-numeric> ids hits the same wall; the fix is the issuer's to make, either in the clause or in the regex."
+}
+```

@@ -69,6 +69,7 @@ would ship that difference too.
 <paths>
 infra/aws/lambda/data_refresh/lambda_function.py
 infra/aws/lambda/data_refresh/test_admission_gate.py
+infra/aws/terraform/data-refresh/qa-scratch-instance.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-da-1-data-refresh-admit.json
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/
@@ -103,7 +104,15 @@ with `python .tools/proof-of-spec-check.py <instance>`, and flip the ONE `<statu
 - Pre-cut: da1.AC1 base FAIL as expected (test file absent); da1.AC2 base FAIL -- NOT the expected PASS: live already
   differs from HEAD (CodeSha256 E4944Imr...), so Phase A step 1 names the drift before any deploy.
 
-<status>pending</status>
+- A1 (issuer, 2026-10-09 ~08:1xZ, on ARMED row Z-S72): disposition (b) -- PIN the qa-scratch clone
+  (`module.data_refresh_api_qa_scratch`) to the prior artifact version `WJQGGIAlTSMp0Vny8avvQ7LxflVuvLf6` (its own
+  explicit version or key), so the signed radius stays true. `qa-scratch-instance.tf` joins <paths>. Done when: the
+  clone's live CodeSha256 still reads `E4944Imr7Y4S4//rTR6HN5sbwczbwLw5DcaH4IZ0D0E=` and a FULL plan of the
+  data-refresh root reads No changes. Any plan row that moves the clone's code is a STOP. Then close leg RB and the
+  ledger. Not ratified as a widening: that needs both halves. The clone keeps the pre-fix admission until
+  `1.0.0_SA_CTO~Z` rules its teardown (its recorded call). Graded by no gate limb as a modification.
+
+<status>complete</status>
 <round>32</round>
 <workstream>DATA-REFRESH-ADMIT</workstream>
 <slot>~AE</slot>

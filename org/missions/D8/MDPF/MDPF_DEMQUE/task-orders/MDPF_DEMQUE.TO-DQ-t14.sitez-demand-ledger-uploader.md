@@ -4,7 +4,7 @@
 <issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -13,6 +13,7 @@
 **AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~03:5xZ:** issued_to `0.7.0_AE_CloudOps~Z` -> `0.7.0_AE_CloudOps~ZQ`, the per-project site-Z lane (site Z CTO msg 32331; Andrew-direct ~03:5xZ relayed msg 1589: only site-bound acts go to site Z, on per-project lanes). The uploader is site-bound: it reads site Z's `bbg_budget` files. Clears gate2's one-project-per-seat finding on `~Z`.
 **REVERTED by the issuer, 2026-10-09 ~04:0xZ (CTO msg 1611, site Z CTO msg 32344):** the four `~Z*` lanes hold no act until Andrew answers site Z's question on site-bound acts; site-bound orders stay as issued. issued_to is back to `0.7.0_AE_CloudOps~Z`; the gate2 seating finding on `~Z` stands open with that question.
 **RE-ADDRESSED by the issuer, 2026-10-09 ~04:1xZ (msg 1644: site Z LIFTED its hold; the dell1 CTO's table):** issued_to `0.7.0_AE_CloudOps~ZQ` (LIVE). Clears the seating finding on `~Z`.
+**STANDING CONDITION added by the issuer, 2026-10-09 ~08:0xZ (0.0.0_AB_MSTR~DELL1 msg 2082; LGIC_BLANKFIX switch-on @4d2bfc6dfd):** naming-place enforcement is live -- a NEW infra name the canon cannot place BLOCKS commit and apply. Any new name this order mints (the site-Z schedule's task name; any S3 key outside the queue's existing ledger address) comes from `lib/opal_naming.py` `name()`/`address()`; a builder refusal is a missing registry row to report, never a hand-typed name. No criterion changes.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-14` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 4) |
 **outcome_ref:** FWD-2, FWD-3 | **depends_on:** none
 

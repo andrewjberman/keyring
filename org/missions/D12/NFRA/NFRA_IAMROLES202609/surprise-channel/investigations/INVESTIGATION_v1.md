@@ -1012,6 +1012,88 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "A worker commit inside its <paths> lands through safe-commit.",
     "world_is": "safe-commit's missions-tree-check refuses the staged set on an unrelated project's index drift, so the order's proof, deliverables and complete flip could not be committed.",
     "notes": "Work product is complete and in the worktree; only the commit is blocked."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit REFUSED TO-IAM-u-2's deliverables commit: missions-tree-check reports INDEX-DRIFT org/projects/NFRA_OPSWKF.json dep_stage index='PRD' tree='EXECUTING', a defect in ANOTHER project's register carrier that the worker's write grant cannot touch.",
+    "spec_asserts": "A worker commit of files under its own deliverables folder is graded on those paths.",
+    "world_is": "The tree validator grades the whole project tree; a drift on NFRA_OPSWKF (register row at PRD, tree project at EXECUTING) fails every commit from every worktree branched from this base. Two attempts, same single violation (1 violation, 49 of 49 tree projects valid).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit run twice at worktree HEAD 50428b904f: [INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index='PRD' tree='EXECUTING'; RESULT: 1 violation(s)",
+        "tool names the remedy as R5 = the register members list, 0.0.0_AB_MSTR's lane; never bypass"
+      ]
+    },
+    "notes": "No bypass was taken. The partial deliverables (rerun-population.sh, compare-runs.py, permission-cold-raw-bundle.round4.PARTIAL.json) sit UNCOMMITTED in /c/tmp/wk-iamroles-11 on branch wk-NFRA_IAMROLES202609-11; commit them once the drift is cleared."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Live list-roles read 290 roles = 280 at Path '/' + 10 service-linked (Path '/aws-service-role/<service>/'); round 3 read 219 + 10. The population rule's 'Path /aws-service-role/' is a PREFIX, not an equality: an exact-equality exclusion matched 0 of the 10.",
+    "spec_asserts": "Round 3's rule: the 10 roles at Path '/aws-service-role/' are excluded and named.",
+    "world_is": "Those 10 roles carry Path '/aws-service-role/<service>.amazonaws.com/'; rerun-population.sh was corrected to a startswith test before the bundle was assembled. Members rose 219 -> 280 (+61) in the interval.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam list-roles via .tools/aws grouped by Path in worktree .scratch/r4work/list-roles.json: 280 at '/', 10 under '/aws-service-role/<service>/', 0 other (290 total)",
+        "round 3 bundle ~8 population_rule: 219 at '/', 10 excluded"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S3",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The reseat brief's '195 per-role files' was 65 roles x 3 files (.json/.err/.rc), so 215 of 280 roles remained, not about 85; the sweep resumed from the 65 rc0-verified roles and ran the 215 in one background pass.",
+    "spec_asserts": "The reseat brief: .scratch/r4work/roles holds 195 per-role files at the issuer's count; about 85 roles remain.",
+    "world_is": "roles/ held 195 files = 65 .json + 65 .err + 65 .rc; all 65 had rc 0 and parsed with a rows key; 215 roles were not yet attempted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls .scratch/r4work/roles | sed to strip the extension | sort | uniq -c -> 65 err, 65 json, 65 rc",
+        "final run: attempted=280 returned_rc0=280 results=280, no rc != 0 role"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S4",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "26 permissions on opal-drift-producer-codebuild-role (iotevents:*, evidently:*) read never-used in round 3 and unobservable in round 4 ('service not present in Access Advisor response') with byte-identical instrument code and the grant unchanged.",
+    "spec_asserts": "Same instrument blobs, same rule and lookback give a comparable per-permission status for an unchanged grant.",
+    "world_is": "For that role the Access Advisor response in the 2026-10-09 run no longer lists the iotevents and evidently services, which moves 26 rows never-used -> unobservable; the cause inside AWS is not determinable from the bundles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "compare-runs.py over ~8 round-3 bundle and the round-4 bundle: 'never-used -> unobservable : 26', all on opal-drift-producer-codebuild-role",
+        "instrument_blobs equal across the two bundles (COMPARABLE: yes)"
+      ]
+    }
   }
 ]
 ```
@@ -1041,5 +1123,93 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   "world_is": "The commit gate refuses on a tree-wide index drift unrelated to the staged file, so the deliverable stands uncommitted in the worktree (CONDITION_AXIS_EXERCISED.md, AC1=3, AC2=1, AC3 pin matches).",
   "disposition": "UNDER_INVESTIGATION"
 }
+]
+```
+
+## Z-S16 -- the round-4 commit refusal (Z-W10-S1 / Z-W11-S1 / Z-W12-S1) is cleared: every cell drained
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S16",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-09T07:52:59Z",
+    "one_line": "The commit refusal carried by Z-W10-S1, Z-W11-S1 and Z-W12-S1 (missions-tree INDEX-DRIFT on NFRA_OPSWKF) no longer fires: all three round-4 cells committed and drained after a trunk merge into each worker branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W10-S1 / Z-W11-S1 / Z-W12-S1 stand BLOCKING and ARMED: a worker commit inside its <paths> is refused on an unrelated project's index drift.",
+    "world_is": "missions-tree-index check reads 0 violations in both reseated worktrees after `git merge box/sitez` (@b68c5ef1ef, @5f38362f93); the cells drained at @bcb0d718fc (u-1), @aebcf9cb69 (u-3), @6037269ded (u-2), each safe-merge reading dropped 0. The three rows' disposition is the CVO's at L9; this row carries the evidence that the hazard is cleared.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/missions-tree-index.py check in /c/tmp/wk-iamroles-11 and -12 after the trunk merge: RESULT: 0 violation(s)",
+        "safe-merge tree checks: u-3 4 of 4 files, u-2 7 of 7 files, dropped 0, foreign 0"
+      ]
+    },
+    "notes": "Cites Z-W10-S1, Z-W11-S1, Z-W12-S1. No bypass was taken at any step."
+  }
+]
+```
+
+## Z-S17 -- round-close-check grades a judgment criterion off ANY CVO row naming its bare id, and reads MAY-CLOSE with an order open
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S17",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-09T07:52:59Z",
+    "one_line": "round-close-check.py grades a round's JUDGMENT criteria GRADED off ANY CVO row in the project that mentions the bare criterion id: round 4's three AC4s all read GRADED from Z-C-S8, a 2026-09-10 round-2 row about IAM-r-6 that predates the round. It also read MAY-CLOSE while one of three orders was still open.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZI for this round: MAY-CLOSE is NOT read as closure and all three AC4s go to 3.0.0_SA_CVO~Z at L8 as ungraded. The tool's source is NFRA_CTLPLN's (round-close-check.py, last touched @10afe6b697); routed to 1.0.0_SA_CTO~Z in the round-4 slug.",
+    "spec_asserts": "`verdict=REFUSED means it is not finished` (canonical-drive obligation 3): a MAY-CLOSE verdict certifies every judgment criterion of THIS round was graded by a non-doer CVO.",
+    "world_is": "grade_criterion() (round-close-check.py ~:240) matches the regex of the bare crit_id (e.g. 'AC4') against json.dumps of every adjudication/investigation row and returns GRADED on the first CVO-authored hit, with no scope to the order, the round or the row's date. Separately, at 07:2xZ with TO-IAM-u-2 not complete the check printed '1 not complete and outside the verdict' and verdict=MAY-CLOSE.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/round-close-check.py --project NFRA_IAMROLES202609 --round 4 at HEAD after @6037269ded: 'JUDGMENT TO-IAM-u-{1,2,3} AC4 -> GRADED (adjudication row NFRA_IAMROLES202609-Z-C-S8 by 3.0.0_SA_CVO~Z)'",
+        "ADJUDICATION_v1.md row Z-C-S8: surfaced_at 2026-09-10T14:32Z, adjudicates Z-S11 (IAM-r-6, round 2); round 4 was issued 2026-10-09",
+        "same tool at ~07:25Z before the u-2 drain: 'ORDERS ... 2 complete, 1 not complete and outside the verdict' ... verdict=MAY-CLOSE"
+      ]
+    },
+    "notes": "A false MAY-CLOSE would let a round count as finished with its judgment criteria never graded; the falsifier is a planted order whose AC4 no row grades, in a project where any older CVO row mentions AC4."
+  }
+]
+```
+
+## Z-S18 -- the close-gate grades every round's orders, and its stem fallback reads 18 historical VALID proofs as PROOF-BAD
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S18",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-09T08:05:55Z",
+    "one_line": "safe-commit's missions-tree-check close-gate grades a dep_stage -> ROUND_CLOSE flip over EVERY order of the project (21 across rounds 1-4), not the closing round, and its file-stem id fallback reads 18 historical VALID proofs PROOF-BAD because each names the short to_id. Today it is WARN and admitted @b756665567; under ENFORCE every tree project whose orders lack a <to_id> tag would be refused at close.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~Z to route to the owner of round-close-check.py (NFRA_CTLPLN, stem fallback @10afe6b697) BEFORE the close-gate flips to ENFORCE; this seat does not edit 18 closed-round orders to fit the gate.",
+    "spec_asserts": "`run python .tools/round-close-check.py --project <CODE> --round <n>` before dep_stage moves to ROUND_CLOSE (canonical-drive obligation 3): the gate grades the round being closed, and a proof that proof-of-spec-check reads VALID is a valid proof.",
+    "world_is": "The close-gate line reads 'orders=21 judgment=21 graded=21 ... verdict=REFUSED' with 'PROOFS complete=21 proof_ok=3 proof_bad=18'; the 18 are rounds 1-3 proofs naming to_id 'NFRA_IAMROLES202609.TO-IAM-<x>' where the gate, finding no <to_id> tag, expects the full file stem; one (TO-IAM-t-3) is filed as TO-IAM-t-3.proof_of_spec.json, not under the order's long stem. The round-scoped run (--round 4) reads proof_ok=3 proof_bad=0 after the <to_id> amendments @a83d784525 and @b756665567.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for @b756665567: 'WARN: missions-tree-check close-gate -- NFRA_IAMROLES202609 dep_stage EXECUTING -> ROUND_CLOSE would be REFUSED under ENFORCE; WARN mode admits it'",
+        "same output: 'PROOFS mode=structural complete=21 proof_ok=3 proof_bad=18'",
+        "round-close-check.py:159 id = tag(text,'to_id') or the file stem; :190 compares inst['to_id'] to that id"
+      ]
+    },
+    "notes": "Sibling of Z-S17 (same tool, the judgment-grading limb). The 18 are a census of THIS project only; every other tree project whose workers wrote the short to_id is in the same class, not measured here."
+  }
 ]
 ```

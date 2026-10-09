@@ -270,6 +270,71 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "One report date per capture, the same in the calendar and in the trade windows.",
     "world_is": "Two witnesses one trading day apart for every CGIC capture 10-02..10-06. D1-S4's reading (labels stale, windows right) assumed the canonical rows' date is the truth; it is unproven.",
     "notes": "Not cut: which witness is true is a data ruling (1.0.0_SA_CTO~DELL1). If the sidecar is true, the fix is the canonical rows' date (and every CGIC trade window moves back one trading day); if the rows are true, the fix is the calendar (classify on the rows' date, or treat a consistent one-day lag as new). RIV-wd-1's infer_windows reads the rows' date, so it follows whichever is fixed."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~V1",
+    "surfaced_at": "2026-10-09T08:15Z",
+    "one_line": "RIV-we-1 (canonical source_report_date = the claimed as-of) is FORWARD-ONLY as deployed: build-canonical-shape names a revision by a digest of its INPUTS, not its code, and a replay that finds that revision already stored 'adds nothing', so every served canonical object (and the trade windows built on it) keeps the old date until history is deliberately rebuilt",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py:945-956 at ba92996a72: `same` holds holdings-<rev>.parquet with rev from _revision_digest(chosen, g4); `hit` -> 'this revision is already gold: a replay adds nothing'",
+        "real run 2026-10-09 ~08:0xZ (ws2/real_run_local.py --canonical, overlay of live objects): build-canonical-shape PARTIAL, written_new 0 over 16 report dates; build-trade-schedule written_new 0; we1_windows_compare: 0 dates changed for every one of 13 funds"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ADDENDUM 2 @9f0a957c00: the CGIC trade windows move a trading day earlier.",
+    "world_is": "After deploy, only captures with new inputs get the claimed as-of; served history (CGIC 10-02..10-08) keeps delivery-day dates.",
+    "notes": "A history rebuild is a served write (canonical_shape and trade_schedule objects for the affected dates) under its own pair: either a forced replay that ignores the stored revision, or a revision digest that includes the gold code version. The issuer's local proof hides the served canonical objects from the overlay (--fresh-canonical) to show what the rebuild would write."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W28-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~28",
+    "surfaced_at": "2026-10-09T08:40Z",
+    "one_line": "RIV-we-2: the G6 (flow_reconciliation) object cannot carry window_start_delivered / window_end_delivered -- its SCHEMA and finish_row live in gold_flow_reconciliation.py, outside this order's paths, so the pair rides on the recon dict and infer_recon's frame only",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_flow_reconciliation.py:50-63 SCHEMA has no *_delivered column; finish_row (:88-90) takes only COLUMNS from the recon dict, so the parquet G6 row drops the pair",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py: _pair_rows' recon dict carries window_start_delivered / window_end_delivered; infer_recon appends them after g6mod.COLUMNS (tests/test_we2_window_asof.py::test_recon_rows_carry_the_same_pair)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-we-2 interface item 2: the G5 schema gains the two columns; recon rows carry the same pair.",
+    "world_is": "G5 parquet gains the pair; the served G6 parquet row does not (its schema is a file this order may not edit). The recon window_start / window_end DO move to the as-of dates, so G6 window_end and G5 window_end stay equal.",
+    "notes": "To land the pair in the served G6 object, add the two date32 columns to gold_flow_reconciliation.SCHEMA (a later order that owns that file). Also unchanged by design: G5 `date`, `window_trading_days`, the window_widened flag, the corporate-action window test and the object address (date=<delivery day>) stay on the delivery days; only the labels window_start / window_end moved."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~V1",
+    "surfaced_at": "2026-10-09T08:45Z",
+    "one_line": "CORRECTS D1-S5 (this seat's error): canonical_shape partitions are ALREADY dated by the vendor's claimed as-of, not the delivery day -- partition date=2026-10-05 holds capture 20261007T110910Z (requested 10-06, claims 10-05) -- so CGIC's trade windows were right all along; RIV-we-1/we-2 change nothing on real data, ADDENDUM 3's scoped rebuild has nothing to rebuild, and the only real defect is the calendar calling a consistently one-day-lagged fund 'repeat'",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Dry run (ws2/real_run_local.py --canonical --fresh-canonical at 598173c0fa, live reads, local writes): build-canonical-shape OK 27 written, 20915 rows; build-trade-schedule OK 26 written. Over every Bloomberg row of the rebuilt canonical (11 funds, 18,000+ rows): source_report_date != partition date in 0 rows; report_date_claim INFERRED in 0 rows",
+        "CGIC: date=2026-10-02 object holdings-20261006T123244Z (sidecar requested 10-05, claims 10-02); date=2026-10-05 holdings-20261007T110910Z (requested 10-06, claims 10-05); date=2026-10-06 holdings-20261008T122342Z -- partition = claim in each",
+        "we1_windows_compare after the rebuild: CGIC 1 of 25 dates changed, the 2026-08-31 range edge only; 7 funds 0 changed; 5 funds 1 changed (the same edge)",
+        "D1-S5 compared the sidecar's REQUESTED date with the canonical PARTITION and read the partition as a delivery day; it is the as-of"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S5 / ADDENDUM 2: canonical rows carry the delivery day; CGIC windows must move a trading day earlier.",
+    "world_is": "Partitions are the as-of; windows are already as-of dated. we-1's `delivered_on` records the partition (the as-of), not the delivery day: misnamed. The calendar (gold_holdings_coverage.classify) compares the claim with the REQUESTED day, so a fund whose file always lags one trading day reads 'repeat' every day.",
+    "notes": "Remedies: (1) withdraw ADDENDUM 3's rebuild (nothing to rebuild); (2) we-1's delivered_on takes the capture's requested_date (or is dropped); (3) the calendar treats a capture whose claim is newer than the previous capture's claim as `new` (a lagged daily fund), keeping `repeat` for a claim equal to the previous one. Owner of the rulings: 1.0.0_SA_CTO~DELL1."
   }
 ]
 ```

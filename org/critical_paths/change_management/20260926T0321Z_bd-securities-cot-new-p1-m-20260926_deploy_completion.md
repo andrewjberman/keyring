@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-26T03:21:35.082351+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1. R1 measured 2026-10-08 against etf-classifications (the table BD and COT gold now read). BD half (07:3xZ): of the 210 ticker-shaped written keys (the only ones BD reaches), 187 at the 09-26 class, 15 at a later deliberate model/scheduled class (cash, commodities, structured), 8 absent; SPHY, the USD 6.79M move, reads fixed_income/High Yield. COT half (06:5xZ): of 122, 51 at class, 10 later class, 3 prefixed, 58 absent (USD 49.17M, mostly Part-2 manual assets; FWD-15 now covers them, CTO ruling @ddd3eaac69, census @070d5824d0). Closes when FWD-15 places the 58 absent COT keys. No rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
+**Status:** CLOSED -- nothing stranded -- closed 20261009T085002Z
 **Deploy:** bd-securities COT-new write Part 1: 941 conditional PutItem (CTO @ab4a2e41bb; sha c96398886f143f54)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -14,7 +14,7 @@
 |---|---|---|---|---|---|
 | A07 | verify | a07 dim_asset_classification dry build with the new items (CTO precondition) | per-firm delta 49F/INF/COT count and dollars; 0 moves outside the written keys | measure_a07_delta_cot_new.py --part all (dry, no upload; A07_DELTA_COT_NEW_20260926.json): 123 of the union's keys change; 49F 10 keys $56,952.06 (8 equity->fixed_income, 2 equity->alternatives: ARKB CGMU ESIIX ETHA JCBUX JSOSX LBNYX PZA SHYD WOBDX); INF 8 keys $0.00 (positions at 0 shares; incl. FDIC91232 = Leader Bank IRA -> other, a Part-2 key); COT 122 keys $62,603,923.90; changed NOT via a written key: 0 -> no stop | CLOSED 20260926T032135Z |
 | W1 | verify | bd-securities 941 conditional PutItem classified_run=irpt-m-cot-new-20260926 | receipt: written 941, condition refusals 0, read-back 941, loader 941 | receipt BD_SECURITIES_COT_NEW_P1_RECEIPT_20260926.json: census sha c96398886f143f54 941 keys 0 present; wrote 941 of 941; 0 condition refusals; read-back 941 (class + classified_run); fresh loader 935 of 941 -- 6 NAME:: keys (HOTCHKIS WILEY HY, MFS CHARTER INCOME, NEOS 1-3M T-BILL ETF, NUVEEN AMT-FREE MUN, NUVEEN CA HY MUNI, PIMCO HIGH INCOME) resolve by name to a same-name ticker sibling (HWHZX MCR CSHI NUW NCHRX PHK, fixed_income), so COT serves fixed_income for all 6 ($604,373 at 09-22; BD 0 rows). Versus the half: +$149,663 equity->fixed_income (NEOS) and $1,025 fixed_income instead of alternatives (HOTCHKIS) -- reported to the CTO | CLOSED 20260926T032551Z |
-| R1 | verify | COT C_06 first scheduled run after the write (Mon 2026-09-28) and BD C_06 next run | COT mix moves equity->fixed_income/alternatives per the half; BD 652 accounts per the half |  | OPEN |
+| R1 | verify | COT C_06 first scheduled run after the write (Mon 2026-09-28) and BD C_06 next run | COT mix moves equity->fixed_income/alternatives per the half; BD 652 accounts per the half | CLOSED 2026-10-09 ~08:5xZ by 2.0.0_SA_COO~M1 on 1.0.0_SA_CTO~DELL1 rounds 13-15 analysis section 2 (CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUNDS_13_15_20261009.md:34-35, msg 2139): the ledger closes naming its 16 absent keys, not held open for them. Measured 07:5xZ against etf-classifications: 941 written, 925 present, 16 absent = 5 e49 FINAL refusals (ETH, ETHE, FFC, FRIAX, JPC among them; E49_FINAL_REFUSALS_ALL/V3, E49_TWICE_REFUSED_FINAL) + 11 never in FWD-15's plan, ROUTED to FWD-15's UNPLACED-KEY census path (round 12 item 4): ETHA, NAME::AST INVESTMENT GRADE BOND PORTFOLIO, NAME::AXA MODERATE ALLOCATION, NAME::BENEFIT FIXED RATE OPTION, NAME::CALAMOS STRATEGIC TOTAL RETURN COM SH BEN INT, NAME::GRAYSCALE ETHEREUM STAKING MINI ETF, NAME::JOHN HANCOCK LIFE INSURANCE CO 5 06 15 2028, NAME::MFS MULTIMARKET INCOME TR SH BEN INT, NAME::MORGAN STANLEY 6 25 08 09 2026, NAME::PATRIOT BK N A 4 5 2026, NAME::PRUDENTIAL ANNUITY. No rollback (S188). | CLOSED 20261009T085002Z |
 
 ## Log
 
@@ -27,3 +27,8 @@
 - 20261008T065132Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR m
 - 20261008T065635Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 COT half MEASURED 2026-10-08T06:5xZ against etf-classi
 - 20261008T072825Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 measured 2026-10-08 against etf-classifications (the t
+- 20261009T075120Z HOLD RELEASED -> OPEN
+- 20261009T075121Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. RE-MEASURED 2026-10-09 ~07:5xZ after FWD-15 (TO-AI-e49 CO
+- 20261009T085002Z HOLD RELEASED -> OPEN
+- 20261009T085002Z LEG R1 closed: CLOSED 2026-10-09 ~08:5xZ by 2.0.0_SA_COO~M1 on 1.0.0_SA_CTO~DELL1 rounds 13-15 analysis section 2 (CTO_ROUND_ANALYSIS_M
+- 20261009T085002Z CLOSED -- all 3 legs proven

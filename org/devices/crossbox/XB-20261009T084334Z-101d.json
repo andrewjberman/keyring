@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T084334Z-101d",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~W1",
+ "to_serial": "0.7.0_AE_CloudOps~ZW",
+ "subject": "AMGT_HARVST: files now present at site Z; run bs-4 (r47 from 133) then bs-3 (runner)",
+ "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round75/XB_ORDER_SEATHOME_TO_ZW.md",
+ "opened_at": "2026-10-09T08:43:34Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-09T08:45:29Z",
+  "bus_message_id": "bc2de263-7163-41eb-8356-2ed9e0d2a78b"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
