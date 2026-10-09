@@ -23843,3 +23843,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No column in the live fact_allocation_positions carries a CUSIP. AC1 and AC3 (with_cusip >= 1) cannot be met from this table; a CUSIP would need a join to another source (e.g. fact_model_holdings or a security master), which the order does not name."
 }
 ```
+
+## IRPT_BCKEND-D2-S40 -- Resolves D2-W267-S1: IB-pr-403 joins the CUSIP from 49F's dim_asset by ticker (exactly one; basis carried)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S40",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W267-S1. CTO ruling AMENDMENT 1 @bdf378d09c (msg 3001) chose (a): the CUSIP is joined from 49F's own dim_asset by ticker, carried only where the ticker maps to exactly one CUSIP, with cusip_basis joined_via_ticker(dim_asset@as_of); zero or several matches are listed. TO-IB-pr-403 AMENDMENT 1 and p104_cells.py carry it; worker ~267 is re-seated on the amended order.",
+  "one_line": "CTO ruled the ticker -> 49F dim_asset join (exactly-one, basis carried); IB-pr-403 amended and re-seated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO_RULING_D1_S8_49F_CUSIP_PLACEMENT_20261009.md AMENDMENT 1",
+      "p104_cells.py dry-run at base: AC1 FAIL, AC2 PASS, AC3 FAIL"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-403: the SmartX row's own CUSIP becomes the node's security_id.",
+  "world_is": "The SmartX table holds no CUSIP; the order now joins 49F's own master by ticker, exactly-one, with the basis carried."
+}
+```
+
+## IRPT_BCKEND-D2-W266-S1 -- Rebuilding a live bundle: CRLF from the box git, and gzip bytes that depend on the interpreter
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W266-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~266",
+  "surfaced_at": "2026-10-09T09:31:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Two byte traps in rebuilding a live bundle: the box git turns a patched LF member into CRLF, and python 3.14 (zlib-ng) packs different gzip bytes than the live producer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --show-origin core.autocrlf -> file:C:/Program Files/Git/etc/gitconfig true; git apply of 9af6811b61+ce6e2a218e onto the live member gave 3180 CRLF / 0 LF lines (sha256 ccab30f3...); with -c core.autocrlf=false -c core.eol=lf it gave LF, blob e39636c5a8 after adding the 01e843ce2e diff back",
+      "python 3.14.7 (zlib-ng 1.3.1) repack of the live 49financial members = 464,953 bytes sha256 f05805c2...; python 3.12.10 (zlib 1.3.1) repack = 465,247 bytes sha256 fff044da... = the live object byte for byte (3 of 3 firms, cmp identical); decompressed tars equal",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~266/IB103-2_narrow_bundle_census.json build_only.method"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-402 steps 2-3: patch the live member with the two commits' diffs and repack with the mint's packer; the built bytes are then the release.",
+  "world_is": "Both steps are environment-sensitive without an error. A bare git apply on this box rewrites the member with CRLF line endings (a different file from the one ce6e2a218e committed); the default python (3.14, zlib-ng) writes a valid but different gzip stream than the live producer, so a sha256 built there would not be the one an applier on another interpreter gets. The packet pins both: the patch is applied with autocrlf/eol overridden and checked against blob e39636c5a8, the packer is python 3.12 and its control reproduces the live bytes, and the applier's step 3 is a digest gate whose miss is a STOP. Nothing is blocked; filed so a later applier who rebuilds with another interpreter reads the cause of a digest miss here."
+}
+```

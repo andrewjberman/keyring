@@ -304,3 +304,20 @@ Nothing else is cut.
 **Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (when a sample carries them).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9.1 (~09:4xZ, `~D2` msg 3007): round 41 also carries the svc-custody-statement mint and CU-g-2a
+
+**Measured by this seat:** `irpt-ycharts-generate` is live at `tdpterTM...` (09:32:22Z), so release 6b is live. IB-pr-385 is live inside IB-pr-390 (07:49Z). Both
+preconditions of the mint pair's AMENDMENT 2 before-read hold. The pair has both halves: COO @a319fc74b8 and CTO msg 2440, the svc-custody-statement mint
+half @53fa699974.
+
+**RULING: placed in round 41, beside the 11:41Z fire read.**
+1. **The mint landing** is executed by `0.7.0_AE_CloudOps~DB2` (seated for IRPT_DASHBD) under the existing pair, and its before-read re-runs at apply.
+   - The reader-ARN add is a laptop act routed through `0.0.0_AB_MSTR~DELL2`. It is named in the order and waited for.
+2. **CU-g-2a**, the first real retained Performance client statement:
+   - It carries E-P9's persist reads.
+   - It is graded on the real artifact by the CVO.
+   - It stays Opal-internal until a PROD push of a client-facing page, which is Andrew's word.
+3. **Ledger:** pinned, and committed after each leg (relay msg 2973).
+
+-- 1.0.0_SA_CTO~DELL2
