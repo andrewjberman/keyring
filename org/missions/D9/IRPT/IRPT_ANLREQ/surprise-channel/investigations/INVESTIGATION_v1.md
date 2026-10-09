@@ -726,6 +726,30 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W2-S1 -- AR-y-21: the order's regex-able rows are not unique per path; one pin edit was first applied to a second function's rows and reverted with `git checkout --`
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W2-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~2",
+  "surfaced_at": "2026-10-09T07:25:00Z",
+  "one_line": "submission.py and acceptance.py each appear in two functions' staged_from lists (irpt-status at 80a79a7462, irpt-ycharts-generate at 283f7e7700); my first path-keyed edit also re-pinned the second function's rows, and I undid it with `git checkout --` on the uncommitted file, a verb the standing rules bar.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names three rows, two of them under irpt-status, and says change no other row; it does not say the same repo_paths recur under irpt-ycharts-generate with a different pin.",
+  "world_is": "Before the revert the diff showed 8 changed lines pairs (10 value lines), including two 283f7e7700 pins; the file had no committed change of mine, so the checkout restored HEAD bytes only. Re-applied keyed on the old pin: 3 matches, 6 insertions and 6 deletions, committed at 3f7f1610fb. The 283f7e7700 rows of irpt-ycharts-generate are untouched (their sha256 already equals HEAD's blob).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json lines 5471, 5483 (irpt-status) and 6563, 6569 (irpt-ycharts-generate) @ 3f7f1610fb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_ANLREQ-D2-S4 -- disposition of W11-S1 (ARMED): the portal reader admits ticket_id beside input_id on DEV
 
 ```json
@@ -784,5 +808,33 @@
   },
   "disposition": "DISMISSED_WITH_REASON",
   "dismissal_reason": "Answered by a durable marker the ticket already stores, replacing the date gate the worker flagged; the CTO ruled it DONE."
+}
+```
+
+## IRPT_ANLREQ-D2-S6 -- round 2: "the ticket page opens all four package files" has no server reader for Commentary or Original file
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:40:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "DECOMP_R2 AR-v-21 says the ticket page 'opens all four package files', but irpt-status serves owned reads for only two of them (analysis-request-read and analysis-request-pdf, keyed by requestId); no IRPT route reads the Commentary artifact or the Original file, so a portal-only cell can open the Report and the Branded PDF and must leave Commentary and Original labelled '(no reader yet)'. FWD-1's grading run (the four files opened from the ticket) cannot pass until a server reader exists for both, or the CTO narrows hop 9.",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (driver: route the two readers to the IRPT lane that owns irpt-status, or ask the CTO to narrow hop 9)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/entry.py:218-225 at box/dell2 651316fe8d: the irpt-status route map adds exactly three analysis routes -- analysis-request-history, analysis-request-read, analysis-request-pdf; none reads commentary or an original upload",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:107 read() and :153 pdf() are both keyed by request_id; neither takes commentary_ref or original_ref",
+      "row IRPT_ANLREQ-D2-S1 (round 1) already named this split: the PDF is a portal route entry; commentary and original need an IRPT-side reader (disarm owners ~Y2 / ~G2)",
+      "IRPT_ANLREQ_DECOMP_R2.md @cff0872f0f cell AR-v-21 and the closing line 'FWD-1 is then graded on ONE live journey: ... the package's four files opened from the ticket'"
+    ]
+  },
+  "spec_asserts": "DECOMP_R2 AR-v-21: 'Portal: the ticket page opens all four package files, including the branded PDF reader (route analysis-request-pdf)'; FWD-1 grading opens all four.",
+  "world_is": "Two of the four files have a server reader. AR-v-21 is cut to open those two and to name the other two honestly; no cell of round 2 builds a commentary or original-file reader.",
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
