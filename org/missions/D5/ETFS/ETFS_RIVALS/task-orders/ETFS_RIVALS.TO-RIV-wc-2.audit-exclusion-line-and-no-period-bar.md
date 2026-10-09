@@ -128,7 +128,8 @@ FAIL as expected.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 by 2.0.0_SA_COO~V1: chain wc-1 -> wc-2 merged ccf53a8f16; AC1 PASS (proofs VALID); J1 owed to 3.0.0_SA_CVO~RV1 on the issuer real run after the guards lift -->
 <round>28</round>
 <workstream>3</workstream>
 <slot>~25</slot>
