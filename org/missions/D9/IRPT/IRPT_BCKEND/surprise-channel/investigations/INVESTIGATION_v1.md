@@ -22438,3 +22438,135 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The release is correct on the replayed firms. These three are consequences to know about at sign-off, none armed today."
 }
 ```
+
+## IRPT_BCKEND-D2-W190-S1 -- Ports 3 and 4 already exist as the admitted interpreter intake/custody_interpreter.py build_custody_ports; custody_ports.py wraps them inste
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W190-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~190",
+  "surfaced_at": "2026-10-09T02:19Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Ports 3 and 4 already exist as the admitted interpreter intake/custody_interpreter.py build_custody_ports; custody_ports.py wraps them instead of building economic rules.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/custody_interpreter.py:411 build_custody_ports(get_object, read_rows, opaque, admitted_firms) returns (interpret_source, validate_evidence); module docstring cites CTO 100639/100675/100686/100695/100712 and the design org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/CUSTODY_INTERPRETER_DESIGN_20260924.md.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_HOP4_CARD_20260925.md: 'Reader + interpreter ports: BUILT, never constructed ... No non-test caller of any of the three.'",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_custody_interpreter_reader.py runs the reader round-trip over these ports; _scope/tests/test_custody_ports.py now runs them through the new wrapper (234 passed in the _scope suite)."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-382 and the port contract: ports 1/3/4 have no production implementation and ~P builds them; if an economic rule is not written anywhere, STOP.",
+  "world_is": "Every economic rule port 3/4 need IS written and admitted (the interpreter plus custody_portfolio._validated); nothing was invented. The cell reduced to wrapping them with the reader's binding checks, a firm allow-list (default COT only, the interpreter's production default; 49F and INF only when the installer passes admitted_firms under the ledgered plan, CTO 100712), and an S3 by-version reader adapter. The release-6 stage list therefore also carries intake/custody_interpreter.py and intake/custody_portfolio.py."
+}
+```
+
+## IRPT_BCKEND-D2-W190-S2 -- SelectionStore alone cannot source port 1: the selected-set fingerprint needs the current entitlement revision and viewer policy of a freshl
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W190-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~190",
+  "surfaced_at": "2026-10-09T02:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "SelectionStore alone cannot source port 1: the selected-set fingerprint needs the current entitlement revision and viewer policy of a freshly resolved scope, so port 1 takes a request-bound current_authority(principal, owner) -> (scope, directory) that the installer must supply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/selection_store.py: SelectionStore.load returns only the retained record (schema_version, firm_id, account_ids, directory_revision, account_set_id).",
+      "infra/aws/lambda/investor-reporting/_scope/selection.py:127-136 _view computes selected_account_set_fingerprint = resolve.fingerprint(account_ids, scope['entitlement_revision'], scope.get('viewer_policy'), firm), and resolve_selection needs scope and directory; ACCEPTED_READER_REVIEW_20260923.md:71 forbids substituting any other hash.",
+      "infra/aws/lambda/investor-reporting/_scope/custody.py:63-88 CustodyAccess._current_selection_owner is the existing recipe (Enforcer.resolve_now(request) over fresh ENTRY.deps loads); the port signature (principal, owner) carries no request, so the resolver must be a closure bound to the request."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-382: 'The likely source is _scope/selection_store.py SelectionStore; confirm it or say why not.'",
+  "world_is": "Not sufficient alone. Port 1 = SelectionStore.load (via selection.resolve_selection) over a scope and directory resolved fresh on every call by an installer-supplied current_authority; it also refuses unless the resolved set, directory_revision and entitlement_revision equal the owner's. Y2 must write current_authority from custody.py:63-88 for release 6, request-bound and never warm; the factory refuses to build without it."
+}
+```
+
+## IRPT_BCKEND-D2-W190-S3 -- The interpreter's default row decoder imports pyarrow, which the irpt-ycharts-generate function (irpt-common layer only) is not shown to car
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W190-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~190",
+  "surfaced_at": "2026-10-09T02:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "The interpreter's default row decoder imports pyarrow, which the irpt-ycharts-generate function (irpt-common layer only) is not shown to carry; release 6 without it refuses every custody read as CUSTODY_SOURCE_SHAPE.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/custody_interpreter.py:107-110 _read_parquet_rows does 'import pyarrow.parquet as pq' lazily; any decode exception becomes CUSTODY_SOURCE_SHAPE (:471-474).",
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:326 layers = [irpt_common]; infra/aws/lambda/ci/lambda-layer-map.json layers.irpt-common description names jsonschema, referencing, attrs, rpds, bd_helpers and ids and no pyarrow. The layer's contents were read from its map description, not from the published layer, so absence is INFERRED.",
+      "The tests inject read_rows (JSON), so no test in this cell exercises pyarrow; intake/tests/test_custody_interpreter.py has one real-parquet arm."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-382 / contract: release 6 ships the reader so a statement submission no longer raises CUSTODY_FACTORY_REQUIRED (its after-read).",
+  "world_is": "If pyarrow is absent from the built zip and the layer, the reader installs but every create/read refuses fail-closed (CUSTODY_SOURCE_SHAPE), so the after-read would move from CUSTODY_FACTORY_REQUIRED to a different refusal. Release 6 must stage pyarrow or the installer must pass read_rows; the read-set file lists it under runtime_prerequisites."
+}
+```
+
+## IRPT_BCKEND-D2-S19 -- disarm of D2-W190-S3: release 6 carries the AWSSDKPandas-Python312:16 layer for the custody decoder
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S19",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T02:30:00Z",
+  "disposition": "GRADUATED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disarm of IRPT_BCKEND-D2-W190-S3 (disarm owner 2.0.0_SA_COO~Y2): the custody interpreter's default decoder imports pyarrow, which irpt-ycharts-generate lacks; release 6 attaches the estate's AWS-managed AWSSDKPandas-Python312:16 layer and its after-read reads one custody row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live irpt-ycharts-generate layers = [irpt-common:5] only (get-function-configuration, ~02:3xZ); irpt-common:5 description: jsonschema + IRPT schemas + BD helpers, 644526 bytes, no pyarrow",
+      "the built function zip at 328b73d536 carries 0 pyarrow members",
+      "intake/custody_interpreter.py:108-109 default decoder imports pyarrow.parquet lazily; build_custody_ports(read_rows=...) is the injection point (line 411-420)",
+      "estate precedent: arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python312:16 in 49f-value-parity, cot-value-parity, inf-value-parity"
+    ]
+  },
+  "spec_asserts": "A custody (Performance client statement) read through the installed AcceptedCustodyReader decodes the custody parquet.",
+  "world_is": "INERT today: no live importer reaches the custody path (generate_installed.py:172 raises CUSTODY_FACTORY_REQUIRED before any decode). Disarmed by ruling: release 6 cannot land without the layer (its census + an after-read that decodes one custody row); if the layer exceeds the 250 MB unzipped limit, release 6 passes read_rows instead and this row re-opens."
+}
+```
+
+## IRPT_BCKEND-D2-S20 -- release 6 would fail symbol_closure on the port's publication fallback (false positive)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S20",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T02:42:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Release 6 of irpt-ycharts-generate will FAIL the symbol-closure check on a false positive: round 35's port keeps a `try: from holdings_publication import HoldingsPublication / except ImportError: from publication import HoldingsPublication` fallback, and in that function `publication` is ycharts' own module, which defines no HoldingsPublication, so symbol_closure.py flags the fallback line even when the right module is staged.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings/holdings_publication_port.py:8-11 (the fallback)",
+      "infra/aws/lambda/investor-reporting/ycharts/extract/publication.py (classes: PublicationRefused only; no HoldingsPublication)",
+      "this seat's synthetic zip staged as release 6 stages it (the port, holdings/publication.py AS holdings_publication.py, ycharts' publication.py): org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/checks/r71/symbol_closure.py -> 'MISSING holdings_publication_port.py:11 imports HoldingsPublication from publication', modules=3 pairs=2 missing=1, FAIL"
+    ]
+  },
+  "spec_asserts": "Release 6's built zip passes symbol_closure (the release-4 lesson, asked of release 6's pair at round 34).",
+  "world_is": "It cannot as staged: the check reads the fallback branch. At runtime the fallback is safe (it would raise ImportError, not bind ycharts' module), so the defect is the check's view of a fallback, not a wrong binding."
+}
+```

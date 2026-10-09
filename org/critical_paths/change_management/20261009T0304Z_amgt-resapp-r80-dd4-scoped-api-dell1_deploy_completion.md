@@ -1,0 +1,27 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-09T03:04:00.556534+00:00
+**Status:** OPEN
+**Deploy:** AMGT_RESAPP AMGT-dd-4: redeploy opal-amgt-scoped-api from dell1 at build pin 65532d8a7b (risk WORLD; GO 2.0.0_SA_COO~R1 msg 1476). NEVER-WIDEN PAIR READ BEFORE FIRST LIVE ACT: COO half org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND80_DD4_COO_HALF.md @db906ef3d1 sha256 382ef5f7a5f85c2abe107e08a096b54990589c03313cbb4038649fb65ee2cb4b; CTO half NEVER_WIDEN_ROUND80_DD4_CTO_HALF.md @f35ac7640a sha256 93adc61cb13c6c87729354b64a61b7123099d115b502c56537ee594a910313eb (SIGNED with conditions 1-4). Live pre-act: CodeSha256 ltXvElwZ4iyRx6bJLDQRWksbDoiTesc8xvu1h+p3QI0=, LastModified 2026-10-08T17:35:08Z, Memory 1769, Runtime python3.11, Timeout 29.
+**Authored by:** 0.7.0_AE_CloudOps~DELL1
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 6.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | verify | ROLLBACK CAPTURE: download Code.Location, sha256 base64 must equal the live CodeSha256, keep the path | base64 sha equality + kept path | PASS. aws lambda get-function --function-name opal-amgt-scoped-api, Code.Location downloaded to /c/Users/Test/AppData/Local/Temp/claude/C--Dev-ajb-workspace/d548f244-8a28-4ed1-9051-22f512ed1641/scratchpad/amgt/LIVE_ROLLBACK_opal-amgt-scoped-api_ltXvElwZ.zip -- 42015430 bytes, sha256 base64 ltXvElwZ4iyRx6bJLDQRWksbDoiTesc8xvu1h+p3QI0=, EQUAL to the live CodeSha256. This file IS the rollback (CTO half condition 2) and is AMGT_DEPLOYED_ZIP for the build. | CLOSED 20261009T030452Z |
+| L2 | verify | wheel folder C:/tmp/r80-wheels re-hashed against round78/BB18_WHEEL_FOLDER_SHA256_20261008.txt | 6 of 6 sha256+bytes equal, denominator printed | PASS. C:/tmp/r80-wheels re-hashed against org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/BB18_WHEEL_FOLDER_SHA256_20261008.txt BEFORE the build. RECORD DENOMINATOR 6 declared; FOLDER DENOMINATOR 6 .whl present (plus a SHA256.txt sidecar, not a wheel); 6 of 6 EQUAL on both sha256 and byte count; DECLARED-BUT-ABSENT none; NOT-IN-THE-RECORD none. attrs-26.1.0 aa97b256ec689d4d/67548, jsonschema-4.26.0 756dd1cd8812465d/90628, jsonschema_specifications-2025.9.1 80d57274293a297e/18437, referencing-0.37.0 b9a6046f8b50bf51/26763, rpds_py-2026.6.3-cp314-cp314-win_amd64 0be972be84cfcaf4/220380, typing_extensions-4.16.0 8bcbfab4891bda69/45571. | CLOSED 20261009T030452Z |
+| L3 | verify | BUILD from a detached worktree at EXACTLY 65532d8a7b, --build-only, PIP_NO_INDEX=1 + PIP_FIND_LINKS + PIP_LOG; CONTENT-DIFF lists only the pair's named files | build sha + content-diff file list + pip index-request count 0 |  | OPEN |
+| L4 | activation | upload the built file, then ONE safe-apply on infra/aws/terraform/harvest/ with the plan graded UNTARGETED; exactly ONE resource may move | plan counts + the single resource named + apply output |  | OPEN |
+| L5 | verify | new CodeSha256 DIFFERS from ltXvElw.. AND equals the built file's sha | get-function-configuration read |  | OPEN |
+| L6 | git | source-map record: the function's lambda-source-map.json entry gains last_deployed_commit + artifact_sha256; comp-lambdamap no longer NO-RECORD | commit hash + comp-lambdamap line quoted |  | OPEN |
+| L7 | verify | AC1 r80_deployed.py and AC2 r78/r79_deployed.py regression arm | every criterion's output lines + exit=0 |  | OPEN |
+
+## Log
+
+- 20261009T030400Z OPENED by 0.7.0_AE_CloudOps~DELL1 with 7 leg(s)
+- 20261009T030452Z LEG L1 closed: PASS. aws lambda get-function --function-name opal-amgt-scoped-api, Code.Location downloaded to /c/Users/Test/AppData/Lo
+- 20261009T030452Z LEG L2 closed: PASS. C:/tmp/r80-wheels re-hashed against org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/BB18_WHEE

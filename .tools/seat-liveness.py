@@ -20,7 +20,9 @@ THE CLASSES (N minutes from --minutes, default 45):
   MOVING   alive by process, and a commit by that serial's author inside N minutes (git log --all --author "^<serial> <",
            anchored, so a base serial never matches its lanes) or a file written under deliverables/<serial>/ in a live
            worktree inside N minutes.
-  QUIET    alive, nothing inside N minutes, no open task order.
+  QUIET    alive, nothing inside N minutes, no open task order. An order's status is its LAST <status> tag; a STAGED order
+           is waiting on its GO and is not open work (it counts toward none of HUNG, DEAD or ELSEWHERE; a seat's reason line
+           carries staged=<n>).
   HUNG     alive by process, an open task order assigned to it (<issued_to> equal to the serial), nothing inside N minutes.
   DEAD     a registered session, or an open order whose project is PLACED ON THIS BOX, and no process. EXCEPTION, stated
            in the line: a seat whose broker heartbeat is under 10 minutes old with no process token is process-blind, not
@@ -67,6 +69,7 @@ CLASSES = ("MOVING", "QUIET", "HUNG", "DEAD", "ELSEWHERE", "UNKNOWN")
 FRESH_HEARTBEAT_SECONDS = 600
 ORDER_DATES = {}
 ORDER_PROJECTS = {}
+ORDER_STAGED = {}
 SERIAL_IN_CMDLINE = re.compile(r'"\s*([0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)')
 PS_SCRIPT = (
     "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false); "
@@ -129,7 +132,8 @@ def tok(cmdline: str):
 
 
 def open_orders_to(ctx) -> dict:
-    """{issued_to serial: [order file names]} for non-terminal orders, parsed from the order files. The newest <issued_date>
+    """{issued_to serial: [order file names]} for open orders, parsed from the order files: an order's status is its LAST
+    status tag; a terminal order is skipped and a STAGED order is counted in ORDER_STAGED only. The newest <issued_date>
     per serial goes in ORDER_DATES so a stale order (a seat that never ran it) is visible beside the DEAD verdict."""
     out = {}
     for path in glob.glob(ctx.path("org", "missions", "D*", "*", "*", "task-orders", "*.md")):
@@ -143,9 +147,11 @@ def open_orders_to(ctx) -> dict:
         word = None
         for st in re.finditer(r"<status>\s*([A-Za-z_-]+)", text):
             if st.group(1).lower() in SL.STATUS_WORDS:
-                word = st.group(1).lower()
-                break
+                word = st.group(1).lower()      # an order's status is its LAST status tag (CTO msg 107528): no break
         if word in SL.TERMINAL:
+            continue
+        if word == "staged":                    # waiting on its GO: not open work, kept visible as staged=<n>
+            ORDER_STAGED[who.group(1)] = ORDER_STAGED.get(who.group(1), 0) + 1
             continue
         out.setdefault(who.group(1), []).append(os.path.basename(path))
         ORDER_PROJECTS.setdefault(who.group(1), []).append(os.path.dirname(os.path.dirname(path)))
@@ -262,20 +268,23 @@ def owned_here(serial: str, reg: dict, device: str) -> bool:
 # ---------------------------------------------------------------- the classification
 
 def classify(*, alive: bool, registered: bool, hb_age, orders: list, commit_ep, deliv_ep, now: int, minutes: int,
-             process_read: bool, newest_order: str = "", placed: dict = None) -> tuple:
+             process_read: bool, newest_order: str = "", placed: dict = None, staged: int = 0) -> tuple:
     """(class, reason). Pure: every input is a measured value. `placed` is placement_of()'s answer for the seat's open orders
-    (None: no placement read, which is only ever correct for a seat with no open order)."""
+    (None: no placement read, which is only ever correct for a seat with no open order). `staged` is the count of the seat's
+    staged orders: not open work, named in the reason where the reason names orders."""
+    tail = ", staged=%d" % staged if staged else ""
     if not process_read:
         return "UNKNOWN", "process list unreadable: no seat is called dead or hung off a failed read"
     if not alive:
         if registered and hb_age is not None and hb_age <= FRESH_HEARTBEAT_SECONDS:
             return "UNKNOWN", "no process token but a broker heartbeat %dm old: process-blind, not called dead" % (hb_age // 60)
         if not orders:
-            return "DEAD", "no process carries this serial; registered session"
+            return "DEAD", "no process carries this serial; registered session" + tail
         placed = placed or {"here": 0, "elsewhere": {}, "unread": len(orders)}
         away = sum(placed["elsewhere"].values())
         counts = "%d placed here, %d elsewhere, %d unread" % (placed["here"], away, placed["unread"])
-        why = "%d open order(s) (%s), newest issued %s: %s" % (len(orders), counts, newest_order or "?", ", ".join(orders[:2]))
+        why = "%d open order(s) (%s), newest issued %s: %s%s" % (len(orders), counts, newest_order or "?", ", ".join(orders[:2]),
+                                                               tail)
         if placed["here"] == 0 and placed["unread"] > 0:
             return "UNKNOWN", ("placement unread for %d order(s), %d placed elsewhere: never called dead off an unread placement; %s"
                                % (placed["unread"], away, why))
@@ -291,8 +300,8 @@ def classify(*, alive: bool, registered: bool, hb_age, orders: list, commit_ep, 
     if commit_ep is None:
         return "UNKNOWN", "the author filter matches nothing in the repository's history: a serial that never committed is not quiet"
     if orders:
-        return "HUNG", "open order(s) %s and nothing for %dm" % (", ".join(orders[:2]), age_min)
-    return "QUIET", "alive, nothing for %dm, no open order" % age_min
+        return "HUNG", "open order(s) %s and nothing for %dm%s" % (", ".join(orders[:2]), age_min, tail)
+    return "QUIET", "alive, nothing for %dm, no open order%s" % (age_min, tail)
 
 
 def build(ctx, device: str, reg: dict, minutes: int, dev) -> tuple:
@@ -333,6 +342,7 @@ def build(ctx, device: str, reg: dict, minutes: int, dev) -> tuple:
         klass, why = classify(alive=serial in proc_by_serial, registered=info is not None, hb_age=hb_age,
                               orders=orders.get(serial, []), commit_ep=commit_ep, deliv_ep=deliv_ep, now=now,
                               minutes=minutes, process_read=process_read, newest_order=ORDER_DATES.get(serial, ""),
+                              staged=ORDER_STAGED.get(serial, 0),
                               placed=placement_of(serial, dev, reg, device) if serial in orders else None)
         rows.append({"serial": serial, "kind": kind_of(serial), "class": klass.split("(")[0], "label": klass, "reason": why,
                      "pids": proc_by_serial.get(serial, []), "orders": len(orders.get(serial, []))})

@@ -737,3 +737,18 @@ NFRA_CTLPLN.TO-CT-k-2 AMENDMENT 10) is in transit.
 | `DB-b-68` | E3: FLOW_TIMING_AFTER_FEE_BASE 116 traced, status under the reader of record | LOCAL | DB-b-63 (merged) | B34-3 |
 
 fanout: 3 of 3 chains, cap 8, reason: disjoint surfaces. Workers 0.9.0_WK_IRPT_DASHBD~43 and ~45 spawn now; ~44 spawns when the kit lands and the issuer writes its path to `deliverables/2.0.0_SA_COO~D2/relay/KIT_PATH_PY312_PANDAS223.txt`. All cut from box/dell2.
+
+## 37. ROUND 35, WORKSTREAM B (2026-10-09 ~02:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-34 ADDENDUM 3 @fde009aab3, on ADJUDICATION_v19)
+
+Round 34 is closed: tie-out 8,433 of 9,078, and the pandas 2.2.3 kit read FITS (1,500.7 of 2,048 MB). The CTO ruled the withheld
+activity-and-lot release's S31 and S33 MET; S32 is MET only on a read the packet carries; the release proceeds to its never-widen pair,
+COO half first.
+
+Issuer pre-read: 6 of the round-26 packet's 19 file-list rows are stale at HEAD (handler.py, account_activity_lots.py, lib/opal_naming.py,
+three registry files), so the packet is RE-CUT at HEAD before any half is signed.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-69` | the release ask: the S32 read on the kit (classify_and_sum vs the tested version; returns old pin vs HEAD; DB-b-43 on 2.2.3), one full kit run's refusal count for S33, and the packet re-cut at HEAD with both halves UNSIGNED | WORLD | DB-b-67 (merged) + the kit (relay @7aea38af1e) | B35-1 |
+
+fanout: 1 of 1 chains, cap 8, reason: one packet over one release. Worker 0.9.0_WK_IRPT_DASHBD~46, cut from box/dell2. On its drain the issuer reads the packet and signs or withholds the COO half; the CTO signs its half on it.

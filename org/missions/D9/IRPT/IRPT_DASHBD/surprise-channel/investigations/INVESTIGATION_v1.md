@@ -3435,3 +3435,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W44-S1 -- The offline kit installs but cannot run the round 30 runner: it packages no psutil and no boto3, which the runner and the handler's --local mode import.
+
+```json
+{
+  "id": "IRPT_DASHBD-W44-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~44",
+  "surfaced_at": "2026-10-09T02:23:25Z",
+  "one_line": "The offline kit installs but cannot run the round 30 runner: it packages no psutil and no boto3, which the runner and the handler's --local mode import.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-67 step 1-2: the kit (7 wheels: numpy, pandas, pyarrow, dateutil, pytz, six, tzdata) installed offline into a py312 venv is enough to run lots_750_run.py default over the handler's --local mode.",
+  "world_is": "MEASURED: the offline install succeeded (no wheel missing), but batched_e2_run.py imports psutil and handler.local imports boto3/botocore (S3 reads of the run's inputs), and neither is in the kit or the venv. Resolved without any network: copied boto3, botocore, s3transfer, jmespath, urllib3 and psutil from dell2's own user site-packages (Python312, Roaming) into .scratch/sidepkgs and added a .pth file to the venv; pandas, numpy and pyarrow stay the kit's (the run's own process prints 3.12.10 / 2.2.3 / 1.26.4 / 14.0.2). These side packages are not the measured libraries; their resident size is part of the baseline in every earlier round's runs too. The next kit should list psutil, boto3 and their dependencies, or the order should say the venv takes them from the box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/batched_e2_run.py:31 (import psutil is inside main; handler.local imports boto3 at infra/aws/lambda/investor-reporting/reporting-gold/handler.py:591)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~44/kit_run.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

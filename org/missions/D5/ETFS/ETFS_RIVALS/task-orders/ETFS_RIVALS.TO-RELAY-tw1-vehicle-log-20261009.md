@@ -17,6 +17,18 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    Step 2 now uses the transcriber 0.0.3_BG_BBGTerminal committed for this ask (0.0.0_AB_MSTR~DELL1 msg 1472, site Z msg
+    32283): `python -I org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/transcribe_vehicle_log.py 20261009`
+    from the workspace root. It writes the step 2 path itself and adds the verdict "DID THIS FIRE REACH THE ENRICHMENT LEG?"
+    (row ETFS_RIVALS-Z-S79). It copies only the STEP and EXIT CODE lines, so ALSO copy the whole log, unedited, to
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.full.log`, and commit both
+    files together. Step 2's four-line header is replaced by the script's own header. The log lives under the Terminal's
+    Windows user (`C:/Users/Opal Bloomberg/opal_bbg_logs/`); if you run as another user and the script prints `no vehicle log
+    matches`, list that directory and report what it holds. Never substitute an ad-hoc run. AC1's expectation reads: the file
+    prints and holds the line `-- DID THIS FIRE REACH THE ENRICHMENT LEG? --`.
+  </amendment>
+
   <objective>
     Carry the 2026-10-09 11:00Z Bloomberg vehicle run's log from site Z into the repo, verbatim, by 11:15Z, so the dell1
     issuer can grade RIV-tw-1's J1. The log lives only on site Z (`%USERPROFILE%\opal_bbg_logs`); the issuer is on dell1
@@ -52,7 +64,7 @@ lane: CloudOps~Z, the site-Z executor for this dell1 project (msg 1440).
 </preflight>
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="RIV-tw-1"><invocation>git show origin/box/sitez:org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt</invocation><expect>the file prints, its first four lines are the header of step 2, and no header line reads INCOMPLETE</expect></criterion>
+  <criterion id="AC1" cell_refs="RIV-tw-1"><invocation>git show origin/box/sitez:org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt</invocation><expect>the file prints and holds the line -- DID THIS FIRE REACH THE ENRICHMENT LEG? --</expect></criterion>
 </proof_of_spec>
 
   <report>

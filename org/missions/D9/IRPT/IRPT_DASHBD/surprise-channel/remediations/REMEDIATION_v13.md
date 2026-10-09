@@ -42,11 +42,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-08. Graduated at round 29's L9 (
     "owner": "2.0.0_SA_COO~D2",
     "round": "v30",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D2",
       "round": "v30"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

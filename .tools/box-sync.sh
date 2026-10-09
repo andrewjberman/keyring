@@ -12,6 +12,7 @@
 # USAGE (an MSTR serial only -- OPAL_AGENT_SERIAL, else the session serial file):
 #   bash .tools/box-sync.sh box        [--dry-run]   take origin/CLOUD into box/<this box>, then push box/<this box>
 #   bash .tools/box-sync.sh integrate  [--dry-run]   merge every origin/box/* that is ahead into CLOUD, then push CLOUD
+#   bash .tools/box-sync.sh status     [--fetch]     ANY seat, read-only: each box branch behind/ahead of CLOUD
 #
 # HOW IT AVOIDS SUFFOCATING THE BOX: each merge is computed in the object store (`git merge-tree --write-tree`), graded on
 # a PRIVATE index in a private git dir (HEAD and MERGE_HEAD pinned to the two parents, over the shared files), and written
@@ -28,10 +29,28 @@
 set -uo pipefail
 MODE="${1:-}"; DRY=0
 [ "${2:-}" = "--dry-run" ] && DRY=1
-case "$MODE" in box|integrate) ;; *) echo "usage: box-sync.sh box|integrate [--dry-run]" >&2; exit 2 ;; esac
+case "$MODE" in box|integrate|status) ;; *) echo "usage: box-sync.sh box|integrate [--dry-run] | status [--fetch]" >&2; exit 2 ;; esac
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || { echo "box-sync: not in a git repo" >&2; exit 2; }
 cd "$ROOT" || exit 2
+
+# STATUS (read-only, any seat): where every box branch stands against CLOUD, read from git, because each box's BOX-SYNC
+# rows live in that box's own untracked audit log and no other box can read them. A box still BEHIND CLOUD after its slot
+# is a held or skipped pass. Reads the remote-tracking refs as last fetched; --fetch fetches origin first.
+if [ "$MODE" = status ]; then
+  [ "${2:-}" = "--fetch" ] && { git fetch -q origin || { echo "box-sync status: fetch failed" >&2; exit 1; }; }
+  cl="$(git rev-parse -q --verify refs/remotes/origin/CLOUD)" || { echo "box-sync status: origin/CLOUD unreadable" >&2; exit 1; }
+  echo "origin/CLOUD $(git log -1 --format='%h %cI' "$cl")"
+  n=0
+  for r in $(git for-each-ref --format='%(refname)' refs/remotes/origin/box/); do
+    took="$(git log -1 --first-parent --format='%cI %h' --grep='^box-sync(.*take CLOUD' "$r")"
+    printf '%-12s tip %s  behind CLOUD %s  ahead of CLOUD %s  last take of CLOUD: %s
+' "${r#refs/remotes/origin/}"       "$(git log -1 --format='%h %cI' "$r")" "$(git rev-list --count "$r..$cl")" "$(git rev-list --count "$cl..$r")" "${took:-none}"
+    n=$((n + 1))
+  done
+  echo "box branches read: $n"
+  exit 0
+fi
 GITDIR="$(git rev-parse --path-format=absolute --git-dir)"
 COMMON="$(git rev-parse --path-format=absolute --git-common-dir)"
 AUDIT="${COMMON}/../org/git-author-override-audit.log"

@@ -22326,6 +22326,164 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_RESAPP-D1-W317-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~317",
+  "surfaced_at": "2026-10-09T02:10:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "The walker's disarm on dell1 sets the account disabled and replaces the hash, then stops at ssm:DeleteParameter (AccessDenied for cloudops-dell1-agent-user): the SSM parameter /opal/ui-walker/password stays PRESENT after both passes.",
+  "spec_asserts": "SKILL.md safety model: 'disarm <holder> ... sets it disabled, replaces the hash, deletes the parameter, and proves a login is refused.' The order: 'Then disarm.'",
+  "world_is": "Both passes' disarm printed DISARM FAILED with AccessDeniedException on ssm:DeleteParameter (reproduced once by calling the module's own _ssm().delete_parameter): 'User: arn:aws:iam::313476888478:user/cloudops-dell1-agent-user is not authorized to perform: ssm:DeleteParameter on resource: arn:aws:ssm:us-east-1:313476888478:parameter/opal/ui-walker/password because no identity-based policy allows the ssm:DeleteParameter action'. After each pass `status` reads status=disabled armed=no armedBy=none; SSM PRESENT. The row's disable ran first (its conditional write passed), so the parameter's password no longer matches the stored hash; the login-refused proof, which follows the delete in the disarm, did not run. A re-run of disarm with the holder reads REFUSED (held by nobody).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~317/data/walk_stdout_pass1.log and walk_stdout_pass2.log (the DISARM FAILED lines)",
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status after pass 2: 'status=disabled ... armed=no armedBy=none; SSM PRESENT'",
+      "ui_walker_account.py lines 195-199 (the delete_parameter call that raised)"
+    ]
+  },
+  "notes": "The SSM parameter is a leftover secret for a disabled account whose hash was replaced; the next arm overwrites it. Granting ssm:DeleteParameter on that one parameter to the dell1 agent user is an IAM act this worker did not take (bound: no write beyond the walker's own mechanism)."
+},
+{
+  "id": "AMGT_RESAPP-D1-W317-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~317",
+  "surfaced_at": "2026-10-09T02:10:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "Round 79's driver launches the account script as plain `python`, which on this box lacks bcrypt; the copied instrument was edited to read the interpreter from WALK_PY.",
+  "spec_asserts": "The order: 'On this box run it with py -3.12 (the default Python lacks bcrypt)' and 'copy it into your own instrument/ and extend it there.'",
+  "world_is": "walk_ay6.mjs line 99 calls execFileSync('python', [ACCOUNT, ...]) for arm and disarm, so `py -3.12` on the command line does not reach the walker's own arm/disarm. In the copy at deliverables/0.9.0_WK_AMGT_RESAPP~317/instrument/walk_ay6.mjs that call reads process.env.WALK_PY || 'python', with WALK_PY set to the Python 3.12 interpreter. `python -c 'import bcrypt'` on this box: ModuleNotFoundError. No other line of walk_ay6.mjs changed; the shared skill's walk.mjs is untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~317/instrument/walk_ay6.mjs line 99",
+      "python -c 'import bcrypt' output on this box: ModuleNotFoundError: No module named 'bcrypt'"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-D1-W317-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~317",
+  "surfaced_at": "2026-10-09T02:13:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "The order's row id form AMGT_RESAPP-R1-W317-S<k> is refused by the surprise-row gate: R1 is not a registered fabric coordinate (D1, D2, Z are); this worker's rows carry D1.",
+  "spec_asserts": "The order: 'Rows: id form AMGT_RESAPP-R1-W317-S<k>, disarm_owner 2.0.0_SA_COO~R1.'",
+  "world_is": "safe-commit's surprise-row gate blocked the first commit: 'AMGT_RESAPP-R1-W317-S1: fabric=dell1 -- the id carries the coordinate R1, which the device register does not hold; registered coordinates: D1, D2, Z'. The rows were re-minted as AMGT_RESAPP-D1-W317-S1, -S2 and this row -S3; the order's R1 form was used in no committed row. No override was used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output of the first attempt: '[surprise-row-gate] BLOCKED -- 2 violation(s) on NEW rows' naming coordinate 'R1' and the registered 'D1', 'D2', 'Z'",
+      "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md rows AMGT_RESAPP-D1-W317-S1 and -S2"
+    ]
+  },
+  "notes": "For the issuer: a round-81 order for a worker on dell1 would carry the D1 coordinate in its id form."
+},
+{
+  "id": "AMGT_RESAPP-D1-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T02:21:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "Round-80 cut defects at the issuer: (a) r80_dd2.py P6 expected clean_location(None) == '' while order AMGT-dd-2 says a non-string is returned unchanged; (b) every round-80 order named row id form AMGT_RESAPP-R1-W<n>-S<k>, a coordinate the device register does not hold (dell1 is D1).",
+  "spec_asserts": "Order AMGT-dd-2 step 2: 'Non-string input is returned unchanged.' The row gate: a row id's coordinate is a device register row_coordinate (org/devices/DEVICES.json: '', Z, D1, D2).",
+  "world_is": "(a) dd-2's AC1 read FAIL on P6 alone (worker ~316 report; its branch row AMGT_RESAPP-R1-W316-S1); the issuer amended P6 to expect None, and AC1 on the shared tree reads R80 R2 AC1 SERVED: YES. (b) the merge's row gate refused the R1 row with no override path; the issuer withdrew it on the branch (@91465662e7, audited override) and carries it here. Worker ~317 minted its rows as D1 (AMGT_RESAPP-D1-W317-S3 records the same refusal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round80/checks/r80_dd2.py line 70 (AMENDMENT 1)",
+      "wk-AMGT_RESAPP-316 @be1966317b (the R1 row) and @91465662e7 (its withdrawal)",
+      "org/devices/DEVICES.json row_coordinate fields"
+    ]
+  },
+  "notes": "Remedy for later rounds: the issuer's orders name id form AMGT_RESAPP-D1-W<n>-S<k>; the open order dd-1 (re-opened) is amended to D1 in the same commit as this row; dd-4 mints no rows of its own form."
+},
+{
+  "id": "AMGT_RESAPP-D1-W315-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~315",
+  "surfaced_at": "2026-10-09T02:32:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "BLOCKING",
+  "one_line": "AMENDMENT 1 asks for a filings folder reading 0 failed, but lib/research/filings/tests/test_section_coverage.py::test_one_section_lists_the_other_as_not_covered fails once section_coverage._WANTED['20-F'] carries business; that test file is not in the order's paths.",
+  "spec_asserts": "Order dd-1 AMENDMENT 1: make _WANTED['20-F'] equal the producer's table, change nothing else in section_coverage.py, and the whole filings test folder reads 0 failed.",
+  "world_is": "With _WANTED['20-F'] = [business, risk, mdna] (edited, fitz stubbed on PYTHONPATH so test_no_analyze's subprocess imports): 191 passed, 1 failed. test_wanted_table_equals_the_producers now PASSES. test_one_section_lists_the_other_as_not_covered (test_section_coverage.py:41-46) plants a 20-F source with keys=('risk',) and asserts not_covered == [('mdna', ...)] only; with business wanted, not_covered is business then mdna, so the left side carries one more item. The assertion encodes the old two-key 20-F table. Fix is one expectation line in a test file the order's <paths> does not grant, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/tests/test_section_coverage.py:41-46 on branch wk-AMGT_RESAPP-315",
+      "pytest lib/research/filings/tests/ (fitz stub) last line: 1 failed, 191 passed in 12.25s",
+      "lib/research/filings/section_coverage.py _WANTED['20-F'] edited by this worker's commit on branch wk-AMGT_RESAPP-315"
+    ]
+  },
+  "notes": "Without a fitz stub on PYTHONPATH test_no_analyze.py::test_battery_import_reaches_no_analyze_module also fails (it runs a subprocess importing document.py -> fitz); that one is the box's missing PyMuPDF, not this change. Candidate fix for the issuer: grant test_section_coverage.py and change the expectation to [('business', 'Item 4.B. Business Overview'), ('mdna', ...)]."
+},
+{
+  "id": "AMGT_RESAPP-D1-W315-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~315",
+  "surfaced_at": "2026-10-09T02:38:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "AMENDMENT 2 resolved row AMGT_RESAPP-D1-W315-S1: the one stale expectation in test_section_coverage.py now names business then mdna, and the filings folder reads 192 passed.",
+  "spec_asserts": "Order dd-1 AMENDMENT 2: change the single expectation in test_one_section_lists_the_other_as_not_covered to business then mdna, nothing else in the file, and the filings folder reads 0 failed.",
+  "world_is": "With the expectation changed and fitz stubbed, pytest lib/research/filings/tests/ last line: 192 passed in 10.80s (0 failed). lib/research/api/tests/ last line: 2 failed, 866 passed in 37.95s; both failures are ModuleNotFoundError: No module named 'pypdf' (test_print_fiscal_year_sort.py::test_head_copy_raises_on_mixed_keys, test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/tests/test_section_coverage.py:41-46 on branch wk-AMGT_RESAPP-315",
+      "pytest lib/research/filings/tests/ (fitz stub) last line: 192 passed in 10.80s",
+      "resolves AMGT_RESAPP-D1-W315-S1"
+    ]
+  },
+  "notes": "Resolves AMGT_RESAPP-D1-W315-S1 (landed row not edited). The api folder's two failures are the box's missing pypdf, no row."
+},
+{
+  "id": "AMGT_RESAPP-D1-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T03:02:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "Round 80 left R1's store half uncut (ASML NA's 20-F re-fetch from SEC, its silver row, the re-analysis and the draft rebuild) because it needed Andrew's per-use egress word; that hold lifted mid-round by law edit 4d77a9c3ea (egress open on every channel except Bloomberg).",
+  "spec_asserts": "Decomposition s.88b 'Not cut': R1's store half 'Held for Andrew's per-use word (CLAUDE.md Agent Autonomy)'. Mid-round the decomposition is FROZEN (CLAUDE.md rule 27).",
+  "world_is": "Andrew-direct ~02:4xZ 2026-10-09 'yes' to 'infinite egress on all channels now (aside from BBG which goes through its queue logic)'; CLAUDE.md Agent Autonomy now reads 'Egress is open on every channel, except Bloomberg' (order org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_CLAUDE_MD_EGRESS_OPEN_EXCEPT_BBG.md, on origin box/sitez 4d77a9c3ea; MSTR~DELL1 msg 1498). The store half needs no Bloomberg call (EDGAR-by-CIK path, round80/GROUP_R1_NOTES.md section 2), so its only blocker is gone; dd-1's code (merged @6e44bfec4a) now cuts a 20-F business section.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "decompositions/AMGT_RESAPP_DECOMP.md s.88b",
+      "MSTR~DELL1 msg 1498",
+      "round80/GROUP_R1_NOTES.md sections 2 and 5"
+    ]
+  },
+  "notes": "Not cut mid-round (the decomposition is frozen). Carried to the round-80 drain-end packet for the CTO's round-80 analysis: the store half is a WORLD cell (SEC GET, silver write under a never-widen pair, model call, draft rebuild), then a FWD-18 walk on ASML NA. The RESERVED card sent to 0.0.0_AB_MSTR~DELL1 at the cut is withdrawn."
 }
 ]
 ```
