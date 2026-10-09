@@ -11118,3 +11118,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Disarmed same-turn by the fix. NFRA_OPLGTW round 32's two AC3s go to 3.0.0_SA_CVO~Z in the L8 packet."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W47-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~47",
+  "surfaced_at": "2026-10-09T10:55:00Z",
+  "one_line": "OG-ab-1 step 1 premise fails: registration commit e8290dd5fe (and 931774fb11) are already ancestors of box/sitez, so `git cherry-pick -n e8290dd5fe` took nothing; AB_R3_PLAN.txt and the ADVI_BILLING surprise-channel edit are already on this branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git merge-base --is-ancestor e8290dd5fe HEAD -> ANCESTOR (HEAD 038d5f3b97); same for 931774fb11 -> 931-ANC",
+      "RUN git cherry-pick -n e8290dd5fe: only conflict was org/missions/D8/ADVI/ADVI_BILLING/surprise-channel/investigations/INVESTIGATION_v1.md (content already present); restored to HEAD with git restore --staged --worktree --source=HEAD; git status then clean, tools.py already holds 3 mentions of copy_site_file_to_s3 and test_advi_site_to_s3_registration.py + advi_billing_gateway_iam.tf were in HEAD (git log -- both: e8290dd5fe)",
+      "RUN git ls-files: org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.9.0_WK_ADVI_BILLING~7/ holds AB_R3_PLAN.txt, RELEASE_PACKET_E2.md, the proof json at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order (section 1 step 1, and the issue commit's premise) says the registration commit is NOT yet on box/sitez and that AB_R3_PLAN.txt and the ADVI_BILLING surprise edit 'stay dell2's'.",
+  "world_is": "e8290dd5fe arrived whole on box/sitez with an earlier CLOUD take (box-sync 89cf22bc98 or before), including AB_R3_PLAN.txt and the ADVI_BILLING channel edit. Step 1 was a no-op; no commit was made for it. Steps 2-5 were done on the registered tool as found. The release cell should not assume the registration commit still needs a cherry-pick.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done: removing the already-landed dell2 files (outside <paths> and not mine to remove)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W47-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~47",
+  "surfaced_at": "2026-10-09T10:55:00Z",
+  "one_line": "Four gateway tests (three suites) fail on box/sitez for causes unrelated to the copy_site_file_to_s3 carry and were failing before it: test_data_entitlement_guard::test_ogz1_ac08, test_portal_grant (2), acceptance/test_local_acceptance::test_ogv2_a12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN before (HEAD 038d5f3b97, each suite in its own process): test_data_entitlement_guard 4 failed 8 passed; test_data_entitlement_family 1 failed 3 passed; test_portal_grant 2 failed 5 passed; acceptance/test_local_acceptance 1 failed 13 passed; test_entitlement_admin 9 passed",
+      "RUN after the carry + two count updates: guard 1 failed 11 passed (3 guard failures cleared by classifying the registered tool); family 4 passed; entitlement_admin 9 passed; portal_grant and acceptance unchanged",
+      "RUN test_data_entitlement_guard::test_ogz1_ac08: right-hand route set has extra '/hx/teams/teams', '/hx/teams/channels/{team_id}/{channel_id}/messages', '/hx/teams/teams/{team_id}/channels' (56 == 56 counts, sets differ); test_portal_grant: test_asker_portal_scope_admits_granted_channel and test_asker_portal_scope_refuses_other_channel; acceptance: test_ogv2_a12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 5: every gateway suite importing destructive_ops or data_entitlement is reported before and after; a test failing only on the tool count is updated, an assertion is never weakened.",
+  "world_is": "Tool-count tests updated for 42->43 registered (named): tests/test_data_entitlement_family.py::test_ogpf1_ac01 (52->53 non-data tools; it was already failing at 53 once e8290dd5fe registered the tool) and tests/test_entitlement_admin.py::test_ogz2_ac08 (61->62; it moved only when the name entered NATIVE_TOOLS). The three remaining failures are not count failures and were left alone: guard ogz1_ac08 (route set differs by three /hx/teams routes), portal_grant x2, acceptance ogv2_a12.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "No fix attempted outside the order's scope; owner of those suites to triage."
+}
+```

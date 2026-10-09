@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete -- landed by 0.7.0_AE_CloudOps~DELL1. Retire commit 26eb2403f8 (3 tracked files, both folders gone from git), proof d377185513. READ-ONLY IN AWS: no apply, destroy, import, state rm, s3 rm or safe-apply ran, and no send was made. BAA1-AC1 RETIRE ok=True roots=2 absent=2 state_empty=2 aws_owned_zero=2 remote_state_left=2 (issuer base dry-run read ok=False absent=0). BAA1-AC2 ALL-ROOTS ok=True roots_total=86 mapped=86 unmapped=0 (round 11 closed at 88/86/2, so the delta is exactly these two). BAA1-AC3 judgment: paths recorded, no verdict; read by 2.0.0_SA_COO~B1 msg 2310. Instance VALID rc=0, controls 4 of 4 discriminate, after the issuer added the owed <proof_genre>DEPLOY</proof_genre> marker @0a7061f458 (verified at that pin and in the worktree). STATE-LIST both count=0, controlled against opal-assets printing 238 addresses. AWS-OWNED both count=0; root 2's single graph hit named, not dropped: orphan log group /aws/lambda/opal-assets-absence-check, 6 streams, retention None, function gone -- row LGIC_BLANKFIX-D1-S3. REMOTE-STATE both LEFT (343 B G1Hy9VgQ.., 180 B Dm9SuGZI..); the deletes are Andrew's, in the issuer's drain end with the orphan. The three standing conditions were not touched.</status>
 <direct_act>true</direct_act>
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
