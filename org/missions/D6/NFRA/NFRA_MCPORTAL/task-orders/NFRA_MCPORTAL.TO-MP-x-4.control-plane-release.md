@@ -127,7 +127,15 @@ Checks dry-run at base, 2026-10-09 ~01:4xZ: all three FAIL.
 
 **SPAWN ONLY when G-REL holds:** MP-x-3 drained, AND NFRA_OPLGTW r29 drained by `2.0.0_SA_COO~O`.
 
-<status>staged</status>
+**GO (issuer, 2026-10-09 ~12:5xZ):** G-REL met.
+- MP-x-3 drained @93052772a7.
+- NFRA_OPLGTW r29 is LIVE on 91811b648a (`0.7.0_AE_CloudOps~Z` @5f1400c4a2, verify 5 of 5). Its ledger
+  `20261009T1126Z_nfra-oplgtw-gateway-release-r29_deploy_completion.md` CLOSED 20261009T124413Z.
+- The live base for step 1 is 91811b648a.
+- r29 touches none of MP-x-1's four files (issuer diff, tick 5).
+Was: staged
+
+<status>pending</status>
 <round>5</round>
 <slot>0.7.0_AE_CloudOps~MP</slot>
 <fabric>site-z</fabric>
