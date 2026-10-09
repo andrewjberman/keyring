@@ -96,3 +96,20 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
    object version) and read it back; `comp-iam` the runner role; wire the slice path; the next scheduled run reads the same answers.
 4. FWD-4 and FWD-5 are EXERCISED "on purpose": a test ticker/rule row added to a copy of the list is found with no code edit (the
    ST-w-2 tests), then once on the real path at the drain.
+
+## Amendments (issuer rulings at the drain read, 2026-10-09 ~05:1xZ)
+
+- **A1 (ST-w-3 contract, the issuer's defect): an Opal MODEL is not an unidentified strategy.** Worker `~6` @`bd9cb30a48` built the
+  contract as written and listed 38 of 45 Opal-looking names, most of them ordinary Opal Models (`Opal Satellite 40..80`,
+  `Opal Short-Term`, `Opal Fixed Income`) as `NO_MEMBER` (row `MDPF_STRATID-D1-W6-S1`). C-SLEEVE and the PRD BOUNDARY ("reclassifying
+  an Opal Model as an SMA" is out of scope) say those are not candidates. Ruling: the list excludes a name that is an Opal Model figure
+  (Rebalancer `fact_model_roster.is_opal` true, or a registry Model member), and lists it only if it ALSO matches a sleeve rule. This
+  is a narrow re-cut of the function's predicate, carried to the next workstream-2 issuance with the drain; the order stands complete.
+- **A2 (ST-w-1 names): the cited fund names may be stale.** ST-w-1 sourced the four names from the net-assets producer's FUNDS table
+  (`etfs-netassets-daily/lambda_function.py:104-113`: "Polen Dividend Income ETF", "Polen International Dividend Income ETF", ...),
+  while Cottonwood's model definitions carry a component named `OPAL INTERNATIONAL DIVIDEND INCOME ETF` (2026-10-08). Ruling: before
+  the S3 write at the drain, the names are re-read against the fund's current legal name, and `full_names` carries the current name
+  (a former name may ride as a second rule row). No figure moves on this: a full-name match only ADDS a member where today's rules
+  had none, and the seam prints every gain.
+- **A3 (row ids, the issuer's defect):** the orders named the surprise-row id form `MDPF_STRATID-W2-W<n>-S<k>`, which the row gate
+  refuses; the dell1 worker form `MDPF_STRATID-D1-W<n>-S<k>` is correct and stands.
