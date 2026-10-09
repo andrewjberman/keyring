@@ -8,7 +8,7 @@ Author `1.0.0_SA_CTO~DELL2`, 2026-10-08 ~22:0xZ, under NFRA_CTLPLN ADDENDUM v0.1
 
 ## 1. State
 
-- **CB-w-1:** the conditional funding credit. 1 named regression (B3S748567, the parked fund). The 25 months round 22 had recovered are
+- **CB-w-1:** the conditional funding credit. 1 named regression (acct#57e741a5, the parked fund). The 25 months round 22 had recovered are
   DIFF again.
 - **CB-w-2:** the dividend and fee rules. Closed REFUSED (58 of 75 back, but 95 regressions).
 - **The method, per the CRO's research** @35c8aa0d75:
