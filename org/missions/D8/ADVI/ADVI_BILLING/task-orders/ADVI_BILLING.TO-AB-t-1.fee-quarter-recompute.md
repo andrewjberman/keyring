@@ -87,6 +87,28 @@ its reason. This cell builds the calculation and the one comparison. A one-time 
    `bd_reference` (reached | bridge-miss), class counts. **No dollar figure, client name or full account number in any
    committed file**: figures live only in the S3 object; records carry classes, counts and masked ids (last 4).
 
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~B2, 2026-10-09, ruling your rows W1-S1, W1-S2, W1-S3 and the panel's D2-W2-S3; these
+override steps 2-5 and 7 where they differ):**
+- **A1 -- the household key (W1-S1).** Do not use `rel_to_z_mapping.json`. The page's `client_key` IS the Black Diamond
+  `relationship_id` on the fee lines in `s3://opal-data-bd/silver/fees/2026-07-*.parquet`: measured by the issuer, every
+  scheduled 0833 TPFEE account's fee-line `relationship_id` names a served `s3://opal-data-bd/platinum/clients/<relationship_id>/summary.json`
+  whose `detail.accounts[].account_id` contains that line's `account_id` (z-id). The Schwab account is the line's
+  `account_number` (digits only, zfill 10). `relationship_id` in the object = the `dim_relationship` id holding those accounts
+  (null if none). The household = the accounts of that served summary.
+- **A2 -- the ADVISOR rate (W1-S2).** The client's advisory rate is the account's own BD schedule: `basis_points` /
+  `account_fee_schedule` on its July 2026 fee line ("49F - Flat 1" = 100 bps = rate 0.0100). `schedule_claim` measured,
+  `schedule_source` = the BD fee line's partition key. 0.003175 is Opal's share inside that fee, not the client's rate; name it in
+  `steps` if useful, never as the rate. Pick rule: 1-4 accounts, EVERY account with a July 2026 BD fee line with `basis_points` > 0
+  and a TPFEE row on 2026-07-07; smallest first.
+- **A3 -- the PLATFORM portion (W1-S3).** No per-account SMArtX platform/model rate is held in Opal. Emit the component with
+  `rate` null, `computed_fee` null, `schedule_claim` absent, the SMFEE debit as measured, `reconcile_class` DIFFERS (NO_DEBIT if no
+  row) with `difference_reason` "platform schedule (SMArtX UMA/model fee per allocation) is not held in Opal". Contract: `rate`
+  and `computed_fee` become `number|null`, null only when `schedule_claim` is absent. Household computed totals sum the non-null
+  components and `steps` say so.
+- **A4 -- flows shape (panel row D2-W2-S3).** `flows_in_period[]` entries are `{date, amount, note}` (amount = signed USD,
+  note = the ledger's class). `rate` stays an annual fraction (agrees with the panel).
+- The ledger, the one write, the checks and your `<paths>` are unchanged; reading the BD fee and platinum objects is a read.
+
 <criterion id="AB1-1-AC1" cell_refs="AB-t-1"><invocation>python org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/checks/r1/r1_checks.py . AB1-1-AC1</invocation><expect>AB1-1-AC1 PASS</expect></criterion>
 `AB1-1-AC1` -- the object at the builder address conforms to the contract. Base: FAIL.
 
