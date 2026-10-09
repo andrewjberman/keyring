@@ -139,6 +139,26 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "J1 (CVO) sees the shipped order. If newest-first was meant, a one-line change to the sort."
-  }
+  },
+{
+  "project": "ETFS_RIVALS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ETFS_RIVALS~25",
+  "surfaced_at": "2026-10-09T06:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ETFS_RIVALS-D1-W25-S4",
+  "one_line": "Removing the header Period row also removes what only that row carried: the per-fund '(nothing ranked)' state and grey rule, and the per-fund date pills; their CSS rules in render.py now match nothing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "WS3 item 7: the header's PERIOD row is removed; the ranking panels' period controls and the 30/90/365 data stay; no other header row changes.",
+  "world_is": "Four existing tests pinned the row's contents (test_crorv_layout period row, test_r8rn1 top switch with dates, test_r6ui2 empty-period state, test_r8rn1 clipped-pill dates, plus the short-label count 3 -> 2) and were re-pinned to the new page. The panels' own switch (rf-pswitch) carries neither the per-fund empty-state grey nor the date pills, so those two signals are gone from the page; the dead CSS selectors (.rf-controls label[for=rf-period-*] grey rule, .rf-dt) remain emitted. _period_states and _period_dates in render.py are now unused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "render.py _controls at this branch; tests/test_crorv_layout.py, test_r8rn1_period_switch.py, test_r6ui2_ranking_panels.py"
+    ]
+  },
+  "notes": "J1 (CVO) sees the shipped page. Dead CSS and the two unused helpers can go in a later render.py cleanup; not done here (widening)."
+}
 ]
 ```
