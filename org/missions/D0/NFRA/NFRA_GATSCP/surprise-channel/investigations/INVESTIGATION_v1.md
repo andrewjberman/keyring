@@ -477,3 +477,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
 }
 ```
+
+## NFRA_GATSCP-D1-W10-S1 -- proof-of-spec-check rc=2 in this worktree: the schema fix 6b65ca5a52 is not in the worker's base
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W10-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~10",
+  "surfaced_at": "2026-10-09T14:05Z",
+  "one_line": "proof-of-spec-check.py rc=2 (UnknownType) in this worktree: its schema carries e7c10e5b4b's prose in a type value; the fix 6b65ca5a52 is on box/dell1 but not in wk-NFRA_GATSCP-10's base e19881df2d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <GS-f-3 instance> GF3-AC1,GF3-AC2 at e19881df2d -> jsonschema.exceptions.UnknownType, 'NOT-A-VERDICT ... tool failure (rc=2)'",
+      "git log -3 -- org/standards/PROOF_OF_SPEC.schema.json: worktree head e7c10e5b4b; box/dell1 head 6b65ca5a52 'commit_or_etag type back to string'",
+      "workaround: same checker loaded at its own path with SCHEMA_PATH pointed at git show 6b65ca5a52:org/standards/PROOF_OF_SPEC.schema.json (in .scratch/) -> VALID (rc=0), violations=0; no repo file edited. The drain's gate on the merged tree decides the true verdict."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "python .tools/proof-of-spec-check.py <instance> <ids> returns rc 0 or 1 in a worker worktree.",
+  "world_is": "In this worktree it returns rc 2 on every instance; the schema fix lives on the box branch, outside the worker's grant. The instance was graded against the fixed schema out of band."
+}
+```
