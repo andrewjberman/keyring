@@ -51,6 +51,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 
 <paths>
 lib/research/identity/crosswalk.py
+lib/research/identity/crosswalk.schema.json
 lib/research/identity/tests/
 lib/research/api/name_search.py
 lib/research/api/scoped_amgt.py
@@ -91,3 +92,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 (issuer, 2026-10-09T12:4xZ) on row AMGT_RESAPP-D1-W340-S1: `crosswalk.schema.json` refuses the new `issuer` field and the `with_issuer_cik` denominator, so `write_pool` would refuse the list AMGT-jj-4 publishes. GRANTED: lib/research/identity/crosswalk.schema.json (the two additions the row names, nothing else). Criteria unchanged; the worker re-runs AC1 and AC2 after the schema edit. Graded by no gate limb (a modification; <placeholders>NONE).</status>
