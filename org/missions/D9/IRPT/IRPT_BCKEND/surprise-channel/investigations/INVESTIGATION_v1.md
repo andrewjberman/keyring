@@ -22086,6 +22086,61 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-S14 -- a --no-paginate route read-back answered [] for a route that was live, and the deploy recorder left deployed_code_sha256 stale for the second release running
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T00:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The IB-pr-378 route read-back run with --no-paginate returned [] on a route that had just been created successfully, because the route sits beyond page 1 of 116 -- an empty page that, read as absence, would have graded a good apply as failed and could have driven Branch B's route removal and function rollback; separately, record-terraform-deploy.sh left deployed_code_sha256 at the PRE-APPLY value for the second consecutive release, so that is its standing behaviour rather than a one-off.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~00:0xZ: terraform reported 'aws_apigatewayv2_route.irpt[\"POST /api/scoped/investor-reporting/custody-report\"]: Creation complete after 0s [id=jtwlf6l]' and 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed'; the re-plan of the same target then read 'No changes'",
+      "the SAME question asked with `aws apigatewayv2 get-routes --api-id 7k3ed8px20 --no-paginate --query \"Items[?RouteKey=='POST /api/scoped/investor-reporting/custody-report']...\"` returned [] -- an empty JSON array, no error, rc=0",
+      "the same read WITHOUT --no-paginate, counted client-side with the denominator printed: 116 routes on api 7k3ed8px20, exactly 1 exact match -- RouteId jtwlf6l, Target integrations/61aupci, AuthorizationType CUSTOM, AuthorizerId naqxlm. So the route was live the whole time and the [] was the instrument",
+      "CLAUDE.md rule 22a already names this class ('paginated list-* + --query length() returns the PAGE count and --no-paginate is the hazard'); this row records it FIRING on a route read-back where the TO's Branch B makes the wrong verdict destructive: 'If Part B fails: remove the route first, then roll the function back'",
+      "recorder repeat: after record-terraform-deploy.sh ran at 6d3e35294b, lambda-source-map.json's irpt-export-render row still carried deployed_code_sha256 rNjtTwcm.. (the PRE-APPLY value) while artifact_sha256 and the live function were 7T29wPhz..; corrected with record-deploy-scope.py --code-sha256. The identical gap was measured and corrected on IB-pr-377 for irpt-directory-refresh and irpt-directory-search hours earlier",
+      "a third instrument note, same release: planning the route needed MSYS_NO_PATHCONV=1 for the slashed -target, which made terraform save the planfile to a literal /tmp (C:\tmp) instead of the translated temp dir; safe-apply's naming-plan-gate then could not read it and FAILED CLOSED before the apply -- nothing was applied on that attempt, which is the gate behaving correctly"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-378 step 6: 'Read the route back with `get-routes` filtered to that key', with Branch B: 'If Part B fails: remove the route first, then roll the function back only if the CTO half's Branch B requires it.'",
+  "world_is": "A `get-routes` read filtered to one key is NOT a sound oracle for route existence when --no-paginate is present: on this API the answer is on page 2 of 116 routes, so the filtered read answers [] for a route that exists. ABSENT and BEYOND-PAGE-1 are byte-identical here, and the order's Branch B turns that false absence into two destructive acts. The verdict recorded for AC2 comes from the auto-paginated read with its denominator printed, and the check script the issuer wrote does not pass --no-paginate, so the graded criterion was never exposed to this. Nothing is asked of this seat beyond the record: the recorder's deployed_code_sha256 behaviour is the CI tool's owner's call, and the read-back wording is the order's."
+}
+```
+
+## IRPT_BCKEND-D2-S15 -- Resolves D2-S14: the route was read correctly; the issuer's route checks read every page
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S15",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T00:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S14: the applier did not act on the empty --no-paginate page. It re-read all 116 routes without --no-paginate, counted client-side and found exactly 1 match (jtwlf6l, CUSTOM authorizer), so no Branch B fired. It also corrected the recorder's stale deployed_code_sha256 to 7T29wPhz. The issuer re-ran the r90 checks at box/dell2 HEAD: IB90-1-AC1 PASS (live == built 7T29wPhz, census 0, replan 0, replay identical) and IB90-1-AC2 PASS (route live after the function, replan 0, ledger closed). The class is already law (CLAUDE.md 22a: --no-paginate is the hazard). From round 92 on, every route read-back in a ~P order reads all pages and prints the denominator.",
+  "one_line": "IB-pr-378 is graded on a full-page route read; the empty page drove no rollback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p90_cells.py . IB90-1-AC1 -> IB90-1-AC1 PASS; . IB90-1-AC2 -> IB90-1-AC2 PASS (issuer, 2026-10-09 ~00:2xZ)",
+      "row D2-S14 evidence: 116 routes read, 1 exact match, RouteId jtwlf6l"
+    ]
+  },
+  "spec_asserts": "A route read-back is a sound oracle for route existence.",
+  "world_is": "It is when every page is read, with the denominator printed. That is how this one was graded."
+}
+```
+
 ## IRPT_BCKEND-D2-W188-S1 -- The IB-pr-380 rule is correct in the refresh Lambda but cannot operate in production from directory/ alone: the artifact
 
 ```json

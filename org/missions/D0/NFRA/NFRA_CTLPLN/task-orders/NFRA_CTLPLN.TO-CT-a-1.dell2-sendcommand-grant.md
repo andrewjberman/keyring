@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -150,6 +150,10 @@ infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_iam_roles_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_planreads_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_plan_reads.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/plan_reads_census.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -1026,3 +1030,49 @@ THE BACKEND. Rows start at `NFRA_CTLPLN-W14-S27`.
 `sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
 `routes_freed` and `routes_still_refused` may move (the sends now read allowed): report both. Rewrite the proof instance,
 validate, flip to `complete`.
+
+## AMENDMENT 20 (2.0.0_SA_COO~C, 2026-10-08 ~22:1xZ) -- REOPENED, PRIORITY: cell 3 -- item 4 (IAM create/change for roles and policies) plus the Dells' plan-time reads, so each Dell deploys its own placed roots
+
+Authority: Andrew-direct 2026-10-08 ~13:2xZ "2.) LIFT ITEM 4" (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_TEN_ANSWERS_LIFT_ITEMS_5_AND_4_WIDEN_BOTH_GRANTS_DELL2_RETRIES_DELL1_INSTALLS.md`
+row 2: "Create or change IAM roles and policies"; and its "One consequence" section: the Dell users become administrators of the
+account, "This seat carries it as he said it and does not add a ceiling he did not ask for"); Andrew ~22:0xZ, each box deploys
+through its own CloudOps seat (addendum in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`); `1.0.0_SA_CTO` msg
+107398: "cut cell 3 now and fold in a 'plan reads' grant (the SSM parameters and any other read a Dell's terraform plan of its placed
+roots needs ...), so laptop applies for Dell projects end." Your base carries steps A-E, D and D2 applied. Gate limb: none graded
+this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND. Rows start at `NFRA_CTLPLN-W14-S31`.
+
+THE ISSUER'S READING (the CTO half confirms or widens it): item 4 names ROLES and POLICIES. In: create, change, tag and delete IAM
+roles, managed and inline policies, policy versions, role attachments, instance profiles; and `iam:PassRole` on any role (a new
+pipeline's role must be passable, and the record adds no ceiling). Out (stays refused, reported): IAM USERS, GROUPS, ACCESS KEYS,
+LOGIN PROFILES, MFA and account-level settings (password policy, account alias, SAML/OIDC providers). Everything else that refuses
+today stays as it is.
+
+1. **FIND, by reading, and print:** the statements that refuse IAM writes today (`DenyEveryIamWrite`, `DenyPassRoleExceptNamed`,
+   and any other with an `iam:` write in its actions), their actions and resources, and which Allow (if any) covers IAM writes now.
+2. **IAM: the Deny comes off for roles and policies; the Allow goes on.** Replace `DenyEveryIamWrite` with a narrower Deny on the
+   OUT list above (by action family: `iam:CreateUser`, `iam:CreateAccessKey`, `iam:*LoginProfile`, `iam:*Group*`, `iam:*MFA*`,
+   `iam:UpdateAccountPasswordPolicy` and the like; list them exactly). Remove `DenyPassRoleExceptNamed`. Add an Allow (a new managed
+   policy, name from the builder, or a statement where it fits 6,144) for the IN list, `Resource "*"`. Keep `iam:Get*`/`iam:List*`
+   as today. Print every touched document's characters and the group's managed-policy count.
+3. **PLAN READS.** For each Terraform root a Dell-placed project applies (placement from each project's `project.json` and the
+   device register; print the root list with its project and box), find every read a `terraform plan` makes that the Dell user
+   is refused today: at least each `aws_ssm_parameter` resource or data source (dell1 msg 1189 names `/mdpf/custody_source`,
+   `infra/aws/terraform/mdpf-pipeline/lambdas.tf:25`), and any `data` source whose read action the simulator refuses. Measure with
+   `iam:SimulatePrincipalPolicy` per Dell user. Grant exactly those reads (by exact ARN where the action takes one; the read-only
+   Describe/List/Get family on `*` only where it takes no resource), in the same new policy or a sibling. Print the table: root,
+   resource address, action, ARN, decision before, decision after.
+4. **SIMULATION.** Two new fields BEFORE `sendcmd_ok` in the POLICY-SIM line: `iamw_ok=<a>/<n>` (both users: CreateRole,
+   PutRolePolicy, AttachRolePolicy, CreatePolicy, CreatePolicyVersion, PassRole on a role not on the old named list -> allowed;
+   CreateUser, CreateAccessKey, CreateLoginProfile on a user -> explicitDeny with the narrow Deny named) and
+   `planread_ok=<a>/<n>` (every read of item 3 allowed for the Dell its root is placed on). Every other field reads as at the base.
+5. **STATIC CHECK:** the builder-name and attachment counts move; report them.
+6. **PLAN NOTE**, new section I, for the people who sign: the expected plan BY READING (addresses), what a Dell can newly do in plain
+   words (create roles and policies, pass any role, so it can grant itself any permission a policy can express, as Andrew's record
+   states), what still refuses and why, and "What this step can undo" (every remaining Deny on the Dell group is a policy a Dell can
+   now rewrite; name them).
+
+**ACCEPTANCE.** The six ids. `CTa1-AC2`'s `<expect>` is changed above by this amendment to
+`iamw_ok=[0-9]+/[0-9]+ planread_ok=[0-9]+/[0-9]+ sendcmd_ok=[0-9]+/[0-9]+ shellwin_ok=[0-9]+/[0-9]+ routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+Rewrite the proof instance, validate, flip to `complete`.

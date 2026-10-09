@@ -11,11 +11,11 @@ A reader MUST compare against the live file and FALL BACK TO PARSING on mismatch
 must be able to know it is stale.
 """
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
-MASTER_SHA256 = '2f777a16e1a8daa5a6a161f132ff7d0ad121f9aa17e0e412244469bb40c53323'
+MASTER_SHA256 = 'f8a6b39ae733ec03659362ea124f2095565469016e7952733252c161fd46c85f'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
-MANIFEST_SHA256 = '6b2b01567d82cbb030fdb8013646efc89731833c0eff66b12f043ef02ab29f47'
+MANIFEST_SHA256 = '9d72728e57c69d9a8c429f00f900476faf6a624c5ac654a55108b98a7f97373e'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
-LEDGER_SHA256 = '6a007b7c2b9f2243a28b58235e5d707c44fa34ef3af10ab91ad418b6d5031cfd'
+LEDGER_SHA256 = '0a76f9ff091fa58daca20fe78483c15ce580648907e29be6bf69d8d170d95bfe'
 
 TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface> [--hours 24] [--graph] ; comp-activity '
                                      'overlap ; comp-activity boxes',
@@ -46,7 +46,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                              'runtime/dynamic construction'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED',
-                'status': 'active'},
+                'status': 'deprecated'},
  'comp-assets': {'canonical_call': 'comp-assets [--channel <source[/scope]>] [--probe] [--json]',
                  'concern': 'OPAL_ASSETS monolith backfill COMPLETENESS census (V2-6) -- per channel folder of '
                             's3://opal-data-assets: per-layer object/byte counts, feed breakdown, date FRONTIER, '
@@ -63,7 +63,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                               'anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': True,
                  'state': 'PERSISTED',
-                 'status': 'active'},
+                 'status': 'deprecated'},
  'comp-atomcheck': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-aws': {'canonical_call': 'comp-kuzu "<Cypher>"    # comp-aws is DEPRECATED for agent use; the engine runs in '
                                 'the nightly derive-runner',
@@ -98,7 +98,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                             'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                'knows_own_denominator': False,
                'state': 'PERSISTED',
-               'status': 'active'},
+               'status': 'deprecated'},
  'comp-blast': {'canonical_call': 'comp-blast <fn-or-arn> [--function name] [--check-consumers]',
                 'concern': 'downstream IMPACT set + upstream callers (what breaks if I change X; function-level)',
                 'control_established': 'POSITIVE',
@@ -143,7 +143,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                    'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                       'knows_own_denominator': False,
                       'state': 'PERSISTED',
-                      'status': 'active'},
+                      'status': 'deprecated'},
  'comp-chainrun': {'canonical_call': 'comp-chainrun snapshot --label <L> ; comp-chainrun diff <A> <B>',
                    'concern': 'ATOMIC-BUNDLE gold snapshot/diff (pre/post chain re-run -- '
                               'DROPPED/COLUMNS-LOST/EMPTIED partial-refactor leak; VALGATE Class-B)',
@@ -156,8 +156,8 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                 'anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': True,
                    'state': 'PERSISTED',
-                   'status': 'active'},
- 'comp-claimlink': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
+                   'status': 'deprecated'},
+ 'comp-claimlink': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'deprecated'},
  'comp-clobber': {'canonical_call': 'comp-clobber [--min-writers N] [--include-partitioned] [--json]   # static '
                                     'candidate scan; comp-clobber --sweep BUCKET PREFIX = the LIVE oracle '
                                     '(interleaved etag-lineage across every key under a prefix); comp-clobber --live '
@@ -176,7 +176,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                'resource types not queried'],
                   'knows_own_denominator': True,
                   'state': 'LIVE',
-                  'status': 'active'},
+                  'status': 'deprecated'},
  'comp-closure': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-cluster': {'canonical_call': 'comp-cluster AdvisorIntelligence    # panel->drilldown tree + per-cluster '
                                     'sources + cross-panel coupling\n'
@@ -197,7 +197,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                   'knows_own_denominator': False,
                   'state': 'PERSISTED',
                   'status': 'active'},
- 'comp-cochange': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
+ 'comp-cochange': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'deprecated'},
  'comp-constants': {'canonical_call': 'comp-constants check [--lane bd|inf|cot|multifirm] ; comp-constants new',
                     'concern': 'marker/firm-CONSTANT drift vs canonical config (rep_id sweeps, FIRM_ID, AUA bounds; '
                                'pre-commit gate)',
@@ -217,7 +217,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                    'excludes': ['anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': True,
                    'state': 'PERSISTED',
-                   'status': 'active'},
+                   'status': 'deprecated'},
  'comp-coverage-check': {'control_established': 'POSITIVE',
                          'cost_band': 'SUB_SECOND',
                          'denominator_construction': 'TRAVERSED',
@@ -262,7 +262,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                  'candidates not enumerated for simulation'],
                     'knows_own_denominator': True,
                     'state': 'LIVE',
-                    'status': 'active'},
+                    'status': 'deprecated'},
  'comp-debris': {'canonical_call': 'comp-debris [--types ddb|s3|ec2|events] [--days 30] [--hot-days 7]   # default '
                                    '--types lambda',
                  'control_established': 'POSITIVE',
@@ -274,7 +274,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                               'anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': True,
                  'state': 'PERSISTED',
-                 'status': 'active'},
+                 'status': 'deprecated'},
  'comp-denytest': {'canonical_call': 'comp-denytest <plan|change-spec>',
                    'control_established': 'NEGATIVE',
                    'cost_band': 'MINUTES',
@@ -282,7 +282,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                    'excludes': ['candidates not enumerated for simulation'],
                    'knows_own_denominator': True,
                    'state': 'LIVE',
-                   'status': 'active'},
+                   'status': 'deprecated'},
  'comp-depth': {'canonical_call': 'comp-depth grains <node-id> | scope <grain> | drill <node-id> --to <grain> | '
                                   'rollup <node-id> --to <grain> | blast <node-id> --grain <g>',
                 'concern': 'DEPTH-scoped graph querying (NFRA_GRAPHDEPTH P3) -- scope a traversal to a declared '
@@ -304,7 +304,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                              'anything unregistered -- THE PHANTOM CLASS'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED',
-                'status': 'active'},
+                'status': 'deprecated'},
  'comp-describe': {'canonical_call': 'comp-describe <arn-or-name> [--json]   # find + describe ONE resource off the '
                                      'derive-at-scan engine',
                    'control_established': 'POSITIVE',
@@ -347,7 +347,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                 'non-filesystem stores'],
                    'knows_own_denominator': True,
                    'state': 'LIVE',
-                   'status': 'active'},
+                   'status': 'deprecated'},
  'comp-drift': {'canonical_call': 'comp-drift coverage',
                 'concern': 'structural-cruft / abandonment DISPOSITION over the propagation seams '
                            '(edges-that-go-nowhere, old duplicated channels, deprecated outputs) -- the '
@@ -368,7 +368,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                              'in-VPC only; ~3-4 min/call'],
                 'knows_own_denominator': False,
                 'state': 'PERSISTED',
-                'status': 'active'},
+                'status': 'deprecated'},
  'comp-dups': {'canonical_call': 'comp-dups [--class CROSS_FIRM|IAM_POLICY_SPLIT|SERVICE_SPLIT|ENV_TWIN] [--json]   '
                                  '# on-demand scan of the canonical graph; comp-dups --nightly = the post-derive '
                                  'ledger-write mode -> org/modules/graph/debtscan/YYYY-MM-DD_DUPS_candidates.json + '
@@ -386,7 +386,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                             'resource types not queried'],
                'knows_own_denominator': True,
                'state': 'LIVE',
-               'status': 'active'},
+               'status': 'deprecated'},
  'comp-estate': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-fedobs': {'canonical_call': 'comp-fedobs coevolution | comp-fedobs',
                  'control_established': 'POSITIVE',
@@ -399,7 +399,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                               'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                  'knows_own_denominator': False,
                  'state': 'PERSISTED',
-                 'status': 'active'},
+                 'status': 'deprecated'},
  'comp-find': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-firmsep-sweep': {'canonical_call': 'comp-firmsep-sweep <firm> [--write-reach]',
                         'control_established': 'NEGATIVE',
@@ -408,7 +408,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                         'excludes': ['candidates not enumerated for simulation'],
                         'knows_own_denominator': True,
                         'state': 'LIVE',
-                        'status': 'active'},
+                        'status': 'deprecated'},
  'comp-freshness': {'canonical_call': 'comp-freshness chain {bd|inf|cot} ; comp-freshness script <id>',
                     'concern': 'pipeline-DATA S3/DDB freshness -- is upstream fresh enough to run a gold chain? (the '
                                'gold-run-readiness gate)',
@@ -427,7 +427,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                   'excludes': ['anything unregistered -- THE PHANTOM CLASS'],
                   'knows_own_denominator': True,
                   'state': 'PERSISTED',
-                  'status': 'active'},
+                  'status': 'deprecated'},
  'comp-gitdrill': {'canonical_call': 'comp-gitdrill <node|file> [--at <ref> [--diff]]',
                    'control_established': 'POSITIVE',
                    'cost_band': 'SECONDS',
@@ -438,7 +438,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                 'anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': True,
                    'state': 'PERSISTED',
-                   'status': 'active'},
+                   'status': 'deprecated'},
  'comp-glob': {'control_established': 'POSITIVE',
                'cost_band': 'SECONDS',
                'denominator_construction': 'MATCHED',
@@ -480,23 +480,6 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                'knows_own_denominator': True,
                'state': 'LIVE',
                'status': 'active'},
- 'comp-honesty': {'canonical_call': 'comp-honesty <case.json> | comp-honesty --file <src.py> [--evidence <ev.json>] '
-                                    '| comp-honesty --self-test',
-                  'concern': 'honesty/completion GATE over the GOV-A invariants (I1 honest-missing / I2 '
-                             'measure-per-case / I3 control-fires-when-exercised); claim+evidence (or --file src.py) '
-                             '-> per-invariant PASS/FAIL/N-A, makes NFRA_SEMCTL_HONESTY_INVARIANTS.md runnable (N-A '
-                             'is LOUD, never a silent pass)',
-                  'control_established': 'POSITIVE',
-                  'cost_band': 'SECONDS',
-                  'denominator_construction': 'ENUMERATED',
-                  'excludes': ['other regions',
-                               'other accounts',
-                               'resource types not queried',
-                               'non-Python lanes',
-                               'runtime/dynamic construction'],
-                  'knows_own_denominator': True,
-                  'state': 'LIVE',
-                  'status': 'active'},
  'comp-iam': {'canonical_call': 'comp-iam gaps   # or: comp-iam service <lambda> | comp-iam role <name>',
               'concern': 'grant-analysis -- boto3 calls vs IAM grants (permission gaps; who-can-do-what; the '
                          'DESIRED/source half + `reconcile` overlay)',
@@ -539,8 +522,8 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                 'anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': False,
                    'state': 'PERSISTED',
-                   'status': 'active'},
- 'comp-imgread': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
+                   'status': 'deprecated'},
+ 'comp-imgread': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'deprecated'},
  'comp-incrparity': {'canonical_call': 'comp-incrparity <args>',
                      'concern': 'INCREMENTAL BD-pipeline parity (incremental cache vs full-recompute oracle)',
                      'control_established': 'POSITIVE',
@@ -552,7 +535,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                   'anything unregistered -- THE PHANTOM CLASS'],
                      'knows_own_denominator': True,
                      'state': 'PERSISTED',
-                     'status': 'active'},
+                     'status': 'deprecated'},
  'comp-keys': {'canonical_call': 'comp-keys prefix <bucket|s3://bucket/prefix> ; comp-keys partitions '
                                  '<bucket/prefix> ; comp-keys exists <suffix>',
                'concern': 'S3 INVENTORY -- WHAT EXISTS under a prefix: arbitrary-prefix key enumeration, per-prefix '
@@ -577,7 +560,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                           'anything unregistered -- THE PHANTOM CLASS'],
                              'knows_own_denominator': True,
                              'state': 'PERSISTED',
-                             'status': 'active'},
+                             'status': 'deprecated'},
  'comp-kuzu': {'canonical_call': 'comp-kuzu "MATCH (n:CloudNode) WHERE n.node_type=\'LAMBDA\' RETURN n.id, n.name '
                                  'LIMIT 50"\n',
                'concern': 'cross-surface federated READ -- Cypher over the loaded estate graph (the FAST default '
@@ -617,7 +600,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                     'anything unregistered -- THE PHANTOM CLASS'],
                        'knows_own_denominator': False,
                        'state': 'PERSISTED',
-                       'status': 'active'},
+                       'status': 'deprecated'},
  'comp-learns-status': {'canonical_call': 'comp-learns-status [gap_heat|coverage_gaps|tool_demand|...] [--json]',
                         'control_established': 'POSITIVE',
                         'cost_band': 'MINUTES',
@@ -631,8 +614,8 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                      'in-VPC only; ~3-4 min/call'],
                         'knows_own_denominator': False,
                         'state': 'PERSISTED',
-                        'status': 'active'},
- 'comp-lease': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
+                        'status': 'deprecated'},
+ 'comp-lease': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'deprecated'},
  'comp-ledger-agreement': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-legacywriter': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-manifest-check': {'control_established': 'POSITIVE',
@@ -669,7 +652,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                    'excludes': ['anything unregistered -- THE PHANTOM CLASS'],
                    'knows_own_denominator': True,
                    'state': 'PERSISTED',
-                   'status': 'active'},
+                   'status': 'deprecated'},
  'comp-parity': {'canonical_call': 'comp-parity [firm] [--config '
                                    'data/canonical/schwab/parity/{firm}_parity_config.yaml] [--json]   # default '
                                    'firm: 49f',
@@ -683,7 +666,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                               'anything unregistered -- THE PHANTOM CLASS'],
                  'knows_own_denominator': False,
                  'state': 'PERSISTED',
-                 'status': 'active'},
+                 'status': 'deprecated'},
  'comp-passcraft': {'control_established': 'POSITIVE',
                     'cost_band': 'SECONDS',
                     'denominator_construction': 'TRAVERSED',
@@ -694,7 +677,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                  'anything the SERVED projection has not picked up yet -- read the VINTAGE line'],
                     'knows_own_denominator': False,
                     'state': 'PERSISTED',
-                    'status': 'active'},
+                    'status': 'deprecated'},
  'comp-perf': {'control_established': 'POSITIVE',
                'cost_band': 'SUB_SECOND',
                'denominator_construction': 'ENUMERATED',
@@ -703,7 +686,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                             'runtime/dynamic construction'],
                'knows_own_denominator': True,
                'state': 'PERSISTED',
-               'status': 'active'},
+               'status': 'deprecated'},
  'comp-pii': {'canonical_call': 'comp-pii audit ; comp-pii scan <Component>',
               'concern': 'PII EXPOSURE audit (routes + components; hashed vs cleartext; pseudonymizer coverage)',
               'control_established': 'POSITIVE',
@@ -805,7 +788,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                'anything unregistered -- THE PHANTOM CLASS'],
                   'knows_own_denominator': True,
                   'state': 'PERSISTED',
-                  'status': 'active'},
+                  'status': 'deprecated'},
  'comp-routable-check': {'control_established': 'POSITIVE',
                          'cost_band': 'SECONDS',
                          'denominator_construction': 'TRAVERSED',
@@ -871,18 +854,6 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                 'knows_own_denominator': True,
                 'state': 'LIVE',
                 'status': 'active'},
- 'comp-stitch-refresh': {'control_established': 'POSITIVE',
-                         'cost_band': 'SECONDS',
-                         'denominator_construction': 'TRAVERSED',
-                         'excludes': ['gitignored paths',
-                                      'submodule contents (gitlink only)',
-                                      'anything not in the repo',
-                                      'anything not yet ingested into the graph',
-                                      'anything the SERVED projection has not picked up yet -- read the VINTAGE '
-                                      'line'],
-                         'knows_own_denominator': False,
-                         'state': 'PERSISTED',
-                         'status': 'active'},
  'comp-surprise': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-symbols': {'canonical_call': 'comp-symbols <file> [--grep <pattern>] [--kind func|class|const|import] '
                                     '[--json]',
@@ -928,7 +899,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                    'knows_own_denominator': True,
                    'state': 'LIVE',
                    'status': 'active'},
- 'comp-to': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
+ 'comp-to': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'deprecated'},
  'comp-tool-health': {'canonical_call': 'comp-tool-health [<tool>] [--json]',
                       'control_established': 'POSITIVE',
                       'cost_band': 'SECONDS',
@@ -941,7 +912,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                    'anything unregistered -- THE PHANTOM CLASS'],
                       'knows_own_denominator': False,
                       'state': 'PERSISTED',
-                      'status': 'active'},
+                      'status': 'deprecated'},
  'comp-tool-health-gate': {'control_established': 'POSITIVE',
                            'cost_band': 'SECONDS',
                            'denominator_construction': 'ENUMERATED',
@@ -951,7 +922,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                         'anything unregistered -- THE PHANTOM CLASS'],
                            'knows_own_denominator': True,
                            'state': 'PERSISTED',
-                           'status': 'active'},
+                           'status': 'deprecated'},
  'comp-toolgraph': {'canonical_call': 'comp-toolgraph [--json]',
                     'control_established': 'POSITIVE',
                     'cost_band': 'TENS_OF_SECONDS',
@@ -969,7 +940,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                  'runtime/dynamic construction'],
                     'knows_own_denominator': False,
                     'state': 'PERSISTED',
-                    'status': 'active'},
+                    'status': 'deprecated'},
  'comp-tooltip': {'canonical_call': 'comp-tooltip <args>',
                   'concern': 'tooltip MIGRATION/coverage audit (inline vs <DataTooltip> canonical; one-off sprint '
                              'tool)',
@@ -982,7 +953,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                'anything unregistered -- THE PHANTOM CLASS'],
                   'knows_own_denominator': True,
                   'state': 'PERSISTED',
-                  'status': 'active'},
+                  'status': 'deprecated'},
  'comp-trace': {'canonical_call': 'comp-trace <node> --direction both [--depth N]',
                 'concern': 'bidirectional dependency PATH walk from any repo node (where does data come/go -- '
                            'up/down/both)',
@@ -1033,7 +1004,6 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                 'knows_own_denominator': True,
                 'state': 'PERSISTED',
                 'status': 'active'},
- 'comp-v5-composite-test': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-validate': {'canonical_call': 'comp-validate <script_id> --artifact <local/path>',
                    'concern': 'gold-artifact INVARIANT validation pre-upload (key_present/count_min/sum_approx/...; '
                               'the no-crash-but-wrong-output gate)',
@@ -1086,7 +1056,7 @@ TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface
                                'in-VPC only; ~3-4 min/call'],
                   'knows_own_denominator': True,
                   'state': 'PERSISTED',
-                  'status': 'active'},
+                  'status': 'deprecated'},
  'comp-xray': {'canonical_call': 'comp-xray frozen <bucket> <key> --fields total_aua,total.aua [--cadence-days N] '
                                  '[--json]',
                'concern': 'value-MOTION -- is the CONTENT genuinely changing or frozen-but-fresh? '
@@ -2338,19 +2308,6 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'status': 'canonical',
               'tool': 'comp-shell',
               'use_case': 'Does a new local-runtime .sh use a util missing from Git Bash 3.6.7 (pgrep/flock/...)?'},
-             {'anti_pattern': 'asserting a claim GREEN without exercising the honesty bar -- silent-missing / '
-                              'aggregate-hides-per-case / dead-guard',
-              'canonical_call': 'comp-honesty <case.json> | comp-honesty --file <src.py> [--evidence <ev.json>] | '
-                                'comp-honesty --self-test',
-              'cost': '~1s/case',
-              'freshness': 'live claim+evidence check',
-              'id': 'meta.honesty.invariant_gate',
-              'layer': 'meta',
-              'mode': 'rebuild',
-              'rebuild_trigger': 'n/a',
-              'status': 'canonical',
-              'tool': 'comp-honesty',
-              'use_case': 'Does a completeness/GREEN claim honor the GOV-A honesty floor (I1/I2/I3)?'},
              {'anti_pattern': "hand-forking Opal's globgrph TF + recognizers per new company instead of "
                               'parameterizing via company.yaml (two bespoke pieces + reuse)',
               'canonical_call': 'comp-genesis {new <c> | validate <c> | up --dry-run <c> | verify --local <c> | '
@@ -3518,7 +3475,6 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                   'comp-ledger-agreement',
                                   'comp-missions',
                                   'comp-perf',
-                                  'comp-v5-composite-test',
                                   'comp-imgread',
                                   'comp-coverage-check',
                                   'comp-routable-check',
@@ -3526,7 +3482,6 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                   'comp-tool-health-gate',
                                   'comp-canon-motif',
                                   'comp-passcraft',
-                                  'comp-stitch-refresh',
                                   'comp-residue',
                                   'comp-arity',
                                   'comp-adversary',
@@ -3545,6 +3500,12 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                             'successor': None,
                                             'why': 'standalone coverage-view tool; superseded by comp-manifest-check '
                                                    'completeness'},
+                     'comp-honesty': {'retired': "2026-10-08 Andrew-direct ~23:0xZ comp-tool audit (call 1: '1.) "
+                                                 "Yes.'), 4.0.0_SA_CRO; record "
+                                                 'org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_230xZ_RETIRE_41_TOOLS_YES_ROUTER_FIXES_YES_RAIL_STAYS_A_GATE_BUT_DIRECTED.md',
+                                      'successor': None,
+                                      'why': 'a 15-line wrapper over org/modules/graph/comp_honesty.py with no run '
+                                             'in 30 days; the engine stays for any caller that imports it'},
                      'comp-kuzu-full': {'retired': '2026-09-02 NFRA_COMPEFFICACY unit 2 (Andrew-approved 92664; '
                                                    'executed by 0.8.0_AE_CloudComp, re-scoped by 3.0.0_SA_CVO '
                                                    '92726). Consolidated onto comp-kuzu --mode full -- the flag '
@@ -3596,6 +3557,13 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                       'it -- the HUD carried 4 bare-pipescript nudges undetected '
                                                       'precisely because no deleted name was ever declared in this '
                                                       'section (CVO, Andrew-direct programmatic-staleness mandate)'},
+                     'comp-stitch-refresh': {'retired': '2026-10-08 Andrew-direct ~23:0xZ comp-tool audit (call 1: '
+                                                        "'1.) Yes.'), 4.0.0_SA_CRO; record "
+                                                        'org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_230xZ_RETIRE_41_TOOLS_YES_ROUTER_FIXES_YES_RAIL_STAYS_A_GATE_BUT_DIRECTED.md',
+                                             'successor': None,
+                                             'why': 'the un-retired twin of the local stitch publisher retired by '
+                                                    'NFRA_CLDGRPH S29; disarmed @42f4e0a2b7, then removed; the cloud '
+                                                    'producer opal-stitch-produce is the one writer'},
                      'comp-surface-check': {'retired': '2026-08-06 Andrew-direct retirement -- executable + registry '
                                                        'rows + comp-which route + the publish workflow + the portal '
                                                        'CI leg and pre-commit hook all removed; ~/bin deprovisioned. '
@@ -3615,6 +3583,12 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                    'caller guards on `command -v`, and a gate that cannot be found '
                                                    'is not advisory, it is off while reporting nothing (the '
                                                    '2026-07-29 precedent).'},
+                     'comp-v5-composite-test': {'retired': '2026-10-08 Andrew-direct ~23:0xZ comp-tool audit (call '
+                                                           "1: '1.) Yes.'), 4.0.0_SA_CRO; record "
+                                                           'org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_230xZ_RETIRE_41_TOOLS_YES_ROUTER_FIXES_YES_RAIL_STAYS_A_GATE_BUT_DIRECTED.md',
+                                                'successor': None,
+                                                'why': 'a one-off live Lambda regression test from 2026-06, not a '
+                                                       'comp-tool; no run in 30 days'},
                      'pipescript': {'retired': '2026-07-30 Andrew-direct naming consolidation -- bare `pipescript` '
                                                'is a RETIRED rc=2 stub, PROHIBITED (CLAUDE.md comp-estate row); NOTE '
                                                'comp-pipescript is a DIFFERENT LIVE tool, not this alias',
@@ -3634,9 +3608,17 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                    'subcommands': ['who <path-or-surface>',
                                                    'overlap',
                                                    'boxes',
+                                                   'emit',
+                                                   'flush',
+                                                   'backfill',
+                                                   'surface',
                                                    '--hours',
                                                    '--graph',
-                                                   '--all']},
+                                                   '--all',
+                                                   '--limit',
+                                                   '--commit',
+                                                   '--since',
+                                                   '--rev']},
                  'comp-assets': {'does': 'READ-ONLY backfill census over the OPAL_ASSETS monolith '
                                          '(s3://opal-data-assets): per channel folder, per-layer counts/bytes/feeds '
                                          "+ date FRONTIER + 0-byte count, PLUS the channel's declared "
@@ -3646,6 +3628,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                          'any census content). DISTINCT from comp-freshness (cadence-gated gold-run '
                                          'readiness; this is completeness, no cadence, no gate)',
                                  'entries': ['cloud.assets.backfill_census'],
+                                 'status': 'deprecated',
                                  'subcommands': ['',
                                                  '--channel <source[/scope]>',
                                                  '--probe',
@@ -3695,6 +3678,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                        'per-axis DELTA (what got hotter/colder/staler since <date>). THIN: runs the '
                                        'existing readers, computes nothing new',
                                'entries': ['org.axes.directory', 'org.axes.delta'],
+                               'status': 'deprecated',
                                'subcommands': ['directory',
                                                'delta',
                                                '--axes',
@@ -3713,7 +3697,8 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                 'subcommands': ['map', 'collisions', 'key']},
                  'comp-chainrun': {'does': 'Snapshot/diff gold artifacts around an atomic bundle',
                                    'entries': ['pipeline.chainrun.atomic_bundle'],
-                                   'subcommands': ['snapshot', 'diff']},
+                                   'status': 'deprecated',
+                                   'subcommands': ['snapshot', 'diff', 'selfcheck', 'spec']},
                  'comp-clobber': {'does': 'OUTPUT-KEY COLLISION scanner: are 2+ DISTINCT producers writing the SAME '
                                           'sink (S3 key / DynamoDB table) -- a two-writers-one-key CLOBBER where a '
                                           'stale producer overwrites a fresh one. The class comp-dups is blind to '
@@ -3725,6 +3710,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                           '2026-07-21 aum-timeseries freeze. Advisory/read-only. Engine: '
                                           'clobber_scan.py',
                                   'entries': ['estate.clobber.output_key_collision'],
+                                  'status': 'deprecated',
                                   'subcommands': ['--min-writers',
                                                   '--include-partitioned',
                                                   '--live BUCKET KEY',
@@ -3769,6 +3755,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            'trajectory. Subject-coordinate C1-discovered-relations (provisional -- '
                                            'first CVO dial confirms).',
                                    'entries': ['estate.cochange.agent_type_comovement'],
+                                   'status': 'deprecated',
                                    'subcommands': ['matrix',
                                                    'pair <T1> <T2>',
                                                    'file <path-substr>',
@@ -3782,7 +3769,8 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                     'subcommands': ['check', 'index', 'new', 'list']},
                  'comp-coverage': {'does': 'Compiler/task-order coverage report',
                                    'entries': ['meta.coverage.report'],
-                                   'subcommands': ['<args>']},
+                                   'status': 'deprecated',
+                                   'subcommands': ['<args>', 'report']},
                  'comp-dataflow': {'does': 'Value-ORIGIN trace + canonical-source assertion: does a served/consumed '
                                            'value come from the CANONICAL source, or from a served/legacy artifact? '
                                            'Flags a producer reading a SERVED (platinum/served/portal-json) artifact '
@@ -3797,6 +3785,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                             'degrades in production with nothing reporting it (the daily-agenda '
                                             'github-token case, 2026-07-09)',
                                     'entries': ['cloud.deadgrant.silent_degrade'],
+                                    'status': 'deprecated',
                                     'subcommands': ['[<lambda|role>]']},
                  'comp-debris': {'does': 'Coldest-first cloud-resource invocation-coldness ledger (advisory; NEVER '
                                          'deletes): ranks lambdas by oldest last-invocation (dormancy AFTER '
@@ -3808,6 +3797,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                          'reusing classify/BANDS/_HELD_RX with trading-calendar dormancy (T-1 data) '
                                          '+ cadence-aware windowing folded. Engine comp_debris.py',
                                  'entries': ['cloud.debris.coldness_ledger'],
+                                 'status': 'deprecated',
                                  'subcommands': ['--types <lambda|ddb|s3|ec2|events>',
                                                  '--days N',
                                                  '--hot-days N',
@@ -3819,6 +3809,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            '(deny-add => explicitDeny; allow-removal => implicitDeny) -- the author '
                                            'can neither pick the criterion nor hold the call wrong',
                                    'entries': ['cloud.denytest.iam_change_verify'],
+                                   'status': 'deprecated',
                                    'subcommands': ['<plan|change-spec>']},
                  'comp-depth': {'does': 'DEPTH-scoped querying on the marker-head graph (NFRA_GRAPHDEPTH P3): the '
                                         "GRAIN coordinate of an investigation -- a node's grain and CONTAINS-ladder "
@@ -3827,6 +3818,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                         'grain_contract; composes the provenance-checked marker-head read-handle '
                                         '(ONE head, checked every call). Answers WHAT GRAIN, not what-is-affected.',
                                 'entries': ['graph.depth.grain_scope'],
+                                'status': 'deprecated',
                                 'subcommands': ['grains <node-id>',
                                                 'scope <grain> [--limit N]',
                                                 'drill <node-id> --to <grain>',
@@ -3870,6 +3862,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            "grain. Read-only parse of gold_dispatch.sh's declared blocks; never "
                                            'executes the bash',
                                    'entries': ['pipeline.dispatch.orchestration_dag'],
+                                   'status': 'deprecated',
                                    'subcommands': ['<firm>',
                                                    '<firm> --chain <name>',
                                                    '<firm> --script <ID>',
@@ -3889,6 +3882,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                 'entries': ['drift.coverage.ledger',
                                             'drift.target.chain_walk',
                                             'drift.sweep.parity_board'],
+                                'status': 'deprecated',
                                 'subcommands': ['coverage', '<target>', 'sweep', '--deep', '--json']},
                  'comp-dups': {'does': 'Estate duplicate/dead-resource CENSUS (NFRA_DEBTSCAN standing dimension): 4 '
                                        'structural duplicate classes '
@@ -3899,6 +3893,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                        'dual-managed (TF-state apply-conflict only); removal = '
                                        'worklist+human-confirm. Engine: dup_scan.py',
                                'entries': ['estate.dups.duplicate_resources'],
+                               'status': 'deprecated',
                                'subcommands': ['--class', '--nightly', '--json']},
                  'comp-estate': {'does': 'THE GLOBAL LOSSLESS FIDELITY DESCENT FROM SEMANTICS TO FACTS '
                                          '(Andrew-direct purpose ruling, verbatim, 2026-07-30) -- FIRST CONTACT for '
@@ -3950,6 +3945,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                  'entries': ['meta.fedobs.co_evolution',
                                              'meta.fedobs.coverage_gaps',
                                              'meta.fedobs.directive_effectiveness'],
+                                 'status': 'deprecated',
                                  'subcommands': ['coevolution',
                                                  'coverage',
                                                  'direff',
@@ -3976,6 +3972,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                 'SIMULATION because grant-shape greps cannot see AWS-managed '
                                                 "Resource:'*' policies",
                                         'entries': ['cloud.firmsep.credential_universe'],
+                                        'status': 'deprecated',
                                         'subcommands': ['<firm>', '--write-reach']},
                  'comp-freshness': {'does': 'Is upstream S3 data fresh enough to run a gold chain',
                                     'entries': ['pipeline.freshness.chain_ready'],
@@ -3989,6 +3986,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                           "spend. NOT a query over Opal's OWN estate (that is comp-system). Thin "
                                           'shim -> infra/system/sdk/genesis',
                                   'entries': ['meta.genesis.provision_new_company'],
+                                  'status': 'deprecated',
                                   'subcommands': ['new <c>',
                                                   'validate <c>',
                                                   'project <c>',
@@ -4003,6 +4001,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            'via the trace graph; every line carries its commit-ish. Read-only. '
                                            'Engine comp_gitdrill.py',
                                    'entries': ['meta.gitdrill.producer_history'],
+                                   'status': 'deprecated',
                                    'subcommands': ['<node|file>',
                                                    '--at <ref>',
                                                    '--diff',
@@ -4038,11 +4037,6 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                'score',
                                                'compare <A> <B> [--windows N --window-days D]',
                                                'federated']},
-                 'comp-honesty': {'does': 'Honesty/completion GATE over GOV-A I1/I2/I3: claim+evidence -> '
-                                          'per-invariant PASS/FAIL/N-A; makes NFRA_SEMCTL_HONESTY_INVARIANTS.md '
-                                          'runnable. N-A is LOUD, never a silent pass',
-                                  'entries': ['meta.honesty.invariant_gate'],
-                                  'subcommands': ['<case.json>', '--file', '--evidence', '--self-test']},
                  'comp-iam': {'does': 'IAM permission-gap cross-reference (boto3 calls vs grants)',
                               'entries': ['cloud.iam.permission_gaps'],
                               'subcommands': ['gaps',
@@ -4082,6 +4076,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            'is a FINDING; never fabricates an Iceberg history for a data artifact. '
                                            'Read-only. Engine comp_icedrill.py',
                                    'entries': ['meta.icedrill.vintage_history'],
+                                   'status': 'deprecated',
                                    'subcommands': ['s3://...',
                                                    'ddb <table>',
                                                    'graph <node>',
@@ -4089,6 +4084,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                    '--self-test']},
                  'comp-incrparity': {'does': 'Incremental BD-pipeline parity (cache vs oracle)',
                                      'entries': ['pipeline.incrparity.bd'],
+                                     'status': 'deprecated',
                                      'subcommands': ['<args>']},
                  'comp-keys': {'does': 'What S3 keys / partition-dates / per-firm existence EXIST under a prefix -- '
                                        'INVENTORY (what exists), distinct from comp-freshness (is-it-fresh). Live '
@@ -4121,6 +4117,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                'to the tracked backlog comp-learns-backlog.md (the gap->build '
                                                'bridge). Advisory-only; CTO ratifies. Engine comp_learns_score.py',
                                        'entries': ['meta.learns.value_scorer'],
+                                       'status': 'deprecated',
                                        'subcommands': ['--top N',
                                                        '--file-candidates',
                                                        '--goodhart-audit',
@@ -4133,6 +4130,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                                 'recomputes. (Its sibling use-verb was retired 2026-07-08 per the '
                                                 'NFRA_TOOLCHECK P2 ruling.)',
                                         'entries': ['meta.learns.demand_gap_cost'],
+                                        'status': 'deprecated',
                                         'subcommands': ['',
                                                         '<view>  # gap_heat|coverage_gaps|tool_demand|...',
                                                         '--json',
@@ -4152,6 +4150,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                         'reproduced through the normative home precondition_token.py _request_hash '
                                         'before use). Engine: org/modules/graph/comp_lease.py (AE lane).',
                                 'entries': ['epistemy.lease.eligibility'],
+                                'status': 'deprecated',
                                 'subcommands': ['evaluate <closure.json> [--out DIR]',
                                                 'state <lease.json>',
                                                 '--self-test',
@@ -4197,12 +4196,14 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            'total-order arbitration when a node matches 2+ roles (guards+transforms '
                                            '-> Guard)',
                                    'entries': ['ontology.relation_role.dual_axis_lint'],
+                                   'status': 'deprecated',
                                    'subcommands': ['check', 'self-test', 'role-resolve <Role>...']},
                  'comp-parity': {'does': 'DATA/served parity gate for a never-widen cutover (DATA_SSOTMG TO-4): '
                                          'tolerance-aware dual-gated proof a canonical pipeline can stand in for the '
                                          'BD-served surfaces, firm-by-firm; the multi-day CLEAN streak IS the '
                                          'cutover gate. DISTINCT from comp-lambdamap parity (DEPLOY parity)',
                                  'entries': ['pipeline.parity.served_cutover'],
+                                 'status': 'deprecated',
                                  'subcommands': ['[firm]', '--config', '--json']},
                  'comp-pii': {'does': 'PII exposure audit (routes + components)',
                               'entries': ['trace.pii.exposure'],
@@ -4340,21 +4341,25 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                      'file, NOT .comp-graph/.agent_context (which is repo-global and '
                                      'last-writer-wins across concurrent agents)',
                              'entries': ['session.context.set_to'],
+                             'status': 'deprecated',
                              'subcommands': ['<TO_filename_without_.md>']},
                  'comp-tool-health': {'does': 'Fused per-comp-tool 3-axis HEALTH query (used / rail_consistent / '
                                               'effective -> KEEP|FIX|PROMOTE|RETIRE) over the COMPLEARN substrate; '
                                               'value-anchored (outcome value + rail quality, never invocation '
                                               'count); read-only advisory (CTO ratifies). Engine comp_tool_health.py',
                                       'entries': ['meta.toolhealth.keep_fix_retire'],
+                                      'status': 'deprecated',
                                       'subcommands': ['[<tool>]', '--json']},
                  'comp-toolgraph': {'does': 'The comp-tool SUITE as a measure-only graph: C0 nodes (the ratified '
                                             'universe) + C1 mechanical edges (SHARES_SUBSTRATE/WRITES/INVOKED_BY) + '
                                             'the DECLARED-vs-ACTUAL coupling diff (the undeclared-ripple finding). '
                                             'Engine comp_toolgraph.py',
                                     'entries': ['meta.toolgraph.suite_coupling'],
+                                    'status': 'deprecated',
                                     'subcommands': ['--json']},
                  'comp-tooltip': {'does': 'Tooltip migration/coverage audit',
                                   'entries': ['meta.tooltip.migration'],
+                                  'status': 'deprecated',
                                   'subcommands': ['<args>']},
                  'comp-trace': {'does': 'Bidirectional dependency walk from any repo node (cached)',
                                 'entries': ['trace.walk.dependency_chain'],
@@ -4385,6 +4390,7 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                           'FAILS CLOSED (rc=1) on zero data events in range. Floor on reachability, '
                                           'never a ceiling -- do not derive IAM narrowings from it',
                                   'entries': ['cloud.whoread.object_read_forensics'],
+                                  'status': 'deprecated',
                                   'subcommands': ['<bucket>[/prefix]', '--since']},
                  'comp-xray': {'does': 'Value-MOTION lens (NFRA_COMPDIFF): is the CONTENT genuinely changing, or '
                                        'FROZEN-BUT-FRESH (value frozen while timestamp advances -- the 3x-2026-06-29 '
@@ -4967,6 +4973,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'ownpath)',
                  'role': 'genesis-provisioner',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-genesis'},
                 {'not_homed_reason': 'the rail ENTRY -- maps a plain-English question to the canonical homed tool; '
                                      'it ROUTES, it is not a surface inspection (PRD deliverable 4 reorgs it '
@@ -4990,6 +4997,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'docstring: does a CORRECTION reach the DOCUMENT IT CORRECTS.',
                  'role': 'correction-propagation',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-claimlink'},
                 {'not_homed_reason': 'KEY-CONTEXT READ (NFRA_SCRIPTGEN Part B, Andrew-direct 2026-08-05). Fixes the '
                                      'right-file-wrong-read failure: SHAPE + salience + AUTHORITATIVE-vs-DESCRIPTIVE '
@@ -5051,12 +5059,14 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'a live break on this same box today',
                  'role': 'source-analysis-primitive',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-arity'},
                 {'not_homed_reason': 'native-resolution image-region tiler for pixel-level reads (the .188-vs-.186 '
                                      'misread class, Andrew-direct 2026-07-15); an inspection primitive on LOCAL '
                                      'image files, not a graph/surface query',
                  'role': 'vision-primitive',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-imgread'},
                 {'not_homed_reason': 'session-context setter (race-free per-session TO_ID for the comp auto-logger); '
                                      'a startup primitive ROUTABLE-FLIP 2026-08-06 (Andrew-approved; CVO~B swept all '
@@ -5068,6 +5078,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'always called itself a DEBT, NOT a resting place.',
                  'role': 'session-primitive',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-to'},
                 {'not_homed_reason': 'rebuilds the trace-graph cache (the trace WRITE-PATH); operates on the tooling '
                                      'cache, not a surface',
@@ -5133,6 +5144,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      '5/5. Engine org/modules/graph/clobber_scan.py',
                  'role': 'clobber-scanner',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-clobber'},
                 {'concern': 'agent-type CO-MOVEMENT -- which agent TYPES change the SAME FILES within a window '
                             '(friction/coordination surfaces), with BOTH F4 denominators on every output '
@@ -5162,6 +5174,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'org/modules/graph/comp_cochange.py',
                  'role': 'comovement-scanner',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-cochange'},
                 {'concern': 'value-ORIGIN / canonical-source lineage -- does a producer read a SERVED '
                             '(platinum/served/portal-json) artifact as a value source? The layer grammar running '
@@ -5319,6 +5332,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'territory-surface query; on-demand ontology-lint (NFRA_ONTOCLARITY WS-B fog-7)',
                  'role': 'ontology-lint',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-ontolint'},
                 {'not_homed_reason': "THE COMPUNIFY gate (NFRA_COMPUNIFY S2) -- enforces this ledger's own "
                                      'gate_contract + projection-currency; polices the coverage map, not a surface '
@@ -5351,6 +5365,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'degraded row (debt=ABSENT until comp-debt lands)',
                  'role': 'axis-directory',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-axes'},
                 {'not_homed_reason': 'NFRA_TOOLCHECK P3 follow-on: the REGISTERED-IMPLIES-REACHABLE completeness '
                                      'gate -- asserts every manifest tools_index tool is routable=True in the '
@@ -5368,6 +5383,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'an export artifact, not an estate surface query',
                  'role': 'enforcement-gate',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-kit-striplist-gate'},
                 {'not_homed_reason': 'NFRA_TOOLSTACK: THE RESIDUE DETECTOR (ARCHETYPAL_LEARNING_LOOP shape #1) -- '
                                      'the deterministic detector for a structural surface a SOURCE declares '
@@ -5393,6 +5409,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'exists.',
                  'role': 'residue-detector',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-residue'},
                 {'not_homed_reason': 'the VERIFY element of the firm-sep-DATA credential-plane program (PREVENT=the '
                                      'cross-firm belts, DETECT=the wildcard/sentinel lints, VERIFY=this). It '
@@ -5404,6 +5421,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'IAM; it does not query an estate surface, so it has no surface home',
                  'role': 'verify-harness',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-denytest'},
                 {'not_homed_reason': 'DETECT pillar leg 2 of the firm-sep-DATA credential-plane program -- '
                                      'PROVE-THE-UNIVERSE. Simulates a firm credential against EVERY role in the '
@@ -5415,6 +5433,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'universe; it does not query an estate surface, so it has no surface home',
                  'role': 'verify-harness',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-firmsep-sweep'},
                 {'not_homed_reason': 'DETECT pillar leg 3 of the firm-sep-DATA credential-plane program -- the '
                                      'LIVE-DEGRADE universe. Intersects a DEAD secret reach (NO_GRANT from a '
@@ -5429,6 +5448,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'so it has no surface home',
                  'role': 'verify-harness',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-deadgrant'},
                 {'not_homed_reason': "the WHO-DID-READ instrument (CTO GO 20260709T210020Z): 'Layer-3 live-simulate "
                                      "proves who MAY read; only this proves who DID.' Reads the org trail's S3 "
@@ -5449,6 +5469,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      '(tag-authz)',
                  'role': 'verify-harness',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-whoread'},
                 {'not_homed_reason': 'the PRE-IMPORT AUTHORIZATION GATE for NFRA_TERRAFORM batch D (CTO GO '
                                      "20260709T195725Z). Answers 'are this resource's TAGS load-bearing for "
@@ -5486,6 +5507,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'type this name. Registered 2026-08-21 by 0.8.0_AE_CloudComp.',
                  'role': 'verify',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-lease'},
                 {'not_homed_reason': 'NFRA_EPISTEMY C3 identity + support-closure compiler (COO GO 63813; base cert '
                                      '63859; CTO gate 63865/63887): compiles, per Lambda (or EC2 service from '
@@ -5519,11 +5541,13 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                 {'not_homed_reason': 'compiler/task-order coverage report; a meta view over the tooling/TOs',
                  'role': 'meta-report',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-coverage'},
                 {'not_homed_reason': 'tool-performance measurement; meta, not a graph-query use-case '
                                      '(manifest-excluded)',
                  'role': 'meta-measurement',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-perf'},
                 {'not_homed_reason': 'The bare-name human entry over the whole estate: a named-thread traversal that '
                                      'routes to homed sub-resolvers; a router+discovery surface, not a '
@@ -5544,6 +5568,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      '2026-07-08, NFRA_TOOLCHECK P2 CTO-ruled)',
                  'role': 'complearn-loop',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-learns-status'},
                 {'not_homed_reason': "COMPLEARN P2 value-anchored SCORER (the TRAINS verb's Goodhart gate): ranks "
                                      'build-next / route-fix / merge-retire candidates on escapes-prevented / '
@@ -5556,6 +5581,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'surface inspection',
                  'role': 'complearn-loop',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-learns-score'},
                 {'not_homed_reason': 'repo-wide Python REFERENCE graph incl .tools/ + org/modules (closes COMPRAIL '
                                      'F-5): who IMPORTS / LOADS (SourceFileLoader) / INVOKES (subprocess) a '
@@ -5575,6 +5601,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      "The complement to comp-gitdrill's SPACE-axis siblings. Engine comp_gitdrill.py",
                  'role': 'tool-graph',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-gitdrill'},
                 {'not_homed_reason': 'VINTAGE-axis drill: an artifact -> its version/partition history across '
                                      'EXISTING substrates (dated S3 partitions / S3 object-versions / DDB daily / '
@@ -5584,6 +5611,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'fabricates). Read-only. Engine comp_icedrill.py',
                  'role': 'tool-graph',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-icedrill'},
                 {'not_homed_reason': 'coldest-first cloud-resource INVOCATION-coldness ledger (advisory; NEVER '
                                      'deletes): ranks lambdas by oldest last-invocation (dormancy AFTER activity). '
@@ -5598,6 +5626,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'windowing folded. Read-only. Engine comp_debris.py',
                  'role': 'debtscan-scorer',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-debris'},
                 {'not_homed_reason': 'Access-plane coldness + reach -- the lifecycle SIBLING of comp-iam '
                                      '(deploy-time correctness): is this IAM role/grant still USED (RoleLastUsed '
@@ -5679,11 +5708,8 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'Provisional pending ~D P2; ~D confirms the final grain/home.',
                  'role': 'compdrift-loop',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-drift'},
-                {'not_homed_reason': 'comp-tool regression test harness; not an estate inspection',
-                 'role': 'test-harness',
-                 'routable': False,
-                 'tool': 'comp-v5-composite-test'},
                 {'not_homed_reason': 'comp-which routing regression test harness; not an estate inspection',
                  'role': 'test-harness',
                  'routable': False,
@@ -5695,6 +5721,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'inspection. Engine comp_tool_health.py. Owner 0.8.0_AE_CloudComp~D',
                  'role': 'tool-health',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-tool-health'},
                 {'not_homed_reason': 'NFRA_TOOLHEALTH TH-C: close-the-loop ACCEPTANCE GATE -- each non-KEEP TH-B '
                                      'verdict -> a typed ADVISORY commission the CTO ratifies (FIX->fix-TO / '
@@ -5704,6 +5731,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      '0.8.0_AE_CloudComp~D',
                  'role': 'enforcement-gate',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-tool-health-gate'},
                 {'not_homed_reason': 'NFRA_DEBTSCAN TO-D3 canon-motif SCORER: scores each canon class off the RIGHT '
                                      'surface (SERVED_LINEAGE+AUTH kuzu-lib / DEPLOY deploy-ledger / PIPELINE '
@@ -5713,23 +5741,8 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'drift); DEBTSCAN owner to VERIFY/refine grain+concern.',
                  'role': 'debtscan-scorer',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-canon-motif'},
-                {'not_homed_reason': 'NFRA_GLOBGRPH cross-layer stitch-graph LOCAL PRODUCER: runs derive_stitch.py '
-                                     'against the local repo (portal + pipeline scripts + graph modules) + the S3 '
-                                     'AWS-resource snapshot -> stitch_graph.json, then publishes '
-                                     'artifact-FIRST/marker-LAST to s3://opal-313476888478-globgrph/stitch/ (the '
-                                     'atomic commit point; contract preserved for the comp-debt ensure_fresh '
-                                     'consumer). Replaces the retired GH-Action/CodeBuild/EventBridge apparatus '
-                                     "(Andrew-direct 2026-07-07: a solo contributor's local tree IS the canonical "
-                                     'state). It WRITES the substrate the query tools read; it does not query an '
-                                     'estate surface, so it has no surface home. Added d31bfb597 by '
-                                     '0.7.0_AE_CloudOps; PLACED 2026-07-09 by 0.8.0_AE_CloudComp (NFRA_GRAPHS AC1 '
-                                     'orphan sweep -- it was UNPLACED in both censuses and absent from tools_index, '
-                                     'so comp-coverage-check ran RED estate-wide and comp-which could never route to '
-                                     'it). Owner 0.7.0_AE_CloudOps to VERIFY/refine grain+concern.',
-                 'role': 'graph-producer',
-                 'routable': False,
-                 'tool': 'comp-stitch-refresh'},
                 {'not_homed_reason': 'NFRA_FEDOBS-P3 reflective-observation surface (READER): reads the SERVED '
                                      'fedobs_observations.json (co-evolution / compiler-coverage / '
                                      'directive-effectiveness measured signals over the C0 CSE log) as answerable '
@@ -5743,6 +5756,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      '0.5.0_AE_OpalETL.',
                  'role': 'fedobs-reflective-reader',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-fedobs'},
                 {'not_homed_reason': 'NFRA_TOOLGRAPH.TO-1: the comp-tool SUITE as a measure-only graph -- C0 nodes '
                                      '(the ratified AC-0 63-universe) + C1 mechanical edges '
@@ -5755,6 +5769,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'yet in the ratified AC-0 63 (a catalog-reconciliation follow-up).',
                  'role': 'tool-graph',
                  'routable': True,
+                 'status': 'deprecated',
                  'tool': 'comp-toolgraph'},
                 {'not_homed_reason': 'NFRA_PASSCRAFT.TO-1: the tool front-pass recon-scaffolding SDK -- `recon '
                                      '<tool>` runs ONLY the mechanical moves (read both layers, map the write '
@@ -5767,6 +5782,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                      'yet in the ratified AC-0 63.',
                  'role': 'recon-scaffolding',
                  'routable': False,
+                 'status': 'deprecated',
                  'tool': 'comp-passcraft'},
                 {'not_homed_reason': 'LD-0341: attributes COMMITS to mission-register sub-groups '
                                      '(org/tier0/missions.yaml) so org/tier0/MISSIONS.md activity blocks are '
@@ -6444,6 +6460,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                                 'reads/writes/column-gaps/deployed-parity)',
                                'tool': 'comp-pipescript'}],
             'granularity': 'chain',
+            'status': 'deprecated',
             'surface': 'GIT',
             'tool': 'comp-dispatch',
             'touches_resource': ['dispatch-dag']},
@@ -6464,14 +6481,6 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
             'granularity': 'file',
             'surface': 'GIT',
             'tool': 'comp-shell',
-            'touches_resource': []},
-           {'concern': 'honesty/completion GATE over the GOV-A invariants (I1 honest-missing / I2 measure-per-case / '
-                       'I3 control-fires-when-exercised); claim+evidence (or --file src.py) -> per-invariant '
-                       'PASS/FAIL/N-A, makes NFRA_SEMCTL_HONESTY_INVARIANTS.md runnable (N-A is LOUD, never a silent '
-                       'pass)',
-            'granularity': 'claim',
-            'surface': 'GIT',
-            'tool': 'comp-honesty',
             'touches_resource': []},
            {'concern': 'TS TYPE consumers/blast/fields before editing a shared type',
             'granularity': 'type',
@@ -6595,6 +6604,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
             'touches_resource': ['portal-component']},
            {'concern': 'tooltip MIGRATION/coverage audit (inline vs <DataTooltip> canonical; one-off sprint tool)',
             'granularity': 'component',
+            'status': 'deprecated',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-tooltip',
             'touches_resource': []},
@@ -6678,6 +6688,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                'their_concern': 'value-MOTION (content)',
                                'tool': 'comp-xray'}],
             'granularity': 'object',
+            'status': 'deprecated',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-assets',
             'touches_resource': ['freshness']},
@@ -6698,6 +6709,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                'their_concern': 'INCREMENTAL parity (cache vs oracle, BD-incremental)',
                                'tool': 'comp-incrparity'}],
             'granularity': 'served-json',
+            'status': 'deprecated',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-parity',
             'touches_resource': ['parity']},
@@ -6711,12 +6723,14 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                'their_concern': 'DATA/served parity (cutover gate)',
                                'tool': 'comp-parity'}],
             'granularity': 'object',
+            'status': 'deprecated',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-incrparity',
             'touches_resource': ['parity']},
            {'concern': 'ATOMIC-BUNDLE gold snapshot/diff (pre/post chain re-run -- DROPPED/COLUMNS-LOST/EMPTIED '
                        'partial-refactor leak; VALGATE Class-B)',
             'granularity': 'served-json',
+            'status': 'deprecated',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-chainrun',
             'touches_resource': []},
@@ -6727,6 +6741,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                                'their_concern': 'DUAL-MANAGED (TF-state apply-conflict only)',
                                'tool': 'comp-aws'}],
             'granularity': 'graph-node',
+            'status': 'deprecated',
             'surface': 'AWS-CLOUD',
             'tool': 'comp-dups',
             'touches_resource': ['estate-structure']},
@@ -6843,6 +6858,7 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
                        'never a type fork). DISTINCT from comp-kuzu (raw Cypher, any query) + comp-blast (breadth '
                        'IMPACT set) + comp-trace (dependency PATH) -- comp-depth owns the grain/DEPTH scope',
             'granularity': 'graph-node',
+            'status': 'deprecated',
             'surface': 'TRINO',
             'tool': 'comp-depth',
             'touches_resource': []}],

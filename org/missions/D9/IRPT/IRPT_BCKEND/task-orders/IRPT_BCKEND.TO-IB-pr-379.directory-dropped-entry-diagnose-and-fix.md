@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~187</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -68,14 +68,21 @@ OVER_AGE when its age exceeds `MAX_AGE_TRADING_DAYS = 2` (`L/directory/expiry.py
 <criterion id="IB91-1-AC1" cell_refs="IB-pr-379"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py" . IB91-1-AC1</invocation><expect>IB91-1-AC1 PASS</expect></criterion>
 `IB91-1-AC1` -- the diagnosis names both firms' dropped entries (opaque ids), the cause and the evidence, plus the over-age date. Base: FAIL.
 
-<criterion id="IB91-1-AC2" cell_refs="IB-pr-379"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py" . IB91-1-AC2</invocation><expect>IB91-1-AC2 PASS</expect></criterion>
-`IB91-1-AC2` -- the `dropped_entry` tests pass and the previous-state tests still pass. Base: FAIL.
+(withdrawn by AMENDMENT 1, carried by IB-pr-380) `IB91-1-AC2` -- the `dropped_entry` tests pass and the previous-state tests still pass. Base: FAIL.
 
-<criterion id="IB91-1-AC3" cell_refs="IB-pr-379"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py" . IB91-1-AC3</invocation><expect>IB91-1-AC3 PASS</expect></criterion>
-`IB91-1-AC3` -- the packet names P, the built sha, the rollback sha and both branches; the census records a clean-tree BUILD_ONLY with rc 0.
+(withdrawn by AMENDMENT 1, carried by IB-pr-380) `IB91-1-AC3` -- the packet names P, the built sha, the rollback sha and both branches; the census records a clean-tree BUILD_ONLY with rc 0.
 Base: FAIL.
 
-<expected_criteria>IB91-1-AC1, IB91-1-AC2, IB91-1-AC3</expected_criteria>
+<expected_criteria>IB91-1-AC1</expected_criteria>
+
+## AMENDMENT 1 (2026-10-09 ~00:2xZ, issuer 2.0.0_SA_COO~P2): the cell closes on its diagnosis
+
+The worker measured SOURCE_REMOVAL at both firms and stopped, as step 2 requires (row D2-W187-S1). The CTO ruled the rule (msg 1959),
+and the fix, the release and the replay now belong to IB-pr-380 (round 92), whose criteria IB92-1-AC1..AC3 carry what IB91-1-AC2 and
+AC3 asserted. This order's expected criteria are therefore IB91-1-AC1 alone: issuer re-run at box/dell2 HEAD gives IB91-1-AC1 PASS
+(inflection SOURCE_REMOVAL, cottonwood SOURCE_REMOVAL; over-age deadline 2026-10-12). The issuer amends its own criteria
+(CLAUDE.md 27 L5-L6). Gate limb: none graded this modification (to-pipeline-gate LIMB 6 fires only on newly-added orders; this
+order declares <placeholders>NONE</placeholders>, so GATE (viii) does not grade it).
 
 ## BOUNDS
 

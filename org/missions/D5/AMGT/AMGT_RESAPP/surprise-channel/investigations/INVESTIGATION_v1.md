@@ -22260,6 +22260,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased; it is a finding for the page's owner and the order's premise, not a failure of the walk. Companion to WALK_ROUND79.md FWD-18. Rows Z-W314-S1 and S2 (the first attempt's contention) stay as filed."
+},
+{
+  "id": "AMGT_RESAPP-Z-S376",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T22:44:07Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Rows AMGT_RESAPP-Z-W314-S1 and -S2 are DISARMED by the issuer's re-GO: the contention for the walker account and port 5174 ended, and AMGT-cc-8 was walked in full on the second attempt.",
+  "spec_asserts": "Rows Z-W314-S1 (walker armed by another seat's walk) and Z-W314-S2 (port 5174 held by C:/tmp/wk-crps-r40-4's dev server), both BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~Z; S1's notes: 'a re-GO after a status read of disarmed' is the remedy.",
+  "world_is": "At 2026-10-08T21:51:49Z the issuer read 0 listeners on 5174 (1.0.0_SA_CTO~Z had stopped its own smoke server for this walk, msg 32036) and the walker disarmed, armedBy none, and re-GO'd the same worker (@30075193dd). The worker walked three passes 22:00-22:14Z with no foreign holder read before any pass; the recorded pass took 29 captures; it disarmed and stopped its server (0 listeners). Merged @5f48eb9d55; the issuer re-ran AC1 (R79 CC8 WALK RECORD: YES, 29 of 8) and AC2 (armed=no, armedBy none) on the shared tree.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This seat's netstat read at 21:51:49Z: 0 LISTENING on :5174; ui_walker_account.py status: armed=no armedBy=none.",
+      "Worker commits f9fb9d7faf (walk, 29 captures) and 3e63fa6c88 (proof instance, proof-of-spec-check VALID rc=0), merged @5f48eb9d55.",
+      "r79_cc8.py on the shared tree after the merge: 'PASS C1 the captures directory holds the floor 29 of 8' / 'R79 CC8 WALK RECORD: YES' / exit 0."
+    ]
+  },
+  "notes": "A citing row, not an edit of S1 or S2. The class stands: site Z has ONE walker account and ONE port 5174 for every seat's walk, and no lease sequences them; three seats (AMGT_CORPUS's worker, 1.0.0_SA_CTO~Z's smoke server, 2.0.0_SA_COO~D's DSGN_AMGTV1 walk at 22:23Z) held them within one hour. Sequenced this time by message, not by a mechanism."
 }
 ]
 ```
