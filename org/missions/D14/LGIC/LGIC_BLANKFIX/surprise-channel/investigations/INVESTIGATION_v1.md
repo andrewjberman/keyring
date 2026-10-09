@@ -1729,3 +1729,104 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The served keys of the portal bucket are folder trees (family/subfamily/file) and the platinum grammar reads one table level and then entity partitions. The drafted canonicals are CONFORMANT but are not a folder-for-folder move, so a served-output act that follows them also renames the portal's request paths. Whether the grammar should admit a sub-folder, or the registry's owner prefers the gold tier for these keys, is the CRO's and the CTO's call; every such row says it is a target name only."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S19 -- the placement switch refuses in the gates, but safe-commit and safe-apply act on the rc only while the older switch is on
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S19",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T03:28:06Z",
+  "one_line": "the placement switch refuses in the gates, but safe-commit and safe-apply act on the rc only while the older switch is on",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py (decide_exit) and .tools/safe-commit.sh lines 1030-1048 at trunk, read this session",
+      ".tools/safe-apply.sh lines 238-252 and 295-309: 'if [ \"$NAPPLY_ENFORCE\" -eq 1 ] && [ \"$NPLAN_RC\" -ne 0 ]'",
+      "ls org/mcp at the end of the build: naming-gate.enforce present, naming-place.enforce absent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A switch file org/mcp/naming-place.enforce whose presence makes the gate refuse (TO BF-w-1 build item 2).",
+  "world_is": "Both gates now exit 1 on a placement refusal while the new switch file is present, whatever naming-gate.enforce says. The callers decide what rc 1 does: .tools/safe-commit.sh unstages and aborts only when NGATE_ENFORCE=1 (naming-gate.enforce present or NAMING_GATE_ENFORCE=1), and .tools/safe-apply.sh blocks only when NAPPLY_ENFORCE=1; with the older switch absent a placement refusal is printed and the commit or apply goes on. Today naming-gate.enforce is present, so the two switches agree; turning only the new one on while the older is off would not block. Neither caller is in this order's grant."
+}
+```
+
+## LGIC_BLANKFIX-W1-S20 -- safe-apply gives the plan-mode gate no tree, so door 2 finds an added resource's root by its name
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S20",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T03:28:06Z",
+  "one_line": "safe-apply gives the plan-mode gate no tree, so door 2 finds an added resource's root by its name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-apply.sh line 296: NPLAN_OUT=\"$(python \"$NAPPLY_GATE\" --plan-json \"$NPLAN_TMP.json\" 2>&1)\"",
+      "exercise_fwd6_arms.py arms A, B and G drive the apply gate's plan mode on a hand-built plan that adds a name the tree holds"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Design 'Where it runs' step 3: the apply gate's plan mode calls the same placement step for an ADDED resource.",
+  "world_is": "safe-apply.sh runs 'python naming-apply-gate.py --plan-json FILE' and passes neither the -chdir tree nor the root, and a plan document carries no path. The built gate takes an optional --root DIR and otherwise asks the scope which one root enumerates the added name (lib/opal_naming_rootcheck.py roots_of_name). A name no root lists (built from a variable or module) or that two roots list is graded by grade() alone and a NAMING PLACE-NOTICE line says so. The one-line follow-up, 'pass --root \"$NAPPLY_TREE\"' at safe-apply.sh line 296, is the safe-apply owner's: the file is outside this order's grant."
+}
+```
+
+## LGIC_BLANKFIX-W1-S21 -- the build has no override, so turning the placement switch on leaves a creator with a registry-owed HOLE no way through
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S21",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T03:28:06Z",
+  "one_line": "the build has no override, so turning the placement switch on leaves a creator with a registry-owed HOLE no way through",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FWD6_DESIGN_round6.md 'The exercise that would prove it', arm H; TO BF-w-1 build item 3 'arms A to G' and 'FWD6-ARMS ok=True arms=7 held=7'",
+      ".tools/naming-gate.py _NOT_A_NAME_VERDICTS: DECLARED-EXCEPTION and WAIVED-READ rows are never placed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Design arm H: an R20 register row id the registry holds passes the step with the id printed; a made-up id still refuses. The order's build list and its REPORT say arms A to G only (seven).",
+  "world_is": "Arm H is not built, because the order names seven arms and the cell's build list has no override item. With the switch present, a NEW name the canon cannot place (a HOLE owed by 4.0.0_SA_CRO) refuses until the CRO writes the row; the only other pass is a declared exception the matrix already recognises (verdict DECLARED-EXCEPTION), which the step skips by design. Nothing is harmed while the switch stays absent, but the switch should not be turned on until the override is decided."
+}
+```
+
+## LGIC_BLANKFIX-W1-S22 -- commit-time cost is about 13 s for a one-root commit; a builder-chosen cap of 8 roots is the only bound, and a hand-built diff cannot add a file the disk lacks
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S22",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T03:28:06Z",
+  "one_line": "commit-time cost is about 13 s for a one-root commit; a builder-chosen cap of 8 roots is the only bound, and a hand-built diff cannot add a file the disk lacks",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "arm A diff through .tools/naming-gate.py --diff, timed by the uncommitted harness .scratch/try_gate.py, this session: 'rc=1  12.8s' (switch present) and 'rc=0  15.0s' (absent)",
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json at this trunk: ALL-ROOTS ok=True roots_total=87 mapped=63 unmapped=24 ... hole=287"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Design 'Where it runs' step 5: one root check is about 8 s; the many-root cost is UNMEASURED and the build cell measures it and states the bound; the design's 'hole=0 over the 13 mapped roots' was the ratchet's starting denominator.",
+  "world_is": "MEASURED this session at the trunk: the arm A commit (one root, placement, then HEAD run for the ratchet) takes 12.8 s with the switch present and 15.0 s with it absent, against about 2 s without the step; one root run is 3.5 to 4.5 s. Many roots are not measured: the gate places at most PLACE_ROOT_CAP = 8 roots per commit, prints a NAMING PLACE-NOTICE naming the rest, and does not refuse for them. The cap is the builder's choice (the design states none). A new .tf file that is in a diff but not on disk is not seen by the scope, so a hand-built diff cannot add one; in a real commit the file is on disk and in the index. The design's 'hole=0 over 13 mapped roots' no longer holds (ALL-ROOTS at this trunk: mapped=63, hole=287), so the exercise prints each arm's own head and post HOLE counts instead."
+}
+```
