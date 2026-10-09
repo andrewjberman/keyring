@@ -18,6 +18,15 @@
 <owned_cells>RIV-wa-1 RIV-wb-1 RIV-wc-1 RIV-wc-2 RIV-wd-1 RIV-we-1 RIV-we-2 RIV-wf-1 RIV-wg-1 RIV-wh-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    STEP 6, THE tc-1 CLAUSE, RULED (your msg 2554 via 0.0.0_AB_MSTR~DELL1 msg 2556): CTO condition 10 ("never inside each
+    other's run windows") is about the SCHEDULED RUN windows, not the merge act. RIV-tc-1's merge is a git merge into site
+    Z's Terminal working tree; it touches no Lambda, and its run window is the vehicle's 10:55Z-11:15Z, which step 6
+    already excludes. Measured 14:3xZ: b0b65368fb is NOT an ancestor of origin/box/sitez (tip 529cb74182), so tc-1 has not
+    landed. PROCEED with steps 6-8 now, inside step 6's windows. Do not wait for a RUNNING/CLEAR word from site Z. Gate limb:
+    none grades this modification.
+  </amendment>
+
   <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE: `0.7.0_AE_CloudOps~RV1` (dell1), seated for ETFS_RIVALS by 0.0.0_AB_MSTR~DELL1 (msg 2540), because the seating
     lint read `0.7.0_AE_CloudOps~DELL1` as holding MDPF_STRATID.TO-APPLY-W2-a (one project per Tier-2 seat instance).

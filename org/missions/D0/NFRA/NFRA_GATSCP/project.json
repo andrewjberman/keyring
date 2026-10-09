@@ -9,7 +9,7 @@
   "fabric_ruling": "a NEW project, not a workstream of NFRA_CTLPLN (brief Part II's L3 question): NFRA_CTLPLN already carries 24 live outcomes; this one has its own boundary (the refusal scope of three gates, index regeneration at commit, the cross-box issuance hook) and relies on NFRA_CTLPLN's crossbox-call.py without redesigning it.",
   "pipeline": "gitops-gates-scoped-to-the-act",
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-09",
   "registered_under_tree": "2026-10-09",
   "pods": [],
@@ -34,7 +34,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~N1",
   "workstreams": [],
-  "phase": "2026-10-09 ~13:5xZ (2.0.0_SA_COO~N1): round 3 issued in one commit over ROUND_ANALYSIS.round2.md section 3 (+ D1-S5 per CTO msg 2258): GS-f-1 POINTER, GS-f-2 CRLF, GS-f-3 round-close-check, GS-f-4 crossbox custody, GS-f-5 census, GS-f-6 --continue partial.",
+  "phase": "2026-10-09 ~15:xxZ (2.0.0_SA_COO~N1): round 3 ROUND_CLOSE -- six remediation orders complete and drained @b600261e98; FWD-1..7 REALIZED since round 2; close record deliverables/2.0.0_SA_COO~N1/TRACE_round3.md. Round 3's analysis is the project's close read.",
   "blocking": null,
   "last_updated": "2026-10-09",
   "leads_dell1": {

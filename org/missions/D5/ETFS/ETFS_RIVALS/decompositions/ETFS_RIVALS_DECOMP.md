@@ -1283,3 +1283,26 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
 - Checks: `ws3_item8_prep/wi1_lookup_run_check.py` (AC1; base FAIL: run_for_day absent) and
   `ws3_item8_prep/wi1_wiring_check.py` (AC2; base FAIL 3). Acceptance (the pair's read, CTO ADDENDUM 6): Tokio Marine
   adjusted on the served page; a name with no discontinuity makes 0 calls.
+
+### `RIV-wj-1` -- the generated stack grants the daily Lambda ONE read of the existing Bright Data key secret and names it in that Lambda's environment (CTO ruling ADDENDUM 7; RIV-wi-1's grant) -- APPENDED 2026-10-09, revision 1.27
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 7 @aa290d707e
+  (1.0.0_SA_CTO~DELL1 msg 2555): option (a) -- GetSecretValue on exactly
+  `arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/bright-data/api-key-7ojPkd`, no wildcard, no other
+  action, no copy of the secret; `BD_SERP_ZONE` stays plain environment; the generated policy diff shows ONE new
+  statement. Row D1-S11 tells FIND_INSURE's owner of the second consumer.
+- Measured (14:2xZ, key names only): the SERP key is `find-insure/bright-data/api-key` (a raw string);
+  `find-dualbiz/bright-data/serp` names it as `api_key_secret` and gives `zone` = `serp_opal`. RIV-wi-1 (merged
+  @e17ab4e69d) reads the key from `BRIGHT_DATA_API_KEY`, else from the secret named by `RIVALFUNDS_SERP_SECRET`, and the
+  zone from `BD_SERP_ZONE`. The stack's one existing secrets grant is the OpenAI secret (`gen_policies._ai_secret`,
+  statement `GetOpenAISecret`, the daily Lambda's environment `RIVALFUNDS_AI_ENABLE`, `RIVALFUNDS_OPENAI_SECRET`).
+- Interface (`infra/aws/terraform/etfs-rivalfunds/gen_policies.py` and its committed outputs):
+  1. A constant for the ONE ARN with a comment citing ADDENDUM 7 (a foreign secret has no builder home; R19: this existing
+     pipeline is not migrated by this cell).
+  2. For the sweep stage (the daily Lambda) only: one more statement, `Sid` `GetSerpSecret`, `Effect` `Allow`, `Action`
+     `["secretsmanager:GetSecretValue"]`, `Resource` `[<the ARN>]`; and the environment gains `RIVALFUNDS_SERP_SECRET` =
+     the ARN and `BD_SERP_ZONE` = `serp_opal`, keeping its two keys.
+  3. The committed `generated.auto.tfvars.json` and `policies/*.json` are regenerated with `--out
+     infra/aws/terraform/etfs-rivalfunds` and equal a fresh regeneration (line endings aside).
+- Out of bounds: every `.tf` file, every other Lambda, any `terraform plan` or `apply`, any AWS call; the rivalfunds code.
+- Check: `ws3_item8_prep/wj1_serp_grant_check.py` (AC1; base FAIL 2: limbs (1) and (3); limbs (2) and (4) PASS at the
+  base and must keep passing).

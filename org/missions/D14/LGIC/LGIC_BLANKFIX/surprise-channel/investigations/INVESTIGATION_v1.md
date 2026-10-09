@@ -2555,3 +2555,25 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "opal_naming_cadence.py decides the word or the reason correctly for all 180 rows, but the line the root check prints is made by decide() in lib/opal_naming_rootcheck.py, outside this order's paths, so an undecided row with a carried word keeps it. Needed there (not done, outside the grant; the lane of BF-ac-2 and BF-ac-3, slot ~2): in decide(), when cad.get(\"word\") is None, the row states an expression (cad.get(\"expression\") not None) and cad.get(\"carried\") is a cadence word not starting with on-, rebuild the canonical with _rebuild_on_word(base, carried, \"{cadence}\") so the existing {cadence} branch prints the HOLE with cad[\"basis\"] as the reason. Consequence to expect: six holes appear in the census (hole=6), each with its reason and an owner already named by H14. No weakening: the checker counts those six as carried_over and fails; the expected value is unchanged."
 }
 ```
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T14:30:00Z",
+  "one_line": "S9 is resolved by AMENDMENT 1 (@2c56f0390a) and the merge @48ca3c6a7b: decide() now prints the partial form, and BAC1-AC1 reads carried_over=0",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence_r14.py on base 84b51c181a: FWD4-CADENCE-R14 ok=True schedules=180 agree=148 partial=32 mismatch=0 carried_over=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 of TO BF-ac-1: the partial form for a no-word row moves to BF-ac-3 build item 4 in decide(); BAC1-AC1 re-run on the trunk after slot ~2 merges.",
+  "world_is": "Merge 48ca3c6a7b carries the decide() change; the re-run reads ok=True agree=148 partial=32 mismatch=0 carried_over=0, so S9 (carried_over=6) no longer holds."
+}
+```

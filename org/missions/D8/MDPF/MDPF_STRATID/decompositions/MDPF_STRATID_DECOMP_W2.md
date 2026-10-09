@@ -160,3 +160,8 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
    (Step F, after-the-fact report). Carries A8.
 4. **Wiring (a build cell, cut after step 3):** the running silver/slice path calls `set_strategy_config(load_strategy_config())` so
    `opal_sma_member_of` reads the S3 list; fail closed. Then the next scheduled run reads the same answers (FWD-4/FWD-5 on the real path).
+- **A9 (cell `ST-w-6`, drain step 4, cut 2026-10-09 ~14:4xZ):** the running path reads the S3 list -- `rebalancer_schemas` loads
+  `load_strategy_config()` on first use when no caller set a config, fails closed, records `STRATEGY_CONFIG_SOURCE`. Write set =
+  ST-w-2's (`rebalancer_schemas.py`) plus `tests/test_opal_strategy_wiring.py`, continued by slot `~5` under TO-W2-2. Serves FWD-4,
+  FWD-5. Checks `w2_6_tests`, `w2_6_live`: FAIL as expected at the base (no file; `STRATEGY_CONFIG_SOURCE=None`). Merge is a deploy
+  by push: the issuer opens a change-management entry first, after TO-APPLY-W2-a's L2 grant is read back.
