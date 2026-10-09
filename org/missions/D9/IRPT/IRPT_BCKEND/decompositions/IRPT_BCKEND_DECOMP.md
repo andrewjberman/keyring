@@ -1132,7 +1132,7 @@ cells, cut once this gold exists.
 
 | cell | serves | risk | depends on | chain |
 |---|---|---|---|---|
-| `IB-er-201` | FWD-3 thread, hop 1: one invested 49F account (0010498003), YTD, silver -> holdings-basis gold | WORLD (new gold prefixes; no reader switched, nothing served moves) | none | E1 |
+| `IB-er-201` | FWD-3 thread, hop 1: one invested 49F account (acct#24ccad9d), YTD, silver -> holdings-basis gold | WORLD (new gold prefixes; no reader switched, nothing served moves) | none | E1 |
 
 **IB-er-201.** The source declaration as data (ruling 1), the gold script writing `holdings_performance_daily` and
 its manifest at the builder addresses (ruling 9), the method of call 3 (rulings 2-5), and an ad-hoc QA run for the
@@ -1144,7 +1144,7 @@ fanout: 1 of 1 chains, cap 8.
 ## 15. ROUND 20, WORKSTREAM ~P (2026-09-29 ~01:2xZ, issuer 2.0.0_SA_COO~P, on PRD v0.19 rulings 10-12 and 1.0.0_SA_CTO 102519)
 
 The FWD-3 thread's next hop on ~P: the adapter reads the holdings gold (~E round 1 built hop 1 for account
-0010498003). One chain, one worker; the page and PDF hops follow the served move.
+acct#24ccad9d). One chain, one worker; the page and PDF hops follow the served move.
 
 | cell | serves | risk | depends on | chain |
 |---|---|---|---|---|
@@ -1341,7 +1341,7 @@ saying so. So the cell carries the module and its top-level closure (`maintained
 |---|---|---|---|---|
 | `IB-pr-271` | FWD-3 CONSTRAINT: `_authz/served.py` refuses a SERVICE principal's selected firm outside its `allowedFirmIds` (FIRM_BINDING), with the profile read injectable and the reader's closure in all 7 bundles; no build or apply in the cell | WORLD (source of 7 served functions; no deploy) | none | P27a |
 | `IB-pr-272` | FWD-3 (INF): three read-only answers -- the 09-24 NNA rows (ruling 1: branch A packet or branch B repair), why the mirror and silver-orion did not move `fact_positions` on today's raw (ruling 2), whether Orion positions accept an as-of date from documentation only (ruling 3) | WORLD (read-only; no write, no call) | none | P27b |
-| `IB-pr-273` | FWD-3 (49F): the S237/S239 blast-radius read -- the deployed adapter's SI and 3Y for 0093614544 and two others, its reader shape, and every served reader of `twr_daily` with a propagates flag (ruling 4) | WORLD (read-only on deployed bytes) | none | P27c |
+| `IB-pr-273` | FWD-3 (49F): the S237/S239 blast-radius read -- the deployed adapter's SI and 3Y for acct#c8072993 and two others, its reader shape, and every served reader of `twr_daily` with a propagates flag (ruling 4) | WORLD (read-only on deployed bytes) | none | P27c |
 | `IB-pr-274` | FWD-3 (49F): the Schwab silver for 2026-09-29 lands via `/49-schwab-conv` and the cause of the missed hour is recorded (ruling 5, row S235); PARKED on `0.6.2_AE_PartnerETL~C` until that seat is LIVE | WORLD (silver data, AE lane) | none | P27d (parked) |
 | `IB-pr-275` | FWD-3 CONSTRAINT: the served move of IB-pr-271 -- build, a never-widen packet naming the 7 functions and each one's profile-table grant, both halves, targeted applies under a ledger, then ~Y's live negative control under svc-irpt-analysis (CTO 103318 item 2) | WORLD (served; the issuer's act, no worker face) | IB-pr-271 | P27a |
 

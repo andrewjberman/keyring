@@ -145,7 +145,7 @@ Author: 3.0.0_SA_CVO, 2026-10-02 ~19:5xZ. L8 input: the issuer's drain-end recor
       "evidence": [
         "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_132xZ_ALL_RECS_APPROVED_OPEN_CALLS.md:13, card 4: 'YES, ONE pull, scoped to the five round-1 accounts: Black Diamond's return over each of Opal's gap-free segments'; :16 'The vendor word in card 4 is ONE pull ... It is not a standing grant.'",
         "task-orders/IRPT_DASHBD.TO-DB-b-10.black-diamond-like-day-pull.md:46-52 'THE ONE PULL. One session; for each mapped account, at most ONE performancePeriod request ... tenants.py for 49 Financial's route and session, the blackdiamond/49f/session secret'; :89 BOUNDS 'Vendor: the one pull above and NO other call'",
-        "deliverables/0.9.0_WK_IRPT_DASHBD~1/BD_LIKEDAY_PULL_R4.json read by this seat: vendor_calls 3, session_token_mints 1, transport_retries 0; requests acct#e7ab8585, acct#37ac6e23, acct#a4af74fa all HTTP 200; unmapped acct#23898664, acct#7e343f56",
+        "deliverables/0.9.0_WK_IRPT_DASHBD~1/BD_LIKEDAY_PULL_R4.json read by this seat: vendor_calls 3, session_token_mints 1, transport_retries 0; requests acct#89d0916a, acct#6b914f88, acct#ffa615d2 all HTTP 200; unmapped acct#f08ffd13, acct#d0cf6c92",
         "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py:144-152 get_clientview_token (the row's read): the POST needs the bearer minted by GET /session/token"
       ]
     },

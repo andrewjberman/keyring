@@ -24,7 +24,7 @@
 **The cell.** Read-only. Row S237 (read it in `org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md`):
 2025-01-09 was an NYSE closure the 49F engine (`data/assets/scripts/gold/runners_49f/c02_twr_engine.py`) skips, but the custodian book
 moved that day, and `c02:460` reads the flow ledger at `date=D` only, so 01-09's flows sit in 01-10's end value and in neither the begin
-value nor the flow: account `0093614544` served `r_net` +56.10% on 2025-01-10 for a $1,125,000 deposit; 46 accounts, 44 with OK rows,
+value nor the flow: account `acct#c8072993` served `r_net` +56.10% on 2025-01-10 for a deposit (amount removed under the containment ruling @0e8209c33c); 46 accounts, 44 with OK rows,
 max error +91.13 pp. Row S239 adds that `parity_period_returns.py:373-388` links a non-OK day as NEUTRAL BY VALUE, so a period spanning
 2025-01-10 carries the error. The question the CTO asks: **does it reach a SERVED period return?** Answer it by measurement.
 
@@ -33,7 +33,7 @@ irpt-performance-adapter` (CodeSha256 at the cut `+h/AH/RY7PK+MLuXyflt+YYzWg+jXH
 r3 re-switch to the holdings gold) and its artifact (`get-function` -> the code location, or `s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-performance-adapter.zip`
 at the S3 version whose metadata `content-sha256` equals it). Run it as a cold container with the existing harness
 `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r20/adapter_cold_periods.py` (read its header for the extract and
-the event shape; it reads real S3, writes nothing). Ask since-inception (SI) and 3Y for `0093614544` and at least two other S237
+the event shape; it reads real S3, writes nothing). Ask since-inception (SI) and 3Y for `acct#c8072993` and at least two other S237
 accounts (their ids are in the row). Record per account `SI`, `3Y` (a figure or a named refusal code, verbatim), and `reads` (the table
 the answer came from: the holdings gold `irpt/49financial/gold/holdings_performance_daily/` or the engine's `gold/advi/canonical/twr_daily/`).
 Name `reader_shape` for the served adapter path: `PARTITION_LISTING` (lists partitions and refuses a non-OK window),

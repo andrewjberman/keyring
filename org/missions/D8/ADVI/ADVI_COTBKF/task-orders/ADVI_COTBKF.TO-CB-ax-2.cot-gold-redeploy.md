@@ -68,6 +68,13 @@ A module the mirror lacks means STOP (restore the scripts by `copy-object` of th
 `IMPORT-CLOSURE b00_modules=<n> writer_modules=<m> missing=0`. The CVO corrected its round-41 grade, which checked bytes but not
 imports. This read is the guard against that class.
 
+**AMENDMENT 2 (issuer, 2026-10-09 ~16:4xZ; CTO ADDENDUM 22.1).** The union list gains `code/gold/legacy_addresses.json` (MINTS, the repo
+blob of `infra/logic/registry/legacy_addresses.json`). It is uploaded with the other beside-module files, BEFORE the writer.
+- **The pair** is ONE pair covering B_00 (@7b85e1a074), the writer, `ticker_overrides.py`, `legacy_addresses.json` and `scopes.json`
+  if changed.
+- **The import-closure read** (AMENDMENT 1) is included.
+- **The served written-key census** is read against the pre-change writer. A new key class means STOP.
+
 ### ACCEPTANCE
 
 <criterion id="CB50ax2-AC1" cell_refs="CB-ax-2"><invocation>python -m pytest data/cot/scripts/gold/tests/test_cot_gold_failclosed.py -q</invocation><expect>passed</expect></criterion>
