@@ -1,0 +1,24 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-09T04:05:19.897889+00:00
+**Status:** OPEN
+**Deploy:** IRPT_BCKEND APPLY-Y75: irpt-ycharts-generate release 5b at pin 328b73d536 -- E11 plus the E9 report modules shipped WHOLE (6 changed members), superseding release 5 which rolled back on the split commit of row D2-S18
+**Authored by:** 0.7.0_AE_CloudOps~DELL2
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 6.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | verify | step 0 pre-checks at the pin in a detached worktree (AMENDMENT 1) | pin 328b73d536 an ancestor of origin/box/dell2 with a behaving positive control; release census changed_members=6 and they are the six the objective names; cochange_closure split=0; live CodeSha256 Un0wVZqj...; the current S3 object version recorded as the rollback source | ALL FOUR PRE-CHECKS PASS, measured in a detached worktree /c/dev/wk-y75-pin at 328b73d536 (0 uncommitted), per AMENDMENT 1 because the shared HEAD now carries release 6. (a) CTO condition, the pin is on origin: git fetch then git merge-base --is-ancestor 328b73d536 origin/box/dell2 rc 0, origin/box/dell2 at 75a28f544e, and a POSITIVE CONTROL (HEAD~50) also rc 0 so the zero is the world rather than the instrument. Noted and not relied on alone: CLAUDE.md 22a says an ephemeral pin is resolved by CONTENT, not by is-ancestor; here the order names this check and the census below reads the pin BY CONTENT, which is the content control. (b) release-census.py irpt-ycharts-generate --pin HEAD: built_members=100 live_members=100 changed_members=6, and the six ARE the six the objective names -- composition.py, contracts/ExportBundle.schema.json, custody_submission.py, infra/logic/registry/reporting_policies.json, repository.py, retention.py, each printed with its built and live blob. (c) cochange_closure.py irpt-ycharts-generate: rows=84 commits_checked=33 split=0, cochange_closure PASS -- the split that rolled release 5 back (row D2-S18) is gone. (d) live CodeSha256 Un0wVZqjqpwKhpYyFeBRW3fVFddrlHR0BtHjYuP5eNY= EQUALS the order declared live/rollback value, LastModified 2026-10-09T01:52:26Z. (e) ROLLBACK SOURCE RECORDED: S3 object version 0JwTG2RprPYoLoRmFUXJREfiGKlERII3, 591141 bytes, whose own content-sha256 metadata is Un0wVZqj... i.e. the version that carries the live bytes. | CLOSED 20261009T040536Z |
+| L2 | s3-prefix | build-and-upload.sh investor-reporting irpt-ycharts-generate from the pin worktree | the uploaded sha256 is 5FRkux2oSNN1jB4xJEibio+F9F2ofl9mgcuH9jN/JrY= or STOP, AND symbol_closure.py run ON THE UPLOADED ZIP prints missing=0 with symbol_closure PASS (CTO condition) before any apply |  | OPEN |
+| L3 | activation | the targeted plan then safe-apply of irpt-ycharts-generate | plan is 0/1/0 touching s3_object_version and source_code_hash ONLY; after it the live CodeSha256 equals 5FRkux2o... and a re-plan shows 0 |  | OPEN |
+| L4 | verify | after-read 2 the import census, after-read 3 the E11 offline suites, and X-1 the template-lane on-behalf upload | import census failed: {} GATES everything after it (CTO condition, any failure goes straight to branch B); the revision test reads 3 passed and the three custody suites 66 passed 2 skipped; X-1 graded on all three read-back booleans taken BEFORE any delete, and the S3 deletes stay Andrew act |  | OPEN |
+| irpt-ycharts-generate | tf-lambda | module.irpt_ycharts_generate.aws_lambda_function.this | TF apply (0 destroy) + 0-diff replan + deployed source_code_hash matches uploaded sha + verify-on-served |  | OPEN |
+
+## Log
+
+- 20261009T040519Z OPENED by 0.7.0_AE_CloudOps~DELL2 with 5 leg(s)
+- 20261009T040536Z LEG L1 closed: ALL FOUR PRE-CHECKS PASS, measured in a detached worktree /c/dev/wk-y75-pin at 328b73d536 (0 uncommitted), per AMENDMENT
