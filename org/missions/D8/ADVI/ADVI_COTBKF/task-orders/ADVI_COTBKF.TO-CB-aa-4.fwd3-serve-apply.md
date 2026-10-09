@@ -2,7 +2,7 @@
 
 <to_id>ADVI_COTBKF.TO-CB-aa-4</to_id>
 <project>ADVI_COTBKF</project>
-<issued_to>0.7.0_AE_CloudOps~DELL2</issued_to>
+<issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>issued</status>
@@ -29,7 +29,7 @@ compares. The targets are three NEW keys under `s3://opal-data-assets/commonweal
 `account_day_value/`, `month_grades/`, each `date=2026-06-23/`); nothing exists at them today, so the write mints, it does not move
 served output.
 
-**Your item.** Apply it, the customary way for a dell2 deploy (Andrew ~22:0xZ, MSTR msg 1751):
+**Your item.** Apply it, the customary way for a dell2 deploy (Andrew ~22:0xZ, MSTR msg 1751), as the fresh lane `0.7.0_AE_CloudOps~CB2` (MSTR msg 2264; one project per Tier-2 seat instance):
 1. **Before any write:** the never-widen pair is signed -- the COO half by `2.0.0_SA_COO~C2` and the CTO half by `1.0.0_SA_CTO~DELL2`,
    each naming the blast radius (exactly the three keys above; rollback = delete those three keys). The pair files are cited in this
    order's amendment when signed; do not write before both exist.
@@ -66,7 +66,7 @@ The block is your repo WRITE grant; the S3 grant is the three keys above.
 
 <proof_of_spec>
 Criterion ids: CB27aa4-AC1. Instance at
-`org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~DELL2/ADVI_COTBKF.TO-CB-aa-4.fwd3-serve-apply.proof_of_spec.json`, validated
+`org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.7.0_AE_CloudOps~CB2/ADVI_COTBKF.TO-CB-aa-4.fwd3-serve-apply.proof_of_spec.json`, validated
 with `python .tools/proof-of-spec-check.py <instance> CB27aa4-AC1` BEFORE the flip. Mechanical.
 </proof_of_spec>
 

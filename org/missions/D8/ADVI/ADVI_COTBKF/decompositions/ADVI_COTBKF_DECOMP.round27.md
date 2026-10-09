@@ -30,7 +30,7 @@ never-widen pair. The write surfaces are disjoint.
 | `CB-aa-1` | E1: trace each of the 512 to a named valuation-side cause (price, holdings, carried level, ...) or `untraced:<what was checked>` | FWD-3 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~50` |
 | `CB-aa-2` | E2: the ranked price-need file for every UNPRICED security-span, key CUSIP, tiered P1/P2/P3 and scored | FWD-3 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~51` |
 | `CB-aa-3` | E3a: the FWD-3 serve builder -- daily returns, account-day values and month grades (with Commonwealth's reported figures beside them) as silver tables at the builder's addresses; dry-run and verify modes | FWD-3 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~52` |
-| `CB-aa-4` | E3b: the SERVED write of those tables, under a never-widen pair and a ledger, read back | FWD-3 | SERVED | `CB-aa-3` | `0.7.0_AE_CloudOps~DELL2` |
+| `CB-aa-4` | E3b: the SERVED write of those tables, under a never-widen pair and a ledger, read back | FWD-3 | SERVED | `CB-aa-3` | `0.7.0_AE_CloudOps~CB2` (MSTR msg 2264) |
 
 **Fan-out:** `3 of 3 chains, cap 8`. After CB-aa-2 lands, the issuer files the need file with dell1's queue (the issuer's record, not an
 order -- round 25's precedent).
