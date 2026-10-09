@@ -6070,3 +6070,27 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "Remedy is the gate owner's: an absent required registry input should REFUSE (or exit with a distinct error), never degrade to WARN. Until then, the negative control for any naming verdict is to confirm LEGACY_SERVED_PATHS.json is present in the worktree that ran the gate."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W2-S152",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+ "surfaced_at": "2026-10-09T16:27:12Z",
+ "one_line": "The commit gate printed 'NAMING-GATE: PASS 0 graded' and no NAMING line for a planted per-firm stored-file prefix that place() places as PATTERN: a pattern name is neither graded nor reported as skipped.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Commit a09b284984 on qa/lgic-enforce-r20-s12 (never merged): infra/aws/lambda/zz-lgic-enforce-r20-s12/probe.py adds PROBE_PREFIX = os.environ.get('IRPT_DIRECTORY_PREFIX', 'investor-reporting/directory'), the shape of infra/aws/lambda/investor-reporting/directory/handler.py:53; safe-commit rc=0, gate output 'NAMING-GATE: PASS 0 graded', denominator 1 path in the diff, 1 seen, 0 unseen.",
+   "place('investor-reporting/directory','S3Key','investor-reporting/directory') returns kind PATTERN (run from the worktree root at 9f96f3739d).",
+   "A first attempt planting the same line at infra/aws/lambda/investor-reporting/directory/zz_qa_pattern_probe.py (a MAPPED root) printed the same 'NAMING-GATE: PASS 0 graded' before the lane gate refused that path as outside the order's <paths>; no commit was made there. Not measured: whether the gate's zero is because it skips a PATTERN, because the literal sits in an os.environ.get default, or because the post-image has no new stored name."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FWD-5 / D1-W2-S12: place() returns PATTERN for the per-firm names and the commit-gate behaviour on such a name is measured; a name the check cannot grade is reported, not silent.",
+ "world_is": "On one planted commit the gate graded nothing for the PATTERN name and printed no line saying it skipped it, so the grade_line of PATTERN_COMMIT_R20.json is NONE. The count '0 graded' is the only trace. Whether that is by design (a pattern is not a name) is the gate owner's to say."
+}
+```
