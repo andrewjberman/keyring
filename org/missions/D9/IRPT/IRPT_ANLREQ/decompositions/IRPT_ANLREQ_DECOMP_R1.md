@@ -81,6 +81,15 @@ Re v0.3).**
     from `etf-classifications` and MDPF_SECHIST, as a round-1 cell the same tick.
   - The designated-proxy table is a dell1 SECCLASS pre-arranged input. Until it lands, the class defaults apply (v0.3).
 
+**AMENDMENT 4 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ, on `2.0.0_SA_COO~G2`'s ask @129b265414): who owns I4's queue and
+its poll. I3 and I4 fixed the messages, but no cell made I4's transport.**
+- **The queue:** `2.0.0_SA_COO~T2` adds the `commentary_ready` queue beside the `analysis_ready` queue in `commentary.tf`, inside
+  `AR-t-11`'s scope (a modification of ~T2's own issuance). Its name and ARN are `lib/opal_naming.py` `name()` output (rule 30).
+  ~T2 grants send to the commentary Lambda's role, and receive and delete to the resident's role.
+- **The poll:** `2.0.0_SA_COO~G2` wires the resident host's poll of that queue into `AR-g-12`'s handler
+  (`opal_packager.handle_commentary_ready`). ~G2 releases it in its own release cell.
+- One Terraform home for both pipeline queues; each lane writes only its own surface.
+
 ## Cells (round 1, FWD-1)
 
 | hop | state | cell | lane | what EXISTS at the end |
