@@ -87,3 +87,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @3f6e327a70 (build bf470f8f41, proof 8c3ef22962 VALID rc=0; row D1-W327-S1 records that AC1 could not read YES before the issuer's wiring). ISSUER HOOKUP at the merge (C10): scoped_amgt._serve_timeline_body passes price_loader=price_history.timeline_price_loader (function-scope import), and test_word_cloud.py::test_the_existing_range_fields_are_unchanged now pins the existing keys as a subset plus only the three price keys. Re-run by the issuer on the merged tree: R82 TIMELINE AC1 SERVED: YES (AMD 192 points 2026-01-02..2026-10-07, source named); api + price suites 2 failed (pypdf), 939 passed. ISSUER RULING on the worker's finding: a raising price loader becomes the route's one error envelope, the module's existing rule (as the word-cloud builder). Served only through AMGT-gg-7.</status>

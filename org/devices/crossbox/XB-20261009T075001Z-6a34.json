@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T075001Z-6a34",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~V1",
+ "to_serial": "0.7.0_AE_CloudOps~ZV",
+ "subject": "RIVALS seat-home pointer @2a0a4ee702: run TO-RELAY-tw1-vehicle-log-20261009 after the 11:00Z run",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009.md",
+ "opened_at": "2026-10-09T07:50:01Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-09T07:52:29Z",
+  "bus_message_id": "222920fb-5f89-41f7-8597-79ba3410036d"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

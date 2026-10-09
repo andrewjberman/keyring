@@ -23509,3 +23509,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S31 -- a signed release's built bytes go stale for every LATER pair on the same host: Y77 would revert IB-pr-390 on irpt-ycharts-generate
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S31",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-09T08:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "TO-APPLY-Y77 (release 6 custody, irpt-ycharts-generate) is signed against built V6EiBNcJ and live_before 5FRkux2o; IB-pr-390 landed on that host at 07:49Z (live ZA0QJ5Wt, plus the declared AWSSDKPandas layer), so applying Y77's signed bytes would silently revert ALL-never-admits and the profile narrowing on that host.",
+  "spec_asserts": "A never-widen pair binds a blast radius whose rollback and before-state are the live bytes at apply; a later release never moves a host backwards past an earlier signed release.",
+  "world_is": "Measured 08:0xZ: get-function-configuration irpt-ycharts-generate CodeSha256 ZA0QJ5Wt (07:49:20Z), layers irpt-common:5 + AWSSDKPandas-Python312:16 (declared at infra/aws/terraform/investor-reporting/ycharts/generate.tf:398); IB-pr-395 ledger CLOSED @1af3b71371. Y77 step 0 expects 5FRkux2o.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live CodeSha256 ZA0QJ5Wt equals IB-pr-390 packet's built value for irpt-ycharts-generate",
+      "commit 1af3b71371 (0.7.0_AE_CloudOps~IB2): IB-pr-390 LANDED on 6 of 8 hosts, ledger CLOSED",
+      "2.0.0_SA_COO~Y2 msg 2832: Y77 step 0 expects live 5FRkux2o; signed build V6EiBNcJ"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```

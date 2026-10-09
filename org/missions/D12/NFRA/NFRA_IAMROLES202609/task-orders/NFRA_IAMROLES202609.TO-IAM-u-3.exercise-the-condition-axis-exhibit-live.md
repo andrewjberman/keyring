@@ -122,7 +122,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>
@@ -130,6 +130,7 @@ Every invocation runs under `timeout 120`.
 <issued_by>2.0.0_SA_COO~ZI</issued_by>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<to_id>NFRA_IAMROLES202609.TO-IAM-u-3</to_id>
 
 **Issuer:** `2.0.0_SA_COO~ZI` (L5+L6, round 4) - **Project:** NFRA_IAMROLES202609 - **PRD:** v0.2 @3cadaf52ca (L4-R GRANDFATHERED per `prd-signoff.py status`)
 **Authority chain:** round-3 slug @36e167a2ea -> `ROUND_ANALYSIS.round3.md` @f8571787db section 7 (R4-C) -> L5 round-4 decomp -> this issuance.

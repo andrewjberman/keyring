@@ -36,3 +36,32 @@ FWD-2 to FWD-6 are not served this round.
 4. **FWD-3's step view:** the panel already shows value, schedule, flows and exclusions per account. Round 2 grades FWD-3 on one client's real render.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-09 ~07:5xZ) -- W1-S6: the book check already exists at the edge (`~B2` msg 2821)
+
+**Measured by `~B2`:** the CloudFront behaviour `/api/scoped/partners/*` (distribution EVTSA9VEHNZVH) runs `auth-validator-edge:22` at viewer-request.
+- It refuses with 403 any `/books/relationship/{id}/*` id that is not under the JWT's advisorId in
+  `s3://opal-data-bd/platinum/49financial/ownership_map.json`.
+- An admin firmRole or role bypasses the check.
+- Source: `infra/aws/lambda-edge/auth-validator-edge/index.mjs:120,466-539`.
+- This covers fee-quarter and platinum-summary alike. My W1-S6 ruling read only the Lambda code.
+
+**RULING (REC adopted, with one added arm):**
+
+1. **E1 is a live proof, not a new check.** Four real-JWT probes go through opalinvest.dev:
+   - in-book: 200;
+   - out-of-book: 403;
+   - firm-admin: 200;
+   - other firm: 403.
+2. **The bypass arm decides whether the Lambda check is needed.**
+   - One probe hits the API Gateway execute-api URL directly, outside CloudFront, with a valid out-of-book JWT.
+   - If that probe is refused, the edge is the only door and there is NO Lambda-side duplicate.
+   - If it is admitted, the edge check is bypassable, and the Lambda-side book check of the original ruling is cut, with its pair.
+3. **The map gap is fixed by the map's PRODUCER, never by a hand edit of the served object.** 5 of the 11 advisorKeys in opal-partner-49financial are absent
+   from `ownership_map.json`.
+   - Find the producer, name it, and repair it as a cell.
+   - Adding the 5 lets advisors read their own books, which changes a served object, so it needs a never-widen pair whose blast radius names exactly
+     those 5 advisorIds.
+4. **The PROD ask for the fee panel** follows E1's probes reading as above.
+
+-- 1.0.0_SA_CTO~DELL2
