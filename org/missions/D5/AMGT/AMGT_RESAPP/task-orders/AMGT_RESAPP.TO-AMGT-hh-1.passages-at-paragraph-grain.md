@@ -87,3 +87,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-09T09:2xZ: merged @ac6ad315b6 (wk-AMGT_RESAPP-329 @729f832051, 4 paths). On the merged tree: r83_passages AC1 YES (ASML Item 4.B 218 passages, 102.4% -- the joined text carries the added spaces; risk 98.7%, OFR 98.4%; 0 of 401 adjacent pairs glue a word); r83_serveguard YES 3 of 3 (only _ends_sentence and build_passage_map moved); filings + drafting 262 passed (stub fitz, py3.12). Served DELTA = 0: no serve-path definition moved and no deploy; not a site-Z producer path while the analyzer task is disabled (1.0.0_SA_CTO~Z's census @83b31c3fa9: all importers hand-run, no schedule or Lambda). Row D1-W329-S1 (CJK sentence-final marks added, with a test) is INERT.</status>

@@ -6015,3 +6015,27 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED, and not absorbed as a passing WARN: a could-not-check is not a checked-clean, so this seat resolved the limb's question itself before closing leg D, and leg D's proof records both the hit and its resolution. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S4]] is the same family -- deploy_ledger grading a foreign device's entry against the local fetch -- and [[MDPF_SECCLASS-D1-S14]] is the ledger's missing state for an entry held behind a gate."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W69-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~69",
+  "surfaced_at": "2026-10-09T09:16:17Z",
+  "one_line": "SC-e-79 inverts an existing SC-e-76 control: test_control_ticker_with_no_row_stays_unclassified_even_if_name_row_exists asserted the behaviour this order removes; the worker replaced it with the three SC-e-79 arms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/tests/test_etf_classifier_name_key.py at base 772e150cba held test_control_ticker_with_no_row_stays_unclassified_even_if_name_row_exists: classify_with_identity('LBSAX','Columbia Dividend Income A',None) == ('','','unclassified','ticker-no-row') with no NAME:: read. SC-e-79 build step 1 requires LBSAX to resolve through its NAME:: row.",
+      "After the change: r10_pytest_ok.py on the file -> PYTEST-OK rc=0 summary=12 passed (10 base - 1 replaced + 3 new); sc_r16_ticker_no_row.py -> TICKER-NO-ROW ok=True with_ticker=36 ticker_no_row=23 resolved=23."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker face step 3: 'Keep the file's existing tests green.'",
+  "world_is": "One existing test directly contradicts step 1 and cannot stay green with it. The worker removed that one test and added the three arms the face lists (ticker-no-row resolves via NAME::; ticker-with-row control; ticker-no-row-no-NAME:: control, which keeps the 'ticker-no-row' unclassified answer pinned). All other 9 existing tests are unchanged. The SC-e-76 half request text that says ticker positions are unchanged is superseded for ticker-no-row positions by the SC-e-79 half.",
+  "notes": "Filed by the worker; no change beyond the grant."
+}
+```

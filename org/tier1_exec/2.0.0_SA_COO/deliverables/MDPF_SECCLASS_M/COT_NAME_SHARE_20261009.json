@@ -1,0 +1,75 @@
+{
+  "as_of": "2026-10-07",
+  "source": "s3://opal-data-cot/gold/canonical/holdings/2026-10-07.parquet",
+  "positions": 21024,
+  "unclassified_positions": 1311,
+  "unclassified_mv": 84275714.93,
+  "total_mv": 553031383.86,
+  "name_placeable_positions": 1060,
+  "name_placeable_mv": 17769409.83,
+  "threshold_pct": 0.5,
+  "material": true,
+  "method": "COT classify_position on every position of the newest canonical holdings partition; each unclassified one's NAME::<BD normalize_name(asset_name)> key read from etf-classifications via batch_get_item, counted when a row with an asset_class exists.",
+  "top": [
+    {
+      "name": "CCA Eiger Opportunity LP Capital Values",
+      "name_key": "NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES",
+      "class": "alternatives",
+      "market_value": 1000000.0
+    },
+    {
+      "name": "CCA FC Houston Opportunity LP Capital Values",
+      "name_key": "NAME::CCA FC HOUSTON OPPORTUNITY LP CAPITAL VALUES",
+      "class": "alternatives",
+      "market_value": 1000000.0
+    },
+    {
+      "name": "Peregrine Land Investments I, LP",
+      "name_key": "NAME::PEREGRINE LAND INVESTMENTS I LP",
+      "class": "alternatives",
+      "market_value": 973018.6
+    },
+    {
+      "name": "LMCSP5",
+      "name_key": "NAME::LMCSP5",
+      "class": "equity",
+      "market_value": 646345.58
+    },
+    {
+      "name": "EXTENDED MARKET UNITS",
+      "name_key": "NAME::EXTENDED MARKET UNITS",
+      "class": "equity",
+      "market_value": 546819.76
+    },
+    {
+      "name": "CCA Eiger Opportunity LP Capital Values",
+      "name_key": "NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES",
+      "class": "alternatives",
+      "market_value": 500000.0
+    },
+    {
+      "name": "CCA FC Houston Opportunity LP Capital Values",
+      "name_key": "NAME::CCA FC HOUSTON OPPORTUNITY LP CAPITAL VALUES",
+      "class": "alternatives",
+      "market_value": 500000.0
+    },
+    {
+      "name": "CCA FC Houston Opportunity LP Capital Values",
+      "name_key": "NAME::CCA FC HOUSTON OPPORTUNITY LP CAPITAL VALUES",
+      "class": "alternatives",
+      "market_value": 500000.0
+    },
+    {
+      "name": "BALANCED FUND UNITS",
+      "name_key": "NAME::BALANCED FUND UNITS",
+      "class": "equity",
+      "market_value": 422230.79
+    },
+    {
+      "name": "FID GR CO POOL CL 3",
+      "name_key": "NAME::FID GR CO POOL CL 3",
+      "class": "equity",
+      "market_value": 404755.37
+    }
+  ]
+}

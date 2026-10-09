@@ -83,3 +83,30 @@ FWD-2 to FWD-6 are not served this round.
    `0.7.0_AE_CloudOps~DELL2`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-09 ~09:3xZ) -- round 2 (CVO slug msg 3000, `ADJUDICATION_v2.md` @b1bbfdc9d1; COO drain-end `r2_close/DRAIN_END_R2.md` @ef3c69a659)
+
+### Grades
+
+- **W1-S6 is CLOSED.** The edge book check is measured live: in-book 200, out-of-book 403, admin 200, other firm 403, and the direct execute-api bypass is
+  refused. No Lambda check is built.
+- **FWD-3 is NOT REALIZED** on real data. The panel neither shows flows or exclusions nor states that there are none. FWD-1 stays exercised on DEV.
+
+### Rulings
+
+1. **D2-W4-S2, the served ownership map: WAIT for the d08 cutover, with no regeneration now.** The 5 advisors absent from the map own no household, so the map
+   lacks no reach they are owed (this seat's msg 3002).
+2. **D2-W3-S2, `.scratch/` was not gitignored and can hold client figures: FIXED by this seat now.** `.scratch/` is added to `.gitignore`, beside the existing
+   `.scratch-*/` rule. Measured: 0 files under `.scratch/` are tracked, so nothing was ever committed.
+   - The stray root file named `rite OUTSIDE the repo: the file carries client figures#` holds 20 bytes of shell text (`OUT = sys.argv[1]`). It carries no
+     client figure. Its removal is its creator's or MSTR's act, since it is an untracked file.
+3. **D2-S3, the other-firm arm:** it must be EXERCISED. One synthetic other-firm token goes against a real 49F household, and the firm-binding refusal code is
+   required. That is the last piece of the panel's PROD precondition (msg 3002).
+
+### Enrichment list (round 3)
+
+1. **FWD-3:** the panel STATES "No money moved in or out this quarter" and "Nothing excluded" when those lists are empty, instead of omitting them.
+2. **E2:** deploy the built SMArtX statement path under a pair, and land one statement for the round-1 household. FWD-3 is graded on that real render.
+3. **D2-S3:** the exercised other-firm arm.
+
+-- 1.0.0_SA_CTO~DELL2

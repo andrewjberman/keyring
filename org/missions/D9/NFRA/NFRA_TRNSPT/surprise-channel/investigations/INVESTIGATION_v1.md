@@ -1287,6 +1287,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "notes": "Not run: found by reading the code while writing the FWD-5 coverage row. Becomes live if an analyst-facing reader is ever given the meeting reader."
   },
   {
+    "id": "NFRA_TRNSPT-D2-W2-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T09:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-w19 names test_parse_silver.py in its write grant but the file is test_teams_parse_silver.py, which is outside the grant and asserts the silver columns equal ps.COLUMNS; held_out is therefore added only to rows that went through wipe_rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_parse_silver.py:102@0f17922291 (assert table.column_names == ps.COLUMNS; the file named in the order, test_parse_silver.py, does not exist at that commit)",
+        "data/transcripts/scripts/teams/parse_silver.py@wk-NFRA_TRNSPT-2 (write() emits the held_out column iff the rows carry it; parse_and_write always wipes, so every landing carries it; a direct write() of unwiped rows keeps the 10-column schema)",
+        "data/transcripts/scripts/teams/read_meeting.py (no held_out handling; same finding as NFRA_TRNSPT-D2-W1-S8, now reachable on Teams series silver once rewritten with the column)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-w19: the order's <paths> block names data/transcripts/scripts/tests/test_parse_silver.py as the grant for the existing parse_silver tests.",
+    "world_is": "The existing parse_silver tests live in test_teams_parse_silver.py, not in the grant; changing COLUMNS or always adding held_out would break them (and research_fold.STORE_COLUMNS = COLUMNS + held_out), so I kept COLUMNS and made the column conditional. The full tests directory is green (393 passed, test_eod_voice.py ignored: pre-existing collection error).",
+    "notes": "Not a defect found in the product; a path-name mismatch in the order and a design choice for the issuer to ratify. If the issuer wants held_out always present in write(), test_teams_parse_silver.py needs one line changed."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W3-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~3",
+    "surfaced_at": "2026-10-09T09:30:00Z",
+    "one_line": "Storing the listing snapshot on apply makes two existing assertions in test_teams_pull.py (7 puts; one /state/ key) fail; the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (amend a later order's paths to admit test_teams_pull.py, or direct the two assertions to 8 puts and two /state/ keys; this worker may not edit the file)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_pull.py:44 asserts len(s3.puts) == 7 (2 transcripts x 3 objects + the run record) and :77 unpacks exactly one key containing /state/; pytest test_teams_pull.py: 24 passed at the base, 2 failed after pull.run writes the listing snapshot (8 puts; 2 /state/ keys: pull_runs and listing_snapshots)",
+        "data/transcripts/scripts/teams/pull.py run(): the snapshot is written beside the run record behind the same apply flag, as TR-e-19 build step 1 directs; r19_checks.py e4 prints R19-E4-OK and test_listing_snapshot_expired.py + test_completeness.py pass (17 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-e-19 build step 1: each pull stores its listing as one snapshot behind the existing apply flag, with no other change named.",
+    "world_is": "The write adds an eighth put and a second /state/ key on an applied pull, so two older assertions in test_teams_pull.py that count puts and state keys are now stale; a drain-time run of that file goes red until they are updated.",
+    "notes": "Not worked around: the snapshot write was not made opt-in and the older test file was not edited."
+  },
+  {
     "id": "NFRA_TRNSPT-D2-S10",
     "project": "NFRA_TRNSPT",
     "fabric": "dell2",

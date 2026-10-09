@@ -219,7 +219,8 @@ $inFlightCmd = 'safe-(commit|merge|deploy|apply)\.sh|commit-worker\.sh|commit-ga
 #   DECLARED  a live marker under <git common dir>/detached-jobs/*.json written by .tools/detached-job.sh, within its
 #             declared max runtime, whose process existed when the marker was written (a reused PID never matches).
 #             The marked process's Windows subtree AND its MSYS descendants are exempt; an expired marker exempts nothing.
-#   WORKTREE  a process whose command line, or whose cwd (MSYS /proc/<pid>/cwd, else its nearest MSYS ancestor's), is
+#   WORKTREE  a process whose command line, or whose cwd (MSYS /proc/<pid>/cwd, else its nearest MSYS ancestor's, else the
+#             Windows process's own current directory read from its PEB), is
 #             under a WORKER worktree: a linked worktree (`git worktree list --porcelain`) whose leaf or branch is wk-*.
 $root0 = Split-Path -Parent $PSScriptRoot
 $gitExe0 = (Get-Command git.exe -ErrorAction SilentlyContinue)
@@ -459,6 +460,51 @@ if ($Mode -eq 'scripts' -or $Mode -eq 'all') {
         foreach ($w in @($chain.Keys)) { foreach ($mp in $chain[$w]) { if ($cwdByMsys.ContainsKey($mp)) { $cwdOf[$w] = $cwdByMsys[$mp]; break } } }
       } catch { [Console]::Error.WriteLine("WARN: MSYS cwd read failed -- WORKTREE exemption reads command lines only this run") }
     }
+  }
+  # NATIVE cwd (AMGT_HARVST, dell1 08:08:36Z, 1.0.0_SA_CTO msg 107868): a native python.exe whose launching bash has exited
+  # has no MSYS row, so its worktree was invisible when its command line carried a RELATIVE path, and it was stopped as
+  # ORPHAN. Read the Windows process's own current directory from its PEB (read-only: QUERY_INFORMATION + VM_READ, a
+  # 64-bit target only) for every candidate the MSYS read left without a cwd. Owner 4.0.0_SA_CRO~B (built by 4.0.0_SA_CRO).
+  if ($genericCands.Count -gt 0 -and $workerTrees.Count -gt 0) {
+    try {
+      if (-not ('OpalProcCwd' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System; using System.Runtime.InteropServices; using System.Text;
+public static class OpalProcCwd {
+  [StructLayout(LayoutKind.Sequential)] struct PBI { public IntPtr Exit; public IntPtr Peb; public IntPtr Aff; public IntPtr Pri; public IntPtr Pid; public IntPtr Par; }
+  [DllImport("ntdll.dll")] static extern int NtQueryInformationProcess(IntPtr h, int c, ref PBI p, int len, out int ret);
+  [DllImport("kernel32.dll", SetLastError = true)] static extern IntPtr OpenProcess(int access, bool inherit, int pid);
+  [DllImport("kernel32.dll", SetLastError = true)] static extern bool ReadProcessMemory(IntPtr h, IntPtr addr, byte[] buf, IntPtr size, out IntPtr read);
+  [DllImport("kernel32.dll", SetLastError = true)] static extern bool IsWow64Process(IntPtr h, out bool wow);
+  [DllImport("kernel32.dll")] static extern bool CloseHandle(IntPtr h);
+  public static string Get(int pid) {
+    if (IntPtr.Size != 8) return null;
+    IntPtr h = OpenProcess(0x0410, false, pid);
+    if (h == IntPtr.Zero) return null;
+    try {
+      bool wow; if (IsWow64Process(h, out wow) && wow) return null;
+      PBI p = new PBI(); int ret; IntPtr rd;
+      if (NtQueryInformationProcess(h, 0, ref p, Marshal.SizeOf(p), out ret) != 0) return null;
+      byte[] b = new byte[8];
+      if (!ReadProcessMemory(h, IntPtr.Add(p.Peb, 0x20), b, (IntPtr)8, out rd)) return null;
+      IntPtr pp = (IntPtr)BitConverter.ToInt64(b, 0);
+      byte[] us = new byte[16];
+      if (!ReadProcessMemory(h, IntPtr.Add(pp, 0x38), us, (IntPtr)16, out rd)) return null;
+      int len = BitConverter.ToUInt16(us, 0);
+      if (len <= 0) return null;
+      byte[] s = new byte[len];
+      if (!ReadProcessMemory(h, (IntPtr)BitConverter.ToInt64(us, 8), s, (IntPtr)len, out rd)) return null;
+      return Encoding.Unicode.GetString(s);
+    } finally { CloseHandle(h); }
+  }
+}
+'@
+      }
+      foreach ($c in $genericCands) {
+        $w = [int]$c.ProcessId
+        if (-not $cwdOf.ContainsKey($w)) { $d = [OpalProcCwd]::Get($w); if ($d) { $cwdOf[$w] = $d } }
+      }
+    } catch { [Console]::Error.WriteLine("WARN: native cwd read failed -- WORKTREE exemption reads MSYS cwd and command lines only this run") }
   }
   foreach ($p in $genericCands) {
     $procId = [int]$p.ProcessId

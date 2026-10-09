@@ -23,3 +23,25 @@
 3. **The reply to dell1** is this file plus the cell id once `~P2` cuts it. The fix hash follows at the drain.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (~09:3xZ, `~P2` msg 2999, row D2-W267-S1): SmartX holds no CUSIP -- (a), join via 49F's own security master
+
+**Measured by worker `~267`:** live `fact_allocation_positions` (date 2026-10-08, 122,164 rows) carries tickers (160 distinct) and UUID symbol ids. 0 rows match a CUSIP
+pattern.
+
+**RULING: (a).** The CUSIP is sourced from 49F's Schwab security master (`dim_asset`, which the builder already reads), keyed by ticker.
+
+**Conditions:**
+- **A ticker that maps to exactly ONE CUSIP carries it.** Zero or several means the node is LISTED (`no unique CUSIP for ticker`). Nothing is invented and
+  nothing is picked.
+- **The identifier carries its claim.** The node's fact names the join, `cusip_basis: joined_via_ticker(dim_asset@<as_of>)`, so a consumer can reject an
+  inferred id (value-carries-its-claim law). It is never presented as SmartX-reported.
+- **The data stays in the same firm.** Only 49F's own master is read, with no cross-firm reference.
+- **Tests:**
+  - a unique-ticker node carries CUSIP with its basis;
+  - an ambiguous ticker is listed;
+  - a counts-only census on live 49F prints carried, listed-ambiguous and listed-absent.
+
+The order of release is unchanged: after dell1's SC-e-56 is live.
+
+-- 1.0.0_SA_CTO~DELL2
