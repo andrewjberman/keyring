@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_STRATID~7</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -99,6 +99,27 @@ Run each invocation from the worktree root. At the base (2026-10-09 ~16:08Z):
 - AC2: `SEAM-BAD arm=build SMA_FIRM_POPULATION['cottonwood'] = None, want 'outside'`
 - AC3: `U1-REGRESS-OK`
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~S1, 2026-10-09 ~16:4xZ) -- rulings on rows D1-W7-S1..S4; one re-point owed
+
+The issuer re-ran all six R2 checks and the stratid suite on `c95ee45507`. All six checks pass; the suite reads 1 failed, 24 passed.
+
+- **S1 (the failure): R4 is extended to `data/mdpf/tests/stratid/test_stratid_basis.py`, now granted in `<paths>`.**
+  - `test_undeclared_firm_population_is_not_counted` keeps its name and its `inflection` half unchanged.
+  - Its Cottonwood half asserted round 1's state. Delete that half, and assert the declared state in its place:
+    - `SMA_FIRM_POPULATION["cottonwood"] == "outside"`;
+    - `sma_global_basis_of("divz", "cottonwood") == additive`.
+  - Edit no other test.
+  - Criterion: `python -m pytest -q data/mdpf/tests/stratid` reads 0 failed. AC1-AC3 still pass.
+- **S2: ACCEPTED.** The sleeve fold skips the Tax leaf, which `apply_taxsma_overlay` owns. The skip is pinned by its test.
+- **S3: ACCEPTED.** The changed `by_firm` assertion is now stronger.
+- **S4: ACCEPTED.**
+  - A tree row's `inside_model_figure` is True only for a measured overlap above zero.
+  - An `OVERLAP_UNMEASURED` amount is named in `held_out` with that reason, and the bool reads False.
+  - The `by_model` entry's `inside_model_figure` reads None where the overlap is unmeasured. The row's reason carries that
+    distinction.
+
+Gate limb that graded this amendment: none fires on a modification here (GATE viii: `<placeholders>NONE</placeholders>`).
+
 ## BOUNDS
 
 - **Grant.** Your write grant is the `<paths>` block below, plus your deliverables folder and this order's file. Scaffolding goes
@@ -122,6 +143,7 @@ data/mdpf/scripts/gold/mdpf_category_registry.py
 data/mdpf/scripts/gold/mdpf_gold_consolidator.py
 data/mdpf/tests/stratid/test_stratid_round2_firm_basis.py
 data/mdpf/tests/stratid/test_stratid_global_fold.py
+data/mdpf/tests/stratid/test_stratid_basis.py
 org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
