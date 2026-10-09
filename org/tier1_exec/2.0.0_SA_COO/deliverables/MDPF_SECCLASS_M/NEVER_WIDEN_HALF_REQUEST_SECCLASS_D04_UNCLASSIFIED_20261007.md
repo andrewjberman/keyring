@@ -79,6 +79,28 @@ after the D_04 step, the served key is unchanged until the next run (no half-lan
 
 **Ledger:** `secclass-d04-unclassified-<date>`, opened before the upload.
 
+## COO half -- DRAFT, UNSIGNED (2.0.0_SA_COO~M1, 2026-10-09 ~04:5xZ; laptop XA-20261009T034917Z-0eb1: fresh pair, cut after the e75 leg G read)
+
+Re-measured; three premises above have moved since 2026-10-07:
+- **dell1 reads `platinum/` now.** The served file was read at VersionId J.tOphoPr... (2026-10-09T00:46:44Z, 24,566 B). The Branch A/B read
+  is measured at signing, not inferred.
+- **Writers of `opal-data-bd platinum/firm/mix_summary.json`: N = 1 live.** `list-object-versions` holds 8 versions, 2026-10-05 to
+  2026-10-09, every one at a BD run end (~00:4xZ and ~05:4xZ). The D_06 port emitter named above does not write this bucket's key on
+  any of those days.
+- **e75 and e76 write the same served file** (C_06's mix, D_03/D_04's composition) at the 04:00Z fire. e60 is signed only on the
+  file after that fire, with its VersionId as the rollback target.
+
+**OPEN at signing: the key-case reader question.** e60 serves the top-level `mix` residue as `Unclassified` (capital) and stops serving
+lower-case `unclassified` / `other`. The portal reads this key through `getPlatinumFirmMixSummary`
+(`portal/src/api/endpoints/advisor-intelligence.ts:558`, typed `PlatinumFirmMixSummary`). Its canonical class list keys the residue as
+lower-case `unclassified` (`portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts:42`; the label 'Unclassified' is display
+only). Before signing, the issuer reads every consumer of `PlatinumFirmMixSummary.mix`. A consumer that keys on lower-case
+`unclassified` would lose the residue line. That is a reader break, and it moves this half to a key-case amendment of the build
+(serve `unclassified`) before any act.
+
+**Tests at the merge (worktree `coo_m1_e60` @abdbb3038e):** test_d04_unclassified_line.py 5 passed; BD gold suite 96 passed, 1 failed.
+The one failure is pre-existing at box/dell1 (row MDPF_SECCLASS-D1-S19, the retired ship-every-_shared rule), not this build.
+
 ## COO half -- UNSIGNED
 
 ## CTO half -- UNSIGNED
