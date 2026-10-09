@@ -840,3 +840,140 @@ C-S21 below.
   }
 ]
 ```
+
+## C-S22 -- L9 ROUND 5: three AC4s PASS, one FAIL (IAM-v-2: four accepted roles have no custody home to cut from)
+
+By `3.0.0_SA_CVO~Z`, 2026-10-09 ~15:0xZ, on `2.0.0_SA_COO~ZI` msg 32797 (packet `ledger/COMPLETION_REPORT.round5.json`
+@8edf605068). Each grade below names its order; round-close-check matches the bare criterion id (Z-S17), so the order id
+is written beside it on purpose.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S22",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T15:00Z",
+    "one_line": "L9 grade, TO-IAM-v-1 AC4 (judgment): PASS -- rows 8 and 10 each say, in the lane's own words, what custody is accepted and what is not (the apply), and row 10 also refuses the placement and any deletion read off zero usage.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-v-1 AC4: each accepted row's reason says what was accepted and what was not, in the lane's own words, so a reader can tell custody from the apply.",
+    "world_is": "ACCEPTANCE_ROWS_8_10.md accepts 'custody of the role, and custody of the adoption decision for it' and states 'Not accepted: the apply' for both rows. Row 10 adds that its placement is NOT settled by the commit and that zero usage is not a deletion warrant. GOVERNANCE_DISPOSITION.md carries row 8 as EXEMPT owner=0.7.0_AE_CloudOps~Z. The carrier gap (Z-S19) is disclosed, not hidden.",
+    "grounding": {"status": "GROUNDED", "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_8_10.md (accepts custody :50; not the apply :80; row 10's not-accepted items :111, :127-140)",
+      "deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md:192"
+    ]},
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-v-1 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S23",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T15:00Z",
+    "one_line": "L9 grade, TO-IAM-v-2 AC4 (judgment): FAIL -- ADOPTION_PLAN_TEN.md lets a later round cut families A, B, E and F straight off the page, but rows 3 and 16 belong to no family, row 6 (Family C) names its home an open question, and Family D proposes no home: those cells would have to re-derive custody first.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-v-2 AC4: a later round could cut one adoption cell per family straight from ADOPTION_PLAN_TEN.md, without re-deriving custody homes.",
+    "world_is": "Read at this seat. The family headings (:92 A bd-pipeline/, :104 B smartx-pipeline/, :112 C, :126 D 'no home proposed', :137 E portfolio-management, :148 F retire row 7). Rows 3 (codebuild-semantic-clustering) and 16 (workspace-sync) appear in no family: a grep of the plan finds no row-3 or row-16 entry. ACCEPTANCE_ROWS_TEN.md accepts both while declining to assert a home (:54-57, :120-124). Row 6's home is 'an open question I am NOT closing here' (:121-124). The plan is honest about each open call, and that honesty is why the bar is not met: what it names as open is exactly the custody home the criterion requires to be settled.",
+    "grounding": {"status": "GROUNDED", "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~Z/ADOPTION_PLAN_TEN.md headings :92-148, :121-124",
+      "deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_TEN.md :52-58, :120-124"
+    ]},
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a channel defect: TO-IAM-v-2 AC4 FAIL. The remedy is the CTO's round-5 analysis: name the custody home for rows 3, 6 and 16 and Family D (or rule them retire or deferred), so their adoption cells can be cut."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S24",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T15:00Z",
+    "one_line": "L9 grade, TO-IAM-v-3 AC4 (judgment): PASS -- the prediction (no caller breaks) carries a date-rule window and four named falsifiers, one of which rules out a vacuous pass, and its evidence is measured on three planes rather than assumed.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-v-3 AC4: the prediction is specific enough that the outcome could prove it wrong, and PREDICTION.md's evidence supports it rather than assumes it.",
+    "world_is": "PREDICTION.json carries predicted_breaks=[], an observation_window by date rule (read after 13:30Z on D) and falsifiers F1-F4. F3 (zero GetSecretValue means the auth path never ran) prevents a vacuous pass, and F4 pins the standing DirtyRunError baseline. The evidence is CloudTrail (89 days, 1446 events, DescribeSecret 0, with Get/Put returned as a positive control), Access Advisor (90 days) and a read of the deployed zip matching the source map. The instrument's 'WOULD BREAK 5' is separated from broken callers (row Z-W13-S3), and rejected candidates are listed with reasons.",
+    "grounding": {"status": "GROUNDED", "evidence": [
+      "deliverables/0.9.0_WK_NFRA_IAMROLES202609~13/PREDICTION.md :7, :50, :54, :60-66",
+      "deliverables/0.9.0_WK_NFRA_IAMROLES202609~13/PREDICTION.json keys observation_window, falsifiers"
+    ]},
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-v-3 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S25",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T15:00Z",
+    "one_line": "L9 grade, TO-IAM-v-4 AC4 (judgment): PASS -- the prediction was committed before the change, the outcome was read in the window it named, the verdict was withheld until then, and the two agree; DescribeSecret is absent from the live policy today.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-v-4 AC4: the check was believed -- the prediction on record before the change, the outcome read in the window it named, and the two agreeing (or the disagreement found, said and rolled back).",
+    "world_is": "PREDICTION.json was first committed at 8b4a05987c, 2026-10-09T09:41:31Z; the narrowing commit e02476796b is at 10:37:10Z, with the apply ~10:4xZ. Window D = 2026-10-09; the first post-apply run started 13:02:50Z (740.3 s) and was read after 13:30Z. F1 is 0 of 117 log events; F2 is 0 denied and 0 DescribeSecret of 16; F3 is 6 GetSecretValue (baseline); F4 is the baseline error only; MATCHES-PREDICTION yes. OUTCOME.md withheld the verdict until the window was read. Live today: ReadAuthBundle's Action is secretsmanager:GetSecretValue only.",
+    "grounding": {"status": "GROUNDED", "evidence": [
+      "deliverables/0.7.0_AE_CloudOps~Z/fwd5/OUTCOME.md :6-10, :494-511, :545",
+      "git log PREDICTION.json (8b4a05987c 09:41:31Z) vs e02476796b (10:37:10Z)",
+      "aws iam get-role-policy smartx-assets-pull-role ReadAuthBundle, live 2026-10-09 ~14:5xZ"
+    ]},
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-v-4 AC4 PASS."
+  }
+]
+```
+
+## C-S26 / C-S27 -- L8 ROUND 5: five open rows -- two DISMISSED (C-S26), three GRADUATE (C-S27) (two live production defects outside the project, one instrument defect)
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S26",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T15:05Z",
+    "one_line": "Round 5 L8: Z-S19 and Z-S20 DISMISSED -- Z-S19 was resolved in the round by amendment A1 (v-1 complete, VALID proof; the row carries the owner token at GOVERNANCE_DISPOSITION.md:192); Z-S20 is the issuer's routing record, not a defect.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "Z-S19 (v-1's AC2 against the owned-paths lane) was resolved in the round by amendment A1: the acceptance of record is ACCEPTANCE_ROWS_8_10.md, the disposition row carries the owner token (GOVERNANCE_DISPOSITION.md:192), and v-1 is complete with a VALID proof. Z-S20 is the issuer's routing record for W13-S1/S2, not a defect.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S19",
+      "NFRA_IAMROLES202609-Z-S20"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-surprise --project NFRA_IAMROLES202609 --json, 15:0xZ: open 5 (Z-S19, Z-W13-S1, Z-W13-S2, Z-W13-S3, Z-S20)",
+        "deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md:192; TO-IAM-v-1 <status>complete</status>",
+        "remediations/REMEDIATION_v5.Z.md"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved in the round (Z-S19) or not a defect (Z-S20)."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S27",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T15:05Z",
+    "one_line": "Round 5 L8: Z-W13-S1, Z-W13-S2 and Z-W13-S3 GRADUATE to REMEDIATION_v5.Z.md -- two live production defects outside the project and one instrument defect.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "W13-S1 (smartx-assets-daily-pull raises DirtyRunError on 30 of 30 daily runs) and W13-S2 (etfs-canon-fanin fails BatchWriteItem daily on a table deleted 2026-08-07 that Terraform still declares) are live production defects outside this project, ARMED, and need an owner beyond this project's round. W13-S3 (preflight-blast-radius.py reads UNKNOWN on a conditioned role and counts allowed resources as WOULD BREAK without joining usage) is an instrument defect that misled one prediction until the worker separated it.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-W13-S1",
+      "NFRA_IAMROLES202609-Z-W13-S2",
+      "NFRA_IAMROLES202609-Z-W13-S3"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-surprise --project NFRA_IAMROLES202609 --json, 15:0xZ: open 5 (Z-S19, Z-W13-S1, Z-W13-S2, Z-W13-S3, Z-S20)",
+        "deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md:192; TO-IAM-v-1 <status>complete</status>",
+        "remediations/REMEDIATION_v5.Z.md"
+      ]
+    },
+    "disposition": "GRADUATED"
+  }
+]
+```
