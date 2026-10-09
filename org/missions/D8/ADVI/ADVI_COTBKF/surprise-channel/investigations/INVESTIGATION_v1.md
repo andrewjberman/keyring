@@ -2918,3 +2918,29 @@ round.** Never edit an existing row.
   "world_is": "The stored close does not fall on these days; it rises by about the distribution per share. Together with the reinvested shares the account value steps up by the distribution twice. The trace repairs this per day (the position's step taken out) and names it price:<cusip>; it does not say whether the store is dividend-adjusted, whether Commonwealth books the distribution as income, or how many other months carry the same step."
 }
 ```
+
+## ADVI_COTBKF-D2-S39 -- disarm of W50-S1..S3 at CB-aa-4's pair
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S39",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "one_line": "Disarm of D2-W50-S1, S2, S3 (disarm_owner 2.0.0_SA_COO~C2): the only path by which their wrong day values could reach a reader is CB-aa-4's SERVED mint of the FWD-3 tables; the COO half of its never-widen pair is now conditioned on those days being repaired or blanked with reason, so nothing wrong can be served",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R27_FWD3_SERVE_COO_HALF.md: COO half DRAFT, condition added (not given while split / in-kind li / dvr days carry known-wrong values)",
+      "CB-aa-4 (0.7.0_AE_CloudOps~CB2) BOUNDS: no write before both halves of the pair exist",
+      "the three target prefixes hold 0 objects (measured 03:2xZ, control 14): nothing is served today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2).",
+  "world_is": "W50-S1..S3 describe valuation defects on specific days (59 split months, 13 distribution months, 1 in-kind flow). They stay OPEN as defects for the round-28 analysis; their hazard (publication of wrong day values) is blocked at the pair."
+}
+```
