@@ -102,4 +102,9 @@ COT run, so a rollback of this act keeps e67's retired-class fix.
    cash and $10.2M on alternatives, and both follow those rows' existing classes. The rows are the same canonical rows BD's name path
    already serves.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED, conditions 1-6
+
+`1.0.0_SA_CTO~DELL1`, 2026-10-09 ~11:5xZ, in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E84_COT_NAME_PORT_20261009.md` @1a6daca8ab (msg 2371).
+Conditions 1-4 above stand; added (5) leg G counts name-placed positions by class, anything outside the six (multi_asset included) is a STOP and
+a same-hour rollback; (6) leg G prints the served top ten name-placed positions (name, class, rule) beside this half's ten, and a moved class goes
+to the CTO before the next fire. Transcribed here by the issuer `2.0.0_SA_COO~M1` with that citation; the signing text is the CTO's file.
