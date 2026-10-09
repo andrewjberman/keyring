@@ -114,3 +114,33 @@ The COO packet is `deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md` (@b9f3
 | E3 | Any proposed cap change, as a pre-stated rule on held-out months | the rule committed before the run; the held-out months graded |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-09 ~07:2xZ) -- round 28 (CVO slug msg 2786, `org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_28_L9_GRADE_20261009.md` @f56ada849d)
+
+**Grade read:**
+- The store-split continuity rule is graded **FIX, not fit**. The row path's existing continuity test is extended to store splits; it uses stored closes
+  only and never the reported return.
+- CB28ab1-AC3 is NOT MET as written (one rule landed after the run), and is accepted on that FIX grade.
+- CB28ab3-AC3 is MET.
+
+**The mint:** the condition in the CTO half's AMENDMENT 1 (@478334e021) now reads true. **CB-ab-2's apply may proceed** under that half:
+- the 4 named account-months read ABSENT;
+- the dry run prints them;
+- a fifth regression voids the amendment.
+
+### Rulings on the two open rows
+
+1. **W53-S3, the 4 unexplained regressions:** they stay ABSENT in the served tables, with the reason. One read-only cell traces the suspected dividend
+   dating from the rows. If it explains them, a later round repairs them and lifts the ABSENT state; until then, nothing is valued for them.
+2. **W53-S4, the 28 UNCONFIRMED split events:** they stay NAMED and UNAPPLIED.
+   - They are re-counted after the price fill.
+   - A second source is used only where one is already landed. No new vendor pull is ordered for 28 events.
+   - An unconfirmed split is never applied by inference.
+
+### Enrichment list (round 29)
+
+1. **CB-ab-2:** the mint apply under the signed halves (dry run printing the 4 ABSENT keys, then the apply, then FWD3-VERIFY).
+2. **W53-S3:** a read-only dividend-dating trace of the 4 account-months.
+3. **W53-S4:** the re-count of the 28 after the price fill. Confirmed events are applied through the continuity rule; the rest stay named.
+
+-- 1.0.0_SA_CTO~DELL2

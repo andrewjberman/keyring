@@ -42,12 +42,27 @@ issuance commit). Work and commit ONLY there with `bash .tools/safe-commit.sh --
 `opal-tickets` is an existing table (the ticket-center stack). This is a grant on an existing name, not a new resource, so no
 naming builder applies. Run `terraform fmt` on the folder if `terraform` is on PATH. Never run `plan`, `init` or `apply`.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~07:1xZ, REOPENS this order; CTO never-widen half for OW-d-1 @a4c661373b, condition 1):** the role is
+shared by six functions, so `UpdateItem` must be narrowed AT THE POLICY. Replace the one `TicketBridgeOpalTickets` statement with
+TWO statements in the same policy:
+- `Sid = "TicketBridgeOpalTicketsRead"`: `Action = ["dynamodb:GetItem"]` on `table/opal-tickets`, with no condition.
+- `Sid = "TicketBridgeOpalTicketsWrite"`: `Action = ["dynamodb:UpdateItem"]` on `table/opal-tickets`, with
+  `Condition = { "ForAllValues:StringEquals" = { "dynamodb:Attributes" = ["ticket_id", "linked_submission_id", "events", "status"] } }`.
+
+Those four are exactly what the merged code writes: the bridge SETs `linked_submission_id` and `events`, and REMOVEs
+`linked_submission_id` on revert; the workflow handler SETs `events` and `status`; `ticket_id` is the key. Read
+`trade-submission-handler/src/submission_handler.py` and `trade-workflow-handler/src/workflow_handler.py` (READ only) to confirm
+that no other attribute is written. If one is, STOP and file a BLOCKING row; never widen the list on your own. Nothing else in
+either file changes. Then run AC2, which replaces AC1.
+
 ### ACCEPTANCE
 
-<criterion id="OW-i1-AC1" cell_refs="OW-i-1"><invocation>python org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/R1_CHECKS/ow_checks.py i1-grant</invocation><expect>OW-I1-GRANT-OK</expect></criterion>
-`OW-i1-AC1`: the grant carries exactly GetItem + UpdateItem on table/opal-tickets, and TICKETS_TABLE is on both functions.
+`OW-i1-AC1` is RETIRED by AMENDMENT 1: its one-statement shape is what the CTO half narrows. AC2 grades the two-statement shape and the env.
 
-<expected_criteria>OW-i1-AC1</expected_criteria>
+<criterion id="OW-i1-AC2" cell_refs="OW-i-1"><invocation>python org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/R1_CHECKS/ow_checks.py i1-cond</invocation><expect>OW-I1-COND-OK</expect></criterion>
+`OW-i1-AC2`: the GetItem statement and the conditioned UpdateItem statement, conditioned to exactly the four written attributes.
+
+<expected_criteria>OW-i1-AC2</expected_criteria>
 
 ## BOUNDS
 
@@ -68,9 +83,9 @@ org/missions/D9/NFRA/NFRA_OPSWKF/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: OW-i1-AC1. The instance is at
+Criterion ids: OW-i1-AC2. The instance is at
 `org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/0.9.0_WK_NFRA_OPSWKF~4/NFRA_OPSWKF.TO-OW-i1.opal-tickets-grant.proof_of_spec.json`.
-Validate it with `python .tools/proof-of-spec-check.py <instance> OW-i1-AC1` BEFORE the flip.
+Validate it with `python .tools/proof-of-spec-check.py <instance> OW-i1-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT (once):** the check line verbatim, the commits, and any row ids.

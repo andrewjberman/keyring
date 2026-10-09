@@ -23232,3 +23232,280 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The worktree branch does not carry the file; it exists at 19c5067e12. The stream and requests_stream_arn output were therefore kept."
 }
 ```
+
+## IRPT_BCKEND-D2-W201-S1 -- AMENDMENT 1 (ALL never admits an internal caller) cannot be committed: served.py and two test files are in no non-terminal order's <paths> at HEAD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The lane gate refuses the amendment-1 code commit (owned-paths, ADHC_OWNPTH.005), so there is no new pin; the packet is built at the pre-amendment pin 389b61b222 and the order is left open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output, rc=1: three VIOLATION lines naming the three paths",
+      "git rev-parse HEAD still 389b61b2227d51f164ab393bf1386684014b4e18 after the refusal"
+    ]
+  },
+  "spec_asserts": "Coordinator amendment 1 (CTO msg 2569): three files are added to the grant, the code commit is the new pin, and the order text is recorded at the drain.",
+  "world_is": "safe-commit refused served.py, test_allowed_firm_ids.py and test_served_on_behalf_create.py: lane IRPT_LIVE_SCOPE_P, 'no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'. The order text is not amended until the drain and the worker may not edit it. The change was made and tested in the worktree (suite 303 passed, 1 failed, see S3), saved as org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~201/amendment1_ALL_never_admits.patch, and the three files were restored to HEAD. Needs: the issuer amends <paths> (or commits the patch itself), then the census, BUILD_ONLY and replay re-run at the new pin with replay/make_census.py and replay/run_replay.py (the candidate map's served.py pin and sha256 move to the new commit). The packet must not be signed as the final pair before that. Nothing is applied, so the standing state is unchanged."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S2 -- The stale _denominator named by amendment 1 item 3 is not in infra/aws/terraform/investor-reporting/api/routes.json; it is in docs/contracts/investor-reporting/v1/routes.json
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The granted routes.json is the retired stub (no _denominator); the stale counts are in the contract file, which is outside the grant and was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python json load of docs/contracts/investor-reporting/v1/routes.json at 389b61b222: _denominator.total 21, len(routes) 23",
+      "python json load of infra/aws/terraform/investor-reporting/api/routes.json: keys _retired_as_a_carrier .. _retired_by, no _denominator"
+    ]
+  },
+  "spec_asserts": "Amendment 1 item 3: infra/aws/terraform/investor-reporting/api/routes.json `_denominator` states 19 and the file holds 21 routes.",
+  "world_is": "The terraform file is an 8-key retired-carrier stub (its text says 'the same 12 entries'). The stale block is docs/contracts/investor-reporting/v1/routes.json `_denominator`: declared 19, routed_elsewhere 2, total 21, functions_targeted 7, while the file holds 23 routes (21 DECLARED + 2 ROUTED_ELSEWHERE, counted from the rows at 389b61b222; handlers of the DECLARED rows = 7 functions). The true block is declared 21, routed_elsewhere 2, no_handler_at_head 0, total 23, functions_targeted 7. Not edited: that path is outside the grant."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S3 -- Amendment 1 collides with IB-pr-385's own test: test_svc_custody_statement_does_not_change_opal_or_dev_admission gives its Opal caller a profile row 'ALL' and expects the any-firm selection
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "With 'ALL never admits' applied, the _authz tests give 303 passed and 1 failed; the failing test file is outside the grant and a test is never weakened.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest tests -q in _authz with the patch applied: 1 failed, 303 passed; failing id as above"
+    ]
+  },
+  "spec_asserts": "Amendment 1: the full _authz suite must pass.",
+  "world_is": "tests/test_svc_custody_statement.py::_run injects load_service_profile=lambda email: {'allowedFirmIds': 'ALL'} for every caller, including the Opal caller of test_svc_custody_statement_does_not_change_opal_or_dev_admission (selected inflection, expects reached[0] == 'inflection'). Under the amendment that caller is refused FIRM_BINDING, which is the intended new behaviour. The fix is a one-line fixture change in that file (give the non-svc caller a row without ALL, keep ALL for the svc subject, whose point is that ALL does not widen it). Needs the issuer to grant tests/test_svc_custody_statement.py."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S4 -- The live source map pins _authz/served.py at older blobs in all 8 functions that package it: a build at the pin does not carry IB-pr-385/387 and would record a green release of unchanged bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "release-census at the box/dell2 pin shows served.py UNCHANGED against live in 6 functions and an unrelated older blob (not HEAD's) in the other 2, because every staged_from row for served.py names an old pin and sha256; a candidate map restaging them is a deliverable.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "release-census at dea0f53252: irpt-export-render changed_members=0; irpt-49f, directory-search, holdings 0",
+      "candidate-map census at 389b61b222: served.py changed in all 8 (built e1db29d5eb5b)"
+    ]
+  },
+  "spec_asserts": "The order: a release packet for IB-pr-385 + IB-pr-387, built from the pin.",
+  "world_is": "infra/aws/lambda/ci/lambda-source-map.json carries served.py staged_from pins d8d8e7d868 (49f-reporting-read, directory-search, export-render, holdings), f9a00f732c (performance-adapter), f6c6b56f40 (narrative), 0642c9d004 (status), 038b35d676 (ycharts-generate); none is the HEAD blob e1db29d5eb5b. The source map is outside the grant. The worker built from org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~201/lambda-source-map.candidate.json (committed at 389b61b222; exactly 8 staged_from rows differ, 32 diff lines) through BAU_SOURCE_MAP_OVERRIDE, which build-and-upload.sh supports. The applier must land that restage (and re-record artifact_sha256) before the build, or the release is a no-op that reads green. ARMED because an apply of an unrestaged build leaves the ledger green on unchanged bytes.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W201-S5 -- irpt-holdings cannot be built at the pin: ADHC_DRIFTD.002 refuses (holdings_publication_port.py is in source_dir and not in files[])
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "BUILD_ONLY for irpt-holdings fails at the real map and the candidate map; the function is censused (1 changed member) but has no built artifact, and its replay uses a would-be zip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build log: ERROR: ADHC_DRIFTD.002 parity check failed; PARTIAL -- 0 built, 1 failed: irpt-holdings",
+      "git log -3 -- holdings/holdings_publication_port.py: 73075a9048"
+    ]
+  },
+  "spec_asserts": "The order: build every function that packages served.py, twice, byte-identical.",
+  "world_is": "BUILD_ONLY=1 build-and-upload.sh investor-reporting irpt-holdings exits 1: 'Files present in source_dir but NOT in lambda-source-map.json files[]: + holdings_publication_port.py' (added by 73075a9048, IB-m35-351, never registered). Registering it would also add that member to the holdings zip (a different cell's change), so the worker did not add it to the candidate map and did not use BAU_PARITY_SKIP. The replay for holdings uses the live holdings zip with served.py replaced by the pinned blob (labelled would_be)."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S6 -- The new served.py breaks irpt-narrative's error path (staged errors.py predates errors.public_line(admitted=)), and live irpt-narrative runs a boundary with no internal selection at all
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "In the candidate build of irpt-narrative, every refusal that records an internal error raises TypeError in served._record; the function is also 27 served.py commits and 21 members behind, so it should not be in this pair.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "replay JSON defects_not_counted_in_arms: irpt-narrative built codes FIRM_BINDING, HARNESS_TypeError",
+      "release-census irpt-narrative with the candidate map: changed_members=21"
+    ]
+  },
+  "spec_asserts": "The order: census every function that packages served.py; the release carries IB-pr-385/387 only.",
+  "world_is": "replay: built irpt-narrative, route GET /narrative/{reportId}: HARNESS_TypeError from served.py:107 `_errors.public_line(..., admitted=BOUNDARY_REASONS)` ('unexpected keyword argument'); the same tree's staged errors.py is the older blob. Live irpt-narrative served.py (ba0cea6d4246) has no selected_tenant / internal selection: releasing HEAD served.py there would ADD any-firm selection for Opal internals to a function that has none, besides the 21 changed members (8 added). Recommendation: leave irpt-narrative out of this pair; it needs its own restage of errors.py/loaders.py/resolve.py and its own release. ARMED while narrative stays in the pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W201-S7 -- The release of served.py also carries IB-pr-366 and IB-pr-357, which the live served.py of four functions predates
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T05:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Four functions (49f-reporting-read, directory-search, export-render, holdings) run served.py blob a8eb91e7d4c5; its successors fff1b0395a (IB-pr-366, CTO ruling msg 1402 option c: the served CREATE guard) and db8161f46e (IB-pr-357: internal_correlation_id dropped) are not live there, so the packet's owner list names four commits, not two.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "make_census.py owners: b4b544fb15, 7e0bfc3222, fff1b0395a, db8161f46e for the four functions"
+    ]
+  },
+  "spec_asserts": "The order: every changed member must be owned by its cell's commit.",
+  "world_is": "Owners of served.py per function are in IB97-3_release_census.json (owner_commits). The replay covers the narrowing and svc arms, not IB-pr-366's on-behalf create guard nor IB-pr-357's envelope field; the signer should read them as part of the release."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S8 -- AMENDMENT 1 asks the packet to name the follow-up cell for irpt-holdings and irpt-narrative, and no such cell exists at this pin
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T06:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packet's held-out section cannot cite a follow-up cell id: the decomposition carries IB-pr-390 and IB-pr-391 for section 90 and no cell for releasing served.py to irpt-holdings (row S5) or irpt-narrative (row S6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md lines 2381-2382 (IB-pr-390, IB-pr-391 are the last IB-pr rows); task-orders listing has no IB-pr-39x beyond 390 and 391"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 item 3: the packet lists every route each held-out host serves as NOT YET NARROWED, and names the follow-up cell.",
+  "world_is": "The packet lists the two held-out routes (GET .../holdings/{accountSetId}, GET .../narrative/{reportId}) as NOT YET NARROWED and states that the follow-up cell is UNCUT, to be cut by 2.0.0_SA_COO~P2 with the scope of rows S5 and S6. The worker did not invent a cell id."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S1 -- FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py ASSET_CLASS_VALUES (SC-e-56 comment: multi_asset left) and classify_security raising on a class outside it",
+      "run_firm with the real validator on a multi_asset fixture: RuntimeError 'asset_class: multi_asset is not one of [equity, fixed_income, alternatives, structured, commodities, cash, other, unclassified]' (tests/test_holdings_publish_gate.py, the arms that stand validation aside)"
+    ]
+  },
+  "spec_asserts": "PRD FWD-14 ACCEPT: WORSE is any multi_asset; on WORSE the index does not move and one refusal record names the condition, count and ids.",
+  "world_is": "Today a multi_asset class is stopped upstream as a build defect (a bare raise, no refusal record) because the published contract enum and the classifier both exclude it. The gate refuses it WITH a record only if validation ever admits it; the tests prove that arm by standing validate_snapshot aside. No decision asked: reported so a reader does not take the arm for exercised-in-production."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S2 -- The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:815 and :824 -- cottonwood fact_allocations carries no account status column at this vintage -> termination UNKNOWN on every entry",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:623 (49F: RELATIONSHIP entry TERMINATED only when every account is closed) and :725 (INF: only when no row is_active)",
+      "holdings_snapshot.py closed_account_ids(): collects account ids of entries whose termination.indicator == TERMINATED; an absent directory names none (fails closed)"
+    ]
+  },
+  "spec_asserts": "PRD v0.32: an account the firm's source records as closed or terminated is LISTED, never refused, so an ordinary closure cannot freeze the firm.",
+  "world_is": "The exemption is exactly as wide as the source's own closure marking. 49F account-level closures and fully closed relationships are recognized; a partly closed 49F relationship is not (its entry stays ACTIVE); Cottonwood has no closure column at all, so a closed COT account that leaves the candidate is REFUSED as account_lost and every later fire refuses too until the source gains a closure fact. Left alone this is the freeze v0.32 was written to prevent, for COT. Disarm: a cell that gives COT (and partly closed 49F relationships) a source closure marking, or a CTO ruling on another source."
+}
+```
+
+## IRPT_BCKEND-D2-W262-S1 -- irpt-narrative's fixed build is a wide release: 22 changed members and internal firm selection that live does not honour
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W262-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~262",
+  "surfaced_at": "2026-10-09T06:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fixed irpt-narrative build is correct on its error path but is a wide release: 22 changed members (8 added) against live, and its boundary starts honouring selected_tenant for Opal internal callers, which live irpt-narrative ignores.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "replay arm 'unrelated Opal internal caller with NO profile row, selecting inflection': irpt-narrative built reaches inflection with the Opal roster, live reaches opal-capital (selection not honoured); irpt-holdings identical",
+      "release-census irpt-narrative at c18b5fec74: changed_members=22 (14 changed, 8 added), every one owned; live CodeSha256 es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc="
+    ]
+  },
+  "spec_asserts": "The order: restage errors.py (the smaller change) so the new served.py error path no longer raises TypeError, keeping every other host unchanged.",
+  "world_is": "The TypeError is fixed by restaging errors.py bc3727b3a3 -> 74a62fb46c (adds public_line(admitted=)) and served.py to 74a62fb46c; 4 tests -k served_error_path pass incl. a control that sees the TypeError on the old blob. But live irpt-narrative runs an older boundary: releasing ANY current served.py there adds the internal firm selection (IB-pr-387 narrowing and, for a caller with no profile row, any-firm reach) that live does not have, plus the 21 other members the map already stages for it. This is the S6 finding made measurable; the packet carries it as a signer decision, per-route table and Branch A/B. Disarmed when the signer reads the narrative row of the packet and signs or strikes irpt-narrative from the pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

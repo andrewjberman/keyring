@@ -122,7 +122,7 @@ Rows: id `NFRA_OPLGTW-Z-W44-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Pre-cut: tg1.AC1 base FAIL as expected (test file absent); tg1.AC2 base PASS as expected (teams_format 35, reader_fallback
   5, route 21, none removed; identity_scope 10, status_row 4, scoped_consent 7 rc 0).
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>GATE-R30</workstream>
 <slot>~44</slot>

@@ -801,3 +801,28 @@ Workers 0.9.0_WK_IRPT_DASHBD~47, ~48 and ~49, each cut from box/dell2.
 
 **fanout:** 4 of 4 chains, cap 8. Reason: one release chain (E1 then E2) and three independent Inflection cells with disjoint write
 surfaces. Workers 0.9.0_WK_IRPT_DASHBD~50 to ~54, cut from box/dell2. ~51 is spawned when DB-b-73 drains.
+
+
+## 40. ROUND 38, WORKSTREAM B (2026-10-09 ~06:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-37 ADDENDUM 6 @fb5579ddfc, on ADJUDICATION_v22 @153e101791)
+
+**Where round 37 left things.**
+- Round 37 is closed.
+- The R37 release pair is signed: COO @9395a9c1bc, CTO @e64eb96736.
+- The taxonomy proposal is ADOPTED as additive keys.
+- Orion's gross is to land as silver.
+- The fee slices print PARTIAL.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-78` | E1, FWD-4: the R37 apply. Pins, root restore, plan 0/3/0, safe-apply, a population dry_run under 85% gating the first fire, A1 to A7 | WORLD | both halves | B38-1 |
+| `DB-b-79` | E3, FWD-11: Orion's gross TWR landed as silver at address() output, with as_of (W53-S1) | WORLD | DB-b-75 (drained) | B38-2 |
+| `DB-b-80` | E2, FWD-11: the taxonomy keys and 48 header; the adapter reads them; the tie-out on both bases from the landed gross (W49-S3, W54-S1) | WORLD (served-data path floor) | DB-b-79 | B38-2 |
+| `DB-b-81` | E4, FWD-11: the fee slices with COMPLETE/PARTIAL and denominators (W53-S2) | LOCAL | none | B38-3 |
+
+**Carried, not cut:**
+- the svc-custody-statement mint and CU-g-2a on `0.7.0_AE_CloudOps~DB2`, waiting on IB-pr-385 and release 6 being live;
+- FWD-8's tolerance, at Andrew's word;
+- CU-g-6, at Andrew's word (row 0347).
+
+**fanout:** 3 of 3 chains, cap 8. Reason: the release, the Orion gross chain (DB-b-79 then DB-b-80), and the fee slices, with disjoint write
+surfaces. Workers `0.9.0_WK_IRPT_DASHBD~55`, ~57 and ~58 are cut from box/dell2; ~56 is spawned on DB-b-79's drain.

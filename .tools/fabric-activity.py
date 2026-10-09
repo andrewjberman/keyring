@@ -146,26 +146,60 @@ def _placement():
     return _PLACEMENT
 
 
+def _register_boxes():
+    """The register's rows for boxes that are NOT the default-lane box, with each one's lane letters and trailing row digits
+    (D1 -> "1"): the only things a serial or a committer name can say about a box. [] when the register cannot be read."""
+    sys.path.insert(0, os.path.join(ROOT, "lib"))
+    try:
+        import devices  # noqa: E402
+        rows = devices.devices()
+    except Exception:
+        return []
+    out = []
+    for d in rows:
+        if d.get("lane_letters_default"):
+            continue
+        m = re.search(r"(\d+)$", d.get("row_coordinate") or "")
+        out.append((d["name"], [x.upper() for x in d.get("lane_letters") or []], m.group(1) if m else ""))
+    return out
+
+
 def infer_box(author, committer):
-    """Best guess of the box from serials (box_claim=inferred): DELLn / a lane ending in n -> delln; ~Z or SITEZ ->
-    sitez; a worker 0.9.0_WK_<CODE>~n -> its project's placement; any other agent serial -> laptop; a human name ->
-    unplaced (the laptop and site Z both commit under it)."""
+    """Best guess of the box from serials (box_claim=inferred), by the device register: a box's name in the author or
+    committer, or a lane ending in its row digits -> that box; a lane starting with one of its lane letters -> that box;
+    a worker 0.9.0_WK_<CODE>~n -> its project's placement; any other agent serial -> the default-lane box (laptop); a human
+    name -> unplaced (the laptop and site Z both commit under it)."""
     s = "%s|%s" % (author, committer)
-    if re.search(r"DELL1", s, re.I):
-        return "dell1"
-    if re.search(r"DELL2", s, re.I) or committer.strip().lower() == "dell2":
-        return "dell2"
-    if "SITEZ" in s.upper():
-        return "sitez"
+    boxes = _register_boxes()
+    for name, _letters, _digits in boxes:
+        if re.search(re.escape(name), s, re.I) or committer.strip().lower() == name.lower():
+            return name
     m = re.match(r"0\.9\.0_WK_([A-Z0-9_]+)~", author)
     if m:
         return _placement().get(m.group(1), "unplaced")
     m = re.match(r"\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9]+(?:~([A-Za-z]*)(\d*))?$", author.strip())
     if m:
         letters, digit = m.group(1) or "", m.group(2) or ""
-        if letters.upper().startswith("Z"):
-            return "sitez"
-        return {"1": "dell1", "2": "dell2"}.get(digit[-1:], "laptop")
+        for name, lane_letters, _digits in boxes:
+            if any(letters.upper().startswith(x) for x in lane_letters):
+                return name
+        for name, _letters, digits in sorted(boxes, key=lambda b: -len(b[2])):
+            if digits and digit.endswith(digits):
+                return name
+        return _default_box()
+    return "unplaced"
+
+
+def _default_box():
+    """The register's default-lane box: the one that runs every lane no other box claims."""
+    sys.path.insert(0, os.path.join(ROOT, "lib"))
+    try:
+        import devices  # noqa: E402
+        for d in devices.devices():
+            if d.get("lane_letters_default"):
+                return d["name"]
+    except Exception:
+        pass
     return "unplaced"
 
 
