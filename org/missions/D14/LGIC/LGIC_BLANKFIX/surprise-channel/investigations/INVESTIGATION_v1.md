@@ -2134,3 +2134,30 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The binding is to the text safe-commit.sh is handed, which is what the gate can be handed before the commit exists; git's cleanup can change trailing whitespace and blank lines in the stored message, so the stored message may differ from the hashed text in whitespace only. The row still cannot admit a commit whose message text differs in any other byte (B7 holds one extra byte refused). A reader who needs the stored message's own hash would have to hash it after the commit, which is outside this gate. The row's trust base is unchanged: a seat that can stage a row and hash its own message can still forge one."
 }
 ```
+
+## LGIC_BLANKFIX-S13 -- round 9's two exercise scripts spawn a bare bash and false-fail on a box with WSL
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S13",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T07:55:00Z",
+  "one_line": "Round 9's exercise_switch_on.py and exercise_override.py spawn a bare 'bash' from Python; on a Windows box with WSL installed CreateProcess reaches System32 bash.exe first, so both read ok=False on the laptop although every arm holds with Git Bash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run by 3.0.0_SA_CVO in a detached worktree of origin/CLOUD 4016b2ec41: exercise_switch_on.py -> 'SWITCH-ON ok=False arms=11 held=1'; exercise_override.py -> 'OVERRIDE-ARMS ok=False arms=12 held=7'; one arm's output 'WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed'",
+      "the same scripts through a wrapper that maps argv[0] 'bash' to the Git Bash executable and changes nothing else: 'SWITCH-ON ok=True arms=11 held=11', 'OVERRIDE-ARMS ok=True arms=12 held=12'",
+      "exercise_switch_on.py run_bash(): subprocess.run(['bash', ...]); prepending Git's /usr/bin to PATH does not change the result (System32 precedes PATH in the CreateProcess search)",
+      "CLAUDE.md Git section: Python spawning ANY MSYS binary uses .tools/msys_argv_guard.py msys_safe_run(), never bare unix names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BX3's criterion and BX4-AC1 read ok=True wherever the issuer or the CVO runs them.",
+  "world_is": "They read ok=True on dell1 and ok=False on the laptop for an environment reason, not a gate one. The production gates spawn no bare bash (naming-gate.py, naming-apply-gate.py, opal_naming_rootcheck.py, opal_naming.py searched)."
+}
+```
