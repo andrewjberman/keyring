@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~21</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -112,6 +112,26 @@ replaced by the ONE I7 sample for every lane: `org/missions/D9/IRPT/IRPT_ANLREQ/
 in the issuance base). `test_package_i5p_i7.py` reads that file at test time, round-trips its `sample` against its `canonical` both ways,
 and uses `canonical` for `pdf_ref` and `commentary_ref`, including in the updated package-route fixtures. The portal tests may carry the same
 canonical string as a literal. Delivered to the running worker the same tick. Gate limb: none graded this modification.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~09:1xZ; DECOMP_R2 AMENDMENT 2 @a30b01837a on CTO round-1 ADDENDUM 1 @64e9e6157d, row D2-S6).** The
+portal cell now wires the ORIGINAL FILE reader too. Part A and the PDF reader are done and stay as they are (portal DEV d06ae384, drain
+@53cbcad426).
+- **Server route** (source at HEAD; it ships in `~Y2`'s release 1): `GET ${IR_ROUTE_BASE}/analysis/requests/{requestId}/original`,
+  operation `analysis-request-original` (`infra/aws/lambda/investor-reporting/ops/entry.py:207-240`; handler `ops/owned_report.py:186`
+  `original()`), returning the same `{"download_route": {"url", "expires_at"}, "sha256", ...}` shape as the PDF. It refuses a custody-lane
+  request by name (`ANALYSIS_ORIGINAL_NOT_APPLICABLE`) and an unretained one (`ANALYSIS_ORIGINAL_NOT_RETAINED`).
+- **Client.** Add `analysis-request-original` to the operation union and `IR_ROUTE_TABLE`, and `getAnalysisRequestOriginal(requestId,
+  selectedTenant?)` beside `getAnalysisRequestPdf`, built the same way, returning `{ signedUrl }`. The URL is never stored or logged.
+- **Page.** `PackageReaders` gains `getAnalysisRequestOriginal`. The Original file row opens through it (a new tab) when `original_ref` is
+  a non-null string and the reader exists. A `null` `original_ref` keeps the custody sentence and makes NO call. A refusal shows the
+  server's reason text in the existing alert line. The Commentary row keeps "(no reader yet)"; its reader is FWD-3.
+- **One more test** in `package-r2.test.tsx`, named exactly `the real client opens the original file through analysis-request-original`
+  (the real client, a stubbed transport; assert the path and that the signed URL reaches `openUrl`). Update `package-open.test.tsx` only
+  where it asserted Original file as "(no reader yet)", and say so.
+- **Worktrees:** workspace `C:/tmp/anlreq-v21b` (branch `wk-irpt_anlreq-v21b`, from this amendment's commit); portal
+  `C:/tmp/anlreq-v21b-portal` (branch `wk-irpt_anlreq-v21b`, from portal `origin/DEV`). Criteria unchanged: AR21-v-AC1..3, with
+  `v21-page` now requiring five names. Re-validate the proof instance and flip back to complete.
+- Gate limb: to-pipeline-gate GATE (viii) grades this modified order (it declares `<placeholders>`).
 
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py

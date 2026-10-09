@@ -9371,3 +9371,61 @@ fanout:
   no_s3_deletes: true
   egress: gg-2 only (SEC EDGAR + one model call per name); no Bloomberg call in any order
 ```
+
+## 91. ROUND 83 -- THE PASSAGE MAP AT PARAGRAPH GRAIN, THE OFFLINE PROOF ON ASML NA, PBR'S REAL SECTIONS, THE STORE HALF, THE FWD-18 WALK. Five orders
+
+**Input:** the CTO~DELL1 round-82 analysis `ledger/ROUND_ANALYSIS.round82.md` @c600e61f91 (R1-R2, enrichment items 1-5). Grounded in
+`deliverables/2.0.0_SA_COO~R1/round83_prep/` (GROUP_PASSAGE_NOTES, GROUP_PBR_NOTES). Item 3 (r81_store.py S3 case-insensitive, with a
+planted contents-entry negative control) was a DIRECT ACT under the size floor @051e5b9200 (self-test 3 of 3); no order.
+
+### 91a. MEASURED AT THE CUT
+
+- **Why ASML's business text was not served:** `passages.build_passage_map` makes one passage per line and drops every line under 60
+  chars as a heading. ASML's Item 4.B (median line 38 chars) keeps 8 passages covering 627 of 58,260 chars (1.1%); risk 73.5%, OFR
+  19.2%. Cross-line quotes fail the one-passage verbatim gate: 19 of 83 citations are verbatim in one cited passage, 83 of 83 only when
+  the cited passages are glued with no separator (391 of 488 adjacent pairs glue a word). r83_passages AC1 NO at the base.
+- **Serve path:** the live function imports `passages.clean_location`; `Locator` and `cjk_share` are imported by drafting_build and
+  ceo_search. r83_serveguard YES at the base (a bound).
+- **PBR:** see GROUP_PBR_NOTES; r83_pbr AC1 NO at the base.
+- **The key:** row D1-W324-S3; every order that runs the model reads the key with `--value-only` in the same call, and its last
+  criterion is r83_nokey (YES at the base, NO on a planted file).
+
+### 91b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-hh-1` | the passage map at paragraph grain (R1) | `~329` | worker | LOCAL | `filings/passages.py` (`build_passage_map` only), one test | FWD-18 (through hh-2, hh-4) |
+| `AMGT-hh-2` | the offline re-analysis of ASML NA, no store write (R1's proof) | `~330` | worker | LOCAL (one model run) | own deliverables | FWD-18 (gates hh-4) |
+| `AMGT-hh-3` | PBR cut from its real sections (item 2) | `~331` | worker | LOCAL (merge: site-Z deploy) | `filings/document.py`, its test | FWD-18 for PBR (through hh-4) |
+| `AMGT-hh-4` | the store half under a NEW four-write pair, ASML NA first (item 4) | `~332` | worker | WORLD | four keys per name; ledger | FWD-18 |
+| `AMGT-hh-5` | the FWD-18 walk on ASML NA (item 4) | `~333` | worker | LOCAL (a read) | own deliverables | FWD-18 (CVO AC3) |
+
+**Not cut:** FWD-16 (Andrew's 2026-09-15 hold); the key rotation (an act for Andrew, open-calls row 86a2); the comp-secrets fix (its
+owner, carried by 0.0.0_AB_MSTR~DELL1); no redeploy (the served /thesis reads stored drafts; hh-1 moves no serve-path definition).
+
+### 91c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: enrichment items 1-5 + R1, R2. Item 1 -> hh-1 + hh-2; item 2 -> hh-3; item 3 -> direct act @051e5b9200; item 4 ->
+  hh-4, hh-5; item 5 -> not cut (Andrew's hold); R2 -> a criterion in hh-2 and hh-4. Uncovered: FWD-16 only.
+- **(ii) Same grain:** one module or one act per cell.
+- **(iii) Intent:** hh-1 is the round's only writer of `passages.py`; hh-3 the only writer of `document.py`.
+- **(iv) What a cell does NOT move:** hh-1 moves no serve-path definition (AC2) and no gate; hh-2 writes no store; hh-3 moves no other
+  20-F, 10-K or fixture cut; hh-4 writes four keys per name and deletes nothing; hh-5 is read-only.
+- **Write sets:** hh-1 and hh-3 are disjoint files. 0 overlaps.
+
+### 91d. EDGES AND FAN-OUT
+```
+hh-1 --> hh-2 --> hh-4 --> hh-5
+hh-3 --(PBR only)--> hh-4
+fanout:
+  cap: 8
+  orders_total: 5
+  chains_total: 2
+  wave_0: [hh-1 ~329, hh-3 ~331]   # 2 roots, cap 8
+  wave_1: [hh-2 ~330 (staged: hh-1 merged)]
+  wave_2: [hh-4 ~332 (staged: hh-2 AC1 YES + a NEW pair COO + 1.0.0_SA_CTO~DELL1; PBR only if hh-3 merged under 1.0.0_SA_CTO~Z)]
+  wave_3: [hh-5 ~333 (staged: hh-4's ASML NA YES)]
+  merge_hold: hh-3 (document.py: 1.0.0_SA_CTO~Z's half)
+  no_s3_deletes: true
+  egress: hh-2 (one model run), hh-4 (SEC EDGAR + one model run per name); no Bloomberg call in any order
+```
