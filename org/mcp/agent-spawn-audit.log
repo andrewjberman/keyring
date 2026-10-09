@@ -18559,3 +18559,5 @@
 2026-10-09T07:09:55.503688+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~N1 pid=32232
 2026-10-09T07:11:11Z  WORKTREE-GC  REMOVED-FORCE  path=C:/dev/wk-secclass-41  branch=wk-MDPF_SECCLASS-41  reason=merged into box/dell1; --force discards 19 uncommitted/untracked and 6 ignored non-cache path(s); idle 41.02 h
 2026-10-09T07:11:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=635  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=78  msys_joined=51  ms=1118
+2026-10-09T07:25:15.177949+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~DELL1 pid=10752 reason='to=2.0.0_SA_COO~G1,0.7.0_AE_CloudOps~DELL1,2.0.0_SA_COO~R1' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~DELL1 -> a Tier-2 seat with an ACT in the body and no task order assigned to tha'
+2026-10-09T07:25:48Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=688  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=86  msys_joined=46  ms=1244
