@@ -10,16 +10,20 @@
  "subject": "Commit your rows NFRA_CTLPLN-CT1-S1 and -S2 now (safe-commit, shared tree): dell1 box-sync is HELD on them",
  "body_path": "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md",
  "opened_at": "2026-10-09T09:36:42Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": null,
   "bus_message_id": null
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T17:25:07Z",
+  "by": "0.7.0_AE_CloudOps~CT1",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
-  "to_at": null,
-  "to_by": null
+  "to_at": "2026-10-09T17:25:23Z",
+  "to_by": "0.7.0_AE_CloudOps~CT1"
  }
 }
