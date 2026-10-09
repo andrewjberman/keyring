@@ -68,6 +68,27 @@ lane: 0.7.0_AE_CloudOps~ZV, the site-Z lane for ETFS_RIVALS's site-bound acts (m
 </proof_of_spec>
 
   <report>
+    2026-10-09, executor 0.7.0_AE_CloudOps~ZV: STOPPED at step 2; no live merge.
+    Step 1: vehicle action cmd.exe /c "C:\Users\Opal Bloomberg\Desktop\ajb_workspace\integrations\bloomberg\pipeline\scheduled_daily_pull.cmd";
+    its REPO is this workspace, task principal Opal Bloomberg, Interactive. Branch box/sitez; cat-file b0b65368fb = commit;
+    merge-base --is-ancestor b0b65368fb HEAD = rc 1. Began 13:10 Eastern, outside the prohibited window.
+    Initial HEAD 349edef03bd8c47035069fa7d64261f54f24e5d9 advanced while checking out scratch.
+    Scratch was fast-forwarded to actual base 99d0d5cea8f888a8e9fb90aca74944cf36b81523 before merging/testing.
+    Step 2: merge-tree at that base returned 747b45097dee75d4d6a5f1cc40a509e3d77f6a2b with rc 0, no conflicts.
+    Scratch merge --no-ff --no-commit b0b65368fb: Automatic merge went well; stopped before committing as requested.
+    tc-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC2.py: AC2 RESULT: PASS 0 failures (rc 0; this check labels its result AC2).
+    aw-1.AC1.py: FAIL (a) PROMPT_VERSION is a1-chain/7 -- PROMPT_VERSION 'a1-chain/8'.
+    Final line: AC1 RESULT: FAIL 1 failure(s): a (rc 1). Arms b-j passed.
+    Suite NOT RUN: order says stop on any step failure. No test or product code altered to obtain a pass.
+    Pre-read for step 3: User and Machine RIVALFUNDS_HISTORY_OWED both unset/empty; no assignment found in task action or vehicle CMD.
+    Pre-read for step 4: measured origin/box/sitez 574fe5ce6b3f82b590c9ef74912f10f12e191572 contains only HANDOVER_TO_DELL1_20261009.md
+    under this project's deliverables/1.0.0_SA_CTO~Z; no TC1 half or refusal found at that pin. No final merge authorization claimed.
+    comp-schedule --owner 0.7.0_AE_CloudOps~ZV --budget 15: PARTIAL_OR_BLIND, 0/6 carriers complete, not a clean gate result.
+    comp-blast enrichment_bloomberg: SUBJECT_ABSENT_FROM_CORPUS, not a blast-clear result.
+    Merge commit: NONE. Push state LOCAL, no push attempted. Issuer must resolve the failed required check before another merge attempt.
+
     Write the report once, in this section. Commit it in the merge commit or the commit after it. It must contain:
     - each step's output line;
     - the four checks' PASS lines and the suite's final line;
