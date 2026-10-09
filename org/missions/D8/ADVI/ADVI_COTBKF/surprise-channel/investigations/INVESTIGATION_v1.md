@@ -2572,3 +2572,29 @@ round.** Never edit an existing row.
   "world_is": "Nine fee/charge/tax types (ASF, bcf, cbf, fco, stp, term, ftax, stax, frntax; 5,596 CFNCASH rows, ftax 4,198) have no row in the table. Under the old chain their cash was never debited, so 'internal' meant 'ignored'; under the method the ledger debits it (the snapshot needs that), so the same label now means a drag. The default was kept and no variant was graded or adopted; whether a withholding that rides a withdrawal is a flow is the CTO's call, with the 35 months named here as the evidence."
 }
 ```
+
+## ADVI_COTBKF-D2-S36 -- L9 CB24x1-AC4 NOT MET as written: dividend months not graded both ways (no ex-date source)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S36",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T00:05:26Z",
+  "one_line": "L9 CB24x1-AC4 NOT MET as written, on one clause that cannot be measured yet: no cross-month dividend month is graded both ways, because no store the chain reads holds an ex-date. Clause 1 (the method follows the CRO's table row by row) and clause 2 (round 22's 25: 25 of 25 MATCH) are MET; neither date is adopted by assumption.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261008_COMMONWEALTH_TWR_METHOD.md (the leg table)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md lines 1239-1306 (method, type by type), 1204 (25 of 25), 685ff (98 named)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_24_L9_GRADE_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB24x1-AC4: the rule follows the CRO's table row by row; round 22's 25 are each MATCH or named with a traced cause; every cross-month dividend month is graded both ways with the swing printed and neither date adopted by assumption.",
+  "world_is": "Clause 3's 'graded both ways' is not done and could not be: every dividend row carries the pay date only (row D2-W46-S2); the pay|ex option is built and tested with no ex-date input. A MET would claim a swing nobody measured. Closes when an ex-date source lands (the dell1 data-queue project; Yahoo carries ex-dates) and the 22 dividend-dated regressions are graded both ways, or when the CTO amends the clause by name."
+}
+```
