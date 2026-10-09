@@ -20,7 +20,7 @@ EGRESS CLASS, declared: NONE (the worker writes no AWS).
 
 Read `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round1.md` section 3 and `org/missions/D8/MDPF/MDPF_CANON/prd/MDPF_CANON_PRD.md` (v2.9) CONTRACTS and the DECISIONS first.
 
-Write `deliverables/X2_GLOBAL_BASIS.md`: why the combined all-firms (`global`) figure reveals nothing about any single firm's clients
+Write `deliverables/0.9.0_WK_MDPF_CANON~5/X2_GLOBAL_BASIS.md` (your serial folder; see AMENDMENT 1): why the combined all-firms (`global`) figure reveals nothing about any single firm's clients
 (PRD DEC-7, FWD-3). It must have three headings:
 1. **Aggregation level:** what one `global` figure sums over (firms, models, accounts), read from the producer code
    (`mdpf_gold_consolidator.py`'s global fold) with `path:line`.
@@ -28,7 +28,7 @@ Write `deliverables/X2_GLOBAL_BASIS.md`: why the combined all-firms (`global`) f
    than 2 firms, say which and stop: file a row; do not write the basis.
 3. **Why no per-firm or per-account row survives:** the fold's output shape, field by field.
 
-Then add the basis file's path to the X2 row of `infra/logic/06_CONFORMANCE_LEDGER.md` as its citation. Do not change the row's
+Then add the basis file's path (the serial-folder path above) to the X2 row of `infra/logic/06_CONFORMANCE_LEDGER.md` as its citation. Do not change the row's
 status: moving X2 from OWED to GRANTED is Andrew's later acknowledgement, not this cell's.
 
 ## 2. BOUNDS
@@ -78,6 +78,8 @@ A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W5-S<k>`, with 
 filing. Report once: the diff (one line per file), the output line of every criterion, the commit hash, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~22:0xZ, row MDPF_CANON-D1-W5-S1):** the PRD names `deliverables/X2_GLOBAL_BASIS.md` at the deliverables root, which the owned-paths lane TREE_DELIVERABLES lets NOBODY write (deliverables/<SERIAL>/** only; the issuer probed it and was refused). The document lives in the author's serial folder; `r2_checks.py` reads that path (amended). The PRD's path wording goes to the CTO. Graded by no gate limb (a modification).
 
 **ISSUER NOTES:** round 2 = `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round1.md` @409182ae5a section 3, items 2-4 (item 1 and item 5 are the issuer's read of the 2026-10-10 13:30Z
 daily write, not cells). Base box/dell1. LF only.
