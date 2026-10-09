@@ -5104,3 +5104,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W81-S1 -- DB-b-106: the only landed BD transaction dates are the silver_legacy record, which ends 2026-08-20 and has day gaps; 319 of 475 segments are UNEXPLAINED, 156 confirmed
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W81-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~81",
+  "surfaced_at": "2026-10-09T16:30:00Z",
+  "one_line": "BD's landed transaction dates exist only in blackdiamond/49financial/silver_legacy/transactions (legacy plane, last return_date 2026-08-20, whole weeks absent); of 475 FLOW_TIMING/INCOME_DATE segments 156 confirmed, 319 UNEXPLAINED (BD_RECORD_ABSENT_DAY 76, BD_RECORD_ENDS_BEFORE_OPAL_EVENTS 80, DATE_SETS_DIFFER 275, NO_BD_TXN_FOR_ACCOUNT 3; codes overlap).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 1: the firm's own Black Diamond transaction or posting dates are landed in the 49 Financial tree, readable by a served address, and cover the segments the tie-out keys (the tie-out reads blackdiamond/49financial/bronze/reporting_performance/pull=20261004, which carries no transaction or posting date).",
+  "world_is": "The 49f plane (blackdiamond/49f/bronze, silver, gold) holds no transaction record; the pull=20261004 reporting_performance bronze holds period points only. The only landed BD transaction dates are blackdiamond/49financial/silver_legacy/transactions/date=*/*.parquet (1878 files, 2,328,055 distinct rows for the 5252 plan accounts after the xref join; fields return_date, trade_date, settle_date, external_flow label, income). Its last return_date is 2026-08-20 while segments run to 2026-10-01, and it holds zero rows for any account on many business days (for example the weeks around 2025-03-27 to 2025-04-09). Opal's flow dates equal BD's where BD has the day; Opal events sit on days the BD record lacks (fees and quarter-end flows among them). A segment is confirmed only if the BD record covers all of it and the two date sets are equal, so absence of BD rows grades UNEXPLAINED with a code, not a disagreement finding. Interpretation of 'agree': the order's title reads agree=confirmed, disagree=UNEXPLAINED, so a segment whose flow or income dates are the same on both sides is confirmed even though FLOW_TIMING names a timing effect; whether date agreement supports the reason is the CTO's to grade. Account-level record outside the repo (CTO msg 3617); repo record carries counts and sha256.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~81/bd_dates_two_sided.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~81/BD_DATES_TWO_SIDED.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
