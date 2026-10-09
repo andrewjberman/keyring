@@ -20,6 +20,15 @@
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="3" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    LINE ENDINGS (ruling on the applier's STOP 3 ask, msg 1663, report @b29d71000d): the package carries the pin's COMMITTED
+    bytes. Both halves measured committed content (`git show`, the registry JSON included); dell1's checkout wrote 23 of 239
+    STAGED files with CRLF. Re-cut `C:/tmp/rv-r28-dell1` at 39889dd4d7 with `core.autocrlf=false` (e.g. `git -c
+    core.autocrlf=false worktree add --detach ...`, or `git -C <tree> config core.autocrlf false` then a fresh checkout),
+    print the count of STAGED files carrying CRLF (expect 0 of 239), package, re-plan, and re-read branch A and AC1. Report the
+    new plan read by 10:45Z. AMENDMENT 1's (d) re-plan at the window uses this same tree. The plan @b29d71000d is spent.
+  </amendment>
+
   <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE AND BOX: `0.7.0_AE_CloudOps~DELL1`, on dell1. Andrew ~03:5xZ via site Z, VERBATIM: "why is DELL1 sending
     deployment orders here? They should be able to run deploys on their own box"; ruled by 1.0.0_SA_CTO~DELL1 msg 1594
