@@ -532,3 +532,29 @@
   }
 ]
 ```
+
+
+## IRPT_ANLREQ-D2-W41-S11 (worker 0.9.0_WK_IRPT_ANLREQ~41, AR-t-13) -- the decomposition holds no cell AR-t-13
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W41-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+  "surfaced_at": "2026-10-09T06:55:00Z",
+  "one_line": "proof-of-spec-check refuses AR13-t-AC1: cell_ref 'AR-t-13' is not an id in IRPT_ANLREQ_DECOMP_R1.md, so no valid proof instance exists and the order cannot flip to complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 4 re-opens TO-AR-t-12 with cell AR-t-13 (<owned_cells>AR-t-12 AR-t-13</owned_cells>, criterion AR13-t-AC1 cell_refs=\"AR-t-13\"); the order's proof validates with `proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1` rc 0 before the flip.",
+  "world_is": "The checker prints `VIOLATION: alignment: cell_ref 'AR-t-13' (cited by ['AR13-t-AC1']) does NOT exist in org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R1.md` and exits 1 (decomp id space = 10 ids; AR-t-13 is named only in the order file). Everything else in the instance validates (AR12-t-AC1 resolves, 2/2 invocations match their criteria, 8/8 surprise ids resolve, 13 artifacts resolve at their pins). The decomposition is outside this order's paths and frozen mid-round, so the worker cannot add the cell; the order stays open. Needed from the issuer or the decomposition's owner: an AR-t-13 cell row in the decomposition (or the criterion's cell_refs amended to an id the decomposition holds), then the flip is the instance commit plus the status line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1 -> INVALID (rc=1), one VIOLATION line @ this worktree HEAD",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.md:110,150 -- the only mentions of AR-t-13 outside the channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
