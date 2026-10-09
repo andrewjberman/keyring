@@ -1,0 +1,70 @@
+diff --git a/src/pages/InvestorReporting/__tests__/opal-scope/README.md b/src/pages/InvestorReporting/__tests__/opal-scope/README.md
+new file mode 100644
+index 00000000..2bc38a4b
+--- /dev/null
++++ b/src/pages/InvestorReporting/__tests__/opal-scope/README.md
+@@ -0,0 +1,11 @@
++# Verified Global / partner scope candidate
++
++Paired producer: dc51d8920dd25d4c11bf48737cdca31ada3e8a63. Portal baseline fac3b6a0c7cb55dd75d3c190a1382ce710030381.
++
++Real authenticated page defaults eligible internal actors to Global; partner actors to their verified firm. Global is an explicit directory context, never a synthetic report grant. Select Firm is populated from server outcomes; each search page and accepted selection uses its own explicit registry tenant and opaque firm/revision binding. Client/account narrowing uses existing Resolution. Identity/session changes replace the page query cache and selection state. Partial and unavailable firm outcomes remain visible.
++
++`server-wire.json` is synthetic output of the actual candidate directory Entry. `context.test.ts` runs it through the real LiveClient and envelope parser. `mounted.mjs` mounts the real page under controlled AuthContext and transport; it is not a live authentication or production proof.
++
++Validation: typecheck, targeted ESLint, production build PASS. Focused client plus field-map tests: 13 PASS; mounted page PASS; existing header-race and browse-race controls PASS. Build emits existing CSS URL / chunk-size warnings. Broad legacy fe-s-13 run is not claimed green: isolated producer fixture paths and old operation/census expectations need separate paired-layout classification.
++
++No deployment or vendor calls. The downstream generation custody owner/profile extension is a separate admitted candidate and is not proved by this directory/browser test.
+diff --git a/src/pages/InvestorReporting/__tests__/opal-scope/mounted.html b/src/pages/InvestorReporting/__tests__/opal-scope/mounted.html
+new file mode 100644
+index 00000000..1a0cab24
+--- /dev/null
++++ b/src/pages/InvestorReporting/__tests__/opal-scope/mounted.html
+@@ -0,0 +1,47 @@
++<!doctype html><html><head><meta charset="utf-8"><title>Controlled Opal scope integration</title></head>
++<body><div id="root"></div><script type="module">
++import React from 'react';
++import {createRoot} from 'react-dom/client';
++import {flushSync} from 'react-dom';
++import {BrowserRouter} from 'react-router-dom';
++import {AuthContext} from '/src/contexts/AuthContext.context.ts';
++import {InvestorReporting} from '../../index.tsx';
++import wire from './server-wire.json';
++import '/src/index.css';
++// Controlled identity + transport, actual page/client/parser. This is not live auth proof.
++const root=createRoot(document.getElementById('root'));
++let internal=true, identity='first', partial=false;
++const calls=[];
++const nativeFetch=window.fetch.bind(window);
++window.fetch=async (url,options={})=>{
++ if(!String(url).includes('/api/scoped/investor-reporting/'))return nativeFetch(url,options);
++ const path=new URL(String(url),location.origin);
++ const body=options.body?JSON.parse(options.body):{};
++ const tenant=body.selected_tenant??path.searchParams.get('selected_tenant');
++ calls.push({path:path.pathname,tenant,identity,body});
++ let answer;
++ if(path.pathname.endsWith('/resolve')){
++   if(tenant==='global'){
++     answer=structuredClone(wire.context);
++     if(partial){answer.data.completeness='PARTIAL';answer.data.firms[1]={tenant:'inflection',scope:null,state:'UNAVAILABLE',reason:'UNEXPECTED'};}
++   }else{
++     const member=wire.context.data.firms.find(row=>row.tenant===tenant);
++     answer={...wire.context,firm_id:member.scope.verified_request_firm_id,data:structuredClone(member.scope)};
++     if(!internal)answer.data.principal_class='FIRM_OPERATIONS';
++   }
++ }else if(path.pathname.endsWith('/browse'))answer=wire.pages[tenant];
++ else if(path.pathname.endsWith('/selections'))answer=wire.selections[tenant];
++ else throw Error('Controlled harness does not serve this report');
++ return new Response(JSON.stringify(answer),{status:200,headers:{'Content-Type':'application/json'}});
++};
++function render(){
++ const auth={isLoading:false,isAuthenticated:true,accessToken:null,user:{email:identity+'@example.invalid'},
++ claims:{firmId:internal?'opal-capital':'49financial',userType:null,advisorId:null,firmRole:internal?null:'admin',advisorRole:null},
++ isInternal:()=>internal,isDev:()=>false};
++ flushSync(()=>root.render(React.createElement(AuthContext.Provider,{value:auth},
++  React.createElement(BrowserRouter,null,React.createElement(InvestorReporting)))));
++}
++window.exercise={calls,switchIdentity:(name,isInternal=true)=>{identity=name;internal=isInternal;render();},
++ partial:()=>{partial=true;internal=true;identity='partial';render();}};
++render();
++</script></body></html>
