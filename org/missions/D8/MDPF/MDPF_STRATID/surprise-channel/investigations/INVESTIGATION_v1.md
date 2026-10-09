@@ -226,7 +226,7 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "spec_asserts": "Delegation keeps the signature of opal_sma_member_of and the five callers unchanged.",
     "world_is": "The callers are unchanged, but the module they import gained a file dependency. At deploy, opal_strategy_matcher.py must be added beside rebalancer_schemas.py in the silver-blackdiamond BUILD_MANIFEST and in whatever copies the gold scripts (and the vendored lambda copy infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/rebalancer_schemas.py, which has no name rules today), or the import fails."
   },
-{
+  {
     "id": "MDPF_STRATID-D1-W5-S2",
     "project": "MDPF_STRATID",
     "fabric": "dell1",
@@ -266,6 +266,27 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The worker validates its instance on its branch before flipping the order complete.",
     "world_is": "The decomposition file is outside the worker's grant and the branch predates amendment A5; validity holds only once the shared decomp is on the branch (the drain)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S2",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T13:52:00Z",
+    "one_line": "DISARM of MDPF_STRATID-D1-W5-S1 by its disarm owner: ST-w-5 landed with ST-w-2 in drain merge 4bb33bbed6, so every one of the 6 carriers that ships rebalancer_schemas.py also ships opal_strategy_matcher.py; no package built or deployed between the two.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_5_ship.py on the shared tree at 4bb33bbed6: W25-SHIP-OK 6 of 6 carriers",
+        "decomposition amendment A5: the ~5 branch never merges without ST-w-5; it merged as one branch carrying both cells",
+        "mdpf-gold-lambda's deployed package is still the pin-148f715f8c build (ledger mdpf-stratid-r1-global-pfde-fold L3); no rebuild since"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row D1-W5-S1: a carrier that ships rebalancer_schemas.py without opal_strategy_matcher.py raises ImportError at deploy.",
+    "world_is": "After 4bb33bbed6 no carrier ships one without the other. The hazard named by D1-W5-S1 is disarmed; its disposition is the CVO's."
   }
 ]
 ```
