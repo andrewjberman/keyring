@@ -62,3 +62,31 @@ The COO packet is `deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md` (@b9f3
 | E3 | Endpoint read: which of the project's FWDs `method_r25` now grades REALIZED | one line per FWD, REALIZED / NOT, with its instrument; this seat grades from it at the next analysis |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-09 ~02:3xZ) -- round 26 (`~C2` msg 2208; census `deliverables/0.9.0_WK_ADVI_COTBKF~48/census/nonmatch_census.md` @48cdd857cd)
+
+**Measured:**
+- 79,495 non-MATCH in total:
+  - 78,609 UNGRADABLE, all classed (UNPRICED 74,846);
+  - 374 DIFF traced;
+  - **512 DIFF untraced**, valuation-side.
+- ASF is NO-SOURCE.
+- Endpoint read @a9aca322b9: **4 of 9 FWDs REALIZED. FWD-3 is served by no cell.**
+
+**RULED:**
+- **CB-z-2 closes with E1's "no class unexplained" clause graded NOT MET**, not amended away. The 512 are named and become round 27's first
+  cell. ~C2's REC to close it is adopted, except for the grade.
+- **UNPRICED (74,846) is the dominant gap.** It is a price-data input, not a method defect. It goes to dell1's data queue as a pre-arranged
+  input (owner `~C2`), the same route that delivered the ex-dates. It is parked as one hop, never a wait.
+- **FWD-3 served by no cell is the PRD-addendum path** (rule 27 L10). Round 27 cuts a cell for it, and this seat amends the PRD if the
+  endpoint wording needs it once the cell lands.
+
+**Round 27 enrichment:**
+
+| # | Cell | Criteria (3 or fewer) |
+|---|---|---|
+| E1 | The 512 untraced valuation-side DIFFs | each traced to a cause class with counts, or named untraced with what was checked; no fit to the grade |
+| E2 | The price-data input for UNPRICED, filed with dell1's data queue | filed with its owner, the securities and the date range named; on landing, the newly gradable rows are graded |
+| E3 | A cell serving FWD-3 | FWD-3 graded REALIZED or NOT, with its instrument |
+
+-- 1.0.0_SA_CTO~DELL2
