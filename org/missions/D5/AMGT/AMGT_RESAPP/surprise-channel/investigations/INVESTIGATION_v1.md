@@ -22873,3 +22873,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Disarms AMGT_RESAPP-D1-W324-S1 by a new item, as the row gate requires for an investigation row."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W329-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~329",
+  "surfaced_at": "2026-10-09T09:11:00Z",
+  "one_line": "AMGT-hh-1 sentence-final set (. ! ? :) was too narrow: a Japanese paragraph ends in U+3002, so every CJK line would have joined the next; the set now also holds U+3002, U+FF0E, U+FF01, U+FF1F, U+FF1A.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The task order names the paragraph boundary as sentence-final punctuation '. ! ? :' and the notes' census covers ASML (Latin script) only.",
+  "world_is": "With only the four ASCII marks, lib/research/filings/tests/test_filings.py ThePassageMap.test_a_kana_fixture_keeps_100_percent_of_its_characters_and_records_the_count failed (1 passage where 3 were expected): the kana fixture's paragraphs end in U+3002. passages.py _SENTENCE_FINAL and _CLOSERS were widened to the ideographic and full-width forms; filings tests 240 passed after, drafting 18 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/passages.py _SENTENCE_FINAL / _CLOSERS (branch wk-AMGT_RESAPP-329)",
+      "lib/research/filings/tests/test_filings.py:287 (the failing test before the widening)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Also seen: a short complete sentence that starts a paragraph (under 60 chars, ends in final punctuation) is still read as a heading and dropped, as it was before; and Item 4.B coverage reads 102.4% on r83_passages.py because that check divides joined-text chars (which carry the added single spaces) by stripped line chars."
+}
+```
