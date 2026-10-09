@@ -422,3 +422,29 @@
   "world_is": "Until the ruling, H1's stream mapping would also have reached it; the ruling withdraws H1 and its kms:Decrypt grant before any apply, so one trigger remains."
 }
 ```
+
+## IRPT_ANLREQ-D2-W63-S1 -- AR-g-13: "the same refusals as poll_once" and "refused and deleted" name opposite outcomes; the order's terminal list also leaves the record-level refusals to a reading
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W63-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~63",
+  "surfaced_at": "2026-10-09T06:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-g-13 asks the package poll for 'the same 4096-byte and duplicate-field refusals as poll_once' and, in arm (c), for a malformed body to be refused AND DELETED; poll_once raises on both and never deletes, so the order cannot mean the same outcome. Built as: message-level refusals delete, everything record-level keeps.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py poll_once (ValueError CLOSED_QUEUE_MESSAGE_REQUIRED / DUPLICATE_QUEUE_FIELD, no delete) @f9daebcb8e",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-13.resident-polls-commentary-ready-into-packager.md section 3 and arm (c) @2b0744fbbe",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py _closed_message / handle_commentary_ready (refusal names) @f9daebcb8e"
+    ]
+  },
+  "spec_asserts": "AR-g-13 section 3: the package poll applies the same 4096-byte and duplicate-field refusals as poll_once, and deletes a message only on attached, already attached, or a named refusal of the message itself (wrong kind, extra or missing field, not closed); arm (c): a malformed body is refused and deleted, the packager not called.",
+  "world_is": "poll_once raises on an oversize body or a duplicate field and leaves the message, so 'the same' refusal cannot also delete. poll_package_once applies the same two checks and then DELETES (an oversize, non-JSON, non-object or duplicate-field body can never become valid, and keeping it only walks it to the DLQ); the packager's own message-level names (WRONG_KIND, EXTRA_FIELD, MISSING_FIELD, MESSAGE_NOT_JSON, MESSAGE_NOT_AN_OBJECT, CLOSED_QUEUE_MESSAGE_REQUIRED) delete when raised as PackagerRefused. Every other refusal the packager raises about the RECORDS (ACCEPTANCE_RECORD_ABSENT, TICKET_ID_ABSENT, COMMENTARY_REF_ABSENT, JOB_NOT_READY, ORIGINAL_REF_ABSENT, COMMENTARY_MALFORMED) is not in the order's terminal list and is KEPT: those depend on records that can still arrive (commentary written, job READY), so redelivery and the DLQ own them. The package poll also sets the process variable IRPT_ANALYSIS_READY_QUEUE_URL from the I3 binding (the order's first option), so the factory mutates os.environ once at build."
+}
+```
