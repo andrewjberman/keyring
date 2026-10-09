@@ -13,11 +13,13 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | P1 | verify | source-map re-pin + built-zip member census vs live zip + targeted plan | upload_member_diff exactly the two member paths, reporting_policies.json equal live, Plan: 0 to add, 1 to change, 0 to destroy | source-map re-pin 072d27a4a1; built oNgy4rnr...; member census vs live zip (S3 version a.YllA9SmwwfY34NlajqOaNsex2bBZAy): differ exactly account_activity_lots.py + handler.py, reporting_policies.json equal live, 19 of 19 members; upload version qh361rTWYO2VtgsirsJXq6kiqJEVBDpZ (f0d129281f); targeted plan 'Plan: 0 to add, 1 to change, 0 to destroy.' | CLOSED 20261009T143249Z |
-| D1 | activation | one safe-apply of the saved plan, infra/aws/terraform/investor-reporting/reporting-gold | Apply complete, 1 changed |  | OPEN |
-| V1 | verify | readback CodeSha256 equals built, post-apply plan No changes | get-function-configuration CodeSha256 = built sha256; No changes |  | OPEN |
+| D1 | activation | one safe-apply of the saved plan, infra/aws/terraform/investor-reporting/reporting-gold | Apply complete, 1 changed | SAFE_APPLY_TERRAFORM=main terraform.exe .tools/safe-apply.sh -chdir=infra/aws/terraform/investor-reporting/reporting-gold apply r44.tfplan: rc 0, 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' at 2026-10-09T14:34:30Z | CLOSED 20261009T143625Z |
+| V1 | verify | readback CodeSha256 equals built, post-apply plan No changes | get-function-configuration CodeSha256 = built sha256; No changes | get-function-configuration CodeSha256 oNgy4rnrduvN9N2axhsHBfe9izZKd8dZGeFGXAIh+cM= = built = artifact metadata; LastUpdateStatus Successful, State Active; post-apply targeted plan 'No changes. Your infrastructure matches the configuration.'; source map stamped by record-deploy-scope.py (deployed_code_sha256, deploy_ledger d250d437a5) | CLOSED 20261009T143625Z |
 | S1 | verify | first scheduled fire sizing read (85% of 900 s = 765 s, 85% of 2048 MB = 1740.8 MB); issuer reads REPORT line and closes this leg | REPORT line Duration and Max Memory Used against the 85% lines |  | OPEN |
 
 ## Log
 
 - 20261009T141409Z OPENED by 0.9.0_WK_IRPT_DASHBD~70 with 4 leg(s)
 - 20261009T143249Z LEG P1 closed: source-map re-pin 072d27a4a1; built oNgy4rnr...; member census vs live zip (S3 version a.YllA9SmwwfY34NlajqOaNsex2bBZAy)
+- 20261009T143625Z LEG D1 closed: SAFE_APPLY_TERRAFORM=main terraform.exe .tools/safe-apply.sh -chdir=infra/aws/terraform/investor-reporting/reporting-gol
+- 20261009T143625Z LEG V1 closed: get-function-configuration CodeSha256 oNgy4rnrduvN9N2axhsHBfe9izZKd8dZGeFGXAIh+cM= = built = artifact metadata; LastUpda
