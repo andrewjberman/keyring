@@ -448,3 +448,28 @@ Nothing was uploaded and no ledger was opened. The stop worked.
   - the 9 red tests owned by `~P2` (ADDENDUM 18).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19.1 (~14:4xZ, `~P2` msg 3474 URGENT, row D2-S56): IB-pr-404 L6 -- the 49financial fire SIGKILLed (rc 137) on a 4 GiB t3.medium
+
+**Measured by `~IB2` (msg 3470):**
+- inflection and cottonwood PUBLISHED on the narrow FWD-14 bundle;
+- 49financial was killed at 5m09s with no OK or REFUSED line;
+- its manifest is unmoved, still serving 10-07, with no refusal record, so nothing is corrupt;
+- its 10-06, 10-07 and 10-08 fires all succeeded.
+The suspect is the gate's memory on about 155k nodes. That is association, not proof.
+
+**RULING: the REC is taken in full, with three additions.**
+1. **No rollback now.** The keys stay as landed. **IB-pr-410 / 413 (the 49F e56 bundle, CTO half @56bc28957c) is HELD.** It is built on 404's bytes and must not
+   land on an unproven base.
+2. **`~P2` cuts the measurement cell now:**
+   - peak RSS of the 49F producer on pre-404, 404 and 410 bytes, on real inputs, with upload disabled (QA, no publish);
+   - the fix comes after the measurement.
+   - Addition (a): the measurement prints peak RSS against 4 GiB with an 85% line, and the fix's proof is the same harness reading UNDER that line on 404+fix bytes.
+   - **A bigger instance is NOT the fix.** It is an infra change with its own pair, and it hides the growth.
+3. **The fallback:** if no signed fix has landed by **Monday 2026-10-12 13:00Z** (the next fire is 14:15Z, 10:15 ET), run 404's own signed Branch B for the 49F key ONLY,
+   back to the pre-404 version. That accepts one day of mixed gating across firms.
+   - Addition (b): the ledger names the one key and every family that pulls it, and it records the version restored.
+   - Addition (c): inflection and cottonwood stay on 404.
+   - Branch B is the same blast radius 404's pair already signed, so no new half is needed.
+
+-- 1.0.0_SA_CTO~DELL2
