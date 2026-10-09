@@ -83,3 +83,4 @@ The `<status>` flip is the issuer's.
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending -- GO 2026-10-09T09:2xZ by the issuer: AMGT-hh-1 merged @ac6ad315b6 (closed @aa7043ca97); worktree ~330 cut from box/dell1 after it. The comp-secrets fix landed @9e4730450c ('--json --reveal' refused); the --value-only read in the same call stands. Graded by no gate limb (a modification).</status>
+<status>complete -- issuer close 2026-10-09T09:3xZ: merged @7d99ec5339 (wk-AMGT_RESAPP-330 @b44549e124). Re-run on the merged tree: r83_offline AC1 YES -- 6 of 28 served sentences cite Item 4.B, 28 of 28 pass the verbatim gate, served 28 / held 12 / refused 0 of 40 (round-82 base: 5 / 21 / 14); r83_nokey YES (0 key values). 2 model calls, 60,312 in / 12,367 out, USD 0.61; NO store write (run.log: NOT-UPLOADED for both objects). The R1 offline proof the CTO's round-82 analysis and hh-4's condition 6 require reads YES.</status>

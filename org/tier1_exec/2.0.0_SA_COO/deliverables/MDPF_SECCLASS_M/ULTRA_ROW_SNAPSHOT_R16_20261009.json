@@ -1,0 +1,39 @@
+{
+ "classified_by": "scheduled",
+ "new": {},
+ "remap": {
+  "NAME::AMERICAN CENTURY ULTRA INV": {
+   "before": {
+    "asset_class": {
+     "S": "fixed_income"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "American Century Ultra Inv"
+    },
+    "sub_asset_class": {
+     "S": "Ultra Short Duration"
+    },
+    "ticker": {
+     "S": "NAME::AMERICAN CENTURY ULTRA INV"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "equity",
+   "set_sub": "US Large Cap"
+  }
+ },
+ "table": "etf-classifications",
+ "taken_at": "2026-10-09T09:32:46.768814+00:00",
+ "updated_by": "mdpf-secclass-s11-rows"
+}
