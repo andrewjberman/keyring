@@ -8035,6 +8035,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ],
       "disposition": "DISMISSED_WITH_REASON",
       "dismissal_reason": "The hazard is removed at HEAD by a refusal in each of the three writers (@928dbc98e7), shown by a positive and a negative control per script; nothing else is owed on Z-W120-S3."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S106",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~W1",
+      "surfaced_at": "2026-10-09T00:25:51Z",
+      "one_line": "to-check reads 39 AMGT_HARVST orders ACTIVE at status issued; 36 of them carry a later terminal <status> tag, so the 39 is a first-tag parse of orders that append their flips.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HANDOVER_TO_DELL1_20261009.md (origin/box/sitez): 'to-check --all --project AMGT_HARVST reads 39 ACTIVE, all with status issued ... likely the first-tag parse of orders that append their flips. DELL1's COO reconciles it ... from each order's LAST <status>'.",
+      "world_is": "Read at box/dell1 HEAD 2026-10-09 ~00:2xZ over all 173 files in task-orders/: first <status> tag issued on 39; LAST tag complete 161, withdrawn 5, cancelled 3, closed 1, issued 3. The three still issued on their last tag are open by design: bo-1 (~122) and bp-1 (~123) are SERVED orders whose branches are held unmerged on a never-widen pair; bk-3 (~118) was held unspawned until a newer gold part was served, and rebuild #10 served one at 23:40:30Z, so 2.0.0_SA_COO~W1 spawned it at 00:2xZ. NOT measured: which to-check code line takes the first tag; other projects whose orders append flips read the same way.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/ (173 files, last-tag parse)",
+          ".tools/to-check.py",
+          "origin/box/sitez:org/missions/D5/AMGT/AMGT_HARVST/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
