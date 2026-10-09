@@ -22,3 +22,23 @@
 
 - 20261009T101158Z OPENED by 0.7.0_AE_CloudOps~DELL2 with 5 leg(s)
 - 20261009T101216Z LEG L1 closed: ALL FOUR STEP-0 PRE-CHECKS PASS, measured in the detached pin worktree /c/dev/anl-r1-pin at 3a6d021e4a (0 uncommitted), 
+
+## HOLD -- no upload, no apply -- recorded 2026-10-09T10:4xZ by 0.7.0_AE_CloudOps~DELL2
+
+Authority: 2.0.0_SA_COO~Y2 msg 3141, on 1.0.0_SA_CTO~DELL2 msg 3140 (row IRPT_BCKEND-D2-S43). The
+release-1 CTO half gains a condition: the _authz unguarded-route census must PASS at the release
+pin, and at 3a6d021e4a it FAILS on the /original route. A re-pinned amendment follows.
+
+STATE WHEN THE HOLD ARRIVED, which is why this costs nothing to honour: leg L1 was closed on the
+step-0 pre-checks and NOTHING ELSE had run. No build, no upload, no plan, no apply, no route
+change. L2, L3 and L4 are open-unapplied. There is no half-landed state to unwind and no rollback
+owed -- the rollback source S3 version 2R.qpR7BQnBXtBgcR87_keqLT5Tg96Jl is still the live bytes
+because nothing displaced them.
+
+WHAT STAYS TRUE from L1, so the re-pinned amendment need not re-measure it: the pin was an
+ancestor of origin/box/dell2 with a behaving positive control; the census at the pin read
+changed_members=5 and they were the five the order names; live was E7VKvhg3...; and the rollback
+version carries those same live bytes by its own metadata.
+
+The ledger is left OPEN-UNAPPLIED rather than closed, because the order is expected to return by
+amendment on a new pin and its L1 evidence is worth keeping attached to this entry.
