@@ -101,3 +101,29 @@
   "notes": "CN-a-2's apply legs are PROVEN and nothing is half-landed: the code and env are live and verified (CodeSha256 equal to the prediction made before the upload, env carrying the three GOLD_WRITER_ROLE_ARN_* and MDPF_GOLD_COMMIT 55c3cc4642, 0-diff re-plan). A rollback does NOT clear this hazard: the previous live package ff1a8867a6 carries the same import, so only the builder fix or a rollback past R2's deploy would, and the latter is another order's landed work. The run_class=backfill invocation (C4) is HELD rather than run, because it would write 49financial and inflection partitions while cottonwood and global failed -- a partial dated history the order's error-0 arm does not describe."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S4",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T20:26:43Z",
+  "one_line": "Four 2-row SYNTHETIC composite parquet partitions sit in the new gold home -- opal-data-mdpf mdpf/global/gold/{account_distribution,account_units,aggregate_aua_timeseries,aum_metrics}/date=2026-10-08/data.parquet, written 2026-10-09T19:10:38-39Z, before any apply or deploy, two minutes before 0.9.0_WK_MDPF_CANON~2's commit; its order forbade any AWS write.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 -- removal of the four keys is an S3 delete, which needs a human's confirmation (RESERVED card to 0.0.0_AB_MSTR~DELL1 for Andrew); until then the backfill skips them as present (plan() excludes existing partitions) and global 10-08 holds fixture rows, never the composite's figures",
+  "spec_asserts": "CN-a-2's bounds: no AWS write of any kind by a worker; DEC-2: history is never rewritten, so whatever sits in a dated partition stands.",
+  "world_is": "head-object: 1037 B each, application/vnd.apache.parquet, no metadata. Rows (pyarrow): aum_metrics = {period: 2026-10-08, total.aum: <num>}, account_units = {count: <num>, value_date: 2026-10-08} -- records_for's (path, value_num, value_text) shape with 2 rows each, a fixture, not the composite (whose aum_metrics carries far more figures). Firm buckets carry only TAXSMA's 9+9 objects; inflection 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws s3api list-objects-v2 --bucket opal-data-mdpf --prefix mdpf/global/gold/ (6 keys: the 4 above + 2 ai_classified_securities index.json)",
+      "pyarrow read of two of the four (scratch copies), 2 rows each",
+      "git -C C:/Dev/wt-canon-w2 log: 4fc14f14cd 15:12:22-04:00 (19:12Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed by the issuer at the round-1 real run; CloudOps told the backfill will plan 0 for global 10-08 on these four."
+}
+```
