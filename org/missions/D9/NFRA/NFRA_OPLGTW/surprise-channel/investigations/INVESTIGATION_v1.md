@@ -11643,3 +11643,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Inert until the applier runs it; the applier should run `before` first, which exits 1 if the host differs from the base list."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S76",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T19:02:48Z",
+  "one_line": "Disarms NFRA_OPLGTW-Z-W49-S1 (the transcripts KMS key gave the gateway role no use): REMEDIATED in the world -- NFRA_TRNSPT.TO-APPLY-ka21 complete; key 44a2284f carries GatewayWritesTranscripts = kms:GenerateDataKey + kms:Encrypt for opal-gateway-role, no Decrypt (read live by 1.0.0_SA_CTO~Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round32.md @3566a85699 section 2, row W49-S1: REMEDIATED in the world; the key policy read by 1.0.0_SA_CTO~Z carries the named WRITE statement (6 statements)",
+      "MSG 1.0.0_SA_CTO~Z msg 32946: 'disarm W49-S1 with a citing row; I read the key grant live'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard W49-S1 named is gone: the key policy now grants the gateway role the write use. The .pptx pair still waits on its registry row and PutObject grant (W49-S4, round-34 cell E1).",
+  "spec_asserts": "W49-S1: an IAM PutObject grant alone cannot make the .pptx pair write, because the transcripts KMS key policy gives opal-gateway-role no use of the key.",
+  "world_is": "The key policy grants kms:GenerateDataKey and kms:Encrypt to opal-gateway-role (no Decrypt). The KMS leg of the .pptx pair is done; the S3 grant and registry row are not (W49-S4).",
+  "notes": "Citing row; W49-S1's own text is untouched."
+}
+```
