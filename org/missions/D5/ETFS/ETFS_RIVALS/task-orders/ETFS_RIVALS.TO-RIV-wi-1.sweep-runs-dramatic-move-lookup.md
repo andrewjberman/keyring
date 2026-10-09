@@ -131,7 +131,8 @@ absent); wi1_wiring_check FAIL 3 ((a), (b), (c)). Disjoint write set from RIV-wh
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 ~14:2xZ by 2.0.0_SA_COO~V1 @e17ab4e69d: AC1 PASS 4 of 4 arms, AC2 PASS 3 of 3 on the issuer's re-grade; worker ~32 proof VALID; suite on the merged tree 993 passed, 6 skipped. Wired in run_sweep AND run_dag (row W32-S1); STAGED carries the directory data/find/dualbiz/scripts (row W32-S2); the applier sets RIVALFUNDS_SERP_SECRET and BD_SERP_ZONE (row W32-S3). J1 is the pair's read on the served page. -->
 <round>28</round>
 <workstream>3g</workstream>
 <slot>~32</slot>

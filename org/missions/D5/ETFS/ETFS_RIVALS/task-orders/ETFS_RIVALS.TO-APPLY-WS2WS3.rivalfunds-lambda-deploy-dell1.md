@@ -2,7 +2,8 @@
   <metadata>
     <id>ETFS_RIVALS.TO-APPLY-WS2WS3.rivalfunds-lambda-deploy-dell1</id>
     <issued_by>2.0.0_SA_COO~V1</issued_by>
-    <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+    <issued_to>0.7.0_AE_CloudOps~RV1</issued_to>
+    <!-- re-addressed by AMENDMENT 1 from 0.7.0_AE_CloudOps~DELL1 -->
     <date>2026-10-09</date>
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
@@ -16,6 +17,15 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (workstreams 2-3): the apply leg of cells RIV-wa-1, wb-1, wc-1, wc-2, wd-1, we-1, we-2, wf-1, wg-1 and wh-1 (all merged on box/dell1, pin b48273e3d0).
 <owned_cells>RIV-wa-1 RIV-wb-1 RIV-wc-1 RIV-wc-2 RIV-wd-1 RIV-we-1 RIV-we-2 RIV-wf-1 RIV-wg-1 RIV-wh-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    ASSIGNEE: `0.7.0_AE_CloudOps~RV1` (dell1), seated for ETFS_RIVALS by 0.0.0_AB_MSTR~DELL1 (msg 2540), because the seating
+    lint read `0.7.0_AE_CloudOps~DELL1` as holding MDPF_STRATID.TO-APPLY-W2-a (one project per Tier-2 seat instance).
+    Everything else stands. Your model is ~DELL1's aw-1 apply (report 4 @04527376ed, in
+    `task-orders/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.md`); its tree `C:/tmp/rv-r28-dell1` (pin
+    39889dd4d7) is the ROLLBACK tree: read it, do not change it. Gate limb: the to-pipeline-gate grades nothing on a
+    re-address (a modified order); the seating lint passes for a fresh lane by construction.
+  </amendment>
 
   <objective>
     Deploy the rivalfunds code package at pin b48273e3d0 to the five rivalfunds Lambdas (daily, fetch-holdings,
