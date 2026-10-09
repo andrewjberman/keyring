@@ -2263,3 +2263,21 @@ disappearance rule, and packages the release for the applier. SOURCE_REMOVAL sto
 | `IB-pr-379` | diagnose and fix the dropped entries in the inflection and cottonwood builds; package the refresh release | FWD-7 | WORLD | IB-pr-377 (PASS) | P91-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one fault, one cell; the release order follows its packet. Assignee: 0.9.0_WK_IRPT_BCKEND~187.
+
+## 85. ROUND 92, WORKSTREAM ~P (2026-10-09 ~00:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1959)
+
+IB-pr-379 (round 91) stopped at its diagnosis, as its SOURCE_REMOVAL clause requires. Both dropped entries are source removals, one each:
+an inflection household the vendor merged away, and a cottonwood zero-value account no longer emitted. The build is right, and the
+disappearance rule fails them indefinitely (row D2-W187-S1, BLOCKING, ARMED). The CTO ruled the rule:
+- an entry absent from both the build and the source is carried forward as TERMINATED + source_removed_on, and the build goes READY;
+- an entry in the source but missing from the build stays REFRESH_FAILED, and that is the negative arm, run on both firms' real cases;
+- each refresh prints its TERMINATED count.
+
+The release goes under its own pair and must be live before cottonwood's OVER_AGE on 2026-10-12, so by Friday 10-09's close. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r92/p92_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-380` | carry source-removed entries forward as TERMINATED; real-case replay with the negative arm; package the refresh release | FWD-7 | WORLD | IB-pr-379 (diagnosis drained) | P92-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one rule, one cell; the release order follows its pair. Assignee: 0.9.0_WK_IRPT_BCKEND~188.
