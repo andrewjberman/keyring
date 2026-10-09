@@ -3684,3 +3684,81 @@ round.** Never edit an existing row.
   "world_is": "The writer is BD-tree code with BD-derived inputs; a run with the env bucket pointed at the cot bucket (a runtime act the repo does not show) is the only way the writer reaches the cot store; the repo cannot say which run did."
 }
 ```
+
+## ADVI_COTBKF-D2-W63-S1 -- CB-ai-1 detector corrections and builder-in-force reading (class shared_builder_run)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W63-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~63",
+  "surfaced_at": "2026-10-09T11:50:00Z",
+  "one_line": "CB-ai-1: the run-1 detector of the committed class rule over-matched (docstring lines read as live cot paths; same-run daily files read as a prior carrier) and no cot-path builder commit exists before the store write, so the rule's 'revision in force' was read from the seed commit 6b0be4337e plus the shared builder path; class=shared_builder_run after the detector was corrected (rule text unchanged).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rule commit 5c79b91853 (script docstring, no output)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~63/bd_txn_provenance.md sections 2-4",
+      "run 1 (first output) printed class=live_cot_path:data/cot/scripts/gold/B_01.holdings_lots.py:2263, a module docstring line, and build_canonical_prices_v2.py:24, also a docstring; run 2 uses ast to skip docstrings/comments and treats only an earlier-than-60s hit as a prior carrier",
+      "git log: data/cot/scripts/gold/build_canonical_prices_v2.py first commit 6b0be4337e 2026-06-10, after the store write 2026-06-09T20:42:16Z; that seed revision auto-chains inject_scoped_overrides (lines 22,481,669) and was removed 319a716cb4 2026-06-12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The class rule reads the cot builder revision in force at the store LastModified from git log; a cot builder revision exists at that time.",
+  "world_is": "The cot-path builder entered git (as a faithful S3 seed) the day after the store write; the writer-in-force is the seed's content, which still auto-chained the 49F inject; the grader should confirm the seed-as-in-force reading and the 60 s same-run reading."
+}
+```
+
+## ADVI_COTBKF-D2-W62-S1 -- AC2's invocation names no --grades, so the build reads <data-dir>_out/month_grades_{after,before}.parquet; AC1
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W62-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~62",
+  "surfaced_at": "2026-10-09T11:35Z",
+  "one_line": "AC2's invocation names no --grades, so the build reads <data-dir>_out/month_grades_{after,before}.parquet; AC1 writes them to its --out (the deliverables folder), so they were copied to .scratch/advi_cotbkf/r34_out/ for AC2 to run as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commonwealth_fwd3_serve.py build(): grades_path default = Path(str(data) + '_out') / GRADES_AFTER (a65776f167)",
+      "cp of org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~62/month_grades_{before,after}.parquet to .scratch/advi_cotbkf/r34_out/; the worktree also had no tx cache or price cache, so .scratch/advi_cotbkf/cache and fwd3/price_cache were copied from the base checkout's .scratch (local files, no S3 write)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB34ah2-AC2 runs --build --data-dir .scratch/advi_cotbkf/r34 --out ... as written after AC1.",
+  "world_is": "It runs as written only after the two grade files sit at <data-dir>_out; the copy is a byte copy of AC1's own output (CB-ah-3's applier needs the same step)."
+}
+```
+
+## ADVI_COTBKF-D2-W62-S2 -- The committed as-traded rule drops 3,962 linear_interpolation days that lie after (3,959) or before (3) a tick
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W62-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~62",
+  "surfaced_at": "2026-10-09T11:36Z",
+  "one_line": "The committed as-traded rule drops 3,962 linear_interpolation days that lie after (3,959) or before (3) a ticker's last/first yahoo_finance point: the store interpolated them toward a non-Yahoo neighbour (transaction_observed), and the rule brackets by replaced Yahoo points only; 36 priced holding-days are lost (5,115,115 -> 5,115,079).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRICE-BASIS arm=AFTER line of the AC1 run: points_replaced=1049193 points_dropped_no_close=0 days_rederived=477980 days_dropped_unbracketed=3962; BEFORE priced=5115115, AFTER priced=5115079",
+      "store read (price_cache canonical prices, the 911 substituted tickers): LI days outside [first, last] yahoo_finance day = 3962 on 911 tickers' rows, 5 tickers with 65-68 each (SDIV, TDTT, WAL, SPYI, UHS); e.g. HLN transaction_observed 19194 then LI 19195-19197 then yahoo_finance 19198",
+      "rule at 2536c4fc09 (committed before the run): 'a day with a replaced point on only one side is dropped'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CB-ah-2 item 1: re-derive the ticker's linear_interpolation days linearly between the replaced points; nothing else changes.",
+  "world_is": "Days with a replaced point on one side only cannot be derived from replaced points; they are blank, never filled. The rule was not changed after the run; widening the neighbours to include the store's transaction_observed points would restore up to 36 holding-days and is the COO's/CTO's call."
+}
+```
