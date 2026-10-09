@@ -31,10 +31,10 @@ Your worktree is `C:/dev/wk-irpt-dashbd-21`; run everything from its root. Your 
 `data/assets/scripts/gold/irpt_reporting/account_activity_lots.py`. Its record
 `deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json` carries `window_identity`: 91 accounts graded over 2026-09-01..
 2026-10-05; 52 tie within one cent; 39 do not (`accounts_above_one_cent`, each with its `gap`). The identity is beginning_value +
-contributions - withdrawals + realized + unrealized_change + income = ending_value. The largest gap is account `0018321241`, about
+contributions - withdrawals + realized + unrealized_change + income = ending_value. The largest gap is account `acct#f0faa651`, about
 1,108,912.92. Find out why, without changing the producer:
 
-1. **The largest gap, term by term.** For `0018321241` over the same window, recompute each of the seven terms from the producer's own
+1. **The largest gap, term by term.** For `acct#f0faa651` over the same window, recompute each of the seven terms from the producer's own
    sources (`s3://opal-data-assets/schwab/08335338/silver/`: `fact_trn`, `fact_rld`, `fact_uln`/`fact_ult`, `dim_position`,
    `dim_balance`), each with the source rows it summed and their count. Name the cause and the rows that show it.
 2. **A census of transaction types** in the 91 accounts' window source (`fact_trn`): every type, its row count, its sign as the activity
@@ -101,6 +101,6 @@ comp-iam: DECLARED-NOT-APPLICABLE -- reason: S3 reads only, from this box; no ro
 comp-routes: DECLARED-NOT-APPLICABLE -- reason: no route changes.
 comp-schedule: DECLARED-NOT-APPLICABLE -- reason: no schedule is touched.
 comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is touched.
-comp-adversary: RUN -- DB24-1-AC1, AC2 and AC3 base FAIL (no record), dry-run at base c2b4cbb412 2026-10-07 ~15:1xZ; the denominator read from round 23's record: 91 graded, 39 above one cent, largest 0018321241 (1,108,912.92), 30 of the 39 within 0.05.
+comp-adversary: RUN -- DB24-1-AC1, AC2 and AC3 base FAIL (no record), dry-run at base c2b4cbb412 2026-10-07 ~15:1xZ; the denominator read from round 23's record: 91 graded, 39 above one cent, largest acct#f0faa651 (1,108,912.92), 30 of the 39 within 0.05.
 lane: the <paths> block IS the grant.
 </preflight>
