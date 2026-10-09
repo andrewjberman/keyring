@@ -423,6 +423,28 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "prd/MDPF_DEMQUE_PRD.md C-RESERVE"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-W1-S4",
+    "one_line": "TO-DQ-t24 requires vendor-warning stop and a named stop outcome through bbg_quote --record, but historical_data drops fieldExceptions and the recorder always emits DRAWN; dependency files outside write grant.",
+    "spec_asserts": "TO-DQ-t24 build1: stop on the first vendor limit warning/refusal, recording the stop; append ONE actuals line with bbg_quote.py --record, outcome DRAWN or the stop named.",
+    "world_is": "After local NTDQ-OK, offline stub session against real blp_client.historical_data with on_response_error=raise returns one data row and drops supplied fieldExceptions; responseError positive control raises. Real record_actual to temporary ledger emits DRAWN for zero cells and rejects outcome keyword; CLI --help has no outcome argument. Neither blp_client.py nor bbg_quote.py is granted. No real draw/task/auth/actuals act. Issuer amendment requested for opt-in diagnostics and stop-aware recording, or approved adapter/interface.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-09T14:49:55Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T24_REVIEW.md",
+        "integrations/bloomberg/mcp/blp_client.py historical_data handle: responseError opt-in; fieldExceptions not read",
+        "data/mdpf/scripts/demque/bbg_quote.py record_actual and CLI outcome interface",
+        "python .scratch/t24-interface-probe.py: rc0; lost field exception, positive responseError control, DRAWN zero, unsupported outcome keyword"
+      ]
+    }
   }
 ]
 ```
