@@ -6607,3 +6607,84 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The gate's universe is the box's diff against origin/CLOUD at push time. The integrator merges box branches into CLOUD on its own clock, so a file can reach CLOUD (and every box) before any pinned-entry push, after which the push path can never deploy it. ARMED: F3 is not live until CloudOps deploys it directly under the OPEN entry. Remedy for the gate owner: deploy any OPEN-entry-named file whose S3 bytes differ from the pinned blob, regardless of the diff."
 }
 ```
+
+## NFRA_CTLPLN-W56-S1 -- CTi14-AC2 cannot print AGENT-SUITE ok=True: two scripts outside this order's paths feed plain text to a drafting call, which the contract now refuses
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:00Z",
+  "one_line": "CTi14-AC2 cannot print AGENT-SUITE ok=True: two scripts outside this order's paths feed plain text to a drafting call, which the contract now refuses",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C: amend the order's paths to add test_inbound_mail_reply.py (and test_inbound_cloud.py), or re-cut AC2; the edit is one fake model reply wrapped as {\"post\": ...}",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/2.0.0_SA_COO~R/checks/check_agent_suites.py at 7b256d4877: pytest 127 passed; mail_reply INBOUND-MAIL-REPLY-TEST ok=False cases=8/9; AGENT-SUITE ok=False pytest_rc=0 mail_reply_rc=1",
+      "data/transcripts/scripts/tests/test_inbound_mail_reply.py:86-87 (World._kimi returns plain 'Fixed the export, can you take a look?' for COMPLETION_SYSTEM) fails case difference_control_the_same_completion_on_a_chat_job_sends_once_after_his_1",
+      "data/transcripts/scripts/tests/test_inbound_cloud.py:86-88 (same plain-text COMPLETION_SYSTEM reply and 'On it, thanks.' for a chat draft) fails 4 of 9 cases: INBOUND-CLOUD-TEST ok=False cases=5/9; that script is not in the AC2 suite but is the same defect",
+      "neither file is in the order's <paths>; the order says read the check and do not edit it, and that a path the lane lacks is a BLOCKING row on that criterion"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTi14-AC2: the agent's seven pytest files and the mail-reply script still pass (127 and 9/9 at the base) after the contract lands.",
+  "world_is": "The contract is strict (the whole answer must be one JSON object), so a fake model that returns plain text for a drafting call is refused by design. Four scripts feed such a fake: the seven pytest files and test_inbound_silent_paths.py and test_inbound_voice.py (all in paths, changed), and test_inbound_mail_reply.py and test_inbound_cloud.py (not in paths, unchanged). Measured: pytest 127/127, mail_reply 8/9, cloud 5/9. Not repaired and not widened: no lenient parse was added."
+}
+```
+
+## NFRA_CTLPLN-W56-S2 -- The addresses_andrew phrase list refuses first-person words a reply written AS Andrew can legitimately carry, and check_post is shared with the laptop End of Day job
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:00Z",
+  "one_line": "The addresses_andrew phrase list refuses first-person words a reply written AS Andrew can legitimately carry, and check_post is shared with the laptop End of Day job",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "daily_reports/eod/post_format.py addresses_andrew: the order's phrase list includes \"I've\", \"here is the\", \"as requested\" and \"previous draft\", matched on word boundaries, case-insensitive",
+      "data/transcripts/scripts/teams_chat/assist.py CHAT_SYSTEM: a chat draft is written AS Andrew in the first person, so 'I've sent it over' or 'Here is the link' is an ordinary reply that the backstop now refuses with '#<tag> draft refused: addresses Andrew, not the team'",
+      "daily_reports/eod/eod_update.py:163 calls pf.check_post(md): the same list now gates the laptop job's End of Day post, not only the cloud assistant's",
+      "0 of the 68 test files under data/transcripts/scripts/tests/ contain a listed phrase (regex census at 7b256d4877), so no existing test shows either effect"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The backstop refuses text spoken TO Andrew rather than to the team (CT-i-14 build step 3).",
+  "world_is": "A phrase list cannot tell a sentence to Andrew from a first-person sentence to the team. Built as written; the rate of false refusals in live drafts is unmeasured here (the draft_contract log line counts outcome=refused but not the cause)."
+}
+```
+
+## NFRA_CTLPLN-W56-S3 -- on_job_complete sets the job to verify before it drafts, so a refused or questioning completion draft leaves no draft open and no retry path
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:00Z",
+  "one_line": "on_job_complete sets the job to verify before it drafts, so a refused or questioning completion draft leaves no draft open and no retry path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/teams_chat/tenant.py on_job_complete: st.update(status='verify', ...) runs before _completion_draft(st); on a Refusal or a Held the handler texts Andrew and returns 'draft-refused' / 'question' without setting st['pending'] and without ctx.send(job.verify)",
+      "the only text Andrew gets is '#<job> draft refused: <why>' (the order's exact form); his notes then find 'nothing waiting' because there is no pending item",
+      "no arm covers this path: test_draft_contract.py arm job_contract covers the success path only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A chat or job draft that is refused texts Andrew one line and keeps any open draft unchanged (CT-i-14 build step 2).",
+  "world_is": "For a FIRST job completion draft there is no open draft to keep, so the order's rule is satisfied but the job sits in verify with nothing for Andrew to send; only #close ends it. Not widened: the order names no retry limb for a first draft."
+}
+```
