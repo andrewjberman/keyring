@@ -22724,3 +22724,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Wiring line for the issuer: in scoped_amgt.py _serve_timeline_body, the get_timeline call (~:6728-6735) gains `price_loader=__import__('lib.research.price.price_history', fromlist=['x']).timeline_price_loader,` after `word_cloud_builder=_word_cloud_block,` -- or the same via a normal `from lib.research.price import price_history` in the function and `price_loader=price_history.timeline_price_loader`. No IAM change (bloomberg/harvest/bronze/* already read). A raising loader turns the whole timeline into the route's error envelope, as the word-cloud builder does; AC1 should be re-run at the merge."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W323-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~323",
+  "surfaced_at": "2026-10-09T07:28:00Z",
+  "one_line": "AMGT-gg-1: PBR's extracted text has no body heading for its top-level sections 'Our Business' or 'Operating and Financial Review and Prospects', so the cross-reference mode cuts PBR business from 'About us' (11,085 chars) and mdna from the sub-heading 'Liquidity and Capital Resources' (19,885 chars), not the whole sections; AC1 reads 15 of 15.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "GROUP_CUT_NOTES.md section 1 row PBR: 'body headings Risk Factors (209708, whole line), Our Business'; the order's rule 3: map each item (4.B, 3.D, 5) to the report section the cross-reference table names and 'cut that section from the body by its own heading'.",
+  "world_is": "Measured on the cached PBR text (.scratch/r82_20f/PBR_US_Equity.txt, 1,329,563 chars): the whole-line pattern '^Our Business$' matches only the contents entry (157983) and the whole-line 'Operating and Financial Review and Prospects' matches only the contents entry (158400) and the cross-reference table (868191 onward). The report's top-level page banners are absent from the extracted text; the body prints only sub-headings ('Exploration & Production' 319061, 'Consolidated Financial Performance' 549928, 'Liquidity and Capital Resources' 568965). The table names for 4.B 'About Us (Overview)' first and for 5 'Operating and Financial Review and Prospects' then '(Liquidity and Capital Resources)', so the cutter takes the first named section with a usable body heading: business = 'About us' to the start of 3.D 'Risk Factors' (p24-30, 11,085 chars, not 'Our Business' p63-141), mdna = 'Liquidity and Capital Resources' to the next table-named heading (19,885 chars; 'Consolidated Financial Performance' p171-179 is not in the cut). The same 'first named section' rule gives ASML mdna = 'Financial performance KPIs' p54 up to the 'Risk factors' heading p66 (31,578 chars, which includes the risk-management framework pages p61-65) and ASML business = 'Our market place' p22 up to p54 (91,976 chars full, capped 60,000). The check reads these as OK because it grades status, length >= 1500 and a non-empty heading, not that the cut is the whole section.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation: PYTHONPATH=$(pwd) python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round82_prep/checks/r82_cut.py --crit AC1 (tree wk-AMGT_RESAPP-323): PBR_US_Equity business=OK(11085) risk=OK(94490) mdna=OK(19885); ASML_NA_Equity business=OK(91976) risk=OK(53968) mdna=OK(31578).",
+      "Whole-line census on the cached PBR text, python re over '(?mi)^\\s*our business\\s*$' -> [(157983)]; '(?mi)^\\s*operating and financial review.*$' -> [158400, 868191, 868257, 868341, 868702] (the last four inside the cross-reference table that starts at 866987); the body text before each section reads 'Annual Report and Form 20-F 2025 I 169 / Annual Report and Form 20-F 2025 I 170 / Consolidated Financial Performance' with no banner line between.",
+      "Code: lib/research/filings/document.py _cut_xref (this worktree, branch wk-AMGT_RESAPP-323): the start is the FIRST name in the table entry with a usable body heading and the end is the next usable body heading the table names for another entry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left for the issuer: whether the store half (the next order that re-cuts and re-analyses the five names) accepts a PBR mdna that is the liquidity sub-section only and a PBR business that is the company overview, or whether the cross-reference mode should also read the page numbers the table gives (PBR 'Operating and Financial Review and Prospects 170', 'Our Business 63') and start at the page marker line 'Annual Report and Form 20-F 2025 I <page>'. I did not build the page-marker reader: the order names heading-based cutting, and the page marker line's text differs by filer. The standard heading cut is unchanged for BABA, NU and SAP's existing cells."
+}
+```
