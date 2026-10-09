@@ -21,11 +21,11 @@ Graduated at round 33's L9 (ADJUDICATION_v26.md), round label v34: D2-S50 (BLOCK
   "owner": "2.0.0_SA_COO~C2",
   "round": "v34",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v34"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W60-S1",
