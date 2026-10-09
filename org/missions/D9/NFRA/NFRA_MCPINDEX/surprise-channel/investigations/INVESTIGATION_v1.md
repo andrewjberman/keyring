@@ -5740,6 +5740,29 @@ carries none.
     "spec_asserts": "cot_bronze_ingest.py:809: an older restatement chunk's failure is a transient that 'self-heals next run'.",
     "world_is": "On both runs read, the failures sit at the END of the sweep, which is the shape of a bearer lapsing mid-run rather than a random transient. Each run's oldest windows are the ones that fail, so a BD restatement of a transaction about 9-14 days old may never be re-landed. The newest chunk, the sentinel and silver are unaffected.",
     "notes": "INERT: nothing served is wrong today, and the run_date window lands. It ARMS if a BD restatement falls in a window that fails on consecutive runs. Not this lane's write surface: the engine is under data/cot/ (read-only to NFRA_MCPINDEX; MX-s-18 AC2) and is downloaded from s3://opal-data-bd/code/bronze/ at runtime. Candidate remedy, not attempted: re-mint once per chunk on a 401, the same pattern the runner applies per table. Denominator: 2 runs read (10-08, 10-09). Earlier runs were not read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S85",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T03:41Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Two indexed YCharts gateway tools do not answer as catalogued: ycharts_time_series returns HTTP 403 with 0 points on a live session, and ycharts_snapshot_metrics returns HTTP 200 with its value keyed to symbol 'None' instead of the requested symbol.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ycharts_freshness 2026-10-09 ~03:4xZ: ok true, HTTP 200 (the shared session is live, so the 403 is not an expired credential).",
+        "ycharts_time_series(SPY, price, 2026-10-01..2026-10-07): {http_status: 403, points: 0, series: []}.",
+        "ycharts_snapshot_metrics(['^SPX'], ['ytd_total_return']): {http_status: 200, values: {ytd_total_return: {'None': 14.98}}}.",
+        "Alyssa's External Chrome Workflows Brief (SharePoint Shared, PRD-004 assets, 2026-10-08) item C1 reports the 403 and a 404 for snapshot_metrics; mapped at deliverables/2.0.0_SA_COO~MI/ALYSSA_WORKFLOWS_INDEX_INPUT_MAP_20261009.md."
+      ]
+    },
+    "spec_asserts": "MX-h-3 put YCharts in the index; FWD-8 says long history and market data come back on demand through the index.",
+    "world_is": "The time-series path is refused upstream (403) while the session is live, so history from YCharts is not on demand. The snapshot path answers but loses the symbol key, so a multi-symbol call cannot be attributed per symbol. One symbol was tested per tool; other metrics and symbols were not.",
+    "notes": "INERT: no served artifact reads these tools. It arms the moment discover routes a history or snapshot question to them; the route would return nothing, or a value with no symbol. Input to the PRD v0.7 re-cut (CTO~O msg 32333, CRO~Z midstream brief); not a mid-round cell. Denominator: 1 call per tool."
   }
 ]
 ```

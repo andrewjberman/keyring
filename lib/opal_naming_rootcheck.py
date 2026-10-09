@@ -20,6 +20,8 @@ Python 3.9; ASCII only.
 """
 import argparse
 import ast
+import builtins
+import io
 import json
 import os
 import posixpath
@@ -479,30 +481,37 @@ def map_key(root):
     return r[len(_TF_PREFIX):] if r.startswith(_TF_PREFIX) else r
 
 
-def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None,
-               name_rulings=None):
-    root = _TF_PREFIX + map_key(root)
-    rulings = load_key_rulings() if key_rulings is None else key_rulings
-    nrulings = load_name_rulings() if name_rulings is None else name_rulings
-    items, _unc, _stats = opal_naming_scope.root_names(root, map_path)
+class _RootState(object):
+    """What check_root and place() both read of one root: its normalised path, the registry rulings, the root's items and
+    the map entry. Plain data."""
+
+
+def _root_state(root, map_path, not_judged=None, key_rulings=None, name_rulings=None):
+    st = _RootState()
+    st.root = _TF_PREFIX + map_key(root)
+    st.rulings = load_key_rulings() if key_rulings is None else key_rulings
+    st.nrulings = load_name_rulings() if name_rulings is None else name_rulings
+    st.items, _unc, _stats = opal_naming_scope.root_names(st.root, map_path)
     if not_judged is None:
-        card_rows = load_card_rows()
+        st.card_rows = load_card_rows()
     else:
-        card_rows = {}
+        st.card_rows = {}
         for c in not_judged:
             c = c if isinstance(c, dict) else {"plane": c[0], "name": c[1]}
-            card_rows.setdefault((c.get("plane"), c.get("name")), []).append(c)
-    doc = opal_naming_rootmap.load_map(map_path)
-    name = map_key(opal_naming_scope._norm_root(root))
-    entry = (doc.get("roots") or {}).get(name)
-    if opal_naming_rootmap.nothing_to_name(entry):
-        n = len(items)
-        if n:
-            raise ValueError(NTN_STOP % (n,))
-        out("NOTHING-TO-NAME %s why=%s names=0" % (name, entry.get("why")))
-        return 0
+            st.card_rows.setdefault((c.get("plane"), c.get("name")), []).append(c)
+    st.doc = opal_naming_rootmap.load_map(map_path)
+    st.name = map_key(opal_naming_scope._norm_root(st.root))
+    st.entry = (st.doc.get("roots") or {}).get(st.name)
+    return st
+
+
+def _answer_fn(st):
+    """The per-item answers of a root (answer_of): the five modules' plain data for ONE item. check_root and place() both
+    decide every item from this, so there is one assembly of the answers and one decide()."""
+    root, doc, name, entry, card_rows = st.root, st.doc, st.name, st.entry, st.card_rows
+    rulings, nrulings = st.rulings, st.nrulings
     krows = {}
-    for r in opal_naming_keyfill.fill_keys(items, entry):
+    for r in opal_naming_keyfill.fill_keys(st.items, entry):
         krows[(r["type"], r["current"], r["where"])] = r
     cads = {}
     for r in opal_naming_cadence.cadences(root):
@@ -529,9 +538,23 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
             ans["raised"] = exc
         return ans
 
+    return answer_of
+
+
+def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None,
+               name_rulings=None):
+    st = _root_state(root, map_path, not_judged, key_rulings, name_rulings)
+    root, entry = st.root, st.entry
+    if opal_naming_rootmap.nothing_to_name(entry):
+        n = len(st.items)
+        if n:
+            raise ValueError(NTN_STOP % (n,))
+        out("NOTHING-TO-NAME %s why=%s names=0" % (st.name, entry.get("why")))
+        return 0
+    answer_of = _answer_fn(st)
     if sink is not None:
         sink.append(entry)
-    return run_items(root, items, answer_of, len(opal_naming_scope.root_names(root, map_path)[0]), out, report_only, sink)
+    return run_items(root, st.items, answer_of, len(opal_naming_scope.root_names(root, map_path)[0]), out, report_only, sink)
 
 
 def _collisions(decided):
@@ -558,11 +581,9 @@ def _collisions(decided):
     return out
 
 
-def run_items(root, items, answer_of, expected_n, out=print, report_only=False, sink=None):
-    """One line per item, then the ROOTCHECK line; the return value is the exit code.
-    sink, when a list, receives (item, answers, kind, detail) per line, in order (the `lines` command reads it)."""
-    fourth = _schema_fourth()
-    count = dict((k, 0) for k in KINDS)
+def _decide_items(items, answer_of, fourth):
+    """([(item, kind, detail)], [answers]) for the items of one root: decide() on each, then the collisions. The one place
+    that decides a root's lines; run_items prints them and place() reads them."""
     decided, anss = [], []
     for it in items:
         ans = answer_of(it)
@@ -571,6 +592,15 @@ def run_items(root, items, answer_of, expected_n, out=print, report_only=False, 
         anss.append(ans)
     for i, detail in _collisions(decided).items():
         decided[i] = (decided[i][0], "HOLE", detail)
+    return decided, anss
+
+
+def run_items(root, items, answer_of, expected_n, out=print, report_only=False, sink=None):
+    """One line per item, then the ROOTCHECK line; the return value is the exit code.
+    sink, when a list, receives (item, answers, kind, detail) per line, in order (the `lines` command reads it)."""
+    fourth = _schema_fourth()
+    count = dict((k, 0) for k in KINDS)
+    decided, anss = _decide_items(items, answer_of, fourth)
     for (it, kind, detail), ans in zip(decided, anss):
         count[kind] += 1
         out("%s %s %s -> %s%s  [%s]" % (kind, it["type"], it["current"], detail, _stale_note(it, ans.get("key_ruling")),
@@ -839,6 +869,309 @@ def all_roots(map_path, out=print, run_one=None):
            cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"], len(stale_lines),
            uncounted_all))
     return 0 if ok else 1
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# place() -- the creation-time question (LGIC_BLANKFIX FWD-6, round 8 BF-w-1): where would the canon put THIS name, and if
+# it cannot, who owes what. It is the root check's own decision (_root_state, _answer_fn, _decide_items, decide) asked for
+# one name; nothing here decides a second time. Design: FWD6_DESIGN_round6.md (decision rule, owner table).
+CRO = "4.0.0_SA_CRO"
+CTO = "1.0.0_SA_CTO"
+CREATOR = "the creator"
+DEFAULT_MAP = "infra/logic/registry/root_map.json"
+
+# Every text decide()/_collisions()/_ruling_of() can print under a HOLE has a row: (needle, owner, what is owed). The needle
+# is a literal run of the text; a %s in the owed text is the root's map key. The order matters only for the frame (see owed_for).
+HOLE_OWED = (
+    ("several key rulings carry this key and no hint names this fi", CRO,
+     "a declared_in hint on one key-ruling row that names the file (infra/logic/registry/key_rulings.json)"),
+    ("one bucket per firm, and the registry holds no per-firm answ", CRO,
+     "a per-firm key-ruling row for this key and its bucket variable (infra/logic/registry/key_rulings.json)"),
+    ("so no key ruling is matched", CRO,
+     "a key-ruling row for this key, or a literal bucket the reader can see (infra/logic/registry/key_rulings.json)"),
+    ("it was skipped by a card; the card gives no correct name and", CRO,
+     "the card's canonical form or its no_name_owed line (the card is a registry ruling)"),
+    ("a brace remains that no per-firm answer admits", CRO,
+     "the key-ruling row's per-firm answer for the brace (infra/logic/registry/key_rulings.json)"),
+    ("has no such ending to rebuild", CREATOR,
+     "a name that already ends in the schedule's word, or a schedule expression that agrees with the word the name carries"),
+    ("the grader gave verdict", CTO,
+     "nothing you can write: the grader gave a verdict and no form, which is a rule or registry defect"),
+    ("{system}: the role's system is not resolved", CRO,
+     "a root-map exception that names the role (infra/logic/registry/root_map.json), or a role the policy reader can place"),
+    ("{system}: no map entry for this root", CRO,
+     "a root-map entry for the root %s (infra/logic/registry/root_map.json)"),
+    ("{system}: an inline policy takes its role's system; the root", CREATOR,
+     "declare the inline policy under a role the policy reader finds in the root, so the role's system answers"),
+    ("{system}: this root serves more than one firm; its map entry", CRO,
+     "the map entry's fills for the system, for the root %s (infra/logic/registry/root_map.json)"),
+    ("{cadence}: no cadence row for this name", CREATOR,
+     "declare the name as a literal schedule or event-rule resource the cadence reader can see"),
+    ("{cadence}", CREATOR,
+     "a schedule expression the cadence reader can decide (the line prints its basis), or a name that already ends in the word"),
+    ("{source}/{scope}", CRO, "a key-ruling row for this key, whose class is UNDECIDED (infra/logic/registry/key_rulings.json)"),
+    ("a blank remains that no module fills", CTO,
+     "nothing you can write: a blank no module has a rule for, which is a rule defect"),
+    ("two resources cannot take one name, and nothing here says wh", CREATOR,
+     "one of the two names; nothing here says which keeps it, so agree it with the owner of the older name"),
+    ("the map says nothing to name", CRO,
+     "the root's map entry says it has nothing to name, and a name was added: correct the entry (infra/logic/registry/root_map.json)"),
+)
+_FRAME = "could not fill "
+_RAISED = ("is in no vocabulary", "is an unresolved token", "is neither a source nor a tier", "token is not ruled")
+
+
+def owed_for(detail, root_key="", typ=""):
+    """[(owner, what is owed)] for a HOLE detail, from HOLE_OWED. A frame ("partial form X; could not fill A; B") is owed by the
+    clauses it carries: only the text after the frame is matched, and the cadence row of H14 applies only when H13 did not.
+    A text no row matches is the grader's own raise: a vocabulary or event_rules.json row (CRO) when it names a missing word or
+    token, else a rule defect (CTO)."""
+    d = str(detail)
+    body = d.split(_FRAME, 1)[1] if (d.startswith("partial form ") and _FRAME in d) else d
+    out, seen, got13 = [], set(), False
+    for needle, owner, what in HOLE_OWED:
+        if needle not in body:
+            continue
+        if needle == "{cadence}" and got13:
+            continue
+        if needle == "{cadence}: no cadence row for this name":
+            got13 = True
+        what = what % root_key if "%s" in what else what
+        if (owner, what) not in seen:
+            seen.add((owner, what))
+            out.append((owner, what))
+    if not out:
+        if any(w in d for w in _RAISED):
+            out.append((CRO, "a vocabulary row or an event_rules.json row for the word or token the grader names "
+                             "(infra/logic/registry/)"))
+        else:
+            out.append((CTO, "nothing you can write: the grader raised this text, which is a rule or registry defect"))
+    return out
+
+
+# --- reading a diff's post-image and HEAD's text through the same readers ----------------------------------------------
+_OPEN_MODULES = (opal_naming, opal_naming_scope, opal_naming_cadence, opal_naming_policyrole, opal_naming_keyfill)
+_MISSING = object()
+
+
+def _rel_of(path):
+    try:
+        p = os.path.relpath(os.path.abspath(str(path)), opal_naming.REPO)
+    except ValueError:
+        return None
+    return None if p.startswith("..") else p.replace("\\", "/")
+
+
+def _clear_caches():
+    opal_naming_scope._CACHE.clear()
+    opal_naming_scope._SCAN_CACHE.clear()
+    opal_naming_scope._PARSE_CACHE.clear()
+    opal_naming_policyrole._CACHE.clear()
+
+
+class texts_overlay(object):
+    """With this in force, every module that reads a repository file reads {repo-relative path: text} first: the post-image
+    of a diff, or HEAD's text of the same files. The readers are the five modules' own `open` names, so no reader is
+    re-written. Caches that hold file text are cleared on entry and on exit. A path with no entry reads the disk."""
+
+    def __init__(self, texts):
+        self.texts = dict(texts or {})
+        self._saved = []
+
+    def _open(self, path, mode="r", *a, **kw):
+        rel = _rel_of(path) if isinstance(path, (str, os.PathLike)) else None
+        if rel is not None and self.texts.get(rel) is not None and "w" not in mode and "a" not in mode:
+            text = self.texts[rel]
+            if "b" in mode:
+                return io.BytesIO(text.encode("utf-8"))
+            return io.StringIO(text)
+        return builtins.open(path, mode, *a, **kw)
+
+    def __enter__(self):
+        for m in _OPEN_MODULES:
+            self._saved.append((m, m.__dict__.get("open", _MISSING)))
+            m.open = self._open
+        _clear_caches()
+        return self
+
+    def __exit__(self, *exc):
+        for m, old in self._saved:
+            if old is _MISSING:
+                del m.open
+            else:
+                m.open = old
+        self._saved = []
+        _clear_caches()
+        return False
+
+
+# --- the root of a path, the root of a name ---------------------------------------------------------------------------
+def root_of_path(path):
+    """The Terraform root a repository file belongs to (a .tf file by folder; any other file by the scope's enumeration of
+    names), or None. Reads the working tree, never a diff."""
+    path = str(path).replace("\\", "/")
+    r = opal_naming_scope._root_of_file(path)
+    if r:
+        return r
+    items, _stats = opal_naming_scope._census()
+    for it, a in zip(items, opal_naming_scope._assignment()):
+        if a and opal_naming_scope._file_of(it) == path:
+            return a
+    return None
+
+
+def roots_of_name(name, typ=None):
+    """The sorted roots whose enumerated names include `name` (of type `typ` when given)."""
+    items, _stats = opal_naming_scope._census()
+    out = set()
+    for it, a in zip(items, opal_naming_scope._assignment()):
+        if a and it["current"] == name and (typ is None or it["type"] == typ):
+            out.add(a)
+    return sorted(out)
+
+
+# --- place() ----------------------------------------------------------------------------------------------------------
+_RANK = {"HOLE": 3, "FIX": 2}
+
+
+def _fill_notes(ans, canon):
+    """Where each blank of the grader's form was filled from, as plain words."""
+    notes = []
+    res, cad = ans.get("resolved"), ans.get("cadence")
+    if canon and "{system}" in canon and res is not None and res.get("system"):
+        notes.append('the system "%s" is read from the root map entry (%s)' % (res["system"], res.get("basis")))
+    if canon and "{cadence}" in canon and cad is not None and cad.get("word"):
+        notes.append('the cadence word "%s" is read from the schedule (%s)' % (cad["word"], cad.get("basis")))
+    return notes
+
+
+def _result(it, ans, kind, detail, st, found):
+    graded = ans.get("graded")
+    canon = graded[1] if graded else None
+    res = {"kind": kind, "detail": detail, "name": it["current"], "type": it["type"], "where": it["where"],
+           "root": st.root, "root_key": st.name, "mapped": st.entry is not None, "found": found,
+           "form": None, "fills": [], "owed": []}
+    if kind == "FIX":
+        res["form"] = detail.split(" (", 1)[0]
+        res["fills"] = _fill_notes(ans, canon)
+    elif kind == "HOLE":
+        res["owed"] = owed_for(detail, st.name, it["type"])
+        m = re.match(r"partial form (.*?); could not fill ", detail)
+        res["form"] = m.group(1) if m else None
+    return res
+
+
+def _hole_rows(decided):
+    return [(it["type"], it["current"], detail, it["where"]) for (it, kind, detail) in decided if kind == "HOLE"]
+
+
+def _place_run(root, map_path, wants, not_judged=None, key_rulings=None, name_rulings=None):
+    """(results, hole rows, state). wants: [(name, type, where or None)]. The root's items are decided once, with the wanted
+    names among them; a wanted name the scope does not list is added as an item at `where` (found=False in its result)."""
+    st = _root_state(root, map_path, not_judged, key_rulings, name_rulings)
+    if st.entry is not None and opal_naming_rootmap.nothing_to_name(st.entry):
+        res = []
+        for (name, typ, where) in wants:
+            r = {"kind": "HOLE", "detail": "the map says nothing to name and a name was added: %s" % (name,), "name": name,
+                 "type": typ, "where": where or "?", "root": st.root, "root_key": st.name, "mapped": True, "found": False,
+                 "form": None, "fills": [], "owed": []}
+            r["owed"] = owed_for(r["detail"], st.name, typ)
+            res.append(r)
+        return res, [], st
+    items = list(st.items)
+    idx, found = [], []
+    for (name, typ, where) in wants:
+        hits = [i for i, it in enumerate(items) if it["current"] == name and (it["type"] == typ or typ is None)]
+        pref = [i for i in hits if where and items[i]["where"].rsplit(":", 1)[0] == str(where).rsplit(":", 1)[0]]
+        if hits:
+            idx.append(pref or hits)
+            found.append(True)
+        else:
+            items.append({"plane": "repo", "type": typ, "current": name, "where": where or "?:0"})
+            idx.append([len(items) - 1])
+            found.append(False)
+    answer_of = _answer_fn(st)
+    decided, anss = _decide_items(items, answer_of, _schema_fourth())
+    results = []
+    for cand, f in zip(idx, found):
+        best = max(cand, key=lambda i: _RANK.get(decided[i][1], 1))
+        it, kind, detail = decided[best]
+        results.append(_result(it, anss[best], kind, detail, st, f))
+    return results, _hole_rows(decided), st
+
+
+def place_many(root, map_path, wants, texts=None):
+    """place() for several names of one root with one pass of the root's decisions: [(name, type, where or None)] -> [dict]."""
+    if not texts:  # no post-image to read: the disk, and the scope's caches stay as they are
+        return _place_run(root, map_path, list(wants))[0]
+    with texts_overlay(texts):
+        results, _holes, _st = _place_run(root, map_path, list(wants))
+    return results
+
+
+def place(name, typ, root, map_path=DEFAULT_MAP, where=None, texts=None, not_judged=None, key_rulings=None,
+          name_rulings=None):
+    """Where the canon places ONE name of a root: a dict with `kind` (one of KINDS), `detail` (the root check's own text for it),
+    `form` (the name to use, FIX; the partial form, HOLE), `fills` (where each blank was filled from), `owed` ([(owner, what)]
+    for a HOLE), `root`, `mapped` (the map has an entry for the root) and `found` (the scope listed the name). The decision is
+    decide() on the answers check_root builds, so the kind is the one the root check prints for the same line. `texts`,
+    {repo-relative path: text}, makes the readers see those texts (the post-image of a diff) instead of the disk."""
+    if not texts:
+        return _place_run(root, map_path, [(name, typ, where)], not_judged, key_rulings, name_rulings)[0][0]
+    with texts_overlay(texts):
+        results, _holes, _st = _place_run(root, map_path, [(name, typ, where)], not_judged, key_rulings, name_rulings)
+    return results[0]
+
+
+def refusal_text(res):
+    """(form for the arrow, why text) of a name place() says is FIX or HOLE: what is owed and to whom."""
+    if res["kind"] == "FIX":
+        fills = ("; " + "; ".join(res["fills"])) if res["fills"] else ""
+        return res["form"], ("NEW name the canon places as FIX. Owed: use %s%s. Build it with name() or edit the literal; "
+                             "nothing else is owed." % (res["form"], fills))
+    parts = ["%s -- from %s" % (what, owner) for owner, what in res["owed"]]
+    return (res["form"] or "-"), (
+        "NEW name the canon cannot place (HOLE): %s. Owed: %s. The name is placeable the moment that is done; the creator "
+        "does not write the registry, so for a registry row hand its owner this line." % (res["detail"], "; ".join(parts)))
+
+
+def place_root(root, map_path, wants, post_texts, head_texts, ratchet=True):
+    """One root of a diff: the placement of each wanted name on the post-image, and the hole ratchet (post-image against
+    HEAD, both run now). Returns {"results", "mapped", "root", "post_holes", "head_holes" (None when not ratcheted),
+    "new_holes", "names_post", "names_head"}. An unmapped root is not ratcheted (the HOLEs it prints are largely its absent
+    map entry); its name counts are returned for a notice."""
+    with texts_overlay(post_texts):
+        results, post_rows, st = _place_run(root, map_path, wants)
+        names_post = len(st.items)
+    out = {"results": results, "mapped": st.entry is not None, "root": st.root, "post_holes": len(post_rows),
+           "head_holes": None, "new_holes": [], "names_post": names_post, "names_head": None}
+    if not ratchet:
+        return out
+    with texts_overlay(head_texts):
+        if st.entry is None:
+            out["names_head"] = len(opal_naming_scope.root_names(st.root, map_path)[0])
+        elif not opal_naming_rootmap.nothing_to_name(st.entry):
+            _r, head_rows, _st2 = _place_run(root, map_path, [])
+            out["head_holes"] = len(head_rows)
+            have = {}
+            for t, c, d, w in head_rows:
+                have[(t, c, d)] = have.get((t, c, d), 0) + 1
+            for t, c, d, w in post_rows:
+                if have.get((t, c, d), 0) > 0:
+                    have[(t, c, d)] -= 1
+                else:
+                    out["new_holes"].append((t, c, d, w))
+    return out
+
+
+def ratchet_text(root_res):
+    """The refusal text of a root whose HOLE count grew: the new HOLE lines, each with what is owed and to whom."""
+    lines = []
+    for t, c, d, w in root_res["new_holes"]:
+        owed = "; ".join("%s -- from %s" % (what, owner) for owner, what in owed_for(d, map_key(root_res["root"]), t))
+        lines.append("HOLE %s %s -> %s [%s] Owed: %s" % (t, c, d, w, owed))
+    return ("the unplaceable-name list grew in %s: %d HOLE line(s) now, %d at HEAD. New: %s"
+            % (root_res["root"], root_res["post_holes"], root_res["head_holes"], " || ".join(lines) or "(same text moved)"))
 
 
 def main(argv=None):
