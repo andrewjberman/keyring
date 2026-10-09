@@ -44081,3 +44081,19 @@ REFUSED_20261008)
 2026-10-09T12:20:15Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=10.86  merged=(none) held=(none)
 2026-10-09T12:20:53Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=8.63  graded=n/a  args=(--verify-merge f02c4a9781d69b76c678d254d70e6e08a3121abd)  first=(none)
 2026-10-09T12:20:55Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=39.49  held=dirty-overlap graded=0/149
+2026-10-09T12:21:33Z PASS  0.0.0_AB_MSTR  1  (all paths in-lane)
+2026-10-09T12:21:52Z LANDED-2P  0.0.0_AB_MSTR  80eaf32a38  paths=1  validate=18.29s  wait=0.27s  hold=2.20s  build=1.22s  ref=0.88s  post-commit=8.67s  attempt=1
+2026-10-09T12:22:04Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=11.40  held=conflict cloud=41b6f7a039
+2026-10-09T12:26:25Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=4  secs=14.95  graded=n/a  args=(origin/CLOUD)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T12:28:13Z PASS  0.0.0_AB_MSTR  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T12:30:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=154.75  graded=1/149  args=(--continue)  first=(REFUSED)
+2026-10-09T12:30:40Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=1  secs=30.44  fetch=failed
+2026-10-09T12:31:01Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=19.92  held=conflict cloud=41b6f7a039
+2026-10-09T12:33:11Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.72  graded=n/a  args=(--verify-merge d15abb4527a3a20828328000905a5254b15fe231)  first=(none)
+2026-10-09T12:33:30Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=4.14  graded=n/a  args=(--verify-merge c19e5fea459cbcab1c19cab25521869ff297922d)  first=(none)
+2026-10-09T12:33:52Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=6.33  graded=n/a  args=(--verify-merge 6be2fbae1c85fc6266efa080fcabf24fc3768b8d)  first=(none)
+2026-10-09T12:33:59Z PASS  1.0.0_SA_CTO  1  (all paths in-lane)
+2026-10-09T12:34:03Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=76.39  pushed=6be2fbae1c merged=(box/dell1(graded=0/53),box/laptop(graded=1/5),box/sitez(graded=1/18)) held=(none)
+2026-10-09T12:34:24Z LANDED-2P  1.0.0_SA_CTO  fbc0e4d0a8  paths=1  validate=25.21s  wait=0.19s  hold=2.30s  build=1.05s  ref=0.99s  post-commit=12.94s  attempt=1
+2026-10-09T12:34:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.47  graded=n/a  args=(--verify-merge 1d747bc29344049ab54f996cb08b389d4f3ff8af)  first=(none)
+2026-10-09T12:34:34Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=29.25  held=dirty-overlap graded=0/205
