@@ -5711,3 +5711,25 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Fix for the first: the issuer 2.0.0_SA_COO~Z deletes the stale '<status>pending</status>' line. For the second: the APPLY issuers (2.0.0_SA_COO~C, 2.0.0_SA_COO~R) draw ordinals from one counter, or cite the full id."
 }
 ```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T01:41:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S40",
+  "one_line": "check_transcripts_dell_decrypt.py prints the expected CTa1-AC5 text but ends statements_added=1 ok=False (rc=1): its check 'live key policy equals the pre-edit render' reads False, the live transcripts key policy holding 3 statements (the applied DellAgentUsersDecryptOnly) against the pre-edit render's 2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> 'live key policy (kms get-key-policy) statements=3 equals the pre-edit render ...: False'; 'render: key policy statements after=3 before(55ec1bd250)=2'; last line 'TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False'"
+    ]
+  },
+  "spec_asserts": "CTa1-AC5 (AMENDMENT 17) expects the line `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True`, and the earlier proofs recorded the script's pass.",
+  "world_is": "The expected text is present, but the script's own ok flag is False and rc=1: the live key policy is no longer the pre-edit document because the statement is applied in the account. No arm line changed. Proposed fix for the order's issuer: let the live check accept live == post-edit render once applied."
+}
+```
