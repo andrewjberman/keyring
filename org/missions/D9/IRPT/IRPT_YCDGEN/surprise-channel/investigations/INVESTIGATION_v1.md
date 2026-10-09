@@ -2784,3 +2784,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED: Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
 }
 ```
+
+## IRPT_YCDGEN-D2-S17 -- cause of D2-S2: round-close-check reads the order id only from a <to_id> tag tree orders lack
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S17",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "CAUSE of IRPT_YCDGEN-D2-S2: round-close-check.py read_orders takes an order's id only from a <to_id> tag, which tree task orders do not carry, so every tree proof is compared to ''",
+  "spec_asserts": "round-close-check.py grades each complete order's proof instance against that order's own id.",
+  "world_is": "MEASURED in code at box/dell2: .tools/round-close-check.py:134 builds o['id'] = tag(text, 'to_id') or ''; IRPT_YCDGEN task-orders/*.md carry no <to_id> element (their id is the file stem, which proof instances name as to_id); :165 then refuses every instance ('names to_id <stem>, not '''). Proposed one-line fix: tag(text, 'to_id') or os.path.basename(path)[:-3].",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py:130-166 at box/dell2 a58150512c",
+      "row IRPT_YCDGEN-D2-S2 (19 of 19 round-6 proofs PROOF-BAD)"
+    ]
+  },
+  "notes": "The tool is outside this seat's lane; routed to 1.0.0_SA_CTO~DELL2 as the gate's owner. Until it lands, round 6 cannot read ROUND_CLOSE on this check."
+}
+```
