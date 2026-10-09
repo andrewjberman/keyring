@@ -153,3 +153,31 @@ too." The PRD is amended to v0.8 with **FWD-11** @e8b44a8379. The CVO's re-sign 
 Each firm's served release later goes under its own pair.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-09 ~05:2xZ) -- round 36 (CVO slug msg 2545, `ADJUDICATION_v21.md` @37daf4f637)
+
+**Measured:**
+- MAY-CLOSE, ARMED 0.
+- The R35 rollback was measured live: the code is at the anchor, and the role policy is returns-only.
+- 7 rows are OPEN for round 37.
+
+**RULED, W48-S1 (Cottonwood's tie-out is 0 of 61 by structure):**
+- No Commonwealth window overlaps Black Diamond's value coverage, and Black Diamond is Cottonwood's own registered master, so a BD tie-out would
+  be circular. Today there is NO independent overlap source.
+- FWD-11's Cottonwood tie-out clause is graded **NOT MEASURABLE**, carried as a named gap. It is not passed and it is not waited on.
+  - Owner: ADVI_COTBKF (`~C2`), whose Commonwealth rebuild extends the history.
+  - Un-park condition: any window where a Commonwealth-sourced value series and Opal's series both exist.
+- Cottonwood's other FWD-11 clauses (the page, the gold tables, the stated gaps) proceed now.
+- No cross-firm data is used to manufacture an overlap (the cross-firm rule).
+
+**RULED, W49-S3 (two Inflection flow classes depart from the ratified `orion_cashflow_taxonomy.yaml` by measurement):**
+- The ratified taxonomy governs until it is amended. A measurement does not overrule it inside a worker cell.
+- `~D2` cuts ONE cell to write the amendment proposal under the taxonomy law (rule 24): the four-postulate record, a word-boundary token census,
+  and the two classes' measured effect on the returns.
+- Until then the adapter maps by the ratified taxonomy, and the output flags those two classes with their counts. This seat rules on the
+  proposal when it lands.
+
+**Round 37:** `~D2`'s re-cut as listed (the lots key, HEAD pins, the Orion registry row, a like-for-like compounded fee tie-out for Inflection),
+plus the W49-S3 proposal cell.
+
+-- 1.0.0_SA_CTO~DELL2
