@@ -93,6 +93,21 @@ and report it. Once the apply is done:
   `apply_verify` (the VERIFY lines), `arms` (each `{account (Opal_Agent|Opal_MSP|operator), whoami, port, result}`) and
   `view_server`.
 
+**ISSUER AMENDMENT 2 (2.0.0_SA_COO~AI, 2026-10-09 ~01:3xZ): AC4, R5's persistence arm, re-opens this order.** The box
+rebooted after the apply (LastBootUpTime 2026-10-08T20:56:05Z, after AC3's 2026-10-02T03:02Z), so the arm R5 named "read
+at the next natural reboot" is readable now. AC1 and AC3 stand as graded; you run AC4 only. Nothing is built.
+1. **Preconditions, read first:** `127.0.0.1:8194` is listening (`Get-NetTCPConnection -State Listen -LocalPort 8194`).
+   If not, STOP: write no record and REFUSE AC4 with that measurement. Never sign in to or start the Bloomberg Terminal.
+   Read `(Get-CimInstance Win32_OperatingSystem).LastBootUpTime` in UTC.
+2. **The probe:** exactly AC3's probe above (TCP connect only, 3 s, the same two credential files never printed, copied
+   or exported, the same working directories, the view server started and stopped only if 8790 is not listening).
+   Delete each probe and its result file afterwards, and check both directories hold nothing you wrote.
+3. **The record:** write `org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~26/F11_PERSISTENCE.json`
+   with `measured_at` (UTC `YYYY-MM-DDTHH:MMZ`), `boot_time` (UTC ISO), `method`, `arms` (each `{account
+   (Opal_Agent|Opal_MSP|operator), whoami, port, result}`) and `view_server`. Never edit F11_ACCEPTANCE.json.
+4. Append AC4's result to the existing proof_of_spec instance, keeping AC1 and AC3 as they are. An agent arm reading
+   `OPEN` on 8194 is the finding: record it, file a row, and leave the order open.
+
 ## 2. BOUNDS
 
 1. TCP connect ONLY: no MCP request and no Bloomberg request through any port.
@@ -135,6 +150,7 @@ at the cut).
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OA-f-11"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f11.AC1.sh; echo "exit=$?"</invocation><expect>plan rc=0 COMPILE OK>=1 SUBLAYER persistent 0xFFFF=1 FILTER lines=2 (V4=1 V6=1) well-formed=2 lines naming 8790=0; real and -Remove ELEVATION REQUIRED rc=3; S-1-5-21 literals=0; P/Invoke tokens=4 of 4; PERMIT-WEIGHT refusal>=1; removes R1 rules=1; parse errors=0; other files changed vs eeca5ca7d1=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-f-11"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f11.AC3.sh; echo "exit=$?"</invocation><expect>R1 Firewall rules still present: 0; agent 8194=REFUSED|TIMEOUT 8790=OPEN; msp 8194=REFUSED|TIMEOUT 8790=OPEN; operator 8194=OPEN; apply VERIFY OK lines>=3; arms ok=yes -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="OA-f-11"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f11.AC4.sh; echo "exit=$?"</invocation><expect>R1 Firewall rules present: 0; boot after apply=yes; agent 8194=REFUSED|TIMEOUT 8790=OPEN; msp 8194=REFUSED|TIMEOUT 8790=OPEN; operator 8194=OPEN; arms ok=yes -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -171,9 +187,20 @@ Dry-run at base:
 - f11.AC1 base (OA_F11_REF=eeca5ca7d1): FAIL as expected (`wall-dapi-8194-wfp.ps1 absent`).
 - f11.AC3 base: FAIL as expected (`R1 Firewall rules still present: 2; F11_ACCEPTANCE.json absent`).
 
-<status>complete</status>
+**AMENDMENT 2 RECORD (issuer):** cut on an empty `/canonical-drive` tick by `/next-calls NFRA_OPALAI --drive` (Andrew-direct
+2026-10-09 ~00:0xZ, the work around a block): every open round-2 order waits on the item-0 close run, and Andrew's 10-06
+word was "nothing we can do on the call 1 at this time". First cut as a new order OA-f-15; `.tools/to-pipeline-gate.py`
+refused it (round 2 already has its one issuance; "a re-cut into the first issuance MODIFIES its orders and adds no
+file"), so the arm rides the order whose record face already named it. Gate on this modification: LIMB 6 does not fire,
+GATE (viii) grades it (`<placeholders>NONE`). bbcomm (pid 18020) listens on 8194, nothing on 8790 (read ~01:1xZ). Respawn
+slot `~26` (worker-light, sparse cone plus `integrations/bloomberg`, no nested checkout). A worker runs it because row
+Z-S41 bars this seat from direct credential use. Dry-run at base (c249be336b): AC4 FAIL as expected (record absent; R1 0;
+live boot 2026-10-08T20:56:05Z). Synthetic arms, then removed: GREEN PASS; RED FAIL with Opal_Agent 8194 OPEN; RED FAIL
+with boot_time before the apply. A FAIL re-opens R5 at `1.0.0_SA_CTO~O` with its measurement. Gates nothing.
+
+<status>pending</status>
 <direct_act>true</direct_act>
 <slot>~26</slot>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
-<worker_class>worker</worker_class>
+<worker_class>worker-light</worker_class>
