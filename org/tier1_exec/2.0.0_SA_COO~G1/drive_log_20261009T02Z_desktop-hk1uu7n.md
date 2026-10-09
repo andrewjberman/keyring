@@ -1,0 +1,11 @@
+# drive log 2.0.0_SA_COO~G1, 2026-10-09 02Z-05Z (desktop-hk1uu7n) -- MDPF_HEALGAP + the partner_roster deploy
+
+This file holds only the substantive events.
+
+## event 2026-10-09T02:13Z laptop 1.0.0_SA_CTO re-signed the retargeted partner_roster half @af37bb5fca. Order ADHOC.partner-roster-t1-into-live-readers cut @6242d5ed49 to 0.7.0_AE_CloudOps~DELL1 (pipeline-override audited: no project row; preflight + proof_of_spec C1-C7). Emitter trigger read: opal-assets-daily-emitter-daily cron(15 17 * * ? *)
+## event 2026-10-09T02:5xZ msg 1485: leg B LANDED. Validated by this seat: live CodeSha256 GLQf6kv4.. (02:43:17Z), deployed roster md5 3d309b26 LF, T-1 both feeds; accept_date at 0/1/2/3 td -> norm 0/0/1/2, all accepted. Leg A HELD pre-act (CRLF working copy would stamp 9d8ed608..); ruled amendment A1 @e642b946ef (mint from an LF linked worktree at HEAD)
+## event 2026-10-09T03:0xZ msg 1509: leg A LANDED. Validated: bundle version mzAQC0vZ.., tar members partner_roster.json sha256 4c104d9b../md5 3d309b26 no CR, script 648cf3f5.. unchanged; worktree removed. Issuer marker <proof_genre>DEPLOY</proof_genre> @5489021f2f, root id= @c163476268; proof-of-spec-check C1-C7 VALID rc=0. Open: B4/C7 at the 17:15Z emitter run
+## tick 2026-10-09T03:13Z MDPF_HEALGAP | EMPTY -> /next-calls --drive: 0 FREE. unblock tick empty=1 KEEP-DRIVING
+## event 2026-10-09T03:19Z msg 1540 (Andrew-direct ~03:1xZ via MSTR~DELL1): every dell1 COO on /canonical-drive + /keep-driving. Replied: MDPF_HEALGAP, cron 380fc5d8 at :07
+## tick 2026-10-09T04:1xZ MDPF_HEALGAP | EMPTY -> /next-calls --drive: FREE around the 06:00Z gate -- R2_CHECKS/hg_r2_act1_l4.py @dbc49bc77f (neg 10-08 L4-BAD; pos 10-07 SILVER 06:00:58Z, STAMP 3 feeds). unblock --result work (empty=0)
+## tick 2026-10-09T05:1xZ MDPF_HEALGAP | EMPTY -> /next-calls --drive: FREE around the act-3 gate -- R2_CHECKS/hg_r2_act3.py (--partial/--keys/--diff/--repaired/--restored). Controls: --partial and --repaired 10-08 BAD (no result); --restored OK; --diff same snapshot DIFF-NONE (94 keys), one altered etag DIFF-FOUND n=1. Positive arms of --partial/--repaired await a result object (today's 06:00Z fire gives --repaired its first). unblock --result work
