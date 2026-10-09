@@ -22755,3 +22755,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The header predates the owning cells; the root is applied, and the pair governs."
 }
 ```
+
+## IRPT_BCKEND-D2-W195-S1 -- the refuse-drop is scoped to calls that write, because two IB-pr-381 tests pin run_firm returning on a dropped source entry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W195-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~195",
+  "surfaced_at": "2026-10-09T04:00:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two tests in tests/test_directory_runner_terminated.py call run_firm(upload=False, local_out=None) on a build that drops a source entry and assert it RETURNS with held_in_source==1; a refusal that raises there contradicts them, and that file is outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_directory_runner_terminated.py::test_terminated_carry_forward_in_source_but_missing_from_build_is_not_carried (:136) and ::test_terminated_carry_forward_runner_carry_equals_the_refreshs_own_decision (:366) both failed with RuntimeError REFUSED: BUILD_DROPS_SOURCE_ENTRY when run_firm raised unconditionally (run at the worktree, 3 failed 362 passed incl. the known S71 red)",
+      "built as: run_firm raises the named refusal only for a call that would WRITE (upload or local_out); a call that writes nothing records carried_forward.refused and main() prints ERROR and returns 1. Both old tests pass unchanged; suite then 1 failed (S71 only)."
+    ]
+  },
+  "spec_asserts": "The order says the runner refuses the landing and makes 0 S3 puts, and that the whole runner suite still passes excusing only the S71 guard.",
+  "world_is": "The pre-IB-pr-384 tests pin a run_firm that returns on a dropped source entry. The refusal is therefore scoped to calls that write; a dry run reports the same verdict through carried_forward.refused and main()'s rc. If the owner wants run_firm itself to raise on every call, those two tests (outside this order's paths) must be updated in the same cell.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
