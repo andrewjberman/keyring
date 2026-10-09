@@ -3643,3 +3643,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W47-S5 -- The amended sizing read (dry_run + backfill, population, 2026-10-07) logged LOTS_SKIPPED on a realized-lot key repeat in batch 2 of 8, so lots_rows is
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:17:24Z",
+  "one_line": "The amended sizing read (dry_run + backfill, population, 2026-10-07) logged LOTS_SKIPPED on a realized-lot key repeat in batch 2 of 8, so lots_rows is 0 and precondition 3 is not met; the first fire was NOT run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Ruling AMENDMENT 1 on TO-DB-b-70: a {dry_run, backfill D..D, accounts population} invoke on the newest landed returns day sizes the lots stage over the population (accounts >= 7000, lots_rows > 0) at under 85% of 900 s and 2048 MB; the R35 packet (S33) measured no refusal on the kit run of 2026-10-06 and says the producer refuses only a row identical in every column or a repeat of the whole realized key.",
+  "world_is": "MEASURED 2026-10-09 04:13Z, RequestId c42b0fd6-494f-4444-8cf7-d1e02ff8c38b (the live function, population 7604, event dry_run + accounts population + backfill 2026-10-07..2026-10-07): rows 6897 DRY, class rows 25019 DRY, then 'LOTS_SKIPPED 2026-10-07 SystemExit: REFUSED: realized lot id <two ids joined by /> repeats with the same closing date and quantity: the key is not unique', after 'batch 2 of 8'. Duration 129821.09 ms, Max Memory Used 1200 MB (to the refusal; the stage did not finish, so these are not the lots stage's peaks). lots_rows {} and lots_failed one entry. Gold prefix object counts before and after equal (returns 1132, the other four 0). The 2026-10-07 data therefore carries a realized-lot key repeat the 2026-10-06 kit run did not, and the deployed producer (account_activity_lots.py @18a7702338) refuses it. Consequence if left alone: the 07:41 ET scheduled fire runs the lots catch-up (activity table empty, so oldest days first, up to 10), each day that carries a repeat is LOTS_SKIPPED, returns and class are still written, and after-read A1 (zero LOTS_SKIPPED) cannot pass. Separately, the first attempt (RequestId 2b6a404d-cdad-4dbb-889e-f8f82af94215) put accounts inside the backfill object as the ruling's text shows and was REFUSED at once (accounts is an event-level key per handler.py:31 and :499), nothing written; the second used the handler's documented shape.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json dry_run and dry_run_first",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:494-531",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R35.md S33 and Branch B"
+    ]
+  },
+  "notes": "STOPPED here per the ruling's item 4 (the read did not pass): no first fire, A1 to A6 unread, ledger leg A1 open. The sizing read to try next is the same event on 2026-10-06, the day the kit ran clean, or a list of accounts without the repeat; the issuer decides. Plain Lambda facts for the decision: 2 of 8 batches took about 130 s in total with the returns and class stages first, so the full stage is not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
