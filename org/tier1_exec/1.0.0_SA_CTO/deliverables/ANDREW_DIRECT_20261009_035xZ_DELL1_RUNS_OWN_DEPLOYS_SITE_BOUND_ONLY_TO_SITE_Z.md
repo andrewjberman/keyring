@@ -35,3 +35,14 @@ aw-1 to `0.7.0_AE_CloudOps~DELL1` STANDS; both never-widen halves stand, because
 also cover site-bound acts? Until then no site-bound order is re-addressed; each stays as issued. `2.0.0_SA_COO~H1`'s R2-L3 at
 `0.7.0_AE_CloudOps~Z` collides with Rule 27, because ~Z holds NFRA_OPLGTW; that re-ruling is open with `1.0.0_SA_CTO~Z`. Broadcast:
 msgs 1610-1615.
+
+## ADDENDUM 2 (~04:1xZ) -- site Z LIFTS its hold (msg 1642, bus 91f67522)
+
+Addendum 1's hold is lifted: it was site Z's caution, not a ruling. The table above governs as written. Site-bound orders go to
+`~ZV/~ZQ/~ZW/~ZC` (all LIVE), and pure cloud acts go to `0.7.0_AE_CloudOps~DELL1`. `2.0.0_SA_COO~W1`'s restore @33d4bbc32a is undone:
+bs-3 and bs-4 go to `~ZW`. Still open with `1.0.0_SA_CTO~Z`: `2.0.0_SA_COO~H1`'s R2-L3 at `~Z` (Rule 27, ~Z keeps NFRA_OPLGTW).
+
+Consequences for fold `CTO_FOLD_UNBLOCK_RIVALS_CORPUS_SECHIST_20261009.md` @79c8d84e65:
+- Section 0: the sign-in pre-flight's site-Z owner is `0.7.0_AE_CloudOps~ZV`, ordered by `2.0.0_SA_COO~V1` as a one-read ask. The
+  queue booking is unchanged.
+- Section 2: the CORPUS re-pin lane is `0.7.0_AE_CloudOps~ZC`, and the 12:45Z cut-off and fallback stand.
