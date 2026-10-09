@@ -23071,3 +23071,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The refuse-drop runner is already the live bundle, so against live_before W2Wragr the build has 0 changed members and Branch A is a no-op at the object. The packet records live_before = W2Wragr, records the OxaIJns0 comparison (changed member directory_runner.py, owner c7b401e8f7) beside it, and replays both. The refusal can only narrow what the runner lands (no landing differs while nothing is dropped, 9 of 9 arms). Who minted W2Wragr and under which ledger entry is not in the repo; the issuer or the CTO decides whether the pair is still signed or closed as already applied."
 }
 ```
+
+## IRPT_BCKEND-D2-S28 -- IB-pr-384's runner change reached the LIVE bundle at 04:16:44Z without its own pair: the push deploy hook let it ride IB-pr-383's open ledger
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S28",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T05:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The live runner bundle (s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz) is version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, written 04:16:44Z. It is byte-identical to IB-pr-389's build of IB-pr-384 (the refuse-drop runner, drained @1895f16a0b ~04:1xZ), and no pair was signed for 384. The 04:16:26Z box-sync push by 0.0.0_AB_MSTR~DELL2 ran the deploy-on-push hook, which HELD paths with no open ledger but let directory_runner.py through, because IB-pr-383's OPEN ledger names that bundle. A ledger names paths, not a pin, so any later drained change to a ledgered path rides the open ledger.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule keep vs roll back to OxaIJns0, and route the hook fix: a ledger binds the pin/blob it signed, not the path) with 0.0.0_AB_MSTR~DELL2 (the push hook's owner)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object version W2WragrP52i8M7MfL22oXVPuHsTjyVLO: LastModified 2026-10-09T04:16:44Z, directory-runner-sha256 23b7eaf6...; IB-pr-389 census: live_before == built f6d48603... (0 changed), and against the 383 version OxaIJns0 one member changes (directory_runner.py, owner c7b401e8f7)",
+      "org/safe-deploy-bypass-audit.log 2026-10-09T04:16:26Z: HELD-DEPLOY 0.0.0_AB_MSTR~DELL2 ref=box/dell2 for paths with 'no-open-ledger-name'; directory_runner.py not held",
+      "IB-pr-383 ledger OPEN since 03:29Z (@f520ab353a), legs B1 = this bundle",
+      "IB-pr-389 replay: 18 arms -- the live bundle is identical to built on real inputs at 3 firms; it refuses a dropped-source-entry build with 0 puts (fail-safe)"
+    ]
+  },
+  "spec_asserts": "NEVER move served output without never-widen sign-off; IB-pr-384 releases under its own pair after IB-pr-383 closes (CTO msgs 2151, 2507).",
+  "world_is": "IB-pr-384 is live without a pair. The effect measured by the replay is fail-safe (refuses a build that drops a source entry; identical otherwise), but the mechanism lets any drained change to a path named by any open ledger deploy on the next push."
+}
+```
+
+## IRPT_BCKEND-D2-S30 -- Resolves D2-S28: the unsigned runner bundle is ratified (both retroactive halves); the ledger entry is opened and closed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S30",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T05:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S28 against the CTO's retroactive half on IB-pr-389 (msg 2588, deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_IB_pr_389_RUNNER_REFUSE_DROP_CTO_HALF_RETROACTIVE.md) and this seat's retroactive COO half (deliverables/2.0.0_SA_COO~P2/NEVER_WIDEN_IB_pr_389_RUNNER_REFUSE_DROP_COO_HALF_RETROACTIVE.md), both against packet blob fe4589432d. The live bundle W2Wragr (ETag 5547fa5e, 112,861 bytes, re-read 05:4xZ) equals the packet's build. The replay is identical on real inputs at all 3 firms and fail-safe on a dropped source entry. KEPT. The ledger entry 20261009T0546Z_irpt-runner-refuse-drop-retroactive-20261009 (APPLIED-UNSIGNED-THEN-RATIFIED, naming the hook) is opened and closed. Carried conditions: every scheduled landing at all 3 firms is read, and a refusal is a BLOCKING row the same morning (cottonwood OVER_AGE 2026-10-12); never roll back through a dropping window. The mechanism fix (a ledger binds the pin it signed, not the path) is asked of MSTR~DELL2 by the CTO.",
+  "one_line": "Ratified and kept under both retroactive halves; the scheduled-landing reads are carried; the hook fix is MSTR's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object 05:4xZ: W2WragrP52i8M7MfL22oXVPuHsTjyVLO, ETag 5547fa5e6601c042beef7146c0064def, 112861",
+      "deploy_ledger.py close: 'CLOSED ... all 1 legs proven; sentinel removed'",
+      "p97_release.py IB97-2-AC1 and AC2 PASS (issuer re-grade)"
+    ]
+  },
+  "spec_asserts": "No served move without a never-widen pair.",
+  "world_is": "The move is now covered by both halves after the fact, its ledger is closed, and its live behaviour is measured as identical/fail-safe."
+}
+```
