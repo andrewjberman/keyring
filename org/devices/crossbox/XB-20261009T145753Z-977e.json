@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T145753Z-977e",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~Q1",
+ "to_serial": "0.7.0_AE_CloudOps~ZQ",
+ "subject": "RESUME TO-DQ-t24: amended @9c613dea5b grants opt-in diagnostics + recorder outcome (Z-W1-S4)",
+ "body_path": "org/missions/D8/MDPF/MDPF_DEMQUE/task-orders/MDPF_DEMQUE.TO-DQ-t24.sitez-first-nontrading-backfill.md",
+ "opened_at": "2026-10-09T14:57:53Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
