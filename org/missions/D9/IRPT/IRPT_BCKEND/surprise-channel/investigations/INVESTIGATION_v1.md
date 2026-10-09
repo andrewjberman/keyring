@@ -22251,3 +22251,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A literal termination.source_removed_on key would make every served carried entry schema-invalid, and the contract is not in this order's paths. The date is therefore effective_date (when the termination took effect) and a capability_facts marker 'source_removed_on=YYYY-MM-DD ...', which the next refresh reads back to keep the first date. A named contract field is a contract change for the CTO and the contract's owner."
 }
 ```
+
+## IRPT_BCKEND-D2-S17 -- X-1 actor read-back not yet graded; carried from release 3 (IB-yr-681) to release 5 after-read 4
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S17",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T01:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "X-1's actor proof (stored owner = the verified advisor, acting_principal_id = the filer, body sha) is not yet graded: release 3's laptop cleanup returned no read-back; it is carried to release 5 after-read 4 (CTO msgs 1877, 2091).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~Y2/r68/Y68-1_laptop_cleanup_result.json @e94a64b0f6: admit_readback all null, 9 of 9 keys NOT_FOUND",
+      "CTO msg 1877: grade X-1's actor on E11's release after-read, read-back BEFORE delete",
+      "CTO msg 2091: split IB-yr-681; AC2 met on cleanup; the actor clause is its own open row"
+    ]
+  },
+  "spec_asserts": "X-1 (TCKT_VNEXT on-behalf upload) is proven when the stored UPLOAD record names the verified advisor as owner and the filer as acting_principal_id, and the stored body matches what was sent.",
+  "world_is": "Admission is proven (release 3: RESOLVING -> NORMALIZED); the actor and owner as stored are not yet read back. Disarm: release 5 (TO-APPLY-Y72) after-read 4 returns all three booleans true before any delete; this row then closes GRADUATED."
+}
+```
