@@ -18866,3 +18866,7 @@
 2026-10-09T11:24:21Z  SPAWN  0.7.0_AE_CloudOps~AR2  by 0.0.0_AB_MSTR~DELL2  pid=30008  host_pid=29844
 2026-10-09T11:25:24.546805+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~AR2 pid=9060
 2026-10-09T11:35:12Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=92  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=19  msys_joined=7  ms=1248
+2026-10-09T11:27:49Z  REJECT 0.7.0_AE_CloudOps~TV2  by 0.0.0_AB_MSTR~DELL2  reason=concurrency-cap  live=20/20
+2026-10-09T11:27:59Z  FORCE-SPAWN 0.7.0_AE_CloudOps~TV2  by 0.0.0_AB_MSTR~DELL2  reason=COO~V2 msg 3205: TCKT_VNEXT SA-r-1 executor; CloudOps~DELL2 deaf since 10:38Z
+2026-10-09T11:27:59Z  SPAWN  0.7.0_AE_CloudOps~TV2  by 0.0.0_AB_MSTR~DELL2  pid=10152  host_pid=27100
+2026-10-09T11:29:07.034614+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~TV2 pid=22688
