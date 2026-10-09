@@ -4,7 +4,7 @@
 {
  "project": "DSGN_AMGTV1",
  "directive": "D13",
- "fabric": "site-z",
+ "fabric": "dell1",
  "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",

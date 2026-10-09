@@ -4,7 +4,7 @@
 {
   "project": "AMGT_HARVST",
   "directive": "D5",
-  "fabric": "site-z",
+  "fabric": "dell1",
   "prd_version": "v0.22",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
