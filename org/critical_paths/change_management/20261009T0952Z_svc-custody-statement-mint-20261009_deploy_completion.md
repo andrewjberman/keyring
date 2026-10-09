@@ -22,3 +22,40 @@
 - 20261009T095220Z OPENED by 0.7.0_AE_CloudOps~DB2 with 4 leg(s)
 - 20261009T095613Z LEG B closed: ALL THREE BEFORE-READ LIMBS HOLD, measured on live state at 2026-10-09 ~09:5xZ from the worktree /c/dev/wk-db2-r41-mint 
 - 20261009T100649Z LEG M closed: MINTED AND CREATED, claims exactly the pair's. Secret ARN arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/inve
+
+
+---
+
+## NOTE 1 -- 2026-10-09 ~10:1xZ: the NAMING GRADE call and its verdict (required by the issuer's ruling, msg 3093)
+
+`1.0.0_SA_CTO~DELL2` ADDENDUM 9.3, relayed by `2.0.0_SA_COO~D2` as msg 3093, on row `IRPT_DASHBD-S38`:
+**secrets are GRADED, not BUILT** (the W1-S4 precedent). No R19, no R20, no registry row.
+
+GRADE CALL, run in this worktree at the ruling:
+
+    lib.opal_naming.grade('opal/investor-reporting/svc-custody-statement', 'SECRET')
+      -> ('CONFORMANT', 'opal/investor-reporting/svc-custody-statement')
+
+    lib.opal_naming.grade('opal/ticketing/svc-analyst-intake', 'SECRET')        # the ruling's control
+      -> ('CONFORMANT', 'opal/ticketing/svc-analyst-intake')
+
+Both CONFORMANT, and in each case the canonical form the grader returns EQUALS the name as given, so the
+secret this leg created already carries its canonical name. `grade`'s own domain note (GRADING_RULE.md)
+is why this is the right verb: its verdicts are NO-SYSTEM-ASKED / CONFORMANT / ALIAS / OUT-OF-PATTERN,
+and NOT-GRADED for a type outside its domain.
+
+**Correction to this seat's leg-M proof and to row S38.** Leg M recorded a `name()` REFUSAL
+(`ValueError: scope 'investor-reporting' resolves to no scopes.json row`) and treated it as a gate
+refusal to be routed to an owner under rule 30. That reading was wrong in one specific way, and the
+ruling is the authority: `name()` is the BUILD verb and a secret is not a built name, so its refusal on
+a slash-delimited Secrets Manager path is CORRECT BEHAVIOUR, not a gate defect. **There is therefore
+nothing to route, and no registry row is owed** -- the ruling says so explicitly, and this seat does
+not route a non-defect. The mint's name was never in doubt (both signed halves and the order name it
+verbatim); what was wrong was the instrument this seat reached for. The underlying cause is worth
+naming because it is reusable: the first probe of the module filtered its exports by a forward guess
+(`'name' or 'secret' or 'address' in the export`), and `grade` matches none of those words, so a verb
+that was present the whole time read as absent -- rule 24(i)'s hunt-by-subtraction-from-a-printed-
+denominator, skipped. Reading the full export list is what found it.
+
+**Nothing about the created secret changes:** same name, same ARN, same claims, same TTL. This note
+adds the grade verdict the ruling requires and corrects the reasoning recorded beside it.
