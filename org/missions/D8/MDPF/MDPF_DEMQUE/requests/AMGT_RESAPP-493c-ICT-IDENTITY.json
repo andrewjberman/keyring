@@ -1,0 +1,29 @@
+{
+  "request_id": "AMGT_RESAPP-493c-ICT-IDENTITY",
+  "channel": "reference",
+  "reason": "Row Z-S369 / Z-S377: decides whether ICT_US_Equity stays a key apart from ICT_PM_Equity (one key or two). deliverables/2.0.0_SA_COO~Z/round79/reads/Z_S369_ICT_POOL_READ.md section 3.",
+  "securities": [
+    {
+      "cusip": null,
+      "cusip_reason": "no CUSIP, ISIN, FIGI or exchange code is stored for the US key; obtaining one is this request's purpose",
+      "symbol": "ICT",
+      "security_key": "ICT_US_Equity",
+      "bloomberg": "ICT US Equity"
+    }
+  ],
+  "fields": [
+    "ID_ISIN",
+    "ID_SEDOL1",
+    "ID_BB_GLOBAL",
+    "EXCH_CODE"
+  ],
+  "start": null,
+  "end": null,
+  "filed_by": "2.0.0_SA_COO~R1",
+  "filed_for": "AMGT_RESAPP",
+  "vendor": "bloomberg",
+  "tier": 4,
+  "page": "research",
+  "authority": "Andrew-direct ~01:4xZ 2026-10-09 YES to site Z REC @10e525c7de (laptop 1.0.0_SA_CTO msg 107644, verbatim 'also tell sitez yes to their bbg data request'); site Z 1.0.0_SA_CTO~Z msg 32281 via MSTR~DELL1 msg 1468; 1.0.0_SA_CTO~DELL1 msg 1462 (the queue route, one-queue rule)",
+  "runs_at": "site Z (the Terminal), by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws"
+}
