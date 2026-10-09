@@ -10,6 +10,7 @@
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>4</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~03:5xZ (row MDPF_DEMQUE-D1-W9-S1):** the cut forbade editing `bbg_quote.py` while AC1's fourth test needs `quote()` to expose the reserve's claim -- the issuer's defect. GRANTED: `data/mdpf/scripts/demque/bbg_quote.py`. `quote()` adds `claims` = {"ceiling": <claim>, "reserve": <claim>} for the request's channel (from the allowance file), and when a finish date is computed from a `held` figure the result also carries `finish_date_claim: "held"`. Remove the xfail; all four named tests must PASS. Keep `test_demque_bbg.py` passing.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-10` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 4) |
 **outcome_ref:** FWD-3 | **depends_on:** none
 
@@ -34,7 +35,7 @@ writes a HELD estimate from the producers' own code.
    files and lines read), `margin` (a stated float, default 0.25, overridable by `--margin`), `producers` ({name: cells}), `gaps` (list).
 3. CLI `python reserve_estimate.py --print` prints ONE JSON line of `estimate()` (keys = channels); `--write` updates
    `bbg_allowance.json`'s `<channel>.reserve` to `{"value", "claim": "held", "basis"}` for every channel estimated (ceilings untouched).
-4. Do NOT edit `bbg_quote.py`.
+4. (Amended, see the header) `bbg_quote.py` is granted for the `claims` / `finish_date_claim` keys only.
 5. NEW `data/mdpf/scripts/demque/test_demque_reserve.py` (pytest; small synthetic producer files) with exactly these names:
    `test_reserve_is_names_times_fields_times_rows_per_producer_run`, `test_margin_is_stated_and_applied`,
    `test_reserve_written_with_claim_held_and_basis`, `test_quote_finish_date_carries_held_when_reserve_is_held` (it calls the existing
@@ -61,6 +62,7 @@ Run each invocation from the worktree root. At the base: `RESERVE-BAD no file ..
   investigation file below, and do not weaken a check. Rows are APPEND-ONLY.
 
 <paths>
+data/mdpf/scripts/demque/bbg_quote.py
 data/mdpf/scripts/demque/reserve_estimate.py
 data/mdpf/scripts/demque/test_demque_reserve.py
 data/mdpf/scripts/demque/bbg_allowance.json
