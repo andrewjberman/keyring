@@ -422,3 +422,29 @@
   "world_is": "The generator reaches the v1 schema (via IRPT_CONTRACTS_DIR) but not the served-v2 AnalysisReport schema from a linked worktree outside the workspace layout, so a full run aborts; the one required file was produced by the generator's own renderModule with the override."
 }
 ```
+
+## IRPT_ANLREQ-D2-S3 -- disposition of D2-S2 item 1: H1 withdrawn by the CTO; hop 4b is I3 alone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T05:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolved by the CTO ruling @19c5067e12 (H1 withdrawn before any apply); no second trigger remains, so nothing is owed on this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of IRPT_ANLREQ-D2-S2 item 1 (two READY triggers on the commentary Lambda): H1 is withdrawn by CTO ruling @19c5067e12 (msg 2622); hop 4b is I3 alone (decomposition AMENDMENTS 5-6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_IB_pr_388_H1_WITHDRAWN_20261009.md @19c5067e12",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R1.md AMENDMENT 5 item 1, AMENDMENT 6"
+    ]
+  },
+  "spec_asserts": "Decomposition I3: one analysis_ready message per READY reaches the commentary Lambda.",
+  "world_is": "Until the ruling, H1's stream mapping would also have reached it; the ruling withdraws H1 and its kms:Decrypt grant before any apply, so one trigger remains."
+}
+```

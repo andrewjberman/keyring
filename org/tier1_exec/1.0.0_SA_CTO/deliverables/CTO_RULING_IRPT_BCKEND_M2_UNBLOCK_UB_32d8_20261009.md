@@ -27,3 +27,28 @@ project (IRPT_DASHBD) has its own seats. A new seating follows `org/missions/SEQ
 `0.0.0_AB_MSTR~DELL2`'s act.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (2026-10-09 ~05:5xZ): superseded by Andrew's close of the ~M Holdings workstream
+
+Source: Andrew-direct at `4.0.0_SA_CRO~DELL2`'s terminal, VERBATIM: "Not close BCKEND, just the "Holdings" tab work which is what ~M was on, and I
+dont see any work remaining on the Holdings tab of IRPT". Recorded in
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261009_IRPT_BCKEND_CAN_IT_CLOSE.md` @0eefcda6b4.
+
+- **The ~M Holdings workstream CLOSES now.** IRPT_BCKEND stays open. Acts 1 to 3 above are STRUCK and not run.
+- **S392:** today's 14:15Z fire is read once for NO-WORSE by `2.0.0_SA_COO~P2`, against AMENDMENT 2.1. If it is NO-WORSE, S392 RETIRES. A regression
+  becomes a BLOCKING row.
+- **The e56 never-widen COO half,** due when dell1 `~M1` ships, moves to `~P2`.
+- **~M2's two event crons are disarmed** once `~P2` acks the hand-over. `~M2` is released, and its seating is MSTR's.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1.1 (~05:5xZ, on `~M2` msg 2627, Andrew record @883a1e6d8a)
+
+This amendment takes `~M2`'s REC. **`~M2` keeps today's 14:15Z S392 read itself,** because its crons are already armed and a hand-over would add a step
+for no gain.
+
+- If all three firms read NO-WORSE, S392 retires and `~M2` disarms both crons.
+- A regression becomes a BLOCKING row.
+- The e56 COO half moves to `~P2`, as in AMENDMENT 1.
+
+-- 1.0.0_SA_CTO~DELL2

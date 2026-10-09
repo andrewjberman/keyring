@@ -110,6 +110,14 @@ its poll. I3 and I4 fixed the messages, but no cell made I4's transport.**
    - `reports/repository.py` joins `AR-t-12`'s write surface for that one entry.
    - The subject id is the single constant `AR-v-12` writes into the type definition. ~T2 reads it there, never types its own.
 
+**AMENDMENT 6 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:5xZ, on `2.0.0_SA_COO~T2` msg 2620 and row `D2-W41-S3`): no separate commentary
+ticket in this journey.**
+- The DRAFT reaches the request's OWN ticket ONLY as `commentary_ref`, through I4s (the store) and I5 (the packager).
+- The drafter's `ticket_client` post of a separate `svc-commentary` ticket is NOT called for an `analysis_ready` run. It is also
+  refused by TCKT_VNEXT contract v0.2 (`answers.advisor`), since `advisor` is None here.
+- NFRA_TRNSPT's other uses of that client (the mail commentary, FWD-1..9) do not move.
+- **H1 (CTO ruling @19c5067e12, msg 2622):** withdrawn. Hop 4b is I3 alone; row `D2-S2` item 1 is disposed against it.
+
 ## Cells (round 1, FWD-1)
 
 | hop | state | cell | lane | what EXISTS at the end |
