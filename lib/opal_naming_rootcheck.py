@@ -771,12 +771,15 @@ def all_roots(map_path, out=print, run_one=None):
             problems.append("map key %s: %s" % (key, exc))
     unmapped = [r for r in all_r if r not in covered]
     out("ROOTS total=%d mapped=%d unmapped=%d" % (len(all_r), len(keys), len(unmapped)))
-    uncounted_all = 0
+    uncounted_all, caller_all = 0, 0
     for r in unmapped:
         try:
             r_items, r_unc, _st = opal_naming_scope.root_names(r, map_path)
             n, u = str(len(r_items)), str(len(r_unc))
-            uncounted_all += len(r_unc)
+            n_caller = sum(1 for x in r_unc if x.get("reason") == "module-input")
+            caller_all += n_caller
+            uncounted_all += len(r_unc) - n_caller
+            u = str(len(r_unc) - n_caller)
         except Exception as exc:  # an unreadable count is printed and fails the run, never dropped
             n, u = "unread", "unread"
             problems.append("unmapped root %s: name count unread: %s: %s" % (r, type(exc).__name__, exc))
@@ -787,15 +790,21 @@ def all_roots(map_path, out=print, run_one=None):
 
     def emit_uncounted(key):
         """One UNCOUNTED line per name the mapped root builds that its own files do not resolve (BF-v-4)."""
-        nonlocal uncounted_all
+        nonlocal uncounted_all, caller_all
         try:
             unc = opal_naming_scope.root_names(opal_naming_scope._map_key_root(key), map_path)[1]
         except Exception as exc:  # an unreadable root is printed and fails the run, never dropped
             problems.append("mapped root %s: uncounted names unread: %s: %s" % (key, type(exc).__name__, exc))
             return
-        uncounted_all += len(unc)
         for u in unc:
-            out(opal_naming_scope.uncounted_line(u))
+            if u.get("reason") == "module-input":
+                # BF-x-5: a reusable module's input is named, and counted, by its caller
+                caller_all += 1
+                out(opal_naming_scope.uncounted_line(u).replace("UNCOUNTED ", "COUNTED-AT-CALLER ", 1).replace(
+                    " -- module-input  [", "  [", 1))
+            else:
+                uncounted_all += 1
+                out(opal_naming_scope.uncounted_line(u))
 
     for key in keys:
         ent = doc["roots"][key]
@@ -868,11 +877,11 @@ def all_roots(map_path, out=print, run_one=None):
           and sum(cls.values()) == tot["HOLE"])
     out("ALL-ROOTS ok=%s roots_total=%d mapped=%d unmapped=%d completed=%d stopped=%d items=%d right=%d fix=%d "
         "not_asked=%d pattern=%d carded=%d refused=%d hole=%d carded_class_holes=%d source_bucket_holes=%d "
-        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d stale_hints=%d uncounted=%d"
+        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d stale_hints=%d uncounted=%d counted_at_caller=%d"
         % (ok, len(all_r), len(keys), len(unmapped), done, stopped, items_all, tot["RIGHT"], tot["FIX"],
            tot["NOT-ASKED"], tot["PATTERN"], tot["CARDED"], tot["REFUSED"], tot["HOLE"], cls["carded"],
            cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"], len(stale_lines),
-           uncounted_all))
+           uncounted_all, caller_all))
     return 0 if ok else 1
 
 
