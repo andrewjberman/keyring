@@ -397,6 +397,32 @@
 ]
 ```
 
+## IRPT_ANLREQ-D2-W11-S3 -- gen-wire.ts run as main cannot finish from a linked portal worktree; the one file was rendered through its own renderModule
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W11-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~11",
+  "surfaced_at": "2026-10-09T06:10:00Z",
+  "one_line": "AMENDMENT 2 item 3 says regenerate AnalysisSubmissionRequest.ts with gen-wire.ts from the workspace-root schema, but run as main from a linked portal worktree (C:/tmp/anlreq-v11-portal) the generator resolves the workspace root six levels up (C:/tmp/), so generate() dies on the first document, AnalysisReport, whose served-v2 schema path (infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json) is not there. The v1 schema directory IS reachable through the generator's own IRPT_CONTRACTS_DIR override, so I called the generator's own exported renderModule for AnalysisSubmissionRequest alone, with that override, and wrote only that one file; no other generated file was touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE in C:/tmp/anlreq-v11-portal @69716c81: bun run of generate(<scratch dir>) with IRPT_CONTRACTS_DIR set -> ENOENT open C:\tmp\\infra\u0007ws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json (gen-wire.ts:639, the first document in WIRE_CONTRACTS).",
+      "RESULT: renderModule('AnalysisSubmissionRequest', <schema text read by schemaFilePath>) -> the committed file differs from its old self by exactly two lines: the header sha256 (ed84ac36... -> a6f224cd..., equal to sha256sum of docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json at workspace 5be2acd7cc) and `readonly ticket_id?: string`.",
+      "SAME CAUSE, other tests: in the linked worktree the fe-s-13 tests (routes, content-pins, producer-fixtures), iv-e-26 wire-regen and the component-census tests read the same missing C:/tmp/docs and C:/tmp/infra paths and fail with ENOENT; fe-s-1 source-bounds fails on a pre-existing 'ycharts' token at contracts/index.ts:29. None is in this order's files. The submission-request test and every TicketCenter test pass (23 of 23)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 3: regenerate the wire type with its own generator from the schema at the workspace root; if the generator cannot reach the schema from the portal worktree, STOP and report.",
+  "world_is": "The generator reaches the v1 schema (via IRPT_CONTRACTS_DIR) but not the served-v2 AnalysisReport schema from a linked worktree outside the workspace layout, so a full run aborts; the one required file was produced by the generator's own renderModule with the override."
+}
+```
+
 ## IRPT_ANLREQ-D2-S3 -- disposition of D2-S2 item 1: H1 withdrawn by the CTO; hop 4b is I3 alone
 
 ```json
@@ -420,5 +446,31 @@
   },
   "spec_asserts": "Decomposition I3: one analysis_ready message per READY reaches the commentary Lambda.",
   "world_is": "Until the ruling, H1's stream mapping would also have reached it; the ruling withdraws H1 and its kms:Decrypt grant before any apply, so one trigger remains."
+}
+```
+
+## IRPT_ANLREQ-D2-W63-S1 -- AR-g-13: "the same refusals as poll_once" and "refused and deleted" name opposite outcomes; the order's terminal list also leaves the record-level refusals to a reading
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W63-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~63",
+  "surfaced_at": "2026-10-09T06:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-g-13 asks the package poll for 'the same 4096-byte and duplicate-field refusals as poll_once' and, in arm (c), for a malformed body to be refused AND DELETED; poll_once raises on both and never deletes, so the order cannot mean the same outcome. Built as: message-level refusals delete, everything record-level keeps.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py poll_once (ValueError CLOSED_QUEUE_MESSAGE_REQUIRED / DUPLICATE_QUEUE_FIELD, no delete) @f9daebcb8e",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-g-13.resident-polls-commentary-ready-into-packager.md section 3 and arm (c) @2b0744fbbe",
+      "infra/aws/lambda/investor-reporting/ycharts/research/opal_packager.py _closed_message / handle_commentary_ready (refusal names) @f9daebcb8e"
+    ]
+  },
+  "spec_asserts": "AR-g-13 section 3: the package poll applies the same 4096-byte and duplicate-field refusals as poll_once, and deletes a message only on attached, already attached, or a named refusal of the message itself (wrong kind, extra or missing field, not closed); arm (c): a malformed body is refused and deleted, the packager not called.",
+  "world_is": "poll_once raises on an oversize body or a duplicate field and leaves the message, so 'the same' refusal cannot also delete. poll_package_once applies the same two checks and then DELETES (an oversize, non-JSON, non-object or duplicate-field body can never become valid, and keeping it only walks it to the DLQ); the packager's own message-level names (WRONG_KIND, EXTRA_FIELD, MISSING_FIELD, MESSAGE_NOT_JSON, MESSAGE_NOT_AN_OBJECT, CLOSED_QUEUE_MESSAGE_REQUIRED) delete when raised as PackagerRefused. Every other refusal the packager raises about the RECORDS (ACCEPTANCE_RECORD_ABSENT, TICKET_ID_ABSENT, COMMENTARY_REF_ABSENT, JOB_NOT_READY, ORIGINAL_REF_ABSENT, COMMENTARY_MALFORMED) is not in the order's terminal list and is KEPT: those depend on records that can still arrive (commentary written, job READY), so redelivery and the DLQ own them. The package poll also sets the process variable IRPT_ANALYSIS_READY_QUEUE_URL from the I3 binding (the order's first option), so the factory mutates os.environ once at build."
 }
 ```
