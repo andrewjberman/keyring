@@ -1,45 +1,37 @@
-# Can IRPT_BCKEND close? Per-FWD disposition (CRO read)
+# Closing IRPT_BCKEND's Holdings workstream (~M): what remains (CRO read)
 
 **Author:** 4.0.0_SA_CRO~DELL2, 2026-10-09 ~05:5xZ
-**Ask:** Andrew, in-session at 2.0.0_SA_COO~M2 ~05:4xZ, relayed as msg 2619: "Ask CRO if we can close this, what actually
-remains on endpoints here that arent finished? i can eyeball it and probably just close it".
-**Inputs:**
-- ~M2's table `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/IRPT_BCKEND_CLOSE_QUESTION_ENDPOINT_TABLE_20261009.md`
-  @60c1fe694e;
-- the CTO ruling ca5f74553d (consolidation into IRPT_DASHBD);
-- IRPT_ANLREQ v0.3 C-ABSORB @1251f44685;
-- ~P2's drain packet d35d2fb851.
+**Ask:** Andrew, in-session at 2.0.0_SA_COO~M2 ~05:4xZ, relayed as msg 2619. Then this seat's terminal, which scoped it:
+"Not close BCKEND, just the "Holdings" tab work which is what ~M was on, and I dont see any work remaining on the Holdings tab of IRPT".
+**Inputs:** ~M2's table `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/IRPT_BCKEND_CLOSE_QUESTION_ENDPOINT_TABLE_20261009.md`
+@60c1fe694e; unblock case UB-20261009T052107Z-32d8 (~M2's position).
 
 ## Answer
 
-**Not today as it stands, but it can be shrunk to two outcomes now and closed once those two are driven.** Nine of the
-twelve FWDs have a home elsewhere or are obsolete. Two are live platform guarantees that every other IRPT project leans on,
-and one of them has an ARMED hazard due 2026-10-12.
+**Yes, the Holdings workstream can close.** It has no Holdings-tab build left.
+- Its only outcome share, FWD-5 (holdings by model, unassigned assets preserved), is REALIZED (CTO msg 890).
+- It has 0 open orders; round 35 is drained and READ by the CVO.
 
-| FWD | Disposition | Why |
+Two leftover obligations are not Holdings-tab work. Each needs a new owner, not the lane:
+
+| Leftover | What it is | Recommended owner |
 |---|---|---|
-| FWD-1 advisor finds a client | **FOLD -> IRPT_FNTEND** | its grade is FNTEND's; what remains is a PROD route opening and one advisor walk, both frontend |
-| FWD-2 restricted advisor sees only their population | **KEEP (platform), open** | security property of the 21 scoped routes; what remains is a replay on current bytes (both principal classes, revoked grant), seat-drivable now |
-| FWD-3 Opal performance at INF/COT | **FOLD -> IRPT_DASHBD** | ruled ca5f74553d |
-| FWD-4 YCharts sensitivity analysis + export | **SUPERSEDE -> IRPT_ANLREQ** | the Analysis lane is absorbed (C-ABSORB a), and ANLREQ FWD-7 removes YCharts, so "YCharts analysis" as written is obsolete |
-| FWD-5 holdings by model | **this share DONE; view -> IRPT_FNTEND** | REALIZED (msg 890) |
-| FWD-7 directory cannot go quietly stale | **KEEP (platform), open, ARMED** | row D2-W187-S1: the served directory goes over-age 2026-10-12 (Cottonwood) and 10-13 (Inflection); the seeding run is blocked on a runner-host grant (d35d2fb851); the five-arm controlled-clock drive is seat-drivable |
-| FWD-8 branded report with a narrative page | **FOLD -> IRPT_DASHBD** | it is the Performance client statement's export (IRPT_CUSTDY template, ~P2 cell E-P9), now consolidated there |
-| FWD-9 forwarded email becomes a request | **FOLD -> IRPT_ANLREQ as a later outcome, or RETIRE on Andrew's word** | a second entry door to the same journey; the intake schedule is DISABLED; ANLREQ's primary door is the form |
-| FWD-10 request lands in its own firm's storage | **FOLD with FWD-9** | it follows FWD-9; ANLREQ FWD-5 already holds the firm fence for the form path |
-| FWD-11 Opal Global view across firms | **FOLD -> IRPT_DASHBD** | a performance view across firms |
-| FWD-12 daily holdings-basis gold | **FOLD -> IRPT_DASHBD** | ruled; it serves as the guard rail |
-| FWD-13 Opal vs vendor figure | **FOLD -> IRPT_DASHBD** | the one BD comparison is DASHBD FWD-8 |
+| S392, the per-fire NO-WORSE read (CTO AMENDMENT 2.1) | reading the scheduled `irpt-holdings-snapshot` fire (weekdays 10:15 ET) against the last snapshot | `2.0.0_SA_COO~P2`, IRPT_BCKEND's remaining lane, which keeps holdings as platform. Or retire it after today's 14:15Z fire grades NO-WORSE |
+| The never-widen COO half when dell1 ships the e56 fix (row MDPF_SECCLASS-D1-S8) | a sign-off on another box's change to `holdings_snapshot.py` | `~P2`, the same reason |
 
-## The fastest honest close
+**FWD-5's frontend half** (IRPT_FNTEND's view) is graded in another project. Andrew's read that nothing remains on the
+tab is the grade it waits on. If he says so, it closes there too.
 
-1. **Today:** the CTO writes one addendum moving FWD-1, 3, 4, 5 (view), 8, 9, 10, 11, 12 and 13 as above. IRPT_BCKEND then
-   holds FWD-2 and FWD-7 only, with ~P2 as its one lane. ~M2 is released (unblock UB-20261009T052107Z-32d8).
-2. **Disarm FWD-7's hazard before 2026-10-12:** the runner-host grant for the seeding run, then the five-arm drive on
-   served bytes.
-3. **Drive FWD-2's replay** (21 routes x 2 principal classes + the revoked arm). This is a test run, with no new build.
-4. **Close** when both grade REALIZED. Alternatively, Andrew may close it now and move FWD-2 and FWD-7 to a small
-   platform row. But FWD-7's hazard needs an owner either way, so closing outright before the 10-12 date leaves it
-   orphaned.
+## Effect on the open unblock case
 
-**Limits:** grades since 10-07 are taken from the CTO's records (`held`), not re-run. No release was re-graded here.
+UB-20261009T052107Z-32d8 (~M2) is superseded by this:
+- the lane closes rather than being re-seated through extra work;
+- my proposal's acts 2 and 3 (the D1-S8 trace and the tab walk) become optional for whoever takes the leftovers.
+
+## Andrew-direct -- verbatim
+
+> Ask CRO if we can close this, what actually remains on endpoints here that arent finished? i can eyeball it and probably
+> just close it
+
+> Not close BCKEND, just the "Holdings" tab work which is what ~M was on, and I dont see any work remaining on the
+> Holdings tab of IRPT
