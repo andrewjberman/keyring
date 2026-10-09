@@ -1,0 +1,22 @@
+VERSION-DIFFERS  anthropic                      OPTIONAL  laptop=0.84.0 here=0.45.0 (reported, not failed)
+VERSION-DIFFERS  beautifulsoup4                 HARD      laptop=4.14.3 here=4.15.0 (reported, not failed)
+VERSION-DIFFERS  boto3                          HARD      laptop=1.42.54 here=1.43.108 (reported, not failed)
+VERSION-DIFFERS  botocore                       HARD      laptop=1.43.0 here=1.43.108 (reported, not failed)
+VERSION-DIFFERS  curl-cffi                      HARD      laptop=0.13.0 here=0.16.3 (reported, not failed)
+VERSION-DIFFERS  jsonschema                     HARD      laptop=4.26.0 here=4.23.0 (reported, not failed)
+VERSION-DIFFERS  lxml                           HARD      laptop=6.0.2 here=6.1.3 (reported, not failed)
+VERSION-DIFFERS  matplotlib                     OPTIONAL  laptop=3.11.1 here=3.11.2 (reported, not failed)
+PRESENT          openpyxl                       HARD    
+VERSION-DIFFERS  pandas                         HARD      laptop=2.3.3 here=3.0.6 (reported, not failed)
+VERSION-DIFFERS  pandas-market-calendars        OPTIONAL  laptop=5.4.0 here=5.5.0 (reported, not failed)
+VERSION-DIFFERS  playwright                     HARD      laptop=1.58.0 here=1.63.0 (reported, not failed)
+PRESENT          psutil                         HARD    
+VERSION-DIFFERS  pyarrow                        HARD      laptop=18.1.0 here=25.0.1 (reported, not failed)
+VERSION-DIFFERS  pymupdf                        HARD      laptop=1.27.1 here=1.28.2 (reported, not failed)
+VERSION-DIFFERS  pypdf                          OPTIONAL  laptop=6.12.2 here=6.20.0 (reported, not failed)
+VERSION-DIFFERS  pytest                         HARD      laptop=9.0.2 here=9.1.1 (reported, not failed)
+PRESENT          pyyaml                         HARD    
+VERSION-DIFFERS  requests                       OPTIONAL  laptop=2.32.5 here=2.34.2 (reported, not failed)
+VERSION-DIFFERS  ruff                           TOOL      laptop=0.15.11 here=0.16.10 (reported, not failed)
+MISSING          module:blpapi                  OPTIONAL
+KIT-COMPARE device=dell1 python=3.14.7 required=21 present=20 missing=1 version_differs=17 hard_missing=0 ok=False
