@@ -26,13 +26,16 @@ The runner must run on the site Z box (its publisher sessions are bound to that 
 barrons now. Seeking Alpha joins only when the r47 Seeking Alpha backfill COMPLETES (`1.0.0_SA_CTO~DELL1` msg 1430), and
 that join is NOT this order.
 
-**Start condition:** the issuer, `2.0.0_SA_COO~W1`, sends you the PIN COMMIT, the merged commit that carries HVST-bs-2.
-Do not start before that. Until then this order is held.
+**Start condition, MET (AMENDMENT 1):** the PIN COMMIT is **c1be67f53c**, the merge of HVST-bs-2, on origin `box/dell1`.
+Both halves of this act's pair are signed. Start once your tree carries c1be67f53c (`git cat-file -t c1be67f53c` reads
+`commit`).
 
 ## 1. THE ACT (site Z box)
 
 1. Make a PINNED checkout of the pin commit, beside the workspace and never the shared tree:
-   `git worktree add --detach <workspace-parent>\harvest-runner-pin-<first 10 of the pin> <pin>`.
+   `git worktree add --detach <workspace-parent>\wk-harvest-runner-pin-c1be67f53c c1be67f53c`. The `wk-` prefix is required:
+   site Z's reaper (`.tools/kill-maint.ps1`) exempts only a `wk-*` worktree or a declared detached job, and stops any
+   other process outside a claude tree about 31 minutes after it starts.
 2. `powershell -NoProfile -ExecutionPolicy Bypass -File <pinned>\lib\opal_data_harvest\install-cycle-schedule.ps1 -RepoRoot <pinned> -Publishers bbg,wsj,barrons -Plan`.
    Read it: ACTION ends `--publishers bbg wsj barrons`, WORKDIR is the pinned checkout. Save it as `bs3_plan.out`.
 3. The same command without `-Plan`, once. Save its output as `bs3_register.out`. Then start the task once
@@ -43,7 +46,9 @@ Do not start before that. Until then this order is held.
    `already_held` and `failed`, or the record's `stopped` reason (a refused sign-in is a recorded result, not a failure of
    this order).
 5. Write the records in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/round75/`.
-6. Anything odd: append one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z
+6. Before you close: run `powershell -NoProfile -ExecutionPolicy Bypass -File .tools/kill-maint.ps1` (DRY-RUN by
+   default; never pass `-Execute`). It must list the runner's python process as `EXEMPT`. Save it as `bs3_gc_dryrun.out`.
+7. Anything odd: append one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z
    number>`, minted over every channel document of the project.
 
 <paths>
@@ -55,7 +60,8 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.Arguments"</invocation><expect>--publishers bbg wsj barrons</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory"</invocation><expect>harvest-runner-pin-</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory"</invocation><expect>wk-harvest-runner-pin-c1be67f53c</expect></criterion>
+  <criterion id="AC4" cell_refs="HVST-bs-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/round75/bs3_gc_dryrun.out</invocation><expect>EXEMPT PID</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-bs-3" judgment="true"/>
 </proof_of_spec>
 
@@ -81,6 +87,13 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **Held** until HVST-bs-2's merge (its own never-widen pair) and the issuer's pin message. Issued now because the L6 gate
   admits one issuance per round, as HVST-bk-3 was.
 - `<risk>` WORLD: the runner asks publisher hosts from the site Z box.
+- **AMENDMENT 1 (2026-10-09 ~03:0xZ, issuer):** the pin is c1be67f53c (bs-2 merged, ledger closed @b19aa746cc). Pair:
+  COO half `deliverables/2.0.0_SA_COO_W1/round75/NEVER_WIDEN_HALF_COO_BS3_RUNNER_ACTIVATION.md` @d0493b37a5; CTO half
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_HARVST_BS3_RUNNER_ACTIVATION_20261009.md` @37aefc2855
+  (`1.0.0_SA_CTO~Z`, via `0.0.0_AB_MSTR~DELL1` msg 1514), which adds C-e: the pinned worktree is named
+  `wk-harvest-runner-pin-c1be67f53c` and a reaper dry run lists the runner EXEMPT before close. This amendment carries C-e
+  into step 1, a new step 6, AC2's expect and a new AC4. bbg stays on `1.0.0_SA_CTO~DELL1`'s ruling (msg 1512):
+  bloomberg.com web collection is not a Terminal draw.
 
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
