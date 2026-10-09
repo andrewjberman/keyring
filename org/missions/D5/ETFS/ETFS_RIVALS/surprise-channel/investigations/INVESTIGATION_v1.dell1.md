@@ -291,6 +291,27 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "CTO ADDENDUM 2 @9f0a957c00: the CGIC trade windows move a trading day earlier.",
     "world_is": "After deploy, only captures with new inputs get the claimed as-of; served history (CGIC 10-02..10-08) keeps delivery-day dates.",
     "notes": "A history rebuild is a served write (canonical_shape and trade_schedule objects for the affected dates) under its own pair: either a forced replay that ignores the stored revision, or a revision digest that includes the gold code version. The issuer's local proof hides the served canonical objects from the overlay (--fresh-canonical) to show what the rebuild would write."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W28-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~28",
+    "surfaced_at": "2026-10-09T08:40Z",
+    "one_line": "RIV-we-2: the G6 (flow_reconciliation) object cannot carry window_start_delivered / window_end_delivered -- its SCHEMA and finish_row live in gold_flow_reconciliation.py, outside this order's paths, so the pair rides on the recon dict and infer_recon's frame only",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_flow_reconciliation.py:50-63 SCHEMA has no *_delivered column; finish_row (:88-90) takes only COLUMNS from the recon dict, so the parquet G6 row drops the pair",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py: _pair_rows' recon dict carries window_start_delivered / window_end_delivered; infer_recon appends them after g6mod.COLUMNS (tests/test_we2_window_asof.py::test_recon_rows_carry_the_same_pair)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-we-2 interface item 2: the G5 schema gains the two columns; recon rows carry the same pair.",
+    "world_is": "G5 parquet gains the pair; the served G6 parquet row does not (its schema is a file this order may not edit). The recon window_start / window_end DO move to the as-of dates, so G6 window_end and G5 window_end stay equal.",
+    "notes": "To land the pair in the served G6 object, add the two date32 columns to gold_flow_reconciliation.SCHEMA (a later order that owns that file). Also unchanged by design: G5 `date`, `window_trading_days`, the window_widened flag, the corporate-action window test and the object address (date=<delivery day>) stay on the delivery days; only the labels window_start / window_end moved."
   }
 ]
 ```
