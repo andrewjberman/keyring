@@ -2,6 +2,35 @@
 
 Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
 
+
+```json
+{
+  "id": "MDPF_SECHIST-Z-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T08:18:34Z",
+  "one_line": "The SH-t-4 run-record reland is at HEAD but NOT in the vehicle that runs: this deploy's artifact is the WORKING TREE of etf_daily_pull.py, and the working tree is HEAD minus the 15-line SH-t-4 block, so the 2026-10-09 11:00Z scheduled fire will emit no 'history backfill budget' remainder line. The working-tree blob equals the blob leg L2 of ledger mdpf-sechist-sh-t1-sitez-etf-daily-pull-20261007 closed on, so L2 is intact and it is HEAD that moved past the vehicle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git rev-parse HEAD:integrations/bloomberg/pipeline/etf_daily_pull.py -> 73735f44d6b8e4a17c9ebf241a62b9bf4a334379; git hash-object on the working tree file -> 0e399c9523f60511107b8491b9894c892a6aeb60. The order's own context line pins leg L2 to 'working-tree blob 0e399c9523', so the vehicle's bytes ARE the closed leg's bytes.",
+      "RUN git diff --stat HEAD -- that path -> '1 file changed, 15 deletions(-)'; the hunk is the SH-t-4 run record at main():610-624 that logs spent_after and the ledger remainder.",
+      "RUN git log -S'history backfill budget: estimate' -- that path -> 19e50528d3 (2026-10-08 13:59Z, 2.0.0_SA_COO~H1) 'reland ... SH-t-4 run-record edit back into etf_daily_pull.py and its test, on Andrew's yes'. So the reland landed at HEAD on 10-08 and the vehicle never took it.",
+      "RUN byte-level confirm: git show HEAD:<path> | grep -c 'history backfill budget: estimate' -> 1; the same grep on the working tree -> 0.",
+      "FILE integrations/bloomberg/pipeline/scheduled_daily_pull.cmd: ETF_PULL is %REPO%\\integrations\\bloomberg\\pipeline\\etf_daily_pull.py -- the live checkout, not a built artifact. The ETFS_RIVALS leg's own comment in the same file states the vehicle 'runs the working tree'.",
+      "RUN the L3 subject is NOT broken by this: grep -n '_bb.record(\"backfill\"' on the working tree -> line 609 present, and the etf_history_backfill_<asof> batch_id with it. The budget LINE will still be written; only the extra remainder LOG line is absent.",
+      "LIVE Get-ScheduledTask OPAL_BBGTML_daily_pull -> State Ready, NextRunTime 2026-10-09 07:00:00 local (11:00Z), action cmd.exe /c scheduled_daily_pull.cmd, principal 'Opal Bloomberg' LogonType Interactive."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SH-t-4 was relanded on Andrew's yes at 19e50528d3 and is at HEAD, so the scheduled pull records and logs the backfill draw beside the ledger remainder. Order MDPF_SECHIST.TO-READ-R2-L3 reads the 11:00Z fire for 'a backfill line in the day's bbg_budget ledger'.",
+  "world_is": "HEAD carries SH-t-4; the running vehicle does not. The deploy's artifact for this cell is an UNCOMMITTED working-tree state, which makes the delta itself load-bearing: any routine 'git checkout --' , 'git stash', clean or merge on this tree would restore HEAD's hunk and MOVE the deployed bytes with nothing recorded, which is why this is filed ARMED rather than as a note. ARMED WITHOUT A LIVE OWNER, stated rather than hidden: 2.0.0_SA_COO~H1 reads NOT REGISTERED on the broker (lane never registered), so it cannot disarm same-turn and this row is the parked carrier. CONDITION THAT UN-PARKS IT: ~H1 registering, or any seat holding the mdpf-sechist-sh-t1 ledger ruling whether the vehicle should carry the reland before the next fire. I changed nothing: the order's rules forbid this seat editing anything under integrations/bloomberg/pipeline/, and restoring the hunk would move a producer's bytes hours before its scheduled fire with no sign-off. CONSEQUENCE FOR L3, bounded: the backfill ledger line and the manifest are unaffected, so L3's AC1 is not at risk from this; only SH-t-4's own remainder log line will be absent from the 11:00Z run. SEPARATELY and not caused by this: the 10-08 07:00 fire exited 50 (DAPI precondition failed, pull NOT attempted, fallback aborted at zero Bloomberg attempts per C:\\opal-elev\\bbg_fallback_ESCALATION.txt), and on the rc=50 path the .cmd jumps to :prune and SKIPS the ETF leg entirely -- so a repeat would leave L3's manifest ABSENT. Transport is UP as of 08:0xZ (bbcomm pid 36400 since 03:13 local, 127.0.0.1:8194 LISTENING with an ESTABLISHED link to the vendor), and 0.0.3_BG_BBGTerminal reports bloomberg_health ok:true, so entitlement is believed live; this seat did not test it, because an agent-turn Bloomberg call is barred by R-21."
+}
+```
 ```json
 [
   {
@@ -151,35 +180,6 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
 
 ```json
 {
-  "id": "MDPF_SECHIST-Z-S1",
-  "project": "MDPF_SECHIST",
-  "fabric": "site-z",
-  "surfaced_by": "0.7.0_AE_CloudOps~Z",
-  "surfaced_at": "2026-10-09T08:18:34Z",
-  "one_line": "The SH-t-4 run-record reland is at HEAD but NOT in the vehicle that runs: this deploy's artifact is the WORKING TREE of etf_daily_pull.py, and the working tree is HEAD minus the 15-line SH-t-4 block, so the 2026-10-09 11:00Z scheduled fire will emit no 'history backfill budget' remainder line. The working-tree blob equals the blob leg L2 of ledger mdpf-sechist-sh-t1-sitez-etf-daily-pull-20261007 closed on, so L2 is intact and it is HEAD that moved past the vehicle.",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "2.0.0_SA_COO~H1",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "RUN git rev-parse HEAD:integrations/bloomberg/pipeline/etf_daily_pull.py -> 73735f44d6b8e4a17c9ebf241a62b9bf4a334379; git hash-object on the working tree file -> 0e399c9523f60511107b8491b9894c892a6aeb60. The order's own context line pins leg L2 to 'working-tree blob 0e399c9523', so the vehicle's bytes ARE the closed leg's bytes.",
-      "RUN git diff --stat HEAD -- that path -> '1 file changed, 15 deletions(-)'; the hunk is the SH-t-4 run record at main():610-624 that logs spent_after and the ledger remainder.",
-      "RUN git log -S'history backfill budget: estimate' -- that path -> 19e50528d3 (2026-10-08 13:59Z, 2.0.0_SA_COO~H1) 'reland ... SH-t-4 run-record edit back into etf_daily_pull.py and its test, on Andrew's yes'. So the reland landed at HEAD on 10-08 and the vehicle never took it.",
-      "RUN byte-level confirm: git show HEAD:<path> | grep -c 'history backfill budget: estimate' -> 1; the same grep on the working tree -> 0.",
-      "FILE integrations/bloomberg/pipeline/scheduled_daily_pull.cmd: ETF_PULL is %REPO%\\integrations\\bloomberg\\pipeline\\etf_daily_pull.py -- the live checkout, not a built artifact. The ETFS_RIVALS leg's own comment in the same file states the vehicle 'runs the working tree'.",
-      "RUN the L3 subject is NOT broken by this: grep -n '_bb.record(\"backfill\"' on the working tree -> line 609 present, and the etf_history_backfill_<asof> batch_id with it. The budget LINE will still be written; only the extra remainder LOG line is absent.",
-      "LIVE Get-ScheduledTask OPAL_BBGTML_daily_pull -> State Ready, NextRunTime 2026-10-09 07:00:00 local (11:00Z), action cmd.exe /c scheduled_daily_pull.cmd, principal 'Opal Bloomberg' LogonType Interactive."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "SH-t-4 was relanded on Andrew's yes at 19e50528d3 and is at HEAD, so the scheduled pull records and logs the backfill draw beside the ledger remainder. Order MDPF_SECHIST.TO-READ-R2-L3 reads the 11:00Z fire for 'a backfill line in the day's bbg_budget ledger'.",
-  "world_is": "HEAD carries SH-t-4; the running vehicle does not. The deploy's artifact for this cell is an UNCOMMITTED working-tree state, which makes the delta itself load-bearing: any routine 'git checkout --' , 'git stash', clean or merge on this tree would restore HEAD's hunk and MOVE the deployed bytes with nothing recorded, which is why this is filed ARMED rather than as a note. ARMED WITHOUT A LIVE OWNER, stated rather than hidden: 2.0.0_SA_COO~H1 reads NOT REGISTERED on the broker (lane never registered), so it cannot disarm same-turn and this row is the parked carrier. CONDITION THAT UN-PARKS IT: ~H1 registering, or any seat holding the mdpf-sechist-sh-t1 ledger ruling whether the vehicle should carry the reland before the next fire. I changed nothing: the order's rules forbid this seat editing anything under integrations/bloomberg/pipeline/, and restoring the hunk would move a producer's bytes hours before its scheduled fire with no sign-off. CONSEQUENCE FOR L3, bounded: the backfill ledger line and the manifest are unaffected, so L3's AC1 is not at risk from this; only SH-t-4's own remainder log line will be absent from the 11:00Z run. SEPARATELY and not caused by this: the 10-08 07:00 fire exited 50 (DAPI precondition failed, pull NOT attempted, fallback aborted at zero Bloomberg attempts per C:\\opal-elev\\bbg_fallback_ESCALATION.txt), and on the rc=50 path the .cmd jumps to :prune and SKIPS the ETF leg entirely -- so a repeat would leave L3's manifest ABSENT. Transport is UP as of 08:0xZ (bbcomm pid 36400 since 03:13 local, 127.0.0.1:8194 LISTENING with an ESTABLISHED link to the vendor), and 0.0.3_BG_BBGTerminal reports bloomberg_health ok:true, so entitlement is believed live; this seat did not test it, because an agent-turn Bloomberg call is barred by R-21."
-}
-```
-
-```json
-{
   "id": "MDPF_SECHIST-D1-W8-S1",
   "project": "MDPF_SECHIST",
   "fabric": "dell1",
@@ -199,5 +199,29 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Each R3 criterion invocation, run from the worktree root, prints <LABEL>-TESTS-OK when the named tests pass (order MDPF_SECHIST.TO-SH-t9 ACCEPTANCE).",
   "world_is": "The invocation is environment-sensitive: with FORCE_COLOR set it fails on real passing tests, so a grader running in a coloured shell would read a false BAD for every R3 cell. I did not edit the check (barred by the order) and ran it with FORCE_COLOR unset for the recorded output."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W12-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~12",
+  "surfaced_at": "2026-10-09T14:00:00Z",
+  "one_line": "r3_named_tests.py greps pytest -v output for '::<name> PASSED' but does not strip ANSI color, so with FORCE_COLOR=3 in the caller's environment (as in this worker shell) a fully passing file reports TESTS-BAD for every named test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (FORCE_COLOR=3 in env) python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_named_tests.py WRITER data/mdpf/scripts/silver/test_security_series_writer.py test_three_values_per_day test_cusip_key_namespace test_no_write_without_switch -> pytest '6 passed' but last line 'WRITER-TESTS-BAD not-passed=test_three_values_per_day,test_cusip_key_namespace,test_no_write_without_switch', rc=1; the output shows 'PASSED' wrapped in ESC[32m...ESC[0m.",
+      "RUN same invocation under 'env -u FORCE_COLOR' -> '6 passed' and last line 'WRITER-TESTS-OK passed=3/3', rc=1 absent, rc=0.",
+      "FILE r3_named_tests.py: regex r'::' + name + r'(\\[[^\\]]*\\])? PASSED' over subprocess stdout with no color strip or --color=no; the file was not edited by this worker."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The criterion invocation prints <LABEL>-TESTS-OK for a file whose named tests pass, in whatever shell the worker or drain runs it.",
+  "world_is": "It prints OK only when FORCE_COLOR/PY_COLORS color forcing is absent from the environment; with FORCE_COLOR=3 it prints BAD on a passing file. The same holds for every round-3 criterion that uses r3_named_tests.py. The proof for SH3-t13-AC1 records the run with FORCE_COLOR unset."
 }
 ```
