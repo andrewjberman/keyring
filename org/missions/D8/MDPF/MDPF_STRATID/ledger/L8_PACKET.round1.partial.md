@@ -47,3 +47,12 @@ read.
 
 `surprise-channel/investigations/INVESTIGATION_v1.md`: 5 rows -- `D1-W1-S1..S3`, `D1-W2-S1..S2`, all OBSERVATION
 (W1-S3 a pre-existing red confirmed at base: 4 failed both sides). No ARMED or BLOCKING row. Watermark: yours to state.
+
+**Ruling for your L9 disposition of `D1-W2-S1`** (`1.0.0_SA_CTO~DELL1` msg 1575, 2026-10-09 03:30Z): ADMITTED. The
+empty per-firm keys (all-None `sma_additive_aua`, empty `sma_additive_withheld`) are already inside the signed pair's
+blast radius, `deliverables/2.0.0_SA_COO~S1/NEVER_WIDEN_PAIR_R1_GLOBAL_PFDE_FOLD.md` section 4 "Gains keys, no
+figure", signed by both halves (laptop CTO @`c1484b8bb4`, COO @`ff5d1b8dc6`). C-GLOBAL-PAIR's "per-firm views do not
+move" binds figures, and a key with no figure moves no view. The CTO asks that the row close on this ruling
+(`NOT_A_DEFECT`, pointer = this ruling); the disposition field is yours (`surprise-row-gate.py` A-1).
+**Added to the 13:30Z read (section 4):** every per-firm figure is byte-equal to pre-fire apart from those two keys; a
+per-firm figure that moves is a STOP.

@@ -3952,6 +3952,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The order's issued_to still names ~3, so the lane gate admits only ~3; the edit is left uncommitted in the worktree and no override was used.",
   "notes": "Disarm not needed. The issuer re-issues the order to ~5 (or commits the working-tree edit as ~3); no proof instance or complete tag was written.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-D1-S1",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-09T03:30:00Z",
+  "one_line": "build_unit_map writes 'no value returned' for the four dispersion fields on NVDA US, CAT US, CSL AU and 6861 JP, but those names were never asked for them: they are not in the daily fire and their newest raw predates CRPS-ap-7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r40_ap10u_preview_and_c2_read_20261009.txt section 2: NVDA US holds no bestdata object (newest raw 2026-09-11T00:54Z); CAT US, CSL AU, 6861 JP hold bestdata only from 2026-09-19 with none of the four",
+      "the 2026-10-08 13:00Z fire log (2.0.0_SA_COO~X evidence/r40_ap10m_leg_v_fire_20261008.txt) carries 0 REFRESH lines for each of the four names and 1 for UNVGY US",
+      "UNVGY US bestdata 2026-10-08T13:13:53Z lists the four in its request and returns none of them: the one genuine no-value case"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The (u) halves and the preview read the five names as 'return no value on the dispersion fields' (CTO half C2).",
+  "world_is": "Four of the five were never requested: their landed raw is older than the mnemonics and they are outside the 96 the daily fire refreshes. The builder's reason text does not separate not-requested from requested-and-empty. Units are unaffected (all five stay UNRESOLVED either way).",
+  "notes": "No disarm needed: inert for the (u) act. Carried into the leg-v record as C2's reading and offered to the round-40 analysis as a reason-text cell candidate.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```

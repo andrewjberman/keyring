@@ -22518,3 +22518,35 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Act HELD at step 3, before step 4's upload/apply. Ledger amgt-resapp-r80-dd4-scoped-api-dell1 (opened 23a6ece42d) stays OPEN with L1 and L2 closed and L3 recording this STOP. Rollback is unneeded because nothing landed; the captured live package (42015430 bytes, sha256 ltXvElwZ..) is kept regardless. For the issuer: the decision is either to widen the pair with these three named and their reason, or to confirm the STOP and re-cut at a pin that does not carry them."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T03:26Z",
+  "one_line": "dd-4 cannot complete on dell1: infra/aws/terraform/harvest/ has never been initialized on this box and carries no tracked lock file, so plan/apply needs a terraform init that fetches providers OFF Opal infrastructure -- which Agent Autonomy excludes and the order declares as EGRESS NONE. Artifact rolled back; function never touched.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan (untargeted) in infra/aws/terraform/harvest/ exits rc=1 with exactly one error: 'Backend initialization required, please run \"terraform init\"'.",
+      "The root has never been initialized here: no infra/aws/terraform/harvest/.terraform directory and no .terraform.lock.hcl. `git ls-files infra/aws/terraform/harvest/` reports 0 tracked lock files, so there is no pinned lock to init against offline.",
+      "Denominator over this box's terraform roots: exactly 3 are initialized (mdpf-pipeline, nfra-ctlpln-identity, opal-assets) and harvest is NOT one of them. Swept every live worktree for an initialized harvest root: 0 of 27 have one.",
+      "No provider cache exists to init from: TF_PLUGIN_CACHE_DIR is unset, ~/.terraform.d/plugin-cache is absent, and ~/.terraformrc does not exist.",
+      "So init would resolve providers from registry.terraform.io. CLAUDE.md Agent Autonomy puts 'all egress off Opal infrastructure' outside what this seat may do without Andrew's word, and this order's own preflight declares 'EGRESS CLASS, declared: NONE'. The order's step-2 discipline is explicit about not improvising past a resolution failure ('no variable is unset to get past it'), so no init was run.",
+      "STATE AT THE STOP, measured: the artifact object had been uploaded (version CNJnDUdWWV.XrWoMH_hSzILZG8RANLVR, 42020671 bytes, content-sha256 OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs=) because the upload is step 4's first half and precedes the plan. Left in place it would have PRIMED any later harvest apply by anyone to move the function's code, since modules/yang-lambda reads data.aws_s3_object.artifact at evaluation time.",
+      "ROLLED BACK SAME SESSION per CLAUDE.md NEVER-2 ('finish in-session or roll back + escalate loud') and CTO condition 5's same-session rollback clause: the L1 kept package was re-uploaded with its original stamp. head-object now reads version oVCt0GlgzKipv4vxsXHFJtzQ29uAPqvx, Size 42015430, content-sha256 ltXvElwZ4iyRx6bJLDQRWksbDoiTesc8xvu1h+p3QI0= -- byte-size and stamp both equal to the pre-act object.",
+      "THE FUNCTION WAS NEVER TOUCHED: get-function-configuration still reads CodeSha256 ltXvElwZ4iyRx6bJLDQRWksbDoiTesc8xvu1h+p3QI0= with LastModified 2026-10-08T17:35:08Z, unchanged from the pre-act read. No apply ran, so there is nothing to revert in Terraform state.",
+      "Everything upstream of the apply PASSED and is recorded on the ledger: L1 rollback capture, L2 wheels 6 of 6, L3 build at the pin with 0 off-list members against the widened list and both condition-5 pre-apply arms green (load_registry() 8 sections; address(...) -> s3://opal-data-harvest/amgt/harvest/gold/research_dossier/security_key=X)."
+    ]
+  },
+  "spec_asserts": "Order step 4: 'Upload THAT built file, then ONE `safe-apply` on `infra/aws/terraform/harvest/`, the plan graded UNTARGETED.' The order and both halves name 0.7.0_AE_CloudOps~DELL1 as the applier and assume this box can plan and apply that root; the RE-GO repeated it at the same pin. The preflight declares EGRESS CLASS: NONE.",
+  "world_is": "dell1 cannot plan that root at all. harvest/ is uninitialized here with no tracked lock file and no local provider cache, so the only route to a plan is a terraform init that fetches providers off Opal infrastructure -- an act this seat may not take unasked, and one the order's own EGRESS NONE declaration does not cover. The three roots this box CAN plan are mdpf-pipeline, nfra-ctlpln-identity and opal-assets. The applier ruling (CTO~DELL1 msg 1394, 'each box deploys its own') is sound in principle but has an unstated precondition: the box must already be able to initialize the root the act touches.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Nothing is half-landed: artifact restored to pre-act bytes and stamp, function untouched, no Terraform state written. Ledger amgt-resapp-r80-dd4-scoped-api-dell1 stays OPEN with L1,L2,L3 closed and L4-L7 unattempted. The decision is the issuer's and is a routing question, not a code one: either authorize a terraform init on dell1 for this root (an egress call that is Andrew's, not this seat's), or commit a lock file so init can run against pinned providers, or re-route the apply to a box where harvest/ is already initialized. The built file (42020671 B, sha256 OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs=) and the kept live package are both retained, so whoever applies does not need to rebuild."
+}
+```
