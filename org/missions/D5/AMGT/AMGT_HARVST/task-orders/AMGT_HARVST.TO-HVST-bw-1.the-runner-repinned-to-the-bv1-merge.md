@@ -117,9 +117,19 @@ This order touches none of them beyond the runner's own job.
   (WORKDIR is the c1be67f53c pin) and AC2 would already match (the old pin's state dir is in use), so AC1 is the discriminator.
   AC3 FAIL as expected (no such file).
 
+**COMPLETE 2026-10-09 ~20:3xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Act:** `0.7.0_AE_CloudOps~ZW` @abdcceb042 (box/sitez), under AMENDMENT 2. The stop file ended cycle `20261009T170903Z` at
+  19:53:06Z: `stopped_by_operator`, asked 242, new 1, failed 1, completed false. Proof VALID rc 0 at box/dell1 HEAD.
+- **AC1 PASS:** WORKDIR is `C:/Users/Opal Bloomberg/Desktop/wk-harvest-runner-pin-b5a7a3a4b6`. **AC2 PASS:** `--state-dir` is
+  the old pin's state dir. **AC3 PASS:** `EXEMPT PID 29192 ... wk-harvest-runner-pin-b5a7a3a4b6`. The runner is PID 29192.
+- **Open, carried:** the reaper dry run also lists `EXEMPT PID 37816` on the old pin, with parentage unread (row
+  AMGT_HARVST-D1-S5). bw-2 AMENDMENT 1 reads the process tree. Ledger `harvst-bw1-zw-repin-20261009` stays OPEN by the COO
+  half's C-d: it closes after the first cycle record under the new pin, which bw-2 reads.
+
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>79</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>
