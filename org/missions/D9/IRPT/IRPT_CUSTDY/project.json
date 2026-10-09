@@ -4,8 +4,8 @@
   "directive": "D9",
   "fabric": "laptop",
   "pipeline": "irpt_custdy",
-  "status": "active",
-  "dep_stage": "EXECUTING",
+  "status": "closed",
+  "dep_stage": "CLOSED",
   "created": "2026-10-06",
   "registered_under_tree": "2026-10-06",
   "placement": "DELL2",
@@ -106,5 +106,8 @@
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~K2"
   },
-  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13).",
+  "superseded_by": "IRPT_DASHBD",
+  "closed_by": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_PERFORMANCE_CONSOLIDATION_20261009.md",
+  "closed_note": "Merged into IRPT_DASHBD (CTO ruling @ca5f74553d, on Andrew-direct ~04:2xZ consolidation research); handover by 2.0.0_SA_COO~K2 @185805a565: org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/HANDOVER_IRPT_CUSTDY_TO_IRPT_DASHBD_20261009.md. FWD-1..9 carry into IRPT_DASHBD as new ids at its consolidation addendum."
 }

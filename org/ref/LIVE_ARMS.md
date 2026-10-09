@@ -47,13 +47,14 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   - `0.0.0_AB_MSTR~DELL2` fast-forward `/git-pull` every 15m, and the Taildrop receive monitor: DIRECTED (was AUTHORITY-UNVERIFIED). The record's
     section 1 quotes the handoff he pasted as that session's first message: "Taildrop monitor is a standing arm at launch on this box." Both
     are session Monitors. Stop: his stand-down.
-  - `1.0.0_SA_CTO~DELL2` `/self-drive 60m` over IRPT_CUSTDY, IRPT_BCKEND, ADVI_COTBKF, IRPT_YCDGEN, IRPT_DASHBD, DIRECTED. VERBATIM: "Bring on a CTO
-    with instructions to /self-drive the projects of the COOs you spawn, 60m interval, with instruction to manage adjudications for open
-    calls." Its own arming record is `ANDREW_DIRECT_20261007_072xZ_SELF_DRIVE_60M_DELL2_IRPT_CUSTDY_IRPT_BCKEND_ADVI_COTBKF.md` @66a57498d9. Stop:
-    all five complete, HELD-AT-STOP, or his stand-down.
+  - `1.0.0_SA_CTO~DELL2` `/self-drive 30m` over EVERY dell2 project (11: ADVI_BILLING, ADVI_COTBKF, DSGN_IRPTV1, IRPT_ANLREQ, IRPT_BCKEND,
+    IRPT_CUSTDY until its close, IRPT_DASHBD, IRPT_YCDGEN, NFRA_OPSWKF, NFRA_TRNSPT, TCKT_VNEXT), DIRECTED. VERBATIM (2026-10-09 ~03:4xZ): "run a
+    /self-drive loop on 30m interval covering every single project on this fabric". Arming record
+    `ANDREW_DIRECT_20261009_034xZ_SELF_DRIVE_30M_EVERY_DELL2_PROJECT_AND_DISCRETION_ON_THREE_ACTS.md` @35fabf20c8; it supersedes the 10-07 60m and
+    10-08 30m seven-project records. Stop: all in-scope projects complete, HELD-AT-STOP, or his stand-down.
   - `/canonical-drive <own project>`, CHOSEN: each seat accepts Andrew's recommendation, VERBATIM: "I also recommend that when you bring on the
     COOs, they should have /canonical-drive on their respective projects." He named no interval and no stop; "recommend" is his word and
-    this row does not convert it into an order. Seven seats: `2.0.0_SA_COO~K2` IRPT_CUSTDY; `2.0.0_SA_COO~C2` ADVI_COTBKF;
+    this row does not convert it into an order. Seven seats: `2.0.0_SA_COO~K2` IRPT_CUSTDY (STRUCK 2026-10-09 ~04:4xZ: IRPT_CUSTDY merged into IRPT_DASHBD, CTO ruling @ca5f74553d, handover @185805a565); `2.0.0_SA_COO~C2` ADVI_COTBKF;
     `2.0.0_SA_COO~P2`, `2.0.0_SA_COO~Y2`, `2.0.0_SA_COO~M2` IRPT_BCKEND (workstreams P, Y, M); `2.0.0_SA_COO~G2` IRPT_YCDGEN;
     `2.0.0_SA_COO~D2` IRPT_DASHBD. Cadence is each seat's to state in its own first tick; stop when its project reads complete, at
     HELD-AT-STOP, or on his stand-down.
