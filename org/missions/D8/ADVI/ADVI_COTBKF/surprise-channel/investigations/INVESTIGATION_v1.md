@@ -2838,3 +2838,215 @@ round.** Never edit an existing row.
   "world_is": "1,540 listed securities have no `by` row (they enter by in-kind transfer or contribution); weight 0 would zero their score and tie them, so the script takes the largest inbound line amount (commonwealth_signs share-in types), else 1.0, and prints weight_basis BUY/INBOUND/NONE on every row. The list counts every non-cash security held on an unpriced account-day in the default run (4,372, the unpriced holding days equal holding_days - priced = 15,986,926), a wider population than the CRO's 3,226; the CRO's population definition was not available to this worker, so the difference is recorded, not reconciled. The weight rule is the CTO's or CRO's to change; the script reads one function (purchase_weights)."
 }
 ```
+
+## ADVI_COTBKF-D2-W50-S1 -- CB-aa-1: the price store's closes are split-ADJUSTED back through history while the rebuilt quantity is as traded: 59 of the 512 untraced DIFF months (6 securities, 8 accounts) are months before a split
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W50-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
+  "surfaced_at": "2026-10-09T04:01Z",
+  "one_line": "The closes the chain reads are split-adjusted over their whole history while the quantity rebuilt from the rows is as traded, so a month before a split values the position at 1/k and a split day shows a ghost return (B3S605610 2025-11-17 +274.9% against a reported -2.67)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md section 'One traced month per cause': B3S605610 2025-11, NFLX 64110L106: 68 shares and a stored close of 111.22 on 2025-11-14 (10 times that, 1,112, as traded, if the 10-for-1 ratio holds), a QA row of +612 shares on 2025-11-17 (10-for-1), the stored close continuous across the day (115.42 -> 111.22 -> 110.29); the account value goes 24,498 -> 91,844; with the closes before the split scaled x10 the month is -2.5150 against reported -2.67 (D was +279.4650)",
+      "diff_trace.parquet: 59 months with sub_kind split over 6 securities (02079K107, 02079K305, 023135106, 64110L106, 808524102, 88160R101) and 8 accounts; the split ratios come from the QA rows of every account (same ratio in every account that shows the day), 14 confirmed events",
+      "python data/assets/scripts/silver/commonwealth_diff_trace.py (the AC2 invocation): DIFF-TRACE months=512 traced=73 untraced=439 classes=3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "data/assets/scripts/silver/commonwealth_daily_valuation.py docstring (CB-p-1): each holding is valued at that day's close, quantity x price, and the CTO's cell reads holdings x as-traded close.",
+  "world_is": "For a security with a split, the stored close before the split day is the split-adjusted one (as traded divided by the cumulative ratio) and the rebuilt quantity before the day is the pre-split quantity, so the position is valued at 1/k of its worth until the QA row steps the quantity. Every month before the split since the quantity last changed is mis-weighted, not just the split month; a repair that scales the pre-split closes by the split ratio (written from the QA rows, not from the reported return) carries at least 90% of D in 59 of the 512 months. Nothing in the chain is changed here. The remedy (an as-traded close or a split-aware quantity for every graded month) is a round-28 cell for the issuer and the CTO."
+}
+```
+
+## ADVI_COTBKF-D2-W50-S2 -- CB-aa-1: an in-kind contribution (li) can carry the cost as its Amount, so the flow is valued at cost and the return takes the difference (B3S793726 2025-11: Amount 5,302 against shares worth 14,453)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W50-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
+  "surfaced_at": "2026-10-09T04:01Z",
+  "one_line": "An li row that delivers shares can carry the cost basis as its Amount, so the flow the chain subtracts is below the value the shares add to the account and the day returns the difference (B3S793726 2025-11-20 +8.30%)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transactions cache (silver with Amount): B3S793726 2025-11-20 li GOOGL 02079K305 Quantity 50 Amount 5302.475; the day's close x 50 = 14,452.87; the day's value steps 99,206 -> 112,741 with flow 5,302.48 recorded, return +8.2991%",
+      "diff_trace.md: with the flow set to the shares' value the month is 2.9946 against reported 2.22 (D was +10.3632, remainder +0.7746); the second li month, 2026-02 (two rows, Amounts 5,282.60 and 14,436.70 against 16,729.65 and 25,301.95) stays untraced: the repair leaves +1.04 of D +20.05"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "commonwealth_flows.py EXTERNAL: li is a contribution whose flow is direction x |Amount|; the CB-q-1 rule values a ZERO Amount from quantity x price, which assumes a non-zero Amount is the value.",
+  "world_is": "A non-zero Amount on an in-kind li is taken as the value of what entered. In two B3S793726 months it is well below the shares' value (a cost basis is the reading; the rows do not say). The trace names this as flow_value in one month and measures it in a second; it does not change the flow rule (the order's bounds forbid it) and it does not know how many other in-kind rows across the 82,593 months carry a cost."
+}
+```
+
+## ADVI_COTBKF-D2-W50-S3 -- CB-aa-1: on a reinvested-distribution day (dvr) the stored close steps UP by about the distribution per share while the shares also step up: 13 months, 8 accounts
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W50-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
+  "surfaced_at": "2026-10-09T04:01Z",
+  "one_line": "On a dvr day the position's value steps twice, once by the reinvested shares and once by a close that rises by about the distribution per share instead of falling by it (RGY004120 2025-12-05 FCNTX +5.04% close, +42.5 shares)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "transactions cache: RGY004120 2025-12-05 dvlt 1019.65 and dvr Quantity 42.539 of 316071109; the stored close 22.7407 (2025-12-04) -> 23.8867 (2025-12-05), 1.1460 a share against a distribution of about 1.09 a share; the day returns +9.74% (price +5.00, shares +4.74) and the month is 11.2855 against reported 1.65",
+      "diff_trace.parquet: 13 months with sub_kind distribution (4 are the RGY accounts of 316071109 in 2025-12); with the day's whole position step taken out of the value from that day on the month is within 0.11 of reported",
+      "INFERRED: the store is not shown to be total-return adjusted; the sign and size of the close step are measured, the cause of it is not"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The close on a distribution day is an as-traded close, which falls by the distribution per share on the ex-date, so reinvested shares at that close leave the position's value unchanged.",
+  "world_is": "The stored close does not fall on these days; it rises by about the distribution per share. Together with the reinvested shares the account value steps up by the distribution twice. The trace repairs this per day (the position's step taken out) and names it price:<cusip>; it does not say whether the store is dividend-adjusted, whether Commonwealth books the distribution as income, or how many other months carry the same step."
+}
+```
+
+## ADVI_COTBKF-D2-S39 -- disarm of W50-S1..S3 at CB-aa-4's pair
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S39",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "one_line": "Disarm of D2-W50-S1, S2, S3 (disarm_owner 2.0.0_SA_COO~C2): the only path by which their wrong day values could reach a reader is CB-aa-4's SERVED mint of the FWD-3 tables; the COO half of its never-widen pair is now conditioned on those days being repaired or blanked with reason, so nothing wrong can be served",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R27_FWD3_SERVE_COO_HALF.md: COO half DRAFT, condition added (not given while split / in-kind li / dvr days carry known-wrong values)",
+      "CB-aa-4 (0.7.0_AE_CloudOps~CB2) BOUNDS: no write before both halves of the pair exist",
+      "the three target prefixes hold 0 objects (measured 03:2xZ, control 14): nothing is served today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2).",
+  "world_is": "W50-S1..S3 describe valuation defects on specific days (59 split months, 13 distribution months, 1 in-kind flow). They stay OPEN as defects for the round-28 analysis; their hazard (publication of wrong day values) is blocked at the pair."
+}
+```
+
+## ADVI_COTBKF-D2-W52-S1 -- a default sweep re-grade run persists account-level day values only (no per-holding rows, no daily returns), s
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W52-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~52",
+  "surfaced_at": "2026-10-09T04:06:00Z",
+  "one_line": "CB-aa-3: a default sweep re-grade run persists account-level day values only (no per-holding rows, no daily returns), so the serve builder re-derives holdings and daily returns and refuses unless they reproduce the run",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py@4d4d00aa6f (rederive, check_values, check_grades)",
+      ".scratch/advi_cotbkf/fwd3_serve/fwd3_manifest.json (checks.day_values_rows=1691729, day_values_worst_abs_diff=0.0, month_grades_rows=82593)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~52/dry_run_ac2.log"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order has --build write the three tables 'from a default run's day values and month grades', and states the run 'writes day parquet to --data-dir and month grades beside its report'.",
+  "world_is": "The run's <data-dir>/after/account_day_value.parquet holds account, date, value, holdings, priced_holdings, complete (no cusip, quantity, close, price source) and no daily_returns.parquet is written at all (the chain computes the returns in memory). commonwealth_fwd3_serve.py --build therefore re-derives the holdings (daily_holdings_table over with_sweep_cash), the per-holding valuation (value_days on the run's security_day_price.parquet) and the daily returns (daily_returns, the run's cash leg) from the transactions cache, which must carry Amount (the shared cache lacks it; a local one was built from the silver transactions, read-only), and REFUSES unless the re-derived account-day values equal the run's file and the re-derived month grades equal month_grades_after.parquet. Measured at 4d4d00aa6f: 1,691,729 account-days, worst abs diff 0.0, 82,593 month grades equal; the three tables hold 1,691,729 / 21,102,041 / 82,593 rows."
+}
+```
+
+## ADVI_COTBKF-D2-W52-S2 -- the three tables are mostly blanks with a reason -- 6.4% of account-days carry a return, 24.2% of holding-days
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W52-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~52",
+  "surfaced_at": "2026-10-09T04:06:00Z",
+  "one_line": "CB-aa-3: the three tables are mostly blanks with a reason -- 6.4% of account-days carry a return, 24.2% of holding-days a close; account_day_value is 21,102,041 rows (58 MB, one object)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_fwd3_serve.py --dry-run --data-dir .scratch/advi_cotbkf/r27 --out .scratch/advi_cotbkf/fwd3_serve: rows 1691729 / 21102041 / 82593",
+      "pyarrow read of the three local tables: return notna 107453; close notna 5115115; verdicts {'UNGRADABLE': 78609, 'MATCH': 3098, 'DIFF': 886}",
+      ".scratch/advi_cotbkf/r27/after_out/daily_valuation.md (holding_days 21102041, priced 5115115)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 reads 'an analyst reads its return for any single day from 2013 to June 2026'; the order builds the tables for serving as one object each.",
+  "world_is": "daily_returns: 1,691,729 account-days, 107,453 with a return (6.4%); blanks 1,584,276 = UNPRICED 1,560,217, NON_POSITIVE_BASE 22,521, FIRST_DAY 1,533, FLOW_UNVALUED 5 (null with the reason, nothing filled). account_day_value: 21,102,041 holding-days, 5,115,115 with a close (24.2%), the rest null close and null value. month_grades: MATCH 3,098, DIFF 886, UNGRADABLE 78,609 of 82,593 (the round-25/26 run's own numbers, reproduced). account_day_value.parquet is 57,970,640 bytes written as a single part-00000.parquet; the hash is taken in 1,000,000-row chunks so the table is never one pandas frame. This is the delivery's price coverage, not a defect of the builder; it bounds what the served tables can answer and the size CB-aa-4 writes."
+}
+```
+
+## ADVI_COTBKF-D2-W52-S3 -- only 35 of the 3,098 MATCH months belong to the 83 open accounts, and Commonwealth's Year row is not always a 
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W52-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~52",
+  "surfaced_at": "2026-10-09T04:06:00Z",
+  "one_line": "CB-aa-3: only 35 of the 3,098 MATCH months belong to the 83 open accounts, and Commonwealth's Year row is not always a calendar year; the one-account read and the Year join state their rules",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_fwd3_serve.py@4d4d00aa6f (choose_account, _year_pick, reported_index)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~52/dry_run_ac2.log (ANALYST-READ account=RGY004256)",
+      "python read of silver performance Month/Year/InceptionToDate at the performance_prefix builder address: 80709 / 6425 / 1520 rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order asks for the one-account read of 'a MATCHED, living client' and for the yearly figure 'beside' the computed month.",
+  "world_is": "Of 3,098 MATCH months only 35 are on the 83 accounts open in the delivery's positions (4 of them on a non-flat security with a reported move of 0.5 pct or more); the read account is the open account with the most such months, RGY004256 (4 MATCH, 2 DIFF, 21 UNGRADABLE of 27 months, 547 days of which 160 carry a return), chosen by a stated rule (choose_account) and overridable with --account. Commonwealth's Year rows are calendar years, parts of a year, or an account's single cross-year span (560 of 6,425 cross a year end); the builder carries the Year row whose span overlaps the month with its start and end shown: 80,508 months have a Year figure, 1,901 months have none (no Year row covers the month, reported_note says so), InceptionToDate is present for 81,989 months, absent for 289 months and in conflict (two disagreeing rows) for 17."
+}
+```
+
+## ADVI_COTBKF-D2-S40 -- L9 CB27aa1-AC3 NOT MET; CB27aa2-AC3, CB27aa3-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S40",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T04:44:16Z",
+  "one_line": "L9 CB27aa1-AC3 NOT MET as written; CB27aa2-AC3 MET; CB27aa3-AC3 MET. CB27aa1-AC3 fails on 'nothing forced': REACH_CAP_PCT was moved 0.5 -> 1.0 after exploratory runs on the same 512 months (traced 70 -> 73, the worker's own disclosure), and the three months it admits include the ONLY flow_value month, so one of the three classes exists by a constant tuned on the outcome. The other two clauses hold (rule commit 4624627872 precedes the run; each class shown on a traced month's day values; 439 left untraced with what each cause leaves).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/ADVI_COTBKF.TO-CB-aa-1.trace-512.proof_of_spec.json controls.determinism ('the exploratory run before the reach cap moved from 0.5 to 1.0 gave traced=70')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md:15-21 (the rule states the cap 1.0, not that it moved), :87-166 (one traced month per class)",
+      "data/assets/scripts/silver/commonwealth_price_need.py tier_of :115-121 against the CRO rule RESEARCH_20261008_COTTONWOOD_YAHOO_PRICE_BACKFILL_STRUCTURE.md:126-131",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~52/dry_run_ac2.log :1-6 (schemas) and the one-account read",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_27_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB27aa1-AC3, CB27aa2-AC3, CB27aa3-AC3 (the three judgment criteria of round 27).",
+  "world_is": "CB27aa1-AC3: two of three clauses met, 'nothing forced' not met for the three months between the 0.5 and 1.0 caps. Remedy: re-run at the pre-registered 0.5, or keep 1.0 and label those three months 'traced at a cap set after the results'; either way flow_value is not an earned class until a month reaches under a cap fixed before it was seen. CB27aa2-AC3 and CB27aa3-AC3 met, with notes in the grade file."
+}
+```

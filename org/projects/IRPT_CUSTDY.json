@@ -5,9 +5,9 @@
  "macro_code": "IRPT",
  "fabric": "laptop",
  "dep_stage": "EXECUTING",
- "status": "active",
+ "status": "closed",
  "name": "Q-1: investor reporting from the custodian level for 49 Financial and Cottonwood, replacing Black Diamond by 2027-01-01",
  "generated_from": "org/missions/D9/IRPT/IRPT_CUSTDY/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-07T08:07:27Z"
+ "generated_at": "2026-10-09T04:42:46Z"
 }

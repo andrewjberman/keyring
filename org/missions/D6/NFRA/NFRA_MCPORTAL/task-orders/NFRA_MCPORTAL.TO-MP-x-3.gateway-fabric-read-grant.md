@@ -148,7 +148,14 @@ The bucket reads at the cut were SSE-S3 with no bucket policy, so no KMS grant i
 - Row ids move from the illegal `A7` coordinate to `Z-S<k>`.
 - Row Z-S21's option (c), the commit limb RAISEing a name the apply limb then refuses, stays on the row for the gate's owner.
 
-<status>pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-09:
+- the act @edf50ff4d3, ~03:4xZ;
+- the proof-instance fix @bee68a57eb (worker commit 42ed038fea), ~04:1xZ, VALID rc=0.
+
+Issuer re-run: AC1 resources=3 problems=0; AC2 6 of 6 simulation arms; AC3 6 of 6 tokens.
+gateway-mcportal-fabric-read-policy is LIVE on opal-gateway-role. Ledger nfra-mcportal-r4-fabric-read-grant is CLOSED.
+
+<status>complete</status>
 <round>5</round>
 <slot>0.7.0_AE_CloudOps~MP</slot>
 <fabric>site-z</fabric>

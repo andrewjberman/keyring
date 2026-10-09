@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R6M.md</decomp_doc>
 <owned_cells>YCD-w-6</owned_cells>
 </decomp_ref>
+<to_id>IRPT_YCDGEN.TO-YCD-w-6.resident-package-carries-opal-brand-asset</to_id>
 <issued_to>0.9.0_WK_IRPT_YCDGEN~7</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <placeholders>NONE</placeholders>

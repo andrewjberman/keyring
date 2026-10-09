@@ -5,10 +5,10 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
  "status": "RATIFIED"
 }
 ```
@@ -126,6 +126,76 @@ outcomes verbatim.
          SOURCE     Andrew-direct 2026-10-09 ~03:3xZ, verbatim: "You should be doing this not just for 49 Financial, but for
                     all clients, inflection and cottonwood too." (record
                     org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/ANDREW_DIRECT_20261009_033xZ_ALL_CLIENTS_NOT_ONLY_49F.md @9a0a87676b)
+
+  FWD-12 One 49 Financial advisor's quarter-end client reports are produced by Opal from Schwab's
+         records, and the advisor would send them without opening Black Diamond
+         DONE WHEN  EXERCISED -- every client report for one real advisor, for the quarter ending
+                    2026-09-30, produced and read by that advisor's firm
+         ACCEPT     for one named 49 Financial advisor, every client gets a quarter-end report built by
+                    Opal from Schwab's own records: returns, holdings, activity and fees for each account
+                    and household over the standard periods; the advisor reads them and says they would
+                    send them as they are
+         SOURCE     brief PART I, the candidate thread; O1; was IRPT_CUSTDY FWD-1 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-13 Every 49 Financial and Cottonwood client's report for the quarter ending 2026-12-31 comes from
+         Opal, and nobody at either firm opens Black Diamond to produce one
+         DONE WHEN  EXERCISED -- the 2026-12-31 quarter-end run for both firms, every client, read
+         ACCEPT     for the year-end quarter, every client of both firms has an Opal report; no one at
+                    either firm logs in to Black Diamond to make a report; a report Opal could not make is
+                    listed by name with the reason
+         SOURCE     brief O1; PART III items 1-2; Andrew, "it has to be done by january 1st"; was IRPT_CUSTDY FWD-2 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-14 Each firm's reports are in its own template
+         DONE WHEN  EXERCISED -- one report read in each firm's template, and the firm agreeing it is theirs
+         ACCEPT     a 49 Financial report and a Cottonwood report each show that firm's own sections,
+                    periods, benchmarks, wording and branding; changing one firm's template changes nothing
+                    in the other's
+         SOURCE     brief O2; Andrew, "performance reporting templates per advisor firm"; was IRPT_CUSTDY FWD-3 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-15 A Cottonwood client's history reads as one record from 2013 to today
+         DONE WHEN  EXERCISED -- one account read across the 2026 hand-over, with no gap and nothing counted
+                    twice
+         ACCEPT     for a Cottonwood account, the Commonwealth years and the daily Black Diamond data after
+                    the move read as one history: one set of returns and one transaction list; at the
+                    hand-over there is no missing stretch and no doubled entry, and an account that cannot
+                    be joined says why
+         SOURCE     brief O3; Andrew, "an adapter ... consolidated shape between the commonwealth and the
+                    ... black diamond data for cottonwood"; was IRPT_CUSTDY FWD-4 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-16 Before the switch, every figure where Opal and Black Diamond disagree has its reason written down
+         DONE WHEN  EXERCISED -- the comparison read for the 2026-09-30 and 2026-12-31 quarter-ends
+         ACCEPT     for each of the two quarter-ends, a person sees where Opal's figure matches Black
+                    Diamond's and, where it differs, the reason, written before anyone asks; after the
+                    year-end switch no comparison runs again
+         SOURCE     brief O4; PART III item 4; was IRPT_CUSTDY FWD-5 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-17 Every security in a client report is described and valued from Opal's own securities record
+         DONE WHEN  EXERCISED -- one report's holdings each traced to Opal's classification and history
+         ACCEPT     every holding in a client report takes its class, sector and history from Opal's own
+                    securities record, never from Black Diamond's labels; a holding Opal cannot describe
+                    is shown as such
+         SOURCE     brief O5; was IRPT_CUSTDY FWD-6 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-18 Andrew can see, any day, how far each firm is from switching off Black Diamond
+         DONE WHEN  EXERCISED -- the view read for both firms on one day, and its counts checked
+         ACCEPT     for each firm, Andrew reads which reports Opal makes, which still come from Black
+                    Diamond, and what is left, and can say which firm is ready
+         SOURCE     brief O6; PART III item 5; was IRPT_CUSTDY FWD-7 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-19 Inflection's reports follow from its Orion data, after the two priority firms
+         DONE WHEN  EXERCISED -- one Inflection client's report produced by Opal from the Orion data
+         ACCEPT     one Inflection client report comes from Opal using the data Opal already holds from
+                    Orion; this starts only after 49 Financial and Cottonwood are switched
+         SOURCE     brief O7; Andrew, "inflection is not a huge priority"; was IRPT_CUSTDY FWD-8 (merged 2026-10-09, CTO ruling @ca5f74553d)
+
+  FWD-20 For every figure a Black Diamond report shows, anyone can see where Opal gets it instead
+         DONE WHEN  EXERCISED -- the map read for every field of one Black Diamond client report
+         ACCEPT     for each figure in a Black Diamond client report, a person reads which Black Diamond
+                    source served it and where Opal reads the same figure from the custodian or Opal's own
+                    store; a figure with no other source is named as such; where Commonwealth's history
+                    holds more than Black Diamond's feed, that is shown
+         SOURCE     Andrew-direct ~21:0xZ, "figure out what black diamond endpoints correspond with the
+                    various fields and we essneitally do black diamonds job for them"; was IRPT_CUSTDY FWD-9 (merged 2026-10-09, CTO ruling @ca5f74553d)
 ```
 
 ## ENDPOINT PROVENANCE (outside the ratified section)
@@ -500,5 +570,25 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
 - **Each firm's gold release is its own never-widen pair.** A firm's bucket, prefixes and role are separate, and they never share a write set
   with another firm. Addresses come from `address()` output per firm (C-NAMES).
 - **ENDPOINT changed.** The CVO re-signs the ratified-text half. The brief half is accepted, since Andrew's word is the source.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-09 ~04:5xZ, `1.0.0_SA_CTO~DELL2`): CONSOLIDATION -- IRPT_CUSTDY absorbed as FWD-12..FWD-20
+
+- **Ruling:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_PERFORMANCE_CONSOLIDATION_20261009.md` @ca5f74553d.
+- **Confirmed by Andrew ~04:4xZ:** "Go with your recs on both consolidation calls" (CRO record @c41f11fb70).
+- **Handover:** `~K2` @185805a565, `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/HANDOVER_IRPT_CUSTDY_TO_IRPT_DASHBD_20261009.md`.
+- **Absorbed:** IRPT_CUSTDY FWD-1..9 become this project's FWD-12..20, verbatim. Each SOURCE line names its old id, and no id is renumbered or
+  reused. IRPT_CUSTDY's CONTRACTS remain readable at `org/missions/D9/IRPT/IRPT_CUSTDY/prd/IRPT_CUSTDY_PRD.md` and are cited from here.
+- **ONE return method:** the flow-adjusted daily TWR, for 49financial, Inflection and Cottonwood. The holdings-only figure is its guard rail.
+  - Inflection is GROSS from Orion, with fees as their own figures (Andrew @669ab7d677).
+  - This supersedes IRPT_BCKEND FWD-3's holdings-basis figure for Inflection and Cottonwood.
+- **ONE Black Diamond comparison:** FWD-8. IRPT_CUSTDY FWD-5 (now FWD-16) and IRPT_BCKEND FWD-13 are graded through FWD-8's tie-out instrument.
+  FWD-8 reads NOT REALIZED until Andrew states the tolerance.
+- **IRPT_BCKEND `~P`'s performance scope** (FWD-3, FWD-12 as guard rail, FWD-13, E-P9) moves in at `~P2`'s round boundary, by a later
+  addendum on both PRDs.
+- **The one issuer:** `2.0.0_SA_COO~D2`.
+- **ENDPOINT changed** (FWD-12..20 added). The CVO re-signs the ratified-text half. The brief half is accepted, since the CRO's research and
+  Andrew's word are the source.
 
 -- 1.0.0_SA_CTO~DELL2

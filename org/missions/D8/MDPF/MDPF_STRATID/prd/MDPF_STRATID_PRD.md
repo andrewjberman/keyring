@@ -210,3 +210,23 @@ and MDPF_TAXSMA's open task orders; the served Eclipse silver; the served Global
 `rebalancer_schemas.OPAL_SMA_NAME_RULES` + `opal_sma_member_of`; `mdpf_category_registry.SMA_MEMBERS` + `SMA_BASIS_VERIFIED`;
 `mdpf_gold_consolidator.apply_taxsma_overlay` + `test_taxsma_cot_global_fold.py`; `s3://opal-data-etfs/config/etf_universe.json`;
 `dim_mdpf_aggregate_aua_timeseries.GLOBAL_MODEL_KEYS`; `wsb_49f_smartx_model_aua.OPAL_ETF_TICKERS`.
+
+## ADDENDUM v0.4 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~04:4xZ) -- WORKSTREAM 2 opened (S01, S02, S03, S08); fold of UB-20261009T040755Z-d866
+
+The ENDPOINT and CONTRACTS sections are not edited. Source: the CRO's approach (`python .tools/unblock.py show --id UB-20261009T040755Z-d866`).
+
+- **Workstream 2 = S01 shared matcher, S02 one ETF list, S03 SMA rules as data, S08 unidentified list.** Its write surface is the
+  matcher, the list and the rules data. It is disjoint from round 1's frozen surface (the S05/S06 fold and the deployed
+  `mdpf-gold-lambda` at the pin-148f715f8c build). Rule 27: a workstream is a scope, not a round.
+- **Issuer: `2.0.0_SA_COO~S1`, the same lane** (the REC). One project, one issuer. Workstream 2 is its own L5-L6 issuance, cut now,
+  beside round 1.
+- **GUARD 1, a criterion of EVERY workstream-2 order:** no deploy of `mdpf-gold-lambda`, and no write to the ETF universe config
+  (`etf_universe.json` in the ETFS config prefix), before the 2026-10-09 13:30Z FWD-1 read is taken. Merged code does not reach that
+  fire; only a deploy would.
+- **GUARD 2, inputs:** S01-S03 orders read Track A's measured inputs: the CRO's S04 Eclipse census and S07 read
+  (`org/tier1_exec/4.0.0_SA_CRO~DELL1/deliverables/MDPF_STRATID_S07_MUNI_VERIFY_20261009.md` @67e20ee89f). They are not cut against
+  held rows.
+- **S07 reads UNDETERMINED by data.** `Opal_Muni_Income` ($64,119,753.85, one account) is an Opal Rebalancer model of six third-party
+  muni ETFs with SMA flags false. Under C-MUNI-VERIFY a person decides. Until then the S03 Muni rule is DATA with no member, and the
+  account stays on the S08 unidentified list. No Muni dollars count. The person's check is listed as an act on this box's open calls.
+- FWD-2 and FWD-6 share round 1's write surface and stay sequenced behind the round-1 analysis.

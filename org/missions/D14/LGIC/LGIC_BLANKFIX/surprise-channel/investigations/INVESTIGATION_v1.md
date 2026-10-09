@@ -1880,7 +1880,6 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
 }
 ```
 
-
 ## LGIC_BLANKFIX-S12 -- two round-8 instruments read red on the trunk because their fixture HOLE closed before the merge
 
 ```json
@@ -1906,5 +1905,30 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "Drain end ROUND8: BF-w-1 re-proved 'ROOTCHECK-TEST ok=True cases=320' and 'FWD6-ARMS ok=True arms=7 held=7'; the order bars a test from depending on a typed estate state that moves.",
   "world_is": "The re-proof ran in the slot's worktree, cut before the registry write. On the merged trunk the intake HOLE is NOT-ASKED, so the shrink case has nothing to shrink and both instruments read false. The build is not shown wrong: arms A-E and G hold. The fixture is a live estate HOLE, the same class as rows S6, S7 and S8. Repair: plant the HOLE in the overlay text, as arm D does, instead of reading one off the estate."
+}
+```
+
+## LGIC_BLANKFIX-D1-S1 -- round-close-check grades 0 of 5 round-8 orders because their status carries a suffix; MAY-CLOSE is vacuous
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T04:18:02Z",
+  "one_line": "round-close-check grades 0 of 5 round-8 orders because their status carries a suffix; MAY-CLOSE is vacuous",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project LGIC_BLANKFIX --round 8 at origin/CLOUD 2b788e3b6b: 'ORDERS ... 5 order(s), 0 complete, 5 not complete and outside the verdict' ... 'graded=0 ... verdict=MAY-CLOSE'",
+      "all five TO-BF-w-* order files read '<status>complete -- proof-of-spec VALID (rc=0)</status>'; .tools/round-close-check.py:275 tests o['status'] == 'complete' exactly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "canonical-drive obligation 3: verdict=REFUSED means the round is not finished, so the check grades the round's complete orders and their proofs.",
+  "world_is": "An order whose status is 'complete -- <note>' counts as neither complete nor terminal, so its proof is never read and the verdict passes on zero graded orders. Round 8 is genuinely complete (handoff 85ba7c79b2, each proof re-run by the issuer); the defect is in the instrument, whose owner is not this seat."
 }
 ```

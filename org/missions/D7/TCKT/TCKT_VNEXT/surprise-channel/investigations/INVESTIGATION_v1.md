@@ -546,3 +546,57 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "A live apigatewayv2 get-routes read would close the console-only part; it was barred by this order (no AWS call). The census JSON records the gap in denominator.not_in_source."
 }
 ```
+
+## TCKT_VNEXT-D2-S12 -- disposition of ARMED row D2-W6-S2: measured real (45 profiles), fix ruled fail-closed, routed cross-box; stays ARMED until live
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T04:08:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S12",
+  "one_line": "Disposition record for ARMED row TCKT_VNEXT-D2-W6-S2 (data-refresh admits callers with no userType): measured REAL by 1.0.0_SA_CTO~DELL2 (45 opal-users-v2 PROFILE rows lack userType: 43 user, 2 admin); fix ruled fail-closed (admit only Dev or opal-capital internal); routed cross-box via 0.0.0_AB_MSTR~DELL2 (~02:1xZ... 04:0xZ msg); W6-S2 stays ARMED until the fix is live.",
+  "disarm_owner": "the data_refresh Lambda's owning project (routed by 1.0.0_SA_CTO~DELL2 through 0.0.0_AB_MSTR~DELL2); TCKT_VNEXT builds nothing on it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 2361 (Re 2358): read-only census 45 PROFILE rows without userType; authorizer passes userType 'null'",
+      "infra/aws/lambda/data_refresh/lambda_function.py:165-167 'if not user_type or user_type == Dev: return True' (read by the issuer at 41b7e28bdf)"
+    ]
+  },
+  "spec_asserts": "Only Dev or Opal-internal callers may trigger or roll back a data refresh.",
+  "world_is": "Any authenticated portal user whose profile lacks userType (45 rows today) is admitted to the data-refresh routes, trigger and rollback included.",
+  "notes": "Disposition only; W6-S2 itself is append-only and not rewritten."
+}
+```
+
+## TCKT_VNEXT-D2-W7-S1 -- The existing ticket_center tests reach the live users table when a box holds AWS credentials; closed in the test setups by an empty users stand-in
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W7-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~7",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The existing ticket_center tests reach the live opal-users-v2 table whenever a box holds AWS credentials: _directory_snapshot ran un-faked on every claim, and the new profile-scope lookup would have run on every internal call",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py (at 050b5f0f0f): mod._ddb is the real boto3 dynamodb ServiceResource and no setUp replaces it; boto3.Session().get_credentials() on this box resolves from the shared-credentials-file",
+      "measured by the worker: pytest of infra/aws/lambda/ticket_center/tests took 15.78s with credentials resolvable and 0.84s with AWS_SHARED_CREDENTIALS_FILE and AWS_CONFIG_FILE pointed at a missing file (both 118 passed at that point)",
+      "after the fix: the same directory, credentials blanked, 131 passed in 1.47s; the empty-users stand-in is EmptyUsersDdb in test_authz_matrix.py, installed by test_authz_matrix, test_analysis_request fresh(), test_we_dl_notice and test_client_notify setUp"
+    ]
+  },
+  "spec_asserts": "The order says NO AWS call, and that an existing test whose fake has no users table and now hits the lookup gets an empty users table in that test's setup.",
+  "world_is": "The suite already issued read-only Query/GetItem calls to the live opal-users-v2 on every claim (the pre-existing directory enrichment), silently, because the soft-fail swallows the result; the worker's first full run after adding the scope lookup and one probe call did the same (read-only, no write, nothing applied). The suite never failed on it, so the order's 'now hits the lookup' premise was already true at base for the claim path. Now closed in four test files (test_commentary_write and test_package_route ride test_analysis_request's fresh()); test_directory_resolution.py and the new test file install their own users doubles.",
+  "notes": "Read-only calls only, from the worker's first test run and one probe, before the stand-in landed. No IAM or data effect. A box without credentials never saw this."
+}
+```

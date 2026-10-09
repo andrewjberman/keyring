@@ -1262,3 +1262,75 @@ modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
 
 **ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as the order states them after this amendment. Rewrite the proof instance,
 validate it, and flip to `complete`.
+
+## AMENDMENT 27 (2.0.0_SA_COO~C, 2026-10-09 ~04:4xZ) -- FOLDED INTO THE OPEN PASS AFTER AMENDMENT 26: both Dells run the shell document on mdpf-daily-runner, standing
+
+Requested by dell2 2.0.0_SA_COO~P2 (relay 0.0.0_AB_MSTR msg 107720) for IB-pr-383, whose Cottonwood OVER_AGE deadline is 2026-10-12.
+dell2's CloudOps~DELL2 measured on the live API (row IRPT_BCKEND-D2-S25 @627f6fa99e) that `cloudops-dell2-agent-user` is REFUSED
+`ssm:SendCommand` on `i-02448edb624a7a7cf` (mdpf-daily-runner). dell2's own pair is signed: COO @8323d3fb19, CTO @f0a2f049f7. Their
+preferred form is (B): the same standing form as TO-APPLY-26, under Andrew's ~02:5xZ word that the Dells run their own scripts.
+Under AMENDMENT 26's parity it is granted to BOTH Dells. The laptop CTO is told. Gate limb: none graded this modification.
+YOU APPLY NOTHING.
+
+1. First, read where `i-02448edb624a7a7cf` stands today:
+   - Is it one of the routes' privileged hosts, and is it named by any explicit Deny in the identity root?
+   - What is its instance role (name only)?
+   - Print each fact with its file and line. If an explicit Deny names it on purpose (a comment, a ruling or a census row that
+     excludes it), STOP and report. Do not remove a deliberate Deny.
+2. Otherwise, `AWS-RunShellScript` on that host joins the standing shell Allow that both users hold after AMENDMENT 26. Every other
+   shell or session document stays denied there, as on the resident host.
+3. `simulate_policy.py`'s `shellpar_ok` gains the host's arms for both users: the shell document allowed and PowerShell refused.
+   `simulate_dell_parity.py` stays `unequal=0`.
+4. Plan note section P: the expected plan by reading. The policy that both users hold is changed in place, and nothing else.
+
+**ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to
+`complete`.
+
+## AMENDMENT 28 (2.0.0_SA_COO~C, 2026-10-09 ~04:5xZ) -- FOLDED INTO THE OPEN PASS: the GenerateDataKey statement is scoped to the jobs' prefixes; kms:Encrypt only on evidence
+
+Requested by dell2 2.0.0_SA_COO~T2 (relay 0.0.0_AB_MSTR msg 107726, CTO frame 24e5ac25 (3)). TO-RUN-a17 stopped at step 1 at the key,
+and nothing was written (`org/tier2_senior/0.7.0_AE_CloudOps/deliverables/NFRA_TRNSPT.TO-RUN-a17_step1_refusal.json`). Verbatim:
+"THE GRANT: kms:GenerateDataKey + kms:Encrypt on that key for cloudops-dell2-agent-user, scoped (encryption context or S3 condition) to
+teams/transcripts/silver/research_meeting/ (a17), and outlook/transcripts/{bronze,silver,gold}/analysis_commentary/ plus
+outlook/transcripts/state/pull_runs/ (b17)." AMENDMENT 26 parity gives it to BOTH Dells. Gate limb: none graded this modification.
+YOU APPLY NOTHING.
+
+1. **The scope narrows the AMENDMENT 25/26 statement.** It is conditioned on `kms:EncryptionContext:aws:s3:arn` (StringLike), which is
+   the context S3 sends on an SSE-KMS write. The values are the bucket's object ARNs under exactly these five prefixes:
+   - `teams/transcripts/silver/research_meeting/*`;
+   - `outlook/transcripts/bronze/analysis_commentary/*`;
+   - `outlook/transcripts/silver/analysis_commentary/*`;
+   - `outlook/transcripts/gold/analysis_commentary/*`;
+   - `outlook/transcripts/state/pull_runs/*`.
+   If the bucket uses an S3 Bucket Key, the context S3 sends is the BUCKET ARN, not the object ARN, and a per-prefix condition cannot
+   hold. Read the bucket's encryption configuration (get-bucket-encryption, `BucketKeyEnabled`), print it, and in that case STOP the
+   scoping and report: the grant stays unscoped, as AMENDMENT 26 built it, and the issuer rules.
+2. **`kms:Encrypt` only on evidence.** S3 SSE-KMS PutObject needs GenerateDataKey, not Encrypt. Read the code the two jobs run
+   (`TO-RUN-a17` and `TO-RUN-b17` under `org/tier2_senior/0.7.0_AE_CloudOps/task_orders/`, or the scripts they name). If either calls
+   KMS Encrypt directly (a boto3 `kms` client `encrypt`), add `kms:Encrypt` under the same condition and print the file and line.
+   Otherwise do not add it, and say so.
+3. **The check.** `check_transcripts_dell_decrypt.py` adds two arms for each user: a PutObject plus GenerateDataKey under one listed
+   prefix, allowed; and under an unlisted prefix of the same bucket (for example `teams/transcripts/bronze/`), refused at the key. The
+   check composes the S3 and key legs as row W14-S45 describes. `dell2_generate_ok` and `dell1_generate_ok` mean allowed in scope
+   and refused out of scope.
+4. Plan note section Q: the expected plan by reading. The transcripts key policy is changed in place, and nothing else.
+
+**ACCEPTANCE.** The seven ids, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to `complete`.
+
+### AMENDMENT 28 -- ISSUER'S RULING (2.0.0_SA_COO~C, 2026-10-09 ~04:5xZ): Bucket Key is ON, so the key scope is the BUCKET, not the prefix
+
+dell2 2.0.0_SA_COO~T2 measured it (relay 0.0.0_AB_MSTR msg 107740), and the issuer read it at
+`infra/aws/terraform/transcripts/main.tf:137`: `bucket_key_enabled = true`. With a Bucket Key, S3's KMS encryption context is the
+BUCKET ARN, so A28 item 1's per-prefix condition would refuse every write. dell2 also measured that the a17/b17 code makes no direct
+KMS Encrypt call: the only KMS calls are `describe_key` (pull.py:215, silver.py:277, gold.py:303), and the writes are SSE-KMS PutObject.
+Gate limb: none graded this modification. THIS RULING REPLACES A28 ITEMS 1 AND 2:
+
+1. The GenerateDataKey statement, for both Dell users, carries exactly two conditions:
+   - `StringEquals kms:ViaService = s3.us-east-1.amazonaws.com` (S3 only, never a direct KMS call);
+   - `StringEquals kms:EncryptionContext:aws:s3:arn = <the transcripts bucket ARN>`, which is this bucket only. Use the bucket
+     resource's ARN reference, never a typed string.
+   No per-prefix condition sits at the key. The prefix boundary is the S3 identity leg, unchanged by this amendment.
+2. No `kms:Encrypt`. State the evidence above in section Q.
+3. A28 item 3 is re-read accordingly. The in-scope arm is allowed: a PutObject under a listed prefix of this bucket. The
+   out-of-scope arm is a GenerateDataKey with another bucket's ARN as context, or with no ViaService; it is refused at the key. Print
+   both legs for both users.

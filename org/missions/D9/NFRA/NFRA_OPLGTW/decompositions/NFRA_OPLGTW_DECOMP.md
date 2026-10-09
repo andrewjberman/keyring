@@ -1834,3 +1834,18 @@ Label `<round>32</round>`, ONE issuance, eight cells in six chains.
 - **OG-ap-2 CUT as workstream APPLY-Y** (2026-10-09 ~02:0xZ, issued to `0.7.0_AE_CloudOps~Z`): OG-bf-1's leg Y, the 49F
   dispatcher date gate, under the signed pair (COO @9e406fcb00, CTO @094786bd2a); source-map entry first, code-only
   plan, Arm 1 on demand, Arm 2 organic.
+- **OG-tg-1 CUT as workstream GATE-R30** (2026-10-09 ~04:0xZ, slot ~44): sender identity (UPN, tenant) on Teams reads for
+  every caller; the Opal-users-only gate on the Bloomberg concierge's Teams reads and sends; the concierge unscoped (seed
+  + two overlay rows removed) -- Andrew ~03:2xZ/~03:3xZ, PRD v2.3 item 4; held out of r29 (A6), ships in r30.
+
+## ADDENDUM R3-T.31 (2.0.0_SA_COO~O, 2026-10-09 ~04:4xZ) -- round 33, workstream ENTITLE-R33 (ahead of the analysis)
+
+**Source.** `1.0.0_SA_CTO~O` ruling msg 32383: a profile confines only the data-grant tool family; "unprofiled = full"
+refused; Andrew gets a v2.2-width profile with 13 months, and the Bloomberg concierge mirrors it in r30. "Cut it as a
+round-33 cell with tests."
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-pf-1` | -- | `decide()` confines a profiled principal only on the five schwab_* tools and the Black Diamond data tools; unprofiled still denied data; Alyssa's data reach unchanged. | WORLD | ~45 | worker |
+
+**fanout:** 1 start, cap 8. r30 carries OG-pf-1 and OG-tg-1 plus the two grant writes (Andrew's profile; the mirror).
