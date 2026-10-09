@@ -723,3 +723,17 @@ deployed bytes and takes the branch rule.
 | `DB-b-65` | E3: NEAR_ZERO_BALANCE 153 traced by sub-class, each fixed or named | LOCAL | DB-b-58 (merged) | B33-3 |
 
 fanout: 3 of 3 chains, cap 8, reason: disjoint surfaces -- E1 edits the reader, E2 reads the deployed function, E3 reads round 31's records. Workers 0.9.0_WK_IRPT_DASHBD~40, ~41, ~42, cut from box/dell2.
+
+## 36. ROUND 34, WORKSTREAM BD (2026-10-09 ~02:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-33 ADDENDUM 2 @47c849d75b, msg 2116, on ADJUDICATION_v18)
+
+Round 33 is closed. The reader of record gives 8,385 of 9,078, of which the near-zero 79 are pending a shim-free re-run (row S36). The
+served function runs pandas 2.2.3 but packages no lots producer, so the read was REFUSED (measured). The kit request (laptop
+NFRA_CTLPLN.TO-CT-k-2 AMENDMENT 10) is in transit.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-66` | E1: repair the two callers (~35 crossover_e1, ~39 large_flow_e3; each passes its own test) and re-run DB-b-65 shim-free on the reader's own mean | LOCAL | DB-b-63, DB-b-65 (merged) | B34-1 |
+| `DB-b-67` | E2: the lots peak on the pandas 2.2.3 kit, FITS/BREACH against 2,048 MB, beside 3.0.6; decides the activity-and-lot release | LOCAL | DB-b-64 (merged) + the kit's arrival | B34-2 |
+| `DB-b-68` | E3: FLOW_TIMING_AFTER_FEE_BASE 116 traced, status under the reader of record | LOCAL | DB-b-63 (merged) | B34-3 |
+
+fanout: 3 of 3 chains, cap 8, reason: disjoint surfaces. Workers 0.9.0_WK_IRPT_DASHBD~43 and ~45 spawn now; ~44 spawns when the kit lands and the issuer writes its path to `deliverables/2.0.0_SA_COO~D2/relay/KIT_PATH_PY312_PANDAS223.txt`. All cut from box/dell2.
