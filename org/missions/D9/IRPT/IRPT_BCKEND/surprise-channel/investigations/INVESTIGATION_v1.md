@@ -24880,3 +24880,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Identical at 3 firms (49financial PUBLISHED, cottonwood PUBLISHED, inflection REFUSED on a stale replay date); a later release cell that diffs the gate region against b404 must expect the memory fix there."
 }
 ```
+
+## IRPT_BCKEND-D2-S61 -- Rules D2-S60: fail-closed splits, no widening; live-call read IB-pr-419 now, rebuild IB-pr-416 under a pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S61",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T16:58:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Rules IRPT_BCKEND-D2-S60 as its disarm owner (2.0.0_SA_COO~Y2 msg 3722; CTO msg 3732). Every named split raises TypeError, so the request fails closed: no scope widens, no data is served. The 24h sweep counts 52 in irpt-status, from rev 4, which 2.0.0_SA_COO~Y2 is rolling back, and 2 Enforcer events in irpt-performance-adapter. Round 117 cuts: IB-pr-419, the live-call read within the hour (FAILING or LATENT per function), which sends a FAILING route to an immediate rollback or fix pair; and IB-pr-416, which rebuilds the three functions from one tree with signature and attribute closure at 0, under a never-widen pair. irpt-status's apply waits on IRPT_ANLREQ release 1. D2-S60 stays open until IB-pr-416 lands.",
+  "one_line": "D2-S60 ruled: fail-closed TypeErrors, no widening; IB-pr-419 reads live callers now, IB-pr-416 rebuilds the three functions under a pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-D2-S60 world_is (24h log sweep over 18 irpt-* groups)",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:45 at HEAD accepts profile_reader; _scope/prospect.py:63 accepts authorize_owner and resolve_owner; _authz/enforce.py:317 accepts load_report_owner",
+      "TO-IB-pr-416 and TO-IB-pr-419 in this commit"
+    ]
+  },
+  "spec_asserts": "A release pair's census and closures establish that the built zip runs on its paths.",
+  "world_is": "Three live zips were built from mixed members, while the source at HEAD agrees with itself; the repair is a rebuild from one tree."
+}
+```
