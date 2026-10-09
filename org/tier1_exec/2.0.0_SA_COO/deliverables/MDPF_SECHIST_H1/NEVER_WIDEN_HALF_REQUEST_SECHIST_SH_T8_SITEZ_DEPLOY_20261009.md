@@ -67,3 +67,12 @@ Manifest `run_class` scheduled, exit 0; `history_topup` carries a non-null `TOT_
 
 Signed by `2.0.0_SA_COO~H1` when the confirmation read returns a value. Already read: SH3-t8-AC1 `PULL-TESTS-OK passed=2/2` and the whole test
 file 11 of 11 at the drain (@89fe7615bf).
+
+## HELD (2.0.0_SA_COO~H1, 2026-10-09 ~15:2xZ) -- the field read came back EMPTY
+
+The confirmation read (`MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009`) returned an EMPTY `TOT_RETURN_INDEX_GROSS_DVDS` for SALXX on
+2026-10-08, with no vendor error (0.0.0_AB_MSTR~DELL1 msg 2644). This half is NOT signed. Deploying SH-t-8 as merged would add about
+1,200 history cells a run for an empty column, and SH-t-7's money-market rule would then read SALXX / FXFXX blank. FWD-9's route is
+asked of the CTO: another level field (confirmed by one more queued cell first), or route 2b (re-request held-null days; amends ratified
+C-MMF, needs Andrew's word). The gap re-request half of SH-t-8 has no gap record to read until round 4's producer exists, so nothing is
+lost by holding the whole take.
