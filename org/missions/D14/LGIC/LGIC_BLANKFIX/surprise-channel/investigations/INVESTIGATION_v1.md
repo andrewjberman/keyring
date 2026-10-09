@@ -2161,3 +2161,82 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "They read ok=True on dell1 and ok=False on the laptop for an environment reason, not a gate one. The production gates spawn no bare bash (naming-gate.py, naming-apply-gate.py, opal_naming_rootcheck.py, opal_naming.py searched)."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S3 -- the base has 88 Terraform roots and 10 unmapped, not 87 and 9: advi/billing-read (4 names) is a root the round-9 close does not hold, so the cell's census reads roots_total=86, not 85, after the two retirements
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T09:23:30Z",
+  "one_line": "the base has 88 Terraform roots and 10 unmapped, not 87 and 9: advi/billing-read (4 names) is a root the round-9 close does not hold, so the cell's census reads roots_total=86, not 85, after the two retirements",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming.py census --all-roots on this worktree at 0f652707c8 (before any edit): 'ALL-ROOTS ok=True roots_total=88 mapped=78 unmapped=10 ... hole=0'; UNMAPPED infra/aws/terraform/advi/billing-read names=4 uncounted=0",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9.txt: roots_total=87 unmapped=9 with no advi/billing-read; investor-reporting/export reads items=29 there and items=35 on this base",
+      "check_held_entries_round10.py (0.9.0_WK_LGIC_BLANKFIX~2): after the seven entries and the two retirements the merged run prints roots_total=86 mapped=85 unmapped=1 (advi/billing-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's CONTEXT: at this cut the census reads roots_total=87 mapped=78 unmapped=9; after the two retirements roots_total reads 85 (the CRO's ruling R10-4).",
+  "world_is": "The base is later than the round-9 close: advi/billing-read exists, is tracked, and no map entry or cell names it. The cell maps the seven it was given and retires the two; it does not map the tenth. The check compares the merged denominator with the live count before the retirements (88 - 2 = 86) and lists the unmapped root by name, so it neither hides it nor claims 85. Whoever owns advi/billing-read owes it an entry; roots_total=85 holds only once it is mapped or retired."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S4 -- lib/opal_naming_keyfill.bucket_of reads the file's only opal-data literal as the bucket of every key in the file, so a correct key-ruling row for a key in another bucket (a globgrph or lambda-artifacts bucket, or an s3:// URI constant) is dropped and the hole stays
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T09:24:00Z",
+  "one_line": "lib/opal_naming_keyfill.bucket_of reads the file's only opal-data literal as the bucket of every key in the file, so a correct key-ruling row for a key in another bucket (a globgrph or lambda-artifacts bucket, or an s3:// URI constant) is dropped and the hole stays",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py _ruling_of: 'a candidate must also agree on the bucket wherever the item's bucket is known' -- known, _why = bucket_of(item); cands = [r for r in cands if r.get('bucket') in (None, known)]",
+      "lib/opal_naming_keyfill.bucket_of on the shared-infra items of infra/aws/lambda/infrastructure_monitor/lambda_function.py: warehouse/_branch_head.main.json -> ('opal-data-portal-v2', \"the file's only bucket literal 'opal-data-portal-v2' (line 96)\") while the code reads GLOBGRPH_BUCKET = 'opal-313476888478-globgrph' at line 123; contract_integrity/latest.json the same",
+      "bucket_of on ec2/astn-wsjft/deploy.sh -> 'opal-data-astn' (line 58) and on ec2/etfs-reports -> 'opal-data-etfs' (line 49), while both keys are in s3://opal-313476888478-lambda-artifacts/... URI constants (astn-wsjft-orchestrator/lambda_function.py:61, etfs-reports-orchestrator/lambda_function.py:53)",
+      "check_held_entries_round10.py: the rows for those keys (REGISTRY_ROWS_round10.json) merge with no refusal and the four HOLE lines stay; each has an OWNED line to 1.0.0_SA_CTO in HOLES_OWNED_round10.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A registry row (bucket, key[, declared_in]) answers a stored-file path wherever the code writes that bucket and key.",
+  "world_is": "A row whose bucket is the true bucket does not match when the reader names a different one, so four paths on two newly mapped roots stay HOLE although their rows are drafted. The registry's existing row for warehouse/_branch_head.main.json has the same problem on this root. I did not edit lib/ (outside the grant) and did not write a row with the wrong bucket to force a match."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S5 -- the ruling keeps harvest at '11 amgt names' and 0 on the others; grade() measures 13 on harvest (two LAMBDA names) and 1 on mdpf-pipeline (an IAM policy led by gateway), so the entries list what is measured
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T09:24:30Z",
+  "one_line": "the ruling keeps harvest at '11 amgt names' and 0 on the others; grade() measures 13 on harvest (two LAMBDA names) and 1 on mdpf-pipeline (an IAM policy led by gateway), so the entries list what is measured",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROOT_MAP_ROUND10_RULINGS_20261009.md:50 'Exceptions stay as measured in round 8 (harvest's 11 amgt names; 0 on the others).'",
+      "check_held_entries_round10.py prints EXCEPTIONS harvest listed=13 measured=13 and EXCEPTIONS mdpf-pipeline listed=1 measured=1; the round-8 draft lists 11 for harvest (MAP_ENTRIES_round8.json) and 0 for mdpf-pipeline",
+      "the 13 are the 11 plus the LAMBDAs amgt-resapp-chatter-axis (chatter-axis-schedule.tf:178) and opal-amgt-scoped-api (scoped-amgt-api.tf:455); the 1 is the IAM policy gateway-taxsma-workbook-bearer-read-policy (mdpf-pipeline/iam.tf:1274); mdpf-pipeline read 64 items at round 8 and reads 78 now"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling's measured counts (R10-3, :50): harvest 11, the other four roots 0.",
+  "world_is": "The root map's own rule is 'measured by the cell'; the entries carry the 13 and the 1, each cited to its line, and the check fails on an unlisted or a wrongly listed exception. None of them changes a verdict (the names already lead with their own system), so the registry owner can strike the three extra rows without effect if the ruling's counts are meant literally."
+}
+```

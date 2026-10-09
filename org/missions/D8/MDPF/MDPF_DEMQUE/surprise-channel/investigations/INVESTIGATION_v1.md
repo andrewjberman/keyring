@@ -236,6 +236,71 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "rg bbg_budget|\\.record\\( over tplus1/tools/run_daily_pull.py and both tplus1/src/*.ipynb: zero matches"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-W1-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-09T09:39:47Z",
+    "one_line": "DQ-t-18 requires an unmetered sentinel row while preserving uneditable tests that assert exact row counts without it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-DQ-t18 @73cae9cfe6 Build 2: day without bbgtml lines gets one bbgtml-unmetered row; Build 3: keep t14 tests passing; paths omit t14 tests",
+        "data/mdpf/scripts/demque/test_demque_bbg_ledger_upload.py:47 exact cells list; :63 exact four rows; :99 exact two lines",
+        "Memory-only sentinel probe with original five tests: 3 failed, 2 passed, exit 1; deciding failures extra None, 5 != 4, 3 != 2; S3 stubbed",
+        "Unmodified baseline afterward: five passed, UPL-OK, exit 0",
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T18_REFUSAL.md"
+      ]
+    },
+    "spec_asserts": "TO-DQ-t18 requires both the added sentinel row and unchanged t14 tests passing; existing test file is outside write grant.",
+    "world_is": "The fixtures have no bbgtml lines, so the mandatory row contradicts three exact cardinality assertions. No production file changed. Issuer must amend the test grant/expectations or the sentinel interface before implementation; order remains pending under its refusal clause."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W13-S1",
+    "one_line": "The history reserve (40 cells) is the static producer names only; the ledger's one day draws 5858 history cells, so the quoted allowance per day is the ceiling less a reserve well under the real production draw.",
+    "spec_asserts": "TO-DQ-t15 step 2: history.reserve = the tier-1 producers' daily history legs read as text (names x fields x rows per name), margin stated, gaps named.",
+    "world_is": "Only etf_daily_pull.py states its history names in code: (FUNDS 4 + EXTRA_SECURITIES 2) x RET 2 fields + FUNDS 4 x FUND_D 5 fields, one top-up row each = 32 cells, x1.25 = 40. The run-time universe constituents (derive_universe reads S3), the depth backfill (BACKFILL_CAP 50), price_axis_pull (covered universe) and enrichment_bloomberg are named gaps, so they are not in the 40. The served ledger's largest history day (dt=2026-10-08) is 5858 cells, which includes those legs. The history ceiling is that same 5858 floor, so the history allowance per day (ceiling - reserve = 5818) treats the reserve as 40 although production drew far more that day; the finish days quoted from it (history 2026-10-13, model_block 2026-10-13) are HELD and may be early by that margin. Nothing was guessed; a measured production draw on the ledger (separating tier-1 from demand rows) would replace the reserve.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~13",
+    "surfaced_at": "2026-10-09T09:34:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/reserve_estimate.py --print: history producers {etf_daily_pull: 32}, value 40, 8 gaps named",
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:46,52,397,472,473",
+        "demand_ledger dt=2026-10-08 history cells 5858 (s3://opal-data-assets/bloomberg/global/bronze/demand_ledger/dt=2026-10-08/ledger.jsonl)"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S3",
+    "one_line": "Yahoo's dividend list misses some cash Bloomberg's total return carries (LNVGY, DIVZ, IDVZ), and Yahoo shows money-market funds at a 0 total return where Bloomberg accrues interest daily.",
+    "spec_asserts": "PRD ADDENDUM v0.5 / C-PRICES: every stored Yahoo row carries the as-traded price, the dividend/interest cash on its ex-date and a total-return value; the TR column is built by the method DQ-t-17 fixes.",
+    "world_is": "DQ-t-17 (TR_COMPARISON.md @0aa91a7a96): on 36 comparable ex-dates Yahoo cash matches Bloomberg to 0.075 bp, but Bloomberg's TR carries payments Yahoo does not list -- LNVGY 2025-12-11 (85.8 bp), DIVZ 2026-09-29 (12.5 bp), IDVZ 2026-09-29 (21.8 bp) -- and FXFXX/SALXX accrue about 1 bp a day (3-4 bp over a weekend) in Bloomberg while Yahoo shows a $1.00 close and no dividend (TR 0). A Yahoo-only TR column would understate those names; interest-accruing funds need Bloomberg or an explicit accrual.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-09T09:41:06Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~15/TR_COMPARISON.md",
+        "org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~15/TR_COMPARISON.json",
+        "dq_t17_run.py re-run at dell1 base @0aa91a7a96: TRCMP-OK 3 names"
+      ]
+    }
   }
 ]
 ```

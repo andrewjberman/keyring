@@ -11090,3 +11090,31 @@ name the one known failure instead of silently inheriting it.
   "notes": "S4 is resolved by A2. Not done here: any edit to the AMGT_HARVST channel (outside this order's paths). The owner of that channel (see the gate's text: 1.0.0_SA_CTO) removes the duplicate."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S73",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T09:31:34Z",
+  "one_line": "round-close-check graded a generic judgment id (AC3) on ANY CVO row whose text contains it: round 32 read OG-bf-1 AC3 and OG-da-1 AC3 GRADED by Z-C-S43, a round-23 row (2026-10-07) whose only AC3 is the script name rl9.AC3.sh -- verdict MAY-CLOSE with 2 judgment criteria never graded.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .tools/round-close-check.py --project NFRA_OPLGTW --round 32 (before the fix): 'JUDGMENT TO-OG-bf-1 AC3 -> GRADED (adjudication row NFRA_OPLGTW-Z-C-S43 by 3.0.0_SA_CVO~O)', same for TO-OG-da-1, verdict=MAY-CLOSE",
+      "FILE surprise-channel/adjudications/ADJUDICATION_v15.Z.md: Z-C-S43 surfaced_at 2026-10-07T02:00:00Z, Round 23 L8, evidence 'rl9.AC2.sh and rl9.AC3.sh re-run' -- names neither order",
+      "FILE .tools/round-close-check.py grade_criterion: matched the bare criterion id with word boundaries over json.dumps(row); '.' and '.sh' are boundaries, so rl9.AC3.sh matched AC3",
+      "RUN after the fix: both read UNGRADED, verdict=REFUSED; --selftest 16/16 incl. the two new generic-id cases"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in the same commit (round-close-check generic-id matcher); nothing left to investigate.",
+  "spec_asserts": "round-close-check REFUSES a round whose judgment criteria no CVO-kind row grades (canonical-drive obligation 3).",
+  "world_is": "A generic id graded off any CVO row mentioning it in any object. Fixed in this commit: a generic AC id needs the row to also name the order (its to_id, TO-<short> or the short id). Earlier MAY-CLOSE verdicts on rounds whose judgment ids are generic were read with the old matcher and are not re-graded here.",
+  "notes": "Disarmed same-turn by the fix. NFRA_OPLGTW round 32's two AC3s go to 3.0.0_SA_CVO~Z in the L8 packet."
+}
+```

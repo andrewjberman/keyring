@@ -2489,3 +2489,33 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   }
 ]
 ```
+
+## NFRA_OPALAI-Z-S64 -- The launcher's first prompt never runs: claude 2.1.295's --add-dir is variadic, so the prompt appended after it at launcher.ps1:172 is taken as a second directory. Z-S63 is not fixed live, and f9.AC4 certified the defective form.
+
+```json
+{
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T09:24Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~AI",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_OPALAI-Z-S64",
+  "one_line": "The launcher's first prompt never runs: claude 2.1.295's --add-dir is variadic, so the prompt appended after it at launcher.ps1:172 is taken as a second directory. Z-S63 is not fixed live, and f9.AC4 certified the defective form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~Z msg 32612/32613: launcher 8cdc7b9 run twice 09:09Z and 09:13Z, GATE: PASS, Analyst window showed an EMPTY prompt; closed 09:18Z, served no Teams message",
+      "claude --help (2.1.295, the Analyst's version): 'Usage: claude [options] [command] [prompt]' and '--add-dir <directories...>'",
+      "control: claude -p --add-dir <tmp> \"Reply with exactly the word PONG and nothing else.\" -> 'Error: Input must be provided either through stdin or as a prompt argument when using --print'",
+      "fix: claude -p --add-dir <tmp> -- \"Reply with exactly the word PONG and nothing else.\" -> 'PONG'",
+      "opal_ai PROD 8cdc7b9 opal/runtime/launcher.ps1:172 ends ' --add-dir ' + $q + $refsDir + $q + ' ' + $q + 'Run your On launch steps from prompt.md, then serve Teams.' + $q",
+      "deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC4.sh: requires the built command to END --add-dir '<refs>' '<prompt>' (regex ^ '([^']+)'$ after the add-dir tail)"
+    ]
+  },
+  "spec_asserts": "OA-f-9 A2 AC4 (row Z-S63): the launcher starts the Analyst WITH a first prompt, so prompt.md's On launch steps run unattended.",
+  "world_is": "The prompt is on the command line but the CLI consumes it as an --add-dir value, so the Analyst idles at input exactly as in Z-S63. AC4 graded the string shape, which is the defective shape, and never ran the CLI, so it passed. Disarm: OA-f-9 AMENDMENT 3 (AC5: a -- separator before the prompt, graded with the real CLI's control and fix arms), drain, opal_ai DEV/PROD push by 0.0.0_AB_MSTR~Z, then the step-4 read re-run before r29's arms (CTO~Z ruling 32614)."
+}
+```

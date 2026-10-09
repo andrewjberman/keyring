@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~22</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -139,6 +139,11 @@ amendment-2 build (portal bd3b6559, workspace 60affc1faf). The grant gains ONE p
 PDF adapter, since the envelope is the same. Nothing else in that file changes. Then re-run the three criteria, commit the proof instance
 and flip to complete. Gate limb: to-pipeline-gate GATE (viii) grades this modified order.
 
+**AMENDMENT 4 (issuer, 2026-10-09 ~09:5xZ; row D2-W22-S3).** The proof instance for AMENDMENTS 2-3 is
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~22/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json`
+(@d78b868a49), because the lane gate admits a worker only to its own serial's folder. The `~21` instance stays as the round-2 base proof.
+Gate limb: to-pipeline-gate GATE (viii) grades this modified order.
+
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_package_i5p_i7.py
@@ -160,7 +165,7 @@ portal/src/pages/InvestorReporting/contracts/envelope.ts
 
 <proof_of_spec>
 Criterion ids: AR21-v-AC1 AR21-v-AC2 AR21-v-AC3. The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~21/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~22/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json` (AMENDMENT 4).
 Validate it with `python .tools/proof-of-spec-check.py <instance> AR21-v-AC1 AR21-v-AC2 AR21-v-AC3` before the flip.
 </proof_of_spec>
 

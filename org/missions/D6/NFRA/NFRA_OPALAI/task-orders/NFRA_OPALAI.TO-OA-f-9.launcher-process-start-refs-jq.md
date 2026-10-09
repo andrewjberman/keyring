@@ -99,6 +99,19 @@ until someone types. AC1-AC3 stand as graded; you build and prove AC4 only.
 3. Change nothing else. The ARGLEN guard and both `[System.Diagnostics.Process]::Start` launches stay. Never run the
    launcher, never start claude.exe, never touch `C:\opal_runtime`.
 
+**ISSUER AMENDMENT 3 (2.0.0_SA_COO~AI, 2026-10-09 ~09:3xZ, row Z-S64): AC5 re-opens this order -- the first prompt is
+swallowed by `--add-dir`.** Launched live at 09:09Z and 09:13Z on PROD `8cdc7b9`, the Analyst again opened to an EMPTY
+prompt. Cause, measured on claude 2.1.295 (the Analyst's version): `--add-dir <directories...>` is variadic, so the prompt
+placed right after it is taken as a second directory. `claude -p --add-dir <d> "<prompt>"` refuses ("Input must be
+provided ... as a prompt argument"); `claude -p --add-dir <d> -- "<prompt>"` answers. AC4 graded the defective shape and is
+SUPERSEDED by AC5; AC1-AC3 stand as graded; you build and prove AC5 only.
+1. **Your nested base is `8cdc7b9735`** (opal_ai origin PROD), on a branch off it. Bound 1's commit form applies.
+2. **The change, one token:** in the `$analystCmd = ...` assignment of `opal/runtime/launcher.ps1`, the separator between
+   the `--add-dir` value and the first prompt becomes ` -- ` (space, two hyphens, space) instead of a single space, so the
+   built command ends `--add-dir '<refs>' -- '<prompt>'`. The prompt text stays exactly as it is.
+3. Change nothing else. AC5 runs the installed `claude` twice in print mode with a tiny prompt (a control and the fix);
+   that is the only claude you start. Never run the launcher, never touch `C:\opal_runtime`.
+
 ## 2. BOUNDS
 
 1. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `0a5c7c2`. Commit with
@@ -132,7 +145,7 @@ unchanged). Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigati
   <criterion id="AC1" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC1.sh; echo "exit=$?"</invocation><expect>Start-Process -Credential=0; Process.Start>=2; temp-file=0; stdout-pipe>=1; --add-dir>=1; agent\refs>=1; OPAL_RUNTIME_CONFIG>=1; REFUSE ELEVATED>=1; .EnvironmentVariables=0; drive-letter literals=0; parse errors=0; behaviour 'LAUNCHER: REFUSE ELEVATED' rc=6 when elevated=True, else 'ERROR: config not found' rc=2; other files changed vs 0a5c7c2=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC2.sh; echo "exit=$?"</invocation><expect>arm1 HOME jq -> deny lines=0; arm2 no jq -> 'jq not found' lines>=1; arm3 PLAN: JQ lines=1 naming jq_exe=1; arm4 PLAN: JQ lines=0, PLAN lines=10 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC3.sh; echo "exit=$?"</invocation><expect>arm1 refs Write G1-deny=1; arm2 refs Edit G1-deny=1; arm3 state_dir Write deny=0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC4" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC4.sh; echo "exit=$?"</invocation><expect>BUILT: prompt=on-launch dq=0; parse errors=0; ARGLEN guard=1; Process.Start=2; other files changed vs de5ce25fa3=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC5" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC5.sh; echo "exit=$?"</invocation><expect>BUILT: separator=yes prompt=on-launch dq=0; parse errors=0; ARGLEN guard=1; Process.Start=2; other files changed vs 8cdc7b9735=0; cli control refused=yes, separator answered PONG=yes -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -196,7 +209,21 @@ Dry-run at base (`OA_F9A2_REF=de5ce25fa3`): f9.AC4 FAIL as expected (`BUILT: no-
 Process.Start 2, other files 0 -- the controls hold). Scratch nested branch, deleted after: GREEN PASS with a prompt naming
 On launch (`BUILT: prompt=on-launch dq=0`); RED FAIL when the prompt does not name it (`BUILT: prompt=other`).
 
+**AMENDMENT 3 RECORD (issuer):** row Z-S64 (BLOCKING, ARMED, this seat). Step 4 of the UB-9a05 fold (@f200ec49f6) ran the
+launcher live before r29: `0.0.0_AB_MSTR~Z` msg 32612, two runs, GATE: PASS, empty prompt both times, closed 09:18Z having
+served no Teams message. `1.0.0_SA_CTO~Z` msg 32614 rules it this round's repair, issuer's authority, re-run the step-4 read
+on the fixed launcher before r29's arms. AC4 checked the built STRING and never the CLI, and the string it required was the
+defective one; AC5 adds the real CLI's control and fix arms. AC4 is superseded in the proof block, so the order carries
+the cap of three mechanical criteria for its open part (AC5 alone). Gate on this modification: LIMB 6 does not fire;
+GATE (viii) grades it (`<placeholders>NONE`). Respawn slot `~24`, worker-light, nested `opal_ai=8cdc7b9735`. Release: the
+nested commit reaches opal_ai DEV and PROD by `0.0.0_AB_MSTR~Z`'s push (push law: no word needed for opal_ai); then the
+step-4 read re-runs.
+
+Dry-run at base (`OA_F9A3_REF=8cdc7b9735`): f9.AC5 FAIL as expected (`BUILT: separator=no`; parse 0, ARGLEN 1,
+Process.Start 2, other files 0; cli control refused=yes, separator answered PONG=yes -- the controls hold).
+
 <status>complete</status>
+<status>pending</status>
 <direct_act>true</direct_act>
 <slot>~24</slot>
 <fabric>site-z</fabric>

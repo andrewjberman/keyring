@@ -282,3 +282,16 @@ Written on the COO packet; it is revised if the CVO's slug differs.
 3. The transport cell, when the owner's answer lands.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10.1 (~09:4xZ) -- the CVO's slug for rounds 17-19 (msg 3023, `ADJUDICATION_v10.md` @67046ae880): ADDENDUM 10 stands
+
+The slug matches the COO packet ADDENDUM 10 was written on (3 dismissed, ARMED 0). Its three items are already ruled:
+- **W1-S7, the Teams silver writer applies no wipe:**
+  - no reader is granted beyond the named original readers until every Teams silver object reads wiped and the pull wipes on landing (ADDENDUM 8.1);
+  - the served re-wipe pair is in round 20 (ADDENDUM 10).
+  This is exactly the CVO's "grant no reader until one holds".
+- **D2-S10, the transport is a stub and the bearer is missing:** ADDENDUM 9. A round-19 transport cell is built; the bearer name comes from NFRA_OPLGTW, never
+  guessed.
+- **D2-S9, the backfill precedent is empty:** ADDENDUM 5. It is kept empty, and the residual check is the privacy guard.
+
+-- 1.0.0_SA_CTO~DELL2
