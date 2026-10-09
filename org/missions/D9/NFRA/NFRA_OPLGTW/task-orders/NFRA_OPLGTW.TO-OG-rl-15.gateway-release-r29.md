@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md</decomp_doc>
 <owned_cells>OG-rl-15</owned_cells>
 </decomp_ref>
+<to_id>NFRA_OPLGTW.TO-OG-rl-15</to_id>
 <issued_to>0.9.0_WK_NFRA_OPLGTW~43</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <placeholders>NONE</placeholders>
@@ -68,6 +69,15 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   and version id; never the value, in no file, message, log or commit). The secret write and the deploy that reads it
   are the applier's, never yours. If the route admits only one bearer value, say so: then the leg is a rotation, and the
   ask names every current holder that must receive the new reference.
+- **AMENDMENT A2 (issuer, 2026-10-09 ~02:0xZ; `1.0.0_SA_CTO~O` msg 32258).** Andrew's word for the five Bloomberg-concierge
+  allowlist rows, verbatim in `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261009_015xZ_OPAL_STAFF_MAY_READ_BLACK_DIAMOND_THROUGH_GATEWAY.md`
+  @0035550443: "any account at ... any vendor any everything", "do not hold up progress". The release set GAINS five rows in
+  `infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt` for `opalbloomberg@opalinvest.com`: `opal_discover`,
+  `opal_describe`, `blackdiamond_list_fees`, `find_sharepoint_site`, `search_files`, unqualified, under one comment block
+  citing that record by path@commit (the file's own rule: every row carries its authorization). Add them in your
+  release commit; they are the ONE named exception to "any OTHER gateway difference: STOP". In Phase A's REHEARSAL and
+  Phase C's read, `identity_scope.check` for that identity on each of the five reads allowed: AC2's body gains
+  `bloomberg_tools_allowed` (the count of the five that read allowed through the INSTALLED code, 5 expected).
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -92,7 +102,8 @@ principal, rollback = the prior reach per key (CTO ruling msg 32087). Commit and
    "instance_id"}`, the host printing `RL15_DIGEST <sha256>` of `json.dumps(body, sort_keys=True)`. Body fields,
    exactly: `served_release`, `installed_code: true`, `asker_query_class`, `asker_query_write_class`,
    `unclassified_registered_tools`, `send_gate_in_oauth_as`, `calendar_months_max`, `contract_version`,
-   `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `grants_written: 0`.
+   `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `bloomberg_tools_allowed`,
+   `grants_written: 0`.
    Re-read the standing floor into `W/RL15_FLOOR.json` per the form.
 2. The grant write, under the signed halves only: Andrew's and Alyssa's principals' grants gain `calendar_months: 13`;
    record each key's prior reach first. Then `W/RL15_GRANTS.json`, the host printing `RL15G_DIGEST <sha256>`, body
@@ -161,6 +172,8 @@ Report once per phase.
 - A1 (2026-10-09, CTO msg 32212): the domain table per v1.9 (a party with no domain left out) and one MAIL_BEARER
   value for the laptop Teams agent as its own leg (applier writes the secret; hand-over by reference). Graded by no gate
   limb as a modification (placeholders NONE).
+- A2 (2026-10-09, CTO msg 32258, Andrew @0035550443): the five Bloomberg allowlist rows ride r29; AC2's attest rule gains
+  `bloomberg_tools_allowed == 5` (rl15_attest.py, same commit). Graded by no gate limb as a modification.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
