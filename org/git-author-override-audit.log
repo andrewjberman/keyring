@@ -48898,3 +48898,43 @@ REFUSED_20261008)
 2026-10-09T22:21:47Z LANDED-2P  2.0.0_SA_COO~R1  5c3e5955b1  paths=1  validate=8.77s  wait=0.06s  hold=0.94s  build=0.56s  ref=0.35s  post-commit=2.41s  attempt=1
 2026-10-09T22:24:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.70  graded=n/a  args=(--verify-merge 228e4b82ecb0881eb53f41e7888381ba3663ca32)  first=(none)
 2026-10-09T22:24:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=17.56  took=7a44c59efb hold=1.48s graded=0/0 pushed=228e4b82ec  phases: t_fetch=1.79s t_merge_cloud=8.79s t_land=1.49s t_push=3.48s
+2026-10-09T22:25:00Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane) act=ab2a5a90a5cb paths=1:org/git-author-override-audit.log
+2026-10-09T22:25:06Z LANDED-2P  0.0.0_AB_MSTR~DELL1  0e7b079746  paths=1  validate=5.65s  wait=0.08s  hold=0.96s  build=0.62s  ref=0.32s  post-commit=2.27s  attempt=1
+2026-10-09T22:25:12Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=5.07  took=already-current pushed=0e7b079746  phases: t_fetch=1.32s t_push=2.89s
+2026-10-09T22:27:49Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=15d337c7419b paths=1:org/critical_paths/unblock/20261009T2227Z_UB-20261009T220527Z-99ac.md
+2026-10-09T22:27:55Z LANDED-2P  3.0.0_SA_CVO  b5b640159d  paths=1  validate=5.61s  wait=0.05s  hold=0.88s  build=0.55s  ref=0.30s  post-commit=2.27s  attempt=1
+2026-10-09T22:29:18Z PASS  0.7.0_AE_CloudOps~DELL1  4  (all paths in-lane) act=20da3dfb9b8d paths=4:org/critical_paths/.open_deploys/mdpf-canon-r2-publisher-layer-and-builder-grant-dell1-20261009.json|org/critical_paths/change_management/20261009T2216Z_mdpf-canon-r2-publisher-layer-and-builder-grant-dell1-20261009_deploy_completion.md|org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ADHOC.canon-r2-publisher-layer-and-builder-grant_PROOF_OF_SPEC.json|org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.canon-r2-publisher-layer-and-builder-grant.md
+2026-10-09T22:29:25Z LANDED-2P  0.7.0_AE_CloudOps~DELL1  446b5db1a6  paths=4  validate=7.54s  wait=0.07s  hold=0.85s  build=0.53s  ref=0.30s  post-commit=2.41s  attempt=1
+2026-10-09T22:29:46Z PASS  2.0.0_SA_COO~C1  3  (all paths in-lane) act=bc7becfa1b25 paths=3:org/critical_paths/.open_deploys/amgt-corpus-r44-at9.json|org/critical_paths/change_management/20261009T2150Z_amgt-corpus-r44-at9_deploy_completion.md|org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r44_at9_leg_v_20261009.txt
+2026-10-09T22:29:53Z LANDED-2P  2.0.0_SA_COO~C1  c4646671c8  paths=3  validate=8.09s  wait=0.06s  hold=0.84s  build=0.52s  ref=0.30s  post-commit=2.46s  attempt=1
+2026-10-09T22:34:04Z PASS  2.0.0_SA_COO~D1  1  (all paths in-lane) act=6879c5194019 paths=1:org/tier1_exec/2.0.0_SA_COO~D1/drive_log_20261009T22Z_desktop-hk1uu7n.md
+2026-10-09T22:34:10Z LANDED-2P  2.0.0_SA_COO~D1  7ffd08c610  paths=1  validate=5.58s  wait=0.06s  hold=0.80s  build=0.50s  ref=0.28s  post-commit=2.18s  attempt=1
+2026-10-09T22:34:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.47  graded=n/a  args=(--verify-merge e6b299d02ee30d146e9c2bab94ef4dae7872484b)  first=(none)
+2026-10-09T22:34:23Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.39  graded=n/a  args=(--verify-merge 67c6eb2f7bdeb05a71cda3f5eb14cb5c1949f672)  first=(none)
+2026-10-09T22:34:28Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=24.98  took=e1327320cb hold=1.30s graded=0/1 pushed=67c6eb2f7b  phases: t_fetch=2.11s t_merge_cloud=8.19s a2.t_merge_cloud=7.89s t_land=1.31s t_push=3.13s
+2026-10-09T22:35:18Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=e99cf5169428 paths=1:org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v51.md
+2026-10-09T22:35:36Z LANDED-2P  3.0.0_SA_CVO  4341b0b122  paths=1  validate=29.66s  wait=0.06s  hold=0.84s  build=0.53s  ref=0.29s  post-commit=2.17s  attempt=1
+2026-10-09T22:36:11Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=4489731183ab paths=1:org/missions/D5/AMGT/AMGT_CORPUS/ledger/NEVER_WIDEN_ROUND44_AT9_CTO_HALF.md
+2026-10-09T22:36:17Z LANDED-2P  1.0.0_SA_CTO~DELL1  437cdac772  paths=1  validate=6.76s  wait=0.06s  hold=0.82s  build=0.52s  ref=0.27s  post-commit=2.01s  attempt=1
+2026-10-09T22:37:22Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane) act=bcc094aa9d48 paths=1:org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-mm-4.redeploy-the-selector-refusal-and-filing-sentence-flag.md
+2026-10-09T22:37:29Z LANDED-2P  2.0.0_SA_COO~R1  d87030b077  paths=1  validate=7.77s  wait=0.06s  hold=0.86s  build=0.54s  ref=0.29s  post-commit=2.16s  attempt=1
+2026-10-09T22:37:39Z PASS  2.0.0_SA_COO~C1  1  (all paths in-lane) act=998b9a91ecc5 paths=1:org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r44_fwd16_census_v10_20261009.txt
+2026-10-09T22:37:46Z LANDED-2P  2.0.0_SA_COO~C1  e90bac771e  paths=1  validate=7.24s  wait=0.06s  hold=0.85s  build=0.53s  ref=0.29s  post-commit=2.11s  attempt=1
+2026-10-09T22:41:47Z PASS  0.7.0_AE_CloudOps~RA1  2  (all paths in-lane) act=cbd7938a35ad paths=2:org/critical_paths/.open_deploys/amgt-resapp-r88-mm4-scoped-api-dell1.json|org/critical_paths/change_management/20261009T2241Z_amgt-resapp-r88-mm4-scoped-api-dell1_deploy_completion.md
+2026-10-09T22:41:52Z LANDED-2P  0.7.0_AE_CloudOps~RA1  81da64660c  paths=2  validate=6.07s  wait=0.06s  hold=0.81s  build=0.51s  ref=0.28s  post-commit=2.30s  attempt=1
+2026-10-09T22:44:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.51  graded=n/a  args=(--verify-merge 0386cacc8055a90df1c0682d3b21720ff8133e5c)  first=(none)
+2026-10-09T22:44:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=16.68  took=aa237c5b0b hold=1.37s graded=0/14 pushed=0386cacc80  phases: t_fetch=1.97s t_merge_cloud=8.31s t_land=1.39s t_push=3.04s
+2026-10-09T22:47:29Z PASS  2.0.0_SA_COO~C1  1  (all paths in-lane) act=3df25d5ea7b0 paths=1:org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r44_at9_leg_w_write_log_20261009.txt
+2026-10-09T22:47:38Z LANDED-2P  2.0.0_SA_COO~C1  ee546ee516  paths=1  validate=7.86s  wait=0.10s  hold=1.12s  build=0.68s  ref=0.41s  post-commit=2.35s  attempt=1
+2026-10-09T22:50:13Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=4849508f0239 paths=1:org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v52.md
+2026-10-09T22:50:34Z LANDED-2P  3.0.0_SA_CVO  179f15fc51  paths=1  validate=36.52s  wait=0.08s  hold=1.08s  build=0.66s  ref=0.39s  post-commit=2.51s  attempt=1
+2026-10-09T22:51:31Z PASS  2.0.0_SA_COO~C1  1  (all paths in-lane) act=75255c1b4717 paths=1:org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r44_fwd10_fwd15_imb_walk_20261009.txt
+2026-10-09T22:51:34Z PASS  0.9.0_WK_MDPF_CANON~4  4  (all paths in-lane) act=6b4ab4b1776c paths=4:org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~4/MDPF_CANON.TO-CN-b-1.proof_of_spec.json|org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~4/READER_CENSUS.md|org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md|org/missions/D8/MDPF/MDPF_CANON/task-orders/MDPF_CANON.TO-CN-b-1.md
+2026-10-09T22:51:38Z LANDED-2P  2.0.0_SA_COO~C1  f20cca91c7  paths=1  validate=6.97s  wait=0.07s  hold=0.85s  build=0.51s  ref=0.31s  post-commit=2.23s  attempt=1
+2026-10-09T22:52:16Z MERGE-ATTEMPT  2.0.0_SA_COO~D1  rc=0  secs=2.86  graded=0/4 fast-lane  args=(wk-MDPF_CANON-4)  first=(none)
+2026-10-09T22:53:04Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=6cbfccce6d6f paths=1:org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/adjudications/ADJUDICATION_v53.md
+2026-10-09T22:53:21Z LANDED-2P  3.0.0_SA_CVO  65a583da88  paths=1  validate=30.27s  wait=0.06s  hold=0.82s  build=0.51s  ref=0.29s  post-commit=2.13s  attempt=1
+2026-10-09T22:54:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.47  graded=n/a  args=(--verify-merge 0283b427ae209eb6aeb640d76430dd84c6e37a84)  first=(none)
+2026-10-09T22:54:23Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=19.18  took=f7cd809482 hold=1.47s graded=0/3 pushed=0283b427ae  phases: t_fetch=3.02s t_merge_cloud=8.72s t_land=1.48s t_push=3.55s
+2026-10-09T22:54:46Z PASS  2.0.0_SA_COO~D1  1  (all paths in-lane) act=9a2c134e1637 paths=1:org/missions/D8/MDPF/MDPF_CANON/surprise-channel/investigations/INVESTIGATION_v1.md
+2026-10-09T22:54:58Z LANDED-2P  2.0.0_SA_COO~D1  77a321b160  paths=1  validate=15.42s  wait=0.06s  hold=0.90s  build=0.55s  ref=0.32s  post-commit=2.28s  attempt=1
