@@ -22581,3 +22581,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Ledger amgt-resapp-r80-dd4-scoped-api-dell1: L1,L2,L3,L4,L5,L7 closed with proof; L6 alone open and NOT closed, because the record it names is half absent. The deploy is NOT half-landed -- the function is live, correct and independently verified; L6 is bookkeeping, so the open leg should not be read as a live deploy hazard. infra/aws/terraform/harvest/CHANGELOG.json is deliberately left UNTRACKED in the shared tree so the recorder's entry for this deploy is not lost before someone adds the registry row. For the issuer: the artifact_sha256 gap looks like a defect in reconcile-deployed's parity classification for a NULL recorded sha, which would affect every one of the 41 no-record functions, not just this one."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W321-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~321",
+  "surfaced_at": "2026-10-09T06:23Z",
+  "one_line": "AMGT-ee-4 stopped at ASML NA step 2: the merged cutter (opal-filings-fetch/2.0.0) cut NO item (business, risk or mdna) from ASML's live 20-F, so the fetch returned UNRESOLVED-SOURCE and wrote a state marker instead of a silver part; AC1/AC2/AC3 read NO and the other four names were not touched (condition 3).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation (py 3.12.10, anthropic 0.84.0, tree wk-AMGT_RESAPP-321 @a3cf190f46): `py -3.12 -m lib.research.filings.fetch --security-key ASML_NA_Equity --form 20-F --cik 937966 --write-pool --cache-dir .scratch/r81cache` at 2026-10-09T06:20:43Z, rc=0, printed 'UNRESOLVED-SOURCE: ASML_NA_Equity -- the 20-F primary document asml-20251231.htm parsed to 1374962 chars but no named item (business, risk, mdna) could be cut from it'.",
+      "Per-item reasons printed: business: 'item4[.,:;-]*b[.,:;-]*businessoverview' 0 raw matches, 'b[.,:;-]*businessoverview' 1 raw match which is a contents line (0 qualified); risk: 'item3...d...riskfactors' 0 raw, 'd...riskfactors' 2 raw, 1 not at line start and 1 contents line (0 qualified); mdna: 'item5...operatingandfinancialreview' 0 raw, 'operatingandfinancialreviewandprospects' 1 raw, a contents line (0 qualified).",
+      "The send output: 'OK: uploaded s3://opal-data-harvest/amgt/harvest/state/filing_attempt/security_key=ASML_NA_Equity/UNRESOLVED-SOURCE.json ContentLength=2338'. list_object_versions on that prefix reads ONE version, XCTQo1uW9rvomS3k12_BqMRLq4EFm81B (2026-10-09T06:20:48Z), IsLatest True: the key is NEW, so it has no prior VersionId to copy back and rolling it back would be a delete, which the order bars.",
+      "Re-read after the stop: silver sec filing_source still holds ONE part (date=2026-09-22/part-20260922T033157Z.parquet); ASML analysis key head VersionId WIU.oSeIh8NKMhy2DfqsJmRwGOusYTxs and drafting key head VersionId FWeloN5.zr6pvN1NWUXScK5RakjwF1qV, both equal to the pre-act record. No model call was made.",
+      "Criteria at the stop: AC1 'R81 STORE AC1 SERVED: NO' exit=1 (S1-S3 FAIL); AC2 'R81 STORE AC2 SERVED: NO' exit=1 (T1 PASS, T2 FAIL refusal sentence x2, T3 FAIL 0 Item 4.B locations); AC3 'R81 EE4 CENSUS: NO' exit=1 (E1 PASS, E2-E4 FAIL, all five still at parser 1.0.0)."
+    ]
+  },
+  "spec_asserts": "AMGT-ee-4 order section 1 and the COO half's EXPECTED OUTCOME: the merged cutter 'cuts a business section from its own heading'; the two branches named are 'heading present: business text is served' and 'heading absent: business FAILED with its reason in the stored source, risk/mdna as today's patterns cut them'. The COO half's blast radius is three keys per name and 'NO other key'.",
+  "world_is": "A third outcome, which neither branch names: on ASML's 2025 20-F all three items fail to cut, so build_source_object returns UNRESOLVED-SOURCE (no silver row is built at all) and fetch.persist routes that object to STATE (amgt/harvest/state/filing_attempt/...), a fourth key outside the pair's blast radius. That key is write-once and was empty before; it is served only when a name's drafting status is ABSENT (scoped_amgt.py read_thesis_bundle), and ASML's drafting is SERVED, so the live page is unchanged (AC2 T1 200, refusal sentence still x2). I did not delete it (R2). The silver, analysis and drafting keys were not written, so there is nothing to roll back for ASML NA; the BABA, NU, PBR and SAP names were not fetched. The cut for ASML needs a pattern that reads this filing's own headings (the business item's only match is a contents line), which is a producer change outside this order's paths.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Change-management entry amgt-resapp-r81-ee4-store-half-dell1: legs closed with the STOPPED proof, no leg claims a rewrite. Open for the issuer: whether the new ASML UNRESOLVED-SOURCE.json state key is acceptable to leave in place (it makes a future CHANGED outcome for ASML write a held marker, and would surface its reason if ASML's drafting ever went ABSENT), and whether the BABA, NU, PBR and SAP cuts should be dry-run (build_source_object without --write-pool) before any further write, since the same cutter would now be applied to them. I made no dry run: the order's act is the write."
+}
+```
