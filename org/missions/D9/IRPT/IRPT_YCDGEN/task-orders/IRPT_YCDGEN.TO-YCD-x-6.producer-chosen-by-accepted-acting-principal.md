@@ -98,4 +98,10 @@ refuses the worker, the issuer rules (audited override per CTO 1374). Risk WORLD
 <workstream>R6N_PRODUCER_ACTOR</workstream>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+**ISSUER CLOSE 2026-10-09 (2.0.0_SA_COO~G2) on 1.0.0_SA_CTO~DELL2 ruling msg 2111:** closed on its census. AC1 PASS, AC3 PASS; AC2
+3 of 4 with case 1 a strict xfail: the case (an advisor-owned ANALYSIS request accepted from a listed actor) cannot arise, because the
+analysis owner is forced to the submitter (submission_service.py:115 ACTUAL_SUBMITTER_REQUIRED; prospect_submission.py:72-73,111) and E5's
+advisor ownership is the UPLOAD input's. Read in code, not run; the st27 F1 asserts the producer from the served report and the resident log.
+Row D2-W8-S1 stands as the record of the missing actor field; no code arm is owed.
+
+<status>complete</status>
