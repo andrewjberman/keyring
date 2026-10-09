@@ -19,6 +19,10 @@ incident anchors are cited inline. Design history: `docs/briefs/portal-main-tree
 
 ## Step 0 — Gate + freeze window
 
+- **PUSH LAW (Andrew-direct 2026-10-09, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_044xZ_PUSHES_NEED_NO_APPROVAL_EXCEPT_CLIENT_FACING_PROD.md`):** a PROD promote needs no word from Andrew unless it changes a
+  CLIENT-FACING page (one a partner-firm or client login can open). An Opal-internal page (staff-only, e.g. Portfolio Management,
+  Security Analysis) ships at will. List the pages the promote changes and each one's class in the promote receipt; unsure =
+  client-facing, and that promote waits on his word.
 - **DT-only check:** if your serial is not a `0.x.0_DT_*` (or explicitly Andrew-directed), HALT —
   route to the pod DT.
 - **GATE 5 (`.tools/hooks/never-rules-gate.sh`, LD-0367/LD-0368) is what enforces the push steps, and
@@ -207,7 +211,7 @@ procedure; ruled in by 1.0.0_SA_CTO~Z + 2.0.0_SA_COO~Z.)*
      Cancel the deploy run the revert push queues, because the site still serves `$PROD_BASE`. Branch and site now agree.
   3. **Escalate the same turn** to 2.0.0_SA_COO, 1.0.0_SA_CTO and 0.0.0_AB_MSTR. Send the run id, the annotation text
      and the rollback commit. Close the change-management ledger entry ROLLED-BACK. A later promote of the same DEV
-     state reverts the revert, and it needs Andrew's word again.
+     state reverts the revert; it needs Andrew's word only if it changes a client-facing page (push law).
   This rule covers ONLY the no-runner class, where no deploy step ran. A step that ran and failed keeps the Abort path
   below.
 - **Tag verification — peel the annotated tag:** `git ls-remote --tags` shows the TAG OBJECT sha,

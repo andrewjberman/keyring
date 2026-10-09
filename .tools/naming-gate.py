@@ -92,6 +92,7 @@ SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
 PLACE_FILE = os.path.join(REPO, "org", "mcp", "naming-place.enforce")  # the placement step's switch: present = refuse
+PLACE_PREVIEW = os.environ.get("NAMING_PLACE_PREVIEW") == "1"  # run the step while the switch is absent (its rows only WARN)
 PLACE_MAP = "infra/logic/registry/root_map.json"
 PLACE_PATH_PREFIX = "infra/aws/"
 PLACE_ROOT_CAP = 8  # roots placed per commit; each costs about two root-check runs (about 10 s)
@@ -1960,6 +1961,11 @@ def place_step(rows, meta):
                for p in _PLACE["files"]):
         return rows
     on = place_enforcing()
+    if not on and not PLACE_PREVIEW:
+        # Row LGIC_BLANKFIX-W1-S22 (1.0.0_SA_CTO ruling 2026-10-09): with the switch absent the step's rows can only WARN, and the
+        # root census costs ~13 s per root on every seat's .tf commit; skip it. NAMING_PLACE_PREVIEW=1 runs it anyway (FWD-6 arm G).
+        meta.append("NAMING PLACE-NOTICE placement step skipped: org/mcp/naming-place.enforce is absent (NAMING_PLACE_PREVIEW=1 runs it)")
+        return rows
     try:
         if _diff_repo() != REPO:
             return rows

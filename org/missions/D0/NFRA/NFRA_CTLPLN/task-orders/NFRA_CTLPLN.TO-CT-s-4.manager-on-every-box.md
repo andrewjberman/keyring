@@ -208,7 +208,7 @@ The tool's next defect came from the field. `0.0.0_AB_MSTR` msg 107619 relayed d
 0.7.0_AE_CloudOps~DELL1 flagged HUNG (99 min) on AMGT_RESAPP.TO-AMGT-dd-4, which reads [status tag: staged] at HEAD ...
 Ask: exclude staged (not yet GO'd) orders from the HUNG test." The reader is `open_orders_to()` in `.tools/seat-liveness.py`
 (about lines 131-155). It treats every non-terminal status as open, and it takes the FIRST status word in the file.
-`1.0.0_SA_CTO` msg 107528, the gate owner's ruling, says: "an order's status is its LAST <status> tag". Gate limb: none graded
+`1.0.0_SA_CTO` msg 107528, the gate owner's ruling, says: "an order's status is its LAST [status] tag". Gate limb: none graded
 this modification.
 
 1. **The LAST tag.** An order's status is the last `<status>` tag in the file whose word is in `SL.STATUS_WORDS`, not the first.
