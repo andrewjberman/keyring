@@ -1440,5 +1440,26 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "To honour step 4 inside <paths>, pull._land_content_only repeats land_bronze.land's refusals, keys, never-overwrite and KMS puts using land_bronze's own helpers (~50 lines of duplicated policy). thread_trace is a read-only diagnostic and is not exercised by any test with a content-only sidecar.",
     "notes": "The issuer may fold the content-only branch into land_bronze.land (metadata_bytes=None) in a later order and delete the pull.py copy; thread_trace needs the same absent-aware branch."
   }
+  ,{
+    "id": "NFRA_TRNSPT-D2-W2-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:34:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of ARMED row NFRA_TRNSPT-D2-W2-S7: disarmed at d2d7a59ae2 (research_fold rows carry wallclock_basis read from the row).",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show d2d7a59ae2: research_fold._fold_one sets wallclock_basis to WALLCLOCK_OBSERVED when the row's start_utc is non-null, else WALLCLOCK_ABSENT; never derived",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at d2d7a59ae2: 415 passed, 0 failed; test_research_fold, test_research_store and test_securities_allowlist assert through COLUMNS and needed no edit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 2 steps 7-8: research_fold stamps wallclock_basis from the row; the tests pinning the old column set are updated; the tests directory passes.",
+    "world_is": "Step 7 landed as stated. Step 8 required no edit: the three test files compare against parse_silver.COLUMNS rather than a literal column list, so they went green with the fold fix alone.",
+    "notes": "Resolves D2-W2-S7 (existing row not edited)."
+  }
 ]
 ```
