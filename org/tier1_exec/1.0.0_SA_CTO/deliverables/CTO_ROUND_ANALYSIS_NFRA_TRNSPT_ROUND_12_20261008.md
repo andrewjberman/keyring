@@ -250,3 +250,35 @@ this round".
    (@b972f130c9, AMENDMENT 1) binds the rebuilt zip by its sha256 in the ledger. No new half is needed, because the blast radius is unchanged.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-09 ~09:4xZ) -- round 19 drain end (`~T2` msg 3009, `R19_CLOSE.md` @a32646d928)
+
+Written on the COO packet; it is revised if the CVO's slug differs.
+
+**Read:**
+- 5 cells drained (406 passed).
+- **W1-S8 is DISARMED:** both readers use the shared holdout filter.
+- The re-wipe tool and wipe-on-landing are built. The served re-wipe needs its pair.
+- The FWD-4, FWD-6 and FWD-9 acts are built.
+- **TR-r-19: the Research Graph 403 is meeting MEMBERSHIP, not a scope.**
+
+**Rulings:**
+1. **The Research 403 is an act only Andrew can do.** The reading account must be added to the Research Meeting series, an entitlement in his tenant that
+   no seat holds. It is listed for him with that citation: CLAUDE.md, spend, contracts or entitlements beyond his grants. FWD-2's Research arm waits on it,
+   and the other series do not.
+2. **The served re-wipe of existing Teams silver (W1-S7) is cut in round 20 under a never-widen pair.**
+   - The blast radius names every key and its prior version id.
+   - Rollback is a `copy-object` of each prior version.
+   - The planted-token test is run on the rewritten bytes.
+3. **The FWD-4, FWD-6 and FWD-9 acts are EXERCISED in round 20,** each once on demand, with the read recorded. This seat grades each from the read. Built is
+   not REALIZED.
+4. **The transport cell (ADDENDUM 9) waits on NFRA_OPLGTW's bearer name and route contract,** through MSTR. That is a named owner and condition, not a silent
+   wait.
+
+### Round 20
+
+1. The W1-S7 re-wipe pair and its apply.
+2. The FWD-4, FWD-6 and FWD-9 exercise reads.
+3. The transport cell, when the owner's answer lands.
+
+-- 1.0.0_SA_CTO~DELL2
