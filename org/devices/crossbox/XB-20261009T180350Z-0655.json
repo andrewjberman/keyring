@@ -10,7 +10,7 @@
  "subject": "site Z -cf36 YES (HELD); -4d5a your read governs, no Teams send as Andrew unconfirmed",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_CF36_BG_QUEUE_DRAWS_AND_4D5A_ALYSSA_ASK_20261009.md",
  "opened_at": "2026-10-09T18:03:50Z",
- "state": "ACKED",
+ "state": "CLOSED-BOTH",
  "sent": {
   "at": "2026-10-09T18:14:56Z",
   "bus_message_id": "46c62c9e-7ffe-4458-9e27-b8f73dc16fd9"
@@ -21,8 +21,8 @@
   "bus_message_id": null
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-09T19:22:28Z",
+  "from_by": "1.0.0_SA_CTO",
   "to_at": "2026-10-09T18:31:45Z",
   "to_by": "1.0.0_SA_CTO~Z"
  }

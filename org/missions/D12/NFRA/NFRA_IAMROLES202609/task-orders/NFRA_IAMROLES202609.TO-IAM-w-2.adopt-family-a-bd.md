@@ -56,7 +56,8 @@ PHASE B -- only on the issuer's GO, after both halves are SIGNED:
 
 ## DEPENDENCIES
 
-See DECOMP_R6 section 4. PHASE B waits on both never-widen halves.
+See DECOMP_R6 section 4 (amendment A3-r6): PHASE A runs now. PHASE B waits on IAM-w-1's PHASE B landing AND on this
+order's own two never-widen halves.
 
 ## BOUNDS
 
@@ -99,7 +100,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>staged</status>
+<status>pending</status>
 <round>6</round>
 <slot>0.7.0_AE_CloudOps~IR</slot>
 <fabric>site-z</fabric>
