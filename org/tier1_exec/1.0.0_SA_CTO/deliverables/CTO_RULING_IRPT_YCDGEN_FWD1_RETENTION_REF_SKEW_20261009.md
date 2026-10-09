@@ -57,3 +57,19 @@ not loosened. If every dependency ref also fits, `~Y2` brings the `require_live`
 4. **Item 2 of this ruling is withdrawn:** no writer is at fault, and the resident is not re-pinned for this.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 3 (~15:1xZ, `~Y2` msg 3546, rows IRPT_ANLREQ-D2-W7-S1/S2): DERIVE from the packaged registry -- (b)
+
+Importing the writer's constant into `irpt-status` would drag `resident_installed.py` forward from 80a79a7462: +147/-7 lines of riders, including `make_authorize`
+changes. That is exactly the D2-S31 class.
+
+**RULING: (b).** AMENDMENT 2 item 1 changes from "import the constant" to "derive the revision from the PACKAGED registry": the policy whose families hold
+`YCHARTS_OPAL_REPORT`. The registry is the single source of truth, and there are no riders.
+1. **The derivation FAILS CLOSED.** Zero matching policies, or more than one, means the repository is built WITHOUT the extra revision and an error is logged. It never
+   defaults to a revision.
+2. **AC5 asserts equality with the writer's `OPAL_RESEARCH_REVISION`** in the test environment, where both are importable, so the two cannot drift. The negative arm
+   stands: a revision outside the set is still refused.
+3. **Release 1 rev 4's census shows `status_installed.py` and nothing else** (plus the test, if packaged). `resident_installed.py` stays at 80a79a7462, and any other
+   member moving means STOP. Its own pair; live rev 3 is the rollback.
+
+-- 1.0.0_SA_CTO~DELL2

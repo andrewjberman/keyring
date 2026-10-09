@@ -21,11 +21,11 @@ Graduated at round 40's L9 (ADJUDICATION_v31.md), round label v41: 2 rows, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v41",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v41"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W68-S1",
@@ -42,11 +42,11 @@ Graduated at round 40's L9 (ADJUDICATION_v31.md), round label v41: 2 rows, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v41",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v41"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
