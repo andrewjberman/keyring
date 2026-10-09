@@ -4,9 +4,9 @@
 <issued_to>0.9.0_WK_MDPF_STRATID~6</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
-<risk>LOCAL</risk>
+<risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>1</round>
@@ -61,7 +61,7 @@ table. `Opal_Muni_Income` (one account, about $64.1M) must appear, reason `RULE_
 `W2-3-AC2` -- SEAM on real data: the recorded list has SOURCE, DENOMINATOR and RESULT lines and carries the control `Opal_Muni_Income`.
 At the base: `W23-SEAM-BAD no file ...`.
 
-<expected_criteria>W2-3-AC1 W2-3-AC2 W2-4-AC1 W2-4-AC2</expected_criteria>
+<expected_criteria>W2-3-AC1 W2-3-AC2 W2-4-AC1 W2-4-AC2 W2-7-AC1 W2-7-AC2</expected_criteria>
 
 Run each invocation from your worktree root.
 
@@ -109,6 +109,48 @@ Correct the EXCLUDED-AS-MODEL line to say the set is the roster+definition `is_o
 `W2-3-AC2` and `W2-4-AC2` now require `Opal_Muni_Income` NOT listed and `Opal_Muni_Sleeve` listed; re-run all four criteria and re-flip
 `<status>` to `complete` only when all pass.
 
+### AMENDMENT A10 (issuer, 2026-10-09 ~17:2xZ) -- cell `ST-w-7`: the list reaches every scheduled run
+
+Your earlier passes are complete and stand. `unidentified_candidates` is merged and lives at
+`data/assets/scripts/silver/opal_unidentified.py`. No running path calls it yet, so FWD-7 ("one scheduled run read") has nothing to
+read. This amendment wires it in.
+
+`ST-w-7` (decomposition amendment A10):
+1. In `data/assets/scripts/gold/build_cottonwood_mdpf_slice.py`, add `unidentified_block(gold_by_date: dict) -> dict`.
+   - It reads the frame at `max(gold_by_date)`, the latest Cottonwood gold value date. Columns are `model_name`, `dollar_value` and
+     `account_count`, and the rows are read BEFORE `build_slice` strips the SMA sleeves.
+   - It turns each row into `{"firm_id": "cottonwood", "name": model_name, "dollars": dollar_value}` and calls
+     `opal_unidentified.unidentified_candidates(rows, rs.opal_sma_member_of, cfg, opal_models=...)`.
+     - `cfg` is the loaded strategy config (the same one `rebalancer_schemas` loads).
+     - `opal_models` is the Opal-model name set that your ST-w-4 record used: A6's roster+definition `is_opal` union, read the same
+       way.
+   - It returns `{"as_of", "firm_id": "cottonwood", "names_scanned": <distinct names in that frame>, "config_source":
+     rebalancer_schemas.STRATEGY_CONFIG_SOURCE, "rows": [...]}`.
+   - Import `opal_unidentified` the way the slice already imports `rebalancer_schemas`: a sibling in the flat package, with a
+     repo-relative fallback.
+2. In `build_composed`, set `composed["unidentified_strategies"] = unidentified_block(gold)` before it returns. Move no figure.
+3. Add tests in NEW `data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py`, with synthetic frames and no network,
+   using these exact names:
+   - `test_composed_carries_unidentified_block`
+   - `test_planted_opal_name_is_listed_with_firm_name_dollars`
+   - `test_opal_model_and_matched_member_not_listed`
+   - `test_figures_unchanged_by_the_list`
+
+<criterion id="W2-7-AC1" cell_refs="ST-w-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_7_tests.py</invocation><expect>W27-OK</expect></criterion>
+`W2-7-AC1` -- the four named tests pass.
+
+<criterion id="W2-7-AC2" cell_refs="ST-w-7"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_7_seam.py</invocation><expect>W27-SEAM-OK</expect></criterion>
+`W2-7-AC2` -- the seam on real data (read-only S3).
+- Arm A: `build_composed` in memory carries the block with `as_of` = the latest gold value date, `names_scanned` > 0, and
+  `config_source` naming the S3 list, and its figures equal the served slice.
+- Arm B: a planted "Opal Frontier Sleeve" row (1234.56) is listed with firm cottonwood, dollars 1234.56, reason `NO_MEMBER`; the
+  control frame does not list it.
+
+At the base (2026-10-09 ~17:2xZ): AC1 `W27-BAD no file ...`; AC2 `W27-SEAM-BAD arm=build no unidentified_block ...`.
+
+Re-flip `<status>` to `complete` only when every criterion in `<expected_criteria>` passes. No deploy: the slice ships with round
+2's deploy at the issuer's drain. A10 lifts the bound "Do not edit ... any gold script" for this one file only.
+
 ## BOUNDS
 
 - **GUARD 1:** no deploy and no write to the ETF universe config before the 2026-10-09 13:30Z read. You write nothing in AWS;
@@ -125,18 +167,20 @@ data/assets/scripts/silver/tests/test_opal_unidentified.py
 org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md
 org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md
+data/assets/scripts/gold/build_cottonwood_mdpf_slice.py
+data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py
 </paths>
 
 The block is your WRITE grant (paths relative to your worktree root are the same files). Everything else named here you READ.
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md</decomp_doc> (workstream 2), cell `ST-w-3`.
-<owned_cells>ST-w-3 ST-w-4</owned_cells>
+<owned_cells>ST-w-3 ST-w-4 ST-w-7</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: W2-3-AC1, W2-3-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/MDPF_STRATID.TO-W2-3.unidentified-strategy-list.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> W2-3-AC1 W2-3-AC2` BEFORE the flip.
+Criterion ids: W2-3-AC1, W2-3-AC2, W2-7-AC1, W2-7-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/MDPF_STRATID.TO-W2-3.unidentified-strategy-list.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> W2-3-AC1 W2-3-AC2 W2-7-AC1 W2-7-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the RESULT and DENOMINATOR lines, the top 10 listed rows, commits.
@@ -146,10 +190,10 @@ validated with `python .tools/proof-of-spec-check.py <instance> W2-3-AC1 W2-3-AC
 ## RECORD FACE
 
 <preflight>
-comp-schedule: DECLARED-NOT-APPLICABLE nothing wired into a running path (ruling W5).
+comp-schedule: DECLARED-NOT-APPLICABLE A10 wires the list into the already-scheduled Cottonwood slice run; no schedule moves.
 comp-iam: DECLARED-NOT-APPLICABLE read-only S3 under the worker's credentials.
 comp-adversary: DECLARED-NOT-APPLICABLE recorded in the decomposition battery.
-risk: LOCAL -- code, tests and a recorded document on a branch; serving the list at a builder address is a drain act (ruling W5).
+risk: SERVED -- A10 adds a key to the served Cottonwood slice (no figure moves); deployed at the issuer's drain.
 direct_act: false -- workstream issuance with shared contracts.
 </preflight>
 

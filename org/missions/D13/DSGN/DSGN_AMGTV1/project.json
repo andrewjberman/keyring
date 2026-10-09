@@ -4,8 +4,8 @@
   "directive": "D13",
   "fabric": "dell1",
   "pipeline": null,
-  "status": "active",
-  "dep_stage": "EXECUTING",
+  "status": "complete",
+  "dep_stage": "CLOSED",
   "created": "2026-09-29",
   "registered_under_tree": "2026-09-29",
   "placement": "DELL1",
@@ -40,12 +40,13 @@
   },
   "coo_lane": "2.0.0_SA_COO~D1",
   "fabric_ruling": "dell1 -- Andrew-direct 2026-10-08 ~22:5xZ ('I think all the AMGT work should go to DELL1 ... also DSGN_AMGTV1 ... ETFS_RIVALS'), record @b7361ceb2a; re-placed at L3 by 1.0.0_SA_CTO~DELL1 @a4bcfa869f",
-  "blocking": "PRD v0.2 ADMITTED (ratified-text SIGNED by 3.0.0_SA_CVO~Z @5a222f83d6; brief half auto). L5 decomposition and the round-1 issuance (the Valero thread) are 2.0.0_SA_COO~D's.",
+  "blocking": "CLOSED 2026-10-09 at round 68 (rule 27 L10, R6). COMPLETION_REPORT.round68 @4ca1f1092e (2.0.0_SA_COO~D1: 26 of 26 header outcomes COVERED; 164 of 165 task orders terminal with valid proofs, AV-zzf-1 cancelled before spawn), COMPLETION_GRADES.round68 (1.0.0_SA_CTO~DELL1, msg 2888: 26 of 26 REALIZED), close read ROUND_ANALYSIS.round68 @7f0af91492 on PRD v0.19 (FWD-3 retired, out of the header). Portal PROD 37aa1247 = portal-v2.1.211 LIVE (CI 37962854830 success), DEV c96efe17; never-widen pair CTO @7f0af91492 + COO @fa95fb4389. Andrew's own walk is welcome and is not a gate; a defect he finds re-opens the project (round-65 analysis).",
   "thread_counter": 0,
   "threads": [],
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPOINT_FORWARD_20260928.md",
   "counterpart": null,
   "placement_ruling": "Moved to dell1 on Andrew-direct 2026-10-08 ~22:5xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: \"I think all the AMGT work should go to DELL1. That means AMGT_CORPUS RESAPP HARVST and also DSGN_AMGTV1. I think we can also put ETFS_RIVALS over there as well.\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md @b7361ceb2a). Re-placed at L3 by 1.0.0_SA_CTO~DELL1 2026-10-09 on the site-Z hand-over and census (@6a308cd424). PRODUCER RULE: the site-Z producers named in the census stay at site Z and dell1 reads their S3/DynamoDB outputs; a dell1 change to a site-Z producer path is a site-Z deploy under a never-widen pair carrying 1.0.0_SA_CTO~Z's half before the merge.",
   "handover_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md @70c5bd38d1",
-  "fabric_ruling_prior": "site-z -- Andrew-direct 2026-09-28 ~22:4xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'COO~D is fine, because they are on separate boxes, so there shouldn't be any overlap. DSGN_AMGTV1 will be owned by the sitez box, so it should not interfere with any COO~D ops on the laptop box.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_DSGN_AMGTV1_SEATS_ON_COO_D_SITEZ.md). D13 is placed LAPTOP; this member is the named per-member exception the register header reserves to Andrew per case (DIRECTIVES.yaml:24-26), adjudicated by 3.0.0_SA_CVO~Z msg 26308 (REC (a) CONCUR). directives-check displays D13 as LAPTOP for this member: display only, no tool routes member work by directive placement."
+  "fabric_ruling_prior": "site-z -- Andrew-direct 2026-09-28 ~22:4xZ at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'COO~D is fine, because they are on separate boxes, so there shouldn't be any overlap. DSGN_AMGTV1 will be owned by the sitez box, so it should not interfere with any COO~D ops on the laptop box.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_224xZ_DSGN_AMGTV1_SEATS_ON_COO_D_SITEZ.md). D13 is placed LAPTOP; this member is the named per-member exception the register header reserves to Andrew per case (DIRECTIVES.yaml:24-26), adjudicated by 3.0.0_SA_CVO~Z msg 26308 (REC (a) CONCUR). directives-check displays D13 as LAPTOP for this member: display only, no tool routes member work by directive placement.",
+  "closed": "2026-10-09"
 }
