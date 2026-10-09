@@ -373,8 +373,9 @@ def _render_entry(state: dict) -> str:
     advi-breaks-to3-49f-431167-unrealized-facts-restore sat falsely RED for 214h behind exactly
     that belief. A comment that over-claims an invariant is a detector that lies to its reader.
     Layer 3 (_entry_prose_drift) DETECTS the drift this function cannot prevent.
-    Never hand-edit an entry -- except its `## Sign-off` section, which _write_entry carries through every
-    re-render (LGIC_ENFORCE-W1-S17).
+    Hand-written prose IS kept: _write_entry carries every non-owned section (Sign-off included, LGIC_ENFORCE-W1-S17)
+    and every hand line in the preamble/Log through each re-render (_carried_prose; NFRA_MCPORTAL-Z-S24). Never hand-edit
+    the Status line or the Manifest table -- those are regenerated from the sentinel.
     """
     lines = [
         "# Deploy Completion Record",
@@ -425,6 +426,55 @@ def _carried_signoff(old_text: str) -> str:
     return old_text[m.start():end].rstrip("\n") + "\n"
 
 
+_OWNED_SECTION_RE = re.compile(r"^## (Manifest|Log)\b", re.I)   # the only sections _render_entry writes
+_GENERATED_PREAMBLE = ("# Deploy Completion Record", "**Date opened:**", "**Status:**", "**Deploy:**",
+                       "**Authored by:**", "**Class:**", "**Window:**", "---")
+CARRIED_NOTES_HEAD = "## Carried notes (hand-written lines kept across re-renders)"
+
+
+def _carried_prose(old_text: str, rendered: str) -> str:
+    """Every hand-written part of the old entry that a re-render would otherwise drop, verbatim and in order.
+
+    WHY (1.0.0_SA_CTO~Z msg 32830; NFRA_MCPORTAL-Z-S24): `hold` and `close-leg` re-rendered the entry from the sentinel
+    and kept only `## Sign-off`, so every prose line an order said to "record in the entry" vanished at rc=0 -- MP-x-4's
+    entry went from 137 lines to 23 (ca9b6c05f0..b8fc617e2e). Generalises _carried_signoff:
+      (a) every `## ` section the renderer does not own (it owns only Manifest and Log) is carried whole -- Sign-off
+          and any other hand heading;
+      (b) a hand line inside the preamble or the Log section (or a non-table line inside Manifest) that the new
+          render does not contain is kept under ONE CARRIED_NOTES_HEAD section. That section is then not owned, so
+          the next render carries it whole: idempotent, nothing duplicated across re-renders."""
+    if not old_text:
+        return ""
+    parts = re.split(r"(?m)^(?=## )", old_text)
+    pre, sections = parts[0], parts[1:]
+    rendered_lines = set(rendered.splitlines())
+    loose = []
+    for ln in pre.splitlines():
+        s = ln.strip()
+        if s and ln not in rendered_lines and not any(s.startswith(g) for g in _GENERATED_PREAMBLE):
+            loose.append(ln)
+    kept = []
+    for sec in sections:
+        body_lines = sec.splitlines()
+        if _OWNED_SECTION_RE.match(body_lines[0]):
+            for ln in body_lines[1:]:
+                s = ln.strip()
+                if s and ln not in rendered_lines and not s.startswith("|"):   # Manifest table rows regenerate
+                    loose.append(ln)
+            continue
+        kept.append(sec.rstrip("\n"))
+    if loose:
+        notes = [i for i, sec in enumerate(kept) if sec.startswith(CARRIED_NOTES_HEAD)]
+        if notes:
+            have = set(kept[notes[0]].splitlines())
+            add = [ln for ln in loose if ln not in have]
+            if add:
+                kept[notes[0]] = kept[notes[0]] + "\n" + "\n".join(add)
+        else:
+            kept.append(CARRIED_NOTES_HEAD + "\n\n" + "\n".join(loose))
+    return ("\n\n".join(kept) + "\n") if kept else ""
+
+
 def _write_entry(state: dict) -> None:
     path = Path(WORKSPACE / state["entry_path"])
     try:
@@ -432,7 +482,7 @@ def _write_entry(state: dict) -> None:
     except OSError:
         old = ""
     body = _render_entry(state)
-    keep = _carried_signoff(old)
+    keep = _carried_prose(old, body)
     if keep:
         body = body.rstrip("\n") + "\n\n" + keep
     path.write_text(body, encoding="utf-8", newline="\n")
