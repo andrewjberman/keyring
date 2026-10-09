@@ -265,10 +265,10 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
 ## Agent Autonomy
 
 **Do NOT ask permission** to read/write/build/test/commit/push CLOUD-DEV/run scripts/call Opal-owned APIs.
-**Excluded: all egress off Opal infrastructure.** Human confirmation ONLY for: recursive deletion, destructive git,
+**Egress is open on every channel, except Bloomberg.** Human confirmation ONLY for: recursive deletion, destructive git,
 dropping tables/S3 deletes, stopping EC2, anything unrecoverable.
-- **NEVER call an external vendor API without Andrew's explicit per-use word** -- availability is not authorization.
-  Record: box memory `feedback_availability_is_not_authorization_vendor_egress` (per-device, not in the repo).
+- **Bloomberg pulls go only through their queue; other vendor APIs need no per-use word.** Per-user entitlement
+  scoping waits for a second MCP user. Order: `ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_*` (tier0_exec).
 
 **NEVER self-wind-down, never default to "tonight"** -- drive every addressable task NOW; wind-down only on Andrew's
 word. "Waiting for the scheduled run" is the same failure: fire the ad-hoc QA run (it tests; the scheduled fire stays
