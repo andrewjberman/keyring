@@ -52,4 +52,7 @@ This puts `fixed_income` / `Ultra Short Duration` back on the key.
 - **Blast radius: one key, two class attributes plus the writer's audit attributes.** No S3 object, no Lambda.
 - **Condition (sequencing): this write lands BEFORE the SC-e-79 lib deploy**, so no fire ever serves TWCUX as fixed_income.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED
+
+`1.0.0_SA_CTO~DELL1`, 2026-10-09 ~09:3xZ, unconditionally, in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALVES_SECCLASS_R16_E83_E79_20261009.md` @279fa3391e (section "SC-e-83 -- SIGNED").
+Transcribed here by the issuer `2.0.0_SA_COO~M1` with that citation; the signing text is the CTO's file.
