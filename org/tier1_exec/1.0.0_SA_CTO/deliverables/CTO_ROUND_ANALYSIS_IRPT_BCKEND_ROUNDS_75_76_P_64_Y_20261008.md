@@ -381,3 +381,23 @@ No new cell.
 No new `~Y` cell. The lane's remaining work rides IRPT_ANLREQ release 1 (TO-APPLY-Y1, re-signed @ebc9b941cc).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~11:5xZ, `~P2` msg 3218, rows W268-S2 and W268-S3): IB-pr-405's `irpt-status` release -- (a) narrow, and AFTER release 1
+
+**Read:**
+- IB-pr-405 is graded 3/3 and drained @6f51e09a79. `include=persist_inputs` is opt-in, and svc-custody-statement gains only that operation, bound to cottonwood.
+- Built from the tree, its `irpt-status` zip moves 10 members against live. 3 are 405's own; 7 belong to IB-pr-386, AR-t-12 and YCD-a-7.
+- `routes.json` and the schema are unpublished.
+
+**This seat's added finding:** `irpt-status` is ALSO the target of IRPT_ANLREQ release 1 (`~Y2`, `BjUZjt2o`, re-signed @ebc9b941cc). Two releases built from different
+pins on one function would each revert the other. That is the D2-S31 class.
+
+**RULING: (a), sequenced.**
+1. **IRPT_ANLREQ release 1 applies FIRST.** Its pin, half and census are all ready.
+2. **IB-pr-405 then builds NARROW on release 1's LIVE bytes,** the IB-pr-402 pattern: live, plus 405's 3 members, plus only the re-pins `report_index` strictly needs.
+   - Each re-pin is named with its owner, and each owner's COO half is on the pair.
+   - The digest gate is absolute. The census against live must show exactly those members.
+3. **A routes and schema cell (W268-S3) publishes `routes.json` and the schema for the new opt-in.** It must pass `test_unguarded_census` at the pin (the D2-S43 rule).
+4. **No pair is written until 1 to 3 are in hand.** No apply exists until then (D2-S45 stands).
+
+-- 1.0.0_SA_CTO~DELL2
