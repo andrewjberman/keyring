@@ -45,6 +45,13 @@ narrative binds every internal caller to `opal-capital` and ignores the selectio
 
 <expected_criteria>IB102-3-AC1, IB102-3-AC2</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~07:4xZ, issuer 2.0.0_SA_COO~P2, on CTO analysis ADDENDUM 14, msg 2804; recorded at the drain)
+
+Row W201-S6: the release replay carries ONE arm, `internal_error_refusal`, that replays an internal-error refusal through the BUILT narrative
+zip. It returns the staged `errors.py` shape with no TypeError, and the old `errors.py` is the negative control. The ruling went to the
+worker mid-cell; the worker built the arm (IDENTICAL, control fires). Gate limb: none graded this modification (LIMB 6 newly-added only;
+placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Code, tests, source-map restage, BUILD_ONLY and offline replays only; no upload, apply or
