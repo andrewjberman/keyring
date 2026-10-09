@@ -24223,3 +24223,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W272-S1 -- After IB-pr-409 a row-listed Opal internal caller still classes OPAL_GLOBAL through the built narrative zip where live classes it UNKNOWN: the order k
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W272-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~272",
+  "surfaced_at": "2026-10-09T13:01:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "After IB-pr-409 a row-listed Opal internal caller still classes OPAL_GLOBAL through the built narrative zip where live classes it UNKNOWN: the order kept that caller unchanged from IB-pr-399, so the class widening for callers WITH a profile row is not closed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "enforcer-scope arm, case row_listed_no_selection (profile row allowedFirmIds [cottonwood], x-firm-id opal-capital, no selection), each tree's own _scope.resolve against a SYNTHETIC directory: live roster None / UNKNOWN / permitted 0; built roster ['ops@opalinvest.com'] / OPAL_GLOBAL / permitted 2; stopped QiNRKpaC the same as built (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/IB110-1_release_replay.json, arm 'a row-listed internal caller's roster and class ... unchanged from the stopped IB-pr-399 build', and enforcer_scope.*.cases.row_listed_no_selection)",
+      "the cause is narrative/entry.py NarrativeEntry._live_roster@b8a49eee0e: it replaces the roster only for a caller with NO profile row (_internal_allowed_firms -> None), as the order states ('a row-listed caller is unchanged'); a row-listed caller keeps the shared boundary's email roster, which classes OPAL_GLOBAL (enforce.py:790: any advisor in its own firm), bound first to the selected listed firm",
+      "tests: narrative/tests/test_no_row_unknown.py::test_no_row_unknown_row_listed_caller_is_unchanged_from_the_shared_boundary pins the unchanged behaviour"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-409 / CTO ADDENDUM 18.1: no widening is accepted; hand enforcer_for the roster live hands for a no-row Opal caller; a row-listed caller is unchanged.",
+  "world_is": "The no-row arm is now identical to live (UNKNOWN, nothing granted). A row-listed caller is unchanged from IB-pr-399 as ordered, so it is OPAL_GLOBAL on built and UNKNOWN on live: the same class difference the CTO refused for the no-row caller, left standing for the narrower population with a maintained row. Whether that is accepted or fixed (hand it the live roster too, a one-line change in _live_roster) is the signer's call; it is stated in the packet (read-this-first item 4) and was not widened or narrowed here.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W272-S2 -- IB-pr-399's replay driver derived its pre-binding negative control from `pin^`; at the IB-pr-409 pin that parent is IB-pr-399's own NarrativeEntry, so
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W272-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~272",
+  "surfaced_at": "2026-10-09T13:01:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-399's replay driver derived its pre-binding negative control from `pin^`; at the IB-pr-409 pin that parent is IB-pr-399's own NarrativeEntry, so the control would have measured nothing. The driver is re-pinned to cabad9008c^.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.9.0_WK_IRPT_BCKEND~264/replay/run_replay.py: PRE_BINDING_PIN = git rev-parse <pin>^ ; at pin b8a49eee0e the parent bd9c06d2fb already holds NarrativeEntry (IB-pr-399, code commit cabad9008c)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/replay/run_replay.py: STOPPED_PIN = cabad9008c and PRE_BINDING_PIN = cabad9008c^ (6cbf2707cf); the arm 'NEGATIVE CONTROL: ... entry.py put back to its pre-IB-pr-399 bytes' reads expected-diff, 1 of 1 routes bind to inflection (pre-binding entry.py = 6cbf2707cf)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-409: IB-pr-399's 13 arms re-run against the live zip and the new built zip.",
+  "world_is": "The 13 arms re-run unchanged by name and verdict (13 of 13), with the pre-binding control's source pinned to a fixed commit instead of pin^, copied into this worker's replay/ directory."
+}
+```
