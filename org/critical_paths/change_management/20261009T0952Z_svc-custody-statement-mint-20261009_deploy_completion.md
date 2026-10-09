@@ -59,3 +59,39 @@ denominator, skipped. Reading the full export list is what found it.
 
 **Nothing about the created secret changes:** same name, same ARN, same claims, same TTL. This note
 adds the grade verdict the ruling requires and corrects the reasoning recorded beside it.
+
+
+---
+
+## NOTE 2 -- 2026-10-09 ~11:5xZ: the ROLLBACK TRIGGER for leg R, recorded so a successor can act without this session
+
+Leg R is gated on a LAPTOP act (the reader-ARN add to `cloudops-dell-agent-platform-secrets-policy`, cut there as
+NFRA_CTLPLN AMENDMENT 30). Relay msg 3224: the laptop's `0.7.0_AE_CloudOps` has read no mail since ~09:29Z and
+`2.0.0_SA_COO~C` is moving AMENDMENTS 29/30 to a fresh lane, so the ~12:00Z applied ETA MAY SLIP. Window to ~17:52Z.
+
+**Why this note exists.** CLAUDE.md's NEVER-2 says an entry a device left OPEN proves only that THIS device saw no
+completion. If this session ends before the ARN lands, the trigger below must be readable from the entry itself
+rather than from a live agent's intent.
+
+**TRIGGER.** If the policy's default version is still `v3` (30 ARNs, no svc-custody-statement entry) at **~16:30Z**,
+roll back rather than let the window lapse:
+
+1. `aws secretsmanager delete-secret --secret-id opal/investor-reporting/svc-custody-statement` with the **DEFAULT
+   recovery window -- NEVER `--force-delete-without-recovery`**. The pair's rollback says default; the default window
+   is what makes this reversible if the laptop lands minutes later.
+2. Nothing to remove from the allow-list: the ARN was never added, which is the whole reason leg R is open. Do NOT
+   ask the laptop to add and then remove it.
+3. `deploy_ledger.py close-leg R` with the rollback as its proof, then `close` the entry, then escalate LOUD to
+   `2.0.0_SA_COO~D2` (issuer) and `0.0.0_AB_MSTR~DELL2` (the relay), naming this note.
+
+**Authority.** No new sign-off is needed: `delete-secret` with the default recovery window IS the rollback both halves
+signed (COO half AMENDMENT 2; CTO half "Rollback: delete-secret with the DEFAULT recovery window (never force)").
+
+**WHAT THE ROLLBACK DOES NOT TOUCH, so nobody over-reads it.** The code admission IB-pr-385 is live in
+`irpt-export-render` and stays live -- it is IRPT_BCKEND's, not this order's, and the pair names it as the real
+control. Rolling back this secret disarms only this token's custody; it does not revert the released code, and it
+does not touch `opal/auth/jwt-private-key`, the portal authorizer, any human principal or any other firm.
+
+**MEASURE BEFORE ACTING ON THIS TRIGGER.** Read the policy's live default version first and print it beside the
+decision -- if it has moved past `v3`, the apply landed and the correct act is to re-simulate and CLOSE, never to
+roll back. World-done closes SUPERSEDED; it is never re-executed.
