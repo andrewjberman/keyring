@@ -152,3 +152,29 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "ARMED, and this is the part that needs a decision rather than a note: step 2's commit 780f31c7cd leaves the secret ARN as the variable's COMMITTED DEFAULT while the act is deferred. That is deliberate under the halves (committed, never -var, because the root is shared) but it now means ANY apply of infra/aws/terraform/transcripts by any project -- NFRA_TRNSPT owns the rest of it -- lands MAIL_BEARER_SECRET and this unreviewed package without passing Branch A. Three dispositions, all the issuer's with the signers: (a) re-sign the halves on the measured b1b8f5b4fe..HEAD packaged diff and re-cut the apply; (b) revert 780f31c7cd to default \"\" until the re-sign, which re-disarms the shared root; (c) pin the package by building at b1b8f5b4fe. This seat applied nothing and holds. ALSO FOR THE RECORD: the halves' Branch B enumerates 7 registry files by name while build.sh:28 packages them by glob, so the enumeration cannot keep up with the build -- the durable fix is to state the packaged set as the glob."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S4",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-09T17:07:37Z",
+  "one_line": "Issuer ruling on COMM_ASSIST-Z-S3 (amendment A6): the PHASE B GO is withdrawn, the committed mail-key default is reverted to empty until re-issue, the build is pinned at 2ad98c2e3a, and the COO half is re-cut (re-cut 2) on the measured drift. None of the drift reaches C-MAIL's sender set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ (disarm of COMM_ASSIST-Z-S3 executed by this row; the revert of the default is A6's first act, by 0.7.0_AE_CloudOps~CA)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer read b1b8f5b4fe..2ad98c2e3a over the packaged paths: 7 files +857/-6; COMM code 0 lines; the registry leaf census shows 4 changed leaves (key_rulings x3 metadata, reporting_policies policies[2].firms), the rest additive; legacy_addresses.json new.",
+      "mail_requests.firm_domains() reads reg['scopes'] (scopes.json) and MAIL_PARTIES_PATH (mail_parties.json), both unchanged in that span; reporting_policies.json is not read by the mail path.",
+      "name(teams, global, chat-assist, lambda, handler) at the pin = teams-global-chat-assist-handler-lambda (unchanged)."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled inside the issuer's decomposition: re-cut on the measured diff and the pinned build; the CTO and CVO re-sign before Phase B is re-issued. The hazard (a committed default with no signed package) is disarmed by A6's revert.",
+  "spec_asserts": "The package Phase B ships equals the halves' measured table.",
+  "world_is": "The trunk kept moving under the packaged paths after the halves were measured; a pinned build is the only way the measured table equals what ships."
+}
+```

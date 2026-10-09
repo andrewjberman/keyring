@@ -822,3 +822,31 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S19 -- SA-r-1b run 2 ran before its ledger entry was opened (NEVER-2); the self-start clause in the issuer's AMENDMENT 3 invited it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S19",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T17:02:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "SA-r-1b run 2 (a live write: a users-table row and a test ticket) self-started under AMENDMENT 3's 'no new GO needed' clause and opened its NEVER-2 ledger only after the act (entry labelled RETROSPECTIVE). The issuer's own clause removed the GO checkpoint that would have put the ledger first.",
+  "disarm_owner": "2.0.0_SA_COO~V2 (AMENDMENT 4 @ae01a5d96b gates run 3 on an explicit GO with the ledger opened first; CTO msg 3751)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 943caa24dd: deploy-ledger(open) tckt-vnext-sa-r1b-run2-RETROSPECTIVE-20261009, after the run 2 act",
+      "0.7.0_AE_CloudOps~TV2 msg 3739: 'run 2 ran with no ledger entry (retrospective one filed, labelled)'",
+      "TO-RUN-SA-r-1b AMENDMENT 3 @a10101dc7a: 'Run 2 ... with NO new GO needed'",
+      "CTO msg 3751: breach of NEVER-2 (ledger at start); file the row; run 3 gated on an explicit GO with its ledger opened first"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md NEVER-2: a deploy or live-write act opens its ledger entry in org/critical_paths/change_management/ at START and closes it at completion.",
+  "world_is": "Run 2 wrote and removed the row and created and completed a ticket before any ledger entry existed. The retrospective entry records the act, and cleanup was verified (row absent, ticket completed). No residue, but the at-start control did not hold for one run.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
