@@ -1016,6 +1016,30 @@
     "spec_asserts": "TO MP-x-4 step 4 directs: 'Run `python .tools/deploy_ledger.py open ...` ... Record the census, the cold-read time, the rollback and this order's path.' That instruction presumes the entry is a durable place to record evidence across the entry's own lifecycle verbs.",
     "world_is": "The entry is a GENERATED artifact, not an append-only log. `hold` rewrites it from the tool's structured state: declared leg descriptions and proof strings survive, the Log lines survive, and everything else a human or agent wrote into the file is dropped. rc=0, stdout says OK, and a following `check` still reports the entry healthy. So the order's 'record it in the entry' and the tool's regeneration are in direct conflict, and the conflict surfaces only as a line-count delta in the commit that carries the hold.",
     "notes": "Issuer's call; MP-x-4 is NOT blocked by it (the record is re-homed and the act is separately held on OG-ap-4). Options: (a) make the entry append-safe -- have `hold`/`close-leg`/`close` preserve any content below a marker line, which is the minimal fix and keeps every existing order's wording valid; (b) route the tool's lifecycle verbs through an explicit `--note` field so prose becomes structured state the regeneration keeps; (c) change the ORDER TEMPLATES instead, so cells are told to record evidence in a deliverable and leave only a pointer in the entry -- cheapest today, but it leaves a tool that silently eats what is written to it. This cell used (c) as a workaround by necessity. Whichever is chosen, the SILENCE is the defect: a destructive regeneration that returns rc=0 and reports KNOWN-HELD afterwards cannot be distinguished from a safe one by any output the tool produces. Measured from worktree C:/tmp/mp-x4, branch wk-mcportal-r5-x4, entry 20261009T1414Z_nfra-mcportal-r5-control-plane-release, at b8fc617e2e."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S25",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T14:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S24"
+    ],
+    "one_line": "DISARMS Z-S24 for this project. Evidence a cell must keep is no longer written into a change_management entry that `deploy_ledger.py hold` / `close-leg` regenerate. MP-x-4's record is re-homed and accepted, and MP-r-2 (AMENDMENT 4) writes its pre-act record to a deliverables file and leaves only a pointer in the entry. The tool's silent regeneration is routed to 0.0.0_AB_MSTR~Z, the infrastructure owner; it is not this project's write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S24 measured the loss: the entry went from 137 to 23 lines across `hold` (ca9b6c05f0..b8fc617e2e: 2 insertions, 115 deletions). The record survives in git at ca9b6c05f0 and is re-homed at deliverables/0.7.0_AE_CloudOps~MP/MP-x-4_PRE_ACT_RECORD.md @0b4deae4f4, a path the tool never writes.",
+        "This project's open cells that write a ledger entry are MP-x-4 (in flight, HELD-PRE-APPLY) and MP-r-2 (staged). MP-k-2 is complete; its entry closed, and the evidence its ACs read lives in the deliverables and the proof instance, not in prose. MP-q-1 writes no ledger. So the remaining exposure is the two release cells, and both are covered by this disarm."
+      ]
+    },
+    "spec_asserts": "Z-S24 ARMED: the task orders require pre-act records 'in the ledger entry', and the tool deletes that prose on hold/close-leg.",
+    "world_is": "For NFRA_MCPORTAL the requirement is re-pointed: the record lives in a deliverables file, the entry carries a pointer, and the drain reads the deliverables file. The tool still regenerates silently. That defect, a destructive rewrite returning rc=0 with KNOWN-HELD, is routed to 0.0.0_AB_MSTR~Z and stays open there.",
+    "notes": "Disarm owner per Z-S24: 2.0.0_SA_COO~MP (issuer). The pointer may itself be dropped by a later close-leg; at the drain the issuer reads the deliverables record, never the entry's prose."
   }
 ]
 ```
