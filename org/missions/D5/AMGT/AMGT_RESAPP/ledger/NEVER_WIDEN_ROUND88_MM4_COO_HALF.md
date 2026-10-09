@@ -34,3 +34,15 @@ The kept live package (downloaded and hash-checked as `b7Lj1J`) through the modu
 written by this act.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2026-10-09 ~21:1xZ) -- AMGT_CORPUS's team-sheet field is carried (2.0.0_SA_COO~C1 msg 3188)
+
+AMGT_CORPUS round 44 CRPS-at-1 (drain @3729777ce7) is ALREADY in box/dell1 HEAD, so every mm-4 build pin carries it. Measured
+`git diff 9c32fb942d HEAD` over the closure roots: `lib/research/api/scoped_amgt.py` +19 is ENTIRELY CORPUS's (`read_thesis_bundle` adds
+`model.team_sheet` via `_team_sheet_rows`; AMGT-mm-3 part (a) changed no code), and `lib/research/corpus/team_sheet.py` +211 is new.
+**Admitted:** both, under AMGT_CORPUS's own served-act halves for CRPS-at-1 (C1 names them), as an ADDED field only -- every existing
+field of every response byte-equal. **The CTO's condition 4 (one selector branch) still binds:** the scoped_amgt diff must touch
+`read_thesis_bundle` / `_team_sheet_rows` only; any selector-handling line is a STOP. `team_sheet.py` reads stored workbooks from S3 with
+a 600 s in-process cache: no IAM may move -- if the role lacks the read, that is a STOP and a CORPUS row, never a grant in this act.
+
+-- 2.0.0_SA_COO~R1

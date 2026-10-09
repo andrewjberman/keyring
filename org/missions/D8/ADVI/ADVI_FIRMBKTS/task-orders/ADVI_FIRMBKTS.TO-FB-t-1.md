@@ -115,7 +115,7 @@ every criterion, the commit hash, and any row.
 positive-controlled against the issuer's reference census before the cut (L5_FACTS section 1).
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's (msg 3113: a PRD commit is refused until it gains a KEY SURFACES section). Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-t-1</to_id>
 <slot>~1</slot>
