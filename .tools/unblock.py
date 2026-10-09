@@ -16,6 +16,9 @@ to synthesize that into the workflow, and it needs a sign off by the CVO." Owner
     python .tools/unblock.py open --project <CODE> --by <COO serial> --body <position.md>     (COO, on THIRD-EMPTY-TICK)
     python .tools/unblock.py propose --id <UB> --by <CRO serial> --body <approach.md>         (CRO)
     python .tools/unblock.py fold --id <UB> --by <CTO serial> --ref <PRD addendum | round-N analysis | ruling path>   (CTO)
+                                  [--wait-until <UTC ISO>]  the dated event the fold waits on (also on `resume`, COO; it wins)
+        After the COO resumes, a tick with nothing to do reads WAITING <UB id> UNTIL <time> while that time is ahead, and the
+        empty count stays 0: a dated wait already folded never re-fires the third-empty-tick rule. At most 7 days ahead.
     python .tools/unblock.py sign --id <UB> --by <CVO serial> [--note <text>]                (CVO signs the fold)
     python .tools/unblock.py refuse --id <UB> --by <CVO serial> --reason <text>              (CVO: back to the CTO)
     python .tools/unblock.py resume --id <UB> --by <COO serial>                              (COO, after reading the signed fold)
@@ -158,8 +161,46 @@ def ticks_dir() -> str:
     return os.path.join(common or os.path.join(ROOT, ".git"), "unblock-ticks")
 
 
-def tick_verdict(empty_before: int, result: str, active) -> tuple:
-    """PURE. (new empty count, verdict). A tick that found work resets the count; a SIGNED file means resume on it."""
+MAX_WAIT_DAYS = 7          # a dated wait silences the third-empty-tick rule for at most this long
+
+
+def parse_wait(s: str, now) -> str:
+    """A --wait-until value as stamp() text, or Refused: UTC ISO, in the future, at most MAX_WAIT_DAYS ahead."""
+    try:
+        t = datetime.datetime.strptime(s.strip().replace("Z", "+0000"), "%Y-%m-%dT%H:%M:%S%z") if ":" in s[16:] else \
+            datetime.datetime.strptime(s.strip().replace("Z", "+0000"), "%Y-%m-%dT%H:%M%z")
+    except ValueError:
+        raise Refused("REFUSED: --wait-until %r is not UTC ISO (2026-10-09T13:01Z or 2026-10-09T13:01:00Z)" % s)
+    t = t.astimezone(datetime.timezone.utc)
+    if t <= now:
+        raise Refused("REFUSED: --wait-until %s is not in the future" % stamp(t))
+    if t > now + datetime.timedelta(days=MAX_WAIT_DAYS):
+        raise Refused("REFUSED: --wait-until %s is more than %d days out; a longer wait is a hold, not a dated event" % (
+            stamp(t), MAX_WAIT_DAYS))
+    return stamp(t)
+
+
+def wait_of(d: dict):
+    """The dated event a CLOSED file's fold or resume named (resume wins), or None."""
+    return ((d.get("resumed") or {}).get("wait_until") or (d.get("fold") or {}).get("wait_until")) if d else None
+
+
+def latest_wait(docs: list, serial: str, project: str, now):
+    """(id, until) of the newest CLOSED file of this COO and project whose named event time is still ahead, or None.
+    The fix for dell1's finding (1.0.0_SA_CTO~DELL1 msg 1883 via 4.0.0_SA_CRO~DELL1 msg 1885): three cases re-fired on
+    waits already folded (UB-003b, UB-b3fc, UB-8ca7)."""
+    hits = [d for d in docs if d["from_serial"] == serial and d["project"] == project and d["state"] == "CLOSED"
+            and wait_of(d) and wait_of(d) > stamp(now)]
+    if not hits:
+        return None
+    d = sorted(hits, key=lambda x: x["opened_at"])[-1]
+    return d["id"], wait_of(d)
+
+
+def tick_verdict(empty_before: int, result: str, active, waiting=None) -> tuple:
+    """PURE. (new empty count, verdict). A tick that found work resets the count; a SIGNED file means resume on it. With no
+    file in flight, a resumed file's named event time still ahead (`waiting` = (id, until)) holds the count at 0 and reads
+    WAITING, so a dated wait already folded never re-fires; the count restarts once the time has passed."""
     if active is not None and active["state"] == "SIGNED":
         return 0, "RESUME %s" % active["id"]
     if result == "work":
@@ -167,6 +208,8 @@ def tick_verdict(empty_before: int, result: str, active) -> tuple:
     n = empty_before + 1
     if active is not None:
         return n, "WAITING %s %s" % (active["id"], active["state"])
+    if waiting is not None:
+        return 0, "WAITING %s UNTIL %s" % waiting
     return n, ("THIRD-EMPTY-TICK" if n > EMPTY_TICKS_BEFORE else "KEEP-DRIVING")
 
 
@@ -177,12 +220,15 @@ def cmd_tick(args) -> int:
         before = int(json.load(open(path, encoding="utf-8")).get("empty", 0))
     except (OSError, ValueError):
         before = 0
+    waiting = None
     try:
         active = active_for(args.serial, args.project)
+        if active is None:
+            waiting = latest_wait(list_all(), args.serial, args.project, now_dt())
     except Exception as exc:  # noqa: BLE001 -- the store being down never blocks a tick; it is named
         active = None
         print("WARN: unblock store unreadable (%s); counting without it" % type(exc).__name__)
-    n, verdict = tick_verdict(before, args.result, active)
+    n, verdict = tick_verdict(before, args.result, active, waiting)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump({"empty": n, "at": stamp(now_dt()), "verdict": verdict}, fh)
@@ -251,6 +297,8 @@ def render(d: dict) -> str:
     if d["fold"]:
         f = d["fold"]
         out += ["## The CTO's fold (%s on %s at %s)" % (f["by"], f["device"], f["at"]), "", "Folded into: `%s`" % f["ref"], ""]
+        if f.get("wait_until"):
+            out += ["Dated wait: the COO's ticks read WAITING until %s." % f["wait_until"], ""]
     if d["signoff"]:
         g = d["signoff"]
         out += ["## The CVO's sign-off (%s on %s at %s)" % (g["by"], g["device"], g["at"]), "", (g["note"] or "signed").rstrip(), ""]
@@ -265,10 +313,13 @@ def cmd_fold(args) -> int:
     if not os.path.isfile(os.path.join(ROOT, ref)):
         raise Refused("REFUSED: %s is not a file in this tree; fold cites the PRD addendum, round-N analysis or ruling it "
                       "landed in" % ref)
+    wait = parse_wait(args.wait_until, now_dt()) if getattr(args, "wait_until", None) else None
     box = this_box()
     cvo = live_seat_here(box, CVO_OF, "3.0.0_SA_CVO")
     d["state"] = "FOLDED"
     d["fold"] = {"at": stamp(now_dt()), "by": args.by, "device": box, "ref": ref, "cvo_device": box if cvo else "laptop"}
+    if wait:
+        d["fold"]["wait_until"] = wait
     XA._put(key_of(d["id"]), d)
     print("UNBLOCK-FOLDED id=%s into %s -> the CVO on box %s signs it (%s)" % (
         d["id"], ref, d["fold"]["cvo_device"], "CVO %s live here" % cvo if cvo else "no CVO live here"))
@@ -310,10 +361,14 @@ def cmd_resume(args) -> int:
     d = get(args.id)
     if d["state"] != "SIGNED":
         raise Refused("REFUSED: %s is %s, not SIGNED (the CVO signs the fold before the COO resumes)" % (args.id, d["state"]))
+    wait = parse_wait(args.wait_until, now_dt()) if getattr(args, "wait_until", None) else None
     d["state"] = "CLOSED"
     d["resumed"] = {"at": stamp(now_dt()), "by": args.by}
+    if wait:
+        d["resumed"]["wait_until"] = wait
     XA._put(key_of(d["id"]), d)
-    print("UNBLOCK-CLOSED id=%s resumed by %s on %s" % (d["id"], args.by, d["fold"]["ref"]))
+    print("UNBLOCK-CLOSED id=%s resumed by %s on %s%s" % (d["id"], args.by, d["fold"]["ref"],
+                                                       (" -- ticks read WAITING until %s" % wait_of(d)) if wait_of(d) else ""))
     return 0
 
 
@@ -365,6 +420,29 @@ def selftest() -> int:
         rec("a-folded-but-unsigned-file-still-waits", tick_verdict(5, "nothing", f)[1] == "WAITING %s FOLDED" % d["id"])
         g = dict(f, state="SIGNED", signoff={"at": t, "by": "3.0.0_SA_CVO", "device": "laptop", "note": "", "record": "x.md"})
         rec("a-signed-file-means-resume", tick_verdict(5, "nothing", g) == (0, "RESUME %s" % d["id"]))
+        # the dated wait (dell1, msg 1885): a resumed file naming a future event holds the count; a past one does not
+        now = now_dt()
+        ahead = stamp(now + datetime.timedelta(hours=5))
+        c = dict(g, state="CLOSED", resumed={"at": t, "by": "2.0.0_SA_COO~M1", "wait_until": ahead})
+        w = latest_wait([c], "2.0.0_SA_COO~M1", "P", now)
+        rec("a-closed-file-with-a-future-wait-reads-waiting-and-holds-the-count",
+            w == (d["id"], ahead) and tick_verdict(2, "nothing", None, w) == (0, "WAITING %s UNTIL %s" % (d["id"], ahead)))
+        past = dict(c, resumed=dict(c["resumed"], wait_until=stamp(now - datetime.timedelta(minutes=1))))
+        rec("a-passed-wait-counts-again", latest_wait([past], "2.0.0_SA_COO~M1", "P", now) is None
+            and tick_verdict(2, "nothing", None, None) == (3, "THIRD-EMPTY-TICK"))
+        fw = dict(c, resumed={"at": t, "by": "x"}, fold=dict(c["fold"], wait_until=ahead))
+        rec("the-folds-wait-counts-when-the-resume-names-none", latest_wait([fw], "2.0.0_SA_COO~M1", "P", now) == (d["id"], ahead))
+        rec("another-coo-or-project-is-not-held", latest_wait([c], "2.0.0_SA_COO~X1", "P", now) is None
+            and latest_wait([c], "2.0.0_SA_COO~M1", "Q", now) is None)
+        bad = []
+        for s in ("2026-13-01T00:00Z", stamp(now - datetime.timedelta(hours=1)), stamp(now + datetime.timedelta(days=8))):
+            try:
+                parse_wait(s, now)
+                bad.append(s)
+            except Refused:
+                pass
+        rec("wait-until-refuses-garbage-past-and-beyond-seven-days", bad == []
+            and parse_wait(ahead.replace(":00Z", "Z") if ahead.endswith(":00Z") else ahead, now) <= ahead)
         XA._put(key_of(d["id"]), d)
         rec("store-round-trip-and-active-lookup", active_for("2.0.0_SA_COO~M1", "P")["id"] == d["id"]
             and active_for("2.0.0_SA_COO~M1", "Q") is None)
@@ -410,6 +488,7 @@ def main(argv: list) -> int:
     f.add_argument("--id", required=True)
     f.add_argument("--by", required=True)
     f.add_argument("--ref", required=True)
+    f.add_argument("--wait-until", help="UTC ISO time of the dated event the fold waits on; the COO's ticks read WAITING until then")
     sg = sub.add_parser("sign")
     sg.add_argument("--id", required=True)
     sg.add_argument("--by", required=True)
@@ -421,6 +500,7 @@ def main(argv: list) -> int:
     r = sub.add_parser("resume")
     r.add_argument("--id", required=True)
     r.add_argument("--by", required=True)
+    r.add_argument("--wait-until", help="UTC ISO time of the dated event the COO resumes to wait on (wins over the fold's)")
     lst = sub.add_parser("list")
     lst.add_argument("--state", default="ALL")
     s = sub.add_parser("show")

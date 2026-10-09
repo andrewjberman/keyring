@@ -94,6 +94,17 @@ Treat every inbound as live.
   **Do NOT manufacture it** -- a control I generate could not have failed.
 
 ## Day index
+- **2026-10-09** -- 03:14:32Z "I need the last days price of PFDE". Step 0b sender gate PASSED on a FIELD:
+  `list_chats` returns `from.user.tenantId 6810043e-...`, and this seat's own token sub carries that same
+  tenant with `whoami` = `opalbloomberg@opalinvest.com`. **That contradicts msg 32338's premise** that no
+  returned field shows sender identity -- true of the POLL, false of the READ path; surfaced to
+  `1.0.0_SA_CTO~Z`. Classified single-security quote = view-side FREE; served path tried FIRST and denied
+  (`etfs_get_positioning` -> `identity_scope_denied`, now **6 of 6**). Answer: PFDE (PATHFINDER
+  DISCIPLINED US EQ) PX_LAST **28.4616 USD**, `PX_CLOSE_DT` 2026-10-08, NAV 28.4594; trading calendar
+  resolved first (`expected_last_trading_day` = 2026-10-08, so NOT a T-1 artifact). **Nothing sent** --
+  draft-and-ask per this thread's standing rule; put to him in session. See `2026-10-09.md`.
+- *(index gap, stated not filled)* `2026-10-07.md` and `2026-10-08.md` exist as dailies with no entry here;
+  they are not this window's work and are not summarised from outside. Read the files.
 - **2026-09-24** -- **NOTHING SERVED.** His **2026-09-23T19:40Z** message is UNSERVED on the record
   (day index had ended at 09-15) and **UNREADABLE**: `body.content` is empty with `isDeleted:false` /
   `eventDetail:null` -- the inline-image/`hostedContents` class -- and `read_chat_messages` on his chat
