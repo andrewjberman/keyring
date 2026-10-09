@@ -311,3 +311,29 @@
   "world_is": "The check is environment-sensitive. The conftest in the order's own tests directory makes the output plain on any box; any other test directory the same check grades (AB-t-3 uses bun) is unaffected."
 }
 ```
+
+## ADVI_BILLING-D2-S1 -- L9 AB1-3-AC3 MET
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T07:44:05Z",
+  "one_line": "L9 AB1-3-AC3 MET: on the real-data render (viewed by this seat on dell2, sha256 efc9ee5e... matches the record; not copied anywhere), the 'Fee for 2026Q3' panel alone answers 'why is my fee this number': each account shows its schedule (49F - Flat 1, 100 bps), the value charged, 64 of 251 days, the computed fee, the Schwab debit and the difference, each line labelled 'Differs from Schwab' with a reason; 'How the fee is built' gives value x 0.01 x 64/251 per account and the household sum; the platform fee says plainly its schedule is not held in Opal. The difference reasons are stated as candidates (valuation basis, prior-quarter true-up) with the method marked unknown -- honest, and within FWD-1's ACCEPT branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/r1_close/REAL_RUN_FWD1_R1.md @b44766f7ef",
+      "C:/dev/advi_billing_private/r1_close/realrun_fee_panel.png (dell2, outside git; this seat's sha256 prefix efc9ee5ed31476a7)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_BILLING_ROUND_1_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB1-3-AC3: an advisor can answer 'why is my fee this number?' from the panel alone.",
+  "world_is": "Met; notes in the grade file."
+}
+```
