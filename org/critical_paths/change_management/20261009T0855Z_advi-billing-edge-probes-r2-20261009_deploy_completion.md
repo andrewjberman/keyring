@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T08:55:54.127969+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261009T090946Z
 **Deploy:** ADVI_BILLING TO-AB-e-1: five read-only GET probes of the edge book check (.004c relationship) for household z08219260, with five synthetic 10-minute RS256 tokens minted in-session
 **Authored by:** 0.7.0_AE_CloudOps~AB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20261009T090803Z LEG L3 closed: firm_admin: firmRole admin, no advisorId -> HTTP 200; the admin short-circuit at index.mjs:468-470 admits before any own
 - 20261009T090855Z LEG L4 closed: other_firm: firmId mockadv, no advisorId -> HTTP 403, body head Advisor scoping: missing identity claims -- failure mode
 - 20261009T090915Z LEG L5 closed: execute_api_bypass: out_of_book claims sent straight at 7k3ed8px20.execute-api.us-east-1.amazonaws.com -> HTTP 403 Forbi
+- 20261009T090946Z CLOSED -- all 5 legs proven
