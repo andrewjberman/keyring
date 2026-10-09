@@ -1,0 +1,12 @@
+# 2.0.0_SA_COO~Y2 drive log 2026-10-09 10Z
+
+| tick | project | limb | round | TOs | cells | thread | act |
+|---|---|---|---|---|---|---|---|
+| 10:07Z | IRPT_BCKEND | L7 | r77 | Y77 complete (941fa6f0c1, ledger CLOSED 5/5) | - | n | GRADE: release 6b LIVE tdpterTM, policy 11 ARNs, census failed {}; checks AMENDMENT 3 @6be9fb45a0 (applier file adapter): AC1 DEFERRED on read 5a -> IRPT_ANLREQ Y1 read 4; AC2 PASS (0 custody_reports, 0 named); AC3 PASS (branch A). Open: Andrew delete word for Y77 reads 4/5 prospect objects (REQ-3d76e5b4/9d59d4d2/f7ddede9) once a keyed list exists (laptop can map) |
+| 10:22Z | IRPT_BCKEND | L7->L8 | r75 | Y75 graded PASS | - | n | GRADE: laptop v3 read-back all TRUE (X-1 PROVEN), 7 DDB + 2 S3 versions deleted (dell2 re-read absent); result @0911a71d4b; Y75 checks AMENDMENT 3; Y75-1-AC1/2/3 PASS; row D2-S17 closed by D2-S42; applier asked for Y75 proof + flip |
+| 10:27Z | IRPT_ANLREQ+BCKEND | L7 | Y1 in flight | ledger open 10:13Z (@150f6a90b7); irpt-status still E7VKvhg3 | - | n | WATCH: Y1 underway; Y75 proof+flip owed by applier (msg sent 10:22Z); Y77 AC1 waits on Y1 read 4 |
+| 10:33Z | IRPT_ANLREQ | L7 (repair) | r2 | Y1 HELD | - | n | RULE: CTO msg 3140 / row D2-S43 -- _authz census fails: irpt-status installed route table (reports/status_installed.py HISTORY_ROUTES) lacks /original -> Y1 HELD (applier told); AR-y-21 AMENDMENT 4 @bd13b0d11c (one line + re-pin; AC4 census); worker ~5 spawned; then re-pin the release-1 pair and re-sign |
+| 10:44Z | IRPT_ANLREQ | L7->release | r2 | AMENDMENT 4 drained @f23639ea21 | - | n | DRIVE FORWARD: census 22/22 at base, built BjUZjt2o; pair REVISION 2 @ba918317c3 -> CTO re-sign asked; Y1 held |
+| 10:47Z | IRPT_ANLREQ | release | r2 | Y1 held on pin-on-origin | - | n | DRIVE FORWARD: CTO re-signed rev 2 (3163) -> Y1 AMENDMENT 1 @a707e589d3 (pin f23639ea21, built BjUZjt2o) + checks; applier told; MSTR asked to push box/dell2 |
+| 10:51Z | IRPT_BCKEND | L8 | r75/r77 | Y75 instance VALID | - | n | RULE: proof flip refused on order-side cell ids (row D2-S21 fired) -> APPLY-Y75/Y77 registered as IB-ya-751/IB-ya-771 + cell_refs @7d4318cd3e; Y75 instance re-checked VALID; applier asked to flip Y75; Y1 resuming (pin on origin) |
+| 10:58Z | IRPT_BCKEND | L8 | r72-75 | Y75 COMPLETE @634da92d06 | - | n | DRIVE FORWARD: round-close 72-75 MAY-CLOSE; L8 packet @29fbd15e37 sent to CVO; Y1 not yet started (irpt-status unchanged) |

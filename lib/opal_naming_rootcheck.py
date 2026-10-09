@@ -600,6 +600,59 @@ def _decide_items(items, answer_of, fourth):
     return decided, anss
 
 
+UNDECIDED = "UNDECIDED"
+
+
+def stored_origin(ans):
+    """The address a stored-file line's new location was read from: the key ruling's canonical, else the key class's
+    canonical (ADDRESS, LEGACY, RULED), else the grader's canonical. Plain text or None. The source and the owner of a
+    stored file are read from THIS address and from nowhere else (never from the folder the file sits in today)."""
+    row, key = ans.get("key_ruling"), ans.get("key")
+    if row:
+        return row.get("canonical")
+    if key is not None and key.get("class") in ("ADDRESS", "LEGACY", "RULED"):
+        return key.get("canonical")
+    graded = ans.get("graded")
+    return graded[1] if graded else None
+
+
+def stored_source_owner(ans):
+    """(source, owner) of a stored file's new location, each a word or UNDECIDED. The registry's key grammar
+    ({source}/{scope}/{tier}/...) puts the source first and the owner (the firm, or the system's own scope) second in the
+    address the ruling or key class decided; a word counts only when it is in the vocabulary of its slot (a source word, a
+    firm or product scope word). A blank still open ({scope} of a per-firm ruling), an address too short, or a word in
+    neither vocabulary is UNDECIDED -- never a guess."""
+    addr = stored_origin(ans)
+    if not isinstance(addr, str):
+        return UNDECIDED, UNDECIDED
+    segs = addr.split(" ", 1)[0].split("/")
+    v = opal_naming._vocab()
+    src = segs[0] if segs and segs[0] in v.v1 else UNDECIDED
+    own = segs[1] if len(segs) > 1 and (segs[1] in v.long_scope or segs[1] in v.products) else UNDECIDED
+    return src, own
+
+
+_SO_RE = re.compile(r" source=(\S+) owner=(\S+)")
+
+
+def split_source_owner(detail):
+    """(detail without its stored-file fields, source or None, owner or None) of a printed line's detail."""
+    m = _SO_RE.search(detail)
+    if m is None:
+        return detail, None, None
+    return detail[:m.start()] + detail[m.end():], m.group(1), m.group(2)
+
+
+def item_line(it, ans, kind, detail):
+    """The printed line of one item. A stored file (S3Key) the check FIXes or finds RIGHT states, after the new location,
+    `source=<system> owner=<firm or system>`; every other line is unchanged."""
+    extra = ""
+    if it["type"] == "S3Key" and kind in ("FIX", "RIGHT"):
+        extra = " source=%s owner=%s" % stored_source_owner(ans)
+    return "%s %s %s -> %s%s%s  [%s]" % (kind, it["type"], it["current"], detail, extra,
+                                         _stale_note(it, ans.get("key_ruling")), it["where"])
+
+
 def run_items(root, items, answer_of, expected_n, out=print, report_only=False, sink=None):
     """One line per item, then the ROOTCHECK line; the return value is the exit code.
     sink, when a list, receives (item, answers, kind, detail) per line, in order (the `lines` command reads it)."""
@@ -608,8 +661,7 @@ def run_items(root, items, answer_of, expected_n, out=print, report_only=False, 
     decided, anss = _decide_items(items, answer_of, fourth)
     for (it, kind, detail), ans in zip(decided, anss):
         count[kind] += 1
-        out("%s %s %s -> %s%s  [%s]" % (kind, it["type"], it["current"], detail, _stale_note(it, ans.get("key_ruling")),
-                                         it["where"]))
+        out(item_line(it, ans, kind, detail))
         if sink is not None:
             sink.append((it, ans, kind, detail))
     n = len(items)
