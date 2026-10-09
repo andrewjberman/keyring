@@ -5155,3 +5155,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W82-S1 -- DB-b-107: only 2 of the last 90 days have landed lot partitions, so the "heaviest of 90" is the heaviest of 2 and is the day DB-b-103 already sampled
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W82-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~82",
+  "surfaced_at": "2026-10-09T16:05:00Z",
+  "one_line": "The three lot tables hold only date=2026-10-07 and date=2026-10-08 in the 90-day window, so the day-selection has a denominator of 2 and its maximum, 2026-10-08, is the day DB-b-103 already ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: read the landed lot tables' daily row counts over the last 90 calendar days, print the number of days read and the top 5, choose the maximum; month-end 2026-09-30 is a candidate. The CTO's ruling is that one sample is not a margin and the heaviest day of the 90 is the one to size.",
+  "world_is": "Listing each of account_lot_realized, account_lot_unrealized_daily and account_activity_daily under irpt/49financial/gold/ returns exactly two date= partitions each (2026-10-07, 2026-10-08); date=2026-09-30 has no object. Manifest rows summed per day: 2026-10-08 585281 (35834 + 542546 + 6901), 2026-10-07 576018 (3245 + 565876 + 6897). The maximum is 2026-10-08, the same day DB-b-103 sized (377 s, 1661 MB), so this order's run is a second sample of the same day, not a heavier day. A heavier unlanded day (for example month-end) cannot be found by reading landed tables; the dry run computes from upstream and could be pointed at one, but the face names landed tables as the selection source and this worker did not widen it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~82/R44_HEAVY_DAY_DRYRUN.json selection",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~78/R44_SIZING_DRYRUN.json lots_rows_by_table"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
