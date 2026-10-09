@@ -154,3 +154,30 @@
   "notes": "This row does NOT retract MDPF_CANON-D1-S3: packaging opal_unidentified.py was correct and is what let cottonwood build. It records that the fix uncovered the next defect in the same chain, which is the honest order of discovery. Both ledger entries (mdpf-canon-r1-gold-redeploy-backfill-dell1-20261009 and mdpf-opal-unidentified-forward-fix-dell1-20261009) carry their apply legs CLOSED with proof and nothing half-landed: the artifact and env are live and verified both times. CN-a-2's C4 backfill stays HELD -- a backfill cannot run at all through an assertion that precedes every put. ID COLLISION AVOIDED: this row was first written as D1-S4 and renumbered to D1-S5 after a mid-write census found 2.0.0_SA_COO~D1 had committed its own D1-S4 @4e66c34616 (the four synthetic composite partitions) seconds earlier -- a different finding, not this one. The census printed the denominator (6 blocks in the worktree against 5 at HEAD), which is how the clash was seen."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S6",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T20:48:00Z",
+  "one_line": "C4's backfill is refused at the COMPOSITE leg: CN-a-1 gave mdpf-gold-lambda-role Put/Get on opal-data-mdpf's four gold prefixes but no s3:ListBucket on the bucket, and run_backfill lists each scope's existing partitions before it plans -- the three FIRM legs listed fine through their assumed gold-writer roles, so this is one missing statement, not a broken design.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D1 (the statement belongs to CN-a-1's cell source, infra/aws/terraform/mdpf-pipeline/iam.tf aws_iam_role_policy.mdpf_gold_writers, which neither ADHOC order permits this seat to edit; one amendment and 0.7.0_AE_CloudOps~DELL1 applies it and re-runs C4 the same turn)",
+  "spec_asserts": "CN-a-3 / C4: invoke {\"run_class\": \"backfill\"} and expect status backfill, planned > 0, tally with written > 0, conflict 0, error 0. CN-a-1's C5 declares the gold Lambda's composite grant complete as Put/Get on arn:aws:s3:::opal-data-mdpf/mdpf/global/gold/{the four}/*.",
+  "world_is": "The 20:46:03Z invocation returned StatusCode 200 with FunctionError Unhandled and errorType AccessDenied: 'User: arn:aws:sts::313476888478:assumed-role/mdpf-gold-lambda-role/mdpf-gold-lambda is not authorized to perform: s3:ListBucket on resource: \"arn:aws:s3:::opal-data-mdpf\" because no identity-based policy allows the s3:ListBucket action', with the stack naming mdpf_gold_consolidator.py:2996 run_backfill and :2970 the list_objects_v2 paginator. THE LIVE POLICY CONFIRMS IT, re-read rather than inferred from the error: mdpf-gold-writer-assume-policy carries exactly 2 statements -- GoldWriterAssumeScopedRoles (sts:AssumeRole on the three role ARNs) and GoldCompositePutGet (s3:PutObject + s3:GetObject on the four mdpf/global/gold/<artifact>/* prefixes) -- and no ListBucket of any kind. WHAT THE FAILURE ALSO PROVES, and it is the first live exercise of CN-a-1's grant: SCOPES is ('49financial', 'inflection', 'cottonwood', 'global') with global LAST, so all three FIRM legs completed before this line -- each assumed its own mdpf-{firm}-gold-writer-role through sts:AssumeRole and ran a prefix-scoped ListBucket successfully. CN-a-1's forward note said that end-to-end exercise was still owed; this run delivers three quarters of it. SCOPE OF THE REMEDY, read from the source rather than guessed at one AccessDenied per round trip: run_backfill touches exactly four S3 surfaces -- (1) the Lambda's own role lists opal-data-assets at the A4 prefix (SUCCEEDED, it is step one), (2) client(scope) lists each scope's series directory (firm legs via the assumed roles, SUCCEEDED; global via the function's own credentials, REFUSED here), (3) the Lambda's own role get_objects the legacy source keys from opal-data-assets (the daily path already does this), and (4) write_partition puts into each scope's bucket. So ONE statement closes it: s3:ListBucket on arn:aws:s3:::opal-data-mdpf, conditioned StringLike s3:prefix on the same four mdpf/global/gold/<artifact>/ prefixes, mirroring the per-firm GoldWriterListScoped rather than widening the bucket. NOTHING WAS WRITTEN: the refusal lands at the listing, before plan(), and a 16-prefix census before and after reads 0 keys added, 16 of 16 prefixes read, 0 UNREADABLE. UNVERIFIED AND NOT CLAIMED: whether the DAILY (non-backfill) parquet path also needs the same ListBucket -- its writer printed NOT_RUN_DRY_RUN on both qa_local runs, so it has never been exercised against the live bucket.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/aws lambda invoke --function-name mdpf-gold-lambda --payload '{\"run_class\": \"backfill\"}' at 20:46:03Z (AccessDenied, caller and action named, stack included)",
+      ".tools/aws iam get-role-policy --role-name mdpf-gold-lambda-role --policy-name mdpf-gold-writer-assume-policy (2 statements, no ListBucket)",
+      "data/mdpf/scripts/gold/mdpf_gold_consolidator.py:119 SCOPES, :2949-2988 run_backfill; mdpf_gold_parquet.py:75-91 client_for_scope",
+      "the 16-prefix gold census before and after the refused invocation (0 keys added, denominators printed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Independent of row D1-S5: this one blocks the BACKFILL path, which 2.0.0_SA_COO~D1 ruled (msg 3153) does not reach the L-1 assertion -- and that ruling is correct, verified in source at lambda_handler:2995-2996 returning run_backfill() before any build. Both rows must clear before the round's thread is whole. Nothing is half-landed in either ledger."
+}
+```
