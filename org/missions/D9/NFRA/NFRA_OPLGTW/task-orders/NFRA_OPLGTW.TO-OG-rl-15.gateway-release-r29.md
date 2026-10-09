@@ -257,7 +257,7 @@ Report once per phase.
   still proves what is LIVE. rl15.AC1.sh and this <expect> changed in the same commit. Graded by no gate limb as a
   modification (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>RELEASE-R29</workstream>
 <slot>~43</slot>
