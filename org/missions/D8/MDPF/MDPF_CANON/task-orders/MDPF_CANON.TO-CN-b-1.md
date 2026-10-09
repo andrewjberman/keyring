@@ -20,7 +20,7 @@ EGRESS CLASS, declared: NONE (the worker writes no AWS).
 
 Read `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round1.md` section 3 and `org/missions/D8/MDPF/MDPF_CANON/prd/MDPF_CANON_PRD.md` (v2.9) CONTRACTS and the DECISIONS first.
 
-Write `deliverables/READER_CENSUS.md`: every reader and every writer of the four surfaces the PRD retires or repoints (PRD M1; brief
+Write `deliverables/0.9.0_WK_MDPF_CANON~4/READER_CENSUS.md` (your serial folder; see AMENDMENT 1): every reader and every writer of the four surfaces the PRD retires or repoints (PRD M1; brief
 IV.2 and IV.3). The four surfaces are:
 - the two legacy gold trees, `opal-data-assets/gold/mdpf_revamp/` and `opal-data-assets/portal/gold/mdpf/`;
 - the stale served key `json/portfolios/aum-timeseries.json`;
@@ -85,6 +85,8 @@ A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W4-S<k>`, with 
 filing. Report once: the diff (one line per file), the output line of every criterion, the commit hash, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~22:0xZ, row MDPF_CANON-D1-W5-S1):** the PRD names `deliverables/READER_CENSUS.md` at the deliverables root, which the owned-paths lane TREE_DELIVERABLES lets NOBODY write (deliverables/<SERIAL>/** only; the issuer probed it and was refused). The document lives in the author's serial folder; `r2_checks.py` reads that path (amended). The PRD's path wording goes to the CTO. Graded by no gate limb (a modification).
 
 **ISSUER NOTES:** round 2 = `org/missions/D8/MDPF/MDPF_CANON/ledger/ROUND_ANALYSIS.round1.md` @409182ae5a section 3, items 2-4 (item 1 and item 5 are the issuer's read of the 2026-10-10 13:30Z
 daily write, not cells). Base box/dell1. LF only.
