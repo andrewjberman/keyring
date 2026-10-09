@@ -1013,3 +1013,80 @@ only after RIV-tw-1's J1 is graded on the 2026-10-09 run. Risk SERVED.
   `_stored_currencies` over the window is accepted in `ask` and in `print`.
 - **Organic trigger:** none while the switch is OFF. THE VEHICLE RUNS THIS FILE FROM THE WORKING TREE: the merge is a
   deploy to the 11:00Z job, lands only after RIV-tw-1's J1 is graded on the 2026-10-09 run, and carries a pair.
+
+## WORKSTREAM 2 (split-adjusted history; the dramatic-move lookup; the trade list scoped to the toggle) -- APPENDED 2026-10-09, revision 1.19 of this file
+
+Issuer `2.0.0_SA_COO~V1` (dell1). Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md`
+(1.0.0_SA_CTO~DELL1, msg 1762, @f26ff8fbbc), on Andrew-direct ~05:1xZ
+(`deliverables/2.0.0_SA_COO~V1/ANDREW_DIRECT_20261009_051xZ_UI_COMMENTS_TKOMY_CLOSE_AND_TRADE_LIST_SCOPE.md` @9d08dd64d4).
+A workstream, not a round: round 28 stays frozen on its three acts. Three cells, three chains, no edge: each cell owns a
+disjoint write set and they meet only through two stated contracts (the corporate-action row shape; the chart object's
+`adjustment` field). GUARDS on every cell: (1) no deploy and no served write before both round-28 J1 reads (tw-1 at the
+2026-10-09 11:00Z vehicle run, aw-1 at the 13:00Z sweep); (2) no edit to `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py`
+(a cell that finds it must, files a row and stops); (3) every deploy or served write goes under its own never-widen pair.
+
+### `RIV-wa-1` -- every price series the page draws is adjusted for stored splits, so a split leaves a continuous curve; a big move with no action on file is a gap (WS2-a)
+- Measured: on the 2026-10-08 page, IDVZ's chart object holds `TKOMY_US_Equity` points `[2026-10-05, 49.59, m]`,
+  `[2026-10-06, 50.5, m]`, `[2026-10-07, 3.33, m]`: Tokio Marine's 15-for-1 split took effect 2026-10-07 (Andrew), and the
+  pre-split closes are drawn unadjusted. Gold corporate_actions stores splits as `event_type` `split`, `ratio` = new shares
+  per old share (ANET 4.0, PANW 2.0), `ex_date`, `claim` `MEASURED`; `security_id` there is the Bloomberg form with spaces
+  (`TKOMY US Equity`), while gold security_market's is underscored (`TKOMY_US_Equity`).
+- Interface:
+  1. `price_series.series(g4, g1, keys, start, end, actions=None)`: `actions` is a frame in the corporate_actions shape
+     (at least `security_id`, `event_type`, `ratio`, `ex_date`, `claim`; `source_url` optional). For a key, every row
+     with `event_type` `split` (a reverse split is a ratio below 1) and an `ex_date` inside `(start, end]` divides every
+     price dated before the ex-date by its ratio (cumulative over several rows; market and holding-implied points alike).
+     Keys match after mapping spaces to underscores. `cash_div` and other event types adjust nothing.
+  2. Each key's result gains `"adjustment"`: a list of `{"event_type", "ratio", "ex_date", "claim", "source_url"}`, one per
+     applied row, oldest first; `[]` when none. With `actions=None` the points equal today's output, except item 3.
+  3. A drawn price more than 3x, or below one third of, the key's previous drawn price (after adjustment), with no applied
+     row between them, is not drawn: point `(d, None, None)` and a gap with reason
+     `"the price moved more than threefold in one day and no corporate action is on file"`.
+  4. `price_series.load(s, keys, start, end)` also reads every object under gold `corporate_actions/date=<D>/` for the
+     window's dates (ALL objects there, including WS2-b's `actions-inferred-*` objects) and passes them as `actions`.
+  5. `publish_page._build_charts` copies each series' `adjustment` into the chart object's security entry (`"adjustment"`).
+     WS2-c renders it; this cell writes no render code.
+- Out of bounds: no S3 write, no deploy; `enrichment_bloomberg.py`, `render.py` and `dramatic_move.py` untouched.
+
+### `RIV-wb-1` -- a dramatic move with no action on file is looked up on the web and, when found, stored as an INFERRED corporate-action row (WS2-b)
+- Measured: gold corporate_actions date=2026-10-06 and date=2026-10-07 (160 rows each) carry no TKOMY or 8766 row, and no
+  date=2026-10-08 object exists. Egress is open except Bloomberg (law 4d77a9c3ea). A SERP client exists:
+  `lib/research/management/ceo_search.py` (Bright Data, `BRIGHT_DATA_API_KEY`, `BD_SERP_ZONE`).
+- Interface, a new module `data/etfs/scripts/rivalfunds/dramatic_move.py`:
+  1. `detect(g4, actions) -> list[dict]`: per security, consecutive stored closes (ascending dates) where the close is
+     more than 3x or below one third of the previous one and no `split` or `merger` row of that security has an ex-date in
+     `(prior_date, date]`. Each candidate: `security_id`, `date`, `prior_date`, `prior_close`, `close`, `security_name`
+     when the frame has one. Keys match across the two forms by mapping spaces to underscores.
+  2. `lookup(candidate, search=None) -> dict | None`: builds a query from the security name (or id) and the date (e.g.
+     "Tokio Marine Holdings stock split October 2026"), calls `search(query)` -> list of `{title, url, snippet}`, and parses
+     an explicit ratio ("15-for-1", "15:1", "1-for-10 reverse", a merger exchange ratio). Found: ONE row in the stored
+     corporate_actions shape: `security_id` in the Bloomberg form, `event_type` `split` (or `merger`), `ratio` new-per-old as
+     a float, `ex_date` the candidate's date unless the result names another, `claim` `INFERRED`, `source` `web_search`,
+     `source_url` the result's URL, `status` `OK`, `row_kind` `event`. Nothing parseable: `None`, never a guessed ratio.
+     `search=None` uses the Bright Data SERP the way `ceo_search.py` does (read it; do not edit it).
+  3. `write_rows(s, rows, day)` writes one object `address("rivalfunds","etfs","gold","corporate_actions",f"date={day}",
+     f"actions-inferred-{revision}.parquet")` through a sink. It is BUILT and tested on a memory sink only: running it
+     against live S3 is a served write under guards 1 and 3, not this cell's act.
+- Out of bounds: no live search in tests (inject `search`), no S3 write, no deploy, no hookup into the sweep (the issuer adds
+  the hookup at the merge); `enrichment_bloomberg.py`, `price_series.py`, `render.py` untouched.
+
+### `RIV-wc-1` -- the security dialog's trade list follows the selected window, behind a closed disclosure; an adjusted series says so (WS2-c)
+- Measured: `render.py` writes a fixed heading `HEADP = "<p data-chart-trades-head>Trades in the last 365 days</p>"` and
+  `_trade_list`; the page script's `putTrades` fills the list from every marker of the chart object and ignores the range
+  toggle (`draw(f,o,rg)`, the `[data-chart-range]` click handler). Andrew: the 365-day list "was not ... asked for if
+  you're looking at the 30d Toggle. That should at the very least be behind a dropdown, and it should be scoped for the
+  toggle value".
+- Interface (`render.py` only, plus its tests):
+  1. The list sits inside `<details data-chart-trades-box>` with NO `open` attribute; its `<summary>` is the heading.
+     No static text names 365 days.
+  2. The page script exposes `window.rfChart.tradehead(rg)` -> `"Trades in the last 30 days"` / `"... 90 days"` /
+     `"... 365 days"` for `R30` / `R90` / `R365`, and `window.rfChart.tradelines(markers, from)` -> the trade lines of the
+     markers whose `end` is on or after `from` (the window's first day), oldest first, worded as today's `tradelines`.
+  3. On every `draw` (first load and every toggle click) the heading and the list are rewritten for the selected window;
+     an empty window says `"No trades in the last <n> days."`.
+  4. When the chart object's security entry carries a non-empty `adjustment` (WS2-a's field), the dialog shows one muted
+     line under the chart: `"Prices before <ex_date> are adjusted for a <ratio>-for-1 split"` (a reverse split as
+     `"1-for-<1/ratio> reverse split"`), plus `" (found by web search)"` and the link when `claim` is `INFERRED`.
+  5. Existing tests that pin the old heading (`test_r21pl1_strip_and_caption.py`, `test_r18tl1_trade_list_from_markers.py`)
+     are updated to the new shape; every other test stays green.
+- Out of bounds: no S3, no deploy, no other module.

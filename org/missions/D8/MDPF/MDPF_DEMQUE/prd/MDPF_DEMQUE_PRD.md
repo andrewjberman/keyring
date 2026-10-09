@@ -269,3 +269,15 @@ reads its state before each draw; the standing shape joins C-QUOTE). Ruling `CTO
   - For the rival-funds request: `.../request=ETFS_RIVALS-HISTORY-OWED-DAILY/state.json`.
 - **Cut at DEMQUE's next round:** the writer of the state object, plus the standing shape in C-QUOTE's checks. Negative arm: a request
   set to `paused` reads `paused` at the address. ETFS_RIVALS' round-29 reader cell is cut against this address.
+
+## ADDENDUM v0.5 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~05:5xZ) -- prices are TOTAL RETURN (Andrew-direct ~05:4xZ)
+
+**Word, VERBATIM** (record `org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md`
+@cb023aa95f): "all Yahoo finance price tables must store the price value, any dividend/interest channel, and a total return value, per
+ticker, per day. Anytime we work with prices, either from Bloomberg or from YFinance, they must be the dividend/interest-inclusive total
+return, but it is good to have it all parsed out for provenance/audit sake".
+
+- **C-PRICES amended:** each stored row carries three values: the as-traded price, the dividend/interest cash on its ex-date, and the
+  total-return value. Splits stay kept apart. Every consumer of a price reads the total-return value.
+- **First:** the round-5 comparison cell (a few clear dividend payers, Bloomberg against Yahoo under this method) runs before the
+  total-return column is built. Ruling: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md` C.

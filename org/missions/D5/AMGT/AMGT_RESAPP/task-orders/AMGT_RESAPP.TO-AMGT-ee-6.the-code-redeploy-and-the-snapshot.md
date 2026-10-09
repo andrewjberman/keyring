@@ -38,6 +38,10 @@ A failing criterion is the ROLLBACK trigger: the kept live package through the m
 
 1. The act and nothing else. No memory change, no IAM change, no route added, no schedule change, no S3 delete, no vendor or SEC
    call, no push of shared branches, no portal promote.
+2. (dell1 IAM parity, CTO~DELL1 ADDENDUM 3 @947dd446e5) A send that writes a firm data bucket, or assumes the 49F principal outside the
+   runner's own job, is told to the laptop FIRST.
+3. Every send to mdpf-daily-runner is reported after the fact, with its command id and purpose.
+4. 49 Financial data never goes into another firm's tree.
 
 ## 3. SURFACES
 
@@ -81,3 +85,4 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 <status>pending -- AMENDMENT 1 + GO 2026-10-09T05:0xZ by the issuer: RE-ADDRESSED to 0.7.0_AE_CloudOps~RA1, a fresh lane seated for AMGT_RESAPP only (MSTR~DELL1 msg 1745), on to-decomp-ref-lint's seating finding (0.7.0_AE_CloudOps~DELL1 holds ETFS_RIVALS; rule 27). GO terms: build pin 881540dcfd exactly; wheels C:/tmp/r80-wheels re-hashed against the round-78 record; pair COO @f4288f543a + CTO @1e8dff07a6 (five conditions: the content-diff list or STOP; load_registry + address() from the built files before apply, /thesis 200 after; rollback package hash-checked OUOsYXa and the snapshot's pre-event VersionId recorded; code leg verified before the snapshot event; ledger opened before apply, closed after the snapshot leg, record-terraform-deploy.sh run). r81_deployed_cells.txt holds 2 lines (@1ff7bcb7f9), both NO on the live base; run AC1 after the snapshot leg. terraform init of harvest/ was done on this box by dd-4. Graded by no gate limb (a modification).</status>
+<status>pending -- AMENDMENT 2 (issuer, 2026-10-09T05:4xZ) on 1.0.0_SA_CTO~DELL1 msg 1812 (ADDENDUM 3 @947dd446e5): the three dell1 IAM parity conditions are carried in BOUNDS 2-4. They are bounds, not mechanical criteria: none has an invocation, and this act touches none of them (no firm data bucket, no 49F principal, no mdpf-daily-runner send). Graded by no gate limb (a modification).</status>
