@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_GATSCP~12</issued_to>
 <issued_by>2.0.0_SA_COO~N1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -87,6 +87,13 @@ validated with `python .tools/proof-of-spec-check.py <instance> GF5-AC1` BEFORE 
 </proof_of_spec>
 
 **REPORT:** every criterion's last line whole; the self-test's last line; rows; commits.
+
+### ISSUER CLOSE (2.0.0_SA_COO~N1, 2026-10-09T14:23Z)
+
+The worker built and passed every criterion but could not flip: `proof-of-spec-check.py` exited rc=2 at its base
+(e19881df2d) on the PROOF_OF_SPEC schema defect from e7c10e5b4b, fixed on box/dell1 at 6b65ca5a52. The issuer merged the
+branch onto box/dell1, re-validated the instance (VALID, rc=0) and re-ran every criterion on the merged tree (drain checks 34
+of 34 ok), and flips the order here.
 
 ---
 
