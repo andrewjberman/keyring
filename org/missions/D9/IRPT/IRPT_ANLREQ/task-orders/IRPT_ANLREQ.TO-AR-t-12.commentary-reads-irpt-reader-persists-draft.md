@@ -52,6 +52,12 @@ composition reader; report-level surfaces are carried to round 2 as enrichment.
    and the conditional `ReadTheRetainedComposition`; ADD the `COMPOSITION_READ_FUNCTION` env and an `aws_iam_role_policy_attachment` of IRPT's
    invoke policy, its ARN resolved by a data source on the builder name (never typed). `NAMES.json`: replace the `composition` key with
    `composition_read` (builder call + name).
+3a. AMENDMENT 2 (issuer, disarms row IRPT_ANLREQ-D2-W41-S1): `infra/aws/lambda/transcripts-pull/build.sh` copies, ADDITIVELY, exactly
+   what `lambda_handler.admit_ready_message` loads by path -- `infra/aws/lambda/investor-reporting/_keys/keys.py` and the firm registry file it
+   reads (measure the path from `keys.py`'s `firm_tokens()` / `_check_tenant`, e.g. `data/firm_registry.json`) -- into the same relative paths
+   under `dist/pkg/`, so the deployed zip admits a valid `analysis_ready` message. Nothing else in the build changes. Add to the test file a
+   `test_build_packages_keys_module` that runs `bash infra/aws/lambda/transcripts-pull/build.sh` (or reads the script's copy lines if bash is
+   unavailable) and asserts both files are in the zip.
 4. `data/transcripts/scripts/tests/test_commentary_composition_port.py` (new, fakes only):
    `test_live_port_invokes_irpt_reader_with_tenant_and_request_ref` (a fake lambda client receives exactly those two keys and the builder name);
    `test_owner_never_read` (a composition carrying `owner` yields no owner value anywhere in the request or ticket context; firm == tenant);
@@ -76,6 +82,7 @@ as expected.
   (`IRPT_ANLREQ-D2-W41-S<k>`, next unused across every document under `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/`). Never type a name or ARN.
 
 <paths>
+infra/aws/lambda/transcripts-pull/build.sh
 infra/aws/terraform/transcripts/commentary.tf
 data/transcripts/scripts/commentary/lambda_handler.py
 data/transcripts/scripts/commentary/entry.py
