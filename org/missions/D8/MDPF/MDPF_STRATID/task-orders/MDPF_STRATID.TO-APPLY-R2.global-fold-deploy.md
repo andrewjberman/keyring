@@ -57,13 +57,13 @@ decompositions/MDPF_STRATID_DECOMP_R2.md, under the signed never-widen pair. -->
 ## THE ACT, in this order
 
 1. **Open the change-management entry** (condition 4; NEVER-2), as yourself, before anything ships:
-   `python .tools/deploy_ledger.py open --slug mdpf-stratid-r2-global-fold --title "MDPF_STRATID round 2 + ST-w-7: Cottonwood OUTSIDE, held-out stated, unidentified list on the slice" --author 0.7.0_AE_CloudOps~DELL1 --leg "L1|s3-prefix|data/mdpf/scripts/gold/mdpf_gold_consolidator.py|s3 sha256 == git show <merge>" --leg "L2|s3-prefix|data/mdpf/scripts/gold/mdpf_category_registry.py|s3 sha256 == git show <merge>" --leg "L3|s3-prefix|data/assets/scripts/gold/build_cottonwood_mdpf_slice.py|s3 sha256 == git show <merge>" --lambda mdpf-gold-lambda --leg "L4|verify|next scheduled mdpf-scheduled-floor fire|issuer's r2_run_read.py prints R2-RUN-READ PASS"`.
+   `python .tools/deploy_ledger.py open --slug mdpf-stratid-r2-global-fold --title "MDPF_STRATID round 2 + ST-w-7: Cottonwood OUTSIDE, held-out stated, unidentified list on the slice" --author 0.7.0_AE_CloudOps~DELL1 --leg "L1|s3-prefix|data/mdpf/scripts/gold/mdpf_gold_consolidator.py|s3 sha256 == git show ff1a8867a6" --leg "L2|s3-prefix|data/mdpf/scripts/gold/mdpf_category_registry.py|s3 sha256 == git show ff1a8867a6" --leg "L3|s3-prefix|data/assets/scripts/gold/build_cottonwood_mdpf_slice.py|s3 sha256 == git show ff1a8867a6" --lambda mdpf-gold-lambda --leg "L4|verify|next scheduled mdpf-scheduled-floor fire|issuer's r2_run_read.py prints R2-RUN-READ PASS"`.
    Commit it, then tell `2.0.0_SA_COO~S1`, citing this order, that the entry is open. Do nothing more until step 2 lands.
 2. **The issuer merges** both chains into box/dell1 and names the merge commit to you. `0.0.0_AB_MSTR~DELL1`'s box push then carries
    the three files through the push gate (D1).
-3. **After the push**, read back each D1 key: the S3 object's sha256 must equal `git show <merge>:<path>`'s, and its LastModified
+3. **After the push**, read back each D1 key: the S3 object's sha256 must equal `git show ff1a8867a6:<path>`'s, and its LastModified
    must be after the entry's open time. Close legs L1, L2 and L3 with that proof.
-4. **D2:** `build_package.py` at `--pin <merge>`, the upload, and a targeted `safe-apply` on the function per the package's own
+4. **D2:** `build_package.py` at `--pin ff1a8867a6`, the upload, and a targeted `safe-apply` on the function per the package's own
    README.
    - Read back the deployed package's manifest: the three changed files' sha256 must equal the pin's.
    - Then invoke nothing. The scheduled fire is the run.
