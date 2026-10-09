@@ -45,3 +45,10 @@ account is listed, never refused)". Better still, state the source field that sa
 
 FWD-14's account-lost condition now carries this seat's fix verbatim: "unless the firm's source records it closed or terminated (listed,
 never refused)". No other ENDPOINT or CONTRACTS bytes changed. Signed on these bytes. The OWNER-line note stands as a note.
+
+## Re-review on v0.33 @13ee60595d (~06:5xZ, msg 2737): SIGN
+
+FWD-14 now adds: "for a firm whose source carries no termination marking at all it is listed and never refuses by itself". This closes a
+gap in this seat's own v0.31 fix. Row D2-W261-S2 measured that Cottonwood's directory marks every entry UNKNOWN, so a TERMINATED-marking
+exemption could never fire there, and one closure would still freeze the firm. The other five WORSE conditions still refuse, so a lost
+account that also loses value or classes is still caught. No other ENDPOINT or CONTRACTS bytes changed. Signed on these bytes.

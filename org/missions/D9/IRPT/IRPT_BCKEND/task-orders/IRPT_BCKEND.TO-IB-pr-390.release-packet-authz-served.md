@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~201</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -65,6 +65,37 @@ Prove each criterion by running its invocation from the worktree root.
 
 <expected_criteria>IB97-3-AC1, IB97-3-AC2</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~06:2xZ, issuer 2.0.0_SA_COO~P2): ALL never admits; restage in-cell; 6 of 8 hosts released now
+
+The rulings behind this amendment:
+- Andrew-direct, relayed by ~V2 msg 2536: release 385+387 now, standalone.
+- CTO msg 2539: one packet for 385+387.
+- CTO msg 2569, on CVO 2565: a lone "ALL" fails closed at served.py; fix routes.json's stale denominator.
+
+The worker's rows D2-W201-S1, S3, S4, S5 and S6 are ruled as follows.
+
+1. **Code before the pin (rows S1 and S3).** Commit `amendment1_ALL_never_admits.patch`. A profile allowedFirmIds equal to the string
+   "ALL", or a list holding "ALL", is refused FIRM_BINDING at the internal narrowing step. Add tests named `allowed_firm_ids` for both
+   forms. `test_served_refuses_all` asserts FIRM_BINDING. The test
+   `test_svc_custody_statement.py::test_svc_custody_statement_does_not_change_opal_or_dev_admission` gives its Opal caller an "ALL" row
+   and expects any-firm access; re-point that fixture to a caller with NO profile row (unchanged behaviour), and add one assertion that an
+   "ALL" row is refused. This tightens the suite only. The `_authz` suite passes whole.
+2. **Restage in-cell (row S4).** Commit the restage of `infra/aws/lambda/ci/lambda-source-map.json`, so that `served.py`'s staged rows
+   for the RELEASED functions pin the new code commit. A build at the real map must then carry the change; no candidate map. The
+   applier does not restage.
+3. **Hosts released now: 6 of 8.** irpt-49f-reporting-read-lambda, irpt-directory-search, irpt-export-render, irpt-performance-adapter,
+   irpt-status and irpt-ycharts-generate.
+   - **Held out:** irpt-holdings (row S5: its parity gate refuses BUILD_ONLY at the real map) and irpt-narrative (row S6: the new
+     served.py raises TypeError against its staged errors.py). Their source-map rows are NOT restaged.
+   - The packet lists every route each held-out host serves as NOT YET NARROWED, and names the follow-up cell.
+4. **Stale denominator (row S2).** Fix it in `docs/contracts/investor-reporting/v1/routes.json`, the file that carries it: write
+   declared 21, routed_elsewhere 2, total 23. Change no route.
+5. **Then re-run** `replay/make_census.py`, `replay/run_replay.py` and `replay/make_packet.py` at the new pin, and flip the order to
+   complete.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE). This order's `<paths>` are widened
+to the files named above.
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. No upload, apply or deploy; BUILD_ONLY and offline replays only. AWS reads only.
@@ -76,6 +107,12 @@ Prove each criterion by running its invocation from the worktree root.
 - **Search:** raw recursive grep/find in Bash is gated; use the native Grep/Glob/Read tools. **ASCII only.**
 
 <paths>
+infra/aws/lambda/investor-reporting/_authz/served.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_allowed_firm_ids.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py
+infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py
+infra/aws/lambda/ci/lambda-source-map.json
+docs/contracts/investor-reporting/v1/routes.json
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-390.release-packet-authz-served.md
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~201/

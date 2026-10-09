@@ -248,6 +248,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       ]
     },
     "notes": "J1 (CVO) sees the shipped page. Dead CSS and the two unused helpers can go in a later render.py cleanup; not done here (widening)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~V1",
+    "surfaced_at": "2026-10-09T07:36Z",
+    "one_line": "CORRECTS D1-S4: for CGIC the two witnesses of a report's date DISAGREE by one trading day -- the Bloomberg sidecar's claimed_report_date lags the delivery date (10-05 capture claims 10-02, 10-06 claims 10-05) while canonical_shape stamps the rows' source_report_date with the delivery date -- so either the calendar's repeat labels are right and every CGIC trade window is dated one trading day late, or the labels are wrong; which one decides the fix",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Bloomberg bronze sidecars, requested_date -> status, claimed_report_date[CGIC]: 2026-10-02 batch-20261003T110629Z OK 2026-09-30; 2026-10-02 batch-20261004T110522Z OK 2026-09-30; 2026-10-02 batch-20261005T123303Z BAD-ANCHOR None; 2026-10-02 import-d12-idvz-pfoe ...20261005T054409Z OK None; 2026-10-05 batch-20261006T110635Z BAD-ANCHOR None; 2026-10-05 batch-20261006T123223Z OK 2026-10-02; 2026-10-06 batch-20261007T110832Z OK 2026-10-05 (7 sidecars read, 07:3xZ)",
+        "gold canonical_shape newest object per date, CGIC extra_attributes.bloomberg.source_report_date: date=2026-10-02 -> 2026-10-02 (207/207), date=2026-10-05 -> 2026-10-05 (205/205), date=2026-10-06 -> 2026-10-06 (206/206); summed quantity moves each date (row D1-S4)",
+        "gold_holdings_coverage.classify: actual < expected -> 'repeat' unless the fund is measured periodic; the calendar's actual is the sidecar claim (_bbg_obs), the windows' date is the canonical row date"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "One report date per capture, the same in the calendar and in the trade windows.",
+    "world_is": "Two witnesses one trading day apart for every CGIC capture 10-02..10-06. D1-S4's reading (labels stale, windows right) assumed the canonical rows' date is the truth; it is unproven.",
+    "notes": "Not cut: which witness is true is a data ruling (1.0.0_SA_CTO~DELL1). If the sidecar is true, the fix is the canonical rows' date (and every CGIC trade window moves back one trading day); if the rows are true, the fix is the calendar (classify on the rows' date, or treat a consistent one-day lag as new). RIV-wd-1's infer_windows reads the rows' date, so it follows whichever is fixed."
   }
 ]
 ```

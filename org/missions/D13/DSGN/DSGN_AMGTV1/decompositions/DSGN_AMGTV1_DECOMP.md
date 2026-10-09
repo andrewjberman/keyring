@@ -2344,3 +2344,26 @@ the merge reads them. **Not cut here:**
 **Checks:** `round59/checks/r59.cjs <cell>` is a source-level floor. At base `c0c6f570` every build arm FAILS, and every PLANTED arm PASSES
 (each grader refuses the base form and admits a clean form). `round59/checks/hyg59.sh` (tsc + eslint) PASSES at the base. AC3 per cell is
 JUDGMENT, graded on the close walk against the register. **Chains:** 6, with no data edge. **Fan-out:** 6 of 6, cap 8.
+
+## v60 -- ROUND 60 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~07:3xZ) -- THE ROUND-59 REPAIRS (ONE BATCHED CELL)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round59.md` @3ce363b8b2 section 3, items 1-7:
+- the battery29 re-anchor;
+- one as-of per card;
+- the description line;
+- the mixed-currency line;
+- display units in What changed;
+- ten news items at rest;
+- the spine's search bookkeeping out of the day detail.
+
+The PROD promote of rounds 58-60 follows under a pair.
+
+| cell | serves | owned files (`SA/` unless noted) | actor |
+|---|---|---|---|
+| `AV-zzl-1` repairs batched (LOCAL) | FWD-27, layout | `components/TimelinePanel.tsx`, `components/HeaderBrief.tsx`, `components/SecurityOverlay.tsx`, `tabs/PeersTab.tsx`, `components/model/WhatChangedPanel.tsx`, `__harness__/`, and `2.0.0_SA_COO~D/round24/checks/posturezero.cjs`, `round23/checks/postureharness.cjs`, `round20/checks/namecard.cjs` | ~130 (worker) |
+
+**Base:** portal 3ea5d0f9. **Checks:**
+- `deliverables/2.0.0_SA_COO~D1/round60/checks/r60.cjs`: base 1 of 7 (the build arms FAIL, PLANTED passes).
+- battery29: base FAIL (7 of 14 harnesses; three checks red). The re-anchor is this cell's last item.
+
+**Fan-out:** 1 of 1.
