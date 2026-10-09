@@ -188,3 +188,35 @@ write code only. `comp-iam` -- RUN as a reading: e-3's deploy will need `s3:PutO
 round. `comp-routes`, `comp-cache`, `comp-schedule`, `comp-adversary` -- DECLARED-NOT-APPLICABLE: no route, cache or schedule moves in a cell.
 
 fanout: 3 of 4 chains, cap 8, reason: chain C is the issuer's act; three worker chains.
+
+## 4. ROUND 3 (2026-10-09 ~09:4xZ, issuer 2.0.0_SA_COO~B2, on the CTO's ADDENDUM 3 @7f414eb19e)
+
+**Source:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_BILLING_ROUND_1_20261009.md` ADDENDUM 3 (msg 3004), on the CVO's
+`ADJUDICATION_v2.md` @b1bbfdc9d1. Enrichment list: (1) FWD-3 empty states; (2) E2 deployed under a pair with one statement landed; (3) the
+exercised other-firm arm (D2-S3).
+
+**Measured before the cut:** the gateway is NFRA_OPLGTW's served service (site Z fabric; COO `2.0.0_SA_COO~O`), deployed by
+`0.7.0_AE_CloudOps~Z` through `infra/aws/ec2/safe-ec2-deploy.sh` + `deploy-to-ec2.sh`, whose STALE-BASE GUARD refuses a release not cut on the
+host's running ref; five gateway deploys today (latest ledger `20261009T0742Z_nfra-oplgtw-og-da-1-data-refresh-admit`). Each integration
+carries its own IAM file in `infra/aws/terraform/opal-gateway/` (e.g. `taxsma_gateway_iam.tf`). So item (2) is cut as the RELEASE PACKET
+this project hands the gateway's owners (MSTR to MSTR, cross-fabric); the deploy, the statement landing, the silver write and the served
+re-emit follow it as served acts.
+
+| cell | serves | status | risk | depends on | chain | placement |
+|---|---|---|---|---|---|---|
+| `AB-r-1` | FWD-3: `AdvisorBookFeePanel.tsx` states "No money moved in or out this quarter" when an account's `flows_in_period` is empty and "Nothing excluded" when `excluded_value` is 0/null, instead of omitting them; its bun test proves both. DIRECT-ACT (one file pair, LOCAL). | NOT_EVALUATED | LOCAL (portal DEV) | none | G | worker-light, portal |
+| `AB-r-2` | D2-S3: ONE synthetic other-firm token with COMPLETE claims (a real other firm's id, a mapped advisor of that firm if one exists) against `z08219260`'s fee-quarter path through `opalinvest.dev`, GET only, under ADDENDUM 2's terms; the refusal must be the firm-binding one (not "missing identity claims"). | NOT_EVALUATED | WORLD (identity; reads only) | none | H (workstream EDGEPROBE3) | `0.7.0_AE_CloudOps~AB2` |
+| `AB-r-3` | E2 release packet: the `copy_site_file_to_s3` registration in `infra/aws/ec2/opal-gateway/app/tools.py` (out of `SAFE_TOOLS`), its registration test, a new `infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf` granting the gateway instance role `s3:PutObject` on the builder's `smartx/49financial/bronze/fee_statement/*` only (checked against `mcpmsp_gateway_firm_deny.tf`), the `ADVI_FEE_STATEMENT_S3_ROOT` config line, a saved plan, and `RELEASE_PACKET_E2.md` for the gateway's owners (base-ref rule, blast radius, rollback). Nothing deployed or applied. | NOT_EVALUATED | WORLD (gateway code + IAM planned; no apply) | none | I | worker |
+
+**After the packet (served acts, not cells):** the gateway's owners deploy it under a pair (site Z); the issuer lands the Q3 2026 statement
+with the tool, writes its silver, and re-emits `fee_quarter` v2 for `z08219260` under a pair (it moves a served object); FWD-3 is graded on
+that real render.
+
+**Chain read.** M = 3 independent chains: G (`AB-r-1`), H (`AB-r-2`, the CloudOps lane), I (`AB-r-3`). N = 2 workers + the lane, K = 8. Write
+sets are disjoint (portal panel + test; the lane's deliverables + ledger; gateway `tools.py`, one new test, one new `.tf`, the packet).
+
+**Battery.** `comp-iam` -- RUN as a reading: AB-r-3 adds one PutObject grant on one prefix to the gateway role; the plan is the read.
+`comp-blast` -- RUN: AB-r-1 changes one served-on-DEV component; AB-r-3 changes nothing live in the cell. `comp-routes`, `comp-cache`,
+`comp-schedule`, `comp-adversary` -- DECLARED-NOT-APPLICABLE.
+
+fanout: 2 of 3 chains, cap 8, reason: chain H is the CloudOps lane's order (workstream EDGEPROBE3), not a worker.

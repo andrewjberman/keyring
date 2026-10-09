@@ -872,3 +872,30 @@ surfaces. Workers `0.9.0_WK_IRPT_DASHBD~55`, ~57 and ~58 are cut from box/dell2;
 **Carried:** FWD-8's tolerance; the foreign-tax members; the mint and CU-g-2a on `~DB2`; CU-g-6.
 
 **fanout:** 1 of 1 chains, cap 8. Reason: one cell. Worker `0.9.0_WK_IRPT_DASHBD~60`, cut from box/dell2.
+
+
+## 43. ROUND 41, WORKSTREAM B (2026-10-09 ~09:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 9 and 9.1, msg 3011)
+
+**Where round 40 left things.**
+- Round 40 is closed.
+- Both preconditions of the svc-custody-statement mint hold: IB-pr-385 is live in IB-pr-390 (07:49Z), and release 6b is live at tdpterTM
+  (09:32Z).
+- The CTO placed the mint and CU-g-2a (absorbed from IRPT_CUSTDY) in round 41.
+
+**The enrichment list:**
+- **E1** (the 11:41Z R37 fire's A1-A7 and REPORT against 765 s) is the issuer's read; a SKIPPED line or an over-line duration is a BLOCKING
+  row.
+- **E2 to E4** are cells:
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-84` | E2, FWD-12: the svc-custody-statement mint landing, by 0.7.0_AE_CloudOps~DB2 under the pair (COO @a319fc74b8, CTO msg 2440) | WORLD | the pair; IB-pr-385 and 6b live | B41-1 |
+| `DB-b-85` | E3, FWD-12: the statement runner and its offline test (CU21-AC3) | LOCAL | none | B41-2 |
+| `DB-b-86` | E4, FWD-12: the first real retained Performance client statement and the other-firm refusals, by ~DB2 | WORLD | DB-b-84, DB-b-85 | B41-1 |
+
+**Supersession.** IRPT_CUSTDY TO-CU-g-2a is superseded by DB-b-85 and DB-b-86 (its AMENDMENT 1 named that recut).
+
+**Carried:** FWD-8's tolerance; CU-g-6 (Andrew's word, row 0347).
+
+**fanout:** 2 of 2 chains, cap 8. Reason: the AE seat's mint then apply, and the worker's offline build. Worker `0.9.0_WK_IRPT_DASHBD~61` is cut
+from box/dell2; `0.7.0_AE_CloudOps~DB2` takes DB-b-84 now and DB-b-86 after both drains.
