@@ -67,3 +67,12 @@ null, `objects_failed` empty and `history_backfill_budget.recorded` non-null tog
 `inferred` (the producer's own record() return), never `measured`. Shape confirmed on the 2026-10-07 ad-hoc manifest:
 recorded 2929, estimate 3448, limit 120000, spent_before 0, 15 planned securities. A direct site-Z ledger read, when one
 lands, upgrades it to `measured`.
+
+## Tick 04:04Z -- issuer ruling on the CRO's clean-name point (UB-20261009T035455Z-cbf8, PROPOSED)
+
+RULING (issuer, inside the round-2 decomposition): for TO-SH-t3 / SH2-t3-AC1 a "clean name" is a name with no `/<state>`
+suffix, exactly as cut -- the CTO's round-1 analysis 2.2 and the check's own test (`R2_CHECKS/sh_fwd1_acceptance.py:85`,
+`"/" not in name`). An upper-case legal-form token ("Lenovo Group LTD") is clean for FWD-1; no amendment, no surprise row.
+Form-token casing across screens is FWD-8 ("a security reads the same on every screen"), a round-3 enrichment item, not a
+FWD-1 condition. Settled before 13:01Z as the CRO asked. The sign-in pre-flight and the two-branch analysis wait on the
+CTO fold; the drive resumes on them when the case reads RESUME.
