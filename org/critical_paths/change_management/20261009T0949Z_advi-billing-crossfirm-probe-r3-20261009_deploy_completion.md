@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T09:49:55.431218+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261009T095502Z
 **Deploy:** ADVI_BILLING TO-AB-r-2: ONE read-only GET probe exercising the cross-firm arm -- an other-firm (inflection) firmRole-admin token with complete claims against 49 Financial household z08219260
 **Authored by:** 0.7.0_AE_CloudOps~AB2
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,3 +18,4 @@
 
 - 20261009T094955Z OPENED by 0.7.0_AE_CloudOps~AB2 with 1 leg(s)
 - 20261009T095440Z LEG L1 closed: cross-firm probe: firmId inflection, role user, firmRole admin, complete claims, ONE GET through opalinvest.dev -> HTTP 
+- 20261009T095502Z CLOSED -- all 1 legs proven
