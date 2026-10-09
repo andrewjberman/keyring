@@ -1,0 +1,410 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "LGIC_CANON",
+ "round": 5,
+ "written_by": "2.0.0_SA_COO~B1",
+ "written_utc": "2026-10-09T19:38Z",
+ "decomposition_ref": "org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md@b1e26111f8",
+ "denominators": {
+  "fwd_in_prd_header": 6,
+  "cells_in_decomposition": 32,
+  "task_orders": 33,
+  "task_orders_terminal_with_valid_proof": 32
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- two people have actually judged the same pipeline against it and compared answers",
+   "cells": [
+    {
+     "cell_id": "CN-j-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~4/LGIC_CANON.TO-CN-j-1.judge-a.proof_of_spec.json@5d19e0aa4d"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-10",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-10-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~5/LGIC_CANON.TO-CN-j-10-r3.judge-h-unbriefed.proof_of_spec.json@8c0215b374"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-11",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-11-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-j-11-r3.judge-comparison.proof_of_spec.json@9ee3f44d57"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~5/LGIC_CANON.TO-CN-j-2.judge-b.proof_of_spec.json@d541c9eed7"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-3",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.TO-CN-j-3.judge-compare.proof_of_spec.json@562462e25d"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-4",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-j-4-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~4/LGIC_CANON.CN-j-4-r2.judge-c.proof_of_spec.json@1b7331e28a"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-5",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-j-5-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~5/LGIC_CANON.CN-j-5-r2.judge-d.proof_of_spec.json@31db4c0bf0"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-6",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-j-6-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~6/LGIC_CANON.CN-j-6-r2.judge-e-negative-arm.proof_of_spec.json@c8a1689d26"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-7",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-j-7-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.CN-j-7-r2.judge-comparison.proof_of_spec.json@8dbb96bbef"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-8",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-8-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-j-8-r3.judge-f.proof_of_spec.json@6562273083"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-j-9",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-j-9-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~4/LGIC_CANON.TO-CN-j-9-r3.judge-g.proof_of_spec.json@d453a8ca33"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-k-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-k-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-1.canon.proof_of_spec.json@daa5b3ba75"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-k-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-k-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.CN-k-2-r2.canon-edit.proof_of_spec.json@931d7d88f1"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-k-3",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-k-3-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.CN-k-3-r2.renderer-note.proof_of_spec.json@ee35d0fa2f"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-k-4",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-k-4-r2",
+       "status": "withdrawn",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.CN-k-4-r2.rerender-adjacency.proof_of_spec.json@"
+      },
+      {
+       "id": "LGIC_CANON.TO-CN-k-4-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-4-r3.rerender-adjacency.proof_of_spec.json@285304a20b"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-k-5",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-k-5-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-5-r3.canon-coordinates.proof_of_spec.json@abf00c6c15"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- he has actually gone through the list and decided",
+   "cells": [
+    {
+     "cell_id": "CN-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-r-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-r-1.fwd2-record.proof_of_spec.json@83afab6973"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- an owner has actually read theirs and resumed",
+   "cells": [
+    {
+     "cell_id": "CN-r-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-r-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-r-2.fwd3-record.proof_of_spec.json@6386bd663a"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a real piece of work has taken a name from it",
+   "cells": [
+    {
+     "cell_id": "CN-n-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-n-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~8/LGIC_CANON.TO-CN-n-1.naming-a.proof_of_spec.json@89d39cee69"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-n-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-n-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~9/LGIC_CANON.TO-CN-n-2.naming-b.proof_of_spec.json@c95d6262c2"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-n-3",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-n-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.TO-CN-n-3.naming-compare.proof_of_spec.json@dd226198db"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the checklist has been run end to end on a LGIC_LGCTFM practice wave over an existing firm's subject, and that firm's people can see their dashboard at the end",
+   "cells": [
+    {
+     "cell_id": "CN-k-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-k-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.CN-k-2-r2.canon-edit.proof_of_spec.json@931d7d88f1"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-o-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-o-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~6/LGIC_CANON.TO-CN-o-1.checklist.proof_of_spec.json@f66af58292"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-o-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-o-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.TO-CN-o-2.checklist-review.proof_of_spec.json@b736df9041"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-o-3",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-o-3-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~8/LGIC_CANON.CN-o-3-r2.checklist-edit.proof_of_spec.json@4a0c6ef5e1"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-o-4",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-o-4-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~9/LGIC_CANON.CN-o-4-r2.checklist-review-r2.proof_of_spec.json@7dbd8e27cf"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-o-5",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-o-5-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.proof_of_spec.json@d8edabc2aa"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-q-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-q-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-q-1.step13-registry-rows.proof_of_spec.json@b8c19509d5"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-q-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-q-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-q-2.portal-paths-derived.proof_of_spec.json@95e1ecaf7f"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-q-3",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-q-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-q-3.checklist-run-r5.proof_of_spec.json@afe897b40d"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "APPLIED",
+   "done_when_text": "APPLIED -- every part carries either a decision or the name of the person it is waiting on, and the two can be told apart on sight",
+   "cells": [
+    {
+     "cell_id": "CN-k-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-k-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-1.canon.proof_of_spec.json@daa5b3ba75"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-l-1",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-l-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-l-1.ledger.proof_of_spec.json@831a86ba6f"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-l-2",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.CN-l-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.CN-l-2-r2.ledger-hygiene.proof_of_spec.json@e088b0b613"
+      }
+     ]
+    },
+    {
+     "cell_id": "CN-l-3",
+     "task_orders": [
+      {
+       "id": "LGIC_CANON.TO-CN-l-3-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-l-3-r3.state-plane.proof_of_spec.json@04357c8cb7"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  }
+ ]
+}

@@ -63,11 +63,14 @@ T0="${EPOCHREALTIME:-0}"
 NOW_TS() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 secs() { local a="${1/[.,]/}" b="${EPOCHREALTIME:-0}"; b="${b/[.,]/}"; local d=$(( (10#$b - 10#$a) / 10000 )); printf '%d.%02d' $((d / 100)) $((d % 100)); }
 ROWNOTE=""
+# PHASES (CTO ruling 3 @ba20ac668b): per-phase seconds on every BOX-SYNC row -- t_fetch, t_merge_<box> (integrate) or
+# t_merge_cloud (box), t_land, t_push -- so a slow pass names its slow phase. A retried integrate tags its later attempts aN.
+PHASES=""
 row() {
   # the GITSTATE record (NFRA_MCPORTAL FWD-16, owner 4.0.0_SA_CRO): every non-dry pass, in the background so it costs the pass nothing
   [ "$DRY" -eq 0 ] && [ -f "$ROOT/.tools/fabric-gitstate.py" ] && \
     ( python "$ROOT/.tools/fabric-gitstate.py" --mode "$MODE" --rc "$1" --serial "${SERIAL:-unknown}" --note "${ROWNOTE}" >> "${GITDIR}/fabric-gitstate.log" 2>&1 & )
-  [ -d "$(dirname "$AUDIT")" ] || return 0; echo "$(NOW_TS) BOX-SYNC  ${SERIAL:-unknown}  mode=${MODE}  rc=$1  secs=$(secs "$T0")  ${ROWNOTE}" >> "$AUDIT" 2>/dev/null || true; }
+  [ -d "$(dirname "$AUDIT")" ] || return 0; echo "$(NOW_TS) BOX-SYNC  ${SERIAL:-unknown}  mode=${MODE}  rc=$1  secs=$(secs "$T0")  ${ROWNOTE}${PHASES:+  phases:${PHASES}}" >> "$AUDIT" 2>/dev/null || true; }
 
 # --- who: an MSTR serial only (box and CLOUD are shared branches; GATE 5 of never-rules-gate.sh, LD-0367/0368)
 SERIAL="${OPAL_AGENT_SERIAL:-}"
@@ -97,7 +100,9 @@ PRIV=""
 cleanup() { [ -n "$PASSLOCK" ] && rm -rf "$PASSLOCK" 2>/dev/null; [ -n "$PRIV" ] && rm -rf "$PRIV" 2>/dev/null; return 0; }
 trap cleanup EXIT
 
+_tf="${EPOCHREALTIME:-0}"
 [ "$MODE" = grade ] || git fetch -q origin 2>/dev/null || { echo "box-sync: git fetch origin failed -- nothing done" >&2; ROWNOTE="fetch=failed"; row 1; exit 1; }
+[ "$MODE" = grade ] || PHASES=" t_fetch=$(secs "$_tf")s"
 
 # grade_merge P1 P2 T -> 0 pass, 1 refused. Path-scoped: paths T changes against BOTH parents, plus paths both sides
 # changed since the merge base; the row gate reads them from a private index in a private git dir pinned to the merge.
@@ -250,30 +255,45 @@ fi
 
 # ============================================================== integrate: every box branch into CLOUD
 if [ "$MODE" = "integrate" ]; then
-  C0="$(git rev-parse --verify -q refs/remotes/origin/CLOUD)" || { ROWNOTE="no-origin-CLOUD"; row 1; exit 1; }
-  C="$C0"; DONE=""; HELD=""
-  for r in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/box/); do
-    tip="$(git rev-parse "$r")"
-    git merge-base --is-ancestor "$tip" "$C" && continue
-    GRADED_NOTE=""
-    if make_merge "$C" "$tip" "integrate(${SERIAL}): ${r#origin/} @${tip:0:10} into CLOUD (box-sync)"; then
-      C="$MERGE_OUT"; DONE="${DONE}${DONE:+,}${r#origin/}(${GRADED_NOTE})"
-    else
-      _mrc=$?
-      HELD="${HELD}${HELD:+,}${r#origin/}$([ "$_mrc" -eq 4 ] && echo ':conflict' || echo ':refused')"
-      echo "box-sync: HELD ${r#origin/} -- $([ "$_mrc" -eq 4 ] && echo 'it conflicts with CLOUD; that box resolves it in its next box pass' || echo 'refused, see above'). The other boxes go on."
+  # A REFUSED PUSH IS RETRIED IN THE SAME PASS (CTO ruling 3 @ba20ac668b), as box mode already does: re-fetch, rebuild every
+  # merge on the new origin/CLOUD, push again -- at most twice more. Before, one refusal cost the whole slot.
+  for _att in 1 2 3; do
+    _ap=""; [ "$_att" -gt 1 ] && _ap="a${_att}."
+    C0="$(git rev-parse --verify -q refs/remotes/origin/CLOUD)" || { ROWNOTE="no-origin-CLOUD"; row 1; exit 1; }
+    C="$C0"; DONE=""; HELD=""
+    for r in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/box/); do
+      tip="$(git rev-parse "$r")"
+      git merge-base --is-ancestor "$tip" "$C" && continue
+      GRADED_NOTE=""; _tm="${EPOCHREALTIME:-0}"
+      if make_merge "$C" "$tip" "integrate(${SERIAL}): ${r#origin/} @${tip:0:10} into CLOUD (box-sync)"; then
+        C="$MERGE_OUT"; DONE="${DONE}${DONE:+,}${r#origin/}(${GRADED_NOTE})"
+      else
+        _mrc=$?
+        HELD="${HELD}${HELD:+,}${r#origin/}$([ "$_mrc" -eq 4 ] && echo ':conflict' || echo ':refused')"
+        echo "box-sync: HELD ${r#origin/} -- $([ "$_mrc" -eq 4 ] && echo 'it conflicts with CLOUD; that box resolves it in its next box pass (one owner repairs: the seat owning the broken file lane, on its own box; an ANY path, the integrator box)' || echo 'refused, see above'). The other boxes go on."
+      fi
+      PHASES="${PHASES} ${_ap}t_merge_${r#origin/box/}=$(secs "$_tm")s"
+    done
+    ROWNOTE="merged=(${DONE:-none}) held=(${HELD:-none})$([ "$_att" -gt 1 ] && echo " attempt=${_att}")"
+    if [ "$C" = "$C0" ]; then echo "box-sync: integrate -- nothing to merge"; row "$([ -n "$HELD" ] && echo 4 || echo 0)"; [ -n "$HELD" ] && exit 4; exit 0; fi
+    if [ "$DRY" -eq 1 ]; then echo "box-sync: DRY RUN -- would push CLOUD ${C0:0:10} -> ${C:0:10}: $ROWNOTE"; ROWNOTE="dry-run $ROWNOTE"; row 0; exit 0; fi
+    _tp="${EPOCHREALTIME:-0}"
+    if git push -q origin "${C}:refs/heads/CLOUD"; then
+      PHASES="${PHASES} ${_ap}t_push=$(secs "$_tp")s"
+      echo "box-sync: integrate -- CLOUD ${C0:0:10} -> ${C:0:10} pushed; $ROWNOTE"
+      ROWNOTE="pushed=${C:0:10} $ROWNOTE"; row "$([ -n "$HELD" ] && echo 4 || echo 0)"
+      [ -n "$HELD" ] && exit 4; exit 0
     fi
+    PHASES="${PHASES} ${_ap}t_push=$(secs "$_tp")s(refused)"
+    if [ "$_att" -eq 3 ]; then
+      echo "box-sync: push of CLOUD was refused on all 3 attempts (a writer outside the integrator keeps moving it?) -- nothing landed; the next pass retries" >&2
+      ROWNOTE="push=refused-x3 $ROWNOTE"; row 3; exit 3
+    fi
+    echo "box-sync: push of CLOUD was refused (attempt ${_att}) -- re-fetching and rebuilding on the new CLOUD" >&2
+    _tf="${EPOCHREALTIME:-0}"
+    git fetch -q origin 2>/dev/null || { echo "box-sync: re-fetch failed -- nothing landed" >&2; ROWNOTE="push=refused refetch=failed $ROWNOTE"; row 3; exit 3; }
+    PHASES="${PHASES} a$((_att + 1)).t_fetch=$(secs "$_tf")s"
   done
-  ROWNOTE="merged=(${DONE:-none}) held=(${HELD:-none})"
-  if [ "$C" = "$C0" ]; then echo "box-sync: integrate -- nothing to merge"; row "$([ -n "$HELD" ] && echo 4 || echo 0)"; [ -n "$HELD" ] && exit 4; exit 0; fi
-  if [ "$DRY" -eq 1 ]; then echo "box-sync: DRY RUN -- would push CLOUD ${C0:0:10} -> ${C:0:10}: $ROWNOTE"; ROWNOTE="dry-run $ROWNOTE"; row 0; exit 0; fi
-  if ! git push -q origin "${C}:refs/heads/CLOUD"; then
-    echo "box-sync: push of CLOUD was refused (a writer outside the integrator moved it?) -- nothing landed; the next pass retries" >&2
-    ROWNOTE="push=refused $ROWNOTE"; row 3; exit 3
-  fi
-  echo "box-sync: integrate -- CLOUD ${C0:0:10} -> ${C:0:10} pushed; $ROWNOTE"
-  ROWNOTE="pushed=${C:0:10} $ROWNOTE"; row "$([ -n "$HELD" ] && echo 4 || echo 0)"
-  [ -n "$HELD" ] && exit 4; exit 0
 fi
 
 # ============================================================== box: take CLOUD into box/<this box>, push it
@@ -317,9 +337,11 @@ for attempt in 1 2 3; do
   P1="$(git rev-parse "refs/heads/$B")"
   if git merge-base --is-ancestor "$CLOUD_TIP" "$P1"; then TOOK="already-current"; break; fi
   GRADED_NOTE=""
+  _tm="${EPOCHREALTIME:-0}"
   make_merge "$P1" "$CLOUD_TIP" "box-sync(${SERIAL}): take CLOUD @${CLOUD_TIP:0:10} into ${B}"; mrc=$?; M="$MERGE_OUT"
+  PHASES="${PHASES} $([ "$attempt" -gt 1 ] && echo "a${attempt}.")t_merge_cloud=$(secs "$_tm")s"
   if [ "$mrc" -eq 4 ]; then
-    echo "box-sync: HELD -- CLOUD @${CLOUD_TIP:0:10} conflicts with ${B}. Resolve with the /integrate BOX PASS (safe-merge in a drain worktree); nothing landed."
+    echo "box-sync: HELD -- CLOUD @${CLOUD_TIP:0:10} conflicts with ${B}. Resolve with the /integrate BOX PASS (safe-merge in a drain worktree); one owner repairs a trunk break -- the seat owning the file lane, on its own box (owned-paths-validate.py --check-path names it; an ANY path: the integrator box); every other box just takes CLOUD next pass. Nothing landed."
     ROWNOTE="held=conflict cloud=${CLOUD_TIP:0:10}"; row 4; exit 4
   fi
   [ "$mrc" -eq 0 ] || { ROWNOTE="refused ${GRADED_NOTE}"; row 1; exit 1; }
@@ -376,13 +398,14 @@ for attempt in 1 2 3; do
     echo "box-sync: $_p was dirty at the land -- $(python "$ROOT/.tools/merge-resolve-known.py" --append-missing "$(git rev-parse "$M:$_p")" "$_p" 2>&1)"
   done
   rm -rf "$LOCK_DIR"
-  TOOK="${CLOUD_TIP:0:10} hold=$(secs "$_TL")s ${GRADED_NOTE}"
+  TOOK="${CLOUD_TIP:0:10} hold=$(secs "$_TL")s ${GRADED_NOTE}"; PHASES="${PHASES} t_land=$(secs "$_TL")s"
   break
 done
 [ "$TOOK" = "none" ] && { ROWNOTE="took=none (3 attempts lost the race)"; row 3; exit 3; }
 if [ "$DRY" -eq 1 ]; then echo "box-sync: DRY RUN -- $B already holds CLOUD; would push $B"; ROWNOTE="dry-run took=$TOOK"; row 0; exit 0; fi
 if [ "$(git rev-parse "refs/heads/$B")" != "$(git rev-parse -q --verify "refs/remotes/origin/$B" 2>/dev/null || echo none)" ]; then
-  git push -q origin "$B" || { echo "box-sync: push of $B failed -- the branch is current locally; the next slot pushes" >&2; ROWNOTE="took=$TOOK push=failed"; row 3; exit 3; }
+  _tp="${EPOCHREALTIME:-0}"
+  git push -q origin "$B" && PHASES="${PHASES} t_push=$(secs "$_tp")s" || { echo "box-sync: push of $B failed -- the branch is current locally; the next slot pushes" >&2; ROWNOTE="took=$TOOK push=failed"; row 3; exit 3; }
 fi
 echo "box-sync: box -- $B took CLOUD (${TOOK}) and is pushed"
 ROWNOTE="took=$TOOK pushed=$(git rev-parse --short=10 "refs/heads/$B")"; row 0; exit 0

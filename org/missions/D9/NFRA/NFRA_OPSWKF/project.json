@@ -2,7 +2,7 @@
   "project_code": "NFRA_OPSWKF",
   "macro_code": "NFRA",
   "directive": "D9",
-  "fabric": "laptop",
+  "fabric": "dell2",
   "pipeline": "nfra_opswkf",
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -58,5 +58,6 @@
     "coo": "2.0.0_SA_COO~O2 (dell2; seated 2026-10-09 by 0.0.0_AB_MSTR~DELL2, msg 2401)"
   },
   "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13).",
-  "round": 1
+  "round": 1,
+  "last_updated": "2026-10-09"
 }
