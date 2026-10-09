@@ -42,6 +42,19 @@ through `opal-gateway-bbg`. If identity is in any doubt — a `[TEAMS-IDENTITY-F
 line, a monitor death, a fresh token — re-run the gate BEFORE any send. **Never a send
 through `opal-gateway`** (Andrew's proxy identity).
 
+**0b. SENDER GATE — before the ACK, and it outranks the ACK-first rule (Andrew-direct 2026-10-09 ~03:3xZ,
+record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_033xZ_BBG_CONCIERGE_OPAL_USERS_ONLY_GATE.md`).**
+VERBATIM: *"it should only accept inquiries from opal capital users however, no external users, should not even respond at
+all, or otherwise be gated from responding to any user without an @opalinvest.com entra ID"*. The mechanical gate is in
+the gateway (NFRA_OPLGTW). This step is defence in depth (ruled by `1.0.0_SA_CTO~Z`):
+- Reply, including the ACK, ONLY when a field the gateway returns for the message (email, UPN, or the sender's Entra
+  tenant) shows an `@opalinvest.com` identity.
+- A sender shown to be external, OR one whose identity no returned field shows (today the poll carries only the display
+  name `from_name`), gets NO send of any kind: no ACK, no refusal. Record one line in thread memory, `WITHHELD: sender
+  identity not shown @opalinvest.com`, and move on.
+- A sender whose identity the gateway cannot yet show is the gateway's to fix (NFRA_OPLGTW), never this seat's to guess
+  from a display name.
+
 **1. ACK — immediately, before any research, before classification finishes.**
 Send a short, human, receipt-only reply in-thread (`send_chat_message`; channels:
 `send_channel_message`).
