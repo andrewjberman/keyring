@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~41</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -166,7 +166,7 @@ The block is your WRITE grant (your deliverables folder is granted by the tree c
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R1.md</decomp_doc> (round 1), cell `AR-t-12`.
-<owned_cells>AR-t-12 AR-t-13</owned_cells>
+<owned_cells>AR-t-12</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
