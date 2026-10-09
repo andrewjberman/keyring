@@ -113,9 +113,9 @@ No row carries `route` or `loop_target`.
     "remedy": "Let the UNDEFINED branch in _cmd_check_agent (and check_agent's early return) fall through to _owns_task_order_paths before concluding UNDEFINED. Control: a worker whose non-terminal order names a new top-level path is admitted, and the same path with no order is refused. One fix serves both projects. Whose fix is for 1.0.0_SA_CTO, the disarm owner.",
     "owner": "1.0.0_SA_CTO",
     "round": "v1",
-    "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1"},
-    "closed": false,
-    "disarm": {"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": null}
+    "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"},
+    "closed": true,
+    "disarm": {"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-25T05:05Z"}
   },
   {
     "id": "NFRA_MCPORTAL-Z-W2-S1",
