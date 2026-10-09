@@ -6312,3 +6312,60 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "On dell1 it is not clean: it moves click DOWN from 8.5.0 to 8.3.1 and breaks one core dependency requirement (huggingface_hub needs >=8.4.2). The cell is still executable exactly as written -- this row does not refuse it and does not widen the bounds -- but the issuer owns the call on whether a downgrade that unsatisfies huggingface_hub is wanted on this box, and the order was cut on the laptop where the installed version may differ. CORRECTION WORTH RECORDING: a first pass over the requirement set counted 3 breaking dists (adding httpx2>=8.4.2 and scipy<8.3.0); both are gated behind extras (cli, dev) and are NOT core constraints, so the honest number is ONE. The instrument that fixes this is reading each Requirement's marker, not just its specifier. SCOPE: declared metadata only -- it does not exercise huggingface_hub against 8.3.1, so 'unsatisfied requirement' is a declared conflict, not an observed runtime failure."
 }
 ```
+
+## NFRA_CTLPLN-D1-S4 -- the intake check record pins the check-8 signature file by a sha256 computed on LF bytes, so any receiver on a CRLF checkout that hashes that file as-is reads a FALSE MISMATCH on an intact signature -- measured here: f8155b87 vs the pinned b41ea9db, reconciled only after CRLF->LF normalization.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T10:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S4",
+  "one_line": "the intake check record pins the check-8 signature file by a sha256 computed on LF bytes, so any receiver on a CRLF checkout that hashes that file as-is reads a FALSE MISMATCH on an intact signature -- measured here: f8155b87 vs the pinned b41ea9db, reconciled only after CRLF->LF normalization.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "click-8.3.1-py3-none-any.whl.check.json check 8 evidence pins signature_file_sha256=b41ea9dbfe8d85c53a5c0a572eebce668a891cdf8829e737c7381bf05b626389 for org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_CLICK_ONLY.md",
+      "sha256 of that file AS CHECKED OUT on dell1 2026-10-09: f8155b87e3e261ba40cee526012a1385ec8771989be481de7db8f7af735ac8f7 -- MISMATCH against the pin",
+      "worktree 2381 bytes with 39 CRLF pairs; git blob 2342 bytes with 0 CRLF; 2381-2342=39",
+      "sha256 of the worktree bytes with CRLF->LF = b41ea9db... = the pin, and sha256 of the git blob = b41ea9db... = the pin; both reconcile",
+      "git log for that path: ONE commit, e058ba4c12 by 1.0.0_SA_CTO 2026-10-08T07:02:54Z, BEFORE the check record's at=2026-10-08T07:06:50Z -- the file has not changed since signing"
+    ]
+  },
+  "spec_asserts": "C-INTAKE check 8: a person reads checks 1-7 and signs, and the check record pins the signature file by hash so a receiver can confirm the attestation it is relying on is the one that was signed.",
+  "world_is": "The pin is only reproducible against LF bytes. On a Windows checkout (every Dell) the file on disk carries CRLF, so the straightforward receiver check -- hash the signature file, compare to the pin -- FAILS on a perfectly intact signature. The signature here IS intact; this row is about the instrument, not the attestation. It fails in the ALARMING direction, which has two bad outcomes: a receiver may refuse a good install, or, worse, learn that this particular mismatch is normal and stop checking. The fix is for the check to be specified on normalized bytes (or on the git blob), and it belongs to the instrument's owner, not to this seat. SCOPE: one signature file, one receiver, one day; it does not survey how many other pinned hashes in the intake records have the same shape."
+}
+```
+
+## NFRA_CTLPLN-D1-S5 -- the click wheel was delivered LOOSE to dell1, so intake_receive.py verify and prove both REFUSE it (MANIFEST.json absent, ok=False, refused=1) and the route's receiving half could not be exercised; the install was authorized by the signed check record and an independent hash instead.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T10:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S5",
+  "one_line": "the click wheel was delivered LOOSE to dell1, so intake_receive.py verify and prove both REFUSE it (MANIFEST.json absent, ok=False, refused=1) and the route's receiving half could not be exercised; the install was authorized by the signed check record and an independent hash instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "delivery named a bare file: C:/Users/Test/Downloads/click-8.3.1-py3-none-any.whl (crossbox XB-20261009T100730Z-a3db), 108274 bytes; no pack folder, no MANIFEST.json",
+      "AGENTBUS_DEVICE=dell1 python org/devices/intake/intake_receive.py verify --from <pack> rc=1: 'PACK-DEFECT: MANIFEST.json absent', 2 STRAY, 'REFUSED: wheel not listed in manifest; check record not listed in manifest', 'INTAKE-VERIFY wheels=1 verified=0 checked=0 stray=2 ok=False'",
+      "prove --from <pack> --scratch <new dir> rc=1: 'INTAKE-PROVE device=dell1 python=3.14.7 wheels=1 installed=0 imported=0 failed=0 refused=1 ok=False'",
+      "intake_receive.py docstring: a PACK is a folder holding, per wheel, <name>, <name>.check.json and <name>.delivery.txt, plus one MANIFEST.json",
+      "precedent for the other file of this same batch: org/devices/intake/records/intake-20261008-a/LOOSE_DELIVERY_rpds_py_SITEZ_BY_CTO_RULING_106777.md -- 'there is NO pack and NO manifest for this file, so intake_receive.py verify cannot be run'",
+      "authorization used instead, all measured on dell1: independent sha256 of the delivered file = 981153a6...45b2a6 = the record's held_sha256; record verdict='checked' (8 checks, 6 passed, 2 not_applicable); check 8 signed by 1.0.0_SA_CTO, signature intact (see NFRA_CTLPLN-D1-S4); installed dist's direct_url.json names a file:/// source carrying that same digest"
+    ]
+  },
+  "spec_asserts": "FWD-15 / the order's step 1: the checked file is RECEIVED, VERIFIED and PROVED by the receiving tool on the Dell, which returns receipts; the order's comp-adversary line names 'an unchecked file installed' as the hazard that verify-and-prove prevents.",
+  "world_is": "Neither verify nor prove could run, because a pack never arrived -- twice now in this one batch, for both of its files. No MANIFEST was authored on the receiver to make the tool pass: the MANIFEST is the SENDING machine's attestation (intake_check.py pack writes it), so a receiver-written one would have the tool verify the receiver's own copy against the receiver's own hashes -- a circular pass indistinguishable in the record from a real receipt. The bytes installed ARE the signed, checked bytes, and three independent readings say so; what is missing is the receiving tool's RECEIPT, which is the artifact the pack mechanism exists to produce. What would close it: the laptop runs intake_check.py pack (now possible -- the c6=failed hold that blocked it is cleared, the record reads verdict=checked with c6=not_applicable) and Taildrops the PACK, not the wheel. That is the sender's act, not this seat's."
+}
+```
