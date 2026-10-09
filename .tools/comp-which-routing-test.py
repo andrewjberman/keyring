@@ -167,6 +167,10 @@ import collections
 import datetime
 import json
 import os
+
+# Every comp-which row this harness causes is tagged harness=1, so usage telemetry can drop test traffic
+# (comp-tool audit 2026-10-08, COMP_WHICH_ROUTER_REVIEW_20261008.md recommendation 3). Set before any call, cold or warm.
+os.environ.setdefault("COMP_WHICH_HARNESS", "1")
 import random
 import re
 import shutil

@@ -79,7 +79,7 @@ _MAX_FALLBACK_GETS = 12
 _CONTRACT_TOOLS = ["comp-trace", "comp-blast", "comp-diff", "comp-xref", "comp-platinum",
                    "comp-system"]
 _REBUILD_VERB = ["comp-build"]          # default IS the rebuild; --check probes. No warm cached read.
-_PURE_PRODUCERS = ["comp-aws derive", "comp-stitch-refresh"]
+_PURE_PRODUCERS = ["comp-aws derive"]   # comp-stitch-refresh retired 2026-10-08
 _QUERY_ONLY = ["comp-kuzu"]
 
 

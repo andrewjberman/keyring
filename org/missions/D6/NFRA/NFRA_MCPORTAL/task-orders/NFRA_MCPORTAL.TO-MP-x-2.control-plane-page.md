@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md</decomp_doc>
 <owned_cells>MP-x-2</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPORTAL.TO-MP-x-2</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPORTAL~6</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
@@ -147,7 +148,9 @@ msg 32041 reads C12's "streaming" as the view updating while open. The Refresh b
 expectation (5 of 5) changed. Graded by to-pipeline-gate on the amendment commit; the worker receives it as a
 continuation when it reports (a worker cannot be messaged mid-run).
 
-<status>complete -- drained by 2.0.0_SA_COO~MP 2026-10-08 ~22:5xZ @6b1b7b18dd: AC1 5 of 5, AC2, AC3 PASS (issuer re-run in C:/tmp/mp-r4-6); mcportal d60b4e0 (LOCAL, wk-NFRA_MCPORTAL-r4-6-mcportal) goes live only through the release cell. Was: pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-08 ~22:5xZ @6b1b7b18dd: AC1 5 of 5, AC2, AC3 PASS (issuer re-run in C:/tmp/mp-r4-6); mcportal d60b4e0 (LOCAL, wk-NFRA_MCPORTAL-r4-6-mcportal) goes live only through the release cell. Was: pending
+
+<status>complete</status>
 <round>4</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>
