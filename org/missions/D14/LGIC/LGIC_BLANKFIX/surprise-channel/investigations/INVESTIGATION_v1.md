@@ -1625,3 +1625,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Three more causes stood at the base: a mapped root with no saved run and no ROOT line (NOTHING-TO-NAME) was not treated as ADDED; the per-root FIX brace check paired live rows with saved lines by position, which breaks when a name is added; and the ROOT-line and ALL-ROOTS-field compares failed on any added name or root. I made the added/not-compared rule cover them (item 2's intent) and kept every saved-run check as it was. A live-side HOLE (intake irpt-intake-poll, 'no cadence row') is printed as ADDED-NAME and is not graded here."
 }
 ```
+
+## LGIC_BLANKFIX-S11 -- the declares check reads newly mapped roots as missing (instrument, not census)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T23:00:08Z",
+  "one_line": "BV4-AC3's instrument reads ok=False on the trunk after the registry's lane mapped 8 of its 11 roots: it looks only for UNMAPPED lines, so a newly mapped root reads MISSING although still_zero=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/check_declares_names.py run on the trunk at the round-7 close -- 'DECLARES-CHECK ok=False roots=11 still_zero=0'; 8 lines 'MISSING <root>: no UNMAPPED line'",
+      "infra/logic/registry/root_map.json @9b9928ea92 (4.0.0_SA_CRO, msg 107404) -- 50 entries written; mapped 63 of 87",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/task-orders/LGIC_BLANKFIX.TO-BF-v-4.uncounted-names.md -- BV4-AC3 passed at its merge @52ea3e1784, before the entries landed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BV4-AC3: every root round 6 found declaring names behind a zero reads names > 0 or uncounted > 0.",
+  "world_is": "The census holds (still_zero=0; the 3 still unmapped read above zero). The instrument assumed the roots stay unmapped; once mapped they print ROOT lines it does not read. Round-8 input: read a mapped root's ROOT line (items) as well. Owner 2.0.0_SA_COO~G; un-parks at the round-7 drain-end message."
+}
+```

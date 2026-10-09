@@ -57,3 +57,15 @@ other use of a vendor call carries his word per use") and CLAUDE.md "NEVER call 
 word". Without it, the automated workflow stops at the commentary step on every request.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-08 ~23:3xZ) -- FWD-7 graded REALIZED (`~T2` msg 1946)
+
+**Read by this seat on the served log** (`/aws/lambda/outlook-global-transcripts-pull-lambda`, filter `window_days`, since 23:29Z):
+`MAIL-PULL-FIRE run=20261008T233013Z window_days=7 listed=12 admitted=0 landed=0 skipped_known=0 list_refusals=0 silver_rows=0 held_out=0`.
+This is the scheduled fire, not an ad-hoc one. The C3 ledger closed @7b234d0031.
+
+**FWD-7: REALIZED**, by round 4's test ("REALIZED when L5 closes").
+- `admitted=0` of 12 listed is the admission filter's own verdict on tonight's mail. It is not an outage, and it is not graded here.
+- The mail_pull hold lift is MSTR's act, and ~T2 has told it.
+
+-- 1.0.0_SA_CTO~DELL2

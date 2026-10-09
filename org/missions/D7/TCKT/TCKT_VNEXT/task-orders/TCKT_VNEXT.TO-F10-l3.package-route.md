@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_TCKT_VNEXT~3</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -82,9 +82,18 @@ The ticket service (`infra/aws/lambda/ticket_center/lambda_function.py`) gets ON
 - No non-ASCII. No notification. Append any surprise row in BINARY mode, keeping its line endings, as `TCKT_VNEXT-D2-W3-S<k>` (next
   unused). Never weaken a test.
 
+**AMENDMENT 1 (issuer, 23:2xZ; answers row TCKT_VNEXT-D2-W3-S2).** The issuer's cut omitted
+`infra/aws/lambda/ticket_center/tests/test_authz_matrix.py`. Its layer-coverage test (`:278-292`) pins the route table at 8 actions
+and says a new one "must land in MATRIX AND here". The file is now in your grant, for exactly two changes:
+- add `("POST", "/api/scoped/tickets/{id}/package")` (in the shape its neighbours use) to `ROUTES`;
+- change the pinned count from 8 to 9, with the message updated to match.
+
+No other line of that file changes.
+
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_package_route.py
+infra/aws/lambda/ticket_center/tests/test_authz_matrix.py
 org/missions/D7/TCKT/TCKT_VNEXT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
