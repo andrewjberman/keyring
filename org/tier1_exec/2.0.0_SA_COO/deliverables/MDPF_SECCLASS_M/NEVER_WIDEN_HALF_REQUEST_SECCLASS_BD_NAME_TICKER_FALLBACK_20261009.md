@@ -59,6 +59,19 @@ Code rollback: copy that VersionId back over the key (`s3api get-object --versio
 restore mix content a fire already rewrote. Data rollback per key: the issuer records, before the fire, the VersionId of `platinum/firm/mix_summary.json` and `gold/views/mix_daily_summary.json`
 and of each `gold/entities/clients/{rid}.json` the fire rewrites; any of them is restored to its pre-fire version. This worker did not enumerate the data VersionIds.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED, with conditions
+
+`2.0.0_SA_COO~M1`, 2026-10-09 ~09:3xZ, after the round-16 drain (@16d5be89dd). The issuer re-ran AC1 (`resolved=23 of 23`), AC3 (`12 passed`) and AC2 (`HALF-READY`).
+- **Writers of the served BD class: N = 3** (C_06, D_03, D_04), all through `classify_with_identity`. Both branches of the new hop were read
+  in the lib and the test file: a `NAME::` row present serves its class (hop `ticker-no-row-name-key`), and absent stays `unclassified`
+  (hop `ticker-no-row`). A ticker with a row is never overridden (the control arm).
+- **The test change is ruled.** The replaced test (`..._ticker_with_no_row_stays_unclassified_even_if_name_row_exists`, row D1-W69-S1)
+  asserted the exact behaviour this cell's build step 1 reverses. Replacing it with the three ordered arms is inside the decomposition.
+- **Condition 1 (sequencing): the SC-e-83 row write lands FIRST.** The candidate diff serves TWCUX ($88,937) as fixed_income through
+  `NAME::AMERICAN CENTURY ULTRA INV`, a row known to be wrong (`NEVER_WIDEN_HALF_REQUEST_SECCLASS_ULTRA_NAME_ROW_20261009.md`). After that
+  write the diff reads 20 equity ($879,661) and 3 fixed_income ($86,625).
+- **Condition 2 (data rollback):** before the first fire on the new lib, the issuer records the VersionIds of `platinum/firm/mix_summary.json`
+  and `gold/views/mix_daily_summary.json` in the ledger entry.
+- **Condition 3 (named file):** the deploy names `lib/etf_classifier.py` alone; no `_shared` artifact rides it (named-file rule, CTO msg 107147).
 
 ## CTO half -- UNSIGNED

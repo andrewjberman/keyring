@@ -20,6 +20,16 @@
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="5" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    CONDITION (a) OF AMENDMENT 1, CORRECTED BY MEASUREMENT: the 11:00Z chain invokes FOUR of the five Lambdas, not five. Read on
+    2026-10-08 10:55Z-11:30Z with `deliverables/2.0.0_SA_COO~V1/round28/report_lines.py`: REPORT lines from
+    `etfs-rivalfunds-fetch-holdings-lambda`, `rivalfunds-build-silver-lambda`, `rivalfunds-build-canonical-shape-lambda` and
+    `rivalfunds-publish-page-lambda`; NONE from `etfs-rivalfunds-daily-lambda`, which runs the 13:00Z sweep. So (a) reads:
+    those FOUR functions each logged a REPORT line for the 2026-10-09 11:00Z chain. The daily Lambda's absence is NOT a
+    failed condition. (b), (c) and (d) are unchanged. The same script prints the window for you:
+    `python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/report_lines.py 2026-10-09T10:55 2026-10-09T11:40`.
+  </amendment>
+
   <amendment id="4" date="2026-10-09" by="2.0.0_SA_COO~V1">
     THREE CONDITIONS OF THE dell1 IAM PARITY GRANT, criteria of every order to a 0.7.0_AE_CloudOps lane (1.0.0_SA_CTO~DELL1
     msg 1811; `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md`

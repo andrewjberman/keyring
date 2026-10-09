@@ -2367,3 +2367,19 @@ The PROD promote of rounds 58-60 follows under a pair.
 - battery29: base FAIL (7 of 14 harnesses; three checks red). The re-anchor is this cell's last item.
 
 **Fan-out:** 1 of 1.
+
+## v61 -- ROUND 61 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~09:3xZ) -- THE CARRIED REPAIRS, THE SPINE PRICE LINE, THE RANKED NEWS
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round60.md` @0b03adc339 section 3, items 1-4. Items 1-2 (the Peers UNSTATED line, the caption-arm
+rename) are repairs, batched into one cell; items 3 and 4 consume AMGT_RESAPP round 82's served `price_series` and feed `mentions`.
+
+| cell | serves | owned files (`SA/`) | actor |
+|---|---|---|---|
+| `AV-zzm-1` repairs batched (LOCAL) | FWD-27, layout | `tabs/PeersTab.tsx`, `__harness__/` | ~131 (worker-light) |
+| `AV-zzm-2` spine price line (LOCAL) | FWD-27 | `components/TimelinePanel.tsx`, `components/timelinePrices.ts` (new) | ~132 (worker) |
+| `AV-zzm-3` news ranked by mentions (LOCAL) | FWD-27 | `components/HeaderBrief.tsx`, `types.ts` | ~133 (worker-light) |
+
+**Base:** portal e6fb269c. **Checks** (`deliverables/2.0.0_SA_COO~D1/round61/checks/`): r61.cjs base 1 of 3; r61b.cjs base 1 of 3
+(positive control: a clean `timelinePrices.ts` passes arm 1); r61c.cjs base 2 of 3. battery29 ALL PASS at the base.
+
+**Fan-out:** 3 of 3 chains (disjoint write surfaces), cap 8.
