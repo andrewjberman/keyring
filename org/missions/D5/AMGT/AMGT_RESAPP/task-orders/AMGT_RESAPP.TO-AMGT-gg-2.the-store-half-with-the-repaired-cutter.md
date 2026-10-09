@@ -90,3 +90,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>staged -- pair COMPLETE: COO half @5e08743a44, CTO half @15cb69dbc2 (msg 1962): round 81's conditions 1-4 carried, plus CONDITION 5: list each name's FOUR prefixes before and after the act and write the diff into that name's ledger leg; any key outside the four is a STOP for the remaining names, disclosed the same tick. GO after AMGT-gg-1 merges under 1.0.0_SA_CTO~Z's half and r82_cut AC1 reads OK on ASML NA. Graded by no gate limb (a modification).</status>
