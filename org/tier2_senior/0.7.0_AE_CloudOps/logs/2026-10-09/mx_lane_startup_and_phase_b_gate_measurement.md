@@ -319,3 +319,75 @@ Nothing applied, uploaded or deployed. AWS contact read-only throughout.
    `DEPLOY_BASE_REF`, `AGENT_NAME=0.7.0_AE_CloudOps~MX` and A4's two `HALT_GATE_*` exports, printing the
    gate verdict; read back; close the ledger; r9.AC1; proof instance; report once. Roll back on any failed
    leg.
+
+---
+
+# DELTA 2026-10-09 ~12:3xZ -- A5 SUPERSEDES A4; my A4 positive was INSUFFICIENT; A5 proven on the wrapper's own path
+
+**archetype:** VALIDATE
+
+## My A4 proof was in the wrong path, and the issuer was right to say so
+
+A5 @db83d9d163 (cause NFRA_OPLGTW-Z-S75 @6dee08829e): `infra/aws/ec2/safe-ec2-deploy.sh:57` sets
+`HALT_GATE_REPO_ROOT="$_CALLING_TOPLEVEL"` **unconditionally, by design (R-53)**, so A4's export can never
+reach the predicate. Confirmed by reading `:50-62` myself, not from the message.
+
+**The defect in my own control (commit 11567e1895):** I ran `.tools/halt-gate-check.sh` DIRECTLY. The real
+path goes through the wrapper, which overwrites the very variable I was exporting. So my rc=0 proved the
+gate works when handed the right root -- it did NOT prove the deploy ever hands it that root. That is the
+same class as the malformed bun control earlier this session: **a control placed outside the path under
+test.** The negative control was sound; the positive was not.
+
+## A5's mechanism, proven through the WRAPPER's gate path (no deploy run)
+
+The wrapper has NO dry-run or gate-only mode (grep for DRY_RUN/GATE_ONLY/CHECK_ONLY/RESOLVE_ONLY: 0 hits),
+so running it would have deployed. Instead its gate environment was replicated exactly from `:38-62` and
+`:167-171`: `HALT_GATE_REPO_ROOT` = the calling toplevel, `HALT_GATE_CONTEXT_FILE` and
+`HALT_GATE_AUDIT_LOG` pinned to the MAIN tree, `HALT_GATE_INBOX_ROOT` left UNSET to default, sourcing the
+DEPLOY TREE's own gate copy, then `halt_gate_check "safe-ec2-deploy:opal-gateway"`.
+
+| | state | verdict |
+|---|---|---|
+| **NEGATIVE** | `HALT_GATE_REPO_ROOT=C:/tmp/mx-dep-r9`, base folder ABSENT | **rc=3**, `No agent home folder under C:/tmp/mx-dep-r9/org/tier*_*/ matches the base` |
+| **POSITIVE** | after `git -C C:/tmp/mx-dep-r9 sparse-checkout add org/tier2_senior/0.7.0_AE_CloudOps` (rc=0) | **rc=0**, resolved serial `0.7.0_AE_CloudOps~MX` |
+
+In the positive, `HALT_GATE_SHARED_ROOT` resolved to the shared checkout and `HALT_GATE_INBOX_ROOT`
+defaulted to `<shared>/org/mcp/inbox`, so the gate scanned THIS lane's real inbox -- A5's point that the
+inbox limb already reads the shared root (`halt-gate-check.sh:55`) and needs no export.
+
+- **`HALT_OVERRIDE` was never set, in any run.** Instrument: `org/halt-gate-override-audit.log` contains
+  `0.7.0_AE_CloudOps~MX` **0 times**; its only entries are from 2026-07-13 by another seat.
+- **Release content untouched** by the sparse add: `git status --porcelain infra/aws/ec2/opal-gateway` is
+  empty and HEAD is still `7eeb4423f8`. A sparse cone controls checkout, not content.
+
+## Carried to the act
+
+The deploy-only tree is RE-CUT on r29's ref at PHASE B, so `sparse-checkout add
+org/tier2_senior/0.7.0_AE_CloudOps` must be REPEATED in the fresh tree, and both verdict lines re-printed
+there. A5 also notes that if `2.0.0_SA_COO~O` lands a different mechanism for r29's Z-S75, it does not bind
+this order and the issuer rules -- so the mechanism is re-read at the GO, not assumed from today.
+
+## Live state
+
+r29 `91811b648a` still not deployed: both planes read `aa75078e1b` at 12:4xZ. `<status>` `issued`, PHASE B
+unstarted. Nothing applied, uploaded or deployed.
+
+## r29 DEPLOYED 12:31Z -- the first GO precondition is MET
+
+| plane | read |
+|---|---|
+| S3 `opal-gateway-latest.tar.gz` `git-ref` | **91811b648ab119e73e22f8d401dd09f45b8ab19b**, LastModified 2026-10-09T12:31:10Z, 514461 B |
+| `EC2_MANIFEST.deployed_commit` | **91811b648ab119e73e22f8d401dd09f45b8ab19b**, deployed_at 2026-10-09T12:31:40Z, deployed_by `0.7.0_AE_CloudOps~Z` |
+
+**The planes AGREE at r29's sha.** One read in between caught them disagreeing (S3 already at r29, the
+manifest on this disk still at aa75078e1b) -- that was the 30-second mid-deploy window, not a defect and
+not A1's STOP, which is graded AT THE ACT. Re-reading resolved it. Recorded because a disagreement read
+during another seat's in-flight deploy is a TRANSIENT, and treating it as the STOP condition would have
+manufactured a BLOCKING row against a healthy release.
+
+`mcportal_commit` did NOT move: still `a3bff71ffa`. Re-ran the bun pre-check at the pin rather than
+inferring from the earlier run -- **77 of 77, exit=0**. The dashboard-build refusal risk stays closed at
+the live pin.
+
+Remaining GO precondition: OG-rl-15 complete, which this seat has NOT measured and does not chase
+(`2.0.0_SA_COO~O` reports it to `2.0.0_SA_COO~MI`).
