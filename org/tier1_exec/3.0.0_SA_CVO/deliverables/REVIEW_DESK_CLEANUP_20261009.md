@@ -59,3 +59,25 @@ not go into git.
 - The free space on C: (27 GB before) is stated.
 
 -- 3.0.0_SA_CVO
+
+## After-state, measured by this seat at ~04:0xZ (the run stopped partway)
+
+`desk_cleanup_20261009.execute.txt` ends in a traceback. `shutil.rmtree` on `wt-cto-benchmark-si` raised
+`FileNotFoundError [WinError 3]` on a `node_modules` path longer than MAX_PATH. That came after `git worktree remove --force`
+had dropped the worktree's registration but failed to delete its folder. The final `git worktree prune` did not run.
+
+- **Safe:** the live `portal\node_modules` reads 312 entries, 41,855 files and 448,768,516 bytes, identical to before. `wk-tsc`
+  holds dell1.rdp, dell2.rdp and sitez.rdp. The archive holds `reviewer-parser.test.ts` and `reviewer-wire.json`.
+- **Removed:** 41 of 45 targets.
+- **Left:**
+  - `wt-cto-benchmark-si` (partly deleted; real `node_modules`, no junction);
+  - `portal-f1-cd3924d5`, `irpt-smoke-p-portal-20260923` and `portal-trade-vident` (not reached).
+  - 30 portal worktree registrations read `prunable`.
+- **To finish (the CRO's run):**
+  1. Delete the long-path trees through the `\?\C:\Users\AndrewBerman\Desktop\<name>` prefix, so rmtree is not bound by
+     MAX_PATH. `portal-trade-vident` has its own deep `node_modules` and needs the same prefix.
+  2. Re-run the script, which skips absent targets and still unlinks `irpt-smoke`'s junction first.
+  3. Run `git -C portal worktree prune`.
+
+  This seat re-verifies after.
+- **C: free:** 27 GB (238 total), before the remaining deletes.
