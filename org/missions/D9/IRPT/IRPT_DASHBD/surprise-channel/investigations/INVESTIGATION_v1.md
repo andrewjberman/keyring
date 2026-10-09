@@ -3187,3 +3187,27 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W39-S1 -- 26 of the 170 LARGE_FLOW_DAY misses carry BD fees equal to minus netAdditions; the add-back and the TWR are of a flow
+
+```json
+{
+  "id": "IRPT_DASHBD-W39-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~39",
+  "surfaced_at": "2026-10-09T02:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "26 of the 170 LARGE_FLOW_DAY misses are not a large-flow valuation: BD's fees field equals minus its netAdditions and the money gain is about zero, so the fee add-back and the TWR are both of a flow.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~39/LARGE_FLOW_E3.json rows sub_class BD_FEE_FIELD_IS_FLOW and counts"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-62: the 170 are LARGE_FLOW_DAY, a flow of at least 25% of the prior day's value sets the segment's return and BD's per-flow valuation is not in the landed period point.",
+  "world_is": "MEASURED on the 170: for 26 rows BD fees is negative and equals minus netAdditions to within a dollar or 0.2%, and ending - beginning - netAdditions is about zero (cash-only or sweep accounts: Opal's linked return is 0.0000 to 0.19), while BD's TWR reads -0.34 to 2.15. The fee add-back (fees / mean daily value) is then an add-back of the contribution, not of a fee, which is why round 31's classifier reached these only at the large-flow step. Grading them on BD's own landed gain over the mean daily value lands 23 of the 26 within 0.35 pp (module large_flow_e3.py, landed_gain_return); nothing is adopted into the reader of record, and the other 144 are not a fee-field effect. Whether the 26 also appear among round 31's FEE_ADDBACK_NOT_APPLICABLE or the 9,078 outside the 170 was not measured."
+}
+```
