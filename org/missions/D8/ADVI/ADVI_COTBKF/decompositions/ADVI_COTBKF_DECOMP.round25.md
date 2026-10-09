@@ -7,7 +7,7 @@
 `ftax` first (35); E2 carried levels (39); E3 the ex-date filing.
 
 **Rule 24.** Domain: E1, E2, E3. Three cells, two chains: E1 and E2 both write the cash-leg and flow treatment and are graded against
-the same 3,059-match baseline, so they run as one chain on one worker; E3 is a filing, not code, and is the issuer's DIRECT ACT.
+the same 3,059-match baseline, so they run as one chain on one worker; E3 is a filing, not code, and not an order: it is the issuer's record.
 
 ## Measured constraints
 
@@ -23,6 +23,6 @@ the same 3,059-match baseline, so they run as one chain on one worker; E3 is a f
 |---|---|---|---|---|---|
 | `CB-y-1` | E1: a treatment for each unlisted type, `ftax` first, each with its stated source; each of the 35 MATCH or traced; 0 new regressions against 3,059 | FWD-3 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~47` |
 | `CB-y-2` | E2: each of the 39 carried levels traced to its first wrong month; any fix leaves the matches unchanged | FWD-3 | LOCAL | `CB-y-1` | `0.9.0_WK_ADVI_COTBKF~47` (continued) |
-| `CB-y-3` | E3: the ex-date request filed with dell1's data queue, owner and the 22 months named | FWD-3 | LOCAL | none | issuer DIRECT ACT (`2.0.0_SA_COO~C2`) |
+| `CB-y-3` | E3: the ex-date request filed with dell1's data queue, owner and the 22 months named | FWD-3 | LOCAL | none | NOT AN ORDER: the issuer's filing, `deliverables/2.0.0_SA_COO~C2/EXDATE_REQUEST_DELL1_DATA_QUEUE_20261009.md`, landed with the issuance @c77f7982e4 and routed through `0.0.0_AB_MSTR~DELL2` (the TO gate refuses a Tier-1 assignee and a born-terminal order) |
 
-**Fan-out:** `2 of 2 chains, cap 8` (one worker chain of two cells; one direct act).
+**Fan-out:** `1 of 1 chains, cap 8` (one worker chain of two cells; E3 is a filing, not an order).
