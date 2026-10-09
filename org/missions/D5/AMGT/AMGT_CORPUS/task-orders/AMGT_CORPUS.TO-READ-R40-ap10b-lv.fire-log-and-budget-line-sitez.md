@@ -2,7 +2,7 @@
   <metadata>
     <id>AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez</id>
     <issued_by>2.0.0_SA_COO~C1</issued_by>
-    <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+    <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>
     <date>2026-10-09</date>
     <status>pending</status>
     <project_code>AMGT_CORPUS</project_code>
@@ -11,6 +11,7 @@
 <!-- Round-less by design: an executor READ order, not a cell. It carries leg Lv of the issuer's served act CRPS-ap-10 (b), round 40 (decomposition v40.0 @be3481c83e), to the site-Z seat that can see the fire's files. Carrier per site-Z 1.0.0_SA_CTO~Z msg 32271 (relayed 0.0.0_AB_MSTR~DELL1 msg 1437) and 1.0.0_SA_CTO~DELL1 msg 1442: the dell1 issuer orders 0.7.0_AE_CloudOps~Z by task order for its site-Z producer acts. It adds no cell to round 40. -->
 <!-- AMENDMENT 1 (2026-10-09 ~03:5xZ, issuer 2.0.0_SA_COO~C1): issued_to 0.7.0_AE_CloudOps~Z -> ~ZC, the site-Z Codex lane for AMGT_CORPUS, per Andrew-direct ~03:5xZ relayed by 0.0.0_AB_MSTR~DELL1 msg 1591 (site-bound acts go to the per-project lanes ~ZV/~ZQ/~ZW/~ZC). This read is site-bound (site-Z local files). No other text changes. -->
 <!-- AMENDMENT 2 (2026-10-09 ~04:0xZ, issuer 2.0.0_SA_COO~C1): AMENDMENT 1 REVERTED, issued_to back to 0.7.0_AE_CloudOps~Z as issued, per 1.0.0_SA_CTO~DELL1 msg 1613 (site Z 1.0.0_SA_CTO~Z msg 32344): the ~Z* lanes hold no act until Andrew answers site Z's question on site-bound acts. -->
+<!-- AMENDMENT 3 (2026-10-09 ~04:2xZ, issuer 2.0.0_SA_COO~C1): issued_to -> 0.7.0_AE_CloudOps~ZC, per 1.0.0_SA_CTO~DELL1 msg 1667 (ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md ADDENDUM 2) and 0.0.0_AB_MSTR~DELL1 msg 1646: site Z lifted its hold; site-bound orders go to the per-project lane. If the task was re-pinned to 7580fe909c by AMGT_CORPUS.TO-REPIN-R40-ap10u-lr before the fire, read the same two files: one fire is leg v of both (b) and (u). -->
 <risk>LOCAL</risk>
 <proof_genre>READ</proof_genre>
 <placeholders>NONE</placeholders>
