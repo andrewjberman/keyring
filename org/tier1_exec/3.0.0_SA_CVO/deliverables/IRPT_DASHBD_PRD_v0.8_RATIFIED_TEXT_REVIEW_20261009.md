@@ -46,3 +46,14 @@ vendor. The refusal stands on a stronger ground, the issuer's own registry read 
 adapter, and "tied out against Black Diamond" would compare Black Diamond with itself. A circular tie-out is not a tie-out. An independent
 candidate exists but is unregistered for this purpose: the Commonwealth custody data ADVI_COTBKF grades (`opal-data-assets/commonwealth/
 cottonwood/`). The fix line is unchanged: each firm against its own independent reported source, named by the first cell's read.
+
+## Re-review on @3eb7dbcf36 (~03:5xZ, msg 2343): SIGN
+
+The diff e8b44a8379..3eb7dbcf36 on the PRD is two hunks. ENDPOINT: FWD-11's ACCEPT now reads "each firm's return is tied out against its
+own reported source, named by the first cell's read, as 49 Financial's is (FWD-8)", which is the fix line above, byte for byte in
+substance. CONTRACTS: unchanged. On these bytes this seat signs the ratified-text half.
+
+**Note for the addendum, not a ground (it is outside ENDPOINT and CONTRACTS):** its new bullet repeats this seat's withdrawn ground 3,
+"Cottonwood's reported returns are Commonwealth's, not Black Diamond's, because cot is not bd (rule 13)". Per the correction above, rule 13's
+"bd" is 49 Financial, and Cottonwood's registered master IS Black Diamond (z09). The accurate sentence: a Black Diamond tie-out for
+Cottonwood would be circular; Commonwealth custody data is the unregistered independent candidate, confirmed or not by the first cell.
