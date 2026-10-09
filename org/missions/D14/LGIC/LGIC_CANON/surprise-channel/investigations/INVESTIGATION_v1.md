@@ -1448,6 +1448,28 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "Two registries now hold the same answer for two keys and can drift apart; the registry owner (4.0.0_SA_CRO) rules whether the census should also read key_rulings.json (by key alone where the bucket is unknown) or name_rulings.json's _about should admit a stored-file path. Not done here: neither is in this order's paths."
+  },
+  {
+   "id": "LGIC_CANON-D1-W1-S31",
+   "project": "LGIC_CANON",
+   "fabric": "dell1",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-10-09T19:21:21Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "one_line": "portal/src/lib/firmAccess.ts FIRM_ALLOWED_PATHS holds a 'demo' firm (10 pages) whose scope row is tenant.kind demo with no tenant.pages, so the order's '--check for every firm in the map' cannot both pass live and grade demo.",
+   "spec_asserts": "TO LGIC_CANON.TO-CN-q-3 PART A build 2: for every firm in FIRM_ALLOWED_PATHS every granted page must be in that firm's derived set, a page that is not STOPs; criterion Q4R5-AC1: --check passes live. ADDENDUM 1: the core is derived for every CLIENT firm with the portal on.",
+   "world_is": "MEASURED 2026-10-09. scopes.json FIRM rows: 49financial, inflection, cottonwood (kind client, tenant.pages written by 4.0.0_SA_CRO @a15fb36a4c) and demo (kind demo, surfaces portal true, no tenant.pages). firmAccess.ts grants demo 10 pages. Graded literally, --check STOPs 10 times on demo and rc is 1 live. lib/opal_portal_paths.py --check therefore grades kind client firms (3 firms, 25 pages) and prints 'SKIP demo -- tenant.kind=demo, not a client firm (10 granted pages not graded)' with the denominators (4 firms, 35 pages). No check value was weakened; the skip is printed, not silent.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python lib/opal_portal_paths.py --check at wk-LGIC_CANON-1: 'CHECK: firms=4 pages=35 graded_firms=3 skipped_firms=1 stops=0 OK'",
+     "infra/logic/registry/scopes.json demo row: tenant.kind demo, no pages key",
+     "portal/src/lib/firmAccess.ts :114-125 demo allowlist"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "For the CTO/registry owner: either rule that the demo tenant is outside the client-page rule (the skip stands), or have 4.0.0_SA_CRO write tenant.pages for demo (the 10 pages less the 7 core = /attribution /factor-tilts /trade-submission, plus kind would have to be client for the core), after which the skip can be dropped. Not done here: scopes.json is not in this order's paths."
   }
 ]
 ```
