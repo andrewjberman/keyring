@@ -142,6 +142,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
       resources. `4.0.0_SA_CRO~RV` was not relaunched, so the driver rules ETFS_RIVALS calls until he says otherwise.
     - The "Friday demo" goal text is not in his word of today and is not carried.
     - Stop: DONE read from the register, HELD-AT-STOP (never for AMGT_HARVST), or Andrew's stand-down.
+    - **STRUCK 2026-10-09 ~02:0xZ by `1.0.0_SA_CTO~Z`, STOPPED-BY-OPERATOR.** Andrew moved all five projects to DELL1 (records
+      `ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md` @b7361ceb2a and
+      `ANDREW_DIRECT_20261009_014xZ_RESAPP_BBG_ASKS_VIA_BACKFILL_QUEUE_NO_UNBLOCK_NEEDED.md` @0953984a75: "those agents are on DELL1
+      now, thats where they can work"). The cron is deleted. The site-Z COO rows above are void for the five projects, whose seats
+      are dell1's. A successor does not re-arm this row.
 - DELL1 (Andrew-direct ~07:15Z 2026-10-07 at the `0.0.0_AB_MSTR~DELL1` terminal, relayed as msg 1, VERBATIM: "Bring CTO online
   with instructions to run /self-drive on the underlying COOs projects with a 60m interval. Furthermore, the COOs should be running
   /canonical-drive on their projects."). Record
