@@ -181,3 +181,28 @@
   "notes": "Independent of row D1-S5: this one blocks the BACKFILL path, which 2.0.0_SA_COO~D1 ruled (msg 3153) does not reach the L-1 assertion -- and that ruling is correct, verified in source at lambda_handler:2995-2996 returning run_backfill() before any build. Both rows must clear before the round's thread is whole. Nothing is half-landed in either ledger."
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S7",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T21:32:14Z",
+  "one_line": "DISARMS rows D1-S3, D1-S4, D1-S5 and D1-S6 (the disarm owner's read of the live plane after ADHOC.canon-r1-gold-redeploy-backfill closed @1785cdcddf).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D1",
+  "spec_asserts": "Each ARMED row disarms through its owner with the evidence named.",
+  "world_is": "S3 (package omits opal_unidentified.py): fixed by MDPF_STRATID F2 @79e30151a6, live; C1 manifest carries it. S5 (L-1 key-set on unidentified_strategies): fixed by MDPF_STRATID ST-w-8 @88e974ca10; C3 qa_local re-read green, errors [], 16 of 16, L-1 PASS on all four types, zero writes. S6 (composite ListBucket): AMENDMENT 4 applied; C4 completed. S4 (4 synthetic composite 10-08 partitions): deleted on Andrew's word by the laptop 1.0.0_SA_CTO (record ANDREW_DIRECT_20261009_210xZ_DELETE_SYNTHETIC_TEST_DATA_MDPF_GLOBAL_20261008.md @991c4cae64; call dell1-20261009T202914Z-113f CLOSED); the backfill then wrote the real global 10-08 for the three artifacts with a source. Final read: 540 partitions, 16 of 16 series equal to their legacy dated counts, 0 mismatches.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ADHOC.canon-r1-gold-redeploy-backfill_PROOF_OF_SPEC.json @1785cdcddf",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_210xZ_DELETE_SYNTHETIC_TEST_DATA_MDPF_GLOBAL_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Resolves MDPF_CANON-D1-S3, MDPF_CANON-D1-S4, MDPF_CANON-D1-S5, MDPF_CANON-D1-S6. Filed at the round-1 close; the four rows' hazards are spent."
+}
+```
