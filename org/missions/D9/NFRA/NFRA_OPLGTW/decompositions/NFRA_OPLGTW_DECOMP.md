@@ -1932,3 +1932,14 @@ market_update), built on OG-ab-1, released WITH E2 under one pair naming both ad
 | `OG-pn-1` | -- | Measure the 28 columns, extend the pin explicitly (guard not loosened), tests, the never-widen ask; then (by continuation) the applier's deploy and the re-run of only the held dates. | WORLD | ~50 | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.39 (2.0.0_SA_COO~O, 2026-10-09 ~17:0xZ) -- round 33, workstream E2-RELEASE
+
+**Source.** CTO~Z msg 32663 (TAKE E2) and @14cbf27dec (the .xlsx pair releases ALONE). Host free after MP-x-4
+(16:27Z); MX-r-9 next, then this release.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-rl-16` | -- | Phase A: release on the live ref carrying E2's .xlsx pair only (not OG-ab-2's .pptx), the ANNOUNCE for three halves. Phase C: the served read after the applier deploys. | WORLD | ~51 | worker |
+
+**fanout:** 1 start, cap 8. The applier's order is cut after the halves and MX-r-9's ledger close.
