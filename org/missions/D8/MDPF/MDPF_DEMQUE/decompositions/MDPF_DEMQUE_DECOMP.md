@@ -186,3 +186,26 @@ Round 2 is EXECUTING (frozen). Round 3 is cut only from the CTO's round-2 analys
 | the pilot readout | R2-PILOT-50's lock outcomes by asset type, push-backs, actual vs quoted cells -> tolerance bands confirmed or retuned | FWD1_REAL_RUN_R2.md |
 | priority ranking | FWD-9: requests carry a tier, but within-tier score (held days x accounts x largest purchase) and the "gone client" exclusion are not computed | dell2 research s.6; crosswalk (MATCHED 471 of 1,533) |
 | unresolved list | FWD-5: REJECTED / no-symbol / partial-range securities are not yet listed with reason and open date ranges | dell2 research s.2, s.5 |
+
+## ROUND 3 -- CUT (issuer 2.0.0_SA_COO~Q1, dell1; 2026-10-09 ~03:2xZ)
+
+**Status: ISSUED** in one issuance. Round 2 is CLOSED (@590c35ee97). Rectangle: `1.0.0_SA_CTO~DELL1` msg 1511 -- "Cut round 3 in ONE
+issuance with the C-METER Bloomberg quote cell first (quote in BQL/reference cells, record actuals; site Z draws per C-SITES)". Since
+law edit 4d77a9c3ea (msg 1502) every Bloomberg draw files to this queue, and under msg 1466 none but the two RESAPP calls draws unquoted,
+so every new Bloomberg request blocks on this cell. The candidates above (reserve measurement, pilot readout incl. row D1-S1, ranking,
+unresolved list) are not in this round: they go to the CTO in the round-2 drain-end message.
+
+**Measured at the base:** the two filed requests (`requests/AMGT_RESAPP-493c-ICT-IDENTITY.json`: channel `reference`, 1 security x 4 static
+fields, null window; `requests/AMGT_RESAPP-107a-ABNB-MODEL-BLOCK.json`: channel `model_block`, the field set
+`integrations/bloomberg/research/model_block_pull.py` declares: `HEADER_FIELDS` :103, `HIST_FIELDS` :220, `FORECAST_FIELDS` :330, "calls per
+name stay 8" :340). Allowance inputs: BQL CEILING = the measured floor 2,920,000 cells (2026-10-05, PRD C-RESERVE); the RESERVE (tier-1
+production's measured draw + margin) is not on the ledger yet (msg 1511 (2): production is ledgered as RESERVE draws, from now); the
+reference/history and model-block channels have no measured ceiling.
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `DQ-t-9` | `bbg_quote.py`: a Bloomberg request (`vendor` bloomberg; `channel` bql / reference / history / model_block) quoted in cells per channel before it draws -- reference = securities x fields; history/bql = weekdays x fields x securities; model_block = the producer's declared per-name groups (read by `ast`, never imported) with a per-group breakdown; finish date only when the channel's allowance (CEILING - RESERVE - drawn today, `bbg_allowance.json`, each figure with its claim) is known, else `finish_date: null` + `allowance_gap` naming what is missing; `record_actual()` appends the drawer's MEASURED cells beside the quote to the ledger, labelling a draw with no quote "drawn before C-METER Bloomberg; no quote" | FWD-3, FWD-4 | dell1 code | LOCAL | H, `0.9.0_WK_MDPF_DEMQUE~8` |
+
+Write set: `data/mdpf/scripts/demque/bbg_quote.py`, `.../bbg_allowance.json`, `.../test_demque_bbg.py`, the channel. Checks (dry-run at the
+base ~03:2xZ, both FAIL as expected): `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R3_CHECKS/`. `fanout: 1 of 1 chains, cap 8`.
+Battery: comp-schedule / comp-iam / comp-adversary DECLARED-NOT-APPLICABLE (no schedule, no AWS, no vendor call; LOCAL code).
