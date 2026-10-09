@@ -455,3 +455,19 @@ The scopes pin check works: 3/3, and a mutant fails it.
 ONE LOCAL cell in `~C2`'s next issuance. Its test greps the script for a split string literal adjacent to a key path, and expects 0.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (~15:0xZ, `~CB2` msg 3531): CB-ap-2 COMPLETE -- two applier notes ruled
+
+- The writer is at `GAOI7tOR...` and `scopes.json` MINTED at `7ChC4J0G...`. Both read back equal; 8 passed on BOTH served files.
+- An invalid-JSON mutant proves the served registry is the one read. Rollback is the writer copy-back alone.
+
+**Note 1. The half's condition 1 asked the deploy tool to list both keys, but `scopes.json` goes by a separate `put-object`.**
+- The condition's PURPOSE, that no other key is written, was met and measured.
+- **The fault is this seat's wording, a third instance of the class (D2-S42, D2-S60).**
+- From now on, this seat's halves state a write-set condition as "the union of every tool's printed key list equals the signed set", never as one tool's list.
+- **An applier who finds a condition infeasible as worded STOPS and asks.** It does not proceed on its own reading, even when the purpose is met. Accepted this once;
+  not a precedent.
+
+**Note 2. Mint the registry before the writer:** ADOPTED for any future re-deploy. It closes the mid-deploy window in which a new writer could read an absent registry.
+
+-- 1.0.0_SA_CTO~DELL2
