@@ -3969,3 +3969,30 @@ round.** Never edit an existing row.
   "world_is": "Both met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-S59 -- control_same=False is the basis change (reader-gate row, ADDENDUM 11)
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S59",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T13:07:13Z",
+ "one_line": "control_same=False on the round-34 re-grade is the BASIS CHANGE: the run's two arms differ only in price basis (store -> as_traded; same sweep list v1/v1, same cash leg method_r28), so the sweep control has no no-change arm. Of 566 control months, 7 moved; every security-day whose price changed in those 7 account-months is a re-priced cottonwood-silver-canonical-prices point (21-189 cusip-days each); no moved month has another cause. Largest move: RGY005018 2024-11, -0.8300 pp (DIFF -> MATCH).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "issuer re-ran the tool's own control_months() on .scratch/advi_cotbkf/r34_out/month_grades_{before,after}.parquet with the run's transactions and sweep list: control 566, same 559, moved 7",
+   "moved (computed pct before -> after): B3S762431 2021-10 5.6330->5.5314 (DIFF->MATCH); B3S786844 2022-09 -21.6921->-21.9164 (DIFF->MATCH); D49151054 2021-06 -5.29715->-5.29713 (MATCH->MATCH); D49151054 2021-07 -1.8551->-2.4174 (MATCH->DIFF, now ABSENT row D2-S56); RGY004256 2024-05 -2.5702->-2.5912 (MATCH->MATCH); RGY005018 2024-10 -0.37535->-0.37536 (MATCH->MATCH); RGY005018 2024-11 1.8405->1.0104 (DIFF->MATCH)",
+   "cause check: .scratch/advi_cotbkf/r34/{before,after}/security_day_price.parquet -- in each moved account-month every held cusip-day with a changed price has after-store cottonwood-silver-canonical-prices (the substituted basis); the 703 security-days store-wide that changed to another store were canonical before and fell back when unbracketed days dropped (price_basis.json days_dropped_unbracketed=3962), also the basis change",
+   "r34 price_basis.json: substituted_tickers=911, points_replaced=1049193, days_rederived=477980"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "ADDENDUM 11: the reader gate opens after one row explaining control_same=False, with the count of control accounts that moved and the largest move; any move from another cause keeps the gate shut.",
+ "world_is": "7 control months moved (5 accounts), all from the basis change; largest 0.83 pp. The gate condition is met."
+}
+```
