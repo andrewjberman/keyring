@@ -24250,3 +24250,116 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The widening build was stopped before upload; the fix is a cut cell under a CTO ruling."
 }
 ```
+
+## IRPT_BCKEND-D2-W271-S1 -- IB-pr-408: 5 of 9 red _contracts tests fixed in grant, 4 named
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W271-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~271",
+  "surfaced_at": "2026-10-09T12:56:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-408: of 9 red _contracts tests 5 FIXED in grant (2 stale denominators, 2 stale ExportReceipt fixtures, 1 worktree-blind portal resolver); 4 NAMED -- three DECLARED routes (custody-report-read, custody-report-persist, analysis-request-original) publish no response schema file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base e783f333cc: pytest _contracts -rf 9 failed 176 passed 13 skipped; in a linked worktree test_the_consumer_fixture_source_is_named_and_non_empty fails because portal/ is an empty gitlink; in the primary checkout (47dd74455f) the other 8 fail and it passes",
+      "routes.json _denominator.declared stayed 21 across eb70303e8f (AR-y-22 added analysis-request-original): walk over routes.json commits, test green at 71e9aacf27, red at eb70303e8f; the same count was also red a414382a19..d34a46f37d and was corrected by 71e9aacf27, so the history is NOT monotone and the first_red_commit is the start of the CURRENT red streak",
+      "docs/contracts/investor-reporting/v1/responses holds 19 *.response.schema.json for 22 DECLARED routes; custody-report-read/-persist rows carry response_schema null by choice (commit 60f7d8f4c8, row W167-S1: the portal wire generator skips only an explicit null); analysis-request-original row carries null with an absent_reason (eb70303e8f)",
+      "ExportReceipt.valid.json and .invalid.json (_contracts/fixtures) both gained facts.covered_account_ids ['ACCT-1']: the invalid fixture lacked it too, so it would have been refused for the wrong reason (the control would have been vacuous); after the edit it is refused only for vendor_signed_url_exposed (jsonschema: 'False was expected')"
+    ]
+  },
+  "spec_asserts": "The order lists the known members and says a fix is a stale count or fixture in _contracts/ or a declaration in v1/; it names no edit to the seam test's portal resolver and no edit to the invalid fixture.",
+  "world_is": "Two extra edits were needed, both inside _contracts/: test_seam_paired.py portal_root() now also tries the primary checkout DERIVED from git rev-parse --git-common-dir (a linked worktree's portal/ is empty, the design comment already says the primary checkout is the only place its files exist); this un-skips 13 tests in a linked worktree, which pass as they do in the primary checkout. ExportReceipt.invalid.json got the same covered_account_ids so its stated refusal reason is the only one. The 4 NAMED reds need a response schema authored per route and a non-null response_schema in routes.json, which moves what the portal wire generator renders (gen-wire.ts) -- a cross-product change outside this grant.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S50 -- IB-pr-397's re-plan reads 11 adds, not AMENDMENT 3's 5: a second cell landed in the shared export root. And commentary_draft_store.tf carries the SAME duplicate-log-group defect S41 just fixed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S50",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T13:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The ruled edit is correct and this order's five adds are exactly right, but the shared root now also holds the commentary draft store's six, so the untargeted plan is 11 and the standing rule makes a foreign line a STOP -- and that sibling file repeats the very duplicate-log-group defect this amendment fixed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 3's edit landed as ruled at the new pin d5a48694a3: the root's aws_cloudwatch_log_group.commentary_composition_read is dropped (0 own log-group resources remain in the file), its depends_on keeps only aws_iam_role_policy.commentary_composition_read, and the module receives log_retention_days = 14. 4 insertions / 6 deletions, one file. The commit-time naming gate PASSED (0 graded, no placement refusal), which also answers msg 2879's FYI for this order's four names",
+      "UNTARGETED re-plan at the new pin: 'Plan: 11 to add, 0 to change, 0 to destroy' -- 0 change and 0 destroy, so nothing is being modified or removed",
+      "the 11 partition cleanly, 5 mine and 6 another cell's. MINE (commentary_composition): aws_iam_policy.commentary_composition_invoke, aws_iam_role.commentary_composition_read, aws_iam_role_policy.commentary_composition_read, module.irpt_commentary_composition_read.aws_cloudwatch_log_group.lambda, module.irpt_commentary_composition_read.aws_lambda_function.this. FOREIGN (commentary_draft_store, cell AR-t-13): aws_cloudwatch_log_group.commentary_draft_store, aws_iam_policy.commentary_draft_store_invoke, aws_iam_role.commentary_draft_store, aws_iam_role_policy.commentary_draft_store, module.irpt_commentary_draft_store.aws_cloudwatch_log_group.lambda, module.irpt_commentary_draft_store.aws_lambda_function.this",
+      "TARGETED at this order's four addresses: 'Plan: 5 to add, 0 to change, 0 to destroy' -- EXACTLY the count AMENDMENT 3 requires, exactly the signed half's set, and the module's log group reads name /aws/lambda/irpt-commentary-composition-read-lambda ONCE with retention_in_days = 14",
+      "SECOND FINDING, the same defect class as row D2-S41 in the sibling file: commentary_draft_store.tf:92 declares resource aws_cloudwatch_log_group.commentary_draft_store and :121 references it in depends_on, while its own module.irpt_commentary_draft_store creates /aws/lambda/irpt-commentary-draft-store-lambda too. Both '+ name' lines appear in the untargeted plan, at lines 49 and 555, character-identical. No such log group exists live, so whichever create runs first, the other fails ResourceAlreadyExistsException -- that order will half-land exactly as this one would have",
+      "why the count changed since AMENDMENT 3 was written: the draft store was not in this root when the 5 was specified. It is the IB-pr-397 sibling the COO queued in msg 2790 and it has landed in the tree since, unapplied"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3: re-plan at the new pin; it must show EXACTLY 5 adds, 0 change, 0 destroy, and the module's log group with retention 14; no retention, or any other count, is a STOP; print the plan line by line against the half. Standing rule (COO msg 2863, CTO msg 2862): on a shared root, STOP with a row and the plan text on any line that belongs to another release.",
+  "world_is": "Both clauses are now in tension and the applier did not resolve it alone. The untargeted count is 11, which AMENDMENT 3 calls a STOP; the targeted count is 5 with retention 14, which is what AMENDMENT 3 describes. Targeting is what this seat did for IB-pr-395, and the CTO's response to that was to make a foreign line a STOP rather than something to target around -- so this time it is surfaced before any apply instead of absorbed. NOTHING WAS APPLIED: the function is still absent live, the ledger for this order is still RED with L3/L4 open, and only the read-only plans were run. The issuer's call is which of two shapes to take: (a) apply the targeted 5 now, recording that the 6 foreign adds were held out and remain pending for the draft store's own order, or (b) land the draft store's S41-class fix first so the root plans cleanly and both cells can apply as whole-root plans. Either way the draft-store defect needs the same one-line fix this amendment just made here -- drop the root resource and its depends_on reference and pass log_retention_days = 14 to the module -- and it is NOT this order's to make: it belongs to the cell that owns commentary_draft_store.tf, which is why it is filed here rather than edited.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W269-S1 -- BLOCKING: the 49F bundle with e56 + IB-pr-403 is REFUSED by its own FWD-14 gate on real inputs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W269-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~269",
+  "surfaced_at": "2026-10-09T12:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-406's built 49F bundle (e56 + IB-pr-403) makes the FWD-14 gate REFUSE on real inputs (classified_security_lost 53); IB107-1-AC2 cannot read identical.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/IB107-1_49f_bundle_replay.json arm fwd14_gate_unchanged: base (IB-pr-402 bytes 3f2e738f) PUBLISHED, conditions none, 193 puts; built (f8bd6f66) REFUSED classified_security_lost 53, 1 put; same served index, business_date 2026-10-08, 155,019 node ids both sides; evaluate_publish_gate byte-identical in both members",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/IB107-1_49f_class_transitions.json: of the 115,412 SmartX model-asset nodes that newly carry a CUSIP, class state base->built classified->classified 101,520 and classified->unclassified 13,892; display.symbol present on base and absent on built at 115,412 of 115,412; canonical CUSIP key hit 1 of 115,412; 87 custody CUSIP nodes change, 32 newly classified, 0 lost",
+      "holdings_snapshot.py fill_display (member sha256 a9fe965f9e5ada7fe9b2278e2e596c32d48ae96e43df90ec90a22211e921ec62): symbol = fact('ticker=') or (security_id.value if namespace == 'TICKER' else ''); IB-pr-403 (dfa9b72cc9) sets namespace CUSIP, so symbol is empty and classify_security asks the table with no ticker",
+      "the first uncached real run and the memoised re-run both REFUSED with the same condition and count (53); the gate's own rule applied to (built candidate, base nodes as the stand-in served) names 53 CUSIP keys, all carried by a SmartX node and all classified on a custody node of the built candidate",
+      "census: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/IB107-1_49f_bundle_census.json (build rc 0, tree clean, built twice identical, changed members exactly holdings_snapshot.py + holdings_49f.py, base 3f2e738f equals the live object); packet org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~269/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-406.md"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-406 criterion 6: `fwd14_gate_unchanged` identical -- the publish gate's outcome and conditions are the same on both trees; IB107-1-AC2 requires that arm to read identical. The order treats the two additions as classification-additive for 49F.",
+  "world_is": "The gate's outcome is NOT the same: base PUBLISHES, built REFUSES. IB-pr-403's CUSIP security_id removes the ticker that fill_display and classify_security read, so 13,892 SmartX nodes that the ticker table classified on base are unclassified on built (101,520 more fall from the table to a name alias; 6,689 change class value) and the gate refuses on 53 securities. Landed as built, 49F's served holdings would stop moving (every fire REFUSES, the prior publication ages). The worker recorded the arm as FAIL, not identical or expected-diff, and did not relabel it: IB107-1-AC2 therefore prints FAIL and the order stays pending. Inferred, NOT tested: e56 alone, or IB-pr-403 with the ticker kept visible to display/classification (a ticker= fact beside the CUSIP id), would not drop the ticker-table hits. ONE EDIT by the owner of IB-pr-403's holdings_49f.py (or a CTO ruling on the pair) plus a re-cut of this cell clears it; it is outside this worker's grant.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W269-S2 -- e56's CUSIP-key fallback is uncached: producer wall time x9 on the real 49F run
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W269-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~269",
+  "surfaced_at": "2026-10-09T12:59:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "e56's CUSIP-key fallback adds one UNCACHED DynamoDB GetItem per symbol miss: 3,907 s vs 443 s on the same real 49F run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real 49financial run, same inputs and served index: base tree 443.4 s PUBLISHED; built tree 3,907.5 s (first run, canonical misses uncached, run log 115,921 'Classification not found' lines, mostly CUSIP:<id> keys); the same built tree with canonical_lookup memoised in the replay driver 330.7 s, 238,727 calls, 2,047 distinct keys",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py get_classification: a hit is cached in self._cache, a miss logs a warning and returns None without caching, so every repeat of a missing key is a fresh table.get_item",
+      "built classify_security (git 01e843ce2e, holdings_snapshot.py) asks canonical_lookup(CUSIP:<id>) for every node whose symbol misses; with IB-pr-403 that is all 115,412 SmartX model-asset nodes on 49F"
+    ]
+  },
+  "spec_asserts": "SC-e-56 is described as a fallback after a symbol miss; nothing in the order or the 402 packet states a run-time cost for the producer's fire.",
+  "world_is": "Measured from the laptop (network latency to DynamoDB), the uncached fallback multiplies the 49F producer's wall time about 9x on the real run. The production factor is NOT measured here: the host the scheduled fire runs on, its latency to the table and the SSM command timeout were not read. Memoising canonical misses (one dict in the canonical client or the classifier wrapper) would remove it; that edit is not in this order's grant and not made."
+}
+```
