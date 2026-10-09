@@ -1,4 +1,4 @@
-# NFRA_MCPORTAL -- rounds 3-4 L8 compile + L9 (site Z) -- 14 of 14 undispositioned rows dispositioned; FWD-14 NOT REALIZED (built, not released); L10 precondition NOT MET at the project grain (2 staged round-3 orders)
+# NFRA_MCPORTAL -- rounds 3-4 L8 compile + L9 (site Z) -- 14 of 14 undispositioned rows dispositioned; FWD-14 NOT REALIZED (built, not released); L10 precondition MET after the issuer superseded the 2 staged round-3 orders (@39ea2d5e3e)
 
 Author: 3.0.0_SA_CVO~Z, signing for 3.0.0_SA_CVO~O (not seated; 3.0.0_SA_CVO~Z signed v0.5's ratified half @8de5b2dc76).
 Round: v3. Fabric: site-z. Recorded: 2026-10-09T00:3xZ.
@@ -52,6 +52,11 @@ reads every order of the project. 2 of 20 are not terminal at HEAD: `NFRA_MCPORT
 slug's remediation rows (`REMEDIATION_v3.Z.md`, and Z-W2-S3's in-place advance) are written but not landed. They land
 when both orders are terminal or when a named exception is recorded. That is the issuer's and the CTO's call, not this
 seat's.
+
+**MET (2026-10-09 ~01:1xZ).** The issuer superseded both orders at @39ea2d5e3e on the round-2 precedent. Neither was ever
+spawned; both are re-cut unchanged and staged on the same gates in round 5, and Andrew's hold is untouched. This seat
+read the last `<status>` of each as `superseded`. `round-close-check.py --project NFRA_MCPORTAL` reads 20 orders: 15
+complete, 5 superseded, MAY-CLOSE (issuer msg 32204, @5e59e66320).
 
 ```json
 [
