@@ -21,11 +21,11 @@ Graduated at the rounds-42/44 L8 (ADJUDICATION_v26.md), round label v45: S43, OP
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v45",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v45"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
