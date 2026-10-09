@@ -1425,6 +1425,29 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "REMEDY, not performed (outside the grant): re-count the table sentence and delete the portal-paths bullet from the DOES-NOT-DO STOP list in a later cell that holds the checklist."
+  },
+  {
+   "id": "LGIC_CANON-D1-W2-S1",
+   "project": "LGIC_CANON",
+   "fabric": "dell1",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~2",
+   "surfaced_at": "2026-10-09T19:05:00Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "one_line": "TO-CN-q-1 build step 2 says a stored-file path's answer goes in key_rulings.json, but `census --names` reads only name_rulings.json (by name and type, no bucket), so the 8 S3Key RAISEs of the practice wave clear only by name_rulings.json rows; two of them repeat answers key_rulings.json already holds.",
+   "spec_asserts": "TO LGIC_CANON.TO-CN-q-1 build step 2: 'key_rulings.json for a stored-file path, name_rulings.json for any other name'; 'Change no row already there'. Both registry files' _about: key_rulings.json answers a stored-file path, name_rulings.json answers a name that is NOT a stored-file path.",
+   "world_is": "MEASURED 2026-10-09. lib/opal_naming.py:2782-2790 (_census_rulings) and :2793-2836 (census_judge) consult only name_rulings.json, keyed (name, type); a --names line carries no bucket, so key_rulings.json (keyed (bucket, key)) cannot match. key_rulings.json already holds rows for blackdiamond/49f/session-trigger-mode.json (canonical) and config/ticker_lookup.json (none_owed), yet the census stopped on the first. So 9 rows were added to name_rulings.json (8 S3Key, 1 IAM_ROLE) and none to key_rulings.json; the two that key_rulings.json already answers repeat its answer verbatim. The census then ran COMPLETE (rc 0, 175 judged + 0 carded + 9 ruled, 0 RAISE) and lib/tests read 199 passed, 1 skipped. name_rulings.json _about still says it answers a name that is NOT a stored-file path; this write departs from that sentence.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "lib/opal_naming.py:2782-2836 at branch wk-LGIC_CANON-2: census reads only name_rulings via opal_naming_rootcheck.load_name_rulings",
+     "python lib/opal_naming.py census --names (184 wave names) before the rows: rc=3, first RAISE blackdiamond/49f/session-trigger-mode.json; grade() over all 184 names found 9 RAISE (8 S3Key, 1 IAM_ROLE)",
+     "after the rows: rc=0, CENSUS: COMPLETE 175 judged + 0 carded + 9 ruled",
+     "python -m pytest lib/tests -q -p no:cacheprovider: 199 passed, 1 skipped (the base's count)"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "Two registries now hold the same answer for two keys and can drift apart; the registry owner (4.0.0_SA_CRO) rules whether the census should also read key_rulings.json (by key alone where the bucket is unknown) or name_rulings.json's _about should admit a stored-file path. Not done here: neither is in this order's paths."
   }
 ]
 ```
