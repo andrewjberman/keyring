@@ -8056,6 +8056,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+        "id": "AMGT_HARVST-Z-W118-S1",
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~118",
+        "surfaced_at": "2026-10-09T00:26:02Z",
+        "one_line": "BJ1_FEED_WALK.json carries no article_key and only the newest 15 items per security, so the bk-3 comparison over ALL items by article key could not be made for BP_US_Equity (17) and META_US_Equity (135).",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "HVST-bk-3 s.2: compare article keys with BJ1_FEED_WALK.json over ALL items of each feed.",
+        "world_is": "BJ1_FEED_WALK.json items hold published_date, publisher, title, url, url_reason, match_forms, mention_count, with no article_key, and items[:15]. The script matches on (published_date, publisher, title). For BP (first walk 17, stored 15) and META (135, stored 15) the older first-walk items are not in the packet: META 'items new 117' is an artifact of that and is flagged on its output line; BP 'left 1' and 'new 0' compare against the stored 15 only. The other ten securities were stored whole (items_total equals stored items). Not done: reading the first walk's gold part, as the order forbids a direct gold read.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~115/BJ1_FEED_WALK.json @36cd6e15fc",
+                "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~118/bk3_feed_walk.out"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
