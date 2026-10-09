@@ -477,3 +477,28 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
 }
 ```
+
+## NFRA_GATSCP-D1-W13-S1 -- GS-f-6's lacks-check exempts a keep-ours resolution; a path reset in BOTH index and working copy is not caught
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W13-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~13",
+  "surfaced_at": "2026-10-09T14:08Z",
+  "one_line": "The order says refuse when ANY staged path is missing from the merge commit; a conflicted path resolved by keeping the first parent's bytes is also missing from the commit's diff against ^1, so the check cannot refuse it without refusing a legitimate resolution. _verify_staged_carried exempts a missing path whose working copy equals HEAD (git diff --quiet HEAD -- path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-merge.sh _verify_staged_carried (branch wk-NFRA_GATSCP-13)",
+      ".tools/tests/test_safe_merge_continue.py case c: keep-ours of one conflicted path exits 0; case b: path unstaged with its resolution left in the working copy exits 7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order GS-f-6 build 1: when any staged path is missing from the commit, REFUSED and exit non-zero.",
+  "world_is": "Narrower by one case: a missing path is a loss only when its working copy differs from the committed blob. A path reset in both the index and the working copy (e.g. checkout HEAD -- path) reads as a keep-ours and is not caught; D1-S5's mechanism of loss is not recorded in the order, so whether it left the working copy intact is unmeasured here."
+}
+```
