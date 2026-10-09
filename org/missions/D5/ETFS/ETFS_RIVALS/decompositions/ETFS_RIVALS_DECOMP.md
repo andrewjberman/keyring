@@ -1090,3 +1090,61 @@ disjoint write set and they meet only through two stated contracts (the corporat
   5. Existing tests that pin the old heading (`test_r21pl1_strip_and_caption.py`, `test_r18tl1_trade_list_from_markers.py`)
      are updated to the new shape; every other test stays green.
 - Out of bounds: no S3, no deploy, no other module.
+
+## WORKSTREAM 3 (the audit's exclusion line; no trade below tolerance or on a repeat day; the header Period bar) -- APPENDED 2026-10-09, revision 1.20 of this file
+
+Issuer `2.0.0_SA_COO~V1`. Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 1
+(1.0.0_SA_CTO~DELL1 msg 1852, @a50caca634), on Andrew-direct comments 4-7 (record
+`deliverables/2.0.0_SA_COO~V1/ANDREW_DIRECT_20261009_051xZ_UI_COMMENTS_TKOMY_CLOSE_AND_TRADE_LIST_SCOPE.md` @588865eef8).
+Item 8 (the Direction Verdict prompt) is WS3's SECOND issuance, cut only after aw-1's J1 read at the 13:00Z sweep. WS3 carries
+the three WS2 guards and takes no file a live WS2 order owns: `render.py` belongs to RIV-wc-1, so items 4 and 7 are
+`RIV-wc-2`, the next order on wc-1's chain (same worker, after wc-1 is terminal). Two chains: `RIV-wd-1` alone; `RIV-wc-1 -> RIV-wc-2`.
+
+### `RIV-wd-1` -- a share change is a trade only when the share count moved and the trade clears Andrew's 20 bps tolerance; no trade is read across a repeated report (WS3 items 5 and 6)
+- Measured: `gold_trade_schedule._pair_rows` infers a holding's trade as `q1 - f * q0`, with `f` the median ratio over the
+  window's untouched holdings (`FLOW_WINDOW_EPS` 0.001; `flow_adjusted` true past it). In a window with fund flows an
+  UNCHANGED holding therefore reads as a trade. The CGIC audit (latest report 2026-10-06, revision 20261008T122342Z-6ea2fb54eece)
+  shows 12 such rows, all "flow adjusted": MediaTek 2454_TT 428,000 -> 428,000 (-1,442; window 09-30 -> 10-02), Renault
+  RNO_FP 277,771 -> 277,771 (-936; -2,361 in 09-29 -> 09-30), SMC 6273_JP 10,700 -> 10,700 (-36), Jentech 3653_TT 23,000 ->
+  23,000 (-77), Taisei 1801_JP 56,900 -> 56,900 (-192), Aura AUGO_US 46,976 -> 46,976 (-158; -399), Grifols GRFS_US
+  120,713 -> 120,713 (-407; -1,026), Tokyo Electron 8035_JP 205,000 -> 205,000 (-1,743). Andrew's tolerance (PRD v0.21
+  FWD-10 SOURCE): "at a 20bps tolerance it's immediately clear who is discretionary and who is systematic"; today no code
+  applies it. The holdings calendar (`gold_holdings_coverage`) marks 10-01, 10-02, 10-05 and 10-06 `repeat` ("report dated
+  <d> re-published") while the 10-02 -> 10-05 and 10-05 -> 10-06 windows carry trades.
+- Interface (`gold_trade_schedule.py`, and `gold_holdings_coverage.py` only if item 3 needs it; plus tests):
+  1. **Unchanged count, no trade.** A holding whose share count is the same in both reports (`q1 == q0`, both > 0) is NEVER
+     a trade, whatever the flow factor; it is not emitted as an add or trim.
+  2. **The tolerance.** `TRADE_TOLERANCE_BPS = 20`: a candidate trade whose absolute estimated notional is below 20 bps of the
+     fund's total (the later report's) market value is not a trade on the page or in the rankings. It is kept as a row with
+     `action` `below_tolerance` (or an equivalent flag the readers skip), counted, so the audit can say how many and the
+     numbers stay reconstructible. Entries and full exits are trades whatever their size.
+  3. **No trade across a repeated report.** Where the later report of a window is a re-publication of the earlier one (the
+     same actual report date, the coverage table's `repeat`), the window yields no trade; and the windows and the calendar
+     read the same object, so a day the calendar marks `repeat` never carries a trade. Find which of the two is wrong today
+     (state it in the report with the two objects read), and make them agree.
+     This item is graded by J1 on the issuer's real run over CGIC's actual windows (no trade on a day the calendar marks
+     `repeat`); the check's arm (c) is a control (a re-published report with identical counts yields no trade, at the
+     base and after).
+  4. Readers that count trades (rankings, buying trend, trade markers) skip the rows items 1-3 exclude; existing tests stay
+     green except where they asserted an unchanged-count or sub-tolerance trade (each such change named in the report).
+- Out of bounds: no S3 write, no deploy; `render.py`, `price_series.py`, `publish_page.py`, `dramatic_move.py`,
+  `enrichment_bloomberg.py` untouched (a reader in one of them that needs changing is a row and the issuer's hookup).
+
+### `RIV-wc-2` -- the audit's exclusion line reads as its own line, naming what it excludes; the header Period bar is gone (WS3 items 4 and 7)
+- Measured: `render.py` writes, inside each audit window above the trade table, "<n> money-market line(s) traded: cash
+  management, not a holding decision, so not shown as trades (as in the rankings and the trend)." (about lines 392 and 431).
+  Andrew read it as naming the trade beneath it ("Tokyo Electron being "excluded" becuse its a cash management operation?").
+  The page header carries a PERIOD row (30d / 90d / 365d with their dates) beside the peer-group rows; the ranking panels
+  have their own period controls. Andrew: "we do not need this "Period" component in the top of the page anymore".
+- Interface (`render.py` and its tests; the next order on wc-1's chain, so it starts from wc-1's merged `render.py`):
+  1. The exclusion line names the excluded line(s): the security name (or identifier) and the amount traded, e.g.
+     "Left out: 1 money-market line traded (JPMorgan US Government Money Market, $2.1m): cash management, not a holding
+     decision." It sits in its own block, visually apart from the trade table (not immediately above the first row), so it
+     cannot be read as describing the row beneath it.
+     The carrier: the audit window dict gains `cash_equiv_lines`, a list of `{security_key, name, est_notional}`, one per
+     excluded money-market line; render from it when present, and from the count alone (as today) when absent. The
+     window dict is built in `publish_page.py`, which RIV-wa-1 owns: populating `cash_equiv_lines` there is the issuer's
+     hookup at the merge, not this cell's.
+  2. The header's PERIOD row is removed from the main page. The ranking panels' period controls and the 30/90/365 data stay.
+     No other header row changes; the page keeps exactly ONE inline script.
+- Out of bounds: no S3, no deploy, no other module.

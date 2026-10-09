@@ -4,10 +4,10 @@
  "directive": "D9",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "PRD",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Q-3: trade submission through Opal, led by the operations lead's Excel workflow (dashboard intake, SharePoint workbook, Claude access, one trail)",
  "generated_from": "org/missions/D9/NFRA/NFRA_OPSWKF/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-06T21:11:01Z"
+ "generated_at": "2026-10-09T06:10:13Z"
 }
