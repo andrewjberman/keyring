@@ -5143,6 +5143,30 @@
     "spec_asserts": "J1 (:88): the 2026-10-08 and later vehicle logs show the enrichment leg's lines and exit code UNCHANGED WITH THE SWITCH UNSET -- i.e. the scheduled daily fire exercised the OFF path and printed what the pre-change module printed.",
     "world_is": "The 2026-10-08 11:00Z fire never reached the OFF path: blpapi could not start a session to the Terminal (signed out), the leg exited 97 with nothing written, and 0 HISTORY OWED lines were printed because no leg code ran, not because the switch is off. ABSENT is not EXERCISED-AGAINST. The criterion is therefore UNVERIFIABLE on 2026-10-08 and stays so until a fire reaches the leg; the next candidate is the 2026-10-09 11:00Z fire (OPAL_BBGTML_daily_pull, nextRun 10/9/2026 7:00:00 AM local, state Ready), and that fire is itself conditional on the Terminal being signed in at 07:00 local -- bloomberg_health read ok:true at 2026-10-09T01:1xZ, which is a reading about 01:1xZ and not a promise about 11:00Z.",
     "notes": "SURFACED, NOT DISPATCHED, and nothing here grades J1 -- the grade is 3.0.0_SA_CVO~RV's on the issuer's real read (:88) and this seat is expressly not its grader. The ARMED standing is about the NEXT NORMAL ACT: a J1 read that takes the date range at face value consumes a non-exercising run as a pass, and the disarm is one sentence from the issuer -- that J1 is read on the first fire that REACHED the enrichment leg, not on the earliest date in the range. Hence disarm_owner 2.0.0_SA_COO~RV (the issuer of RIV-tw-1), not the CVO and not this seat. Durable form of the fix, for whoever takes it: J1's evidence predicate should name a REACHED-LEG condition (the leg's own exit code being the normal one, or the step line present with a non-97 exit) rather than a calendar date, so that a vendor-down morning reads UNVERIFIABLE instead of PASS. This seat's own act on the ask it received is the verbatim transcription under deliverables/0.0.3_BG_BBGTerminal/, which carries this caveat in the file so the transcription cannot be read as a pass."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S80",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-10-09T02:41Z",
+    "one_line": "CORRECTION to ETFS_RIVALS-Z-S79, filed by its own author: S79 is ARMED and names `disarm_owner` 2.0.0_SA_COO~RV, which is not a live seat. dell1's 2.0.0_SA_COO~V1 holds that scope now (0.0.0_AB_MSTR~Z msg 32284). An ARMED row whose disarm owner cannot be reached is a row that cannot discharge, so this row carries the live owner on the record. The channel is append-only, so S79's own text stands unedited and this row is the carrier -- a broker message is never the carrier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~V1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 32284 (2026-10-09T02:34:22Z, READ-acked by this seat 2026-10-09T02:3xZ), verbatim: \"Row ETFS_RIVALS-Z-S79 names disarm_owner 2.0.0_SA_COO~RV, which is gone; its owner now is dell1's 2.0.0_SA_COO~V1. I tell dell1.\"",
+        "The same message cut the 2026-10-09 11:00Z transcription carrier to 0.7.0_AE_CloudOps~Z under dell1 order TO-RELAY-tw1-vehicle-log-20261009 (bus d7b4f500, commit bb6f1eac0c on box/dell1), so the seat that will produce the first reached-leg log is not this one and not the one S79 named.",
+        "S79 as committed at org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md @c086fcc096 -- hazard_standing ARMED, disarm_owner 2.0.0_SA_COO~RV."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": ["ETFS_RIVALS-Z-S79"],
+    "spec_asserts": "The investigation schema's ARMED branch requires a named `disarm_owner`, and the channel's whole point is that the row, not a message, is the carrier -- so the named owner must be a seat that can actually take the disarming act.",
+    "world_is": "S79's named owner 2.0.0_SA_COO~RV is not live; the scope moved to dell1's 2.0.0_SA_COO~V1. The hazard S79 states is unchanged and still ARMED: a J1 read that takes \"the 2026-10-08 and later vehicle logs\" at face value grades a run that never reached the enrichment leg. Only the owner moved. The disarm remains one sentence from the issuer -- that J1 is read on the first fire that REACHED the leg, not on the earliest date in its range.",
+    "notes": "Filed by S79's own author within the hour, on the author's own defect, rather than left to a relay. `adjudicates` carries S79 because that is the schema's append-only mechanism for touching an existing row, and the disposition stays UNDER_INVESTIGATION -- this corrects the owner and settles nothing about the hazard. NOT a re-grade of J1 and not a dispatch: J1's grade is the CVO's on the issuer's real read (RIV-tw-1 task order :88). A general lesson for this channel, stated because it will recur across a two-fabric split: an ARMED row's `disarm_owner` is a LIVENESS claim with a shelf life, and nothing in the schema makes it rejectable when the named seat dies."
   }
 ]
 ```
