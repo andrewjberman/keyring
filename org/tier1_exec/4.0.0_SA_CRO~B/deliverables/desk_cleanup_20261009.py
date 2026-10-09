@@ -39,13 +39,20 @@ PLAIN = ["portal-trade-vident"]
 TARGETS = SHELLS + PORTAL_WT + PLAIN
 
 
+def lp(p):
+    """Windows long-path form, so a walk or delete never silently skips (or fails on) a path past 260 characters."""
+    p = os.path.abspath(p)
+    return p if p.startswith("\\\\?\\") else "\\\\?\\" + p
+
+
 def is_link(p):
     return os.path.islink(p) or os.path.isjunction(p)
 
 
 def links_in(root):
     found = []
-    for cur, dirs, files in os.walk(root):          # os.walk does not descend into links (followlinks=False)
+    errors = []
+    for cur, dirs, files in os.walk(lp(root), onerror=errors.append):   # never descends into links (followlinks=False)
         for d in list(dirs):
             fp = os.path.join(cur, d)
             if is_link(fp):
@@ -55,6 +62,8 @@ def links_in(root):
             fp = os.path.join(cur, f)
             if os.path.islink(fp):
                 found.append(fp)
+    if errors:   # an unreadable subtree could hide a link: fail closed
+        raise OSError("links_in(%s) could not read %d path(s), e.g. %s" % (root, len(errors), errors[0]))
     return found
 
 
@@ -109,17 +118,17 @@ def main(argv):
         lk = links_in(p)
         reg = os.path.normcase(os.path.normpath(p)) in regs
         print("%-30s %s links=%d %s" % (name, "portal-worktree" if reg else "folder", len(lk),
-                                        "; ".join("%s -> %s" % (os.path.relpath(lp, p), os.path.realpath(lp)) for lp in lk)))
+                                        "; ".join("%s -> %s" % (os.path.relpath(x, lp(p)), os.path.realpath(x)) for x in lk)))
         if not execute:
             continue
-        for lp in lk:
-            tgt = os.path.realpath(lp)
-            if os.path.isdir(lp):
-                os.rmdir(lp)          # removes the junction/link itself; never the target's contents
+        for link in lk:
+            tgt = os.path.realpath(link)
+            if os.path.isdir(link):
+                os.rmdir(link)          # removes the junction/link itself; never the target's contents
             else:
-                os.unlink(lp)
+                os.unlink(link)
             if not os.path.exists(tgt):
-                print("FATAL: link target %s vanished after removing %s; stopping" % (tgt, lp))
+                print("FATAL: link target %s vanished after removing %s; stopping" % (tgt, link))
                 return 2
         if links_in(p):
             skipped.append((name, "links remain after unlinking"))
@@ -127,9 +136,9 @@ def main(argv):
         if reg:
             r = subprocess.run(["git", "-C", PORTAL, "worktree", "remove", "--force", p], capture_output=True, text=True)
             if r.returncode != 0 and os.path.isdir(p):
-                shutil.rmtree(p)
+                shutil.rmtree(lp(p))
         else:
-            shutil.rmtree(p)
+            shutil.rmtree(lp(p))
         done.append(name)
     if execute:
         subprocess.run(["git", "-C", PORTAL, "worktree", "prune"], capture_output=True)
