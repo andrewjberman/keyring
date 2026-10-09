@@ -1125,6 +1125,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "C-TICKET: the draft lands on a ticket for the requester; the ticket-write contract's body is buildable from what H1/H2 supply.",
     "world_is": "One required body field has no producer; account_type and themes are also absent (they only weaken ranking and the prompt).",
     "notes": "Holdings category weights are derivable from the normalized-input artifact (~P2 msg 1849); that is an H2 enhancement, not a blocker."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T02:12:10Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The irpt-normalized-portfolio.v1 artifact carries NO category field: a position row is security_id + analysis_dollars + original{identifier, quantity, source_*} (docs/contracts/investor-reporting/v1/examples/RequestComposition.synthetic.json:134-182; intake/portfolio.py:283; ycharts/generate/normalized_input.py rows are identifier+USD only). So H2 holdings_categories stays {} on every real input.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py: prepare_normalized_upload rows/bindings have no category",
+        "docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json:159-237: normalized_holdings item has no category property (additionalProperties false)",
+        "data/transcripts/scripts/commentary/entry.py _category_percents reads a row-level 'category' ONLY if present (assumed name, unmeasured); tests use synthetic rows carrying it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-h14: category weights derive from the category field the normalized input carries.",
+    "world_is": "No category field exists; the derivation is plumbed and tested on synthetic rows but is unreachable on real data until a category source (e.g. a security-master or HoldingsSnapshot class join) is named.",
+    "notes": "Not invented: absent category => {}. Disarm: none needed."
   }
 ]
 ```
