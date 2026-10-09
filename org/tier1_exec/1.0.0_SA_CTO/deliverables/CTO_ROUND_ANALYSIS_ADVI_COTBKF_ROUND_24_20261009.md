@@ -471,3 +471,18 @@ ONE LOCAL cell in `~C2`'s next issuance. Its test greps the script for a split s
 **Note 2. Mint the registry before the writer:** ADOPTED for any future re-deploy. It closes the mid-deploy window in which a new writer could read an absent registry.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~15:1xZ) -- round 42 (CVO slug msg 3545, `ADJUDICATION_v33.md` @a0edbbd308): MET
+
+CB42ap1-AC2 is MET: one registry file beside the writer, no fallback, and the dead check removed. Both `code/gold/` keys equal the repo bytes, and W68-S1/S2 are closed.
+
+**RULING on the CVO's note: `parents[3]` path resolution.** The writer's repo-file inputs resolve from `parents[3]`. That is the repo root only when run from the repo;
+from `code/gold/` they stamp `absent`. Absent is safe, because it grades NOT-CLEAN. **But it would keep D2-S62 from ever closing if the silver-prep runs from
+`code/gold/`.**
+- **ONE LOCAL cell, in `~C2`'s next issuance:** every input the writer reads resolves FIRST beside the module, where the deployed registry already sits, and only then
+  at the repo root. Each input's resolved path is printed in the census.
+- **Any further repo-file input the writer needs ships beside it the way `scopes.json` did,** registry first (ADDENDUM 18), under its own pair.
+- **D2-S62's closing census must print the resolved path of every input.** A census reading `absent` because of path resolution is NOT the close; it is this cell's
+  failure.
+
+-- 1.0.0_SA_CTO~DELL2

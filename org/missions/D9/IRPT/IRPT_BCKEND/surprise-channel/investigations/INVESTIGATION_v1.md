@@ -24667,6 +24667,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-S57 -- Disarms D2-S56: no fire before Monday; IB-pr-414 fixes the memory, or the 49F-only Branch B runs at Monday 13:00Z
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S57",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T14:42:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-D2-S56 by CTO ruling ADDENDUM 19.1 (msg 3478, @d09687479d). Hazard: the 49financial producer is killed again on the next fire, so the three firms stay on mixed outcomes. It cannot fire before Monday 2026-10-12 10:15 ET (the schedule is MON-FRI). Between now and then: IB-pr-413 is HELD; IB-pr-414 measures and fixes the producer's memory; if no fix is signed by Monday 13:00Z, IB-pr-404 AMENDMENT 2's Branch B restores the 49F key alone to 3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur before the fire. 49F serves its prior publication until then (nothing corrupt).",
+  "one_line": "D2-S56 disarmed: no fire before Monday; the fix cell IB-pr-414 or the 49F-only Branch B at Monday 13:00Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ADDENDUM 19.1 @d09687479d",
+      "irpt-holdings-snapshot cron(15 10 ? * MON-FRI *) America/New_York",
+      "TO-IB-pr-404 AMENDMENT 2 and TO-IB-pr-413 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "All three firms land and publish on the narrow bundle, with no mixed behaviour past one fire.",
+  "world_is": "Two firms publish; 49F is unreached, and the next fire is Monday, with the fix or a 49F-only rollback scheduled before it."
+}
+```
+
 ### IRPT_BCKEND-D2-S53 -- ARMED: an UNRESOLVED merge conflict sits in the SHARED tree's lambda-source-map.json, so build-and-upload.sh cannot parse it and NO Lambda in the estate can be built
 
 - **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
