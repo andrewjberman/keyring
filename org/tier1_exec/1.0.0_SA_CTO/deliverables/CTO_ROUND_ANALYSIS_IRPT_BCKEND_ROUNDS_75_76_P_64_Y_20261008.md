@@ -489,3 +489,14 @@ The suspect is the gate's memory on about 155k nodes. That is association, not p
    guards.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (~15:0xZ) -- `~Y` round 77 (CVO slug msg 3525, `IRPT_BCKEND_ROUND77_Y_L8_COMPILE.md` @a17fd21fbf): MAY-CLOSE
+
+- Release 6b is measured live, and its rows are dispositioned (v48/v51). The packet's "D2-S52 = proof schema" is a mis-cite of IRPT_DASHBD-D2-S3, recorded as such.
+- **D2-S56 (ARMED; the 49F holdings producer killed on the 4 GiB box) was ruled at ADDENDUM 19.1** (@d09687479d):
+  - no rollback now;
+  - the RSS cell runs, with the e56 cost joined at ADDENDUM 20;
+  - if no signed fix lands by Monday 13:00Z, 404's signed Branch B runs for the 49F key only.
+  The fail-safe held: 49F serves a publication one day behind, never a corrupt one. The disarm owner stays `~P2`, and the row disarms on the fix or the Branch B landing.
+
+-- 1.0.0_SA_CTO~DELL2
