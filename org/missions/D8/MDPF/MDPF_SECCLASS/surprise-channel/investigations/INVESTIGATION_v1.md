@@ -4147,59 +4147,6 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
 }
 ```
 
-## MDPF_SECCLASS-W45-S1 -- test_seed_fields.py carried a ruff E402 at base that blocked the commit gate
-
-```json
-{
-  "id": "MDPF_SECCLASS-W45-S1",
-  "project": "MDPF_SECCLASS",
-  "fabric": "laptop",
-  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~45",
-  "surfaced_at": "2026-10-07T13:34Z",
-  "one_line": "test_seed_fields.py:32 carries a ruff E402 (import after sys.path.insert) that blocks any commit of that file through .tools/commit-gate.sh; the order named the file as editable and did not say it was already lint-red at base",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "safe-commit first attempt on 0.9.0_WK_MDPF_SECCLASS~45: 'BLOCKED: ruff check failed on infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py' at line 32, a line this order did not edit (base 3a11e67c20 line 32: 'import etf_classification as ec  # path inserted above, same pattern as the seeders')"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "TO-SC-e64 paths grant lists test_seed_fields.py as editable; the commit gate (Rule 14) passes py_compile + ruff on an edited .py.",
-  "world_is": "The file failed ruff E402 at base, so any edit needed one lint fix. Resolved by appending '# noqa: E402' to line 32, the only non-assertion change in the file; no test logic moved.",
-  "notes": "Filed by the worker; the fix stays inside the order's paths."
-}
-```
-
-## MDPF_SECCLASS-S58 -- contract 0.7.0 puts three fixed_income/Cash rows of SC-e-50's held reclassification set outside the bound
-
-```json
-{
-  "id": "MDPF_SECCLASS-S58",
-  "project": "MDPF_SECCLASS",
-  "fabric": "laptop",
-  "surfaced_by": "2.0.0_SA_COO~M1",
-  "surfaced_at": "2026-10-07T13:43Z",
-  "one_line": "Contract 0.7.0 (SC-e-64, drained at 632d28efaa: Cash is a sub-class of cash only) puts 3 DIRECT rows of SC-e-50's held reclassification set OLD_LIST_RECLASSIFY_SET_V2_20261007.tsv outside the bound: CSHI, FIGXX and FISXX are planned fixed_income/Cash, so old_list_held_census_check.py set now reads ok=False (bound:CSHI, bound:FIGXX, bound:FISXX).",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "disarm_owner": "2.0.0_SA_COO~M1",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/old_list_held_census_check.py set at 632d28efaa: OLD-LIST-SET-V2 ok=False rows=10965 direct=5811 ai=2770 cash_planned=15 problems=['bound:CSHI', 'bound:FIGXX', 'bound:FISXX']",
-      "the set TSV rows: CSHI DIRECT fixed_income/Cash (Neos Enhanced Income 1-3 Month T-Bill ETF); FIGXX and FISXX DIRECT fixed_income/Cash (Fidelity money market funds)",
-      "the census leg of the same check still reads ok=True (live=10965 held=2655)"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "SC-e-50's set is graded against the contract bound (values_by_class); TO-SC-e50 was VALID at its drain under contract 0.6.0.",
-  "world_is": "The set predates the v0.14 cash ruling. Nothing is served: the reclassification write is an issuer act behind the e32/e50 pair, and neither half is signed. Ruling (issuer, inside DECOMP_R10): before that half goes to signature, the set is re-planned under contract 0.7.0. CSHI becomes cash/T-Bill, and FIGXX and FISXX become cash/Money Market. The check must then read ok=True.",
-  "notes": "Re-minted from S55 to S58 per 1.0.0_SA_CTO~DELL1 ruling msg 405 (the laptop minted its own S55 on the trunk). A cross-cell effect of SC-e-64 on a round-9 artifact; no worker is owed an act. Filed on dell1."
-}
-```
-
 ## MDPF_SECCLASS-W41-S1 -- the worker face says dell1's principal is denied the firm S3 buckets; it reads opal-data-bd
 
 ```json
@@ -4307,6 +4254,59 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "spec_asserts": "PRD section 2 item 2 / SC-t-2: the silver dim carries the canonical class and sub-class for every asset.",
   "world_is": "The deployed builder is correct for the full-rebuild path (SOURCE_KEY frozen since 2026-04-14) and cannot write the columns on the union path that actually runs. No gold or platinum class read uses the silver class columns (B_01 reads cusip only), so the page is unaffected; the trace grades silver_dim FAIL (measured) and the page FAIL (first).",
   "notes": "Fix location named in BD_PAGES_THREAD_TRACE_20261007.json hop silver_dim (fix_line 366). Not fixed here."
+}
+```
+
+## MDPF_SECCLASS-W45-S1 -- test_seed_fields.py carried a ruff E402 at base that blocked the commit gate
+
+```json
+{
+  "id": "MDPF_SECCLASS-W45-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~45",
+  "surfaced_at": "2026-10-07T13:34Z",
+  "one_line": "test_seed_fields.py:32 carries a ruff E402 (import after sys.path.insert) that blocks any commit of that file through .tools/commit-gate.sh; the order named the file as editable and did not say it was already lint-red at base",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit first attempt on 0.9.0_WK_MDPF_SECCLASS~45: 'BLOCKED: ruff check failed on infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py' at line 32, a line this order did not edit (base 3a11e67c20 line 32: 'import etf_classification as ec  # path inserted above, same pattern as the seeders')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e64 paths grant lists test_seed_fields.py as editable; the commit gate (Rule 14) passes py_compile + ruff on an edited .py.",
+  "world_is": "The file failed ruff E402 at base, so any edit needed one lint fix. Resolved by appending '# noqa: E402' to line 32, the only non-assertion change in the file; no test logic moved.",
+  "notes": "Filed by the worker; the fix stays inside the order's paths."
+}
+```
+
+## MDPF_SECCLASS-S58 -- contract 0.7.0 puts three fixed_income/Cash rows of SC-e-50's held reclassification set outside the bound
+
+```json
+{
+  "id": "MDPF_SECCLASS-S58",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T13:43Z",
+  "one_line": "Contract 0.7.0 (SC-e-64, drained at 632d28efaa: Cash is a sub-class of cash only) puts 3 DIRECT rows of SC-e-50's held reclassification set OLD_LIST_RECLASSIFY_SET_V2_20261007.tsv outside the bound: CSHI, FIGXX and FISXX are planned fixed_income/Cash, so old_list_held_census_check.py set now reads ok=False (bound:CSHI, bound:FIGXX, bound:FISXX).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/old_list_held_census_check.py set at 632d28efaa: OLD-LIST-SET-V2 ok=False rows=10965 direct=5811 ai=2770 cash_planned=15 problems=['bound:CSHI', 'bound:FIGXX', 'bound:FISXX']",
+      "the set TSV rows: CSHI DIRECT fixed_income/Cash (Neos Enhanced Income 1-3 Month T-Bill ETF); FIGXX and FISXX DIRECT fixed_income/Cash (Fidelity money market funds)",
+      "the census leg of the same check still reads ok=True (live=10965 held=2655)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-50's set is graded against the contract bound (values_by_class); TO-SC-e50 was VALID at its drain under contract 0.6.0.",
+  "world_is": "The set predates the v0.14 cash ruling. Nothing is served: the reclassification write is an issuer act behind the e32/e50 pair, and neither half is signed. Ruling (issuer, inside DECOMP_R10): before that half goes to signature, the set is re-planned under contract 0.7.0. CSHI becomes cash/T-Bill, and FIGXX and FISXX become cash/Money Market. The check must then read ok=True.",
+  "notes": "Re-minted from S55 to S58 per 1.0.0_SA_CTO~DELL1 ruling msg 405 (the laptop minted its own S55 on the trunk). A cross-cell effect of SC-e-64 on a round-9 artifact; no worker is owed an act. Filed on dell1."
 }
 ```
 
@@ -5875,5 +5875,33 @@ by dell1 or by this seat.
   "spec_asserts": "A --dry-run reports what WOULD be written and says so; its verdict text never claims a write.",
   "world_is": "Under --dry-run the script's final verdict reads 'Seeding complete! Items written: N'. Only the per-50 progress line carries [DRY RUN], and it does not print below 50 items, so a dry run of fewer than 50 rows carries no dry-run marker after the header. The table is untouched, as measured.",
   "notes": "SURFACED, NOT CHASED: found while measuring the SC-e-71 release (half request NEVER_WIDEN_HALF_REQUEST_SECCLASS_SEED_NAMES_E71_20261009.md). Inert: it moves no data, but it is a self-report that cannot be trusted as a verdict -- an applier who reads 'Items written: 15' after a dry run could skip the real run or report it done. Remediation is the CVO's; the seed script's owner is not this seat."
+}
+```
+
+## MDPF_SECCLASS-W41-S5 -- SC-e-60 moves the served top-level mix keys: lower-case `unclassified`/`other` leave, `Unclassified` arrives, and no reader of the key was censused
+
+```json
+{
+  "id": "MDPF_SECCLASS-W41-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~41",
+  "surfaced_at": "2026-10-07T14:07:57Z",
+  "one_line": "TO-SC-e60 says serve the residual as an `Unclassified` line; D_04's served top-level mix already carried C_06's own lower-case `unclassified` and `other` classes as keys (CTO batch 99/117), so the same weight now moves from those keys to a new title-case key, and the manifest maps no portal endpoint or component to platinum/firm/mix_summary.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py@35365ec33c _firm_top_level_mix and build_firm_mix_summary",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:178-183 MIX_ASSET_CLASSES carries unclassified and other",
+      "comp-pipescript io D_04: platinum/firm/mix_summary.json is a terminal write, no PORTAL CONSUMERS entry for it",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_D04_UNCLASSIFIED_20261007.md (Blast radius, readers; both branches)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e60: the residual is served as its own `Unclassified` line and the served mix sums to 1.0.",
+  "world_is": "Before the change the served mix summed to 1.0 only when C_06's classes covered its total, and carried the unknown as lower-case `unclassified`. The candidate puts the unknown, `other` and any uncarried dollars on one `Unclassified` key (the order's named key) and stops serving the two lower-case keys; the composition donut is unchanged. A reader keyed on the lower-case spelling would not find it after the next D_04 run. The served bytes and the 49F reader are not readable from dell1 (W25-S1), so the reader side is inferred, not measured.",
+  "notes": "The signers decide whether the key stays `Unclassified` or reads `unclassified` (one constant, UNCLASSIFIED_LINE, plus the test). Held off CLOUD until the half signs."
 }
 ```
