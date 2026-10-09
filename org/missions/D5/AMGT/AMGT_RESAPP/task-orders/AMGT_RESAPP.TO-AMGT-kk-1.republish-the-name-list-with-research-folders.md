@@ -26,6 +26,13 @@ object) of `2026-10-07.json` present with an equal value or a printed, admitted 
 unchanged). Record the prior VersionId; rollback is a versioned re-put of the prior bytes, never a delete. Read
 `round86_prep/GROUP_REPUBLISH_NOTES.md` whole first.
 
+**FIRST, the guard (CTO~DELL1 msg 2572):** in `lib/research/identity/crosswalk.py`, `main` REFUSES to publish (`--write-pool`: a
+nonzero exit with a printed reason, no store write) when the research-library read raises LibraryAbsentError AND the served latest
+list carries a `research_universe` with folders -- it never writes ABSENT over a served count. A first publish with no served
+`research_universe`, and the `--out` local build, behave as today. Tests in
+`lib/research/identity/tests/test_crosswalk_refuses_absent_library.py` (the refusal with no put attempted, the first-publish case,
+the `--out` case; the library and the served list stubbed offline). Commit the guard, THEN run the republish on that code.
+
 ## 2. BOUNDS
 
 1. The act and nothing else: today's crosswalk key only, no other store write, no deploy, no schedule.
@@ -40,6 +47,8 @@ unchanged). Record the prior VersionId; rollback is a versioned re-put of the pr
 ## 3. SURFACES
 
 <paths>
+lib/research/identity/crosswalk.py
+lib/research/identity/tests/test_crosswalk_refuses_absent_library.py
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/
@@ -51,6 +60,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-kk-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_crosswalk.py" --crit AC1 --reference crosswalk/v1/2026-10-07.json --admit as_of,denominators.with_issuer_cik,research_universe.read_at,research_universe.folders,denominators.research_folders_live; echo "exit=$?"</invocation><expect>the latest stored name list keeps every record, carries issuer.cik as before, and every top-level field of 2026-10-07.json is present with an equal value or an admitted change, with research_universe.folders 1 or more; C1-C5 PASS; R85 CROSSWALK AC1: YES; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-kk-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round84_prep/checks/r84_listing.py" --crit AC1 --where deployed; echo "exit=$?"</invocation><expect>a typed ASML still resolves to ASML_NA_Equity, Micro still lists, the other answers byte-equal; R84 LISTING AC1: YES; and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-kk-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" py -3.12 -m pytest lib/research/identity/tests/test_crosswalk_refuses_absent_library.py -q; echo "exit=$?"</invocation><expect>every guard test passes: --write-pool with an absent library and a served research_universe exits nonzero with no put attempted; a first publish and the --out build behave as before; 0 failed; and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -77,3 +87,4 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>staged -- AMENDMENT 1 (issuer, 2026-10-09T14:5xZ) on CTO~DELL1 msg 2572: (a) the executor is a LAPTOP CloudOps seat (no synced library on dell1), re-addressed at the GO by a crossbox ORDER through 0.0.0_AB_MSTR~DELL1; (b) the CTO's guard is folded into this order (round 86 already has its one issuance, so no sibling file -- to-pipeline-gate ONE ISSUER PER ROUND): crosswalk.py refuses to publish research_universe ABSENT over a served count, landed and tested (AC3) BEFORE the republish; paths +2. Graded by to-pipeline-gate on a modification (no <placeholders> limb).</status>
