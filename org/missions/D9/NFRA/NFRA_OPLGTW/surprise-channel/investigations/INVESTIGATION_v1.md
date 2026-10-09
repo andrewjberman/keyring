@@ -10114,59 +10114,6 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
-  "id": "NFRA_OPLGTW-Z-W41-S1",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
-  "surfaced_at": "2026-10-09T00:15:56Z",
-  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "INFERRED",
-    "evidence": [
-      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
-      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
-      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
-      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
-  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
-}
-```
-
-```json
-{
-  "id": "NFRA_OPLGTW-Z-W41-S2",
-  "project": "NFRA_OPLGTW",
-  "fabric": "site-z",
-  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
-  "surfaced_at": "2026-10-09T00:57:58Z",
-  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
-      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
-      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
-  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
-  "disarm_owner": "2.0.0_SA_COO~O",
-  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
-}
-```
-
-```json
-{
   "id": "NFRA_OPLGTW-Z-W38-S1",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
@@ -10342,6 +10289,33 @@ name the one known failure instead of silently inheriting it.
 
 ```json
 {
+  "id": "NFRA_OPLGTW-Z-W41-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:15:56Z",
+  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
+      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
+      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
+      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
+  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
+}
+```
+
+```json
+{
   "id": "NFRA_OPLGTW-Z-W39-S4",
   "project": "NFRA_OPLGTW",
   "fabric": "site-z",
@@ -10438,6 +10412,32 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Done as A2 states: source commit 47c3c75f11 (the 4 files of data_assets_mirror.patch), silver_build_commit.schwab repinned at 7af0b6bc3d, artifact rebuilt from that pin. S4 itself is not edited; its disposition is the issuer's or the CVO's to write. The artifact is NOT uploaded and the Lambda is NOT changed; the plan shows the OPAL_BUILD_COMMIT env change as one in-place item for the applier.",
   "disarm_owner": "2.0.0_SA_COO~O",
   "notes": "S4 cited, not edited. A later source edit to either module, or a package edit, breaks the equality: the applier re-reads sha256 AzrzJS+91y57... from a build at the apply commit before uploading."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:57:58Z",
+  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
+      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
+      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
+  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
 }
 ```
 
@@ -11667,5 +11667,82 @@ name the one known failure instead of silently inheriting it.
   "spec_asserts": "W49-S1: an IAM PutObject grant alone cannot make the .pptx pair write, because the transcripts KMS key policy gives opal-gateway-role no use of the key.",
   "world_is": "The key policy grants kms:GenerateDataKey and kms:Encrypt to opal-gateway-role (no Decrypt). The KMS leg of the .pptx pair is done; the S3 grant and registry row are not (W49-S4).",
   "notes": "Citing row; W49-S1's own text is untouched."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T14:56:35Z",
+  "one_line": "STOP at batch 3 of OG-bh-1: for six 08403355 era-C dates (2025-12-12, 15, 16, 17, 18, 19) the RPS section-1 zip carries 28 columns the converter's pin does not know, so opal-assets-silver-schwab raises SchemaDriftError, writes no fact_rps / fact_rps_s2 / dim_position / dim_balance, and each date's completion record reads incomplete (MISSING_OUTPUT x4); 18 Lambda errors (6 files x 3 attempts), DLQ 0 -> 6.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/opal-assets-silver-schwab 2026-10-09T14:08Z..14:35Z: '[ERROR] RuntimeError: event run ... had 1 failure(s): schwab/08403355/bronze/rps/20251212/08403355.CRS20251212.RPS.zip: SchemaDriftError(\"partition carries column(s) the pin does not know: ['account_title_line_1', 'account_title_line_2', 'account_title_line_3', 'acct_regis', 'acct_type', 'net_credit_debit', 'margin_balance', 'available_to_pay', 'mrgn_buying_pwr', 'money_mkt_funds', 'mtd_margin_int', 'daily_margin_int', 'eqty_excl_option', 'eqty_percentage', 'mkt_value_long', 'mkt_value_short', 'eqty_incl_option', 'option_rqrmnts', 'mnth_end_div_pay', 'maintenance_call', 'mvl_cash_ex_optn', 'net_mv_positions', 'net_mv_plus_cash', 'cash_balance_settled_only', 'cash_margin_bal_settled', 'versmrkr_3', 'bank_sweep_ibf', 'bank_cash'] (feed=RPS s1) -- vendor drift is a finding: measure, extend the pin, never silently absorb\")'; the same message for 20251215, 16, 17, 18, 19 (six distinct dates, three attempts each).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json batches[2] (SSM 794ca37d-3118-457c-8ed6-021000ee307c): puller rc 0, enumerated 2314 downloaded 694 skipped 1620 failed 0, landing guard ok; converter Errors 18, Throttles 0, Invocations 706; dlq_baseline 0, dlq_after 6; not_qualified lists the six dates with closure status incomplete and findings MISSING_OUTPUT for dim_balance, dim_position, fact_rps, fact_rps_s2.",
+      "bh1_tool.py dlq at 2026-10-09T14:54Z: DLQ visible=6 in_flight=0. The same six dates hold fact_rps for 08335338 and 08242234 (list-objects-v2 on silver/fact_rps/date=2025-12-12/ returned 1 key each), so the drift is in this master's files for those dates only; neighbouring dates of 08403355 convert and qualify (batches 1-2: 147 of 147 dates; batch 3: 56 of 62).",
+      "schwab_runtime.py _sweep_lane (repo HEAD): a lane whose sweep results include a failed conversion composes NO sweep completion marker (`if not any(r.action == 'failed' ...)`), records the failure in the sweep manifest, and folds guard FAIL into schwab/08403355/meta/backfill-status.json; run_sweep drains the DLQ (cap 100, deleting the messages)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ask section 2: era B and C are 'the shapes the producer qualifies today for 08335338'; the COO half's stop rule: an era B or C date not qualified for a reason other than missing sibling files STOPS the run. DLQ at or below its start depth.",
+  "world_is": "Run stopped after batch 3 (landed: batches 1-3, 2314 of 6002 files, dates 2025-12-11..2026-10-08; AC2 today: 201 of 758 qualified, 557 open). Not run: batches 4-9 and the closing 2000-day run. No retry, no delete, no code or pin change by this worker. Standing effects until disarmed: (1) the 12:15Z sweep will try the six rps files again, fail, write no sweep completion markers for the whole 08403355 lane, drain and delete the six DLQ messages, and fold backfill-status guard FAIL for 08403355 (event-path records are unaffected); (2) ledger nfra-oplgtw-og-bh-1-taxsma-history stays OPEN (24 h window from 08:37Z). Options for the issuer, not taken here: extend the converter's RPS s1 pin for the 28 columns (a producer code leg for 0.7.0_AE_CloudOps~Z, then re-run the six events), or declare the six dates unavailable and roll their six rps zips back per the ask section 5 so the lane's sweep guard clears, or accept the standing sweep failure.",
+  "notes": "Batches 1-3 timings: puller 29.5 / 29.8 / 28.5 min, converter drain +8.2 / +8.0 / +8.0 min after the puller, one batch about 38 min; remaining 6 batches plus closing run estimated about 4 h (2.6 s per file, 3,688 files left plus a 2-3 min closing run). Batches 4-9 reach back into 2024-2025, so more dates may carry the same drift; unmeasured."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T15:40:36Z",
+  "one_line": "Resolution of NFRA_OPLGTW-Z-W46-S3 (the S3 row itself is not edited): both halves carry AMENDMENT 1, so six era-C dates (2025-12-12, 15, 16, 17, 18, 19) are recorded 'held: vendor drift (RPS pin)' and OG-bh-1 resumes at batch 4 under the narrowed stop rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half AMENDMENT 1 @f77e32d7c3 (deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_OG-bh-1_20261009.md): a date failing ONLY with an RPS SchemaDriftError is recorded 'held: vendor drift' and does not stop the run; every other stop stands; the pin extension is a separate cell for 0.7.0_AE_CloudOps~Z.",
+      "COO half AMENDMENT 1 @eea4aebe10 (deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-bh-1_20261009.md): same ruling; DLQ may rise by the held RPS files' count and any rise above it stops; the 12:15Z sweep retries the held files and withholds the lane's sweep markers until the pin lands (accepted).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json: held = the six dates, amendment_1.resumed_utc 2026-10-09T15:38:36Z. bh1_drive.py edited before resuming: a not-qualified era B/C date is held only if the converter log shows a SchemaDriftError on its single rps key AND every closure finding is one of fact_rps, fact_rps_s2, dim_position, dim_balance; any other ERROR line, any converter Errors count above 3 x the drift files, or a DLQ rise above the newly held count stops the driver."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W46-S3: a date not qualified for a reason other than missing siblings stops the run (COO half section 3).",
+  "world_is": "The stop rule is narrowed in one case by the two amendments; the held dates stay NOT qualified (the Gateway never serves an incomplete date) and are not re-run by this order. Held dates will read open under bh1.sh AC2.",
+  "notes": "Cites S3 as resolved by ruling, not by repair: the 28 columns are still unknown to the pin."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S77",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T19:40:15Z",
+  "one_line": "The six OG-bh-1 held-date RPS messages left the shared converter DLQ opal-assets-silver-dlq between 15:39Z and 16:17Z 2026-10-09 by an unknown actor -- not OG-bh-1 (its driver only reads depth) and not the 12:15Z sweep (outside that window); the held records were unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json: batch 4 dlq_baseline 6 (15:3xZ), batch 5 dlq_baseline 0 (16:1xZ)",
+      "WORKER REPORT 0.9.0_WK_NFRA_OPLGTW~46 (OG-bh-1 Phase B close): 'The 6 DLQ messages left the queue between 15:39Z and 16:17Z ... not this order, and the 12:15Z sweep had not run in that window'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-bh-1 AMENDMENT 1 (both halves): the held RPS files' DLQ messages are the expected residue until OG-pn-1 re-runs the six dates.",
+  "world_is": "The queue was emptied by someone else in a 38-minute window. No record changed. Who receives or purges opal-assets-silver-dlq outside the 12:15Z sweep is unknown; a second DLQ consumer would also eat other masters' failures silently.",
+  "notes": "Next read: CloudTrail sqs:ReceiveMessage/DeleteMessage/PurgeQueue on opal-assets-silver-dlq 15:39Z-16:17Z. INERT because nothing incomplete was served and OG-pn-1 re-runs the six dates by its own path."
 }
 ```

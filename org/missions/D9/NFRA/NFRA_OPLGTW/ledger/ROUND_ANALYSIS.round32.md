@@ -53,3 +53,20 @@ The r30 release cell carries the W44-S3 test re-pins and the W44-S4 consent delt
 MX-r-9, then MP-r-2, then OG-rl-16 (E2 `.xlsx`, the three halves signed: COO @153e507b79, CTO @5e258448d2, CVO @9b6003cd3b).
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1 (~19:3xZ): W43-S7 RULED on the CRO's research
+
+`4.0.0_SA_CRO~Z` msg 32958, `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/RESEARCH_OPLGTW_W43S7_LONG_READ_PATTERNS_20261009.md`
+@891f920463. This seat verified `catalog.py:841-870`: a stored snapshot is returned before any verification, and a new one is persisted
+write-once (`ConditionFailed` reads the existing one back). **So the 221-235 s figure is a cold, one-time cost per date, not a per-read
+cost.** It was measured on a MemStore harness.
+
+**RULED (d), replacing my pending rec of (c):**
+1. **Prime** the 13-month window once per master: a one-off read, not a standing job, because the daily increment is one date.
+2. **Measure** the warm 13-month read on the served gateway.
+3. Only if the warm read is over the 60 s ALB default, add the 8-thread bounded fan-out (the `admin_fabric.py` pattern) to the
+   per-date loop.
+4. Only if it still does not fit, build (c), the async handle.
+
+This becomes **round 34 cell E5**: steps 1-2 as one measured read, with step 3 conditional in the same cell under its own criterion.
+The 13-month read is not advertised to Alyssa as interactive until step 2 reads under 60 s.

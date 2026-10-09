@@ -2,7 +2,7 @@
   "project_code": "IRPT_DASHBD",
   "macro_code": "IRPT",
   "directive": "D9",
-  "fabric": "laptop",
+  "fabric": "dell2",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -43,6 +43,6 @@
   "blocking": "Not blocked. Seating override by Andrew's word (two seats each holding a second project); C-LEASE governs F beside DSGN_IRPTV1. Owned dependencies elsewhere: etf-classifications (MDPF_SECCLASS), the holdings price return (IRPT_BCKEND), the news tables, the topics scope row (LGIC), the household union-find's home (ADVI_FIRMBKTS).",
   "fabric_ruling": "laptop: D9 is LAPTOP as a whole (Andrew-direct 2026-09-10); both named seats are laptop lanes.",
   "phase": "L3 @7ae82f3532; L4 PRD v0.1 @2cb022f549; L4-R ADMITTED 2026-09-30 ~14:2xZ (ratified-text half signed by 3.0.0_SA_CVO @9914eab4f4, brief half by CRO authorship). L5/L6 open at 2.0.0_SA_COO~P (workstream B, the FWD-1 thread hops 1-4) and 2.0.0_SA_COO~D (workstream F, hop 5); round 1 is the thread.",
-  "last_updated": "2026-09-30",
+  "last_updated": "2026-10-09",
   "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }
