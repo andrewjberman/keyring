@@ -267,12 +267,23 @@ def status_words() -> set:
         return set(_STATUS_FALLBACK)
 
 
+COMPLETE_WORDS = {"complete", "completed", "done", "closed"}
+OTHER_TERMINAL_WORDS = {"superseded", "cancelled", "canceled", "withdrawn", "retired", "parked"}
+
+
+def lead_word(text: str) -> str:
+    """The order's own status word: the first token of the <status> text, lowercased, trailing punctuation stripped."""
+    toks = text.strip().lower().split()
+    return toks[0].rstrip(".,;:!-") if toks else ""
+
+
 def last_status(text: str, words: set) -> str:
-    """The LAST <status> tag whose word is a status word (CTO ruling msg 107528)."""
+    """The LAST <status> tag whose LEADING word is a status word (CTO ruling msg 107528; R3: read the order, not a spelling)."""
     got = ""
+    known = set(words) | COMPLETE_WORDS | OTHER_TERMINAL_WORDS
     for m in re.finditer(r"^<status>(.*?)</status>", text, re.M):
-        w = m.group(1).strip().lower()
-        if w in words:
+        w = lead_word(m.group(1))
+        if w in known:
             got = w
     return got
 
@@ -432,8 +443,8 @@ def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, de
             device, rv["state"], verdict)
     orders = read_orders(src, proj_dir, rnd, ws)
     n_orders = len(orders)
-    done = [o for o in orders if o["status"] == "complete"]
-    open_ = [o for o in orders if o["status"] not in ("complete", "superseded", "cancelled", "canceled", "withdrawn", "retired")]
+    done = [o for o in orders if o["status"] in COMPLETE_WORDS]
+    open_ = [o for o in orders if o["status"] not in COMPLETE_WORDS and o["status"] not in OTHER_TERMINAL_WORDS]
     lines.append("ORDERS scope round=%s workstream=%s: %d order(s), %d complete, %d not complete and outside the verdict%s" % (
         rnd if rnd is not None else "all", ws if ws is not None else "all", n_orders, len(done), len(open_),
         (" (" + ", ".join(o["id"].split(".")[-1] for o in open_) + ")") if open_ else ""))
@@ -538,6 +549,9 @@ def selftest() -> int:
         print("%s  %s -> %s" % ("PASS" if ok else "FAIL", name, line if not ok else " ".join(want)))
 
     try:
+        reset()
+        w(base + "/task-orders/TEST_PROJ.TO-1.one.md", order.replace("<status>complete</status>", "<status>complete -- landed by someone. Note.</status>"))
+        case("a `complete -- <note>` status reads complete with its judgment criterion", run(), "orders=2", "judgment=1", "ungraded=0", "verdict=MAY-CLOSE")
         reset(reviewer=None)
         case("no reviewer on the box is REFUSED", run(), "reviewer=ABSENT", "verdict=REFUSED")
         reset(graded_by="")
