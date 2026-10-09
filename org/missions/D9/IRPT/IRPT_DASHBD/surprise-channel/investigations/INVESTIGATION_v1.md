@@ -4285,3 +4285,81 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W61-S1 -- The service subject svc-custody-statement is admitted on three operations only, so the selection and snapshot a submission needs have no producer for it; run takes them as a selection file
+
+```json
+{
+  "id": "IRPT_DASHBD-W61-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~61",
+  "surfaced_at": "2026-10-09T10:05:00Z",
+  "one_line": "run cannot create the account_set_id (sel_...) or learn the snapshot_id itself: the runner reads them from --selection (account_set_id, snapshot_id, client_id, account_ids), supplied by the AE seat in DB-b-86.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face: run retains ONE submission for ONE household using the service subject's token.",
+  "world_is": "_authz/tests/test_svc_custody_statement.py test_svc_custody_statement_reaches_only_its_three_operations: the subject reaches custody-report-persist, POST /analysis and POST /export, not selection-create or directory resolve. The submission needs ?account_set_id=sel_<64 hex> (an Opal operator's retained selection, _scope/custody.py _selection_ref) and a snapshot_id that CustodyAccess checks against the accepted custody snapshot; the household document carries neither (accounts are masked). The runner therefore refuses to invent them and the opaque client_id / account_ids must equal the directory entry's (_scope/custody.py resolve_owner). The AE seat must produce the selection file from an operator selection-create answer and the accepted custody publication before DB-b-86.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py:128",
+      "infra/aws/lambda/investor-reporting/_scope/custody.py:98",
+      "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py (load_selection)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W61-S2 -- The client-report contract's exact top-level keys exclude composition_sha256, which the live writer requires of the document; the runner validates first, then binds
+
+```json
+{
+  "id": "IRPT_DASHBD-W61-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~61",
+  "surfaced_at": "2026-10-09T10:05:00Z",
+  "one_line": "validate_document refuses a document that already carries composition_sha256 (TOP_KEYS is exact); custody_write refuses a document that does not. The runner validates the unbound document and adds the key afterwards. The submit answer also names request_id only, so artifact_id and the composition hash are read from the acceptance record in irpt-requests (a DynamoDB read grant for the AE seat).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell text: persist the household document produced by hop3_real_run / client_report_figures and validated by validate_document.",
+  "world_is": "client_report_figures.py:135 TOP_KEYS and :1060 keys(doc, TOP_KEYS); reports/custody_write.py BINDING_KEY/_check_binding (IB-pr-375) refuses a document with no composition_sha256 or another's. submission_service.submit returns {identity{request_id,...}, stage, dispatch_pending}; the REQUEST_COMPOSITION artifact_id is in the acceptance record (acceptance.py record composition_ref) and ART-... is a digest of owner/family/logical_id, not derivable by a client. Whether the live persist validator accepts the extra top-level key is untested here (offline build); DB-b-86's first persist answers it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py:1060",
+      "infra/aws/lambda/investor-reporting/reports/custody_write.py:54",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py:166"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W61-S3 -- verify-submission prints the policy revision it MEASURES on the retained submission; the expected irpt-custody-x10-v1 may read irpt-x10-v1 for the REQUEST_COMPOSITION family
+
+```json
+{
+  "id": "IRPT_DASHBD-W61-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~61",
+  "surfaced_at": "2026-10-09T10:05:00Z",
+  "one_line": "DB41-3-AC1 expects 'SUBMISSION RETAINED policy=irpt-custody-x10-v1'. The runner prints retention_ref.policy_revision read from the artifact's index row, never a typed constant; if the live row carries irpt-x10-v1 the criterion fails honestly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell: the submission is retained under irpt-custody-x10-v1 (after release 5).",
+  "world_is": "reports/composition.py build_retained_repositories maps a revision only for families in the additional policy that are NOT in the default policy (revisions.setdefault), and ArtifactRepository.put reserves with policy_revision=None (the default irpt-x10-v1, retention.py:19) for a family absent from that map; REQUEST_COMPOSITION is not named in retention.py. Only CUSTODY_REPORT is evidenced as custody-policy retained. Measured by reading code, not the live row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/composition.py:42",
+      "infra/aws/lambda/investor-reporting/reports/repository.py:397",
+      "infra/aws/lambda/investor-reporting/reports/retention.py:19"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
