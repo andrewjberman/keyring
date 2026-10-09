@@ -5830,6 +5830,52 @@ carries none.
   "spec_asserts": "Order section 5: write the proof instance, validate it, then flip complete and commit instance, deliverables and flip together.",
   "world_is": "The proof (valid, rc=0), the rows and the complete flip sit in this worktree UNCOMMITTED because org/projects/ADVI_BILLING.json is not in the order's paths and a bypass is forbidden by the hook's own remedy text. Code is committed at 6584b623fa.",
   "notes": "ARMED until the base carries the index fix: no worker on a base before 66844d4f96 can land a proof. disarm_owner 2.0.0_SA_COO~MI: carry the ADVI_BILLING index fix to this base (or have the integrator commit the three staged-ready missions files). Denominator: 1 violation of 49 tree projects."
-}
+},
+  {
+    "id": "NFRA_MCPINDEX-Z-W29-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~29",
+    "surfaced_at": "2026-10-09T05:42Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The task order's emitter input (--census-dir pointing into the main tree) makes the emitter rewrite every census_ref file path as ../ajb_workspace/..., so 32 existing catalog lines change outside needs:; I passed the worktree's own tracked census instead, and the catalog then differs from base only by the built-by git-head stamp.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py census_ref_for() writes os.path.relpath(CENSUS_DIR/fname, REPO_ROOT); with CENSUS_DIR in the main tree, a first emit at base (before any change of mine) rewrote census_ref to file: ../ajb_workspace/org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census/ARTIFACT_CENSUS_MP.yaml (git diff --stat: 32 insertions, 32 deletions).",
+        "The census is TRACKED (git ls-files .../refs/census = 4 files), so the linked worktree already holds it; with --census-dir pointing at <worktree>/org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census the emit at base differs only in '# BUILT BY ... at git HEAD' and 'built_at_git_head' (2 lines; git diff -U0 of the removed lines).",
+        "The accessor index read from the main tree's portal/src/api (the order's --portal-api) changed no catalog row on this emit; the worktree's own portal/src/api differs from the main tree's in one file (endpoints/tickets.ts, diff -rq), unrelated to any catalogued accessor."
+      ]
+    },
+    "spec_asserts": "MX-c-6 emitter cautions: pass --census-dir and --portal-api pointing READ-ONLY into the main tree; every row outside needs: must be unchanged after the emit.",
+    "world_is": "Following the caution literally changes the repo-relative census_ref path of every census-backed channel row (32 lines) and the order's own diff check fails. The census is tracked, so the worktree copy is the correct input. The built-by head stamp (2 lines) changes on every emit by construction and is the emitter's own stamp, not a row. Any later worker or release that re-emits in a worktree with the main-tree census path repeats this.",
+    "notes": "ARMED until MX-r-9 or the next re-emitter is told to pass the in-tree census path (or the emitter writes census_ref against the census's own repo). Not fixed here: the emitter's relpath is outside the order. I also ran a git checkout -- on the one catalog file I had myself regenerated, to restore base before the second emit; no other file was touched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W29-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~29",
+    "surfaced_at": "2026-10-09T06:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit refuses every commit that stages an org/missions file, at this worktree's base 6d704a78c3, because the missions-tree validator reports INDEX-DRIFT on org/projects/ADVI_BILLING.json (index dep_stage PRD, tree DECOMP); the fix is CLOUD ac148d7eb9, not in this base and outside the order's paths.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Two refused attempts (the first with INVESTIGATION_v1.md alone, the second with the proof instance, the order flip and the row file): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/ADVI_BILLING.json: dep_stage: index=PRD tree=DECOMP; RESULT: 1 violation(s)'; ERROR: safe-commit did NOT commit (rc=1).",
+        "git merge-base --is-ancestor ac148d7eb9 HEAD returns 1 (not an ancestor); ac148d7eb9 is the main checkout's top commit 'regenerate org/projects/ADVI_BILLING.json to the tree's DECOMP'.",
+        "The same worker's code commit e7f52df685 (workflows/, infra/ paths only) landed: the check fires only when an org/missions path is staged."
+      ]
+    },
+    "spec_asserts": "The order's <paths> admit the proof instance, the investigation file and the order flip, and the worker commits them on its worktree branch.",
+    "world_is": "Those three paths cannot be committed from this base. The files are written and validated in the worktree (proof-of-spec-check rc=0, c6.AC1/AC2/AC3 PASS) but uncommitted, and the order's status flip is held back to in_progress: it is not terminal until they are committed.",
+    "notes": "Cure: base the worktree on a commit carrying ac148d7eb9, or the issuer commits the three uncommitted paths after the drain. Not attempted by the worker: org/projects/ is outside its write grant and --force does not bypass a gate failure."
+  }
 ]
 ```
