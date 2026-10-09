@@ -2420,3 +2420,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r100/p100_apply_390.py`: AC1 and AC2 
 | `IB-pr-395` | apply IB-pr-390 on 6 hosts (replay before ledger; held hosts untouched) | FWD-2 / IRPT_ANLREQ FWD-1 | WORLD | IB-pr-390 pair GIVEN | P100-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one release. Assignee: 0.7.0_AE_CloudOps~IB2.
+
+## 94. ROUND 101, WORKSTREAM ~P (2026-10-09 ~07:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2738)
+
+IB-pr-393 (FWD-14 gate) is graded 2/2 PASS and drained @42793c81fc. Its row W261-S2 found that the v0.32 closed-account exemption cannot fire
+for a firm whose directory marks no closures: cottonwood is all UNKNOWN. The CTO ruled PRD v0.33 (@13ee60595d), and the CVO admitted it
+(msg 2744): for such a firm, account_lost is LISTED and never refuses alone. One follow-up cell builds it; the FWD-14 release pair follows.
+IB-pr-395 (the 390 release on 6 hosts) is out to 0.7.0_AE_CloudOps~IB2. Check `deliverables/2.0.0_SA_COO~P2/checks/r101/p101_v033.py`:
+AC1 PASSes at base as a regression guard (the 15 existing gate tests plus the suite); AC2 FAILs.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-396` | FWD-14 v0.33: all-UNKNOWN firm's account_lost listed, not refusing | FWD-14 | WORLD | IB-pr-393 drained | P101-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one change. Assignee: 0.9.0_WK_IRPT_BCKEND~263.
