@@ -5,7 +5,7 @@
   "fabric": "dell2",
   "pipeline": "irpt_anlreq",
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-10-09",
   "registered_under_tree": "2026-10-09",
   "placement": "DELL2",
@@ -21,7 +21,19 @@
   "description": "Andrew-direct 2026-10-08 ~22:3xZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md @2b21a349d1); build word given as the CTO's discretion 2026-10-09 ~03:4xZ (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_034xZ_SELF_DRIVE_30M_EVERY_DELL2_PROJECT_AND_DISCRETION_ON_THREE_ACTS.md @35fabf20c8). Interim driver 2.0.0_SA_COO~Y2 (CVO verdict msg 1889), to a project-code COO seat once the naming setup lands. Runs under /closer.",
   "brief_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANALYSIS_REQUEST_END_TO_END_GAP_BRIEF_20261008.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_ANLREQ_20261009.md",
-  "prds": [],
-  "prd_lineage": [],
+  "prds": [
+    {
+      "path": "org/missions/D9/IRPT/IRPT_ANLREQ/prd/IRPT_ANLREQ_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-09",
+      "author": "1.0.0_SA_CTO~DELL2"
+    }
+  ],
   "decompositions": []
 }
