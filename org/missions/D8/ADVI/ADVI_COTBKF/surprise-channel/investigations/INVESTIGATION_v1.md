@@ -2734,3 +2734,26 @@ round.** Never edit an existing row.
   "world_is": "The rule traces a DIFF month to a posting category only when that category's postings are big enough to move the month by the difference (exposure at least |D|). For 374 of 886 DIFF months one does (cash legs 190, income 154, client flows 30). For the other 512 the difference is larger than anything a different treatment of the month's postings could move (478) or the month holds no driver posting at all (34): these months' differences sit outside the categories the method decides, which points at the valuation (price, holdings, carried cash level) rather than a posting treatment, but this census has no instrument for that and names no cause it did not trace. The order is left open and the test is not weakened; widening the rule after seeing these counts would be rule-fitting, so a rule that traces valuation-side drivers (carried level, stale or missing price, holdings step) is a round-27 cell for the CTO's analysis. The UNGRADABLE side is fully classed: UNPRICED alone is 74,846 months, a cause that spans the whole table (the order states that only about 8% of account-days are priced from Opal's stores; not re-measured here) and is named, not split."
 }
 ```
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W48-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~48",
+  "surfaced_at": "2026-10-09T02:37Z",
+  "one_line": "Row ADVI_COTBKF-D2-W48-S1's red test (test_method_r25b_is_selectable_and_is_method_r25) is fixed by this commit under the issuer ruling at 4a4088de98: line 57 now asserts the default is CASH_LEG_METHOD_R26",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_commonwealth_carried_levels.py line 57: `assert sw.CASH_LEG_DEFAULT == sw.CASH_LEG_METHOD_R26`; the file was added to CB-z-2 <paths> by 4a4088de98",
+      "python -m pytest -q data/assets/scripts/silver/tests: 659 passed, 11 skipped, 0 failed (S1 recorded 1 failed, 640 passed, 11 skipped)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S1: the default change to method_r26 leaves one test red that is outside CB-z-2's paths, ARMED until the issuer disarms it.",
+  "world_is": "The issuer widened CB-z-2's grant by that one path and this worker changed that one assertion to the new default; the suite is green. S1 is not edited; its disarm is this row's subject."
+}
+```
