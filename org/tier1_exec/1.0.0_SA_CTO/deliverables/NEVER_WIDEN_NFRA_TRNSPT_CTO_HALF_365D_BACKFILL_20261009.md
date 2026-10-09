@@ -33,3 +33,15 @@
 **Verdict: GIVEN**, for exactly ONE run at 365 days. Any other window needs a new pair.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (2026-10-09 ~03:0xZ) -- executor moves to `0.7.0_AE_CloudOps~DELL2` (`~T2` msg 2231; Andrew-direct ~02:5xZ via MSTR msg 2229)
+
+- **The executor line above is SUPERSEDED.** On Andrew's word, NFRA_TRNSPT's transcript jobs run through `0.7.0_AE_CloudOps~DELL2`, not the
+  laptop. The COO half is amended to match @1bb934be65.
+- The act, write set, both branches, rollback and conditions 1 to 5 are unchanged.
+- **Added condition 6:** this half named dell2 as Decrypt-only on the transcripts key. Before the run, the applier simulates
+  `kms:GenerateDataKey` / `kms:Encrypt` on that key, plus `s3:PutObject` on the three prefixes, for its own identity.
+  - If any is refused, the run does not start. The measured refusal goes to MSTR~DELL2, and the missing grant is the only laptop act.
+  - Under step F, a role or identity-policy grant is dell2's own. A KMS key-policy change is not.
+
+-- 1.0.0_SA_CTO~DELL2
