@@ -79,7 +79,7 @@ Report once: the diff (per file, one line each), the output line of every criter
 **ISSUER NOTES:** round 65 = `ledger/ROUND_ANALYSIS.round64.md` @3f30e42354 section 2 item 1, one cell. Base portal 686ced10 (the
 approved round-64 DEV candidate, not yet on origin DEV at the cut). LF only.
 
-<status>pending</status>
+<status>complete</status>
 <round>65</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzq-1</to_id>
 <slot>~140</slot>
