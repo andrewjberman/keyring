@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
   "contract": "ADVI_BILLING fee_quarter object",
   "owner": "ADVI_BILLING (AB-t-1 writes it; AB-t-2 reads it; AB-t-3 renders it)",
   "address": "lib/opal_naming.address('advi','49financial','gold','advi_billing','quarter=<YYYYQn>','<client_key>.json')",
@@ -8,7 +8,7 @@
   "fields": {
     "contract_version": {
       "type": "string",
-      "meaning": "this contract's version; the object carries 0.1.0"
+      "meaning": "this contract's version; the object carries 0.2.0 (0.2.0 is additive over 0.1.0: every 0.1.0 field keeps its meaning)"
     },
     "firm": {
       "type": "string",
@@ -21,6 +21,32 @@
     "client_key": {
       "type": "string",
       "meaning": "the portal's household key = the Black Diamond relationship_id (z-prefixed) on the account fee lines, which names the served platinum client summary; also the object's file name"
+    },
+    "household_source": {
+      "type": "string",
+      "enum": [
+        "household_crosswalk",
+        "bd_fee_lines"
+      ],
+      "meaning": "where the household's accounts came from (0.2.0): household_crosswalk = the gold household_crosswalk, newest date= partition, rows whose claim is measured for this client_key; bd_fee_lines = the relationship's served platinum summary accounts joined to the Black Diamond fee lines (round 1's route), used when the crosswalk has no such row"
+    },
+    "smartx_statement": {
+      "type": "object",
+      "meaning": "whether the silver smartx_fee_statement partition for the quarter was used (0.2.0)",
+      "fields": {
+        "used": {
+          "type": "boolean",
+          "meaning": "true when the silver partition exists for the quarter"
+        },
+        "accounts_covered": {
+          "type": "integer",
+          "meaning": "accounts of the household that have at least one allocation row in it; each of those takes its rates and true-ups from it, any other account keeps the Black Diamond schedule"
+        },
+        "partition": {
+          "type": "string|null",
+          "meaning": "the silver builder address read; null when not used"
+        }
+      }
     },
     "quarter": {
       "type": "string",
@@ -115,7 +141,7 @@
         },
         "schedule_source": {
           "type": "string",
-          "meaning": "the BD fee line the schedule was read from, by partition key"
+          "meaning": "where the schedule was read from: the BD fee line by partition key, or (0.2.0) the SMArtX fee statement silver partition, in which case schedule_claim is measured and the schedule's rates are value-weighted over the account's allocations"
         },
         "flow_adjustment": {
           "type": "number",
@@ -155,7 +181,7 @@
             },
             "rate": {
               "type": "number|null",
-              "meaning": "annual rate as a fraction (0.0100 = 100 basis points) applied as value x rate x days_in_period / days_in_year; null only when the component's schedule_claim is absent (PLATFORM: the SMArtX schedule is not held in Opal)"
+              "meaning": "annual rate as a fraction (0.0100 = 100 basis points) applied as value x rate x days_in_period / days_in_year; null only when the component's schedule_claim is absent. 0.2.0: with a SMArtX statement, PLATFORM carries UMA + APM + Model rate and both rates are value-weighted over the account's allocations by Current Period Estimate Valuation"
             },
             "debit_code": {
               "type": "string",
@@ -167,7 +193,7 @@
             },
             "computed_fee": {
               "type": "number|null",
-              "meaning": "USD, round(billable_value x rate x days_in_period / days_in_year, 2); null only when the component's schedule_claim is absent"
+              "meaning": "USD, round(formula_fee + adjustment.amount, 2) where formula_fee = billable_value x rate x days_in_period / days_in_year (0.2.0; with no adjustment it is the 0.1.0 value); null only when the component's schedule_claim is absent"
             },
             "debited_fee": {
               "type": "number|null",
@@ -202,9 +228,21 @@
                 "held",
                 "absent"
               ],
-              "meaning": "how this component's rate was come by (same enum as claim_enum): ADVISOR carries the account's schedule_claim; PLATFORM carries absent in 0.1.0 because no per-account SMArtX platform/model rate is held in Opal. A consumer rejects a null rate/computed_fee that does not carry absent."
+              "meaning": "how this component's rate was come by (same enum as claim_enum): ADVISOR carries the account's schedule_claim; PLATFORM carries absent when no SMArtX statement partition covers the account (no per-account platform rate is held in Opal otherwise) and measured when one does (0.2.0). A consumer rejects a null rate/computed_fee that does not carry absent."
+            },
+            "formula_fee": {
+              "type": "number|null",
+              "meaning": "USD, billable_value x rate x days_in_period / days_in_year, before the adjustment (0.2.0); null when computed_fee is null"
+            },
+            "adjustment": {
+              "type": "object|null",
+              "meaning": "the named adjustment included in computed_fee (0.2.0): {name, amount}, amount USD signed; null when none"
             }
           }
+        },
+        "adjustments": {
+          "type": "array",
+          "meaning": "named adjustments included in the account's components' computed_fee (0.2.0): {portion, name, amount}; [] when none. Today the SMArtX statement's prior-quarter true-ups ('SmartX true-up' on PLATFORM, 'Advisor true-up' on ADVISOR), USD, signed"
         }
       }
     },
@@ -218,7 +256,7 @@
         },
         "computed_fee": {
           "type": "number",
-          "meaning": "USD, sum of the non-null computed_fee over the components (0.1.0: the ADVISOR components)"
+          "meaning": "USD, sum of the non-null computed_fee over the components (the ADVISOR components; with a SMArtX statement the PLATFORM components too)"
         },
         "debited_fee": {
           "type": "number",
@@ -273,6 +311,7 @@
   },
   "tolerance_usd": 0.01,
   "difference_sign": "computed_fee - debited_fee",
-  "scope_note": "0.1.0 models neither the prior-quarter true-up carried on the 07-07 debit nor flows (flow_adjustment 0.0); both are named as reasons on a DIFFERS, not computed. The PLATFORM (SMArtX) schedule is not held in Opal: its component carries null rate and computed_fee, schedule_claim absent, and the SMFEE debit as measured.",
-  "amendment": "AMENDMENT 1 (2.0.0_SA_COO~B2 2026-10-09): household key = BD relationship_id; ADVISOR rate = the account's own BD schedule; PLATFORM component with null rate and fee; flows_in_period {date, amount, note}."
+  "scope_note": "0.1.0 models neither the prior-quarter true-up carried on the 07-07 debit nor flows (flow_adjustment 0.0); both are named as reasons on a DIFFERS, not computed. The PLATFORM (SMArtX) schedule is not held in Opal: its component carries null rate and computed_fee, schedule_claim absent, and the SMFEE debit as measured. 0.2.0: where a silver smartx_fee_statement partition covers an account, its PLATFORM component carries the statement's rate, a computed_fee and schedule_claim measured, and the SmartX / Advisor true-ups are included in computed_fee as named adjustments; the platform rate is UMA + APM + Model rate (the composition is an assumption until a real statement is read).",
+  "amendment": "AMENDMENT 1 (2.0.0_SA_COO~B2 2026-10-09): household key = BD relationship_id; ADVISOR rate = the account's own BD schedule; PLATFORM component with null rate and fee; flows_in_period {date, amount, note}.",
+  "amendment_2": "AMENDMENT 2 (2.0.0_SA_COO~B2 round 2, AB-e-6): household_source (household_crosswalk | bd_fee_lines), smartx_statement, accounts[].adjustments, components[].formula_fee and components[].adjustment added; additive only, so 0.1.0 readers and the served panel are unaffected."
 }
