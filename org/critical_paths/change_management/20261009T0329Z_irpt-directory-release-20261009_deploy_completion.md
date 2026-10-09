@@ -94,3 +94,34 @@ AMENDMENT 1's conditions, to be honoured in this order when the window clears:
 Unrelated and unaffected: sr1's W2 at 13:35:57Z falls inside the exclusion window but is a
 DynamoDB profile write under a different order, not a seeding run, so this condition does not reach
 it. It fires on time.
+
+## THE SCHEDULED FIRE LANDED AT 13:40:50Z, INSIDE THE EXCLUSION -- pre-flight read at 13:52Z
+
+This is why the CTO condition exists, and it fired exactly where the condition said it would.
+
+AT 13:12Z I measured all three firms 2026-10-09 dated keys as 404 (positive controls PRESENT). At
+13:52Z, re-measuring as pre-flight:
+  opal-data-inf  directory/2026-10-09/directory.json  PRESENT, LastModified 13:40:50Z, version gDdnnAtQ...
+                                                      294 entries, TERMINATED 0
+  opal-data-inf  directory/latest.json                PRESENT, 13:40:50Z
+  opal-data-cot  directory/2026-10-09/directory.json  STILL 404
+  opal-data-cot  directory/latest.json                PRESENT, 13:40:48Z
+13:40Z is 09:40 ET -- the second of the two scheduled fires the order names. So the producer ran
+while this seat was holding, which is precisely the race the CTO condition exists to prevent. Had I
+seeded at 13:20Z as the un-parking first allowed, I would have been writing the same keys as the
+scheduled runner.
+
+WHAT IT CHANGES, and what it does not:
+  THE SEEDING IS STILL NEEDED. The fresh scheduled artifact carries TERMINATED 0. Carrying the
+  terminated entry forward is the entire purpose of the seeding run, so the scheduled fire did not
+  do this seat work for it. The need is measured, not assumed.
+  THE SUB-BRANCH PER FIRM IS NOW DIFFERENT, and both are signed. The CTO 380/381 half signs BOTH
+  arms -- a same-date overwrite where the runner selects today existing date, and a NEW dated key
+  where the frontier moved. inflection now takes the SAME-DATE OVERWRITE arm, over a 13:40:50Z
+  scheduled artifact whose version is recorded above for rollback. cottonwood has no dated key for
+  today, so it takes whichever arm its own frontier selects.
+  THE ASYMMETRY IS REAL and worth stating: the two firms are no longer in the same starting state.
+  That does not breach all-three-or-none, which is about not leaving the SEED partial, but it does
+  mean the two runs are not mirror images and their read-backs must be judged per firm.
+
+Counts and booleans only above; no client figures are recorded anywhere in this entry.
