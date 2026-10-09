@@ -9593,3 +9593,9 @@ fanout:
   no_s3_deletes: true
   egress: kk-5 (one model run); no Bloomberg call in any order
 ```
+
+### 94e. AMENDMENT (issuer, 2026-10-09 ~14:5xZ) -- CTO~DELL1 msg 2572
+
+AMGT-kk-1 runs on a laptop CloudOps seat (no synced research library on dell1), re-addressed at the GO by a crossbox ORDER through
+0.0.0_AB_MSTR~DELL1, and carries the CTO's guard: crosswalk.py refuses to publish research_universe ABSENT over a served count (AC3,
+landed before the republish), so W341-S1 is impossible from any box. kk-1 is the round's only writer of crosswalk.py.

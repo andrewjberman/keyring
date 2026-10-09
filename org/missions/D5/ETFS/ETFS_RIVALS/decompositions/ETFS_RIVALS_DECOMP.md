@@ -1306,3 +1306,26 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
 - Out of bounds: every `.tf` file, every other Lambda, any `terraform plan` or `apply`, any AWS call; the rivalfunds code.
 - Check: `ws3_item8_prep/wj1_serp_grant_check.py` (AC1; base FAIL 2: limbs (1) and (3); limbs (2) and (4) PASS at the
   base and must keep passing).
+
+### `RIV-wk-1` -- a stored corporate-action row can be VOIDED without a delete: an append-only void object, written by a CLI, that `price_series` honours (CTO half condition 11 of the lookup deploy) -- APPENDED 2026-10-09, revision 1.28
+- Placement: `1.0.0_SA_CTO~DELL1`'s half of the lookup deploy pair,
+  `deliverables/1.0.0_SA_CTO~DELL1/round28/NEVER_WIDEN_HALF_CTO_WI1_LOOKUP_DEPLOY.md` @63bdddfbb9 (msg 2581), condition
+  11: the COO half's rollback of a wrong `corporate_actions` row rested on an S3 delete, which no seat may do; "No void
+  path, no apply."
+- Measured: `price_series._actions(s, lo, hi)` (~line 216) concatenates EVERY `.parquet` under
+  `gold/corporate_actions/date=<D>/` for D in [lo, hi]; `_adjustments` (~128) applies each `split` row. The inferred rows
+  (`dramatic_move._row` ~249, `write_rows` ~330) carry `security_id`, `event_type`, `ratio`, `ex_date`, `source_url` and the
+  object's `revision` (stamped by `write_rows`). There is no void path: a wrong row adjusts forever.
+- Interface:
+  1. `dramatic_move.void_rows(s, revision, security_id, reason, day=None) -> uri`: writes ONE new object
+     `actions-void-<rev>.parquet` under `gold/corporate_actions/date=<day or today UTC>/` with one row per voided action:
+     `void_revision`, `security_id`, `reason`, `voided_at`, `producer_version`. Append-only; it never rewrites or deletes.
+  2. A CLI: `python -m rivalfunds.dramatic_move void --sink <s3 | local:<dir>> --revision <rev> --security-id <sid>
+     --reason <text> [--day <D>]`, exit 0 on a written void, non-zero with a message when no stored action row matches
+     (`revision`, `security_id`).
+  3. `price_series._actions` reads `actions-void-*` objects separately (never as action rows) and drops every action row
+     whose (`revision`, `security_id`) a void names, over all dates. A void for an unknown row changes nothing.
+- Out of bounds: `sweep.py`, `publish_page.py`, `render.py`, `gen_policies.py`, every infra path; no S3, no search, no
+  deploy. The void CLI is never run against S3 by this cell.
+- Check: `ws3_item8_prep/wk1_void_check.py` (AC1; base FAIL 2 -- arms B and C; arm A, both rows adjusting before any void,
+  PASSES at the base and must keep passing).

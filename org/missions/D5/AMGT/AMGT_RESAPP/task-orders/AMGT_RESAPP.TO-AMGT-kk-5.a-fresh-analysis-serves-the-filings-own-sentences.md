@@ -80,3 +80,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T15:0xZ by the issuer: AMGT-kk-2 merged @246654e7a6 (same file, drafting_build.py). Worktree ~345 cut from box/dell1 after this line. ONE offline NU run expected. Graded by no gate limb (a modification).</status>

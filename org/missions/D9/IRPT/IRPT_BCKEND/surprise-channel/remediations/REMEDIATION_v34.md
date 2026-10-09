@@ -24,11 +24,11 @@ Four are ARMED with a dated deadline (cottonwood OVER_AGE 2026-10-12) and disarm
     "owner": "2.0.0_SA_COO~P2",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v95"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-D2-W187-S1",
@@ -47,15 +47,15 @@ Four are ARMED with a dated deadline (cottonwood OVER_AGE 2026-10-12) and disarm
     "owner": "2.0.0_SA_COO~P2",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v95"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-09T13:40:53Z"
     }
   },
   {
@@ -75,15 +75,15 @@ Four are ARMED with a dated deadline (cottonwood OVER_AGE 2026-10-12) and disarm
     "owner": "2.0.0_SA_COO~P2",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v95"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-09T13:40:53Z"
     }
   },
   {
@@ -103,15 +103,15 @@ Four are ARMED with a dated deadline (cottonwood OVER_AGE 2026-10-12) and disarm
     "owner": "2.0.0_SA_COO~P2",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v95"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-09T13:40:53Z"
     }
   },
   {
@@ -131,15 +131,15 @@ Four are ARMED with a dated deadline (cottonwood OVER_AGE 2026-10-12) and disarm
     "owner": "2.0.0_SA_COO~P2",
     "round": "v95",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v95"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-09T13:40:53Z"
     }
   },
   {

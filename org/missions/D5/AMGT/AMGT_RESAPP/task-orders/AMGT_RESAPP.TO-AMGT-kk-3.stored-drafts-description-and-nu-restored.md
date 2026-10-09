@@ -85,3 +85,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T15:0xZ by the issuer, on 1.0.0_SA_CTO~DELL1 msg 2596 (CTO half NEVER_WIDEN_ROUND86_KK3_CTO_HALF.md). Pair COO @1380a0f2cd + CTO: conditions 1-3 (per-key prior VersionId and version listing; AC1 YES before ANY write; one key at a time, a NO stops the rest) PLUS 4 (after each key's write, read its served page: the served dossier description field still shows -- if it disappears that key is re-put the same hour; no Item 5 / 3.D line under a description label; NU's one Item 4.B sentence; the empty state where the section is now empty -- the CVO reads it at L9) and 5 (per-key sentence counts outside company_description printed, at or above ASML 16, BABA 19, NU 28, PBR 22, SAP 13; NU 6/11/19 whole and 100% verbatim). Worktree ~343 cut from box/dell1 after this line. Graded by no gate limb (a modification).</status>

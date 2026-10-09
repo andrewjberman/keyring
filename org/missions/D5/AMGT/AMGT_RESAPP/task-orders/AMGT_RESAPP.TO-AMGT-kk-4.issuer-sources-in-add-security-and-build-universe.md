@@ -37,6 +37,8 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 ## 3. SURFACES
 
 <paths>
+lib/research/identity/tests/test_add_security_batch.py
+lib/research/identity/tests/test_crosswalk_write_validates.py
 lib/research/identity/add_security.py
 lib/research/identity/build_universe.py
 lib/research/identity/tests/test_writers_carry_issuer.py
@@ -75,3 +77,5 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>pending -- AMENDMENT 1 (issuer, 2026-10-09T15:0xZ) on row AMGT_RESAPP-D1-W344-S1: the worker's build (@3cf9a6fa1d, VALID) made add_security CATCH an issuer-source load failure and build without `issuer` (fail-open), because two existing tests call _build_document unstubbed. RULING: fail-CLOSED -- a load failure refuses the build with a printed reason, never a silent publish without issuer (the same rule CTO~DELL1 msg 2572 set for research_universe). GRANTED: lib/research/identity/tests/test_add_security_batch.py and test_crosswalk_write_validates.py, to stub the source load. Criteria unchanged; add one test that the load failure refuses. Row D1-W344-S2 (build_universe stamps an optional issuer on universe names) accepted, INERT. Graded by no gate limb (a modification).</status>
+<status>complete -- issuer close 2026-10-09T15:1xZ: merged @f2c0b8c3c0 (wk-AMGT_RESAPP-344 @e52a3195c0, proof VALID, under AMENDMENT 1). Re-run on the merged tree: AC1 8 passed (test_writers_carry_issuer.py: add_security and build_universe stamp issuer from the issuer sources; a source load failure REFUSES the build, rc 6, with a printed reason -- fail-closed as ruled); AC2 lib/research/identity 256 passed, 0 failed. Rows W344-S1 (ruled in AMENDMENT 1) and W344-S2 (INERT) stand.</status>

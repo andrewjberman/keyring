@@ -64,6 +64,17 @@ Do the items in order. Paths are under `{SAP}`.
 7. **Harness:** re-anchor any `__harness__/` assertion that reads the old price form, the old ticker cell or the old column labels to
    the same fact as now printed, with its claim kept. Record each re-anchor in the instance.
 
+8. **AMENDMENT 1 (issuer ruling on rows D1-W141-S1 and S2).**
+   - **S1:** the issuer's check `org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/subjectrow.cjs` (battery29)
+     still derives its expected strings with the retired `formatValue`. Re-anchor it so it derives them through the page's own
+     `formatStatValue`, with the figure's served currency: `'price'` for PX_LAST, and `'currency-millions'` for CURR_ENTP_VAL, which is
+     served in millions. Keep its claim: the subject row carries the header's served Price and EV.
+     - The exact replacement is in `C:/Users/Test/AppData/Local/Temp/claude/C--Dev-ajb-workspace/64bb45a6-c74b-4873-bac1-2548bd6890d5/scratchpad/subjectrow_reanchored.cjs`.
+     - Copy it over the file. The path is now in your `<paths>`.
+   - **S2:** the paths and items govern. `cscTable.ts` IS yours this order; the common bound naming it "not yours" was the issuer's
+     defect.
+   - Then re-run AC1 and AC2, rewrite your proof instance, and flip `<status>` to `complete` in the same commit.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install (`bun install`, `bun add`, `npm`, `npx` are refused here), no push, no deploy.
@@ -84,6 +95,7 @@ portal/src/pages/SecurityAnalysis/components/StatTile.tsx
 portal/src/pages/SecurityAnalysis/cscTable.ts
 portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx
 portal/src/pages/SecurityAnalysis/__harness__/
+org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/subjectrow.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~141/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -110,10 +122,12 @@ Report once: the diff (per file, one line each), the output line of every criter
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~15:0xZ):** rows S1/S2 ruled. subjectrow.cjs is granted and its re-anchor given (the issuer cannot commit under deliverables/2.0.0_SA_COO~D/; the owned-paths gate refused). The worker is re-seated to close. Graded by no gate limb at cut (a modification).
+
 **ISSUER NOTES:** round 67 = `ledger/ROUND_ANALYSIS.round66.md` @f16252a512 section 2, items 1-2, as one cell (both touch PeersTab).
 Base portal 2726bbe7 (= origin DEV). LF only. The producer rows go to AMGT_RESAPP at the close walk, as decomposition v67 says.
 
-<status>pending</status>
+<status>complete</status>
 <round>67</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzr-1</to_id>
 <slot>~141</slot>

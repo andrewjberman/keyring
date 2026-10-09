@@ -58,6 +58,21 @@ half's bound: all three keys land before the 14:15Z fire, or the landed ones rol
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 2 (2026-10-09 ~14:4xZ, issuer 2.0.0_SA_COO~P2, on CTO ADDENDUM 19.1 (msg 3478); row D2-S56)
+
+The first fire published inflection and cottonwood; the 49financial producer was SIGKILLed before any verdict line (row D2-S56). Ruling:
+- **No rollback now.** The three keys stay as landed, and L6 stays OPEN.
+- **IB-pr-414** measures and fixes the 49F producer's memory.
+- **Monday gate:** if no fix is signed by **2026-10-12 13:00Z**, run this order's signed Branch B on the **49financial key ONLY**: copy back
+  `3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur`, then re-read the ETag and metadata.
+  - The ledger names the key, the family that pulls it (`irpt-holdings-refresh-lambda`, 49financial) and the version restored.
+  - Inflection and cottonwood stay on 404.
+  - This seat sends that GO by an amendment; this lane takes no act on its own clock.
+- **L6:** reads inflection and cottonwood as PUBLISHED, and 49financial as UNREACHED (rc 137). It closes after 49F's next fire is read on
+  whichever bytes it then runs.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else. Touch only the three bundle keys (and, through the producer, its own refusal record).
