@@ -10,6 +10,7 @@
 <worker_class>worker-light</worker_class>
 <placeholders>NONE</placeholders>
 <round>6</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~12:5xZ (worker ~16's report):** `drawn_date` is CUMULATIVE -- the first actuals `date` (in date order) on which the job's running sum of `cells_drawn` reaches `cells_quoted`, else null. A request drawn over several days (the 15,720-cell history request) finishes the day its total is reached, not when one row alone reaches it. Add one assertion of a multi-row cumulative finish inside `test_on_time_when_drawn_on_or_before_finish_day`. No criterion changes.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-19` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 6 -- CUT) |
 **outcome_ref:** FWD-4 | **depends_on:** none
 

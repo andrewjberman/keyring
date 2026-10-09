@@ -1,0 +1,219 @@
+{
+  "claim": "measured: read-only list, live table read 2026-10-09; trace partition 2026-10-06",
+  "source": "BD_UNCLASSIFIED_TRACE_D1S11_20261008.json",
+  "with_ticker": 61,
+  "ticker_no_row": 23,
+  "name_resolvable": 23,
+  "unresolved": 0,
+  "usd_resolvable": 966285.46,
+  "usd_unresolved": 0,
+  "entries": [
+    {
+      "ticker": "LBSAX",
+      "name": "COLUMBIA DIVIDEND INCOME A",
+      "name_key": "NAME::COLUMBIA DIVIDEND INCOME A",
+      "why_group": "A:",
+      "market_value": 365335.72,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCGE1",
+      "name": "LARGE CAP EQUITY MANAGED POOL",
+      "name_key": "NAME::LARGE CAP EQUITY MANAGED POOL",
+      "why_group": "A:",
+      "market_value": 151435.14,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCGN1",
+      "name": "INTERNATIONAL EQUITY INDEX POOL",
+      "name_key": "NAME::INTERNATIONAL EQUITY INDEX POOL",
+      "why_group": "A:",
+      "market_value": 149833.97,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "TWCUX",
+      "name": "AMERICAN CENTURY ULTRA\u00ae INV",
+      "name_key": "NAME::AMERICAN CENTURY ULTRA INV",
+      "why_group": "A:",
+      "market_value": 88936.6,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCSI1",
+      "name": "SHORT TERM INCOME POOL",
+      "name_key": "NAME::SHORT TERM INCOME POOL",
+      "why_group": "A:",
+      "market_value": 59242.28,
+      "name_row_class": "fixed_income",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "ASMIY",
+      "name": "ASM INTL NV NY REGISTER SH",
+      "name_key": "NAME::ASM INTL NV NY REGISTER SH",
+      "why_group": "A:",
+      "market_value": 27730.24,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "BALCX",
+      "name": "AMERICAN FUNDS AMERICAN BALANCED C",
+      "name_key": "NAME::AMERICAN FUNDS AMERICAN BALANCED C",
+      "why_group": "A:",
+      "market_value": 23420.0,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCGS1",
+      "name": "SMALL CAP EQUITY POOL",
+      "name_key": "NAME::SMALL CAP EQUITY POOL",
+      "why_group": "A:",
+      "market_value": 22958.0,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCGG1",
+      "name": "GROWTH POOL",
+      "name_key": "NAME::GROWTH POOL",
+      "why_group": "A:",
+      "market_value": 22773.13,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCGT1",
+      "name": "TREASURY INFLATION PROTECTED SECS",
+      "name_key": "NAME::TREASURY INFLATION PROTECTED SECS",
+      "why_group": "A:",
+      "market_value": 15574.65,
+      "name_row_class": "fixed_income",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "PFF",
+      "name": "ISHARES PREFERRED & INCOME SECURITIES ETF",
+      "name_key": "NAME::ISHARES PREFERRED INCOME SECURITIES ETF",
+      "why_group": "A:",
+      "market_value": 11808.0,
+      "name_row_class": "fixed_income",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SCGL1",
+      "name": "INTL EQUITY MANAGED POOL",
+      "name_key": "NAME::INTL EQUITY MANAGED POOL",
+      "why_group": "A:",
+      "market_value": 5585.81,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "FBCVX",
+      "name": "FIDELITY BLUE CHIP VALUE",
+      "name_key": "NAME::FIDELITY BLUE CHIP VALUE",
+      "why_group": "A:",
+      "market_value": 4812.51,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "CEMVX",
+      "name": "CAUSEWAY EMERGING MARKETS INVESTOR",
+      "name_key": "NAME::CAUSEWAY EMERGING MARKETS INVESTOR",
+      "why_group": "A:",
+      "market_value": 4109.08,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "AEMGX",
+      "name": "ACADIAN EMERGING MARKETS INVESTOR",
+      "name_key": "NAME::ACADIAN EMERGING MARKETS INVESTOR",
+      "why_group": "A:",
+      "market_value": 3973.06,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "VWIGX",
+      "name": "VANGUARD INTERNATIONAL GROWTH INV",
+      "name_key": "NAME::VANGUARD INTERNATIONAL GROWTH INV",
+      "why_group": "A:",
+      "market_value": 3832.43,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "FIADX",
+      "name": "FIDELITY ADVISOR INTERNATIONAL DISCV I",
+      "name_key": "NAME::FIDELITY ADVISOR INTERNATIONAL DISCV I",
+      "why_group": "A:",
+      "market_value": 2882.52,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "FG",
+      "name": "F&G ANNUITIES & LIFE INC COMMON STOCK",
+      "name_key": "NAME::F G ANNUITIES LIFE INC COMMON STOCK",
+      "why_group": "A:",
+      "market_value": 1533.6,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "DJT",
+      "name": "TRUMP MEDIA & TECHNOLOGY GROUP COM",
+      "name_key": "NAME::TRUMP MEDIA TECHNOLOGY GROUP COM",
+      "why_group": "A:",
+      "market_value": 390.26,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "GLPI",
+      "name": "GAMING & LEISURE P COM",
+      "name_key": "NAME::GAMING LEISURE P COM",
+      "why_group": "A:",
+      "market_value": 67.24,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "SKYQ",
+      "name": "SKY QUARRY INC COM NEW",
+      "name_key": "NAME::SKY QUARRY INC COM NEW",
+      "why_group": "A:",
+      "market_value": 33.0,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "TDSC",
+      "name": "ETC CABANA TARGET DRAWDOWN 10 ETF",
+      "name_key": "NAME::ETC CABANA TARGET DRAWDOWN 10 ETF",
+      "why_group": "A:",
+      "market_value": 17.18,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    },
+    {
+      "ticker": "BLIAQ",
+      "name": "BB LIQUIDATING INC CL A",
+      "name_key": "NAME::BB LIQUIDATING INC CL A",
+      "why_group": "A:",
+      "market_value": 1.04,
+      "name_row_class": "equity",
+      "e79_expected": "resolves via NAME:: row"
+    }
+  ]
+}

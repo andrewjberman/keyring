@@ -303,6 +303,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     }
   },
   {
+    "id": "MDPF_DEMQUE-D1-W17-S1",
+    "one_line": "With the history reserve seeded from the ledger (7322), the history allowance per day is not positive: the ceiling is the same 5858 floor the reserve is measured from.",
+    "spec_asserts": "TO-DQ-t20 / CTO round-5 R1: the history reserve is the ledger's measured daily draw plus a margin, and if the allowance (ceiling - reserve) cannot hold it the quote says so.",
+    "world_is": "history.ceiling = 5858 (largest ledger day dt=2026-10-08, a held floor); history.reserve = round(5858 x 1.25) = 7322. Allowance per day = 5858 - 7322 = -1464. bbg_quote.py --quote DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json now returns finish_date null and allowance_gap 'history allowance per day not positive (ceiling 5858, reserve 7322)' for 15720 history cells. The ceiling is a floor, not a capacity; a reserve measured from the same day can never leave room under it. A history ceiling above the measured draw (vendor meter or a refusal-bounded figure) is needed before any backfill is scheduled.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~17",
+    "surfaced_at": "2026-10-09T12:53:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_allowance.json history.ceiling/reserve",
+        "bbg_quote.py --quote DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json output"
+      ]
+    }
+  },
+  {
     "id": "MDPF_DEMQUE-D1-W18-S1",
     "one_line": "DQ-t-21 appends four columns to prices.parquet as ordered, which fails the existing test_demque_store.py::test_only_the_locked_range_is_written (asserts exactly the three old columns); that file is outside the order's write grant.",
     "spec_asserts": "TO-DQ-t21 step 2: prices.parquet gains cash, total_return, tr_source, flags AFTER the existing columns; and 'keep the existing test_demque_*.py passing'.",

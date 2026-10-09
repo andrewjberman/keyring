@@ -62,7 +62,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 3600)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-jj-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_sentences.py" --crit AC1 --where file --keys NU_US_Equity --draft "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~338/offline/draft.json"; echo "exit=$?"</invocation><expect>NU's offline draft states no fact twice in a row, glues no sentence boundary, and keeps at least as many sentences as its current stored draft; S1-S3 PASS; R85 SENTENCES AC1: YES; and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-jj-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_sentences.py" --crit AC1 --where file --keys NU_US_Equity --draft "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~338/offline/draft.json" --no-floor; echo "exit=$?"</invocation><expect>NU's offline draft states no fact twice in a row, glues no sentence boundary, (S3, the sentence floor, printed but not graded -- AMENDMENT 1); S1-S2 PASS; R85 SENTENCES AC1: YES; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-jj-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_nokey.py" "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~338" .scratch; echo "exit=$?"</invocation><expect>no file you wrote carries a model key value; R83 NOKEY: YES; and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -91,3 +91,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 (issuer, 2026-10-09T13:0xZ) on CTO~DELL1 msg 2442 and row AMGT_RESAPP-D1-W338-S1: a fresh model draw's yield (10 of 11 NU draws paraphrase-only; 22 served vs the stored 38) is not the join repair's to control, so AC1 grades S1-S2 on the offline draft with --no-floor; the served floor moves to AMGT-jj-2 (graded on the live function after NU's stored draft is repaired in place, ADDENDUM 2). W338-S1 is carried to round 86. Graded by no gate limb (a modification; <placeholders>NONE).</status>
