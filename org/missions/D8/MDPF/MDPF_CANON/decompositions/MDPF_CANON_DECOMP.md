@@ -74,3 +74,28 @@ The scheduled 13:30Z floor is the confirmation, never the proof.
 
 **Known red at base, not this project's:** three `test_global_fold_flag2.py` cases fail at box/dell1 (filed as row MDPF_CANON-D1-S1);
 the regression criterion deselects exactly those three by node id.
+
+
+## v2 -- ROUND 2 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~21:5xZ)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round1.md` @409182ae5a section 3.
+- Item 1 (the 2026-10-10 13:30Z daily-write read: CN-a-2 AC3, FWD-1 REALIZED) is the issuer's act, not a cell.
+- Item 5 (the first account_units partitions forward) is the same read.
+- Items 2-4 are four cells, independent of one another:
+
+| cell | serves (cell_refs) | candidate | owned files | depends on | actor |
+|---|---|---|---|---|---|
+| `CN-b-1` the reader census (LOCAL) | FWD-5, FWD-8 | M1 | `deliverables/READER_CENSUS.md` | -- | ~4 (worker) |
+| `CN-b-2` the combined slice's basis (WORLD: a ledger row under infra/) | FWD-3 | M7 | `deliverables/X2_GLOBAL_BASIS.md`, `infra/logic/06_CONFORMANCE_LEDGER.md` (X2 row citation) | -- | ~5 (worker-light) |
+| `CN-b-3` the publisher can read parquet (WORLD; no switch) | FWD-4 | M5 (capability) | `infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf` | -- | ~6 (worker-light) |
+| `CN-b-4` the composite grant from the builder (WORLD) | FWD-1, FWD-6 | W1-S1 ruling | `infra/aws/terraform/mdpf-pipeline/iam.tf` (+ registry row and regenerated locals if needed) | -- | ~7 (worker-light) |
+
+**Fan-out:** 4 of 4 chains, cap 8.
+
+**Deploy at the drain** (CloudOps, `safe-apply`):
+- CN-b-3's runtime and layer change, then one publisher run whose served data-bearing leaves are byte-identical;
+- CN-b-4's re-pointed grant, whose rendered policy is identical.
+CN-b-1 and CN-b-2 are documents.
+
+**Checks:** `deliverables/2.0.0_SA_COO~D1/round2/checks/r2_checks.py` with one subcommand per cell. At base: census 2/4, basis 0/3,
+publisher 1/3, builder 0/3.
