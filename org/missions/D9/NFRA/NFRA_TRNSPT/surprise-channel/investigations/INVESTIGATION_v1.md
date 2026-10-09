@@ -1552,5 +1552,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "The silver tier's wipe is not complete for held-out rows by design (TR-w-9: held out is the residual-flag case, filtered at the reader). The role built here, with its trust admitting nobody, is inert; once a holder is named it can read those rows' stored text through plain S3 GetObject, bypassing visible_rows.",
     "notes": "Armed only in the sense that applying the role with a named holder widens who can read held-out text. This order applies nothing and the default trust admits nobody. The apply order's COO/CTO halves should read this row; the fix options are the issuer's (blank text where held_out at write, or exclude the research_meeting prefix from the grant)."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S13",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T12:05:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of ARMED row NFRA_TRNSPT-D2-W2-S10 by the issuer's ruling: the silver reader's grant EXCLUDES teams/transcripts/silver/research_meeting/ until held-out text is blanked at the writer; the apply (TR-a-21) carries an explicit Deny on that prefix as its first step.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "decompositions/NFRA_TRNSPT_DECOMP_R21.md AMENDMENT 1: TR-a-21 (the apply) is not cut; nothing of aws_iam_role.silver_reader is applied",
+        "readers.tf at 7a834056a8: var.silver_reader_trust_principal_arns defaults to [] and the trust is a single Deny on sts:AssumeRole, so no principal can hold the role today",
+        "row D2-W2-S10's grounding: research_fold stores held-out rows' text; holdout.visible_rows filters at read time only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-r21: the silver-only role is the narrower reader; held-out rows are not readable through it.",
+    "world_is": "The role as built would grant silver/research_meeting/*, whose held-out rows keep their text. Ruled: TR-a-21's build adds a Deny on silver/research_meeting/* to aws_iam_policy.silver_reader with a test, and its plan is refused without it; blanking held-out text at research_fold is a separate later cell that would let the Deny be lifted.",
+    "notes": "Resolves D2-W2-S10 (existing row not edited). Issuer ruling inside the round-21 decomposition (2.0.0_SA_COO~T2)."
+  }
 ]
 ```

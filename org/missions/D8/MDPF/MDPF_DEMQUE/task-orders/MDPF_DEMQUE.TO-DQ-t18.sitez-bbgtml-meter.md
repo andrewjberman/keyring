@@ -4,7 +4,7 @@
 <issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -86,6 +86,8 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 <proof_of_spec>
 Criterion ids: DQ5-t18-AC1, DQ5-t18-AC2. Instance at `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE.TO-DQ-t18.sitez-bbgtml-meter.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> DQ5-t18-AC1,DQ5-t18-AC2` BEFORE the flip.
+Identical canonical tree copy for the completion gate:
+`org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.7.0_AE_CloudOps~ZQ/MDPF_DEMQUE.TO-DQ-t18.sitez-bbgtml-meter.proof_of_spec.json`.
 </proof_of_spec>
 
 **REPORT:** the files, every check's output, the change-management entry, the 07:00 run's ledger lines, commits and push state.
@@ -104,3 +106,13 @@ direct_act: false -- a seat order to the site-Z per-project lane.
 
 Source: CTO round-4 analysis @91f3ee9da6 R2; row MDPF_DEMQUE-Z-W1-S2; PRD C-PRODUCERS; decomposition round 5. Codex lanes run this
 mission-tree order directly (site Z AGENTS.md @a55888e3a2).
+
+## Completion -- 0.7.0_AE_CloudOps~ZQ, 2026-10-09
+
+Completed under issuer amendment ebdd71e8ed. CTO signature 3ccf1f560f C1 discharged by reading the completed Oct9 07:00 Eastern
+baseline log before signed source e465eabe7b merged as 04124013f9. Live RUNNER points to the meter; five code files match the signed
+candidate and scheduled task XML is unchanged. AC1 METER-OK (5 passing executions); AC2 BBGTML-OK day2026-10-09, 1 bbgtml row of4.
+Original uploader suite:5 passed. Bound proof VALID (2 of2 criteria,0 violations) before this status flip.
+Deployment record `org/critical_paths/change_management/20261009T1002Z_mdpf-demque-zq-t18-meter_deploy_completion.md` CLOSED @856117665b.
+Report: `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T18_REVIEW.md`.
+First metered scheduled run remains unobserved and is assigned to issuer round6 by the amendment; not a claim of this completion.

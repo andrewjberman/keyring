@@ -21,7 +21,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T11:51:00Z. Graduated at ADJUDICATION_v1
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v18",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v18"
     },
@@ -30,7 +30,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T11:51:00Z. Graduated at ADJUDICATION_v1
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_SECCLASS-D1-S23",
