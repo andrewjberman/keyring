@@ -22750,3 +22750,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Left for the issuer: whether the store half (the next order that re-cuts and re-analyses the five names) accepts a PBR mdna that is the liquidity sub-section only and a PBR business that is the company overview, or whether the cross-reference mode should also read the page numbers the table gives (PBR 'Operating and Financial Review and Prospects 170', 'Our Business 63') and start at the page marker line 'Annual Report and Form 20-F 2025 I <page>'. I did not build the page-marker reader: the order names heading-based cutting, and the page marker line's text differs by filer. The standard heading cut is unchanged for BABA, NU and SAP's existing cells."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W324-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~324",
+  "surfaced_at": "2026-10-09T08:30:54Z",
+  "one_line": "AMGT-gg-2 ASML gate read NO (AC1 S3 FAIL, AC2 T3 FAIL) on the freshly re-cut and re-analyzed ASML NA; the act stopped after ASML and ASML was rolled back; BABA, NU and SAP were not touched.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The order's AC1 expects 'R81 STORE AC1 SERVED: YES' and AC2 'R81 STORE AC2 SERVED: YES' on ASML NA after the re-cut; condition 3 of the pair: a NO stops the act after ASML's rollback decision is recorded.",
+  "world_is": "After fetch (silver part-20261009T082333Z, parser opal-filings-fetch/2.0.0, items Item 4.B/3.D/5, excerpt 145,654 chars) and analyze (analysis X5YQ7V_Eku50nY_y3s_2ZpT8INyFVlvp, drafting MZN0U0Q6mmbB03t.sH.BQFwxIIr4148H; 2 model calls, 31,929 in / 12,222 out tokens, USD 0.4652): AC1 PASS S1, PASS S2, FAIL S3, exit 1. AC2 (deployed) PASS T1 (200), PASS T2 (refusal sentence x0), FAIL T3 (0 of 11 served locations start with Item 4.B; all are ITEM 5 or ITEM 3.D), exit 1. The new draft served 5 sentences (company_description 1, risks 1, recommendation 3; investment_thesis 0, ceo_bio 0) with 14 dropped by the verbatim gate, including company_description and investment_thesis drops on the passages P0096-P0098 (the thesis_driver source passage). Rollback done in the same act (no delete): analysis and drafting prior VersionIds re-written as newest (j8Na7vbstyVwylNkvcd.6qlvoITHieEF, iaClXu9ZJUkDAuxNqZleFTdx9ZVGio2R, bytes equal the prior versions) and silver part-20261009T082927Z carrying the prior row (parser 1.0.0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation: PYTHONPATH=$(pwd) py -3.12 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round81_prep/checks/r81_store.py --crit AC1 (and --crit AC2 --where deployed) at 2026-10-09T08:27Z in C:/tmp/r82-324: outputs as in world_is.",
+      "Four-prefix before/after diffs: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~324/diff_ASML_NA_Equity.txt and diff_ASML_NA_Equity_after_rollback.txt: no key outside the four prefixes.",
+      "Ledger entry org/critical_paths/change_management/20261009T0822Z_amgt-resapp-r82-gg2-store-half-dell1_deploy_completion.md leg L1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "T3 is the substantive failure: the cutter now delivers the business text (excerpt item Item 4.B, 60,000 chars kept of 91,976) but no served passage from it survives the analysis's verbatim gate into the served locations. S3 is a separate check defect (row S2). Left for the issuer: whether the next try changes the analysis/draft side or the served-location rule; no further name was fetched or analyzed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W324-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~324",
+  "surfaced_at": "2026-10-09T08:30:54Z",
+  "one_line": "r81_store.py AC1 S3 finds the heading label case-sensitively, but the stored excerpt carries the heading as 'ITEM 4.B. BUSINESS OVERVIEW', so S3 reads FAIL on a section that does open on its own heading.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "r81_store.py docstring: S3 'the excerpt text, within 400 characters after that label, reads business overview (the heading itself)'; LABEL = 'Item 4.B. Business Overview'; the check does text.find(LABEL).",
+  "world_is": "The fresh ASML source's excerpt text begins 'ITEM 4.B. BUSINESS OVERVIEW\nOur market place...'; text.find('Item 4.B. Business Overview') returns -1, the window is empty, S3 FAILs. A case-insensitive find would put the heading at offset 0 and the window would read 'business overview'. S2 (items list) passes because items holds the title-case label.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured on C:/tmp/r82-324/.scratch/fresh/ASML_NA_Equity.source.json (the object persisted as silver part-20261009T082333Z): excerpt.text[:30] = 'ITEM 4.B. BUSINESS OVERVIEW' and find(LABEL) = -1.",
+      "Code: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round81_prep/checks/r81_store.py lines 49-53."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W324-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~324",
+  "surfaced_at": "2026-10-09T08:30:54Z",
+  "one_line": "'comp-secrets get anthropic-api-key --reveal' (without --value-only) printed the model key's cleartext into the worker's tool output when its descriptor block was exported whole; no request reached the vendor with it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's step 3 says export ANTHROPIC_API_KEY from 'comp-secrets get anthropic-api-key --reveal' in the same call; analyze.py's BLOCKED text gives a grep '^value:' | sed form.",
+  "world_is": "The --reveal output is a multi-line descriptor block (name, firm, arn, value); exported whole it made httpx raise LocalProtocolError, whose message echoed the block including the cleartext value into the log and the worker's transcript. The log was redacted in place (.scratch, untracked); the retry used --reveal --value-only and ran clean. The ASML analysis made 0 model calls on the failed attempt (error before the request was sent).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Failed attempt: .scratch/analyze_ASML.log (redacted) in C:/tmp/r82-324 ended 'httpx.LocalProtocolError: Illegal header value' at analyze.py:341; retry .scratch/analyze_ASML2.log rc=0.",
+      "Spec: the order's step 3 text (worker face of ee-4) names --reveal only; comp-secrets get --help documents --value-only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The key value sits in this worker's transcript only (no committed file, no S3). Rotation, if wanted, is the issuer's call."
+}
+```
