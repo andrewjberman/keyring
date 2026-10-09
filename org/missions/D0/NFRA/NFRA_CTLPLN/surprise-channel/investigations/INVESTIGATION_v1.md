@@ -6473,3 +6473,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Integrate now holds the slot for 10-14 minutes, so the next slots are skipped and a fix waits longer: the PROOF_OF_SPEC.schema.json repair 59a9442734 sat local while every proof check read rc=2. Where the time goes is not measured; the verify-merges explain about 150s of the 607s."
 }
 ```
+
+## NFRA_CTLPLN-S9108 -- crossbox-call.py has no way to withdraw or supersede an order the other side never acknowledged, so a moot ORDER is retried by send-pending forever
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9108",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T17:20:00Z",
+  "one_line": "XB-20261009T093642Z-9ec5 (laptop -> dell1 ~CT1, 'commit your rows') went moot when ~CT1 committed them itself at 09:42Z; it was never acked, `close` refuses an unacked file, STATES holds only OPEN/ACKED/CLOSED-BOTH, so it stays OPEN and the manager's send-pending fails on it every pass",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py:67 STATES = (\"OPEN\", \"ACKED\", \"CLOSED-BOTH\"); :178-179 refuse any other state value.",
+      "Run 2026-10-09 ~09:5xZ by 2.0.0_SA_COO~C: `crossbox-call.py close --id XB-20261009T093642Z-9ec5 --side from` -> 'REFUSED: ... is not acknowledged yet (no ack recorded in this copy); a call closes after the other side has read it'.",
+      "0.0.0_AB_MSTR msg 108055: send-pending fails on 9ec5 every pass with no recorded send."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A cross-box call or order travels as a file with an acknowledgement and closes on both sides (CT-s-6); every file reaches a terminal state.",
+  "world_is": "A file whose purpose evaporates before the other side reads it has no terminal path except a resend-and-ack round trip; the opener cannot withdraw it, and the only way to stop the manager's retries is to fake an ack (refused here) or resend.",
+  "notes": "Interim route taken: MSTR resends, ~CT1 acks as moot, both sides close. Candidate fix for the next round: a `withdraw --id --reason` verb for the opener while state is OPEN, recorded as a fourth terminal state."
+}
+```
