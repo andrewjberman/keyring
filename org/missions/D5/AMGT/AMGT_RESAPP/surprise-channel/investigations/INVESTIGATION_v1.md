@@ -23692,3 +23692,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Found while trying to exercise the new AC3 guard end to end: the intended absent-library condition was never created, so the first exercise proved the setup wrong rather than the guard. The guard was then exercised correctly by raising LibraryAbsentError from library_root with write_pool mocked, and it REFUSED (rc=2, no put) against the live served count of 102. Not a defect in this order's act and it blocks nothing: this box resolves the right library either way. It matters for the NEXT box told to use the override -- a typo or an unmounted path yields a silently different library rather than a refusal, which is the same publish-the-wrong-thing shape AC3 exists to stop. Candidate remedy for the owner: refuse when the override is SET but is not a directory, rather than falling through."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~AMG",
+  "surfaced_at": "2026-10-09T18:25Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The mass-deletion gate writes org/mass-deletion-audit.log in the INVOKING tree, so every ATTRIBUTED/BLOCKED row from a linked worktree is destroyed by the mandated force-remove at the drain.",
+  "class": "OBSERVATION",
+  "spec_asserts": "CLAUDE.md 14a names an audit log as the instrument for an audited escape ('org/git-author-override-audit.log is the instrument'); .tools/git-hooks/mass-deletion-check.sh is the same shape -- 'A mass deletion of tracked files is LEGAL. An UNATTRIBUTED one is not', with _audit() writing a verdict row per decision. CLAUDE.md 14b INVERTS worktree isolation for an APPEND-ONLY SHARED FILE (a surprise channel, a log): 'do NOT isolate there'. Andrew 2026-10-08: force-removing merged worktrees is mandatory.",
+  "world_is": "mass-deletion-check.sh's _audit() appends to \"$ROOT/$AUDIT_LOG\", and $ROOT resolves to the tree the hook ran in. MEASURED this session: the two merges this act required (80c910315f, d1db275360; 93 and 86 deletions) each produced an ATTRIBUTED row in C:/tmp/amg-kk1's copy -- git status in that worktree read ' M org/mass-deletion-audit.log' -- and the worktree was then force-removed per the standing word, discarding both appends uncommitted. The SHARED tree's org/mass-deletion-audit.log reads 0 rows for 0.7.0_AE_CloudOps~AMG (grep -c = 0); its last three rows are from 2026-09-27 and 2026-10-04, all authored 'Andrew Berman'. By contrast org/git-author-override-audit.log DID capture this seat's rows (47405/47410 BLOCK, 47411 OVERRIDE) because safe-commit.sh resolves the repo root rather than the worktree. The SUBSTANTIVE record survives either way, in the commits' own Authorized-Deletion: trailers, permanently in history -- so this is a lost INDEX, not a lost authorisation.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/mass-deletion-check.sh _audit() appends to \"$ROOT/$AUDIT_LOG\" (seen at :160-168)",
+      "org/mass-deletion-audit.log in the shared tree: 0 rows matching 0.7.0_AE_CloudOps~AMG",
+      "commits 80c910315f and d1db275360 each carry an Authorized-Deletion: trailer (the surviving record)",
+      "org/git-author-override-audit.log lines 47405, 47410, 47411 -- the contrasting case, written to the shared tree"
+    ]
+  },
+  "notes": "Found at this order's drain, not by inspection. Blocks nothing and cost this act nothing. It matters because the two logs are cited the same way but behave differently: a reader auditing deletions from the shared log will see none of the work done in worktrees, which is where CLAUDE.md 14b sends every multi-file act while other seats are live -- so the log under-reports exactly the population it exists to cover, and an absence in it reads identically to 'no mass deletion happened'. Candidate remedy for the owner: resolve the log path via `git rev-parse --git-common-dir` (as safe-commit.sh effectively does) so the append lands in the shared tree, per 14b's append-only inversion. Owner is the gate's owner, 1.0.0_SA_CTO; filed here because this project's drain is where it surfaced."
+}
+```

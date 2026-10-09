@@ -155,3 +155,41 @@ Three orders held, three terminal. **Five** ledger entries opened and closed, ze
 `svc-irpt` policy narrow (dell2 occurrences 0) and the two Dell IAM policies carrying exactly the one action
 and one ARN TO-APPLY-29 authorised. Zero `GetSecretValue` calls by this seat all session. Scratch deleted at
 each close.
+
+---
+
+## TO-APPLY-30 AMENDMENT 3 -- window 5, and a FAIL control of this seat's own
+
+**archetype:** DEPLOY
+
+Window 5 (the issuer numbers by ledger history, not by this lane's count; this lane ran 1, 2, 3, 5) under a
+FRESH laptop CTO consent msg 108068 @`91d0d7982c` -- a service-secret window is consented per use, so
+windows 1-3's 107976 consent did not cover it. ADD put 17:57:43Z, REMOVE 18:05:37Z on G2's R DONE 17:59:20Z,
+open 7 min 54 s, 22 min 6 s inside the hard close. Both legs graded as before. Commit `00b5317a75`.
+
+**THE DEFECT, recorded because it is this seat's own.** The order says send the ADD put time AT ONCE. It
+went at 18:01:39Z -- 236 s after the put, 139 s after G2 had already finished and called R DONE -- because
+this seat ran the read-back, the three simulations and the alarm, and composed the relay afterwards. The
+issuer reported the time "never reached MSTR or dell2".
+
+Measured rather than accepted: the message WAS written and sits in `0.0.0_AB_MSTR`'s `read/` at 1,134 bytes.
+Delivery did not fail; ORDERING did. G2 was unblocked only because it polled the live grant and acted 97 s
+after the put -- luck, not design. Had it been waiting on the message it would have lost four minutes of a
+thirty-minute window.
+
+**Remedy adopted and carried in the proof instance as `put_time_relay` status FAIL:** the put time goes out
+IMMEDIATELY after the put returns, before read-back, simulations, alarm or ledger work. The ADD's proof can
+be assembled a minute later; a consumer waiting on the time cannot. Correct order for any future window:
+put -> relay the time -> then prove.
+
+Not filed as a surprise row: self-caused, on-task and in-lane, so the carrier is the proof instance, the
+ledger leg proof and the report to the issuer.
+
+## Session total (final, superseding the earlier total)
+
+Three orders held, three terminal. **Six** ledger entries opened and closed, zero sentinels left. Four
+secret-reader windows (eight legs, sixteen negative controls, twenty-four simulated decisions, 55 min 38 s
+open in total), every REMOVE on G2's call ahead of its own armed alarm. Live `svc-irpt` policy narrow (dell2
+occurrences 0); the two Dell IAM policies carry exactly the one action and one ARN TO-APPLY-29 authorised.
+Zero `GetSecretValue` calls by this seat all session. One self-reported FAIL control. Scratch deleted at
+each close.
