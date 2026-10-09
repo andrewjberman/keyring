@@ -23648,3 +23648,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "After the re-cut it does: 6b at 66207bce7d carries 390's served.py byte-equal; V6EiBNcJ is never applied."
 }
 ```
+
+## IRPT_BCKEND-D2-W264-S1 -- irpt-narrative: opal-capital binding held, but the built boundary hands the Enforcer an Opal roster that live does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W264-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~264",
+  "surfaced_at": "2026-10-09T08:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Even with the opal-capital binding held, the built irpt-narrative hands the Enforcer an Opal roster of the caller's email for every internal caller (class OPAL_GLOBAL in opal-capital) where live hands none; the no_row arm is identical on bound firm and code only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB102-3_release_replay.json arm no_row_internal_selects_other_firm: built opal-capital/UNEXPECTED roster ['ops@opalinvest.com'], live opal-capital/UNEXPECTED roster null (same bound firm and code)",
+      "served.py Entry.handle at 74a62fb46c: principals = frozenset([trusted['x-user-email']]) when verified_internal_subject(headers) is not None, else self.opal_principal_ids; _scope/resolve.py classify_principal: an email on the roster is OPAL_GLOBAL (branch 2), before FIRM_OPERATIONS/FIRM_ADVISOR/UNKNOWN",
+      "the same roster delta is in IB-pr-394's own replay data (0.9.0_WK_IRPT_BCKEND~262/IB99-1_release_replay.json routes[irpt-narrative].noRow: built roster ['ops@opalinvest.com'], live roster null); narrative entry.NarrativeEntry at cabad9008c drops only the selection, by order, and does not touch the roster"
+    ]
+  },
+  "spec_asserts": "The order: a no-row internal caller stays bound to opal-capital as live binds it; the arm no_row_internal_selects_other_firm reads IDENTICAL live versus built.",
+  "world_is": "The arm is identical on the firm the boundary binds to (opal-capital) and on the public code. It is NOT identical on the Opal roster handed to enforcer_for: live (served.py from before IB-pr-385) hands none, so the Enforcer classifies an internal caller by its headers; the built boundary hands the caller's own email, so the same caller is classified OPAL_GLOBAL inside opal-capital. Whether that changes the accounts a narrative request may name was not measured here (the order binds the firm only; the shared served.py is outside the grant). The packet states the delta beside the arm and the verdict is defined on firm plus code, with the roster recorded. Disarmed when the signer reads the roster line of the packet and signs, or the CTO rules the roster for narrative.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
