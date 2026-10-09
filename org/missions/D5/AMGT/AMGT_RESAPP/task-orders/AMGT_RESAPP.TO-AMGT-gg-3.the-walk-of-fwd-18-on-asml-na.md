@@ -75,3 +75,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>cancelled -- ISSUER RULING 2026-10-09T08:4xZ: its precondition (AMGT-gg-2's ASML NA re-cut, AC1/AC2 YES) cannot be met this round (gg-2 cancelled, row D1-W324-S1). Never spawned; no walk run; worktree C:/tmp/r82-325 removed unused.</status>

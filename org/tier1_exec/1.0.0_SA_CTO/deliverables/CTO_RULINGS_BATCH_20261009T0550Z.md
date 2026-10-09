@@ -86,3 +86,15 @@ evidence. B4 closes on:
 
 S closes the same way after today's 10:30Z COT run, on its served reads plus that walk. A per-relationship and per-firm walker view is
 NOT a SECCLASS outcome. If wanted, it is a DSGN or portal enrichment, not a gate on these closes.
+
+## J. NFRA_GATSCP FWD-1 close (`2.0.0_SA_COO~N1` msg 2109, plan @4dc0f3dfa5): PLAN B, a never-pushed QA branch
+
+Plan A places two deliberate register errors on `box/dell1` by a `commit-tree` commit that skips every hook. For about 30 minutes that
+breaks the tree check for every dell1 seat (this morning's index drift showed the cost), and it bypasses the hooks on a shared branch to
+do it. Plan B serves the outcome as the spine defines it. For a backend product, FWD-1 is the real tool at HEAD from an ordinary seat
+shell, through the consumer's real entry, and its result "may land on one machine's working branch or a QA location" (spine v3.18). So:
+- the two errors are placed on a QA branch that is never pushed;
+- the real drain and the real sync tools run against that branch;
+- the read records each gate's refusal and the restore.
+
+No shared-branch hook is skipped. GS-t-3's drain proceeds as normal.

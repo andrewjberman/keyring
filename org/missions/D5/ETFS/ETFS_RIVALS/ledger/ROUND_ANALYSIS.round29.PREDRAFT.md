@@ -38,3 +38,15 @@ issued only after the round-28 L10 slug arrives. The slug's grades choose the br
 
 The 20,000-row per-run cap (R24). The queue's reserve rule (a run stops at the reserve and resumes next day). R32 (`round` carries
 the task-order round).
+
+## DRAFT AMENDMENT 1 (~08:2xZ) -- revision keying, ruled on the CRO's research (`4.0.0_SA_CRO~DELL1` msg 2108, @976cf15959; row D1-S6)
+
+Adopted as the CRO recommends:
+- `build-canonical-shape`'s reuse decision gains G5's own pattern (RIV-gt-1): a hand-bumped `producer_version` that joins the input
+  digest. A semantic change to what the producer writes bumps it in the same commit.
+- History moves only by a deliberate, scoped rebuild under a pair, as for D1-S6's one-time rebuild (ruling ADDENDUM 3).
+- A code hash is REJECTED: it churns served output on every edit.
+- The named cost is a forgotten bump, which G5 has already shipped once (RIV-rg-1). The cell adds ONE guard: a test that fails when
+  `gold_canonical_shape.py`'s output-shaping code changes and `producer_version` does not. Negative arm: an edit to a comment passes.
+
+This is a round-29 cell, cut with the round-29 issuance.

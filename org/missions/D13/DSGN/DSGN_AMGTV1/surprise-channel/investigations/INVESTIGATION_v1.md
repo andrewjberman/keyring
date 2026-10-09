@@ -1676,6 +1676,28 @@
  "spec_asserts": "Task order AV-zzk-3 section 1: the identity header keeps 'one description'; item 2 stops CompanyLine and 'the full description stays behind About the company'.",
  "world_is": "After item 1 (HeaderBrief out of IdentityHeader) and item 2 (CompanyLine unmounted), the description renders only on the News tab, inside HeaderBrief's About the company fold; the header shows none. Worker did not reach into HeaderBrief.tsx (cell B's file) to export DescriptionLine.",
  "notes": "Issuer's merge wiring: either export DescriptionLine from HeaderBrief and mount it once in IdentityHeader, or accept the description on the News tab. The structural floor r59.cjs C passes either way."
+},
+{
+ "id": "DSGN_AMGTV1-D1-W130-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~130",
+ "surfaced_at": "2026-10-09T08:10:00Z",
+ "one_line": "AV-zzl-1 item 7 expects ONE moved assertion per red harness; the battery needed about twenty re-anchors across eight harnesses plus a loader stub in namecard.cjs, and two of them change what the check reads (generation_captions_present, header posture arms).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal 13a923e3 src/pages/SecurityAnalysis/__harness__/: tabs 8 checks re-anchored (tab order, description, feed, social, posture line, model rows, generation captions), shell 2, posture 5, execFallback 1, execText 1, modelPattern 1, posturePattern 1, thesisLadder 1; every harness keeps its base check count (tabs 20, shell 10, posture 32).",
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round20/checks/namecard.cjs: the loader's generic GraphicCard stub drops the `panel` prop that carries the ticker, so the check now supplies its own GraphicCard stub.",
+   "tabs.harness.cjs generation_captions_present: the header's two data-generation-caption elements left with the readings sentence (AV-zzk-3, SAW-14); the security-mode arm now reads zero in the header instead of at least two per name."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zzl-1 item 7: for each red harness or check, re-anchor the ONE assertion that reads markup round 59 or this cell moved, keeping its claim.",
+ "world_is": "Round 59 moved the news list, posture line, readings sentence and tab subtitle out of the surfaces eight harnesses read, so many assertions were red at the base. Most re-anchors point at the same fact in its new place; header posture (posture.harness) and generation_captions_present state that the header now carries none, which is a different polarity.",
+ "notes": "AC3 (judgment) should read the polarity changes: tabs.harness.cjs generation_captions_present, posture.harness.cjs noObjectHeader/headerLine/refusedOk."
 }
 ]
 ```
