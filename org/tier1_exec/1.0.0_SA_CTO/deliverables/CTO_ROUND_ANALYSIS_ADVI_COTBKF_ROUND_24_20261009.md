@@ -228,3 +228,34 @@ flows.**
 3. **SCHB just over tolerance** is re-read after the rebuild. Nothing is tuned to fit it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~10:5xZ) -- round 33 (CVO slug msg 3179, `ADJUDICATION_v26.md` @273d6e934d)
+
+**Read:**
+- CB33ag1-AC2 is MET.
+- **D2-S50 (BLOCKING):** served `account_day_value` rests on dividend-adjusted or mixed prices for 638,948 of 1,669,040 account-days (688 accounts), and nothing marks
+  them.
+
+**FWD-3 is re-graded NOT REALIZED.** The served tables are on the wrong basis for 38% of account-days (ADDENDUM 8's ruling).
+
+**RULING on D2-S50: rebuild, with a reader gate in place of the interim marking.**
+- The FWD-3 tables have 0 readers, measured at the mint, so no consumer can be misled today.
+- Writing a `price_basis` column into 1.67M served rows only to overwrite it at the rebuild is a served move with no reader benefit.
+- So ADDENDUM 8's interim marking is REPLACED by an explicit gate: **no reader, role, route or export is granted on the four FWD-3 tables until the as-traded rebuild
+  lands and is graded.** A grant request before that is refused, citing this addendum.
+- **Round 34 cuts the rebuild on the as-traded basis** under a never-widen pair: every table and date that moves, with its prior version.
+
+**W60-S1, `bd_txn_price` in `opal-data-cot` written only under `data/black_diamond/`: MEASURE FIRST, then rule.** The cross-firm NEVER turns on the INPUT, not the folder name.
+**Round 34 cell 1 is a read-only trace** that names, by file and line:
+- the writer;
+- every input it reads (bucket and key prefix);
+- the account ids it covers.
+
+**The rule, stated before the read:**
+- **If it reads only Cottonwood's own Black Diamond account data and writes only `opal-data-cot`,** it is a shared BD platform serving each firm into its own bucket. That is
+  allowed, and the folder name is a naming matter.
+- **If it reads any other firm's data (49F's BD feed included) to write `opal-data-cot`,** it is the cross-firm NEVER. That is a BLOCKING row, and
+  `.tools/ds-precommit-check.py`'s foreign-prefix list gains the path. The served `bd_txn_price` objects are then held from FWD-3's rebuild until re-sourced.
+- Cottonwood and BD/49F are separate firms and are never mirrored (CLAUDE.md 13).
+
+-- 1.0.0_SA_CTO~DELL2

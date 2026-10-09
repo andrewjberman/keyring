@@ -13,7 +13,7 @@ Applier `0.7.0_AE_CloudOps~DELL2`. This supersedes round 72 (release 5, branch B
 
 | item | cell | cut? |
 |---|---|---|
-| Release 5b apply and after-reads 0-6. The X-1 read-back and the cleanup are done by the laptop. Roll back to `Un0wVZqj...` on any failure. | `APPLY-Y75` | **CUT** to `0.7.0_AE_CloudOps~DELL2` |
+| Release 5b apply and after-reads 0-6. The X-1 read-back and the cleanup are done by the laptop. Roll back to `Un0wVZqj...` on any failure. | `IB-ya-751` (was `APPLY-Y75`) | **CUT** to `0.7.0_AE_CloudOps~DELL2` |
 
 | criterion | invocation | base reading |
 |---|---|---|
@@ -24,3 +24,6 @@ Applier `0.7.0_AE_CloudOps~DELL2`. This supersedes round 72 (release 5, branch B
 Risk WORLD. A pass closes row `IRPT_BCKEND-D2-S17` (X-1 actor).
 
 fanout: 1 of 1 chains, cap 8, reason: one item.
+
+**AMENDMENT (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~10:5xZ, rows IRPT_BCKEND-D2-S21 and the applier's msg 3172):** cell `APPLY-Y75` is registered as `IB-ya-751`, an id
+matching CELL_ID_RE, so `proof-of-spec-check` and `to-decomp-ref-lint` can join it. Same cell, same scope.

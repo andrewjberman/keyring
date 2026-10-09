@@ -3604,3 +3604,56 @@ round.** Never edit an existing row.
   "world_is": "The final line prints yahoo_calls=72 (the full pass counted from an already-cached 12). The debug call made 73 total. The class rule was unchanged between the debug runs and the full run (script blob identical to the rule commit e5b8ad94ba)."
 }
 ```
+
+## ADVI_COTBKF-D2-S49 -- L9 CB33ag1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S49",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:50:45Z",
+  "one_line": "L9 CB33ag1-AC2 MET: the rule commit e5b8ad94ba (06:10 ET) precedes the output commit 3a063e09a6 (06:42), and git shows no .py change between them; each of the 3,580 tickers' class follows from its printed comparison by that rule (TOL 0.5%, SHARE 80%, MIN_OVERLAP 20, MIXED_FLOOR 0.20): e.g. dividend_adjusted = store/AdjClose constant on >= 80% of days and store/Close drifting beyond TOL, printed per row with share_close, share_adj, share_ra_c, rc_spread, the medians and the implied vintage.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log e5b8ad94ba / 3a063e09a6; git diff --stat e5b8ad94ba 3a063e09a6 on the scripts (empty)",
+      "git show e5b8ad94ba:data/assets/scripts/silver/commonwealth_price_basis_census.py (CLASS RULE, docstring lines 22-42)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.csv (3,580 rows, each with class, reason and its ratios)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_33_DRAIN_END_20261009.md @2fc7789480",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_33_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB33ag1-AC2: the rule commit precedes the output commit in git, and each class follows from the printed comparison by that rule.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S50 -- the served FWD-3 tables rest materially on dividend-adjusted prices, unmarked
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S50",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:50:45Z",
+  "one_line": "The SERVED FWD-3 tables rest materially on dividend-adjusted prices: in account_day_value, 638,948 of 1,669,040 account-days (38.3%), 688 of 1,528 accounts and 31,249 of 81,718 account-months (73 of 159 months) hold at least one position priced from a dividend_adjusted or mixed ticker, while the chain also books dividends as cash. Until CTO ADDENDUM 8 item 2's marking and rebuild land, a reader of those served rows sees values on the wrong basis with no mark.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_33_DRAIN_END_20261009.md @2fc7789480 (served-table counts, the issuer's run equal to the worker's)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.csv (3,580 rows, each with class, reason and its ratios)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3's served tables carry each account's true daily value and return; a figure on a known-wrong basis is marked or blanked (CTO ADDENDUM 8 @bff4e48547 item 2).",
+  "world_is": "Served on the wrong basis for 38% of account-days, unmarked today; the marking and rebuild (CB-ag-2, CB-ag-3) are drafted @a9a774a7b9, not yet cut."
+}
+```
