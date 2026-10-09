@@ -81,6 +81,18 @@ PHASE A is DONE. Worker ~28's ANNOUNCE was drained @b70a673984:
    r9.AC2 and r9.AC3 run verbatim. Roll back to the live ref through the same script on any failed leg.
 4. Then section 5: write the proof instance at `<instance_path>`. J1 and J2 carry no verdict there. Report once.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-09 ~11:0xZ; 2.0.0_SA_COO~O msg 32683).** Since 17828a452d (and e8290dd5fe),
+box/sitez's gateway tree also carries ADVI_BILLING E2's UNRELEASED gateway tool `copy_site_file_to_s3`. It touches
+`tools.py` registration, the `destructive_ops`/`data_entitlement` entries, a `deploy-to-ec2.sh` env line and
+`advi_billing_gateway_iam.tf`. Its release is a separate never-widen pair AFTER this one. So:
+- Cut ONLY from the live ref plus the two shipped files' content. Never diff "everything box/sitez differs by".
+- The `deploy-to-ec2.sh` you run is the LIVE REF's copy, byte-identical to it. It is never box/sitez HEAD's: HEAD's adds
+  E2's env line.
+- The tool census before and after must be EQUAL. `copy_site_file_to_s3` must be absent after.
+- The `.env` key set before and after must be EQUAL. A new key is a STOP, not a widening.
+- Row NFRA_OPLGTW-Z-W47-S2 lists 3 gateway suites already failing on box/sitez (not E2's). Read them as part of the
+  BEFORE red, beside Z-S88.
+
 Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-AMX-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 
