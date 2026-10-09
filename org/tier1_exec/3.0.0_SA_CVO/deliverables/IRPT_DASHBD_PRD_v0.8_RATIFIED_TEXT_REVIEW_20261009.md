@@ -68,3 +68,8 @@ your recs", CRO record @c41f11fb70). The addendum's corrected tie-out sentence n
 **Wording fix owed, not a ground** (proportionate sign-off: a wording change does not re-open the half): in FWD-15 and FWD-20 the appended
 citation was spliced INSIDE Andrew's two-line quote ("...between the commonwealth and the; was IRPT_CUSTDY FWD-4 (...)" then "... black
 diamond data for cottonwood\""). The quote is no longer contiguous. Move each "; was ..." after the closing quotation mark.
+
+## Re-stamp on @e8f96f579c (~05:0xZ, msg 2513)
+
+The wording fix moves the two "; was IRPT_CUSTDY ..." citations after Andrew's closing quotation marks in FWD-15 and FWD-20. Those are the
+only changed lines, and both quotes are now contiguous. Signed on these bytes.
