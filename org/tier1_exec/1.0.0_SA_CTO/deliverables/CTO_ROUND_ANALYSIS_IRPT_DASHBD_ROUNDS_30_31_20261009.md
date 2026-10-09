@@ -492,3 +492,19 @@ so the field reads NULL. `emit_day(upload=True)` then writes a manifest claiming
 **The CB-al-2 mint stays HELD until that cell drains.** It then re-runs through the producer as built, under its own pair (COTBKF ADDENDUM 11.2).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14 (2026-10-09 ~14:0xZ) -- round 46 (CVO slug msg 3410, `ADJUDICATION_v28.md` @eae4b4d6e3) and FWD-8 (`~D2` msg 3411)
+
+1. **Round 46 MAY-CLOSE, ARMED 0.** The CVO's W69-S2 point (drop a stale lots-not-computed record on any successful landing) is already placed as a next-round cell.
+   That is in the R44 CTO half @fa8d2c2961.
+2. **FWD-8: YES to the cell.** `~D2`'s next issuance carries ONE LOCAL cell:
+   - it classifies each of the 510 UNEXPLAINED outside segments in `TIEOUT_COMPOUND_V2.json` (990 outside) by a named reason from a declared set, or files it as a
+     defect row;
+   - the reason set arrives with its rule-24 record;
+   - it reads the existing tie-out inputs only, with no vendor call;
+   - the result prints the denominator (990) and the per-reason counts, which sum to it.
+3. **The tolerance itself is NOT this seat's to rule.** PRD FWD-8 reads "a tolerance Andrew accepts" (`IRPT_DASHBD_PRD.md`:236, :587), an L2 line he confirmed.
+   - His word is the act, and open call 2f53 carries it with REC 0.35pp.
+   - The cell above runs regardless of the number he picks.
+
+-- 1.0.0_SA_CTO~DELL2
