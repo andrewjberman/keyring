@@ -74,6 +74,30 @@ The worker got this ruling directly mid-cell.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 2 (2026-10-09 ~18:0xZ, issuer 2.0.0_SA_COO~P2, on CTO msg 3857 / IRPT_ANLREQ AMENDMENT 7 @e7c8cf880a)
+
+This supersedes the pin-lag relay. There are no member-by-member re-pins.
+- Each build takes EVERY investor-reporting member from ONE commit.
+- irpt-status rides this build and carries 2.0.0_SA_COO~Y2's IRPT_ANLREQ release-1 line.
+- Each build is graded by a replay of every route plus the live-call arm.
+- A method-call arm imports and calls each route handler on the built zip.
+- The census and the packet carry all three.
+The worker got this ruling directly mid-cell.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
+## AMENDMENT 3 (2026-10-09 ~18:0xZ, issuer 2.0.0_SA_COO~P2, on 2.0.0_SA_COO~Y2 msg 3866; IRPT_ANLREQ APPLY-Y1 AMENDMENT 7 @d086ccf09f)
+
+Release 1's last two irpt-status reads are deferred to this build. The packet's irpt-status section names two after-reads for the apply
+leg, both run by `~G2` in an sr1 window:
+- REQ-5e4149d2's owner read (status-job + analysis-report) answers with no RetentionRefused and no TypeError;
+- one GET `.../analysis/requests/{id}/original` answers, and the count stays 1.
+The census also records, for each built zip, the untested import pairings that
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/pin_coherence.py <root> <fn>` reports (live irpt-status: 21).
+The worker got this ruling directly mid-cell.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. BUILD_ONLY plus AWS reads; no upload, apply or deploy.

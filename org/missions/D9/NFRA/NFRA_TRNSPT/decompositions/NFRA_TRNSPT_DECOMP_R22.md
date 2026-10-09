@@ -32,3 +32,17 @@ research grant, the named past meeting).
 ## Battery
 
 `org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R22_CHECKS/r22_checks.py c22` at base: FAIL (absent).
+
+## AMENDMENT 1 (issuer, 2026-10-09 ~18:0xZ) -- CTO ADDENDUM 13.1 (msg 3840, row D2-S15): root cause FIRST, then a named recovery
+
+The census (@ac982db915) finds 4 monday_meeting occurrences fetchable but never landed. They are exactly the 4 OLDEST of the 20 listed (created
+2026-04-10, 04-13, 05-04, 06-01); every one from 2026-06-08 on landed. Listing captured as `deliverables/2.0.0_SA_COO~T2/R22_MONDAY_LISTING_FIXTURE.json`
+(ids and times only).
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-rc-22` | root cause (LOCAL, read-only): replay the fixture through the pull's own selection code (the scheduled pull and the earlier backfill path), show it skips exactly those 4, name the code line, and state whether the SCHEDULED path would skip such a meeting again | FWD-3 | dell2 worker (workstream `census`) | LOCAL | worker | -- |
+| `TR-rf-22` | IF the scheduled path would skip again: its fix, under its own pair, BEFORE the recovery (cut on TR-rc-22's verdict) | FWD-3 | worker + pair | WORLD | -- | TR-rc-22 |
+| `TR-rv-22` | the recovery: the 4 named ids through the scheduled pull's own code path, invoked once for those ids, under ONE pair; before-read each is still held (Graph metadata); same wipe/hold-out, residual re-wipe 0; a meeting no longer held is LOST, stated with its date | FWD-3 | ISSUER pair + applier | WORLD | -- | TR-rc-22 (+ TR-rf-22 if cut) |
+
+Chain B = TR-rc-22 -> (TR-rf-22) -> TR-rv-22. Battery: `r22_checks.py rc22` at base: FAIL (absent).

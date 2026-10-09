@@ -24959,3 +24959,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Its detector was the shape-blind 49F set. The served hash list finds a real id from another firm in 3 of its files, plus 2 code files outside its list. The next issuance cuts one code cell for all 5, graded against the hash list. The ids sit in tracked check scripts, so this row is INERT: nothing is served."
 }
 ```
+
+## IRPT_BCKEND-D2-W279-S1 -- ~276's mem_harness.py and ~269's replay driver cannot run under `python -I` on this device: psutil and boto3 live in the user site
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W279-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~279",
+  "surfaced_at": "2026-10-09T17:47:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On this device python 3.12's boto3 and pytest sit in the user site (and psutil was absent): `py -3.12 -I` (which drops the user site) fails with ModuleNotFoundError; I ran the harness with `-P` (no cwd/script-dir on sys.path, user site kept) after a user-site `pip install psutil`.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 -I -c 'import boto3' -> ModuleNotFoundError; py -3.12 -c 'import boto3, psutil' -> boto3 1.42.54 and psutil 7.2.2 from C:/Users/Test/AppData/Roaming/Python/Python312/site-packages",
+      "mem_harness.py header and the 410 packet name `python -I`; the memory and replay runs of IB-pr-417 used `py -3.12 -P` (same interpreter, same numbers: lookups 123,315 / 124,553 equal ~276 and ~273)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-417 BOUNDS: run ~276's mem_harness.py and the ~269/~265 replay as written (python -I in their usage lines).",
+  "world_is": "Both usage lines fail on this device as written. The substitute keeps the isolation that matters for planted modules (-P); the packet's landing step 2 (`narrow_pack.py -I`) needs only the standard library and ran unchanged under -I."
+}
+```
