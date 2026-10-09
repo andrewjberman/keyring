@@ -37,3 +37,16 @@ Two changes reach this half (CRO refusal msg 2416):
    signed pairs complete where they are.
 
 The rest of ENDPOINT and CONTRACTS is unchanged from v0.1. Signed on these bytes.
+
+## Re-review on v0.3 @1251f44685 (~05:0xZ, msgs 2496, 2499, 2509): SIGN
+
+Against Andrew's verbatim words (~04:4xZ, recorded in `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261009_SECURITY_SWAP_AND_NO_YCHARTS.md`
+@9ae5d353d1, final section):
+1. **FWD-2 and C-SWAP** follow his method in order: check that the security exists; yfinance as "the checker"; if yfinance has nothing,
+   classify with the SECCLASS taxonomy using a search; pick a proxy "that is in the registry". The proxy is deterministic from the registry,
+   not proposed by the model, which is his "select an ETF ... in the registry". The clause "the advisor sees and can change it" is not in
+   these words; it carries the brief's "swap ability ... featured in that process" (@2b21a349d1) and narrows nothing.
+2. **FWD-7** is his "I do not think we actually need YCHARTS for anything", as an exercised trace with zero calls.
+3. **C-PRICES:** SECHIST first, yfinance next, Bloomberg "only ... if truly absolutely necessary" (through its queue); the overlays use the
+   ported performance engine, as he suggested.
+4. FWD-1, FWD-3..6 and the other contracts are unchanged. No wait; no seat name inside the sections.
