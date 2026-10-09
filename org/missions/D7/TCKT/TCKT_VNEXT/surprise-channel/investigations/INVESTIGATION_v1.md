@@ -704,3 +704,32 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   never re-executes. Disposition: the order is flipped `complete -- SUPERSEDED`, its proof instance
   is VALID rc=0, and cell SA-k-1 lives on in TO-APPLY-V12 and R13b. The two-project overlap on
   `opal-ticket-api` is acknowledged by the issuer, which owns both lines, so it is not an open call.
+
+## TCKT_VNEXT-D2-S15 -- seat-arm pair v2.1: hop (b) ticket CREATE cannot pass for any firm (token reach and row scope are disjoint)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S15",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T15:42:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Pair v2.1's synthetic filer cannot file the FWD-1 ticket: CREATE requires the firm in BOTH the token's authorizer-derived allowedFirmIds and the PROFILE row's scope list, and v2.1 makes them disjoint (token tier advisor -> 'opal-capital'; row [49financial]), so 49financial fails the first check and opal-capital the second. Found by the executor before hop (b) ran; confirmed from the code.",
+  "disarm_owner": "2.0.0_SA_COO~V2 (pair v2.2 to the CTO; asked 15:41Z)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:339-344 _create_firm_allowed: return _firm_allowed(actor, firm) and _in_profile_scope(actor, firm)",
+      "infra/aws/lambda/ticket_center/lambda_function.py:331-336 _firm_allowed: firm must be in the token's allowedFirmIds csv unless 'ALL'",
+      "infra/aws/lambda/ticket_center/lambda_function.py:391-393 _in_profile_scope: firm must be in the PROFILE list when one exists",
+      "R1_RUN/TV_R1_SEAT_ARM_PLAN_AND_PAIR.md v2.1: token tier advisor, role user (authorizer allowedFirmIds = opal-capital, census); row allowedFirmIds [49financial]",
+      "0.7.0_AE_CloudOps~TV2 msg 3584 (inferred from deployed bytes, being measured)"
+    ]
+  },
+  "spec_asserts": "Pair v2 / v2.1 section 2.3(b): the filer creates an analysis_request ticket for 49financial, and the clamp narrows it to that one firm.",
+  "world_is": "With a non-ALL token, the clamp can only narrow the token's own reach, which is opal-capital alone; it cannot admit 49financial. The test filer can reach no client firm on CREATE, so v2.1 proves one-firm safety but cannot complete FWD-1.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

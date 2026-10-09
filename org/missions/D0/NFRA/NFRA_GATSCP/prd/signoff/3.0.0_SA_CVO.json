@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_GATSCP_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "7cb6183997e71bc49e8d68a092fdfd297ad29aea",
+  "prd_version": "v0.4",
+  "prd_pin": "10fd45b98e500eff406a3747ae0790319a30d60b",
   "half": "ratified-text",
-  "half_hash": "94803c445122efefcbc41a8b3c5c19266ad86749c1a121fe2dd5b8624eecf835",
-  "endpoint_hash": "5d2bbeaf8a8462fe4937d0198a0f2b277d76b35a3bd63a284320c451fe499975",
+  "half_hash": "2206bd86ffbd7e37aecb9fc2fb03b200450643d6447b2de5cc7311b765b1b2a0",
+  "endpoint_hash": "002ef5671f54c19e0d7083d6d921d08be58766eee82edde5ccaad7dd16cf413d",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GATSCP_v0.1_L4R_RATIFIED_TEXT_REVIEW_20261009.md@1b2002595e",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_GATSCP_PRD_V04_RATIFIED_TEXT_REVIEW_20261009.md@13916e29f6",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-09T06:52:27Z"
+  "signed_at": "2026-10-09T15:38:56Z"
 }

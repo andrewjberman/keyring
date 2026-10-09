@@ -89,7 +89,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-4.transcript-allowlist-apply
   worktree. CTO C1 holds: ENV_KEYS_BEFORE == ENV_KEYS_AFTER. GO given by this amendment (staged -> pending).
   Graded by no gate limb as a modification (placeholders NONE).
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>APPLY-TL1</workstream>
 <slot>~AE</slot>

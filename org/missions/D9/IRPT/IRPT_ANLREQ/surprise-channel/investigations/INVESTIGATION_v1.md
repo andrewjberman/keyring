@@ -1438,3 +1438,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W41-S17 -- step 16 build refused at the parity check, not a missing module
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W41-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+  "surfaced_at": "2026-10-09T16:00:00Z",
+  "one_line": "AMENDMENT 7 step 16: BUILD_ONLY of irpt-commentary-draft-store-lambda stages all 12 members OK (3 old + 9 new, sha verified) but REFUSES at the ADHC_DRIFTD.002 parity check: seven source_dir files are not in files[].",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 7 step 16: after the nine root members are staged, BUILD_ONLY prints a BUILD_ONLY: line and 0 not-found lines.",
+  "world_is": "Zero 'not found' lines, but no BUILD_ONLY: line: the build ends 'PARTIAL - 0 built, 1 failed'. Parity check lists build_resident_package.py, currency_authority.py, custody_write.py, generate_installed.py, request_composition.py, resident_installed.py, status_installed.py as present in infra/aws/lambda/investor-reporting/reports but absent from files[]. Not a missing module; the files[] list (kept unchanged by the order) needs these seven or BAU_PARITY_SKIP=1 with justification. Stopped per order; t13b check prints AR1-T13B-FAIL rc=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-commentary-draft-store-lambda -> ADHC_DRIFTD.002 parity check failed",
+      "1dbd639660"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

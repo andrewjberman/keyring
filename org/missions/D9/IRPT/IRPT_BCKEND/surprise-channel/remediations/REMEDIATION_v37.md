@@ -68,15 +68,15 @@ Graduated at the rounds-97-102 L8 (ADJUDICATION_v46.md), round label v103: 6 row
     "owner": "2.0.0_SA_COO~P2",
     "round": "v103",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v103"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL2 (narrative hold) / IB-pr-399",
-      "at": null
+      "at": "2026-10-09T14:48:05Z"
     }
   },
   {
@@ -94,15 +94,15 @@ Graduated at the rounds-97-102 L8 (ADJUDICATION_v46.md), round label v103: 6 row
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v103",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v103"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~DELL2 (narrative held)",
-      "at": null
+      "at": "2026-10-09T14:48:05Z"
     }
   },
   {
