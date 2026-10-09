@@ -16,6 +16,9 @@ with RIV-wf-1; row D1-C-S2 says what that page must show.**
 **ADDENDUM 2 (~11:40Z, on the 2026-10-09 11:00Z vehicle run, COO~V1 msg 2341): RIV-tw-1 J1 MET; RIV-tc-1 J1 NOT MEASURED (tc-1
 unmerged at the run). Row D1-C-S3.**
 
+**ADDENDUM 3 (~13:30Z, on the 2026-10-09 13:00Z sweep, COO~V1 msg 2460): RIV-aw-1 J1 NOT MET on the plain-English clause
+(the counted clauses MET; 4 of 26 items carry '$0.0 million' or a CUSIP). Row D1-C-S4.**
+
 ```json
 [
   {
@@ -82,6 +85,28 @@ unmerged at the run). Row D1-C-S3.**
         "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py @b28e2c4932 :901, :917, :937, :1002, :1190, :1222",
         "surprise-channel/investigations/INVESTIGATION_v1.Z.md ETFS_RIVALS-Z-S10 (2026-10-01 exit-94 baseline)",
         "2.0.0_SA_COO~V1 msg 2341"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S4",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-09T13:30Z",
+    "one_line": "Round 28 L9 on the 2026-10-09 13:00Z sweep: RIV-aw-1 J1 NOT MET on its plain-English clause. Every counted clause holds: 0 period codes, both dates stated in 26 of 26, all 146 dollar figures in the text matched to a cited value. But 4 of 26 items read wrong to a portfolio manager: 7 '$0.0 million' trades (WCMG x2 items, ETFT) and a bare CUSIP standing in for Apple (GQGU).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "aw-1 J1: on the first 13:00Z sweep after the deploy, the 26 served account items carry 0 period codes and state their two dates, and every dollar figure in them is cited (the issuer's count); the accounts read as plain English to a portfolio manager. Its prompt (a1-chain/7 SYSTEM) forbids 'a code, a key, a fact id or a short form'.",
+    "world_is": "- Artifact: s3://opal-data-etfs/rivalfunds/etfs/gold/research_hypotheses/date=2026-10-09/research_hypotheses-20261009T130227Z-ai.parquet. It is the only object under the prefix, read by this seat 13:2xZ as cloudops-dell1-agent-user: 26 rows, prompt a1-chain/7, grounding PASS 26 of 26.\n- Counted clauses, this seat's own reads: the issuer's counts (COO~V1 msg 2460, round28/sweep_read.py) give 0 of 26 with a period code and 26 of 26 stating two ISO dates. Dollar citation, which the issuer's reader does not count: this seat matched every '$<n>[ million|bn|k]' in `text` against the abs values in that item's cited_rows (value + values), within the shown rounding. 146 figures, 0 unmatched. Positive control: a planted '$9.7 million' on IDVZ/activity_30d is flagged.\n- Plain English, all 26 texts read in full. Most read as a portfolio manager would want, with names, signs, periods in words and the dated range stated once. Defects in 4 items: WCMG/activity_30d 'trimmed Valero Energy Corp by $0.0 million and Wuxi Biologics Cayman Inc by $0.0 million'; WCMG/direction_verdict 'even after a $0.0 million trim'; ETFT/activity_30d 'trimmed Meta Platforms Inc by $0.0 million', 'trimmed Netflix Inc twice by $0.0 million and $0.0 million', 'each at $0.0 million' (7 instances). The million unit rounds these two small funds' trades to zero, so a sold position reads as a trade of nothing. GQGU/activity_30d 'the fund added 037833100 for $8.1 million': Apple's CUSIP where the name belongs, the identifier class the prompt forbids.\n- Observations, not graded here: (a) row D1-S8 (all 13 Direction Verdicts open 'From <date> to <date>'), RIV-wg-1's remedy, confirmed 13 of 13. (b) Five Direction Verdicts that speak of 'the last 365 days' state a range starting later than a year back: IDVZ and PFOE 2026-01-02, WCMG 2026-04-23, ETFT 2025-12-02, PCLG 2025-10-16. The dates are the data's true start, but the words claim a full year.\n- Remedy owners: the unit choice for small funds and the identifier leak are the issuer's to place (a WS3 cell or round 29); this seat cuts nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/research_hypotheses/date=2026-10-09/research_hypotheses-20261009T130227Z-ai.parquet (26 rows; text, cited_rows)",
+        "task-orders/ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure.md:100 (J1)",
+        "deliverables/2.0.0_SA_COO~V1/round28/sweep_read.py (the issuer's counts); COO~V1 msg 2460",
+        "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S8"
       ]
     },
     "disposition": "GRADUATED"
