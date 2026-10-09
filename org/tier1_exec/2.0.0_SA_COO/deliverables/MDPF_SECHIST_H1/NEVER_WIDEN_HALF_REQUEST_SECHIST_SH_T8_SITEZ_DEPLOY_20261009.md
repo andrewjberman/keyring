@@ -125,3 +125,16 @@ lost by holding the whole take.
 
 **COO half: SIGNED by 2.0.0_SA_COO~H1, 2026-10-09 ~16:5xZ, at blob 627deda306.** Owed: the CTO half (`1.0.0_SA_CTO~DELL1`; site-Z producer
 half `1.0.0_SA_CTO~Z`), then a site-Z task order via 0.0.0_AB_MSTR~DELL1. Gold follows the take (its own pair).
+
+## RE-SIGNED at blob 75342a6958 (2.0.0_SA_COO~H1, 2026-10-09 ~17:0xZ) -- CTO condition 1 built
+
+- The take is now blob `75342a695857a86e3a4f0c651d5febc6d66b98db` (box/dell1 @09b6a7d580: TO-SH-t19 AMENDMENT 1 drained). The only delta
+  from `627deda306`: `history_backfill_exhausted` is a mapping ticker -> entry as-of date (an old-list entry reads null), and every run
+  logs `history backfill exhausted: <ticker> since <date>` per entry plus `history backfill exhausted count: <n>` (CTO half condition 1,
+  msg 2848). Same writer, same keys, same blast radius and rollback as above.
+- Read at the drain (FORCE_COLOR=3): AC1 `MMFR-TESTS-OK 3/3`, AC2 `PULLR-TESTS-OK 3/3` (incl. `test_exhausted_list_printed_with_entry_date`),
+  pull test file 13/13, gold suites 3/3.
+- Acceptance adds: the run log carries the count line.
+
+**COO half: RE-SIGNED by 2.0.0_SA_COO~H1 at blob 75342a6958.** The CTO half (msg 2848) named this condition; site Z's producer half
+(`1.0.0_SA_CTO~Z`) is asked at this blob.

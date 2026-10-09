@@ -1517,3 +1517,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W8-S1 -- AMENDMENT 8 worker grant missing: order issued_to is ~7, lane gate refuses ~8 on the source map
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W8-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~8",
+  "surfaced_at": "2026-10-09T17:10:00Z",
+  "one_line": "Source-map work for AMENDMENT 8 is done and all three criteria pass in the worktree, but safe-commit refuses the commit: the owned-paths gate finds no non-terminal order issued_to 0.9.0_WK_IRPT_ANLREQ~8 naming infra/aws/lambda/ci/lambda-source-map.json.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 8: worker ~8 commits the irpt-status composition.py re-pin; the <paths> block is the grant.",
+  "world_is": "TO-AR-y-21 line 5 reads <issued_to>0.9.0_WK_IRPT_ANLREQ~7</issued_to>; the lane IRPT_COMPLETION_SOURCE_MAP permits COO~P, COO~Y and COO~M, and a WORKER only via an order naming the path issued_to its serial. Cut defect (ADHC_OWNPTH.005). Work left uncommitted in /c/dev/wk-irpt-anlreq-8: source map re-pins composition.py -> 2aa217ec58 (sha 5b896004af77), and repository.py -> 3fc99be70f (sha d94dc2c74c75; AC3 signature_closure needed it: composition.py calls the repositories with revisions=), proof instance validated VALID rc=0. Nothing deployed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: agent=0.9.0_WK_IRPT_ANLREQ~8 not in permitted_agents -- no NON-TERMINAL task order at HEAD issued_to this serial names this path",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md:5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

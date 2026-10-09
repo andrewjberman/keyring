@@ -24907,3 +24907,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Three live zips were built from mixed members, while the source at HEAD agrees with itself; the repair is a rebuild from one tree."
 }
 ```
+
+## IRPT_BCKEND-D2-W281-S1 -- IB-pr-419: GET stops at NOT_AUTHORIZED; verdicts rest on the 24h logs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W281-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~281",
+  "surfaced_at": "2026-10-09T17:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-419: a GET with a synthetic principal stops at NOT_AUTHORIZED before every split; the verdicts rest on the 24h logs, and irpt-performance-adapter is FAILING on the Enforcer load_report_owner split.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB117-4_live_call_read.json in deliverables/0.9.0_WK_IRPT_BCKEND~281/",
+      "24h filter-log-events: irpt-performance-adapter 3 load_report_owner TypeErrors (15:41Z-16:49Z, 3 streams); irpt-status 52 additional_policy_revisions TypeErrors (16:17Z-16:22Z, 1 stream), none after the 16:43Z update; irpt-narrative 0",
+      "3 GETs, each StatusCode 200, no FunctionError, public_reason_code NOT_AUTHORIZED"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-419: one real GET per route that reaches a split, with a verified internal subject's headers where the split needs one, using a synthetic or Opal-internal principal.",
+  "world_is": "A verified internal subject is a signed token the edge validator checks, which a synthetic principal cannot carry, and the profile_reader split sits on CREATE_INPUT, a write. No GET reached any split. FAILING for irpt-performance-adapter rests on live log events, not on the GET. The irpt-status events are a different kwarg (build_retained_repositories) than the one the order names and have stopped. Fails closed in every case. Disarm owner not needed: INERT."
+}
+```

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~41</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -164,13 +164,26 @@ with `BAU_PARITY_SKIP=1`, the script's own sanctioned override, justified by tha
 registration belongs to whichever functions own them, not to this entry, and stays on row W41-S17.
 17. Re-run step 16 with `BAU_PARITY_SKIP=1` and record the closure line above in the proof's notes.
 
+### AMENDMENT 9 (issuer, 2026-10-09 ~17:2xZ) -- the staged policy registry must carry the ACTIVE row (0.7.0_AE_CloudOps~DELL2 msg 3778)
+
+AMENDMENT 7 staged `infra/logic/registry/reporting_policies.json` at pin c250183790, where row `irpt-anlreq-x10-v1` reads
+PENDING_ENFORCEMENT. TO-APPLY-t1's A2 needs the zip to carry the ACTIVE row, which laptop 4.0.0_SA_CRO landed @103902e75d (state ACTIVE,
+enforcement_ref 81c60ba22c). RULING: advance that ONE staged_from member.
+18. In the entry `irpt-commentary-draft-store-lambda`, set the `reporting_policies.json` member's `pin` to the full hash of 103902e75d (git
+    rev-parse) and its `sha256` to the blob's sha256 at that pin, computed the same way as the other members. Change no other member or
+    entry.
+19. Re-run the BUILD_ONLY build (BAU_PARITY_SKIP=1). The sha256 must DIFFER from step A's xyROb11e....
+Base: box/dell2 at this amendment, where `ar1_t2_checks.py t13p` reads `AR1-T13P-FAIL pin=c250183790 sha_ok=True row_active=False`.
+
+<criterion id="AR13-t-AC4" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13p</invocation><expect>AR1-T13P-OK</expect></criterion>
+
 <criterion id="AR12-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t12</invocation><expect>AR1-T12-OK</expect></criterion>
 `AR12-t-AC1` -- the three named tests pass, the file is green, and `DecryptWithTheIrptKey` is gone from commentary.tf.
 
 <criterion id="AR13-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13</invocation><expect>AR1-T13-OK</expect></criterion>
 `AR13-t-AC1` -- the four named refusal tests pass and the store test file is green (dry-run at box/dell2 29125b907d: `AR1-T13-FAIL absent`).
 
-<expected_criteria>AR12-t-AC1 AR13-t-AC1 AR13-t-AC2 AR13-t-AC3</expected_criteria>
+<expected_criteria>AR12-t-AC1 AR13-t-AC1 AR13-t-AC2 AR13-t-AC3 AR13-t-AC4</expected_criteria>
 
 Dry-run at the base (box/dell2 c5d73485ca): `AR1-T12-FAIL absent: data/transcripts/scripts/tests/test_commentary_composition_port.py` -- FAIL
 as expected.

@@ -315,7 +315,7 @@ CB34ah1-AC2 and CB34ah2-AC3 are MET. The three FWD-3 tables are served at `price
 D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
 
 **FWD-3 is re-graded REALIZED, with two named exceptions** (the ADDENDUM 7 pattern):
-1. the 5 account-months ABSENT under the as-traded basis (`REGRESSED_UNDER_AS_TRADED`, D49151054 about 0.6 pp), each carrying its row;
+1. the 5 account-months ABSENT under the as-traded basis (`REGRESSED_UNDER_AS_TRADED`, acct#df101fce about 0.6 pp), each carrying its row;
 2. the 988 held bond account-days (three cross-firm bonds, `HELD_SOURCE_UNDER_REVIEW`). They re-enter only through the ADDENDUM 10 38-key rewrite and a later delta.
 
 **RULING on the reader gate (ADDENDUM 9): its condition is MET, and it opens after ONE row.**
