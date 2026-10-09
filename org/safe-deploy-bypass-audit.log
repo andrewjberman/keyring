@@ -188,3 +188,7 @@
 2026-10-09T12:04:46Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py  reason=no-open-ledger-names-it
 2026-10-09T12:14:08Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py  reason=no-open-ledger-names-it
 2026-10-09T12:14:08Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py  reason=no-open-ledger-names-it
+2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_custody/e2a_real_statement.py  reason=no-open-ledger-names-it
+2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_custody/tests/test_e2a_real_statement.py  reason=no-open-ledger-names-it
+2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/account_activity_lots.py  reason=no-open-ledger-names-it
+2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/tests/test_account_activity_lots.py  reason=no-open-ledger-names-it
