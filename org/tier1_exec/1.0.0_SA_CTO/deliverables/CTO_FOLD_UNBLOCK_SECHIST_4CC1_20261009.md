@@ -16,7 +16,7 @@ The COO's two acts, as the CRO proposed:
 1. **Each tick:** `unblock.py tick ... --result nothing --wait-until 2026-10-10T13:00Z --owner schedule:<gold rule>`. After the L3 read,
    re-pass it with 2026-10-12T11:00Z.
 2. **At 2026-10-10 09:00Z:** if `0.7.0_AE_CloudOps~ZQ` shows no ack on XB-5772 (V1), ask `0.0.0_AB_MSTR~Z` through
-    to give ~ZQ a turn. That leaves two hours before the pull.
+   `0.0.0_AB_MSTR~DELL1` to give ~ZQ a turn. That leaves two hours before the pull.
 
 This seat's own gold half (@924d065596) is unchanged: the first gold run's blind stages are read on that run, and that is the L3 read.
 
