@@ -733,3 +733,63 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S16 -- W6-S2's fix is live, and it is why the pair's data-refresh arm cannot be met (v2.1 measured 200; v2.2 no better)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S16",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-09T15:52:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "W6-S2's routed fix is LIVE, and it is why the seat-arm pair's data-refresh expectation cannot be met: validate_user_type now admits 'Dev' OR an Opal-internal principal, and _is_opal_internal is true on tier=='internal' OR firmId=='opal-capital'. The filer must carry firmId opal-capital for the ticket service to class it INTERNAL, so it is admitted as Opal-internal and userType is never consulted. This was the measured STOP of SA-r-1 under v2.1, and v2.2 (internal tier) does not close it either.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 with 2.0.0_SA_COO~V2 -- the pair's 'one data-refresh route: refused' arm needs re-ruling or qualifying; this seat builds nothing on it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED LIVE: GET https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/data-refresh/history -> HTTP 200 for a token with userType 'test-filer', tier advisor, role user, firmId opal-capital (SA-r-1 run SA-r-1-2026-10-09T15:40:57Z, trace R1_RUN/sa_r1_trace.json one_firm_proof.data_refresh)",
+      "THE ADMIT PROVES THE NEW GATE IS DEPLOYED: the pre-fix gate was 'if not user_type or user_type == Dev: return True' (cited in row D2-S12), which REFUSES a non-empty non-Dev userType. A non-empty 'test-filer' was admitted, so the live bytes are the post-fix gate, not the pre-fix one -- W6-S2's empty-userType hole is closed and the admit came through the INTERNAL limb",
+      "infra/aws/lambda/data_refresh/lambda_function.py validate_user_type: 'Admit a caller that is Dev OR Opal-internal; refuse everything else'",
+      "infra/aws/lambda/data_refresh/lambda_function.py _is_opal_internal: returns True if tier == OPAL_INTERNAL_TIER, or if firmId == OPAL_INTERNAL_FIRM_ID ('opal-capital')",
+      "opal-data-refresh-api CodeSha256 qHMjXkK1/1NhmBmkK/6Q+q+WdXMRoTOprNfTixBIxaM=, LastModified 2026-10-09T07:59:39Z (get-function-configuration)",
+      "ticket_center/lambda_function.py principal_class: INTERNAL is keyed on firmId == 'opal-capital', so the filer cannot drop that claim and still reach CLAIM/REPORT",
+      "parents: row TCKT_VNEXT-D2-W6-S2 (the reach) and TCKT_VNEXT-D2-S12 (its fix ruled fail-closed, 'admit only Dev or opal-capital internal')"
+    ]
+  },
+  "spec_asserts": "Pair v2.1 (CTO W6-S2 ruling msg 2568): giving the test filer a non-empty, non-Dev userType ('test-filer') makes data_refresh refuse it, because the gate admitted only an empty userType or 'Dev'. Pair v2.2 step 3 keeps the same arm: 'one data-refresh route: refused'.",
+  "world_is": "The gate that premise describes is no longer the deployed one. W6-S2's ruled fix replaced it with 'Dev OR Opal-internal', and Opal-internality is satisfied by firmId 'opal-capital' alone -- the exact claim the ticket plane requires of the filer. So userType is not a lever on this route for ANY token the pair can mint: v2.1 is admitted (measured 200) and v2.2's internal tier satisfies the first limb directly. The arm is unmeetable until the data-refresh side changes, not until the pair changes.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## TCKT_VNEXT-D2-S17 -- data_refresh admits any Opal-internal caller whatever its userType (routed to the data_refresh owner, CTO msg 3619)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S17",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T16:04:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "data_refresh's validate_user_type admits a caller as Opal-internal on firmId opal-capital OR tier internal and then admits it whatever its userType, so a synthetic or test userType (here 'test-filer') gains the same data-refresh write-path reach as Opal staff. The W6-S2 premise that a non-empty, non-Dev userType is refused there does not hold in the deployed code.",
+  "disarm_owner": "2.0.0_SA_COO~O (NFRA_OPLGTW, owner of the data_refresh admission: TO-OG-da-1)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/data_refresh/lambda_function.py:142-163 is_opal_internal: tier == 'internal' -> True; firmId == 'opal-capital' -> True",
+      "infra/aws/lambda/data_refresh/lambda_function.py validate_user_type: userType 'Dev' admits; otherwise is_opal_internal(context) admits, userType not consulted",
+      "last change: d9539cc0b7 (NFRA_OPLGTW.TO-OG-da-1 Phase A); live per lambda-source-map: opal-data-refresh-api last_deployed_at 2026-10-09T07:59:39Z",
+      "0.7.0_AE_CloudOps~TV2 msg 3607 and row TCKT_VNEXT-D2-S16 (the seat-arm STOP arm that this defeats)",
+      "CTO msg 3619 (v2.2 half AMENDMENT 1 @133952758b): the arm is dropped for the run; the admission finding goes to the data_refresh owner as a row"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 2568 (TCKT_VNEXT W6-S2): a non-empty, non-Dev userType (e.g. 'test-filer') is refused by data_refresh.",
+  "world_is": "Any principal with firmId opal-capital or tier internal is admitted to data_refresh regardless of userType. TCKT_VNEXT's seat-arm run neither probes nor calls data_refresh, and proves 0 calls from the logs (SA-r-1b AMENDMENT 2). Whether a test userType should be refused there is the owner's call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

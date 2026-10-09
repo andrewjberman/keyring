@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~16</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>carried</status>
 <direct_act>true</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
@@ -68,3 +68,8 @@ direct_act: true -- a read.
 </preflight>
 
 Source: CTO round-3 analysis (msg 2675) section 3; PRD v0.2 + ADDENDUM v0.3.
+
+<carried>
+Carried to round 5 by the issuer (2.0.0_SA_COO~H1, 2026-10-09 ~16:1xZ) on 1.0.0_SA_CTO~DELL1 msg 2778 (the UB-64ce pattern). Replacement: the TR-field read is VOID under PRD v0.3 (route 2b: TOT_RETURN_INDEX_GROSS_DVDS is dropped); round 5 replaces it with the repair cell's negative arm (a null first day reads blank, then filled after the re-request) read on the first scheduled run after SH-t-8's take.
+No worker was spawned on this order.
+</carried>

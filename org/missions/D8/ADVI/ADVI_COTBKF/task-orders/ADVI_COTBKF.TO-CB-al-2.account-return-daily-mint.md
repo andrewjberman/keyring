@@ -73,6 +73,19 @@ ADDENDUM 13.2 @304cb81ef6: CB-al-2 is NOT minted as built.
 - When that cell drains, the issuer rebuilds through it from round 43's entry (adding the entry's method row reference if the cell
   requires one) and writes the pair on the rebuilt manifests. Then this order runs under that pair.
 
+**AMENDMENT 4 (issuer, 2026-10-09 ~16:0xZ) -- the content and apply path are ready; the COO half is GIVEN; waits ONLY on the CTO half.**
+
+- **Content:** round 47 (method_version 3, drained @9c6b230812) and round 49 (`--apply`, drained @26cf9c42db).
+- **COO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R38_ARD_COTTONWOOD_MINT_COO_HALF.md`.
+- **The act, once the CTO half is cited by AMENDMENT 5:**
+  `python data/assets/scripts/silver/commonwealth_account_return_daily.py --apply --pair <COO half> --pair <CTO half>
+  --manifest org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~74/ard_cottonwood_manifest.json`.
+  - The local files are under `.scratch/advi_cotbkf/ard_cottonwood_r47/` in the shared tree.
+- **Acceptance** becomes `--verify-served --manifest <the same manifest> --out .scratch/advi_cotbkf/ard_cottonwood_verify`, with
+  `ARD-COTTONWOOD-VERIFY days=3325 match=3325/3325`. The criterion's bar (`ARD-COTTONWOOD-VERIFY days=`) is unchanged.
+- **Rollback is NOT a delete.** The minted keys stay unread behind the reader gate, and their list goes to the ledger for Andrew.
+  The BOUNDS line "Delete only the keys this act minted" is struck.
+
 ### ACCEPTANCE
 
 <criterion id="CB38al2-AC1" cell_refs="CB-al-2"><invocation>python data/assets/scripts/silver/commonwealth_account_return_daily.py --verify-served --out .scratch/advi_cotbkf/ard_cottonwood_verify</invocation><expect>ARD-COTTONWOOD-VERIFY days=</expect></criterion>

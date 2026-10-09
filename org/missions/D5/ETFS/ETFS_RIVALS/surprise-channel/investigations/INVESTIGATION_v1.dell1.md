@@ -534,6 +534,52 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "spec_asserts": "RIV-wk-1 task order section 2: tests in rivalfunds/tests must keep passing.",
       "world_is": "One test, outside RIV-wk-1's paths, already fails at the base because RIV-wj-1 changed the generated policy without updating its assertion; the suite's final line is therefore 1 failed, 999 passed, 6 skipped with or without RIV-wk-1.",
       "notes": "Not fixed here: the test file belongs to no path of this order and the assertion change is RIV-wj-1's follow-through (the issuer decides)."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S13",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T15:50Z",
+      "one_line": "round-close-check reads round 28 MAY-CLOSE with 8 of 8 judgment criteria GRADED, each 'by adjudication row ETFS_RIVALS-D1-C-S1' -- one 07:30Z row that grades none of wg-1/wh-1/wi-1 and HOLDS wa-1 and wd-1; the round is NOT closeable: wa-1 and wd-1 J1 HELD, wi-1 J1 needs the 2026-10-10 13:00Z sweep, tc-1 is unmerged, both deploy ledgers' L2 are open",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "python .tools/round-close-check.py --project ETFS_RIVALS --round 28 at 15:4xZ: 'ROUND-CLOSE ... orders=15 judgment=8 graded=8 ungraded=0 ... verdict=MAY-CLOSE'; every JUDGMENT line cites ETFS_RIVALS-D1-C-S1",
+              "ADJUDICATION_v1.dell1.md: D1-C-S1 (07:30Z) grades wc-1/wc-2 MET, wd-1 repeat NOT MET, wa-1 HELD; D1-C-S2 moves wd-1 to HELD; ADDENDUM 4 (wg-1 MET), ADDENDUM 5 (wh-1 MET) carry their own rows; wi-1 has no grade",
+              "open ledgers: etfs-rivalfunds-ws23-dell1-20261009, etfs-rivalfunds-wi1-dell1-20261009 (L2 each); TO-MERGE-tc1 pending, b0b65368fb not in origin/box/sitez"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "round-close-check's MAY-CLOSE means every judgment criterion of the round is graded.",
+      "world_is": "It matches a judgment criterion to any adjudication row of the project, so one early row reads as grading all eight.",
+      "notes": "This seat closes round 28 on the artifacts, not on MAY-CLOSE. Owner of the instrument: .tools/round-close-check.py's lane (route via 0.0.0_AB_MSTR~DELL1 at the round-28 slug)."
+  }
+,
+  {
+      "id": "ETFS_RIVALS-D1-S14",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "0.7.0_AE_CloudOps~RV1",
+      "surfaced_at": "2026-10-09T16:10Z",
+      "one_line": "FOR THE COMP-RAIL OWNER: comp-find SILENTLY IGNORES a negative pathspec, so an agent told 'repo-wide search may resume except over <dir>' cannot comply by excluding -- the tool scans the restricted directory while the operator believes it is excluded; only POSITIVE scoping limits the corpus",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "control run 16:09Z, term 'DENOMINATOR', two safe directories: (A) `comp-find --files 'DENOMINATOR' org/ref docs/architecture` -> 53 hit(s) across 513 file(s); (B) the SAME call plus ':!docs/architecture/**' -> 53 hit(s) across 513 file(s), byte-identical denominator; (C) positive scope `comp-find --files 'DENOMINATOR' org/ref` -> 1 hit across 27 file(s)",
+              "B == A proves the exclusion had no effect; C != A proves the comparator is live and that positive pathspecs DO limit the corpus, so B's null result is the tool and not the test",
+              "first seen 16:00Z on a different term ('SEAT_ROLES', org/ref, with and without ':!org/ref/**'): 6 hits / 27 files both ways",
+              "CLAUDE.md rule 21: comp-find's DEFAULT corpus is `all` (tracked + untracked + gitignored minus a printed ephemeral floor), i.e. repo-wide unless positively scoped"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "CLAUDE.md rule 21 describes comp-find pathspecs without distinguishing positive from negative forms, and git pathspec semantics (which the rail's '--corpus' language borrows, including `git rc=128` for an out-of-worktree pathspec) admit ':!<path>' as an exclusion. An operator instruction of the form 'search may resume, except over <dir>' is therefore naturally executed as a negative pathspec.",
+      "world_is": "The negative pathspec is accepted without error or warning and changes nothing: the directory is still scanned and its bytes still read. The exclusion fails OPEN and SILENTLY -- the most dangerous shape, because the denominator the tool prints looks authoritative and the operator has no signal. The only mechanism that limits the corpus is naming the directories to search positively.",
+      "notes": "Owner to inform: the comp-rail / NFRA_COMPRAIL owner (docs/architecture/NFRA_COMPRAIL_PRD.md). Found while complying with a client-data prohibition relayed as 0.0.0_AB_MSTR~DELL1 msgs 2749 and 2768 via 2.0.0_SA_COO~V1 (msgs 2751, 2771), whose msg 2749 wording was exactly 'content search may resume, except over org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/'. This seat did NOT test the syntax against any restricted path -- the control was rehearsed on two harmless directories precisely because a fail-open exclusion would have performed the prohibited read. msg 2768's later wording, 'keep searches scoped to ETFS_RIVALS and infra paths', is already the SAFE positive form and needs no change. Suggested remedy for the owner: make comp-find either honour ':!' or REFUSE it loudly; a silently-dropped exclusion argument is the defect. No ETFS_RIVALS act depends on this row."
   }
 ]
 ```

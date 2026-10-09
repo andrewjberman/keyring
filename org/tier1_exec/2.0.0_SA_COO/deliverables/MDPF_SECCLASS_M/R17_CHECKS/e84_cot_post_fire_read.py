@@ -78,7 +78,7 @@ def main(argv) -> int:
             if nm in want:
                 served_seen += 1
                 if h.get("asset_class") != want[nm]:
-                    mismatch.append({"key": k, "name": nm, "served": h.get("asset_class"), "table": want[nm]})
+                    mismatch.append({"name": nm, "served": h.get("asset_class"), "table": want[nm]})  # no relationship key: client-data scope ruling @dc2b1d9ee0
     mix = json.loads(s3.get_object(Bucket=B, Key="platinum/firm/mix_summary.json")["Body"].read())
     unc_now = (mix.get("mix", {}).get("unclassified") or {}).get("market_value")
     rec = json.loads(REC.read_text(encoding="utf-8"))

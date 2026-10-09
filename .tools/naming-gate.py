@@ -323,11 +323,11 @@ def apply_hunks(pre_text, hunks):
 
 # --------------------------------------------------------------------------- string extraction
 class Lit:
-    __slots__ = ("value", "raw", "line", "hint", "permitted", "label", "block")
+    __slots__ = ("value", "raw", "line", "hint", "permitted", "label", "block", "built")
 
     def __init__(self, value, raw, line, hint=None):
         self.value, self.raw, self.line, self.hint = value, raw, line, hint
-        self.permitted, self.label, self.block = False, False, None
+        self.permitted, self.label, self.block, self.built = False, False, None, False
 
 
 def _call_name(func):
@@ -468,6 +468,112 @@ def scan(text, lang):
             toks.append(("sym", c, None, line))
         i += 1
     return toks
+
+
+# --------------------------------------------------------------------------- built names (row LGIC_BLANKFIX-D1-W2-S9)
+# A name built at a call site (an `opal_name` module block, a Python `name(...)` call) carries its arguments as permitted
+# builder input, so the literals are skipped. Without a replacement the built name -- the string that is actually minted --
+# was graded by nothing and the gate printed `PASS 0 graded` (ABSENT, not EXERCISED). These extractors read the ARGUMENTS
+# of each such site; grade_built composes the name with lib/opal_naming.py name() and grades it like any other literal, or
+# prints BUILT-NOT-GRADED with the reason. Result rows: (line, args dict or None, why or None).
+BUILT_ARGS = ("system", "scope", "function", "kind", "qualifier", "fifo")
+_NONLIT = object()
+
+
+def py_built(src, added):
+    """name(...) builder calls of a Python post-image that meet the added set: the bare name() (four or more arguments, the
+    builder's shape) or opal_naming.name(). All-literal arguments give a dict for name(**args); otherwise None and why."""
+    out = []
+    for node in ast.walk(ast.parse(src)):
+        if not isinstance(node, ast.Call) or not _meets(node, added):
+            continue
+        qualified = _naming_module_call(node.func) and node.func.attr == "name"
+        bare = isinstance(node.func, ast.Name) and node.func.id == "name" and len(node.args) + len(node.keywords) >= 4
+        if not (qualified or bare):
+            continue
+        line = _first_added(node, added)
+        args, bad = {}, []
+        if len(node.args) > len(BUILT_ARGS) or any(isinstance(a, ast.Starred) for a in node.args) \
+                or any(k.arg is None for k in node.keywords):
+            out.append((line, None, "name() call with *args/**kwargs or too many positional arguments"))
+            continue
+        pairs = list(zip(BUILT_ARGS, node.args)) + [(k.arg, k.value) for k in node.keywords]
+        for key, val in pairs:
+            if isinstance(val, ast.Constant) and (val.value is None or isinstance(val.value, (str, bool))):
+                args[key] = val.value
+            else:
+                bad.append(key)
+        if bad:
+            out.append((line, None, "name() call with non-literal argument(s): %s" % ", ".join(bad)))
+        else:
+            out.append((line, args, None))
+    return out
+
+
+def tf_built(src, added):
+    """`module "x" { source = ".../opal_name" ... }` blocks of a Terraform post-image that meet the added set. A block that
+    passes none of system/function/kind is a registry-map reader and names nothing: skipped."""
+    toks = scan(src, "tf")
+    out, i, n = [], 0, len(toks)
+
+    def is_sym(t, ch):
+        return t[0] == "sym" and t[1] == ch
+
+    while i < n:
+        t = toks[i]
+        if not (t[0] == "word" and t[1] == "module" and i + 2 < n and toks[i + 1][0] == "str" and is_sym(toks[i + 2], "{")):
+            i += 1
+            continue
+        start, attrs, cur, depth, bracket, end = t[3], {}, [], 1, 0, t[3]
+        i += 3
+
+        def finish():
+            if len(cur) >= 2 and cur[0][0] == "word" and is_sym(cur[1], "="):
+                rest = cur[2:]
+                if len(rest) == 1 and rest[0][0] == "str" and "${" not in rest[0][1] and "%{" not in rest[0][1]:
+                    attrs[cur[0][1]] = rest[0][1]
+                elif len(rest) == 1 and rest[0][0] == "word" and rest[0][1] in ("null", "true", "false"):
+                    attrs[cur[0][1]] = {"null": None, "true": True, "false": False}[rest[0][1]]
+                else:
+                    attrs[cur[0][1]] = _NONLIT
+
+        while i < n:
+            t = toks[i]
+            i += 1
+            end = t[3]
+            if t[0] == "nl":
+                if depth == 1 and bracket == 0:
+                    finish()
+                    cur = []
+                continue
+            if t[0] == "sym":
+                if t[1] == "{":
+                    depth += 1
+                elif t[1] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        finish()
+                        break
+                elif t[1] in "[(":
+                    bracket += 1
+                elif t[1] in "])":
+                    bracket = max(0, bracket - 1)
+            if depth >= 1:
+                cur.append(t)
+        src_val = attrs.get("source")
+        if not (isinstance(src_val, str) and "opal_name" in src_val):
+            continue
+        hit = [ln for ln in added if start <= ln <= end]
+        if not hit or not any(k in attrs for k in ("system", "function", "kind")):
+            continue
+        bad = [k for k in BUILT_ARGS if attrs.get(k) is _NONLIT]
+        if bad:
+            out.append((min(hit), None, "opal_name module block with non-literal argument(s): %s" % ", ".join(bad)))
+        else:
+            args = dict((k, attrs[k]) for k in BUILT_ARGS if k in attrs)
+            args.setdefault("scope", None)  # the module's own default: null is a shared resource (S5)
+            out.append((min(hit), args, None))
+    return out
 
 
 def js_literals(src, added):
@@ -1718,7 +1824,8 @@ def judge(nm, path, lit, pre_text, waivers=None):
     if _resolves_to_tracked(lit.value):
         return None  # a value resolving to a tracked path at HEAD is a CITATION (R-11), not a mint
     typ, graded_as = nm.classify(lit.value, lit.hint)
-    carr = nm.carrier(lit.value)
+    # a name BUILT by name() carries its firm as the builder's short form: the builder is the permitted route, not a hand-kept carrier
+    carr = None if lit.built else nm.carrier(lit.value)
     if typ is None and carr is None:
         return None
     new = pre_text is None or not _in_pre(lit, pre_text)
@@ -1921,12 +2028,78 @@ def grade_file(nm, f, post_from_index):
         if j:
             rows.append((j[0], path, lit.line, lit.value, j[1], j[2], j[3]))
             _note_place(nm, path, lit, pre_text, j)
+    rows += grade_built(nm, path, post_text, pre_text, added, gen_ranges, waivers)
+    return rows
+
+
+def _built_sites(path, src, added):
+    """[(line, args, why)] of the builder sites of one post-image; a Python fragment that does not parse is read line by line."""
+    if path.endswith(".tf"):
+        return tf_built(src, added)
+    if not path.endswith(".py"):
+        return []
+    try:
+        return py_built(src, added)
+    except SyntaxError:
+        out = []
+        for ln, txt in sorted(added.items()):
+            try:
+                out += [(ln, a, w) for _l, a, w in py_built(txt.strip(), {1})]
+            except SyntaxError:
+                pass
+        return out
+
+
+def grade_built(nm, path, post_text, pre_text, added, gen_ranges, waivers):
+    """Rows for the names BUILT at a call site of the added lines: compose with name() and grade like any literal, or say why not."""
+    sites = _built_sites(path, post_text, added)
+    if not sites:
+        return []
+    pre_built = set()
+    if pre_text:
+        for _ln, a, _w in _built_sites(path, pre_text, dict((k, "") for k in range(1, pre_text.count("\n") + 2))):
+            if a is not None:
+                try:
+                    pre_built.add(nm.mod.name(**a))
+                except Exception:  # a pre-image site name() refused is not a name that existed
+                    pass
+    # a built name sits in no text, so the NEW test (_in_pre) reads the pre-image plus the names its sites built
+    pre_aug = None if pre_text is None else pre_text + "\n" + "\n".join(sorted(pre_built))
+    rows, seen = [], set()
+    for line, args, why in sites:
+        if any(lo <= line <= hi for lo, hi in gen_ranges):
+            continue
+        built = None
+        if args is not None:
+            try:
+                built = nm.mod.name(**args)
+            except Exception as exc:  # name() refuses its arguments: say so, never grade a guess
+                why = "name() refused the literal arguments %r: %s: %s" % (args, type(exc).__name__, exc)
+        if built is None:
+            rows.append(("BUILT-NOT-GRADED", path, line, why, "-", why, "PASS"))
+            continue
+        if (line, built) in seen:
+            continue
+        seen.add((line, built))
+        try:
+            hint = nm.mod._type_of_kind(args.get("kind"), nm.mod._schema())
+        except Exception:
+            hint = None
+        lit = Lit(built, built, line, hint)
+        lit.built = True
+        j = judge(nm, path, lit, pre_aug, waivers)
+        if j is None:
+            why = "name() built %s but the gate could not classify it as a resource name" % built
+            rows.append(("BUILT-NOT-GRADED", path, line, why, "-", why, "PASS"))
+            continue
+        rows.append((j[0], path, line, built, j[1], "built by name() at the call site: " + j[2], j[3]))
+        _note_place(nm, path, lit, pre_aug, j)
     return rows
 
 
 # --------------------------------------------------------------------------- the placement step (FWD-6)
 _PLACE = {"cands": [], "files": {}}
-_NOT_A_NAME_VERDICTS = ("DECLARED-EXCEPTION", "NOT-GRADED", "RAISE", "RAISE-EXISTING", "WAIVED-READ", "SKIP")
+_NOT_A_NAME_VERDICTS = ("DECLARED-EXCEPTION", "BUILT-NOT-GRADED", "NOT-GRADED", "RAISE", "RAISE-EXISTING", "WAIVED-READ", "SKIP")
 
 
 def place_enforcing():
@@ -1945,7 +2118,7 @@ def _note_file(path, pre_text, post_text):
 
 def _note_place(nm, path, lit, pre_text, j):
     """Remember a NEW stored name that was graded as a name (not a carrier, not a declared exception) for the step."""
-    if j is None or j[0] in _NOT_A_NAME_VERDICTS or nm.carrier(lit.value):
+    if j is None or j[0] in _NOT_A_NAME_VERDICTS or (not lit.built and nm.carrier(lit.value)):
         return
     typ, _graded_as = nm.classify(lit.value, lit.hint)
     if typ is None:
@@ -2342,6 +2515,46 @@ def override_self_test():
     return ok
 
 
+def built_self_test(nm):
+    """The built-name arms (row LGIC_BLANKFIX-D1-W2-S9): an opal_name module block and a Python name() call with literal
+    arguments are graded as the name they build; a site that is not all literals, or that name() refuses, prints
+    BUILT-NOT-GRADED; a hand-typed literal beside them is graded exactly as before. Returns True when all hold."""
+    want = "ir" + "pt-co" + "t-reporting-gold-scheduler-role"  # split: this file must not hand-type a firm token
+    tf_ok = ('module "r" {\n  source = "../modules/opal_name"\n  system = "irpt"\n  scope = "cottonwood"\n'
+             '  function = "reporting-gold"\n  kind = "role"\n  qualifier = "scheduler"\n}\n')
+    tf_var = tf_ok.replace('scope = "cottonwood"', 'scope = var.firm')
+    tf_reader = 'module "m" {\n  source = "../modules/opal_name"\n}\n'
+    py_ok = 'ROLE = name("irpt", "cottonwood", "reporting-gold", "role", "scheduler")\n'
+    py_kw = 'ROLE = opal_naming.name(system="irpt", scope="cottonwood", function="reporting-gold", kind="role", qualifier="scheduler")\n'
+    py_var = 'ROLE = name("irpt", firm, "reporting-gold", "role", "scheduler")\n'
+    py_bad = 'ROLE = name("irpt", "cottonwood", "reporting-gold", "no-such-kind")\n'
+    py_typed = 'ROLE = "' + want + '"\n'  # the same name typed by hand keeps its firm token: graded as ever
+    arms = (("tf-module-literal", "m.tf", tf_ok, "graded", want), ("py-call-literal", "m.py", py_ok, "graded", want),
+            ("py-call-keywords", "m.py", py_kw, "graded", want), ("tf-module-var", "m.tf", tf_var, "not-graded", None),
+            ("tf-registry-reader", "m.tf", tf_reader, "none", None), ("py-call-var", "m.py", py_var, "not-graded", None),
+            ("py-call-refused", "m.py", py_bad, "not-graded", None), ("py-hand-typed-control", "m.py", py_typed, "typed", None))
+    ok = True
+    for label, path, src, expect, name_want in arms:
+        added = set(range(1, src.count("\n") + 1))
+        if expect == "typed":
+            lits = py_literals(src, added)
+            got = [judge(nm, path, x, None) for x in lits]
+            arm = len(got) == 1 and got[0] is not None
+            shown = "typed literal graded %s" % (got[0][0] if got and got[0] else None)
+        else:
+            rows = grade_built(nm, path, src, None, added, [], {})
+            if expect == "graded":
+                arm = len(rows) == 1 and rows[0][3] == name_want and rows[0][0] != "BUILT-NOT-GRADED"
+            elif expect == "not-graded":
+                arm = len(rows) == 1 and rows[0][0] == "BUILT-NOT-GRADED"
+            else:
+                arm = rows == []
+            shown = ", ".join("%s %s" % (r[0], r[3] if r[0] != "BUILT-NOT-GRADED" else "(why printed)") for r in rows) or "no row"
+        ok = ok and arm
+        print("SELF-TEST arm built %s -> %s: %s" % (label, shown, "ok" if arm else "FAIL"))
+    return ok
+
+
 def self_test():
     """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
     group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
@@ -2354,6 +2567,7 @@ def self_test():
         ok = ok and arm
         print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
                                                     "ok" if arm else "FAIL"))
+    ok = built_self_test(nm) and ok
     ok = place_self_test() and ok
     ok = override_self_test() and ok
     print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
@@ -2394,7 +2608,10 @@ def main(argv=None):
     rows.sort(key=lambda r: (r[1], r[2], r[3]))
     verdict_lines = list(meta)
     for verdict, path, line, s, canon, why, _counts in rows:
-        vl = "NAMING %s %s:%d %s -> %s" % (verdict, path, line, s, canon)
+        if verdict == "BUILT-NOT-GRADED":
+            vl = "NAMING BUILT-NOT-GRADED %s:%d %s" % (path, line, s)
+        else:
+            vl = "NAMING %s %s:%d %s -> %s" % (verdict, path, line, s, canon)
         verdict_lines.append(vl)
         print(vl)
         print("  why: %s" % why)
