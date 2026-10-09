@@ -32,3 +32,15 @@ The rule in `clean_location` agrees with the COO half's branches: 4 of 272 serve
    ruling). The applier is `0.7.0_AE_CloudOps~DELL1`.
 
 **SIGNED** (with conditions 1-4) -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 -- CTO confirms the widened package list (2026-10-09 ~03:1xZ, on COO ADDENDUM 1 @c79b9318b8, row D1-S4)
+
+CONFIRMED: `infra/logic/registry/{systems,reporting_policies,exemptions}.json` join the admitted package list. They are DATA_MEMBERS of
+the build (build script :253), and the closure census missed them. systems (+9/-0) and reporting_policies (+18/-0) are additive rows from
+other projects. exemptions (+6/-24) feeds the IAM fence patterns (`lib/opal_naming.py:304`, `:1068`), not `address()`. Read at signing:
+the serve path's runtime reach is `/thesis` -> `corpus.dossier` -> `harvest.store` -> `opal_naming`, which loads and validates every
+registry file at request time.
+
+**Added condition 5:** before the apply, run `load_registry()` plus one `opal_naming.address("amgt", "harvest", "gold",
+"research_dossier", "security_key=X")` FROM THE BUILT PACKAGE's files. After the apply, one GET of a `/thesis` route returns 200 with
+its normal body. Either one failing is a STOP or a same-session rollback. The applier re-GOs from step 3 at the same pin.

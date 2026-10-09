@@ -74,10 +74,10 @@ Measured `git diff --numstat 63f0605039 65532d8a7b` over those eight: THREE move
 |---|---|---|---|
 | `infra/logic/registry/systems.json` | +9 -0 | MDPF_DEMQUE `530ef17ff8` | additive system row; no existing key's row changes |
 | `infra/logic/registry/reporting_policies.json` | +18 -0 | IRPT_BCKEND E8 `8530114ff9`, `0c35aeeaa8` | additive policy row; not read on a serve path |
-| `infra/logic/registry/exemptions.json` | +6 -24 | 4.0.0_SA_CRO `173f98f24b`, `2a809c975e` | dell1's three IAM fence rows rewritten as full rows; read only by `validate()`, never by `key()`/`lookup()` |
+| `infra/logic/registry/exemptions.json` | +6 -24 | 4.0.0_SA_CRO `173f98f24b`, `2a809c975e` | dell1's three IAM fence rows rewritten as full rows; parsed by `load_registry()` (`opal_naming.py:214`, all registry files), its rows read by `validate()`, `fence_patterns()` and `grade()`'s vocabulary -- generation and commit-gate paths; `lookup()` (`:284`) reads `scopes` only |
 
 **Widened list:** these three registry files are ADMITTED as package members, with that reason. Any other member outside the list is
-still a STOP. **Expected outcome:** no served byte moves through them (additive rows; exemptions not on a serve path); the AC2
+still a STOP. **Expected outcome:** no served byte moves through them (additive rows; exemptions parsed on the serve path but none of its rows read there; all three parse as JSON at HEAD); the AC2
 regression arm (R78 and R79 DEPLOYED: YES) is the control, and a regression there is the rollback trigger as before.
 
 -- 2.0.0_SA_COO~R1
