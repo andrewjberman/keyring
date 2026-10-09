@@ -1,0 +1,19 @@
+{
+  "_about": "Draft root_map.json entry for the root advi/billing-read, per LGIC_BLANKFIX ROUND_ANALYSIS.round10 ruling R2 (row D1-W2-S3; 1.0.0_SA_CTO~DELL1 msg 2209). Drafted by 4.0.0_SA_CRO~DELL1, 2026-10-09 ~09:5xZ, in root_map.json's shape (system, scope, source, evidence, exceptions). NOT in the registry until 4.0.0_SA_CRO, the only writer of infra/logic/registry/, writes it. Every value is read from code or from the registry, cited in _cite.",
+  "roots": {
+    "advi/billing-read": {
+      "system": "advi",
+      "scope": "49financial",
+      "source": "schwab",
+      "evidence": "Read: every .tf under infra/aws/terraform/advi/billing-read/ (api.tf, iam.tf, lambda.tf, locals.tf, main.tf; created by 0.9.0_WK_ADVI_BILLING~1 @9317198b13, cell AB-t-2). SYSTEM: the function's own builder arguments SYSTEM, TIER, TABLE = 'advi', 'gold', 'advi_billing' (infra/aws/lambda/advi/billing-read/entry.py, cited in locals.tf header), and the ADVI_BILLING project is an advi project, so system = advi, the existing ADVI system's tenancy (ruling R2). SCOPE: locals.tf reads the firm from the registry, never typed: master 08335338 (scopes.json class MASTER, firm 49financial, bucket opal-data-49financial); the role reads ONLY advi/49financial/gold/advi_billing/ in that bucket, so scope = 49financial. SOURCE: the fee object is computed from the Schwab master 08335338 (scopes.json vendor schwab; locals.tf header: data/assets/scripts/gold/runners_49f/runner_common.py SILVER), so source = schwab. Names: the Lambda, role and policy names are builder output (module.advi_billing_read_lambda_name, advi_billing_read_role_name, advi_billing_read_policy_name in lambda.tf/iam.tf), so no hand-typed name is expected to need an exception.",
+      "exceptions": [],
+      "_cite": {
+        "system": "infra/aws/lambda/advi/billing-read/entry.py (SYSTEM='advi'); infra/aws/terraform/advi/billing-read/locals.tf header lines 8-11",
+        "scope": "infra/aws/terraform/advi/billing-read/locals.tf advi_br_master='08335338' -> infra/logic/registry/scopes.json key 08335338 firm=49financial",
+        "source": "infra/logic/registry/scopes.json key 08335338 vendor=schwab",
+        "exceptions": "none found: every name in the root is builder output; the registry writer's own ALL-ROOTS read is the check",
+        "not_checked": "the draft entries' 'fills' field (present in MAP_ENTRIES_round10.json) is not filled here; its meaning was not read. The writer adds it if root_map.json requires it."
+      }
+    }
+  }
+}

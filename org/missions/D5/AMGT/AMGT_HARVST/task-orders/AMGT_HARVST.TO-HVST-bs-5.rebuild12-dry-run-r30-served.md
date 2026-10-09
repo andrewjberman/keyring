@@ -97,9 +97,22 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   cell's measured diff. Rollback writes rebuild #11's rows as the newest part, never a delete.
 - Slot ~131. Checks dry-run at the base: AC1, AC2, AC3 base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-09 ~09:4xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker ~131 @a7a06fbc3c, proof @4bdcef8666, VALID rc 0; merged @c1f750dd0a. The first run was reaped at 08:08:36Z
+  (no served write); the relaunch was DECLARED by the issuer.
+- **AC1 PASS** `PUTS SENT 0`. **AC2 FAIL** `OUTSIDE R30 CLASS: 113`. **AC3 FAIL** `RULE (rebuild #12): BREAKS`. These are
+  results, not defects, and were read by the issuer on the branch. R30 REMOVALS 285 are all in br-1's class (census 280).
+  The 113 OUTSIDE rows are all kept pairs whose mention_count fell but not to 0 (V 59, BKNG 14, ORA_FP 6, ORANY 6). This is
+  R30's per-mention effect inside an article. Lost 0, added 0, daily OTHER 0.
+- **Ruled:** `1.0.0_SA_CTO~DELL1` ADDENDUM 2 (msg 2181) admits "R30-partial count-down" as a second class (113, mention
+  delta 337) beside the 285 removals (delta 425); total 762. The served act is under its own pair (COO @0554e2651d + CTO, msg 2196).
+- **AC4 (judgment):** `REBUILD12_REMOVED_SAMPLE.md` (30 of 285) plus about 20 count-downs, for `3.0.0_SA_CVO` after the serve.
+- **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>75</round>
 <workstream>R12</workstream>
 <slot>~131</slot>

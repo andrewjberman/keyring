@@ -31,3 +31,16 @@ the same canonical string as a literal, because the portal cannot read the works
   release.
 - **Client-facing.** The Ticket Center is client-facing (CTO msg 2826), so the portal half is DEV only; PROD waits on Andrew.
 - FWD-1's grading run (the CVO reads one live journey) follows the four releases named in DECOMP_R2.
+
+## ADDENDUM 1 (~09:4xZ): AR-v-21 AMENDMENTS 2-4 -- the Original file reader
+
+- **Why:** DECOMP_R2 AMENDMENT 2 @a30b01837a (CTO round-1 ADDENDUM 1 @64e9e6157d, row D2-S6) gave this cell the original-file reader;
+  `~Y2`'s AR-y-22 serves `GET .../analysis/requests/{requestId}/original` (in release 1). The Commentary reader moved to FWD-3.
+- **Built by** `0.9.0_WK_IRPT_ANLREQ~22`: portal bd3b6559 (route, `getAnalysisRequestOriginal`, the Original file row, the fifth test) and
+  d7427de7 (one `IR_DATA_ADAPTER` entry in `envelope.ts`, granted by AMENDMENT 3).
+- **Issuer re-run:** `V21-PACKAGE-OK passed=5`, `V21-PAGE-OK pass=5`, `PORTAL-TSC-OK`. The InvestorReporting bun suite reads 77 fail /
+  25 errors both at d06ae384 (before) and d7427de7 (after): environment failures of a C:/tmp worktree, not this change.
+- **Proof:** `deliverables/0.9.0_WK_IRPT_ANLREQ~22/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json` @d78b868a49 (VALID;
+  AMENDMENT 4 moved it there, because the lane gate admits a worker only to its own folder). Drained @668d1c299a.
+- **Rows:** D2-W22-S1 (envelope adapter missing), D2-W22-S2 (order issued to ~21), D2-W22-S3 (proof folder), each answered by AMENDMENTS 3-4.
+- **Portal:** CTO msg 3022 APPROVED d7427de7 for DEV; landing asked of MSTR~DELL2. CLIENT-FACING: PROD waits on Andrew.

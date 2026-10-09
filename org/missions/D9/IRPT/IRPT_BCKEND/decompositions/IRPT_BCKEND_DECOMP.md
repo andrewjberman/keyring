@@ -2502,3 +2502,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r104/p104_cells.py`: AC1 and AC3 FAIL
 | `IB-pr-403` | 49F SmartX-path nodes carry CUSIP security_id; none -> listed, never invented | FWD-2 (SECCLASS e56 acceptance 1) | SERVED | none (release after SC-e-56 live) | P104-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~267.
+
+## 98. ROUND 105, WORKSTREAM ~P (2026-10-09 ~09:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO half @c4df78131d)
+
+IB-pr-402 is graded 3/3 PASS and drained. Its pair is GIVEN: COO @a9d5043ef9 and CTO @c4df78131d (msg 3017), which requires all three keys
+to land before the 14:15Z fire or roll back, and the ledger committed per leg. IB-pr-398 is COMPLETE (~IB2 @236d19e1ae). One apply cell,
+sequenced on ~IB2 after 397 and before 401.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r105/p105_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-404` | land IB-pr-402's three narrow per-firm holdings bundles on ~IB2; replay on uploaded bytes; first-fire read | FWD-14 | WORLD | IB-pr-402 drained; pair GIVEN | P105-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one apply cell. Assignee: 0.7.0_AE_CloudOps~IB2.

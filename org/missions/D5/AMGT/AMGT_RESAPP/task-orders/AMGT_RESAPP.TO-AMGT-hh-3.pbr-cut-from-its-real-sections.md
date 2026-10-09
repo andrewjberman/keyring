@@ -79,3 +79,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-09T09:4xZ: merged @41d58a74d0 (wk-AMGT_RESAPP-331 @763c3051a1, 3 paths) as a SITE-Z DEPLOY under COO @8d4624c41f + 1.0.0_SA_CTO~Z @7537de8e1d; NEVER-2 entry amgt-resapp-r83-hh3-sitez-pbr-cut-merge CLOSED 2 of 2. On the merged tree: r83_pbr AC1 YES (PBR business at 'Our Business' 319,061, risk at 'Risks' closed 304,198, mdna at 'Operating and Financial Review and Prospects' 549,928; the other four names 12 of 12 unchanged); r82_cut AC1 15/15 and AC2 YES; filings 249 passed. Row D1-W323-S1's remedy has landed in the cutter; PBR's served text moves only through a store half.</status>
