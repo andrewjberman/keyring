@@ -10,6 +10,9 @@ its face names "the first page published with this code", and no page is publish
 judgment criterion. This is the L9 record only: the round-28 L10 slug waits on tw-1 J1 (11:00Z vehicle run), aw-1 J1
 (13:00Z sweep) and row D1-W26-S1 (ARMED).
 
+**ADDENDUM 1 (~09:05Z, on packet ADDENDUM 1 @d7868190de): RIV-wd-1 J1's repeat clause NOT MET -> HELD for the first page rendered
+with RIV-wf-1; row D1-C-S2 says what that page must show.**
+
 ```json
 [
   {
@@ -30,6 +33,28 @@ judgment criterion. This is the L9 record only: the round-28 L10 slug waits on t
         "task-orders/ETFS_RIVALS.TO-RIV-wa-1.split-adjusted-series.md:89, TO-RIV-wc-1...:88, TO-RIV-wc-2...:105, TO-RIV-wd-1...:107 (J1 faces); TO-RIV-wd-1...:37-49 (items 1-3)",
         "http://127.0.0.1:8765/rivalfunds/2026-10-08 and /audit, read by Playwright 2026-10-09 07:19-07:28Z",
         "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S4"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-09T09:05Z",
+    "one_line": "On packet ADDENDUM 1 (@d7868190de, msg 2146): RIV-wd-1 J1's repeat clause moves from NOT MET to HELD for the first page rendered with RIV-wf-1. Even on wf-1's own figures, the calendar labels REQUESTED days and the trade windows are dated by the REPORT'S as-of day, so 10-02 still reads repeat beside a window ending 10-02 that carries a trade.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wd-1 J1: no trade sits on a day the calendar marks repeat. ADDENDUM 1: on wf-1's calendar (CGIC 10-05/06/07 new, 10-01/02 repeat) the clause can be graded MET.",
+    "world_is": "- The local page at http://127.0.0.1:8765/rivalfunds/2026-10-08/audit was re-read at 08:58Z (Playwright). Its files are dated 08:37Z, BEFORE the wf-1 merge 451b193828 (08:50:36Z). The CGIC calendar still reads 10-01, 10-02, 10-05 and 10-06 repeat and 10-07 gap. No rendered artifact of wf-1 exists to grade, and the wf-1 local calendar run is described in the packet but has no committed record.\n- wf-1's code (gold_holdings_coverage.py at 451b193828) still classifies 'per expected day', meaning the requested day: 'repeat / regressed / gap / periodic per expected day'. The trade windows are dated by the report's claimed as-of (row D1-S7). On wf-1's stated figures, expected day 10-02 is 'repeat' (that capture claims 09-30), while the window '2026-09-30 to 2026-10-02 (1 trade)' (TSM trim) ends on the as-of 10-02 report, which was captured on expected day 10-05 ('new'). The trade is real, but the page shows a trade window ending 10-02 beside a 10-02 column marked repeat. As worded, the clause would read NOT MET on the rebuilt page unless the calendar says which day its columns are or is keyed by the as-of date.\n- Grade: HELD for the first page rendered with wf-1. The grade turns on what the page shows a reader: either the two date axes are shown as different, or no repeat-marked day coincides with a window end that carries a trade.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~V1/ws2/L8_PACKET_WS2_WS3.md ADDENDUM 1 @d7868190de",
+        "git diff 451b193828^1 451b193828 -- data/etfs/scripts/rivalfunds/gold_holdings_coverage.py (classify(prev_actual); docstring 'per expected day')",
+        "C:/tmp/ws2-real-run/layer/opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-08/audit.html mtime 08:37Z; Playwright read 08:58Z",
+        "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S7"
       ]
     },
     "disposition": "GRADUATED"
