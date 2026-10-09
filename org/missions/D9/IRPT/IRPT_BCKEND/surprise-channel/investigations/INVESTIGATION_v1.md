@@ -24583,3 +24583,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The suite is a different size today (198 collected, 0 skipped, against 198 with 13 skipped), and the red set is a subset of the nine (the upload-contract, status-handler, fixture-source and the export-receipt / submit-export controls now pass). The packet prints both lists; this cell's paths touch no target of either. Not investigated why the set moved (not this order's cell)."
 }
 ```
+
+## IRPT_BCKEND-D2-W275-S1 -- No standalone document schema for the custody report; response contracts carry the data type in $defs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W275-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~275",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No standalone document schema exists for the custody report reference or read answer; the two new response contracts carry the data type in their own $defs, self-referenced by $id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py _documents_of asserts a data $ref and _data_for reads fixtures/<document>.valid.json; the v1 registry (_response_validator) lists only top-level v1/*.schema.json; the grant admits no new v1/*.schema.json",
+      "published: docs/contracts/investor-reporting/v1/responses/custody-report-{read,persist}.response.schema.json with fixtures custody-report-{read,persist}.response.{valid,invalid}.json"
+    ]
+  },
+  "spec_asserts": "The order says every data $ref resolves to a published document schema; the grant lists only the two responses files and _contracts/.",
+  "world_is": "No custody document schema is published in v1/ (PerformanceReport.retained_ref is kind PERFORMANCE only). Adding one is outside this order's paths, so data refs the response file's own $defs (opal://.../responses/<op>.response.schema.json#/$defs/<Type>), which resolves to a published file and keeps the test unweakened. A later cell may promote them to v1/CustodyReport*.schema.json; the read's `report` member is typed only as an object (its members are not described, none invented)."
+}
+```
