@@ -991,6 +991,48 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "The L10 precondition holds that a slug waits until every task order under the project is terminal, read from each order's `<status>` tag at HEAD.",
     "world_is": "The gate's first-match regex captures a `<status>` string occurring in an order's PROSE, so an order describing markup is graded on the description; all 18 orders are terminal on their actual status tags.",
     "notes": "⛔ NOTHING IS ASKED OF ANY LANE BEYOND THE ROUTING, and no order was edited. This is the SECOND gate defect this seat has routed today (Z-S12 was the first) and both are the same family the estate met all day: AN INSTRUMENT ANSWERING CONFIDENTLY ABOUT THE WRONG OBJECT -- there the wrong PLANE, here the wrong OCCURRENCE. ⭐ AND THE GENERAL FORM IS WORTH MORE THAN THE REGEX: A FIRST-MATCH READ OF A STRUCTURED FIELD IS A GUESS THAT THE FIELD APPEARS BEFORE ANY DISCUSSION OF IT. That holds for most documents and fails for exactly the documents that are ABOUT the field -- which are the ones a governance estate writes when it starts auditing its own markup."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit REFUSED TO-IAM-u-2's deliverables commit: missions-tree-check reports INDEX-DRIFT org/projects/NFRA_OPSWKF.json dep_stage index='PRD' tree='EXECUTING', a defect in ANOTHER project's register carrier that the worker's write grant cannot touch.",
+    "spec_asserts": "A worker commit of files under its own deliverables folder is graded on those paths.",
+    "world_is": "The tree validator grades the whole project tree; a drift on NFRA_OPSWKF (register row at PRD, tree project at EXECUTING) fails every commit from every worktree branched from this base. Two attempts, same single violation (1 violation, 49 of 49 tree projects valid).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit run twice at worktree HEAD 50428b904f: [INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index='PRD' tree='EXECUTING'; RESULT: 1 violation(s)",
+        "tool names the remedy as R5 = the register members list, 0.0.0_AB_MSTR's lane; never bypass"
+      ]
+    },
+    "notes": "No bypass was taken. The partial deliverables (rerun-population.sh, compare-runs.py, permission-cold-raw-bundle.round4.PARTIAL.json) sit UNCOMMITTED in /c/tmp/wk-iamroles-11 on branch wk-NFRA_IAMROLES202609-11; commit them once the drift is cleared."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Live list-roles read 290 roles = 280 at Path '/' + 10 service-linked (Path '/aws-service-role/<service>/'); round 3 read 219 + 10. The population rule's 'Path /aws-service-role/' is a PREFIX, not an equality: an exact-equality exclusion matched 0 of the 10.",
+    "spec_asserts": "Round 3's rule: the 10 roles at Path '/aws-service-role/' are excluded and named.",
+    "world_is": "Those 10 roles carry Path '/aws-service-role/<service>.amazonaws.com/'; rerun-population.sh was corrected to a startswith test before the bundle was assembled. Members rose 219 -> 280 (+61) in the interval.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam list-roles via .tools/aws grouped by Path in worktree .scratch/r4work/list-roles.json: 280 at '/', 10 under '/aws-service-role/<service>/', 0 other (290 total)",
+        "round 3 bundle ~8 population_rule: 219 at '/', 10 excluded"
+      ]
+    }
   }
 ]
 ```
