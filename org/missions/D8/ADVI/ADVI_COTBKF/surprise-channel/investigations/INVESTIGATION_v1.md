@@ -3553,3 +3553,54 @@ round.** Never edit an existing row.
   "disarm_owner": "2.0.0_SA_COO~C2"
 }
 ```
+
+## ADVI_COTBKF-D2-W60-S1 -- The only repo code that writes the bd_txn_price label is in the bd firm's tree (data/black_diamond/scripts/sil
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W60-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~60",
+  "surfaced_at": "2026-10-09T10:41Z",
+  "one_line": "The only repo code that writes the bd_txn_price label is in the bd firm's tree (data/black_diamond/scripts/silver/inject_scoped_overrides.py:136 default, force_source set at scoped_price_exceptions.json:10,18,26); no writer in data/cot, yet the cottonwood price store carries its 1,623 rows on 3 CUSIP_ tickers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n -F bd_txn_price -- '*.py' '*.json' at worktree HEAD e5b8ad94ba: 8 hits; writer = data/black_diamond/scripts/silver/inject_scoped_overrides.py:136 (src = exc.get('force_source', 'bd_txn_price')); the label values come from data/black_diamond/scripts/silver/scoped_price_exceptions.json lines 10, 18, 26; data/cot/scripts/gold/B_01.holdings_lots.py:2263 mentions it in a comment only",
+      "store rows (org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.md section 5): CUSIP_05613L3H2 431 rows 2024-10-15..2026-06-09 at 1.0188; CUSIP_651639AX4 572 rows 2024-04-01..2026-06-09 at 0.9037; CUSIP_95000U2D4 620 rows 2024-01-24..2026-06-09 at 0.9804; each a constant price",
+      "data/tier2_senior 0.4.0_DS_ClientPlatform logs 2026-04-15 (wp11_and_3bond_formalization.md:74) name the same three CUSIPs (BNP, WFC, NEWMONT) and prices as the bd firm's inception-price overrides"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CB-ag-1 item 5: print the 3 bd_txn_price tickers, their dates, and which code writes the label, from repo search; row D2-S48 asks whether the label is cottonwood's own or the bd firm's data.",
+  "world_is": "The repo's only writer is the bd firm's inject_scoped_overrides.py; the 3 CUSIP_ tickers and prices equal the bd firm's scoped overrides. The route by which those rows reached the cottonwood store (a copy of the bd build, or a cot-side writer outside the repo) is unread; reading the bd bucket to find out is barred. Not a class input: the 3 tickers carry no yahoo_finance rows in the census."
+}
+```
+
+## ADVI_COTBKF-D2-W60-S2 -- The Yahoo pass was one pass of 72 network calls in the real run, plus 1 earlier call from a 12-ticker debug ru
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W60-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~60",
+  "surfaced_at": "2026-10-09T10:41Z",
+  "one_line": "The Yahoo pass was one pass of 72 network calls in the real run, plus 1 earlier call from a 12-ticker debug run whose pulls were cached and reused: 73 Yahoo calls in total, 0 rate-limited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run log: 'yahoo call 1..72' at <=50 tickers each (3,568 fetched, 12 reused from cache), pause 6 s between calls, no rate-limit text; last call 72 of 18 tickers",
+      "debug run .scratch/dbg1 (--max-tickers 12 --skip-served) made 1 call; its 12 per-ticker pulls sit in .scratch/advi_cotbkf/yahoo_census/ and the full pass reused them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CB-ag-1: make one pass, at most 50 tickers per call, at least 5 s apart, print the call count; develop with --max-tickers before the full pass.",
+  "world_is": "The final line prints yahoo_calls=72 (the full pass counted from an already-cached 12). The debug call made 73 total. The class rule was unchanged between the debug runs and the full run (script blob identical to the rule commit e5b8ad94ba)."
+}
+```

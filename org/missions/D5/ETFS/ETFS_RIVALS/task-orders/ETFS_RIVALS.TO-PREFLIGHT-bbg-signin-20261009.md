@@ -5,6 +5,7 @@
     <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
     <date>2026-10-09</date>
     <status>pending</status>
+<!-- graded 2026-10-09 ~10:46Z by 2.0.0_SA_COO~V1 on the report at origin/box/sitez (read 10:46Z): AC1 MET (issuer grade; status stays open: the complete flip needs a proof-of-spec instance the site-Z executor did not write) -- credentials OK; bloomberg_health ok:true 10:37:50Z; ONE reference_data draw SPY US Equity PX_LAST 10:37:57Z returned 773.93; no sign-in. Reachability at the instant only; the 11:00Z run is the J1 read. Draw booked tier-1 by 2.0.0_SA_COO~Q1. -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>

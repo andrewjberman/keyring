@@ -3959,7 +3959,9 @@ def main(argv):
     _disp, _src = _dispatched_from_argv_or_env(argv[1:])
     files = [a.replace("\\", "/") for a in _disp]
     targets = [f for f in files if CHANNEL_RE.search(f)]
-    if not targets:
+    _baseline_rel = "org/surprise_channel/.corpus-baseline.json"
+    _baseline_staged = _baseline_rel in files  # GATSCP GS-e-4: a baseline reset triggers the corpus pass
+    if not targets and not _baseline_staged:
         print("[surprise-row-gate] OK: no surprise-channel rows in this commit "
               "(denominator: %d dispatched path(s))." % len(files))
         return 0
@@ -3986,6 +3988,8 @@ def main(argv):
         _act_argv = []
         for _t in targets:
             _act_argv += ["--act", _t]
+        if _baseline_staged:
+            _act_argv += ["--act", _baseline_rel]
         if _scv.main(_act_argv) != 0:
             all_v.append("standing corpus pass REFUSED -- see the [surprise-corpus] lines above")
     except SystemExit as exc:
