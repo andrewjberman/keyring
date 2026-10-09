@@ -1183,3 +1183,33 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-S18 -- the close-gate grades every round's orders, and its stem fallback reads 18 historical VALID proofs as PROOF-BAD
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S18",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-09T08:05:55Z",
+    "one_line": "safe-commit's missions-tree-check close-gate grades a dep_stage -> ROUND_CLOSE flip over EVERY order of the project (21 across rounds 1-4), not the closing round, and its file-stem id fallback reads 18 historical VALID proofs PROOF-BAD because each names the short to_id. Today it is WARN and admitted @b756665567; under ENFORCE every tree project whose orders lack a <to_id> tag would be refused at close.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~Z to route to the owner of round-close-check.py (NFRA_CTLPLN, stem fallback @10afe6b697) BEFORE the close-gate flips to ENFORCE; this seat does not edit 18 closed-round orders to fit the gate.",
+    "spec_asserts": "`run python .tools/round-close-check.py --project <CODE> --round <n>` before dep_stage moves to ROUND_CLOSE (canonical-drive obligation 3): the gate grades the round being closed, and a proof that proof-of-spec-check reads VALID is a valid proof.",
+    "world_is": "The close-gate line reads 'orders=21 judgment=21 graded=21 ... verdict=REFUSED' with 'PROOFS complete=21 proof_ok=3 proof_bad=18'; the 18 are rounds 1-3 proofs naming to_id 'NFRA_IAMROLES202609.TO-IAM-<x>' where the gate, finding no <to_id> tag, expects the full file stem; one (TO-IAM-t-3) is filed as TO-IAM-t-3.proof_of_spec.json, not under the order's long stem. The round-scoped run (--round 4) reads proof_ok=3 proof_bad=0 after the <to_id> amendments @a83d784525 and @b756665567.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output for @b756665567: 'WARN: missions-tree-check close-gate -- NFRA_IAMROLES202609 dep_stage EXECUTING -> ROUND_CLOSE would be REFUSED under ENFORCE; WARN mode admits it'",
+        "same output: 'PROOFS mode=structural complete=21 proof_ok=3 proof_bad=18'",
+        "round-close-check.py:159 id = tag(text,'to_id') or the file stem; :190 compares inst['to_id'] to that id"
+      ]
+    },
+    "notes": "Sibling of Z-S17 (same tool, the judgment-grading limb). The 18 are a census of THIS project only; every other tree project whose workers wrote the short to_id is in the same class, not measured here."
+  }
+]
+```
