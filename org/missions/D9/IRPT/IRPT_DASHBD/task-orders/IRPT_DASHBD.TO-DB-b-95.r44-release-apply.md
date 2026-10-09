@@ -57,11 +57,20 @@ Record `R44_APPLY_RECORD.json`. Report the deploy to `0.0.0_AB_MSTR~DELL2` throu
 
 <expected_criteria>DB47-1-AC1</expected_criteria>
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~14:3xZ): the source map path granted (row D2-W70-S1)
+
+The worker stopped correctly before upload: the re-pin's file is `infra/aws/lambda/ci/lambda-source-map.json`, which `<paths>` did not name. The issuer's
+defect. `<paths>` now names it and the BOUNDS sentence is corrected. Resume from step 3 on the SAME worktree base (handler blob `7c9bb9dcdc5b`),
+reusing the open ledger `20261009T1414Z_irpt-dashbd-r44-release-1009`. This amendment reaches the worker branch by cherry-pick of this one commit,
+never by a box/dell2 merge (DB-b-97's handler edit has drained to box/dell2 and must not ride R44).
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.
 - **Served output does not move.** No edit under `data/`, `infra/` or `portal/`.
-- **This order's exception:** under the signed pair, you build, upload and run ONE targeted safe-apply of the gold Lambda function, and you edit the source map in `infra/aws/lambda/investor-reporting/reporting-gold/`. No invoke. Deletes are Andrew's.
+- **This order's exception:** under the signed pair, you build, upload and run ONE targeted safe-apply of the gold Lambda function, and you edit the source map `infra/aws/lambda/ci/lambda-source-map.json`. No invoke. Deletes are Andrew's.
 - **AWS:** S3 reads only unless this face says otherwise. NO Black Diamond or vendor call, no secret read, no S3 write, no deploy, no bun,
   no download of any package, script or program.
 - **Refusal clause.** A vendor call, a secret read, an S3 write, a deploy, an edit outside the grant, a filled figure, or an account
@@ -72,6 +81,7 @@ org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/
 org/critical_paths/
 infra/aws/lambda/investor-reporting/reporting-gold/
+infra/aws/lambda/ci/lambda-source-map.json
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-95.r44-release-apply.md
 </paths>

@@ -24609,3 +24609,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "They did: both seeding sends ran from 0.7.0_AE_CloudOps~DELL2's identity with rc=0."
 }
 ```
+
+## IRPT_BCKEND-D2-W275-S1 -- No standalone document schema for the custody report; response contracts carry the data type in $defs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W275-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~275",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No standalone document schema exists for the custody report reference or read answer; the two new response contracts carry the data type in their own $defs, self-referenced by $id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py _documents_of asserts a data $ref and _data_for reads fixtures/<document>.valid.json; the v1 registry (_response_validator) lists only top-level v1/*.schema.json; the grant admits no new v1/*.schema.json",
+      "published: docs/contracts/investor-reporting/v1/responses/custody-report-{read,persist}.response.schema.json with fixtures custody-report-{read,persist}.response.{valid,invalid}.json"
+    ]
+  },
+  "spec_asserts": "The order says every data $ref resolves to a published document schema; the grant lists only the two responses files and _contracts/.",
+  "world_is": "No custody document schema is published in v1/ (PerformanceReport.retained_ref is kind PERFORMANCE only). Adding one is outside this order's paths, so data refs the response file's own $defs (opal://.../responses/<op>.response.schema.json#/$defs/<Type>), which resolves to a published file and keeps the test unweakened. A later cell may promote them to v1/CustodyReport*.schema.json; the read's `report` member is typed only as an object (its members are not described, none invented)."
+}
+```
