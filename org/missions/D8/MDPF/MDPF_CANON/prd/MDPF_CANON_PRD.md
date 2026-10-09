@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v2.8",
+ "prd_version": "v2.9",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -196,10 +196,13 @@ CONTRACTS changed, so both halves are owed again.
 | each firm's bucket and its serving grants | **consumed** | the bucket exists, serves, and carries its serving grants, per firm | produced by `ADVI_FIRMBKTS`, per firm; FWD-2 and FWD-6 wait on it for that firm |
 | the scoped route for a firm's slice | **produced** | the portal's existing requests keep their URLs (`/api/general/mdpf/{firm}/...`); the portal is frozen, so no caller changes. The edge maps them: `global` keeps its current general handling unchanged, and a firm segment resolves through the registry, aliases included, to one firm and is served, from that firm's bucket at the key above, to two kinds of session only: a session whose validated tenant resolves to that same firm, and an internal Opal staff session (tenant `opal-capital`), for which the path segment IS the selection because the frozen portal's selector sends no `?firm=` on these requests (`ModelPortfolios.tsx:357-358`, Andrew's MDPF_SCOPED.S5). Any other firm's session is refused. This is the boundary the scoped router already enforces by comparing resolved buckets (`shared-advisor-router/index.mjs:367-373` @`40697fe79d`), never a bare segment-equals-tenant test. **Keeping the old URL never keeps general authorization for firm data** | the portal's Model Portfolios page and its wrappers (`aum.ts`, `portal-proxy.ts`); the edge routers and CloudFront behaviours; the router's firm map is `LGIC_ENFORCE`'s generated view |
 | the dedicated runner | **produced** | one principal per firm, named by `name()` (`mdpf-49f-runner-role` and its siblings), whose only write grant is `opal-data-{firm}/mdpf/{firm}/platinum/*` in its own firm's bucket; its host is built by this project | the per-firm slice writes |
+| the firm gold writer | **produced** | one principal PER FIRM, its name `name()` output with the firm in its scope slot (so `LGIC_ENFORCE`'s scope-derived Deny admits it unchanged), assumed by `mdpf-gold-lambda`; its ONLY write grant is `address()`'s firm gold prefix (`opal-data-{firm}/mdpf/{firm}/gold/*`), never platinum, never another firm. The MDPF_TAXSMA precedent (`mdpf-pipeline/iam.tf` per-firm gold roles). v2.9, L5 call msg 2990, ruled (a) | the gold Lambda (M2) assumes it; M10's runner is unchanged and stays platinum-only |
 | the separation rule | **consumed** | `LGIC_ENFORCE`'s scope-derived Deny on each firm bucket, which admits a principal whose name carries that firm in its scope slot. **For FWD-6, "word-for-word what it was before" means the run needs NO edit to it: no exemption row, no carve-out, and the rule's bytes are identical before and after the run** | produced by `LGIC_ENFORCE` (its fence row, and its cell E5 on the template) |
 | the decommission standard | **consumed** | for each retiring tree: 45 CONSECUTIVE days in which a named instrument records no data event on the tree except an excluded probe. It starts no earlier than that instrument's observed-live stamp, any other event restarts it, and it counts only once every reader is repointed. Each removal is then its own act | `ADVI_FIRMBKTS`'s FWD-6 window ruling (its tree row @`9819855eda`), on Andrew's ~18:4xZ card 2 and ~03:xxZ word |
 | the combined slice's written basis | **produced** | `org/missions/D8/MDPF/MDPF_CANON/deliverables/X2_GLOBAL_BASIS.md`: why the combined all-firms figure reveals nothing about any single firm's clients | the ledger's X2 row (`LGIC_CANON`); anyone moving data later |
 | inherited law | **consumed** (ruled) | A-1 to A-3 as quoted above; B1 (repoint the RPS read through `opal-data-assets`) and B2 (the JWT read stays, a standing exception, ledger X1); route (c) and the dedicated runner; Rule 17b; the canon's R4-R7, R11, R12, R16-R19 and R21 | Andrew's words; the law surface; `LGIC_CANON`'s canon |
+
+**v2.9 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~18:4xZ), L5 call msg 2990 (`2.0.0_SA_COO~D1`), ruled (a):** firm-scope GOLD is written by a per-firm gold-writer principal, not by widening the platinum runner. Least privilege per tier, and the live Deny admits it with no edit (FWD-6). It adds one CONTRACTS row and one SURFACE MANIFEST row. The ratified-text half re-signs.
 
 ## THE DECISIONS -- CLOSED AT L4
 
@@ -449,6 +452,7 @@ Surfaces this project writes, reads or executes.
 | the publisher Lambda and its Terraform | APPLIED: the port to parquet | M5 | MDPF_CANON |
 | the producer scripts; `EC2_MANIFEST.json`; `gold-lambda.tf`; `lambda-source-map.json` | edits | M4, M6 | MDPF_CANON; deploys ride their owners' paths (Rule 13) |
 | the runner's host and its per-firm IAM roles | APPLIED: new compute and principals | M10 | MDPF_CANON, through the infrastructure lane |
+| the per-firm gold-writer roles and their trust on `mdpf-gold-lambda` | APPLIED: new principals, one write grant each (firm gold prefix) | M2 | MDPF_CANON, through the infrastructure lane |
 | the hold file | an edit | M11 | its custodian, under the order |
 | `docs/architecture/MDPF_CANON_PRD.md` | the moved notice | DEC-1 | 1.0.0_SA_CTO |
 | `org/missions/D8/MDPF/MDPF_CANON/deliverables/` | documents | M1, M7, M11 | MDPF_CANON |
