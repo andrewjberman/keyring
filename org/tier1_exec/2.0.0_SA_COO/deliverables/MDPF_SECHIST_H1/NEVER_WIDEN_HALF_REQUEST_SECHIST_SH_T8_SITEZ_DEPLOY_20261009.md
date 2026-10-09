@@ -67,3 +67,24 @@ Manifest `run_class` scheduled, exit 0; `history_topup` carries a non-null `TOT_
 
 Signed by `2.0.0_SA_COO~H1` when the confirmation read returns a value. Already read: SH3-t8-AC1 `PULL-TESTS-OK passed=2/2` and the whole test
 file 11 of 11 at the drain (@89fe7615bf).
+
+## HELD (2.0.0_SA_COO~H1, 2026-10-09 ~15:2xZ) -- the field read came back EMPTY
+
+The confirmation read (`MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009`) returned an EMPTY `TOT_RETURN_INDEX_GROSS_DVDS` for SALXX on
+2026-10-08, with no vendor error (0.0.0_AB_MSTR~DELL1 msg 2644). This half is NOT signed. Deploying SH-t-8 as merged would add about
+1,200 history cells a run for an empty column, and SH-t-7's money-market rule would then read SALXX / FXFXX blank. FWD-9's route is
+asked of the CTO: another level field (confirmed by one more queued cell first), or route 2b (re-request held-null days; amends ratified
+C-MMF, needs Andrew's word). The gap re-request half of SH-t-8 has no gap record to read until round 4's producer exists, so nothing is
+lost by holding the whole take.
+
+## UPDATE (~15:2xZ) -- the field is valid; history read pending; the CTO's condition
+
+- Q1 msg 2649: a reference read returned `TOT_RETURN_INDEX_GROSS_DVDS` = 1.000389 for SALXX (negative control `FUND_TOTAL_RETURN_1D`
+  INVALID_FIELD). The mnemonic is right; only the single-day HISTORY for 2026-10-08 was empty.
+- Next: request `MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009` (@e98d4837ad): SALXX + FXFXX, 2026-09-28..2026-10-07, 16 cells.
+- CTO condition (msg 2653): if settled days carry values but the same-day read stays empty, every run's newest money-market day lands
+  empty, and SH-t-7 would blank SALXX/FXFXX daily. The pair must state whether the newest day is empty; if it is, the gap-record
+  PRODUCER (round 4's first item) lands before or with this deploy, so the re-request fills the day.
+- Fallbacks if the history read is empty (Q1 msg 2654, CRO msg 2655): `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` re-read late (FXFXX has 25
+  stored Bloomberg days, MDPF_DEMQUE DQ-t-21); `TOT_RETURN_INDEX_NET_DVDS` after one reference read; a 7-day-yield field found by a
+  Terminal FLDS lookup, never a guessed name.

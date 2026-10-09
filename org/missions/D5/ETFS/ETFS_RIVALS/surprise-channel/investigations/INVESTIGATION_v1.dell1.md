@@ -512,5 +512,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "world_is": "19 of the 20 keys exist. date=2026-10-09 is absent at 14:40Z, after today's 13:00Z sweep. For that one key the condition 8 read cannot be unchanged-or-changed, and the condition 5 rollback has no bytes to restore: if the 2026-10-10 run creates it, the rollback for that key is 'delete or leave', never 'restore'. The other 19 keys carry full pre-images (bytes + sha256 + status counts), so the in-place writer's rollback is intact everywhere it has a prior state.",
       "notes": "Not a blocker and the apply proceeded: the snapshot instrument records absence by design, 2026-10-09 is inside the last-10-trading-day window G2 is allowed to write, and a first-ever write of an absent key is not a widening of served state. For L2 (the issuer's): grade 19 keys unchanged-or-changed, and grade 2026-10-09 separately as created-or-still-absent. Surfaced by the applier, 0.7.0_AE_CloudOps~RV1; disposition is the CVO's/issuer's."
   }
+,
+  {
+      "id": "ETFS_RIVALS-D1-W34-S1",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_ETFS_RIVALS~34",
+      "surfaced_at": "2026-10-09T14:58Z",
+      "one_line": "rivalfunds suite at the base has 1 failing test, test_r6ap1_ai_stage::test_policy_and_environment_split_and_committed_copy_is_current: it expects ONE secretsmanager action in the daily Lambda's generated policy, RIV-wj-1 (86c14e4b3a) added a second statement (GetSerpSecret)",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "python -m pytest -q rivalfunds/tests from data/etfs/scripts, RIV-wk-1 branch: '1 failed, 999 passed, 6 skipped'; the failure is rivalfunds/tests/test_r6ap1_ai_stage.py:172 'sm[etfs-rivalfunds-daily-lambda] == [secretsmanager:GetSecretValue]' with 'Left contains one more item: secretsmanager:GetSecretValue'",
+              "the test loads infra/aws/terraform/etfs-rivalfunds/gen_policies.py, which this cell neither reads nor edits (RIV-wk-1 touched price_series.py, dramatic_move.py and a new test only); git log of gen_policies.py: 86c14e4b3a RIV-wj-1 adds the GetSerpSecret statement",
+              "not re-run at a clean base: the failure's path does not import either file RIV-wk-1 changed"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "RIV-wk-1 task order section 2: tests in rivalfunds/tests must keep passing.",
+      "world_is": "One test, outside RIV-wk-1's paths, already fails at the base because RIV-wj-1 changed the generated policy without updating its assertion; the suite's final line is therefore 1 failed, 999 passed, 6 skipped with or without RIV-wk-1.",
+      "notes": "Not fixed here: the test file belongs to no path of this order and the assertion change is RIV-wj-1's follow-through (the issuer decides)."
+  }
 ]
 ```

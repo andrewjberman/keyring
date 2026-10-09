@@ -5054,3 +5054,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W74-S1 -- DB-b-99: the two named "mechanical" reasons do not read Black Diamond's own transaction or income dates
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W74-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~74",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "FLOW_TIMING and INCOME_DATE are flagged mechanical in SENSITIVITY.json as the order names them, but V2's test re-links Opal's own dated series against BD's return; no BD-side date is read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order step 4: the MECHANICAL reasons are two-sided reads (flow timing or an income date read from both sides' transaction dates); only those inferred reasons can realize FWD-8.",
+  "world_is": "V2's FLOW_TIMING evidence is a START-timing re-link of Opal's flow-bearing days closing the gap to BD's return; INCOME_DATE is a link with Opal's income days removed. The classifier landed no BD transaction or income date, so neither is read from both sides. SENSITIVITY.json carries mechanical true for both with mechanical_basis stating this; whether that satisfies the CTO's 'two-sided' test is the CTO's to grade, not this worker's. All nine settings leave both reasons' counts constant (449, 26) because V2, not the thresholds, assigns them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json evidence strings for FLOW_TIMING and INCOME_DATE",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~74/SENSITIVITY.json final.reasons"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

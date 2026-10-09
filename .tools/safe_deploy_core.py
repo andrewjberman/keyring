@@ -1747,10 +1747,14 @@ def main(argv: list[str]) -> int:
     failed = False
     etag_refusal = False   # IB-2: S3 holds a byte the record does not carry -- rc=2, not rc=1
 
+    # Row IRPT_BCKEND-D2-S24 (1.0.0_SA_CTO, 2026-10-09): the summary counted only the loose leg, so a bundle-routed push
+    # printed "NOTHING WAS DEPLOYED" after minting and uploading a bundle. Bundles minted here are counted for the summary.
+    n_bundles = 0
     for bname, (label, b) in sorted(triggered.items()):
         status, detail, shas = mint_bundle(label, bname, b)
         dest = f"s3://{b['bucket']}/{b['s3_key']}"
         if status == "MATCH":
+            n_bundles += 1
             print(f"  BUNDLE MINTED  [{label}] {bname} -> {dest}  ({detail})")
             for k, v in sorted(shas.items()):
                 print(f"    {k}={v}")
@@ -1941,10 +1945,11 @@ def main(argv: list[str]) -> int:
     # anything builds `to_deploy` by a route that bypasses detect_script_files. Enumerating skip
     # reasons is the six-sites-when-there-are-eight error.
     n_dep, n_skip = len(deployed), len(skipped_not_member)
-    if not n_dep and n_shipped:
-        print(f"OK: safe-deploy gate PASS -- {n_shipped} named shipped artifact(s) deployed and ETag-verified; "
-              "0 script file(s).")
+    if not n_dep and (n_shipped or n_bundles):
+        print(f"OK: safe-deploy gate PASS -- {n_bundles} bundle(s) minted and uploaded; {n_shipped} named shipped "
+              "artifact(s) deployed and ETag-verified; 0 loose script file(s).")
         return 0
+    bundles_note = f"; {n_bundles} bundle(s) minted and uploaded" if n_bundles else ""
     if not n_dep:
         detail = f"; {n_skip} SKIPPED (first-mint, 404)" if n_skip else ""
         print(f"OK: safe-deploy gate PASS -- 0 file(s) deployed{detail}. NOTHING WAS DEPLOYED.")
@@ -1953,10 +1958,10 @@ def main(argv: list[str]) -> int:
         for rel in skipped_not_member:
             print(f"       NOT DEPLOYED  {rel}")
     elif n_skip:
-        print(f"OK: safe-deploy gate PASS -- {n_dep} deployed and verified; "
+        print(f"OK: safe-deploy gate PASS -- {n_dep} deployed and verified{bundles_note}; "
               f"{n_skip} SKIPPED (first-mint, 404), listed above and NOT deployed.")
     else:
-        print(f"OK: safe-deploy gate PASS -- all {n_dep} file(s) deployed and verified")
+        print(f"OK: safe-deploy gate PASS -- all {n_dep} file(s) deployed and verified{bundles_note}")
     return 0
 
 

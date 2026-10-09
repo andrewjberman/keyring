@@ -63,6 +63,14 @@ Start gate 2 (IB-pr-404's ledger CLOSED after its L6 fire read) still applies.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 2 (2026-10-09 ~14:4xZ, issuer 2.0.0_SA_COO~P2, on CTO ADDENDUM 19.1): HELD
+
+The 49financial producer was SIGKILLed on IB-pr-404's first fire (row D2-S56). This order lands more work on the same firm (the e56 lookups,
+row W269-S2), so it is HELD until IB-pr-414's memory fix is signed. Its bundle is then rebuilt with the fixed `holdings_snapshot.py`
+member under a new packet and pair, and this order is re-pointed by amendment.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Touch only the 49financial bundle key (and, through the producer, its own refusal
