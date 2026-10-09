@@ -101,6 +101,33 @@ lane: 0.7.0_AE_CloudOps~ZV, the site-Z lane for ETFS_RIVALS's site-bound acts (m
 </proof_of_spec>
 
   <report>
+    2026-10-09 19:10Z, executor 0.7.0_AE_CloudOps~ZV: AMENDMENT 2 EXECUTED; whole merge LOCAL.
+    Canonical .git/commit-queue.lock acquired 19:07:58Z and held through gates, scratch removal and merge;
+    locked HEAD 4516c6399c05ace2bd03123c975bdd9b04f4443a, branch box/sitez, shared index empty.
+    Step 1: target b0b65368fb425bd0e1e20366ce38b10982a077e3 present; pre-merge ancestry rc 1.
+    Step 2(a): merge-tree rc 0, conflict-free tree cc8b1004b7d2c3d6e63e7509e5d69ce18b199ab4.
+    Step 2(b): scratch fast-forwarded to locked HEAD; merge --no-ff --no-commit succeeded.
+    tc-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC1.py: AC1 RESULT: PASS 0 failures (rc 0).
+    tw-1.AC2.py: AC2 RESULT: PASS 0 failures (rc 0).
+    aw-1.AC1.py: AC1 RESULT: FAIL 1 failure(s): a (rc 1), solely PROMPT_VERSION 'a1-chain/8'; b-j OK.
+    This is the exact exception accepted by AMENDMENT 1; ITEM8 RESULT: PASS 0 failures (rc 0).
+    Step 2(c): git diff --stat f231d52983 4516c6399c -- data/etfs/scripts infra/aws/lambda/etfs-pipeline empty.
+    Per AMENDMENT 2, reused the suite at f231d52983: 1015 passed, 3 skipped in 86.01s; no suite rerun.
+    Step 3/d: fresh User and Machine RIVALFUNDS_HISTORY_OWED unset/empty. OPAL_BBGTML_daily_pull action remains
+    cmd.exe /c the workspace integrations/bloomberg/pipeline/scheduled_daily_pull.cmd; no history switch in action/CMD.
+    Step 4/d: fresh origin/box/sitez 4180ebc8119f3ac96c87c8ef456545e5ad2448a9; CTO~Z deliverables contain only
+    HANDOVER_TO_DELL1_20261009.md, no TC1 half/refusal. CTO~Z msg 32960 was information about lock timeout, not refusal.
+    Scratch merge aborted and exact scratch worktree removed; HEAD equality and empty shared index rechecked before live merge.
+    Step 5/e: plain authored git merge --no-ff b0b65368fb succeeded at 19:09:40Z, outside the excluded vehicle window.
+    Merge 6061de660d8ea1f7928699ad16176072c7549979; parents 4516c6399c05ace2bd03123c975bdd9b04f4443a and
+    b0b65368fb425bd0e1e20366ce38b10982a077e3. Five files changed, 393 insertions, 12 deletions.
+    Post-merge target ancestry rc 0; git status --short data/etfs/scripts/rivalfunds/ empty. Lock released and absence confirmed.
+    Runner shell returned rc 1 despite completed merge; independent git show confirms exact author/parents/hash, and no lock remains.
+    Push state measured 19:10Z: LOCAL; git ls-remote origin refs/heads/box/sitez still 4180ebc8119f3ac96c87c8ef456545e5ad2448a9.
+    No push by this seat. Merge hash sent to MSTR~Z at 19:10Z for relay to MSTR~DELL1. J1 and status remain with CVO/issuer.
+    No history-switch changes, live vendor calls, vehicle/pull run, Lambda deploy or S3 write.
+
     AMENDMENT 1 attempt, 2026-10-09, 0.7.0_AE_CloudOps~ZV: amended checks PASSED; live merge NOT PERFORMED because HEAD moved after testing.
     Started on box/sitez b9d3876c8857f50f60a5ea4a3ede250a324dfe15, target b0b65368fb present and not ancestor (rc 1).
     First scratch merged at updated base f453cdd6bd32d8b8c6b77a73b712a28761856899, clean tree c00b3f51830ddbae08a3a28a2e6466945701ad7b.
