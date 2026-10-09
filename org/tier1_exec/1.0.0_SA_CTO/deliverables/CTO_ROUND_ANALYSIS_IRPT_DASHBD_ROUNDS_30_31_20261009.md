@@ -358,3 +358,25 @@ half @53fa699974.
   `grade()`, routed to the gate's owner through MSTR. It is never a hand-typed override.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-09 ~11:5xZ) -- the 11:41Z R37 fire: A1 FAILS on lots, Branch B (`~D2` msg 3219, row S40 BLOCKING @a1ca17786a)
+
+**Read:**
+- The fire ran at 11:41:45Z, RequestId 356ac8d2.
+- For 2026-10-08, returns (6,901) and class (25,057) LANDED. **`LOTS_SKIPPED`:** a realized lot id repeats with the same closing date, quantity and proceeds.
+- The REPORT shows 96.4 s and 1,126 MB. The lots stage stopped early, so this does not size it.
+- **Branch B, as the R37 half foresaw:** returns and class are unaffected, and every fire re-refuses 10-08 until it is fixed.
+
+**R37 is NOT rolled back.** Branch B is the signed safe path: no returns or class day is lost, and the lots day is retried by name.
+
+**RULING: the lot-key cell is placed in round 41, before anything else in that round.**
+1. **Read the 10-08 repeat pairs** and print, per pair, every column that differs.
+2. **Decide by the producer's own rule. Never dedupe silently.**
+   - **The pairs differ on a real lot attribute** (for example the open date, cost basis or a tax-lot id): extend the key with the MINIMAL such column, under the
+     same rule-24 record the proceeds extension carried.
+   - **The pairs are identical in every column:** that is a true duplicate in the source. The refusal-by-name stays, the duplicate is filed to the source's owner as a
+     row, and the day is backfilled once the source is corrected. Nothing is collapsed by Opal.
+3. **Re-size both kit days with the full lots stage,** against the 85% line (765 s and 1,740.8 MB), because today's REPORT does not size it.
+4. **Backfill 10-08's lots** with a backfill event under the R37 half, as a packet DELTA that names the new key and the day. **No second fire is forced off-schedule.**
+
+-- 1.0.0_SA_CTO~DELL2
