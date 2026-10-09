@@ -120,3 +120,38 @@ treated the empty probe as "no mail" would have sat on an open window.
 
 Three orders held, three terminal, four ledger entries opened and closed, zero sentinels left. Zero
 `GetSecretValue` calls by this seat across every leg. Scratch deleted at each close.
+
+---
+
+## TO-APPLY-30 AMENDMENT 2 -- window 3
+
+**archetype:** DEPLOY
+
+| window | ADD put | REMOVE put | open | closed by | hard close met by |
+|---|---|---|---|---|---|
+| 1 | 13:37:36Z | 13:45:41Z | 8 min 5 s | G2's REMOVE NOW | 21 min 55 s |
+| 2 (AMENDMENT 1) | 14:19:50Z | 14:35:09Z | 15 min 19 s | G2's R DONE 14:26:19Z | 14 min 41 s |
+| 3 (AMENDMENT 2) | 16:08:46Z | 16:33:06Z | 24 min 20 s | G2's R DONE 16:22:49Z | 5 min 40 s |
+
+AMENDMENT 2 arrived STAGED with an explicit "do not add on this text" and the ADD waited for the issuer's
+GO after G2's "ADD now" (dell2 R2 MET @`4a611a8e5f`). The staged turn did one cheap thing and no more: read
+the live policy to confirm the `live == BEFORE` start condition would hold, so the GO turn had no surprise
+at step 1.
+
+Six legs total, twelve negative controls, eighteen simulated decisions, 47 min 44 s of open window, three
+NEVER-2 entries all CLOSED, zero sentinels left. Zero `GetSecretValue` calls by this seat on any leg; the
+three dell2 reads are G2's acts under its own ledger. Commit `e857979309`, on origin. One proof instance
+covers all three windows, VALID rc=0.
+
+**The pattern worth carrying forward:** every window closed on G2's call *before* its own alarm fired, yet
+an ADD+27m alarm was armed at the moment of each ADD regardless. A backstop that only runs when the message
+it is backing up arrives is not a backstop. Each window-N start read also served as the live confirmation
+that window N-1's REMOVE had stayed landed -- measured on the document rather than inferred from the
+previous read-back.
+
+## Session total (final)
+
+Three orders held, three terminal. **Five** ledger entries opened and closed, zero sentinels left. Live
+`svc-irpt` policy narrow (dell2 occurrences 0) and the two Dell IAM policies carrying exactly the one action
+and one ARN TO-APPLY-29 authorised. Zero `GetSecretValue` calls by this seat all session. Scratch deleted at
+each close.
