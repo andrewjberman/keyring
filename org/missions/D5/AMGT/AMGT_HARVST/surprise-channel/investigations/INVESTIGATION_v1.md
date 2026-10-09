@@ -8211,6 +8211,119 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S1",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T11:55:00Z",
+  "one_line": "AMENDMENT 1 of HVST-bt-1 (common word = LOWER > CAP_MID in silver) flags 0 aliases over 413 (security, alias) rows and 20,908 silver articles, so R31 removes 0 mentions and CVO ROWS reads 0 of 14, not 14 of 14; the rule was not tuned.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bt-1.a-common-word-alias-needs-a-second-anchor.md@24fb88cfa9 AMENDMENT 1 item 3: 'CVO ROWS: <x> of 14 removed -- it must read 14 of 14'; item 1: an alias is COMMON when LOWER > CAP_MID, counted over all silver titles and bodies.",
+  "world_is": "Counted as written (whole-word, matcher bounds, case-insensitive; LOWER = no upper-case letter in the span; CAP_MID = capital first letter and not at block start nor after '. ', '? ', '! ', or a line break) over 20,908 latest silver articles: 0 of 413 rows have LOWER > CAP_MID. Nearest: Booking LOWER 106 = CAP_MID 106 (tie, not flagged), Cadence 92 v 384, Orange 55 v 236, Visa 362 v 1628, Monster 27 v 455. Census on served rebuild #12 (50,026 tested pairs): R31 MENTIONS before 205470, after 205470, removed 0; CVO ROWS 0 of 14 removed (the 8 Visa and 6 Orange rows all keep their count). The Visa CAP_MID is 1442 body mixed-case + 8 body all-caps + 178 title uses (64 of them inside a headline capitalised throughout), so no reading of the sentence-start or headline clause reaches LOWER 362; common_word_diag.out has the split for Visa, Orange, Booking, Cadence, Monster. Per the order's instruction ('if not 14 of 14, report it and do NOT tune') the rule, the definition and the file were left as measured; the matcher, tests and census are built to the amended definition and are correct for any file the definition produces.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_aliases.json",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_diag.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_scan.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S2",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:13:29Z",
+  "one_line": "AMENDMENT 2 (flag at LOWER / CAP_MID >= 0.2) flags 5 of 413 alias rows (Booking, Cadence, Orange x2, Visa) and the census CVO ROWS reads 14 of 14 removed, so the condition of AMGT_HARVST-D1-W132-S1 no longer holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT_HARVST-D1-W132-S1: under AMENDMENT 1 (LOWER > CAP_MID) 0 of 413 aliases flag and CVO ROWS reads 0 of 14; the order's AMENDMENT 2 (1.0.0_SA_CTO~DELL1 ADDENDUM 5, msg 2380) item 3 requires 14 of 14.",
+  "world_is": "With _COMMON_WORD_RATIO = 0.2 the same silver counts (20,908 articles, unchanged) flag Booking (106 v 106, 1.000), Cadence (92 v 384, 0.240), Orange x2 (55 v 236, 0.233), Visa (362 v 1628, 0.222); the nearest miss is Waste Management 0.174. Census on served rebuild #12 (50,026 tested pairs; BEFORE equals served on 50,026 of 50,026): R31 MENTIONS before 205470, after 202754, removed 2716; pairs removed 781; counted down 0; CVO ROWS 14 of 14 removed. The rule was not tuned: the threshold is the one the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_aliases.json",
+      "e9be6a3bcc:lib/research/harvest/publication_gold.py"
+    ]
+  },
+  "adjudicates": [
+    "AMGT_HARVST-D1-W132-S1"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Superseded by AMENDMENT 2 of the order: at ratio >= 0.2 the census reads CVO ROWS 14 of 14 removed (bt1_census.out @e9be6a3bcc), so the 0 of 14 result of AMENDMENT 1 no longer stands."
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S3",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:13:29Z",
+  "one_line": "Under AMENDMENT 2 most removed mentions read as true company mentions (my plain reading of the four 10-row samples: Visa 10, Booking 9, Cadence 9, Orange 9 of 10), because the second anchor misses the company's own long name or a ticker the securities file does not hold; not a grade, and the rule was not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's R31: the second anchor is the security's ticker, its full legal or company name, or a non-common alias of the same security; the CTO STOPs an alias whose removals are mostly true company mentions (AMENDMENT 2 item 2).",
+  "world_is": "In the r75 securities file V_US_Equity has ticker_aliases [] and no ticker_anchor_symbols, aliases ['Visa Inc', 'Visa']; BKNG_US_Equity aliases ['Booking Holdings Inc', 'Booking'] and company 'Booking Holdings Inc'; CDNS_US_Equity aliases ['Cadence'] and company 'Cadence' (the company string is the common alias, so it cannot anchor); ORA_FP_Equity company 'Orange', aliases ['Orange'], ticker 'ORA'. So 'Visa ( V )', 'Booking Holdings' (no 'Inc'), 'Cadence Design Systems' and 'Orange SA ( OTC:ORANY )' (the ORANY ticker belongs to the other security) carry no anchor, and every Visa/Booking/Cadence/Orange mention in them is removed. Removed counts in bt1_census.out: Visa 2050 mentions over 549 pairs, Orange 618 mentions over 201 pairs (two listings), Cadence 31 over 15, Booking 17 over 16. The samples (10 each, article key ascending, every k-th) read by me as about the company: Visa 10, Booking 9 (1 is 'Flight Booking' in a title), Cadence 9 (1 is Cadence Bancorporation), Orange 9 (1 is Orange County). No verdict, no tuning: the CVO grades the samples and the CTO decides the STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_aliases.json",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/securities.universe.r75.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S4",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:42:44Z",
+  "one_line": "Under AMENDMENT 3 the removed samples read less often as true company mentions than under S3 (my plain reading, not a grade: Visa 7 of 10 where S3 had 10, Booking 4 of 6 where S3 had 9 of 10, Cadence 9 of 10 as before, Orange 10 of 10 as before); removed mentions fall 2716 to 908; CVO ROWS stays 14 of 14; the rule was not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 3 (ADDENDUM 6): the thin anchors of S3 were the cause; widening the second anchor to kinds A to E under two guards should lower the share of removed mentions that are true company mentions, with CVO ROWS still 14 of 14.",
+  "world_is": "bt1_census.out @222d7eff9f: R31 MENTIONS before 205470, after 204562, removed 908 (AMENDMENT 2: removed 2716); PAIRS REMOVED 342 (781), COUNTED DOWN 0; CVO ROWS 14 of 14. Removed by security (mentions): Visa 278 (2050), Orange 593 over two listings (618), Cadence 31 (31), Booking 6 (17). My plain reading of the REMOVED SAMPLE blocks: Visa 7 of 10 about the company (the 3 others are travel or work visas in headlines: Trump Visa Crackdown, H-1B Visa Fees, H-1B Visa Workers); Booking 4 of 6 shown (all 6 removed; 'Booking.com' x4 is the company's brand, 'Flight Booking' and 'Booking trends' are not); Cadence 9 of 10 (1 is Cadence Bancorporation); Orange 10 of 10. What still removes true mentions: a Visa, Orange or Cadence story that carries no ticker form, no 'Visa Inc' and no sibling ticker ('Visa sees some volume improvement', 'Orange takes control of Morocco carrier Meditel', 'Cadence Touts AI ...' with no CDNS); the identity file holds 'Cadence' not 'Cadence Design Systems'; 'Orange ( ORAN )' carries ORAN, a ticker no record holds. ANCHORS USED (kept mentions, first kind A-E): Visa 2034 kept: A 1982, C 52; Cadence 652: A 652; Orange ORANY 87: A 24, C 63; Orange ORA_FP 25: D 25; Booking 117: A 80, B 37. No verdict and no tuning: the CVO grades the samples and the CTO decides the STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "222d7eff9f:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "222d7eff9f:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.json",
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "adjudicates": [
+    "AMGT_HARVST-D1-W132-S3"
+  ]
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S5",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:42:44Z",
+  "one_line": "The existing issuer grouping does not join ORA_FP and ORANY, and it lives in universe_securities.py not publication_gold.py; I used it plus the identity file's own sa_symbol.value link to get the order's example (ORANY anchors ORA_FP).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 3 item 1 (D): the ticker of any sibling listing of the same issuer, 'by the existing issuer grouping in publication_gold', e.g. ORANY for ORA_FP.",
+  "world_is": "publication_gold.py holds no issuer grouping; the existing one is universe_securities.issuer_groups(companies_by_key, leis_by_key) (limb 1 same registry lei; limb 2 shared ticker root and equal names). Run over the identity file's 242 companies and the registry leis it returns 6 groups (ASML, AZN, GSK, OMAB, RIO, TTE) and does NOT join ORA_FP_Equity (root ORA, a lei, company 'Orange') to ORANY_US_Equity (root ORANY, no lei, company 'Orange SA'). The identity file says ORA_FP_Equity sa_symbol.value is ORANY (MEASURED, 'R0: pool name is 89-file folder'). I therefore take the groups of issuer_groups and join two records when one's sa_symbol.value equals the other's key root; that adds 58 - 12 = 46 securities with a sibling, of which only ORA_FP and ORANY hold a common alias. A different reading (a hand-listed pair, or a name-only limb 2) would also give the example; I did not choose by tuning to the census, and the choice is changeable at one place (_identity_index).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "222d7eff9f:lib/research/harvest/publication_gold.py",
+      "lib/research/harvest/universe_securities.py",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```

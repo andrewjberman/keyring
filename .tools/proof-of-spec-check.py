@@ -228,7 +228,9 @@ PENDING_SENTINEL = "PENDING-THIS-COMMIT"
 # Kinds whose product is not a git (commit, path) pair, so resolution skips them and the order's own read-back holds the truth.
 # ddb_rows ADDED 2026-10-09 (1.0.0_SA_CTO rule-24 ruling on row MDPF_SECCLASS-D1-S20, record
 # org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/RULE24_RECORD_PROOF_KIND_TABLE_ROWS_D1_S20_20261009.md @bfabe0002d).
-NON_GIT_KINDS = ("s3_object", "ddb_rows")
+# aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO, row IRPT_DASHBD-S41 via 0.0.0_AB_MSTR msg 107957): any other live AWS resource
+# (a Secrets Manager secret, an IAM role, an SSM parameter), pinned by its ARN and version id, which are not a git ref.
+NON_GIT_KINDS = ("s3_object", "ddb_rows", "aws_resource")
 _COMMITISH_RE = re.compile(r"^[0-9a-f]{7,40}$")
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _WORD_BYTE = re.compile(rb"[A-Za-z0-9_]")
@@ -527,7 +529,7 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
               f"({ctx}: {'staged in this commit' if ctx == 'PRE-COMMIT' else 'touched by the instance commit ' + (inst_commit or '')[:10] if ctx == 'POST-COMMIT' else 'n/a'}) / "
               f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts, or tracked ones git reports modified in place, that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
-              f"{n_s3} s3_object/ddb_rows (not a git ref; skipped) -- denominator {len(rows)} row(s); "
+              f"{n_s3} s3_object/ddb_rows/aws_resource (not a git ref; skipped) -- denominator {len(rows)} row(s); "
               "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known, "
               "unless a dry run finds that tracked artifact modified in place (it rides the commit)",
               f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
