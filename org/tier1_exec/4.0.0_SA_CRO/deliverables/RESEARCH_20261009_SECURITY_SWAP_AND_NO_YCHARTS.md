@@ -107,6 +107,41 @@ section 5.2). One owner is needed first.
 4. A YCharts retirement line: the date YCharts is no longer called by any Analysis Request hop, graded by a request
    whose trace shows zero YCharts calls end to end.
 
+## 5. Where the prices come from, and the time series at the centre (Andrew's third message)
+
+**The registry has no prices (measured).** The full scan's field census shows `ticker`, `asset_class`,
+`sub_asset_class`, `name`, `identifier_namespace`, `instrument_kind`, `classified_by`, `low_confidence`,
+`classification_confidence`, `listing_country`, `security_bloomberg`, `management_style`, `sector`, `industry` and
+timestamps. There is no price or return field. It is a listing. Prices live in MDPF_SECHIST's one-series-per-security
+store (C-SERIES), which is still being filled.
+
+**Price source, in order:**
+1. MDPF_SECHIST's stored series, when it has the security.
+2. **yfinance** for any ticker it lacks, landing in that same series. That is the default for equities, ETFs, funds,
+   closed-end funds and UITs; the ADVI_COTBKF v0.4 addendum 2 already ruled Yahoo for these.
+3. **Bloomberg only when truly necessary**: fixed income and other instruments Yahoo cannot price, through its queue and
+   `bbg_budget.py` behind the production reserve.
+
+A security neither source prices is analysed through its proxy (section 2, step 4) and labelled as such.
+
+**Port the performance engine for the overlays.** Variants 2 and 3 (Comparison, Multi-Comp) centre on a price-performance
+time series: the client's portfolio against the Opal models and third-party ETFs over the same window.
+- The engine to reuse is IRPT_DASHBD's daily time-weighted return (`data/assets/scripts/gold/irpt_reporting/account_return_daily.py`),
+  now the one method for all firms (Andrew-direct @c41f11fb70).
+- For a prospect's file there are no flows. The portfolio series is the accepted weights applied to each holding's (or
+  proxy's) daily total return from SECHIST, linked the same way. That is the engine with zero flows, not a new formula.
+- **Opal models:** their daily series are already produced by the MDPF gold and platinum run (`/mdpf-refresh`;
+  `mdpf_get_model_benchmarks` on the gateway). Held: I did not read those served files here.
+- **Third-party ETFs:** SECHIST, then yfinance.
+- One engine, three inputs (portfolio, models, ETFs). The overlay is three series on one calendar
+  (`lib/trading_calendar.py`).
+
+**Order of build inside IRPT_ANLREQ** (the engine workstream ~G2 reads it):
+1. The seeded core ETFs' and the Opal models' series in SECHIST, since every comparison uses them.
+2. The portfolio series from the ported engine.
+3. Variants 2 and 3 render the overlay.
+4. The price-based Overview elements come off `NOT_IN_THIS_VERSION`.
+
 ## Andrew-direct -- verbatim record
 
 Channel: this seat's dell2 terminal, in-session, 2026-10-09 ~04:4xZ.
@@ -123,3 +158,11 @@ Channel: this seat's dell2 terminal, in-session, 2026-10-09 ~04:4xZ.
 > probably room here to pull off a yfinance call for the given missing security if absolutely necessary, thats
 > effectively the checker, if yfinance doesnt have it then we do the Kimi process to match to something we have the
 > data for already,.
+
+> The only caveat to this is that i think our big securities table doesnt have prices and etc, its just a listing, so
+> that begs the question on where the pricing data would come from. I think that it should not be a huge deal to run
+> YFinance on the tickers and only BBG it if truly absolutely necessary. Furthermore, we now have a pretty solid
+> performance reporting calculation engine, so i think that could effectively be ported over to this function if we need
+> to do some time series performance overlays with the Opal Models/3rd party ETFs in variants 2 and 3, probably going to
+> need that price function as I Imagine that the price performance time series is a pretty central focal point to this
+> whole abnalysis operation
