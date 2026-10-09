@@ -94,7 +94,23 @@ update it only to the new sequence, and say so in your report.
 - **One new test**, named exactly `retries the analysis step without refiling`.
 - The order stays HELD from landing until row W11-S1 (the portal client admitting `ticket_id`) is fixed by its owner.
 
+**AMENDMENT 2 (issuer, 2026-10-09 ~05:5xZ; decomposition AMENDMENT 5 @2bd14c3fbc, `~Y2` msg 2607). Row W11-S1 is now THIS cell's.**
+1. **Re-base first.** Portal DEV moved to `c34ff9c0` (AR-v-13 landed). Put your commits onto a branch from `origin/DEV`; both
+   touch `AnalysisRequestParts.tsx`, so resolve any overlap by keeping BOTH behaviours.
+2. **Client reader.** `src/pages/InvestorReporting/contracts/submission-request.ts` (`readSubmissionRequest`, `:13-38`) admits
+   `ticket_id` ONLY beside `input_id`, matching `^TCK-\d{8}-[0-9a-f]{8}$`. Any other `ticket_id` shape, or `ticket_id` without
+   `input_id`, is refused as today. Every other rule is unchanged.
+3. **Wire type.** `src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts` is GENERATED. Regenerate it with its
+   own generator (`src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts`) from the schema at the workspace root
+   (`docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json`, which carries `ticket_id` since `~Y2`'s
+   AR-y-11 @3ad7526e06). Never hand-edit it; the header's source sha256 must match the schema. If the generator cannot reach
+   the schema from the portal worktree, STOP and report.
+4. **One more test** in your test file, named exactly `the client admits ticket_id only beside input_id`.
+5. With the reader fixed, the form is no longer HELD on W11-S1. W11-S1 resolves on your drain.
+
 <paths>
+portal/src/pages/InvestorReporting/contracts/submission-request.ts
+portal/src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts
 portal/src/pages/TicketCenter/TicketCenter.tsx
 portal/src/pages/TicketCenter/AnalysisRequestParts.tsx
 portal/src/pages/TicketCenter/analysisRequest.ts
