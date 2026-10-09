@@ -3904,3 +3904,53 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W54-S1 -- The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.
+
+```json
+{
+  "id": "IRPT_DASHBD-W54-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml header and title: 43 distinct type_desc, 'Stage 0b'; the order text and the file's own comments treat 43 as the domain.",
+  "world_is": "MEASURED 2026-10-09 by parsing the file at HEAD: len(types) = 48 (Internal 19, Return 17, NNA 9, CorporateAction 3). The five entries added by the 2026-08-11 five-code amendment are in the list but the title, the '43 distinct type_desc' comment and total_type_desc_entries_v2 still read 43. The MECE section of the amendment proposal subtracts from 48. NEEDED: the CTO's word on whether the header is corrected in the same edit as the amendment; this cell edits nothing in the file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (types: list, title, schema_collapse_audit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/ORION_TAXONOMY_AMENDMENT_PROPOSAL.md (MECE section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W54-S2 -- Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the 
+
+```json
+{
+  "id": "IRPT_DASHBD-W54-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the headline 24 of 562 round 36 published is the lower of the two gross figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72 / round 36: the contract tie-out is the gross figure, 24 of 562 within 0.35 pp, with the net recomputation 421 beside it; the amendment is proposed because the net count improves.",
+  "world_is": "MEASURED 2026-10-09 by rerunning round 36's adapter unchanged plus one read-only block over four flow sets (same 562 denominator, 483 computable): net within 293 ratified, 348 with the journals, 350 with the tax pair, 421 with both; gross within 43, 41, 27, 24. The gross figure adds the advisory fee back and the vendor figure is Net of Fees, so the gross count is not like-for-like and moves the opposite way. Which basis grades the adapter is an open issuer/CTO call already named in W49-S2; this row only records that the two bases disagree on the direction of the amendment's effect. The proposal grades on the net basis and prints both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/MEASURED_EFFECT.json (by_flow_set)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/measure_flow_sets.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
