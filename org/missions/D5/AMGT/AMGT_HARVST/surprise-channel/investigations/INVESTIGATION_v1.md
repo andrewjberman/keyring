@@ -8279,6 +8279,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S4",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:42:44Z",
+  "one_line": "Under AMENDMENT 3 the removed samples read less often as true company mentions than under S3 (my plain reading, not a grade: Visa 7 of 10 where S3 had 10, Booking 4 of 6 where S3 had 9 of 10, Cadence 9 of 10 as before, Orange 10 of 10 as before); removed mentions fall 2716 to 908; CVO ROWS stays 14 of 14; the rule was not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 3 (ADDENDUM 6): the thin anchors of S3 were the cause; widening the second anchor to kinds A to E under two guards should lower the share of removed mentions that are true company mentions, with CVO ROWS still 14 of 14.",
+  "world_is": "bt1_census.out @222d7eff9f: R31 MENTIONS before 205470, after 204562, removed 908 (AMENDMENT 2: removed 2716); PAIRS REMOVED 342 (781), COUNTED DOWN 0; CVO ROWS 14 of 14. Removed by security (mentions): Visa 278 (2050), Orange 593 over two listings (618), Cadence 31 (31), Booking 6 (17). My plain reading of the REMOVED SAMPLE blocks: Visa 7 of 10 about the company (the 3 others are travel or work visas in headlines: Trump Visa Crackdown, H-1B Visa Fees, H-1B Visa Workers); Booking 4 of 6 shown (all 6 removed; 'Booking.com' x4 is the company's brand, 'Flight Booking' and 'Booking trends' are not); Cadence 9 of 10 (1 is Cadence Bancorporation); Orange 10 of 10. What still removes true mentions: a Visa, Orange or Cadence story that carries no ticker form, no 'Visa Inc' and no sibling ticker ('Visa sees some volume improvement', 'Orange takes control of Morocco carrier Meditel', 'Cadence Touts AI ...' with no CDNS); the identity file holds 'Cadence' not 'Cadence Design Systems'; 'Orange ( ORAN )' carries ORAN, a ticker no record holds. ANCHORS USED (kept mentions, first kind A-E): Visa 2034 kept: A 1982, C 52; Cadence 652: A 652; Orange ORANY 87: A 24, C 63; Orange ORA_FP 25: D 25; Booking 117: A 80, B 37. No verdict and no tuning: the CVO grades the samples and the CTO decides the STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "222d7eff9f:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "222d7eff9f:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.json",
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "adjudicates": [
+    "AMGT_HARVST-D1-W132-S3"
+  ]
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S5",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:42:44Z",
+  "one_line": "The existing issuer grouping does not join ORA_FP and ORANY, and it lives in universe_securities.py not publication_gold.py; I used it plus the identity file's own sa_symbol.value link to get the order's example (ORANY anchors ORA_FP).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 3 item 1 (D): the ticker of any sibling listing of the same issuer, 'by the existing issuer grouping in publication_gold', e.g. ORANY for ORA_FP.",
+  "world_is": "publication_gold.py holds no issuer grouping; the existing one is universe_securities.issuer_groups(companies_by_key, leis_by_key) (limb 1 same registry lei; limb 2 shared ticker root and equal names). Run over the identity file's 242 companies and the registry leis it returns 6 groups (ASML, AZN, GSK, OMAB, RIO, TTE) and does NOT join ORA_FP_Equity (root ORA, a lei, company 'Orange') to ORANY_US_Equity (root ORANY, no lei, company 'Orange SA'). The identity file says ORA_FP_Equity sa_symbol.value is ORANY (MEASURED, 'R0: pool name is 89-file folder'). I therefore take the groups of issuer_groups and join two records when one's sa_symbol.value equals the other's key root; that adds 58 - 12 = 46 securities with a sibling, of which only ORA_FP and ORANY hold a common alias. A different reading (a hand-listed pair, or a name-only limb 2) would also give the example; I did not choose by tuning to the census, and the choice is changeable at one place (_identity_index).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "222d7eff9f:lib/research/harvest/publication_gold.py",
+      "lib/research/harvest/universe_securities.py",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
