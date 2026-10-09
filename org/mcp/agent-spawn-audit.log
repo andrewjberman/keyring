@@ -18952,3 +18952,8 @@
 2026-10-09T15:00:00Z  SPAWN  0.7.0_AE_CloudOps~AMG  by 0.0.0_AB_MSTR  pid=27336  host_pid=24816
 2026-10-09T15:00:32.892425+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~AMG pid=24040
 2026-10-09T15:10:44.062949+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL1 pid=27028 reason='to=2.0.0_SA_COO~S1' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 153 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T15:24:04Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=663  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=70  msys_joined=35  ms=858
+2026-10-09T15:24:17Z  WORKTREE-GC  ESCALATE  path=C:/dev/wk-secclass-48  branch=wk-MDPF_SECCLASS-48  owner=box MSTR (owner unknown)  reason=7 uncommitted/untracked; 2 unmerged commit(s); 6 ignored non-cache path(s); idle 48.43 h, owner not live
+2026-10-09T15:24:38Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-3  branch=wk-healgap-2-3  reason=merged into CLOUD; --force discards 4 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.32 h
+2026-10-09T15:24:56Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-4  branch=wk-healgap-2-4  reason=merged into CLOUD; --force discards 9 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.34 h
+2026-10-09T15:25:15Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-5  branch=wk-healgap-2-5  reason=merged into CLOUD; --force discards 3 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.33 h
