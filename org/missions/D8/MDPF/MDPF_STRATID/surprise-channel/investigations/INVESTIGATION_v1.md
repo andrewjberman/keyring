@@ -146,6 +146,26 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "AC2 builds the matcher from infra/aws/etfs/config/etf_universe.json in the worker's worktree, with the contract's keys.",
     "world_is": "The file was copied into this worktree and left uncommitted (not in the grant). The AC2 result holds for the sibling worker's content as read at 2026-10-09T05:0xZ; on a base without the keys the matcher reads only the tickers and the seam still passes, but the gained full-name hit would not appear."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W5-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~5",
+    "surfaced_at": "2026-10-09T05:23:00Z",
+    "one_line": "The branch copy of MDPF_STRATID_DECOMP_W2.md lacks cell ST-w-5 (amendment A5), so proof-of-spec-check on the branch reports INVALID on the W2-5-AC1 cell_ref until the shared decomp merges.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "proof-of-spec-check on the branch instance: rc=1, 'cell_ref ST-w-5 does NOT exist in ...DECOMP_W2.md'",
+        "same instance with the shared-tree decomp copied in temporarily (not committed, restored): VALID rc=0; the shared copy is 34 lines longer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker validates its instance on its branch before flipping the order complete.",
+    "world_is": "The decomposition file is outside the worker's grant and the branch predates amendment A5; validity holds only once the shared decomp is on the branch (the drain)."
   }
 ]
 ```
