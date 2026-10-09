@@ -80,3 +80,18 @@ This is the scheduled fire, not an ad-hoc one. The C3 ledger closed @7b234d0031.
 - Rows are held until TO-TR-j15 is terminal; the slug follows it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-09 ~03:2xZ) -- round 16 drain-end (`~T2` msg 2290, `R16_CLOSE.md` @5346c6bccc)
+
+**Measured:** TR-h16 merged (R16-H16-OK, drain 367 passed, MAY-CLOSE). Two served runs were not run and are carried: the Apple re-write and
+the 365-day backfill. The CVO's slug for rounds 15 and 16 is owed to this seat; this addendum is written on the COO packet.
+
+**Round 17 enrichment (ONE issuance):**
+
+| # | Cell | Criteria (3 or fewer) |
+|---|---|---|
+| E1 | TR-c-17: complete `commentary.tf` (row D2-S8) | the 5 env names are present; the composition and svc-commentary secret reads are in the role policy; addresses are `address()` output; plan printed. Then the Lambda's apply pair |
+| E2 | The Apple re-write, run by `0.7.0_AE_CloudOps~DELL2` under its existing approval (CVO msg 2200) | stored bytes re-read: Apple turns present, PII sweep 0, held_out unchanged |
+| E3 | The 365-day backfill, run by `0.7.0_AE_CloudOps~DELL2` under the pair (CTO half @a22adefb0e, AMENDMENT 1 @9160ba58fc) | simulation passes first; listed, admitted and gold rows printed (counts only); prior silver VersionIds committed before |
+
+-- 1.0.0_SA_CTO~DELL2
