@@ -24363,3 +24363,274 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Measured from the laptop (network latency to DynamoDB), the uncached fallback multiplies the 49F producer's wall time about 9x on the real run. The production factor is NOT measured here: the host the scheduled fire runs on, its latency to the table and the SSM command timeout were not read. Memoising canonical misses (one dict in the canonical client or the classifier wrapper) would remove it; that edit is not in this order's grant and not made."
 }
 ```
+
+## IRPT_BCKEND-D2-W272-S1 -- After IB-pr-409 a row-listed Opal internal caller still classes OPAL_GLOBAL through the built narrative zip where live classes it UNKNOWN: the order k
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W272-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~272",
+  "surfaced_at": "2026-10-09T13:01:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "After IB-pr-409 a row-listed Opal internal caller still classes OPAL_GLOBAL through the built narrative zip where live classes it UNKNOWN: the order kept that caller unchanged from IB-pr-399, so the class widening for callers WITH a profile row is not closed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "enforcer-scope arm, case row_listed_no_selection (profile row allowedFirmIds [cottonwood], x-firm-id opal-capital, no selection), each tree's own _scope.resolve against a SYNTHETIC directory: live roster None / UNKNOWN / permitted 0; built roster ['ops@opalinvest.com'] / OPAL_GLOBAL / permitted 2; stopped QiNRKpaC the same as built (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/IB110-1_release_replay.json, arm 'a row-listed internal caller's roster and class ... unchanged from the stopped IB-pr-399 build', and enforcer_scope.*.cases.row_listed_no_selection)",
+      "the cause is narrative/entry.py NarrativeEntry._live_roster@b8a49eee0e: it replaces the roster only for a caller with NO profile row (_internal_allowed_firms -> None), as the order states ('a row-listed caller is unchanged'); a row-listed caller keeps the shared boundary's email roster, which classes OPAL_GLOBAL (enforce.py:790: any advisor in its own firm), bound first to the selected listed firm",
+      "tests: narrative/tests/test_no_row_unknown.py::test_no_row_unknown_row_listed_caller_is_unchanged_from_the_shared_boundary pins the unchanged behaviour"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-409 / CTO ADDENDUM 18.1: no widening is accepted; hand enforcer_for the roster live hands for a no-row Opal caller; a row-listed caller is unchanged.",
+  "world_is": "The no-row arm is now identical to live (UNKNOWN, nothing granted). A row-listed caller is unchanged from IB-pr-399 as ordered, so it is OPAL_GLOBAL on built and UNKNOWN on live: the same class difference the CTO refused for the no-row caller, left standing for the narrower population with a maintained row. Whether that is accepted or fixed (hand it the live roster too, a one-line change in _live_roster) is the signer's call; it is stated in the packet (read-this-first item 4) and was not widened or narrowed here.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W272-S2 -- IB-pr-399's replay driver derived its pre-binding negative control from `pin^`; at the IB-pr-409 pin that parent is IB-pr-399's own NarrativeEntry, so
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W272-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~272",
+  "surfaced_at": "2026-10-09T13:01:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-399's replay driver derived its pre-binding negative control from `pin^`; at the IB-pr-409 pin that parent is IB-pr-399's own NarrativeEntry, so the control would have measured nothing. The driver is re-pinned to cabad9008c^.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.9.0_WK_IRPT_BCKEND~264/replay/run_replay.py: PRE_BINDING_PIN = git rev-parse <pin>^ ; at pin b8a49eee0e the parent bd9c06d2fb already holds NarrativeEntry (IB-pr-399, code commit cabad9008c)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/replay/run_replay.py: STOPPED_PIN = cabad9008c and PRE_BINDING_PIN = cabad9008c^ (6cbf2707cf); the arm 'NEGATIVE CONTROL: ... entry.py put back to its pre-IB-pr-399 bytes' reads expected-diff, 1 of 1 routes bind to inflection (pre-binding entry.py = 6cbf2707cf)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-409: IB-pr-399's 13 arms re-run against the live zip and the new built zip.",
+  "world_is": "The 13 arms re-run unchanged by name and verdict (13 of 13), with the pre-binding control's source pinned to a fixed commit instead of pin^, copied into this worker's replay/ directory."
+}
+```
+
+## IRPT_BCKEND-D2-S51 -- a cleanup list deleted a shared content-addressed retention row; three later test requests now refuse
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S51",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T13:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Y75 cleanup list (issuer-derived DDB keys, deleted 10:10Z under Andrew @35fabf20c8) included the CONTENT-ADDRESSED retention row RETENTION#RET-021c9f6b...c5b7 (NORMALIZED_PORTFOLIO), which three LATER synthetic requests (TO-APPLY-Y77 reads 4-5: REQ-3d76e5b4, REQ-9d59d4d2, REQ-f7ddede9) share because they re-used the same test input; those three now refuse RetentionExpired. No real request is affected (4 of 7 tenant requests' chains are live).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release1/Y1_laptop_reads_3_5_result.json (sha256 13aa6be20e54), root_cause_one_shared_dependency",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_admit_keys_v3.json (the derived keys; note: RET- and ART- share one digest)",
+      "laptop 2.0.0_SA_COO~C msg 107972 via MSTR msg 3357"
+    ]
+  },
+  "spec_asserts": "A cleanup list deletes only what one test upload made.",
+  "world_is": "Content-addressed rows are SHARED by every upload of the same bytes; a list derived from one upload deleted a row later requests still reference. Rule for this lane's future cleanups: walk the retention dependency tree (RETENTION#<id> rows, as the laptop's principal-free walk did) and exclude any row another live request references, before naming a key. Ruling 2026-10-09 ~13:3xZ: no PITR restore (test requests only); Y1 reads 3a/4_route/5 re-run on a fresh synthetic request; the three broken test requests join the next cleanup list under Andrew's word."
+}
+```
+
+## IRPT_BCKEND-D2-S52 -- the decomposition was truncated from 142 cells to 3 by the round-109 and 110 issuances, so 300 of 301 task orders now cite a cell that is not there and proof-of-spec refuses the alignment limb
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S52",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T13:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "IRPT_BCKEND_DECOMP.md went 2562 lines to 15 to 29 across two issuances; it now holds 3 distinct cells where it held 142, and every order whose cell was dropped cannot have its proof of spec validated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "line counts and cell counts across the commits that touched the file, newest first: 38a80bb2fe (round 110 issuance) 29 lines; ef1f7f8409 (round 109 issuance) 15 lines; f4ecd2ab52 (round 108 issuance) 2562 lines; 074cfafc99 (round 107) 2547 lines",
+      "distinct cells, denominator printed: at f4ecd2ab52 the file carried 274 IB-pr-* mentions over 142 DISTINCT cells; at HEAD it carries 4 mentions over 3 distinct cells",
+      "IB-pr-397 specifically: 2 hits at f4ecd2ab52, 0 hits at ef1f7f8409 and at HEAD",
+      "project-wide blast radius, measured over every task order in the project: 301 task-order files scanned; 300 (order, cell) pairs cite a cell_refs value that is ABSENT from the decomposition at HEAD; 300 distinct cells dangling",
+      "the consequence this seat hit: proof-of-spec-check.py on IRPT_BCKEND.TO-IB-pr-397's instance, run from its own worktree, returns rc=1 INVALID with 'VIOLATION: alignment: cell_ref IB-pr-397 (cited by [IB102-1-AC1]) does NOT exist in ... IRPT_BCKEND_DECOMP.md -- a citation to a cell that is not there is worse than no citation'. The instance does not cite the cell itself (0 cell_refs keys in it); the checker reads it from the ORDER's <criterion cell_refs=\"IB-pr-397\">",
+      "SEPARATE AND NOT CONFLATED: the already-validated IB-pr-395 and IB-pr-398 instances now return rc=2 from the shared tree -- 'NOT-A-VERDICT: this is a tool failure (rc=2), not an INVALID instance (rc=1)', on '74a62fb46c'. That is a different failure mode from the alignment violation and its cause is NOT established here; it is recorded so nobody reads it as the same finding. Both instances were VALID (rc=0) when they were landed earlier today"
+    ]
+  },
+  "spec_asserts": "Every task order carries <decomp_ref> naming a section and cell of org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md, and the proof-of-spec instance must validate with .tools/proof-of-spec-check.py BEFORE the <status> flip to complete. CLAUDE.md 27: mid-round the spec AND the decomposition are FROZEN.",
+  "world_is": "The decomposition is not frozen and is no longer a superset of what the orders cite: two consecutive issuances replaced it with a round-109/110-only document, dropping 139 of its 142 cells. So a seat that completes an order correctly still cannot validate its deliverable, because the alignment limb refuses a citation whose cell the carrier no longer holds -- and the limb is right to refuse. This is live for 300 of 301 orders in the project, not just this one. It is the issuer's carrier: L5 decomp is 2.0.0_SA_COO only, and this seat neither edits nor reconstructs it. WHAT IT DOES AND DOES NOT BLOCK for IB-pr-397: the ACT is complete and verified -- the reader is live at ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, the apply was exactly the 5 signed resources, the post-apply full plan reads exactly the 6 foreign AR-t-13 adds, IB102-1-AC1 PASSES and the deploy ledger is CLOSED with all 5 legs proven, so NOTHING is half-landed. Only the bookkeeping flip of <status> to complete is withheld, because the order requires a validated instance before it and this seat will not flip on an instance that does not validate. The fix is the issuer restoring the dropped cells (or re-pointing the orders' decomp_ref), after which the instance validates unchanged.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S53 -- Resolves D2-W269-S1: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S53",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W269-S1 (BLOCKING). Root cause, measured by ~269: IB-pr-403's CUSIP security_id on 115,412 SmartX nodes removes the TICKER id that holdings_snapshot.fill_display_from_facts reads (:803), so display.symbol drops and 13,892 nodes lose their class; the FWD-14 gate then refuses 49F. The defect is IB-pr-403's, inside ~P's decomposition. Issuer ruling: cell IB-pr-410 (round 111) adds a ticker= fact on every SmartX SECURITY node with a ticker (as custody rows already carry), rebuilds the 49F narrow bundle on IB-pr-404's live bytes with the e56 member, and replays it with fwd14_gate_unchanged and smartx_class_parity identical. IB-pr-406's artifact is superseded; nothing was uploaded.",
+  "one_line": "W269-S1 resolved: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle; IB-pr-406's artifact is superseded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB107-1_49f_bundle_replay.json @5bfc1788af: fwd14_gate_unchanged FAIL (base PUBLISHED, built REFUSED classified_security_lost 53)",
+      "holdings_snapshot.py:803 symbol = fact('ticker=') or TICKER security_id",
+      "TO-IB-pr-410 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 changes only the security_id namespace of SmartX nodes.",
+  "world_is": "It also removed the ticker that display and classification read; IB-pr-410 restores it as a fact."
+}
+```
+
+## IRPT_BCKEND-D2-S54 -- Resolves and disarms D2-W272-S1: the CTO signs the row-listed caller's class as built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S54",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:32:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-W272-S1. A row-listed Opal internal caller classes OPAL_GLOBAL on IB-pr-409's build (live: UNKNOWN), bound to its listed firm; the six hosts released under IB-pr-390's shared served.py (pair @567612e686 / @b97ebb6b98) give that caller the same class. The CTO half on IB-pr-409 (@28563e702c, msg 3370) rules: sign as built. IB-pr-401 is re-pointed to IB-pr-409's artifact (AMENDMENT 3).",
+  "one_line": "W272-S1 resolved: the CTO signs the row-listed caller's class as built (matches the six IB-pr-390 hosts).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half NEVER_WIDEN_IB_pr_409_NARRATIVE_NO_ROW_UNKNOWN_CTO_HALF.md @28563e702c",
+      "COO half @e4227621a6"
+    ]
+  },
+  "spec_asserts": "No served move widens a caller's reach beyond what its pair signs.",
+  "world_is": "The row-listed caller's class is now signed by both halves."
+}
+```
+
+### IRPT_BCKEND-D2-S52 -- ARMED: PROOF_OF_SPEC.schema.json has prose in a `type` keyword; proof-of-spec-check now fails rc=2 for EVERY instance, fabric-wide
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
+- **disarm_owner:** `1.0.0_SA_CTO~DELL2` -- it authored the commit and owns `org/standards/`; this
+  seat does not, so it reports rather than edits.
+- **state:** ARMED. This is not a latent hazard: it is blocking `complete` flips right now, for any
+  seat, because `.tools/to-pipeline-gate.py` requires a VALID instance and the checker cannot return
+  a verdict at all.
+- **spec_asserts:** `python .tools/proof-of-spec-check.py <instance>` returns rc=0 VALID or rc=1
+  INVALID, and the gate admits a `complete` flip on rc=0.
+- **world_is:** it returns **rc=2 TOOL-ERROR** for every instance.
+  `jsonschema.exceptions.UnknownType: Unknown type "string aws_resource ADDED 2026-10-09 ..."`.
+  The cause is one keyword: `$.properties.artifacts_produced.items.properties.commit_or_etag.type`
+  holds a **466-character prose string** beginning `string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO,
+  row IRPT_DASHBD-S41): a live AWS resource that is neither an S3 object nor DynamoDB rows ...`.
+  A JSON Schema `type` must be one of the seven primitives, so the validator cannot resolve it and
+  dies before grading anything.
+- **when, measured:** introduced by `e7c10e5b4b` (`1.0.0_SA_CTO`), authored 2026-10-09T09:00:45-04:00
+  = **13:00:45Z**. At the previous commit `72a2636203` the same keyword read exactly `'string'`
+  (length 6). The prose plainly belongs in the `kind` enum's **description**, where the sibling
+  `s3_object` and `ddb_rows` notes live; it landed in `commit_or_etag.type` instead.
+- **THE CONTROL THAT MAKES THIS GENERAL, not a quirk of my file:** three instances that this seat
+  validated **rc=0 VALID earlier today** -- `IRPT_YCDGEN.TO-APPLY-r7`, `TCKT_VNEXT.TO-APPLY-SA1` and
+  `IRPT_YCDGEN.TO-APPLY-st29` -- were re-run unchanged after 13:00:45Z and all three now return
+  rc=2. Nothing about those files changed; only the schema did.
+- **why it was not caught at once:** the break fails CLOSED and LOUD, but only for whoever validates
+  next. Every validation this seat ran today before 13:00Z passed, so the window between the commit
+  and the first failure was invisible. A schema edit has no gate of its own.
+- **the fix, stated so it needs no diagnosis:** set that keyword back to `"type": "string"` and move
+  the `aws_resource` prose into the `kind` enum's `description`. One token.
+- **blocked on it:** `IRPT_BCKEND.TO-APPLY-Y77`'s flip. Its three criteria are graded PASS by the
+  issuer's own check (`y77_cells.py`, re-run by this seat) and its instance is written; only the
+  validation step is unavailable. The same is true for any other seat holding a finished order.
+
+## IRPT_BCKEND-D2-W273-S1 -- The ADDENDUM 18 red list is 9 tests at ~272's pin and 4 at IB-pr-410's base: the list the packets cite has moved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W273-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~273",
+  "surfaced_at": "2026-10-09T14:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "pytest _contracts at box/dell2 54cb72ee19 reads 4 failed, 194 passed; ADDENDUM 18's list (IB110-1_red_list.json, ~272) is 9 failed, 176 passed, 13 skipped.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run from infra/aws/lambda/investor-reporting/ in wk-IRPT_BCKEND-273 at 54cb72ee19 + 9b7256a99f: FAILED test_seam_paired.py::test_every_declared_route_has_a_response_contract_whose_refs_resolve and ::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original|custody-report-persist|custody-report-read]; 4 failed, 194 passed in 8.82s",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/IB110-1_red_list.json: 9 failed, 176 passed, 13 skipped in 9.69s"
+    ]
+  },
+  "spec_asserts": "The order asks the packet to print the ADDENDUM 18 red list (nine tests) and show the members touch none of its targets.",
+  "world_is": "The suite is a different size today (198 collected, 0 skipped, against 198 with 13 skipped), and the red set is a subset of the nine (the upload-contract, status-handler, fixture-source and the export-receipt / submit-export controls now pass). The packet prints both lists; this cell's paths touch no target of either. Not investigated why the set moved (not this order's cell)."
+}
+```
+
+## IRPT_BCKEND-D2-S55 -- Resolves and disarms D2-S25: the dell2 applier identity now commands the mdpf-daily-runner host; IB-pr-383 S1 and S2 ran rc=0
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S55",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-09T14:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-S25 as its disarm_owner. The refusal it recorded at 03:57Z (cloudops-dell2-agent-user denied ssm:SendCommand on i-02448edb624a7a7cf) no longer holds: the grant has since landed, and the same identity sent IB-pr-383 S1 (inflection, rc=0, 14:06:14Z) and S2 (cottonwood, rc=0, 14:08:38Z) to that instance. Report: 0.7.0_AE_CloudOps~DELL2 msg 3427.",
+  "one_line": "D2-S25 resolved: ssm:SendCommand on the mdpf-daily-runner host now succeeds from the dell2 applier identity (two live sends rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DELL2 msg 3427 (20261009T141022Z): two SSM sends to i-02448edb624a7a7cf, S1 rc=0 14:06:14Z and S2 rc=0 14:08:38Z, writing 4 objects in 2 buckets",
+      "the sends are live SendCommand results from the identity S25 recorded as refused, so they falsify S25's world_is directly"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 steps 5-6 run on the mdpf-daily-runner host from the seat the order is addressed to.",
+  "world_is": "They did: both seeding sends ran from 0.7.0_AE_CloudOps~DELL2's identity with rc=0."
+}
+```
+
+## IRPT_BCKEND-D2-W275-S1 -- No standalone document schema for the custody report; response contracts carry the data type in $defs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W275-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~275",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No standalone document schema exists for the custody report reference or read answer; the two new response contracts carry the data type in their own $defs, self-referenced by $id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py _documents_of asserts a data $ref and _data_for reads fixtures/<document>.valid.json; the v1 registry (_response_validator) lists only top-level v1/*.schema.json; the grant admits no new v1/*.schema.json",
+      "published: docs/contracts/investor-reporting/v1/responses/custody-report-{read,persist}.response.schema.json with fixtures custody-report-{read,persist}.response.{valid,invalid}.json"
+    ]
+  },
+  "spec_asserts": "The order says every data $ref resolves to a published document schema; the grant lists only the two responses files and _contracts/.",
+  "world_is": "No custody document schema is published in v1/ (PerformanceReport.retained_ref is kind PERFORMANCE only). Adding one is outside this order's paths, so data refs the response file's own $defs (opal://.../responses/<op>.response.schema.json#/$defs/<Type>), which resolves to a published file and keeps the test unweakened. A later cell may promote them to v1/CustodyReport*.schema.json; the read's `report` member is typed only as an object (its members are not described, none invented)."
+}
+```

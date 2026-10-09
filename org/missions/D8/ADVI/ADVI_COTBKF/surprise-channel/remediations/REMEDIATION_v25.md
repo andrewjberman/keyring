@@ -21,11 +21,11 @@ Graduated at round 35's L9 (ADJUDICATION_v27.md), round label v36: D2-S52, OPEN.
   "owner": "1.0.0_SA_CTO~DELL2 (Andrew's word for the S3 act)",
   "round": "v36",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v36"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

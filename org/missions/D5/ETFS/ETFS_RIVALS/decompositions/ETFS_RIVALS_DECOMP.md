@@ -1251,3 +1251,58 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
 - Out of bounds: every other file; no vendor call, no S3, no deploy. The real-model read is the issuer's, at the drain.
 - Check: `ws3_item8_prep/wh1_small_notional_and_unnamed_check.py` (AC1; base FAIL 4; the EDGE negative arm and the NAMED
   control PASS). J1 (CVO): on the issuer's real 13-fund run, 0 '$0.0 million' and 0 bare identifiers in any item.
+
+### `RIV-wi-1` -- the 13:00Z sweep runs the dramatic-move lookup before publish, so a split found on the web adjusts the served history (row D1-S10; CTO ruling ADDENDUM 6) -- APPENDED 2026-10-09, revision 1.26
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 6 @04214e638c
+  (1.0.0_SA_CTO~DELL1 msg 2508). Its own cell and its own deploy pair; WS2/WS3 ship first.
+- Measured (row D1-S10 @0d4f7cc409): no Lambda calls `dramatic_move`; no Lambda carries `BRIGHT_DATA_API_KEY`;
+  `rivalfunds_package.STAGED` (7 paths) does not stage `data/find/dualbiz/scripts/serp.py`, and `serp_search` finds it
+  only at the repository layout (`pathlib.Path(__file__).resolve().parents[4]`). `price_series._actions` READS gold
+  `corporate_actions`; `dramatic_move.write_rows` is its only writer. Andrew-direct comment 1: "there should be a google
+  search for corporate action and an automatic refactoring of historical prices by the split multiple".
+- Interface:
+  1. `dramatic_move.run_for_day(day, sink, *, g4=None, actions=None, search=None, cap=MAX_LOOKUPS_PER_RUN, names=None)
+     -> dict`. With `g4`/`actions` None it reads the stored closes (G4) and the stored corporate actions from `sink` for
+     the 30 days before `day`; it runs `detect`, searches at most `cap` candidates (`lookup`), writes every find with
+     `write_rows` (one object, source_url per row), and returns a report `{candidates, searched, calls, written, failed,
+     capped, uri}`. It PRINTS one line naming the cap and the counts. A search that raises is counted in `failed` and the
+     run goes on; `run_for_day` itself never raises for a search or write failure. A name with no discontinuity draws 0
+     searches. `MAX_LOOKUPS_PER_RUN` is a module constant (8).
+  2. `sweep.run_sweep` calls `dramatic_move.run_for_day(date, sink)` after the canonical / trade-schedule stages and
+     before the day's publish, inside a `try` that records the failure and does not re-raise (a failed lookup never
+     blocks publish; the price stays unadjusted and the chart's gap flag stays).
+  3. The key: `serp_search` takes `BRIGHT_DATA_API_KEY` from the environment, else reads the Secrets Manager secret named
+     by `RIVALFUNDS_SERP_SECRET` (one `GetSecretValue`, cached per process). With neither, the search raises (counted as
+     failed by item 1).
+  4. `infra/aws/lambda/etfs-pipeline/rivalfunds_package.py` `STAGED` stages `data/find/dualbiz/scripts/serp.py`, and
+     `serp_search` finds it in a Lambda tree (a `_serp_dir()` that tries the staged destination first, then the
+     repository layout).
+- Out of bounds: Terraform, IAM, the Lambda environment and any deploy (the deploy pair's applier sets
+  `RIVALFUNDS_SERP_SECRET` and the one-ARN read); `price_series.py`, `publish_page.py`, `render.py`,
+  `enrichment_bloomberg.py`; no live search, no S3.
+- Checks: `ws3_item8_prep/wi1_lookup_run_check.py` (AC1; base FAIL: run_for_day absent) and
+  `ws3_item8_prep/wi1_wiring_check.py` (AC2; base FAIL 3). Acceptance (the pair's read, CTO ADDENDUM 6): Tokio Marine
+  adjusted on the served page; a name with no discontinuity makes 0 calls.
+
+### `RIV-wj-1` -- the generated stack grants the daily Lambda ONE read of the existing Bright Data key secret and names it in that Lambda's environment (CTO ruling ADDENDUM 7; RIV-wi-1's grant) -- APPENDED 2026-10-09, revision 1.27
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 7 @aa290d707e
+  (1.0.0_SA_CTO~DELL1 msg 2555): option (a) -- GetSecretValue on exactly
+  `arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/bright-data/api-key-7ojPkd`, no wildcard, no other
+  action, no copy of the secret; `BD_SERP_ZONE` stays plain environment; the generated policy diff shows ONE new
+  statement. Row D1-S11 tells FIND_INSURE's owner of the second consumer.
+- Measured (14:2xZ, key names only): the SERP key is `find-insure/bright-data/api-key` (a raw string);
+  `find-dualbiz/bright-data/serp` names it as `api_key_secret` and gives `zone` = `serp_opal`. RIV-wi-1 (merged
+  @e17ab4e69d) reads the key from `BRIGHT_DATA_API_KEY`, else from the secret named by `RIVALFUNDS_SERP_SECRET`, and the
+  zone from `BD_SERP_ZONE`. The stack's one existing secrets grant is the OpenAI secret (`gen_policies._ai_secret`,
+  statement `GetOpenAISecret`, the daily Lambda's environment `RIVALFUNDS_AI_ENABLE`, `RIVALFUNDS_OPENAI_SECRET`).
+- Interface (`infra/aws/terraform/etfs-rivalfunds/gen_policies.py` and its committed outputs):
+  1. A constant for the ONE ARN with a comment citing ADDENDUM 7 (a foreign secret has no builder home; R19: this existing
+     pipeline is not migrated by this cell).
+  2. For the sweep stage (the daily Lambda) only: one more statement, `Sid` `GetSerpSecret`, `Effect` `Allow`, `Action`
+     `["secretsmanager:GetSecretValue"]`, `Resource` `[<the ARN>]`; and the environment gains `RIVALFUNDS_SERP_SECRET` =
+     the ARN and `BD_SERP_ZONE` = `serp_opal`, keeping its two keys.
+  3. The committed `generated.auto.tfvars.json` and `policies/*.json` are regenerated with `--out
+     infra/aws/terraform/etfs-rivalfunds` and equal a fresh regeneration (line endings aside).
+- Out of bounds: every `.tf` file, every other Lambda, any `terraform plan` or `apply`, any AWS call; the rivalfunds code.
+- Check: `ws3_item8_prep/wj1_serp_grant_check.py` (AC1; base FAIL 2: limbs (1) and (3); limbs (2) and (4) PASS at the
+  base and must keep passing).

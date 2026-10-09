@@ -451,3 +451,262 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The override log is missing from box-sync's union set, so a manager resolves it by hand each time. Carried by the box manager, who rules nothing on it."
 }
 ```
+
+## NFRA_GATSCP-D1-S13 -- the row gate's self-test reads two LIVE arms red since a proof-of-spec-check change outside this project
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S13",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T13:36Z",
+  "one_line": "surprise-row-gate.py --self-test reads 2 arms failed of 246, both LIVE arms about LGIC_NAMING's proof terminality, after reading 0 failed at ~10:3xZ; the one change to proof-of-spec-check.py in between is 1.0.0_SA_CTO's e7c10e5b4b (13:00Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "box/dell1 642c914b19, ~13:5xZ: RESULT: 2 arm(s) failed of 246 -- 'proof terminality LIVE: LGIC_NAMING LN-e-3-r2 ... reads terminal by proof' and 'proof terminality DOCTORED PAIR, real bytes'",
+      "GS-e-4 worker report (round 2, ~10:3xZ): RESULT: 0 arm(s) failed of 246",
+      "git log since 09:00Z on .tools/proof-of-spec-check.py and LGIC_NAMING: e7c10e5b4b 1.0.0_SA_CTO 13:00:45Z 'fix(proof-of-spec): kind aws_resource for a live AWS resource that is not S3'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The row gate's self-test is green; its live arms read LGIC_NAMING's real proof instances as the checker grades them.",
+  "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
+}
+```
+
+## NFRA_GATSCP-D1-W8-S1 -- proof-of-spec-check.py rc=2 on every instance: PROOF_OF_SPEC.schema.json line 157 holds a description inside "type"
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W8-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~8",
+  "surfaced_at": "2026-10-09T14:06Z",
+  "one_line": "python .tools/proof-of-spec-check.py <instance> <ids> exits 2 (UnknownType) on every instance, including the round-2 GE6 instance that passed at its own flip; the schema's artifacts_produced kind enum at org/standards/PROOF_OF_SPEC.schema.json:157 carries a prose description as the value of \"type\".",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-NFRA_GATSCP-8 @e19881df2d: proof-of-spec-check.py on deliverables/0.9.0_WK_NFRA_GATSCP~7/NFRA_GATSCP.TO-GS-e-6...proof_of_spec.json GE6-AC1,GE6-AC2 -> TOOL-ERROR UnknownType: Unknown type \"string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO, row IRPT_DASHBD-S41)...\", rc=2",
+      "org/standards/PROOF_OF_SPEC.schema.json:157 \"type\": \"string aws_resource ADDED 2026-10-09 ...\" (the CTO's e7c10e5b4b); same cause as the two red LIVE self-test arms of D1-S13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The proof validator returns rc 0 or 1 on a well-formed instance, so the order's flip to complete is gated on rc 0.",
+  "world_is": "The validator cannot run; GS-f-1's criterion GF1-AC1 passes by its own output (GS-F1-POINTER ok=True arms=2 failed=0) but the instance cannot be validated, so the order's status stays pending. Outside the grant: the schema is not mine to edit; owner 1.0.0_SA_CTO."
+}
+```
+
+## NFRA_GATSCP-D1-W9-S1 -- proof-of-spec-check.py cannot validate any instance: the schema's commit_or_etag "type" is a sentence
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W9-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~9",
+  "surfaced_at": "2026-10-09T14:03Z",
+  "one_line": "python .tools/proof-of-spec-check.py exits rc=2 (UnknownType) on every instance, including a round-2 sibling that validated before, because org/standards/PROOF_OF_SPEC.schema.json line 157 gives commit_or_etag a \"type\" holding a prose sentence (from e7c10e5b4b); the GF2-AC1 flip is blocked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json:157 \"type\": \"string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO, row IRPT_DASHBD-S41): ...\"; git log: e7c10e5b4b",
+      "proof-of-spec-check.py on my instance (45ed3b65b2) and on 0.9.0_WK_NFRA_GATSCP~3's GE1 instance: jsonschema.exceptions.UnknownType, 'NOT-A-VERDICT ... rc=2'",
+      "GF2-AC1 itself: r3_crlf.py last line 'GS-F2-CRLF ok=True arms=3 failed=0', rc 0; to-pipeline-gate --self-test 0 failed of 117"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "proof-of-spec-check.py returns rc 0 or 1 on a well-formed instance.",
+  "world_is": "It returns rc=2 on all. The schema is outside my write grant; the order stays pending (status not flipped) and the instance is committed unvalidated. Owner of the schema change: 1.0.0_SA_CTO."
+}
+```
+
+## NFRA_GATSCP-D1-W10-S1 -- proof-of-spec-check rc=2 in this worktree: the schema fix 6b65ca5a52 is not in the worker's base
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W10-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~10",
+  "surfaced_at": "2026-10-09T14:05Z",
+  "one_line": "proof-of-spec-check.py rc=2 (UnknownType) in this worktree: its schema carries e7c10e5b4b's prose in a type value; the fix 6b65ca5a52 is on box/dell1 but not in wk-NFRA_GATSCP-10's base e19881df2d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <GS-f-3 instance> GF3-AC1,GF3-AC2 at e19881df2d -> jsonschema.exceptions.UnknownType, 'NOT-A-VERDICT ... tool failure (rc=2)'",
+      "git log -3 -- org/standards/PROOF_OF_SPEC.schema.json: worktree head e7c10e5b4b; box/dell1 head 6b65ca5a52 'commit_or_etag type back to string'",
+      "workaround: same checker loaded at its own path with SCHEMA_PATH pointed at git show 6b65ca5a52:org/standards/PROOF_OF_SPEC.schema.json (in .scratch/) -> VALID (rc=0), violations=0; no repo file edited. The drain's gate on the merged tree decides the true verdict."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "python .tools/proof-of-spec-check.py <instance> <ids> returns rc 0 or 1 in a worker worktree.",
+  "world_is": "In this worktree it returns rc 2 on every instance; the schema fix lives on the box branch, outside the worker's grant. The instance was graded against the fixed schema out of band."
+}
+```
+
+## NFRA_GATSCP-D1-W11-S1 -- GS-f-4 fold text and GF4-AC2 arm 2 disagree on a sub-field changed on one side only
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W11-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~11",
+  "surfaced_at": "2026-10-09T14:06Z",
+  "one_line": "GS-f-4 build text says fold field by field with a field changed on one side only taking that side; GF4-AC2 arm 2 (ack.by ZQ on one side, unchanged on the other) must be REFUSED, which a sub-field three-way would resolve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/2.0.0_SA_COO~N1/round3_prep/checks/r3_xbox_custody.py resolver arm 2: x2 sets ack.by=ZQ (base ZG) and ack.bus_message_id=None, x sets only ack.bus_message_id=None; expects rc != 0",
+      ".tools/crossbox-call.py merge (:597-625) folds sub-fields two-way: null ignored, two different non-null values refuse",
+      "a pure sub-field three-way resolves arm 2 (ZQ changed on one side only) and fails the check; a pure two-way refuses arm 1 (sent.bus_message_id changed on theirs only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A field changed on one side only takes that side; a field changed on both sides to different values refuses (cell text), and the fold is the one crossbox-call.py merge uses.",
+  "world_is": "The two sources disagree on a sub-field changed on one side only. Built so BOTH checks hold: a sent/ack/closed block changed on one side takes that side (three-way on the block); a block both ends wrote folds sub-field by sub-field with crossbox-call's rule (null ignored, two different non-null values refuse). Effect: a receiver that rewrites an existing non-null sub-field (ack.by) while the sender also touched the ack block is refused for a person; a block changed on one side only is never refused. Check unedited."
+}
+```
+
+## NFRA_GATSCP-D1-W11-S2 -- the proof checker reads rc=2 here: the schema at this branch's base is the broken one
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W11-S2",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~11",
+  "surfaced_at": "2026-10-09T14:10Z",
+  "one_line": "proof-of-spec-check.py exits rc=2 (TOOL-ERROR UnknownType) in this worktree because org/standards/PROOF_OF_SPEC.schema.json at its base carries e7c10e5b4b's bad type value; the fix 6b65ca5a52 is on the base checkout, not on this branch.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> GF4-AC1,GF4-AC2 -> rc=2 'NOT-A-VERDICT: this is a tool failure (rc=2)', schema line 157 'type': 'string aws_resource ADDED ...'",
+      "git log in /c/Dev/ajb_workspace: 6b65ca5a52 fix(proof-of-spec schema, 1.0.0_SA_CTO~DELL1): commit_or_etag type back to string",
+      "same command on the older GS-t-1 instance (0.9.0_WK_NFRA_GATSCP~1) also rc=2 here",
+      "diagnostic only: the tool loaded at its own path with SCHEMA_PATH pointed at `git show 6b65ca5a52:org/standards/PROOF_OF_SPEC.schema.json` graded the GS-f-4 instance 'VALID (rc=0)', acceptance rows=2, violations=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "proof-of-spec-check.py <instance> GF4-AC1,GF4-AC2 returns rc 0 or 1 and the order's status flips to complete on rc 0.",
+  "world_is": "rc=2 here. The schema is outside this order's paths, so it is not patched on this branch; the order status stays pending and the flip waits on the schema fix reaching the branch (a re-run of the one command, after the drain or a rebase onto a base with 6b65ca5a52). Both criteria PASS by their own output."
+}
+```
+
+## NFRA_GATSCP-D1-W12-S1 -- proof-of-spec-check rc=2 in this worktree: the schema at its base carries a broken type value
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W12-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~12",
+  "surfaced_at": "2026-10-09T14:06Z",
+  "one_line": "python .tools/proof-of-spec-check.py on any instance exits rc=2 (jsonschema UnknownType) in the worktree based at e19881df2d, because org/standards/PROOF_OF_SPEC.schema.json:157 still carries e7c10e5b4b's broken commit_or_etag type; main fixed it in 6b65ca5a52.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree .tools/proof-of-spec-check.py GF5 instance: TOOL-ERROR UnknownType, NOT-A-VERDICT rc=2; the same rc=2 on the committed GS-t-1 instance",
+      "git log in the worktree for the schema shows e7c10e5b4b as the latest; main shows 6b65ca5a52 on top (fix: type back to string)",
+      "main's checker run on the worktree instance returns INVALID rc=1 with CHECKER-SCOPE only (cannot resolve a commit outside its tree): not a verdict"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof validates with the worktree's own checker to rc 0 before the status flip.",
+  "world_is": "The worktree base lacks 6b65ca5a52, and a worker may not merge or edit the schema, so no rc 0 can be read. GF5-AC1 itself is PASS-by-output (GS-F5-CENSUS ok=True). The order stays pending until the base carries the fix."
+}
+```
+
+## NFRA_GATSCP-D1-W13-S1 -- GS-f-6's lacks-check exempts a keep-ours resolution; a path reset in BOTH index and working copy is not caught
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W13-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~13",
+  "surfaced_at": "2026-10-09T14:08Z",
+  "one_line": "The order says refuse when ANY staged path is missing from the merge commit; a conflicted path resolved by keeping the first parent's bytes is also missing from the commit's diff against ^1, so the check cannot refuse it without refusing a legitimate resolution. _verify_staged_carried exempts a missing path whose working copy equals HEAD (git diff --quiet HEAD -- path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-merge.sh _verify_staged_carried (branch wk-NFRA_GATSCP-13)",
+      ".tools/tests/test_safe_merge_continue.py case c: keep-ours of one conflicted path exits 0; case b: path unstaged with its resolution left in the working copy exits 7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order GS-f-6 build 1: when any staged path is missing from the commit, REFUSED and exit non-zero.",
+  "world_is": "Narrower by one case: a missing path is a loss only when its working copy differs from the committed blob. A path reset in both the index and the working copy (e.g. checkout HEAD -- path) reads as a keep-ours and is not caught; D1-S5's mechanism of loss is not recorded in the order, so whether it left the working copy intact is unmeasured here."
+}
+```
+
+## NFRA_GATSCP-D1-W13-S2 -- proof-of-spec-check returns a TOOL-ERROR on this worktree: the schema at its base carries the corrupted commit_or_etag type
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W13-S2",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~13",
+  "surfaced_at": "2026-10-09T14:12Z",
+  "one_line": "On this worktree (base e19881df2d) python .tools/proof-of-spec-check.py exits rc=2 'UnknownType: Unknown type \"string aws_resource ADDED ...\"' because org/standards/PROOF_OF_SPEC.schema.json at e7c10e5b4b put prose into commit_or_etag.type; box/dell1 fixed it at 6b65ca5a52. The instance was validated with that fixed schema applied temporarily to the working tree (not committed, restored afterwards): VALID rc=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check.py on wk-NFRA_GATSCP-13 before the swap: TOOL-ERROR UnknownType, rc=2",
+      "git show box/dell1:org/standards/PROOF_OF_SPEC.schema.json carries no 'string aws_resource' in the type; 6b65ca5a52 1.0.0_SA_CTO~DELL1",
+      "same proof instance with the box/dell1 schema: VALID (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order: validate with python .tools/proof-of-spec-check.py <instance> GF6-AC1,GF6-AC2 before the flip; rc 0 is the verdict.",
+  "world_is": "The checker cannot run on a worktree cut before 6b65ca5a52; the fix is on box/dell1 and reaches this branch at the drain. The schema file is outside this order's grant and was not committed."
+}
+```
+
+## NFRA_GATSCP-D1-S14 -- D1-S13's cause measured: the PROOF_OF_SPEC schema defect; 0 of 247 failed on the fixed tree
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S14",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T14:23Z",
+  "one_line": "Row D1-S13's cause measured: the row gate's two red LIVE arms were the PROOF_OF_SPEC schema defect from e7c10e5b4b (a prose sentence in a `type` value; every instance rc=2); on a tree carrying the fix 6b65ca5a52 the self-test reads 0 of 247 failed, GS-f-1's new arm included.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/surprise-row-gate.py --self-test on the round-3 drain tree (box/dell1 + the six worker branches): RESULT: 0 arm(s) failed of 247 (+ live census)",
+      "worker rows D1-W8-S1, W9-S1, W10-S1, W11-S2, W12-S1, W13-S2: proof-of-spec-check rc=2 (UnknownType) at base e19881df2d; fixed schema at 6b65ca5a52",
+      "GS-f-1 instance repair @02c260744e: two placeholders the worker's rc=2 hid (vintage_commit HEAD; commit_or_etag PENDING)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D1-S13: the timing points at e7c10e5b4b, cause not proven.",
+  "world_is": "Proven by the difference: same gate code, schema fixed, 0 failed. Five round-3 orders were built and passed but could not flip at their base; the issuer flipped them after re-validation on the merged tree. D1-S13 can close."
+}
+```

@@ -52,3 +52,13 @@ laptop. Plain words: a Dell seat on that host can act with 49 Financial's source
 
 **SIGNED (addendum)** -- `1.0.0_SA_CTO`
 
+
+## Condition (4) answer 2026-10-09 ~14:3xZ -- MDPF_STRATID.TO-APPLY-W2-a read grant (dell1)
+
+On `0.0.0_AB_MSTR` msg 107994 (relay of dell1 `0.7.0_AE_CloudOps~DELL1` msgs 2542/2543, before the act): **OK.** One statement on each of
+two roles, the MDPF daily runner's role and `mdpf-gold-lambda`'s execution role: `s3:GetObject` on
+`arn:aws:s3:::opal-data-etfs/config/etf_universe.json` and nothing else (no wildcard, no List, no Put). The object is Opal's own ETF list,
+not a firm's data, so the cross-firm rule is untouched. Applied through Terraform (`safe-apply`), read back live with a positive control
+(the key reads allowed) and a negative control (a sibling key still reads implicitDeny), reported after the fact by bus.
+
+**SIGNED (condition 4)** -- `1.0.0_SA_CTO`

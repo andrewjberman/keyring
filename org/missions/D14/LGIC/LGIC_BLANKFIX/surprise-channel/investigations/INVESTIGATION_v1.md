@@ -2399,3 +2399,181 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Two meanings of 'owner' live in the repository: the ruling row's mover and the address's scope (whose file it is). The line prints the second, as FWD-4 says 'whose it is'. The ruling's mover text is long prose and stays on the ruling."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S8 -- name() refused the kind 15min (the two keepalive schedules, 49f and cot) because its cadence test ignored the schema's interval_form.token_regex; the refusal was the builder's code, not a missing registry row, and was fixed in lib/opal_naming.py _is_cadence
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T12:57:30Z",
+  "one_line": "name() refused the kind 15min (the two keepalive schedules, 49f and cot) because its cadence test ignored the schema's interval_form.token_regex; the refusal was the builder's code, not a missing registry row, and was fixed in lib/opal_naming.py _is_cadence",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base lib/opal_naming.py:2024-2026 _is_cadence accepted only cadence.values and on-{event}; python -c name('blackdiamond','49financial','keepalive-sched','15min') raised ValueError: kind '15min' is neither a NAMING_SCHEMA.json kind nor a cadence (2 of 31 firm schedule lines: bd-49f-keepalive-sched, bd-cot-keepalive-sched)",
+      "org/standards/NAMING_SCHEMA.json cadence.interval_form: 'a reader of cadences accepts `values` OR a token matching `token_regex`'; lib/opal_naming.py:1246 _Vocab already compiles that regex for grade()",
+      "after the one-line change name() returns blackdiamond-49f-keepalive-sched-15min and blackdiamond-cot-keepalive-sched-15min; kinds such as 15minutes are still refused; the 10 test_opal_naming_*.py scripts read ok=True; the ALL-ROOTS line is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-2 Build 2: a name() refusal is a missing registry row to draft in REGISTRY_ROWS_round14.json, never a hand-typed workaround.",
+  "world_is": "The only refusals were two {N}min kinds, and the missing piece was in the builder's code (the schema already rules {N}min and {N}h), not in any registry file; so no row is drafted (REGISTRY_ROWS_round14.json holds none) and the code was brought to the ratified schema inside the order's lib/opal_naming.py grant. The {N}h kinds (2h to 23h) take the same path and were not exercised by a firm line at this cut."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S9 -- a firm schedule passes the real naming gate only in the opal_name module form, where the gate grades 0 strings; so gate_pass=31 means 'no refusal', and the listed literal (the line the list prints) is refused 31 of 31 as a hand-kept carrier
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T12:57:45Z",
+  "one_line": "a firm schedule passes the real naming gate only in the opal_name module form, where the gate grades 0 strings; so gate_pass=31 means 'no refusal', and the listed literal (the line the list prints) is refused 31 of 31 as a hand-kept carrier",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_firm_schedules_r14.py on bd-pipeline/cot-pipeline/mdpf-pipeline/opal-assets: builder arm (name = module.opal_name_fs_N.name, a module block with system/scope/function/kind) NAMING-GATE: PASS 0 graded, rc=0; literal arm (the listed string typed as name) 31 NAMING REFUSE 'NEW hand-kept carrier of the firm token', rc=1",
+      ".tools/naming-gate.py docstring THE CONTEXT RULE: a firm token is permitted only inside key()/address()/name()/lookup() arguments or the arguments of an opal_name module block; D1-W1-S7 already measured the literal refusal for one line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-2 Build 3: each firm schedule line 'is fed through the real naming-gate --diff on a temporary copy of its .tf with the listed name' and passes.",
+  "world_is": "The listed name cannot be typed into the .tf and pass; it passes as the builder's module output, which is also what R2 asks for (the firm as scope, never hand-composed). The checker therefore feeds the module form as the pass arm and the typed literal as the difference control. The gate verifies the form of the declaration (no hand-kept firm token), not the string the module will print; that string is name() output by the checker's own call."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S10 -- 23 of the 254 stored-file lines have no key ruling row naming who moves the store, so their owner prints UNDECIDED with a reason; the order's last line expects undecided=10
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T13:36:10Z",
+  "one_line": "23 of the 254 stored-file lines (16 key class ADDRESS, 7 graded FIX) have no key ruling row, so no row names who moves the store; owner prints UNDECIDED (reason), while the order's last line reads undecided=10",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py stored_owner(): owner is read from the key ruling row's `owner` field (infra/logic/registry/key_rulings.json, 161 rows, every row carries owner); python .scratch census of the 254 stored-file lines at base: 218 matched a ruling row (14 per-firm, 10 with an open {source}/{scope} place), 16 are key class ADDRESS and 20 are graded with no key row (13 RIGHT, 7 FIX)",
+      "check_fwd4_stored_r14.py output: files=254 owner_and_scope=207 per_firm_patterns=14 undecided=10 owner_unnamed=23; the 13 RIGHT lines with no row print owner=none (the file is already at its address, nothing moves)",
+      "example: FIX S3Key code/silver/convert_fees_to_silver.py -> blackdiamond/49financial/code/silver/convert_fees_to_silver.py source=blackdiamond owner=UNDECIDED (no key ruling row names who moves this store) scope=49financial  [infra/aws/lambda/bd-pipeline/bd-49f-fees-runner/lambda_function.py:44]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-3 Build 3: last line `FWD4-STORED-R14 ok=True files=N owner_and_scope=N per_firm_patterns=14 undecided=10`; R4: owner from the ruling row, a field no row decides prints UNDECIDED with its reason.",
+  "world_is": "per_firm_patterns=14 and undecided=10 (the open {source}/{scope} rows) hold as stated. 23 more FIX lines have no ruling row to read an owner from, so by the same rule their owner is UNDECIDED with a reason. The checker prints them as a separate count, owner_unnamed=23, and keeps undecided= for the 10 open-place rows; files = owner_and_scope + per_firm_patterns + undecided + owner_unnamed (254 = 207 + 14 + 10 + 23). No mover was guessed from the root map or the address. Whoever owns key_rulings.json (4.0.0_SA_CRO) can close the 23 with rows; the check then moves them to owner_and_scope."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S11 -- the round-13 stored-file checker (check_fwd4_stored_files.py) read the address's scope as `owner=`; R4 makes owner the mover, so the checker was edited to read `scope=` (its last line is now files=240 with_source_owner=230 undecided=10)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T13:36:10Z",
+  "one_line": "keeping check_fwd4_stored_files.py passing unmodified is not possible under R4: it matched `owner=<single word>` and required the new key to begin source/owner; owner is now the ruling row's mover sentence and the address's scope is the `scope=` field",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "before the edit, on the new lines: `FWD4-STORED ok=False files=240 with_source_owner=0 undecided=0` (FAIL lines 'carries no source and owner' and 'the move's new key blackdiamond/49financial/... does not begin with its own source/owner blackdiamond/ADVI_FIRMBKTS moves the bucket ...')",
+      "after the edit (FIELDS regex replaced by rc.split_stored_fields; the path-prefix test reads the scope field): `FWD4-STORED ok=True files=240 with_source_owner=230 undecided=10`; the 14 per-firm lines are PATTERN now and are not FIX/RIGHT lines, so files fell from 254 to 240 and undecided from 24 to 10 (24 - 14)",
+      "the deliverable is in this worker's own deliverables folder, inside the grant; the assertions are unchanged in strength: both fields decided, the move agrees with its own fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's inherited-state paragraph: keep check_fwd4_stored_files.py passing (BAB2-AC2's invocation, last line FWD4-STORED ok=True).",
+  "world_is": "The checker passes again, but only after its parse moved from `owner=` to `scope=` for the address's word. R4 (two columns, never one in place of the other) makes that move necessary, not optional. Its counts differ from round 13 (254/230/24 became 240/230/10) because R5 turns the 14 per-firm FIX lines into PATTERN lines."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S12 -- the 14 per-firm stored-file lines change kind FIX -> PATTERN, so place() reports kind PATTERN for them; the census moves fix 1636 -> 1614 (-22) and right 672 -> 670 (-2), hole 0 -> 10, on this branch
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S12",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T13:36:10Z",
+  "one_line": "census at this branch: pattern 25 -> 39 (+14, R5), and also fix -22, right -2, hole 0 -> 10 (the AMENDMENT 1 partial-form rows: 8 FIX and 2 RIGHT lines that carried a word the reader does not give); the order's `nothing else moves` is true of R5 alone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "before: ALL-ROOTS ok=True ... items=2601 right=672 fix=1636 not_asked=268 pattern=25 ... hole=0 ... other_holes=0 (python lib/opal_naming.py census --all-roots at 43f6416fed)",
+      "after: ALL-ROOTS ok=True ... items=2601 right=670 fix=1614 not_asked=268 pattern=39 ... hole=10 ... other_holes=10; the 10 HOLE lines are the 10 undecided E1 rows (canonical-schwab-ec2 x3, fred-pipeline x1, market-overview x2, news-pipeline x3, transcripts x1), each printing `partial form <name>-{cadence}; could not fill {cadence}: <reader's reason>`",
+      "this branch carries the cadence reader as it was before BF-ac-1 @7a82774af7 (slot ~1); with that reader the evenly spaced rows are expected to take {N}h words again and the hole count to read lower"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-3 Build 2: the census pattern= count rises by 14 and nothing else moves; AMENDMENT 1 expects six rows to move once BF-ac-1 is merged.",
+  "world_is": "pattern rises by exactly 14 and the 14 FIX lines leave fix, as stated. The other movement is build item 4 (AMENDMENT 1) acting on this branch's older cadence reader, which gives no word for ten rows whose names carry one. place() on a per-firm stored-file name now returns kind PATTERN where it returned FIX; whether the commit-time gate treats a PATTERN differently from a FIX for a NEW per-firm stored-file literal was not measured here."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S9 -- BAC1-AC1 cannot read ok=True inside the grant: six of the ten S8 list lines still carry the old word because lib/opal_naming_rootcheck.py decide() keeps a carried cadence word when the expression decides none; the partial form is built there, not in opal_naming_cadence.py
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T12:45:00Z",
+  "one_line": "BAC1-AC1 cannot read ok=True inside the grant: six of the ten S8 list lines still carry the old word because lib/opal_naming_rootcheck.py decide() keeps a carried cadence word when the expression decides none; the partial form is built there, not in opal_naming_cadence.py",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence_r14.py: FWD4-CADENCE-R14 ok=False schedules=180 agree=148 partial=26 mismatch=0 carried_over=6 (negative arm: 9 of 9 planted lines landed where planted)",
+      "the four evenly spaced S8 rows now read 12h from their expressions (cron(45 9,21..), cron(15 10,22..), cron(45 10,22..), cron(0 8,20..)) and the list prints -12h; the six that stay carried over: fear-greed-daily-update cron(30 14,21 * * ? *), trending-topics-portal-publisher-daily cron(10 14,21 * * ? *), keyword-drilldown-generator-daily cron(25 12,21 * * ? *), finbert-scoring-post-ingestion-45min cron(55 0,13,20 * * ? *) (gaps 13, 7, 4 hours), teams-global-transcripts-pull-hourly cron(0 13-22 ? * MON-FRI *), fred-ingestion-monthly-early cron(0 15 ? * 6#1 *); each prints FIX/RIGHT with its old word",
+      "lib/opal_naming_rootcheck.py decide(): the rebuild runs only on `cad.get(\"agrees\") is False and cad.get(\"word\")`; with no word the graded CONFORMANT/FIX name is returned as it stands. The partial form of a blank, `HOLE partial form X-{cadence}; could not fill {cadence}: <basis>`, is built only when the graded canonical already holds {cadence} (a name with no cadence word); H14 in HOLE_OWED names that hole's owner",
+      "no cadence.py field reaches that path: decide reads only canonical (a brace-free canonical is a final name), agrees+word (a truthy word is written into the name) and basis"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-ac-1 and ROUND_ANALYSIS.round13 R1: uneven fires have no word and the row prints its partial form with the reason; the list never carries over the old word; built in lib/opal_naming_cadence.py and its test only.",
+  "world_is": "opal_naming_cadence.py decides the word or the reason correctly for all 180 rows, but the line the root check prints is made by decide() in lib/opal_naming_rootcheck.py, outside this order's paths, so an undecided row with a carried word keeps it. Needed there (not done, outside the grant; the lane of BF-ac-2 and BF-ac-3, slot ~2): in decide(), when cad.get(\"word\") is None, the row states an expression (cad.get(\"expression\") not None) and cad.get(\"carried\") is a cadence word not starting with on-, rebuild the canonical with _rebuild_on_word(base, carried, \"{cadence}\") so the existing {cadence} branch prints the HOLE with cad[\"basis\"] as the reason. Consequence to expect: six holes appear in the census (hole=6), each with its reason and an owner already named by H14. No weakening: the checker counts those six as carried_over and fails; the expected value is unchanged."
+}
+```
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T14:30:00Z",
+  "one_line": "S9 is resolved by AMENDMENT 1 (@2c56f0390a) and the merge @48ca3c6a7b: decide() now prints the partial form, and BAC1-AC1 reads carried_over=0",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence_r14.py on base 84b51c181a: FWD4-CADENCE-R14 ok=True schedules=180 agree=148 partial=32 mismatch=0 carried_over=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 of TO BF-ac-1: the partial form for a no-word row moves to BF-ac-3 build item 4 in decide(); BAC1-AC1 re-run on the trunk after slot ~2 merges.",
+  "world_is": "Merge 48ca3c6a7b carries the decide() change; the re-run reads ok=True agree=148 partial=32 mismatch=0 carried_over=0, so S9 (carried_over=6) no longer holds."
+}
+```

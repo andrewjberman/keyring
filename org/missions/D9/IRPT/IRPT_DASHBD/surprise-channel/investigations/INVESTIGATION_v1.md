@@ -4631,3 +4631,271 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S1 -- Resolves and disarms S40: the realized key now carries realized_gain (DB-b-87), released live (DB-b-88), and 2026-10-08 lots backfilled with zero LOTS_SKIPPED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_DASHBD-S40. The hazard was the 2026-10-08 lots day refused by name on every fire because the realized key was not unique. DB-b-87 extended the key with realized_gain (drained @0a41f929a3); DB-b-88 released it to irpt-49f-reporting-gold-lambda (live CodeSha256 yIAQjspL... read by the issuer at 13:1xZ, ledger 20261009T1247Z CLOSED 4/4) and backfilled 2026-10-08 in one invoke: realized 35834, unrealized 542546, activity 6901, 0 LOTS_SKIPPED, 389.1 s / 1649 MB under the 85% line, returns byte-equal (sha256 3151345f...). DB-b-90 (round 44) moves the uniqueness check onto the final rows (W62-S1).",
+  "one_line": "S40 disarmed: realized key extended by realized_gain, released live, and 2026-10-08 lots backfilled with 0 LOTS_SKIPPED and returns byte-equal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-49f-reporting-gold-lambda live CodeSha256 yIAQjspL0nPX6tJOHxD+Dv0REVoZyBNRkhmHQxUVuEE= (issuer read, 13:1xZ)",
+      "org/critical_paths/change_management/20261009T1247Z_irpt-dashbd-r37-delta-1008_deploy_completion.md (CLOSED 4/4)",
+      "p41b_lotkey.py DB41b-2-AC1 PASS and DB41b-2-AC2 PASS at box/dell2 after the DB-b-88 drain",
+      "backfill invoke RequestId 0cbe2c8b-c78f-4e6c-940f-bab89ccb1000"
+    ]
+  },
+  "spec_asserts": "CTO ADDENDUM 9: a LOTS_SKIPPED day is a BLOCKING row until the key is fixed and the day is backfilled.",
+  "world_is": "The key is fixed live and 2026-10-08 is landed for all three lot tables."
+}
+```
+
+
+## IRPT_DASHBD-S43 -- TO-DB-b-86 BLOCKED before the run: the selection's account_set_id has no producer this seat can reach, and the served reads AMENDMENT 1 names do not carry it
+
+```json
+{
+  "id": "IRPT_DASHBD-S43",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T13:20:00Z",
+  "one_line": "TO-DB-b-86 cannot run as amended: the runner requires account_set_id as sel_<64 hex> from an Opal operator's selection-create answer, but AMENDMENT 1's two served reads cannot produce it -- the served custody directory has no selection field in any of its 269 entries, and svc-custody-statement is admitted on three operations that do not include selection-create. Filling it would be a fabricated reference.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-86 AMENDMENT 1 (Selection): 'The --selection file is seat-authored from two served reads only: the Cottonwood client's account set from the served custody directory, and the snapshot id from the served holdings current/manifest.json.' The runner's load_selection requires account_set_id matching sel_<64 hex>, plus snapshot_id, client_id and account_ids.",
+  "world_is": "THE TWO SERVED READS WERE BOTH DONE, and they yield three of the four required fields, not four. (1) The served custody directory resolved through advisor_client_list.load_directory's own default path -- the directory_runner pointer s3://opal-data-cot/investor-reporting/directory/latest.json at generated_at 2026-10-08T13:40:45Z, whose key is investor-reporting/directory/2026-10-07/directory.json (538,204 bytes, 269 entries). An EXHAUSTIVE NESTED KEY CENSUS over all 269 entries (denominator printed, every path counted, not a forward guess) gives exactly these id-bearing paths: /ids/client_id 269, /ids/account_ids 269, /ids/firm_id 269, /ids/relationship_id 220, /account_masks[]/account_id 557, /permitted_scope/scope_ids 269, /permitted_scope/scope_kind 269, plus access, cohort, display_name, masked_discriminator, permitted_capabilities, revision and termination subtrees. NO path whose name contains set, sel or snapshot exists anywhere in the structure. So client_id and account_ids are available and account_set_id is NOT. (2) The served holdings manifest s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (LastModified 2026-10-08T14:18:08Z, schema irpt-holdings-index-v1, firm_id cottonwood, 9 dates) gives latest_date 2026-10-07 with revision 8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e -- so snapshot_id IS available. WHY THE MISSING FIELD CANNOT BE SUPPLIED BY THIS SEAT. The runner's own docstring names the selection as one of the 'INPUTS the runner does not invent (they have no producer reachable by the service subject, which is admitted on three operations only)', taken 'from an Opal operator's selection-create answer'. The three admitted operations are custody-report-persist, POST /analysis and POST /export (IB-pr-385, the pair's AMENDMENT 2), and selection-create is not among them, so svc-custody-statement cannot mint one. Typing a sel_<64 hex> by hand would be a FILLED FIGURE -- this order's refusal clause names a filled figure as a defect -- and it would travel as the account_set_id query parameter of a REAL submission against REAL Cottonwood client data, which is worse than useless. REUSE WAS CHECKED AND DOES NOT SERVE: a census of 'sel_[0-9a-f]{64}' over org and data returns 4,449 hits across 57,618 files scanned, but the SURFACED band is DSGN_IRPTV1 browser netlogs against localhost:5174 and localhost:5181 -- dev-fixture selections (the same id sel_bdf98e1d... repeatedly), not Cottonwood production selections, and not valid for the cottonwood tenant on opalinvest.dev. STOPPED BEFORE THE RUN, per this order's 'A refusal on the Cottonwood path is a finding: file a row and stop. Never work around it.' Nothing was submitted, nothing persisted, no deploy ledger opened (opening one for an act that cannot proceed would create a RED half-landed entry for no act). ALSO MEASURED AND WORTH RECORDING, because it will bite the next seat: client_report_figures._returns_paths('cottonwood', ...) computes s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/, and that prefix holds ZERO objects -- the bucket's gold area holds holdings, holdings_performance_daily, holdings_performance_manifest and holdings_qa only (785 objects under irpt/, read with head-bucket rc=0 as a positive control, so this is a true empty and not a deny). Separately, hop3_real_run.py -- the required --hop3-file producer -- states it is BUILT on dell2 and RUN on the laptop because the returns gold is an explicit deny for the dell2 user, and no hop3 output file exists anywhere in the repo (only its proof_of_spec and prose). So even with a valid account_set_id, the household document input is not producible on this device as things stand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py (module docstring 'INPUTS the runner does not invent'; load_selection's sel_<64 hex> validation; --hop3-file and --selection both required)",
+      "data/assets/scripts/gold/irpt_custody/hop3_real_run.py (WHERE IT RUNS: the firm bucket is an explicit deny for the dell2 user; built on dell2, run on the laptop)",
+      "data/assets/scripts/gold/irpt_custody/advisor_client_list.py load_directory (the directory_runner PROD_PREFIX/latest.json default this read followed)",
+      "s3://opal-data-cot/investor-reporting/directory/2026-10-07/directory.json (269 entries; the exhaustive nested key census)",
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (latest_date 2026-10-07, revision 8982ba98...967e)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-86.e2a-real-statement-apply.md AMENDMENT 1 (Selection) and the refusal clause",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md AMENDMENT 2 (the three admitted operations)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S2 -- Resolves S43 by routing: CTO ADDENDUM 11.1 rules the selection file-based (DB-b-93), places the Cottonwood returns gold on ADVI_COTBKF, and sends hop3 to the laptop
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-S43 by routing, per 1.0.0_SA_CTO~DELL2 ADDENDUM 11.1 (@43bbe32935): (1) the selection stays a seat-authored file and no seat mints account_set_id -- the runner-accepts-file cell is DB-b-93 (round 45); (2) the Cottonwood account_return_daily gold (0 objects) is ADVI_COTBKF's, placed by COTBKF ADDENDUM 11.2; (3) hop3 runs on the laptop by cross-box order after (2) lands. DB-b-86 carries AMENDMENT 3 and stays blocked until all three are read.",
+  "one_line": "S43 routed: selection file-based (DB-b-93), Cottonwood returns gold to ADVI_COTBKF, hop3 to the laptop; DB-b-86 blocked by AMENDMENT 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_30_31_20261009.md ADDENDUM 11.1 @43bbe32935",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-93.runner-selection-file.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-86.e2a-real-statement-apply.md AMENDMENT 3"
+    ]
+  },
+  "spec_asserts": "A BLOCKING row is dispositioned before the round's slug.",
+  "world_is": "Every gap S43 named has an owner and a cell or an order; nothing was minted by hand."
+}
+```
+
+## IRPT_DASHBD-D2-S3 -- The S41 fix @e7c10e5b4b broke PROOF_OF_SPEC.schema.json: commit_or_etag's "type" now holds the aws_resource description text, so every proof check fails with a tool error (rc=2)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:45:00Z",
+  "one_line": "e7c10e5b4b replaced artifacts_produced[].commit_or_etag's \"type\": \"string\" with the aws_resource description text, so jsonschema raises UnknownType on every instance that reaches it: proof-of-spec-check exits rc=2 (NOT-A-VERDICT), and to-pipeline-gate refuses any commit that touches a complete order.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "e7c10e5b4b: 'the schema enum gains aws_resource ... content and coverage rungs unchanged'.",
+  "world_is": "MEASURED at box/dell2 HEAD after the fix arrived (is-ancestor read): proof-of-spec-check on IRPT_DASHBD.TO-DB-b-91's proof, which was VALID at 13:1xZ before the fix arrived, now prints TOOL-ERROR: UnknownType: Unknown type \"string aws_resource ADDED 2026-10-09 ...\" and NOT-A-VERDICT rc=2. The schema diff shows org/standards/PROOF_OF_SPEC.schema.json commit_or_etag \"type\" changed from \"string\" to that text; the text was evidently meant for the kind field's description. The safe-commit of IRPT_DASHBD.TO-DB-b-91 AMENDMENT 1 (criterion text only) was REFUSED by to-pipeline-gate for this reason. Remedy (owner's): restore \"type\": \"string\" on commit_or_etag and move the text into kind's description.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e7c10e5b4b -- org/standards/PROOF_OF_SPEC.schema.json (commit_or_etag type line)",
+      "python .tools/proof-of-spec-check.py <~66 DB-b-91 proof> -> TOOL-ERROR UnknownType, rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W69-S1 -- the census finds a third member (reporting_policies.json) differing from its pin at HEAD; the artifact is built from the pin, so the release is still the two owned members
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W69-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~69",
+  "surfaced_at": "2026-10-09T13:58:00Z",
+  "one_line": "The census over live yIAQjspL finds a THIRD member differing from HEAD, infra/logic/registry/reporting_policies.json (pin 0c35aeeaa8), though the face expects exactly two; the artifact is built from the PIN so the release is still exactly two changed members, and the packet was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-94 item 1: comparing the source map's members as pinned for yIAQjspL against HEAD, the changed members must be exactly account_activity_lots.py and reporting-gold/handler.py; any other differing member is a row and a STOP before the packet.",
+  "world_is": "MEASURED over the 18 staged_from pins plus handler.py: 16 pins equal their HEAD bytes; account_activity_lots.py and handler.py differ (the two owned members); reporting_policies.json HEAD sha256 1479826b5764... differs from its pin sha256 dc0eccfde861... (other seats' registry commits eab13e88d3, 589aee38f0 landed after pin 0c35aeeaa8). The R37 delta packet (~63) recorded the same difference and built from the pin. Because the builder materializes the member at its PIN, the released artifact's bytes for it do not change, so I read the STOP as not firing for a pinned member and wrote the packet, naming the difference in it; the apply cell must keep that pin. If the issuer reads the face's STOP as covering a HEAD-versus-pin difference, the packet is the only thing written and nothing was built or applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda staged_from (sha256 per pin; python read of HEAD bytes vs pin blobs)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~69/R44_RELEASE_CENSUS.json members_compared",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R37_DELTA_PACKET_1008.md section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W69-S2 -- the lots status record is dropped by a scheduled fire only; a backfill that lands a stated day leaves its statement
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W69-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~69",
+  "surfaced_at": "2026-10-09T13:59:00Z",
+  "one_line": "The DB-b-91 status record is dropped only by a scheduled fire that lands the day; an explicit backfill that lands a refused lots day leaves its statement in the object, so Branch A's 'the status record drops that day' holds on the scheduled path only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-94 Branch A: a lots day lands, the final-rows check passes, and the status record drops that day (stated from the producer's own rules).",
+  "world_is": "READ at HEAD: record_lots_status (handler.py:455-487) is called only from catch_up_lots (:513), the scheduled path; run_backfill calls emit_lots (:582) and not record_lots_status. kept = prior minus the fire's landed set (:477), and catch_up_lots owes only days after the activity table's newest landed day (class_owed_days :322-338), so a refused day that a backfill later lands is never in a later fire's landed set and its statement stays until the object is rewritten some other way. Not measured live (no fire run). The packet states Branch A for the scheduled path and records this limit; a fix is the issuer's or the CTO's to order, not this cell's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:455-487, :490-514, :544-586 @3697923e02",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:322-338"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W68-S1 -- sel_<64 hex> is not derivable from the selection file; the id resolves to a stored record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T13:45:00Z",
+  "one_line": "sel_<64 hex> is not derivable from the seat-authored file (it hashes the firm directory revision) and the POST /analysis owner-resolution loads a stored selection record: a file-only submission will be refused by the route unless a stored record exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-93: if the id is not deterministic, the statement path takes the file without an id; if the route refuses a submission without a valid stored id, file a row naming the route and the check.",
+  "world_is": "READ, not run. _scope/selection.py::_reference hashes (schema_version, firm_id, account_ids, directory_revision), and directory_revision (selection.py::directory_revision) is the sha256 of the whole firm directory the Enforcer held, which is no field of the selection file. The owner-resolution check that consumes the id is _scope/selection.py::resolve_selection (lines 110-123), reached through performance/entry.py::_resolve_selected and _scope/custody.py:78 with configured_store().load (selection_store.py:29-35, DynamoDB SELECTION#<id>): an absent record raises 'selection reference unavailable', a changed one 'selection binding changed; select again'. I did not find in the files read the exact code that POST /analysis calls to admit account_set_id; the runner change (accepts a file without the id, omits the query parameter, records selection_source=file + sha256) is kept. Whether the live route admits a submission without account_set_id is not established by this read; DB-b-86 will show it, and a refusal there needs either a stored selection record written by an owning seat or a route change in IRPT_BCKEND's lane.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/selection.py:40-44,19-22,110-123",
+      "infra/aws/lambda/investor-reporting/_scope/selection_store.py:29-35",
+      "infra/aws/lambda/investor-reporting/performance/entry.py:92-105",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/SELECTION_FILE.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W68-S2 -- BLOCKING: the proof-of-spec checker cannot run in this worktree (schema at base is malformed; fix 1f256cfc64 is not here)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T13:58:00Z",
+  "one_line": "BLOCKING on the proof-of-spec flip: org/standards/PROOF_OF_SPEC.schema.json at this worktree's base carries e7c10e5b4b's malformed commit_or_etag type, so .tools/proof-of-spec-check.py exits rc=2 (UnknownType); the fix 1f256cfc64 is on the shared checkout but not in this worktree and the schema is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rules: validate the proof instance with python .tools/proof-of-spec-check.py <instance> DB45-1-AC1; rc 0 permits the flip of the order's status to complete.",
+  "world_is": "MEASURED in C:/dev/wk-irpt-dashbd-68 at HEAD f9bd3c2430 (base e7316aa723): the checker prints 'TOOL-ERROR: UnknownType ... NOT-A-VERDICT: this is a tool failure (rc=2)' because org/standards/PROOF_OF_SPEC.schema.json line 157 carries a 'type' value that is the aws_resource prose (commit e7c10e5b4b). The shared checkout at C:/dev/ajb_workspace has 1f256cfc64 'restore commit_or_etag type: string' (row IRPT_BCKEND-D2-S52). The checker run from the shared checkout against this instance is INVALID for two reasons that are not findings on it: CHECKER-SCOPE (instance outside that tree) and kind 'code' not in its enum. The criterion itself ran PASS-by-output: 'OK: runner accepts the selection file; deterministic=False; 25 passed' / 'DB45-1-AC1 PASS', rc 0, and the mutant against an empty root printed 'DB45-1-AC1 FAIL' rc 1. The proof instance (committed) therefore has no rc 0 verdict and the order's status stays 'issued'. Unblock: the issuer brings 1f256cfc64 into this branch (merge) or edits the instance's grant, then re-runs the checker; the instance's artifacts kind 'code' (two rows) is not in the schema enum at 1f256cfc64's neighbour either, and is changed to 'script' / 'test' in the next commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json:157 @e7c10e5b4b",
+      "git log 1f256cfc64 on C:/dev/ajb_workspace (restore commit_or_etag type)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/IRPT_DASHBD.TO-DB-b-93.runner-selection-file.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S4 -- Resolves and disarms D2-S3: 1.0.0_SA_CTO~DELL2 restored commit_or_etag "type": "string" @1f256cfc64
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_DASHBD-D2-S3. 1.0.0_SA_CTO~DELL2 restored \"type\": \"string\" on artifacts_produced[].commit_or_etag @1f256cfc64 (its row IRPT_BCKEND-D2-S52), an ancestor of box/dell2 HEAD (is-ancestor read). The proof-of-spec-check on IRPT_DASHBD.TO-DB-b-91's proof reads VALID again at HEAD, and the DB-b-91 AMENDMENT 1 commit that was refused now lands. origin/CLOUD carries the fix once the laptop integrator takes box/dell2 (MSTR msg 3384).",
+  "one_line": "D2-S3 disarmed: schema type restored @1f256cfc64; proof checks VALID again on dell2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1f256cfc64 HEAD (box/dell2)",
+      "MSTR~DELL2 msg 3384"
+    ]
+  },
+  "spec_asserts": "A proof check returns a verdict, never a tool error.",
+  "world_is": "The schema reads type string again at HEAD."
+}
+```
+
+## IRPT_DASHBD-D2-W68-S3 -- Resolves IRPT_DASHBD-D2-W68-S2: schema fix 1f256cfc64 is an ancestor of the worker branch via merge beaa8bc8a6
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T14:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-D2-W68-S2. Schema fix 1f256cfc64 reached branch wk-irpt-dashbd-45-68 via merge commit beaa8bc8a6 (is-ancestor read, rc 0); proof-of-spec-check on the TO-DB-b-93 proof now prints VALID (rc=0).",
+  "one_line": "W68-S2 resolved: schema fix 1f256cfc64 merged into the worker branch @beaa8bc8a6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1f256cfc64 HEAD -> rc 0 at beaa8bc8a6",
+      "proof-of-spec-check TO-DB-b-93 proof -> VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "A proof check returns a verdict, never a schema-caused INVALID.",
+  "world_is": "With the fix merged, the proof check returns VALID."
+}
+```

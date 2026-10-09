@@ -1,0 +1,15 @@
+# Drive log 2.0.0_SA_COO~Q1 -- MDPF_DEMQUE, 2026-10-09 13Z (desktop-hk1uu7n)
+
+Decisions closed: round 6 drained (t19 @112f2f2b12, t21 @2128f6e687 after amendment @154f28a514), real run @d53f6aaa9a, packet READ 13:13Z, round 6 CLOSED @0c72210d2b; CTO round-6 analysis @4f7ded8845 (FWD-4 REALIZED) -> round 7 issued @5edbbfc79c; t23 merged @00a33f63ee, t22 merged @4c6a16ded6; t24 (Saturday backfill) at site Z. Rows verbatim from the runtime tick log.
+
+## tick 65 -- 2026-10-09T13:01:19Z | MDPF_DEMQUE | L7/drain | 6 | 1/3 merged (t20 @a01be8c2eb) | t19 repaired @ea746cfb12 (cumulative), merge blocked by R1's safe-merge lock (since 12:57Z); t21 done @4e41917447 but breaks test_demque_store.py + draw hookup missing -> amended @154f28a514, ~18 re-seated (rows unioned in its branch @f1ed17306a) | result=work |
+## drain -- 2026-10-09T13:04:03Z | MDPF_DEMQUE | t19 merged @112f2f2b12; QVA-OK, FWD4-OK ON_TIME on base | work |
+## tick 66 -- 2026-10-09T13:07:33Z | MDPF_DEMQUE | L8 | 6 | 3/3 | DRIVE FORWARD: t19 merged @112f2f2b12, t21 merged @2128f6e687 after amendment @154f28a514 + re-seat; 83 tests, all six R6 checks OK on base; round-close-check MAY-CLOSE 3/3; row D1-S4 @a27fc03fb5; real run @d53f6aaa9a; L8 packet to 3.0.0_SA_CVO | result=work |
+## tick 67 -- 2026-10-09T13:08:56Z | MDPF_DEMQUE | L8 | 6 | 3/3 | packet msg 2456 SENT, not yet READ (1 min); 12Z drive log committed | result=work |
+## tick 68 -- 2026-10-09T13:18:52Z | MDPF_DEMQUE | L10 | 6 | 3/3 | DRIVE FORWARD: packet msg 2456 READ 13:13:39Z; round 6 CLOSED (ROUND_CLOSE); awaiting CVO L8/L9 + CTO round-6 analysis | result=work |
+## tick 69 -- 2026-10-09T13:31:20Z | MDPF_DEMQUE | L5-L7 | 6->7 | 0/3 | DRIVE FORWARD: CTO round-6 analysis @4f7ded8845 (FWD-4 REALIZED; R1 non-trading-day backfill at measured 5,858) -> ONE issuance round 7 @5edbbfc79c (t22 ~19, t23 ~20, t24 ~ZQ depends t22); 2 workers spawned; XB 7a23 to MSTR to carry | result=work |
+## tick 70 -- 2026-10-09T13:32:14Z | MDPF_DEMQUE | L7 | 7 | 0/3 | workers ~19/~20 just spawned (13:30Z); t24 waits on t22 + XB 7a23 carry | result=nothing |
+## tick 71 -- 2026-10-09T13:37:44Z | MDPF_DEMQUE | L7/drain | 7 | 1/3 | t23 merged @00a33f63ee: QALLT-OK, QALL-OK 4 of 4 (SECHIST UNQUOTED); ~20 cherry-picked the proof-schema fix 6b65ca5a52 (identical bytes); t22 running; t24 waits on t22 | result=work |
+## drain -- 2026-10-09T13:42:07Z | MDPF_DEMQUE | t22 merged @4c6a16ded6: NTD-OK, NTDQ-OK (finish 2026-10-17, trading day 0, Saturday 5858, measured); 88 tests; proof VALID at base; rows D1-W19-S1 (claim-gated rule), D1-W19-S2 (worktree lacked schema fix); integrate-to-site-Z ask to MSTR for t24 | work |
+## tick 72 -- 2026-10-09T13:47:17Z | MDPF_DEMQUE | L7 | 7 | 2/3 | EVENT-GATED: t24 draws Sat 2026-10-10 at site Z (round 7's last outcome); t22 not yet on CLOUD (laptop integrate chased, msg 2503); carried: TR column + lock floor at the 02:30Z draw | result=nothing |
+## tick 73 -- 2026-10-09T13:57:47Z | MDPF_DEMQUE | L7 | 7 | 2/3 | WAIT: t22 not yet on CLOUD (MSTR watching, msg 2512); XB 7a23 on box/sitez; t24 draws Sat 10-10 | result=nothing |

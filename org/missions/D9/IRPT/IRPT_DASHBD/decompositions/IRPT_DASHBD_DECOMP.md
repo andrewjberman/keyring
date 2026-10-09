@@ -950,3 +950,57 @@ once they drain. DB-b-88 (in flight) releases DB-b-87's key and backfills 2026-1
 meanwhile.
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~65`, ~66 and ~67, cut from box/dell2.
+
+
+## 47. ROUND 45, WORKSTREAM B (2026-10-09 ~13:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 11.1, msg 3362, @43bbe32935)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-93` | E1, FWD-12: the runner accepts the seat-authored selection file (derived id, or `selection_source: file`) | LOCAL | none | B45-1 |
+
+**DB-b-86 (round 41)** is BLOCKED by its AMENDMENT 3 on the Cottonwood returns gold (ADVI_COTBKF, COTBKF ADDENDUM 11.2), DB-b-93, and the
+laptop's hop3 file.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~68`, cut from box/dell2.
+
+
+## 48. ROUND 46, WORKSTREAM B (2026-10-09 ~13:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 12, msg 3371, @77e60c3d2b)
+
+Rounds 42 and 44 are MAY-CLOSE (CVO ADJUDICATION_v26 @fbc76ab42d). The CTO ruled DB-b-90 and DB-b-91 release TOGETHER as ONE gold Lambda release
+after `yIAQjspL`, under one pair (item 5).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-94` | E1, FWD-4: the release packet -- the member census over live yIAQjspL (exactly DB-b-90's and DB-b-91's members), both branches, rollback, two UNSIGNED halves | WORLD | DB-b-90, DB-b-91 (drained) | B46-1 |
+
+The apply is a later cell, after both halves are signed. DB-b-92 rides the runner (item 3); its sha256 limb stays dormant.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~69`, cut from box/dell2.
+
+
+## 49. ROUND 47, WORKSTREAM B (2026-10-09 ~14:1xZ, issuer 2.0.0_SA_COO~D2, on the R44 CTO half @fa8d2c2961 and ADDENDUM 13.1, msg 3413)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-95` | E1, FWD-4: apply the R44 release (DB-b-90 + DB-b-91, ONE gold Lambda release over yIAQjspL) under the signed pair | WORLD | DB-b-94, both halves | B47-1 |
+| `DB-b-96` | E2, FWD-11: sources.json carries valuation_source / fee_treatment / price_basis; the returns manifest reads them, with an absent arm (W66-S1) | WORLD (served-producer floor) | none | B47-2 |
+| `DB-b-97` | E3, FWD-4: the backfill path clears landed days from the lots status record (W69-S2) | WORLD (served-handler floor) | DB-b-91 | B47-3 |
+
+**Isolation.** DB-b-95 builds at its own worktree base (handler blob `7c9bb9dcdc5b`) and does not merge box/dell2 before the build, so DB-b-97's
+handler edit cannot ride the R44 release. DB-b-96 and DB-b-97 ship later under their own pairs. ADVI_COTBKF's CB-al-2 mint is held until DB-b-96
+drains (ADDENDUM 13.1).
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~70`, ~71 and ~72, cut from box/dell2.
+
+
+## 50. ROUND 48, WORKSTREAM B (2026-10-09 ~14:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 14, msg 3416)
+
+Round 47 is already issued, so the CTO's FWD-8 cell is cut in its own round.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-98` | E1, FWD-8: classify the 510 UNEXPLAINED outside segments of TIEOUT_COMPOUND_V2 by a declared reason set (rule-24 record) or file defects; the counts sum to 990 | LOCAL | none | B48-1 |
+
+The tolerance is Andrew's word (open call 2f53, REC 0.35pp); this cell runs regardless.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~73`, cut from box/dell2.
