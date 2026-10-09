@@ -73,19 +73,22 @@ arms = [
          m.union_fences(blk([(None, A)]), blk([(None, A), (None, B)]), blk([(None, A), (None, dict(B, v=7))])))),
     ("BLOCKS: one row changed differently on both sides -> UNRESOLVED",
      lambda: m.union_fences(blk([(None, A)]), blk([(None, dict(A, v=8))]), blk([(None, dict(A, v=9))]))[0] is None),
-    # APPEND-ONLY logs (0.0.0_AB_MSTR msg 107817): base + CLOUD tail + box tail, only when both sides extend the base.
-    ("APPEND: both sides append, CLOUD is theirs -> base + CLOUD tail + box tail",
+    # APPEND-ONLY logs (0.0.0_AB_MSTR msgs 107817, 107847): a LINE UNION -- CLOUD's file, then the box-only lines.
+    ("APPEND: both sides append, CLOUD is theirs -> CLOUD's file + box-only lines",
      lambda: m.union_append("a\nb\n", "a\nb\nBOX\n", "a\nb\nCLD\n", cloud="theirs")[0] == "a\nb\nCLD\nBOX\n"),
-    ("APPEND: both sides append, CLOUD is ours (integrate) -> base + CLOUD tail + box tail",
+    ("APPEND: both sides append, CLOUD is ours (integrate) -> CLOUD's file + box-only lines",
      lambda: m.union_append("a\n", "a\nCLD\n", "a\nBOX1\nBOX2\n", cloud="ours")[0] == "a\nCLD\nBOX1\nBOX2\n"),
-    ("APPEND: a CLOUD tail with no final newline does not fuse with the box's first line",
+    ("APPEND: CLOUD's copy REORDERED by an earlier hand union (the dell1 HOLD) -> CLOUD's order kept, box-only appended",
+     lambda: m.union_append("a\nb\n", "b\na\nC\n", "a\nb\nBOX\n", cloud="ours")[0] == "b\na\nC\nBOX\n"),
+    ("APPEND: a CLOUD file with no final newline does not fuse with the box's first line",
      lambda: m.union_append("a\n", "a\nBOX\n", "a\nCLD", cloud="theirs")[0] == "a\nCLD\nBOX\n"),
-    ("APPEND: a side edited an earlier line -> UNRESOLVED",
-     lambda: m.union_append("a\nb\n", "a\nB!\nBOX\n", "a\nb\nCLD\n", cloud="theirs")[0] is None),
-    ("APPEND: a side removed a line -> UNRESOLVED",
-     lambda: m.union_append("a\nb\n", "a\n", "a\nb\nCLD\n", cloud="theirs")[0] is None),
-    ("APPEND: no merge base -> UNRESOLVED",
-     lambda: m.union_append(None, "x\n", "y\n")[0] is None),
+    ("APPEND: a CRLF copy of a line CLOUD holds is the same line -> not duplicated",
+     lambda: m.union_append(None, "a\r\nBOX\r\n", "a\n", cloud="theirs")[0] == "a\nBOX\r\n"),
+    ("APPEND: a line the box holds twice and CLOUD once -> one copy added",
+     lambda: m.union_append(None, "x\nx\n", "x\n", cloud="theirs")[0] == "x\nx\n"),
+    ("APPEND: nothing is dropped -- every line of either side is in the result",
+     lambda: (lambda r: all(x in r.splitlines() for x in ["q", "a", "b", "z"]))(
+         m.union_append("a\nb\n", "a\nz\n", "q\na\nb\n", cloud="theirs")[0])),
 ]
 for name, fn in arms:
     try:

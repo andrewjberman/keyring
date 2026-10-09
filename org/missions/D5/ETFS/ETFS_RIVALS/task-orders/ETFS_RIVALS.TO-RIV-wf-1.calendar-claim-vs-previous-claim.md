@@ -113,7 +113,8 @@ FAIL as expected.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 by 2.0.0_SA_COO~V1: AC1 PASS 4 of 4 (worker ~29 proof VALID) -->
 <round>28</round>
 <workstream>3d</workstream>
 <slot>~29</slot>

@@ -2033,3 +2033,131 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The round-8 file was taken with 63 roots mapped; the live run maps 78, so hole_before=10 is not comparable with hole_after=41. The build holds (10 of 10 names NOT-ASKED, hole fell 51 to 41 on the same 78 roots) but the order's own comparison reads false. Not weakened; the order stays open for the issuer to name the right baseline (the CONTEXT's hole=51)."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S2 -- exercise_override.py (the ~2 script the order says to keep passing) fails O12 at the base and O1, O5, O7 once BF-y-1 moves the audit row; the script is outside the write grant
+
+```json
+{
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T08:32:54Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "LGIC_BLANKFIX-D1-W1-S2",
+  "one_line": "exercise_override.py (the ~2 script the order says to keep passing) fails O12 at the base and O1, O5, O7 once BF-y-1 moves the audit row; the script is outside the write grant",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "at base 46f6d8a447: python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/exercise_override.py -> 'O12 ... got: switch present, audit log absent ... FAIL' and 'OVERRIDE-ARMS ok=False arms=12 held=11' (O12 expects naming-place.enforce ABSENT; the switch is present since 4d2bfc6dfd)",
+      "after BF-y-1 the same unmodified script: O1, O5, O7 FAIL (they read the ignored org/naming-place-override-audit.log, which the cell no longer writes) plus O12: 'OVERRIDE-ARMS ok=False arms=12 held=8'",
+      "the adjusted copy org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/exercise_override.py (O1/O5/O7 read the staged jsonl row, O12 compares the switch and audit file bytes before and after): 'OVERRIDE-ARMS ok=True arms=12 held=12'"
+    ]
+  },
+  "spec_asserts": "The lead's brief: keep exercise_override.py and exercise_switch_on.py passing, adjusting only an arm the cell legitimately changes, and name each such arm.",
+  "world_is": "The ~2 script lies outside this order's <paths>, so it was left as it was and its adjusted copy sits in the ~1 deliverables folder (arms named in its docstring: O1, O5, O7, O12; O2-O4, O6, O8-O11 unchanged). exercise_switch_on.py passes unchanged (SWITCH-ON ok=True arms=11 held=11). The ~2 script still fails O12 on its own, a defect that predates this cell."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S3 -- BLIND: a real override commit adds org/audit/naming-place-override-audit.jsonl, a path the MSTR ledger hook's record-only list does not name; no hook or lane gate ran in the temporary trees
+
+```json
+{
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T08:32:54Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "LGIC_BLANKFIX-D1-W1-S3",
+  "one_line": "BLIND: a real override commit adds org/audit/naming-place-override-audit.jsonl, a path the MSTR ledger hook's record-only list does not name; no hook or lane gate ran in the temporary trees",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      ".tools/git-hooks/mstr-ledger-check.sh lists record-only paths near its line 197-199 (org/mcp/agent-spawn-audit.log, org/git-author-override-audit.log, org/audit/archive/*); org/audit/naming-place-override-audit.jsonl is not among them",
+      "exercise_audit_in_commit.py cuts the naming stage of .tools/safe-commit.sh and lands with git commit --only in a temporary repository that carries no hooks, so no hook and no lane gate graded the audit path"
+    ]
+  },
+  "spec_asserts": "BF-y-1: safe-commit.sh adds the audit file to the pathspec of the commit it permits, so the landed commit carries its own row.",
+  "world_is": "Not exercised end to end: whether a hook (the MSTR ledger check for an MSTR-authored commit, or a lane/ownership gate for another lane) refuses a commit that carries org/audit/naming-place-override-audit.jsonl is unread. A refusal fails closed (the override commit does not land, the unwind removes the row), so the hazard is INERT. The hook and the lane tables are outside BF-y-1's paths; the owner of each decides."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S4 -- a refusal AFTER the naming stage (a later gate) leaves the override row on disk; only the naming blocks and a failed git commit unwind it
+
+```json
+{
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T08:32:54Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "LGIC_BLANKFIX-D1-W1-S4",
+  "one_line": "a refusal AFTER the naming stage (a later gate) leaves the override row on disk; only the naming blocks and a failed git commit unwind it",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      ".tools/safe-commit.sh: _np_unwind is called on the two naming-stage BLOCKED branches and when git commit returns non-zero; the gates between them (surprise-row-gate, prd-manifest-gate, comp-system, pipeline-gate2) exit 1 without it",
+      "exercise_audit_in_commit.py C6 holds the naming-stage refusal (rc=1, disk and index = the seed); with _np_unwind neutered the same arm FAILS (audit disk CHANGED, index CHANGED), so the unwind is what holds C6"
+    ]
+  },
+  "spec_asserts": "BF-y-1: a commit with no override line does not touch the audit file; nothing else in the commit flow changes.",
+  "world_is": "When a later gate refuses an overridden commit, the row for that unlanded attempt can stay in the working copy and ride into the next commit that stages the file, as an audit row of an attempt that permitted nothing. Over-recording, never under-recording; the naming-stage and commit-failure cases are held and exercised."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S5 -- msg_sha256 binds the message text as PASSED to safe-commit.sh (the -F bytes, or -m texts joined by a blank line), not the bytes git stores after its own message cleanup
+
+```json
+{
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T08:50:05Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "LGIC_BLANKFIX-D1-W1-S5",
+  "one_line": "msg_sha256 binds the message text as PASSED to safe-commit.sh (the -F bytes, or -m texts joined by a blank line), not the bytes git stores after its own message cleanup",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      ".tools/safe-commit.sh override block (BF-y-2): NP_MSGFILE is written from COMMIT_ARGS (-F file bytes; -m texts joined by a blank line); the commit itself is `git commit --only \"${COMMIT_ARGS[@]}\"`, which applies git's default cleanup (whitespace mode for -F/-m: trailing whitespace and surrounding blank lines stripped, one trailing newline added)",
+      "exercise_override_bound.py B1/B2 hold the hash against the text as passed (-F bytes; two -m texts joined by a blank line); a stored-message hash was not computed, and `-F -` (stdin) is read by no override reader at all, as before BF-y-2"
+    ]
+  },
+  "spec_asserts": "BF-y-2: msg_sha256 = sha256 of the exact committed message (the -m/-F text, as passed).",
+  "world_is": "The binding is to the text safe-commit.sh is handed, which is what the gate can be handed before the commit exists; git's cleanup can change trailing whitespace and blank lines in the stored message, so the stored message may differ from the hashed text in whitespace only. The row still cannot admit a commit whose message text differs in any other byte (B7 holds one extra byte refused). A reader who needs the stored message's own hash would have to hash it after the commit, which is outside this gate. The row's trust base is unchanged: a seat that can stage a row and hash its own message can still forge one."
+}
+```
+
+## LGIC_BLANKFIX-S13 -- round 9's two exercise scripts spawn a bare bash and false-fail on a box with WSL
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S13",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T07:55:00Z",
+  "one_line": "Round 9's exercise_switch_on.py and exercise_override.py spawn a bare 'bash' from Python; on a Windows box with WSL installed CreateProcess reaches System32 bash.exe first, so both read ok=False on the laptop although every arm holds with Git Bash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run by 3.0.0_SA_CVO in a detached worktree of origin/CLOUD 4016b2ec41: exercise_switch_on.py -> 'SWITCH-ON ok=False arms=11 held=1'; exercise_override.py -> 'OVERRIDE-ARMS ok=False arms=12 held=7'; one arm's output 'WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed'",
+      "the same scripts through a wrapper that maps argv[0] 'bash' to the Git Bash executable and changes nothing else: 'SWITCH-ON ok=True arms=11 held=11', 'OVERRIDE-ARMS ok=True arms=12 held=12'",
+      "exercise_switch_on.py run_bash(): subprocess.run(['bash', ...]); prepending Git's /usr/bin to PATH does not change the result (System32 precedes PATH in the CreateProcess search)",
+      "CLAUDE.md Git section: Python spawning ANY MSYS binary uses .tools/msys_argv_guard.py msys_safe_run(), never bare unix names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BX3's criterion and BX4-AC1 read ok=True wherever the issuer or the CVO runs them.",
+  "world_is": "They read ok=True on dell1 and ok=False on the laptop for an environment reason, not a gate one. The production gates spawn no bare bash (naming-gate.py, naming-apply-gate.py, opal_naming_rootcheck.py, opal_naming.py searched)."
+}
+```
