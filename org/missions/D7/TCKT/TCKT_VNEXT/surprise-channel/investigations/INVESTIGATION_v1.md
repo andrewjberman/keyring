@@ -463,3 +463,86 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "world_is": "Met as written. Weighed: (a) the positive arm used a synthetic attachment, so it proves the write path and claims, not real report ids (H6 / TV-r-1 carry that); (b) test ticket TCK-20261009-a1052909 stays open on Andrew's word (35fabf20c8); (c) the dell1 reach is D2-S9, the CTO's. None changes the grade."
 }
 ```
+
+## TCKT_VNEXT-D2-W6-S1 -- Neither candidate one-firm token meets the CTO's bar: both authorizer-resolve to allowedFirmIds=opal-capital, so a ticket CREATE for 49financial is refused 400 and 27 of 117 portal routes reach more than one firm
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W6-S1",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~6",
+  "surfaced_at": "2026-10-09T04:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Neither candidate one-firm token meets the CTO's bar: both authorizer-resolve to allowedFirmIds=opal-capital, so a ticket CREATE for 49financial is refused 400 and 27 of 117 portal routes reach more than one firm",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~6/SA_ROUTE_CENSUS.json: rows=117, per token ONE_FIRM=36 NO_FIRM=51 MORE_THAN_ONE=27 UNRESOLVED=3 (sa_checks.py sa-census: SA-CENSUS-OK)",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:293-322 computeAllowedFirms: ALL only for userType Dev or tier internal; otherwise the own firmId",
+      "infra/aws/lambda/ticket_center/lambda_function.py:310-315 _firm_allowed and :1072-1073 the CREATE refusal",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1124-1137 selected_tenant admitted for any internal caller; the allowedFirmIds clamp only when x-user-type is service"
+    ]
+  },
+  "spec_asserts": "CTO msg 2342 requires the synthetic test-filer row clamped to ONE firm (49financial) on every /api/scoped route it can reach, and the FWD-1 design has this filer, as INTERNAL (firmId opal-capital), file an Analysis Request for 49financial.",
+  "world_is": "Both T_ADVISOR_OPAL and T_SERVICE_TIER_OPAL get allowedFirmIds=opal-capital (only userType Dev or tier internal yields ALL), which (a) fails _firm_allowed for answers.firm=49financial so CREATE returns 400, and (b) leaves 6 ticket routes (list, metrics, get, claim, complete, report) with no firm check and 21 investor-reporting routes admitting any of 3 client firms via selected_tenant (the allowedFirmIds clamp there is service-only). Census: 117 routes, MORE_THAN_ONE=27, UNRESOLVED=3 per token.",
+  "notes": "The smallest clamps (a FILER_ALLOWED_FIRMS env map in the COMMENTARY_ALLOWED_FIRMS pattern, in _firm_allowed and at served.py:1134) are written in SA_ROUTE_CENSUS.md section 2. Neither is built here; this order is read-only."
+}
+```
+
+## TCKT_VNEXT-D2-W6-S2 -- The data-refresh routes (including trigger and rollback) admit a caller whose userType is absent, so a one-firm test filer token reaches platform-wide data operations that have no firm axis
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W6-S2",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~6",
+  "surfaced_at": "2026-10-09T04:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The data-refresh routes (including trigger and rollback) admit a caller whose userType is absent, so a one-firm test filer token reaches platform-wide data operations that have no firm axis",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/data_refresh/lambda_function.py:160-167: 'Allow Dev users or users without userType restriction' returns True when user_type is empty",
+      "infra/aws/lambda/data_refresh/lambda_function.py:1830-1865 routes: POST /data-refresh/trigger, POST /data-refresh/rollback, POST /data-refresh/upload-urls",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:406 userType: decoded.userType || 'null' (no claim becomes the string null)"
+    ]
+  },
+  "spec_asserts": "The CTO's bar is about FIRM reach, and the census treats a route that reads no firm as NO_FIRM; nothing in the order suggests a no-userType token can run platform operations.",
+  "world_is": "opal-data-refresh-api validate_user_type admits userType 'Dev' OR empty and maps the authorizer's 'null' string to empty, so any token without a userType passes the gate on all 9 data-refresh and security-scanner routes (trigger, rollback, upload-urls included). The same census shows the trade-desk dashboard/workflow routes, portal-content GET and the market data proxy read no identity or firm either. These 51 NO_FIRM rows satisfy a firm bar and are still reachable by the filer. Whether production users carry a userType is data, not in source.",
+  "notes": "Not a defect of this order. Raised because a token mint that clears the firm bar would still hold these routes; a mint with userType set to a non-Dev value would be refused here (:168-170).",
+  "disarm_owner": "1.0.0_SA_CTO"
+}
+```
+
+## TCKT_VNEXT-D2-W6-S3 -- The portal route denominator cannot be completed from source: a console-only default route and live-only routes exist, and the IRPT route contract's own denominator is stale
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-W6-S3",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_TCKT_VNEXT~6",
+  "surfaced_at": "2026-10-09T04:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The portal route denominator cannot be completed from source: a console-only default route and live-only routes exist, and the IRPT route contract's own denominator is stale",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/apigateway-portal/routes.tf:1-2 and main.tf:53-57: $default route and stage console-only",
+      "infra/aws/terraform/partners-api/api-gateway.tf:12-13: /api/shared/ routes manually created and never in Terraform",
+      "docs/contracts/investor-reporting/v1/routes.json lines 271-279 _denominator vs a count of its routes array: DECLARED 21, ROUTED_ELSEWHERE 2"
+    ]
+  },
+  "spec_asserts": "The order says to enumerate every route on the portal API across all Terraform roots under infra/ and that comp-routes is not complete.",
+  "world_is": "Source yields 116 routes plus the console-only $default (khcd4f1, no authorization setting in source, integration s7ntfz4 opal-portal-data-proxy). partners-api/api-gateway.tf:12-13 says the /api/shared/advisor-intelligence/* routes were manually created and never in Terraform, so any still live are invisible to source. docs/contracts/investor-reporting/v1/routes.json _denominator says declared=19 while the file holds 21 DECLARED plus 2 ROUTED_ELSEWHERE (23 rows).",
+  "notes": "A live apigatewayv2 get-routes read would close the console-only part; it was barred by this order (no AWS call). The census JSON records the gap in denominator.not_in_source."
+}
+```
