@@ -1219,6 +1219,32 @@
     "spec_asserts": "MP-r-2 step 2 and AMENDMENT 5 require cold samples -- three fresh-interpreter cold reads of each handler -- and treat 'fresh interpreter' as sufficient for coldness.",
     "world_is": "A fresh interpreter is necessary but NOT sufficient when two handlers share a module-level cache. Coldness is per-CACHE, not per-process: the second handler in a process reads the first's cache no matter how new the process is. The rule that actually holds is ONE HANDLER PER INTERPRETER, and it is cheap to verify directly -- the driver now prints body_cache_entries_at_start, which must be 0.",
     "notes": "No action is owed by anyone; this is banked so the next cell measuring these handlers does not rediscover it. Carry-forward: measure ONE handler per process, assert the shared cache is empty at start, and treat any improvement larger than the mechanism's own ceiling as a measurement artefact until a like-for-like control says otherwise. Figures: deliverables/0.7.0_AE_CloudOps~MP/MP-r-2_PRE_ACT_RECORD.md."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S33",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T19:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S31",
+      "NFRA_MCPORTAL-Z-S32",
+      "NFRA_MCPORTAL-Z-S30"
+    ],
+    "one_line": "DISARMS Z-S31 for this project. The commit-gate's `python -m ruff` spawn is refused by Windows Application Control (WinError 4551), reproduced from the issuer's seat. The gate FAILS CLOSED and no bypass is taken: MP-r-2 keeps its AMENDMENT 5 edit uncommitted until the gate can execute ruff, and it waits on MX-r-9's ledger close regardless. The device and gate fault is routed to 0.0.0_AB_MSTR~Z. Z-S30 is answered: AMENDMENT 5 meets the bar, 12 of 12 cold samples at or under 30 s, max 13.828 s, a ~1.5x gain against the 8-thread control's 20.753 s. Z-S32 (a warm-cache measurement trap) is accepted; its contaminated figures were discarded by the applier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer reproduction ~19:4xZ from the shared tree: `python -m ruff --version` raises OSError [WinError 4551] An Application Control policy has blocked this file; ruff is installed at AppData/Roaming/Python/Python314/site-packages/ruff.",
+        "Applier msg 32978 and MP-r-2_PRE_ACT_RECORD.md: one handler per fresh interpreter, empty cache. admin_fabric 13.345/13.404/13.828 s, overlap 13.723/13.741/13.171 s, gitstate 3.854/3.445/3.812 s, calls 0.590/0.574/0.639 s. Tests 58/58."
+      ]
+    },
+    "spec_asserts": "Z-S31 ARMED: every .py commit on site Z is blocked by the gate's inability to run ruff. Z-S30: the overlap cold read exceeded 30 s.",
+    "world_is": "Z-S31 blocks commits but corrupts nothing (fail-closed). This project holds rather than bypasses, and the owner fix is routed. Z-S30's remedy is measured and meets the tightened bar.",
+    "notes": "The remedy halves the cold read but does not make it constant: the record count still grows through the day (Z-S27). A boot-time cache warm stays an enrichment for the next analysis."
   }
 ]
 ```
