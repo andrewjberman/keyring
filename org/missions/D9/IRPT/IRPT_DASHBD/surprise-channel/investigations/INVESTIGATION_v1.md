@@ -3187,3 +3187,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W38-S1 -- Round 31's classifier (~36) and the reader of record (~35's v2) form the daily mean differently: ~36 keeps negative daily values, v2 keeps positives only; 8 segments hold a negative value.
+
+```json
+{
+  "id": "IRPT_DASHBD-W38-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~38",
+  "surfaced_at": "2026-10-09T02:00:00Z",
+  "one_line": "~36's mean_daily_value keeps negative daily values, v2's daily_mean_value keeps positives only; making ~36 import v2's base unchanged moves its record (evidence strings, 8 segments).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-60: ~35's v2 and ~36's classifier agree on the daily-mean fee base; ~36 can import it, defining none of the five names, with its output unchanged.",
+  "world_is": "MEASURED: the two means are not the same function. mean_daily_value (~36) averages every non-zero served market_value_eod; daily_mean_value (v2) averages the positive ones. They differ on the 8 of 9,082 planned segments whose served days hold a negative value. A first run of ~36 importing v2's function unchanged rewrote UNEXPLAINED_CLASSES_E2.json (evidence strings of 6 rows: mean value and the abs_diff figures; cause classes of the rows shown unchanged). The reader of record therefore carries a flag, daily_mean_value(days, positive_only=True) and fee_base_gross(..., positive_only=True); ~36 binds both with positive_only=False (functools.partial), and its JSON and MD re-run byte-identical. The grading of record (v2, positive_only=True) is the 8,088; whether the negative-value segments should average positives only is a question for the CTO, not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_reader.py daily_mean_value",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~36/unexplained_classes.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
