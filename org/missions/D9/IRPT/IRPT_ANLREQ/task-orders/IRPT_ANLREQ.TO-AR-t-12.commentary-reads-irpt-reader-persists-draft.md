@@ -154,6 +154,16 @@ Base: box/dell2 at this amendment, where `ar1_t2_checks.py t13b` reads `AR1-T13B
 
 <criterion id="AR13-t-AC3" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13b</invocation><expect>AR1-T13B-OK</expect></criterion>
 
+### AMENDMENT 8 (issuer, 2026-10-09 ~15:5xZ) -- ruling on row IRPT_ANLREQ-D2-W41-S17 (the ADHC_DRIFTD.002 parity stop)
+
+The staged closure now resolves (12 staged_from members verified, 0 "not found"); the build stops at the parity gate on seven top-level .py
+files in the SHARED `reports` source_dir that no function's files[] declares (build_resident_package, currency_authority, custody_write,
+generate_installed, request_composition, resident_installed, status_installed). MEASURED (issuer, AST over the source_dir): the draft store's
+local import closure is {commentary_draft_store, composition, repository, retention}, all declared; none of the seven is in it. RULING: build
+with `BAU_PARITY_SKIP=1`, the script's own sanctioned override, justified by that closure; the check `t13b` sets it. The seven's
+registration belongs to whichever functions own them, not to this entry, and stays on row W41-S17.
+17. Re-run step 16 with `BAU_PARITY_SKIP=1` and record the closure line above in the proof's notes.
+
 <criterion id="AR12-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t12</invocation><expect>AR1-T12-OK</expect></criterion>
 `AR12-t-AC1` -- the three named tests pass, the file is green, and `DecryptWithTheIrptKey` is gone from commentary.tf.
 

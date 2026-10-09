@@ -1,1 +1,2 @@
 {"cells_drawn": 1, "cells_quoted": 1, "channel": "reference", "date": "2026-10-09", "drawer": "0.7.0_AE_CloudOps~ZV", "job": "SITEZ-SIGNIN-PREFLIGHT-REFDATA-20261009", "label": "quoted", "outcome": "DRAWN", "page": "production daily pulls (pre-flight)", "vendor": "bloomberg"}
+{"cells_drawn": 1, "cells_quoted": 1, "channel": "history", "date": "2026-10-09", "drawer": "0.0.3_BG_BBGTerminal", "job": "MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009", "label": "quoted", "outcome": "DRAWN", "page": "Positioning (FWD-9 money-market rule)", "vendor": "bloomberg"}

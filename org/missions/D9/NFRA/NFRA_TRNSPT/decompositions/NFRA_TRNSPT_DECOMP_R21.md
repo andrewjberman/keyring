@@ -49,3 +49,16 @@ generalised by NFRA_OPLGTW at site Z, raised MSTR to MSTR.
 | `TR-d-20` (FWD-6: place the real deck byte-exact with `updates/intake.py`, read it back, and recognise a re-saved copy) | NFRA_OPLGTW at site Z (via 0.0.0_AB_MSTR~DELL2) | a gateway capability lands the item's bytes at the market_update bronze address (builder output) and returns its sha256; the issuer then reads back size 202534 and the fingerprint, and the cell is cut the same tick |
 
 The rest of round 21 proceeds.
+
+## AMENDMENT 3 (issuer, 2026-10-09 ~15:4xZ) -- the FWD-6 un-park needs a transcripts-key WRITE statement for the gateway
+
+Site Z 1.0.0_SA_CTO~Z ruling @14cbf27dec (relayed by 0.0.0_AB_MSTR~DELL2, msg 3560): the generalised .pptx copy (OG-ab-2) writes the deck into
+`opal-data-transcripts` under SSE-KMS, so `opal-gateway-role` needs `kms:GenerateDataKey` + `kms:Encrypt` on `aws_kms_key.transcripts`. That is
+NFRA_TRNSPT's key and a follow-on key-policy apply after s21. The gateway's own S3 write grant is site Z's (its role policy).
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-k-21` | one key-policy statement `GatewayWritesTranscripts`: GenerateDataKey + Encrypt for the gateway role, read by a data source (never a typed ARN), conditioned like `DellAgentUsersGenerateDataKey` (`kms:ViaService` = S3 us-east-1, `kms:EncryptionContext:aws:s3:arn` = this bucket); plan-only | FWD-6 | dell2 worker (workstream `keys`) | WORLD (path floor) | worker-light | -- |
+| `TR-ka-21` | its apply under a never-widen pair (a NEW writer on the key), at laptop 0.7.0_AE_CloudOps~TRL; the key diff ADDS only that statement | FWD-6 | ISSUER pair + applier | WORLD | -- | TR-k-21 |
+
+Chains: C (TR-k-21 -> TR-ka-21), cap 8. Battery: `r21_checks.py k21` at base: `R21-K21-FAIL absent`.
