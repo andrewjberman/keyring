@@ -311,3 +311,53 @@ write: **1 row** (`S1`).
   "notes": "INPUT FOR L5, NOT A CUT. ADVI_FIRMBKTS holds L4-R ADMITTED with no COO lane seated (SEQUENCE.yaml slot order). The decomposition that seats it carries this patch into the cell that renames build_canonical_prices_v2.py's literal, so the rename and the tolerant load land in one diff. The S_00 step touches the cot-pipeline's SSM terraform, a served change: it rides that cell's never-widen pair. Disposition closes when that cell's merge carries the patch or the decomposition rules it out with its reason."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~F1",
+  "surfaced_at": "2026-10-09T20:28:52Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~F1",
+  "one_line": "THE FENCE ON opal-data-inflection AND opal-data-cottonwood NOW ADMITS user/cloudops-dell1-agent-user, SO PRD v1.3's F4 PREMISE (IT DENIES s3:* TO EVERY IDENTITY WE HOLD) HAS MOVED",
+  "spec_asserts": "PRD v1.3 CELL CANDIDATES F4 and SURFACE MANIFEST: both buckets are born with a fence that DENIES s3:* to every identity this estate holds, measured at EXERCISED on 2026-09-19 (get-bucket-policy refused user/Andrew_Berman); F4 first mints a role matching the admit glob, then repairs the fence from it.",
+  "world_is": "2026-10-09 ~20:1xZ, as arn:aws:iam::313476888478:user/cloudops-dell1-agent-user: get-bucket-versioning returns Enabled and list-objects-v2 returns objects on opal-data-inflection (7 depth-4 prefixes, all irpt/inflection/...) and opal-data-cottonwood (12, irpt/ and mdpf/). Whom the attached policy admits beyond this user, and whether the other-firm refusal holds, was not read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-versioning --bucket opal-data-inflection / opal-data-cottonwood (Enabled)",
+      "aws s3api list-objects-v2 --bucket <each> --max-keys 3 (KeyCount 3)",
+      "sts get-caller-identity (user/cloudops-dell1-agent-user)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a round-1 hazard: round 1 writes nothing to either bucket. Bounds F4: its round re-reads whom the attached fence admits (positive arm: this user; negative arm: a principal of another firm) before it cuts any mint or repair. Disposition closes when that round's decomposition cites this row."
+}
+```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-S2",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~F1",
+  "surfaced_at": "2026-10-09T20:28:52Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "opal-data-49financial HOLDS THE 08-18 TEMPLATE'S TIER-FIRST FORM (gold/advi/canonical/..., gold/advi/dimensions/..., gold/advi/reference/bd_legacy_*) BESIDE THE RULED SOURCE-FIRST KEYS, AND NO CELL OF THIS PROJECT'S PRD PLACES IT",
+  "spec_asserts": "PRD v1.3 CONTRACTS, the canonical key string: in a firm bucket every key is {source}/{scope}/{tier}/{table}/{partition} with {scope} equal to the bucket's firm; brief IV.4: the ruled string supersedes the template's tier-first gold/{product}/... form. FWD-2's domain is the three legacy buckets only.",
+  "world_is": "2026-10-09 ~20:1xZ list-objects-v2 over opal-data-49financial, rolled up to four segments: 900 distinct prefixes. Among them, tier-first gold/advi/** classes of about 1,136 objects each (gold/advi/canonical/{twr_daily,flow_ledger,canonical_positions,...}, gold/advi/dimensions/{dim_account,dim_security,...}) and gold/advi/reference/bd_legacy_{holdings,performance,nna} (about 2,425 each), next to source-first irpt/49financial/** keys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api list-objects-v2 --bucket opal-data-49financial (full, paginated), keys rolled up to depth 4 with counts; denominator 900 distinct prefixes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Out of this project's three-bucket domain as the PRD draws it, so it is placed with the CTO: either a PRD addendum widens F2's domain to the residue in the firm buckets, or the producing pipeline's own migration (R19) carries it. Its writer is not traced here. Round 1 does not touch it."
+}
+```
