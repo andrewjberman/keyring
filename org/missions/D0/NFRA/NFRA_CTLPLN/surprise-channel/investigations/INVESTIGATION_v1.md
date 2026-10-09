@@ -6688,3 +6688,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "For a FIRST job completion draft there is no open draft to keep, so the order's rule is satisfied but the job sits in verify with nothing for Andrew to send; only #close ends it. Not widened: the order names no retry limb for a first draft."
 }
 ```
+
+## NFRA_CTLPLN-W56-S4 -- Resolves NFRA_CTLPLN-W56-S1: amendment 1 added the two test files to the paths and each fake model reply is now the JSON contract
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:30Z",
+  "one_line": "Resolves NFRA_CTLPLN-W56-S1 (disarm): under CT-i-14 amendment 1 (003e1a1bf7) test_inbound_mail_reply.py and test_inbound_cloud.py join the paths, and each fake model reply for a Teams-bound drafting call is wrapped as {\"post\": <same text>}; the BLOCKING hazard no longer stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_inbound_mail_reply.py World._kimi COMPLETION_SYSTEM reply wrapped; INBOUND-MAIL-REPLY-TEST ok=True cases=9/9 (was ok=False 8/9)",
+      "test_inbound_cloud.py World._kimi COMPLETION_SYSTEM reply and the chat-draft fallback reply wrapped; INBOUND-CLOUD-TEST ok=True cases=9/9 (was ok=False cases=5/9)",
+      "no assertion about what is posted or texted was changed in either file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTi14-AC2: the agent's seven pytest files and the mail-reply script still pass after the contract lands.",
+  "world_is": "Two scripts outside the original paths fed plain text to a drafting call; they are in paths now and use the contract. The strict parser was not loosened."
+}
+```
+
+## NFRA_CTLPLN-W56-S5 -- Resolves NFRA_CTLPLN-W56-S2 for the chat and job paths: they refuse five drafting-exchange phrases; check_post keeps the full list
+
+```json
+{
+  "id": "NFRA_CTLPLN-W56-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~56",
+  "surfaced_at": "2026-10-09T22:30Z",
+  "one_line": "Resolves NFRA_CTLPLN-W56-S2 for the chat and job paths (amendment 1): post_format.py exposes ANDREW_PHRASES_EOD (full list, check_post unchanged) and ANDREW_PHRASES_DRAFTING (five phrases) and assist.draft_chat_reply and tenant._completion_draft use the second; the End of Day side of S2 (check_post shared with the laptop job) stands as ruled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "daily_reports/eod/post_format.py: addresses_andrew(text, phrases=ANDREW_PHRASES_EOD); check_post calls it with the default full list",
+      "assist.draft_chat_reply and tenant._completion_draft pass ANDREW_PHRASES_DRAFTING",
+      "test_draft_contract.py arm chat_refused: 'your notes' is refused; 'I've attached it, let me know if anything is missing.' is offered; DRAFT-CONTRACT ok=True arms=9/9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Chat and job drafts are refused only for phrases that describe the drafting exchange (amendment 1 item 2).",
+  "world_is": "The full list still gates the End of Day post; the false-refusal rate of the full list on live End of Day posts is unmeasured here."
+}
+```
