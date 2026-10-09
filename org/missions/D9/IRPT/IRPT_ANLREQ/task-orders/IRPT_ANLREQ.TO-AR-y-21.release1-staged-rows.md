@@ -2,10 +2,10 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~2</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~3</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -19,7 +19,7 @@
 
 ## WORKER FACE
 
-### THE CELL
+### THE CELL (AR-y-21) -- COMPLETE: drained @3895b80dae, proof VALID by 0.9.0_WK_IRPT_ANLREQ~2; recorded, not re-run
 
 `AR-y-11` (drained @3ad7526e06) taught the analysis submission to carry `ticket_id` and taught the published request contract to admit it.
 Two served functions still package the OLD bytes of those files through `infra/aws/lambda/ci/lambda-source-map.json` `staged_from` rows. **Re-pin
@@ -41,30 +41,71 @@ exactly three rows to a pin whose blob equals HEAD's**:
 - Report `python infra/aws/lambda/ci/release-census.py irpt-status --pin HEAD` and the same for `irpt-ycharts-generate`, with every changed
   member listed. This is informational; the release pair grades it.
 
+### AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~07:5xZ): this order now carries cell `AR-y-22`
+
+On CTO round-1 ADDENDUM 1 @64e9e6157d (msg 2813) and row `D2-S6`; decomposition `IRPT_ANLREQ_DECOMP_R2.md` AMENDMENT 2. A re-cut into the
+round's one ~Y issuance modifies this order and adds no file (`to-pipeline-gate`, one issuer per round). The criteria below are AR-y-22's.
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
+#### THE CELL NOW (AR-y-22)
+
+The ticket page opens each package file through IRPT under the viewer's own scope. `irpt-status` already serves the report's PDF that
+way: operation `analysis-request-pdf`, wired at `infra/aws/lambda/investor-reporting/ops/entry.py:198-204`, with
+`OwnedAnalysisReader.pdf` at `ops/owned_report.py:153`. It serves nothing for the advisor's ORIGINAL upload. **Add that reader, on the
+same pattern.**
+
+1. **The method.** Add `OwnedAnalysisReader.original(principal, request_id, *, signer, data_firm=None)` in `ops/owned_report.py`.
+   - Re-authorize exactly as `pdf` does (through the owned record read, with the final re-reads), then release one Opal-signed link to
+     the request's original upload.
+   - Resolve the original the way `ops/prospect_dates.py:295-299` resolves it: `ORIGINAL_HOLDINGS` for the template lane, `ORIGINAL_CSV`
+     for the CSV lane, under the original owner binding. Do not invent a new lookup.
+   - Answer with the link, the artifact's sha256 and byte length (the `pdf` response's shape), and no bytes.
+   - Refusals, each by name:
+     - a custody-lane request (no prospect upload): `ANALYSIS_ORIGINAL_NOT_APPLICABLE`, NOT_FOUND class (I5', the "No original file"
+       case);
+     - an absent or unbound original: `ANALYSIS_ORIGINAL_NOT_RETAINED`;
+     - a viewer without the record: the existing owned-read refusal.
+2. **The route.** In `ops/entry.py`, add operation `analysis-request-original`, mapped from
+   `GET /api/scoped/investor-reporting/analysis/requests/{requestId}/original`. Register it in all four places the pdf operation appears:
+   `routes`, `operations`, `owner_read_modes` (`OWNED_RECORD`) and `record_id_parameters` (`requestId`). Map its refusal classes in `reasons`
+   the way the pdf ones are.
+3. **The API.** Add the same route to `docs/contracts/investor-reporting/v1/routes.json`, the carrier that
+   `infra/aws/terraform/investor-reporting/api/routes.tf` reads, handler `irpt-status`. Copy the pdf route's entry shape exactly.
+4. **IAM, only if the read needs it.** `irpt-status`'s role is declared in `infra/aws/terraform/investor-reporting/ops/iam.tf:85`, and its
+   family list already names the original-holdings family. If the CSV lane's `ORIGINAL_CSV` (`state/prospect_inputs`) is also listed there,
+   change nothing. If a family the reader needs is missing, STOP and file a row; do not add a grant here.
+5. **Test.** Add `infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py`, offline, in the world/fixture style of
+   `ops/tests/test_owned_report.py`. It proves:
+   - (a) the owner of a template-lane request gets a signed link whose sha256 equals the retained original's;
+   - (b) a viewer at ANOTHER firm is refused (the CTO's named test);
+   - (c) a custody-lane request refuses `ANALYSIS_ORIGINAL_NOT_APPLICABLE`;
+   - (d) a request whose original is absent refuses `ANALYSIS_ORIGINAL_NOT_RETAINED`.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
-<criterion id="AR21-y-AC1" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC1</invocation><expect>AR21-y-AC1 PASS</expect></criterion>
+<criterion id="AR22-y-AC1" cell_refs="AR-y-22"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py</invocation><expect>passed</expect></criterion>
 
-<criterion id="AR21-y-AC2" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC2</invocation><expect>AR21-y-AC2 PASS</expect></criterion>
+<criterion id="AR22-y-AC2" cell_refs="AR-y-22"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ops/tests</invocation><expect>0 failed</expect></criterion>
 
-<criterion id="AR21-y-AC3" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC3</invocation><expect>AR21-y-AC3 PASS</expect></criterion>
+<criterion id="AR22-y-AC3" cell_refs="AR-y-22"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC3</invocation><expect>AR21-y-AC3 PASS</expect></criterion>
 
-<expected_criteria>AR21-y-AC1,AR21-y-AC2,AR21-y-AC3</expected_criteria>
+<expected_criteria>AR22-y-AC1,AR22-y-AC2,AR22-y-AC3</expected_criteria>
 
-**Issuer's base run at box/dell2 HEAD:**
-- AC1: FAIL, 3 of 3 rows lag;
-- AC2: PASS, split=0 for both functions;
-- AC3: PASS, irpt-status missing=0 of 111 and irpt-ycharts-generate missing=0 of 299.
+- AC1: at least 4 passed and 0 failed.
+- AC2: base `261 passed, 22 skipped`; no `failed` after the cell.
+- AC3: both built zips (irpt-status and irpt-ycharts-generate) still resolve every imported name. If the new code adds a module, it must
+  be packaged.
 
 ## BOUNDS
 
 - **Grant.** The `<paths>` block only. No deploy, no upload (BUILD_ONLY only, inside AC3), no terraform, no AWS calls.
+- Every `.py` edit passes `.tools/commit-gate.sh`.
 - **Refusal clause.** If a criterion cannot be met as written: stop, file a row, report, and do not weaken a check.
-- **Rows** are `IRPT_ANLREQ-D2-W2-S<k>`, in `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md`, one `## <id> -- <title>`
+- **Rows** are `IRPT_ANLREQ-D2-W3-S<k>`, in `org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md`, one `## <id> -- <title>`
   header plus a ```json block per row (the file's existing format). Gate: `python .tools/surprise-row-gate.py --check <path>`.
 - **Before the issuer drains,** run `bash .tools/safe-merge.sh box/dell2` INSIDE your worktree and resolve any channel conflict there
   (box/dell2's file plus your own row blocks appended whole).
-- **Commit with** `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~2" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~2@opal.agent" bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~2 <0.9.0_WK_IRPT_ANLREQ~2@opal.agent>" -F <msgfile> -- <paths>`.
+- **Commit with** `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~3" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~3@opal.agent" bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~3 <0.9.0_WK_IRPT_ANLREQ~3@opal.agent>" -F <msgfile> -- <paths>`.
   Write the message file with the Write tool (a Windows path); no pre-`git add`; ASCII only; use the native Grep/Glob/Read tools.
 
 <paths>
@@ -72,24 +113,31 @@ infra/aws/lambda/ci/lambda-source-map.json
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/investor-reporting/ops/owned_report.py
+infra/aws/lambda/investor-reporting/ops/entry.py
+infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py
+docs/contracts/investor-reporting/v1/routes.json
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/
 </paths>
 
 <decomp_ref>
-<decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md</decomp_doc> round 2, workstream ~Y, cell `AR-y-21`.
-<owned_cells>AR-y-21</owned_cells>
+<decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md</decomp_doc> round 2, workstream ~Y, cells `AR-y-21` (complete) and `AR-y-22` (AMENDMENT 2).
+<owned_cells>AR-y-21 AR-y-22</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR21-y-AC1, AR21-y-AC2, AR21-y-AC3. Instance at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`. Its `to_id` is the FULL id
-`IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows`. Validate with `python .tools/proof-of-spec-check.py <instance> AR21-y-AC1,AR21-y-AC2,AR21-y-AC3` BEFORE the
-flip to complete. Shape: `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~1/IRPT_ANLREQ.TO-AR-y-11.analysis-carries-ticket-id.proof_of_spec.json`.
+Criterion ids: AR22-y-AC1, AR22-y-AC2, AR22-y-AC3 (AMENDMENT 1; AR-y-21's AR21 ids are recorded VALID in
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`). New instance at
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`, `to_id` the FULL id
+`IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows`, validated with `python .tools/proof-of-spec-check.py <instance> AR22-y-AC1,AR22-y-AC2,AR22-y-AC3` BEFORE the flip to complete.
 </proof_of_spec>
 
 **REPORT (final message):**
 - each criterion's output lines;
-- the three new pins and sha256 values;
-- both census outputs;
+- the route entry added;
+- the refusal names;
+- the IAM family check result;
+- the diff summary;
 - the commit hashes and row ids.
 
 ---
@@ -97,10 +145,10 @@ flip to complete. Shape: `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK
 ## RECORD FACE
 
 <preflight>
-comp-blast: RUN (by reading) -- three staged rows in two functions (irpt-status: 2; irpt-ycharts-generate: 1); the blobs carry AR-y-11 (ticket_id admitted, persisted, contract) and nothing else of theirs moves; nothing deploys in this cell.
-comp-iam: DECLARED-NOT-APPLICABLE -- no permission is added or changed.
-comp-routes: DECLARED-NOT-APPLICABLE -- no route or authorizer change.
+comp-blast: RUN (by reading) -- one reader method, one operation in ops/entry.py, one route in the routes.json carrier; the pdf operation is the template; served at the irpt-status release, never here.
+comp-iam: RUN (by reading) -- irpt-status's role (ops/iam.tf:85) lists the original-holdings family; the cell adds NO grant and STOPs on a missing family.
+comp-routes: RUN -- one new GET route under the existing authorizer, added to routes.json (the API carrier read by api/routes.tf); applied with the irpt-status release pair.
 comp-schedule: DECLARED-NOT-APPLICABLE -- no schedule or trigger is touched.
-comp-adversary: RUN -- AC1 at base FAILs (3 of 3 lag); AC2 and AC3 PASS at base and refuse a split commit or a missing name the re-pin introduces.
+comp-adversary: RUN -- AC1 at base FAILs (no file); arms (b)-(d) are refusals, (b) the CTO's named other-firm test; AC2 base 261 passed/0 failed; AC3 PASS at base.
 lane: the <paths> block IS the grant (worker_grant).
 </preflight>
