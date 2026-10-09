@@ -133,3 +133,18 @@ and append the status tag reading complete at the END of this file only if AC1-A
 <status>complete</status>
 <!-- REOPENED 2026-10-09 ~21:3xZ by the issuer 2.0.0_SA_COO~C1 for AMENDMENT 1 (row D1-W1-S6: the order was terminal, so the gate refused the amendment's paths). -->
 <status>pending</status>
+
+## 7. AMENDMENT 2 (2026-10-09 ~21:5xZ, the issuer's own, on the CTO's ruling msg 3213)
+
+The served /9 lost the team cases on six PDF names (row D1-S2: the /8 and /9 writes ran with fitz stubbed). The CTO ruled a fix-forward
+/10 now, DECOUPLED from team_sheet, which moves to /11. `CRPS-at-8` made `METHOD_VERSION` `amgt-corpus-dossier/10` on box/dell1
+(@548315f918, literal only) and the issuer is writing /10. Your AMENDMENT 1 work (team_sheet in the dossier, served from it) is right;
+only its version number changes.
+
+**Do, and only this:** merge `box/dell1` into your branch (`git merge --no-edit box/dell1`). The METHOD literal will conflict in
+`dossier.py` and the five pinning tests: resolve each to `amgt-corpus-dossier/11`, keeping box/dell1's `/10` comment line and adding
+`# /11 (CRPS-at-1 AMENDMENT 2): team_sheet stored in the dossier.` above the assignment. Keep everything else of yours. Re-run AC1-AC3 and
+the five pinning tests, update your instance, run the checker after your final commit, and append a status tag reading complete at the
+END of this file only if AC1-AC3 pass. Report once.
+
+<status>pending</status>
