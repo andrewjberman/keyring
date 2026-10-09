@@ -1485,5 +1485,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "S04 as the order words it is MET on the gateway's tool surface (one call by name, status 200, count 20). The surface the pull Lambda actually calls is the headless /hx/transcripts route, and it admits none of the 4 allowlisted meetings for the stored bearer. The bearer itself is live (403, not the control's 401). So the p18 apply lands its 9 resources and the Lambda runs, but the FIRST-LANDING branch -- FWD-2's acceptance -- is unreachable until the gateway host's allowlist is widened. Nothing served moves either way; the fire logs and lands nothing, which the COO half's second branch already admits.",
     "notes": "Owner: the gateway host's allowlist is NFRA_OPLGTW's surface, not this project's and not this seat's -- routed to 2.0.0_SA_COO~T2 in the p18 report, which carries it to the CTO. This seat did NOT widen anything and did not work around the refusal. The apply proceeded: the order's STOP conditions are S04, S05 and KMS, and all three read MET. Re-probe is one read: the 4-meeting probe above."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-09T11:20:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "NONE of the transcripts root's Lambdas carries a lambda-source-map.json entry (0 of 232 entries name one), and the root has never been tagged (0 transcripts-v* tags), so deployment rules 4 and 6 are unmet for the function TO-APPLY-p18 just created and for the three that predate it.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json: functions enumerated, DENOMINATOR 232 entries, transcripts-bearing entries = 0 -- teams-global-transcripts-pull-lambda (created at this apply), outlook-global-transcripts-pull-lambda, the commentary Lambda and the chat-assist Lambda are all absent",
+        "git tag -l 'transcripts-v*' and git tag -l '*transcripts*' both return empty, against a 0-diff targeted apply of infra/aws/terraform/transcripts completed at 2026-10-09T11:12Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cloud-ops DEPLOYMENT RULES 4 ('Every Lambda has an entry in infra/aws/lambda/ci/lambda-source-map.json') and 6 ('git tag -a {pipeline}-v{X.Y.Z} + git push --follow-tags after every 0-diff apply').",
+    "world_is": "Both are unmet for this root, and three of the four functions predate TO-APPLY-p18. Neither file is inside the order's <paths> (deliverables, logs, change_management), so the applier cannot land either fix: the owned-paths hook refuses the source-map edit, and rule 6 would need a version number minted for a pipeline whose version space nobody has established -- the root has been applied before, untagged, so v1.0.0 is a judgment the issuer owns, not a mechanical next step. Rule 4's own text warns that the map PAIRS a function with a dir and never compares deployed bytes, so its absence hid nothing here: this apply resolved the deployed bytes by CONTENT instead (live CodeSha256 taFbGTCU... equals the built zip's base64 sha256).",
+    "notes": "Owner: 2.0.0_SA_COO~T2 to cut a cell that adds the four source-map entries and decides the tag, or the CTO to rule the root exempt. Routed in the p18 report. One entry per function is the whole fix; the tag is one decision."
+  }
 ]
 ```
