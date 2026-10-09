@@ -2,10 +2,10 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~3</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~4</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -99,15 +99,31 @@ same pattern.**
 
 Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
 
+### AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~08:3xZ): AR-y-22's reader must SHIP -- two more staged rows for `irpt-status`
+
+AR-y-22 drained @75650bef27 (worker ~3's proof VALID; that cell is complete). But `irpt-status` stages `ops/entry.py` and `ops/owned_report.py`
+at `80a79a7462` (`lambda-source-map.json`), so the built zip does not carry the new route or reader. The issuer's census at HEAD lists only
+`acceptance.py`, `submission.py` and `pdf_link.py` as changed. `pdf_link.py` is unpinned, from `source_dir`.
+
+**The cell now (AR-y-21, re-opened):** re-pin EXACTLY these two `irpt-status` rows to the last commit touching each path, with the sha256 of that
+blob, exactly as AR-y-21's first three rows were re-pinned (pin and sha256 only, byte-preserving):
+`infra/aws/lambda/investor-reporting/ops/entry.py` and `infra/aws/lambda/investor-reporting/ops/owned_report.py`. Touch no other row.
+The check `checks/r2/ar21_cells.py` now lists 5 rows (its AMENDMENT 3); base AC1 FAIL, 2 of 5 lag. Report the `irpt-status` census after.
+Proof instance: `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~4/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`,
+criteria AR21-y-AC1..3, `to_id` the FULL id. Rows are `IRPT_ANLREQ-D2-W4-S<k>`. Your paths are the <paths> block (the source map is in it).
+Commit as `0.9.0_WK_IRPT_ANLREQ~4`.
+
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
-<criterion id="AR22-y-AC1" cell_refs="AR-y-22"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py</invocation><expect>passed</expect></criterion>
+<criterion id="AR21-y-AC1" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC1</invocation><expect>AR21-y-AC1 PASS</expect></criterion>
 
-<criterion id="AR22-y-AC2" cell_refs="AR-y-22"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ops/tests</invocation><expect>0 failed</expect></criterion>
+<criterion id="AR21-y-AC2" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC2</invocation><expect>AR21-y-AC2 PASS</expect></criterion>
 
-<criterion id="AR22-y-AC3" cell_refs="AR-y-22"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC3</invocation><expect>AR21-y-AC3 PASS</expect></criterion>
+<criterion id="AR21-y-AC3" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC3</invocation><expect>AR21-y-AC3 PASS</expect></criterion>
 
-<expected_criteria>AR22-y-AC1,AR22-y-AC2,AR22-y-AC3</expected_criteria>
+<expected_criteria>AR21-y-AC1,AR21-y-AC2,AR21-y-AC3</expected_criteria>
 
 - AC1: at least 4 passed and 0 failed.
 - AC2: base `261 passed, 22 skipped`; no `failed` after the cell.
@@ -123,7 +139,7 @@ Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a mod
   header plus a ```json block per row (the file's existing format). Gate: `python .tools/surprise-row-gate.py --check <path>`.
 - **Before the issuer drains,** run `bash .tools/safe-merge.sh box/dell2` INSIDE your worktree and resolve any channel conflict there
   (box/dell2's file plus your own row blocks appended whole).
-- **Commit with** `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~3" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~3@opal.agent" bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~3 <0.9.0_WK_IRPT_ANLREQ~3@opal.agent>" -F <msgfile> -- <paths>`.
+- **Commit with** `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~4" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~4@opal.agent" bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~4 <0.9.0_WK_IRPT_ANLREQ~4@opal.agent>" -F <msgfile> -- <paths>`.
   Write the message file with the Write tool (a Windows path); no pre-`git add`; ASCII only; use the native Grep/Glob/Read tools.
 
 <paths>
@@ -141,14 +157,13 @@ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R2.md</decomp_doc> round 2, workstream ~Y, cells `AR-y-21` (complete) and `AR-y-22` (AMENDMENT 2).
-<owned_cells>AR-y-22</owned_cells>
+<owned_cells>AR-y-21</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR22-y-AC1, AR22-y-AC2, AR22-y-AC3 (AMENDMENT 1; AR-y-21's AR21 ids are recorded VALID in
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~2/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`). New instance at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`, `to_id` the FULL id
-`IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows`, validated with `python .tools/proof-of-spec-check.py <instance> AR22-y-AC1,AR22-y-AC2,AR22-y-AC3` BEFORE the flip to complete.
+Criterion ids: AR21-y-AC1, AR21-y-AC2, AR21-y-AC3 (AMENDMENT 3). Instance at
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~4/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`, `to_id` the FULL id
+`IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows`, validated with `python .tools/proof-of-spec-check.py <instance> AR21-y-AC1,AR21-y-AC2,AR21-y-AC3` BEFORE the flip to complete.
 </proof_of_spec>
 
 **REPORT (final message):**
