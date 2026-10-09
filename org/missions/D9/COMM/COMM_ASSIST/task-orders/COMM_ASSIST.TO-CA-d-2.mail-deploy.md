@@ -25,11 +25,21 @@
 route. Do, in order: step 4 (BEFORE reads) and step 5 (both builds plus the import test) below. Then a SCRATCH preview: `TF_DATA_DIR`
 set to a NEW scratch directory outside every git tree; `init -input=false` (a migrate or reconfigure prompt = STOP);
 `terraform -chdir=infra/aws/terraform/transcripts plan -input=false -no-color -lock=false -target=module.ldo_001` with the variable
-at its committed default `""` and no `-var`. Save it as `PHASE_A_PLAN.txt` in your deliverables folder. **Expected: `0 to add, 2 to
+at its committed default `""` and the ONE foreign `-var` the A3 rule below permits. Save it as `PHASE_A_PLAN.txt` in your deliverables folder. **Expected: `0 to add, 2 to
 change, 0 to destroy`, and both changes are the two functions' `source_code_hash`/`last_modified` only.** Any other reading (an
 add, destroy, policy change, env change, address outside the module, failed import test, or a live hash other than `xWURpe/n...`)
 -> file a BLOCKING row with the measurement and STOP. Then write `PHASE_A_READ.md` (one line per reading) and STOP. Do not
-continue to step 1.
+continue to step 1. The dependencies `-target=module.ldo_001` pulls in (`aws_kms_key.transcripts`, `aws_iam_role.second_reader` and
+its policy) must read NO change; any change on them is "an address outside the module" -> STOP.
+
+**A3 -- THE ONE PERMITTED `-var` (issuer ruling, row COMM_ASSIST-Z-S2 disarming Z-S1).** The shared root's NFRA_TRNSPT variable
+`second_reader_trust_principal_arns` has no default by design. Pass it, and only it, as `-var` with the value READ at the act from
+`aws iam get-role --role-name teams-global-transcripts-second-reader-role` (`AssumeRolePolicyDocument.Statement[].Principal.AWS`,
+as a JSON list; it read `["arn:aws:iam::313476888478:user/Opal_Terminal"]` at 12:4xZ). Never type it from this order; never pass
+any other `-var`. Our own `chat_assist_mail_bearer_secret_arn` is NEVER a `-var`: it is the committed default of step 2.
+
+**PHASE A RE-RUN (A3):** re-take the scratch preview with that one `-var`, save as `PHASE_A_PLAN_2.txt`, append the readings to
+`PHASE_A_READ.md`, report, and STOP.
 
 **PHASE B runs only when the issuer writes `PHASE B GO` on the line below.** It is written once NFRA_OPLGTW `TO-OG-ap-3` is
 complete with AC1 PASS (the secret exists and the gateway serves r29). Phase B is steps 1-9 below, re-reading step 4 at the act.
@@ -62,7 +72,7 @@ joins the exec policy's secrets read). This cell sets the variable to the real s
    load without both zips; building uploads nothing). Run the import test on `infra/aws/lambda/teams-chat-assist/dist/pkg` that the COO
    half's Branch B names.
 6. `TF_DATA_DIR` = a NEW scratch directory outside every git tree; `init -input=false` against the declared backend (a migrate or
-   reconfigure prompt = STOP). Take a saved, locked, targeted plan `-target=module.ldo_001`. Branch A exactly
+   reconfigure prompt = STOP). Take a saved, locked, targeted plan `-target=module.ldo_001` with the A3 `-var` only. Branch A exactly
    (`0 to add, 3 to change, 0 to destroy`; the two functions' code hash and env var, plus the policy's one ARN) -> apply that saved
    plan through `bash .tools/safe-apply.sh`. Anything else -> Branch B: apply nothing, close the ledger as not-applied, report.
    Never between 20:00Z and 21:45Z.
@@ -76,7 +86,7 @@ joins the exec policy's secrets read). This cell sets the variable to the real s
 ### RULES FOR THIS CELL
 
 - One targeted apply, `module.ldo_001` only. Never untargeted, never bare `terraform`, never `aws lambda update-function-code`.
-- Never write, read the value of, rotate or delete the secret. Never `-var`. Never push, `git stash`, rebase, `checkout --`, `clean`.
+- Never write, read the value of, rotate or delete the secret. No `-var` except the A3 one. Never push, `git stash`, rebase, `checkout --`, `clean`.
 - No non-ASCII. `dist/` is never committed.
 - Refuse a criterion you cannot satisfy as written. File a BLOCKING row with the measurement and stop; do not widen.
 
@@ -98,7 +108,7 @@ the base.
 Each invocation runs under `timeout 120`. Write the proof instance to
 `org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~CA/COMM_ASSIST.TO-CA-d-2.mail-deploy.proof_of_spec.json`. Validate
 it with `python .tools/proof-of-spec-check.py <instance> CAd2-AC1,CAd2-AC2`. Flip `<status>` to `complete` only when both PASS and
-the instance is VALID. Surprise rows are `COMM_ASSIST-Z-AE-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~ZZ`, `surfaced_at` =
+the instance is VALID. Surprise rows are `COMM_ASSIST-Z-S<k>` (the gate grammar; A3), fabric `site-z`, disarm_owner `2.0.0_SA_COO~ZZ`, `surfaced_at` =
 `date -u +%FT%TZ` at filing. Append lines only to the investigation file.
 
 <decomp_ref>
@@ -137,6 +147,10 @@ lane: the <paths> block IS the grant (worker RULING 1).
   into PHASE A (BEFORE reads, builds, import test and a scratch `""`-variable preview plan, expecting 0/2/0 with the code hash
   only; it applies nothing) and PHASE B (the act, behind the `PHASE B GO` line, unchanged in substance). Phase A runs once the
   fold is signed by `3.0.0_SA_CVO~Z`. No criterion changed. Graded by no gate limb as a modification (placeholders NONE).
+- A3 (issuer, 2026-10-09 ~12:5xZ, on 0.7.0_AE_CloudOps~CA's Phase A STOP, msg 32751, row Z-S1): one foreign `-var`
+  (`second_reader_trust_principal_arns`) is permitted at its LIVE value, read at the act; the readers dependencies must read no change;
+  the Phase A preview is re-run; the row-id line follows the gate grammar. NFRA_TRNSPT a18 applied it at 09:55Z (role CreateDate). Branch A
+  and the halves' blast radius are unchanged. Disarm row COMM_ASSIST-Z-S2. Graded by no gate limb as a modification (placeholders NONE).
 - The analysis's done-when also names the real mail run. That run is the issuer's at close, not this order's (an applier sends no
   test mail).
 

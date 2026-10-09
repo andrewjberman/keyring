@@ -62,6 +62,8 @@ the row prints its partial form with the reason. The list never carries over the
    `.tf`, graded by the real `.tools/naming-gate.py --diff`: CONFORMANT, no placement refusal. Last line:
    `FWD4-RENAME-12H ok=True name=<new> grade=CONFORMANT`. No apply, no AWS.
 
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-09 ~12:5xZ; row LGIC_BLANKFIX-D1-W1-S9):** the partial form for a no-word row is built in `decide()` (`lib/opal_naming_rootcheck.py`, slot ~2's file), so that change moves to BF-ac-3 as its build item 4. BAC1-AC1 (`check_fwd4_cadence_r14.py`, carried_over=6 at 7a82774af7) is re-run by the issuer on the trunk after slot ~2 merges; this order flips complete then, on that re-run. Criteria text unchanged.
+
 ### ACCEPTANCE
 
 <criterion id="BAC1-AC1" cell_refs="BF-ac-1"><invocation>python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence_r14.py</invocation><expect>FWD4-CADENCE-R14 ok=True</expect></criterion>
