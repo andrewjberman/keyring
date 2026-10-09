@@ -103,7 +103,7 @@ Model card. Rulings carried from the round-59 close: W126-S1 (the description li
 and W128-S1 (the mixed-currency line goes in the Peers fold). Issuer checks granted for re-anchor: three of `2.0.0_SA_COO~D`'s round20-24
 checks. This seat has been the project's issuer since the move; site Z's COO~D is stood down. Base portal 3ea5d0f9 (= origin DEV).
 
-<status>pending</status>
+<status>complete</status>
 <round>60</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzl-1</to_id>
 <slot>~130</slot>
