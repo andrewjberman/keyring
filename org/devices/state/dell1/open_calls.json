@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T04:42:40Z",
+ "written_at": "2026-10-09T05:25:29Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -640,7 +640,7 @@
    "source": "org/missions/D8/MDPF/MDPF_SECHIST/ledger/ROUND_ANALYSIS.round2.PREDRAFT.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T04:34:09Z",
    "kind": "act",
    "context": "FWD-5 gap fill + widened next-run request; FWD-9 total-return level field. Held by Andrew's order ANDREW_DIRECT_20261006_201xZ (Unchanged: pipeline/). Neither is cut before the round-2 FWD-1 read.",
@@ -661,7 +661,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-09T05:25:29Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T043711Z-9afb",
@@ -687,6 +694,44 @@
     "roots": [],
     "evidence": {
      "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261009T051507Z-f23d",
+   "project": "MDPF_DEMQUE",
+   "subject": "Delete one stray S3 object: s3://opal-data-assets/bloomberg/global/silver/demand_state/request=ETFS_RIVALS-HISTORY-OWED-DAILY/state.json (written 2026-10-09T05:10Z at a superseded address; nothing reads it)",
+   "asked_by": "2.0.0_SA_COO~Q1",
+   "source": "org/missions/D8/MDPF/MDPF_DEMQUE/requests/ETFS_RIVALS-HISTORY-OWED-DAILY.json",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T05:15:07Z",
+   "kind": "act",
+   "context": "Written by 2.0.0_SA_COO~Q1 before the PRD v0.4 addendum (@02df620d05) named request_state; the request was re-pointed @9c779bccf1. CLAUDE.md: S3 deletes need human confirmation.",
+   "rec": "Delete it -- one object, additive prefix, no reader; leaving it risks a future reader taking the wrong address.",
+   "scope": {
+    "measured_at": "2026-10-09T05:15:07Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of NFRA_REPORT placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPMSP placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of NFRA_MCPORTAL placed on sitez (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of ADVI_COTBKF placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)"
+     ],
      "placement": [],
      "resources": [],
      "shared": []
