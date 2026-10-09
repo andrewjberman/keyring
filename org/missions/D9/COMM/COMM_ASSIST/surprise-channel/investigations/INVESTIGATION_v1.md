@@ -35,3 +35,29 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "W36-S2 is handed to NFRA_TRNSPT (row file in that channel) and disarmed at NFRA_CTLPLN by S35."
 }
 ```
+
+## COMM_ASSIST-S2 -- W39-S1 does not bind: the gateway's Teams identity is unscoped (site Z code read); r29's read-back confirms
+
+```json
+{
+  "id": "COMM_ASSIST-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-09T02:12:50Z",
+  "one_line": "Disarm read for NFRA_CTLPLN-W39-S1 (the gateway's caller map omits two Graph scopes the channel routes need): site Z reads MS_INGEST_IDENTITY as UNSCOPED, so its consent is the full GRAPH_SCOPES envelope and the omission does not bind; to confirm at r29's ENV read-back.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "site Z 1.0.0_SA_CTO~O msg 32269 (relay 0.0.0_AB_MSTR 107632): identity_scope.py:54-77 and identity_tool_allowlist.txt:19,25 scope exactly one identity, opalbloomberg@opalinvest.com; config.py:224; consent_scopes() returns None for an unscoped identity (:135-137)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~39/CHANNEL_READ_SCOPES_MEASURED.md (both scope lists carry Team.ReadBasic.All, Channel.ReadBasic.All, ChannelMessage.Read.All)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The channel routes shipping in NFRA_OPLGTW r29 get the Graph scopes they need.",
+  "world_is": "True by code read on site Z; the host .env value of MS_INGEST_IDENTITY is not read (site Z's limit, stated).",
+  "notes": "Closes when r29's ENV read-back shows MS_INGEST_IDENTITY is not the one scoped identity; then the first channel_poll line reads failed=0."
+}
+```

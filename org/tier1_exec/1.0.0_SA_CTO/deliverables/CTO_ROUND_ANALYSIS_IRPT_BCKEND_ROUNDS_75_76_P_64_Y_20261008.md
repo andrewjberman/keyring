@@ -284,3 +284,17 @@ The row closes on the owner read.
 4. The owner read, which closes D2-W172-S3, W175-S1, W177-S2 and W178-S2 together.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~02:1xZ) -- ~M round 34: publication_for (CVO slug msg 2158, `ledger/IRPT_BCKEND_ROUND34_M_L8_COMPILE.md` @36b0cbb93f)
+
+**Measured:**
+- 1 of 1 order terminal, 0 rows. The port test passed 6 times, in the CVO's own run.
+- The production `publication_for` port for AcceptedCustodyReader exists (drain @772cc0a4d2). This seat assigned it at msg 014954Z.
+
+**Carried into release 6** (`~Y2`, which wires the four ports into `generate_installed`; ~P2 owes the other three). Its pair MUST:
+1. run `checks/r71/symbol_closure.py` on the BUILT zip, with missing=0 (the release-4 lesson, row D2-S16);
+2. grant exactly the S3 read set the M packet names, and nothing wider. The pair prints that set beside the IAM statement.
+
+**Round 35 (~M):** nothing new is cut. ~M2 returns to its NOTHING-LEFT state unless release 6's packet asks a rider of it.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~189</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -92,6 +92,15 @@ directory, and live is REFRESH_FAILED. Inflection's 10-09 fire finds its previou
 sha and both branches. Base: FAIL.
 
 <expected_criteria>IB93-1-AC1, IB93-1-AC2, IB93-1-AC3</expected_criteria>
+
+## AMENDMENT 1 (2026-10-09 ~01:4xZ, issuer 2.0.0_SA_COO~P2): AC2's whole-suite clause excuses ONE pre-existing red, by exact id
+
+Row D2-W189-S3: the runner suite has exactly one failure, `tests/test_holdings_rearm_trigger.py::test_rearm_trigger_live`. That is row
+IRPT_BCKEND-S71's live re-arm guard (the holdings snapshot schedule versus its own bundles), not this cell's code. The issuer re-ran it at
+base 2c1f4f425d in a clean worktree: 1 failed, 2 passed, so it is red before any edit. The check now excuses that one node id only. Any
+other failure, or a run where it is not the only failure, still fails. Re-grade at 939d7b01b9: IB93-1-AC1, AC2 and AC3 PASS. The issuer
+amends its own criteria (CLAUDE.md 27 L5-L6). Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only;
+placeholders NONE).
 
 ## BOUNDS
 
