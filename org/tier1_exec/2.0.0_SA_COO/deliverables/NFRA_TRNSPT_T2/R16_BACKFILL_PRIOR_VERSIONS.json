@@ -1,0 +1,41 @@
+{
+ "_provenance": {
+  "by": "2.0.0_SA_COO~T2 (dell2)",
+  "count": 5,
+  "purpose": "CTO half condition (msg 2215): the prior VersionId of every existing silver key in range, committed BEFORE the 365-day backfill; rollback copies these back",
+  "read_at_utc": "2026-10-09T02:41:30Z",
+  "scope": "s3://opal-data-transcripts/outlook/transcripts/silver/ and /gold/ (all keys; the 365-day range covers every one), latest versions only"
+ },
+ "keys": [
+  {
+   "key": "outlook/transcripts/silver/analysis_commentary/date=2026-07-06/analysis_commentary.parquet",
+   "last_modified_utc": "2026-10-01T13:16:28Z",
+   "size": 21490,
+   "version_id": "Gh4aUyL43vnxdy9xVSrKyZmrvT3K3vUt"
+  },
+  {
+   "key": "outlook/transcripts/silver/analysis_commentary/date=2026-09-02/analysis_commentary.parquet",
+   "last_modified_utc": "2026-10-07T23:32:29Z",
+   "size": 33202,
+   "version_id": "v7CyRqiibBDKgLHa5Wc5xU0hAODXqNav"
+  },
+  {
+   "key": "outlook/transcripts/silver/analysis_commentary/date=2026-09-15/analysis_commentary.parquet",
+   "last_modified_utc": "2026-10-07T23:32:29Z",
+   "size": 14386,
+   "version_id": "PfkhtKbhQhcgl0t.f2Tda02yfdNXNlr1"
+  },
+  {
+   "key": "outlook/transcripts/silver/analysis_commentary/date=2026-09-17/analysis_commentary.parquet",
+   "last_modified_utc": "2026-10-07T23:32:29Z",
+   "size": 20308,
+   "version_id": "nvo7Ry6uUSWjPiRmA_HEWlyPltsw3lB9"
+  },
+  {
+   "key": "outlook/transcripts/silver/analysis_commentary/date=2026-10-01/analysis_commentary.parquet",
+   "last_modified_utc": "2026-10-02T02:16:01Z",
+   "size": 14533,
+   "version_id": "LloFYqJLK5Ty9Sh8BfnLCzq2D496aCCg"
+  }
+ ]
+}

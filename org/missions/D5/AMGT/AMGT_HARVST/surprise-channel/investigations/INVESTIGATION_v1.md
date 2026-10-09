@@ -8125,6 +8125,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~W1",
+      "surfaced_at": "2026-10-09T02:20:19Z",
+      "one_line": "Rule 27's one-project-per-Tier-2-seat check flags the two site-Z orders of round 75 (bs-3, bs-4), which are addressed to 0.7.0_AE_CloudOps~Z as site Z's ruling directs, because that seat already holds open orders on three other projects.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "CLAUDE.md Rule 27 Seating: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by .tools/to-decomp-ref-lint.py's seating check (fix: address a NEW order to a fresh lane of the class). Site Z 1.0.0_SA_CTO~Z msg 32271, adopted by 1.0.0_SA_CTO~DELL1 msg 1441: no new seat on site Z; each dell1 issuer orders 0.7.0_AE_CloudOps~Z for its site-Z producer acts.",
+      "world_is": "At the commits c7909af157 (bs-3) and d3ef0f93ed (bs-4), the lint, in ANNOUNCE mode because org/mcp/pipeline-gate2.enforce is absent, printed REFUSED SEATING for both: 0.7.0_AE_CloudOps~Z holds open orders on AMGT_CORPUS (1), ETFS_RIVALS (2) and NFRA_MCPINDEX (1). The orders landed. The rule and the ruling cannot both hold for the site Z producer seat. This seat followed the ruling, since the producer sessions are bound to that box's user and the ruling names the seat. NOT measured: whether a fresh CloudOps~<letter> lane on site Z could hold those sessions. Owner of the reconciliation: 1.0.0_SA_CTO~DELL1 (it adopted the ruling).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/to-decomp-ref-lint.py seating check (announce output at d3ef0f93ed)",
+          "1.0.0_SA_CTO~DELL1 msg 1441",
+          "0.0.0_AB_MSTR~DELL1 msg 1436 (site Z 1.0.0_SA_CTO~Z msg 32271)",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bs-3.the-runner-activated-on-bbg-wsj-barrons.md",
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bs-4.the-r47-seeking-alpha-backfill-resumed.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

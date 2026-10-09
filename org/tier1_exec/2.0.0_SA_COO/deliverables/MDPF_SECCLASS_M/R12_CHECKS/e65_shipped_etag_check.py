@@ -14,7 +14,7 @@ import sys
 
 import boto3
 
-CANDIDATE = "3f1e6be8910952f33c88bf100c610ab6"
+CANDIDATE = sys.argv[1] if len(sys.argv) > 1 else "3f1e6be8910952f33c88bf100c610ab6"  # e65b: pass 40ffa3fa...
 KEY = "code/gold/lib/_shared/{}"
 SRC = "infra/aws/lambda/v2_portal/_shared/{}"
 BUCKETS = ("opal-data-bd", "opal-data-cot")
