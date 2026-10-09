@@ -4259,3 +4259,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W60-S1 -- The face said count orion_overrides (Orion value differs from inferred); the 36 Orion-readable accounts were never landed per account, so the count is held at its lower bound 0
+
+```json
+{
+  "id": "IRPT_DASHBD-W60-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~60",
+  "surfaced_at": "2026-10-09T09:15:00Z",
+  "one_line": "orion_overrides cannot be measured: no landed artifact maps the 36 Orion-readable accounts to the inferred billed state; INF_FEE_SLICES_R40.json carries 0 as a held lower bound (0..36).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: count orion_overrides, accounts where Orion's IncludedInBilling differs from the inferred state.",
+  "world_is": "Round 37's per-account Orion CSVs were scratch (orion_gross_fee_pull.py writes them under a scratch dir); the committed record holds aggregates only: 36 accounts 'Included in Billing' (billed 36, unbilled 0, fees 78182.70) and the inferred cut 509 billed / 53 unbilled (fees 100.54). No hashed-key list of the 36 exists, and a live re-pull is barred by this order. The override count is therefore 0 as a held lower bound with upper bound 36; INF_FEE_SLICES_R40.json states this in orion_overrides_claim. The checker accepts any int >= 0, so DB40-1-AC1 passes without measuring it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json (fee_detail.billed_accounts, by_bill_presence)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~59/INF_BILLING_FLAG.json (figures_from)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~60/INF_FEE_SLICES_R40.json (orion_overrides_claim)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
