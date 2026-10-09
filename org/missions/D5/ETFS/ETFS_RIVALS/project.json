@@ -92,12 +92,12 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
-    "coo": "UNSEATED on dell1 -- seated by 0.0.0_AB_MSTR~DELL1 (prior site-Z lane 2.0.0_SA_COO~RV)",
+    "coo": "2.0.0_SA_COO~V1 (dell1), seated ~01:5xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1407); CVO 3.0.0_SA_CVO~RV1",
     "cvo": "3.0.0_SA_CVO~Z",
     "cro": "4.0.0_SA_CRO~Z",
     "workers": "0.9.0_WK_ETFS_RIVALS~<n>, per the L6 issuance"
   },
-  "coo_lane": null,
+  "coo_lane": "2.0.0_SA_COO~V1",
   "fabric_ruling": "dell1 -- Andrew-direct 2026-10-09 ~01:5xZ (relayed by 0.0.0_AB_MSTR~Z bus d21f51be, site Z CTO msg 32243), VERBATIM: \"i just canceled your spawns, those agents are on DE...",
   "blocking": "Round 2 ISSUED by 2.0.0_SA_COO~RV (PRD v0.3 C-GOLD-MODEL): 9 task orders (RIV-m-1, g0-1, b-1, e-1, g1-2, g2-1, g5-2, p-2, d-3); wave 1 slots ~1-~4 spawned (g0-1, b-1, e-1, m-1); g1-2 -> g2-1 -> p-2 on ~1 and g5-2 on ~3 follow their merges; the join RIV-d-3 (slot ~5) spawns after every other order merges and a never-widen pair is signed (1.0.0_SA_CTO~Z + 2.0.0_SA_COO~RV).",
   "thread_counter": 0,
