@@ -1125,6 +1125,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "C-TICKET: the draft lands on a ticket for the requester; the ticket-write contract's body is buildable from what H1/H2 supply.",
     "world_is": "One required body field has no producer; account_type and themes are also absent (they only weaken ranking and the prompt).",
     "notes": "Holdings category weights are derivable from the normalized-input artifact (~P2 msg 1849); that is an H2 enhancement, not a blocker."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W3-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~3",
+    "surfaced_at": "2026-10-09T02:12:49Z",
+    "one_line": "Two stale assertions in test_securities_allowlist.py contradict the TR-x-14 exception (Apple re-added); the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_securities_allowlist.py:78 asserts 'Apple' not in doc2 tokens (synthetic source with AAPL 'Apple Inc', default exceptions file) and :92 asserts 'Apple' not in the committed allowlist ('the stated loss of AMENDMENT 1')",
+        "pytest test_securities_allowlist.py test_wipe_planted.py test_research_*.py: 2 failed (test_builder_strips_suffixes_and_includes_tickers, test_committed_allowlist_matches_the_source), 28 passed; R14-X14-OK",
+        "Refusal clause not triggered: 'Mr. Apple called' and 'Apple Smith joined' wipe Apple; wipe.py untouched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: keep test_securities_allowlist.py green while Apple becomes an allowlist token.",
+    "world_is": "The two assertions encode the pre-exception exclusion of Apple and cannot both hold with the exception; they need updating (line 78: pass exceptions_path=None; line 92: assert Apple present via the exception).",
+    "notes": "Left unedited (outside <paths>). Owner: issuer 2.0.0_SA_COO~T2 to amend the order's paths or cut the test update."
   }
 ]
 ```
