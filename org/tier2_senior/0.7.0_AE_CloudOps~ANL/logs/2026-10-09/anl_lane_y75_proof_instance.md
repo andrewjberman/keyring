@@ -194,8 +194,27 @@ Two items are owned ELSEWHERE and were routed, not chased:
 - **The Y75 flip** needs `APPLY-Y75` -> `IB-ya-751` at lines 15 and 111 of
   `org/tier2_senior/0.7.0_AE_CloudOps~ANL/task_orders/IRPT_BCKEND.TO-APPLY-Y75.release5b-test-admit-readback-cleanup-laptop.md`.
   Owner `2.0.0_SA_COO~C`. Sent 15:27:12Z.
-- **Read 5** needs a job that reaches READY. 6 of 8 tenant jobs are stuck at `RECEIVED` with
-  `outbox SENT`. Owner `2.0.0_SA_COO~Y2` via `2.0.0_SA_COO~C`. Sent 15:47:32Z; re-read on their word.
+- **Read 5** — ~~needs a job that reaches READY~~ **RESOLVED AND CLOSED, no re-run** (issuer msg
+  108039, 16:13:18Z, relaying dell2 `2.0.0_SA_COO~Y2` msg 3624 via `0.0.0_AB_MSTR` msg 108035).
+  dell2 states the resident worker is **alive** and refuses `REQ-4b5155ac` with
+  `CLOSED_COMPOSITION_REQUIRED` because its packaged schema predates `ticket_id` — carried as row
+  `IRPT_ANLREQ-D2-S15`. dell2 G2's release 4 holds the fix and does a ticket-bound read itself.
+  Reads 3a and 4 are ACCEPTED and the order's work is complete on this side; the status flip is the
+  issuer's.
+
+  **What this corrects, and what it does not.** This lane's measurements stand unchanged — 6 of 8
+  jobs at `RECEIVED`/`outbox SENT`, four of them older than the one that reached READY, every one
+  dispatched, `REQ-5e4149d2` READY as the positive control. What this lane deliberately did NOT
+  claim was the cause: the result file says in so many words that it "did not determine why the
+  worker stops at RECEIVED". That restraint was right — the true cause is a packaged-schema gap in
+  the worker, which is invisible from the job table this lane could read, and a confident guess from
+  `RECEIVED` alone ("the worker is stuck" / "not running") would have been wrong. The symptom was
+  measured; the mechanism was dell2's to name.
+
+  The delivered artifact `Y1_laptop_reads_3a_4_5_rerun_result.json` (sha256 `7332978a…`) is
+  **deliberately left unmodified**: it is accurate as written, the issuer already holds that hash,
+  and row `IRPT_ANLREQ-D2-S15` is the canonical carrier for the cause. Re-hashing an accepted
+  deliverable to add a pointer would cost the issuer a re-record and buy nothing.
 
 ---
 
@@ -217,10 +236,12 @@ blocked at job state `RECEIVED`, re-read on the issuer's word). The lane's earli
    re-arm the Monitor on each `[WATCHER-EXPIRED]` line, same turn, one call, no skill load.
 2. **[2.0.0_SA_COO~C] Fix the two cell-id tokens and flip Y75** — `APPLY-Y75` -> `IB-ya-751` at
    lines 15 and 111. The instance validates on everything else.
-3. **[2.0.0_SA_COO~Y2 via 2.0.0_SA_COO~C] Route the stuck generate worker** — 6 of 8 jobs at
-   `RECEIVED`/`outbox SENT`, four older than a completed one. Read 5 re-runs here on their word.
-4. **[2.0.0_SA_COO~Y2] Settle `5_outcome`'s domain** — two observed members now fall outside it
-   (`RETENTION_RECORD_UNAVAILABLE`, `ANALYSIS_REPORT_NOT_READY`); the pdf route has at least three
-   refusal paths before it signs.
+3. ~~**Route the stuck generate worker**~~ **CLOSED 16:13:18Z** — not a stuck worker: a packaged
+   schema predating `ticket_id`, row `IRPT_ANLREQ-D2-S15`, fixed in dell2 G2's release 4. No re-run
+   of read 5; reads 3a and 4 accepted. Nothing further owed by this lane on that order.
+4. **[2.0.0_SA_COO~Y2] Settle `5_outcome`'s domain** — still open. Two observed members fall outside
+   it (`RETENTION_RECORD_UNAVAILABLE`, `ANALYSIS_REPORT_NOT_READY`) and dell2's own diagnosis names a
+   THIRD refusal this lane never reached (`CLOSED_COMPOSITION_REQUIRED`), so the pdf route has at
+   least four distinct paths before it signs and the declared domain holds two.
 5. **[0.0.0_AB_MSTR] Carry `4ae87b336a` and `60cfbecb26` to CLOUD** at the next `box-sync`; this
    seat does not push `box/laptop`.
