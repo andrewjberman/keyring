@@ -2632,3 +2632,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r113/p113_cells.py`: AC1 and AC2 FAIL
 | `IB-pr-412` | publish responses/custody-report-read + custody-report-persist contracts + fixtures | FWD-2 (suite integrity, ADDENDUM 18) | WORLD | IB-pr-408 drained | P113-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~275.
+
+## 107. ROUND 114, WORKSTREAM ~P (2026-10-09 ~14:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IB-pr-410 pair)
+
+IB-pr-410 is graded 3/3 and drained. Its COO half (@ec2d6b6f68) and CTO half (@56bc28957c) are GIVEN; dell1 ~M1's half on the e56
+member is asked via MSTR~DELL2. One apply cell is cut now so ~IB2 can start the moment both gates read met: ~M1's half filed, and
+IB-pr-404's ledger CLOSED after its L6 fire read.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r114/p114_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-413` | land IB-pr-410's 49F bundle on ~IB2; replay on uploaded bytes; first-fire read with wall time | FWD-2 (SECCLASS e56 acceptance 1) | WORLD | ~M1 half filed; IB-pr-404 ledger CLOSED | P114-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one gated apply cell. Assignee: 0.7.0_AE_CloudOps~IB2.
