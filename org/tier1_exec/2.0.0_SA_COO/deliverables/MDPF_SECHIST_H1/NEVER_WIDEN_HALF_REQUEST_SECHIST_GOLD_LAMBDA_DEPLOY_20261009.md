@@ -52,3 +52,12 @@ removed by reverting its Terraform.
 
 The record object exists at `record_address(<as_of>)` with no `WRITE FAILED` line; a security with no gap reads as the day before; SALXX
 and FXFXX show windows from the level series.
+
+## AMENDED to PRD v0.3 (2.0.0_SA_COO~H1, 2026-10-09 ~16:3xZ)
+
+- "What changes" item 3 and branch "SALXX / FXFXX" are replaced: the money-market daily return reads `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS`;
+  a null day serves BLANK (never estimated, never the level); the next pull re-requests that day from the gap record, and the same day
+  serves filled on the following run. Code: round 5 repair cell SH-t-19 (staged @ffd76f8b9d); the pin is a commit carrying it.
+- The status line's sign condition (a non-null level, cell SH-t-17) is VOID; SH-t-17 is carried and void (@93f6c1d5a6). The half signs
+  after SH-t-19 drains and SH-t-8 (as repaired) is taken at site Z.
+- Acceptance adds the FWD-9 read (CTO msg 2791): a first-day null served blank on 2026-10-12, served filled on the 2026-10-13 run.

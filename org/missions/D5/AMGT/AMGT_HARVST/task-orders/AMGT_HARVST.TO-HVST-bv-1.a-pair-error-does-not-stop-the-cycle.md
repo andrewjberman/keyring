@@ -57,6 +57,12 @@ Work in your worktree. Change `lib/opal_data_harvest/backfill_driver.py` and `li
    - The log file exists after a cycle and holds the CYCLE line.
    - A MUTANT: with the guard removed (cap set very high), the 5-errors test fails.
 6. Do not run anything against a publisher, S3 or the site Z box. A surprise is a row; keep working.
+7. **(AMENDMENT 1) Failed pairs are asked again.** A completed cycle with `failed > 0` must not lose those pairs: the next
+   cycle asks each pair that FAILED in the publisher's previous cycle with THAT cycle's floor (the failed window), and every
+   other pair with the new floor. The new cycle record names them (`requeued: [keys]`). A pair that fails again carries its
+   older floor forward until it succeeds. Add a test to `test_bv1_cycle_continues_past_pair_errors.py`: cycle 1 fails 3 pairs;
+   cycle 2 asks exactly those 3 with cycle 1's floor and the rest with cycle 2's; a pair that succeeds in cycle 2 is not
+   re-queued in cycle 3. A mutant that drops the re-queue fails that test.
 
 <paths>
 lib/opal_data_harvest/backfill_driver.py
@@ -100,6 +106,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - The CTO's live proof ("bbg's 3 errors carry their detail, the cycle reaches 242 of 242") is read at site Z after the merge
   and re-pin (a WORLD act under its own pair). This cell's proof is the fixture.
 - Checks dry-run at the base (2026-10-09 ~16:0xZ): AC1 FAIL as expected (no test file); AC2 PASS (53 passed).
+- **AMENDMENT 1 (2026-10-09 ~16:3xZ, issuer):** step 7, on row AMGT_HARVST-D1-W133-S1 (@7a95461ddd): a completed cycle
+  with failures advanced the floor past the failed pairs, so they were never asked again, against the CTO's "Failed pairs
+  re-queue next cycle" (msg 2724). No criterion changes (AC1 covers the added test).
 - Slot ~133, worktree `C:/Dev/wk-harvst-133`, branch `wk-AMGT_HARVST-133-r78`.
 
 <risk>SERVED</risk>
