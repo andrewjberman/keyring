@@ -1289,3 +1289,29 @@
   "dismissal_reason": "World-done and closed on the trunk branch; the open sentinel is a stale copy in pre-close worktrees. The deploy-ledger union reads stale branches, so a hit needs its close commit checked before it is acted on."
 }
 ```
+
+## IRPT_ANLREQ-D2-S13 -- L9 TO-APPLY-R13b AC2 MET
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T12:10:16Z",
+  "one_line": "L9 TO-APPLY-R13b AC2 MET: the joint ticket release (I5', I7 and the trade_request type) is live -- the deployed lambda_function.py equals the committed source (670686262068808f), the 8 env keys are unchanged with COMMENTARY_ALLOWED_FIRMS byte-exact, unauthenticated POSTs to /tickets and /tickets/{id}/package answer 401 beside a positive control, ItemCount 13 before and after, full replan 0-diff. Applied by the substitute lane ~AR2 under ruling @5ff94852a6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AR2/deliverables/IRPT_ANLREQ.TO-APPLY-R13b.ticket-joint-i5p-i7-trade-request-ar2.proof_of_spec.json",
+      "this seat's live read ~12:1xZ: opal-ticket-api CodeSha256 HK82TEd0SQWe..., LastModified 2026-10-09T11:43:28Z, Successful, 8 env keys; git show <round commit>:infra/aws/lambda/ticket_center/lambda_function.py sha256 670686262068808f... (= the deployed member the applier hashed), the same bytes at cc15159703, dd11e81e46 and ba6fcb1c14",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_APPLY_R13B_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-R13b AC2: the five step-5 after-reads (deployed file, env, unauthenticated POST, ItemCount, replan).",
+  "world_is": "Met as written. ~O2's trade_request type is now live with it."
+}
+```
