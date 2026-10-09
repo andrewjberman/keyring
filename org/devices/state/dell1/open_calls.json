@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T04:38:00Z",
+ "written_at": "2026-10-09T04:42:40Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -377,9 +377,9 @@
    "escalation": {
     "to": "andrew",
     "ref": null,
-    "at": "2026-10-09T03:28:08Z",
+    "at": "2026-10-09T04:42:40Z",
     "by": "1.0.0_SA_CTO~DELL1",
-    "reason": "Andrew's named hold: card A (FWD-2) -- 'I will handle that with sitez' (2026-10-08 ~17:5xZ, H1 record cooH1_ANDREW_DIRECT_20261008_175xZ). REC to Andrew: route it as a MDPF_DEMQUE tier-2 request, quoted first."
+    "reason": "Andrew's named hold on card A: 'I will handle that with sitez' (tick 27 @4266c23b09); only he lifts it"
    }
   },
   {

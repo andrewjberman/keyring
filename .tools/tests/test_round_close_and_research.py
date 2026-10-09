@@ -260,6 +260,40 @@ def main():
             return rc == 1 and "the project tree's validator REFUSES" in out and "close-gate" not in out, "rc=%d %s" % (rc, last_line(out))
         add("the generator's refusal still comes first and unchanged", generator_first)
 
+        def _rcc():
+            from importlib.util import module_from_spec, spec_from_file_location
+            sp = spec_from_file_location("rcc_t", TOOLS / "round-close-check.py")
+            m = module_from_spec(sp)
+            sp.loader.exec_module(m)
+            return m
+
+        def _order_case(body, name="P.TO-1.x", inst_to_id=None, want="match"):
+            def fn():
+                rcc = _rcc()
+                d = tempfile.mkdtemp(prefix="rcc_ord_", dir=tmp)
+                put(d, "task-orders/%s.md" % name, body)
+                cid = "C1"
+                if inst_to_id is not None:
+                    put(d, "deliverables/w/%s.proof_of_spec.json" % name,
+                        json.dumps({"to_id": inst_to_id, "acceptance": [{"criterion_id": cid, "status": "PASS"}]}))
+                o = rcc.read_orders(d, None, None)[0]
+                if want == "match":
+                    ok, why = rcc.proof_state(o, d, str(REPO), False)
+                    return ok, "id=%s %s" % (o["id"], why)
+                return o["status"] == want, "status=%s" % o["status"]
+            return fn
+
+        crit = "<criterion id=%sC1%s><invocation>x</invocation></criterion>" % (chr(34), chr(34))
+        nl = chr(10)
+        add("no to_id: the order id is the file stem and a proof carrying the stem matches",
+            _order_case(nl.join(["<status>complete</status>", crit]), inst_to_id="P.TO-1.x"))
+        add("to_id present: the order still matches by to_id",
+            _order_case(nl.join(["<to_id>P.TO-9</to_id>", "<status>complete</status>", crit]), inst_to_id="P.TO-9"))
+        add("pending then complete reads complete",
+            _order_case(nl.join(["<status>pending</status>", "<status>complete</status>", crit]), want="complete"))
+        add("complete then pending reads pending",
+            _order_case(nl.join(["<status>complete</status>", "<status>pending</status>", crit]), want="pending"))
+
         with ThreadPoolExecutor(max_workers=4) as pool:
             futures = [(name, pool.submit(fn)) for name, fn in cases]
             results = []

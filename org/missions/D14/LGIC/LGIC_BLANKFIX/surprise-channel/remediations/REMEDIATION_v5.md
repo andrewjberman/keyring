@@ -53,11 +53,11 @@ test or GRADING_RULE.md since round 5).
     "owner": "1.0.0_SA_CTO",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v7"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-S10",

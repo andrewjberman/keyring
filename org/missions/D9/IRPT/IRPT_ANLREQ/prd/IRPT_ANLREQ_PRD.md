@@ -5,10 +5,10 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
  "status": "DRAFT"
 }
 ```
@@ -38,7 +38,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
          DONE WHEN  EXERCISED -- the form offers the analysis types and the Opal models as checkboxes plus a field for other ETFs; a mistyped ETF is caught
                     and a correction offered, and a swap is accepted, before the ticket is created
          ACCEPT     a person who types an ETF wrong is told before filing and can pick the right one; a holding that is unknown or cannot be priced is
-                    replaced by a confirmed candidate security before filing (the security swap), never by an unverified guess
+                    kept if Opal or yfinance can price it, and otherwise replaced before filing by a proxy ETF chosen from Opal's own registry for
+                    its asset class and sub-class (the security swap, C-SWAP), never by an unverified guess; the advisor sees and can change it
          SOURCE     Andrew ("typo check and swap ability completely ironed out"); CRO trace hops 1-2
 
   FWD-3  The investment commentary is written from the report itself, and stays a draft until a person sends it
@@ -64,6 +65,12 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
                     tab, and the package lands on the same ticket
          ACCEPT     an Opal person finishes an unusual request by hand from the Analysis tab, and the ticket ends up the same as an automatic one
          SOURCE     Andrew ("frontend work on the actual Analysis tab will be completed after the fact ... only for unusual cases")
+
+  FWD-7  An Analysis Request runs end to end without YCharts
+         DONE WHEN  EXERCISED -- FWD-1's request is traced hop by hop and shows zero YCharts calls: the typo check, the swap, the prices, the report
+                    and the overlays all come from Opal's own data, with yfinance and Bloomberg as named fallbacks
+         ACCEPT     the finished package is produced with no YCharts call anywhere in the request's trace; a figure Opal could not source says so
+         SOURCE     Andrew 2026-10-09 ~04:4xZ ("I do not think we actually need YCHARTS for anything")
 ```
 
 ## 1. What exists (the CRO's nine-hop trace @9076346655, plus this session's measured changes)
@@ -89,6 +96,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-PACKAGER: one principal attaches the package | this project | The package's last hop is the branded PDF render, which runs after the commentary. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
 | C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the test filer by its PROFILE row [49financial]; the packager by its row. ALL never admits. |
 | C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
+| C-SWAP: the security swap, one pass per unknown holding (Andrew ~04:4xZ; CRO research @9ae5d353d1 section 2) | this project | (1) KNOWN: the ticker or CUSIP in `etf-classifications` and MDPF_SECHIST; a typo suggestion is verified against the registry and yfinance, never YCharts. (2) YFINANCE CHECKER: one paced call; if it has history, the holding is KEPT, a registry row is added and its prices land in MDPF_SECHIST. (3) CLASSIFY only if yfinance has nothing: SECCLASS's classifier with a web-search tool, output bound to the live (class, sub-class) vocabulary, below 0.80 confidence FLAGGED. (4) PROXY, deterministic, no model: the designated registry ETF for that pair, else the class default, and it must have prices. (5) RECORD: the holding keeps the client's name, with `proxy_for`, `proxy`, `method`, `confidence`, `low_confidence` and `sources`. `resolution_kimi`'s model-proposed swap is retired. The designated-proxy table is MDPF_SECCLASS's (dell1), a pre-arranged input. |
+| C-PRICES: where prices come from | this project | MDPF_SECHIST's per-security series first, then yfinance (paced), then Bloomberg only when both lack it (through its queue, CLAUDE.md). The performance overlays of variants 2 and 3 use IRPT_DASHBD's daily TWR engine, ported with zero flows. No YCharts price or figure. |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
@@ -155,3 +164,14 @@ on its own artifact.
 FWD-2's ACCEPT changed, so the CVO's ratified-text half re-opens too.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## v0.3 (2026-10-09 ~05:0xZ, `1.0.0_SA_CTO~DELL2`) -- Andrew-direct ~04:4xZ-05:1xZ: the swap method, no YCharts, prices yfinance-first
+
+- **Source:** `4.0.0_SA_CRO~DELL2` msg 2485, with Andrew's words verbatim in
+  `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261009_SECURITY_SWAP_AND_NO_YCHARTS.md` @9ae5d353d1.
+- **FWD-2:** ACCEPT reworded to the swap method.
+- **FWD-7 is new:** no YCharts call end to end.
+- **New contracts:** C-SWAP and C-PRICES.
+- **C-ABSORB (b):** IRPT_YCDGEN's engine is absorbed; its YCharts path is retired by FWD-7, and its cells S31 and S32 are filled by C-SWAP.
+- **ENDPOINT and CONTRACTS changed.** Both halves re-open.
+

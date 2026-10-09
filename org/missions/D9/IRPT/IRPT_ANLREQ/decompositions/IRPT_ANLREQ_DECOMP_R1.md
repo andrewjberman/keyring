@@ -45,6 +45,19 @@ the journey stays the packager (C-PACKAGER, hop 8).
 | I5 | packager -> ticket | `POST /api/scoped/tickets/{ticket_id}/package` with `{report_ref, pdf_ref, original_ref, commentary_ref, firm}` (`lambda_function.py:1367`, live, pointers only), as the ONE `package_principal`. |
 | I6 | ticket page -> files | each ref opens through IRPT's signed-link reader (`ops/owned_report.py:154`) under the VIEWER's own scope. |
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~04:5xZ, on `2.0.0_SA_COO~T2` msg Re 2489): the commentary STORE (I4 fixed the
+message, not where the DRAFT lives).**
+
+| id | from -> to | shape |
+|---|---|---|
+| I4s | commentary -> store -> packager | The DRAFT is an IRPT artifact. It is written through `reports/repository.py` `ArtifactRepository.put`, the same path as `ANALYSIS` and `REQUEST_COMPOSITION`. Its family is `ANALYSIS_COMMENTARY`, in a NEW additive policy row `irpt-anlreq-x10-v1` in `infra/logic/registry/reporting_policies.json` (source `irpt`, tier `state`, table `analysis_commentaries`; the precedent is ~M2's additive `irpt-custody-x10-v1` row). Every address is the builder's output, never typed (rule 30). The artifact's opaque id is `commentary_ref`. It is set ONCE on the acceptance record of `(tenant, request_id)` by a conditional update (`attribute_not_exists`), so I4's consumer reads it there, as I2 says of every later hop. The packager reads the bytes through the repository's service-reader family grant (`repository.py:43`). |
+
+- **Owner of the registry row and the persist:** `AR-t-12` (~T2). The row is additive, and no existing family moves.
+- **Release note:** `reporting_policies.json` is staged in `irpt-ycharts-generate` (and other functions). The next release census of
+  each lists it as a changed member.
+- **`AR-g-12` (~G2) reads `commentary_ref` from the record and the bytes through the repository.** Its I5 call carries the same id.
+- Gate limb that graded this amendment: none (a decomposition document, not a task order).
+
 ## Cells (round 1, FWD-1)
 
 | hop | state | cell | lane | what EXISTS at the end |

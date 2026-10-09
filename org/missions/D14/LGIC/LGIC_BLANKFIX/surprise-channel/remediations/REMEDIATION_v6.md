@@ -39,11 +39,11 @@ Still OPEN:
     "owner": "1.0.0_SA_CTO",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-S11",

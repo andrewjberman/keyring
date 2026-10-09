@@ -1880,6 +1880,34 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
 }
 ```
 
+## LGIC_BLANKFIX-S12 -- two round-8 instruments read red on the trunk because their fixture HOLE closed before the merge
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S12",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T04:13:00Z",
+  "one_line": "Two round-8 instruments read red on the trunk: ROOTCHECK-TEST (case 5, 'a fixed HOLE: the count shrinks') and arm F of exercise_fwd6_arms.py both edit the intake root's cron to remove a live HOLE, and that HOLE was already gone when BF-w-1 merged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run by 3.0.0_SA_CVO at HEAD ca565d1871: python lib/tests/test_opal_naming_rootcheck.py -> 'FAIL: a fixed HOLE: the count shrinks, no new line' and 'ROOTCHECK-TEST ok=False cases=319'",
+      "run by 3.0.0_SA_CVO at HEAD ca565d1871: exercise_fwd6_arms.py -> 'ARM F ratchet shrinks | NOT HELD ... got: rc=0 holes head=0 post=0' and 'FWD6-ARMS ok=False arms=7 held=6'",
+      "lib/tests/test_opal_naming_rootcheck.py:160-165 -- case 5 edits INTAKE_TF's cron and expects head_holes > post_holes",
+      "run by 3.0.0_SA_CVO: python lib/opal_naming_rootcheck.py lines infra/aws/terraform/investor-reporting/intake --map infra/logic/registry/root_map.json -> 'NOT-ASKED SCHEDULE irpt-intake-poll ...' and 'ROOTCHECK ok=True ... hole=0'",
+      "git merge-base --is-ancestor 46d6a05de0 cd219e95cd -> true: the CRO's round-8 registry write (2026-10-08 22:53 -0400) precedes the BF-w-1 merge (23:50 -0400)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Drain end ROUND8: BF-w-1 re-proved 'ROOTCHECK-TEST ok=True cases=320' and 'FWD6-ARMS ok=True arms=7 held=7'; the order bars a test from depending on a typed estate state that moves.",
+  "world_is": "The re-proof ran in the slot's worktree, cut before the registry write. On the merged trunk the intake HOLE is NOT-ASKED, so the shrink case has nothing to shrink and both instruments read false. The build is not shown wrong: arms A-E and G hold. The fixture is a live estate HOLE, the same class as rows S6, S7 and S8. Repair: plant the HOLE in the overlay text, as arm D does, instead of reading one off the estate."
+}
+```
+
 ## LGIC_BLANKFIX-D1-S1 -- round-close-check grades 0 of 5 round-8 orders because their status carries a suffix; MAY-CLOSE is vacuous
 
 ```json

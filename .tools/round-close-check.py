@@ -127,12 +127,37 @@ def tag(text: str, name: str):
     return m.group(1).strip() if m else None
 
 
+# Source: .tools/seat-list.py STATUS_WORDS (used when seat-list.py imports; this copy is the fallback).
+_STATUS_FALLBACK = {"complete", "superseded", "cancelled", "canceled", "withdrawn", "retired", "closed", "pending",
+                    "staged", "open", "parked", "active", "in_progress", "in-progress", "blocked", "held", "draft",
+                    "issued"}
+
+
+def status_words() -> set:
+    try:
+        return set(load_mod("opal_seat_list_s", os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                             "seat-list.py")).STATUS_WORDS)
+    except Exception:  # noqa: BLE001 - a seat-list that does not import falls back to the local copy
+        return set(_STATUS_FALLBACK)
+
+
+def last_status(text: str, words: set) -> str:
+    """The LAST <status> tag whose word is a status word (CTO ruling msg 107528)."""
+    got = ""
+    for m in re.finditer(r"^<status>(.*?)</status>", text, re.M):
+        w = m.group(1).strip().lower()
+        if w in words:
+            got = w
+    return got
+
+
 def read_orders(proj_dir: str, rnd, ws) -> list:
     out = []
+    words = status_words()
     for path in sorted(glob.glob(os.path.join(proj_dir, "task-orders", "*.md"))):
         text = open(path, encoding="utf-8", errors="replace").read()
-        o = {"path": path, "stem": os.path.basename(path)[:-3], "id": tag(text, "to_id") or "",
-             "status": (tag(text, "status") or "").lower(), "round": tag(text, "round"),
+        o = {"path": path, "stem": os.path.basename(path)[:-3], "id": tag(text, "to_id") or os.path.basename(path)[:-3],
+             "status": last_status(text, words), "round": tag(text, "round"),
              "workstream": tag(text, "workstream"), "issued_by": tag(text, "issued_by") or "",
              "issued_to": tag(text, "issued_to") or "", "criteria": []}
         for m in CRIT_TAG.finditer(text):
