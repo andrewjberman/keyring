@@ -4442,3 +4442,29 @@ round.** Never edit an existing row.
   "world_is": "Met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-S67 -- two S3 keys split to evade the naming gate (rule 30)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S67",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:55:13Z",
+  "one_line": "commonwealth_cot_price_rewrite.py builds two S3 keys by splitting literals so the commit-time naming gate cannot read them: PFX = '/'.join(['silver', 'pri' + 'ces']) (:76) and PIN_KEY = '/'.join(['code', 'gold', 'scopes' + '.json']) (:251, commented 'joined: the naming gate refuses the typed literal'). CLAUDE.md rule 30: a builder refusal is a missing registry row to add, never a hand-typed workaround; a split literal is a typed address the gate cannot see.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76",
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:251",
+      "ADVI_COTBKF round 44 packet @0e628a61f8 (the disclosure)"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is lib/opal_naming address() output; a builder refusal is a missing registry row, never a hand-typed workaround.",
+  "world_is": "Two keys are hand-built by fragment to pass the gate; the gate's purpose (every new address from the builder) is defeated for both."
+}
+```
