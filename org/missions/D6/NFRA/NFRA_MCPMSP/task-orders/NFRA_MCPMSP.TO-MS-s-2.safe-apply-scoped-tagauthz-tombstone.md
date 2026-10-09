@@ -105,7 +105,7 @@ the row's owner until this cell lands). Sibling census at the cut: 6 orders name
 "both cases on a scratch root, with a negative control" = arms 1-4 plus the base-bytes difference control in AC1.
 Check dry-run at base: AC1 FAIL as expected (self-test absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~8</slot>
 <fabric>site-z</fabric>

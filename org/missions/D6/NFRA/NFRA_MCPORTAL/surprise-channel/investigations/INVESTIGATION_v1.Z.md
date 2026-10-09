@@ -940,6 +940,31 @@
     "spec_asserts": "TO MP-x-3 step 1 specifies the policy name '${var.name}-mcportal-fabric-read' (= opal-gateway-mcportal-fabric-read), and step 2 anticipates that if the naming gate refuses that name it refuses AT COMMIT, where the worker files a BLOCKING row and stops. Section 3 directs rows to the id coordinate A7.",
     "world_is": "The commit-time limb does not refuse the name -- it RAISEs (G3), because ${var.name} is unresolved at commit, so the commit landed. The refusal arrives one stage later, inside safe-apply's naming plan limb, which resolves the interpolation and grades the ADDITION as OUT-OF-PATTERN. The act is stopped AFTER the ledger was opened and the plan had graded clean at 1 to add / 0 to change / 0 to destroy, not before the build. Because AC1 looks the policy up by that exact name, no single name satisfies both the gate and the criterion. Separately, the A7 id coordinate the TO directs is not in the gate's grammar.",
     "notes": "Issuer's call, three options, none available to the worker: (a) re-cut AC1 (plus the TO's step-1 name, the new file's header and graph-read.tf's citation) onto the builder's 'gateway-mcportal-fabric-read-policy', matching the two sibling MCPORTAL policies already in this module -- the only option needing no override and no law change; (b) obtain an R20 register entry (infra/logic/registry/, Andrew acknowledges) recording a deliberate departure for the legacy '${var.name}-' form under rule 30's existing-pipeline non-application, then re-run; (c) route the gate itself to 1.0.0_SA_CTO as a defect, since the commit limb's G3 RAISE admits a name the apply limb then refuses -- so EVERY new interpolated name in this module discovers its refusal only after its ledger is open. Worktree C:/tmp/mp-x3, branch wk-mp-x3, commits e5a036a659 (build) and 4f639cc38d (ledger), NOT drained."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S22",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T09:02Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "TO MP-k-2 step 2 directs the PLAN to be run with safe-apply, but safe-apply gates the apply subcommand ONLY and refuses every other subcommand by construction (rc=2), telling the caller to invoke terraform directly -- so the instruction is unsatisfiable as written and the wrapper's own usage text is the remedy. The plan was run with terraform directly, the act was NOT blocked, and the apply still goes through safe-apply per step 4.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED REFUSAL, verbatim, from the worktree root C:/tmp/mp-k2: '.tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway plan -target=aws_iam_role_policy.gw_mcportal_close_request_write' -> 'safe-apply: ERROR -- no \\'apply\\' subcommand in the arguments.' / 'safe-apply: this wrapper gates \\'terraform apply\\' only. For \\'plan\\' or any other subcommand call the terraform binary directly.' / 'safe-apply: usage -- safe-apply.sh [-chdir=DIR] apply [apply-args...]' ; rc=2.",
+        "THE REFUSAL IS BY DESIGN, NOT A DEFECT, and the wrapper documents it in its own header (.tools/safe-apply.sh:19-21): 'Gates `apply` ONLY. `plan` and other subcommands are non-destructive -- call terraform.exe directly for those.' The loop that produces the exit is :53-67 (it scans argv for the literal 'apply' and exits 2 when absent).",
+        "THE WORK WAS NOT BLOCKED. The plan ran with the terraform binary directly, resolved device-agnostically per CLAUDE.md (no .tools/terraform.exe on site Z; terraform v1.15.8 on PATH), and graded exactly as the order requires: 'Plan: 1 to add, 0 to change, 0 to destroy.' with one statement, Action ['s3:PutObject'], Resource ['arn:aws:s3:::opal-313476888478-globgrph/fabric/open-calls/v1/box=*/requests/*'], Sid 'McportalCloseRequestWriteOnly', role 'opal-gateway-role'. Saved to C:/tmp/mp-k2.tfplan.",
+        "THE APPLY PATH IS UNCHANGED by this row: step 4's 'ACT with safe-apply, targeted to the same resource' is satisfiable exactly as written, because that invocation does carry the 'apply' subcommand. Only the PLAN sentence in step 2 is unsatisfiable. No override was taken and none is needed.",
+        "NOT A ONE-OFF WORDING SLIP WORTH LEAVING UNRECORDED: the sibling order in this same workstream, TO-MP-x-4 step 1, routes its EC2 act through infra/aws/ec2/safe-ec2-deploy.sh rather than safe-apply, so the two orders use the wrappers correctly where they are write acts. The conflation is specifically plan-vs-apply."
+      ]
+    },
+    "spec_asserts": "TO MP-k-2 step 2 ('Plan, and the ASK') directs: 'Run the plan with `safe-apply`, targeted to aws_iam_role_policy.gw_mcportal_close_request_write only.' That sentence presumes safe-apply can run a plan.",
+    "world_is": "safe-apply refuses any argv without the literal 'apply' subcommand and exits 2 before terraform is invoked at all, so no plan can be produced through it. The wrapper's own usage text names the correct call ('call the terraform binary directly'), which is what was done. The gating sequence the order actually depends on is intact: the plan graded 1 to add / 0 to change / 0 to destroy before the ASK was written, and the irreversible apply will run through safe-apply's HALTGT checkpoint per step 4.",
+    "notes": "Issuer's call, and nothing in this cell waits on it: (a) re-word step 2 of the next cut to 'run the plan with the resolved terraform binary, targeted' and leave step 4's safe-apply sentence as-is -- the minimal fix, no mechanism changes; (b) leave the orders alone and treat the wrapper's usage text as the standing remedy, accepting that each applier seat pays one refused invocation to discover it. Either way the proof_of_spec is untouched: AC1/AC2/AC3 do not mention safe-apply. Worktree C:/tmp/mp-k2, branch wk-mcportal-cp2-k2, cut from box/sitez @5db9d4cbabf33ac5298e2c6a956cfc8ec2c90abb."
   }
 ]
 ```

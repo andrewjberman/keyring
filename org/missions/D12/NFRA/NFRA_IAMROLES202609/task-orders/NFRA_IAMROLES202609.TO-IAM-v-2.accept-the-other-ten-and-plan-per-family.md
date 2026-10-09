@@ -29,8 +29,12 @@ THE FILE: org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_I
   Rows 8 and 10 are IAM-v-1's (yours already); rows 4, 12, 15 are owned by 1.0.0_SA_CTO~Z; row 13 is DECLARED.
 
 WHAT TO DO:
-  (a) On each of the ten rows, replace `owner=NO-ACCEPTING-SEAT` with `owner=0.7.0_AE_CloudOps~Z` and
-      extend `reason=` with one sentence in your words. Keep every other word of the row.
+  (a) Write deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_TEN.md: your acceptance of record, one
+      section per row, in your words. Then PREPARE the row edits in GOVERNANCE_DISPOSITION.md in the
+      shared tree (owner=NO-ACCEPTING-SEAT -> owner=0.7.0_AE_CloudOps~Z, reason extended) and leave them
+      UNCOMMITTED: that file sits under another serial's deliverables folder and the owned-paths lane
+      refuses your commit there, so the issuer lands your prepared bytes as the carrier, citing your
+      acceptance commit (amendment A1, row Z-S19). Do not take an author override.
   (b) Write deliverables/0.7.0_AE_CloudOps~Z/ADOPTION_PLAN_TEN.md: group the ten into families (by the
       Terraform module that should own each, or by the producing pipeline), and per family state the custody
       home, the adopting act (an `import` block per role, as round 2's candidate does), the module-scoped
@@ -57,13 +61,12 @@ C-ANALYZER-PRICED-FIRST + G-25: no Access Analyzer.  G-21: no alert, alarm, moni
 ## PATHS -- your write surface IS this list, and nothing else
 
 <paths>
-org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md
 org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/
 org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-2.accept-the-other-ten-and-plan-per-family.md
 </paths>
 
-Surprise rows: id `NFRA_IAMROLES202609-Z-AEC-S<k>`, `"fabric": "site-z"`. Commit through `.tools/safe-commit.sh`
+Surprise rows: id `NFRA_IAMROLES202609-Z-S<k>` (next free k), `"fabric": "site-z"`. Commit through `.tools/safe-commit.sh`
 under your own author line. Flip this order's LAST `<status>` to `complete` with a proof instance in your
 deliverables directory.
 
@@ -72,7 +75,7 @@ deliverables directory.
 <proof_of_spec>
   <criterion id="AC1" cell_refs="IAM-v-2"><invocation>bash -c "F=org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md; echo rows=\$(grep -cE '^[0-9]+\. \`[A-Za-z0-9._-]+\`' \$F) unowned=\$(grep -E '^[0-9]+\. \`[A-Za-z0-9._-]+\`' \$F | grep -c -v -E 'DECLARED|owner=(0\.7\.0_AE_CloudOps~Z|1\.0\.0_SA_CTO~Z) reason=')"</invocation><expect>exactly `rows=16 unowned=0` -- 16 of 16 rows are in code or carry a named owner and a reason, read on the committed blob with the denominator printed; unowned above 0 is valid only for a row ADOPTION_PLAN_TEN.md refuses by name</expect></criterion>
   <criterion id="AC2" cell_refs="IAM-v-2"><invocation>bash -c "grep -o -E 'bd-merge-daily-lambda-role|bd-pipeline-task-role|codebuild-semantic-clustering-role|finbert-ec2-backfill-role|lambda-ec2-runtime-monitor-role|lambda-test-role|opal-smartx-lambda-role|portfolio-management-lambda-role|sentiment_query_api-role|workspace-sync-lambda-role' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/ADOPTION_PLAN_TEN.md | sort -u | wc -l"</invocation><expect>10 -- the plan names every one of the ten roles; a "No such file" error means the plan is missing</expect></criterion>
-  <criterion id="AC3" cell_refs="IAM-v-2"><invocation>git log -1 --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md</invocation><expect>exactly 0.7.0_AE_CloudOps~Z -- the acceptance is in a commit the lane authored</expect></criterion>
+  <criterion id="AC3" cell_refs="IAM-v-2"><invocation>bash -c "git log --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_TEN.md | sort -u"</invocation><expect>exactly one line, 0.7.0_AE_CloudOps~Z -- the acceptance of record is a document only the lane authored (amendment A1, row Z-S19)</expect></criterion>
   <criterion id="AC4" cell_refs="IAM-v-2" judgment="true"/>
 </proof_of_spec>
 

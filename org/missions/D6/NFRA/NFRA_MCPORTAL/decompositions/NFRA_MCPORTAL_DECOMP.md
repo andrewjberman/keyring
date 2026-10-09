@@ -807,3 +807,11 @@ cell is renamed `MP-s-1` here and in its order. The ORDER FILE keeps its path
 (`NFRA_MCPORTAL.TO-MP-g-1.fabric-gitstate-handler.md`), because a renamed file is a newly-added order and GATE (x)
 refuses a second issuance into CP2 round 1. The order now answers to `<to_id>NFRA_MCPORTAL.TO-MP-s-1</to_id>` and to
 its filename stem (`proof-of-spec-check.py:758`). The checks keep their file names `g1.AC*.sh`.
+
+## CP2.10 AMENDMENT 2 (issuer, while MP-r-2 is staged): the route hookup is MP-r-2's step 0
+
+CP2.1 placed the four `app/admin_api.py` route lines with the issuer, at the merge. The owned-paths gate refused the
+issuer's hookup commit: that file is lane CLOUD_OPS_OR_ETL, and the COO lane holds no grant on `infra/aws/`. The lines move
+into MP-r-2 as its step 0, and its assignee `0.7.0_AE_CloudOps~MP` holds that lane. Measured by the issuer on the
+drained tree, uncommitted: routes 4 of 4, and every admin and fabric test file 58 passed. G-REL2's "routes hooked
+up" clause is now satisfied inside MP-r-2, not before it.

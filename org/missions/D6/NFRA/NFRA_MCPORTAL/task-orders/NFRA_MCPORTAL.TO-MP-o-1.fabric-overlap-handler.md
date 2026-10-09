@@ -158,7 +158,7 @@ workstream) from PRD v0.5 FWD-15, C13, A15 @cecf26d2c9. Checks dry-run at base 2
 FAIL (test file absent). The capture holds 31 overlaps over 860 activity records (INFRA 1 `tf:transcripts`, CODE 3, TOOL 1,
 RECORD 18, APPEND 8). No gate. Lives through MP-r-2.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <slot>~8</slot>
