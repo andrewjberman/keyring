@@ -23102,3 +23102,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict. SAP is served now (AC1 YES). The decision to keep it or roll it back, and whether T3 should count numeric sentences, is the issuer's. SAP's pre-act VersionIds (analysis rmP1ek8s2AVOO.IMhvmk_3Snqx6vI3zF, drafting qb9GzRTF0E9_nend.L7Sc_W0d_4b5BTR) are in PRE_ACT_RECORD.md for a rollback by re-write."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W340-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~340",
+  "surfaced_at": "2026-10-09T12:28:06Z",
+  "one_line": "crosswalk.schema.json refuses the new record field `issuer` and denominator `with_issuer_cik`, and the schema is outside this order's <paths>, so write_pool would REFUSE the new list until the schema carries both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The round-85 build notes (round85_prep/GROUP_LISTING_BUILD_NOTES.md s.4 item 1) read 'build_crosswalk carries issuer.cik by the precedence above (+ schema field, + tests)'; the order's <paths> lists crosswalk.py, name_search.py, scoped_amgt.py, their tests and the deliverables folder, not lib/research/identity/crosswalk.schema.json.",
+  "world_is": "Records and denominators in crosswalk.schema.json are additionalProperties:false. The local list (crosswalk_local.json, 243 records, 204 with issuer) validates against the CURRENT schema: NO (jsonschema: Additional properties are not allowed ('with_issuer_cik' was unexpected)); against the current schema plus two additions: YES. The additions: records.items.properties.issuer = {type object, additionalProperties false, required [cik, claim, source], cik string pattern ^[1-9][0-9]*$, claim enum [measured], source string minLength 1}; denominators.properties.with_issuer_cik = {type integer, minimum 0}. The worker did not edit the schema (outside its write grant). The local build (--out) never calls the schema, so AC1 and AC2 are unaffected; the world act (write_pool, which validates before any put) is blocked until the schema carries both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.py write_pool -> _validate_document_against_schema (validates before any put)",
+      "lib/research/identity/crosswalk.schema.json records.items additionalProperties false; denominators additionalProperties false",
+      "python jsonschema.validate over org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~340/crosswalk_local.json: current schema FAIL, schema+delta PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict. The schema edit belongs to the store leg's order or an amendment of this one."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W340-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~340",
+  "surfaced_at": "2026-10-09T12:28:06Z",
+  "one_line": "Two of the three crosswalk writers (add_security.py, build_universe.py union) build without issuer sources; I made write_pool's union step (_carry_served) keep a served record's measured issuer on a record the new document holds without one, so no served issuer is stripped, but a record those writers ADD carries no issuer until a crosswalk CLI build.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The order edits crosswalk.py `build_crosswalk` so every record carries issuer by precedence; the build notes name 3 writer entry points (crosswalk main, add_security._persist_registration_and_pool, build_universe.union_main) and one choke point, write_pool.",
+  "world_is": "Only `crosswalk.main` (--out, --dry-run, --write-pool) now passes issuer_sources=load_issuer_sources(). add_security._build_document calls build_crosswalk without it (add_security.py is outside the write grant), and build_universe writes a different document shape. Records add_security rebuilds replace the served copies (the build's own records win), so without a change they would lose issuer; _carry_served (called inside write_pool for every crosswalk/v1 write) now copies the served `issuer` onto any record of the document that lacks one (test_crosswalk_issuer.test_a_served_issuer_is_kept_on_a_carried_record_and_inherited_by_a_writer_without_sources). A security newly registered through add_security carries no issuer until the next crosswalk CLI build. Coverage in the local list: 204 of 243 carry issuer.cik (identity.cik 65, filing_source 12, company_tickers 127); 39 carry none.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/add_security.py:_build_document (build_crosswalk call without issuer_sources)",
+      "lib/research/identity/crosswalk.py _carry_served and write_pool",
+      "python -m pytest lib/research/identity/tests/test_crosswalk_issuer.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict. Writer census for the store pair stays N = 3; the inheritance is in the shared choke point."
+}
+```

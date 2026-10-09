@@ -86,6 +86,14 @@ stands unchanged.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 5 (2026-10-09 ~12:5xZ, issuer 2.0.0_SA_COO~P2): sequence only -- 397 runs NOW
+
+IB-pr-401 is held (row D2-S48, disarmed by D2-S49) until IB-pr-409's rebuild is re-signed (CTO ADDENDUM 18.1). This order no longer waits
+behind it: IB-pr-397 is next on this lane. Its CTO half requires only that it run after IB-pr-395, which is complete. AMENDMENT 3's
+content stands unchanged: drop the root log group, pass retention 14, re-plan exactly 5 adds / 0 change / 0 destroy.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

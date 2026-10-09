@@ -61,3 +61,34 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Closes when r29's ENV read-back shows MS_INGEST_IDENTITY is not the one scoped identity; then the first channel_poll line reads failed=0."
 }
 ```
+
+## COMM_ASSIST-Z-S1 -- PHASE A blocked: the shared transcripts root carries a required variable with no default, and this cell forbids -var
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S1",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA",
+  "surfaced_at": "2026-10-09T12:28:26Z",
+  "one_line": "PHASE A of CA-d-2 cannot take its preview plan: the shared root infra/aws/terraform/transcripts now carries a REQUIRED variable with no default (second_reader_trust_principal_arns, readers.tf:15, added by NFRA_TRNSPT), so terraform plan -target=module.ldo_001 exits 1 before evaluating anything, and this cell's rules forbid -var.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PHASE_A_PLAN.txt (org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~CA/): rc=1, 'Error: No value for required variable ... on readers.tf line 15: variable \"second_reader_trust_principal_arns\"'. No plan body was produced.",
+      "DENOMINATOR: 6 of 6 root .tf files parsed (chat_assist.tf, commentary.tf, mail_pull.tf, main.tf, pull.tf, readers.tf); 6 root variables total; EXACTLY 1 has no default -- second_reader_trust_principal_arns. 0 .tfvars/.auto.tfvars present in the root, 0 tracked by git.",
+      "POSITIVE CONTROL, same scratch TF_DATA_DIR and same init: 'terraform validate' -> rc=0 'Success! The configuration is valid.' The init took the declared s3 backend with no migrate or reconfigure prompt. So the failure is the missing variable VALUE alone, not the scratch setup, the backend or the config.",
+      "DELIBERATE BY DESIGN, and the design is root-wide: readers.tf:12-13 -- 'var.second_reader_trust_principal_arns has NO default on purpose: the issuer's pair names the principal with Andrew's routing, and a plan without it is refused by terraform (a required variable).' Added by 0.9.0_WK_NFRA_TRNSPT~2 in 0693227a69 (2026-10-09 04:32 local, TO-TR-p18) and 3c68dab9c9 (07:52 local, TO-TR-r21).",
+      "THE COLLISION: NFRA_TRNSPT TO-APPLY-a18 line 34 supplies it at ITS apply as `-var second_reader_trust_principal_arns=[\"arn:aws:iam::313476888478:user/Opal_Terminal\"]` and commits no default. CA-d-2's RULES FOR THIS CELL say 'Never `-var`' (and PHASE A says 'no -var'), because a -var on this shared root silently unwires the mail key on the next apply (COO half lines 11-13). The two orders are mutually unsatisfiable on the same root.",
+      "STEP 4 and STEP 5 of PHASE A both read as expected and are NOT part of this block: both functions at CodeSha256 xWURpe/nRkiZAc8Uui+arsJpSeVnUErNEHBWqtvrM5Q= (LastModified 2026-10-08T22:32:01Z / 22:31:55Z), neither carries MAIL_BEARER_SECRET, policy teams-global-chat-assist-policy default v3, live zip 219476 bytes hashing to the same xWURpe/n... value; both builds rc=0; the COO half's Branch B import test rc=0 against dist/pkg."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PHASE A takes a scratch, locked-off, targeted preview plan of module.ldo_001 with the variable at its committed default \"\" and no -var, reading '0 to add, 2 to change, 0 to destroy' with the two functions' source_code_hash/last_modified as the only changes.",
+  "world_is": "No plan of ANY target in this root evaluates without a value for second_reader_trust_principal_arns. PHASE A produced no plan body, applied nothing, opened no ledger, read no secret and called no route. PHASE B is blocked by the same wall, since step 6 takes the same targeted plan under the same no--var rule.",
+  "notes": "ID GRAMMAR: the order prescribes COMM_ASSIST-Z-AE-S<k>, which .tools/surprise-row-gate.py REFUSES (grammar <CODE>-(Z-)?(W<n>-|C-)?S<k>, annex v3.2 section 4 -- there is no AE- segment). Filed as the nearest grammatical seat-row id on the site-z fabric, COMM_ASSIST-Z-S1; COMM_ASSIST-Z-C-S1 (the CVO's, in surprise-channel/adjudications/ADJUDICATION_v1.Z.md) was the only Z- id already taken. No override was taken. The order's row-id line is the issuer's to correct. Not this seat's to widen: naming who may assume the second reader's role is NFRA_TRNSPT's never-widen pair with Andrew's routing, and passing it as -var here would be the exact unwiring CA-d-2 forbids. Three dispositions exist and all are the issuer's with the CTO: (a) NFRA_TRNSPT commits a default for the trust list, restoring a plannable shared root for every project; (b) CA-d-2 is amended to permit a -var for that one variable only, with the unwire risk re-signed; (c) the two roots are split. This seat STOPS here per PHASE A and holds, applying nothing."
+}
+```

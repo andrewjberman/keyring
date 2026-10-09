@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T125323Z-c442",
+ "kind": "CALL",
+ "call_id": "dell2-20261009T114756Z-886a",
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "NFRA_TRNSPT FWD-5 reader holders: close-both on your ruling @374553467d",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CALL_886a_NFRA_TRNSPT_FWD5_HOLDERS_CLOSE_BOTH_20261009.md",
+ "opened_at": "2026-10-09T12:53:23Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

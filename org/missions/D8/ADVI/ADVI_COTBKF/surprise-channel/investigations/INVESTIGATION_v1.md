@@ -3940,3 +3940,32 @@ round.** Never edit an existing row.
  "world_is": "D49151054 2021-10 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
 }
 ```
+
+## ADVI_COTBKF-D2-S58 -- L9 round 34: CB34ah1-AC2 MET, CB34ah2-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S58",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T12:55:59Z",
+  "one_line": "L9 round 34: CB34ah1-AC2 MET -- rule commit e6544ecdfe (07:04 ET) precedes output 33b729fc1b (07:06); the class cross_firm follows from the printed writer (inject_scoped_overrides.py:136) and its inputs (49 Financial's scoped_price_exceptions.json and module), every caller and doc hit listed. CB34ah2-AC3 MET -- rule 2536c4fc09 (07:08) precedes the build output 1fd8b6113f (07:42); the FWD3-BUILD line carries price_basis=as_traded; the substitution is stated as the census's dividend_adjusted and mixed tickers at the cached Yahoo Close (911 tickers); SCHB/SCHZ on 2022-10-12 equal the round-31 evidence key exactly (41.94 / 44.93), nothing tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~61/bd_txn_writer_trace.md",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~62/sweep_regrade.md:5",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~62/evidence_four_months_schb_schz.txt",
+      "git log of workers ~61 and ~62 (rule commits before outputs)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_34_DRAIN_END_20261009.md @9498283193 (msg 3295)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_34_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB34ah1-AC2 and CB34ah2-AC3 (round 34's judgment criteria; the grade opens the CTO's reader gate).",
+  "world_is": "Both met as written."
+}
+```

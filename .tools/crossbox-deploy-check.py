@@ -27,7 +27,8 @@ files is inside its write set (an empty list reads clear: "no file carried"). --
 files of --root that differ from the merge base with the shared branch (committed, staged, unstaged or untracked); when that
 list is empty OVERLAP reads clear with the reason "no file of this root differs", and when the merge base cannot be resolved the
 tool says so and falls back to the root alone. The same rule narrows the OPEN-CALL project-code match and, for a NON-Terraform
-root, the OPEN-DEPLOY match (a sentinel hits only if its text names a carried file). For a Terraform root the OPEN-DEPLOY limb
+root, the OPEN-CALL path match (a call or row hits only if it names a carried file; MDPF_SECCLASS row D1-S23) and the
+OPEN-DEPLOY match (a sentinel hits only if its text names a carried file). For a Terraform root the OPEN-DEPLOY limb
 keeps matching the root: an apply works on the state of the whole root, so another seat's open deploy of the same root collides
 whatever files differ. Without any of the three flags the old root-wide reading stands (the criterion CTs3-AC2 invocation).
 --list-deployable prints what safe-deploy.sh's own core (safe_deploy_core.py detect_script_files + detect_bundle_member_files,
@@ -141,10 +142,17 @@ def projects_covering(pc, dev, reg, rel: str, files=None) -> tuple:
     return out, findings
 
 
-def measure_open_call(repo_root, rel, covering, now) -> tuple:
-    pats = mention_patterns(rel)
+def measure_open_call(repo_root, rel, covering, now, files=None) -> tuple:
+    """files None, or a Terraform root: a live call or row hits when its text names the root or a covering project. A
+    non-Terraform root in FILES MODE: it hits only when it names a carried file or a project covering one (MDPF_SECCLASS
+    row D1-S23: a one-key ship on data/black_diamond drew STOP hits from calls that named only the shared root token)."""
+    narrow = files is not None and not rel.startswith("infra/aws/terraform/")
+    pats = file_patterns(files) if narrow else mention_patterns(rel)
     codes = [c[0] for c in covering]
     lines, hits = [], []
+    if narrow:
+        lines.append("  files mode: a call or row hits only if it names one of the %d carried file(s) or a project covering one, "
+                     "not the shared root" % len(files))
     crossbox = sorted(glob.glob(os.path.join(repo_root, "org", "devices", "crossbox", "*.json")))
     if not crossbox:
         lines.append("  org/devices/crossbox/*.json: none recorded (0 files) -- reads clear")
@@ -522,7 +530,7 @@ def run(argv: list) -> int:
     if trunk and files is None:
         print("FILES-NOTE: %s" % files_note)
     sections = (
-        ("OPEN-CALL", measure_open_call(repo_root, rel, covering, now)),
+        ("OPEN-CALL", measure_open_call(repo_root, rel, covering, now, files)),
         ("OVERLAP", measure_overlap(dev_name, covering, findings, basis, files, files_note)),
         ("UPSET", measure_upset(notices, rel, targets, now)),
         ("OPEN-DEPLOY", measure_open_deploy(repo_root, rel, serial, files)),
