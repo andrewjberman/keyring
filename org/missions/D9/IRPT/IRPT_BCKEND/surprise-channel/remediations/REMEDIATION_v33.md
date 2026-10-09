@@ -25,11 +25,11 @@ approved (msg 107640 via MSTR msg 2188) for lanes measured all-terminal: every ~
     "owner": "2.0.0_SA_COO~Y2",
     "round": "v36",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y2",
       "round": "v36"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

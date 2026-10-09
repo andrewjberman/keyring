@@ -22701,3 +22701,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "0.0.0_AB_MSTR~DELL2"
 }
 ```
+
+## IRPT_BCKEND-D2-S22 -- the directory terraform root still carries IB-s-18's "NOT INITIALISED, NOT PLANNED, NOT APPLIED" prohibition, which its own tree has falsified
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S22",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T03:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "infra/aws/terraform/investor-reporting/directory/main.tf:14 still says SKELETON ONLY ... NOT INITIALISED, NOT PLANNED, NOT APPLIED and :52 says no resources are declared, but the root now holds 7 .tf files including lambda.tf, schedule.tf and holdings_refresh.tf, and irpt-directory-refresh is live -- so the root HAS been planned and applied and the header reads as a standing prohibition against the apply TO-IB-pr-383 step 4 orders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls infra/aws/terraform/investor-reporting/directory/: 7 .tf files (main, lambda, iam, schedule, holdings_refresh, principal_49f, service_profile_read) + CHANGELOG.json",
+      "main.tf:14-20 SKELETON ONLY, WRITTEN BY IB-s-18. NOT INITIALISED, NOT PLANNED, NOT APPLIED: terraform init here would pin this backend before the owning cell exists. The owning cell above initialises it",
+      "main.tf:52 No resources are declared by IB-s-18. Cell IB-s-1, IB-s-4, IB-s-12 declares them.",
+      "live irpt-directory-refresh CodeSha256 RbpsijC23XVUFPE0W34Gr/xqtDil94xYRqDuuZlaYx8= (get-function read), i.e. the function this root declares exists and runs"
+    ]
+  },
+  "spec_asserts": "main.tf's own header asserts the root is NOT INITIALISED, NOT PLANNED and NOT APPLIED, and that no resources are declared in it.",
+  "world_is": "Both clauses are stale. The owning cells IB-s-1/IB-s-4/IB-s-12 named in the header have since declared their resources in this root and the function is live, so the prohibition describes the skeleton moment in IB-s-18 and not the root as it stands. It is INERT rather than BLOCKING because the header itself names the condition that lifts it (the owning cell initialises it) and that condition is met; read literally and out of context, though, it would stop a correctly ordered apply, which is how a stale prohibition does damage. The deletion of the two stale clauses belongs to the root's owner, not to an applier passing through under a never-widen pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S23 -- Resolves D2-S22: the directory root's "NOT INITIALISED" header is stale; the IB-pr-383 apply proceeds under its pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S23",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T03:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S22: the clauses at infra/aws/terraform/investor-reporting/directory/main.tf:14 ('SKELETON ONLY ... NOT INITIALISED, NOT PLANNED, NOT APPLIED') and :52 ('No resources are declared by IB-s-18') are history, not a hold. The root is initialised and applied: its state object has existed since 2026-10-06, it holds 7 .tf files, the r61 release applied here under IB-pr-377 (graded PASS at dc3ff4c2c9), and the issuer recorded the header as stale at round 89 (L8 packet @ab01735253). The applier reads the header correctly as lifted, and the IB-pr-383 apply proceeds under its pair (COO @8323d3fb19, CTO @f0a2f049f7). Deleting the stale comment lines is a comment-only edit that moves no plan; it rides the next ~P cell touching that root (the S4 refuse-drop cell), so the in-flight plan is not disturbed.",
+  "one_line": "The stale header gates nothing; 383 proceeds, and the comment is removed in the next cell on that root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "main.tf:14 and :52 read 2026-10-09 ~03:3xZ at box/dell2 HEAD",
+      "IB-pr-377 applied in this root (proof dc3ff4c2c9); round 89 L8 packet @ab01735253 records the header as stale"
+    ]
+  },
+  "spec_asserts": "A root header saying NOT APPLIED governs whether the root may be applied.",
+  "world_is": "The header predates the owning cells; the root is applied, and the pair governs."
+}
+```
