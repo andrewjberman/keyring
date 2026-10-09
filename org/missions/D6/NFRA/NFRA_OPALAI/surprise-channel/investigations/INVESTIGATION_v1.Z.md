@@ -2462,6 +2462,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Amendment 2 respawn note: worker-light, sparse cone plus integrations/bloomberg, no nested checkout; commit via safe-commit with the three named paths.",
     "world_is": "The cone as cut cannot commit under safe-commit because the validator reads org/projects/<CODE>.json from the working tree. I ran git sparse-checkout add org/projects org/devices in this worktree (config only, nothing written to a repo path) and the commit proceeded.",
     "notes": "Fix shape for the issuer: add org/projects, org/devices and org/missions (the other projects' channels) to the worker-light cone. Nothing else touched."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S63",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-09T03:25Z",
+    "one_line": "The Analyst launched on PROD de5ce25fa3 sits idle at the input prompt: launcher.ps1 starts claude.exe with --add-dir only and no first prompt, so prompt.md's 'On launch' steps (identity gate, Teams engine arm) never run until an operator types a turn. A colleague's Teams message gets no reply.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Andrew launched the Analyst ~03:13Z (Opal_Agent powershell pid 37104 + claude.exe pid 27624, created 03:13:19Z/03:13:21Z); runtime checkout read de5ce25fa3, 0 porcelain lines.",
+        "Andrew's screenshot ~03:23Z: the Analyst window shows only '/mcp -> Authentication successful. Connected to opal-gateway-bbg.' and an empty input prompt; no Teams arm banner.",
+        "C:/opal_runtime/opal_ai/opal/runtime/launcher.ps1:172 builds the Analyst command as '& <claude.exe> --add-dir <refsDir>' with no prompt argument; opal/agent/prompt.md:29-45 'On launch' steps 1-2 need a model turn to execute.",
+        "Andrew's Teams message to the Opal Bloomberg account at 2026-10-09T03:14:32.592Z ('I need the last days price of PFDE') had no reply at the ~03:2xZ read (opalgateway read_chat_messages, Andrew's identity)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "spec_asserts": "CLOSE_RUN_CARD_20261002.md step 1: on GATE: PASS 'a window titled Opal_Agent Analyst opens' and the run proceeds to colleague messages; prompt.md 'On launch' arms the Teams engine every session.",
+    "world_is": "The window opens but serves nothing until someone types into it. Interim disarm: the operator types one first turn ('Run your On launch steps') in the Analyst window. Durable fix candidate (issuer's to cut): the launcher passes an initial prompt to claude.exe so the On-launch steps run unattended.",
+    "notes": "Separate from row Z-S62 (ARMED, 1.0.0_SA_CTO~O): opal_asker_query is refused write_class_denied for every tier on the live gateway, so neither close-run arm can grade as written until the next gateway release; a portal question now reads write_class_denied, not asker_no_profile."
   }
 ]
 ```

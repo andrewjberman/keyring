@@ -209,3 +209,46 @@ reference/history and model-block channels have no measured ceiling.
 Write set: `data/mdpf/scripts/demque/bbg_quote.py`, `.../bbg_allowance.json`, `.../test_demque_bbg.py`, the channel. Checks (dry-run at the
 base ~03:2xZ, both FAIL as expected): `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R3_CHECKS/`. `fanout: 1 of 1 chains, cap 8`.
 Battery: comp-schedule / comp-iam / comp-adversary DECLARED-NOT-APPLICABLE (no schedule, no AWS, no vendor call; LOCAL code).
+
+
+---
+
+# ROUND 4 -- the ENRICHMENT (issuer 2.0.0_SA_COO~Q1, dell1; cut 2026-10-09 ~03:2xZ)
+
+**Status: ISSUED** in one issuance. Round 3 CLOSED @a9fb093353 (L8 packet READ by `3.0.0_SA_CVO`, no BLOCKING/ARMED row). Rectangle: the
+CTO's round-2 analysis `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_DEMQUE_ROUND_2_20261009.md` (msg 1519) items 1-4,
+confirmed by the CTO's round-3 analysis (msg 1536, `CTO_ROUND_ANALYSIS_MDPF_DEMQUE_ROUND_3_20261009.md`), with three rulings folded in: **item 2 corrected (msg 1522, "bands")** -- a match locks when at least 90 pct of the client's trade dates
+agree within THAT security type's band (0.5 pct mutual funds at NAV, 2 pct listed; dell2 research s.1), not "within 2 pct" for all;
+**item 1 (msg 1524, "held+ask")** -- `bql.reserve` starts as a HELD estimate from the producers' code plus a stated margin, every Bloomberg
+finish date carries "held" until it reads measured; **site Z ruling 32309 (msg 1532)** -- ONE order from this issuer to
+`0.7.0_AE_CloudOps~Z` for a site-Z uploader that turns the draws site Z already records into cell rows on the builder ledger home.
+
+**Measured at the base:** `data/etfs/scripts/rivalfunds/bbg_budget.py` `record()` (:73-76) writes `%LOCALAPPDATA%\opal_bbg_budget\bbg_budget_<UTC
+day>.jsonl`, lines `{at, mode, rows, batch_id}` (:9, :50); site Z's reconstruction
+(`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/BBG_CELL_TRACKING_RECONSTRUCTION_20261005_BLOCK_20261008.md` :82-89) gives cells per row by
+producer (rivalfunds BQL holdings 16; G4 market refdata = its MARKET_FIELDS count; others not counted). Builder:
+`address("bloomberg","global","bronze","demand_ledger","dt=<day>")` -> `s3://opal-data-assets/bloomberg/global/bronze/demand_ledger/dt=<day>`.
+The scheduled 07:00 ET daily pull's steps are in `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd`.
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `DQ-t-10` | `reserve_estimate.py`: per channel, the cells one run of each tier-1 producer draws (names x fields x rows, read from the producers' code as text, the producer set = the steps of `scheduled_daily_pull.cmd`), plus a stated margin; writes `bbg_allowance.json` `<channel>.reserve` with claim `held` and its basis; the quote's finish date carries "held" when the reserve is held | FWD-3 | dell1 code | LOCAL | I, `0.9.0_WK_MDPF_DEMQUE~9` |
+| `DQ-t-11` | `lock.py`: the 90 pct agreement floor on top of each type's band; below it `REJECTED:LOW_TRADE_AGREEMENT` | FWD-5, FWD-1 | dell1 code | LOCAL | J, `0.9.0_WK_MDPF_DEMQUE~10` |
+| `DQ-t-12` | `unresolved.py`: the FWD-5 list, one row per (CUSIP, open period) with reason, state, next act, attempts; fed by failed pulls and rejected locks; seeded with the 5 no-data CUSIPs | FWD-5 | dell1 code | LOCAL | K, `0.9.0_WK_MDPF_DEMQUE~11` |
+| `DQ-t-13` | `rank.py` + the draw's sort key in `demand_queue.py`: within a tier, P1 living client > P2 match open > P3 gone (crosswalk), then held days x accounts x largest purchase (dell2 research s.6); a gone client's unmatchable fund is not pursued; each item carries its rank and reason | FWD-9 | dell1 code | LOCAL | L, `0.9.0_WK_MDPF_DEMQUE~12` |
+| `DQ-t-14` | site-Z uploader: reads the `bbg_budget_<day>.jsonl` files `record()` writes and writes cell rows (rows x the stated per-mode cells-per-row, each with its claim) to the builder ledger home; scheduled at site Z; no producer edited; OPAL_BBGTML named as a gap if it does not call `record()` | FWD-2, FWD-3 | site Z, `0.7.0_AE_CloudOps~Z` (a seat, not a worker) | WORLD | M |
+
+Write sets (disjoint): t-10 `reserve_estimate.py`, `test_demque_reserve.py`, `bbg_allowance.json`; t-11 `lock.py`, `test_demque_lock.py`; t-12
+`unresolved.py`, `test_demque_unresolved.py`; t-13 `rank.py`, `test_demque_rank.py`, `demand_queue.py`; t-14 `bbg_ledger_upload.py`,
+`test_demque_bbg_ledger_upload.py` (all under `data/mdpf/scripts/demque/`), plus the channel. The `daily_draw.py` hookups (unresolved rows
+from the draw, the rank before the draw) belong to no cell: the issuer adds them at the merge. Checks (dry-run at the base ~03:2xZ, all FAIL
+as expected; `dq_t11_tests.py`'s five round-1 lock names PASS at the base, the regression arm): `.../MDPF_DEMQUE_Q1/R4_CHECKS/`.
+`fanout: 5 of 5 chains, cap 8` (four dell1 workers; one site-Z seat order).
+Battery: comp-schedule -- t-14 adds a site-Z scheduled job, read at its apply by the site-Z seat; comp-iam -- t-14's S3 PutObject on the
+bloomberg ledger prefix is read at site Z before its first write; comp-adversary DECLARED-NOT-APPLICABLE (LOCAL cells; t-14 is a pair act).
+
+**The issuer's acts at the drain (not cells):** (a) the `daily_draw.py` hookups (unresolved rows, rank order); (b) **item 7, the RESAPP
+quoted-vs-drawn pair (msg 1536):** both RESAPP requests are quoted (round-3 real run @62d605f7ed: ICT 4 reference cells, ABNB 989
+model-block cells); when site Z reports each draw's measured cells, record it with `bbg_quote.py --record ... ` WITH the quote (label
+`quoted`), the first quoted-vs-drawn pair for FWD-4; (c) AMLP and PONPX re-tested under the floor; (d) the one real run of each outcome;
+(e) close only with every BLOCKING row dispositioned and the L8 packet READ by the CVO.
