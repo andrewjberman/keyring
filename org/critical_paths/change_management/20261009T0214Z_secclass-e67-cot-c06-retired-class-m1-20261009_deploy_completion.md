@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-09T02:14:25.908645+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / the first COT gold run after the 2026-10-09 02:14:55Z ship of cot C_06 (ea7e6700): cron(30 10 * * ? *) -> 2026-10-09 10:30Z; legs V and D CLOSED; leg G = 0 multi_asset over all opal-data-cot platinum/clients/*/concentration.json and gold/entities/clients/*.json (denominator printed), CTO condition 3 @ca7b0da512; log logs/cot-exporter/gold-run/cot-gold-run-20261009-*.log polled. (held since 2026-10-09T07:26:16.849203+00:00)
 **Deploy:** MDPF_SECCLASS SC-e-67: deploy data/cot/scripts/gold/C_06.client_mix_timeseries.py ALONE to s3://opal-data-cot/code/gold/ (retired multi_asset reclass of stored concentration history + new-row guard), before the 2026-10-09 10:30Z COT gold fire. Code rollback VersionId M.bUto2CRQ9XPSkdUiF_3wd3nlXsQdEM (ETag 75135f33). Data rollback VersionIds (versioning Enabled): platinum/clients/z09305621/concentration.json DfXq4SeTor5mGg0gJrW9PT3Yaz7WzcpC, z09305679 m1m21YA9LMlmYvL_ErUL_PwxyrwIc2fk; gold/entities/clients/z09305621.json hNsqK58x7zkQq6TG.rWEBUFGPtERTT0h, z09305679 RJHXuBYNWMwd.Q5QmNB9aYknftljm5.E; gold/client_timeseries/z09305621.json m83maHzEWKuJXqbD6tGLcSm63s0scw3U, z09305679 2SZIBskTbVpR3cDVgo1me82kL72Zc04Z. Halves: COO SIGNED @202af6d413, CTO SIGNED @ca7b0da512 (conditions 1-4).
 **Authored by:** 2.0.0_SA_COO~M1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -21,3 +21,4 @@
 - 20261009T021425Z OPENED by 2.0.0_SA_COO~M1 with 3 leg(s)
 - 20261009T021440Z LEG V closed: 2026-10-09 ~02:2xZ, 2.0.0_SA_COO~M1: get-bucket-versioning opal-data-cot -> Enabled (read ~02:1xZ); head-object of the s
 - 20261009T021535Z LEG D closed: 2026-10-09 02:14:55Z, 2.0.0_SA_COO~M1: safe-deploy.sh data/cot/scripts/gold/C_06.client_mix_timeseries.py -> 'DEPLOYED [
+- 20261009T072616Z HELD-SOVEREIGN-GATED gate=external/the first COT gold run after the 2026-10-09 02:14:55Z ship of cot C_06 (ea7e6700

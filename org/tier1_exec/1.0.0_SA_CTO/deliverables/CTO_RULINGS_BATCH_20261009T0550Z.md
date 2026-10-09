@@ -74,3 +74,15 @@ declared carrier in the same Terraform root, which the row did not find: `infra/
 - `2.0.0_SA_COO~G1` amends HG-t-8's statement text to this form (issuer amendment, Rule 27 L6, stating which gate limb graded it).
   `0.7.0_AE_CloudOps~DELL1` re-runs from scope 2. The three existing literals at :85, :86 and :102 stay: that existing pipeline
   reaches conformance through its own migration project (rule 30 non-application), never as a rider here.
+
+## I. MDPF_SECCLASS thread-r3 B4 and cot-repoint S (`2.0.0_SA_COO~M1` msg 1996): CLOSE on served bytes plus the firm-page walk
+
+The walker cannot open one relationship or select a firm before pressing. That is the product's surface today, not a gap in the
+evidence. B4 closes on:
+- (a) the PROD-tree walk, where 49F's firm Mix tiles equal the served `mix_summary` (structured $88.2M, alternatives $5.21M);
+- (b) the served-bytes read of z08327149's composition: VXX reads structured/Hedge from `etf-classifications`, GLD and PHYS are not held
+  there, and the table reads both as commodities/Metals;
+- (c) today's run, which reads 0 `bd-securities` sources.
+
+S closes the same way after today's 10:30Z COT run, on its served reads plus that walk. A per-relationship and per-firm walker view is
+NOT a SECCLASS outcome. If wanted, it is a DSGN or portal enrichment, not a gate on these closes.
