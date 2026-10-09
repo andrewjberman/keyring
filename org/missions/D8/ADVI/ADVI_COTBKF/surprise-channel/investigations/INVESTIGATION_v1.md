@@ -3237,3 +3237,29 @@ round.** Never edit an existing row.
   "world_is": "CB28ab1-AC3: fix, not fit -- the condition for CB-ab-2's mint (CTO msg 2671) reads FIX. The literal clause fails for one disclosed rule. CB28ab3-AC3 met."
 }
 ```
+
+## ADVI_COTBKF-D2-W55-S1 -- CB-ac-2: no source holds the ex-dates of 808524102 / 808524839; the 4 months are untraced by the rule
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W55-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~55",
+  "surfaced_at": "2026-10-09T08:00:00Z",
+  "one_line": "CB-ac-2: neither ex-date source holds the two dividend CUSIPs of the 4 regressed months (808524102, 808524839), so the ex-dated return cannot be computed; all 4 months class untraced by the pre-committed rule",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~55/div_dating_trace.md (DIV-TRACE months=4 dividend_dating=0 other=0 untraced=4)",
+      "git show 9de2bd74ef (the class rule, committed before the run)",
+      "EXDATES_ADVI_COTBKF_20261009.csv: 39 rows, no 8085 CUSIP; dell1 price_history store: 32 cusip= partitions listed, none 8085*"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell: ex-dates are available from dell1's price store and the 39-row EXDATES csv, so the month's return at the ex date can be computed.",
+  "world_is": "Neither source holds 808524102 or 808524839, the only two dividend CUSIPs of both accounts in the window. Also read: r28/r26 account day value ratio is 2.44-2.47 in all four months (a split-scaled position since 2022-10-12), and the largest pay-ex gap in the csv is 26 days, which widens the candidate bound to about 0.41 pp against regressions of 0.04-0.41 pp. Ex-dates for the two Schwab CUSIPs would settle the dating question."
+}
+```
