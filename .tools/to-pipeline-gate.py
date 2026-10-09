@@ -1104,6 +1104,26 @@ def _self_test():
          lambda: _is_terminal_flip(None, "<status>pending</status>\n<status>complete</status>\n") == "complete"),
         ("last-tag: a re-edit that keeps the same tags is still graded (only a REMOVED duplicate is exempt)",
          lambda: _is_terminal_flip("<status>complete</status>\n", "<status>complete</status>\nmore\n") == "complete"),
+        ("redaction: an account number -> acct#<8hex> on a line is a pure redaction",
+         lambda: _is_pure_redaction("<status>complete</status>\nacct 12345678 bal 10\n",
+                                    "<status>complete</status>\nacct acct#0a1b2c3d bal 10\n")),
+        ("redaction: a removed figure and a deleted line are a pure redaction",
+         lambda: _is_pure_redaction("<status>complete</status>\nbalance 1,234.56 ok\nrow 998877 x\n",
+                                    "<status>complete</status>\nbalance ok\n")),
+        ("redaction: an id -> [redacted] is a pure redaction",
+         lambda: _is_pure_redaction("<status>complete</status>\nid 55554444\n", "<status>complete</status>\nid [redacted]\n")),
+        ("redaction: an ADDED line is NOT a redaction (graded as a flip)",
+         lambda: not _is_pure_redaction("<status>complete</status>\nacct 12345678\n",
+                                        "<status>complete</status>\nacct acct#0a1b2c3d\nnew claim\n")),
+        ("redaction: a changed word is NOT a redaction",
+         lambda: not _is_pure_redaction("<status>complete</status>\nresult PASS 12345678\n",
+                                        "<status>complete</status>\nresult FAIL acct#0a1b2c3d\n")),
+        ("redaction: a dropped word with no digit is NOT a redaction",
+         lambda: not _is_pure_redaction("<status>complete</status>\nnot met 12345678\n",
+                                        "<status>complete</status>\nmet acct#0a1b2c3d\n")),
+        ("redaction: pending -> complete with a redaction is NOT a pure redaction (the status line changed)",
+         lambda: not _is_pure_redaction("<status>pending</status>\nacct 12345678\n",
+                                        "<status>complete</status>\nacct acct#0a1b2c3d\n")),
         ("crlf: a CRLF order and its LF twin read the same (placeholders element matches)",
          lambda: _lf("<placeholders>NONE</placeholders>\r\n<status>pending</status>\r\n") == "<placeholders>NONE</placeholders>\n<status>pending</status>\n"
          and PLACEHOLDERS_TAG_RE.search(_lf("<placeholders>NONE</placeholders>\r\n")) is not None),
@@ -2969,6 +2989,63 @@ def _is_terminal_flip(head_text, staged_text):
     return word
 
 
+_REDACT_ID_RE = re.compile(r"(?<![A-Za-z0-9-])[A-Za-z0-9-]*\d[A-Za-z0-9-]*(?![A-Za-z0-9-])")
+_REDACT_TOKEN_RE = re.compile(r"acct#[0-9a-f]{8}")
+_REDACT_MARK_RE = re.compile(r"\[redacted\]", re.IGNORECASE)
+_REDACT_PH = "<<ID>>"
+
+
+def _redact_marker(tok):
+    """True when a staged token (punctuation stripped) is a redaction marker."""
+    t = tok.strip(",;:.()[]'\"")
+    return bool(_REDACT_TOKEN_RE.fullmatch(t)) or t.lower() == "redacted" or bool(_REDACT_MARK_RE.fullmatch(tok.strip(",;:.()'\"")))
+
+
+def _redaction_line_ok(head_line, staged_line):
+    """True when staged_line is head_line with digit-bearing tokens replaced by acct#<8hex> or [redacted], or removed. PURE."""
+    if head_line == staged_line:
+        return True
+    h = _REDACT_ID_RE.sub(_REDACT_PH, head_line)
+    st = _REDACT_MARK_RE.sub(_REDACT_PH, _REDACT_TOKEN_RE.sub(_REDACT_PH, staged_line))
+    if h == st:
+        return True
+    # Figures removed outright: every head token is kept, replaced by a marker, or (only if it carries a digit) dropped.
+    ht, sti = head_line.split(), staged_line.split()
+    j = 0
+    for tok in ht:
+        has_digit = any(c.isdigit() for c in tok)
+        if j < len(sti) and (sti[j] == tok or (has_digit and _redact_marker(sti[j]))):
+            j += 1
+        elif has_digit:
+            continue
+        else:
+            return False
+    return j == len(sti)
+
+
+def _is_pure_redaction(head_text, staged_text):
+    """True when staged differs from HEAD ONLY by redaction: id tokens -> acct#<8hex> or [redacted], digit figures removed, or whole
+    lines deleted. No line added, no other word changed. PURE. dell2 containment ruling @0e8209c33c; 1.0.0_SA_CTO path (b), 2026-10-09."""
+    import difflib
+    if head_text is None or staged_text is None or head_text == staged_text:
+        return False
+    a, b = head_text.split("\n"), staged_text.split("\n")
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+        if op in ("equal", "delete"):
+            continue
+        if op == "insert":
+            return False
+        # replace: each staged line must be a redaction of a DISTINCT head line, in order; unmatched head lines read as deleted.
+        i = i1
+        for j in range(j1, j2):
+            while i < i2 and not _redaction_line_ok(a[i], b[j]):
+                i += 1
+            if i >= i2:
+                return False
+            i += 1
+    return True
+
+
 def _lf(text):
     """Normalise line endings on read (CRLF and a lone CR -> LF); the element regexes end a tab-or-space star dollar and cannot match before a CR."""
     return text.replace("\r\n", "\n").replace("\r", "\n")
@@ -3061,9 +3138,17 @@ def check_complete_flip(root, rel):
     staged = _staged_blob(root, rel)
     if staged is None:
         return []  # not staged (or unreadable as a blob) -- other arms own that
-    flip_word = _is_terminal_flip(_head_blob(root, rel), staged)
+    head = _head_blob(root, rel)
+    flip_word = _is_terminal_flip(head, staged)
     if flip_word is None:
         return []  # not a flip to a terminal state (or only a stale earlier duplicate removed; ruling msg 107528)
+    # PATH (b), 1.0.0_SA_CTO 2026-10-09 (dell2 containment ruling @0e8209c33c; relay msg 108054): an order ALREADY terminal at HEAD
+    # whose change is ONLY a redaction of client account data is not a new flip. Its instance was graded at the original flip, and the
+    # containment moved its artifacts out of the repo, so re-grading it would refuse the very redaction that removes the data.
+    if head is not None and _last_status(head)[0] == flip_word and _is_pure_redaction(head, staged):
+        print("NOTE: %s: already '%s' at HEAD and the change is a pure redaction (id -> acct#<8hex>/[redacted], figures or lines "
+              "removed); not re-graded as a flip." % (rel, flip_word), file=sys.stderr)
+        return []
 
     import json
     code, rel_json, err = _project_row_rel(root, rel)
