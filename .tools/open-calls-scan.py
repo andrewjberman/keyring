@@ -224,6 +224,95 @@ def deliver(target: str, subj: str, content: str, now) -> str:
     return path
 
 
+# ---------------------------------------------------------------- unblock files (Andrew-direct 2026-10-09 ~02:3xZ-02:4xZ)
+# A COO's third empty tick writes to the CRO (.tools/unblock.py); the CRO proposes a new approach, the CTO folds it into the
+# workflow, the CVO signs it off, the COO resumes. This pass drops each step's nudge in the inbox of the seat on THIS box that
+# owns it. Record: org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_023xZ_THIRD_EMPTY_TICK_UNBLOCK_VIA_CRO_THEN_CTO.md
+
+UB_ACTS = {
+    "CRO": "find a new approach that is NOT blocked. Read: python .tools/unblock.py show --id {id}. Write ## New approach / "
+           "## Why it is not blocked / ## What changes for the COO, then python .tools/unblock.py propose --id {id} --by <you> "
+           "--body <file>. It goes to the CTO of box {box}.",
+    "CTO": "synthesize the CRO's approach into the workflow (a PRD addendum, a round-N analysis or a ruling the COO's drive "
+           "reads), then python .tools/unblock.py fold --id {id} --by <you> --ref <that file>. The CVO signs it off.",
+    "CVO": "sign the CTO's fold off, or refuse it back. Read: python .tools/unblock.py show --id {id} and the fold's ref. Then "
+           "python .tools/unblock.py sign --id {id} --by <you> [--note ...] (writes the record; commit it), or "
+           "python .tools/unblock.py refuse --id {id} --by <you> --reason \"...\".",
+    "COO": "your unblock is SIGNED: drive on the fold (python .tools/unblock.py show --id {id}), then "
+           "python .tools/unblock.py resume --id {id} --by <you>.",
+}
+
+
+def unblock_items(device: str, docs: list, live: dict, ep: float, cto, mstr, probe) -> dict:
+    """{target serial: [(role, doc, seat_absent)]} for every unblock file whose next act is on THIS box."""
+    ub = load_mod("opal_unblock_for_scan", ".tools/unblock.py")
+    out = {}
+    for d in docs:
+        role, seat = None, None
+        if d["state"] == "OPEN" and d["cro_device"] == device:
+            role, seat = "CRO", pick(live, ub.CRO_OF.get(device, ""), "4.0.0_SA_CRO", ep, probe)
+        elif d["state"] == "PROPOSED" and d["from_device"] == device:
+            role, seat = "CTO", cto
+        elif d["state"] == "FOLDED" and d["fold"]["cvo_device"] == device:
+            role, seat = "CVO", pick(live, ub.CVO_OF.get(device, ""), "3.0.0_SA_CVO", ep, probe)
+        elif d["state"] == "SIGNED" and d["from_device"] == device:
+            role, seat = "COO", d["from_serial"] if is_live(live.get(d["from_serial"]), ep, probe) else None
+        if role is None:
+            continue
+        target = seat or mstr
+        if target:
+            out.setdefault(target, []).append((role, d, seat is None))
+    return out
+
+
+def compose_unblock(device: str, target: str, items: list, now) -> tuple:
+    subj = "[UNBLOCK] %d step(s) for you on %s" % (len(items), device)
+    lines = ["# Message from OPEN-CALLS-SCAN (box %s)" % device, "**To:** %s" % target,
+             "**Date:** %s" % now.strftime("%Y%m%dT%H%M%SZ"), "**Subject:** %s" % subj, "",
+             "A COO found nothing that advances its project for three ticks and wrote to the CRO (Andrew-direct 2026-10-09). "
+             "The next step of each file below is yours:"]
+    for role, d, absent in items:
+        lines.append("  - %s [%s] project %s, COO %s on %s, opened %s" % (d["id"], d["state"], d["project"], d["from_serial"],
+                                                                         d["from_device"], d["opened_at"]))
+        if absent:
+            lines.append("      NO %s IS LIVE ON %s: seat one (or unstick it) for this step." % (role, device))
+        lines.append("      %s: %s" % (role, UB_ACTS[role].format(id=d["id"], box=d["from_device"])))
+    lines.append("")
+    lines.append("Re-sent every %d minutes while unchanged. Owner of this scan: 4.0.0_SA_CRO~B." % (RENUDGE_SEC // 60))
+    return subj, "\n".join(lines) + "\n"
+
+
+def unblock_pass(device: str, dry: bool, now, live: dict, cto, mstr, prev: dict, probe, notes: list) -> tuple:
+    """(new memory {serial: {fp, sent_at}}, delivered count, item count)."""
+    try:
+        docs = load_mod("opal_unblock_for_scan", ".tools/unblock.py").list_all()
+    except Exception as exc:  # noqa: BLE001
+        notes.append("unblock store unreadable (%s)" % type(exc).__name__)
+        return prev, 0, 0
+    items = unblock_items(device, docs, live, now.timestamp(), cto, mstr, probe)
+    mem, sent = {}, 0
+    for target, its in sorted(items.items()):
+        fp = json.dumps(sorted("%s:%s" % (d["id"], d["state"]) for _, d, _ in its))
+        old = prev.get(target) or {}
+        age = age_min(old.get("sent_at"), now)
+        if old.get("fp") == fp and 0 <= age and age * 60 < RENUDGE_SEC:
+            mem[target] = old
+            continue
+        subj, content = compose_unblock(device, target, its, now)
+        if dry:
+            print(content)
+            mem[target] = old
+            continue
+        try:
+            deliver(target, subj, content, now)
+            mem[target] = {"fp": fp, "sent_at": stamp(now)}
+            sent += 1
+        except OSError as exc:
+            notes.append("unblock nudge to %s not delivered (%s)" % (target, exc))
+            mem[target] = old
+    return mem, sent, sum(len(v) for v in items.values())
+
+
 def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
     now = now or now_dt()
     oc = load_mod("opal_open_calls", ".tools/open-calls.py")
@@ -260,6 +349,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
     fp = json.dumps([sorted(r["id"] for r in due), sorted(x["id"] for _, x in closeout), sorted(x["id"] for x in to_rule),
                      target], sort_keys=True)
     st = read_state()
+    ub_prev = st.get("unblock") or {}
     n = len(due) + len(closeout) + len(to_rule)
     mdoc, msrc = oc.mode_read()
     mode = oc.mode_state(mdoc, device, "scan")
@@ -285,9 +375,15 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
                 sent = "yes"
             except OSError as exc:
                 sent = "no:deliver-failed(%s)" % exc
+    mstr = pick(live, MSTR_OF.get(device, ""), "0.0.0_AB_MSTR", ep, probe)
+    if mode == "off":
+        ub_mem, ub_sent, ub_n = ub_prev, 0, 0
+    else:
+        ub_mem, ub_sent, ub_n = unblock_pass(device, dry, now, live, cto, mstr, ub_prev, probe, notes)
+    st = dict(st, unblock=ub_mem)
     hb = {"schema": SCHEMA, "device": device, "scanned_at": stamp(now), "cto_serial": cto, "cto_live": cto is not None,
           "target": target, "due": len(due), "closeout": len(closeout), "to_rule": len(to_rule), "adjudicator": adj,
-          "adjudicator_why": why, "sent": sent, "mode": mode}
+          "adjudicator_why": why, "sent": sent, "mode": mode, "unblock_items": ub_n, "unblock_sent": ub_sent}
     if not dry:
         write_state(st)
         try:
@@ -296,8 +392,8 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
             notes.append("heartbeat not written (%s)" % type(exc).__name__)
     for note in notes:
         print("WARN: " + note)
-    line = "OPEN-CALLS-SCAN device=%s due=%d closeout=%d to_rule=%d target=%s sent=%s adjudicator=%s mode=%s" % (
-        device, len(due), len(closeout), len(to_rule), target or "none", sent, adj or "?", mode)
+    line = "OPEN-CALLS-SCAN device=%s due=%d closeout=%d to_rule=%d target=%s sent=%s adjudicator=%s mode=%s unblock=%d/%d" % (
+        device, len(due), len(closeout), len(to_rule), target or "none", sent, adj or "?", mode, ub_sent, ub_n)
     return line, hb
 
 
@@ -388,6 +484,41 @@ def selftest() -> int:
         rec("the-switch-off-for-this-box-sends-nothing-and-says-so", "sent=no:mode-off" in line and hb["mode"] == "off", line)
         line, _ = run_pass(dev, False, now, probe)
         rec("another-box-still-reads-on", "mode=on" in line, line)
+        # unblock routing: OPEN -> CRO on cro_device; PROPOSED -> CTO; FOLDED -> CVO on cvo_device; SIGNED -> the COO
+        ub = load_mod("opal_unblock_for_scan", ".tools/unblock.py")
+        oc.mode_write({"schema": oc.MODE_SCHEMA, "scan": "on", "empty_tick": "on", "boxes": {}, "set_by": "t",
+                       "set_at": stamp(now), "reason": "r"})
+        live2 = {"1.0.0_SA_CTO~DELL1": {"pid": 101, "last_seen_epoch": now.timestamp()},
+                 "4.0.0_SA_CRO~D1": {"pid": 101, "last_seen_epoch": now.timestamp()},
+                 "3.0.0_SA_CVO~D1": {"pid": 101, "last_seen_epoch": now.timestamp()},
+                 "2.0.0_SA_COO~M1": {"pid": 101, "last_seen_epoch": now.timestamp()},
+                 "0.0.0_AB_MSTR~DELL1": {"pid": 202, "last_seen_epoch": now.timestamp()}}
+        alive.add(101)
+        json.dump(live2, open(os.environ["OPAL_LIVENESS_FILE"], "w"))
+        for s_ in live2:
+            os.makedirs(inbox_dir(s_), exist_ok=True)
+        base_doc = {"schema": ub.SCHEMA, "id": "UB-20261009T000000Z-0a0a", "project": "P", "from_device": dev,
+                    "from_serial": "2.0.0_SA_COO~M1", "cro_device": dev, "opened_at": stamp(now), "body": "b",
+                    "state": "OPEN", "proposal": None, "fold": None, "signoff": None, "refusals": [], "resumed": None}
+        prop = {"at": stamp(now), "by": "4.0.0_SA_CRO~D1", "device": dev, "body": "x"}
+        fold = {"at": stamp(now), "by": "1.0.0_SA_CTO~DELL1", "device": dev, "ref": "r.md", "cvo_device": dev}
+        sign = {"at": stamp(now), "by": "3.0.0_SA_CVO~D1", "device": dev, "note": "", "record": "x.md"}
+        for state, extra, who in (("OPEN", {}, "4.0.0_SA_CRO~D1"),
+                                  ("PROPOSED", {"proposal": prop}, "1.0.0_SA_CTO~DELL1"),
+                                  ("FOLDED", {"proposal": prop, "fold": fold}, "3.0.0_SA_CVO~D1"),
+                                  ("SIGNED", {"proposal": prop, "fold": fold, "signoff": sign}, "2.0.0_SA_COO~M1")):
+            xa._put(ub.key_of(base_doc["id"]), dict(base_doc, state=state, **extra))
+            items = unblock_items(dev, ub.list_all(), live2, now.timestamp(), "1.0.0_SA_CTO~DELL1", "0.0.0_AB_MSTR~DELL1", probe)
+            rec("unblock-%s-goes-to-%s" % (state.lower(), who), list(items) == [who], items)
+        xa._put(ub.key_of(base_doc["id"]), dict(base_doc, cro_device="laptop"))
+        items = unblock_items(dev, ub.list_all(), live2, now.timestamp(), "1.0.0_SA_CTO~DELL1", "0.0.0_AB_MSTR~DELL1", probe)
+        rec("an-open-file-for-the-laptop-cro-is-not-this-boxs", items == {})
+        xa._put(ub.key_of(base_doc["id"]), dict(base_doc))
+        if os.path.exists(os.environ["OPAL_SCAN_STATE"]):
+            os.remove(os.environ["OPAL_SCAN_STATE"])
+        line, hb = run_pass(dev, False, now, probe)
+        line2, _ = run_pass(dev, False, now + datetime.timedelta(minutes=10), probe)
+        rec("the-pass-delivers-the-cro-step-once-then-holds", "unblock=1/1" in line and "unblock=0/1" in line2, line + " || " + line2)
     finally:
         for k, v in keep.items():
             if v is None:

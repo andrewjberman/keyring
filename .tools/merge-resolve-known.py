@@ -12,7 +12,11 @@ per file class"; 0.0.0_AB_MSTR msg 107365: "the integrator should regenerate gen
      A channel file whose rows sit in ONE ```json list (the AMGT_HARVST / NFRA_CTLPLN shape, which held site Z at
      19:4xZ and dell1 at 00:3xZ on 2026-10-09) takes a THREE-WAY UNION BY ROW instead, with the same rules, each row
      emitted as its own raw bytes; the same id ADDED on both sides with different content is a DUAL-MINT and both copies
-     are kept, for the row gate to admit (1.0.0_SA_CTO msg 107530). Arms: `.tools/test-merge-resolve-known.py`.
+     are kept, for the row gate to admit (1.0.0_SA_CTO msg 107530). A file of one ```json block per row whose headings
+     repeat (IRPT_BCKEND) or are absent (NFRA_OPLGTW), where the section union refuses, takes a THREE-WAY UNION BY BLOCK
+     keyed by the row id inside each block (a batch block of several rows moves as one unit). Replay of every merge
+     since 2026-10-06 (1,188 merges, 220 conflicted channel files): 217 resolved, every one equal to what landed (bytes
+     or data); 3 left to a person, each a real both-sides edit. Arms: `.tools/test-merge-resolve-known.py`.
   2. A GENERATED index entry (`org/projects/<CODE>.json` whose both sides carry `home`): resolved by REGENERATING it
      from the merged tree with `.tools/missions-tree-index.py derive --write`, over a narrow extract of the merged
      tree (that project's home, the two registers, the contract): about 2 s, against 85 s for a full extract.
@@ -219,6 +223,82 @@ def union_rows(base, ours, theirs):
     return text, 'row-union' + (' dual-mint=%s' % ','.join(dual) if dual else '')
 
 
+ANY_FENCE_RE = re.compile(r'^```json[ \t]*\r?\n(.*?)\r?\n[ \t]*```[ \t]*(\r?\n|$)', re.S | re.M)
+
+
+def fence_chunks(text):
+    """(preamble, [(key, raw chunk)], tail) for a file of one ```json OBJECT block per row; None otherwise. A chunk runs
+    from the end of the previous row block (or, for the first row, from its nearest `## ` heading) to the end of its own
+    block, so a row's heading and prose travel with it. key = (row id, k) for the k-th row under that id: the id inside
+    the JSON, never the heading, which some channels reuse (IRPT_BCKEND) or omit (NFRA_OPLGTW)."""
+    ms = list(ANY_FENCE_RE.finditer(text or ''))
+    if not ms:
+        return None
+    chunks, seen, prev = [], {}, None
+    for m in ms:
+        try:
+            obj = json.loads(m.group(1))
+        except ValueError:
+            return None
+        objs = obj if isinstance(obj, list) else [obj]   # a batch block (a list of rows) moves as one unit
+        if not objs or not all(isinstance(x, dict) and str(x.get('id') or '').strip() for x in objs):
+            return None
+        rid = '+'.join(str(x['id']).strip() for x in objs)
+        seen[rid] = seen.get(rid, 0) + 1
+        if prev is None:
+            h = [x.start() for x in re.finditer(r'^## ', text[:m.start()], re.M)]
+            start = h[-1] if h else m.start()
+            pre = text[:start]
+        else:
+            start = prev
+        chunks.append(((rid, seen[rid]), text[start:m.end()]))
+        prev = m.end()
+    return pre, chunks, text[prev:]
+
+
+def union_fences(base, ours, theirs):
+    """THREE-WAY UNION BY ROW BLOCK for a channel file of one JSON object block per row, keyed by the row id inside the
+    block. Same rules as union_rows (a DUAL-MINT keeps both copies, ours then theirs). Comparison strips trailing
+    whitespace; each chunk is emitted as its own raw bytes."""
+    parts = [fence_chunks(x) if x is not None else None for x in (base, ours, theirs)]
+    if parts[1] is None or parts[2] is None or (base is not None and parts[0] is None):
+        return None, 'not one JSON row block per row on every side'
+    b = parts[0] or ('', [], '')
+    o, t = parts[1], parts[2]
+    norm = lambda s: None if s is None else s.rstrip()  # noqa: E731
+    frame = []
+    for k in (0, 2):
+        bv = b[k] if parts[0] else None
+        ok, v = three(norm(bv), norm(o[k]), norm(t[k]))
+        if not ok:
+            return None, 'the text outside the row blocks changed differently on both sides'
+        frame.append(next((x for x in (o[k], t[k], bv) if x is not None and norm(x) == v), o[k]))
+    bd, od, td = dict(b[1]), dict(o[1]), dict(t[1])
+    order = [k for k, _ in b[1]] + [k for k, _ in o[1] if k not in bd] + [k for k, _ in t[1] if k not in bd and k not in od]
+    out, ids, dual = [], [], []
+    for k in order:
+        bb, oo, tt = bd.get(k), od.get(k), td.get(k)
+        if bb is None and oo is not None and tt is not None and norm(oo) != norm(tt):
+            out.extend([oo, tt])
+            ids.extend([k[0], k[0]])
+            dual.append(k[0])
+            continue
+        ok, v = three(norm(bb), norm(oo), norm(tt))
+        if not ok:
+            return None, 'row %s changed differently on both sides' % k[0]
+        if v is not None:
+            out.append(next(x for x in (oo, tt, bb) if x is not None and norm(x) == v))
+            ids.append(k[0])
+    for n in range(len(out) - 1):            # a chunk that was last in its version may lack the newline the next needs
+        if not out[n].endswith('\n'):
+            out[n] += '\n'
+    text = frame[0] + ''.join(out) + frame[1]
+    back = fence_chunks(text)
+    if back is None or [k[0] for k, _ in back[1]] != ids:
+        return None, 'the merged row blocks do not re-read as the union'
+    return text, 'block-union' + (' dual-mint=%s' % ','.join(dual) if dual else '')
+
+
 def regenerate(path, tree, ours, theirs):
     try:
         o, t = json.loads(show(ours, path) or 'null'), json.loads(show(theirs, path) or 'null')
@@ -279,6 +359,9 @@ def main(argv):
                 text, how = union_rows(*sides)
             else:
                 text, how = union_channel(*sides)
+                if text is None:
+                    text2, how2 = union_fences(*sides)
+                    text, how = (text2, how2) if text2 is not None else (None, how + '; ' + how2)
         elif GENERATED_RE.match(p):
             text, how = regenerate(p, opts['tree'], opts['ours'], opts['theirs'])
         else:

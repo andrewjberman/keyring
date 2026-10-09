@@ -1,0 +1,236 @@
+diff --git a/.tools/surprise-row-gate.py b/.tools/surprise-row-gate.py
+index 7c7df6befd..2e1ff708f6 100644
+--- a/.tools/surprise-row-gate.py
++++ b/.tools/surprise-row-gate.py
+@@ -1746,8 +1746,85 @@ def _item_surfaced_at(root, code):
+     return out
+ 
+ 
++# THE ROW'S OWN WORKSTREAM (1.0.0_SA_CTO msg 107639, on dell2 msg 2176 via 0.0.0_AB_MSTR 107638; rule 27: a WORKSTREAM is
++# a SCOPE). A project running interleaved workstreams (IRPT_BCKEND ~P/~Y/~M) never had every order terminal at once, so
++# the project-wide wait below never cleared. A new remediation row now waits only on the open orders of the workstream(s)
++# of the orders it cites; a row whose workstream cannot be resolved keeps the project-wide wait (never looser).
++TO_WORKSTREAM_RE = re.compile(r"<workstream>\s*([^<\n]+?)\s*</workstream>", re.I)
++TO_ISSUED_BY_RE = re.compile(r"<issued_by>\s*([^<\n]+?)\s*</issued_by>", re.I)
++TO_ISSUED_TO_RE = re.compile(r"<issued_to>\s*([^<\n]+?)\s*</issued_to>", re.I)
++_WS_CACHE = {}
++
++
++def _order_workstream(text):
++    """PURE. An order's workstream: its <workstream> tag, else the lane of its <issued_by> COO with any trailing instance
++    digits dropped (`2.0.0_SA_COO~Y2` issues `<workstream>~Y</workstream>`, measured on IRPT_BCKEND), else None."""
++    m = TO_WORKSTREAM_RE.search(text or "")
++    if m and m.group(1).strip():
++        return m.group(1).strip()
++    m = TO_ISSUED_BY_RE.search(text or "")
++    if m and "~" in m.group(1):
++        return "~" + re.sub(r"\d+$", "", m.group(1).split("~", 1)[1].strip())
++    return None
++
++
++def _workstream_map(root, code, merging=False):
++    """{order basename: (workstream or None, issued_to)} over the project's orders (the census's listing), or None when
++    any order is unreadable. Read once per (root, code, merging) per gate run."""
++    key = (root, code, bool(merging))
++    if key in _WS_CACHE:
++        return _WS_CACHE[key]
++    out = None
++    try:
++        ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
++                             "org/missions/D*/*/%s/task-orders/*.md" % code],
++                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
++        if ls.returncode == 0:
++            out = {}
++            for p in [x.strip().replace("\\", "/") for x in ls.stdout.splitlines() if x.strip()]:
++                st, text = _blob(root, "" if merging else "HEAD", p)
++                if st != "OK":
++                    out = None
++                    break
++                m = TO_ISSUED_TO_RE.search(text)
++                out[os.path.basename(p)] = (_order_workstream(text), m.group(1).strip() if m else "")
++    except Exception:  # noqa: BLE001
++        out = None
++    _WS_CACHE[key] = out
++    return out
++
++
++def _row_workstreams(row, code, wsmap):
++    """PURE. The set of workstreams of the orders `row` cites, or None when it cannot be resolved (no cited order found,
++    or a cited order with no workstream). A row cites an order by a worker coordinate `<CODE>-...-W<n>-S<k>` in its id
++    or text (the order issued to 0.9.0_WK_<CODE>~<n>) or by an order id `TO-...` in its text."""
++    if not wsmap:
++        return None
++    text = json.dumps(row, ensure_ascii=False)
++    workers = {"0.9.0_WK_%s~%s" % (code, n) for n in re.findall(r"%s-(?:[A-Za-z0-9]+-)*?W(\d+)-S\d+" % re.escape(code), text)}
++    cited = set(re.findall(r"\bTO-[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9]", text))
++    hits = [ws for base, (ws, to) in wsmap.items()
++            if (to and to in workers) or any(base.startswith("%s.%s." % (code, c)) for c in cited)]
++    if not hits or any(ws is None for ws in hits):
++        return None
++    return set(hits)
++
++
++def _scope_open_to_workstreams(open_ids, row_ws, order_ws):
++    """PURE. The open-order labels (`<basename> [<word>]`) that bind a row of workstream(s) `row_ws`: an order of one of
++    those workstreams, or an order whose workstream is unknown. row_ws None -> every label (the project-wide wait)."""
++    if row_ws is None or open_ids is None:
++        return open_ids
++    keep = []
++    for lbl in open_ids:
++        ws = (order_ws.get(lbl.split(" [", 1)[0]) or (None, ""))[0]
++        if ws is None or ws in row_ws:
++            keep.append(lbl)
++    return keep
++
++
+ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_word=None, merging=False,
+-                                   parent_ids=None, watermark=None, issued_at=None):
++                                   parent_ids=None, watermark=None, issued_at=None, workstreams=None):
+     """GATE (iii) first limb for ONE new tree row carrying a route. `open_tos` is injectable for the
+     red-first exercise; production passes None and the census runs.
+ 
+@@ -1768,11 +1845,18 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
+     route_word = route_word or row.get("route")
+     if open_tos is None:
+         open_ids, total, note = _open_tos_for_project(root, code, merging=merging, round_n=_round_num(row.get("round")))
++        if workstreams is None and open_ids:
++            _wm = _workstream_map(root, code, merging=merging)
++            workstreams = (_row_workstreams(row, code, _wm), _wm or {})
+     else:
+         open_ids, total, note = open_tos
+     if open_ids is None:
+         return ["%s: the L10 precondition (every task order under %s terminal) could NOT be evaluated (%s) "
+                 "-- REFUSED, fail-closed" % (rid, code, note)]
++    _row_ws = None
++    if workstreams is not None and open_ids:
++        _row_ws = workstreams[0]
++        open_ids = _scope_open_to_workstreams(open_ids, _row_ws, workstreams[1])
+     if open_ids and watermark is not None:
+         # THE SWEEP WATERMARK (see SWEEP_WATERMARK_RE): an order first added after the slug's declared cut is the next
+         # sweep's and does not hold this one. Labels are `<basename> [<word>]`, so the lookup keys on the basename.
+@@ -1784,10 +1868,13 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
+             return []
+         if _posn_round3_terminal_exception(root, rel, row, code, open_ids, total):
+             return []
+-        return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s are NOT "
++        return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s%s are NOT "
+                 "terminal at HEAD: %s. The slug waits until every task order is complete "
+                 "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
+-                "is over')." % (rid, route_word, len(open_ids), total, code, ", ".join(open_ids))
++                "is over')." % (rid, route_word, len(open_ids), total, code,
++                                " in the row's workstream(s) %s" % ",".join(sorted(_row_ws)) if _row_ws
++                                else (" (the row's workstream unresolved: project-wide)" if workstreams is not None else ""),
++                                ", ".join(open_ids))
+                 + (" Already terminal by proof: %s." % note if note else "")]
+     return []
+ 
+@@ -2256,7 +2343,10 @@ def _mutation_violations(rel, head_text, staged_text):
+     raw = rel.lower().endswith(".json")
+     old_rows, _ = _rows(head_text, raw) if head_text is not None else ([], 0)
+     new_rows, _ = _rows(staged_text, raw)
+-    old = {r["id"]: r for r in old_rows if r.get("id")}
++    old_all = {}
++    for r in old_rows:
++        if r.get("id"):
++            old_all.setdefault(r["id"], []).append(r)
+     # RC2 second pass (CVO~A re-grade @0dbf12ebb3, hole 4 -- DICT COLLAPSE): the old code built
+     # {id: row} over the staged rows, so a CONTRADICTORY duplicate of an existing id followed by
+     # the unchanged original collapsed to the original, hashed equal, and passed. Every occurrence
+@@ -2266,18 +2356,34 @@ def _mutation_violations(rel, head_text, staged_text):
+         if r.get("id"):
+             new_all.setdefault(r["id"], []).append(r)
+     out = []
++    # GRADE WHAT THE CHANGE INTRODUCES (1.0.0_SA_CTO msg 107628): a duplicate id ALREADY at HEAD (an admitted DUAL-MINT)
++    # does not refuse a commit that leaves it alone; only a duplicate the diff adds -- more occurrences than HEAD
++    # carries -- is refused. The copies already there are graded below like any existing row.
+     for nid, occurrences in new_all.items():
+-        if len(occurrences) > 1:
+-            out.append("%s: id %s occurs %d times in the staged file. An id is one row; a second "
++        if len(occurrences) > max(1, len(old_all.get(nid, []))):
++            out.append("%s: id %s occurs %d times in the staged file (HEAD carries %d). An id is one row; a second "
+                        "occurrence is either a contradictory rewrite hiding behind the original or a "
+-                       "paste error, and both are refused." % (rel, nid, len(occurrences)))
++                       "paste error, and both are refused." % (rel, nid, len(occurrences), len(old_all.get(nid, []))))
+     if head_text is None:
+         return out
+-    for oid, orow in old.items():
++    for oid, orows in old_all.items():
+         if oid not in new_all:
+             out.append("%s: EXISTING row %s was DELETED. The channel is append-only: retire it "
+                        "with a new row that cites it, never by removal." % (rel, oid))
+             continue
++        if len(orows) > 1:
++            # A DUPLICATE ALREADY AT HEAD: every copy must survive byte-equivalent as DATA; neither is edited or removed.
++            hs_old = sorted(_canon_hash(r) for r in orows)
++            hs_new = sorted(_canon_hash(r) for r in new_all[oid])
++            if hs_new != hs_old and len(hs_new) < len(hs_old):
++                out.append("%s: EXISTING row %s was DELETED (one of the %d copies HEAD carries). The channel is "
++                           "append-only." % (rel, oid, len(hs_old)))
++            elif hs_new != hs_old:
++                out.append("%s: EXISTING row %s was MUTATED in place (content hashes %s -> %s). Corrections are NEW "
++                           "items citing the old id." % (rel, oid, ",".join(h[:12] for h in hs_old),
++                                                        ",".join(h[:12] for h in hs_new)))
++            continue
++        orow = orows[0]
+         h_old = _canon_hash(orow)
+         for nrow in new_all[oid]:
+             h_new = _canon_hash(nrow)
+@@ -2806,6 +2912,7 @@ def _self_test(root):
+     _dz = {"id": "X_PRJ-Z-S106", "one_line": "site Z copy"}
+     _dd = {"id": "X_PRJ-Z-S106", "one_line": "dell1 copy"}
+     _d0 = {"id": "X_PRJ-S1", "one_line": "shared"}
++    _dn = {"id": "X_PRJ-S2", "one_line": "a new row appended later"}
+     _dpub = [("origin/CLOUD", {"X_PRJ-Z-S106": {_canon_hash(_dz)}, "X_PRJ-S1": {_canon_hash(_d0)}}),
+              ("origin/box/dell1", {"X_PRJ-Z-S106": {_canon_hash(_dd)}, "X_PRJ-S1": {_canon_hash(_d0)}})]
+     _djs = lambda rows: json.dumps(rows)  # noqa: E731
+@@ -2828,6 +2935,50 @@ def _self_test(root):
+              re.search(r"\b(id|row) %s (occurs|was MUTATED)" % re.escape(i), x) for i in ["X_PRJ-Z-S106"])]
+              == [m for m in mut if "X_PRJ-S1 " in m]))(
+              _mutation_violations("x.json", _djs([_d0, _dd]), _djs([dict(_d0, one_line="edited"), _dd, _dz])))),
++        # THE ROW'S OWN WORKSTREAM (1.0.0_SA_CTO msg 107639): another lane's open order does not hold a remediation row.
++        ("WORKSTREAM: another lane's open order does NOT block a row of workstream ~Y",
++         lambda: _route_precondition_violations(
++             None, "r", {"id": "X_PRJ-D2-W7-S1", "route": "SPEC_ERROR"}, "X_PRJ",
++             open_tos=(["X_PRJ.TO-p-1.a.md [issued]"], 3, ""), route_word="the slug",
++             workstreams=({"~Y"}, {"X_PRJ.TO-p-1.a.md": ("~P", "0.9.0_WK_X_PRJ~9"),
++                                   "X_PRJ.TO-y-1.b.md": ("~Y", "0.9.0_WK_X_PRJ~7")})) == []),
++        ("WORKSTREAM: the row's OWN lane's open order still blocks it",
++         lambda: any("X_PRJ.TO-y-1.b.md" in x and "workstream(s) ~Y" in x for x in _route_precondition_violations(
++             None, "r", {"id": "X_PRJ-D2-W7-S1", "route": "SPEC_ERROR"}, "X_PRJ",
++             open_tos=(["X_PRJ.TO-p-1.a.md [issued]", "X_PRJ.TO-y-1.b.md [issued]"], 3, ""), route_word="the slug",
++             workstreams=({"~Y"}, {"X_PRJ.TO-p-1.a.md": ("~P", "0.9.0_WK_X_PRJ~9"),
++                                   "X_PRJ.TO-y-1.b.md": ("~Y", "0.9.0_WK_X_PRJ~7")})))),
++        ("WORKSTREAM: an open order of UNKNOWN workstream still blocks (never looser)",
++         lambda: _scope_open_to_workstreams(["X_PRJ.TO-q-1.c.md [issued]"], {"~Y"}, {"X_PRJ.TO-q-1.c.md": (None, "")})
++         == ["X_PRJ.TO-q-1.c.md [issued]"]),
++        ("WORKSTREAM resolve: worker coordinate W7 -> the order issued to ~7 -> ~Y; an order id TO-p-1 -> ~P",
++         lambda: (_row_workstreams({"id": "X_PRJ-D2-W7-S1"}, "X_PRJ",
++                                   {"X_PRJ.TO-y-1.b.md": ("~Y", "0.9.0_WK_X_PRJ~7"), "X_PRJ.TO-p-1.a.md": ("~P", "x")})
++                  == {"~Y"}
++                  and _row_workstreams({"id": "X_PRJ-S4", "evidence": ["per TO-p-1 criterion 2"]}, "X_PRJ",
++                                       {"X_PRJ.TO-p-1.a.md": ("~P", "x"), "X_PRJ.TO-p-11.z.md": ("~M", "y")}) == {"~P"})),
++        ("WORKSTREAM resolve: no cited order, or a cited order with no workstream -> None (the project-wide wait)",
++         lambda: (_row_workstreams({"id": "X_PRJ-S4"}, "X_PRJ", {"X_PRJ.TO-p-1.a.md": ("~P", "x")}) is None
++                  and _row_workstreams({"id": "X_PRJ-W7-S1"}, "X_PRJ", {"X_PRJ.TO-y-1.b.md": (None, "0.9.0_WK_X_PRJ~7")})
++                  is None)),
++        ("WORKSTREAM: an order's workstream is its <workstream> tag, else its issuing COO's lane",
++         lambda: (_order_workstream("<issued_by>2.0.0_SA_COO~Y2</issued_by>\n<workstream>~Y</workstream>") == "~Y"
++                  and _order_workstream("<issued_by>2.0.0_SA_COO~P2</issued_by>") == "~P"
++                  and _order_workstream("<issued_by>2.0.0_SA_COO</issued_by>") is None)),
++        # GRADE WHAT THE CHANGE INTRODUCES (1.0.0_SA_CTO msg 107628): an admitted pair already at HEAD freezes nothing.
++        ("PAIR AT HEAD: a commit that appends a NEW id beside an admitted DUAL-MINT pair -> passes",
++         lambda: _mutation_violations("x.json", _djs([_d0, _dd, _dz]), _djs([_d0, _dd, _dz, _dn])) == []),
++        ("PAIR AT HEAD: a NEW duplicate the diff introduces (the new id twice) -> still refused",
++         lambda: any("id X_PRJ-S2 occurs 2 times" in x for x in _mutation_violations(
++             "x.json", _djs([_d0, _dd, _dz]), _djs([_d0, _dd, _dz, _dn, dict(_dn, one_line="other")])))),
++        ("PAIR AT HEAD: a THIRD copy of the paired id -> refused",
++         lambda: any("id X_PRJ-Z-S106 occurs 3 times" in x for x in _mutation_violations(
++             "x.json", _djs([_d0, _dd, _dz]), _djs([_d0, _dd, _dz, dict(_dz, one_line="third")])))),
++        ("PAIR AT HEAD: one copy EDITED -> MUTATED; one copy DROPPED -> DELETED",
++         lambda: (any("X_PRJ-Z-S106 was MUTATED" in x for x in _mutation_violations(
++             "x.json", _djs([_d0, _dd, _dz]), _djs([_d0, _dd, dict(_dz, one_line="edited")])))
++             and any("X_PRJ-Z-S106 was DELETED" in x for x in _mutation_violations(
++                 "x.json", _djs([_d0, _dd, _dz]), _djs([_d0, _dd]))))),
+         # MERGE CARRIED, NOT MADE (3.0.0_SA_CVO ruling @6166eb7b25): the pure decision and its three narrowness arms.
+         ("MERGE CARRIED: merged blob equals the other parent's and the local side made 0 commits -> carried (noted)",
+          lambda: _carried_decision("a1b2c3", "a1b2c3", 0) is True),

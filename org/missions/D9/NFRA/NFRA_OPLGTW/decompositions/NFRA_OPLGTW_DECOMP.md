@@ -1831,3 +1831,6 @@ Label `<round>32</round>`, ONE issuance, eight cells in six chains.
 - **OG-ap-1 CUT as workstream APPLY-TM1** (2026-10-09 ~01:4xZ, issued to `0.7.0_AE_CloudOps~Z`): OG-tm-1's Phase B legs
   C, B, A and the gateway roles, by `-target` only, under the signed pair (COO @3998bbe5a7, CTO @4149c01c23), after row
   S4's mirror drained @b831326e39. The QA pull stays with worker ~39.
+- **OG-ap-2 CUT as workstream APPLY-Y** (2026-10-09 ~02:0xZ, issued to `0.7.0_AE_CloudOps~Z`): OG-bf-1's leg Y, the 49F
+  dispatcher date gate, under the signed pair (COO @9e406fcb00, CTO @094786bd2a); source-map entry first, code-only
+  plan, Arm 1 on demand, Arm 2 organic.

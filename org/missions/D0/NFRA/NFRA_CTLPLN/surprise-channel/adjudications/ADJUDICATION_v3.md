@@ -15,8 +15,8 @@ The other 146 undispositioned items are OBSERVATION/INERT. They gate no slug and
 - 11 because a later order, amendment or apply overtook them (C-S6);
 - 6 because the CTO's and Andrew's rulings widening the Dell grants overtook them (C-S7).
 
-**Not in this version.** The other 8 of the 35 are to GRADUATE (C-S8), and INBOUND's 10 held graduations land under C-S4. Both,
-with their remediation rows, land in one later commit. The row gate refuses any new remediation row while an NFRA_CTLPLN task
+**Added after bd61456a84 (graduations).** The other 8 of the 35 are to GRADUATE (C-S8), and INBOUND's 10 held graduations land under C-S4. Both,
+with their remediation rows, land in this one commit with REMEDIATION_v1.md. The row gate refuses any new remediation row while an NFRA_CTLPLN task
 order reads non-terminal (TO-APPLY-20 dell2 shell window, pending; TO-DELL-1, see row S37).
 
 <sweep_watermark>2026-10-08T23:45Z</sweep_watermark>
@@ -125,6 +125,98 @@ order reads non-terminal (TO-APPLY-20 dell2 shell window, pending; TO-DELL-1, se
     ],
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "The access each row warns of is now granted by a ruling (PassRole, the signed resource-policy ALLOW, Andrew's widening of the two grants). The hazard is a decision taken, not an open defect. No remedy is owed."
+  },
+  {
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-08T23:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CTLPLN-C-S4",
+    "one_line": "INBOUND L8, landed: the 10 graduations ADJUDICATION_v2.md held for the row gate's L10 precondition now carry their remediation rows (REMEDIATION_v1.md); S33, S34 and W36-S2 stay ARMED.",
+    "spec_asserts": "Every INBOUND item the CVO graduates carries a remediation row with an owner and a done-when.",
+    "world_is": "The 10 rows drafted in org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_INBOUND_REMEDIATION_ROWS_HELD_20261008.json land unchanged in substance in REMEDIATION_v1.md. The compile of the 35 items that held them landed first, its 27 dismissals in bd61456a84.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_INBOUND_R6R7_L9_GRADES_20261008.md, section L8 compile",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_INBOUND_REMEDIATION_ROWS_HELD_20261008.json",
+        "1.0.0_SA_CTO msg 107476: compile the 35 now, no audited override"
+      ]
+    },
+    "adjudicates": [
+      "NFRA_CTLPLN-W31-S3",
+      "NFRA_CTLPLN-W32-S5",
+      "NFRA_CTLPLN-W31-S4",
+      "NFRA_CTLPLN-W31-S5",
+      "NFRA_CTLPLN-W31-S6",
+      "NFRA_CTLPLN-W31-S12",
+      "NFRA_CTLPLN-W36-S2",
+      "NFRA_CTLPLN-W39-S1",
+      "NFRA_CTLPLN-S33",
+      "NFRA_CTLPLN-S34"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-08T23:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CTLPLN-C-S8",
+    "one_line": "Eight items GRADUATED, each with its remediation row (REMEDIATION_v1.md), six of them ARMED: Dell write paths to SSM documents and to the cutover parameter, the stale vendored calendars, the 2028 fallback, the fence census baseline, the wheel check, the dell2 provider mirror and the CRLF package hash.",
+    "spec_asserts": "Each row names a hazard or defect that is still present at HEAD and has a seat that can act on it.",
+    "world_is": "W14-S2: dell_create_policy.json CreateUpdateTagCompute allows ssm:CreateDocument, UpdateDocument and UpdateDocumentDefaultVersion on *; no Deny names them. W14-S32: the same statement allows ssm:PutParameter on *, and the simulation reads PutParameter on parameter/mdpf/custody_source allowed for both Dells. W12-S1: the three vendored trading_calendar.py copies differ from lib/trading_calendar.py (163 lines against 283). Z-S3: lib/trading_calendar.py's fallback ends at 2027. W8-S7: dell_fence_census.py's default --out is still the sibling check's baseline file (no commit separates them since 21496c2fee). W6-S17: the intake check-6 rule stands as amended. D2-S1: no .terraform.lock.hcl has been re-locked since the row (git log since 2026-10-08 18:00 reads none). S27: infra/logic/registry/remediations.json and scopes.json read i/lf w/crlf in the shared tree, so a package built there differs from one built in a fresh checkout.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json statement CreateUpdateTagCompute; simulate_policy.py run by this seat: 'PLANREAD-NEG dell1 ssm:PutParameter on parameter/mdpf/custody_source -> allowed'",
+        "cmp by this seat: the three vendored copies under infra/aws/lambda/{inf-pipeline/inf-etf-ownership-daily,bd-pipeline/bd-served-vintage-alarm,opal-assets-absence-check}/trading_calendar.py DIFFER from lib/trading_calendar.py",
+        "git ls-files --eol infra/logic/registry/: 2 of 13 files i/lf w/crlf (remediations.json, scopes.json)",
+        "git log --since '2026-10-08 18:00' -- 'infra/aws/terraform/*/.terraform.lock.hcl': no commit",
+        "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md rows W14-S2, W14-S32, W12-S1, Z-S3, W8-S7, W6-S17, D2-S1, S27"
+      ]
+    },
+    "adjudicates": [
+      "NFRA_CTLPLN-W14-S2",
+      "NFRA_CTLPLN-W14-S32",
+      "NFRA_CTLPLN-W12-S1",
+      "NFRA_CTLPLN-Z-S3",
+      "NFRA_CTLPLN-W8-S7",
+      "NFRA_CTLPLN-W6-S17",
+      "NFRA_CTLPLN-D2-S1",
+      "NFRA_CTLPLN-S27"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-09T02:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "id": "NFRA_CTLPLN-C-S9",
+    "one_line": "L8: rows S9101 (BLOCKING), S9103 (ARMED) and S9105 (BLOCKING) of TO-CT-k-2's AMENDMENT 9 GRADUATED to its issuer 2.0.0_SA_COO~C, each with its remediation row.",
+    "spec_asserts": "AMENDMENT 9: every one of the six roots inits from the pack; the pack's providers join the Dell's mirror in AMENDMENT 1's form; the worker commits its order's <paths>.",
+    "world_is": "S9101: seeking-alpha/main.tf passes source_dir 7 times to modules/yang-lambda, whose variables.tf declares no source_dir (0 occurrences), so its init stops on a configuration defect before any provider. S9103: a pack carrying aws 5.100.0 as a zip must replace, not merge into, a mirror holding the same version unpacked, or seeking-alpha's lock is refused. S9105: .tools/owned-paths-validate.py:123 admits only a numeric worker suffix, so 0.9.0_WK_NFRA_CTLPLN~K9 cannot commit org/devices/** and the AMENDMENT 9 tool edits sit uncommitted in its worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md rows S9101, S9103, S9105 (0.9.0_WK_NFRA_CTLPLN~K9, commit e5238aeb7c)",
+        "read by this seat: infra/aws/terraform/modules/yang-lambda/variables.tf 0 occurrences of source_dir; git grep -c source_dir infra/aws/terraform/seeking-alpha/main.tf -> 7",
+        "read by this seat: .tools/owned-paths-validate.py:123 _WORKER_SERIAL_RE requires (?P<n>[0-9]+)$"
+      ]
+    },
+    "adjudicates": [
+      "NFRA_CTLPLN-S9101",
+      "NFRA_CTLPLN-S9103",
+      "NFRA_CTLPLN-S9105"
+    ],
+    "disposition": "GRADUATED"
   }
 ]
 ```

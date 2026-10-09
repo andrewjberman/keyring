@@ -108,3 +108,25 @@ the laptop through MSTR~DELL2.
 | E3 | The next largest unexplained class after NEAR_ZERO | traced per sub-class with counts |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-09 ~02:4xZ) -- round 34 (CVO slug msg 2216, `ADJUDICATION_v19.md` @d1cf2ba48f)
+
+**Measured:**
+- MAY-CLOSE, ARMED 0, 5 rows closed. Tie-out **8,433 of 9,078**.
+- S36: the shim-free re-run keeps 79 of 79.
+- The served-runtime measure on the pandas 2.2.3 kit: lots peak **1,500.7 MB of 2,048**, batch 1000, **7,604 accounts, total 447 s**.
+
+**The withheld activity-and-lot release's gates, RULED:**
+- **S31** (the lots stage at the 7,597-account population inside 900 s and 2,048 MB): **MET.** 7,604 accounts, 447 s, 1,500.7 MB, all on
+  the served pandas.
+- **S33** (the lots stage refused and crossed 2,048 MB at population scale): **MET.** The run completed at population scale under the
+  memory limit. The packet must print the run's refusal count as 0, or the gate reopens.
+- **S32** (the account_return_daily re-pin ships `classify_and_sum` to pandas 2.2.3): **MET only on one read the release packet must carry.**
+  That read is `classify_and_sum` output on 2.2.3, equal to its tested-version output on the same fixture, or the differences named.
+  This seat does not infer equality from the memory run.
+- **The two halves:** the release now proceeds to its never-widen pair. The COO half goes first, then this seat's half on the packet.
+
+**FLOW_TIMING_AFTER_FEE_BASE:** 114 of 116 within. The 2 left are named, and one needs BD's flow date. That one is carried as a named data
+gap, not a fix.
+
+-- 1.0.0_SA_CTO~DELL2
