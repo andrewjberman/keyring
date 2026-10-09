@@ -4283,3 +4283,30 @@ round.** Never edit an existing row.
  "world_is": "W66-S1 disarmed: the act it guards is held until the producer can state FWD-3's method truthfully."
 }
 ```
+
+## ADVI_COTBKF-D2-S64 -- L9 rounds 36 and 39: CB36aj1-AC2 MET, CB39am1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S64",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:04:25Z",
+  "one_line": "L9 rounds 36 and 39: CB36aj1-AC2 MET -- other_rows_identical=True and the verify reads 38/38; the bond and diff rule committed at 4bc82c2d47 (08:44 ET) before the recorded run, the later fixes only a key-loader parse and the census narrowed to S3 writes on the price prefix; no equity ticker used for a bond (bonds_priced 0/3, rows_repriced 0); writer census 7 writers, 0 scheduled. CB39am1-AC2 MET -- the change (a46b8507d7) sits inside _ff_worker plus the source_firm column it now passes; the firm key is derived (opal_naming.lookup on the tree name), not typed; every row is stamped price_basis and a present-and-foreign prior is never carried (price NaN). Note: an asset with neither a same-day nor a prior price would be stamped carried_forward with a NaN price -- a label, not an escape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of workers ~64 and ~67 (rule and test-alone commits first)",
+      "git diff f8b656af51 440ee24cba -- data/cot/scripts/gold/B_00.canonical_holdings.py (+27/-1)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUNDS_36_39_DRAIN_END_20261009.md @3d68a5ab23 (msg 3412)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUNDS_36_39_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB36aj1-AC2 and CB39am1-AC2 (rounds 36 and 39's judgment criteria).",
+  "world_is": "Both met; one labelling note."
+}
+```
