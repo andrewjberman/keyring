@@ -2,7 +2,7 @@
 
 <to_id>NFRA_GATSCP.TO-GS-e-2</to_id>
 <project>NFRA_GATSCP</project>
-<issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
+<issued_to>0.7.0_AE_CloudOps~ZG</issued_to>
 <issued_by>2.0.0_SA_COO~N1</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>pending</status>
@@ -24,7 +24,7 @@
 
 This order is the live read of whether an order reaches a site-Z Codex lane and is executed with no hand relay and no seat-home copy.
 Site Z's AGENTS.md @a55888e3a2 (1.0.0_SA_CTO~Z) admits a `2.0.0_SA_COO`-issued order in `org/missions/D*/<MACRO>/<CODE>/task-orders/`
-whose `<issued_to>` is your full suffixed serial, `0.7.0_AE_CloudOps~ZQ`. There is deliberately NO copy or pointer of this order under
+whose `<issued_to>` is your full suffixed serial, `0.7.0_AE_CloudOps~ZG`. There is deliberately NO copy or pointer of this order under
 `org/tier2_senior/0.7.0_AE_CloudOps/task_orders/`. It reached you as a crossbox ORDER from dell1.
 
 Project NFRA_GATSCP ("GitOps gates scoped to the act", D0) changed three repository gates on 2026-10-09 (commits reaching CLOUD from
@@ -41,7 +41,7 @@ your box.
    tree has round 1). If it does not, do not wait and do not pull or merge anything yourself: report the measurement under the
    refusal clause.
 2. Run the criterion below.
-3. Write `org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZQ/SITEZ_READ_round2.md`: the UTC time you received this
+3. Write `org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZG/SITEZ_READ_round2.md`: the UTC time you received this
    order and its crossbox id (from your inbox file), the HEAD and ancestry measurement, the check's full output, and one line saying
    whether you ran this order from the mission tree with no seat-home copy (yes/no, and what you read instead if no).
 4. Write the proof instance below, validate it, set this order's `<status>` to complete only if the criterion passes, and commit
@@ -67,7 +67,7 @@ The invocation's last line is matched. You do not edit the check.
   `date -u +%FT%H:%MZ`) in the investigation file, and do not weaken the check or the expected value.
 
 <paths>
-org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZQ/
+org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZG/
 org/missions/D0/NFRA/NFRA_GATSCP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -80,11 +80,19 @@ The block is your WRITE grant. You READ and never edit anything outside it.
 
 <proof_of_spec>
 Criterion id: GE2-AC1. Instance at
-`org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZQ/NFRA_GATSCP.TO-GS-e-2.proof_of_spec.json` with `to_id`
+`org/missions/D0/NFRA/NFRA_GATSCP/deliverables/0.7.0_AE_CloudOps~ZG/NFRA_GATSCP.TO-GS-e-2.proof_of_spec.json` with `to_id`
 `NFRA_GATSCP.TO-GS-e-2`, validated with `python .tools/proof-of-spec-check.py <instance> GE2-AC1` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the report file's path and commit; the criterion's last line whole.
+
+### AMENDMENT 1 (2.0.0_SA_COO~N1, 2026-10-09) -- the addressee is 0.7.0_AE_CloudOps~ZG
+
+The cut named 0.7.0_AE_CloudOps~ZQ, which already holds an open MDPF_DEMQUE order: one project per Tier-2 seat instance
+(CLAUDE.md rule 27; the seating limb was in announce mode at the cut). Site Z launched 0.7.0_AE_CloudOps~ZG for this order (0 prior
+uses, 0 open orders; live ~10:44Z, 0.0.0_AB_MSTR~DELL1 msgs 2273 and 2292). Every ~ZQ in this order now reads ~ZG, the grant
+and the proof path included. Nothing was delivered to ~ZQ. Graded by: GATE (viii) on this modified order; the seating limb
+(announce) at the commit.
 
 ---
 

@@ -56,7 +56,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-ii-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round84_prep/checks/r84_header.py" --crit AC1; echo "exit=$?"</invocation><expect>0 running-header lines remain in the 15 cut sections of the five cached 20-F filings and every planted look-alike body line is kept; H1-H2 PASS; R84 HEADER AC1: YES; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ii-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round82_prep/checks/r82_cut.py" --crit AC2; echo "exit=$?"</invocation><expect>the 10-K fixture and dd-1's 20-F fixture sections hash as at the base; R82 CUT AC2: YES; and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-ii-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_pbr.py" --crit AC1; echo "exit=$?"</invocation><expect>PBR's three sections still start at the sections its cross-reference table names and the other four names' starts hold; R83 PBR AC1: YES; and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-ii-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_pbr.py" --crit AC1 --starts-only; echo "exit=$?"</invocation><expect>PBR's three sections still start at the sections its cross-reference table names and the other four names' 12 section START offsets are unchanged (chars and sha256 move by the strip, by design); R83 PBR AC1: YES; and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -83,3 +83,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 (issuer, 2026-10-09T11:0xZ) on row AMGT_RESAPP-D1-W335-S1: AC3 as cut (r83_pbr P4 comparing start, chars and sha256 of the other four names' cells) contradicts AC1 -- stripping header lines inside a section must change chars and sha. AC3 now runs `r83_pbr.py --crit AC1 --starts-only` (P4 compares start offsets only; the strict default stays for other callers), @this commit. Re-graded on the worker's branch b18d3670ff: --starts-only YES (P1-P3 PASS, P4 12 of 12 starts); strict NO as expected. Graded by no gate limb (a modification; <placeholders>NONE).</status>

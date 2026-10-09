@@ -11,6 +11,7 @@
 <placeholders>NONE</placeholders>
 <round>5</round>
 **AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~10:0xZ (row MDPF_DEMQUE-Z-W1-S3, refusal `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T18_REFUSAL.md`):** build item 2's `bbgtml-unmetered` row contradicts three exact-count assertions in `test_demque_bbg_ledger_upload.py`, which the cut left outside the grant -- the issuer's defect. GRANTED: `data/mdpf/scripts/demque/test_demque_bbg_ledger_upload.py`. Its cardinality expectations may count exactly ONE `bbgtml-unmetered` row (cells null, claim absent) on a fixture day with no `bbgtml-*` line; every original conversion, dry-run and idempotence assertion stays as it is. Build item 3 now reads: keep `test_demque_bbg_ledger_upload.py` passing with only that change. The sentinel interface is unchanged.
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~10:5xZ (CTO~Z half @3ccf1f560f, C1: merge only after today's 07:00 ET run is read, so the first metered run is 2026-10-10):** build item 4's last sentence no longer holds the order open. The order completes when the meter is merged at site Z after today's run, the RUNNER step points at it inside the change-management entry, and AC1 + AC2 pass. The first metered scheduled run's ledger lines are read by the issuer at round 6's real run, not by this order. No criterion changes.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-18` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 5 -- CUT) |
 **outcome_ref:** FWD-2 | **depends_on:** none
 
