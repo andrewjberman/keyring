@@ -965,6 +965,31 @@
     "spec_asserts": "TO MP-k-2 step 2 ('Plan, and the ASK') directs: 'Run the plan with `safe-apply`, targeted to aws_iam_role_policy.gw_mcportal_close_request_write only.' That sentence presumes safe-apply can run a plan.",
     "world_is": "safe-apply refuses any argv without the literal 'apply' subcommand and exits 2 before terraform is invoked at all, so no plan can be produced through it. The wrapper's own usage text names the correct call ('call the terraform binary directly'), which is what was done. The gating sequence the order actually depends on is intact: the plan graded 1 to add / 0 to change / 0 to destroy before the ASK was written, and the irreversible apply will run through safe-apply's HALTGT checkpoint per step 4.",
     "notes": "Issuer's call, and nothing in this cell waits on it: (a) re-word step 2 of the next cut to 'run the plan with the resolved terraform binary, targeted' and leave step 4's safe-apply sentence as-is -- the minimal fix, no mechanism changes; (b) leave the orders alone and treat the wrapper's usage text as the standing remedy, accepting that each applier seat pays one refused invocation to discover it. Either way the proof_of_spec is untouched: AC1/AC2/AC3 do not mention safe-apply. Worktree C:/tmp/mp-k2, branch wk-mcportal-cp2-k2, cut from box/sitez @5db9d4cbabf33ac5298e2c6a956cfc8ec2c90abb."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S23",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T09:52Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The opal-gateway Terraform module does not plan clean: an UNTARGETED plan reads '0 to add, 1 to change, 0 to destroy' (aws_lambda_function.mcportal_grant_writer updated in-place) AND errors reading a data source for a Secrets Manager secret that does not exist (gateway/mail/commassist-bearer). Neither was caused by MP-k-2 and neither was touched: this cell's own resource is 0-diff. The hazard is for the NEXT actor here -- a bare untargeted apply in this module would move a Lambda nobody asked to move, or fail on the absent secret.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, after MP-k-2's apply, from C:/tmp/mp-k2 at HEAD 542de4b7e8. TARGETED plan on this cell's resource: 'No changes. Your infrastructure matches the configuration.' UNTARGETED plan on the same module: 'Plan: 0 to add, 1 to change, 0 to destroy.' plus 'Error: reading Secrets Manager Secret (gateway/mail/commassist-bearer): couldn't find resource'.",
+        "THE ONE CHANGE IS NAMED, not inferred: the untargeted plan's own line is '# aws_lambda_function.mcportal_grant_writer will be updated in-place'. It is a Lambda function, not an IAM policy, so it is outside this cell's write surface (TO MP-k-2 section 3) and outside its never-widen pair's blast radius.",
+        "NOT CAUSED BY THIS ACT, and that is a measurement rather than an assumption: 0 files changed under infra/aws/terraform/opal-gateway/ between the commit the plan was saved at (77184244cf) and HEAD, so the module's configuration base did not move across this cell; and the apply consumed a SAVED plan whose only entry was the single aws_iam_role_policy addition. The post-apply targeted re-plan reading 'No changes' confirms this cell's resource is settled.",
+        "DIRECTION OF THE HAZARD: a Lambda updated 'in-place' by a stray untargeted apply is the CLAUDE.md 22a CODE class -- deployed bytes moving without a build input anyone chose. The absent-secret error is the opposite failure, a plan that cannot complete at all; together they mean no actor in this module can currently get a clean whole-module 0-diff, which is the standard post-apply control that /cloud-ops pre-flight step 5 asks for.",
+        "WHY INERT RATHER THAN ARMED: nothing in flight is running an untargeted apply here. This cell applied a saved targeted plan, and the sibling MCPORTAL acts (MP-x-3, and MP-x-4 when it runs) are likewise targeted or route through safe-ec2-deploy.sh. The hazard needs a future actor to choose a bare apply, so it is latent, not live. It is also not this seat's to disarm: aws_lambda_function.mcportal_grant_writer and the commassist secret are outside the write surface its task order grants."
+      ]
+    },
+    "spec_asserts": "The standard post-apply control (/cloud-ops pre-flight step 5, and the 0-diff habit the sibling MCPORTAL orders rely on) is that a module plans clean after an apply: no changes, no errors. MP-k-2's own bounds also assert that 'no other Terraform resource moves'.",
+    "world_is": "This cell's resource does plan clean, targeted. The MODULE does not: untargeted it wants to update aws_lambda_function.mcportal_grant_writer in place and it errors on a data source for the absent secret gateway/mail/commassist-bearer. Both conditions pre-date MP-k-2 (0 files changed in the module between the saved plan's commit and HEAD) and both were left exactly as found. So MP-k-2's bound held -- no other resource moved -- but the module's whole-module 0-diff control is unavailable to the next actor until these two are dispositioned.",
+    "notes": "Issuer's call, and nothing in MP-k-2 waits on it: (a) route the Lambda drift to whoever owns mcportal_grant_writer (the MCPORTAL grant-writer cell) to re-plan and either apply or pin it, and the absent secret to whoever owns the gateway mail/commassist path -- most likely a half-landed or not-yet-created secret from another lane's in-flight work; (b) if either is known and accepted, record it so the next actor reads a known-drift note instead of rediscovering it mid-act. Either way the standing advice for this module is the one this cell followed: plan and apply TARGETED, from a saved plan, never a bare apply. Measured from worktree C:/tmp/mp-k2, branch wk-mcportal-cp2-k2, at 542de4b7e8."
   }
 ]
 ```
