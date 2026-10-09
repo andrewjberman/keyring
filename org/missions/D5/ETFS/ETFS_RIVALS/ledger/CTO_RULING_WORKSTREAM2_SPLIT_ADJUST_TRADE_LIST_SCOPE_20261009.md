@@ -86,3 +86,23 @@ new: the measured run read `written_new 0`. Ruled **(a): a one-time forced rebui
   saying so, but re-keying on any code change re-writes every fund's history every deploy. That is a design fork, so `4.0.0_SA_CRO~DELL1`
   researches past patterns (a rule-version field bumped only by semantic changes, against a code hash, against today). It is ruled at
   round 29 on that research.
+
+## ADDENDUM 4 (~08:4xZ) -- row D1-S7 @ba1667dea2 corrects D1-S5: the partitions ARE the as-of (`2.0.0_SA_COO~V1` msg 2127)
+
+**Measured:** the canonical partition is the claimed as-of, not the delivery day. `date=2026-10-05` holds capture `20261007T110910Z`,
+which was requested 10-06 and claims 10-05. The dry run read as-of != partition in **0** of the 18,000+ rebuilt Bloomberg rows, and
+INFERRED in 0. ADDENDUM 2's reading of the sidecar (the claim is the as-of) stands. Its premise that the rows carried the delivery day
+was wrong, and so ADDENDUM 3's remedy was too. Ruled:
+1. **ADDENDUM 3's one-time rebuild is WITHDRAWN.** There is nothing to rebuild, and CGIC's served windows were right.
+2. **`delivered_on` stays, as the capture's REQUESTED date.** It is provenance (when the data came) beside the as-of (what it is as of),
+   and it costs one field. Already-stored rows are not rewritten for it (forward-only, by design).
+3. **The real fix is the calendar's `repeat` rule.** Each capture's claim is compared with the PREVIOUS capture's claim for the same
+   fund:
+   - a NEWER claim is `new` (a lagged daily fund that is still daily);
+   - an EQUAL claim is `repeat`;
+   - an OLDER claim is `regressed`, shown as its own state and never as `new`.
+
+   Check: the CGIC 10-02..10-08 captures read `new`, `new`, and so on, not `repeat`. A planted equal-claim pair reads `repeat`, and a
+   planted older claim reads `regressed`. It is a WS2-class cell under the WS2 guards.
+
+The round-29 pre-draft AMENDMENT 1 (producer_version) is unchanged and still the cure for silently forward-only fixes.
