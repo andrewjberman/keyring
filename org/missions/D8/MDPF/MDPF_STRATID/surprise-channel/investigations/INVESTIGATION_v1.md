@@ -287,6 +287,30 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Row D1-W5-S1: a carrier that ships rebalancer_schemas.py without opal_strategy_matcher.py raises ImportError at deploy.",
     "world_is": "After 4bb33bbed6 no carrier ships one without the other. The hazard named by D1-W5-S1 is disarmed; its disposition is the CVO's."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+    "surfaced_at": "2026-10-09T14:12:32Z",
+    "one_line": "TO-APPLY-W2-a's stated rollback does not exist: step 2 says 'Record the prior object VersionId first (rollback = restore it)', but s3://opal-data-etfs is NOT a versioned bucket, so head-object returns VersionId None and an overwrite destroys the prior bytes irrecoverably. A substitute rollback was secured before the write; the bucket-level gap outlives this order.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "head-object s3://opal-data-etfs/config/etf_universe.json before any write: VersionId None, ContentLength 564, LastModified 2026-06-23T15:54:47+00:00, ETag 8f8546ce6b6fec2c42948a07c74365ff.",
+        "get-bucket-versioning --bucket opal-data-etfs returns EMPTY -- no Status field at all, which is how S3 reports versioning never enabled, as distinct from Suspended.",
+        "POSITIVE CONTROL, so the empty read is the world and not the instrument: the same call against opal-313476888478-terraform-state returns {\"Status\": \"Enabled\"}.",
+        "SUBSTITUTE ROLLBACK SECURED BEFORE THE WRITE, which is why this row is INERT rather than ARMED: the prior 564 bytes are downloaded and committed at org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.7.0_AE_CloudOps~DELL1/etf_universe_PRIOR_s3_object_20261009.json, sha256 338bc12081261a7942d9ba9f364f0f7738573b97063c20d1463c4de9c2e39539. Restoring it is a single put-object executable by anyone from the repo rather than from this session's scratch space.",
+        "SERVED DELTA IS ZERO ON THE LOADERS' PLANE, measured not assumed: the loaders' rule (cfg.get('tickers') or cfg.get('etfs') or cfg) over the CURRENT S3 bytes ALREADY yields exactly ['DIVZ','IDVZ','PFDE','PFOE']. The new file adds only full_names and sma_name_rules, which the file's own description states _load_universe does not read. No producer's universe changes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-W2-a step 2: 'Record the prior object VersionId first (rollback = restore it).' AC2 requires 'the prior VersionId is recorded'.",
+    "world_is": "There is no VersionId to record and none to restore: the bucket has never had versioning enabled. The criterion as written is unsatisfiable on this bucket, and the honest reading is that 'record the prior object' is met by preserving its BYTES, which is what was done. THE STANDING GAP: every S3 write to opal-data-etfs -- a bucket three ETFS producers read config from -- has no version-history rollback, so any overwrite is irrecoverable unless the writer preserves the prior bytes by hand first. Owner of the choice: whoever owns opal-data-etfs (the order names 0.4.0_DS_ClientPlatform as the config's owner). Two options, either acceptable: enable versioning on the bucket, or make 'preserve the prior bytes into the writer's deliverables' an explicit step in any order that overwrites a key there.",
+    "notes": "Reported, not worked around, and the write proceeded because a sound rollback was secured first and the served delta on the loaders' plane is zero. ID NOTE: this seat first appended as D1-S1 after reading an id census truncated by `tail -12`, which hid the existing bare D1-S1 and D1-S2; the gate refused it as a duplicate and as an in-place mutation, correctly. Re-read with a printed denominator (14 distinct ids at HEAD, max bare D1-S index 2) and re-filed as D1-S3. A page is not an answer."
   }
 ]
 ```
