@@ -44358,3 +44358,11 @@ REFUSED_20261008)
 2026-10-09T12:22:03Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=4  secs=20.03  held=dirty-overlap graded=1/102
 2026-10-09T12:22:21Z PASS  1.0.0_SA_CTO~DELL1  2  (all paths in-lane)
 2026-10-09T12:22:29Z LANDED-2P  1.0.0_SA_CTO~DELL1  29112515f4  paths=2  validate=7.90s  wait=0.07s  hold=1.18s  build=0.76s  ref=0.39s  post-commit=2.79s  attempt=1
+2026-10-09T12:22:55Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T12:23:02Z LANDED-2P  0.0.0_AB_MSTR~DELL1  1a98040877  paths=1  validate=7.24s  wait=0.06s  hold=1.05s  build=0.66s  ref=0.36s  post-commit=2.73s  attempt=1
+2026-10-09T12:23:08Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=4  secs=4.80  held=conflict cloud=41b6f7a039
+2026-10-09T12:23:25Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T12:23:26Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=2  secs=0.24  graded=n/a  args=(--help)  first=(REFUSED -- '--help' is not a ref in this repo)
+2026-10-09T12:23:32Z LANDED-2P  1.0.0_SA_CTO~DELL1  e7283e617a  paths=1  validate=6.84s  wait=0.06s  hold=0.83s  build=0.54s  ref=0.26s  post-commit=2.16s  attempt=1
+2026-10-09T12:23:40Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=1  secs=5.72  graded=n/a  args=(origin/CLOUD)  first=(REFUSED -- `git merge` failed and this is NOT a conflict)
+2026-10-09T12:23:59Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
