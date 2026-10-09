@@ -4,7 +4,7 @@
 {
  "project": "ETFS_RIVALS",
  "directive": "D5",
- "fabric": "site-z",
+ "fabric": "dell1",
  "prd_version": "v0.21",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
