@@ -3499,3 +3499,31 @@ round.** Never edit an existing row.
   "world_is": "The chain reads a Yahoo-sourced stored price series that is a dividend-adjusted level from an earlier fetch vintage, not today's Close. The constant ratio to Adj Close says one adjustment vintage; a 0.5% test cannot call it adj_close_base because the vintages differ (SCHB 0.54%, SCHZ 2.16%). Also: 10 of 25 SCHB and 7 of 15 SCHZ candidate sample days (first calendar-quarter day, e.g. 2022-01-01) are non-trading stored days (linear_interpolation rows) with no Yahoo bar; the rule skipped them (listed in the md), so the sample is 15 and 8 days, not one per quarter."
 }
 ```
+
+## ADVI_COTBKF-D2-S47 -- L9 CB32af1-AC2 MET (two notes)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S47",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:53:30Z",
+  "one_line": "L9 CB32af1-AC2 MET, with two notes. The class (other_source, both CUSIPs) follows from the printed per-day rows by the script's rule (TOL 0.5%, SHARE 80%): chain/AdjClose is a constant 1.0054 (SCHB) and 1.0216 (SCHZ), above TOL, so not adj_close_base. The named source is the one the chain reads: commonwealth_daily_valuation imports commonwealth_price_census, whose STORES[0] is cottonwood-silver-canonical-prices read on column price (this seat's read). Notes: (1) the rule and its output landed in one commit (0af60ccd42), so 'written before the first run' is the worker's statement, not git-ordered; (2) SCHB's 1.0054 sits 0.04 points over the 0.5% TOL, so its class turns on the tolerance -- but either class gives the same reading (a dividend-adjusted vintage), so no outcome rides on it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~59/base_close_trace.md",
+      "data/assets/scripts/analysis/commonwealth_price_census.py STORES[0]; data/assets/scripts/silver/commonwealth_daily_valuation.py:48 imports it",
+      "git show --stat 0af60ccd42 (rule and output in one commit)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_32_DRAIN_END_20261009.md",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_32_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB32af1-AC2: the class follows from the printed per-day rows by the pre-written rule, and the named source is the one the chain actually reads.",
+  "world_is": "Met; the two notes stand."
+}
+```
