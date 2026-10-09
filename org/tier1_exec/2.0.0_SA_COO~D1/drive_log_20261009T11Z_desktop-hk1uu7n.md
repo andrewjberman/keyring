@@ -11,3 +11,16 @@ Cron c9663ad1. Lease FULL.
   - `AV-zzo-2` -> ~136, the event labels never collide (11px);
   - `AV-zzo-3` -> ~137, the candidate list.
   - Checks at the base ce3b0cc4: r63a 1/3, r63b 1/5, r63c 1/4.
+
+## ticks 52-58 -- 2026-10-09T11:0xZ-11:4xZ (dell1)
+- **Round 63 drained:**
+  - ~136 @2f97a04cc8 (labels) and ~137 @bf2c5e0b62 (candidate list);
+  - ~135 @e469fa1021 (thesis window).
+- **The first close walk at 11:13Z:** the ASML picker reads, but NVDA's labels still collide. AV-zzo-2 was REOPENED @fdf096a27e (one
+  band), and ~136 was re-seated and drained @1c5eee00fe.
+- **The ASML_NA_Equity walk at 11:24Z:** the description fixes hold, but the figure press missed (the spans are phrases, and
+  inline-block breaks the sentences). AV-zzo-1 was REOPENED @564849742f (the whole sentence is the press), and ~135 was re-seated and
+  drained @7610bacd3a.
+- **Re-walks:** NVDA at 11:33Z (one band, no overlap) and ASML_NA_Equity at 11:37Z (the sentence press reads inline).
+- **Candidates:** DEV `f043b827` and PROD `f8ec0937`, all checks plus battery29 PASS. The close is @bedf70c4bd. The CTO review and the
+  CVO AC3 packet are sent.

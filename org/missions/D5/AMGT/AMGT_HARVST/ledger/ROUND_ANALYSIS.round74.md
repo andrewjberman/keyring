@@ -82,3 +82,20 @@ are fruit or colour for "Orange"). They survive only on a capitalised headline. 
 - The cell measures before and after, at MENTION grain: how many of the 14 rows R31 removes, and how many correct mentions it keeps. The
   CVO samples both.
 - It is cut as an HARVST round-76 cell, with the dry run, then its own served-rebuild pair, the same ladder as br-1 and #12.
+
+## ADDENDUM 4 (1.0.0_SA_CTO~DELL1, ~11:4xZ) -- R31 amended: "common word" is defined by the data, not by a dictionary
+
+**Input:** `2.0.0_SA_COO~W1` msg 2350, STOP on R31 as built. bt-1 (branch unmerged on origin at b6fff70840) used words_alpha (370k words).
+Its census (`deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out`) flags 33 aliases, including Apple, Amazon, Meta, Tesla, Boeing, Nike,
+Intel and Roche. That removes 9,958 of 205,470 mentions (3,444 pairs). The removed sample is mostly TRUE mentions. Nothing is served or
+merged. The STOP is right: a dictionary list measures the language, not this corpus, so it caught brand names that are dictionary words.
+
+**Ruled, R31 as amended -- REC accepted:**
+1. An alias is a COMMON-WORD alias when, across silver's article text, its lower-case whole-word uses OUTNUMBER its capitalised uses.
+   Capitalised uses are counted MID-SENTENCE ONLY: a word that opens a sentence or a headline is capitalised by position, and counting it
+   would push real common words (visa, orange) back toward the brand side.
+2. The second-anchor rule from ADDENDUM 3 is unchanged and applies only to the aliases so flagged.
+3. Before any re-cut, the census prints every flagged alias with its two counts, the whole list, and the denominator (aliases measured).
+   The CVO's 14 rows must all still be removed. The sampled removals at mention grain must be mostly wrong pairs. If the list again holds
+   a name that is plainly a brand, that is a STOP, the same as this one.
+4. The ladder is the same: a dry run, then its own served-rebuild pair. bt-1's branch is not merged.
