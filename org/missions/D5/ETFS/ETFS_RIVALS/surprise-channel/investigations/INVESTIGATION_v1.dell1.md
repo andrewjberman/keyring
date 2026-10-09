@@ -557,5 +557,29 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "world_is": "It matches a judgment criterion to any adjudication row of the project, so one early row reads as grading all eight.",
       "notes": "This seat closes round 28 on the artifacts, not on MAY-CLOSE. Owner of the instrument: .tools/round-close-check.py's lane (route via 0.0.0_AB_MSTR~DELL1 at the round-28 slug)."
   }
+,
+  {
+      "id": "ETFS_RIVALS-D1-S14",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "0.7.0_AE_CloudOps~RV1",
+      "surfaced_at": "2026-10-09T16:10Z",
+      "one_line": "FOR THE COMP-RAIL OWNER: comp-find SILENTLY IGNORES a negative pathspec, so an agent told 'repo-wide search may resume except over <dir>' cannot comply by excluding -- the tool scans the restricted directory while the operator believes it is excluded; only POSITIVE scoping limits the corpus",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "control run 16:09Z, term 'DENOMINATOR', two safe directories: (A) `comp-find --files 'DENOMINATOR' org/ref docs/architecture` -> 53 hit(s) across 513 file(s); (B) the SAME call plus ':!docs/architecture/**' -> 53 hit(s) across 513 file(s), byte-identical denominator; (C) positive scope `comp-find --files 'DENOMINATOR' org/ref` -> 1 hit across 27 file(s)",
+              "B == A proves the exclusion had no effect; C != A proves the comparator is live and that positive pathspecs DO limit the corpus, so B's null result is the tool and not the test",
+              "first seen 16:00Z on a different term ('SEAT_ROLES', org/ref, with and without ':!org/ref/**'): 6 hits / 27 files both ways",
+              "CLAUDE.md rule 21: comp-find's DEFAULT corpus is `all` (tracked + untracked + gitignored minus a printed ephemeral floor), i.e. repo-wide unless positively scoped"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "CLAUDE.md rule 21 describes comp-find pathspecs without distinguishing positive from negative forms, and git pathspec semantics (which the rail's '--corpus' language borrows, including `git rc=128` for an out-of-worktree pathspec) admit ':!<path>' as an exclusion. An operator instruction of the form 'search may resume, except over <dir>' is therefore naturally executed as a negative pathspec.",
+      "world_is": "The negative pathspec is accepted without error or warning and changes nothing: the directory is still scanned and its bytes still read. The exclusion fails OPEN and SILENTLY -- the most dangerous shape, because the denominator the tool prints looks authoritative and the operator has no signal. The only mechanism that limits the corpus is naming the directories to search positively.",
+      "notes": "Owner to inform: the comp-rail / NFRA_COMPRAIL owner (docs/architecture/NFRA_COMPRAIL_PRD.md). Found while complying with a client-data prohibition relayed as 0.0.0_AB_MSTR~DELL1 msgs 2749 and 2768 via 2.0.0_SA_COO~V1 (msgs 2751, 2771), whose msg 2749 wording was exactly 'content search may resume, except over org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/'. This seat did NOT test the syntax against any restricted path -- the control was rehearsed on two harmless directories precisely because a fail-open exclusion would have performed the prohibited read. msg 2768's later wording, 'keep searches scoped to ETFS_RIVALS and infra paths', is already the SAFE positive form and needs no change. Suggested remedy for the owner: make comp-find either honour ':!' or REFUSE it loudly; a silently-dropped exclusion argument is the defect. No ETFS_RIVALS act depends on this row."
+  }
 ]
 ```

@@ -21,11 +21,11 @@ Graduated at round 45's L9 (ADJUDICATION_v34.md), round label v46: W72-S1, OPEN.
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v46",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v46"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

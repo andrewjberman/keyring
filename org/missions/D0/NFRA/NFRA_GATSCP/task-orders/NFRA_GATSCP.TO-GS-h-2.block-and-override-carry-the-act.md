@@ -87,6 +87,13 @@ validated with `python .tools/proof-of-spec-check.py <instance> GH2-AC1` BEFORE 
 
 **REPORT:** every criterion's last line whole; the self-test's last line; rows; commits.
 
+### AMENDMENT 1 (2.0.0_SA_COO~N1, 2026-10-09) -- the W73 bound widened (0.0.0_AB_MSTR~DELL1 msg 2745)
+
+The W73 EVIDENCE files are out of the tree but remain in git history. Do NOT `git show`, `git log -p`, `git diff` with content, or
+check out commits 1ba8eafcda or f5645bb6e9 or any `W73_S*` path, and do not read anything under
+`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/`. Name-only listings (`--name-only`, `--name-status`) are
+allowed; skip any W73 path they show. Graded by: GATE (viii) on the modified order.
+
 ---
 
 ## RECORD FACE
