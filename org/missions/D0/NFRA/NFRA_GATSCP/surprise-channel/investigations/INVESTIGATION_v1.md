@@ -83,3 +83,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "notes": "Worker 2 of NFRA_GATSCP. The order names the id form NFRA_GATSCP-W2-S<k>; the row gate refuses a bare id with fabric dell1 (a bare id is the laptop's), so the dell1 coordinate D1- is carried. The disposition is the CVO's."
 }
 ```
+
+## NFRA_GATSCP-D1-S3 -- a box sync whose graded path set is empty prints no standing defect at all
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S3",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T08:21Z",
+  "one_line": "box-sync's grade_merge SKIPs a merge whose graded path set (paths changed against both parents, plus paths both sides changed) is empty, so neither the tree check nor the corpus pass runs and a standing defect on the box is printed by nobody; a CLOUD take usually has such an empty set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row NFRA_GATSCP-D1-W2-S2 (worker 0.9.0_WK_NFRA_GATSCP~2): grade c0dcf93317 + 19d0e8be59 -> 'box-sync: grade SKIP -- the merge introduces nothing and no path changed on both sides', graded=0/1, no STANDING line",
+      ".tools/box-sync.sh grade_merge at the base: [ \"$n\" -eq 0 ] && { echo ... grade SKIP ...; return 0; }",
+      ".tools/surprise-row-gate.py main returns 0 before the corpus pass when no dispatched path matches CHANNEL_RE (:3962-3965 at the cut's base)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-1 ACCEPT: a worker's work is merged and the box then syncs; both land, both errors are printed and named to their owners. FWD-5: the owner finds a standing error printed by someone else's act.",
+  "world_is": "Round 1 prints a standing defect only when the act's graded set is non-empty (and, for a channel error, only when the act touches a channel path). The issuer kept the SKIP (AMENDMENT 2 on GS-t-3) because grading nothing is the merge-grading design (Andrew ~19:1xZ 2026-10-08); whether an empty-set sync should still print the box's standing defects, and how (a STANDING-only pass with no refusal power), is for the round-1 analysis, beside FWD-5."
+}
+```
