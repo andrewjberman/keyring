@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| ADD | activation | svc-irpt secret resource policy ADD | Live BEFORE set-equal; signed ADD put with block-public-policy; readback ADD set-equal; dell2 allowed, dell1 explicitDeny, walker allowed; no GetSecretValue |  | OPEN |
+| ADD | activation | svc-irpt secret resource policy ADD | Live BEFORE set-equal; signed ADD put with block-public-policy; readback ADD set-equal; dell2 allowed, dell1 explicitDeny, walker allowed; no GetSecretValue | Live BEFORE setequal; two failed simulator-setup attempts auto-restored signed BEFORE; final signed ADD put 09:09:07-09:09:10Z block-public-policy; live ADD setequal; dell2 allowed, dell1 explicitDeny, walker allowed; no GetSecretValue; REMOVE due X1 or 13:09:10Z. | CLOSED 20261009T091140Z |
 | REMOVE | activation | svc-irpt secret resource policy BEFORE restored at X1 or ADD+4h | Live ADD set-equal; signed BEFORE put with block-public-policy; readback BEFORE set-equal; both Dells explicitDeny, walker allowed; no GetSecretValue |  | OPEN |
 
 ## Log
 
 - 20261009T090514Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
+- 20261009T091140Z LEG ADD closed: Live BEFORE setequal; two failed simulator-setup attempts auto-restored signed BEFORE; final signed ADD put 09:09:07-09:
