@@ -1,7 +1,7 @@
 # /integrate -- the two devices on ONE TRUNK (`CLOUD`)
 
 **Who runs it:** `0.0.0_AB_MSTR` (laptop) and `0.0.0_AB_MSTR~Z` (site Z). Both halves are shared-branch pushes
-(LD-0367/LD-0368: only the two MSTRs push a shared branch, on Andrew's word). A lane agent invoking this stops at
+(LD-0367/LD-0368: only the MSTRs push a shared branch; no word from Andrew is needed, CLAUDE.md push law, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_044xZ_PUSHES_NEED_NO_APPROVAL_EXCEPT_CLIENT_FACING_PROD.md`). A lane agent invoking this stops at
 Step 0 and routes to its MSTR.
 
 ## The model, as of 2026-09-24 (Andrew-direct "recs approved" ~01:4xZ at the laptop MSTR terminal, card 1 (a))
@@ -187,7 +187,7 @@ second channel** (Andrew 2026-08-12: "no you should write them via agentbus").
 |---|---|
 | `/integrate` | ASSESS: fetch; ahead/behind vs `origin/CLOUD`; conflict dry-run (`merge-tree`); deploy ceiling; the per-author payload. Writes nothing. Runs at MSTR launch. |
 | `/integrate merge` | ASSESS then Step 1 (the merge window, the index control) -- no push. |
-| `/integrate push` | Steps 1-3 on Andrew's word: merge, push, verify from the remote, tell the peer. |
+| `/integrate push` | Steps 1-3, at will (push law): merge, push, verify from the remote, tell the peer. |
 | `/integrate parity` | RETIRED with the second branch. Both devices on one trunk have no parity fixed-point to drive; "is the peer updated" is answered by the peer's own pull. |
 
 ## What is NOT this skill
