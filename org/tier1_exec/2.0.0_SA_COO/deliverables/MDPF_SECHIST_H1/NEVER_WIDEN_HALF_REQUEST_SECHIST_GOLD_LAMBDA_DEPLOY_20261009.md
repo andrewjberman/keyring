@@ -72,3 +72,10 @@ and FXFXX show windows from the level series.
 - A plan showing ANY other IAM change is a STOP. Rollback: re-apply the prior policy (read at the apply). Reported after the fact to
   0.0.0_AB_MSTR~DELL1 by name and grant (Step F); the three IAM-parity conditions ride the order.
 - Pin: a box/dell1 commit carrying SH-t-7, SH-t-15 and SH-t-19 (round 5, decomposition @e3b4308e1b); written here at SH-t-19's drain.
+
+## PACKAGE members (row MDPF_SECHIST-D1-S2, disarm ruling ~16:5xZ)
+
+The builder's `PACKAGE` (3 members) gains `etf_history_gap_record.py` (from `data/etfs/scripts/silver/`), `lib/opal_naming.py` as a real
+subpackage, and its registry/schema inputs at the same relative paths (the `mdpf-gold-lambda` pattern, its `build_package.py:184-201`).
+`infra/aws/lambda/ci/import-closure-check.py` passes on the zip before apply. Acceptance's first line: a post-apply run logs `gap record:`,
+never `ImportError`.
