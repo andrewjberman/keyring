@@ -1012,6 +1012,88 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "spec_asserts": "A worker commit inside its <paths> lands through safe-commit.",
     "world_is": "safe-commit's missions-tree-check refuses the staged set on an unrelated project's index drift, so the order's proof, deliverables and complete flip could not be committed.",
     "notes": "Work product is complete and in the worktree; only the commit is blocked."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit REFUSED TO-IAM-u-2's deliverables commit: missions-tree-check reports INDEX-DRIFT org/projects/NFRA_OPSWKF.json dep_stage index='PRD' tree='EXECUTING', a defect in ANOTHER project's register carrier that the worker's write grant cannot touch.",
+    "spec_asserts": "A worker commit of files under its own deliverables folder is graded on those paths.",
+    "world_is": "The tree validator grades the whole project tree; a drift on NFRA_OPSWKF (register row at PRD, tree project at EXECUTING) fails every commit from every worktree branched from this base. Two attempts, same single violation (1 violation, 49 of 49 tree projects valid).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~ZI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit run twice at worktree HEAD 50428b904f: [INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index='PRD' tree='EXECUTING'; RESULT: 1 violation(s)",
+        "tool names the remedy as R5 = the register members list, 0.0.0_AB_MSTR's lane; never bypass"
+      ]
+    },
+    "notes": "No bypass was taken. The partial deliverables (rerun-population.sh, compare-runs.py, permission-cold-raw-bundle.round4.PARTIAL.json) sit UNCOMMITTED in /c/tmp/wk-iamroles-11 on branch wk-NFRA_IAMROLES202609-11; commit them once the drift is cleared."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S2",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T06:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Live list-roles read 290 roles = 280 at Path '/' + 10 service-linked (Path '/aws-service-role/<service>/'); round 3 read 219 + 10. The population rule's 'Path /aws-service-role/' is a PREFIX, not an equality: an exact-equality exclusion matched 0 of the 10.",
+    "spec_asserts": "Round 3's rule: the 10 roles at Path '/aws-service-role/' are excluded and named.",
+    "world_is": "Those 10 roles carry Path '/aws-service-role/<service>.amazonaws.com/'; rerun-population.sh was corrected to a startswith test before the bundle was assembled. Members rose 219 -> 280 (+61) in the interval.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam list-roles via .tools/aws grouped by Path in worktree .scratch/r4work/list-roles.json: 280 at '/', 10 under '/aws-service-role/<service>/', 0 other (290 total)",
+        "round 3 bundle ~8 population_rule: 219 at '/', 10 excluded"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S3",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The reseat brief's '195 per-role files' was 65 roles x 3 files (.json/.err/.rc), so 215 of 280 roles remained, not about 85; the sweep resumed from the 65 rc0-verified roles and ran the 215 in one background pass.",
+    "spec_asserts": "The reseat brief: .scratch/r4work/roles holds 195 per-role files at the issuer's count; about 85 roles remain.",
+    "world_is": "roles/ held 195 files = 65 .json + 65 .err + 65 .rc; all 65 had rc 0 and parsed with a rows key; 215 roles were not yet attempted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls .scratch/r4work/roles | sed to strip the extension | sort | uniq -c -> 65 err, 65 json, 65 rc",
+        "final run: attempted=280 returned_rc0=280 results=280, no rc != 0 role"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S4",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "26 permissions on opal-drift-producer-codebuild-role (iotevents:*, evidently:*) read never-used in round 3 and unobservable in round 4 ('service not present in Access Advisor response') with byte-identical instrument code and the grant unchanged.",
+    "spec_asserts": "Same instrument blobs, same rule and lookback give a comparable per-permission status for an unchanged grant.",
+    "world_is": "For that role the Access Advisor response in the 2026-10-09 run no longer lists the iotevents and evidently services, which moves 26 rows never-used -> unobservable; the cause inside AWS is not determinable from the bundles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "compare-runs.py over ~8 round-3 bundle and the round-4 bundle: 'never-used -> unobservable : 26', all on opal-drift-producer-codebuild-role",
+        "instrument_blobs equal across the two bundles (COMPARABLE: yes)"
+      ]
+    }
   }
 ]
 ```
