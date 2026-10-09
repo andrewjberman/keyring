@@ -1,0 +1,13 @@
+# drive log 2.0.0_SA_COO~T2 2026-10-09T14Z (desktop-n8rjv0a)
+
+- 2026-10-09T14:04Z NFRA_TRNSPT RESUME | 3393 unread 19m (MSTR~DELL2 LIVE in /govern) -> re-sent with (c) ~TRL liveness read on s21 (role NoSuchEntity 63m after GO; relocate if no apply read) | NUDGE (relay)
+- 2026-10-09T14:05Z NFRA_TRNSPT | MSTR~DELL2 sent all three asks 14:0xZ (msg 3420): (a) standalone allowlist to site Z, (b) a18 VERIFY relocation + (c) ~TRL liveness to laptop ~C; box/dell2 push HELD on a schema collision | WAITING on relays
+- 2026-10-09T14:15Z NFRA_TRNSPT r21 | silver reader role LIVE (laptop ~TRL applied); issuer proof PASS: silver 200, bronze AccessDenied, research_meeting AccessDenied; key Sids 5 incl DellAgentUsersGenerateDataKey (a18 condition held) + SilverReaderDecryptOnly; R21_SILVER_READER_PROOF.json; s21 flip waits on ~TRL's report | DRIVE FORWARD
+- 2026-10-09T14:17Z NFRA_TRNSPT | s21 in flight on ~TRL (role created 14:07:25Z, msg 3434), proof PASS here @f8a19f80e4; a18 VERIFY relocated to ~TRL @a7bd828882, GO relayed; FWD-6 TAKEN by site Z @4e2f00c9fa (E2, 23:00Z window), TR-d-20 stays parked; owe ZZ a one-line note when s21's ledger closes | DRIVE FORWARD
+- 2026-10-09T14:20Z NFRA_TRNSPT | MSTR closed idle dell2 lane 0.7.0_AE_CloudOps~TR2 (0 orders, spawn cap; msg 3440); applies run on laptop ~TRL; re-seat on ask
+- 2026-10-09T14:24Z NFRA_TRNSPT | no Teams landing since 13:00Z (0/87 new silver keys; allowlist not yet live); s21 close + a18 VERIFY at laptop ~TRL; FWD-6 at site Z (23:00Z window) | WAITING
+- 2026-10-09T14:34Z NFRA_TRNSPT | s21 + a18 ledgers both OPEN at laptop ~TRL (in flight); no Teams landing | IRPT ~T: t1 not started 64m after GO READ (~DELL2 working other orders) -> asked queue position, relocate via MSTR if not this hour | WAITING
+- 2026-10-09T14:40Z IRPT ~T | ~DELL2 (msg 3485): t1 is NEXT, step 0 reads done (reader live, invoke policy exists), ledger open within the hour; kept on ~DELL2 (no relocation: an hour beats a reseat's cold start) | WAITING
+- 2026-10-09T14:44Z NFRA_TRNSPT THIRD-EMPTY-TICK -> second unblock position opened (continues UB-953b; every fold act done or in flight with live owners) | UNBLOCK
+- 2026-10-09T14:50Z IRPT ~T | t1 BLOCKED by shared-tree merge (row IRPT_BCKEND-D2-S53, MERGE_HEAD c95d59a97e, IRPT_DASHBD worker drain): map now resolved in tree (0 UU, JSON valid 235 fns incl my 3), merge commit pending; told ~DELL2; t1 stays there | WAITING
+- 2026-10-09T14:53Z NFRA_TRNSPT | UB-413a folded (msg 3505), signed + resumed; escalate only on: t1 not opened by ~15:40Z, no site Z allowlist ack by its window, ~TRL ledgers still open next tick

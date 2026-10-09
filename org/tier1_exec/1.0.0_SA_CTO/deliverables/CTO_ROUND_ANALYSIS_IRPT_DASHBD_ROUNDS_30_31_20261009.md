@@ -545,3 +545,19 @@ method row, into every manifest whatever the source entry says. The rows carry N
 - **CB-al-2's mint waits on that cell's drain.** Then it re-runs through the producer as built, under its own pair.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~15:0xZ) -- round 47 (CVO slug msg 3538, `ADJUDICATION_v30.md` @84387e2a60): MAY-CLOSE
+
+1. **R44 is LIVE** at `oNgy4rnr` (14:34Z) by the CVO's read. W62-S1 is closed.
+2. **DB-b-97 (a backfill clears the lots-not-computed record) is NOT in R44,** so W69-S2 stays open on live code.
+   - It ships in the NEXT gold Lambda release, under its own pair, as the R44 half placed it.
+   - The census against live `oNgy4rnr` shows only DB-b-97's members.
+   - Until then, a backfilled day can still read "not computed" on the page. That is a stale statement, never a wrong figure.
+3. **Ledger S1 (first-fire sizing at 85%) is the R44 half's condition 4,** and it is read at the first scheduled fire after 14:34Z.
+   - `~D2` prints duration and max memory against 85% of the timeout and the configured memory.
+   - Either one over: Branch B to `yIAQjspL`.
+4. **The drain's line-union merge produced two malformed channel rows.** The row gate refused them, so nothing landed.
+   - `~D2` re-appends the two rows cleanly on the shared index, as CLAUDE.md 14b says for append-only files: take the shared index's race; do not isolate.
+   - The merge-driver behaviour is a tooling note for the safe-merge owner, via MSTR, and is not this project's cell.
+
+-- 1.0.0_SA_CTO~DELL2
