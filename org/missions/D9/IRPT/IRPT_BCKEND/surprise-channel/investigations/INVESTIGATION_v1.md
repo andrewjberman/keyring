@@ -23786,3 +23786,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two cannot both hold (D2-S36); the CTO narrowed the skip ban for this one function and the order now carries that."
 }
 ```
+
+## IRPT_BCKEND-D2-S39 -- IB102-2-AC1's arms_ok admits two verdicts while the IB-pr-394 harness emits four, so the criterion REFUSES the replay record both halves signed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S39",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T09:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The world is right and the instrument is narrow: holdings is live at the built sha, narrative is unmoved, the replay re-run is byte-identical to the signed packet record -- and the criterion still reads FAIL because two of that record's own verdict values are outside its allowlist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p102_cells.py:62 arms_ok(arms, n=1) returns len(arms) >= n and all(x['verdict'] in ('identical','expected-diff')) -- a TWO-value allowlist",
+      "the IB-pr-394 harness emits FOUR verdict values, measured over the packet's own IB99-1_release_replay.json: ['WIDENS irpt-narrative', 'admitted', 'expected-diff', 'identical']",
+      "DECISIVE CONTROL: arms_ok applied to the PACKET'S OWN SIGNED record returns False, exactly as it does for my re-run. The criterion therefore refuses the artifact the COO and CTO halves signed, so the FAIL is the instrument and not the world.",
+      "the two rejected values are 'admitted' (arm 4: internal caller with row [cottonwood] selecting cottonwood, admitted through both zips) and 'WIDENS irpt-narrative' (arm 6), which the packet EXPRESSLY admits: 'A WIDENS verdict is expected for irpt-narrative only'",
+      "the world, measured: irpt-holdings live CodeSha256 CKpZUMD5RVWyY/2oyo8zZwN7Ss8J2FbkeNFr2XYbXD8= EQUALS the packet built value (LastModified 2026-10-09T09:11:24Z); irpt-narrative live es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc= UNCHANGED to the same LastModified second; AC1's first two limbs both pass and only the arms limb fails",
+      "the re-run is byte-identical to the signed record: sha256 es6YSTEXcnQeGvyv3wy64HshoAiZBC+tR0Ph4iCctmw= on both files; 9 arms, 5 negative controls, 9 of 9 verdicts matching the packet arm for arm, ZERO arms whose verdict is UNEXPECTED, no HARNESS_* code on the built error path, and the negative control did raise HARNESS_TypeError on 2 of 2 routes",
+      "the deploy itself is complete and not half-landed: ledger 20261009T0906Z_irpt-holdings-release-394-20261009 CLOSED with 5 of 5 legs proven, sentinel removed; the plan was 0 add / 1 change / 0 destroy with zero lines outside the signed radius; re-plan reads No changes"
+    ]
+  },
+  "spec_asserts": "IB102-2-AC1 -- live irpt-holdings == CKpZUMD5...; live irpt-narrative unchanged; after-reads A2: ledger CLOSED stating pin + sha256; replay arms re-run. Base: FAIL.",
+  "world_is": "Every clause of that sentence is satisfied and the criterion still prints FAIL, because its arms_ok helper carries the IB-pr-390-era two-value vocabulary while the IB-pr-394 harness that the pair signed emits four. The applier did NOT make the criterion pass: dropping or relabelling the 'admitted' and 'WIDENS irpt-narrative' arms would have bought a PASS by deleting the single most safety-relevant line in the record -- the one saying the live narrative boundary does not honour firm selection -- so the arms are recorded VERBATIM and the criterion is reported FAIL with its cause. <status> is left pending for that reason; nothing is half-landed, because the release is applied, read back and its ledger closed. ONE EDIT by the issuer clears it: widen arms_ok for the r102 holdings limb to the vocabulary its own harness emits (admit 'admitted', and admit a 'WIDENS <host>' verdict only for a host the order does NOT release), or re-cut IB102-2-AC1 against the four-value vocabulary. A one-line narrowing is NOT equivalent: an arms_ok that silently admits any WIDENS would stop discriminating the case it exists for.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
