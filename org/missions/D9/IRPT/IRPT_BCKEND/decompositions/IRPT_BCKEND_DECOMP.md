@@ -2617,3 +2617,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r112/p112_cells.py`: AC1 and AC3 FAIL
 | `IB-pr-411` | persist_inputs.report_index carries the stored object's sha256; contract + tests | FWD-2 (IRPT_DASHBD W64-S1) | WORLD | IB-pr-405, IB-pr-407 drained | P112-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~274.
+
+## 106. ROUND 113, WORKSTREAM ~P (2026-10-09 ~14:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 18/19)
+
+The red `_contracts` list (IB-pr-408) leaves 4 NAMED entries. Two are ~P2's: the custody-report-read (IB-pr-355) and custody-report-persist
+(IB-pr-373) controls, red because their response-contract files do not exist. One cell publishes both contracts from the shipped handlers;
+routes.json keeps response_schema null (row W167-S1). The route-census test and the analysis-request-original control stay red, owned by
+IRPT_ANLREQ (AR-y-22).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r113/p113_cells.py`: AC1 and AC2 FAIL at base; AC3 is the control (PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-412` | publish responses/custody-report-read + custody-report-persist contracts + fixtures | FWD-2 (suite integrity, ADDENDUM 18) | WORLD | IB-pr-408 drained | P113-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~275.
