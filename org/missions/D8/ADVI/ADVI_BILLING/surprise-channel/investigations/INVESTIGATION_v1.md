@@ -134,3 +134,80 @@
   "world_is": "With a null PLATFORM rate beside an account whose schedule_claim is measured, the contract's null-only-when-absent rule cannot be read off the account field, so each component carries its own schedule_claim (ADVISOR = the account's, PLATFORM = absent). The amendment is silent on the household debited total; summing the SMFEE debits against a computed total that excludes the platform portion would put a number in difference that means nothing, so the household compares the ADVISOR components with their own TPFEE debits and says so in steps. AB-t-3's fixture and AB-t-2's reader must carry the added key or ignore it."
 }
 ```
+
+## ADVI_BILLING-W1-S6 -- The partners relationship platinum-summary route applies no per-advisor book check and its pseudonymizer is a retired no-op; the read route reuses exactly that
+
+```json
+{
+  "id": "ADVI_BILLING-W1-S6",
+  "project": "ADVI_BILLING",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~1",
+  "surfaced_at": "2026-10-09T07:10Z",
+  "one_line": "The order asks that the viewer be scoped to the firm, the advisor's book and pseudonymization as opal-partners-data scopes its relationship routes, but that route's code checks the firm only (is_authorized) and pseudonymize_response returns the body unchanged (needs_pseudonymization is False).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py:1816-1870: for /scoped/partners/books/relationship/{id}/platinum-summary the checks are the authorizer allowedFirmIds, is_authorized(firm_id), get_firm_bucket, _validate_entity_id, then _pseudonymize_s3_response; the L1 advisor-path check (:1685-1697) applies to '/advisors/' and '/books/advisor/' paths only",
+      "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/pseudonymizer.py:66-75 needs_pseudonymization() returns False ('Pseudonymization retired 2026-04-15 per Andrew'); pseudonymize_response returns the body unchanged",
+      "infra/aws/lambda/advi/billing-read/entry.py at this commit: 401 for no authorizer context, a firm outside allowedFirmIds, or any firm other than the one served; 400 for a bad clientKey or quarter; all before any S3 read (tests test_refused_*)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-t-2 'Who may read': scope the viewer exactly as opal-partners-data scopes its relationship routes -- firm from the claims (49 Financial only), the advisor's book, pseudonymization of PII; a viewer outside the firm or outside the household's book gets a refusal and NO S3 read.",
+  "world_is": "The cited code does the firm check and the (no-op) pseudonymization; it has no check that the viewer's advisor owns the household, so none is applied here either and an in-firm viewer of any advisor can read any household's fee object. The coordinator's instruction to scope exactly as that route was followed. A book check would need the household's advisor attribution (the platinum summary's team_attribution advisor ids, a different prefix the role does not read) and is the issuer's call."
+}
+```
+
+## ADVI_BILLING-W1-S7 -- The page's clientKey is the Black Diamond relationship_id (z-form), not rel_; the route accepts both forms
+
+```json
+{
+  "id": "ADVI_BILLING-W1-S7",
+  "project": "ADVI_BILLING",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~1",
+  "surfaced_at": "2026-10-09T07:10Z",
+  "one_line": "The order's clientKey pattern ^rel_[A-Za-z0-9_]+$ would 400 the AB-t-1 household (client_key z08219260); the route accepts ^(rel_|z)[A-Za-z0-9_]+$.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.9.0_WK_ADVI_BILLING~1/AB_T1_RECORD.json: client_key z08219260, relationship_id rel_542a59c41291e9",
+      "coordinator message after AB-t-1: 'the page's clientKey is the Black Diamond relationship_id (z-form)'",
+      "infra/aws/lambda/advi/billing-read/tests/test_billing_read.py test_refused_bad_path_parameters_400_no_s3_read: path-traversal and off-pattern keys 400, the z-form key is served"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-t-2: clientKey must match ^rel_[A-Za-z0-9_]+$; anything else is 400.",
+  "world_is": "The object is keyed by the BD z-form relationship_id (AMENDMENT 1 A1), which the stated pattern refuses. The accepted pattern keeps the character class (no slash or dot) so a key cannot leave the quarter prefix."
+}
+```
+
+## ADVI_BILLING-W1-S8 -- The criterion check parses un-coloured pytest output, and this box exports FORCE_COLOR=3, so AB1-2-AC1 fails on correct tests until a conftest turns colour off
+
+```json
+{
+  "id": "ADVI_BILLING-W1-S8",
+  "project": "ADVI_BILLING",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~1",
+  "surfaced_at": "2026-10-09T07:10Z",
+  "one_line": "r1_checks.py ac_2_1 matches ^PASSED <file>::<test> from pytest -rA, but FORCE_COLOR=3 in the environment wraps those lines in ANSI escapes, so it read passed=[] with pytest rc 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env: FORCE_COLOR=3; python org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/checks/r1/r1_checks.py . AB1-2-AC1 -> 'need a passing test named *real_object* and one named *refused*; passed=[]' with 16 tests passing",
+      "after infra/aws/lambda/advi/billing-read/tests/conftest.py (config.option.color = 'no'): AB1-2-AC1 PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB1-2-AC1 PASS when the local-invoke tests pass, one serving the real object and one refusing an out-of-scope viewer.",
+  "world_is": "The check is environment-sensitive. The conftest in the order's own tests directory makes the output plain on any box; any other test directory the same check grades (AB-t-3 uses bun) is unaffected."
+}
+```
