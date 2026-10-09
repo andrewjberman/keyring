@@ -2305,3 +2305,17 @@ base (exit=1).
 reference 4 of 4. `battery29`: base ALL PASS; on the scratch, every harness green.
 **Rows:** `DSGN_AMGTV1-D1-W121-S<k>`, `-D1-W122-S<k>`. **Then:** the drain (tsc, eslint, battery29 on the combined candidate), a signed-in
 /security-analysis walk, and CTO review.
+
+## v58 -- ROUND 58 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~05:2xZ) -- THE FILING PANEL BESIDE A DRAWN TABLE (DIRECT ACT)
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round57.md` (msg 1757) section 4: item 1 -> cell `AV-zzj-1`; item 2 (the PROD promote) is not a
+cell (a `/prod-deploy` act under its pair, waiting on cross-box XB-20261009T052023Z-bf16).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzj-1` DIRECT ACT (LOCAL) | FWD-27 | `SA/components/SegmentBreakdown.tsx`, `SA/tabs/ThesisTab.tsx` | ~123 (worker-light) |
+
+**Base:** portal 2d42e9b7. **Check:** `deliverables/2.0.0_SA_COO~D1/round58/checks/r58a.cjs`: base 2 of 4, scratch reference 4 of 4. battery29
+base ALL PASS. **Chains:** 1. **Fan-out:** 1 of 1.
+**Beside it:** Andrew-direct ~05:0xZ-05:1xZ (record @1725deb826) -- a deep signed-in walk of /security-analysis feeds a register and a brief
+(the news spine, the news presentation, the disclaimers) for the next rounds.
