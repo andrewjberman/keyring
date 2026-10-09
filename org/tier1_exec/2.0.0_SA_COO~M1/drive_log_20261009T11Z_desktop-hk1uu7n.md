@@ -1,0 +1,10 @@
+# Drive log 2.0.0_SA_COO~M1 -- 2026-10-09 11Z (desktop-hk1uu7n)
+
+| 2026-10-09T11:05:58Z | MDPF_SECCLASS | L7 wait | r17 | TOs 1/2 | cells 2/2 | thread n | EMPTY TICK: COT fire 11:30Z; nothing free |
+| 2026-10-09T11:17:42Z | MDPF_SECCLASS | L7 wait | r17 | TOs 1/2 | cells 2/2 | thread n | WORK: e67 G read gains SGIIX arm + NOT-YET verdict (control NOT-YET, multi_asset=4 on stored older dates; branch A rewrites them). COT fire 11:30Z |
+| 2026-10-09T11:26:07Z | MDPF_SECCLASS | L7 wait | r17 | TOs 1/2 | cells 2/2 | thread n | EMPTY TICK: COT fire 11:30Z (5 min) |
+| 2026-10-09T11:44:05Z | MDPF_SECCLASS | L7 + ledgers | r17 | TOs 1/2 | cells 2/2 | thread n | DRIVE FORWARD: COT run COMPLETE exit 0 (10-08 partition); e67 G PASS (1361 files, multi_asset 0, 0 moved, SGIIX equity) -> e67 ledger CLOSED; cot-repoint S CLOSED (ruling I; all classes served, 227/227 client mixes sum to 1); cot-cusip-rows R CLOSED; commit f99a30fa3c. ~74 SPAWNED (SC-e-84 GO, R1 condition met). remap-b G stays open on the next BD run |
+| 2026-10-09T11:49:58Z | MDPF_SECCLASS | L8 | r17 closed | TOs 2/2 | cells 2/2 | thread n | DRIVE FORWARD: ~74 drained @6ac1a94afe (AC1-3 re-run ok); row D1-S24 filed @121bac48ed; ROUND_CLOSE + L8 packet + e84 COO half @6e68c2d4ca; packet to CVO, CTO half asked |
+| 2026-10-09T11:50:29Z | MDPF_SECCLASS | L8 | r17 closed | TOs 2/2 | cells 2/2 | thread n | EMPTY TICK: packet at CVO (sent 11:49Z), e84 CTO half asked 11:49Z; BD-run legs wait |
+| 2026-10-09T11:53:19Z | MDPF_SECCLASS | L10 wait + world-act | r17 closed | TOs 2/2 | cells 2/2 | thread n | DRIVE FORWARD: e84 CTO half SIGNED @1a6daca8ab (+cond 5-6), transcribed; TO-SC-e84b GO to ~SC1 @4f43bb20ad (3 named files, AC1 base FAIL as expected) |
+| 2026-10-09T11:59:27Z | MDPF_SECCLASS | L6->L7 | r18 | TOs 0/1 | cells 1/1 | thread n | DRIVE FORWARD: r17 analysis (msg 2374) -> ONE issuance r18 @052863d1ec (SC-e-86 tests to named-file rule; both checks FAIL at base as expected); ~76 spawned; D1-S23 routed to MSTR (R3); e84b at ~SC1 |
