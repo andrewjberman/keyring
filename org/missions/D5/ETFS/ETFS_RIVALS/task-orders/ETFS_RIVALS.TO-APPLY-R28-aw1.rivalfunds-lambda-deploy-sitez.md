@@ -20,6 +20,17 @@
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="4" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    THREE CONDITIONS OF THE dell1 IAM PARITY GRANT, criteria of every order to a 0.7.0_AE_CloudOps lane (1.0.0_SA_CTO~DELL1
+    msg 1811; `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md`
+    ADDENDUM 3 @947dd446e5):
+    (1) A send that writes a firm data bucket, or assumes the 49F principal outside the runner's own job, is told to the
+        laptop FIRST.
+    (2) Every send to mdpf-daily-runner is reported after the fact, with its command id and purpose.
+    (3) 49 Financial data never goes into another firm's tree.
+    This apply touches none of them (five rivalfunds Lambda code packages only); state that in the report.
+  </amendment>
+
   <amendment id="3" date="2026-10-09" by="2.0.0_SA_COO~V1">
     LINE ENDINGS (ruling on the applier's STOP 3 ask, msg 1663, report @b29d71000d): the package carries the pin's COMMITTED
     bytes. Both halves measured committed content (`git show`, the registry JSON included); dell1's checkout wrote 23 of 239

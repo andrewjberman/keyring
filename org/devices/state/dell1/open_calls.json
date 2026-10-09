@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T05:25:29Z",
+ "written_at": "2026-10-09T05:55:57Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -352,7 +352,7 @@
    "source": "org/tier1_exec/2.0.0_SA_COO~H1/drive_log_20261009T03Z_desktop-hk1uu7n.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T03:24:27Z",
    "kind": "fork",
    "context": "Round 2 did not cut card A: site Z ruling 31292 held it until AMGT_CORPUS and ETFS_RIVALS record in bbg_budget. Since then the 02:4xZ egress law (CTO~DELL1 msg 1507) routes every Bloomberg draw through COO~Q1's DEMQUE queue. Gates FWD-2's cell.",
@@ -373,7 +373,14 @@
      "shared": []
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-09T05:36:40Z",
+    "by": "2.0.0_SA_COO~H1",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO/deliverables/cooH1_ANDREW_DIRECT_20261009_053xZ_SECHIST_CARD_A_GOES_TO_DEMQUE_BBG_QUEUE.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
    "escalation": {
     "to": "andrew",
     "ref": null,
@@ -678,7 +685,7 @@
    "source": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T04:37:11Z",
    "kind": "act",
    "context": "S07 read UNDETERMINED by data: an Opal Rebalancer model of six third-party muni ETFs, SMA flags false (CRO S07 read @67e20ee89f). Until a person confirms, no Muni dollars count at Global and the account stays on the unidentified list.",
@@ -699,7 +706,14 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-09T05:34:16Z",
+    "by": "2.0.0_SA_COO~S1",
+    "ruling": "org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   }
   },
   {
    "id": "dell1-20261009T051507Z-f23d",
@@ -735,6 +749,43 @@
      "placement": [],
      "resources": [],
      "shared": []
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261009T055557Z-203a",
+   "project": "MDPF_STRATID",
+   "subject": "Confirm whether Opal_Muni_Sleeve ($550,823, the 40% sleeve of one blended Cottonwood account) is Opal's Muni SMA, or exclude it with a reason (C-MUNI-VERIFY)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/4.0.0_SA_CRO~DELL1/deliverables/MDPF_STRATID_MUNI_NAME_CENSUS_20261009.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T05:55:57Z",
+   "kind": "act",
+   "context": "CRO Muni name census @2bb6b38092: NONE FOUND across SmartX, Rebalancer and Eclipse; no vendor SMA flag on any Muni-named object. This sleeve is the only candidate. If no, FWD-3 has no Muni SMA dollars to show and re-enters at the CTO (STRATID v0.5).",
+   "rec": "A person who knows the Cottonwood book decides; no default either way",
+   "scope": {
+    "measured_at": "2026-10-09T05:55:57Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [
+      "infra/aws/lambda/investor-reporting/performance/build_tools/build_candidate.py overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/lambda/investor-reporting)",
+      "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/lambda/investor-reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)"
+     ]
     }
    },
    "closed": null

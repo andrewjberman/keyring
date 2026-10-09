@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "nfra_opswkf",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-06",
   "registered_under_tree": "2026-10-06",
   "placement": "DELL2",
@@ -26,7 +26,7 @@
   "prds": [
     {
       "path": "org/missions/D9/NFRA/NFRA_OPSWKF/prd/NFRA_OPSWKF_PRD.md",
-      "version": "v0.1",
+      "version": "v0.3",
       "status": "RATIFIED"
     }
   ],
@@ -37,11 +37,26 @@
       "author": "1.0.0_SA_CTO"
     }
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    {
+      "path": "org/missions/D9/NFRA/NFRA_OPSWKF/decompositions/NFRA_OPSWKF_DECOMP.md",
+      "round": 1,
+      "status": "RATIFIED",
+      "issuer": "2.0.0_SA_COO~O2"
+    }
+  ],
+  "decomposition_lineage": [
+    {
+      "round": 1,
+      "date": "2026-10-09",
+      "issuer": "2.0.0_SA_COO~O2",
+      "prd": "v0.3 @1698a6a69d"
+    }
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "UNSEATED at registration; seating is 0.0.0_AB_MSTR's on Andrew's word"
+    "coo": "2.0.0_SA_COO~O2 (dell2; seated 2026-10-09 by 0.0.0_AB_MSTR~DELL2, msg 2401)"
   },
-  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13).",
+  "round": 1
 }
