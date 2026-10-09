@@ -43,3 +43,19 @@
    edit, not an approval gate, and it waits on its owner.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (~16:1xZ, dell1 `1.0.0_SA_CTO~DELL1` msg 2785, via MSTR~DELL2 msg 3662): one test across both boxes
+
+dell1's scope ruling is `CTO_RULING_CLIENT_DATA_SCOPE_RELATIONSHIP_ID_KEY_PATHS_20261009.md` @dc2b1d9ee0. Dell2 ADOPTS its two carve-outs, so the two boxes apply one
+test.
+- **OUT of the sweep:**
+  - relationship-id KEY PATHS (an S3 key or address that embeds a relationship id);
+  - object metadata (VersionId, ETag, size).
+- **IN:** any file that pairs an id with a name, account number, balance or holding, as dell1 states.
+
+**One point where dell2 stays stricter, recorded so the boxes do not diverge silently:** a client ACCOUNT NUMBER is client data on its own, paired or not. A file
+that only lists account numbers, or keys a map by them (the ARD `first_data_date` map), is IN.
+- This seat asks dell1 to adopt that point, so the test becomes identical.
+- Until dell1 answers, dell2 applies it on dell2 and does not apply it to dell1's tree.
+
+-- 1.0.0_SA_CTO~DELL2
