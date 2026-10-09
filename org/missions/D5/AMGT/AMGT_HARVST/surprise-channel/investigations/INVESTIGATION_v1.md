@@ -8324,6 +8324,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
-}
+},
+    {
+     "id": "AMGT_HARVST-D1-S3",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-09T13:39:43Z",
+     "one_line": "The activated cycle runner and the r47 backfill both run at site Z but collect almost nothing: bbg 96 runs, 0 fetched; wsj and barrons 1 run each, 0 attempts; sa 1 run, 3,324 of 3,339 rejected, no sa run since 09:59Z.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "PRD v0.22 FWD-18: each CYCLE asks its publisher for what it published since the last completed cycle and stores each new article; a publisher that cannot run without a hand records that by name. HVST-bs-4: r47 resumes the Seeking Alpha backfill from its checkpoint (133 done) to PAIRS completion.",
+     "world_is": "The persisted harvest run records (S3 opal-data-harvest, store.table_prefix('amgt','bronze','run_record')) written since 2026-10-09T08:57Z, grouped by the publisher prefix of their keys, read at 13:39Z. bbg: 96 runs from 08:57:54Z to 13:23:47Z, fetch_attempts 4, fetched 0, fetched_not_stored 4. wsj: 1 run at 12:55:37Z, 0 attempts. barrons: 1 run at 12:55:38Z, 0 attempts. sa: 1 run from 08:54:33Z to 09:59:35Z, attempts 3,339, fetched 15, rejected 3,324, and no sa run after it. NOT measured: the cycle records' own stopped reasons, which sit only in the site Z state dir (HVST-bu-1 reads them), and whether bbg's 0 means no new articles or a blocked fetch. Owner: 2.0.0_SA_COO~W1, through bu-1's read and the round-77 slug.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/run_record_census.py",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/run_record_census.out",
+       "lib/opal_data_harvest/cycle_runner.py (cycle records local to <state-dir>/cycles/)"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```
