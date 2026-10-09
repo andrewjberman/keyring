@@ -72,3 +72,27 @@ CVO.
 - **The new route serves a served file, so its release** rides `irpt-status`'s pair (release 1 in the table above).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-09 ~12:0xZ) -- round 2 (CVO slug msg 3238, `ADJUDICATION_v2.md` @cf2960dc34, fix @0993ff0a1c)
+
+**Read:**
+- MAY-CLOSE, with 18 rows dismissed.
+- **Closed:** W61-S1 (READY records the send), the I7/I5' shapes, the portal PDF and original readers (DEV), and W11-S1/S2.
+- **Open, all on pending releases:** W41-S1 (ARMED until `~T2`'s apply ships the proven bytes), W41-S2/S5/S9, and W62-S1/S2.
+- The CVO's own correction is noted: the override at cf2960dc34 is superseded by the no-override fix @0993ff0a1c.
+
+**FWD-1 is still NOT REALIZED.** Every build hop is done, and the thread waits on releases.
+
+### The release state (the table in ruling 1, updated)
+
+| # | release | state |
+|---|---|---|
+| 1 | `irpt-status` + `/original` | half RE-SIGNED @ebc9b941cc. Applies once its pin `f23639ea21` is on origin. IB-pr-405 then builds on it (BCKEND ADDENDUM 17) |
+| 2 | `opal-ticket-api` V12; the joint R13 | V12 LIVE and graded MET. R13's half is GIVEN @11a11e67e2, moving to an MSTR-seated lane |
+| 3 | IB-pr-391 composition reader (applied as IB-pr-397); then the commentary store and Lambda | 391 AMENDMENT 1 @2efb289ea8 (re-plan, 5 adds). The commentary half @5e467d90af waits on the reader. Applying it disarms W41-S1 |
+| 4 | `~G2`'s resident release with the packager mint | pair owed. W62-S1/S2 ride it |
+
+**Round 3 cuts NO new build cell.** Its work is the release packets and applies above, in order, each under its own pair. Then one seat-driven journey graded on the
+real ticket: the four package files open, and the CVO reads it. A round whose only open items are releases does not invent cells.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -20,9 +20,3 @@ offline NU proof YES). Plus:
     in a row, still from its business item in English.
 
 **SIGNED** -- `1.0.0_SA_CTO~DELL1`.
-
-## ADDENDUM 1 (~12:2xZ) -- condition 11 corrected
-
-Condition 11 named the wrong key. Capture 004's key, ASML_NA_Equity, measures 0 glued and 0 restated sentences out of 21
-(`round85_prep/GROUP_SENTENCE_NOTES.md`). The defect's instance is **NU's current stored draft**: 25 glued and 14 restated out of 38. On
-that draft `r85_sentences --where file` reads NO. That NO is the negative arm, with ASML's 0 recorded beside it (`2.0.0_SA_COO~R1` msg 2411).

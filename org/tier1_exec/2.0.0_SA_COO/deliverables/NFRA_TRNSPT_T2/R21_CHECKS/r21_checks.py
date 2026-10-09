@@ -5,7 +5,7 @@
                       40-hex last_deployed_commit; an entry for a function not yet applied says so in _artifact_note
 
   r21   TR21-r21-AC1  ADDENDUM 12.1: FWD-5's silver-only reader role in readers.tf (plan-only build): names from NAMES.json, GetObject on
-                      silver prefixes only, never bronze, a trust that admits nobody while no holder is named
+                      silver prefixes only, never bronze, a trust of exactly the raw-tier readers (CTO ruling @374553467d)
 
 Prints <TOKEN>-OK or <TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or the worker's worktree root). Local only: no AWS call.
 """
@@ -46,7 +46,8 @@ def m21():
 
 
 R21_TEST = Path("data/transcripts/scripts/tests/test_silver_reader_role.py")
-R21_NAMES = ["test_policy_reads_silver_only", "test_no_bronze_prefix_granted", "test_trust_admits_nobody_without_holder"]
+R21_NAMES = ["test_policy_reads_silver_only", "test_no_bronze_prefix_granted", "test_trust_is_the_raw_tier_readers",
+            "test_research_meeting_prefix_denied"]
 
 
 def r21():
