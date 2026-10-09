@@ -355,3 +355,95 @@ blocked-looking relay into a satisfied order with one ungraded loose end.
 
 **What failed:** nothing landed wrong this block. The near-miss was the rename workaround in
 section 3, stopped by reading the order rather than by any instrument.
+
+---
+
+# ADDENDUM 3, 12:00-13:00Z -- the arm is RESTORED, and the four hours before it are mine
+
+## 1. TEAMS MONITOR ARMED AND HEARING -- the session's headline blocker is closed
+
+`1.0.0_SA_CTO~Z` landed the one-token fix **@16fb949b5b at 07:40Z**, both mentions (`SKILL.md:35`
+and `:179`), verified at HEAD and contained in origin box/sitez. Armed `b56f8w9hx` at 12:0xZ,
+re-armed `b2kcrj9r7` at 12:3xZ after the designed exit. Banner: `token selected:
+identity=6810043e-.../517aa5ee-...` -- the pin resolves and selects Opal Bloomberg, not Andrew.
+**Section 1 of this log is now closed; the seat is woken, not merely polling.**
+
+Before the arm I measured the fix read-only and proved its safety property, which stands as the
+record of WHY the oid pin is not a weakening:
+
+| `--identity` | matched | live | outcome |
+|---|---|---|---|
+| `opalbloomberg` | 0 | 0 | `_pin_fail` exit 2 -- reproduces the failure |
+| `517aa5ee-b4d0-425a-b493-5a22ff77ac4f` | 1 | 1 | ARMS |
+
+SAFETY CONTROL: non-bbg `opalinvest.dev` records in the store = **2** (Andrew's proxy identities);
+of those matching the oid = **0**. The oid pin cannot select Andrew. It narrows identity strictly
+MORE than the server pin alone.
+
+## 2. ⛔ THE REAL FINDING: I RE-CHECKED THE BLOCKER, ON AN INSTRUMENT THAT COULD NOT ANSWER IT
+
+**The fix landed at 07:40Z. I reported "blocked on CTO~Z" in four successive reports until 12:0xZ.**
+Four hours of a blocker that did not exist, and a turn spent proving a fix that was already applied.
+
+I was not negligent about it -- that is the part worth keeping. I **deliberately** interrogated the
+blocker rather than restating it, and ran `get_delivery_state(1.0.0_SA_CTO~Z)`. It read
+`READ@07:35:38Z`. I concluded: seen, not actioned, seat visibly loaded (15 messages in that window,
+multiple L10 slugs, absorbing the dead `CTO~O` lane), patience correct, a nudge would be noise.
+**Every step of that reasoning was sound and the conclusion was false.**
+
+⭐⭐ **I MEASURED THE MESSAGE, NOT THE ARTIFACT.** `get_delivery_state` answers *"did they see it."*
+My blocker's condition was *"is the file changed."* Different questions, different instruments. The
+delivery read **felt** like diligence, which is exactly what made it dangerous: **a re-check on the
+wrong plane discharges the obligation to look while returning nothing about the claim.** One
+`grep -- --identity .claude/skills/bbg-teams-assist/SKILL.md` would have ended it at any moment.
+
+⚠ **And I read silence as state, for the second time today.** The CTO fixed it and moved on without
+replying -- then apologised for silence it did not owe me. Section 5 above is the same error on
+`~ZV` (broker absence read as seat absence). Twice in one session, two planes.
+
+**The corrected rule, banked to `a-blocker-does-not-re-check-itself`:** when a blocker's resolution
+lives in a file, a commit or a served artifact, the disconfirmer must be an observation on **the
+artifact that would change**, never on the request asking for the change. Delivery and liveness
+reads answer *"should I nudge?"* -- never *"is it done?"*
+
+## 3. THE FIRST EMIT WAS A FOUR-DAY REPLAY, AND THEN THE CURSOR FIXED ITSELF
+
+First arm's banner: `cursor=2026-10-05T19:57:52.013Z`, older than this thread dir's newest entry --
+`refs/TEAMS_DUTY.md`'s stated SUSPECT-REPLAY condition. It emitted 6 messages framed
+`(1 of 6) ... (6 of 6) since cursor`: complete, oldest-first, correctly denominated, and
+indistinguishable from a real backlog by shape. **RECALL cleared all six as known** -- three acked
+2026-10-08, three held at draft-and-ask. **Zero new. Nothing re-acked, no delay apologised for.**
+Full per-message table in the thread daily.
+
+⚠ **The replay was invisible to my own compensating control, and I built the blind spot.** Through
+the dead-arm window I swept with `poll_addressed_teams_messages(since_iso=06:40:13.43Z)`, carrying
+the floor forward by hand from the last message I had served. It returned 0 every cycle, correctly.
+The ENGINE's cursor sat at 10-05 the whole time. **Two cursors for one mailbox, four days apart,
+neither instrument able to see the other** -- a third cursor home beside the two `TMPDIR` homes
+already documented, and this one was mine.
+
+⭐ **Resolved by the mechanism, not by me:** the second arm reads `cursor=2026-10-09T06:40:13.43Z`.
+The first arm advanced it to the last message it emitted, so the replay was ONE-TIME catch-up and
+the engine's cursor has **converged with my manual floor**. The next arm will not replay. Recorded
+rather than messaged: on its own this is a corroboration (Rule 31).
+
+## 4. Push state -- all four session commits ON ORIGIN
+
+Measured 13:00:42Z, `ls-remote` + `merge-base --is-ancestor` per commit against
+`origin/box/sitez` @`4f3a0a375d`: `b3fae41a04`, `5db9d4cbab`, `2a0a40bfe4`, `a6b12f92bd` -- all four
+ON ORIGIN. Addendum 2 was LOCAL when last reported; the integrator has since swept it.
+
+## Compiler Tools (addendum 3)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| read-only replication of `_read_pinned_token` | prove the fix + its safety property before the CTO acts | PASS -- 0/1 matched, and 0 of Andrew's 2 records reachable |
+| `grep -- --identity SKILL.md` at HEAD | the check I should have run at 07:45Z | PASS -- and it is the whole lesson of section 2 |
+| arm banner `cursor=` read | SUSPECT-REPLAY grading before serving anything | PASS -- caught a 4-day replay on its first exercise |
+| `merge-base --is-ancestor` x4 vs ls-remote | push state of every session commit | PASS -- 4 of 4 on origin, denominator stated |
+
+**What worked:** grading the emit by RECALL instead of by shape. The replay was textbook and the
+rule caught it cold on its first real exercise since the arm was repaired.
+
+**What failed:** section 2. Not a missing check -- a check on the wrong plane, which is the harder
+failure because it feels like rigour from the inside.

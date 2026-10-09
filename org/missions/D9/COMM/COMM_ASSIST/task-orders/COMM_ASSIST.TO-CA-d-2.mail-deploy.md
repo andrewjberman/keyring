@@ -42,7 +42,9 @@ any other `-var`. Our own `chat_assist_mail_bearer_secret_arn` is NEVER a `-var`
 `PHASE_A_READ.md`, report, and STOP.
 
 **PHASE B runs only when the issuer writes `PHASE B GO` on the line below.** It is written once NFRA_OPLGTW `TO-OG-ap-3` is
-complete with AC1 PASS (the secret exists and the gateway serves r29). Phase B is steps 1-9 below, re-reading step 4 at the act.
+complete with AC1 PASS (the secret exists and the gateway serves r29) AND (A4) NFRA_TRNSPT `TO-APPLY-s21` (the silver-only
+reader role and its key-policy line) is complete, so a `-target=module.ldo_001` plan's dependencies read NO change. Phase B is
+steps 1-9 below, re-reading step 4 at the act.
 The three halves are committed and BIND: COO `org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`,
 CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`, CVO
 `deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md` (all under `org/missions/D9/COMM/COMM_ASSIST/`).
@@ -151,6 +153,12 @@ lane: the <paths> block IS the grant (worker RULING 1).
   (`second_reader_trust_principal_arns`) is permitted at its LIVE value, read at the act; the readers dependencies must read no change;
   the Phase A preview is re-run; the row-id line follows the gate grammar. NFRA_TRNSPT a18 applied it at 09:55Z (role CreateDate). Branch A
   and the halves' blast radius are unchanged. Disarm row COMM_ASSIST-Z-S2. Graded by no gate limb as a modification (placeholders NONE).
+- A4 (issuer, 2026-10-09 ~13:1xZ, on PHASE_A_PLAN_2.txt, 13:09Z): the re-run reads `1 to add, 3 to change`. Two of the changes are
+  outside the module: `aws_iam_role.silver_reader` (create) and `aws_kms_key.transcripts` (policy update), NFRA_TRNSPT TR-r-21's
+  built-but-unapplied silver reader, pulled in as dependencies because module.ldo_001 takes the key's id and ARN. Branch A is
+  correctly not met. OG-ap-3 is complete (fab015fa54). PHASE B GO now also waits on NFRA_TRNSPT TO-APPLY-s21 (pending, laptop
+  0.7.0_AE_CloudOps~TRL). Carried to round 13: decouple module.ldo_001 from the key RESOURCE (read it by data source), so that no
+  other project's pending key change blocks a COMM deploy again. Graded by no gate limb (placeholders NONE).
 - The analysis's done-when also names the real mail run. That run is the issuer's at close, not this order's (an applier sends no
   test mail).
 

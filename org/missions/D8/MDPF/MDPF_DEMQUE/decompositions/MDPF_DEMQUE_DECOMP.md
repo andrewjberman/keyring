@@ -316,3 +316,21 @@ round-5 quotes are frozen beside their requests @70379bb41d.
 | DQ-t-21 | C-PRICES (ADDENDUM v0.5, R2) | the total-return column in the price store: `cash` and `total_return` (+ `tr_source`, `flags`) beside the unchanged `close_served` / `as_traded_close`; guard (a) a non-ex-date gap against Bloomberg's stored TR is flagged `missing_cash`; guard (b) a money-market fund's TR comes from Bloomberg or an accrual, never Yahoo's 0 | NEW `tr_column.py`, NEW `test_demque_tr_column.py`, NEW `money_market.csv`, `price_store.py`, `PRICE_STORE_CONTRACT.md` | `0.9.0_WK_MDPF_DEMQUE~18` | SERVED (prices.parquet gains columns at the next scheduled draw; existing columns byte-identical) |
 
 **Chains:** three, disjoint write sets, no data edge.
+
+
+---
+
+# ROUND 7 -- CUT (issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~13:3xZ)
+
+**Rectangle:** the CTO's round-6 analysis `ledger/ROUND_ANALYSIS.round6.md` @4f7ded8845 section 3 (msg 2479): R1 (a history backfill draws
+on non-trading days at the measured 5,858 a day; 0 on a trading day; a vendor limit warning stops it) and R2 (`--all` over every quote
+shape). Round 6 CLOSED @0c72210d2b. Carried, not cut: the total-return column's first served write and the lock floor, both at the
+2026-10-10 02:30Z draw (the issuer's real run).
+
+| cell | serves | what | write set | assignee | risk | depends |
+|---|---|---|---|---|---|---|
+| DQ-t-22 | FWD-4, FWD-3 (R1) | `bbg_quote.py`: a history request is quoted over NON-trading days (`lib/trading_calendar.py`) at the measured ceiling (5,858, claim `measured`, from the ledger's largest day); `allowance_today` is 0 on a trading day; `--today` on the CLI | `bbg_quote.py`, `ceiling_from_ledger.py`, `bbg_allowance.json`, NEW `test_demque_nontrading.py` | `0.9.0_WK_MDPF_DEMQUE~19` | LOCAL | none |
+| DQ-t-23 | FWD-4 (R2) | `quote_vs_actual.py --all` reads every quote file; an older shape with no finish_date reads `UNQUOTED` | `quote_vs_actual.py`, NEW `test_demque_qva_all.py` | `0.9.0_WK_MDPF_DEMQUE~20` (worker-light) | LOCAL | none |
+| DQ-t-24 | FWD-3, FWD-4 (R1) | the first non-trading-day backfill at site Z: the 15,720-cell TR-comparison request drawn on Saturday 2026-10-10 up to that day's quoted allowance (5,858), stopping on any vendor limit warning or refusal; actuals recorded (`bbg_budget`, `ledger/BBG_ACTUALS.jsonl`) and read against the quote | NEW `bbg_backfill.py`, NEW `test_demque_bbg_backfill.py`, `bbg_ledger_upload.py`, `ledger/BBG_ACTUALS.jsonl`, its deliverables | `0.7.0_AE_CloudOps~ZQ` (site Z) | WORLD (a Bloomberg draw under `1.0.0_SA_CTO~Z`'s half) | DQ-t-22 |
+
+**Chains:** two independent (t-22 -> t-24; t-23). Fan-out 2 of 2 chains.

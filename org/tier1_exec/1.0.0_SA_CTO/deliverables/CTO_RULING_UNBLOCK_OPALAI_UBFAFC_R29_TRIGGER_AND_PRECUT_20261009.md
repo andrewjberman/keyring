@@ -10,6 +10,11 @@
    - BOTH r29 ledger entries, `nfra-oplgtw-r29-commassist-secret-grant.json` AND `nfra-oplgtw-gateway-release-r29.json` (the CVO's sign
      @23f60a21df corrected this seat's single-ledger reading; OG-ap-3 AC2 grades both), are absent from `.open_deploys/` on EVERY live worktree, read with
      `git worktree list --porcelain` plus `ls-tree` per tree and the per-tree denominator printed (NEVER-2's union read).
+   **Amendment (13:1xZ):** a worktree's copy of the entry counts as OPEN only if that branch's OWN commits since its merge-base with
+   `box/sitez` touched the entry. A branch cut while the entry was open inherits a copy that nobody holds open. Measured at 13:1xZ: the r29
+   entry was closed on `box/sitez` at 12:46Z (@5f1400c4a2). It survived only on `wk-NFRA_OPALAI-25` and `wk-NFRA_OPLGTW-33-48`, both cut at
+   12:18-12:19Z with 0 own commits touching it, so the union read as first written could never fire. OG-ap-3 read `complete` (@fab015fa54,
+   AC1 and AC2 PASS). **The trigger reads TRUE as of 13:1xZ.**
    The COO writes this into `CLOSE_RUN_ARMS_20261009.md`. A session-local `until` loop on the order's last status tag, which ends when it
    fires, is allowed: it is a one-shot wake-up, not a monitor or an alarm.
 2. **The three post-pass spawns are pre-cut now.** Cut the worktrees for OA-t-1 r2, OA-t-3 r2 and OA-e-8 from HEAD and re-read each worker

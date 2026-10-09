@@ -2685,3 +2685,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Met for the two conflicted files. Not yet exercised: the Analyst's watcher arming live on the oid pin (the organic serve), which the post-r29 step-4 run and the cutover sitting will show."
 }
 ```
+
+## NFRA_OPALAI-Z-S70 -- r29 refuses any asker message older than 900s (asker_message_stale), so the folded close-run arms, driven from 2026-10-08 messages, cannot pass: both arms refused at 13:06Z-13:08Z with no data read.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S70",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T13:09Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "r29 refuses any asker message older than 900s (asker_message_stale), so the folded close-run arms, driven from 2026-10-08 messages, cannot pass: both arms refused at 13:06Z-13:08Z with no data read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal_asker_query(arm b, msg 1791494553407) at 13:06:43Z and (arm a, msg 1791494398066) at ~13:08Z: both {code: asker_message_stale, guard_denied: true, 'no data was read'}",
+      "git grep @91811b648a infra/aws/ec2/opal-gateway/app/asker_scope.py:68 '(h) the cited message is BOUND: older than ASKER_MESSAGE_MAX_AGE_SECONDS (default 900) ... -> asker_message_stale'; :189-193 default 900, env override",
+      "registered messages: 1791494398066 created 2026-10-08T21:19:58Z, 1791494553407 created 2026-10-08T21:22:33Z (read_chat_messages)"
+    ]
+  },
+  "spec_asserts": "CTO ruling CTO_RULING_UNBLOCK_OPALAI_CLOSE_RUN_DELIBERATE_ARMS_20261009 (UB-1afa), CVO-signed: both arms are driven deliberately from messages that already exist, at the first read after r29 serves.",
+  "world_is": "r29 added a replay bound that the fold did not account for; it binds both arms equally and fires before asker resolution. The arms need a message under 15 minutes old from each sender: Alyssa (admitted) and an un-admitted Opal user (Andrew). Widening ASKER_MESSAGE_MAX_AGE_SECONDS on the live gateway would widen a live control and is not this seat's act. Disarm owner is the fold's author: re-fold the arms' input."
+}
+```
