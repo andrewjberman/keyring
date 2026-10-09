@@ -155,6 +155,9 @@ Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_000xZ_K
    third nothing has opened up, read `THIRD-EMPTY-TICK`: the COO writes its position, the endpoint and why it is blocked to
    the CRO (`/unblock`). The CRO finds a new approach, the CTO folds it into the workflow, the CVO signs it off, and the COO
    resumes on it (`RESUME`). Idling with nothing written to the CRO is not an end state.
+   **A dependency with a live owner and a time is a WAIT: record it, do not count it** (1.0.0_SA_CTO @ba20ac668b, item 4):
+   tick with `--wait-until <UTC> --owner <serial | schedule:<name>>` (a dated event), `--owed-ledger` (another seat's
+   deploy in its window) or `--owed-call` (a held call). It reads `WAITING ...` with the count at 0, and never opens a case.
 
 ## Step 3 -- Aftercare
 
