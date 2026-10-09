@@ -685,3 +685,21 @@ The compounded basis carries an unexplained regression (181 within -> outside) a
 | `DB-b-59` | E3: the 370 FLOW_TIMING graded at flow-start and flow-end, the swing per segment, nothing adopted | LOCAL | DB-b-53 re-cut (merged) | B31-3 |
 
 fanout: 3 of 3 chains, cap 8, reason: three disjoint populations over the same landed records; each writes only its own folder (a fix is a new module there). Workers 0.9.0_WK_IRPT_DASHBD~35, ~36, ~37, one worktree each, cut from box/dell2.
+
+## 34. ROUND 32, WORKSTREAM BD (2026-10-09 ~01:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's rounds 30-31 analysis @fe8e06016b, msg 2007, on ADJUDICATION_v16)
+
+Rounds 30 and 31 are closed and compiled together. Within 0.35 pp: round 18 additive 5,416; round 30 compounded 7,459; round 31 daily-mean
+fee base 8,088 (reached twice, independently). The CTO's rulings:
+- `tieout_compound_v2.py` is the reader of record;
+- the tie-out reader adopts flow-START (served values unchanged).
+
+ISSUER RULING: the tie-out code path is `org/missions/D9/IRPT/IRPT_DASHBD/tieout/`. It is project-owned, never served, and outside every
+deploy lane.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-60` | E1: the reader of record at `tieout/tieout_reader.py`; the fee-base writer census = 1 (~35's v2 and ~36's classifier import it); re-grade 8,088 held | LOCAL | DB-b-57, DB-b-58 (merged) | B32-1 |
+| `DB-b-61` | E2: FLOW_CONVENTION = "start" in the reader; full re-grade; every IN->OUT named | LOCAL | DB-b-60 (it edits DB-b-60's reader) | B32-1 |
+| `DB-b-62` | E3: LARGE_FLOW_DAY 170 traced by sub-class, each fixed or named | LOCAL | DB-b-58 (merged) | B32-2 |
+
+fanout: 2 of 2 chains, cap 8, reason: E2 edits the reader E1 creates (one chain, one worker in order); E3 reads round 31's records only. Workers 0.9.0_WK_IRPT_DASHBD~38 (DB-b-60 then DB-b-61) and ~39, cut from box/dell2.
