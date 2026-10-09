@@ -952,6 +952,51 @@ def _():
     return ok, "%s %s %s" % (field(out0, "open_call"), field(out1, "open_call"), field(out2, "open_call"))
 
 
+def open_deploy_race(listing_after, tree_exists, fail_reread=False):
+    """Drive measure_open_deploy with a stub git: the list names a ghost worktree, its ls-tree fails (rc=128)."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("cbdc_race", str(REPO / ".tools" / "crossbox-deploy-check.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    ghost = str(TMP / "ghost-worktree-race")
+    if tree_exists:
+        os.makedirs(ghost, exist_ok=True)
+    calls = {"list": 0}
+
+    def fake(repo_root, *args):
+        if args[:2] == ("worktree", "list"):
+            calls["list"] += 1
+            if calls["list"] == 1:
+                return 0, "worktree %s\n" % ghost
+            if fail_reread:
+                return 128, ""
+            return 0, ("worktree %s\n" % ghost) if listing_after else "worktree other\n"
+        return 128, ""
+    mod.git_lines = fake
+    hits, lines = mod.measure_open_deploy(".", "infra/aws/terraform/opal-assets", "")
+    return hits, "\n".join(lines)
+
+
+@case("OPEN-DEPLOY race: a worktree removed between the list and the ls-tree reads VANISHED, is not a hit, and is counted")
+def _():
+    hits, text = open_deploy_race(listing_after=False, tree_exists=False)
+    return not hits and "VANISHED during the read" in text and "vanished=1" in text, text[-160:]
+
+
+@case("OPEN-DEPLOY race: a worktree listed but unreadable (still listed, or its path still exists) is still a hit")
+def _():
+    h1, t1 = open_deploy_race(listing_after=True, tree_exists=False)
+    h2, t2 = open_deploy_race(listing_after=False, tree_exists=True)
+    ok = len(h1) == 1 and len(h2) == 1 and "not readable, not clear" in h1[0] and "vanished=0" in t1 and "vanished=0" in t2
+    return ok, "%d %d" % (len(h1), len(h2))
+
+
+@case("OPEN-DEPLOY race: a failed re-read of the worktree list is a hit")
+def _():
+    hits, text = open_deploy_race(listing_after=False, tree_exists=False, fail_reread=True)
+    return len(hits) == 1 and "re-read of the worktree list failed" in hits[0], text[-160:]
+
+
 # ------------------------------------------------------------------------- ITEM 5: the dry pass over real invocations
 def dry_fixture():
     fx = fresh("LAPTOP")
@@ -1057,12 +1102,35 @@ def block_span(text):
     return start, end
 
 
+OURS = ("5f6eaecb34", "b5e448d54a")  # this cell's own commits to the wrappers; any other commit's lines are foreign (another cell's edit)
+
+
+def foreign_only(name, diff_out, blk_s, blk_e):
+    """(hunks, removed) of DIFF_OUT that are this cell's: a hunk outside the block whose lines blame to a commit that is not
+    ours is another cell's legitimate edit to the wrapper and is not counted."""
+    spans = hunk_ranges(diff_out)
+    kept = []
+    for a, b, c, d in spans:
+        if blk_s - 1 <= c and c + max(d, 1) - 1 <= blk_e:
+            kept.append((a, b, c, d))
+            continue
+        if d == 0:
+            kept.append((a, b, c, d))
+            continue
+        rc, bl = git(REPO, "blame", "--porcelain", "-L", "%d,%d" % (c, c + d - 1), "--", ".tools/" + name)
+        shas = {ln.split()[0] for ln in bl.splitlines() if re.match(r"^[0-9a-f]{40} \d+ \d+", ln)}
+        if rc != 0 or any(sh.startswith(OURS) for sh in shas):
+            kept.append((a, b, c, d))
+    return kept
+
+
 def diff_case(name):
     @case("%s differs from the pre-block wrapper by ONE added hunk, no removed line, and bash -n is clean" % name)
     def _():
         rc, out = git(REPO, "diff", "-U0", PIN, "--", ".tools/" + name)
-        hunks = [ln for ln in out.splitlines() if ln.startswith("@@")]
-        removed = [ln for ln in out.splitlines() if ln.startswith("-") and not ln.startswith("---")]
+        bs, be = block_span((REPO / ".tools" / name).read_text("utf-8"))
+        hunks = foreign_only(name, out, bs, be)
+        removed = [ln for ln in out.splitlines() if ln.startswith("-") and not ln.startswith("---")] if len(hunks) == len(hunk_ranges(out)) else []
         syntax = run(git_bash_resolver.bash_argv("-n", str(REPO / ".tools" / name)))
         return rc == 0 and len(hunks) == 1 and not removed and syntax[0] == 0, \
             "hunks=%d removed=%d bash -n rc=%s" % (len(hunks), len(removed), syntax[0])
@@ -1073,8 +1141,8 @@ def diff_case(name):
         rc_o, old_text = git(REPO, "show", "%s:.tools/%s" % (FIRST_PASS, name))
         old_s, old_e = block_span(old_text)
         new_s, new_e = block_span((REPO / ".tools" / name).read_text("utf-8"))
-        spans = hunk_ranges(out)
-        removed = [ln for ln in out.splitlines() if ln.startswith("-") and not ln.startswith("---")]
+        spans = foreign_only(name, out, new_s, new_e)
+        removed = [ln for ln in out.splitlines() if ln.startswith("-") and not ln.startswith("---")] if len(spans) == len(hunk_ranges(out)) else []
         inside = all(old_s - 1 <= a and a + max(b, 1) - 1 <= old_e and new_s - 1 <= c and c + max(d, 1) - 1 <= new_e for a, b, c, d in spans)
         return rc == 0 and rc_o == 0 and spans and inside, "hunks=%d removed=%d old block %d-%d new block %d-%d" % (
             len(spans), len(removed), old_s, old_e, new_s, new_e)
