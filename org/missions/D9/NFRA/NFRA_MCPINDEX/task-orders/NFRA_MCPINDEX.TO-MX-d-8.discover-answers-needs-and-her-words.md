@@ -117,7 +117,7 @@ ac135370d2 (`round8/checks/`):
 - d8.AC1 FAIL as expected: present 0 of 9, routed 0 of 9; the original 27 at 24, so the floor held.
 - d8.AC2 FAIL as expected: named tests passed 0 of 3.
 
-<status>issued</status>
+<status>complete</status>
 <round>8</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

@@ -21,11 +21,11 @@ Graduated at round 36's L8 (ADJUDICATION_v21.md), round label v37: 7 rows, OPEN.
     "owner": "2.0.0_SA_COO~D2",
     "round": "v37",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D2",
       "round": "v37"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-D2-W47-S4",
@@ -42,11 +42,11 @@ Graduated at round 36's L8 (ADJUDICATION_v21.md), round label v37: 7 rows, OPEN.
     "owner": "2.0.0_SA_COO~D2",
     "round": "v37",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D2",
       "round": "v37"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-W48-S1",
@@ -105,11 +105,11 @@ Graduated at round 36's L8 (ADJUDICATION_v21.md), round label v37: 7 rows, OPEN.
     "owner": "2.0.0_SA_COO~D2",
     "round": "v37",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D2",
       "round": "v37"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-W49-S2",
@@ -126,11 +126,11 @@ Graduated at round 36's L8 (ADJUDICATION_v21.md), round label v37: 7 rows, OPEN.
     "owner": "2.0.0_SA_COO~D2",
     "round": "v37",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~D2",
       "round": "v37"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-W49-S3",

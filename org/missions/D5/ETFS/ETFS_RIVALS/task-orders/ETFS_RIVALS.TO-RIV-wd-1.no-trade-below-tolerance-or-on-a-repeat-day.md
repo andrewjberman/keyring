@@ -130,7 +130,8 @@ FAIL as expected.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 by 2.0.0_SA_COO~V1: merged 67f42b7329; AC1 PASS 4 of 4 (worker ~26 proof VALID); J1 owed (CVO) after the issuer reads CGIC G1 source_report_date and G2 coverage for 10-01..10-06; row D1-W26-S1 ARMED: publish_page/ai_accounts below_tolerance skips are the issuer hookups -->
 <round>28</round>
 <workstream>3</workstream>
 <slot>~26</slot>

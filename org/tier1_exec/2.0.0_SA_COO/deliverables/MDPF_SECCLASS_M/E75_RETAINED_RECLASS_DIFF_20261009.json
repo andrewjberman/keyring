@@ -1,0 +1,2162 @@
+{
+ "gold/entities/clients/z08119861.json": [
+  [
+   "2026-10-04",
+   "KAGIX",
+   "KENSINGTON DYNAMIC ALLOCATION INST",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "KAGIX",
+   "KENSINGTON DYNAMIC ALLOCATION INST",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "KAGIX",
+   "KENSINGTON DYNAMIC ALLOCATION INST",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08124280.json": [
+  [
+   "2026-10-04",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08125071.json": [
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD TARGET RETIREMENT 2030 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD TARGET RETIREMENT 2030 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD TARGET RETIREMENT 2030 FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08219275.json": [
+  [
+   "2026-10-04",
+   "SCGB1",
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "SCGB1",
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08250779.json": [
+  [
+   "2026-10-04",
+   "FBALX",
+   "FIDELITY BALANCED",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "FBALX",
+   "FIDELITY BALANCED",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "FBALX",
+   "FIDELITY BALANCED",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08294888.json": [
+  [
+   "2026-10-04",
+   "FKIQX",
+   "FRANKLIN INCOME A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "MDLOX",
+   "BLACKROCK GLOBAL ALLOCATION INV A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "FKIQX",
+   "FRANKLIN INCOME A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "MDLOX",
+   "BLACKROCK GLOBAL ALLOCATION INV A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "FKIQX",
+   "FRANKLIN INCOME A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "MDLOX",
+   "BLACKROCK GLOBAL ALLOCATION INV A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08296293.json": [
+  [
+   "2026-10-04",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08296368.json": [
+  [
+   "2024-08-02",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-14",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-06",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-19",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-26",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-04",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-03",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-02",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-08",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-23",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-22",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-04",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-29",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-14",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-03",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-26",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-16",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-15",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-20",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-30",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-10",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-23",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-13",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-08",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-25",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-19",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-06",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-16",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-07",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-30",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-20",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-21",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-28",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-27",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-12",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-12",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-18",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-27",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-24",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-20",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-01",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-22",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-17",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-08",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-31",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-26",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-17",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-22",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-21",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-11",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-19",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-16",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-13",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-08",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-14",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-03",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-15",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-30",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-01",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-25",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-05",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-04",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-01",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-18",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-29",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-10",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-09",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-28",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-02",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-27",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-02",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-01",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-12",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-06",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-13",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-17",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-24",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-12",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-28",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-30",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-03",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-20",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-17",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-22",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-25",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-11",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-07",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-09",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-19",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-03",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-14",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-29",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-10",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-21",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-04",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-05",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-10",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-01",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-13",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-25",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-19",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-23",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-24",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-21",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-17",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-16",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-16",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-07",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-05",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-10",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-27",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-15",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-23",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-12",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-18",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-07",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-09",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-10",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-07",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-14",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-02",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-06",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-05",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-11",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-25",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-28",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-31",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-21",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-24",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-11",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-30",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-18",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-31",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-22",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-28",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-09",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-06",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-12",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-05",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-29",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-20",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-08",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-27",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-09",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-23",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-15",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-26",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-04",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-26",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-11",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-07-18",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-10-13",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-08-29",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-15",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-11-24",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-09-11",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ],
+  [
+   "2024-12-09",
+   "PDBC",
+   "INVESCO OPTIMUM YIELD DIVERSIFIED COMMODITY STRATEGY NO K-1 ETF",
+   "other",
+   "commodities"
+  ]
+ ],
+ "gold/entities/clients/z08306218.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08319161.json": [
+  [
+   "2026-10-04",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08320620.json": [
+  [
+   "2026-10-04",
+   "AAETX",
+   "AMERICAN FUNDS 2030 TRGT DATE RETIRE A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "AAETX",
+   "AMERICAN FUNDS 2030 TRGT DATE RETIRE A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "AAETX",
+   "AMERICAN FUNDS 2030 TRGT DATE RETIRE A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08320621.json": [
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD TARGET RETIREMENT 2035 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED 529A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD TARGET RETIREMENT 2035 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED 529A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD TARGET RETIREMENT 2035 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED 529A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08325329.json": [
+  [
+   "2026-10-04",
+   "SCGB1",
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "SCGB1",
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "SCGB1",
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08326151.json": [
+  [
+   "2026-10-04",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08326911.json": [
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08331413.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08348207.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08361603.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "AMECX",
+   "AMERICAN FUNDS INCOME FUND OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08367003.json": [
+  [
+   "2026-10-04",
+   null,
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "BALANCED FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08367108.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08370165.json": [
+  [
+   "2026-10-04",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08370405.json": [
+  [
+   "2026-10-04",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   "ABALX",
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08391340.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08396078.json": [
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08397108.json": [
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD WELLINGTON ADMIRAL",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08397885.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08398262.json": [
+  [
+   "2026-10-04",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "FIRST EAGLE GLOBAL I",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z08399935.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08400054.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS INCOME FD OF AMER A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z08400735.json": [
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS AMERICAN BALANCED A",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z0880128.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "CAIBX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR A",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z0880237.json": [
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z0880407.json": [
+  [
+   "2026-10-04",
+   null,
+   "FIDELITY FREEDOM INDEX 2055 PREMIER",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-04",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "FIDELITY FREEDOM INDEX 2055 PREMIER",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "FIDELITY FREEDOM INDEX 2055 PREMIER",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "VANGUARD TARGET RETIREMENT 2045 FUND",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z0884828.json": [
+  [
+   "2026-10-04",
+   null,
+   "IMPAX SUSTAINABLE ALLOCATION INSTL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "IMPAX SUSTAINABLE ALLOCATION INSTL",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "IMPAX SUSTAINABLE ALLOCATION INSTL",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z0884841.json": [
+  [
+   "2026-10-04",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR F-3",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-04",
+   "CFIHX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR F3",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR F-3",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-05",
+   "CFIHX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR F3",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "AMERICAN FUNDS CAPITAL INC BLDR F-3",
+   "multi_asset",
+   "fixed_income"
+  ],
+  [
+   "2026-10-03",
+   "CFIHX",
+   "AMERICAN FUNDS CAPITAL INCOME BLDR F3",
+   "multi_asset",
+   "fixed_income"
+  ]
+ ],
+ "gold/entities/clients/z0884950.json": [
+  [
+   "2026-10-04",
+   null,
+   "Vanguard Target Retirement 2030 Trust",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "Vanguard Target Retirement 2030 Trust",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "Vanguard Target Retirement 2030 Trust",
+   "multi_asset",
+   "equity"
+  ]
+ ],
+ "gold/entities/clients/z0893313.json": [
+  [
+   "2026-10-04",
+   null,
+   "KENSINGTON DYNAMIC ALLOCATION INST",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-05",
+   null,
+   "KENSINGTON DYNAMIC ALLOCATION INST",
+   "multi_asset",
+   "equity"
+  ],
+  [
+   "2026-10-03",
+   null,
+   "KENSINGTON DYNAMIC ALLOCATION INST",
+   "multi_asset",
+   "equity"
+  ]
+ ]
+}

@@ -22670,3 +22670,206 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Found off-task, immediately after ee-6's own close, and filed rather than chased -- nothing was edited. ee-6 itself is genuinely complete regardless of how this is ruled: terminal <status> complete at 0e2bbc65ab, proof-of-spec instance VALID rc=0, ledger amgt-resapp-r81-ee6-scoped-api-dell1 CLOSED 9 of 9 @ee05683b1c, AC1 R81 DEPLOYED YES 2 of 2 and AC2 R80/R79 YES. Cost of the measurement: one scripted read, no live calls. Routed to the issuer rather than to the tool's owner because the convention side of the disagreement is the project's, and a one-line fix to to-check.py without that ruling would silently re-classify 331 orders across several projects at once."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W321-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~321",
+  "surfaced_at": "2026-10-09T06:23Z",
+  "one_line": "AMGT-ee-4 stopped at ASML NA step 2: the merged cutter (opal-filings-fetch/2.0.0) cut NO item (business, risk or mdna) from ASML's live 20-F, so the fetch returned UNRESOLVED-SOURCE and wrote a state marker instead of a silver part; AC1/AC2/AC3 read NO and the other four names were not touched (condition 3).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation (py 3.12.10, anthropic 0.84.0, tree wk-AMGT_RESAPP-321 @a3cf190f46): `py -3.12 -m lib.research.filings.fetch --security-key ASML_NA_Equity --form 20-F --cik 937966 --write-pool --cache-dir .scratch/r81cache` at 2026-10-09T06:20:43Z, rc=0, printed 'UNRESOLVED-SOURCE: ASML_NA_Equity -- the 20-F primary document asml-20251231.htm parsed to 1374962 chars but no named item (business, risk, mdna) could be cut from it'.",
+      "Per-item reasons printed: business: 'item4[.,:;-]*b[.,:;-]*businessoverview' 0 raw matches, 'b[.,:;-]*businessoverview' 1 raw match which is a contents line (0 qualified); risk: 'item3...d...riskfactors' 0 raw, 'd...riskfactors' 2 raw, 1 not at line start and 1 contents line (0 qualified); mdna: 'item5...operatingandfinancialreview' 0 raw, 'operatingandfinancialreviewandprospects' 1 raw, a contents line (0 qualified).",
+      "The send output: 'OK: uploaded s3://opal-data-harvest/amgt/harvest/state/filing_attempt/security_key=ASML_NA_Equity/UNRESOLVED-SOURCE.json ContentLength=2338'. list_object_versions on that prefix reads ONE version, XCTQo1uW9rvomS3k12_BqMRLq4EFm81B (2026-10-09T06:20:48Z), IsLatest True: the key is NEW, so it has no prior VersionId to copy back and rolling it back would be a delete, which the order bars.",
+      "Re-read after the stop: silver sec filing_source still holds ONE part (date=2026-09-22/part-20260922T033157Z.parquet); ASML analysis key head VersionId WIU.oSeIh8NKMhy2DfqsJmRwGOusYTxs and drafting key head VersionId FWeloN5.zr6pvN1NWUXScK5RakjwF1qV, both equal to the pre-act record. No model call was made.",
+      "Criteria at the stop: AC1 'R81 STORE AC1 SERVED: NO' exit=1 (S1-S3 FAIL); AC2 'R81 STORE AC2 SERVED: NO' exit=1 (T1 PASS, T2 FAIL refusal sentence x2, T3 FAIL 0 Item 4.B locations); AC3 'R81 EE4 CENSUS: NO' exit=1 (E1 PASS, E2-E4 FAIL, all five still at parser 1.0.0)."
+    ]
+  },
+  "spec_asserts": "AMGT-ee-4 order section 1 and the COO half's EXPECTED OUTCOME: the merged cutter 'cuts a business section from its own heading'; the two branches named are 'heading present: business text is served' and 'heading absent: business FAILED with its reason in the stored source, risk/mdna as today's patterns cut them'. The COO half's blast radius is three keys per name and 'NO other key'.",
+  "world_is": "A third outcome, which neither branch names: on ASML's 2025 20-F all three items fail to cut, so build_source_object returns UNRESOLVED-SOURCE (no silver row is built at all) and fetch.persist routes that object to STATE (amgt/harvest/state/filing_attempt/...), a fourth key outside the pair's blast radius. That key is write-once and was empty before; it is served only when a name's drafting status is ABSENT (scoped_amgt.py read_thesis_bundle), and ASML's drafting is SERVED, so the live page is unchanged (AC2 T1 200, refusal sentence still x2). I did not delete it (R2). The silver, analysis and drafting keys were not written, so there is nothing to roll back for ASML NA; the BABA, NU, PBR and SAP names were not fetched. The cut for ASML needs a pattern that reads this filing's own headings (the business item's only match is a contents line), which is a producer change outside this order's paths.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Change-management entry amgt-resapp-r81-ee4-store-half-dell1: legs closed with the STOPPED proof, no leg claims a rewrite. Open for the issuer: whether the new ASML UNRESOLVED-SOURCE.json state key is acceptable to leave in place (it makes a future CHANGED outcome for ASML write a held marker, and would surface its reason if ASML's drafting ever went ABSENT), and whether the BABA, NU, PBR and SAP cuts should be dry-run (build_source_object without --write-pool) before any further write, since the same cutter would now be applied to them. I made no dry run: the order's act is the write."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W327-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~327",
+  "surfaced_at": "2026-10-09T07:20:41Z",
+  "one_line": "AMGT-gg-5 AC1 cannot read YES on the worker's commit: the order forbids editing scoped_amgt.py, and the route serves price_series only once the issuer's one wiring line passes the loader",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order's AC1 invocation runs the in-process handler (scoped_amgt.handler) on the tree. scoped_amgt.py:6728 calls timeline_api.get_timeline without price_loader; the order (section 1 item 4) reserves that line for the issuer at the merge, so the worker commit serves no price_series and AC1 prints 'FAIL T2 price_series: None', 'FAIL T3 ... source named: ''', 'R82 TIMELINE AC1 SERVED: NO', exit=1.",
+      "Control that the reader and route do the work: the same check re-run in a scratch wrapper (.scratch/wired.py, not committed) that binds price_loader=lib.research.price.price_history.timeline_price_loader onto timeline_api.get_timeline, against the live stored objects (read only) printed 'PASS T2 price_series: 192 points, 2026-01-02 .. 2026-10-07', 'PASS T3 prices inside 2026-01-01..2026-10-08 and source named', 'R82 TIMELINE AC1 SERVED: YES', exit=0.",
+      "The reader's own tests (lib/research/price/tests/test_price_history.py, 14 plants incl. the route with and without a loader) pass; the price folder is 56 passed."
+    ]
+  },
+  "spec_asserts": "The order's AC1 expects 'R82 TIMELINE AC1 SERVED: YES; and exit=0' from the worker's commit, while its section 1 item 4 forbids the worker to edit scoped_amgt.py, the only place the loader is passed.",
+  "world_is": "Two clauses of one order cannot both hold at the worker's HEAD: AC1 reads NO and exits 1 until the issuer adds the wiring line at the merge; it reads YES the moment the line is in (measured through a scratch wrapper doing exactly that).",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Wiring line for the issuer: in scoped_amgt.py _serve_timeline_body, the get_timeline call (~:6728-6735) gains `price_loader=__import__('lib.research.price.price_history', fromlist=['x']).timeline_price_loader,` after `word_cloud_builder=_word_cloud_block,` -- or the same via a normal `from lib.research.price import price_history` in the function and `price_loader=price_history.timeline_price_loader`. No IAM change (bloomberg/harvest/bronze/* already read). A raising loader turns the whole timeline into the route's error envelope, as the word-cloud builder does; AC1 should be re-run at the merge."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W323-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~323",
+  "surfaced_at": "2026-10-09T07:28:00Z",
+  "one_line": "AMGT-gg-1: PBR's extracted text has no body heading for its top-level sections 'Our Business' or 'Operating and Financial Review and Prospects', so the cross-reference mode cuts PBR business from 'About us' (11,085 chars) and mdna from the sub-heading 'Liquidity and Capital Resources' (19,885 chars), not the whole sections; AC1 reads 15 of 15.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "GROUP_CUT_NOTES.md section 1 row PBR: 'body headings Risk Factors (209708, whole line), Our Business'; the order's rule 3: map each item (4.B, 3.D, 5) to the report section the cross-reference table names and 'cut that section from the body by its own heading'.",
+  "world_is": "Measured on the cached PBR text (.scratch/r82_20f/PBR_US_Equity.txt, 1,329,563 chars): the whole-line pattern '^Our Business$' matches only the contents entry (157983) and the whole-line 'Operating and Financial Review and Prospects' matches only the contents entry (158400) and the cross-reference table (868191 onward). The report's top-level page banners are absent from the extracted text; the body prints only sub-headings ('Exploration & Production' 319061, 'Consolidated Financial Performance' 549928, 'Liquidity and Capital Resources' 568965). The table names for 4.B 'About Us (Overview)' first and for 5 'Operating and Financial Review and Prospects' then '(Liquidity and Capital Resources)', so the cutter takes the first named section with a usable body heading: business = 'About us' to the start of 3.D 'Risk Factors' (p24-30, 11,085 chars, not 'Our Business' p63-141), mdna = 'Liquidity and Capital Resources' to the next table-named heading (19,885 chars; 'Consolidated Financial Performance' p171-179 is not in the cut). The same 'first named section' rule gives ASML mdna = 'Financial performance KPIs' p54 up to the 'Risk factors' heading p66 (31,578 chars, which includes the risk-management framework pages p61-65) and ASML business = 'Our market place' p22 up to p54 (91,976 chars full, capped 60,000). The check reads these as OK because it grades status, length >= 1500 and a non-empty heading, not that the cut is the whole section.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation: PYTHONPATH=$(pwd) python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round82_prep/checks/r82_cut.py --crit AC1 (tree wk-AMGT_RESAPP-323): PBR_US_Equity business=OK(11085) risk=OK(94490) mdna=OK(19885); ASML_NA_Equity business=OK(91976) risk=OK(53968) mdna=OK(31578).",
+      "Whole-line census on the cached PBR text, python re over '(?mi)^\\s*our business\\s*$' -> [(157983)]; '(?mi)^\\s*operating and financial review.*$' -> [158400, 868191, 868257, 868341, 868702] (the last four inside the cross-reference table that starts at 866987); the body text before each section reads 'Annual Report and Form 20-F 2025 I 169 / Annual Report and Form 20-F 2025 I 170 / Consolidated Financial Performance' with no banner line between.",
+      "Code: lib/research/filings/document.py _cut_xref (this worktree, branch wk-AMGT_RESAPP-323): the start is the FIRST name in the table entry with a usable body heading and the end is the next usable body heading the table names for another entry."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Left for the issuer: whether the store half (the next order that re-cuts and re-analyses the five names) accepts a PBR mdna that is the liquidity sub-section only and a PBR business that is the company overview, or whether the cross-reference mode should also read the page numbers the table gives (PBR 'Operating and Financial Review and Prospects 170', 'Our Business 63') and start at the page marker line 'Annual Report and Form 20-F 2025 I <page>'. I did not build the page-marker reader: the order names heading-based cutting, and the page marker line's text differs by filer. The standard heading cut is unchanged for BABA, NU and SAP's existing cells."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W324-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~324",
+  "surfaced_at": "2026-10-09T08:30:54Z",
+  "one_line": "AMGT-gg-2 ASML gate read NO (AC1 S3 FAIL, AC2 T3 FAIL) on the freshly re-cut and re-analyzed ASML NA; the act stopped after ASML and ASML was rolled back; BABA, NU and SAP were not touched.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The order's AC1 expects 'R81 STORE AC1 SERVED: YES' and AC2 'R81 STORE AC2 SERVED: YES' on ASML NA after the re-cut; condition 3 of the pair: a NO stops the act after ASML's rollback decision is recorded.",
+  "world_is": "After fetch (silver part-20261009T082333Z, parser opal-filings-fetch/2.0.0, items Item 4.B/3.D/5, excerpt 145,654 chars) and analyze (analysis X5YQ7V_Eku50nY_y3s_2ZpT8INyFVlvp, drafting MZN0U0Q6mmbB03t.sH.BQFwxIIr4148H; 2 model calls, 31,929 in / 12,222 out tokens, USD 0.4652): AC1 PASS S1, PASS S2, FAIL S3, exit 1. AC2 (deployed) PASS T1 (200), PASS T2 (refusal sentence x0), FAIL T3 (0 of 11 served locations start with Item 4.B; all are ITEM 5 or ITEM 3.D), exit 1. The new draft served 5 sentences (company_description 1, risks 1, recommendation 3; investment_thesis 0, ceo_bio 0) with 14 dropped by the verbatim gate, including company_description and investment_thesis drops on the passages P0096-P0098 (the thesis_driver source passage). Rollback done in the same act (no delete): analysis and drafting prior VersionIds re-written as newest (j8Na7vbstyVwylNkvcd.6qlvoITHieEF, iaClXu9ZJUkDAuxNqZleFTdx9ZVGio2R, bytes equal the prior versions) and silver part-20261009T082927Z carrying the prior row (parser 1.0.0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation: PYTHONPATH=$(pwd) py -3.12 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round81_prep/checks/r81_store.py --crit AC1 (and --crit AC2 --where deployed) at 2026-10-09T08:27Z in C:/tmp/r82-324: outputs as in world_is.",
+      "Four-prefix before/after diffs: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~324/diff_ASML_NA_Equity.txt and diff_ASML_NA_Equity_after_rollback.txt: no key outside the four prefixes.",
+      "Ledger entry org/critical_paths/change_management/20261009T0822Z_amgt-resapp-r82-gg2-store-half-dell1_deploy_completion.md leg L1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "T3 is the substantive failure: the cutter now delivers the business text (excerpt item Item 4.B, 60,000 chars kept of 91,976) but no served passage from it survives the analysis's verbatim gate into the served locations. S3 is a separate check defect (row S2). Left for the issuer: whether the next try changes the analysis/draft side or the served-location rule; no further name was fetched or analyzed."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W324-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~324",
+  "surfaced_at": "2026-10-09T08:30:54Z",
+  "one_line": "r81_store.py AC1 S3 finds the heading label case-sensitively, but the stored excerpt carries the heading as 'ITEM 4.B. BUSINESS OVERVIEW', so S3 reads FAIL on a section that does open on its own heading.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "r81_store.py docstring: S3 'the excerpt text, within 400 characters after that label, reads business overview (the heading itself)'; LABEL = 'Item 4.B. Business Overview'; the check does text.find(LABEL).",
+  "world_is": "The fresh ASML source's excerpt text begins 'ITEM 4.B. BUSINESS OVERVIEW\nOur market place...'; text.find('Item 4.B. Business Overview') returns -1, the window is empty, S3 FAILs. A case-insensitive find would put the heading at offset 0 and the window would read 'business overview'. S2 (items list) passes because items holds the title-case label.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured on C:/tmp/r82-324/.scratch/fresh/ASML_NA_Equity.source.json (the object persisted as silver part-20261009T082333Z): excerpt.text[:30] = 'ITEM 4.B. BUSINESS OVERVIEW' and find(LABEL) = -1.",
+      "Code: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round81_prep/checks/r81_store.py lines 49-53."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W324-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~324",
+  "surfaced_at": "2026-10-09T08:30:54Z",
+  "one_line": "'comp-secrets get anthropic-api-key --reveal' (without --value-only) printed the model key's cleartext into the worker's tool output when its descriptor block was exported whole; no request reached the vendor with it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's step 3 says export ANTHROPIC_API_KEY from 'comp-secrets get anthropic-api-key --reveal' in the same call; analyze.py's BLOCKED text gives a grep '^value:' | sed form.",
+  "world_is": "The --reveal output is a multi-line descriptor block (name, firm, arn, value); exported whole it made httpx raise LocalProtocolError, whose message echoed the block including the cleartext value into the log and the worker's transcript. The log was redacted in place (.scratch, untracked); the retry used --reveal --value-only and ran clean. The ASML analysis made 0 model calls on the failed attempt (error before the request was sent).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Failed attempt: .scratch/analyze_ASML.log (redacted) in C:/tmp/r82-324 ended 'httpx.LocalProtocolError: Illegal header value' at analyze.py:341; retry .scratch/analyze_ASML2.log rc=0.",
+      "Spec: the order's step 3 text (worker face of ee-4) names --reveal only; comp-secrets get --help documents --value-only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The key value sits in this worker's transcript only (no committed file, no S3). Rotation, if wanted, is the issuer's call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S10",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T08:41:49Z",
+  "one_line": "DISARM of AMGT_RESAPP-D1-W323-S1 (ARMED): PBR's wrong-scope business and MD&A cuts were never written, so nothing wrong can be served; the remedy is carried to round 83.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W323-S1 is ARMED: the repaired cutter would write PBR_US_Equity's business from 'About us' and its MD&A from a liquidity sub-heading if gg-2 re-cut PBR.",
+  "world_is": "gg-2 AMENDMENT 1 (@8d0bf2eed2) held PBR, and the gg-2 act (report merged @f00cb74f1d) made no fetch and no write for PBR -- one read-only listing only. The hazard cannot reach a served key. The correct PBR cut is carried as round82/CARRIED_TO_ROUND83.md item 2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/AMGT_RESAPP.TO-AMGT-gg-2.the-store-half-with-the-repaired-cutter.md AMENDMENT 1 status line",
+      "gg-2 worker report (merged @f00cb74f1d): PBR held; its prefixes listed read-only at the close"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms AMGT_RESAPP-D1-W323-S1 by a new item, as the row gate requires for an investigation row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S11",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T08:41:49Z",
+  "one_line": "DISARM of AMGT_RESAPP-D1-W324-S1 (ARMED): ASML NA was rolled back byte-equal and no other name was touched, so nothing served moved; gg-2 and gg-3 are cancelled for round 82 and the T3 defect is carried to round 83.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W324-S1 is ARMED: the ASML gate read NO (AC1 S3, AC2 T3) on a freshly written ASML analysis and draft.",
+  "world_is": "The worker re-wrote the prior analysis and drafting VersionIds (byte-equal) and re-appended the prior silver row; BABA, NU and SAP listings equal their pre-act record; 0 keys outside the four prefixes; NEVER-2 entry amgt-resapp-r82-gg2-store-half-dell1 CLOSED. Issuer ruling: gg-2 and gg-3 cancelled this round; T3 (0 of 11 served locations cite Item 4.B) carried as round82/CARRIED_TO_ROUND83.md item 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_AMGT_RESAPP~324/diff_ASML_NA_Equity_after_rollback.txt",
+      "org/critical_paths/change_management/20261009T0822Z_amgt-resapp-r82-gg2-store-half-dell1_deploy_completion.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms AMGT_RESAPP-D1-W324-S1 by a new item, as the row gate requires for an investigation row."
+}
+```

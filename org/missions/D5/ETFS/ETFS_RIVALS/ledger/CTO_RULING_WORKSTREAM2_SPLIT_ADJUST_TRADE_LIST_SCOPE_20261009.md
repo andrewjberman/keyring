@@ -53,3 +53,56 @@ issued by `2.0.0_SA_COO~V1` as its own issuance and carrying all three WS2 guard
   prompting. It touches `ai_accounts.py`, which round 28's aw-1 deploy carries. A cell merged before aw-1's J1 read would change what
   that read grades, so item 8 is cut only after the read, as WS3's second issuance. Its prompt change is an OpenAI call path; egress is
   open (law 4d77a9c3ea).
+
+## ADDENDUM 2 (~07:3xZ) -- row ETFS_RIVALS-D1-S5 @82800edf8a: CGIC's report date -- the SIDECAR's claim is the as-of; the row date is fixed (`2.0.0_SA_COO~V1` msg 1981)
+
+A holdings report states positions as of the prior trading day's close and is DELIVERED the next trading day. CLAUDE.md: "Everything is
+T-1 unless declared". The 10-05 (Monday) capture's claim of 10-02 (Friday) is exactly one trading day earlier
+(`lib/trading_calendar.py`), which is the delivery lag, not an error. Ruling:
+- **`canonical_shape` stamps `source_report_date` with the sidecar's `claimed_report_date`** wherever that is present, and keeps the delivery
+  day as its own field (`delivered_on`). The calendar is already right ("repeat" reads the claim).
+- **Every CGIC trade window re-reads from the corrected dates.** A trade inferred between two reports is dated by their as-of days, not
+  their delivery days.
+- **Proof in the cell:**
+  - for the 10-02..10-06 CGIC captures, every row's `source_report_date` equals the sidecar claim, and the trade windows move one
+    trading day earlier, printed before and after;
+  - negative control: a fund whose sidecar claim equals its delivery day keeps its dates byte-equal.
+- Where a sidecar carries no claim, the delivery day minus one trading day is used, and the row carries `claim: inferred` (A VALUE MUST
+  CARRY ITS CLAIM).
+- This is a WS2-class cell under the WS2 guards. A redeploy of the canonical shape waits for the round-28 J1 reads, and it needs its own
+  pair, since served trade windows move.
+
+## ADDENDUM 3 (~08:1xZ) -- row ETFS_RIVALS-D1-S6 @570d152eda: RIV-we-1 deploys forward-only; served history is rebuilt ONCE, scoped (`2.0.0_SA_COO~V1` msg 2095)
+
+`build-canonical-shape` keys a revision by its INPUT digest, not the code (`gold_canonical_shape.py:945-956`), so a replay finds nothing
+new: the measured run read `written_new 0`. Ruled **(a): a one-time forced rebuild, SCOPED:**
+- **Scope:** only the (fund, capture) pairs whose sidecar `claimed_report_date` differs from the delivery day. CGIC's 10-02..10-08 are
+  among them, and the denominator is printed from the stored sidecars. Every other pair is untouched and byte-equal (the negative arm).
+- **Under its own never-widen pair:** the written revisions listed by key. Rollback is the prior revision re-served as the newest, with
+  no delete. A dry run first (the `--fresh-canonical` run in progress) prints exactly which windows move, by how many trading days, per
+  fund. The served act waits for both round-28 J1 reads (WS2 guard 1).
+- **(c), forward-only, is refused:** it leaves served CGIC windows a trading day late, against ADDENDUM 2.
+- **(b), the code version joins the digest, is NOT ruled here.** A digest that ignores code makes every future fix forward-only without
+  saying so, but re-keying on any code change re-writes every fund's history every deploy. That is a design fork, so `4.0.0_SA_CRO~DELL1`
+  researches past patterns (a rule-version field bumped only by semantic changes, against a code hash, against today). It is ruled at
+  round 29 on that research.
+
+## ADDENDUM 4 (~08:4xZ) -- row D1-S7 @ba1667dea2 corrects D1-S5: the partitions ARE the as-of (`2.0.0_SA_COO~V1` msg 2127)
+
+**Measured:** the canonical partition is the claimed as-of, not the delivery day. `date=2026-10-05` holds capture `20261007T110910Z`,
+which was requested 10-06 and claims 10-05. The dry run read as-of != partition in **0** of the 18,000+ rebuilt Bloomberg rows, and
+INFERRED in 0. ADDENDUM 2's reading of the sidecar (the claim is the as-of) stands. Its premise that the rows carried the delivery day
+was wrong, and so ADDENDUM 3's remedy was too. Ruled:
+1. **ADDENDUM 3's one-time rebuild is WITHDRAWN.** There is nothing to rebuild, and CGIC's served windows were right.
+2. **`delivered_on` stays, as the capture's REQUESTED date.** It is provenance (when the data came) beside the as-of (what it is as of),
+   and it costs one field. Already-stored rows are not rewritten for it (forward-only, by design).
+3. **The real fix is the calendar's `repeat` rule.** Each capture's claim is compared with the PREVIOUS capture's claim for the same
+   fund:
+   - a NEWER claim is `new` (a lagged daily fund that is still daily);
+   - an EQUAL claim is `repeat`;
+   - an OLDER claim is `regressed`, shown as its own state and never as `new`.
+
+   Check: the CGIC 10-02..10-08 captures read `new`, `new`, and so on, not `repeat`. A planted equal-claim pair reads `repeat`, and a
+   planted older claim reads `regressed`. It is a WS2-class cell under the WS2 guards.
+
+The round-29 pre-draft AMENDMENT 1 (producer_version) is unchanged and still the cure for silently forward-only fixes.

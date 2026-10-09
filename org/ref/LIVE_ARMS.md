@@ -80,7 +80,9 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
+- ~~`1.0.0_SA_CTO~O` `/self-drive 30m`~~ STRUCK 2026-10-09 ~07:4xZ by `1.0.0_SA_CTO~Z`: Andrew-direct "we don't need CTO~O
+  anymore, you just lead the fabric here" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_CTO_O_RETIRED_CTO_Z_LEADS_SITEZ_FABRIC.md`).
+  The COO half below is not touched by that word. Original row: `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
   `2.0.0_SA_COO~O` / `~MI` / `~MP` / `~AI` `/canonical-drive <own project> 30m` (+15m). Class DIRECTED, chooser Andrew
   (his `/self-drive` invocation, 2026-09-28 ~22:2xZ); landed by 1.0.0_SA_CTO~O. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md`. Stop:
@@ -93,6 +95,12 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   Stop: DONE read from the register for all eight, HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO~Z.
   **STRUCK 2026-10-09 ~06:1xZ by `1.0.0_SA_CTO~Z`, STOPPED-BY-OPERATOR:** "No im winding down this fabric, take a /log on current
   status". Cron deleted. A successor does not re-arm this row.
+- `1.0.0_SA_CTO~Z` `/self-drive 30m` over every non-terminal project placed on site Z (re-read each tick; 9 at arm, NFRA_OPLGTW
+  included). Class DIRECTED, chooser Andrew: ~07:3xZ 2026-10-09 at the laptop MSTR terminal, VERBATIM in part: "cto needs to be
+  running /self-drive on 30m interval covering all projects on sitez box" (relay msg 32505). Arming record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_SELF_DRIVE_30M_EVERY_SITEZ_PROJECT.md`. Paired with
+  every site-Z COO lane's `/canonical-drive <own project>` on the same word. Stop: all in-scope projects `status: complete`,
+  HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO~Z.
 - `1.0.0_SA_CTO~Z` `/self-drive 60m` over AMGT_CORPUS, AMGT_HARVST, AMGT_RESAPP, DSGN_AMGTV1, ETFS_RIVALS (the
   Friday demo: PROD by 09:00 ET 2026-10-02). The driver adjudicates every open call; CRO~Z runs `/closer trace` on
   request. Paired with `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` running `/canonical-drive <own project> 30m`; `~RV`

@@ -20,6 +20,18 @@ peer groups): rankings, buying trend, AI accounts, a security dialog per holding
 Code: `data/etfs/scripts/rivalfunds/` (run from `data/etfs/scripts`, package `rivalfunds`); tests:
 `data/etfs/scripts/rivalfunds/tests/` (pytest from `data/etfs/scripts`).
 
+## 0. AMENDMENT 1 (issuer, 2026-10-09 ~06:3xZ) -- FIRST, before the cell: the three tests RIV-wc-1 left red
+
+RIV-wc-1 (your previous order, same worktree) passed its AC1 and left the suite at `3 failed, 918 passed, 6 skipped`, all
+three outside its paths (your rows ETFS_RIVALS-D1-W25-S1 and S2). Ruling: they are size and text pins, not behaviour, and
+this order's `<paths>` (the whole tests folder) covers them. Do these first, in this order:
+1. `test_r24cu1_chart_frame_ticks_tip.py::test_script_shape` and `test_r25mr1_marker_readout.py::test_script_growth_bound`:
+   raise each cap to the measured `len(render.CHART_SCRIPT)` after THIS order's changes plus the same headroom each test
+   used before (state the old and new numbers in the report). Never remove the cap.
+2. `test_r15md1_chart_frame_and_script.py:63`: assert the new placeholder `The fund's trades load with the chart.`
+3. Your row ETFS_RIVALS-D1-W25-S3 stands as built: oldest first with the "earlier" line leading, as the cell said.
+Your report's suite line must read `0 failed`.
+
 ## 1. YOUR CELL (inlined verbatim from the decomposition)
 
 ### `RIV-wc-2` -- the audit's exclusion line reads as its own line, naming what it excludes; the header Period bar is gone (WS3 items 4 and 7)
@@ -116,7 +128,8 @@ FAIL as expected.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 by 2.0.0_SA_COO~V1: chain wc-1 -> wc-2 merged ccf53a8f16; AC1 PASS (proofs VALID); J1 owed to 3.0.0_SA_CVO~RV1 on the issuer real run after the guards lift -->
 <round>28</round>
 <workstream>3</workstream>
 <slot>~25</slot>

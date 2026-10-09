@@ -137,3 +137,54 @@ C-NO-UPLOAD); FWD-6 buy-or-build comparison (public sources only, C-NO-VENDOR-YE
 AB-t-1 measures it missing.
 
 fanout: 2 of 2 chains, cap 8.
+
+## 3. ROUND 2 (2026-10-09 ~08:2xZ, issuer 2.0.0_SA_COO~B2, on the CTO's round-1 analysis @ed0aad9538 + ADDENDUM 1 @e5371f3e39)
+
+**Source:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_ADVI_BILLING_ROUND_1_20261009.md` (msg 2815; ADDENDUM 1 msg
+2825), its enrichment list read as this round's rectangle. Round 1 closed MAY-CLOSE, ARMED 0 (CVO msg 2814); FWD-1 EXERCISED on DEV.
+
+**Measured before the cut (read-only research, 08:0xZ):**
+- **E1 -- the book check exists at the edge.** CloudFront `EVTSA9VEHNZVH` behaviour `/api/scoped/partners/*` runs `auth-validator-edge:22`
+  (viewer-request), which refuses with 403 a `/books/relationship/{id}/*` id absent from `s3://opal-data-bd/platinum/49financial/ownership_map.json`
+  under the JWT `advisorId`; `role`/`firmRole` admin bypasses (`infra/aws/lambda-edge/auth-validator-edge/index.mjs:120,466-539`). The authorizer
+  `opal-portal-authorizer` refuses a request that skips CloudFront (`infra/aws/users/lambda/portal-authorizer/index.mjs:340-351`). Gap: 5 of the 11
+  `advisorKey`s in `opal-partner-49financial` are absent from the map. The map's producer is
+  `data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py`. ADDENDUM 1: four live probes plus one out-of-book JWT straight at execute-api;
+  a Lambda-side check is cut only if that bypass probe is admitted; the gap is fixed at the producer under a pair naming the 5 advisorIds.
+- **E2 -- no SMArtX fee data in Opal.** The daily SMArtX API pull (`infra/aws/lambda/smartx_assets_pull/`) has no fee/billing endpoint; no fee
+  file in S3. The statements exist only as SharePoint `.xlsx`. The gateway can read a site item's bytes only under the caller's Graph token
+  (`infra/aws/ec2/opal-gateway/app/tools.py:699-730`); nothing copies a site file to S3.
+- **E3 -- a durable crosswalk source exists.** `s3://opal-data-bd/silver/allocations/<date>.parquet` carries BD `account_id`, custodian
+  `account_number`, `relationship_id` (z): 3,146 of 3,353 z-keys reach a 0833 account; 5,149/5,149 agreement with the stale xref; newest
+  partition 2026-10-02 (lag to measure). BD `gold/dimensions/accounts_dimension_latest.parquet` is the household spine.
+
+**Builder output at the cut (rule 30, no refusal):**
+`address("advi","49financial","gold","household_crosswalk","date=<d>","household_crosswalk.parquet")` ->
+`s3://opal-data-49financial/advi/49financial/gold/household_crosswalk/date=<d>/household_crosswalk.parquet`;
+`address("smartx","49financial","bronze","fee_statement","quarter=<q>","<file>.xlsx")` ->
+`s3://opal-data-assets/smartx/49financial/bronze/fee_statement/quarter=<q>/<file>.xlsx`;
+`address("advi","49financial","silver","smartx_fee_statement","quarter=<q>","data.parquet")` ->
+`s3://opal-data-assets/advi/49financial/silver/smartx_fee_statement/quarter=<q>/data.parquet`.
+
+| cell | serves | status | risk | depends on | chain | placement |
+|---|---|---|---|---|---|---|
+| `AB-e-1` | E1 (ADDENDUM 1; minted and run by `0.7.0_AE_CloudOps~AB2` per ADDENDUM 2 @abbf204c7e): five live probes for `z08219260` -- through `opalinvest.dev`: an advisor whose map entry holds it (expect 200), an advisor whose entry does not (expect 403), a `firmRole=admin` viewer (expect 200), another firm's viewer (expect 403); and the out-of-book JWT straight at the execute-api URL (expect refusal). Real JWTs minted the way the auth handler mints them. A Lambda-side check is cut next round only if the bypass probe is admitted. THE ISSUER'S ACT (identity material), not a worker order. | NOT_EVALUATED | WORLD (identity; reads only) | none | C | issuer |
+| `AB-e-2` | E1 gap: in `d08_firm_ownership_map.py`, find why 5 `advisorKey`s of `opal-partner-49financial` are absent from the map, fix it in the producer, test it, and print the regenerated map's membership DIFF (advisors added, relationships per added advisor; no other advisor's list may change) WITHOUT writing it. The served regeneration is the issuer's act under a never-widen pair naming the 5 advisorIds. | NOT_EVALUATED | SERVED (prep only; nothing served moves in the cell) | none | D | worker |
+| `AB-e-3` | E2 path: a gateway capability that copies ONE SharePoint site item's bytes to the builder's `smartx/49financial/bronze/fee_statement/quarter=<q>/` prefix and nowhere else (refuses any other destination), with its tests (mocked Graph and S3). Built and tested; the tool's registration line is the issuer's hookup at the merge; the gateway deploy and its IAM grant are a later served act. | NOT_EVALUATED | WORLD (gateway code under infra/; no deploy in the cell) | none | E | worker |
+| `AB-e-4` | E2 content: the SMArtX fee-statement parser -- bronze `.xlsx` (the 33 measured columns: AllocationID, Brokerage Account Number, Sleeve Type, Fee Period Start/End, SmartX/Advisor Prior Quarter Estimate/Actual/True-Up, UMA/APM/Model/Advisor/Client Fee Rate, Current Period Estimate Valuation, Days in Period, Days in Year, Net SmartX Fee, Net Advisor Fee, Fee Debit, ...) -> silver `smartx_fee_statement` at the builder address, with its contract; built and tested on a SYNTHETIC workbook carrying those columns (no real file exists in Opal yet). | NOT_EVALUATED | LOCAL | none | F | worker |
+| `AB-e-5` | E3: the gold `household_crosswalk` producer (one row per Schwab 0833 account: `schwab_account_number`, `bd_account_id`, `bd_relationship_id`, `opal_relationship_id`, `match_method`, `claim`) from BD silver allocations + the BD household spine + `dim_relationship`, its contract, coverage denominators both directions and the allocations lag stated; ONE write at the builder address. | NOT_EVALUATED | WORLD (new gold key; nothing reads it) | none | F | worker |
+| `AB-e-6` | E2+E3 consumer: `fee_quarter.py` v2 takes the household from `household_crosswalk` (AB-e-5) and, where a silver fee statement exists for the quarter (AB-e-4 contract), the per-allocation rates and the true-up (`schedule_claim measured`, source SMArtX); BD fee line stays the fallback. Tested; a dry run for `z08219260` printed, NO write (the re-emit is served: next round or the issuer's act). | NOT_EVALUATED | LOCAL (code; no write) | AB-e-4, AB-e-5 | F | worker |
+
+**E4 -- FWD-3's grade** is the close act, not a cell: the issuer's real render of one client's panel, graded by `3.0.0_SA_CVO` at L9.
+
+**Chain read.** M = 4: C = `AB-e-1` (the issuer's act), D = `AB-e-2`, E = `AB-e-3`, F = `AB-e-4` + `AB-e-5` -> `AB-e-6` (e-6 consumes both).
+N = 3 workers, K = 8: slot ~3 takes chain F in order (e-4, e-5, e-6), slot ~4 takes D, slot ~5 takes E. Write sets are disjoint: D writes
+`data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py` + one new test; E writes a new gateway module + test; F writes
+`data/assets/scripts/silver/advi_billing/`, `data/assets/scripts/gold/advi_billing/`, two `org/standards/ADVI_BILLING_*` contracts and the
+crosswalk key.
+
+**Battery.** `comp-blast` -- RUN as a reading: e-5 writes ONE new gold key under a new table; e-2 writes no served key in the cell; e-3/e-4/e-6
+write code only. `comp-iam` -- RUN as a reading: e-3's deploy will need `s3:PutObject` on the bronze prefix for the gateway's role -- not in this
+round. `comp-routes`, `comp-cache`, `comp-schedule`, `comp-adversary` -- DECLARED-NOT-APPLICABLE: no route, cache or schedule moves in a cell.
+
+fanout: 3 of 4 chains, cap 8, reason: chain C is the issuer's act; three worker chains.

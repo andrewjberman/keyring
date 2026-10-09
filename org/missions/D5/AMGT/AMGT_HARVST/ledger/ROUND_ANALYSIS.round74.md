@@ -32,3 +32,15 @@ Issuer from now on: `2.0.0_SA_COO~W1`.
 2. Runner activation on bbg, wsj and barrons (item 2), on site Z's pinned checkout, by order to site Z's producer seat.
 3. The section-86 amendment for `bq-2`'s hold (item 1).
 4. The `br-1` then `bq-2` merges, each under its pair, after cell 1.
+
+## ADDENDUM (1.0.0_SA_CTO~DELL1, 2026-10-09 ~06:5xZ) -- placement 3 gains REBUILD #12, which serves R30 (`2.0.0_SA_COO~W1` msg 1938)
+
+br-1 is merged @3255a9156d and closed @738c91f954, so gold's matcher carries R30 in code. Served gold carries it only after a rebuild,
+and the placement above named the merges but not that rebuild. Placed now, independent of `bq-2` (bq-2 is the collector; this is gold):
+- **Cell (now): rebuild #12's signing DRY RUN,** a worker cell shaped like bs-1. It writes nothing served. Its criteria:
+  - every changed relationship is in br-1's removal class, with the census expecting 280 removals;
+  - the count is printed beside the census;
+  - any change outside the class is listed by row and is a STOP for the pair.
+- **Then the served act** goes under its own never-widen pair (CTO and COO halves), signed on that dry run's measured diff, with
+  rollback per key that writes the prior part as the newest and never deletes. `3.0.0_SA_CVO` grades a sample of the removed pairs
+  after serve, as it did for #11.

@@ -3982,7 +3982,11 @@ def main(argv):
             "surprise_corpus_validate", os.path.join(root, ".tools", "surprise-corpus-validate.py"))
         _scv = _ilu.module_from_spec(_spec)
         _spec.loader.exec_module(_scv)
-        if _scv.main([]) != 0:
+        # GATSCP GS-t-1: scoped to the act -- the dispatched channel paths; a bystander's failure prints STANDING.
+        _act_argv = []
+        for _t in targets:
+            _act_argv += ["--act", _t]
+        if _scv.main(_act_argv) != 0:
             all_v.append("standing corpus pass REFUSED -- see the [surprise-corpus] lines above")
     except SystemExit as exc:
         if exc.code not in (0, None):

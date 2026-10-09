@@ -23072,35 +23072,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-S29 -- the runner bundle moved at 04:16:44Z and the ONE changed member is directory_runner.py, so IB-pr-383's cleared replay no longer describes what the host would pull
-
-```json
-{
-  "id": "IRPT_BCKEND-D2-S29",
-  "project": "IRPT_BCKEND",
-  "fabric": "dell2",
-  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
-  "surfaced_at": "2026-10-09T05:48Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "0.7.0_AE_CloudOps~DELL2",
-  "one_line": "The grants for IB-pr-383's seeding landed at 05:39:17Z and S1/S2/V1 were released to resume, but the runner bundle was overwritten at 04:16:44Z (version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, sha256 f6d48603) after this seat landed OxaIJns0 (sha256 2e3e6648) at 03:42:25Z; the ONE changed member of 12 is directory_runner.py, the only writer of the seeded keys, so the replay arm that cleared the apply graded a script the host would no longer run.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "list-object-versions on code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz: W2WragrP52i8M7MfL22oXVPuHsTjyVLO IsLatest=true 112861 bytes 2026-10-09T04:16:44Z; OxaIJns0x1vkrd924gLPTyOMGzL_KQxK IsLatest=false 112575 bytes 2026-10-09T03:42:25Z",
-      "both versions downloaded BY VERSION ID and hashed: mine sha256 2e3e6648312f5daa (the value TO-IB-pr-383 and the packet declare), latest sha256 f6d48603a6496f78",
-      "member-by-member diff over the UNION of 12 member names: 0 added, 0 removed, exactly 1 CHANGED -- data/assets/scripts/gold/investor_reporting/directory_runner.py, 08e5e1abc92ad38b (replay-graded) vs 23b7eaf6f2788c61 (host would pull)",
-      "unified diff of that member: 1239 -> 1254 lines, 27 diff lines, adding a refusal attributed in its own comment to TO IB-pr-384 (row D2-W189-S4): 'BUILD_DROPS_SOURCE_ENTRY: %d previous client(s) are still in the source snapshot but missing from this build; nothing is landed', which on an upload or local-mirror call RAISES RuntimeError before any put, and on a dry run records carried_forward.refused and fails main()",
-      "this seat's replay measured held_in_source 0 on BOTH seeded arms (inflection and cottonwood) and 1 on both negative arms, i.e. the new refusal would not have fired on the path the replay exercised"
-    ]
-  },
-  "spec_asserts": "TO-IB-pr-383 step 4 declares the bundle sha256 2e3e6648312f5daad1da91f0c3aaeb4736a81b16cc9bb0dd4f43e5e93886b968, its refusal clause lists 'a built sha other than the packet's' and 'a failed replay' as STOP conditions, and its step 2 requires the replay to run against 'the artifacts actually in play'.",
-  "world_is": "The artifact actually in play is no longer the one the replay graded. The seeding run executes directory_runner.py from whatever version of this bundle the host pulls at run time, and that is now f6d48603 carrying a runner this seat has never replayed. The behavioural delta is not cosmetic: it is a NEW TERMINAL STATE on exactly the call the seeding makes, --upload. On the state the replay measured it would be inert, because held_in_source was 0 on both seeded arms, but that measurement is 2.5 hours old and the refusal fires on LIVE source state, not on replayed state, so its inertness cannot be asserted for the run that matters. The asymmetry decides it: if the refusal fires at inflection the run lands nothing and is recoverable, but if it fires at COTTONWOOD after inflection has already landed, the result is a half-landed seeding across two firms, which is the one state NEVER-2 forbids and which this order's own Branch B is written to undo key by key. So the resume is refused on the order's own terms rather than on preference. Two consequences for the record: ledger leg B1 remains TRUE as history (this seat did land 2e3e6648 and proved it on the object) but it no longer describes the newest version of that key, and the row is ARMED rather than INERT because a resume message is already outstanding and a seat acting on it without reading this row would run the ungraded script. Disarm is this seat's: either re-run the replay arm against f6d48603 and have the issuer re-clear it, or have the issuer rule that IB-pr-384's refusal is in scope for 383 and re-declare the bundle sha."
-}
-```
-
 ## IRPT_BCKEND-D2-S28 -- IB-pr-384's runner change reached the LIVE bundle at 04:16:44Z without its own pair: the push deploy hook let it ride IB-pr-383's open ledger
 
 ```json
@@ -23156,6 +23127,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-S29 -- the runner bundle moved at 04:16:44Z and the ONE changed member is directory_runner.py, so IB-pr-383's cleared replay no longer describes what the host would pull
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S29",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~DELL2",
+  "one_line": "The grants for IB-pr-383's seeding landed at 05:39:17Z and S1/S2/V1 were released to resume, but the runner bundle was overwritten at 04:16:44Z (version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, sha256 f6d48603) after this seat landed OxaIJns0 (sha256 2e3e6648) at 03:42:25Z; the ONE changed member of 12 is directory_runner.py, the only writer of the seeded keys, so the replay arm that cleared the apply graded a script the host would no longer run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions on code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz: W2WragrP52i8M7MfL22oXVPuHsTjyVLO IsLatest=true 112861 bytes 2026-10-09T04:16:44Z; OxaIJns0x1vkrd924gLPTyOMGzL_KQxK IsLatest=false 112575 bytes 2026-10-09T03:42:25Z",
+      "both versions downloaded BY VERSION ID and hashed: mine sha256 2e3e6648312f5daa (the value TO-IB-pr-383 and the packet declare), latest sha256 f6d48603a6496f78",
+      "member-by-member diff over the UNION of 12 member names: 0 added, 0 removed, exactly 1 CHANGED -- data/assets/scripts/gold/investor_reporting/directory_runner.py, 08e5e1abc92ad38b (replay-graded) vs 23b7eaf6f2788c61 (host would pull)",
+      "unified diff of that member: 1239 -> 1254 lines, 27 diff lines, adding a refusal attributed in its own comment to TO IB-pr-384 (row D2-W189-S4): 'BUILD_DROPS_SOURCE_ENTRY: %d previous client(s) are still in the source snapshot but missing from this build; nothing is landed', which on an upload or local-mirror call RAISES RuntimeError before any put, and on a dry run records carried_forward.refused and fails main()",
+      "this seat's replay measured held_in_source 0 on BOTH seeded arms (inflection and cottonwood) and 1 on both negative arms, i.e. the new refusal would not have fired on the path the replay exercised"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 step 4 declares the bundle sha256 2e3e6648312f5daad1da91f0c3aaeb4736a81b16cc9bb0dd4f43e5e93886b968, its refusal clause lists 'a built sha other than the packet's' and 'a failed replay' as STOP conditions, and its step 2 requires the replay to run against 'the artifacts actually in play'.",
+  "world_is": "The artifact actually in play is no longer the one the replay graded. The seeding run executes directory_runner.py from whatever version of this bundle the host pulls at run time, and that is now f6d48603 carrying a runner this seat has never replayed. The behavioural delta is not cosmetic: it is a NEW TERMINAL STATE on exactly the call the seeding makes, --upload. On the state the replay measured it would be inert, because held_in_source was 0 on both seeded arms, but that measurement is 2.5 hours old and the refusal fires on LIVE source state, not on replayed state, so its inertness cannot be asserted for the run that matters. The asymmetry decides it: if the refusal fires at inflection the run lands nothing and is recoverable, but if it fires at COTTONWOOD after inflection has already landed, the result is a half-landed seeding across two firms, which is the one state NEVER-2 forbids and which this order's own Branch B is written to undo key by key. So the resume is refused on the order's own terms rather than on preference. Two consequences for the record: ledger leg B1 remains TRUE as history (this seat did land 2e3e6648 and proved it on the object) but it no longer describes the newest version of that key, and the row is ARMED rather than INERT because a resume message is already outstanding and a seat acting on it without reading this row would run the ungraded script. Disarm is this seat's: either re-run the replay arm against f6d48603 and have the issuer re-clear it, or have the issuer rule that IB-pr-384's refusal is in scope for 383 and re-declare the bundle sha."
+}
+```
+
 ## IRPT_BCKEND-D2-W202-S1 -- The new function has no entry in lambda-source-map.json at the pin, so release-census.py exits 2 for it and BUILD_ONLY needs a scratch-map override pl
 
 ```json
@@ -23205,6 +23205,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "TO IB-pr-391: census every existing function whose packaged reports/repository.py changed.",
   "world_is": "None changed: the staged rows pin the blob, so the new rule in repository.py/retention.py ships only in the new function until a cell re-pins one of the four rows. The other changed members the census prints belong to other cells (not this release) and are not listed as this release's changed members. A later re-pin of any of the four is a separate release with its own pair."
+}
+```
+
+### IRPT_BCKEND-D2-W260-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W260-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~260",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The CTO ruling file the worker face names is not in the worktree; read from commit 19c5067e12 instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_IB_pr_388_H1_WITHDRAWN_20261009.md in the worktree: No such file",
+      "git ls-tree -r 19c5067e12 lists the file; git show 19c5067e12:<path> read in full: no instruction to remove the stream or the requests_stream_arn output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling file is at org/tier1_exec/1.0.0_SA_CTO/deliverables/ in the worktree.",
+  "world_is": "The worktree branch does not carry the file; it exists at 19c5067e12. The stream and requests_stream_arn output were therefore kept."
 }
 ```
 
@@ -23380,5 +23405,384 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "The order: every changed member must be owned by its cell's commit.",
   "world_is": "Owners of served.py per function are in IB97-3_release_census.json (owner_commits). The replay covers the narrowing and svc arms, not IB-pr-366's on-behalf create guard nor IB-pr-357's envelope field; the signer should read them as part of the release."
+}
+```
+
+## IRPT_BCKEND-D2-W201-S8 -- AMENDMENT 1 asks the packet to name the follow-up cell for irpt-holdings and irpt-narrative, and no such cell exists at this pin
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T06:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packet's held-out section cannot cite a follow-up cell id: the decomposition carries IB-pr-390 and IB-pr-391 for section 90 and no cell for releasing served.py to irpt-holdings (row S5) or irpt-narrative (row S6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md lines 2381-2382 (IB-pr-390, IB-pr-391 are the last IB-pr rows); task-orders listing has no IB-pr-39x beyond 390 and 391"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 item 3: the packet lists every route each held-out host serves as NOT YET NARROWED, and names the follow-up cell.",
+  "world_is": "The packet lists the two held-out routes (GET .../holdings/{accountSetId}, GET .../narrative/{reportId}) as NOT YET NARROWED and states that the follow-up cell is UNCUT, to be cut by 2.0.0_SA_COO~P2 with the scope of rows S5 and S6. The worker did not invent a cell id."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S1 -- FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py ASSET_CLASS_VALUES (SC-e-56 comment: multi_asset left) and classify_security raising on a class outside it",
+      "run_firm with the real validator on a multi_asset fixture: RuntimeError 'asset_class: multi_asset is not one of [equity, fixed_income, alternatives, structured, commodities, cash, other, unclassified]' (tests/test_holdings_publish_gate.py, the arms that stand validation aside)"
+    ]
+  },
+  "spec_asserts": "PRD FWD-14 ACCEPT: WORSE is any multi_asset; on WORSE the index does not move and one refusal record names the condition, count and ids.",
+  "world_is": "Today a multi_asset class is stopped upstream as a build defect (a bare raise, no refusal record) because the published contract enum and the classifier both exclude it. The gate refuses it WITH a record only if validation ever admits it; the tests prove that arm by standing validate_snapshot aside. No decision asked: reported so a reader does not take the arm for exercised-in-production."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S2 -- The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:815 and :824 -- cottonwood fact_allocations carries no account status column at this vintage -> termination UNKNOWN on every entry",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:623 (49F: RELATIONSHIP entry TERMINATED only when every account is closed) and :725 (INF: only when no row is_active)",
+      "holdings_snapshot.py closed_account_ids(): collects account ids of entries whose termination.indicator == TERMINATED; an absent directory names none (fails closed)"
+    ]
+  },
+  "spec_asserts": "PRD v0.32: an account the firm's source records as closed or terminated is LISTED, never refused, so an ordinary closure cannot freeze the firm.",
+  "world_is": "The exemption is exactly as wide as the source's own closure marking. 49F account-level closures and fully closed relationships are recognized; a partly closed 49F relationship is not (its entry stays ACTIVE); Cottonwood has no closure column at all, so a closed COT account that leaves the candidate is REFUSED as account_lost and every later fire refuses too until the source gains a closure fact. Left alone this is the freeze v0.32 was written to prevent, for COT. Disarm: a cell that gives COT (and partly closed 49F relationships) a source closure marking, or a CTO ruling on another source."
+}
+```
+
+## IRPT_BCKEND-D2-W262-S1 -- irpt-narrative's fixed build is a wide release: 22 changed members and internal firm selection that live does not honour
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W262-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~262",
+  "surfaced_at": "2026-10-09T06:58Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The fixed irpt-narrative build is correct on its error path but is a wide release: 22 changed members (8 added) against live, and its boundary starts honouring selected_tenant for Opal internal callers, which live irpt-narrative ignores.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "replay arm 'unrelated Opal internal caller with NO profile row, selecting inflection': irpt-narrative built reaches inflection with the Opal roster, live reaches opal-capital (selection not honoured); irpt-holdings identical",
+      "release-census irpt-narrative at c18b5fec74: changed_members=22 (14 changed, 8 added), every one owned; live CodeSha256 es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc="
+    ]
+  },
+  "spec_asserts": "The order: restage errors.py (the smaller change) so the new served.py error path no longer raises TypeError, keeping every other host unchanged.",
+  "world_is": "The TypeError is fixed by restaging errors.py bc3727b3a3 -> 74a62fb46c (adds public_line(admitted=)) and served.py to 74a62fb46c; 4 tests -k served_error_path pass incl. a control that sees the TypeError on the old blob. But live irpt-narrative runs an older boundary: releasing ANY current served.py there adds the internal firm selection (IB-pr-387 narrowing and, for a caller with no profile row, any-firm reach) that live does not have, plus the 21 other members the map already stages for it. This is the S6 finding made measurable; the packet carries it as a signer decision, per-route table and Branch A/B. Disarmed when the signer reads the narrative row of the packet and signs or strikes irpt-narrative from the pair.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S31 -- a signed release's built bytes go stale for every LATER pair on the same host: Y77 would revert IB-pr-390 on irpt-ycharts-generate
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S31",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-09T08:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "TO-APPLY-Y77 (release 6 custody, irpt-ycharts-generate) is signed against built V6EiBNcJ and live_before 5FRkux2o; IB-pr-390 landed on that host at 07:49Z (live ZA0QJ5Wt, plus the declared AWSSDKPandas layer), so applying Y77's signed bytes would silently revert ALL-never-admits and the profile narrowing on that host.",
+  "spec_asserts": "A never-widen pair binds a blast radius whose rollback and before-state are the live bytes at apply; a later release never moves a host backwards past an earlier signed release.",
+  "world_is": "Measured 08:0xZ: get-function-configuration irpt-ycharts-generate CodeSha256 ZA0QJ5Wt (07:49:20Z), layers irpt-common:5 + AWSSDKPandas-Python312:16 (declared at infra/aws/terraform/investor-reporting/ycharts/generate.tf:398); IB-pr-395 ledger CLOSED @1af3b71371. Y77 step 0 expects 5FRkux2o.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live CodeSha256 ZA0QJ5Wt equals IB-pr-390 packet's built value for irpt-ycharts-generate",
+      "commit 1af3b71371 (0.7.0_AE_CloudOps~IB2): IB-pr-390 LANDED on 6 of 8 hosts, ledger CLOSED",
+      "2.0.0_SA_COO~Y2 msg 2832: Y77 step 0 expects live 5FRkux2o; signed build V6EiBNcJ"
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~Y2"
+}
+```
+
+## IRPT_BCKEND-D2-S32 -- the census pin carries the PRE-AMENDMENT packet and an 8-host replay, so "run the replay scripts at the pin" grades the wrong arm set and passes
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S32",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "At the census pin the packet is blob a88bb3e04c83 (8 hosts, no ALL arm); the signed blob be15b61188 and its 6-host scripts land after the pin, so the pin's own replay passes while grading a different claim.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 71e9aacf27:...~201/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-390.md = a88bb3e04c83, HEAD = be15b61188 (the blob both halves name)",
+      "run_replay.py FUNCS at the pin lists 8 hosts incl. irpt-holdings and irpt-narrative; at HEAD it lists the 6 released hosts",
+      "first run, from the pin's scripts: 9 arms, '22 of 22 routes', NO AMENDMENT 1 ALL arm, and lookup resolved from '6 of 8 built trees' incl. irpt-holdings -- rc 0, i.e. it PASSED while describing the pre-amendment release",
+      "re-run from the HEAD scripts against the same uploaded zips: 10 arms, 4 negative controls, '21 of 21 routes', output BYTE-IDENTICAL to the packet's IB97-3_release_replay.json (sha256 PupboWdRBV9UqkXJ59lqPdYmq+4yFaTXcqM8eHup3Zw= both sides)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-395 step 1: re-run the packet's replay, the scripts being under deliverables/0.9.0_WK_IRPT_BCKEND~201/replay/, and build/apply from a clean tree at the census pin.",
+  "world_is": "Those two instructions point at two different script versions. The census pin predates AMENDMENT 1, so a worktree cut at the pin carries the 8-host pre-amendment replay AND the pre-amendment packet; running them returns rc 0 with every arm identical-or-expected-diff, so nothing in the output announces that the ALL-never-admits arm -- the amendment the CTO's half is conditioned on -- was never exercised. A rc-and-verdict reader cannot tell the two runs apart. The build is unaffected: the six served.py source-map rows are byte-identical at the pin and at HEAD and the six built sha256 equal the packet table. Disarmed for this order by driving the replay from the amendment scripts; the general fix is for a packet to pin the replay scripts by blob, so the applier compares script identity by CONTENT rather than by path (CLAUDE.md 22a).",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S33 -- a signed CODE-ONLY apply on a SHARED Terraform root carries other releases' pending lines, and a 0-add/1-change/0-destroy count cannot see a same-resource attribute
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S33",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two of the six roots hold other cells' unapplied resources, and the ycharts plan also carried release 6's layer line on the SAME resource -- which a resource-count guard reads as a clean 0/1/0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "untargeted plan at the census pin: reporting-read, directory, performance, ops each 0 add / 1 change / 0 destroy; export 6 to add (commentary-composition reader: lambda, log group, 2 roles/policies, invoke policy -- cell AR-t-13 / IB-pr-397); ycharts 1 to add (aws_iam_role_policy.generate_custody_factory)",
+      "targeted plan (-target=module.<name>.aws_lambda_function.this) made all six 0 add / 1 change / 0 destroy",
+      "the SAVED ycharts plan body carried '~ layers = [ \"...irpt-common:5\", + \"...AWSSDKPandas-Python312:16\" ]' INSIDE that same 1 change -- generate.tf:398, added @0ee21c796f by IB-yr-761 (row D2-S19), release 6's declared line",
+      "audit of all 6 saved plan bodies (denominator printed): exactly ONE attribute outside last_modified + s3_object_version + source_code_hash, in exactly one root -- layers on ycharts",
+      "CloudTrail via MSTR msg 2839 / COO msg 2852 reported the attach at 07:49:10Z; live irpt-ycharts-generate reads ZA0QJ5Wt with irpt-common:5 + AWSSDKPandas:16"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-395 BOUNDS: the only served change is the six functions' code, with no IAM, route, schedule, env or other function change; refusal clause: a plan touching anything else is a STOP.",
+  "world_is": "Both halves describe a code-only act, but the deploy path is a SHARED root whose config also holds other releases' pending changes, so the signed act cannot be applied by a whole-root apply without exceeding its own sign-off. Targeting held the ADDS out of all six applies. It did NOT hold out a same-resource attribute: the applier's guard graded the resource COUNT (0/1/0) and grepped only s3_object_version and source_code_hash, and a '~ layers' line is neither an added resource nor a grepped key, so it passed a guard that was never looking at it -- the plan text DID print it. The layer is ruled KEEP by 1.0.0_SA_CTO~DELL2 (half AMENDMENT 1 @29a9a2c684, msg 2862: AWS-managed, read-only, no IAM/route/data, and release 6 re-adds it; Y77 re-baselines to live with it present, row D2-S31) and the CTO records no row against the applier. Mechanism now in force for IB-pr-397/-398/-399 (COO msg 2863): on any shared root print the plan LINE BY LINE against the signed half's blast radius before applying, STOP with a row and the plan text on any line belonging to another release, and record the printed comparison in the order's after-reads file. The residual hazard is that the export root's 6 adds and the ycharts root's 1 add are still pending for the next apply on either root.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S34 -- AMENDMENT 1 asks for "the four on blob a8eb91e7d4c5"; three of the six released hosts carry it, and no census holds four
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S34",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The count in the amendment is four; the measured answer is three, in the released census and in the pre-amendment census alike.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 item 2: 'including the four on blob a8eb91e7d4c5'",
+      "released 6-host census (packet blob be15b61188): served.py live_sha256_prefix a8eb91e7d4c5 on irpt-49f-reporting-read-lambda, irpt-directory-search, irpt-export-render = 3",
+      "pre-amendment census at the pin, denominator printed: 7 artifacts scanned, 3 on a8eb91e7d4c5 -- the same three",
+      "measured from the RETAINED S3 rollback versions, before -> after: a8eb91e7d4c5 -> 87d9ecc49747 (x3), 455cd77ea46e -> 87d9ecc49747, 4a9d374c9806 -> 87d9ecc49747, 570f79caa35d -> 87d9ecc49747"
+    ]
+  },
+  "spec_asserts": "The after-reads census names each function's served.py blob BEFORE and AFTER, including the four on blob a8eb91e7d4c5.",
+  "world_is": "Three hosts carry that blob, not four, under either census; the fourth member the sentence implies does not exist in the released set. The requirement is met by measurement rather than by the count -- all six hosts' before and after blobs are recorded in IB100-1_authz_release_after_reads.json, each before value measured from the retained rollback artifact rather than inherited from the packet. Harmless here because the deliverable is the per-host census, not the count; recorded because a count asserted beside a denominator that does not hold it is the CLAUDE.md rule-24 tell.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S35 -- disposition of D2-S31: disarmed by the release-6b re-cut of TO-APPLY-Y77
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S35",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T08:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarmed for release 6b: the CTO half (msg 2888) measured served.py at pin 66207bce7d equal to 74a62fb46c, so 6b reverts nothing of IB-pr-390; TO-APPLY-Y77 AMENDMENT 2 applies 6b (built tdpterTM, rollback ZA0QJ5Wt) and never V6EiBNcJ.",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S31 (Y77 signed against V6EiBNcJ / live_before 5FRkux2o after IB-pr-390 landed): disarmed by the release-6b re-cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/release6_custody/NEVER_WIDEN_PAIR_RELEASE6B_CUSTODY.md @ba6fcb1c14",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_RELEASE6B_CUSTODY_CTO_HALF.md (msg 2888)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_BCKEND.TO-APPLY-Y77.irpt-ycharts-generate-release6-custody.md AMENDMENT 2"
+    ]
+  },
+  "spec_asserts": "Y77 applies a signed build that carries the live served.py.",
+  "world_is": "After the re-cut it does: 6b at 66207bce7d carries 390's served.py byte-equal; V6EiBNcJ is never applied."
+}
+```
+
+## IRPT_BCKEND-D2-W264-S1 -- irpt-narrative: opal-capital binding held, but the built boundary hands the Enforcer an Opal roster that live does not
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W264-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~264",
+  "surfaced_at": "2026-10-09T08:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "Even with the opal-capital binding held, the built irpt-narrative hands the Enforcer an Opal roster of the caller's email for every internal caller (class OPAL_GLOBAL in opal-capital) where live hands none; the no_row arm is identical on bound firm and code only.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB102-3_release_replay.json arm no_row_internal_selects_other_firm: built opal-capital/UNEXPECTED roster ['ops@opalinvest.com'], live opal-capital/UNEXPECTED roster null (same bound firm and code)",
+      "served.py Entry.handle at 74a62fb46c: principals = frozenset([trusted['x-user-email']]) when verified_internal_subject(headers) is not None, else self.opal_principal_ids; _scope/resolve.py classify_principal: an email on the roster is OPAL_GLOBAL (branch 2), before FIRM_OPERATIONS/FIRM_ADVISOR/UNKNOWN",
+      "the same roster delta is in IB-pr-394's own replay data (0.9.0_WK_IRPT_BCKEND~262/IB99-1_release_replay.json routes[irpt-narrative].noRow: built roster ['ops@opalinvest.com'], live roster null); narrative entry.NarrativeEntry at cabad9008c drops only the selection, by order, and does not touch the roster"
+    ]
+  },
+  "spec_asserts": "The order: a no-row internal caller stays bound to opal-capital as live binds it; the arm no_row_internal_selects_other_firm reads IDENTICAL live versus built.",
+  "world_is": "The arm is identical on the firm the boundary binds to (opal-capital) and on the public code. It is NOT identical on the Opal roster handed to enforcer_for: live (served.py from before IB-pr-385) hands none, so the Enforcer classifies an internal caller by its headers; the built boundary hands the caller's own email, so the same caller is classified OPAL_GLOBAL inside opal-capital. Whether that changes the accounts a narrative request may name was not measured here (the order binds the firm only; the shared served.py is outside the grant). The packet states the delta beside the arm and the verdict is defined on firm plus code, with the roster recorded. Disarmed when the signer reads the roster line of the packet and signs, or the CTO rules the roster for narrative.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W265-S1 -- the scheduled holdings producer runs the per-firm standalone bundles, not investor-reporting.tar.gz: FWD-14's release is the three standalone bundles
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W265-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~265",
+  "surfaced_at": "2026-10-09T07:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The scheduled holdings producer does not run holdings_snapshot.py from investor-reporting.tar.gz: it fetches three per-firm standalone bundles (irpt_holdings_<short>), so a release of the named key alone does not put FWD-14's gate on any scheduled fire.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live Lambda irpt-holdings-refresh-lambda (CodeSha256 SGwrvwLH..., LastModified 2026-09-26) IRPT_HOLDINGS_BUNDLE_MAP = s3://opal-data-{49financial,cottonwood,inflection}/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz; schedule irpt-holdings-snapshot ENABLED cron(15 10 ? * MON-FRI *) targets it (aws scheduler get-schedule, read 2026-10-09T07:5xZ)",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py:65-75: aws s3 cp <that firm's bundle_uri>, tar -xzf, sha256sum -c SHA256SUMS, then python3 $R/holdings_snapshot.py --firms <firm> --upload; .tools/safe_deploy_core.py:468-568 STANDALONE_BUNDLES (explicit --mint-bundle only, never commit-routed) holds 44 members per firm including holdings_snapshot.py",
+      "the named bundle investor-reporting.tar.gz (12 members) carries holdings_snapshot.py but NOT its imports (holdings_49f, holdings_inf, source_inputs, publication, opal_naming, ...), so nothing runs holdings_snapshot.py from it",
+      "BUILD_ONLY twice at 6cbf2707cf: named bundle built sha256 0d595983..., 1 of 12 members changed vs live W2Wragr (holdings_snapshot.py, owners 9af6811b61 + ce6e2a218e); standalone built sha256 230d59e7... (identical for all 3 firms) vs live 7a400c14 (49f, cot) / 2b94e928 (inf) ETag: 18 of 44 members changed, 17 of them not FWD-14 (ids.py, lib/trading_calendar.py, lib/opal_naming.py, the registry, CurrencyAuthorities, HoldingsSnapshot.schema.json, build_cottonwood_mdpf_slice.py, dim_mdpf_aum_metrics.py, mdpf_category_registry.py, schwab_account_codes.json, firm_registry.json, NAMING_SCHEMA.json)"
+    ]
+  },
+  "spec_asserts": "The order (TO-IB-pr-400 WORKER FACE): FWD-14's gate ships in the runner bundle s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz, live W2Wragr, and the packet is modelled on IB-pr-389's for that key.",
+  "world_is": "That key's holdings_snapshot.py copy is not what the scheduled fire executes. The three per-firm standalone bundles are, they were last minted 2026-10-04/05 (49f 3Q_W49U7..., inf SuRm8tIY..., cot NZIQjid2...), and minting them is an explicit --mint-bundle act carrying 17 non-FWD-14 member changes owned by other projects. The packet states both artifacts and the replay runs the standalone trees (the consumers); a Branch A on the named key alone would read as released while the first scheduled fire still ran the ungated producer, and S392 would retire on a fire that cannot REFUSE. Disarm: the issuer rules which artifact the pair covers (or recuts the pair on the three standalone bundles) before either half signs.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S36 -- IB-pr-397 AMENDMENT 1 and the IB-pr-391 packet are unsatisfiable together: the signed sha256 is reachable ONLY through the parity skip the amendment forbids
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S36",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Three arms measured: no-skip REFUSES the build outright, the packet's skip reproduces ZZmWOFSA exactly, and the parity-clean 23-member set builds a different sha -- so every path AMENDMENT 1 permits is a STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ARM 1, what AMENDMENT 1 orders (REAL map, the drafted 16-member entry, no BAU_PARITY_SKIP, no BAU_SOURCE_MAP_OVERRIDE): ADHC_DRIFTD.002 parity check FAILED, 'PARTIAL -- 0 built, 1 failed'. It names 7 files present in source_dir but not in files[]: build_resident_package.py, currency_authority.py, custody_write.py, generate_installed.py, request_composition.py, resident_installed.py, status_installed.py. No artifact is produced, so there is no built sha256 to compare at all.",
+      "ARM 2, the packet's own procedure (same entry, BAU_PARITY_SKIP=1): builds sha256 ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, EXACTLY the value both halves signed.",
+      "ARM 3, the remedy the gate itself proposes (register those 7 in files[], no skip): builds, import-closure OK at 15 packaged .py files instead of 8, sha256 pTdVgXqpSZq1f3aQM7pUzmJi+GQir1+Q2ffLyGUY82M= -- NOT the signed value.",
+      "the drafted entry was registered into the REAL map byte-identically (blob 024b3bea at box/dell2 HEAD; 102 lines added, 0 removed, 230 functions, nothing else in the map touched)",
+      "all three arms were BUILD_ONLY with TMPDIR outside every worktree: nothing uploaded, nothing applied. live_before still ABSENT (get-function-configuration ResourceNotFound) and the S3 key still 404 after all three.",
+      "the packet states the same thing in prose and the measurement now confirms it: 'The pair must register exactly that entry and build with the parity skip, or any other member set builds a different sha256' (and Branch A step 1: 'or list the seven other reports/*.py modules, which would change the zip')"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1 (rows W202-S1/S2): register the reader, then BUILD FROM THE REAL MAP -- no override, no BAU_PARITY_SKIP, no parity skip of any kind; the built sha256 must equal ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0= and a different sha is a STOP and a row.",
+  "world_is": "Those two requirements cannot both hold. The function's source_dir is the SHARED reports/ package, so the parity gate compares the whole directory against files[]; the signed 16-member artifact is by construction a SUBSET of that directory, which is exactly what the gate exists to refuse. Under the amendment the only two reachable outcomes are a refused build (no artifact) or a different artifact (pTdVgXqp), and the amendment names the second a STOP. So the applier stopped: the entry is registered (step 1, a pure addition, uncontested and reversible) and NOTHING was built for upload, uploaded, or applied -- live_before stays ABSENT. ONE RULING UNBLOCKS IT, and it is the issuer's or the CTO's, not the applier's: either (a) restore the packet's BAU_PARITY_SKIP=1 for this one function with the justification in the commit message, which reproduces the signed sha exactly and keeps both halves valid as signed, or (b) accept the 23-member parity-clean artifact pTdVgXqpSZq1f3aQM7pUzmJi+GQir1+Q2ffLyGUY82M=, which is a different blast radius (15 packaged modules, 7 of them other cells' code) and so needs both halves re-signed against a new packet. Until then IB-pr-397 is BLOCKED and IB-pr-398 (irpt-holdings only) is untouched and independent of this ruling.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S37 -- Resolves D2-W265-S1: FWD-14's release is the three per-firm holdings bundles, narrow to holdings_snapshot.py
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S37",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T08:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W265-S1 by issuer ruling inside the decomposition (section 96). The FWD-14 release target is re-pointed from the ordered key code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (no scheduled fire executes its holdings_snapshot.py) to the three per-firm keys s3://opal-data-<firm>/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz that irpt-holdings-refresh-lambda fetches. A fresh build moves 17 non-FWD-14 members (87 nodes reclassified at 49financial, 236 at cottonwood), so the release is NARROW: each live bundle with only holdings_snapshot.py moved by 9af6811b61 + ce6e2a218e, never 01e843ce2e. Cell IB-pr-402 (worker ~266) builds and replays it; the pair is signed on that packet. S392 is not retired on any fire before the narrow bundles land.",
+  "one_line": "Release target re-pointed to the three per-firm bundles, narrow to the FWD-14 member; IB-pr-402 builds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB102-4_release_census.json @dda85dc8f4: per-firm artifact changed_member_count 18, 17 non_fwd14_flag",
+      "p102_cells.py IB102-4-AC1 PASS (issuer re-grade, 21 arms)",
+      "TO-IB-pr-402 cut in round 103"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-400 named investor-reporting.tar.gz as the bundle carrying the FWD-14 gate to the scheduled fire.",
+  "world_is": "The scheduled holdings fire runs three per-firm bundles; the release is re-pointed there, narrowed to the FWD-14 member."
+}
+```
+
+## IRPT_BCKEND-D2-S38 -- Resolves and disarms D2-S36: the CTO chose (a), the parity skip scoped to the reader build; IB-pr-397 AMENDMENT 2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S38",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:02:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and DISARMS IRPT_BCKEND-D2-S36. CTO ruling msg 2952 (ADDENDUM 14.1 @13645d01d6) chose (a): BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only, scoped to that build invocation, with the built zip's symbol closure at missing=0 and the build equal to ZZmWOFSA, else STOP. The issuer amended TO-IB-pr-397 (AMENDMENT 2) the same tick. Option (b), the 23-member pTdVgXqp artifact, is not released; both halves stay valid as signed.",
+  "one_line": "CTO ruled (a); IB-pr-397 AMENDMENT 2 permits the scoped parity skip with a symbol-closure check; D2-S36 disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 2952: '(1) D2-S36: BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only'",
+      "TO-IB-pr-397 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1: no parity skip of any kind, and the build equals ZZmWOFSA.",
+  "world_is": "The two cannot both hold (D2-S36); the CTO narrowed the skip ban for this one function and the order now carries that."
 }
 ```

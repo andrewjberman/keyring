@@ -5763,6 +5763,264 @@ carries none.
     "spec_asserts": "MX-h-3 put YCharts in the index; FWD-8 says long history and market data come back on demand through the index.",
     "world_is": "The time-series path is refused upstream (403) while the session is live, so history from YCharts is not on demand. The snapshot path answers but loses the symbol key, so a multi-symbol call cannot be attributed per symbol. One symbol was tested per tool; other metrics and symbols were not.",
     "notes": "INERT: no served artifact reads these tools. It arms the moment discover routes a history or snapshot question to them; the route would return nothing, or a value with no symbol. Input to the PRD v0.7 re-cut (CTO~O msg 32333, CRO~Z midstream brief); not a mid-round cell. Denominator: 1 call per tool."
+  },
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPINDEX-Z-W28-S1",
+  "one_line": "Two existing tests in tests/test_opal_discover.py asserted the defect MX-d-7 removes (latest_value claim held); the order says every existing test still passes, so both assertions were rewritten to the contract-4 value.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_opal_discover.py@46ef2cbb70 line 98-99: latest_value == 2026-08-10 claim held (test_discover_names_catalogued_dataset).",
+      "tests/test_opal_discover.py@46ef2cbb70 line 322: latest_value claim held value 2026-01-02 (test_served_written_at_is_measured_from_one_head).",
+      "Both now inject get= and assert measured with the served value; the prose date is asserted as freshness.held_at_certification. 23 passed in the file."
+    ]
+  },
+  "spec_asserts": "Order section 1 item 5: every existing test in tests/test_opal_discover.py still passes.",
+  "world_is": "Two of them asserted claim held, which PRD v0.7 contract 4 forbids, so they could not pass unchanged beside the act. Both are in the order's own paths. Added an autouse fixture so no test makes a live S3 read unless it injects get=.",
+  "notes": "INERT: the file is in the order paths and the change is recorded here. Denominator: 2 assertions changed, 21 tests untouched."
+},
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_MCPINDEX-Z-W28-S2",
+  "one_line": "The order is silent on rows with no served artifact: silver_datasets rows and non-servable artifact rows also stated a held latest_value; they now read absent with an error_class and the prose date moves to held_at_certification.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integration.py@46ef2cbb70 _silver_answer and _answer_row both called _latest_value(row) (held prose date) for rows that are never read.",
+      "Live run after the change: 'model portfolio timeseries' returns 10 matches; the 3 non-servable rows read latest_value absent/not_servable_to_principal; silver rows read absent/silver_row_has_no_served_artifact."
+    ]
+  },
+  "spec_asserts": "PRD v0.7 contract 4: a held certification value is never shown as the as-of; order item 2 names the failed-read, pattern-key and unresolved-path cases only.",
+  "world_is": "Applying contract 4 to every row leaves no held latest_value anywhere. A caller that read latest_value of a silver or non-servable row as a date now reads None; no consumer in this worktree does (test file and routing harness read only servable rows).",
+  "notes": "INERT: judged under contract 4 as written. If the issuer wants a silver row to keep its held date in latest_value, that is a one-line reversal in _silver_answer. Latency measured live: 1 match 0.75s, 10 matches 1.41s, 8 matches 0.66s."
+},
+{
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+  "surfaced_at": "2026-10-09T06:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "id": "NFRA_MCPINDEX-Z-W28-S3",
+  "one_line": "Every commit that stages a path under org/missions/D*/ is REFUSED on this worktree's base 46ef2cbb70 by missions-tree-check: org/projects/ADVI_BILLING.json index dep_stage PRD against tree DECOMP; the fix is outside the order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit rc=1 twice (proof + status flip + rows): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/ADVI_BILLING.json: dep_stage: index=PRD tree=DECOMP'.",
+      "python .tools/missions-tree-index.py check at HEAD 6584b623fa prints the same single violation (1 of 49 tree projects).",
+      "The fix exists as 66844d4f96 / ac148d7eb9 on box/sitez ('regenerate org/projects/ADVI_BILLING.json ... tree moved at b3c6b8ae1f'); neither is an ancestor of this branch (git branch --contains ac148d7eb9 lists box/sitez, not wk-NFRA_MCPINDEX-28).",
+      "The code commit 6584b623fa (two files outside org/missions) was accepted by the same safe-commit: the check fires only on a staged org/missions/D*/ or org/projects path."
+    ]
+  },
+  "spec_asserts": "Order section 5: write the proof instance, validate it, then flip complete and commit instance, deliverables and flip together.",
+  "world_is": "The proof (valid, rc=0), the rows and the complete flip sit in this worktree UNCOMMITTED because org/projects/ADVI_BILLING.json is not in the order's paths and a bypass is forbidden by the hook's own remedy text. Code is committed at 6584b623fa.",
+  "notes": "ARMED until the base carries the index fix: no worker on a base before 66844d4f96 can land a proof. disarm_owner 2.0.0_SA_COO~MI: carry the ADVI_BILLING index fix to this base (or have the integrator commit the three staged-ready missions files). Denominator: 1 violation of 49 tree projects."
+},
+  {
+    "id": "NFRA_MCPINDEX-Z-W29-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~29",
+    "surfaced_at": "2026-10-09T05:42Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The task order's emitter input (--census-dir pointing into the main tree) makes the emitter rewrite every census_ref file path as ../ajb_workspace/..., so 32 existing catalog lines change outside needs:; I passed the worktree's own tracked census instead, and the catalog then differs from base only by the built-by git-head stamp.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py census_ref_for() writes os.path.relpath(CENSUS_DIR/fname, REPO_ROOT); with CENSUS_DIR in the main tree, a first emit at base (before any change of mine) rewrote census_ref to file: ../ajb_workspace/org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census/ARTIFACT_CENSUS_MP.yaml (git diff --stat: 32 insertions, 32 deletions).",
+        "The census is TRACKED (git ls-files .../refs/census = 4 files), so the linked worktree already holds it; with --census-dir pointing at <worktree>/org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census the emit at base differs only in '# BUILT BY ... at git HEAD' and 'built_at_git_head' (2 lines; git diff -U0 of the removed lines).",
+        "The accessor index read from the main tree's portal/src/api (the order's --portal-api) changed no catalog row on this emit; the worktree's own portal/src/api differs from the main tree's in one file (endpoints/tickets.ts, diff -rq), unrelated to any catalogued accessor."
+      ]
+    },
+    "spec_asserts": "MX-c-6 emitter cautions: pass --census-dir and --portal-api pointing READ-ONLY into the main tree; every row outside needs: must be unchanged after the emit.",
+    "world_is": "Following the caution literally changes the repo-relative census_ref path of every census-backed channel row (32 lines) and the order's own diff check fails. The census is tracked, so the worktree copy is the correct input. The built-by head stamp (2 lines) changes on every emit by construction and is the emitter's own stamp, not a row. Any later worker or release that re-emits in a worktree with the main-tree census path repeats this.",
+    "notes": "ARMED until MX-r-9 or the next re-emitter is told to pass the in-tree census path (or the emitter writes census_ref against the census's own repo). Not fixed here: the emitter's relpath is outside the order. I also ran a git checkout -- on the one catalog file I had myself regenerated, to restore base before the second emit; no other file was touched."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W29-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~29",
+    "surfaced_at": "2026-10-09T06:19Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "safe-commit refuses every commit that stages an org/missions file, at this worktree's base 6d704a78c3, because the missions-tree validator reports INDEX-DRIFT on org/projects/ADVI_BILLING.json (index dep_stage PRD, tree DECOMP); the fix is CLOUD ac148d7eb9, not in this base and outside the order's paths.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Two refused attempts (the first with INVESTIGATION_v1.md alone, the second with the proof instance, the order flip and the row file): 'BLOCKED: missions-tree-check ... [INDEX-DRIFT] org/projects/ADVI_BILLING.json: dep_stage: index=PRD tree=DECOMP; RESULT: 1 violation(s)'; ERROR: safe-commit did NOT commit (rc=1).",
+        "git merge-base --is-ancestor ac148d7eb9 HEAD returns 1 (not an ancestor); ac148d7eb9 is the main checkout's top commit 'regenerate org/projects/ADVI_BILLING.json to the tree's DECOMP'.",
+        "The same worker's code commit e7f52df685 (workflows/, infra/ paths only) landed: the check fires only when an org/missions path is staged."
+      ]
+    },
+    "spec_asserts": "The order's <paths> admit the proof instance, the investigation file and the order flip, and the worker commits them on its worktree branch.",
+    "world_is": "Those three paths cannot be committed from this base. The files are written and validated in the worktree (proof-of-spec-check rc=0, c6.AC1/AC2/AC3 PASS) but uncommitted, and the order's status flip is held back to in_progress: it is not terminal until they are committed.",
+    "notes": "Cure: base the worktree on a commit carrying ac148d7eb9, or the issuer commits the three uncommitted paths after the drain. Not attempted by the worker: org/projects/ is outside its write grant and --force does not bypass a gate failure."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S86",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T07:33Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W28-S1",
+      "NFRA_MCPINDEX-Z-W28-S2",
+      "NFRA_MCPINDEX-Z-W28-S3",
+      "NFRA_MCPINDEX-Z-W29-S1",
+      "NFRA_MCPINDEX-Z-W29-S2"
+    ],
+    "one_line": "RULES the five round-8 worker rows at the MX-d-7 (@e9545d6823) and MX-c-6 (@dc3435a65f) drains: W28-S3 and W29-S2 DISARMED (each branch merged box/sitez carrying the ADVI_BILLING index fix ac148d7eb9 -- @407ae3578f and @f8bf16549e -- and then committed its close); W28-S1 and W28-S2 CONFIRMED as judged under contract 4 (held prose dates no longer pose as served as-of; silver and non-servable rows read absent with an error_class); W29-S1 CONFIRMED: the worktree's own tracked census is the correct emitter input, and a future catalog cell's face names it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MX-d-7 re-graded at the drain on wk-NFRA_MCPINDEX-28 @9f51c11617: d7.AC1 3 of 3 tests, d7.AC2 3 of 3 datasets stated as-of equals served (claim measured), d7.AC3 routing 24 of 27 (floor 24); proof-of-spec-check VALID rc=0.",
+        "MX-c-6 re-graded at the drain on wk-NFRA_MCPINDEX-29 @5a7edfb8ab: c6.AC1 29 of 29 entries 0 violations, c6.AC2 3 of 3 tests, c6.AC3 4 of 4 tool sets 15 named 0 unknown; proof-of-spec-check VALID rc=0.",
+        "Both closes committed through safe-commit after the merge, so missions-tree-check no longer refuses on either base: the BLOCKING hazard is gone."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner; the issuer rules every row inside its own decomposition at the drain.",
+    "world_is": "Both round-8 build cells MX-d-7 and MX-c-6 are on box/sitez with their proofs; no round-8 row remains ARMED. MX-d-8 and MX-r-9 are next on the chain.",
+    "notes": "W29-S1 face amendment applies to the next catalog-writing cell (the emitter's --census-dir points at the worktree's own tracked census, never the main tree). No silver-row reversal of W28-S2 is wanted: a silver row has no served artifact, so absent is the true answer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T07:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The order's own-text rule (the silver rule, >= 2 content words and 60%) cannot reach two of Alyssa's six phrasings: 'statement' is ONE content word and 'S&P YTD' loses 'S&P' (single letters are dropped) and 'ytd' is in no need text; I added two need-local folds and a one-word title-headword fallback the order does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python at HEAD: od._content_words('statement') = {'statement'} (1 word; the rule needs >= 2) and od._content_words('S&P YTD') = {'ytd'}; 'ytd' appears in no part of E-19's need or example_questions (printed False).",
+        "The fix is in infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py: _need_words folds 'S&P' to 'sp' and 'ytd' to 'this year' (both sides, need matching only), and a bare one-word ask that nothing else answers names the one need whose TITLE opens with that word (_need_head); a word found only in an example question ('going') or later in a title ('fees' in E-6) names nothing.",
+        "Measured with the rule: 'How's it going?' and 'fees' stay uncatalogued (existing tests test_own_text_rule_does_not_catalogue_chatter passes); routing harness Q30 'statement' -> E-9, Q33 'S&P YTD' -> E-19."
+      ]
+    },
+    "spec_asserts": "Order act 1: a need entry is reached by its own text, by the same own-text rule silver_datasets rows use (MX-d-6, _own_text_hit).",
+    "world_is": "The same rule, unchanged, cannot name a need for 'statement' (one content word) or for 'S&P YTD' (content words {'ytd'}); at base 'S&P YTD' lands on the market-returns datasets and 'statement' on nothing.",
+    "notes": "Design choices, inside integration.py, tested; the issuer may prefer the catalog to carry 'statement' and 'YTD' in E-9 / E-19 example text instead (a catalog change, MX-c-6's, which this order forbids me)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T07:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A need entry is shown to opal-internal principals only: the existing cross-firm silver test requires firm principals to see nothing for the Black Diamond ask, and E-8 (a GAP need naming blackdiamond_list_fees, its owner and a live error) would otherwise answer it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest tests/test_opal_discover.py at the first draft (needs shown to every principal): test_silver_row_fails_closed_on_cross_firm_visibility FAILED, 'what fees did Black Diamond charge' catalogued True for 49financial (E-8).",
+        "After the gate (principal_class == OPAL_INTERNAL): 26 passed in tests/test_opal_discover.py; a new assertion pins od.discover('cost basis', 'firm', '49financial')['matches'] == []."
+      ]
+    },
+    "spec_asserts": "Order act 1 names no principal gate for a need match; bound 2 forbids changing data_entitlement.",
+    "world_is": "Needs carry internal owners, project codes and live errors; a firm principal asking gets no need match (NOT_CATALOGUED), exactly as a firm gets no silver row.",
+    "notes": "Fail-closed choice by this worker, easy to widen later; Alyssa Keith is staff (opal-internal), so d8.AC1 is unaffected."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T07:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Ranking: 'a need comes first, before a channel artifact' collides with two existing tests that keep a dataset named by its OWN text first (silver blackdiamond_fees; the portal benchmarks row), so a need ranks by how many of the ask's words its own text carries against the same count for a dataset, ties keep the dataset first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "With need-first unconditionally, 4 existing tests failed: test_silver_row_is_read_and_answers_as_itself (E-8 first), test_silver_row_fails_closed_on_cross_firm_visibility, test_own_text_rule_does_not_catalogue_chatter ('fees' -> E-6), test_model_performance_ask_routes_to_the_benchmarks_tool (E-13 first).",
+        "Own-text counts measured: 'account counts by partner' E-16 = 3 vs the aum-metrics portal row's own text = 2 (need first); 'how did the Short Term model do against its benchmark year to date' E-13 = 5 vs the benchmarks portal row's own text = 7 (dataset first, existing test holds).",
+        "Effect on the original 27 asks: 24 of 27 before, 24 of 27 after, the same misses Q05, Q07, Q22 (run_routing.py before/after). Q05 now routes first to NEED:E-13 (SERVED, tool mdpf_get_model_benchmarks) but stays a harness MISS because it compares to a dataset key as at base."
+      ]
+    },
+    "spec_asserts": "Order act 1: rank so that a need entry whose own text the ask names comes first, before a channel artifact selected by a looser keyword.",
+    "world_is": "The ranking is by own-text overlap rather than need-always-first; a need that the ask names more weakly than a silver or portal row does not lead.",
+    "notes": "Q05, Q07 and Q22 were misses at base 24 of 27 (a tool-name versus key comparison in run_routing.py); not changed here."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S87",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W28-S4",
+      "NFRA_MCPINDEX-Z-W28-S5",
+      "NFRA_MCPINDEX-Z-W28-S6"
+    ],
+    "one_line": "RULES MX-d-8's three rows at its drain (@4b29d72cc3): S4 CONFIRMED (the two need-local folds and the one-word fallback stand; moving the words into E-9/E-19 example text is a catalog enrichment for a later catalog cell, not a defect); S5 CONFIRMED (need matches show to opal-internal principals only, which keeps the firm cross-firm test and C7 intact; Alyssa and the operations lead are internal); S6 CONFIRMED (own-text overlap ranking with ties to the dataset; the original 27 stay 24 of 27 with the same misses Q05, Q07, Q22).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "d8.AC1 re-run at the drain on wk-NFRA_MCPINDEX-28 @182203f735: present 9 of 9, routed 9 of 9 first try; original 24 of 27 (floor 24). d8.AC2: 3 of 3 named tests. proof-of-spec-check VALID rc=0.",
+        "Q05 routes first to NEED:E-13 (SERVED, tool mdpf_get_model_benchmarks); it is a harness MISS only because the harness compares to a dataset key."
+      ]
+    },
+    "spec_asserts": "The issuer rules every row inside its own decomposition at the drain.",
+    "world_is": "All three are judgment calls inside MX-d-8's paths that the order did not specify; none widens a grant or a served surface.",
+    "notes": "Carry to the round-8 slug: Q05's harness key should accept a need id once needs route (an instrument repair, batched)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S88",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The opal-gateway test suite is RED at the round-8 base: 33 of 34 named failures (schwab_*, asker_scope, portal_grant, data_entitlement_*, principal_cutover, local_acceptance) fail identically at base 27b37e99b3 and on MX-d-8's branch; MX-d-8 adds no failure. The full suite reads 34 failed / 657 passed on the branch; the 34th (test_asker_binding::test_resolve_asker_class) passes in isolation on both, so it is order-dependent and sorts before every discover test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pytest tests (opal-gateway) on wk-NFRA_MCPINDEX-28 @182203f735: 34 failed, 657 passed, 306s.",
+        "The 34 last-failed ids re-run at 27b37e99b3 (worktree wk-mcpindex-r8-29): 33 failed, 1 passed; the same run on the branch: 33 failed, 1 passed (test_asker_binding::test_resolve_asker_class passes in both).",
+        "Sample signatures: test_schwab_wiring 'Unknown tool: schwab_query'; \"'str' object has no attribute 'get'\"."
+      ]
+    },
+    "spec_asserts": "The drain runs the touched surface's suite once; a red there is a row under the COO's serial.",
+    "world_is": "The red predates round 8 and sits outside NFRA_MCPINDEX's cells (Schwab and entitlement surfaces). MX-r-9's release must not read it as its own regression, and its owner must be named.",
+    "notes": "Owner to name at the round-8 slug: the opal-gateway release-train holder 2.0.0_SA_COO~O. Not a gate on MX-r-9; MX-r-9 PHASE A reads the same denominator before and after."
   }
 ]
 ```

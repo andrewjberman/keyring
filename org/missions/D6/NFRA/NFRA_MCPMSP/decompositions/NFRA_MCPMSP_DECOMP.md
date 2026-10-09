@@ -378,3 +378,60 @@ ids (`MS-e<n>-<letter>`) fail it. Renamed at issuance, one to one, meaning uncha
 Unchanged: `MS-c-1`, `MS-r-1`, `MS-d-2`, `MS-s-1`. Chains as issued: A `MS-c-1 -> MS-ir-1 -> MS-ir-2`; B `MS-ig-1`;
 C `MS-sg-1`; D `MS-rq-1`; E `MS-r-1 -> MS-d-2 -> MS-dn-1`; F `MS-sh-1 -> MS-rn-1 -> MS-rx-1`; G `MS-s-1`; joins
 `MS-d-2`, `MS-dn-1`, `MS-sv-1`.
+
+
+---
+
+# ROUND 3 (enrichment, cut in ONE issuance)
+
+**Author:** `2.0.0_SA_COO~MS`, 2026-10-09 ~08:2xZ. **Input:** `1.0.0_SA_CTO~Z`'s round-2 analysis
+`ledger/ROUND_ANALYSIS.round2.md` @8a9def3720 (msg 32539), enrichment list E1-E2. Rounds 1 and 2 stay frozen as their own record.
+
+## R3.1 GROUND TRUTH MEASURED AT THE CUT (site Z, box/sitez, 2026-10-09 ~08:1xZ)
+
+- `.tools/safe-apply.sh` @95d53e2068: the naming PLAN stage renders the scoped plan (MS-s-1); the tag-authz stage
+  (`:426-427`) and the tombstone stage (`:490-491`) each re-plan the whole tree with none of the caller's args. No open
+  sibling order names `.tools/safe-apply.sh` (6 orders found, all `complete`: CT-s-3, CT-d-3, EN-t-2, EN-t-2-r2, BF-x-3, MS-s-1).
+- The deployed gateway is `aa75078e1b` (EC2_MANIFEST, 2026-10-07T21:49Z). At those bytes the refusal writer
+  (`app/asker_scope.py`) logs `user` = the CALLING identity and puts `sender_email`/`sender_domain` in `args`; `audit.py`'s
+  allowlist admits them; `admin_refusals.py` reads them from `args` only; tests `test_refusal_entry_has_sender_email_domain_no_text`
+  and `test_sender_fields_read_from_entry_args` assert it. So Z-W4-S3's remedy branch is already in the deployed code.
+- NO REAL REFUSAL RECORD EXISTS: the host `/opt/opal-gateway/audit.jsonl` holds 0 `asker_sender_refusal` entries across
+  158,094 lines (SSM 4acf5205-763d-4f81-9748-7fbf6285c1dd); positive control: the same reader counts 2 `opal_asker_query`
+  entries, last 2026-10-09T05:47:45Z (SSM cad5ecd1-7df1-4e19-a060-849be67dc94d); the file starts 2026-08-15.
+- `org/mcp/naming-place.enforce` is announced to switch ON at the next CLOUD take (msg 32548): a scratch-root test must
+  not read the main tree's switch files.
+
+## R3.2 THE CELLS -- 2
+
+| cell | from | builds / runs | write surface | risk |
+|---|---|---|---|---|
+| `MS-s-2` | E1 (Z-W7-S1) | for a SCOPED apply (a `-target`, or a planfile), the tag-authz and tombstone stages grade the SAME plan the naming plan stage renders (the caller's `-target`/`-replace`/`-var`/`-var-file`/`-refresh`/`-destroy`, or `show -json <planfile>`), never a whole-tree re-plan; an unscoped apply unchanged; six-arm scratch-root self-test with the base bytes as the difference control | `.tools/safe-apply.sh`, `.tools/tests/test_safe_apply_scoped_gates.sh` | LOCAL |
+| `MS-rr-1` | E2 (Z-W4-S3) | DIRECT ACT: one domain refusal driven through the DEPLOYED bytes' `asker_scope.py` into a temp audit file, then listed by `admin_refusals.list_refusals()`; prints the entry's `user` beside its `sender_email` and the listed `sender_email` | its deliverables only | LOCAL |
+
+**Issuer ruling at the cut (inside this decomposition):** the analysis's E2 reads "one real refusal record". None exists
+(R3.1, measured with a positive control), and none can be produced without a live sender to the pilot identity (G-MSPID,
+Andrew's act). So `MS-rr-1` settles the identity question on the deployed bytes, and the real-record read is CARRIED to
+the first round that produces a live refusal (`MS-sv-1`, re-cut after G-MSPID). No code change is cut: the remedy's
+"carry the sender args" branch is already deployed.
+
+## R3.3 DEPENDENCY EDGES AND CHAINS
+
+```
+chain A   MS-s-2           safe-apply's scoped plan for two more stages
+chain B   MS-rr-1          the refusal seam on deployed bytes
+```
+
+**Fan-out:** `N = 2 of M = 2 chains, cap 8; join_cells: 0`.
+
+## R3.4 BATTERY
+
+- `comp-schedule`, `comp-iam`, `comp-adversary` -- DECLARED-NOT-APPLICABLE: no cadence; no live IAM act (a fake
+  terraform and a fixture audit file); each criterion's base-bytes or absent-script run is its adversary read.
+
+## R3.5 RULE 24 RECORD
+
+(i) MECE: E1-E2 = 2 items -> 2 cells; the analysis's "Not in round 3" list (MS-sv-1, MS-rn-1, MS-rx-1, FWD-2, FWD-6,
+FWD-7) is subtracted whole. (ii) Same grain: one gate script, one read. (iii) One intent: the round-2 remediations close.
+(iv) What each does NOT move: MS-s-2 moves no unscoped apply and no other gate; MS-rr-1 moves no code, no host and no
+served byte.

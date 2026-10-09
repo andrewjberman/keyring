@@ -28,13 +28,15 @@
 
 ```
   FWD-1  One round of one real project is issued and worked on dell1, reaches the shared trunk
-         through site Z, and is graded on the laptop -- and Andrew can see how long each step took
+         through dell1's own branch and the laptop's integrator, and is graded on the laptop -- and
+         Andrew can see how long each step took
          DONE WHEN  EXERCISED -- one real round, traced from its PRD on the laptop to its grade
          ACCEPT     a real project's round is planned on the laptop, worked and finished on dell1,
-                    published by dell1, merged and pushed by site Z, and graded on the laptop. Nobody
-                    pushes the shared trunk from dell1. Andrew reads afterwards when each step began
-                    and ended. A step done by hand on another box, or a practice round, fails it
-         SOURCE     brief PART I, the candidate thread
+                    pushed by dell1 to its own branch, merged into the shared trunk by the laptop's
+                    integrator, and graded on the laptop. Nobody on dell1 writes the shared trunk.
+                    Andrew reads afterwards when each step began and ended. A step done by hand on
+                    another box, or a practice round, fails it
+         SOURCE     brief PART I, the candidate thread; re-based v0.22
 
   FWD-2  Andrew adds a box once, in one place, and every tool knows its name and its role
          DONE WHEN  EXERCISED -- a box added that way, and a seat started on it
@@ -52,28 +54,35 @@
          SOURCE     brief O2; Andrew-direct 2026-10-06 ~14:0xZ ("only the MSTR agents are the ones that
                     communicate between boxes")
 
-  FWD-4  A finished round from any working box reaches the shared trunk without that box pushing
-         it, and no lane falls more than one round behind
-         DONE WHEN  EXERCISED -- two boxes' rounds published and merged in the order the laptop set
-         ACCEPT     each working box publishes its finished round; site Z merges published rounds in
-                    the order the laptop set and pushes. No box holds more than one unpublished round
-                    per lane
-         SOURCE     brief O3; Andrew's confirmation (headline wording)
+  FWD-4  A finished round from any working box reaches the shared trunk without that box writing
+         the trunk, and no lane falls more than one round behind
+         DONE WHEN  EXERCISED -- two boxes' rounds pushed to their own branches and merged by the
+                    integrator
+         ACCEPT     each working box pushes its finished round to its own branch; the laptop's
+                    integrator merges every box's branch into the shared trunk on its schedule, and no
+                    box writes the shared trunk itself. No box holds more than one unpushed round per
+                    lane
+         SOURCE     brief O3; re-based v0.22
 
-  FWD-5  Publishing work from any box never puts anything into production; only a deploy a box names
-         as its own act, or the push of the shared trunk, does
-         DONE WHEN  EXERCISED -- a round carrying a pipeline script published, and nothing deployed
-         ACCEPT     a published round that contains a pipeline script changes nothing in production
-                    until a box deploys it as a named act or the shared trunk is pushed
-         SOURCE     brief O4; Andrew-direct 2026-10-07 ~07:0xZ, "Definitely drop one lane cap and
-                    shared-branch wait for the dells"
+  FWD-5  Pushing work from any box never puts anything into production except what a signed change
+         names for that exact build
+         DONE WHEN  EXERCISED -- a box push carrying a pipeline script no open change names, and
+                    nothing deployed
+         ACCEPT     when a box pushes its own branch, only a script that an open signed change names,
+                    at the exact version it signed, goes live; any other script in the push is held
+                    and written down, and the push still goes through. Merging the shared trunk
+                    deploys nothing
+         SOURCE     brief O4; re-based v0.22 (the box-push deploy and the pinned-build rule)
 
-  FWD-6  Site Z pushes a routine round on its own, and waits for Andrew on any round that would put
-         something into production
-         DONE WHEN  EXERCISED -- one routine push without Andrew, one held round released by his word
-         ACCEPT     a round with no pipeline script reaches the shared trunk without Andrew at a
-                    terminal; a round with one waits until he says so
-         SOURCE     brief O5; Andrew's card 1
+  FWD-6  Routine work reaches the shared trunk with no one's word, and only a production release of a
+         page clients can open waits for Andrew
+         DONE WHEN  EXERCISED -- one routine push and merge with no one asked, and one release of a
+                    client-facing page held until his word
+         ACCEPT     a push of any box's work, and its merge into the shared trunk, happen without
+                    anyone at a terminal; a production release that changes a page a partner firm or
+                    client can open waits until Andrew says so, and a release of a staff-only page
+                    does not
+         SOURCE     brief O5; re-based v0.22 on the push law
 
   FWD-7  Anyone can see which box runs each project or workstream, and none is split across boxes
          DONE WHEN  EXERCISED -- the placement read for every live project and workstream
@@ -864,6 +873,11 @@ since v0.21 changed the path these four outcomes describe:
 Site Z no longer merges or pushes for the cluster, and a routine push waits for no one. Nothing is retired. FWD-6 is not obsolete: its
 promise (routine work moves alone; only what Andrew reserved waits for him) stands, re-pointed at what he reserved.
 **The ratified-text half is re-owed** (`3.0.0_SA_CVO`, L4-R), because this changes the ENDPOINT.
+
+**Placement (on `3.0.0_SA_CVO`'s v0.22 review @33879bb6bf, REFUSED on placement only):** the four re-based cards below
+REPLACE FWD-1, FWD-4, FWD-5 and FWD-6 IN PLACE in the ENDPOINT section above, so the ratified half binds the new text. This
+addendum keeps the why and the record of the change.
+
 
 ```
   FWD-1  One round of one real project is issued and worked on dell1, reaches the shared trunk

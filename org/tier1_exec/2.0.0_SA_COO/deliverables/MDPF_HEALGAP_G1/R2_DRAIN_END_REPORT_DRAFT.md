@@ -22,7 +22,7 @@ Before FINAL: `round-close-check.py --project MDPF_HEALGAP --round 2` must read 
 
 | act | entry | state |
 |---|---|---|
-| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | L1-L3 proven 16:18-16:20Z (CodeSha256 `NFG8dbEL..` = build); L4 HELD on the 06:00Z fire. `PENDING`: `meta/2026-10-09-result.json` COMPLETE, stamp, silver fired, satellites as_of 2026-10-09 |
+| 1 runner code (HG-t-3 + `induce` drop-feed) | `20261008T1618Z_healgap-r2-act1-runner-code-20261008` | CLOSED 2026-10-09 07:1xZ, 4 of 4 legs. L4 (`R2_CHECKS/hg_r2_act1_l4.py --date 2026-10-09`): L4-OK -- result COMPLETE, 3 feeds arrived (the first result object written live); stamp 3 feeds, model_detail 93; silver first event 06:01:03Z; satellites as_of 2026-10-09 at 07:00:19Z. Controls: 10-08 L4-BAD; 10-07 SILVER/STAMP ok. Act 3 precondition (branch A) MET |
 | 2a event age 900 (HG-t-4) | `20261008T1611Z_healgap-r2-act2a-event-age-20261008` | CLOSED 16:13Z |
 | 2b fire time (HG-t-5) | -- | HELD, not applied (above) |
 | 3 induced PARTIAL + same-day repair (FWD-2, FWD-3), 2026-10-10 | half @1f10c367ce, CTO half msg 1013 | `PENDING`. Precondition: act 1 L4 reads branch A. Step 1 ~2026-10-09 20:00Z (announce to `0.0.0_AB_MSTR~DELL1`, `PutTargets` drop-feed:rebalancer_accounts). Staged read 2026-10-09 01:2xZ: daily rule has 1 target, input `{"mode":"pull"}` |
@@ -49,7 +49,12 @@ read (COMPLETE, R2-2 before/after key sets of the two present feeds), the 11:3xZ
 
 - **R2-1 (D1-W3-S1) -- PULLED FORWARD, not round 3:** decomposition round 2 amendment A1 (cell HG-t-8), carried by
   `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.healgap-r2-1-runner-reads-own-result.md` @15091a3a96 (operator's word at
-  this terminal ~05:3xZ; the round-2 issuance was closed to new files). Apply after 07:10Z, before act 3. `PENDING`: the apply's proof.
+  this terminal ~05:3xZ; the round-2 issuance was closed to new files). LANDED 2026-10-09 ~07:4xZ (edit ba88934f7b, close 74b0ca41c8):
+  live `cot-rebalancer-runner-write-cot` 4 statements, `ReadOwnRunResult` s3:GetObject on `.../cottonwood/meta/*-result.json` (firm read via
+  `one(local.monolith_source_scopes.blackdiamond)`, CTO ruling H, after the naming limb refused the typed firm -- row D1-S9). Issuer
+  validated: live policy read, `hg_t8_iam.py` IAM-OK, proof-of-spec C1-C8 VALID rc=0. C5a over all five identity carriers (allow /
+  implicitDeny x2 / explicitDeny). C5b, the EXERCISED allow arm, is act 3's `--repaired` read (healed_at non-null). Rows D1-S10, D1-S11:
+  iam:SimulatePrincipalPolicy is denied to the dell1 principal.
 - **D1-S7 (b) -- RULED** (CTO batch @6c538a0bfd section D): the satellites producer keeps cron(0 7) and gains ONE scheduled 12:00Z fire
   that reads the runner's completion stamp and rebuilds only when today's bronze has landed (else one log line, nothing served).
   HG-t-5 is freed under it. Round-3 cells: the 12:00Z fire (producer owner 0.6.2_AE_PartnerETL's code; apply by

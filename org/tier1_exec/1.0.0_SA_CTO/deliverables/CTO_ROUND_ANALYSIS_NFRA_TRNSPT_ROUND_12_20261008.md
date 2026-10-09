@@ -95,3 +95,137 @@ the 365-day backfill. The CVO's slug for rounds 15 and 16 is owed to this seat; 
 | E3 | The 365-day backfill, run by `0.7.0_AE_CloudOps~DELL2` under the pair (CTO half @a22adefb0e, AMENDMENT 1 @9160ba58fc) | simulation passes first; listed, admitted and gold rows printed (counts only); prior silver VersionIds committed before |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-09 ~06:5xZ) -- row NFRA_TRNSPT-D2-S9: the backfill's precedent set stays EMPTY
+
+Asked by `2.0.0_SA_COO~T2` msg 2722. Both served runs are DONE:
+- the Apple re-write is CLEAN (@38c9f3967f);
+- the 365-day backfill read on the stored bytes @ff31f846ed: listed 453, landed 24, silver 6 held out 6, gold 0, inside the signed write set.
+
+**RULING: keep it empty.** The residual check withholds every row, and at least one of those rows holds a real name, so it is working as a privacy
+guard. Widening the allowlist to produce precedent would trade privacy for drafting input that FWD-10 does not need. A widening is opened only
+when a FWD needs precedent, and it needs a privacy review approved by the CVO (the Apple precedent). None is ordered.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-09 ~08:2xZ) -- round 17 carried runs closed; what NFRA_TRNSPT's next round covers (`~T2` msg 2890)
+
+**Read:** `org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R17_CARRIED_RUNS_CLOSE.md` @b85c74058c.
+- a17 is COMPLETE: Apple has 17 turns in 9 meetings.
+- b17 is DONE: gold 0 rows, D2-S9 ruled empty (ADDENDUM 5). Its proof is owed by the applier.
+
+### Grade state of the endpoint (PRD v0.3, 11 FWDs)
+
+| FWD | state | basis |
+|---|---|---|
+| FWD-7 | **REALIZED** | ADDENDUM 2 |
+| FWD-10, FWD-11 | **MOVED** to IRPT_ANLREQ (msg 2460) | graded there (commentary FWD-3, package FWD-1). Not graded in NFRA_TRNSPT |
+| FWD-1 to FWD-6, FWD-8, FWD-9 | **UNGRADED** in this seat's record | no grade on this fabric's record. `STATUS.md` names partial evidence (FWD-1's trace, FWD-8's second reader with no principal) |
+
+**NFRA_TRNSPT is NOT at CLOSED:** 8 FWDs carry no grade.
+
+### Ruling: round 18 is a COVERAGE round, then the next rectangle
+
+1. **Cell TR-g-18 (`~T2`, read-only):** one evidence row per ungraded FWD (1-6, 8, 9). Each row names the act that exercises it now, on demand, with its
+   invocation and its read. Where no act exists, it names the missing hop. Output: `R18_COVERAGE.md`. **This seat grades each row from it**, REALIZED or
+   NOT REALIZED with the hop, in the analysis that answers it.
+2. **Two known gaps are cut in the same issuance, because they need no coverage read to know they are open:**
+   - **FWD-8:** the second named reader gets its AWS principal. Andrew named the readers; the principal is minted by name through `name()`, under a
+     pair. It is a laptop identity-allow-list act if dell2 cannot write it (dell2 IAM limits), so the issuer routes it through MSTR.
+   - **FWD-2:** the Research Meeting's arrival is read from the ordinary scheduled run, not a seat-started one. The schedule is read by name.
+3. **FWD-10 and FWD-11 get no NFRA_TRNSPT cell.** A PRD addendum marks them MOVED at the next ENDPOINT change. It does not need its own re-sign now.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-09 ~08:3xZ) -- the Teams pull was never applied (`~T2` msg 2903, `R18_FWD2_SCHEDULED_READ.json` @3f7583537b)
+
+**Measured by `~T2`:**
+- `pull.tf:1` is DESIRED ONLY. `teams-global-transcripts-pull-lambda` and its hourly rule do not exist (153 rules scanned; the outlook pull is live as the
+  control).
+- `research_meeting` is allowlisted and has never landed.
+- **One missing hop is shared by FWD-1, FWD-2 and FWD-3's new-landing arm.**
+
+**RULING: round 18 cuts the apply, in two steps under one pair.** It is not deferred to round 19.
+
+1. **Step 1, a preconditions read (no write), which gates step 2.** The file's own header names the gates:
+   - S04: the gateway's transcript tools are live. Read one tool call by name.
+   - S05: the stored sign-in's lifetime is measured. Print the secret's token expiry, never its value.
+   - The KMS path: the writer role's `aws_kms_grant` on the transcripts key needs `kms:CreateGrant`. Dell2's key access is Decrypt-only (msg 2445), so
+     simulate first. A refusal routes to `0.0.0_AB_MSTR~DELL2` as a laptop act, and the step names it. It is never worked around.
+
+   Any precondition unmet means STOP, with the missing one named.
+2. **Step 2, the apply:** `pull.tf` through `safe-apply`, by `0.7.0_AE_CloudOps~DELL2`.
+   - The names are `name()` output (the file already records them).
+   - The plan carries pull.tf's resources only. Any other line in the transcripts root means STOP (the shared-root rule @29a9a2c684).
+   - **The writer is a third principal.** It writes only `teams/transcripts/*` and is not added to the reader variable. The pair names it.
+   - It has its own cron (C-MORATORIUM): no alarm, no SNS.
+3. **The proof is FWD-2's: the first scheduled fire that lands `research_meeting`.**
+   - It is not a wait. A seat invokes the function once at apply to prove the hop, and the scheduled fire is the acceptance (the organic arm).
+   - FWD-1 and FWD-3's new-landing arm are re-read on the same landing.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~08:5xZ) -- grades on the round-18 coverage (`~T2` msg 2936, `R18_COVERAGE.md` @ed84ea7977, 8 of 8 rows)
+
+### Grades
+
+| FWD | grade | the hop that is missing (from the coverage row) | where it is cut |
+|---|---|---|---|
+| FWD-1 | NOT REALIZED | the Teams pull (no scheduled landing) | TO-APPLY-p18, GO under half @b972f130c9 |
+| FWD-2 | NOT REALIZED | the Teams pull, and the Research Graph 403 | p18, plus round 19: the 403's permission read by name |
+| FWD-3 | NOT REALIZED | the new-landing arm rides the Teams pull | p18 |
+| FWD-4 | NOT REALIZED | the "expired" cause is not reachable by any act | round 19 cell |
+| FWD-5 | NOT REALIZED | no analyst route: the scoped wiped-silver reader role does not exist | round 19 cell, after W1-S7 is fixed (below) |
+| FWD-6 | NOT REALIZED | no act exists (PowerPoint intake) | round 19 cell |
+| FWD-7 | REALIZED | -- | ADDENDUM 2 |
+| FWD-8 | NOT REALIZED | TO-APPLY-a18 is at the laptop (half @f2ec32dea4) | the laptop through MSTR |
+| FWD-9 | NOT REALIZED | no act (one question across meetings, updates and commentary) | round 19 cell |
+| FWD-10, FWD-11 | MOVED | -- | IRPT_ANLREQ |
+
+### The two privacy rows
+
+1. **W1-S8 is ARMED (disarm owner `~T2`).** `read_meeting.py` prints held-out Research rows that `research_read.py` withholds. That is a reader-side leak:
+   a seat could copy withheld content into a log, which FWD-8 forbids.
+   - **Ruling:** both readers call ONE shared holdout filter (the one `research_read.py` uses). `read_meeting.py` is fixed in round 19 before its next use,
+     with a test that a held-out row is never printed.
+   - **Until the fix lands, `read_meeting.py` is not run** against Research silver.
+2. **W1-S7: Teams silver is UNWIPED while PRD C-TIERS says silver is wiped.**
+   - **The exposure today is bounded.** The narrower wiped-silver reader does not exist (coverage row FWD-8 (b)), so only the named original readers can
+     read Teams silver. This is a spec breach, not a live leak.
+   - **Ruling:**
+     - Round 19 re-runs the wipe over the existing Teams silver objects. That is a rewrite of served objects, so it needs a pair whose blast radius names
+       every key.
+     - From the p18 apply on, new silver lands through the wipe (COO half: "the same wipe for silver").
+     - **No narrower reader role (FWD-5) is created until every Teams silver object reads wiped.**
+
+### Enrichment list (round 19)
+
+1. W1-S8: the shared holdout filter in `read_meeting.py`, plus its test.
+2. W1-S7: the re-wipe of existing Teams silver, under a pair.
+3. FWD-2: the Research Graph 403, read by name for the permission it lacks.
+4. FWD-4: an on-demand act that reaches the "expired" cause.
+5. FWD-6: PowerPoint intake, one file kept byte-exact.
+6. FWD-9: one question answered across meetings, updates and commentary. Read-only, by a named reader.
+
+FWD-5's reader role follows item 2. At most three mechanical criteria per build order.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8.1 (~08:5xZ, `~T2` msg 2941): correction -- new Teams silver does NOT land wiped
+
+ADDENDUM 8's line "From the p18 apply on, new silver lands through the wipe" rested on a false COO line. `parse_silver.py:5-6` reads "No PII wipe on transcripts
+this round".
+
+**RULING: (a), apply p18 now, with three conditions.**
+- **Why (a):** Teams silver holds the same content as bronze, which is the raw tier. Both are readable only by the named original readers through the key
+  policy, so unwiped new silver adds no reader and no reach. FWD-1, FWD-2 and FWD-3 need the pull.
+
+**Conditions:**
+1. **The narrower-reader gate is unchanged and is now explicit.** No principal outside the named original readers is granted on `teams/transcripts/*` until both
+   of these hold:
+   - every existing Teams silver object reads wiped (the W1-S7 re-wipe);
+   - the pull wipes on landing.
+2. **Round 19 adds the wipe-on-landing to the pull as item 2b,** with a planted-token test (the C-WIPE-GATE pattern), before FWD-5's reader role.
+3. **PRD C-TIERS is breached until item 2b ships.** The breach is named in the NFRA_TRNSPT record and is not silent: row W1-S7 stays OPEN.
+
+-- 1.0.0_SA_CTO~DELL2

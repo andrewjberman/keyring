@@ -123,6 +123,9 @@ if [ "${1:-}" = "--self-test" ]; then
       "! bash '$0' --verify-index \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   chk "--verify-merge refuses a non-merge commit" \
       "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
+  # GS-t-3: the fast lane (lands by commit-tree, so no commit hook fires) runs the scoped tree check on the merged bytes.
+  chk "the fast lane runs the scoped tree check on its private index and refuses by it" \
+      "grep -q 'missions-tree-index.py\" check --staged --act-from-env _SM_ACT' '$0' && grep -q 'REFUSED BY THE TREE CHECK ON THE MERGE' '$0'"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
   echo "  STOP: BLIND SPOT, STATED: every arm above is a REFUSAL or a structural check. This"
   echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
@@ -558,9 +561,18 @@ _sm_fast_lane() {
       git rev-parse --path-format=absolute --git-common-dir > "$_SM_FL_DIR/commondir"
       GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" git read-tree "$t" || { echo "safe-merge: REFUSED -- could not build the private index" >&2; exit 1; }
       rc=0; STAGED="$paths" GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$GATE" || rc=$?
+      if [ "$rc" -ne 0 ]; then
+        rm -rf "$_SM_FL_DIR"; _SM_FL_DIR=""
+        echo "safe-merge: *** REFUSED BY THE ROW GATE ON THE MERGE'S OWN PATHS (rc=$rc). *** Nothing landed; FIX ON THE BRANCH, then re-run." >&2
+        exit 1
+      fi
+      # the project-tree check (GS-t-3) on the same merged bytes: --staged reads the private index, --act scopes the
+      # refusal to the projects the merge's graded paths touch; every other violation prints STANDING and never refuses.
+      _SM_ACT="$paths"; export _SM_ACT
+      GIT_DIR="$_SM_FL_DIR" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act-from-env _SM_ACT || rc=$?
       rm -rf "$_SM_FL_DIR"; _SM_FL_DIR=""
       if [ "$rc" -ne 0 ]; then
-        echo "safe-merge: *** REFUSED BY THE ROW GATE ON THE MERGE'S OWN PATHS (rc=$rc). *** Nothing landed; FIX ON THE BRANCH, then re-run." >&2
+        echo "safe-merge: *** REFUSED BY THE TREE CHECK ON THE MERGE'S OWN PATHS (rc=$rc). *** Nothing landed; FIX ON THE BRANCH, then re-run." >&2
         exit 1
       fi
     else

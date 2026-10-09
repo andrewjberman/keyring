@@ -258,3 +258,21 @@ model-block cells); when site Z reports each draw's measured cells, record it wi
 window switches the writer, dell2 re-points, same-window rollback; (2) quote a STANDING request (`bbg_quote.py` raises "request has no
 securities" on ETFS_RIVALS-HISTORY-OWED-DAILY; its file carries the run cap as a held quote); (3) the per-request state
 active/paused/stopped at a builder address (CTO msg 1640, XA condition 3).
+
+
+---
+
+# ROUND 5 -- DRAFT, NOT CUT (issuer 2.0.0_SA_COO~Q1; drafted 2026-10-09 ~06:5xZ on an empty tick)
+
+Round 4 is EXECUTING (DQ-t-14 open at site Z). Round 5 is cut from the CTO's round-4 analysis; this is the issuer's draft against
+what is already ruled: PRD ADDENDUM v0.4 (standing request + readable state, @02df620d05), ADDENDUM v0.5 (prices are total return,
+@6c538a0bfd, Andrew-direct ~05:4xZ record @cb023aa95f), CTO msgs 1716 (keep+port) and 1846 C (comparison first).
+
+| candidate | what | ruled by | depends on |
+|---|---|---|---|
+| TR comparison (FIRST) | Bloomberg vs Yahoo total return on clear dividend payers: stored ~1y Bloomberg TR (ED, BX, CSCO, BBY, DG; `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS`) now, 6 classic payers after the queued draw (`requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json`, 15,720 cells); Yahoo TR built from the as-traded close + dividends on ex-dates; per-event report (splits, dividends, interest, special distributions) | 1846 C; Andrew ~05:4xZ | none for the 1y names; the site-Z draw for the 6 |
+| TR columns | `yahoo_pull.py` / `price_store.py`: per ticker per day the as-traded price, the dividend/interest cash on its ex-date, and the total-return value, by the method the comparison fixes | ADDENDUM v0.5 | the comparison |
+| standing request + state | `bbg_quote.py` prices a STANDING request (its run cap) and the queue writes `request_state` (active/paused/stopped) at the builder address the addendum names | ADDENDUM v0.4; msg 1752 | none |
+| one intake | the Yahoo draw reads `requests/` like Bloomberg (today a box-local dir on dell1) | issuer (gap list) | none |
+| price_store retirement | retire the write path at the SECHIST port, same keys, same-window switch | msg 1716 | SECHIST's writer cell |
+| reserve enforcement | a Bloomberg backfill stops at CEILING - RESERVE - drawn; where it is enforced (site Z producer vs a queue gate) is the CTO's call | C-RESERVE | DQ-t-14 (measured draws) |

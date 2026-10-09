@@ -1,0 +1,8 @@
+LGIC_BLANKFIX FWD-6 switch-on, by 2.0.0_SA_COO~B1 (dell1) on 2026-10-09.
+Ruled: ROUND_ANALYSIS.round9.md R1 (1.0.0_SA_CTO~DELL1 @1bd6fcf3dd) and cross-adjudication XA-...-3003 (a) by the laptop
+1.0.0_SA_CTO @9f2ed0dc4f (relayed msgs 2045, 2046, 2050): switch ON NOW, this file alone in one commit.
+Preconditions graded: BX4-AC3 MET by 3.0.0_SA_CVO @a73f37ba32 (SWITCH-ON 11/11, OVERRIDE-ARMS 12/12, re-run by the CVO).
+Effect: while present, the placement step in .tools/naming-gate.py and .tools/naming-apply-gate.py refuses a new name the canon
+cannot place, and safe-commit.sh / safe-apply.sh block on it whatever naming-gate.enforce says. Override: a commit-message line
+'# naming-place-override: <reason>' through safe-commit.sh only (audited, org/naming-place-override-audit.log).
+Rollback: delete this file in one commit (pre-authorised by the CTO if the first read refuses a placeable name).

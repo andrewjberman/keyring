@@ -4135,3 +4135,153 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-D2-W55-S1 -- The ad-hoc {} first fire wrote nothing: 2026-10-08 is SOURCE_LAG until the silver lands (~09:47Z)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W55-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~55",
+  "surfaced_at": "2026-10-09T07:52:00Z",
+  "one_line": "The ad-hoc {} first fire ordered by the issuer at 07:50Z wrote nothing: 2026-10-08 is SOURCE_LAG (no silver balance partition yet), so no A1 to A7 read exists until the silver lands (expected ~09:47Z) and a fire runs after it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-78 step 8 and the issuer's ruling: fire the first fire ad hoc with {} now and read A1 to A7 from it; the face allows at most one ad-hoc first fire.",
+  "world_is": "MEASURED: RequestId a692669c-6155-4dae-ab6f-acce85073c95, StatusCode 200, no FunctionError, REPORT Duration 26789.56 ms, Max Memory Used 304 MB; log '2026-10-08 SOURCE_LAG: no balance partition', 'lots newest landed: account_activity_daily=None ...'; response days [] rows {} class_rows {} lots_rows {}. Silver dim_balance date=2026-10-07 landed 2026-10-08T09:46:56Z, so date=2026-10-08 is expected ~2026-10-09T09:47Z; polled absent for all six silver tables through 07:45Z. The five gold prefixes still hold 0 objects (four new) and 1132 (returns). The one ad-hoc fire allowed by the face is spent; the first fire that can be read is the scheduled 11:41Z fire (or a further ad-hoc ordered by the issuer after the silver lands).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/R37_APPLY_RECORD.json (adhoc_empty_fire)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py select_days / SOURCE_LAG path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W55-S2 -- The 2026-10-07 returns manifest differs from the prior function's in one line (calendar_source); the data is byte-equal
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W55-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~55",
+  "surfaced_at": "2026-10-09T08:30:00Z",
+  "one_line": "The 2026-10-07 returns manifest.json rewritten by the R37 function differs from the one the prior function wrote in one line, calendar_source; the returns data.parquet is byte-equal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The R37 packet: the returns prefix is written exactly as before, byte-identically, and A4 reads DELTA=0 on the returns partition.",
+  "world_is": "MEASURED: account_return_daily/date=2026-10-07/data.parquet sha256 eb3e2627722db6a44d904abe155eb7692ffd9d11c891ee742c9b7f3acf569d3b before (version SvarXXMC..., 2026-10-08T11:42:19Z) and after (version aduYeE6E..., 2026-10-09T08:18:31Z) the backfill fe78f9ad-2bb7-4b51-b7be-46be579745c8. manifest.json sha256 319b3ac0... -> 04dc0209...; diff is one line: calendar_source NYSE/hardcoded-fallback-2024-2027 -> NYSE/hardcoded-fallback-2010-2027, the label of the re-pinned lib/trading_calendar.py (pin 4b766e4e2d). No data byte moved. A consumer that reads the manifest's calendar_source as a string sees the new label on any returns day the new function writes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/A4_RESULT_20261007.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~55/R37_APPLY_RECORD.json (first_fire.a4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W57-S1 -- The Orion session token had 6 minutes left at the pull, under round 37's 30-minute floor, so the copied script's floor was lowered to 2 minutes for th
+
+```json
+{
+  "id": "IRPT_DASHBD-W57-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~57",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The Orion session token had 6 minutes left at the pull, under round 37's 30-minute floor, so the copied script's floor was lowered to 2 minutes for this one read-only call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: start from round 37's orion_gross_fee_pull.py; that script refuses a token with under 30 minutes (MIN_JWT_MINUTES) left.",
+  "world_is": "MEASURED 2026-10-09T06:56Z reading only the non-secret fields of s3://<legacy bucket>/orion/jwt/current.json: issued 2026-10-08T21:01:50Z, expires 2026-10-09T07:02:50Z (ttl_seconds 36060). The floor refused at 0:06:32. orion_gross_silver.py in ~57 sets pull.MIN_JWT_MINUTES from a --min-jwt-minutes argument (default 30) and was run once with 2; one Generate call completed (3,129 rows) before expiry. The copied pull script is unedited. The token is a ~10 hour browser capture, so any later pull in this window will find it expired until it is re-captured; no credential was refreshed or written.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/orion_gross_silver.py (--min-jwt-minutes)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/ORION_GROSS_SILVER.json (pulled_at_utc 2026-10-09T06:58Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W57-S2 -- address() for master 4698 silver resolves to opal-data-assets, a third bucket beside the legacy Orion silver bucket (opal-data-inf) and the firm bucke
+
+```json
+{
+  "id": "IRPT_DASHBD-W57-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~57",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "address() for master 4698 silver resolves to opal-data-assets, a third bucket beside the legacy Orion silver bucket (opal-data-inf) and the firm bucket (opal-data-inflection), so a reader of the gross silver must take the address from the builder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 2: resolve the silver address with lib/opal_naming.py address() for master 4698; the scope row's own note says the Orion bytes land under the routed legacy alias bucket opal-data-inf.",
+  "world_is": "MEASURED 2026-10-09: address('orion','4698','silver','account_performance_gross','snapshot_date=2026-10-08') printed s3://opal-data-assets/orion/4698/silver/account_performance_gross/snapshot_date=2026-10-08; the two objects (data.parquet 41,091 bytes, manifest.json 852 bytes) were listed there after the write. The landed account performance the adapter reads is under opal-data-inf (silver/api_dims/performance/). The write used the builder output as printed; nothing was typed. A consumer that derives the bucket from the legacy alias (as round 37's adapter does for positions) will not find this table; the tie-out cell should read the record's address.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~57/ORION_GROSS_SILVER.json (builder_call, objects_listing)",
+      "infra/logic/registry/scopes.json (key 4698 note)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W56-S1 -- The face said copy round 37's adapter and make it read the keys; reading the gross from the landed silver (no live CSVs) left the fee-slice and miss-c
+
+```json
+{
+  "id": "IRPT_DASHBD-W56-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~56",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "one_line": "The face said copy round 37's adapter and make it read the keys; reading the gross from the landed silver (no live CSVs) left the fee-slice and miss-class code with no input, so ~56's adapter omits them and they remain in ~53's copy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 2: copy round 37's adapter into ~56 and make it read account_boundary from the ratified file; step 3: gross from the landed silver, net from the landed net, same sample.",
+  "world_is": "MEASURED 2026-10-09: round 37's adapter read four live Orion CSVs (gross, net control, Unified Account Dim fees, Billing Dim). With no live pull, the gross and net come from landed parquet, and the fee-slice section (Unified/Billing CSVs, supervision flag) and the live-gross miss classes have no landed input, so ~56/orion_account_return_daily.py does not carry them and orion_sources.json drops fee_sources. They are unchanged in ~53/. Ran from the repo root with --registry-key inflection --end 2026-10-08: 562 account-windows, gross 418 and net 421 within 0.35 pp; the net equals round 36's published headline and the gross equals round 37's plus_departing variant, so the landed gross reproduces the live gross on this sample. The headline flow set is now the ratified file's (NNA entries plus account_boundary entries, tax pair on the before-tax basis); the NNA-only counts (net 293, gross 291) are printed beside it as flow_set_probe. DB-b-81 (fee slices) should copy from ~53/, not ~56/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~56/INF_TIEOUT_R38.json (flow_set_probe, gross, net)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json (flow_variant_within plus_departing 418)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W60-S1 -- The face said count orion_overrides (Orion value differs from inferred); the 36 Orion-readable accounts were never landed per account, so the count is held at its lower bound 0
+
+```json
+{
+  "id": "IRPT_DASHBD-W60-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~60",
+  "surfaced_at": "2026-10-09T09:15:00Z",
+  "one_line": "orion_overrides cannot be measured: no landed artifact maps the 36 Orion-readable accounts to the inferred billed state; INF_FEE_SLICES_R40.json carries 0 as a held lower bound (0..36).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: count orion_overrides, accounts where Orion's IncludedInBilling differs from the inferred state.",
+  "world_is": "Round 37's per-account Orion CSVs were scratch (orion_gross_fee_pull.py writes them under a scratch dir); the committed record holds aggregates only: 36 accounts 'Included in Billing' (billed 36, unbilled 0, fees 78182.70) and the inferred cut 509 billed / 53 unbilled (fees 100.54). No hashed-key list of the 36 exists, and a live re-pull is barred by this order. The override count is therefore 0 as a held lower bound with upper bound 36; INF_FEE_SLICES_R40.json states this in orion_overrides_claim. The checker accepts any int >= 0, so DB40-1-AC1 passes without measuring it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json (fee_detail.billed_accounts, by_bill_presence)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~59/INF_BILLING_FLAG.json (figures_from)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~60/INF_FEE_SLICES_R40.json (orion_overrides_claim)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

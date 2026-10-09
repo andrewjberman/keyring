@@ -25,6 +25,11 @@ USAGE
                                               A CVO act by ruling; the tool does not gate that,
                                               the lane does.
   surprise-corpus-validate.py --json          machine-readable summary on stdout
+  surprise-corpus-validate.py --act PATH ...  (repeatable) SCOPED TO THE ACT: a NEW failure or malformed
+                                              block in a document NOT named by an --act prints
+                                              `STANDING <CODE> surprise-corpus <doc> <id> <pointer>` and
+                                              does not refuse; in an act document it refuses as today. A
+                                              RESOLVED tuple and a missing baseline always refuse.
 
 Every run prints its DENOMINATORS: documents, rows, malformed blocks, failures, baseline size,
 new, resolved. A denominator certifies the SWEEP, not the schema -- a wrong schema passes
@@ -58,13 +63,38 @@ def _kind(path: str) -> str:
     return "REMEDIATION" if "REMEDIATION" in os.path.basename(path).upper() else "INVESTIGATION"
 
 
+SCHEMA_RELS = {"INVESTIGATION": "org/surprise_channel/schemas/investigation_item.schema.json",
+               "REMEDIATION": "org/surprise_channel/schemas/remediation_row.schema.json"}
+
+
+def _graded_text(root: str, rel: str):
+    """A support file's text from the SAME index the documents are graded from (honours GIT_INDEX_FILE and
+    GIT_DIR, as `git cat-file` does), so a schema or baseline staged or merged in is the one used. Falls back
+    to the working tree ONLY where the index read is impossible, with a WARN on stderr -- as the documents do.
+    Returns None when neither holds the file."""
+    try:
+        p = subprocess.run(["git", "cat-file", "blob", ":" + rel], cwd=root, capture_output=True)
+        if p.returncode == 0:
+            return p.stdout.decode("utf-8")
+    except OSError:
+        pass
+    path = os.path.join(root, rel.replace("/", os.sep))
+    if os.path.exists(path):
+        print("[surprise-corpus] WARN: could not read %s from the git index; falling back to the WORKING "
+              "TREE copy." % rel, file=sys.stderr)
+        with open(path, encoding="utf-8") as fh:
+            return fh.read()
+    return None
+
+
 def _schemas(root: str) -> dict:
-    base = os.path.join(root, "org", "surprise_channel", "schemas")
-    with open(os.path.join(base, "investigation_item.schema.json"), encoding="utf-8") as fh:
-        inv = json.load(fh)
-    with open(os.path.join(base, "remediation_row.schema.json"), encoding="utf-8") as fh:
-        rem = json.load(fh)
-    return {"INVESTIGATION": inv, "REMEDIATION": rem}
+    out = {}
+    for kind, rel in SCHEMA_RELS.items():
+        text = _graded_text(root, rel)
+        if text is None:
+            raise FileNotFoundError("%s: not readable from the index and absent on disk" % rel)
+        out[kind] = json.loads(text)
+    return out
 
 
 CHANNEL_FILE_RE = re.compile(r"(INVESTIGATION|REMEDIATION)_v[^/\\]*\.(md|json)$")
@@ -246,11 +276,14 @@ def sweep(root: str):
     docs = _channel_docs(root)
     stats = {"documents": 0, "rows": 0, "malformed_blocks": 0, "failures": 0}
     failures = []
+    sweep.malformed_docs = {}
     for path in docs:
         stats["documents"] += 1
         rel = os.path.relpath(path, root).replace("\\", "/")
         rows, bad = _rows(_read_doc(root, path, rel), raw_json=path.lower().endswith(".json"))
         stats["malformed_blocks"] += bad
+        if bad:
+            sweep.malformed_docs[rel] = bad
         validator = validators[_kind(path)]
         for row in rows:
             stats["rows"] += 1
@@ -268,11 +301,10 @@ def _load_baseline(root: str):
     DELETED baseline file would grade as "matches the baseline". Presence is explicit: None means
     absent and is refused regardless of what the corpus looks like; an empty set means a present
     file that says "zero known failures", which is the state normalization is aiming for."""
-    path = os.path.join(root, BASELINE_REL)
-    if not os.path.exists(path):
+    text = _graded_text(root, BASELINE_REL)
+    if text is None:
         return None
-    with open(path, encoding="utf-8") as fh:
-        data = json.load(fh)
+    data = json.loads(text)
     return {tuple(t) for t in data.get("tuples", [])}
 
 
@@ -335,6 +367,24 @@ def index_rows(root: str) -> list:
     return lines
 
 
+def _act_paths(argv: list) -> list:
+    """Every `--act PATH` (repeatable), normalised to the index spelling (forward slashes, no `./`)."""
+    acts = []
+    for i, a in enumerate(argv):
+        if a == "--act" and i + 1 < len(argv):
+            v = argv[i + 1].replace("\\", "/")
+            acts.append(v[2:] if v.startswith("./") else v)
+    return acts
+
+
+def _project_of(rel: str) -> str:
+    m = _PROJECT_RE.search(rel)
+    return (m.group(1) or m.group(2)) if m else "<unknown>"
+
+
+_PROJECT_RE = re.compile(r"^org/surprise_channel/([^/]+)/|^org/missions/[^/]+/[^/]+/([^/]+)/surprise-channel/")
+
+
 def main(argv: list) -> int:
     root = _root()
     if "--index" in argv or "--index-rows" in argv:
@@ -369,6 +419,18 @@ def main(argv: list) -> int:
     new = sorted(current - baseline)
     resolved = sorted(baseline - current)
     known = sorted(current & baseline)
+    acts = set(_act_paths(argv))
+    malformed_docs = dict(getattr(sweep, "malformed_docs", {}))
+    if acts:
+        # SCOPED TO THE ACT: a NEW failure or malformed block in a document the act does not carry is a
+        # bystander's, printed STANDING and not refused. A RESOLVED tuple always refuses (re-baselining is a
+        # deliberate CVO act).
+        new_scoped = [t for t in new if t[0] in acts]
+        new_standing = [t for t in new if t[0] not in acts]
+        mal_act = sum(n for d, n in malformed_docs.items() if d in acts)
+        mal_standing = {d: n for d, n in malformed_docs.items() if d not in acts}
+    else:
+        new_scoped, new_standing, mal_act, mal_standing = new, [], stats["malformed_blocks"], {}
 
     summary = dict(stats, baseline=len(baseline), new=len(new), resolved=len(resolved), known=len(known))
     if as_json:
@@ -378,25 +440,39 @@ def main(argv: list) -> int:
               "baseline=%d known=%d new=%d resolved=%d"
               % (stats["documents"], stats["rows"], stats["malformed_blocks"], stats["failures"],
                  len(baseline), len(known), len(new), len(resolved)))
-        for t in new:
+        for t in new_scoped:
             print("  NEW      %s  %s  %s  %s" % tuple(t))
         for t in resolved:
             print("  RESOLVED %s  %s  %s  %s  <- re-baseline deliberately (CVO), a passing run "
                   "never shrinks the set" % tuple(t))
         for t in known:
             print("  KNOWN    %s  %s  %s" % (t[0], t[1], t[2]))
+    for t in new_standing:
+        print("STANDING %s surprise-corpus %s %s %s" % (_project_of(t[0]), t[0], t[1], t[2]))
+    for d, n in sorted(mal_standing.items()):
+        print("STANDING %s surprise-corpus %s malformed %d block(s)/item(s) that do not parse"
+              % (_project_of(d), d, n))
+    if acts:
+        print("[surprise-corpus] SCOPE: act_documents=%d in-act findings=%d (new=%d malformed=%d) "
+              "STANDING=%d (new=%d malformed_docs=%d) resolved=%d"
+              % (len(acts), len(new_scoped) + mal_act, len(new_scoped), mal_act,
+                 len(new_standing) + len(mal_standing), len(new_standing), len(mal_standing), len(resolved)))
 
-    if stats["malformed_blocks"]:
+    if mal_act:
         # RC4 hole 2 (CVO~A re-grade): the malformed count was printed and never graded. A block that
         # does not parse is a row nobody can validate; it fails the pass, not just the display.
         print("[surprise-corpus] REFUSED: %d malformed block(s)/item(s) in the corpus. A row that does "
-              "not parse is not a known failure, it is an unvalidated one." % stats["malformed_blocks"],
+              "not parse is not a known failure, it is an unvalidated one." % mal_act,
               file=sys.stderr)
         return 1
-    if new or resolved:
+    if new_scoped or resolved:
         print("[surprise-corpus] REFUSED: %d NEW failure(s), %d RESOLVED baseline tuple(s). The set moved."
-              % (len(new), len(resolved)), file=sys.stderr)
+              % (len(new_scoped), len(resolved)), file=sys.stderr)
         return 1
+    if acts:
+        print("[surprise-corpus] OK: the act's documents are clean against the baseline (%d known, %d STANDING "
+              "outside the act, 0 resolved)." % (len(known), len(new_standing) + len(mal_standing)))
+        return 0
     print("[surprise-corpus] OK: corpus matches the exact legacy baseline (%d known, 0 new, 0 resolved)."
           % len(known))
     return 0

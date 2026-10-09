@@ -181,3 +181,126 @@ Each firm's served release later goes under its own pair.
 plus the W49-S3 proposal cell.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-09 ~06:5xZ) -- round 37 (CVO slug msg 2703, `ADJUDICATION_v22.md` and `REMEDIATION_v18.md` @153e101791)
+
+Round 37 MAY-CLOSE: 5 orders, 0 judgment criteria, ARMED 0, 4 rows OPEN.
+
+### Decision 1: W49-S3, the Orion flow taxonomy -- the proposal is ADOPTED (option 4, additive keys)
+
+Read: `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/ORION_TAXONOMY_AMENDMENT_PROPOSAL.md`, the rule-24 record. It covers:
+- MECE by subtraction from 48 entries, after a falsified domain read over 64,024 files;
+- SAME GRAIN;
+- INTENT COHERENCE;
+- STATE COHERENCE, naming each value that does not move.
+
+1. **The four entries gain `account_boundary`:** Internal Account Journal In (`in`), Out (`out`), and Federal and State Tax Withheld (`out`).
+   - The two tax entries also gain `account_boundary_when: before_tax_return`.
+   - No `bucket` and no `nna_direction` moves. Served NNA does not move, and the 2026-05-11 ratification Items 1 and 2 stand.
+2. **The tax pair is IN scope.**
+   - **Why:** it is a property of the return BASIS (the vendor figure is before-tax), which the qualifier states.
+   - A consumer on an after-tax basis ignores the key, so it is not a fit dressed as a rule.
+3. **The three declared-unmeasured members** (Foreign Tax Withheld, Foreign Dividend Tax, Tax Credit) **stay inside the value,** untagged.
+   - They are measured first when a sample carries them. This is an enrichment item, not a guess.
+4. **The return adapter reads the keys from the ratified file** and drops `orion_sources.json`'s `inter_account_comment` and
+   `tax_withheld_comment` departure. One source of truth; this was W49-S3's defect.
+5. **Measured effect, one sample (562 account-windows, 0.35 pp):**
+   - like-for-like gross (Orion's gross figure): 291 to 418;
+   - net: 293 to 421.
+   This is a fit at one snapshot. The scheduled tie-out re-reads it on every landing.
+6. **W54-S1 rides the same edit:** the taxonomy's title, comment and `total_type_desc_entries_v2` read 48.
+7. **NOT ruled here:** whether the estate wants ONE account-grain TWR flow axis (the `a05` `gips_class` and `c00` default). That is a later
+   proposal, and none is ordered.
+
+### Decision 2: W53-S1, Orion's gross read live -- ADOPTED as remedied
+
+Orion's gross-of-fees return lands as a silver input with its own as-of, at an `address()` output. The tie-out reads the landed figure, never a
+live pull per run. Egress is open for this pull (law 4d77a9c3ea); Orion is not Bloomberg.
+
+### Decision 3: W53-S2, the Inflection fee slices -- PARTIAL is stated
+
+The supervised and billed slices print as PARTIAL, naming 526 of 562 with `IncludedInBilling` unreadable. A slice is never shown as complete. A
+readable billing flag is an enrichment item.
+
+### Decision 4: D2-W51-S1, the R37 apply -- signed
+
+The CTO half is GIVEN @e64eb96736. The root restore to `efeb21df71` is precondition 2. The Lambda `dry_run` REPORT under the 85% line gates the
+first fire.
+
+### Enrichment list (round 38)
+
+1. **The R37 apply,** under both halves, with A1 to A7 read.
+2. **The taxonomy edit:**
+   - the four keys plus the 48 header count, by the taxonomy's owner lane;
+   - the adapter reads the keys from the ratified file, and the `orion_sources.json` departure is removed;
+   - the tie-out is re-read on both bases.
+3. **Land Orion gross** as silver with its as-of (W53-S1); the tie-out reads it.
+4. **The fee slices print PARTIAL,** with the denominator (W53-S2).
+
+**Carried, not cut:**
+- the svc-custody-statement mint and CU-g-2a on `~DB2`, which wait on IB-pr-385 and release 6 being live (an ordering of other seats' acts);
+- FWD-8's tolerance, at Andrew's word.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-09 ~08:4xZ) -- round 38 (CVO slug msg 2923, `ADJUDICATION_v23.md` @ab9ad6b27a)
+
+**Read:**
+- MAY-CLOSE, ARMED 0.
+- **R37 is LIVE** by the CVO's read:
+  - code `ciTGx5UV`;
+  - the role writes exactly the five 49F gold prefixes;
+  - the Lambda `dry_run` peak is 1,632 MB of 2,048. That is under this seat's 1,740.8 MB line, so the R37 half's condition 2 is met.
+- **The 11:41Z scheduled fire is the organic acceptance.** `~D2` reads A1-A7 on it.
+
+**W49-S3 is CLOSED.**
+- It was ruled in ADDENDUM 6, decision 1 (the additive `account_boundary` keys, adopted).
+- The keys are now in the ratified file and read by the adapter: 418 gross and 421 net of 562, which equals the proposal's measured effect.
+- The CVO's "still yours" is answered by that ruling. The disposition is RESOLVED by @fb5579ddfc plus the round-38 landing.
+
+### Enrichment list (round 39)
+
+1. **Read the 11:41Z fire's A1-A7.** A `LOTS_SKIPPED` or `CLASS_SKIPPED` line is a BLOCKING row the same day.
+2. **Explain the +290 s.** The lots stage grew 290 s over R35 on the kit. Measure the Lambda REPORT duration on the fire against 765 s. This is a
+   read, not a cell, unless the duration crosses the line.
+3. **A readable billing flag** for the Inflection fee slices (W53-S2's PARTIAL), where a source exists.
+
+**Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (measure when a sample carries them).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~09:0xZ) -- round 39 (CVO slug msg 2951; DB-b-82 `INF_BILLING_FLAG.json`, drained @6428276d96)
+
+**Read:**
+- Inflection's billing state covers 562 of 562.
+- The file carries its claim as basis `inferred`, derived from the fee amount and schedule. It is not Orion's `IncludedInBilling`.
+- COMPLETE means coverage, not certainty. MAY-CLOSE with no rows.
+
+**RULING (W53-S2): the inferred flag is ACCEPTED.** A consumer must show its basis.
+- The supervised and billed slices print as `inferred: from fee amount and schedule`, never as an Orion-reported fact.
+- Wherever Orion's `IncludedInBilling` is readable for an account, it wins, and the basis for that account reads `measured`.
+- This is the value-carries-its-claim law: the consuming half must be able to reject on the `inferred` basis.
+
+**Round 40:**
+- the 11:41Z fire's A1-A7 (`~D2`) and the REPORT duration against 765 s;
+- the display of the billing basis wherever the slices are shown.
+
+Nothing else is cut.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~09:1xZ) -- round 40 (CVO slug msg 2977, `ADJUDICATION_v24.md` @c2be1fc306)
+
+**Read:**
+- DB-b-83 is complete. The fee slices carry their basis per slice: 36 `measured`, 526 `inferred`. That meets ADDENDUM 8's ruling.
+- W60-S1 is dismissed: `orion_overrides` is a held lower bound (0..36), with its claim field.
+- ARMED 0, MAY-CLOSE.
+
+**No build cell is cut for round 41.** The next owned act is a READ:
+- **`~D2` reads the 11:41Z R37 fire** (A1-A7, and the REPORT duration against 765 s).
+- **Any SKIPPED line, or a duration over the line,** is a BLOCKING row and opens round 41 on it.
+- **A clean read is answered** by this seat's grade of the R37 tables in the next addendum.
+
+**Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (when a sample carries them).
+
+-- 1.0.0_SA_CTO~DELL2

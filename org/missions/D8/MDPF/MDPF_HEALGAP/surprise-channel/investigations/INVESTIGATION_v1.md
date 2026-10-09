@@ -559,6 +559,80 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "D1-S7: the served satellites registry reads as_of 2026-10-07 on 2026-10-08.",
     "world_is": "Served keys read as_of 2026-10-08 from 16:07:36Z. The structural cause (a 07:00Z cron coupled to the runner's fire time) remains until the stamp chain lands."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S9",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+    "surfaced_at": "2026-10-09T07:21:10Z",
+    "one_line": "R2-1 / HG-t-8 cannot be committed as written: the naming commit limb REFUSES the order's own verbatim statement text. naming-gate.py grades the added Resource literal a NEW hand-kept carrier of the firm token 'cottonwood' and demands it be read through lookup('cottonwood') -- a form a .tf file cannot express. The three identical literals already in the same resource are graded EXISTING and only WARN, so the refusal turns on the line being new, not on the name being wrong.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit 2026-10-09 ~07:13Z: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' NAMING REFUSE infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:94 arn:aws:s3:::{x}/blackdiamond/cottonwood/meta/*-result.json -> lookup('cottonwood'); why: NEW hand-kept carrier (context rule). NAMING-GATE: REFUSE 1 graded, denominator 1 of 1 seen.",
+        "naming-gate.py:1737 returns REFUSE for a NEW hand-kept carrier and :1738 returns WARN for an EXISTING one, so newness alone is the discriminator. The same file already carries the literal at :85, :86 and :102 (grep over the one named file, 7 'cottonwood' hits).",
+        "The gate's only sanctioned admission for this shape is the R20 DECLARED EXCEPTION at naming-gate.py:1721-1731, 'THE ONE CONSUMPTION POINT', which needs a waiver entry whose read_context.kind is r20_exception with a register_ref row id, an occurrence count, a cutoff, an owner, and an authority{record,pin} that authority_ok() (:1295) verifies by resolving a full 40-hex pin and finding the ruling id as a whole token in the blob at that pin. CLAUDE.md rule 30: 'a deliberate departure is an R20 register entry Andrew acknowledges.'",
+        "CLAUDE.md rule 30 non-application reads 'existing pipelines -- each reaches conformance through its own migration project (R19), never as a rider', and opal-assets/cot_rebalancer_runner is an existing pipeline: the doctrine exempts this edit while the mechanical gate still refuses it.",
+        "No declared carrier exists to reference instead: monolith.tf:58-59 declares only locals.monolith_bucket = 'opal-data-assets', and :89 a firms-per-tree map blackdiamond = ['cottonwood']; there is no local holding the cottonwood key prefix.",
+        "THE WORLD IS UNTOUCHED AND THE SHARED TREE IS CLEAN. No ledger was opened (nothing began, so an OPEN entry with stranded legs would itself be the drift class). Live get-role-policy cot-rebalancer-runner-write-cot reads 3 statements, no GetObject. The edit was reverted and the revert proven: git diff 0 bytes, 0 occurrences of ReadOwnRunResult in the worktree, and C1 back to its base reading 'IAM-BAD statements granting s3:GetObject: 0 (want 1)'. The refused patch is kept at org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/healgap_r2_1_ReadOwnRunResult_REFUSED_BY_NAMING_GATE.patch (925 B) so the act is one apply away once the call clears.",
+        "The apply side would have refused too (safe-apply.sh:183 the naming limb, :262 and :321 BLOCKED), so no bypass of the commit limb would have landed this either."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's own conditions: 'Naming gate REFUSES hand-typed names (rule 30, msg 1355): no new name or address here; a refusal is a missing registry row to report, never a workaround.' Scope 2 gives the statement text verbatim and says 'Touch nothing else. Commit via safe-commit.'",
+    "world_is": "There is no missing registry row to add: 'cottonwood' is already a known firm segment, which is exactly why carrier() flags it. The gate wants the literal read through the builder, and Terraform has no such call, so the order as written cannot pass its own stated commit path. Nothing this seat may do clears it: safe-commit --force covers contamination only, never a lane or limb refusal, and an R20 entry needs an authority record Andrew acknowledges. CALL, routed to 2.0.0_SA_COO~G1 and 1.0.0_SA_CTO~DELL1: either (a) land an R20 declared-exception entry for this literal under Andrew's word, (b) rule that rule 30's existing-pipeline non-application admits it and have an authorised seat carry the waiver, or (c) re-cut the act so no new firm-token literal is typed. The order is P1 and must land before ~20:00Z, so the call is time-boxed.",
+    "notes": "Reported, not worked around. Distinct from MDPF_HEALGAP-D1-S7/S8, which concern the satellites producer's clock coupling, not the naming limb. The same class will refuse any future new firm-token literal in an existing pipeline's .tf, so the disposition is worth more than this one order."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S10",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+    "surfaced_at": "2026-10-09T07:51:06Z",
+    "one_line": "R2-1's criterion C5 cannot be exercised from dell1: this box's agent principal holds iam:SimulatePrincipalPolicy only for its OWN ARN, not for cot-rebalancer-runner-role, and iam:SimulateCustomPolicy is absent, so there is no substitute instrument. The IAM change itself LANDED and is verified by C4 on the live principal; only the live-evaluation arm is unrunnable, so the ledger is HELD rather than closed and the order is not flipped complete.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C5 arm 1: 'An error occurred (AccessDenied) when calling the SimulatePrincipalPolicy operation: User: arn:aws:iam::313476888478:user/cloudops-dell1-agent-user is not authorized to perform: iam:SimulatePrincipalPolicy on resource: arn:aws:iam::313476888478:role/cot-rebalancer-runner-role because no identity-based policy allows the iam:SimulatePrincipalPolicy action'.",
+        "POSITIVE CONTROL, which is what makes this the instrument and not the world: the SAME action with --policy-source-arn arn:aws:iam::313476888478:user/cloudops-dell1-agent-user returns 'allowed'. The API call works; the grant is RESOURCE-SCOPED to the caller's own principal. An uncontrolled reading of arm 1 would have been indistinguishable from a real deny about the target.",
+        "NO SUBSTITUTE INSTRUMENT: iam:SimulateCustomPolicy is also denied ('not authorized to perform: iam:SimulateCustomPolicy on resource: *'), so the policy document cannot be evaluated locally either. sts get-caller-identity confirms the caller is arn:aws:iam::313476888478:user/cloudops-dell1-agent-user.",
+        "THE CHANGE IS NOT IN DOUBT. C4 on the live principal reads 4 statements with ReadOwnRunResult = Allow s3:GetObject on arn:aws:s3:::opal-data-assets/blackdiamond/cottonwood/meta/*-result.json, DenyBlackdiamond49fFirmSep byte-identical, and a re-plan at the same target reads 'No changes' with -detailed-exitcode rc=0. C1, C2, C3, C4, C7 and C8 all PASS; the proof-of-spec instance grades VALID (rc=0, controls 4 of 4 discriminate).",
+        "Ledger 20261009T0732Z_healgap-r2-1-runner-reads-own-result-dell1-20261009 is HELD-SOVEREIGN-GATED with the gate naming the exact action and resource, rendered by deploy_ledger as 'apply legs proven, only verify open; tracked-not-stranded'. L1 and L2 carry proof; only L3 is open. Closing it would be the DRIFT-DANGEROUS shape this seat surfaced on two laptop entries earlier in the same session.",
+        "NOT SELF-REMEDIED, deliberately: granting this seat's own principal the action it needs to verify its own work is outside the order's <paths> (which names only cot_rebalancer_runner.tf plus ledger and deliverable surfaces) and is the wrong shape regardless. Recorded as a declared exclusion in the instance."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order ADHOC.healgap-r2-1-runner-reads-own-result C5: '.tools/aws iam simulate-principal-policy --policy-source-arn <role arn> --action-names s3:GetObject --resource-arns <three keys>' expecting 'allowed / implicitDeny / explicitDeny, in that order'. C6 then requires the ledger CLOSED, every leg proven. Both presume the applier's principal can simulate the TARGET role.",
+    "world_is": "It cannot, from this box. The dell1 IAM parity grant (ANDREW_DIRECT_20261009_035xZ, ADDENDUM 3 @947dd446e5) gave dell1 its own deploys but not iam:SimulatePrincipalPolicy on other principals, so every WORLD-risk IAM order assigned here will hit the same wall at its verification step, not at its apply step. TWO WAYS TO CLEAR IT, either acceptable: extend the dell1 agent principal with iam:SimulatePrincipalPolicy on arn:aws:iam::313476888478:role/cot-rebalancer-runner-role (or the roles dell1 is given to deploy), or have 2.0.0_SA_COO~G1 grade C5's three arms from a box that holds the action -- the arms must be THREE SEPARATE invocations, because two or more --resource-arns in one call flip the held ones to implicitDeny. Owner of the choice: 1.0.0_SA_CTO~DELL1 with the issuer. The ledger's re-read is the event, not a date.",
+    "notes": "Distinct from MDPF_HEALGAP-D1-S9, which was the naming limb refusing the statement's source text and is RESOLVED by ruling H and amendment A1 -- this row is about verifying the grant, not writing it. Worth more than this one order: it is a standing hole in dell1's ability to close the verify leg of any IAM deploy it is given."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S11",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+    "surfaced_at": "2026-10-09T08:07:27Z",
+    "one_line": "Disposition of MDPF_HEALGAP-D1-S10: amendment A2 @37ce04cf93 SPLIT C5 rather than waiting on the grant -- C5a (the deny arms, read from the live policy documents) graded here PASS 4 of 4, C5b (the allow arm) EXERCISED by the issuer at act 3 on 2026-10-10. R2-1's ledger is CLOSED, 3 of 3 legs proven, and the order is flipped complete. THE UNDERLYING GAP IS NOT CLOSED BY THIS and stays owned.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment A2 @37ce04cf93 read VERBATIM at its own pin (9,895 B as the positive control that the pin-and-path read resolves), which is also where the issuer records re-measuring the AccessDenied against the same principal at 08:0xZ -- so the gap in D1-S10 is corroborated by a second seat, not just this one.",
+        "C5a: 4 of 4 arms match over ALL FIVE identity-based carriers on cot-rebalancer-runner-role (3 inline + 2 attached managed at their default versions) and 10 statements -- deliberately not scoped to the single policy this order edited, since an Allow in another carrier would falsify an implicit-deny claim. result key -> allowed (only write-cot/ReadOwnRunResult matches); bronze/* key -> implicitDeny (zero matches); complete-stamp -> implicitDeny; 49f key -> explicitDeny (only DenyBlackdiamond49fFirmSep matches). 3 distinct verdicts, so the evaluator discriminates. Reproducible at org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/healgap_r2_1_c5a_identity_policy_eval.py with its captured output.",
+        "Ledger healgap-r2-1-runner-reads-own-result-dell1-20261009 CLOSED, all 3 legs proven; verified by three agreeing reads rather than the tool's word -- deploy_ledger check no longer lists the slug (0 occurrences), the sentinel is unlinked, and the entry's tail reads 'CLOSED -- all 3 legs proven'. The entry retains its HELD-SOVEREIGN-GATED interval and its release, so the hold is in the record rather than erased.",
+        "WHAT IS STILL TRUE AFTER THIS ROW: iam:SimulatePrincipalPolicy on another principal remains denied to cloudops-dell1-agent-user, and iam:SimulateCustomPolicy is absent. A2 routed around the gap for THIS order; it did not grant anything."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S10 asserted that C5 and C6 could not close from dell1 and that the order could not be flipped. Amendment A2 then re-scoped what this seat owes: 'C5a (closable now, by this seat): the two DENY arms from the LIVE policy document, not a simulation' and 'C6 then closes on C5a'.",
+    "world_is": "R2-1 is complete: the grant is live (4 statements, ReadOwnRunResult, 49f Deny byte-identical, re-plan 0-diff), C5a is graded, the ledger is CLOSED and the order reads complete. D1-S10 is therefore RESOLVED as a blocker on this order. It is NOT resolved as a capability gap: the next WORLD-risk IAM order assigned to dell1 will meet the same wall at its VERIFY step, not its apply step, and will need the same split or the grant. TWO REMEDIES, either acceptable, owner 1.0.0_SA_CTO~DELL1 with the issuer: extend the dell1 agent principal with iam:SimulatePrincipalPolicy on the roles dell1 is given to deploy, or make the split standard practice and say so in the order template. Whoever takes the first route: the arms must be THREE SEPARATE invocations, because two or more --resource-arns in one call flip the held ones to implicitDeny.",
+    "notes": "DISPOSITION ENUM: UNDER_INVESTIGATION, deliberately, not GRADUATED -- GRADUATED is the CVO's L9 adjudication field (surprise-row-gate.py:119-120, :522-524) and an AE seat setting it would self-grade a judgment that is not its to make; every other row in this channel sits at UNDER_INVESTIGATION for the same reason, including D1-S8 which reported D1-S7's served gap closed. The row text, not the enum, carries the disposition. Resolves D1-S10 rather than re-filing it, the same shape D1-S8 used for D1-S7. D1-S9 (the naming limb) was resolved earlier by CTO ruling H @1af255b7da and amendment A1 @83028dca8a. Both of this order's surprises are now dispositioned."
   }
 ]
 ```
