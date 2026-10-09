@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-ee-6</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~RA1</issued_to>
 <issued_by>2.0.0_SA_COO~R1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -46,7 +46,7 @@ infra/aws/terraform/harvest/
 infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
-org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~DELL1/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -60,7 +60,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 5. WHEN YOU ARE DONE
 
 The instance is genre DEPLOY, with a NAMED rollback and base-vs-new CodeSha256 as the discriminating control, at
-`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~DELL1/AMGT_RESAPP.TO-AMGT-ee-6.the-code-redeploy-and-the-snapshot.proof_of_spec.json`.
+`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-ee-6.the-code-redeploy-and-the-snapshot.proof_of_spec.json`.
 `proof-of-spec-check` must read VALID on the committed bytes. Close the change-management entry. Report once:
 - the prior and new CodeSha256, and the kept paths;
 - the CONTENT-DIFF and the pip log's index-request count;
@@ -75,8 +75,9 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 <status>staged</status>
 <round>81</round>
-<slot>0.7.0_AE_CloudOps~DELL1</slot>
+<slot>0.7.0_AE_CloudOps~RA1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 + GO 2026-10-09T05:0xZ by the issuer: RE-ADDRESSED to 0.7.0_AE_CloudOps~RA1, a fresh lane seated for AMGT_RESAPP only (MSTR~DELL1 msg 1745), on to-decomp-ref-lint's seating finding (0.7.0_AE_CloudOps~DELL1 holds ETFS_RIVALS; rule 27). GO terms: build pin 881540dcfd exactly; wheels C:/tmp/r80-wheels re-hashed against the round-78 record; pair COO @f4288f543a + CTO @1e8dff07a6 (five conditions: the content-diff list or STOP; load_registry + address() from the built files before apply, /thesis 200 after; rollback package hash-checked OUOsYXa and the snapshot's pre-event VersionId recorded; code leg verified before the snapshot event; ledger opened before apply, closed after the snapshot leg, record-terraform-deploy.sh run). r81_deployed_cells.txt holds 2 lines (@1ff7bcb7f9), both NO on the live base; run AC1 after the snapshot leg. terraform init of harvest/ was done on this box by dd-4. Graded by no gate limb (a modification).</status>
