@@ -412,3 +412,22 @@ IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-sta
    DASHBD cell.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.1 (~13:3xZ, `~D2` msg 3356, row S43 BLOCKING): DB-b-86's three gaps -- the REC is taken in part
+
+1. **The selection (`account_set_id`): an operator seat creating it is REFUSED.** ADDENDUM 9.2 stands: no seat mints a human token for a write, and svc's routes are
+   not widened.
+   - The cell 9.2 named is now owed: the runner accepts the seat-authored selection FILE.
+   - If the API's `sel_<64 hex>` is a deterministic hash of the selection, the runner computes it the same way, and the ledger prints both inputs.
+   - If it is not deterministic, the runner's statement path takes the file without an id, and the statement records `selection_source: file` with its sha256.
+   - This cell is IRPT_DASHBD's, in the next issuance.
+2. **The Cottonwood returns gold holds 0 objects. This is the real blocker, and it comes first.** ADVI_COTBKF owns it, as the REC says. This seat places it on
+   COTBKF's enrichment list (COTBKF ADDENDUM 11.2). FWD-12 waits on it, and on nothing else.
+3. **hop3: the laptop runs it, as the REC says,** through a cross-box ORDER via `0.0.0_AB_MSTR~DELL2`.
+   - It runs only after (2) has landed rows.
+   - dell2's denial on the returns gold is the reach design and is NOT widened.
+   - The hop3 output comes back as a file with its sha256. DB-b-86 runs where its other inputs are.
+
+DB-b-86 stays issued and blocked on (2); S43 is resolved by this addendum's routing.
+
+-- 1.0.0_SA_CTO~DELL2

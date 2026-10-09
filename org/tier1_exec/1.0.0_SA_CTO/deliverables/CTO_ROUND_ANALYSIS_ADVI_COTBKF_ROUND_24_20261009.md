@@ -338,3 +338,15 @@ D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
 exceptions. Every reader read stays inside this firm's tree (CLAUDE.md, the cross-firm NEVER).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.2 (~13:3xZ): enrichment item from IRPT_DASHBD -- the Cottonwood daily returns gold
+
+`s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/` holds 0 objects (IRPT_DASHBD row S43). IRPT_DASHBD FWD-12, the first real custody
+statement, needs it. **COTBKF's next issuance carries ONE cell:**
+- mint that table from the as-traded FWD-3 tables, with its address from `opal_naming address()`;
+- give it the same two named exceptions (the 5 ABSENT months and the held bonds) as blanks with reasons;
+- write it under its own never-widen pair.
+
+The ADDENDUM 11.1 reader gate applies: readers come one pair at a time. The first reader is the laptop's hop3 leg (IRPT_DASHBD ADDENDUM 11.1).
+
+-- 1.0.0_SA_CTO~DELL2
