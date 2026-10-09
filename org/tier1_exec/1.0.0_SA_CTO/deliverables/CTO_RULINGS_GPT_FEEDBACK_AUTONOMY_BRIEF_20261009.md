@@ -30,3 +30,17 @@ process report is corrected in its next update.
 | MDPF_STRATID / MDPF_GLOBAL sign-off | **RULED NOW:** the never-widen CTO half for served output a placed project moves is signed by the CTO of the box the project is placed on. A dell1 project moving MDPF_GLOBAL's served output: `1.0.0_SA_CTO~DELL1` signs. This seat (MDPF_GLOBAL's owner) is no longer a required half. |
 | Dell IAM grants (TO-APPLY-29 class) | **Kept, by design:** the control plane granting the Dells their rights is the one legitimate standing dependency. Batch each round's grant needs into one amendment. |
 | NFRA_CTLPLN exercises on dell1 | **Kept:** migration-class work; ends with the project. |
+
+## Addendum ~19:5xZ -- section D (b) runner census (0.0.0_AB_MSTR 108107; dell1 CTO msgs 3098/3099) and progress
+
+- **Runners: dell1's REC ACCEPTED.** Site-Z-only are AMGT_HARVST's FWD-18 cycle runner and backfill driver legs (bound to site Z's publisher
+  sessions and Chrome profiles) and AMGT_CORPUS's `amgt-induction-daily` (bound to the Bloomberg Terminal). Their hosts cannot move, so they stay
+  on site Z as a SERVED capability owned by a site Z lane; dell1 files requests by crossbox file and gets no new deploy lane. Everything else
+  (gold builds, dossier, continuation, census) already runs on dell1. This is the second hardware-bound exception beside the Terminal itself.
+- **Box gap (packages):** `fitz` (PyMuPDF) does not load on dell1 (Python 3.14 or the 3.12 kit), so dell1 stubs the PDF extract. Owner: dell1's
+  manager, as box infra -- install a PyMuPDF build that loads on dell1, or switch `extract.py` to `pypdf` (already installed). Census otherwise:
+  dell1 hard_missing 0 (849cd33fa3).
+- **Landed:** items 1-2 (@1e775f68b6, @9f5386270c, MSTR); item 3 + the five-log append (@e68f2921cc, CRO~A, with a before-baseline of 211 integrate
+  rows, median 44.5 s); items 4 and 5a (@69759661d3, @dbee5062c9, CRO); item 6 register alignment (@228e8598cd, this seat: 9 rows + 6 sequence
+  DRIFT rows; sequence-check DRIFT 6 -> 0).
+- **ADVI_FIRMBKTS** re-placed LAPTOP -> DELL1 @8afcb0f851 for dell1's free COO slot (it gates LGIC_CANON and MDPF_CANON there).

@@ -111,64 +111,64 @@ projects:
     waits_on: []
     why: 'TARGET BOX: dell1 (dell1''s SECOND lane, after the grading of MDPF_SECHIST''s first round). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It shares the classification table with MDPF_SECHIST, which is why the two sit on one box.'
   IRPT_DASHBD:
-    fabric: laptop
+    fabric: dell2
     stage: 2
     waits_on: []
     why: 'TARGET BOX: dell2 (dell2''s SECOND lane, after the grading of IRPT_CUSTDY''s first round). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting dashboard and its total-return gold feed the January 1 programme.'
   ADVI_COTBKF:
-    fabric: laptop
+    fabric: dell2
     stage: 3
     waits_on: []
     why: 'TARGET BOX: dell2, the box that runs IRPT_CUSTDY, on Andrew''s 2026-10-07 ~06:2xZ word (''whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project''), replacing dell1. It moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Cottonwood''s Commonwealth history feeds both the securities history and custodian reporting.'
   ADVI_BILLING:
-    fabric: laptop
+    fabric: dell2
     stage: 3
     waits_on:
     - manual: Andrew has each firm's answers on its billing system, fee terms and sign-off (Q-2 brief PART V)
     why: 'BOX: dell2, its THIRD lane. Advisory-fee billing, buy or build. New; its first step needs the firms'' answers Andrew brings.'
   NFRA_OPSWKF:
-    fabric: laptop
+    fabric: dell2
     stage: 3
     waits_on:
     - manual: 'Andrew has sat with the operations lead: his day, his workbook''s layout, the custodians he calls (Q-3 brief PART V)'
     why: 'BOX: dell2, after ADVI_BILLING. Trade submission led by the operations lead''s Excel workflow. New; it cannot be specified before that sitting.'
   IRPT_BCKEND:
-    fabric: laptop
+    fabric: dell2
     stage: 4
     waits_on: []
     why: 'TARGET BOX: dell2, on Andrew''s 2026-10-07 ~07:0xZ word (''I am ok with your move of the IRPT pair back to Dell2''). Its lanes'' successors start on the Dell directly. The reporting back end.'
   IRPT_YCDGEN:
-    fabric: laptop
+    fabric: dell2
     stage: 4
     waits_on: []
     why: 'TARGET BOX: dell2, on Andrew''s 2026-10-07 ~07:0xZ word (''I am ok with your move of the IRPT pair back to Dell2''). Its lane''s successor starts on the Dell directly; his report retry is then a sign-in on that box.'
   NFRA_TRNSPT:
-    fabric: laptop
+    fabric: dell2
     stage: 4
     waits_on: []
     why: 'TARGET BOX: dell2, the box that runs IRPT_YCDGEN, whose generated reports its commentary follows. It is between rounds, so it moves now by the laptop fabric manager''s award. Its deployed mail pull runs cloud-side and does not move.'
   ETFS_RIVALS:
-    fabric: site-z
+    fabric: dell1
     stage: 5
     waits_on: []
     why: 'Stays at site Z. Rival funds: Bloomberg-bound.'
   AMGT_RESAPP:
-    fabric: site-z
+    fabric: dell1
     stage: 5
     waits_on: []
     why: Stays at site Z. The research application.
   AMGT_HARVST:
-    fabric: site-z
+    fabric: dell1
     stage: 5
     waits_on: []
     why: Stays at site Z. The research harvest.
   AMGT_CORPUS:
-    fabric: site-z
+    fabric: dell1
     stage: 5
     waits_on: []
     why: Stays at site Z. The research corpus.
   DSGN_AMGTV1:
-    fabric: site-z
+    fabric: dell1
     stage: 5
     waits_on: []
     why: Stays at site Z. The research design work beside the three AMGT projects.
@@ -231,7 +231,7 @@ projects:
       prd_admitted: true
     why: 'The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE''s address()/name()/grade() against LGIC_NAMING''s schema and graded against LGIC_CANON''s rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. Fourth in the Platform Logic stage by Andrew''s ~05:2xZ 2026-09-16 word naming the four LGIC projects together. Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): a CONSUMER relation, never a gate on this row.'
   ADVI_FIRMBKTS:
-    fabric: laptop
+    fabric: dell1
     stage: 6
     waits_on: []
     hold:

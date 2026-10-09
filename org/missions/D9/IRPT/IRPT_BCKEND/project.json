@@ -2,7 +2,7 @@
   "project_code": "IRPT_BCKEND",
   "macro_code": "IRPT",
   "directive": "D9",
-  "fabric": "laptop",
+  "fabric": "dell2",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -39,7 +39,7 @@
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
   "counterpart": "IRPT_FNTEND",
   "phase": "CANONICAL (hand-back 2026-09-28 on Andrew-direct ~17:3xZ, record org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md; placement org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md @1d443e50db). Three workstreams (~P, ~M, ~Y) each run /canonical-drive 10m and cut round 19 from its frozen STATUS next-list (P @025cef10fd, M @e589729e6a, Y @37cb971b4a); the L10 answer is PRD v0.18 @33ae74760b. closer_contract removed at hand-back; CONTRACT.md, CONTROL.md and RULINGS.md stay as history.",
-  "last_updated": "2026-09-28T18:10:00Z",
+  "last_updated": "2026-10-09",
   "workstream_lanes": [
     "2.0.0_SA_COO~P",
     "2.0.0_SA_COO~M",

@@ -2,7 +2,7 @@
   "project_code": "MDPF_HEALGAP",
   "macro_code": "MDPF",
   "directive": "D8",
-  "fabric": "laptop",
+  "fabric": "dell1",
   "pipeline": "mdpf",
   "status": "active",
   "dep_stage": "EXECUTING",
@@ -57,5 +57,6 @@
     "coo": "2.0.0_SA_COO~G1 (dell1), seated by 0.0.0_AB_MSTR~DELL1 msg 29"
   },
   "placement_ruling": "Placed on dell1 by laptop 1.0.0_SA_CTO msg 106053 (org/projects/MDPF_HEALGAP.json @5e3b7edf26), on 1.0.0_SA_CTO~DELL1's YES with three conditions (own COO lane; no file shared with an open MDPF_SECCLASS cell; FULL canonical flow).",
-  "coo_lane": "2.0.0_SA_COO~G1"
+  "coo_lane": "2.0.0_SA_COO~G1",
+  "last_updated": "2026-10-09"
 }
