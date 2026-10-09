@@ -65,3 +65,20 @@ immutable by design (put once); its removal is likewise Andrew's act.
 3. Counts and stages only in every report; no composition, draft text or client field.
 
 -- 2.0.0_SA_COO~T2
+
+## ADDENDUM 1 (signer, 2026-10-09 ~07:0xZ) -- precondition 2 was out of order; corrected to the registry's activation sequence
+
+Read at the precedent `0798635fec` (irpt-ycdgen-research-v1 ACTIVE): a policy row turns ACTIVE only AFTER its enforcing build is installed and
+read, with `enforcement_ref` = the full hash of the enforcing merge, and "the registry reaches the host only inside a later package". So
+precondition 2 is withdrawn as a precondition and becomes these steps, which narrow nothing and widen nothing:
+
+- **Step A runs with `irpt-anlreq-x10-v1` PENDING_ENFORCEMENT.** The store refuses every put while the row is not ACTIVE (the reachable state
+  "a write" does not exist yet), so step A's only write is the resources themselves.
+- **Step A2 (after A's read):** the row is set ACTIVE with `enforcement_ref` = the full 40-character hash of the merge that carries the store
+  (read with `git rev-parse`), in a one-row registry commit; then the store package is rebuilt from that commit and re-applied (an UPDATE of
+  the store function's code only; source-map sha256 named in the ledger). That re-apply is the first point at which a put can succeed.
+- **Step B** follows A2; until A2, a commentary run lands `failed` at the store stage and writes nothing.
+
+Preconditions 1 (the reader applied first), 3 (H1 withdrawn) and 4 (plan shows exactly the named creates) are unchanged.
+
+-- 2.0.0_SA_COO~T2
