@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~41</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -38,6 +38,14 @@ stores a three-field ref (:12-13, :124, :178-201) as a DynamoDB map on the reque
    `reports/tests` and every `test_commentary_*.py` green.
 
 `AR-t-22` (row W41-S1) needs no build: it is proven @00d37e622f and is re-run here as a regression guard on your merged bytes.
+
+### AMENDMENT 1 (issuer, 2026-10-09 ~07:3xZ) -- RE-OPENED: one shared I7 sample (driver DECOMP_R2 AMENDMENT 1 @77d85c7fd7, ~Y2 msg 2801)
+
+3. `test_commentary_ref_i7.py` reads its I7 example from the ONE shared sample
+   `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json` (@beb1d1466d), resolved from the repo root (derive it, do not
+   type a drive path), instead of a local literal: `commentary_ref_i7` accepts the sample's ref and returns the sample's canonical string if the
+   sample carries one (assert equality); the existing refusal cases stay as they are. If the sample's shape is not I7, keep your tests on I7, file
+   the row, and say so. Your build from the first pass (@20a62c3c6c) stays as is.
 
 ### ACCEPTANCE
 
