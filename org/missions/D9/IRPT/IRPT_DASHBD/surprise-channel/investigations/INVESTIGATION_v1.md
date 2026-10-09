@@ -4900,6 +4900,81 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-D2-W73-S1 -- 74 OUTSIDE segments carry a DEFECT: BD and the served series disagree on dollars and the gain gap does not reconcile the return gap
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W73-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~73",
+  "surfaced_at": "2026-10-09T14:35:00Z",
+  "one_line": "74 OUTSIDE segments carry a DEFECT: BD and the served series disagree on dollars and the gain gap does not reconcile the return gap",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-98: every one of the 510 V2-UNEXPLAINED segments is reasoned by a test its inputs show, or is a DEFECT row.",
+  "world_is": "74 of the 510 fail all five added tests, and their dollars differ: BD's beginning value, ending value or net gain departs from the served series by more than max($1, 0.1%), while (BD net gain minus served gain) / mean served value predicts the signed return gap only outside 0.35 pp. BD's value is above the served value in every boundary mismatch seen across the set (75 of 75 beginning, 66 of 66 ending). Cause not determined from the inputs (candidate, not proven: BD includes items the served market value excludes). Observed absolute gaps 0.42 to 164.83 pp. Segment list: UNEXPLAINED_CLASSIFIED.json, entries with defect_cause DOLLARS_DIFFER_NO_RECONCILIATION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~73/UNEXPLAINED_CLASSIFIED.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W73-S2 -- 123 OUTSIDE segments carry a DEFECT: dollars tie yet the returns differ and no convention, window or base test explains it
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W73-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~73",
+  "surfaced_at": "2026-10-09T14:35:00Z",
+  "one_line": "123 OUTSIDE segments carry a DEFECT: dollars tie yet the returns differ and no convention, window or base test explains it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-98: every one of the 510 V2-UNEXPLAINED segments is reasoned by a test its inputs show, or is a DEFECT row.",
+  "world_is": "123 of the 510 have beginning value, ending value, flows and gain all tying between BD and the served series, a base above 1% of peak, and no START/MID/END flow-timing envelope or one-day window shift reaches BD's gross return within 0.35 pp. The two sources agree on the dollars and still differ on the time-weighted return by 0.37 to 141.88 pp; the difference lies in daily weighting or in the fee add-back the V2 basis applies, which the inputs do not separate. Segment list: UNEXPLAINED_CLASSIFIED.json, entries with defect_cause DOLLARS_TIE_RETURN_DIFFERS_NO_NAMED_CAUSE.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~73/UNEXPLAINED_CLASSIFIED.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W73-S3 -- The order says V2's per-segment rows carry no reason; they do (reason and evidence on every OUTSIDE row)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W73-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~73",
+  "surfaced_at": "2026-10-09T14:35:00Z",
+  "one_line": "The order says V2's per-segment rows carry no reason; they do (reason and evidence on every OUTSIDE row)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-98 worker face: 'The per-segment rows carry no reason'; the round-48 checker repeats it ('V2 records the reason only in its summary').",
+  "world_is": "TIEOUT_COMPOUND_V2.json at 0.9.0_WK_IRPT_DASHBD~35: each of the 990 OUTSIDE rows carries `reason` and `evidence`; filtering reason == UNEXPLAINED gives 510 distinct segments, equal to the summary. The re-derivation therefore needed no re-run of the reason logic over the inputs; the daily inputs were still read (S3 GETs) to test the new reasons. No effect on the checker's verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~73/UNEXPLAINED_CLASSIFIED.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-D2-W70-S1 -- BLOCKING DB47-1-AC1: the order's <paths> omits the source map file it orders re-pinned (infra/aws/lambda/ci/lambda-source-map.json); nothing uploaded or applied
 
 ```json

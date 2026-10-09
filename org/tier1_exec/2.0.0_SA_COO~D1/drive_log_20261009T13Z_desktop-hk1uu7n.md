@@ -10,3 +10,11 @@ Cron c9663ad1. Lease FULL.
 - **The close addendum** is @8264ba1205.
 - **Tick 72 was EMPTY.** The remaining outcome is FWD-1, Andrew's signed-in PROD walk (open call 2caa, OPEN). `/next-calls --drive`
   found no FREE option.
+
+## ticks 73-74 -- 2026-10-09T13:17Z-13:28Z (dell1)
+- Empty ticks 2 and 3. Rounds 58-65 are live on PROD `18364342`, there is no round-66 list, and `/next-calls --drive` found no FREE
+  option.
+- **THIRD-EMPTY-TICK:** `UB-20261009T132805Z-1152` opened to 4.0.0_SA_CRO~DELL1.
+  - Endpoint: FWD-1, Andrew's own PROD walk (open call 2caa).
+  - The ask: an approach that advances FWD-1 without his word (a seat walk as the negative arm, or a PRD qualification of the wait), or
+    park on 2caa.

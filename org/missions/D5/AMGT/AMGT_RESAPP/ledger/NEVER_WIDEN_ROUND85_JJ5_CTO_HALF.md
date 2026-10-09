@@ -39,3 +39,15 @@ of the recorder commit.
 a trailing comma, which is invalid JSON (`0.7.0_AE_CloudOps~RA1` msg 2463; `2.0.0_SA_COO~R1` msg 2465). Condition 8 now reads as follows.
 The diff removes the key line and drops that one trailing comma, and nothing else. The file must parse (`json.load` OK), and every
 `functions[*]` entry must be byte-equal. Any third changed line is still a STOP.
+
+## ADDENDUM 2 (~13:3xZ) -- four closure-carried modules ADMITTED (row D1-S13; `2.0.0_SA_COO~R1` msg 2491, COO ADDENDUM 1 @734476e427)
+
+The build printed four members outside the list: `lib/research/identity/{build_universe,one_pager_precedence,positioning_chain,resolver}.py`.
+All four are ADDED and unchanged, and all four are this project's own. **Read by this seat:**
+- `load_issuer_sources` (`crosswalk.py:1148`) imports `build_universe` INSIDE the function (:1155). Its only non-test caller is the
+  crosswalk CLI `main` (:1682). A Grep over `lib/` finds no caller in `lib/research/api/`, so no request path reaches it.
+- An AST read of each module's top level shows no import-time effect: only `re.compile` and `frozenset` constants, plus `build_universe`'s
+  `if __name__ == '__main__'` guard. Nothing runs when the module loads.
+
+**Admitted**, on the COO's added check: the build prints 0 request-path reach to `load_issuer_sources`, or it STOPs. Any further member
+outside the list is still a STOP. Conditions 1-10 otherwise stand.

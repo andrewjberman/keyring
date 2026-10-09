@@ -195,6 +195,7 @@ because two releases would each re-test the whole service. Battery dry-run at ba
 J1 is the thread run, the round's one essential wait: Alyssa's act, booked through 0.0.0_AB_MSTR~Z.
 
 <status>issued</status>
+<status>pending</status>
 <round>8</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

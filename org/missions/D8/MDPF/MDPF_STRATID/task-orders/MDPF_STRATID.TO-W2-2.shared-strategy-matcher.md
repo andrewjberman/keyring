@@ -77,7 +77,7 @@ builds the matcher from `infra/aws/etfs/config/etf_universe.json` in your worktr
 <criterion id="W2-2-AC3" cell_refs="ST-w-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_2_census.py</invocation><expect>W22-CENSUS-OK</expect></criterion>
 `W2-2-AC3` -- the census exists, its DENOMINATOR equals its REPLACED/KEPT rows. At the base: `W22-CENSUS-BAD no file ...`.
 
-<expected_criteria>W2-2-AC1 W2-2-AC2 W2-2-AC3 W2-5-AC1</expected_criteria>
+<expected_criteria>W2-2-AC1 W2-2-AC2 W2-2-AC3 W2-5-AC1 W2-6-AC1 W2-6-AC2</expected_criteria>
 
 Run each invocation from your worktree root.
 
@@ -109,6 +109,33 @@ The check lives in the shared tree: run it with this absolute path from your wor
 <criterion id="W2-5-AC1" cell_refs="ST-w-5"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_5_ship.py</invocation><expect>W25-SHIP-OK</expect></criterion>
 `W2-5-AC1` -- every carrier that ships `rebalancer_schemas.py` ships the matcher. On your branch now: `W25-SHIP-BAD 6 of 6 ...`.
 
+### AMENDMENT A9 (issuer, 2026-10-09 ~14:4xZ, drain step 4) -- cell `ST-w-6`: the running path reads the S3 list
+
+The shared list is live at `s3://opal-data-etfs/config/etf_universe.json` (byte-identical to commit 7a8a5e39ab; ledger
+`mdpf-stratid-w2a-etf-universe-s3-dell1-20261009`), and the MDPF runner and gold-lambda roles are being granted `s3:GetObject` on that
+key. Today `rebalancer_schemas.opal_sma_member_of` uses `OPAL_STRATEGY_CONFIG_SEED` unless a caller runs `set_strategy_config`.
+Change `data/assets/scripts/silver/rebalancer_schemas.py` so that, when no caller has set a config, the FIRST call loads the config
+with `opal_strategy_matcher.load_strategy_config()` (once per process, cached) and builds the matcher from it; an unreadable config
+RAISES (fail closed, no fallback to the seed). Set a module attribute `STRATEGY_CONFIG_SOURCE` to
+`"s3://opal-data-etfs/config/etf_universe.json"` when the S3 config is loaded (and to `"set_strategy_config"` when a caller sets
+one). `set_strategy_config(cfg)` and the `cfg=` argument keep winning. The seed may stay only as test data, never as a runtime
+fallback. Do not edit the five callers.
+
+**Tests** `data/assets/scripts/silver/tests/test_opal_strategy_wiring.py` with exactly: `test_default_reads_s3_config_on_first_use`,
+`test_s3_config_loaded_once_per_process`, `test_unreadable_config_raises`, `test_set_strategy_config_overrides_the_s3_default`,
+`test_cfg_argument_still_wins` (stub S3; no network in tests).
+
+<criterion id="W2-6-AC1" cell_refs="ST-w-6"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_6_tests.py</invocation><expect>W26-OK</expect></criterion>
+`W2-6-AC1` -- the five named tests pass. At the base: `W26-BAD no file ...`.
+
+<criterion id="W2-6-AC2" cell_refs="ST-w-6"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_6_live.py</invocation><expect>W26-LIVE-OK</expect></criterion>
+`W2-6-AC2` -- SEAM on real S3 (read-only, under your own credentials): with no config set, the module reads the S3 list, and over
+the 361 real Cottonwood names its answers equal the matcher built from the repo file. At the base:
+`W26-LIVE-BAD STRATEGY_CONFIG_SOURCE=None`.
+
+Re-run the four earlier criteria too. Re-flip `<status>` to `complete` only when all six pass. **No deploy:** the issuer opens a
+change-management entry before merging this branch, because a `box/dell1` push uploads silver scripts the runner syncs.
+
 ## BOUNDS
 
 - **GUARD 1:** no deploy of `mdpf-gold-lambda` or any script, and no write to the ETF universe config, before the 2026-10-09 13:30Z
@@ -123,6 +150,7 @@ The check lives in the shared tree: run it with this absolute path from your wor
 data/assets/scripts/silver/opal_strategy_matcher.py
 data/assets/scripts/silver/rebalancer_schemas.py
 data/assets/scripts/silver/tests/test_opal_strategy_matcher.py
+data/assets/scripts/silver/tests/test_opal_strategy_wiring.py
 org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~5/IDENTITY_COPY_CENSUS.md
 org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_v1.md
 infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py
@@ -137,7 +165,7 @@ The block is your WRITE grant (paths relative to your worktree root are the same
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md</decomp_doc> (workstream 2), cell `ST-w-2`.
-<owned_cells>ST-w-2 ST-w-5</owned_cells>
+<owned_cells>ST-w-2 ST-w-5 ST-w-6</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>

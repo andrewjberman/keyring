@@ -11,3 +11,11 @@ Cron af01ed30, 10m, ETFS_RIVALS. Lease FULL.
 | 12:3xZ | `round28/sweep_read.py` (the 13:00Z read): control on 2026-10-08 (a1-chain/6): 26 items, 25 PASS / 1 FAIL; period codes in 23 of 26; two ISO dates in 0 of 26; openings 13 of 13 "the last thirty days" |
 
 Next: 13:1xZ sweep_read 2026-10-09 + report_lines 12:55-13:40 -> r27 L2 and aw-1 L2 close, aw-1 J1 counts to the CVO; then cut RIV-wg-1.
+
+## 13Z (continued in this file)
+
+| time | act |
+|---|---|
+| 13:09Z | 13:00Z sweep on aw-1's package: daily Lambda 504.6 s, 0 error lines; page 2026-10-09 regenerated 13:08:34Z, 13 of 13. AI rows (a1-chain/7): PASS 26 of 26 (10-08: 25), codes 0 (10-08: 23), two dates 26 of 26 (10-08: 0), corrections 1; Direction Verdict leads 13 of 13 "From <date> to <date>" (D1-S8 at full denominator) |
+| 13:1xZ | Ledgers etfs-rivalfunds-r27 and etfs-rivalfunds-r28-aw1-dell1-20261009 CLOSED @4bbd1fb88b; aw-1 J1 counts to 3.0.0_SA_CVO~RV1 |
+| 13:1xZ | RIV-wg-1 issued @27e0630b5b (decomposition rev 1.24; AC1 base FAIL 3, AC2 base FAIL 1, controls PASS; fanout 1 of 1, cap 8); worktree C:/tmp/wk-rivals-30 provisioned at 27e0630b5b; worker 0.9.0_WK_ETFS_RIVALS~30 spawned |
