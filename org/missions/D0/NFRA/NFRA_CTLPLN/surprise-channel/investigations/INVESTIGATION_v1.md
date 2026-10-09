@@ -6500,3 +6500,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Interim route taken: MSTR resends, ~CT1 acks as moot, both sides close. Candidate fix for the next round: a `withdraw --id --reason` verb for the opener while state is OPEN, recorded as a fourth terminal state."
 }
 ```
+
+## NFRA_CTLPLN-S9109 -- crossbox-call.py send-pending runs bare 'bash' through subprocess, which Windows resolves to WSL bash in System32, so every send on a Windows box exits rc=1
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9109",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T18:20:00Z",
+  "one_line": "send_pending builds its default command as shlex.split('bash <agentbus-sqs.sh> send'); CreateProcess searches System32 before PATH, so 'bash' is WSL bash and fails 'execvpe(/bin/bash) failed' on every pass, although shutil.which('bash') reads Git bash -- the root cause of send-pending rc=1 beside a manual send rc=0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py:388 cmd = shlex.split(os.environ.get(\"CROSSBOX_SEND_CMD\", \"\").strip() or \"bash %s send\" % ...) -- bare 'bash', no resolver.",
+      ".tools/git_bash_resolver.py:55 bash_argv(script, *args) exists for exactly this case (CLAUDE.md Git section).",
+      "0.0.0_AB_MSTR msg 108084, measured on the laptop: subprocess.run(['bash','-c','echo ok']) rc=1 with 'WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed'; XB-9ec5 and XB-0655 failed this way."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The manager's send-pending delivers every OPEN cross-box file on any box (CT-s-6).",
+  "world_is": "On a Windows box the default send command never reaches Git bash; only a manager who sets CROSSBOX_SEND_CMD to the full Git bash path gets a send through.",
+  "notes": "Interim route: 0.0.0_AB_MSTR runs send-pending with CROSSBOX_SEND_CMD set to the full Git bash path. Fix for the next round, one line: build the default argv with git_bash_resolver.bash_argv(agentbus-sqs.sh, 'send'). Pairs with S9108."
+}
+```

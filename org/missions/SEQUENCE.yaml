@@ -193,7 +193,7 @@ projects:
     waits_on: []
     why: Stays at site Z. The sprint window.
   MDPF_CANON:
-    fabric: laptop
+    fabric: dell1
     stage: 6
     waits_on: []
     hold:
