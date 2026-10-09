@@ -4391,3 +4391,33 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-S39 -- S38 superseded: secrets are GRADED not built, the name grades CONFORMANT, and the build-verb refusal was not a gate defect
+
+```json
+{
+  "id": "IRPT_DASHBD-S39",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T10:18:00Z",
+  "one_line": "Row IRPT_DASHBD-S38's premise is SUPERSEDED: secrets are GRADED, not built, and lib.opal_naming.grade('opal/investor-reporting/svc-custody-statement','SECRET') returns CONFORMANT -- so the name() refusal S38 reported was the BUILD verb behaving correctly, not a gate defect, and no registry row is owed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Row IRPT_DASHBD-S38 asserted that rule 30's remedy (a row under infra/logic/registry/) was owed by an owner outside this order's grant, and routed the gap for someone to fix.",
+  "world_is": "1.0.0_SA_CTO~DELL2 ADDENDUM 9.3, relayed by 2.0.0_SA_COO~D2 as msg 3093, ruled that secrets are GRADED and not BUILT (the W1-S4 precedent): the grade of opal/investor-reporting/svc-custody-statement as SECRET is CONFORMANT, as is the control svc-analyst-intake, with no R19, no R20 and no registry row. Run in this seat's worktree at the ruling: grade('opal/investor-reporting/svc-custody-statement','SECRET') -> ('CONFORMANT','opal/investor-reporting/svc-custody-statement') and grade('opal/ticketing/svc-analyst-intake','SECRET') -> ('CONFORMANT','opal/ticketing/svc-analyst-intake'); in both the canonical form EQUALS the name as given, so the secret created by leg M already carries its canonical name. THE CORRECTION: name() is the BUILD verb, and its ValueError on a slash-delimited Secrets Manager path is CORRECT BEHAVIOUR for a node type that is graded rather than built -- therefore there is NO gate defect to route, and this seat does not route a non-defect (the ruling's 'a gate refusal is a gate defect, route it via MSTR' does not reach a refusal that is not one). Nothing about the created secret changes: same name, same ARN arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/investor-reporting/svc-custody-statement-9CmPmS, same claims, same 90-day TTL. CAUSE WORTH KEEPING, because it is reusable: this seat's first probe of lib/opal_naming.py filtered the module's exports by a FORWARD GUESS -- exports whose text contains 'name', 'secret' or 'address' -- and 'grade' matches none of those words, so a verb that was present the whole time read as ABSENT and the seat reached for the build verb instead. That is exactly rule 24(i)'s failure mode: hunt the uncovered member BY SUBTRACTION from a printed denominator, never by a forward list. Printing the full export list is what found grade(name, type) immediately. An early stop and a true absence read identically.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py grade(name, type) and its GRADING_RULE.md docstring (verdicts NO-SYSTEM-ASKED / CONFORMANT / ALIAS / OUT-OF-PATTERN, NOT-GRADED outside the domain)",
+      "org/mcp/inbox/0.7.0_AE_CloudOps/~DB2/read/20261009T101115Z_2.0.0_SA_COO_D2__RULING_IRPT_DASHBD.TO-DB-b-84__row_S38_.md (msg 3093, acked)",
+      "org/critical_paths/change_management/20261009T0952Z_svc-custody-statement-mint-20261009_deploy_completion.md NOTE 1 (the grade call and verdict, as the ruling requires)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.7.0_AE_CloudOps~DB2/MINT_RECORD.json naming_gate",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_DASHBD-S38 @fe6b451cee (the superseded premise)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Superseded by ruling, not by re-measurement: 1.0.0_SA_CTO~DELL2 ADDENDUM 9.3 (relayed by 2.0.0_SA_COO~D2 as msg 3093) ruled that secrets are GRADED and not BUILT, and the grade call this seat then ran returns CONFORMANT for both opal/investor-reporting/svc-custody-statement and the control opal/ticketing/svc-analyst-intake, with the canonical form equal to the name as given. S38's premise -- that a rule-30 registry row was owed to some owner -- is therefore void: name() is the BUILD verb and its refusal on a slash-delimited Secrets Manager path is correct behaviour for a graded node type, so there was never a gate defect to route. Nothing remains for anyone to act on: no R19, no R20, no registry row, and the created secret's name, ARN, claims and 90-day TTL are unchanged. Dismissed by this row rather than left open because S38, read alone, would invite a registry row the CTO expressly ruled out."
+}
+```

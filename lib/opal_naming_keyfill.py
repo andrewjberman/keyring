@@ -87,11 +87,45 @@ def _is_bucket_literal(value, v):
 
 
 def _s3_url_bucket(value, v):
+    """The bucket named by the host of an s3://<bucket>/... string: a bucket-shaped host is a bucket by the URI itself
+    (the registry need not know it)."""
     if isinstance(value, str) and value.startswith("s3://"):
         b = value[5:].partition("/")[0]
-        if _is_bucket_literal(b, v):
+        if _is_bucket_literal(b, v) or opal_naming._BUCKET_NAME_RE.match(b):
             return b
     return None
+
+
+def _s3_url_key_bucket(value, key, v):
+    """The bucket of an s3://<bucket>/<path> constant whose path is the key (or begins with it), else None."""
+    if isinstance(value, str) and key and value.startswith("s3://"):
+        b = _s3_url_bucket(value, v)
+        path = value[5:].partition("/")[2]
+        if b and (path == key or path.startswith(key.rstrip("/") + "/")):
+            return b
+    return None
+
+
+def _bucket_named_consts(tree, v):
+    """{NAME: set of bucket-shaped literals} for a module-level NAME assigned a string that is not a registry bucket but IS
+    used as a bucket in the file: the value of a Bucket= keyword, or the host of an s3://{NAME}/ f-string. The name's
+    spelling is never the evidence; its use as the bucket is."""
+    used = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.keyword) and n.arg == "Bucket" and isinstance(n.value, ast.Name):
+            used.add(n.value.id)
+        elif isinstance(n, ast.JoinedStr):
+            vals = n.values
+            if (len(vals) >= 2 and isinstance(vals[0], ast.Constant) and vals[0].value == "s3://"
+                    and isinstance(vals[1], ast.FormattedValue) and isinstance(vals[1].value, ast.Name)):
+                used.add(vals[1].value.id)
+    out = {}
+    for stmt in tree.body:
+        if (isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and isinstance(stmt.targets[0], ast.Name)
+                and stmt.targets[0].id in used and isinstance(stmt.value, ast.Constant)
+                and isinstance(stmt.value.value, str) and opal_naming._BUCKET_NAME_RE.match(stmt.value.value)):
+            out.setdefault(stmt.targets[0].id, {})[stmt.value.value] = stmt.lineno
+    return out
 
 
 def _split_where(where):
@@ -391,12 +425,19 @@ def _bucket_of_py(tree, line, key, v):
                    if isinstance(n, ast.Constant) and isinstance(n.value, str) and _is_bucket_literal(n.value, v)]
             if val:
                 consts.setdefault(node.targets[0].id, set()).update(val)
+    for nm, lits in _bucket_named_consts(tree, v).items():
+        consts.setdefault(nm, set()).update(lits)
+        for b, ln in lits.items():
+            allb.setdefault(b, ln)
     here = [n for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str)
             and getattr(n, "lineno", 0) == line and id(n) not in docs]
     mine = [n for n in here if n.value == key] or [n for n in here if key and key in n.value]
     extra = ""
     if mine:
         node = mine[0]
+        ub = _s3_url_key_bucket(node.value, key, v)
+        if ub is not None:
+            return ub, "bucket %s is the host of the s3:// constant that holds the key (line %d)" % (ub, node.lineno)
         fb, fwhy = _bucket_via_field(tree, parent, node, consts, v)
         if fb is not None:
             return fb, fwhy
