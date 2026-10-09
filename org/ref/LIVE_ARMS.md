@@ -19,7 +19,7 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
-- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` at `17 * * * *`, DIRECTED: re-armed after the 2026-10-08 laptop reboot on
+- `1.0.0_SA_CTO` `/self-drive 30m laptop directives` at `17,47 * * * *` (cron `a5054ca6`; 30m on Andrew ~06:0xZ 2026-10-09, "that should be much faster clip, like 30m"), DIRECTED: re-armed after the 2026-10-08 laptop reboot on
   Andrew's "1.) Yes." (~18:3xZ, last addendum of
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`), terms of
   `ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`; GitOps, GC and graph coherence
