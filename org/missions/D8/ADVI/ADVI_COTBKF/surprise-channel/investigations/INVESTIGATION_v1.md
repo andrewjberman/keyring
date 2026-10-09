@@ -4103,3 +4103,55 @@ round.** Never edit an existing row.
   "world_is": "The mirror IS the deployment of the repo's gold scripts, so it necessarily contains the one cot writer the half's own census counts and admits. On the literal reading condition 2 therefore STOPS the act the half signs GIVEN; on the reading its own closing sentence implies -- close the BLIND, i.e. find a writer BEYOND the census, or a scheduled one -- the gate PASSES, because the mirror agrees with the census exactly (1 cot writer, the named one, manual-only, scheduled=0, 0 foreign price readers). The applier did not pick between those readings: this is a SERVED overwrite of 38 keys and CLAUDE.md bars the receiving seat from adjudicating scope, so NOTHING WAS WRITTEN (0 of 38 keys) and the question went to the gate's author with the measurement and a recommendation. Conditions 1, 3 and the preflight are already proven in the ledger and do not depend on the answer. The deploy entry is deliberately left OPEN rather than HELD, because deploy_ledger.py has no state for 'pre-apply gates partly proven, act not started, awaiting a ruling': hold refuses while an apply leg is open, and hold --pre-apply refuses once any leg is proven."
 }
 ```
+
+## ADVI_COTBKF-D2-S61 -- L9 CB37ak1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S61",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "L9 CB37ak1-AC2 MET: the class rule was committed alone, unimplemented ('rule-only commit'), at b4764d4fa0 (09:22 ET) before the output 3c00ecf3c3 (09:30); each class follows from the printed rows by its precedence (95000U2D4 trade_only on one 2022-06-08 buy, 05613L3H2 and 651639AX4 none); the one post-run change widened the vendor buy-code list to include 'by', which the rule's own 'buy/sell transaction rows' already covers, disclosed in W65-S1; no other firm's source is counted (the bd_snapshot gold rows were excluded, and they post-date the held window, so no class rides on them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show b4764d4fa0:data/assets/scripts/silver/commonwealth_bond_custodian_price.py (CLASS RULE, main raises 'not yet implemented')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_37_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB37ak1-AC2: each class follows from the printed rows by the rule committed first, and no other firm's source is counted.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S62 -- the bd token names both the Black Diamond platform and the bd firm
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S62",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "The 'bd' token is ambiguous inside Cottonwood's own data: cot GOLD holdings carry 86 rows for 95000U2D4 labelled bd_snapshot (2026-06-08 .. 2026-10-08), and Cottonwood's own pipeline is a Black Diamond session (cot-bd-session-daily-et, BD_FIRM_ID=cottonwood in ssm.tf). A 'bd' label can therefore name the Black Diamond PLATFORM serving Cottonwood's own accounts or the separate bd firm (49 Financial), and a token-based exclusion cannot tell them apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cross-firm guard (CLAUDE.md NEVER, another firm's data) can tell another firm's data from a shared platform serving the firm's own accounts.",
+  "world_is": "It cannot today by label: 'bd' names both. Excluding by token over-excludes Cottonwood's own platform rows; including by token would admit 49F's."
+}
+```
