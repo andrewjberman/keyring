@@ -11228,3 +11228,81 @@ name the one known failure instead of silently inheriting it.
   "world_is": "A2's INTENT is satisfiable and its NAMED MECHANISM is not. The intent -- let the gate resolve my identity legitimately, without HALT_OVERRIDE and without touching the signed release -- is met by the tested fix above, which makes the gate's own premise TRUE rather than re-pointing or weakening it: the folder it looks for exists at the release sha and was simply not materialised by the sparse checkout. The mechanism A2 names cannot reach the predicate, for a reason that is itself a deliberate prior ruling (R-53), so this is two correct designs meeting badly rather than anybody's mistake. WHY I HAVE NOT PROCEEDED ON MY OWN READING: Z-S74 said in terms that the override-versus-configuration distinction was the issuer's to draw on an act of this class, the issuer then drew it by naming a specific mechanism, and substituting a different mechanism of my own after that would take back the call I had just handed over. The fix is tested and idle, the window runs to 23:00Z, and nothing is half-landed. ONE MORE OPTION THE ISSUER MAY PREFER, recorded so the choice is not falsely binary: halt_gate_validate_serial could scan HALT_GATE_SHARED_ROOT as well as HALT_GATE_REPO_ROOT, the way halt_gate_worker_issuer already does, which would fix this class for every seat deploying from a sparse worktree rather than for this deploy alone -- but .tools/ is outside this order's <paths> and a gate edit mid-deploy is a worse act than a cone change, so I name it as a follow-up rather than propose it now."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:04:39Z",
+  "one_line": "BLOCKING: the release commit on rel-nfra-oplgtw-tl1 is refused by the owned-paths lane gate (the release tree at 91811b648a carries no OG-tl-1 task order, so the worker grant finds nothing); the edit is built and tested but UNCOMMITTED, so AC1 cannot pass and there is no release_sha.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (cwd C:/tmp/og-reltl1) bash .tools/safe-commit.sh --author '0.9.0_WK_NFRA_OPLGTW~48 <...>' -F msg -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -> commit-gate OK (bash -n), then 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -- lane=CLOUD_OPS_OR_ETL', 'safe-commit did NOT commit (rc=1)'",
+      "READ .tools/owned-paths-validate.py:188-222 _worker_orders: the worker grant is the NON-TERMINAL task orders under the project code listed by `git ls-files` and read by `git show HEAD:<path>` in the COMMITTING tree",
+      "RUN git ls-files -- 'org/missions/D*/*/NFRA_OPLGTW/task-orders/*.md' in C:/tmp/og-reltl1 (HEAD 4514246d65): 63 orders, 0 matching tl-1 -> the grant for this order does not exist in the release tree",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~43/ANNOUNCE_OG-rl-15.md:7 -- the r29 release commit was made under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPLGTW~43 (R13(a), audited); this order forbids overriding a gate, so I did not"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 step 2 and the cut: the release commit on rel-nfra-oplgtw-tl1 is made by the worker with safe-commit from C:/tmp/og-reltl1; section 2: never override a gate.",
+  "world_is": "The lane gate reads the order at HEAD of the committing tree, and a release worktree cut at the live base cannot hold an order issued after that base. The two stated rules cannot both be met. The edit stands uncommitted in C:/tmp/og-reltl1 (git diff: 1 file, 13 insertions, 3 deletions; bash -n OK; the extracted block tested on 3 inputs: 4 ids -> value of 595 bytes equal to the python join; 3 ids -> exit 1 'yields 3 ids'; missing json -> exit 1 'unreadable'). The stage commit 4514246d65 (data file only) passed because no lane claims that path. To resume: the issuer either commits that one file with the audited override as the r29 release did (then W/tl1_release.json and AC1 follow), or rules another route.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done: tl1_release.json, AC1 pass. Nothing deployed, uploaded or restarted."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:04:39Z",
+  "one_line": "The base 91811b648a does not carry data/transcripts/scripts/teams/meeting_allowlist.json, so a one-commit release cannot satisfy both 'carries the json byte-equal' and AC1's 'files differing 1'; I added a data-only stage commit 4514246d65 and AC1's base_sha must be that stage commit, not the live ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git cat-file -e 91811b648a:data/transcripts/scripts/teams/meeting_allowlist.json -> fatal: path does not exist; git ls-tree HEAD data/transcripts/scripts/teams/ lists NAMES.json, __init__.py, backfill_silver.py, ... and no meeting_allowlist.json",
+      "RUN git ls-tree box/sitez data/transcripts/scripts/teams/meeting_allowlist.json -> blob d57e815a7c; the staged copy in C:/tmp/og-reltl1 hashes d57e815a7ca1987e35041698fbdc26ea1e3698be (equal)",
+      "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/tl1.AC1.sh: diff base..release must be exactly deploy-to-ec2.sh, AND `git show release:<json>` must hash equal to HEAD's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: ONE commit, base = the host's live ref; and the release tree carries the json byte-equal to box/sitez HEAD's; AC1: base..release differs in exactly one file.",
+  "world_is": "Base 91811b648a lacks the json (dell2's file landed on box/sitez after r29 was cut). With base_sha = 91811b648a the diff is 2 files (script and json) and AC1 reads FAIL; with base_sha = 4514246d65 (parent 91811b648a, adds only the json) the diff is 1 file and AC1 can pass. The json sits outside infra/aws/ec2/opal-gateway so it never ships to the host; the host-bound delta from the live ref is the one script. Phase B decides which base_sha the applier's stale-base guard (DEPLOY_BASE_REF) is given: it is the host's live ref, not the stage commit.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Host read at Phase A: md5 97 of 97 identical to the r28 aa75078e1b list (SSM 1b5e2c57-3ff5-4ee7-9247-2340aea60adb, Success), EC2_MANIFEST deployed_commit aa75078e1b at box/sitez 6d0e23e25f; r29 not yet live, so the release is built on 91811b648a."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:16:42Z",
+  "one_line": "RESOLUTION of NFRA_OPLGTW-Z-W48-S1 by amendment OG-tl-1 A1 @9ba3e56d87: the one-file release commit 78afad4283 was made under the audited GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL; S1's blocking condition is cleared.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ git show 9ba3e56d87:org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-tl-1.transcript-allowlist-4-meetings.md lines 102-108: A1 rules that ONE commit (deploy-to-ec2.sh only) on rel-nfra-oplgtw-tl1 uses the override, no other commit, path or branch, no other gate",
+      "RUN GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL bash .tools/safe-commit.sh ... -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (cwd C:/tmp/og-reltl1) -> committed 78afad428389a4665aed267ac7f44e76533be59a, msg-verify MATCH; git diff --name-only 4514246d65 HEAD -> infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (1 file); worktree clean after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 forbids overriding a gate; S1 held the release commit on that rule.",
+  "world_is": "The issuer ruled amendment A1 @9ba3e56d87 permitting exactly one audited override for exactly this commit. It was used once, for that one file; the stage commit 4514246d65 and every commit on wk-NFRA_OPLGTW-33-48 were made without it. tl1_release.json records base_sha 4514246d658cfbb4de58636c9f6d149f7b9abb36 and release_sha 78afad428389a4665aed267ac7f44e76533be59a. Row S1 is not edited; this row is its resolution.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Resolves NFRA_OPLGTW-Z-W48-S1. Row S2 (json absent from base) stands."
+}
+```
