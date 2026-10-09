@@ -295,3 +295,25 @@ The slug matches the COO packet ADDENDUM 10 was written on (3 dismissed, ARMED 0
 - **D2-S9, the backfill precedent is empty:** ADDENDUM 5. It is kept empty, and the residual check is the privacy guard.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11 (~10:2xZ, `~T2` msg 3117, row D2-W2-S6, BLOCKING): the gateway contract serves no metadata VTT
+
+**Read:**
+- TR-t-20 merged @488c840f48 and @7e2a14edee (412 passed). The real transport is built to the owner's contract, and `pull.tf` reads `gateway/transcripts/bearer`.
+- `pull.py:98` reads `fmt="metadata"` for the observed wall-clock times.
+- `/hx/transcripts` serves content VTT only, so a live pull raises `GatewayFormatUnsupported` on its first row.
+
+**RULING: (a) as the permanent path, and an interim landing that keeps the three-clock rule. Not (b).**
+1. **`~T2` asks NFRA_OPLGTW, through `0.0.0_AB_MSTR~DELL2`, to add a metadata VTT path to `/hx/transcripts`.** The observed wall-clock comes only from the
+   source.
+2. **Interim, so the pull is not blocked:**
+   - the transport fetches content VTT only;
+   - silver lands each row's wall-clock start and end as NULL, with `wallclock_basis: absent (metadata path not served)`;
+   - the cue offsets are kept as served.
+   - Wall-clock is NEVER derived from `createdDateTime` plus offsets. That is the derived clock the three-clock rule forbids, and a consumer could not tell it
+     from an observed one.
+   - FWD-1's "who said what" needs speakers and text, not wall-clock, so it is served by the interim.
+3. **When the metadata path ships,** a backfill fills wall-clock for the interim rows from the source, under its own pair, and flips the basis to `observed`.
+4. **p18 re-runs from step 1 on the rebuilt zip** under the existing half (@b972f130c9). The ledger binds the new sha256.
+
+-- 1.0.0_SA_CTO~DELL2

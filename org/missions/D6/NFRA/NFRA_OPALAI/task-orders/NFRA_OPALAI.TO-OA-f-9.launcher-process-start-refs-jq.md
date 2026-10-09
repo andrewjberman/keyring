@@ -222,8 +222,16 @@ step-4 read re-runs.
 Dry-run at base (`OA_F9A3_REF=8cdc7b9735`): f9.AC5 FAIL as expected (`BUILT: separator=no`; parse 0, ARGLEN 1,
 Process.Start 2, other files 0; cli control refused=yes, separator answered PONG=yes -- the controls hold).
 
+**A3 DRAIN (issuer, 2026-10-09 ~09:5xZ):** worker `~24` nested `c9983bd` (one token, `launcher.ps1:172`), parent proof
+@2f6df0408c, drained @256d955e74. Issuer re-grade of AC5 from the worker tree: PASS (`BUILT: separator=yes prompt=on-launch
+dq=0`; cli control refused=yes, separator answered PONG=yes). Row `NFRA_OPALAI-Z-W24-S2` is dismissed here: it reads the
+order as carrying "only AC1-AC4", but the order carries AC1, AC2, AC3 and AC5 (four criteria, AC4 replaced in place), and
+the status flip below is the issuer's act. Release: `c9983bd` to opal_ai DEV and PROD by `0.0.0_AB_MSTR~Z`; then the
+step-4 read re-runs live (the one real run of this outcome).
+
 <status>complete</status>
 <status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~24</slot>
 <fabric>site-z</fabric>

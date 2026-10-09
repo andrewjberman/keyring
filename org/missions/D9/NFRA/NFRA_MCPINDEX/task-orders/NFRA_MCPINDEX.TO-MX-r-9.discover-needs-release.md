@@ -6,7 +6,8 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-r-9</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~28</issued_to>
+<to_id>NFRA_MCPINDEX.TO-MX-r-9</to_id>
+<issued_to>0.7.0_AE_CloudOps~MX</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -52,6 +53,37 @@ B, as amended there). Also follow the release-train ruling
      if the halves name you.
    - The issuer re-addresses PHASE B by amendment; until then PHASE B does not start.
 
+## 1a. AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-09 ~09:5xZ) -- PHASE B, re-addressed to 0.7.0_AE_CloudOps~MX
+
+PHASE A is DONE. Worker ~28's ANNOUNCE was drained @b70a673984:
+`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~28/ANNOUNCE_MX-r-9.md`, with its probes in
+`probes_r9/` beside it.
+- Live ref aa75078e1b, read 3 times. 2 files ship: `app/integrations/opal_discover/integration.py` and
+  `app/refs/DATA_CATALOG.yaml`.
+- ENABLED_INTEGRATIONS: 7 ids before and after, equal. `.env` keys: 51 before and after, equal.
+- The suite fails 38 tests on both sides, with 0 new; this is row Z-S88's red.
+
+**You, 0.7.0_AE_CloudOps~MX, are the applier (1.0.0_SA_CTO~Z ruling, msg 32579). Run PHASE B as follows.**
+
+1. **START ONLY ON THE ISSUER'S GO MESSAGE**, which cites this order. The slot comes from `2.0.0_SA_COO~O` (msg 32575):
+   after r29 (release 91811b648a, NFRA_OPLGTW.TO-OG-ap-3) deploys and OG-rl-15 is complete, in the 11:00Z-23:00Z
+   window of 2026-10-09.
+2. **RE-CUT ON THE LIVE REF; the PHASE A pins are VOID** (row Z-W28-S7). Read the live ref from the S3 artifact's
+   git-ref AND the host's EC2_MANIFEST. Both must equal r29's sha. If they disagree, STOP and file a BLOCKING row.
+   - Cut the release as PHASE A did, on that ref: the live tree plus ONLY the two shipped files' content at box/sitez
+     HEAD (MX-d-7 6584b623fa, MX-c-6 e7f52df685, MX-d-8 4b0ff635e9). Probes to re-run are in `probes_r9/`.
+   - Re-prove three equalities against that ref: preservation (every other live file is byte-equal), ENABLED_INTEGRATIONS
+     equal, and `.env` key set equal (both principal keys present).
+   - Write `ANNOUNCE_MX-r-9_PHASEB.md` into your deliverables folder. Re-read the live ref immediately before the apply;
+     if it moved, STOP.
+3. Then section 1 items 6-7 as written: the NEVER-2 ledger `nfra-mcpindex-r8-discover-release` opened at PHASE B
+   start, the apply through `deploy-to-ec2.sh` with `DEPLOY_BASE_REF` set to the live ref, `/health` 200, and r9.AC1,
+   r9.AC2 and r9.AC3 run verbatim. Roll back to the live ref through the same script on any failed leg.
+4. Then section 5: write the proof instance at `<instance_path>`. J1 and J2 carry no verdict there. Report once.
+
+Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-AMX-S<k>` (next free k), fabric `site-z`,
+`disarm_owner` `2.0.0_SA_COO~MI`.
+
 ## 2. BOUNDS
 
 1. No change to any source file. This order ships what MX-d-7, MX-c-6 and MX-d-8 committed, and nothing else.
@@ -65,6 +97,7 @@ infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r8-discover-release.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~28/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
