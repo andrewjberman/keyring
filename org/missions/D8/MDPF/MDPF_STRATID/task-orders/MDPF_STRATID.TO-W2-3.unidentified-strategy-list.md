@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_STRATID~6</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -181,6 +181,20 @@ Also re-run `R2_CHECKS/st_u2_regress.py`, which must read `U2-REGRESS-OK`.
 Re-flip `<status>` to `complete` only when every criterion in `<expected_criteria>` passes. No deploy: the issuer's drain ships it
 under TO-APPLY-R2. A11 grants `mdpf_gold_consolidator.py` and the new test file for this one change.
 
+### AMENDMENT A11.1 (issuer, 2026-10-09 ~21:0xZ) -- ruling on row D1-W6-S5
+
+- **The finding.** `test_stratid_global_fold.py::test_cottonwood_and_49financial_views_unchanged` (`:166`) asserts that the overlay
+  adds exactly `{sma_additive_aua, sma_additive_withheld}` to a per-firm view. The A11 pad intentionally adds a third key,
+  `unidentified_strategies` (None), so the test's expected set is stale, not the code.
+- **Ruling.** The file is granted for this one edit: add `'unidentified_strategies'` to that expected set. Change nothing else.
+- **Re-run:**
+  - `python -m pytest -q data/mdpf/tests/stratid data/mdpf/tests/taxsma` reads 0 failed;
+  - `R2_CHECKS/st_u2_regress.py` reads `U2-REGRESS-OK`.
+
+  Then re-flip `<status>`.
+
+Gate limb: GATE viii on the modification (placeholders NONE).
+
 ## BOUNDS
 
 - **GUARD 1:** no deploy and no write to the ETF universe config before the 2026-10-09 13:30Z read. You write nothing in AWS;
@@ -201,6 +215,7 @@ data/assets/scripts/gold/build_cottonwood_mdpf_slice.py
 data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py
 data/mdpf/scripts/gold/mdpf_gold_consolidator.py
 data/mdpf/tests/stratid/test_stratid_unidentified_keyset.py
+data/mdpf/tests/stratid/test_stratid_global_fold.py
 </paths>
 
 The block is your WRITE grant (paths relative to your worktree root are the same files). Everything else named here you READ.
