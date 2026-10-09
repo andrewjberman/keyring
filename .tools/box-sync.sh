@@ -270,7 +270,7 @@ if [ "$MODE" = "integrate" ]; then
       else
         _mrc=$?
         HELD="${HELD}${HELD:+,}${r#origin/}$([ "$_mrc" -eq 4 ] && echo ':conflict' || echo ':refused')"
-        echo "box-sync: HELD ${r#origin/} -- $([ "$_mrc" -eq 4 ] && echo 'it conflicts with CLOUD; that box resolves it in its next box pass' || echo 'refused, see above'). The other boxes go on."
+        echo "box-sync: HELD ${r#origin/} -- $([ "$_mrc" -eq 4 ] && echo 'it conflicts with CLOUD; that box resolves it in its next box pass (one owner repairs: the seat owning the broken file lane, on its own box; an ANY path, the integrator box)' || echo 'refused, see above'). The other boxes go on."
       fi
       PHASES="${PHASES} ${_ap}t_merge_${r#origin/box/}=$(secs "$_tm")s"
     done
@@ -341,7 +341,7 @@ for attempt in 1 2 3; do
   make_merge "$P1" "$CLOUD_TIP" "box-sync(${SERIAL}): take CLOUD @${CLOUD_TIP:0:10} into ${B}"; mrc=$?; M="$MERGE_OUT"
   PHASES="${PHASES} $([ "$attempt" -gt 1 ] && echo "a${attempt}.")t_merge_cloud=$(secs "$_tm")s"
   if [ "$mrc" -eq 4 ]; then
-    echo "box-sync: HELD -- CLOUD @${CLOUD_TIP:0:10} conflicts with ${B}. Resolve with the /integrate BOX PASS (safe-merge in a drain worktree); nothing landed."
+    echo "box-sync: HELD -- CLOUD @${CLOUD_TIP:0:10} conflicts with ${B}. Resolve with the /integrate BOX PASS (safe-merge in a drain worktree); one owner repairs a trunk break -- the seat owning the file lane, on its own box (owned-paths-validate.py --check-path names it; an ANY path: the integrator box); every other box just takes CLOUD next pass. Nothing landed."
     ROWNOTE="held=conflict cloud=${CLOUD_TIP:0:10}"; row 4; exit 4
   fi
   [ "$mrc" -eq 0 ] || { ROWNOTE="refused ${GRADED_NOTE}"; row 1; exit 1; }
