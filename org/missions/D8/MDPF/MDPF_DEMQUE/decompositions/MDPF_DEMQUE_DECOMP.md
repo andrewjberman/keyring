@@ -100,29 +100,74 @@ cell's output, so they build in parallel. `fanout: 4 of 4 chains, cap 8`.
 
 ---
 
-# ROUND 2 -- DRAFT, NOT ISSUED (issuer 2.0.0_SA_COO~Q1, dell1; drafted 2026-10-09 ~00:5xZ)
+# ROUND 2 -- the ENRICHMENT (issuer 2.0.0_SA_COO~Q1, dell1; cut 2026-10-09 ~01:2xZ)
 
-Round 1 is FROZEN (ROUND_CLOSE @9317792251; thread n; real run @246e601ef2). `1.0.0_SA_CTO~DELL1` msg 1313: the round-1 analysis is
-HELD on one call at Andrew (FWD-1's consumer: (a) the client's backfilled holding values and performance, valued by ADVI_COTBKF from
-these prices -- the CTO's recommendation -- or (b) a new price page); round 2 carries the hop-5 fix, the S_00 schedule and the
-enrichment candidates either way, and may be decomposed now. This section is cut into cells, and issued in ONE issuance, only when the
-analysis is in hand.
+**Status: ISSUED** in one issuance. Round 1 above is FROZEN (ROUND_CLOSE @9317792251; thread n; real run @246e601ef2).
 
-## Measured at the base, 2026-10-09 ~00:4xZ (bears on the hop-5 fix)
+**Cut on:** PRD v0.3 @fe3d0659ad (L4-R ADMITTED: ratified-text half re-SIGNED by `3.0.0_SA_CVO` @0afa06a7c6 at the current ENDPOINT hash; brief
+half admitted, CRO-written). The rectangle is the CTO's round-1 analysis (`1.0.0_SA_CTO~DELL1` msg 1337; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_MDPF_DEMQUE_20261009T0108Z.md`): FWD-1's consumer is (a), the client's
+backfilled holding values built by ADVI_COTBKF from these prices. Four items: (1) hop 5, the CUSIP absent from the lander's
+transactions object; (2) the hop-6 seam, a file contract with dell2's ADVI_COTBKF (path, key namespace, one AMLP trace end to end);
+(3) S_00 scheduled (dell1 applies it); (4) the enrichment list @5a392db104.
 
-- `opal-data-cot` `silver/transactions/`: 118 objects (2026-03-09 .. 2026-10-08), 993,962 rows, **1,515 distinct CUSIPs**. AMLP's CUSIP
-  `00162Q866` is in **0 of 118** objects. Of the price-need file's 4,545 CUSIPs (all sources), **945** appear anywhere in them.
-- So a lander keyed on Cottonwood's Black Diamond transactions can reach at most ~21% of the need; the rest are historical Commonwealth
-  holdings (10-year delivery, keyed by Cusip in `opal-data-assets/commonwealth/cottonwood/silver/transactions/`). Under consumer (a)
-  the landing target is ADVI_COTBKF's valuation input (an input contract at a fixed path, C-PRODUCERS), not `build_canonical_prices_v2.py`.
+## Measured at the base, 2026-10-09 ~00:4xZ-01:2xZ
 
-## Candidate cells (one intent each; final cut follows the analysis)
+- `opal-data-cot` `silver/transactions/`: 118 objects (2026-03-09 .. 2026-10-08), 993,962 rows, 1,515 distinct CUSIPs; AMLP
+  `00162Q866` in 0 of 118; 945 of the price-need file's 4,545 CUSIPs appear anywhere. Under consumer (a) hop 5 does not go through
+  Cottonwood's Black Diamond transactions at all: it lands in the queue's own price store, keyed by Commonwealth's CUSIP, which ADVI_COTBKF
+  reads (item 1 and item 2 are one store).
+- Builder output (`lib/opal_naming.address`, run 2026-10-09 ~01:1xZ): store `s3://opal-data-assets/yahoo/global/silver/price_history/cusip=<CUSIP>`,
+  index `.../price_history/index`; ledger `s3://opal-data-assets/yahoo/global/bronze/demand_ledger/dt=<date>`.
+- `infra/aws/terraform/cot-pipeline/ssm.tf` `opal-cot-gold-run`: `run_gold <id> <script> <flags> [optional]`, 18 steps A_00..D_04; an
+  `optional` step logs WARN and the chain continues. `build_canonical_prices_v2.py:283,298` `get_object` with no missing-key branch.
+- The queue (`demand_queue.py`) accepts `close` only and its `draw` keeps no prices (ex-date service @5a392db104; real run @246e601ef2).
 
-| candidate | what | serves | depends on the call |
-|---|---|---|---|
-| keep-prices | the draw persists each OK pull (as served, splits, dividends, as traded) to one price store per security, so a lander reads it instead of re-pulling (C-PRICES, C-ONCE) | FWD-1, FWD-8 | no |
-| fields | the queue accepts `dividends` / `splits` (ex-dates) beside `close`; served once already under `close` (@5a392db104) | FWD-4 | no |
-| ledger-home | the Yahoo ledger rows upload to the builder home `s3://opal-data-assets/yahoo/global/bronze/demand_ledger/dt=<date>` (t-3's registry row) | FWD-2 | no |
-| land-v2 | the hop-5 lander re-pointed at the ruled consumer, keyed by Commonwealth CUSIP; carries the row D1-W3-S1 key-derivation question | FWD-1 | YES |
-| s00 | `opal-cot-gold-run` gains S_00 with missing-key handling, or is retired from the thread, per the ruled consumer (dell1 applies its own SSM change, msg 1252) | FWD-1 | YES |
-| schedule | the daily draw on dell1, armed after the round's real run (FWD-1 "no person ran a pull") | FWD-1 | no |
+## Rule 24
+
+Domain: the four items. Items 1 and 2 are one write set and one intent (the store a consumer reads, and the contract describing it):
+`DQ-t-6`. Item 4's queue changes share `demand_queue.py` and one intent (the queue serves more than closes and hands what it drew
+onward): `DQ-t-7`. Item 3 is Cottonwood's gold chain: `DQ-t-8`. The schedule of the daily draw and the AMLP trace with dell2 are drain
+acts. No remainder. State coherence: t-6 never pulls or ranks; t-7 never stores prices; t-8 never touches the queue or the store, and
+does not change what any page reads (row D1-W4-S2 stands: nothing reads `canonical_prices` yet).
+
+## The cells
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `DQ-t-6` | `price_store.py`: per CUSIP, only the LOCKED range, served close and as-traded close kept apart with splits and dividends, the lock row beside them; an index row per CUSIP (symbol, range, claim, rows, as of); an unchanged second write is a no-op; local root or the builder S3 root. Plus `PRICE_STORE_CONTRACT.md`, the hop-6 file contract for ADVI_COTBKF | FWD-1 (hops 5-6), FWD-8 | dell1 code + contract doc; the S3 write is the issuer's drain act | LOCAL | E, `0.9.0_WK_MDPF_DEMQUE~5` |
+| `DQ-t-7` | `demand_queue.py`: fields `dividends` and `splits` accepted and counted in cells; `draw(..., on_result=cb)` hands each OK result to a callback (the store hookup); `upload_ledger(path, date, dry_run=True)` to the builder ledger address | FWD-2, FWD-4 | dell1 code | LOCAL | F, `0.9.0_WK_MDPF_DEMQUE~6` |
+| `DQ-t-8` | `build_canonical_prices_v2.py` survives absent Tier-2 objects (WARN, Tier 2 empty, writes); `ssm.tf` gains `run_gold S_00 build_canonical_prices_v2.py "$UPLOAD_FLAG" optional` ahead of A_00 | FWD-1 (row D1-W4-S1) | dell1 code + Terraform; the code upload and `safe-apply` are the issuer's drain acts | WORLD | G, `0.9.0_WK_MDPF_DEMQUE~7` |
+
+## Write sets (disjoint)
+
+- **DQ-t-6:** `data/mdpf/scripts/demque/price_store.py`, `.../test_demque_store.py`,
+  `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~5/PRICE_STORE_CONTRACT.md`, the channel.
+- **DQ-t-7:** `data/mdpf/scripts/demque/demand_queue.py`, `.../test_demque_queue.py`, the channel.
+- **DQ-t-8:** `data/cot/scripts/gold/build_canonical_prices_v2.py`, `data/cot/scripts/gold/test_s00_missing_tier2.py`,
+  `infra/aws/terraform/cot-pipeline/ssm.tf`, the channel.
+- The `draw(on_result=...)` -> `price_store.write` hookup belongs to no cell (C10): the issuer adds it at the merge.
+- Checks (issuer's, dry-run at the base 2026-10-09 ~01:2xZ, all 5 FAIL as expected; `dq_t7_tests.py`'s five round-1 names PASS at the
+  base (regression arm) and `dq_t8_schedule.py`'s 18-step control PASSES): `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_DEMQUE_Q1/R2_CHECKS/`.
+
+## Edges and fan-out
+
+No data edge: t-6 and t-7 meet only at the merge hookup; t-8 is another pipeline. `fanout: 3 of 3 chains, cap 8`.
+
+## Battery
+
+- `comp-schedule`: t-8 changes the content of an existing schedule's run (one optional step), not a schedule; read at the drain apply.
+- `comp-iam`: DECLARED-NOT-APPLICABLE for the cells (no role change). Drain: the dell1 user's PutObject on `opal-data-assets/yahoo/` and
+  `opal-data-cot/code/gold/` is read before each write; dell1 applies its own IAM now (msgs 1242, 1252) and reports after the fact.
+- `comp-adversary`: DECLARED-NOT-APPLICABLE -- enrichment of LOCAL code; the WORLD cell's apply is a never-widen act at the drain.
+- C-NAMES: every new address is builder output (above). `S_00` mints no resource name.
+
+## The issuer's acts at the drain (not cells)
+
+1. Merge per chain; the `on_result -> price_store.write` hookup; hygiene (`py_compile`, ruff py39, the four test files) once.
+2. AMLP end to end: queue request -> draw (one Yahoo request) -> lock -> store write at the builder address (the store's first object)
+   -> the contract and the index to dell2 through `0.0.0_AB_MSTR~DELL1` (CTO act 2) -> ADVI_COTBKF's read of AMLP valued on the client's
+   backfilled dates, checked against trade prices (FWD-1 ACCEPT v0.3).
+3. t-8: DS-lane upload of `build_canonical_prices_v2.py` to `s3://opal-data-cot/code/gold/` (`.tools/safe-deploy.sh`) and `safe-apply` of
+   `cot-pipeline` for the SSM document, under a change-management entry; the next 07:30 ET chain's log reads `=== S_00` and no halt.
+4. The daily draw on dell1 armed after the AMLP trace (FWD-1 "no person ran a pull").
