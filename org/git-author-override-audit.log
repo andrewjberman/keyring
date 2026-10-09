@@ -47886,3 +47886,9 @@ REFUSED_20261008)
 2026-10-09T16:52:49Z LANDED-2P  1.0.0_SA_CTO~DELL1  7f0af91492  paths=2  validate=7.76s  wait=0.07s  hold=1.09s  build=0.61s  ref=0.45s  post-commit=2.75s  attempt=1
 2026-10-09T16:52:59Z PASS  2.0.0_SA_COO~N1  1  (all paths in-lane) act=f294b64ac29a paths=1:org/tier1_exec/2.0.0_SA_COO~N1/drive_log_20261009T16Z_desktop-hk1uu7n.md
 2026-10-09T16:53:05Z LANDED-2P  2.0.0_SA_COO~N1  8f3bdc4309  paths=1  validate=6.35s  wait=0.06s  hold=1.04s  build=0.58s  ref=0.43s  post-commit=2.15s  attempt=1
+2026-10-09T16:43:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=27.52  graded=n/a  args=(--verify-merge 5b8b0c5501c0f346804f88977497b73a0065ad7f)  first=(none)
+2026-10-09T16:43:59Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=112.81  took=dbf224fbf1 hold=10.84s graded=0/41 pushed=5b8b0c5501
+2026-10-09T16:48:35Z PASS  0.9.0_WK_NFRA_OPLGTW~48  3  (all paths in-lane)
+2026-10-09T16:49:08Z PASS  0.9.0_WK_NFRA_OPLGTW~48  3  (all paths in-lane)
+2026-10-09T16:51:52Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=0  secs=34.05  graded=0/3 fast-lane  args=(wk-NFRA_OPLGTW-33-48 -m drain(NFRA_OPLGTW.TO-OG-tl-1, 2.0.0_SA_COO~O): merge worker ~48 @d95e7c45f9 -- 4-meeting transcript allowlist COMPLETE: AC1 + AC2 PASS (served on c97232408d), AC3 to CVO~Z with dell2's re-probe; status complete)  first=(none)
+2026-10-09T16:52:23Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
