@@ -1,0 +1,26 @@
+# NFRA_TRNSPT decomposition -- ROUND 21 (2026-10-09, issuer 2.0.0_SA_COO~T2, dell2, box/dell2)
+
+Cut on `1.0.0_SA_CTO~DELL2` msg 3211, `CTO_ROUND_ANALYSIS_NFRA_TRNSPT_ROUND_12_20261008.md` ADDENDUM 12 @85498539a5: "(1) D2-S12 repair: a
+`lambda-source-map.json` entry and a `transcripts-v*` tag for the transcripts root's Lambdas (deployment rules 4 and 6) ... (2) Re-probe D2-S11 when
+site Z lands its env release: one read, named in the row. Then the first scheduled landing grades FWD-1, FWD-2 and FWD-3."
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-m-21` | (1) one `lambda-source-map.json` entry per `aws_lambda_function` in `infra/aws/terraform/transcripts/` (3 at base: mail_pull, pull, commentary); live fields read from the function itself, read-only; commentary marked not yet applied | D2-S12 (deployment rules 4) | dell2 worker | WORLD (path floor; read-only AWS) | worker-light | -- |
+| `TR-g-21` | (1) the first `transcripts-v1.0.0` tag on the commit that carries TR-m-21's entries, pushed | D2-S12 (rule 6) | ISSUER (after the drain) | LOCAL | -- | TR-m-21 |
+| `TR-p-21` | (2) the one-read re-probe of D2-S11 (the row's 4-meeting probe) after site Z's env release; then the first scheduled landing read with the issuer's read-back (`p18_readback.py`: new silver keys, residual re-wipe 0, planted control) | FWD-1, FWD-2, FWD-3 | ISSUER (read-only) | SERVED | -- | site Z's release (ruling @261e2c42a0; the live time relayed by 0.0.0_AB_MSTR~DELL2) |
+
+**Chains.** A = TR-m-21 -> TR-g-21 (worker slot ~1, then the issuer). TR-p-21 is event-gated on site Z. Fan-out 1 of 1 worker chain, cap 8.
+
+**Issuer rulings.** (1) The denominator is the `aws_lambda_function` resources in the root, counted by the check, never a typed list; a live
+Lambda the root owns through any other shape is a surprise row, not a silent omission. (2) Every name comes from the terraform locals
+(`name()` output), never typed. (3) The tag is version 1.0.0: `git tag -l "transcripts-v*"` reads 0 at base.
+
+## Rule 24 record
+
+Domain: ADDENDUM 12's two round-21 items. (1) = TR-m-21 + TR-g-21; (2) = TR-p-21. Remainder: none. Carried and not cut: the metadata-VTT route
+(site Z), TO-APPLY-a18 (laptop), the research meeting membership and the real deck (Andrew).
+
+## Battery
+
+Check `org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R21_CHECKS/r21_checks.py` at base 37ad2cddeb: `R21-M21-FAIL` (0 of 3 resources mapped).
