@@ -46080,3 +46080,15 @@ REFUSED_20261008)
 2026-10-09T14:03:23Z LANDED-2P  2.0.0_SA_COO~C2  98b33494be  paths=1  validate=9.09s  wait=0.09s  hold=1.98s  build=1.13s  ref=0.79s  post-commit=3.73s  attempt=1
 2026-10-09T14:03:33Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=5.27  graded=0/10 fast-lane  args=(wk-IRPT_BCKEND-274)  first=(none)
 2026-10-09T14:03:42Z BLOCK  0.0.0_AB_MSTR~DELL2  1  (1 violation(s): VIOLATION: org/standards/PROOF_OF_SPEC.schema.json -- lane=ANY_EXEC (Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331.); agent=0.0.0_AB_MSTR~DELL2 not in permitted_agents;)
+2026-10-09T14:03:56Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T14:03:57Z PASS  1.0.0_SA_CTO~DELL2  2  (all paths in-lane)
+2026-10-09T14:04:01Z LOCK-WAIT  1.0.0_SA_CTO~DELL2  1s
+2026-10-09T14:04:03Z LANDED-2P  0.0.0_AB_MSTR~DELL2  d3f04d9a70  paths=1  validate=6.44s  wait=0.07s  hold=1.14s  build=0.67s  ref=0.44s  post-commit=2.87s  attempt=1
+2026-10-09T14:04:06Z LANDED-2P  1.0.0_SA_CTO~DELL2  881f444c0e  paths=2  validate=6.74s  wait=1.27s  hold=1.59s  build=0.93s  ref=0.60s  post-commit=3.28s  attempt=1
+2026-10-09T14:04:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=22.68  held=conflict cloud=f1b3385398
+2026-10-09T14:04:25Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of rounds 36 and 39 only (orders complete); round 38 (CB-al-2 held) and round 40 (running) are not compiled here
+2026-10-09T14:04:46Z PASS  3.0.0_SA_CVO  4  (all paths in-lane)
+2026-10-09T14:04:48Z PASS  0.9.0_WK_IRPT_BCKEND~273  8  (all paths in-lane)
+2026-10-09T14:05:05Z LANDED-2P  3.0.0_SA_CVO  5c363d0c76  paths=4  validate=34.36s  wait=0.08s  hold=1.15s  build=0.67s  ref=0.45s  post-commit=2.70s  attempt=1
+2026-10-09T14:05:30Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T14:05:38Z LANDED-2P  1.0.0_SA_CTO~DELL2  023be3c879  paths=1  validate=7.69s  wait=0.09s  hold=1.23s  build=0.79s  ref=0.41s  post-commit=3.13s  attempt=1
