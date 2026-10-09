@@ -942,3 +942,52 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_ANLREQ-D2-W3-S4..S5 -- dispositions of this worker's rows S1 and S3 (AMENDMENT 2, 0.9.0_WK_IRPT_ANLREQ~3)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W3-S4",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+    "surfaced_at": "2026-10-09T08:40:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by AMENDMENT 2: PdfSigner.sign takes family (default ORIGINAL_VENDOR_PDF) and admits exactly ORIGINAL_VENDOR_PDF, ORIGINAL_HOLDINGS, ORIGINAL_CSV, bound to reporting_destination; any other family refuses PDF_LINK_FAMILY; nothing is owed on S1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W3-S1 (ARMED, signer refuses original keys): disarmed in-cell by AMENDMENT 2, landed in the commit after 614dde2cb2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ops/pdf_link.py FAMILIES and PdfSigner.sign(family=) on branch wk-IRPT_ANLREQ-3",
+        "infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py test_e2_*, test_e3_* (real PdfSigner, stub S3): 16 passed"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 item 2: sign admits exactly three families, key must equal reporting_destination, any other family refuses PDF_LINK_FAMILY.",
+    "world_is": "With the real signer a builder-shaped ORIGINAL_HOLDINGS key signs; NORMALIZED_PORTFOLIO, EXPORT_PDF, ANALYSIS, an unknown name and None refuse PDF_LINK_FAMILY; the vendor-PDF key still signs with and without the family argument; the reader passes the resolved family. The release of the irpt-status pair remains the issuer's."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W3-S5",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+    "surfaced_at": "2026-10-09T08:40:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by AMENDMENT 2 item 1: <owned_cells> is AR-y-22 only, so the proof instance (AR22 criteria, cell_refs AR-y-22) validates; nothing is owed on S3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W3-S3 (owned_cells named AR-y-21): resolved by AMENDMENT 2, owned_cells is AR-y-22 only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.md <owned_cells>AR-y-22</owned_cells> @614dde2cb2"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 item 1: owned_cells is AR-y-22 only.",
+    "world_is": "The proof instance is re-validated with proof-of-spec-check after the last commit."
+  }
+]
+```
