@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~17</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>carried</status>
 <direct_act>true</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
@@ -69,3 +69,8 @@ direct_act: true -- a read.
 </preflight>
 
 Source: CTO round-3 analysis (msg 2675) section 3; PRD v0.2 + ADDENDUM v0.3.
+
+<carried>
+Carried to round 5 by the issuer (2.0.0_SA_COO~H1, 2026-10-09 ~16:1xZ) on 1.0.0_SA_CTO~DELL1 msg 2778 (the UB-64ce pattern). Replacement: round 5's dated read of the 2026-10-12 07:00 ET (11:00Z) scheduled pull for FWD-7 (spent_after / remainder), same check R3_CHECKS/r3_fwd7_read.py.
+No worker was spawned on this order.
+</carried>
