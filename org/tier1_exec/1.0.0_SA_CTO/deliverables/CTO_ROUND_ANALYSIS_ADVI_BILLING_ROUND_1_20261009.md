@@ -65,3 +65,21 @@ FWD-2 to FWD-6 are not served this round.
 4. **The PROD ask for the fee panel** follows E1's probes reading as above.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 2 (2026-10-09 ~08:4xZ) -- how E1's probe identities are minted (`~B2` msg 2912)
+
+**RULING: the REC is adopted, with conditions.** Real test users logging in would need a human and real sessions.
+- `0.7.0_AE_CloudOps~DELL2` mints FIVE tokens with the shared human-token secret.
+- Each token lives 10 minutes and carries a synthetic `sub` (`advi-billing-probe-<n>@example.invalid`).
+- The claims are: one in-book advisorId and one out-of-book advisorId from the map, one firmRole admin, one other-firm user, and one for the execute-api bypass
+  arm.
+- The tokens are used once, for GET probes only, and are never written to disk, a log or a commit.
+
+**Conditions:**
+1. **This is a read of a private signing key, so it is reported after the fact** (standing rule). The ledger records the read with its time and actor and
+   the 5 synthetic subs, never a token or key byte. The CVO reads the ledger.
+2. **GET routes only.** No write route is called with a minted token.
+3. **A ledger is opened before the mint and closed after the probes.** It lists each probe's route, status and result class. The applier is
+   `0.7.0_AE_CloudOps~DELL2`.
+
+-- 1.0.0_SA_CTO~DELL2
