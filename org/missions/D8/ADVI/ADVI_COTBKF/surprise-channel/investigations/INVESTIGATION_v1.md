@@ -2706,3 +2706,31 @@ round.** Never edit an existing row.
   "world_is": "The default changes and every earlier rule stays selectable, but one test outside the order's write grant pins the old default (`== sw.CASH_LEG_METHOD`), so the silver suite is red by that one test until a seat whose paths include test_commonwealth_carried_levels.py changes its line 57 to `sw.CASH_LEG_DEFAULT == sw.CASH_LEG_METHOD_R26` (the same edit made in the three sibling tests). No code path is wrong; the assertion states a superseded default."
 }
 ```
+
+## ADVI_COTBKF-D2-W48-S2 -- CB26z2-AC2 not met: 512 of 886 DIFF months unexplained by the census rule
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W48-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~48",
+  "surfaced_at": "2026-10-09T02:30Z",
+  "one_line": "CB26z2-AC2 not met: the non-MATCH census classes 79,495 of 79,495 months but 512 DIFF months (of 886) are unexplained by the rule fixed before the counts: 478 where no posting category reaches |D|, 34 that hold no driver row; the 78,609 UNGRADABLE months are all classed",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~48/census/nonmatch_census.md and nonmatch_census.parquet (the AC2 invocation, rc 0): NONMATCH-CENSUS total=82593 match=3098 diff=886 ungradable=78609 classes=10 unexplained=512; MATCH 3098 of 82593 (3.75%); the class counts sum to 79495 = 886 + 78609 (sum_ok=True)",
+      "classes: ungradable:UNPRICED 74846 (94.2% of the non-MATCH months, the largest class), FIRST_DAY 1533, NON_POSITIVE_BASE 1173, NO_REPORTED_RETURN 878, NO_DAILY_RETURNS 116, REPORTED_SPAN 63; diff:driver:SWEEP_CASH_LEG 190, INCOME 154, CLIENT_FLOW 30; unexplained 512 (478 'no driver category reaches |D| (7 categories checked)', 34 'the month holds no row of any of the 7 driver categories'). The 512 are named one per line in the md (section 'Unexplained months'): 45 accounts, 2020-08 to 2026-04",
+      "the re-derivation check passed: the day values reproduce the persisted computed return on 886 of 886 DIFF months (1e-06 pct points) and the first blank reason on every UNGRADABLE month that holds a blank day, so no unexplained month is a recompute mismatch",
+      "of the 478: the largest driver exposure is a median 0.13 (90th percentile 0.86, maximum 1.00) of |D|, by category INCOME 392, SWEEP_CASH_LEG 84, CLIENT_FLOW 2; the 512 have a median |D| of 0.47 pct points (260 of them within 0.5)",
+      "the rule is fixed in data/assets/scripts/silver/commonwealth_nonmatch_census.py at cd084bc838, committed before the default re-grade run and before any count; no class was added, widened or dropped after the counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-z-2 (CTO E1): every non-MATCH month is classed with counts and no class is unexplained; the criterion is `unexplained=0`.",
+  "world_is": "The rule traces a DIFF month to a posting category only when that category's postings are big enough to move the month by the difference (exposure at least |D|). For 374 of 886 DIFF months one does (cash legs 190, income 154, client flows 30). For the other 512 the difference is larger than anything a different treatment of the month's postings could move (478) or the month holds no driver posting at all (34): these months' differences sit outside the categories the method decides, which points at the valuation (price, holdings, carried cash level) rather than a posting treatment, but this census has no instrument for that and names no cause it did not trace. The order is left open and the test is not weakened; widening the rule after seeing these counts would be rule-fitting, so a rule that traces valuation-side drivers (carried level, stale or missing price, holdings step) is a round-27 cell for the CTO's analysis. The UNGRADABLE side is fully classed: UNPRICED alone is 74,846 months, a cause that spans the whole table (the order states that only about 8% of account-days are priced from Opal's stores; not re-measured here) and is named, not split."
+}
+```
