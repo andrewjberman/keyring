@@ -23719,3 +23719,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Found at this order's drain, not by inspection. Blocks nothing and cost this act nothing. It matters because the two logs are cited the same way but behave differently: a reader auditing deletions from the shared log will see none of the work done in worktrees, which is where CLAUDE.md 14b sends every multi-file act while other seats are live -- so the log under-reports exactly the population it exists to cover, and an absence in it reads identically to 'no mass deletion happened'. Candidate remedy for the owner: resolve the log path via `git rev-parse --git-common-dir` (as safe-commit.sh effectively does) so the append lands in the shared tree, per 14b's append-only inversion. Owner is the gate's owner, 1.0.0_SA_CTO; filed here because this project's drain is where it surfaced."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W350-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~350",
+  "surfaced_at": "2026-10-09T20:56:09Z",
+  "one_line": "AMGT-mm-3 (a) cannot be mirrored in scoped_amgt without packaging investor-reporting code and inventing a roster source and an HTTP status; part (a) stopped, (b) and (c) done.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "AMGT-mm-3 (a): scoped_amgt GET watchlist refuses an off-list selected_tenant the way the scoped contract does, for the principal class that contract refuses (OPAL_GLOBAL), with its refusal code and HTTP status; read the contract's status mapping in the investor-reporting handler first; if it cannot be mirrored without packaging investor-reporting code into this function, STOP and file BLOCKING.",
+  "world_is": "Three things the mirror needs are absent from this function and from the contract. (1) Principal class: OPAL_GLOBAL exists only when classify_principal (infra/aws/lambda/investor-reporting/_scope/resolve.py:223) finds the subject in a roster that global.py load_opal_roster reads from SSM SecureString /opal/irpt/opal-principal-roster; scoped_amgt has no roster, no ssm call, and scoped-amgt-api.tf grants none, so without new infra OPAL_GLOBAL is unreachable here and a refusal would be dead code. (2) The off-list test is keys.load_firm_ids reading data/firm_registry.json (_keys/keys.py:297); build-and-upload-scoped-amgt.sh vendors lib/research/* only, so neither the registry nor _scope/_keys code is in the package. (3) The contract carries no HTTP status: global.py Refusal has code/reason/census only, FIRM_NOT_PERMITTED is in no served public-reason set (served._ENFORCE_TO_PUBLIC, BOUNDARY_REASONS), and served.refuse returns an ok:false envelope with no statusCode; the only 403 in the package is performance/handler.py:215 for a different refusal. So the refusing code and status the order asks for cannot be read from the contract. Done instead: (b) and (c) landed with tests; test_watchlist_selector.py pins what is true today (firm read only from the edge header, a selected_tenant from query, body or header is ignored never refused, an absent selector unchanged, a missing edge header still 401). The refusing-class clause of AC1 is therefore not covered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/global.py:161-230 resolve_for_request; REFUSAL_CODES at :67; load_opal_roster at :102",
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:223 classify_principal; _keys/keys.py:297 load_firm_ids; _keys/keys.py:125 _find_registry",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:437 refuse() returns an envelope with no statusCode; :147 _ENFORCE_TO_PUBLIC has no FIRM_NOT_PERMITTED",
+      "infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh: the vendored closure lists lib/research/* data files only; infra/aws/terraform/harvest/scoped-amgt-api.tf: grep ssm|firm_registry|ROSTER = 0 hits"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Options for the issuer or CTO: (A) dismiss D1-S18 as designed (the route has no client-selectable tenant; round-87 prep recommendation A); (B) a cell that first provisions a roster source (SSM read grant plus a parameter) and a firm list in the package, and rules the status (403 is the in-package precedent for a refusal), then mirrors. Narrative/entry.py _held_to_verified_firm shows another route DROPS an Opal internal caller's off-firm selection rather than refusing it, so 'the other routes refuse' is not uniform across the investor-reporting functions."
+}
+```
