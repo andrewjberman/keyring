@@ -2603,3 +2603,17 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r111/p111_cells.py`: every criterion 
 | `IB-pr-410` | 403 ticker fix + 49F narrow bundle (e56 + fixed 49f) + replay with class parity + packet | FWD-2 (SECCLASS e56 acceptance 1) | WORLD | IB-pr-404 landed | P111-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~273.
+
+## 105. ROUND 112, WORKSTREAM ~P (2026-10-09 ~13:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on IRPT_DASHBD ADDENDUM 12 item 3 / CTO msg 3370)
+
+IRPT_DASHBD's runner keeps its verify-persisted-sha256 limb dormant until IRPT serves `report_index.sha256` (W64-S1). The persist response
+already returns it; the owned read does not. One cell adds it, with the contract. It rides IB-pr-405's narrow irpt-status release, after
+IRPT_ANLREQ release 1.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r112/p112_cells.py`: AC1 and AC3 FAIL at base; AC2 is the control (PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-411` | persist_inputs.report_index carries the stored object's sha256; contract + tests | FWD-2 (IRPT_DASHBD W64-S1) | WORLD | IB-pr-405, IB-pr-407 drained | P112-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~274.
