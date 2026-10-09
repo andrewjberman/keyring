@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | activation | gold_rebuild11.act.py: two new parts under amgt/harvest/gold/{article_security_mention,chatter_daily}/date=2026-10-08/ | act record path + RULE HOLDS on written parts |  | OPEN |
+| L1 | activation | gold_rebuild11.act.py: two new parts under amgt/harvest/gold/{article_security_mention,chatter_daily}/date=2026-10-08/ | act record path + RULE HOLDS on written parts | act record round75/gold_rebuild11.act_20261009T034320Z.json: DONE, RULE HOLDS on written parts; written + LIVE newest (read 06:2xZ) mention part-20261009T045809Z (52,709 rows), daily part-20261009T061012Z (68,002 rows); before rebuild #10 parts; PUTS 0 at gate | CLOSED 20261009T062747Z |
 | L2 | verify | REBUILD11_CHANGED_ROWS.json exactly 22 rows; 3.0.0_SA_CVO grade accepts | grade pointer |  | OPEN |
 
 ## Log
 
 - 20261009T034140Z OPENED by 2.0.0_SA_COO~W1 with 2 leg(s)
+- 20261009T062747Z LEG L1 closed: act record round75/gold_rebuild11.act_20261009T034320Z.json: DONE, RULE HOLDS on written parts; written + LIVE newest (r
