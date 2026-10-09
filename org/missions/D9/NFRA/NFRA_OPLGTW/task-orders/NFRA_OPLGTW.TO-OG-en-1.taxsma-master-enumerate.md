@@ -123,7 +123,7 @@ Rows: id `NFRA_OPLGTW-Z-W39-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   box-wide SDD session lock.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>

@@ -10212,3 +10212,77 @@ name the one known failure instead of silently inheriting it.
   "notes": "Judgment of form only: the narrower reading was chosen because an unbounded calendar_days would widen a window the contract fixes."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-08T23:32:57Z",
+  "one_line": "A -Mode enumerate run exits 0 without releasing the box-wide SDD session lock, so a stale lock file (dead pid) is left on SI2 after every enumerate run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 5ca67e2b-e63e-43b5-9eb9-e3849b58c963 output (saved in this worker's scratch, quoted in org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/g5_enumerate_record.json source invocation): the STALE reclaim line at 23:27:45Z.",
+      "FILE infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:361-368 (enumerate exit 0) against :106-110 Release-SessionLock, read at this worktree HEAD."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-en-1 bound 2: the list-only run changes nothing that lands or runs; the puller holds the box-wide session lock and releases it (sdd-daily-pull.ps1 Die and Release-SessionLock).",
+  "world_is": "The enumerate branch ends with a bare `exit 0` (sdd-daily-pull.ps1 lines 361-368) which does not call Release-SessionLock; the control run's own log read: 'SDD session lock is STALE (holder master=08403355 pid=4720 alive=False age=3min) -- reclaiming'. After the control run the lock file C:\\schwab-sdd\\.sdd-session.lock (holder pid 5100, acquired 2026-10-08T23:27:45Z) is presumably still on the box, and the puller also created C:\\schwab-sdd\\daily\u00008403355\\ with a daily-pull.log (the puller's own New-Item). The lock is reclaimed as stale when its pid is dead or its age exceeds 120 minutes; the next scheduled pull is 09:45Z, about 10 hours later. A reused pid inside the first 2 hours could make a real pull Die 7.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to the puller, and any read or removal of the lock file (outside the order). The tail of the lock is not measured after the control run; the second claim above (still present) is INFERRED from the code path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-08T23:32:57Z",
+  "one_line": "The enumerate summary prints the date range as '2..0' for a type with exactly one file (rly, rty), so the single file's date is not shown in the enumerate log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 22e138b8-907f-4694-87d4-a43ea7610b20 and 5ca67e2b-e63e-43b5-9eb9-e3849b58c963 output: the two '2..0' lines per run.",
+      "FILE infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:361-368 (`$ds = ($_.Group | ForEach-Object { $_.date } | Sort-Object)`; `$ds[0]`, `$ds[-1]`)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "sdd-daily-pull.ps1 enumerate block prints '{first}..{last}' dates per type (lines 361-368).",
+  "world_is": "Both runs print `/rly    n=1    2..0` and `/rty    n=1    2..0`: with one row `$ds` is a string, so `$ds[0]` and `$ds[-1]` index characters ('2' and '0'). Types with two or more files print correct ranges (e.g. `/acc n=22 20260908..20261007`). The count is correct; only the date text is wrong. The per-file FILE lines in the box log carry the physical names.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to the puller. Affects only a human read of enumerate output; download mode is a different branch."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-08T23:32:57Z",
+  "one_line": "The first SSM send for OG-en-1 (command ed9ff8c7-db03-4457-bc65-9a7840ab2542) ran an unpatched parameter file and failed before any vendor request; it left an empty C:\\schwab-sdd\\og-g5 on the box until the second run's cleanup.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM ed9ff8c7-db03-4457-bc65-9a7840ab2542 get-command-invocation: 'The term C:\\Program Files\\Amazon\\AWSCLIV2ws.exe is not recognized', 'FATAL: could not pull sdd-daily-pull.ps1 from S3'; START_UTC=2026-10-08T23:21:06Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-en-1 bound 'a run that fails before the search may be retried once'; two vendor list requests in all.",
+  "world_is": "A Python escape (`\u0007` = BEL) turned `AWSCLIV2\u0007ws.exe` into `AWSCLIV2<BEL>ws.exe` in my generated parameter file; a chained shell line ran the send after my patch step failed. The command failed at `& $aws s3 cp` (Status Failed, ResponseCode 1) before the S3 pull, the edit, the task and the vendor call. The box now carries no og-g5 directory (the control run's cleanup reported COPY_DELETED=True). Vendor list requests actually made: 2 (08403355, 08335338).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "This is the one pre-search retry the order allows; the retried commands (22e138b8, 5ca67e2b) succeeded."
+}
+```
