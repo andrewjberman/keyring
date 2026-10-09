@@ -62,6 +62,19 @@ In order:
    temp directory, with the host venv and the instance role.
    - Any one over 30 s (half the ALB's 60-second idle timeout): STOP with a BLOCKING row naming the time. The issuer
      re-cuts.
+   - **AMENDMENT 5 (row Z-S30: overlap cold 31.6 / 24.5 / 22.3 s over ~4,545 records): the ONE permitted load remedy.**
+     It applies in `app/admin_fabric.py` only, the shared fetch path of both `/fabric/boxes` (LIVE since MP-x-4) and
+     `/fabric/overlap`.
+     - Set `FETCH_THREADS = 32` (was 8).
+     - In `_s3_client()`, pass `config=botocore.config.Config(max_pool_connections=FETCH_THREADS)`. boto3's default pool
+       is 10 connections and would cap the gain.
+     - Change nothing else.
+     - Commit it on your step-0 branch with the hookup, then run every admin and fabric test file
+       (`tests/test_admin*.py tests/test_entitlement_admin.py`, 0 failed).
+     - Re-measure on the host: THREE cold samples, each in a fresh interpreter, for BOTH `admin_fabric._compute(6)` and
+       `admin_fabric_overlap._compute(6)`, plus one each of gitstate and calls.
+     - EVERY sample must be at or under 30 s. One sample over still STOPS. Record all samples in
+       `MP-r-2_PRE_ACT_RECORD.md`.
 3. **Rollback, proven before the act.** Rebuild the live base's artifact from a clean tree WITHOUT uploading, and name the
    command that would re-deploy it. If it cannot be shown: STOP, no deploy, a BLOCKING row.
 4. **NEVER-2 ledger, on your branch, in this order.**
@@ -85,7 +98,8 @@ In order:
 ## 2. BOUNDS
 
 1. Terraform, the ALB, the host, its role and its secrets are untouched. `safe-ec2-deploy.sh` is READ, never edited. No
-   handler is edited in this cell. A load-condition failure stops it, it does not tune.
+   handler is edited in this cell, except AMENDMENT 5's two lines in `app/admin_fabric.py`. A load-condition failure after
+   that remedy stops it; it does not tune further.
 2. Make no live POST to `/api/admin/fabric/calls/close`: the one real close is Andrew's, in MP-q-1.
 3. If a leg fails mid-act, roll back with the named command, close the entry as rolled back, and report. Never leave it
    half-landed.
@@ -97,6 +111,7 @@ In order:
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/app/admin_api.py
+infra/aws/ec2/opal-gateway/app/admin_fabric.py
 org/critical_paths/change_management/*nfra-mcportal-cp2-release*
 org/critical_paths/.open_deploys/nfra-mcportal-cp2-release.json
 org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/**
@@ -161,6 +176,12 @@ The GO's commits:
 Exclude NFRA_OPLGTW's E2 .xlsx and the .pptx pair, both unreleased on box/sitez (msg 32919). The census already admits only
 the CP2 files. Row Z-S27 is a known risk: x4.AC3 read 27.4 s cold. A step-2 read over 30 s STOPS, as written.
 Was: staged
+
+**AMENDMENT 5 (issuer, 2026-10-09 ~18:5xZ, on row Z-S30 / msg 32943):** step 2 gains its one load remedy:
+`admin_fabric.FETCH_THREADS` 8 -> 32 with a matching boto3 `max_pool_connections`. `app/admin_fabric.py` joins `<paths>`, and
+the `r2.AC2` allowlist admits it. The bar tightens to ALL three cold samples at or under 30 s. Precedent: round 5's R-13
+allowed MP-x-4 to apply exactly this class of remedy in `admin_fabric.py`. The remedy also lifts the LIVE `/fabric/boxes`
+cold read (rows Z-S27, Z-S29).
 
 <status>pending</status>
 <round>1</round>
