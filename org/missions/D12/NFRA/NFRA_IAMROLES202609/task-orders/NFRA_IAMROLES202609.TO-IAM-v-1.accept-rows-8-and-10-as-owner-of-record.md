@@ -66,7 +66,7 @@ org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVEST
 org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-1.accept-rows-8-and-10-as-owner-of-record.md
 </paths>
 
-Surprise rows: id `NFRA_IAMROLES202609-Z-AEC-S<k>`, `"fabric": "site-z"`, `surfaced_at` = `date -u +%FT%TZ` at
+Surprise rows: id `NFRA_IAMROLES202609-Z-S<k>` (next free k), `"fabric": "site-z"`, `surfaced_at` = `date -u +%FT%TZ` at
 filing. Commit through `.tools/safe-commit.sh` under your own author line. Flip this order's LAST `<status>` to
 `complete` with a proof instance (below) in your deliverables directory.
 
@@ -74,7 +74,7 @@ filing. Commit through `.tools/safe-commit.sh` under your own author line. Flip 
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="IAM-v-1"><invocation>bash -c "grep -E '^(8|10)\. \`' org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md | grep -c 'owner=0.7.0_AE_CloudOps~Z reason='"</invocation><expect>2 -- rows 8 and 10 both name the lane as owner, each with a reason; a 1 or a 0 means a row was not accepted, which is valid only if ACCEPTANCE_ROWS_8_10.md says why</expect></criterion>
-  <criterion id="AC2" cell_refs="IAM-v-1"><invocation>git log -1 --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md</invocation><expect>exactly 0.7.0_AE_CloudOps~Z -- the acceptance is in a commit the lane authored, not one written for it</expect></criterion>
+  <criterion id="AC2" cell_refs="IAM-v-1"><invocation>bash -c "git log --format=%an -- org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_8_10.md | sort -u"</invocation><expect>exactly one line, 0.7.0_AE_CloudOps~Z -- the acceptance of record is a document only the lane authored; the row edit in GOVERNANCE_DISPOSITION.md is its carrier (amendment A1, row Z-S19)</expect></criterion>
   <criterion id="AC3" cell_refs="IAM-v-1"><invocation>git hash-object infra/aws/terraform/data-refresh/zz_adoption_candidate.tf.proposed</invocation><expect>exactly b3a1298d6b2b8d99284b4211bfc0c18eaa707f19 -- the INERT adopting text is unchanged; acceptance did not slide into an edit</expect></criterion>
   <criterion id="AC4" cell_refs="IAM-v-1" judgment="true"/>
 </proof_of_spec>

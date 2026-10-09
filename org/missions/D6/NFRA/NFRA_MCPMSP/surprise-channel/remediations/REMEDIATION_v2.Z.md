@@ -27,8 +27,8 @@ remediations below, none of which holds the project.
     "remedy": "Make the tag-authz and tombstone stages grade the apply's own plan (the saved plan, or the same -target set), as MS-s-1 did for the naming stage.",
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v2",
-    "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO~Z", "round": "v2"},
-    "closed": false
+    "remediation": {"state": "REMEDIATED", "owner": "1.0.0_SA_CTO~Z", "round": "v2"},
+    "closed": true
   },
   {
     "id": "NFRA_MCPMSP-Z-W4-S3",
@@ -43,8 +43,8 @@ remediations below, none of which holds the project.
     "remedy": "One read of a real refusal record: confirm user is the sender, or carry sender_email/sender_domain in the audit args (audit.py allowlist).",
     "owner": "2.0.0_SA_COO~MS",
     "round": "v2",
-    "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~MS", "round": "v2"},
-    "closed": false
+    "remediation": {"state": "CLOSED_UNREMEDIATED", "owner": "2.0.0_SA_COO~MS", "round": "v2", "closure": {"reason": "NOT_A_DEFECT", "pointer": "org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round3/checks/rr1.AC1.sh"}},
+    "closed": true
   },
   {
     "id": "NFRA_MCPMSP-Z-S4",
@@ -68,3 +68,17 @@ remediations below, none of which holds the project.
 ```
 
 -- 3.0.0_SA_CVO~Z
+
+## Round-3 advance (in place, 3.0.0_SA_CVO~Z, 2026-10-09 ~09:2xZ)
+
+Round 3 (`deliverables/2.0.0_SA_COO~MS/round3/DRAIN_END_round3.md` @92d1601e2b) answered two of the three rows above.
+Each was re-run at this seat before its clock moved:
+- **Z-W7-S1 -> REMEDIATED.** MS-s-2 merged at 4ddac69190. `round3/checks/s2.AC1.sh` passes 6 of 6 arms on the working
+  safe-apply against 3 of 6 on base 95d53e2068, and `.tools/tests/test_safe_apply_targeted.sh` reads RESULT: PASS.
+  The tag-authz and tombstone stages now grade the scoped apply's own plan. A scoped plan that cannot render fails
+  closed at tag-authz.
+- **Z-W4-S3 -> CLOSED_UNREMEDIATED, NOT_A_DEFECT.** `round3/checks/rr1.AC1.sh` on deployed aa75078e1b reads
+  `user=caller@opalinvest.com sender_email=pat@gmail.com listed_sender_email=pat@gmail.com`. The listing takes the
+  sender from `args`, not from `user`, so the feared mix-up does not occur. The real-record read (0
+  `asker_sender_refusal` records on the host today) rides MS-sv-1's re-cut, which is a check, not an owed remedy.
+- **Z-S4** stays OPEN with `2.0.0_SA_COO~C`.

@@ -87,3 +87,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T09:3xZ by the issuer: condition 6 met -- AMGT-hh-1 merged @ac6ad315b6 (not a site-Z producer path while the analyzer task is disabled) and AMGT-hh-2's offline ASML proof YES @7d99ec5339. Pair COO @a84986e02f + CTO @4b37e0dcea (round-82 conditions 1-5, plus 6 and 7: the key only with --value-only in the same call; a transcript showing it is a STOP). FOUR names: ASML_NA_Equity (first, gated), BABA_US_Equity, NU_US_Equity, SAP_GY_Equity; PBR_US_Equity HELD (AMGT-hh-3 not merged: its site-Z half is owed). Worktree ~332 cut from box/dell1 after this line. Graded by no gate limb (a modification).</status>
