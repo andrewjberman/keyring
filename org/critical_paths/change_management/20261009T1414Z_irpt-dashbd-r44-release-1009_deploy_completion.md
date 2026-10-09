@@ -1,0 +1,22 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-09T14:14:09.320607+00:00
+**Status:** OPEN
+**Deploy:** IRPT_DASHBD DB-b-95: R44 release -- DB-b-90 (account_activity_lots.py pin d18ddf000d) + DB-b-91 (handler.py blob 7c9bb9dcdc5b) as ONE gold Lambda release over live yIAQjspL on irpt-49f-reporting-gold-lambda -- signed against R44 packet sha256 28e224f030230bf2468e5bf5a78f29e5b55c9fcde5565e2c050275d16b06abc0 (COO half @723a5e7d62, CTO half @fa8d2c2961); targeted plan 0/1/0; built artifact sha256 and build commit are stated at leg P1
+**Authored by:** 0.9.0_WK_IRPT_DASHBD~70
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 36.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| P1 | verify | source-map re-pin + built-zip member census vs live zip + targeted plan | upload_member_diff exactly the two member paths, reporting_policies.json equal live, Plan: 0 to add, 1 to change, 0 to destroy |  | OPEN |
+| D1 | activation | one safe-apply of the saved plan, infra/aws/terraform/investor-reporting/reporting-gold | Apply complete, 1 changed |  | OPEN |
+| V1 | verify | readback CodeSha256 equals built, post-apply plan No changes | get-function-configuration CodeSha256 = built sha256; No changes |  | OPEN |
+| S1 | verify | first scheduled fire sizing read (85% of 900 s = 765 s, 85% of 2048 MB = 1740.8 MB); issuer reads REPORT line and closes this leg | REPORT line Duration and Max Memory Used against the 85% lines |  | OPEN |
+
+## Log
+
+- 20261009T141409Z OPENED by 0.9.0_WK_IRPT_DASHBD~70 with 4 leg(s)
