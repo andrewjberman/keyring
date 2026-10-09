@@ -191,6 +191,51 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "msg 1707: a backfill run executes through SECHIST's Yahoo writer, which reads DEMQUE's ticker map; DEMQUE builds no price writer.",
     "world_is": "The only Yahoo price writer that exists is DEMQUE's price_store, live with 32 securities and a dell2 consumer; the next scheduled draw (02:30Z) would add up to 150 more. Not two writers today (SECHIST has none), but the ruling's end state needs a port: SECHIST's writer takes over the same rows and the consumer re-points, same-window rollback, never run side by side."
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-W1-S1",
+    "one_line": "Budget mode backfill is shared by BQL holdings and ETF history; market-range and amgt-model-block also combine request shapes.",
+    "spec_asserts": "TO-DQ-t14 asks for rows times a per-mode cells table and a channel per mode.",
+    "world_is": "etf_daily_pull.py records backfill with etf_history_backfill_* batch ids and two RET fields; collector_bloomberg.py records backfill holdings with 16 returned columns. A mode-only multiplier misprices the latest 2929 history rows as 46864 rather than 5858 cells. Candidate 492cb5a2f1 uses the recorded batch identity for these two known cases and retains absent cells/channel for unresolvable mixed modes. No producer changed.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-09T08:06:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:472,609",
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py:630",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py:835-862",
+        "integrations/bloomberg/research/model_block_pull.py:2201-2224",
+        "bbg_budget_2026-10-08.jsonl: backfill rows=2929 batch_id=etf_history_backfill_2026-10-07"
+      ]
+    }
+  },
+  {
+    "id": "MDPF_DEMQUE-Z-W1-S2",
+    "one_line": "OPAL_BBGTML notebook draws have no budget record calls in the scheduled runner or its two notebook sources.",
+    "spec_asserts": "TO-DQ-t14 step 5 requires reporting notebook record coverage as a held gap; editing the notebooks is outside this order.",
+    "world_is": "The live OPAL_BBGTML_daily_pull task runs scheduled_daily_pull.cmd, which executes tplus1/tools/run_daily_pull.py. That runner executes market_indices_data_pull.ipynb and model_portfolio_regression_analysis.ipynb. A text search of all three sources finds no bbg_budget or .record( calls. Their notebook draw coverage is held, not measured complete. No notebook was run or edited.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-09T08:06:45Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Get-ScheduledTask OPAL_BBGTML_daily_pull: enabled daily 07:00 local Eastern Standard Time",
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd RUNNER",
+        "integrations/bloomberg/pipeline/tplus1/tools/run_daily_pull.py:235-238",
+        "rg bbg_budget|\\.record\\( over tplus1/tools/run_daily_pull.py and both tplus1/src/*.ipynb: zero matches"
+      ]
+    }
   }
 ]
 ```
