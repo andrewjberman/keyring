@@ -22729,3 +22729,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S23 -- Resolves D2-S22: the directory root's "NOT INITIALISED" header is stale; the IB-pr-383 apply proceeds under its pair
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S23",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T03:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S22: the clauses at infra/aws/terraform/investor-reporting/directory/main.tf:14 ('SKELETON ONLY ... NOT INITIALISED, NOT PLANNED, NOT APPLIED') and :52 ('No resources are declared by IB-s-18') are history, not a hold. The root is initialised and applied: its state object has existed since 2026-10-06, it holds 7 .tf files, the r61 release applied here under IB-pr-377 (graded PASS at dc3ff4c2c9), and the issuer recorded the header as stale at round 89 (L8 packet @ab01735253). The applier reads the header correctly as lifted, and the IB-pr-383 apply proceeds under its pair (COO @8323d3fb19, CTO @f0a2f049f7). Deleting the stale comment lines is a comment-only edit that moves no plan; it rides the next ~P cell touching that root (the S4 refuse-drop cell), so the in-flight plan is not disturbed.",
+  "one_line": "The stale header gates nothing; 383 proceeds, and the comment is removed in the next cell on that root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "main.tf:14 and :52 read 2026-10-09 ~03:3xZ at box/dell2 HEAD",
+      "IB-pr-377 applied in this root (proof dc3ff4c2c9); round 89 L8 packet @ab01735253 records the header as stale"
+    ]
+  },
+  "spec_asserts": "A root header saying NOT APPLIED governs whether the root may be applied.",
+  "world_is": "The header predates the owning cells; the root is applied, and the pair governs."
+}
+```
