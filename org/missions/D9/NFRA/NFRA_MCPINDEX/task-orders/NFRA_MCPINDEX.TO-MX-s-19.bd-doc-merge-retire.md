@@ -90,6 +90,21 @@ Write surface adds `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_Clo
 there under the same file name.
 - Graded by: no gate limb graded this modification.
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-09 ~01:5xZ) -- the A2 precondition becomes one read.** "MX-s-18's Monday and
+Tuesday reads both pass" is graded by `bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.PRE.sh`
+(default dates 2026-10-12 2026-10-13), expecting `precondition dates passing 2 of 2 -- RESULT: PASS`. Per date it reads:
+the runner's `OK: bronze sentinel emitted` line AND the sentinel object by head-object; the scheduled bd-silver-merge
+transactions and realized SUMMARY lines with failures=0; and an object under silver/transactions/ and silver/realized/
+written 00:00-03:00Z. The last two limbs are the Z-W24-S8 discriminator. Before the disable they show that the Lambda,
+not the 21:54Z document, refreshes what the gold dispatch's freshness gate reads.
+- Why: the A2 wording was prose, and a log line alone is not sound. On 2026-10-05 the pre-MX-s-18 code printed `OK:
+  bronze sentinel emitted` while the shared module WARNed NOT emitted and the object reads 404.
+- Controls run at amendment: positive 2026-10-08 2026-10-09 -> 2 of 2 PASS. Negative 2026-10-05 -> 0 of 1 FAIL
+  (object 404, no merge SUMMARY, 0 silver objects).
+- The issuer runs it on 2026-10-13 after 03:00Z. On PASS, the issuer sends the PHASE B GO to `0.7.0_AE_CloudOps~Z`.
+  On FAIL, PHASE B does not start and the failing limb is filed as a row.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 does not fire on a modify).
+
 ## 2. BOUNDS
 
 1. One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a
