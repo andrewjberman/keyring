@@ -408,7 +408,8 @@ directives:
       subgroups: []
       projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY,
                  IRPT_FNTEND, IRPT_BCKEND, NFRA_OPLGTW, NFRA_SPMOVE, NFRA_MCPINDEX, NFRA_TRNSPT,
-                 IRPT_DASHBD, IRPT_YCDGEN, IRPT_CUSTDY, NFRA_OPSWKF, COMM_ASSIST]
+                 IRPT_DASHBD, IRPT_YCDGEN, IRPT_CUSTDY, NFRA_OPSWKF, COMM_ASSIST, IRPT_ANLREQ]
+      members_note_anlreq: "IRPT_ANLREQ ADDED 2026-10-09 by 1.0.0_SA_CTO~DELL2 at L3: one Analysis Request end to end (Andrew-direct 2026-10-08 ~22:3xZ @2b21a349d1; build word as CTO discretion 2026-10-09 ~03:4xZ @35fabf20c8); placement DELL2; D9/IRPT pair measured valid by 0.0.0_AB_MSTR~DELL2 msg 2347; MACROS.yaml unchanged."
       members_note_comm: "COMM_ASSIST ADDED 2026-10-08 by 1.0.0_SA_CTO at L3: Andrew's Teams and Outlook assistant (LDO-001), macro COMM
         (ratified @0dcb083716), lane 2.0.0_SA_COO~R, from NFRA_CTLPLN INBOUND rounds 1-7 (record
         org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md)."
