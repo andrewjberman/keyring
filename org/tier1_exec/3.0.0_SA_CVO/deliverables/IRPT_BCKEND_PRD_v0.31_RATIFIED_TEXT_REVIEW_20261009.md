@@ -40,3 +40,8 @@ account is listed, never refused)". Better still, state the source field that sa
 - The stale-frontier condition is sound as written, because `lib/trading_calendar.py` keeps a Friday from reading stale on a Monday.
 - FWD-14's OWNER line names a seat serial ("workstream 2.0.0_SA_COO~P2") inside ENDPOINT. Every other FWD's OWNER names a project only.
   "IRPT_BCKEND" alone would match.
+
+## Re-review on v0.32 @97826891e9 (~06:1xZ, msgs 2650 and 2651): SIGN
+
+FWD-14's account-lost condition now carries this seat's fix verbatim: "unless the firm's source records it closed or terminated (listed,
+never refused)". No other ENDPOINT or CONTRACTS bytes changed. Signed on these bytes. The OWNER-line note stands as a note.
