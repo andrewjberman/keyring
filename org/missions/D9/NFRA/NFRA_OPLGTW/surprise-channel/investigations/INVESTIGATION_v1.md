@@ -10777,3 +10777,159 @@ name the one known failure instead of silently inheriting it.
   "notes": "Environmental or test-data drift in app/asker_scope.py's sender domain list; for whoever owns OPALAI/asker."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:25:55Z",
+  "one_line": "The live..box/sitez gateway diff at 10e525c7de holds six files (and three Route lines inside app/server.py) that no r29 cell names: MP-x-1's GET /fabric/boxes and CT-i-11's three /hx/teams channel-read routes; the release commit is NOT cut.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat aa75078e1b 10e525c7de -- infra/aws/ec2/opal-gateway lists 24 files: 17 are the four cells' files, 1 is the CLOUD-only runbooks/SCHWAB_PILOT_RUNBOOK.md, 6 are in no cell: app/admin_api.py (+2), app/admin_fabric.py (new, 175), app/refs/fabric_boxes.json (new), tests/test_admin_fabric.py (new) from 06bfb80b54 (0.9.0_WK_NFRA_MCPORTAL~5, MP-x-1, GET /fabric/boxes); app/teams_route.py (+75/-), tests/test_teams_route.py (+155) from 863e37d1f9 and 4d722ff458 (0.9.0_WK_NFRA_CTLPLN~39, CT-i-11, GET /hx/teams/teams, /teams/{team_id}/channels, /channels/{team_id}/{channel_id}/messages).",
+      "app/server.py differs from live by two things: OG-rf-1's SendGate hunks (41b0c7903b, 28 changed lines) and CT-i-11's three Route(...) lines (863e37d1f9, 4 added lines at the teams_route block). With those lines removed the file's changed-line multiset equals OG-rf-1's own diff exactly (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~43/r29_hunk_equality.out: app/server.py [OG-rf-1] 28 = 28, EQUAL).",
+      "org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.round4.md@10e525c7de line 64-65: MP-x-4, a separate release after NFRA_OPLGTW r29, carries MP-x-1; line 118: it does not touch NFRA_OPLGTW's release. Nothing in org/missions/D9/NFRA/NFRA_OPLGTW names CT-i-11 or admin_fabric (0 files)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-rl-15 face: the release set is every gateway difference between live and box/sitez at the hand-off except the CLOUD-only runbook; expected by cell md-1, sf-1, rf-1, cm-1; any OTHER gateway difference: STOP before the release commit and report its files and commits (one named exception: the concierge allowlist rows).",
+  "world_is": "Six extra files and three server.py Route lines differ. No release commit was cut; no sha exists for the halves to sign. The four cells + A2/A3 alone are built as an UNCOMMITTED candidate in C:/tmp/og-rel29 (22 files; r29_hunk_equality.out PASS), rehearsed on the host and tested; it is what the release would be if the extras are excluded (form step 2: carry only the named cells' hunks). If they are to ride, the order is amended, the route inventory (step 7a: 4 GET routes added) and the rehearsal are re-run, and the CVO half names two new served reads (the fabric activity store behind /fabric/boxes; Teams channel messages behind the Teams bearer).",
+  "notes": "Issuer decision needed: (a) exclude the extras (candidate stands, release commit cut on word), or (b) amend them in."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:25:55Z",
+  "one_line": "A2/A3's four allowlist rows cannot ship alone: tests/test_scoped_consent_r253.py fails (the four tools have no TOOL_GRAPH_SCOPES entry) and tests/test_mail_route_domain.py::test_ogmd1_ac06 pins the domain table EMPTY; shipping the entries forces four release-time edits (E1-E4) that are in no cell's diff.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Candidate C:/tmp/og-rel29 with only the cells + the four allowlist rows + the domain entries: tests/test_scoped_consent_r253.py::test_r253_map_covers_every_scoped_tool FAILS 'scoped identity ... has allowlisted tools with no scope-map entry: find_sharepoint_site, opal_describe, opal_discover, search_files' and ::test_r253_concierge_consent_is_narrow FAILS (KeyError on opal_describe); tests/test_mail_route_domain.py::test_ogmd1_ac06 FAILS 'the shipped domain table holds no domain' (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~43/r29_tests_release_before_edits.out).",
+      "E1 app/graph_scope_map.py (+9): opal_discover and opal_describe frozenset() (integrations/opal_discover/integration.py makes no Graph call); find_sharepoint_site Sites.Read.All (tools.py GET /sites?search, GET /sites/{id}/drive/root:/{folder}:/children); search_files Files.ReadWrite.All (tools.py GET /me/drive/root/search(q=...), GET /me/drive/items/{id}/content; the one file scope consented, app/config.py:64). E4 tests/test_scoped_consent_r253.py (1 line): the bound-consent assertion required the taxsma caller to ADD scopes; search_files now maps to the same Files.ReadWrite.All, so it becomes 'adds at most the caller's scopes'. E2 tests/test_mail_route_domain.py ac06 (the pin becomes the signed entries). E3 deploy/mail_sender_domain_table.txt (two header lines said 'ships EMPTY').",
+      "Host rehearsal with E1 staged (r29_rehearsal.out, SSM d292d950): scoped concierge consent 9 -> 9 (the host's TAXSMA_WORKBOOK_IDENTITY is a tid/oid pair, so the taxsma caller's Files.ReadWrite.All is already unioned into the concierge's consent: consent_scopes in app/identity_scope.py); 66 tools; bloomberg_tools_allowed 4 of 4 signed. Full per-file tests after E1-E4: 87 files, 13 failing ids, all 13 also fail on the live-sha baseline tree, 0 new."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2/A3: the release set gains rows in identity_tool_allowlist.txt, the ONE named exception to 'any OTHER gateway difference: STOP'; OG-md-1 ships the domain table empty and the halves sign its entries; the floor tests move by two constants only.",
+  "world_is": "The four rows reach the code only with E1 (host file app/graph_scope_map.py, the 13th host file) and the two tests E2/E4 edited; E3 is comment text. None of E1-E4 is in the allowlist exception or a cell's diff. They are applied to the uncommitted candidate by r29_release_time_edits.py and listed in the ask for the issuer's word. Without E1 the two test files fail in the release tree; shipping the rows without the map entries would also leave the tools' Graph calls without their scopes in the consent URL.",
+  "notes": "search_files maps to Files.ReadWrite.All, a write-capable scope, because no Files.Read variant is consented; the tool itself only reads. Count of the concierge's consent scopes stays 9 on the host."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:25:55Z",
+  "one_line": "Phase C's premise fails for Andrew: gateway-access-state-table holds exactly ONE principal with a profile and grants (Alyssa's, restricted); Andrew has no profile and no grant, so 'set Andrew's grant to 13 months' is a CREATE, not a reach-field change, and AC3's principals_changed == 2 cannot be met by the ruled act.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read-only scan of gateway-access-state-table by the caller identity, 2026-10-09T02:5xZ (649 items, no LastEvaluatedKey): POLICY records fall under 5 partitions; exactly one holds principal_profile (status active, profile_kind restricted, email local part alyssa) with 3 data_entitlement revisions (all active chain, current revision 3, scope.dates {mode: rolling_complete_window} with no calendar_days or calendar_months, 2 masters, 4 datasets, operations describe/download_filtered/list/query, 10 portal_channels) and 3 operator_audit; one email_deny for the same principal; three are og-i1 probe partitions. No profile, grant or deny record names Andrew's principal.",
+      "infra/aws/ec2/opal-gateway/app/data_entitlement.py:decide (lines 426-441 at 10e525c7de): a principal with NO profile passes legacy tools and is denied every Schwab tool; a principal WITH a profile is 'restricted' and may call exactly the tools its active grant's operations allow, every other tool and the direct REST routes denied (module docstring lines 24-60). There is no master-admin bypass of the Schwab entitlement in the module.",
+      "AC3 (rl15_attest.py _grants_ok, org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15_attest.py@10e525c7de): principals_changed == 2, calendar_months_after == [13, 13], prior_reach_recorded == 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-rl-15 Phase C and CTO ruling msg 32087: Andrew's and Alyssa's principals' grants gain calendar_months 13; the blast radius is exactly the reach field of those grants, no other field or principal, rollback = the prior reach per key.",
+  "world_is": "One key exists: Alyssa's current grant (revision 3). Andrew has none. Creating one for Andrew means a new restricted profile plus a new grant, which (a) is a new grant, not a reach change, and (b) by the guard's own rule would confine his principal to the Schwab tools the grant names and deny every other tool and REST route he uses through this gateway. Phase C as written would either change 1 principal (AC3 FAIL) or make a change the ruling did not describe. The ask therefore covers Alyssa's key only and holds Andrew's leg for an Andrew-scope ruling.",
+  "notes": "No grant was written. No tid, oid, email or account id was printed; the scan output was counted in process and the raw file stays in .scratch (untracked)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:25:55Z",
+  "one_line": "A1's MAIL_BEARER leg is not a no-IAM, no-code leg: the route admits several labelled values, but deploy-to-ec2.sh hard-codes one secret and one label, the mail-pull Lambda sends the whole secret string as its bearer, and the gateway role may read exactly four named secrets.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/mail_route.py:121-127 and app/transcript_route.py:78-79 @10e525c7de: MAIL_BEARER is split on commas/whitespace and MAIL_BEARER_LABELS is positionally aligned (a length mismatch labels every value 'msgpull'). Demonstrated offline with synthetic values (r29_mail_bearer_two_values.out): labels 'msgpull,commassist' give 'msgpull' / 'commassist' / None; the deploy script's current single label gives 'msgpull' for both.",
+      "infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:371 and the .env printf (MAIL_BEARER=%s, MAIL_BEARER_LABELS=msgpull) @10e525c7de: one secret, gateway/mail/bearer, one hard-coded label; no empty-value refusal for this secret.",
+      "infra/aws/lambda/transcripts-pull/handler.py:41 and infra/aws/terraform/transcripts/mail_pull.tf:15-40 @10e525c7de: the mail-pull Lambda reads gateway/mail/bearer SecretString whole at run time and presents it as its Bearer; a comma-joined value in that secret would make it present 'a,b'.",
+      "infra/aws/terraform/opal-gateway/gateway-read-secrets.tf @10e525c7de: gateway-read-secrets-policy allows secretsmanager:GetSecretValue on EXACTLY four ARNs (transcripts, mail, rosters, teams bearers), 'no wildcard, no sibling gateway/* secret'. aws secretsmanager describe-secret gateway/mail/bearer (metadata only, 2026-10-09): one version, AWSCURRENT, last changed 2026-10-01; gateway/mail/commassist-bearer does not exist (ResourceNotFoundException). lib/opal_naming.py grade('gateway/mail/commassist-bearer','SECRET') = CONFORMANT, canonical form identical."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 / preflight: comp-iam DECLARED-NOT-APPLICABLE (no IAM change); the secret write and the deploy that reads it are the applier's; if the route admits one value the leg is a rotation.",
+  "world_is": "The route admits several values, so the leg is an addition, not a rotation. It needs a second labelled value read at deploy: a deploy-to-ec2.sh edit (one hunk, bash -n OK, the deploy tests that touch the script pass unchanged, r29_mail_bearer_leg.patch.txt) that is in no cell; and either (A, recommended) a NEW secret gateway/mail/commassist-bearer plus a fifth ARN in gateway-read-secrets-policy (one Terraform change, 0 add 1 change 0 destroy to be confirmed by the applier's plan), or (B) a custom version stage on the existing gateway/mail/bearer (no IAM change; the Lambda reads AWSCURRENT only). The preflight's 'no IAM change' holds only for B. Existing holders (mail-pull Lambda, the host) receive no new reference under either.",
+  "notes": "Nothing written: no secret, no Terraform, no deploy-script change committed."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:25:55Z",
+  "one_line": "Four small mismatches between the order's expected lists and the tree: ops/schwab_status.py and 'the two v1.4 mail test files' are not in the live..hand-off diff; rl15_attest.py has no bloomberg_tools_* rule yet; and in a tree cut at the live sha the grant-writer staging test fails on an AttributeError, not the contract mismatch Z-W42-S1 names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat aa75078e1b 10e525c7de -- infra/aws/ec2/opal-gateway lists no ops/schwab_status.py and no edit to any existing mail test file; OG-cm-1's commit fcedf00b1e touches ops/schwab_entitlement_admin.py only, OG-md-1's commit 15b08fdca1 adds tests/test_mail_route_domain.py only.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15_attest.py@c75b24b4ee has no 'bloomberg' token: _served_ok does not yet test bloomberg_tools_allowed or bloomberg_tools_signed (A2/A3 say the rule rides the same commit; the file is outside this worker's paths). Exercised with the host's body as it stands: extra body fields are ignored, so AC2 passes without them.",
+      "tests/test_schwab_host_inputs.py::test_grant_writer_stages_the_contract_only_from_the_standard in C:/tmp/og-rb29 (live sha) and C:/tmp/og-rel29 (candidate): AttributeError 'grant_writer_build_package' has no attribute '_Source' (the live-sha build_package.py is older than box/sitez's); in the box/sitez worktree the same file fails 3 ways: 18->19, 51->52 and the contract bytes 1.3 vs 1.4 (build_package reads the manifest's deployed_commit)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order face: OG-cm-1 includes ops/schwab_status.py; OG-md-1 includes edits to the two v1.4 mail test files; the floor tests' third failure is the grant-writer staging test (Z-W42-S1).",
+  "world_is": "The shipped-file list is 13 host files and 9 non-host files in the candidate (22 touched incl. org/standards); none of the above changes what ships. The staging test cannot show Z-W42-S1 in the release tree; it will read as the contract mismatch only after the manifest's deployed_commit is r29's sha on a tree carrying build_package _Source.",
+  "notes": "Z-W42-S2 (13-month I/O cost) is untouched by this worker: Phase C's 13-month availability read should record its elapsed time."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:55:27Z",
+  "one_line": "Amendment A6 (457b60e966) withdrew A2-A5, so row Z-W43-S2 narrows: E1 (app/graph_scope_map.py) and E4 (tests/test_scoped_consent_r253.py) and the allowlist rows are gone from the candidate; only E2 (test_ogmd1_ac06's empty-table pin) and E3 (two header comment lines of the domain table) remain, forced by shipping the four domain entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~43/r29_hunk_equality.out (rebuilt after A6): identity_tool_allowlist.txt, app/identity_scope.py, app/graph_scope_map.py and tests/test_scoped_consent_r253.py each 'changed lines 0 => UNTOUCHED'; deploy/mail_sender_domain_table.txt CELL+ENTRIES+E3 and tests/test_mail_route_domain.py CELL+E2; RESULT: PASS; 19 files touched.",
+      "r29_reaches_host.out: 11 files reach the host (10 modified, 1 new), was 13; r29_staged_equal.out: staged 11 = shipped 11, same md5; host rehearsal (SSM 8f64769e): consent 9, tools 66, identity_tool_allowlist.txt md5 fbe94252 equal to the installed file's (BEFORE, SSM 9b0ab2f4).",
+      "For the r30 cell the issuer holds (recorded so the Phase A reads are not redone): rows for opal_discover, opal_describe, find_sharepoint_site and search_files fail tests/test_scoped_consent_r253.py unless app/graph_scope_map.py maps them (measured: opal_discover and opal_describe make no Graph call; find_sharepoint_site Sites.Read.All; search_files Files.ReadWrite.All, already in the concierge's consent through the taxsma caller on the host); and the C2 data grant does not gate blackdiamond_list_fees for a principal with no profile (data_entitlement.py INDEX_TOOLS class legacy, decide() lines 426-441). Both are in commit d757fc5c0b (ANNOUNCE section 11, rows Z-W43-S2 and Z-W43-S5)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A6: A2, A3, A4 and A5 are withdrawn; r29 carries no Bloomberg-account change; any Bloomberg edit already made is reverted before the release commit.",
+  "world_is": "No release commit existed, so the revert is of the uncommitted candidate in C:/tmp/og-rel29: rebuilt from the hand-off blobs by r29_build_candidate.py (which now restores the four Bloomberg-touched files to the live bytes) and r29_release_time_edits.py (E2, E3 only). Z-W43-S2's text stays as filed; its E1 and E4 and its allowlist part no longer apply. Z-W43-S5's third evidence line (rl15_attest.py lacking the bloomberg rule) no longer applies: the attest rules are back to the four-cell body and the stand-in exercise passes against them.",
+  "notes": "The Phase A deliverables committed at d757fc5c0b describe the pre-A6 candidate; they are superseded by the files committed after this row."
+}
+```
