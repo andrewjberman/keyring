@@ -61,7 +61,7 @@ table. `Opal_Muni_Income` (one account, about $64.1M) must appear, reason `RULE_
 `W2-3-AC2` -- SEAM on real data: the recorded list has SOURCE, DENOMINATOR and RESULT lines and carries the control `Opal_Muni_Income`.
 At the base: `W23-SEAM-BAD no file ...`.
 
-<expected_criteria>W2-3-AC1 W2-3-AC2 W2-4-AC1 W2-4-AC2 W2-7-AC1 W2-7-AC2</expected_criteria>
+<expected_criteria>W2-3-AC1 W2-3-AC2 W2-4-AC1 W2-4-AC2 W2-7-AC1 W2-7-AC2 W2-8-AC1 W2-8-AC2</expected_criteria>
 
 Run each invocation from your worktree root.
 
@@ -151,6 +151,50 @@ At the base (2026-10-09 ~17:2xZ): AC1 `W27-BAD no file ...`; AC2 `W27-SEAM-BAD a
 Re-flip `<status>` to `complete` only when every criterion in `<expected_criteria>` passes. No deploy: the slice ships with round
 2's deploy at the issuer's drain. A10 lifts the bound "Do not edit ... any gold script" for this one file only.
 
+### AMENDMENT A11 (issuer, 2026-10-09 ~20:5xZ) -- cell `ST-w-8`: every scope carries `unidentified_strategies` (row D1-S7 follow-on)
+
+- **The defect.** ST-w-7's new slice key reaches only the Cottonwood scope. The consolidator's L-1 check (`assert_keyset_identity`,
+  `data/mdpf/scripts/gold/mdpf_gold_consolidator.py:1065`, called `:2827` before any put) then aborts the whole run:
+  `L-1 KEY-SET IDENTITY FAILED ... cottonwood: only-here=['unidentified_strategies']`. A real run would put 0 of 16
+  (CloudOps~DELL1 msg 3151, row MDPF_CANON-D1-S5).
+- **The deadline.** The runner's 2026-10-10 12:52Z dispatch writes the keyed slice, so the 13:30Z fire fails on ANY package
+  version.
+- **Not the fix:** `R2_RULED_EXTRAS` (`:289`), which is the one contract-ruled exception and not a pass list.
+
+`ST-w-8` follows round 1's `sma_additive_aua` pattern (`:1855-1856`):
+1. **The pad.** In `apply_sma_sleeve_overlay`, every scope doc in `arts` that lacks `unidentified_strategies` gains it as `None`
+   (absent is not zero). Cottonwood's block is untouched. Move no figure.
+2. **Tests.** NEW `data/mdpf/tests/stratid/test_stratid_unidentified_keyset.py` (synthetic docs, no network), with these exact
+   names: `test_every_scope_carries_unidentified_strategies`, `test_keyset_identity_passes_with_cottonwood_block`,
+   `test_padding_moves_no_figure`.
+
+<criterion id="W2-8-AC1" cell_refs="ST-w-8"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_8_tests.py</invocation><expect>W28-OK</expect></criterion>
+`W2-8-AC1` -- the three named tests pass.
+
+<criterion id="W2-8-AC2" cell_refs="ST-w-8"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_8_keyset.py</invocation><expect>W28-KEYSET-OK</expect></criterion>
+`W2-8-AC2` -- on the 4 served docs, Cottonwood given the block. The control reproduces the failure. Through the overlay, all 4 scopes
+carry the key, identity passes, and per-firm totals do not move.
+
+At the base (2026-10-09 ~20:5xZ): AC1 `W28-BAD no file ...`; AC2 `W28-KEYSET-BAD arm=pad scope global lacks unidentified_strategies`.
+Also re-run `R2_CHECKS/st_u2_regress.py`, which must read `U2-REGRESS-OK`.
+
+Re-flip `<status>` to `complete` only when every criterion in `<expected_criteria>` passes. No deploy: the issuer's drain ships it
+under TO-APPLY-R2. A11 grants `mdpf_gold_consolidator.py` and the new test file for this one change.
+
+### AMENDMENT A11.1 (issuer, 2026-10-09 ~21:0xZ) -- ruling on row D1-W6-S5
+
+- **The finding.** `test_stratid_global_fold.py::test_cottonwood_and_49financial_views_unchanged` (`:166`) asserts that the overlay
+  adds exactly `{sma_additive_aua, sma_additive_withheld}` to a per-firm view. The A11 pad intentionally adds a third key,
+  `unidentified_strategies` (None), so the test's expected set is stale, not the code.
+- **Ruling.** The file is granted for this one edit: add `'unidentified_strategies'` to that expected set. Change nothing else.
+- **Re-run:**
+  - `python -m pytest -q data/mdpf/tests/stratid data/mdpf/tests/taxsma` reads 0 failed;
+  - `R2_CHECKS/st_u2_regress.py` reads `U2-REGRESS-OK`.
+
+  Then re-flip `<status>`.
+
+Gate limb: GATE viii on the modification (placeholders NONE).
+
 ## BOUNDS
 
 - **GUARD 1:** no deploy and no write to the ETF universe config before the 2026-10-09 13:30Z read. You write nothing in AWS;
@@ -169,18 +213,21 @@ org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_
 org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md
 data/assets/scripts/gold/build_cottonwood_mdpf_slice.py
 data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py
+data/mdpf/scripts/gold/mdpf_gold_consolidator.py
+data/mdpf/tests/stratid/test_stratid_unidentified_keyset.py
+data/mdpf/tests/stratid/test_stratid_global_fold.py
 </paths>
 
 The block is your WRITE grant (paths relative to your worktree root are the same files). Everything else named here you READ.
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md</decomp_doc> (workstream 2), cell `ST-w-3`.
-<owned_cells>ST-w-3 ST-w-4 ST-w-7</owned_cells>
+<owned_cells>ST-w-3 ST-w-4 ST-w-7 ST-w-8</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: W2-3-AC1, W2-3-AC2, W2-7-AC1, W2-7-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/MDPF_STRATID.TO-W2-3.unidentified-strategy-list.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> W2-3-AC1 W2-3-AC2 W2-7-AC1 W2-7-AC2` BEFORE the flip.
+Criterion ids: W2-3-AC1, W2-3-AC2, W2-7-AC1, W2-7-AC2, W2-8-AC1, W2-8-AC2. Instance at `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/MDPF_STRATID.TO-W2-3.unidentified-strategy-list.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> W2-3-AC1 W2-3-AC2 W2-7-AC1 W2-7-AC2 W2-8-AC1 W2-8-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the RESULT and DENOMINATOR lines, the top 10 listed rows, commits.

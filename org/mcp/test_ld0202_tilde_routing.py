@@ -77,7 +77,11 @@ def main() -> int:
 
         # ---- AC2 (B2 set_summary): same, via set_summary ----
         _seed(srv, {BASE: dict(base_entry)})
+        # The G-A self-scope guard (2026-07-14) refuses an unregistered session before the B2 branch is reached, so the
+        # check runs AS the lane: the B2 branch under test is the one that answers "not registered" for it.
+        srv._my_serial = LANE
         msg = asyncio.run(srv.set_summary(LANE, "LANE-SUMMARY-CLOBBER"))
+        srv._my_serial = None
         after = _read(srv)
         _check("AC2.B2 suffixed set_summary does NOT clobber base summary",
                after.get(BASE, {}).get("summary") == "BASE-SUMMARY"
