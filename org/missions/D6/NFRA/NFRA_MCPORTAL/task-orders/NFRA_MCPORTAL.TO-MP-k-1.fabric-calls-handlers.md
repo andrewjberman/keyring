@@ -170,7 +170,7 @@ Report once, with:
 dry-run at base 2851a9190d: AC1 FAIL (test file absent), AC2 FAIL (test file absent). The live POST needs MP-k-2's grant;
 before it, a live POST answers 503 "request not written", which is the failure arm. No gate. Lives through MP-r-2.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <slot>~10</slot>

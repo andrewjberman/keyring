@@ -22,7 +22,7 @@ EGRESS CLASS, declared: none beyond AWS control-plane calls in Opal's own accoun
 **Do not start before the issuer's GO message.** That GO names the gateway commits to ship and the mcportal commit. It
 comes when G-REL2 holds:
 - round 5's MP-x-4 is drained and live;
-- MP-o-1, MP-s-1, MP-k-1 and MP-p-2 are drained, with the issuer's route-hookup commit;
+- MP-o-1, MP-s-1, MP-k-1 and MP-p-2 are drained (the route hookup is YOUR step 0 below, AMENDMENT 2);
 - MP-k-2 is applied.
 
 Work in a linked worktree you cut from `box/sitez` HEAD, using a NO-CONE pattern list if sparse (row NFRA_MCPORTAL-Z-W5-S2).
@@ -34,10 +34,22 @@ it. Build the release on THAT live base, with ONLY:
   - `app/admin_fabric_overlap.py`, `app/refs/overlap_rules.json` and `tests/test_admin_fabric_overlap.py` (MP-o-1);
   - `app/admin_fabric_gitstate.py` and `tests/test_admin_fabric_gitstate.py` (MP-s-1);
   - `app/admin_fabric_calls.py` and `tests/test_admin_fabric_calls.py` (MP-k-1);
-  - the issuer's four route lines in `app/admin_api.py`;
+  - the four route lines in `app/admin_api.py` that you commit in step 0;
 - the dashboard bundle at the mcportal commit named in the GO (MP-p-2's, a descendant of `d60b4e0`).
 
 In order:
+0. **The route hookup (AMENDMENT 2).** In your worktree on `box/sitez` HEAD, add to `app/admin_api.py`:
+   - three imports: `from . import admin_fabric_calls`, `from . import admin_fabric_gitstate` and
+     `from . import admin_fabric_overlap`, beside `from . import admin_fabric`;
+   - these four lines, directly after `Route("/fabric/boxes", ...)`, verbatim:
+     ```
+     Route("/fabric/overlap", admin_fabric_overlap.overlap, methods=["GET"]),
+     Route("/fabric/gitstate", admin_fabric_gitstate.gitstate, methods=["GET"]),
+     Route("/fabric/calls", admin_fabric_calls.calls, methods=["GET"]),
+     Route("/fabric/calls/close", admin_fabric_calls.close_call, methods=["POST"]),
+     ```
+   Then run every admin and fabric test file (`tests/test_admin*.py tests/test_entitlement_admin.py`). The issuer
+   measured 58 passed with exactly these lines. Commit, and cherry-pick that commit in step 1 with the others.
 1. **The release tree.** Run `git worktree add -b rel-nfra-mcportal-cp2 <path> <live deployed_commit>` and cherry-pick the
    GO's gateway commits there.
    - **Census:** `git diff --stat <live> HEAD -- infra/aws/ec2/opal-gateway` names ONLY the files above. Any other file:
@@ -82,13 +94,14 @@ In order:
 
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/ec2/opal-gateway/app/admin_api.py
 org/critical_paths/change_management/*nfra-mcportal-cp2-release*
 org/critical_paths/.open_deploys/nfra-mcportal-cp2-release.json
 org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/**
 org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/**
 </paths>
 
-Read, never write: `infra/aws/ec2/safe-ec2-deploy.sh`, `infra/aws/ec2/opal-gateway/`, `mcportal/`,
+Read, never write: `infra/aws/ec2/safe-ec2-deploy.sh`, `infra/aws/ec2/opal-gateway/` (except `app/admin_api.py`, step 0), `mcportal/`,
 `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/`.
 
 Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md`, with id
@@ -123,6 +136,11 @@ Phase B waits on the CVO~Z half). Checks dry-run at base 2851a9190d: AC1 FAIL (n
 mcportal a3bff71 lacks d60b4e0), AC3 FAIL against the live r28 host (ssm 56a9dedd: /health=200 control; the four routes 404;
 `cannot import name 'admin_fabric_overlap'`). The first AC3 dry run (ssm d4b2c3ed) exposed a probe defect (`No module named
 'app'`: the probe ran from /tmp); fixed with PYTHONPATH before the cut. GO by message, the applier being a seat.
+
+**AMENDMENT 2 (issuer, while staged):** the route hookup moves into this order as step 0, and `app/admin_api.py` joins
+`<paths>`. The issuer's own hookup commit was REFUSED by the owned-paths gate: `infra/aws/ec2/opal-gateway/app/admin_api.py`
+is lane CLOUD_OPS_OR_ETL, and 2.0.0_SA_COO~MP holds no grant there. This order's assignee does. The four lines were
+measured by the issuer, uncommitted: routes 4 of 4, admin and fabric test files 58 passed. See decomposition CP2.10.
 
 <status>staged</status>
 <round>1</round>

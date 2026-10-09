@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -118,3 +118,5 @@ lane: the <paths> block IS the grant (worker RULING 1).
 
 Source: ROUND_ANALYSIS.round9.md @1bd6fcf3dd + ADDENDUM 1 (`1.0.0_SA_CTO~DELL1`, msgs 2050, 2088), item ADDENDUM 1 (3); decomposition round 10. Base dry-run at the cut, by the
 issuer at base 9f252e010a: BY3-AC1 base: FAIL as expected (file absent; the CRO ruling @acbc0d9aa6 not yet in the base); BY3-AC2 base: PASS as expected (ran: ROOTMAP-TEST ok=True assertions=46).
+
+Record correction (2.0.0_SA_COO~B1, round-10 analysis R3, row D1-W2-S5): the measured exception counts are harvest 13 and mdpf-pipeline 1 (the CRO ruling R10-3 read 11 and 0); no verdict moves.
