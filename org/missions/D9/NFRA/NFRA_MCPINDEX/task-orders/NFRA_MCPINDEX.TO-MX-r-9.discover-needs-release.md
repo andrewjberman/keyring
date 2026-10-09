@@ -119,6 +119,23 @@ BLOCKED rc=3, "SERIAL RESOLVES TO NO KNOWN AGENT", from a SPARSE release worktre
   - This is NOT `HALT_OVERRIDE` and you never use that.
   - Print the gate's verdict line in your PHASE B record.
 
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-09 ~12:3xZ) -- SUPERSEDES A4's mechanism; cause NFRA_OPLGTW-Z-S75
+@6dee08829e.**
+- **Why A4 fails:** `infra/aws/ec2/safe-ec2-deploy.sh:57` sets `HALT_GATE_REPO_ROOT` to the CALLING worktree
+  unconditionally, by design (R-53), so A4's export never reaches the predicate. Your 11567e1895 positive ran
+  `halt-gate-check.sh` directly, not through the wrapper.
+- **Ruling:** make the gate's premise TRUE in the deploy tree. Before PHASE B's apply, materialise your BASE's agent
+  folder in the deploy-only tree: `git -C <deploy tree> sparse-checkout add org/tier2_senior/0.7.0_AE_CloudOps`.
+  The folder exists at every ref in question; a sparse cone simply does not check it out.
+  - Nothing in the gate, the wrapper or the release content changes.
+  - HALT_OVERRIDE stays forbidden.
+  - The lane inbox is read from the shared root already (`halt-gate-check.sh:55` default).
+- **Proof before the apply:** run the wrapper's gate path FROM THE DEPLOY TREE as the wrapper runs it. The negative
+  control (no folder) must read rc=3 `unknown-base`; the positive (folder materialised) must read rc=0 and name your
+  own inbox. Print both.
+- If `2.0.0_SA_COO~O`'s ruling on Z-S75 lands a different mechanism for r29, that does not bind this order. Tell me,
+  and I rule.
+
 Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 

@@ -335,6 +335,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "D1-S5 / ADDENDUM 2: canonical rows carry the delivery day; CGIC windows must move a trading day earlier.",
     "world_is": "Partitions are the as-of; windows are already as-of dated. we-1's `delivered_on` records the partition (the as-of), not the delivery day: misnamed. The calendar (gold_holdings_coverage.classify) compares the claim with the REQUESTED day, so a fund whose file always lags one trading day reads 'repeat' every day.",
     "notes": "Remedies: (1) withdraw ADDENDUM 3's rebuild (nothing to rebuild); (2) we-1's delivered_on takes the capture's requested_date (or is dropped); (3) the calendar treats a capture whose claim is newer than the previous capture's claim as `new` (a lagged daily fund), keeping `repeat` for a claim equal to the previous one. Owner of the rulings: 1.0.0_SA_CTO~DELL1."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~V1",
+    "surfaced_at": "2026-10-09T12:25Z",
+    "one_line": "The live prompt a1-chain/7 (aw-1, live 11:21Z) makes the Direction Verdict lead with the period's dates: both verdicts of a two-fund real run open 'From <date> to <date>, ...' -- a new shared lead, of the kind Andrew's comment 7 objects to",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ws3_item8_prep/ai_real_run_local.py (live reads, local writes, real model) at box/dell1 4d688f78a7+, page day 2026-10-08, funds CGIC and IDVZ, run 20261009T121734Z-ai: CGIC 'From 2025-10-07 to 2026-10-07, the long-run trend is only partly borne out by the ...'; IDVZ 'From 2026-01-02 to 2026-10-07, the direction verdict is mixed: the last 30 days both ...'",
+        "0 S3 objects for that run_id (read back); the parquet is only under C:/tmp/wg1-base-run/layer",
+        "Denominator: 2 funds of 13; the 13:00Z sweep's page is the first full read"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-aw-1: the two dates of the period are stated once in text. Andrew-direct comment 7: the verdicts should not all lead the same way.",
+    "world_is": "The model meets the dates rule by opening with them, so every verdict may lead 'From <date> to <date>, ...'.",
+    "notes": "Remedy in RIV-wg-1 (WS3 item 8, cut after the 13:00Z read): the generic-opening rule names a dated lead too; the dates stay in text, not as the lead. Read at the 13:00Z page with verdict_openers_check.py (dates collapse to one token). Owner: 2.0.0_SA_COO~V1."
   }
 ]
 ```

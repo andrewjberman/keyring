@@ -180,3 +180,11 @@
 2026-10-09T12:00:29Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/commonwealth_sweep_regrade.py  reason=no-open-ledger-names-it
 2026-10-09T12:00:29Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_fwd3_serve.py  reason=no-open-ledger-names-it
 2026-10-09T12:00:29Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/silver/tests/test_commonwealth_price_basis.py  reason=no-open-ledger-names-it
+2026-10-09T11:55:26Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/C_06.client_mix_timeseries.py  reason=no-open-ledger-names-it
+2026-10-09T11:55:26Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/D_03.composition_artifacts.py  reason=no-open-ledger-names-it
+2026-10-09T11:55:26Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/lib/etf_classifier.py  reason=no-open-ledger-names-it
+2026-10-09T11:55:26Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/tests/test_cot_position_rule.py  reason=no-open-ledger-names-it
+2026-10-09T12:04:46Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py  reason=no-open-ledger-names-it
+2026-10-09T12:04:46Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py  reason=no-open-ledger-names-it
+2026-10-09T12:14:08Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py  reason=no-open-ledger-names-it
+2026-10-09T12:14:08Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py  reason=no-open-ledger-names-it
