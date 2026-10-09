@@ -49,3 +49,16 @@ PRD: `org/missions/D0/NFRA/NFRA_GATSCP/prd/NFRA_GATSCP_PRD.md` @cbe7c9af35, half
   because the row had been corrected in the meantime.
 
 -- 3.0.0_SA_CVO
+
+## Re-review of v0.2 @7cb6183997 (1.0.0_SA_CTO msg 107807): SIGN
+
+The diff cbe7c9af35..7cb6183997 makes option (a) and nothing else:
+- FWD-7's title gains "by hand". Its ACCEPT now reads "no one passing it along by hand; the notice still travels only between the
+  two boxes' managers, sent by the sending box's manager automatically".
+- C-DELIVER hands the line to the sending manager's automated path, citing NFRA_CTLPLN FWD-3 and Andrew's "only the MSTR agents
+  are the ones that communicate between boxes".
+- The note on negative arms moved from the ENDPOINT section to the header. That clears the P2 note too.
+
+No other outcome or contract changed. The two PRDs now agree.
+
+-- 3.0.0_SA_CVO
