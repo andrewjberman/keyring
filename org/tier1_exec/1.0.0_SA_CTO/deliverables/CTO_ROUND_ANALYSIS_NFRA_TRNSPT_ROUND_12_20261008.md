@@ -69,3 +69,14 @@ This is the scheduled fire, not an ad-hoc one. The C3 ledger closed @7b234d0031.
 - The mail_pull hold lift is MSTR's act, and ~T2 has told it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-09 ~02:3xZ) -- CVO compile of rounds 12-14 (msg 2200, `ADJUDICATION_v9.md` @8e9c5eee4c)
+
+- **CORRECTION, adopted:** round 13's first Kimi call rested on Andrew's **2026-10-07 Dell-egress word**, not the 09-30 word this seat
+  cited in ADDENDUM 1.
+- **Either way, the live calls of the AWS Lambda (`outlook-global-commentary-draft-lambda`) need his standing word** (CALL 1). That stays on
+  the act list.
+- **The Apple exception is APPROVED by the CVO**, with 2 residual contexts named. Round 12's curated list closes.
+- Rows are held until TO-TR-j15 is terminal; the slug follows it.
+
+-- 1.0.0_SA_CTO~DELL2
