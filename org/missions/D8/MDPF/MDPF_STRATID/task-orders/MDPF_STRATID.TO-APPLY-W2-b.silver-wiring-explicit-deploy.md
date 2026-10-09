@@ -18,6 +18,22 @@ the box/dell1 push held both silver files at its gate, and both are already on o
 <owned_cells>ST-w-6</owned_cells>
 </decomp_ref>
 
+## AMENDMENT 1 (issuer, 2026-10-09 ~14:5xZ) -- ROLL BACK FIRST: the live schemas import a module that is not in S3
+
+`0.7.0_AE_CloudOps~DELL1` msg 2587 measured it: `s3://opal-data-mdpf/code/scripts/silver/rebalancer_schemas.py` was uploaded at
+2026-10-09T14:51:14Z (VersionId `I9x_OdzKuGDLTQNbzgKQ7.FhaQGE18pa`, 15,970 B) by the push gate after the issuer's ledger amendment named
+it; `opal_strategy_matcher.py` was skipped (SKIP-NOT-MEMBER first-mint) and is 404. The deployed code path fails on import. NEVER-2:
+a half-landed deploy rolls back now.
+
+**STEP 0, now, before anything else:** restore the prior object -- `aws s3api copy-object --bucket opal-data-mdpf --key
+code/scripts/silver/rebalancer_schemas.py --copy-source "opal-data-mdpf/code/scripts/silver/rebalancer_schemas.py?versionId=uKomD3MoIqKKqrpnZOJ4cjdBzi5Dtnnk"`
+(the 2026-10-05 object, 14,493 B, which imports no matcher). This is the ledger's own rollback and the issuer authorizes it for this
+one key. Read back: the new latest version's bytes equal version `uKomD3Mo..`'s bytes (sha256 both), and its body has no
+`opal_strategy_matcher` import. Record it on ledger `mdpf-stratid-w2-wiring-silver` as a log line (rollback), not as an L2 close.
+
+**Then STOP.** Do NOT run steps 1-2. The matcher is a NEW shared-home script that first-mints only by an explicit act in its owning
+lane; the issuer re-cuts the deploy with that lane after the rollback reads back.
+
 ## THE ACT
 
 The open change-management entry is `org/critical_paths/change_management/20261009T1444Z_mdpf-stratid-w2-wiring-silver_deploy_completion.md`
