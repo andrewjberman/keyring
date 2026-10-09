@@ -13,6 +13,9 @@
 #   bash .tools/box-sync.sh box        [--dry-run]   take origin/CLOUD into box/<this box>, then push box/<this box>
 #   bash .tools/box-sync.sh integrate  [--dry-run]   merge every origin/box/* that is ahead into CLOUD, then push CLOUD
 #   bash .tools/box-sync.sh status     [--fetch]     ANY seat, read-only: each box branch behind/ahead of CLOUD
+#   bash .tools/box-sync.sh grade P1 P2              ANY seat, read-only: merge P1 and P2 in the object store and grade the
+#                                                    merge exactly as a pass would (row gate + scoped tree check); lands nothing,
+#                                                    moves no ref, no fetch, no lock, no audit row. EXIT 0 pass, 1 refused, 4 conflict
 #
 # HOW IT AVOIDS SUFFOCATING THE BOX: each merge is computed in the object store (`git merge-tree --write-tree`), graded on
 # a PRIVATE index in a private git dir (HEAD and MERGE_HEAD pinned to the two parents, over the shared files), and written
@@ -29,7 +32,7 @@
 set -uo pipefail
 MODE="${1:-}"; DRY=0
 [ "${2:-}" = "--dry-run" ] && DRY=1
-case "$MODE" in box|integrate|status) ;; *) echo "usage: box-sync.sh box|integrate [--dry-run] | status [--fetch]" >&2; exit 2 ;; esac
+case "$MODE" in box|integrate|status|grade) ;; *) echo "usage: box-sync.sh box|integrate [--dry-run] | status [--fetch] | grade P1 P2" >&2; exit 2 ;; esac
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || { echo "box-sync: not in a git repo" >&2; exit 2; }
 cd "$ROOT" || exit 2
@@ -72,7 +75,7 @@ if [ -z "$SERIAL" ] && [ -n "${CLAUDE_CODE_SESSION_ID:-}" ] && [ -f "$ROOT/org/m
   read -r SERIAL < "$ROOT/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial" || true
 fi
 _mstr_re='^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'
-if ! [[ "$SERIAL" =~ $_mstr_re ]] && [ "$DRY" -eq 0 ]; then
+if ! [[ "$SERIAL" =~ $_mstr_re ]] && [ "$DRY" -eq 0 ] && [ "$MODE" != grade ]; then
   echo "box-sync: REFUSED -- only an MSTR serial runs a pass (got '${SERIAL:-unset}'). --dry-run is open to any seat." >&2
   ROWNOTE="refused=not-mstr"; row 1; exit 1
 fi
@@ -80,7 +83,8 @@ export GIT_AUTHOR_NAME="${SERIAL:-box-sync}" GIT_AUTHOR_EMAIL="${SERIAL:-box-syn
 
 # --- skip, never overlap
 PASSLOCK="${COMMON}/box-sync-${MODE}.lock.d"
-if ! mkdir "$PASSLOCK" 2>/dev/null; then
+if [ "$MODE" = grade ]; then PASSLOCK=""   # grade is read-only and takes no lock: any number may run beside a pass
+elif ! mkdir "$PASSLOCK" 2>/dev/null; then
   _hp=""; [ -f "$PASSLOCK/pid" ] && read -r _hp < "$PASSLOCK/pid"
   if [ -n "$_hp" ] && kill -0 "$_hp" 2>/dev/null; then
     echo "box-sync: SKIP -- a ${MODE} pass is still running (pid $_hp); this slot is skipped, never overlapped."
@@ -88,12 +92,12 @@ if ! mkdir "$PASSLOCK" 2>/dev/null; then
   fi
   rm -rf "$PASSLOCK"; mkdir "$PASSLOCK" 2>/dev/null || { ROWNOTE="skipped=passlock"; row 3; exit 3; }
 fi
-echo "$$" > "$PASSLOCK/pid"
+[ -n "$PASSLOCK" ] && echo "$$" > "$PASSLOCK/pid"
 PRIV=""
-cleanup() { rm -rf "$PASSLOCK" 2>/dev/null; [ -n "$PRIV" ] && rm -rf "$PRIV" 2>/dev/null; return 0; }
+cleanup() { [ -n "$PASSLOCK" ] && rm -rf "$PASSLOCK" 2>/dev/null; [ -n "$PRIV" ] && rm -rf "$PRIV" 2>/dev/null; return 0; }
 trap cleanup EXIT
 
-git fetch -q origin 2>/dev/null || { echo "box-sync: git fetch origin failed -- nothing done" >&2; ROWNOTE="fetch=failed"; row 1; exit 1; }
+[ "$MODE" = grade ] || git fetch -q origin 2>/dev/null || { echo "box-sync: git fetch origin failed -- nothing done" >&2; ROWNOTE="fetch=failed"; row 1; exit 1; }
 
 # grade_merge P1 P2 T -> 0 pass, 1 refused. Path-scoped: paths T changes against BOTH parents, plus paths both sides
 # changed since the merge base; the row gate reads them from a private index in a private git dir pinned to the merge.
@@ -113,8 +117,16 @@ grade_merge() {
   local rc=0
   # shellcheck disable=SC2086
   STAGED="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$GATE" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    rm -rf "$PRIV"; PRIV=""
+    echo "box-sync: REFUSED BY THE ROW GATE on the merge's own paths (rc=$rc)" >&2
+    return "$rc"
+  fi
+  # the project-tree check (GS-t-3), on the same merged bytes in the same private git dir, scoped to the merge's graded
+  # path set: it refuses only a violation in a project those paths touch and prints every other one as STANDING.
+  GRADE_ACT="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act-from-env GRADE_ACT || rc=$?
   rm -rf "$PRIV"; PRIV=""
-  [ "$rc" -eq 0 ] || echo "box-sync: REFUSED BY THE ROW GATE on the merge's own paths (rc=$rc)" >&2
+  [ "$rc" -eq 0 ] || echo "box-sync: REFUSED BY THE TREE CHECK on the merge's own paths (rc=$rc)" >&2
   return "$rc"
 }
 
@@ -146,10 +158,11 @@ resolve_known() {
 
 # make_merge P1 P2 MESSAGE -> sets MERGE_OUT (the merge commit) and GRADED_NOTE; rc 4 on conflict, 1 on refusal.
 # Called directly, never inside $( ): a subshell would lose GRADED_NOTE and the private dir path the EXIT trap cleans.
-MERGE_OUT=""; GRADED_NOTE=""; CLOUD_SIDE="ours"
-make_merge() {
-  local p1="$1" p2="$2" msg="$3" out t m
-  MERGE_OUT=""
+MERGE_OUT=""; GRADED_NOTE=""; MERGED_TREE=""; CLOUD_SIDE="ours"
+# merge_tree_of P1 P2 -> sets MERGED_TREE (the merge's tree); rc 4 on a conflict beyond the known classes, 1 on failure.
+merge_tree_of() {
+  local p1="$1" p2="$2" out t
+  MERGED_TREE=""
   out="$(git merge-tree --write-tree --no-messages "$p1" "$p2" 2>/dev/null)"; local mrc=$?
   t="$(printf '%s\n' "$out" | head -1)"
   if [ "$mrc" -eq 1 ]; then
@@ -159,11 +172,30 @@ make_merge() {
     mrc=0
   fi
   if [ "$mrc" -ne 0 ] || [ -z "$t" ]; then echo "box-sync: git merge-tree failed (rc=$mrc)" >&2; return 1; fi
+  MERGED_TREE="$t"
+}
+make_merge() {
+  local p1="$1" p2="$2" msg="$3" t m
+  MERGE_OUT=""
+  merge_tree_of "$p1" "$p2" || return $?
+  t="$MERGED_TREE"
   grade_merge "$p1" "$p2" "$t" >&2 || return 1
   m="$(git commit-tree "$t" -p "$p1" -p "$p2" -m "$msg")" || return 1
   bash "$SAFE_MERGE" --verify-merge "$m" >&2 || { echo "box-sync: REFUSED -- the tree check failed on $m" >&2; return 1; }
   MERGE_OUT="$m"
 }
+
+# ============================================================== grade: read-only, any seat -- merge P1 and P2 and grade it
+if [ "$MODE" = "grade" ]; then
+  G1="$(git rev-parse --verify -q "${2:-}^{commit}")" && G2="$(git rev-parse --verify -q "${3:-}^{commit}")" \
+    || { echo "usage: box-sync.sh grade P1 P2   (two commits)" >&2; exit 2; }
+  _grc=0; merge_tree_of "$G1" "$G2" || _grc=$?
+  [ "$_grc" -eq 4 ] && { echo "box-sync: grade -- HELD: the merge conflicts beyond the known multi-writer classes" >&2; exit 4; }
+  [ "$_grc" -eq 0 ] || exit 1
+  _grc=0; grade_merge "$G1" "$G2" "$MERGED_TREE" || _grc=$?
+  echo "box-sync: grade ${G1:0:10} + ${G2:0:10} -> $([ "$_grc" -eq 0 ] && echo PASS || echo REFUSED) (${GRADED_NOTE:-graded=?}); nothing landed, no ref moved"
+  exit "$_grc"
+fi
 
 # ============================================================== integrate: every box branch into CLOUD
 if [ "$MODE" = "integrate" ]; then
