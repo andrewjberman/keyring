@@ -46758,3 +46758,49 @@ REFUSED_20261008)
 2026-10-09T14:52:17Z PASS  0.7.0_AE_CloudOps~Z  2  (all paths in-lane)
 2026-10-09T14:52:37Z PASS  0.9.0_WK_NFRA_OPLGTW~49  2  (all paths in-lane)
 2026-10-09T14:52:51Z LANDED-2P  0.7.0_AE_CloudOps~Z  38b5e4b432  paths=2  validate=60.12s  wait=0.95s  hold=6.00s  build=3.87s  ref=1.17s  post-commit=15.16s  attempt=1
+2026-10-09T14:52:51Z PASS  0.7.0_AE_CloudOps~ZW  5  (all paths in-lane)
+2026-10-09T14:52:59Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=10.52  graded=n/a  args=(--verify-merge 170305acaa7223d49316a9ee07b62b1308027a66)  first=(none)
+2026-10-09T14:53:08Z LOCK-WAIT  0.7.0_AE_CloudOps~ZW  3s
+2026-10-09T14:53:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=7.82  graded=n/a  args=(--verify-merge HEAD)  first=(WARN -- the merge commit carries file(s) the branch never touched (a status close is expected;)
+2026-10-09T14:53:23Z LANDED-2P  0.7.0_AE_CloudOps~ZW  48864ff38b  paths=5  validate=272.36s  wait=8.16s  hold=3.97s  build=2.10s  ref=1.06s  post-commit=9.77s  attempt=1
+2026-10-09T14:53:26Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=77.14  took=already-current pushed=48864ff38b
+2026-10-09T14:53:59Z PASS  0.7.0_AE_CloudOps~ZQ  1  (all paths in-lane)
+2026-10-09T14:54:27Z PASS  0.7.0_AE_CloudOps~ZQ  1  (all paths in-lane)
+2026-10-09T14:55:02Z LANDED-2P  0.7.0_AE_CloudOps~ZQ  1386d1e673  paths=1  validate=83.45s  wait=0.53s  hold=6.15s  build=3.84s  ref=1.58s  post-commit=15.33s  attempt=1
+2026-10-09T14:55:22Z PASS  3.0.0_SA_CVO~Z  2  (all paths in-lane)
+2026-10-09T14:55:38Z PASS  2.0.0_SA_COO~MP  2  (all paths in-lane)
+2026-10-09T14:56:01Z PASS  2.0.0_SA_COO~MP  2  (all paths in-lane)
+2026-10-09T14:56:06Z PASS  3.0.0_SA_CVO~Z  2  (all paths in-lane)
+2026-10-09T14:56:41Z LANDED-2P  3.0.0_SA_CVO~Z  f022594845  paths=2  validate=124.98s  wait=1.45s  hold=5.96s  build=4.46s  ref=1.12s  post-commit=12.76s  attempt=1
+2026-10-09T14:57:12Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane)
+2026-10-09T14:57:21Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T14:57:35Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane)
+2026-10-09T14:57:41Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T14:57:59Z LOCK-WAIT  2.0.0_SA_COO~AI  1s
+2026-10-09T14:58:09Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane)
+2026-10-09T14:58:16Z LANDED-2P  1.0.0_SA_CTO~Z  14cbf27dec  paths=1  validate=69.02s  wait=0.60s  hold=7.92s  build=5.91s  ref=1.84s  post-commit=17.23s  attempt=1
+2026-10-09T14:58:23Z LANDED-2P  2.0.0_SA_COO~AI  9dd88720a7  paths=1  validate=61.69s  wait=3.66s  hold=6.95s  build=4.54s  ref=2.21s  post-commit=15.47s  attempt=1
+2026-10-09T14:58:27Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane)
+2026-10-09T14:58:31Z MERGE-ATTEMPT  2.0.0_SA_COO~MP  rc=0  secs=58.14  graded=0/2 fast-lane  args=(coo-mp-cp2-issue -m drain(NFRA_MCPORTAL A4 + x-4 ruling, 2.0.0_SA_COO~MP): Z-S24 disarm into box/sitez)  first=(none)
+2026-10-09T14:58:30Z PASS  2.0.0_SA_COO~MI  1  (all paths in-lane)
+2026-10-09T14:58:42Z PASS  2.0.0_SA_COO~MI  1  (all paths in-lane)
+2026-10-09T14:58:54Z LANDED-2P  0.7.0_AE_CloudOps~Z  c8625c3735  paths=1  validate=65.05s  wait=0.94s  hold=4.47s  build=2.41s  ref=1.84s  post-commit=11.60s  attempt=1
+2026-10-09T14:58:52Z PASS  0.9.0_WK_NFRA_OPLGTW~46  2  (all paths in-lane)
+2026-10-09T14:58:55Z PASS  0.9.0_WK_NFRA_OPLGTW~43  2  (all paths in-lane)
+2026-10-09T14:59:12Z LANDED-2P  2.0.0_SA_COO~MI  9c9a302120  paths=1  validate=47.79s  wait=0.82s  hold=4.28s  build=2.92s  ref=1.28s  post-commit=13.27s  attempt=1
+2026-10-09T14:59:30Z PASS  0.9.0_WK_NFRA_OPLGTW~43  2  (all paths in-lane)
+2026-10-09T14:59:59Z PASS  0.7.0_AE_CloudOps~CA  1  (all paths in-lane)
+2026-10-09T15:00:13Z PASS  0.7.0_AE_CloudOps~CA  1  (all paths in-lane)
+2026-10-09T15:00:49Z PASS  0.9.0_WK_NFRA_OPLGTW~46  2  (all paths in-lane)
+2026-10-09T15:01:12Z LANDED-2P  0.7.0_AE_CloudOps~CA  2c84d9521a  paths=1  validate=103.17s  wait=1.32s  hold=5.15s  build=3.64s  ref=0.85s  post-commit=17.30s  attempt=1
+2026-10-09T15:02:19Z PASS  2.0.0_SA_COO~ZI  2  (all paths in-lane)
+2026-10-09T15:03:03Z PASS  2.0.0_SA_COO~ZI  2  (all paths in-lane)
+2026-10-09T15:03:18Z LOCK-WAIT  2.0.0_SA_COO~ZI  1s
+2026-10-09T15:03:26Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=0  secs=38.83  graded=0/31 fast-lane  args=(wk-NFRA_OPLGTW-32-43 -m drain(NFRA_OPLGTW.TO-OG-rl-15, 2.0.0_SA_COO~O): merge worker ~43 @b2c9021bd0 -- r29 Phase C/D: served read through installed code, Alyssa 13-month grant (rev 3->4, 274 dates), release drained back (A8); AC1 11/11, AC2, AC3 PASS; status complete; row Z-W43-S7)  first=(none)
+2026-10-09T15:03:24Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T15:03:41Z LANDED-2P  2.0.0_SA_COO~ZI  9debf1fafd  paths=2  validate=120.68s  wait=3.28s  hold=6.50s  build=3.25s  ref=1.62s  post-commit=15.54s  attempt=1
+2026-10-09T15:03:42Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T15:03:46Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T15:04:11Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T15:04:21Z LANDED-2P  0.0.0_AB_MSTR~Z  375e0bd1a2  paths=1  validate=70.47s  wait=1.34s  hold=8.01s  build=4.78s  ref=3.07s  post-commit=16.37s  attempt=1
+2026-10-09T15:04:55Z LANDED-2P  2.0.0_SA_COO~AI  68ab46b72e  paths=1  validate=75.15s  wait=1.86s  hold=9.65s  build=5.69s  ref=3.70s  post-commit=17.97s  attempt=1
