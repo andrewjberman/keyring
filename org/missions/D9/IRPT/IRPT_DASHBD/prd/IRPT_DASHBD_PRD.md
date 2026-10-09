@@ -494,7 +494,8 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
 - **New outcome FWD-11 (in ENDPOINT):** Inflection and Cottonwood get what 49 Financial gets, each through its own adapter (C-ADAPTERS
   already names all three).
 - **Tie-out source per firm (CVO L4-R msg 2330):** each firm ties out against its own reported source, named by the first cell's read.
-  Cottonwood's reported returns are Commonwealth's, not Black Diamond's, because cot is not bd (rule 13).
+  Cottonwood's registered master IS Black Diamond (z09), so a BD tie-out would be circular. Commonwealth is the unregistered
+  candidate, and the first cell's read names it (CVO note, msg 2350; review @abf4a55e14).
 - **The 49 Financial activity-and-lot release (R35, both halves GIVEN) proceeds as signed.** FWD-11 does not hold it.
 - **Each firm's gold release is its own never-widen pair.** A firm's bucket, prefixes and role are separate, and they never share a write set
   with another firm. Addresses come from `address()` output per firm (C-NAMES).

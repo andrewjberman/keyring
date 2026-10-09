@@ -436,3 +436,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "world_is": "Step 4 as written is not satisfiable: the body it specifies is complete except for an attachment the ticket type requires unconditionally, and the required input_id is a portfolio_<64 hex> id that only a completed analysis-input-upload produces. So leg M's positive arm has an unnamed dependency on that upload flow. Step 6's expected 400 IS returned, but by the attachment check rather than the firm clamp, so the arm does not currently test the thing it exists to test; its status assertion is satisfiable without the clamp working at all. Steps 3, 5 and 7 are genuinely satisfied and are recorded as PASS. Nothing is asked of this seat beyond the record and the ask: the remedy is the issuer's -- either supply a real {upload_id, input_id} for step 4 (which makes step 6 reach the clamp too), or re-cut step 6 to assert the firm-refusal REASON rather than the status alone. No ticket was created, so there is no test ticket to close under step 8 and none is claimed."
 }
 ```
+
+## TCKT_VNEXT-D2-S11 -- L9 TO-APPLY-F10 AC2 MET
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S11",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T03:47:27Z",
+  "one_line": "L9 TO-APPLY-F10 AC2 MET. Leg D read live by this seat: opal-ticket-api CodeSha256 RFRuryx.., LastModified 2026-10-09T01:01:08Z, Successful, COMMENTARY_ALLOWED_FIRMS '49financial,cottonwood,inflection', POST /api/scoped/tickets/{ticketId}/package live with CUSTOM auth (117 routes, every page read). Leg M: step 4 201 created_by svc-commentary; step 6 400 whose message names the firm, so the clamp at :1072 was reached (D2-S10's false-pass shape is closed by AMENDMENT 2); steps 3, 5a, 5b, 7 as the pair predicts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/tckt_f10/F10-M_arms_result.json @5c513af524",
+      "org/critical_paths/change_management/20261009T0056Z_tckt-vnext-f10-d1-mint-20261009_deploy_completion.md (CLOSED 4/4)",
+      "aws lambda get-function-configuration / apigatewayv2 get-routes, this seat ~03:3xZ",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_F10_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-F10 AC2: steps 5 and 6 (deployed bytes and env), and leg M's positive arm plus its negative arms.",
+  "world_is": "Met as written. Weighed: (a) the positive arm used a synthetic attachment, so it proves the write path and claims, not real report ids (H6 / TV-r-1 carry that); (b) test ticket TCK-20261009-a1052909 stays open on Andrew's word (35fabf20c8); (c) the dell1 reach is D2-S9, the CTO's. None changes the grade."
+}
+```

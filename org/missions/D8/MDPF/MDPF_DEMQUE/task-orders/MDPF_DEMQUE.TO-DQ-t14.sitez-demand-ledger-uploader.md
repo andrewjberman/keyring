@@ -1,7 +1,7 @@
 # TO MDPF_DEMQUE.TO-DQ-t14 -- round 4 DQ-t-14: site Z's recorded Bloomberg draws land as cell rows on the builder ledger home
 <to_id>MDPF_DEMQUE.TO-DQ-t14</to_id>
 <project>MDPF_DEMQUE</project>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~ZQ</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>pending</status>
@@ -10,6 +10,7 @@
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>4</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~03:5xZ:** issued_to `0.7.0_AE_CloudOps~Z` -> `0.7.0_AE_CloudOps~ZQ`, the per-project site-Z lane (site Z CTO msg 32331; Andrew-direct ~03:5xZ relayed msg 1589: only site-bound acts go to site Z, on per-project lanes). The uploader is site-bound: it reads site Z's `bbg_budget` files. Clears gate2's one-project-per-seat finding on `~Z`.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-14` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 4) |
 **outcome_ref:** FWD-2, FWD-3 | **depends_on:** none
 
@@ -19,7 +20,7 @@
 
 ### THE CELL
 
-`DQ-t-14` (site Z ruling 1.0.0_SA_CTO~Z msg 32309; dell1 CTO msg 1536 item 6). You are `0.7.0_AE_CloudOps~Z`, a site-Z seat.
+`DQ-t-14` (site Z ruling 1.0.0_SA_CTO~Z msg 32309; dell1 CTO msg 1536 item 6). You are `0.7.0_AE_CloudOps~ZQ`, the site-Z Codex lane seated for MDPF_DEMQUE.
 Site Z already records every Bloomberg draw: `data/etfs/scripts/rivalfunds/bbg_budget.py` `record()` (:73-76) appends to
 `%LOCALAPPDATA%\opal_bbg_budget\bbg_budget_<UTC day>.jsonl` lines `{"at","mode","rows","batch_id"}`, called by `etf_daily_pull.py`,
 `model_block_pull.py` (CORPUS induction), `collector_bloomberg.py` and `enrichment_bloomberg.py`. **Edit no producer.**
@@ -79,7 +80,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: DQ4-t14-AC1, DQ4-t14-AC2. Instance at `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.7.0_AE_CloudOps~Z/MDPF_DEMQUE.TO-DQ-t14.sitez-demand-ledger-uploader.proof_of_spec.json`,
+Criterion ids: DQ4-t14-AC1, DQ4-t14-AC2. Instance at `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.7.0_AE_CloudOps~ZQ/MDPF_DEMQUE.TO-DQ-t14.sitez-demand-ledger-uploader.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> DQ4-t14-AC1,DQ4-t14-AC2` BEFORE the flip.
 </proof_of_spec>
 

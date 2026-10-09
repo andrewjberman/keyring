@@ -86,6 +86,19 @@ Your nested base is the local round-2 DEV (`nfra-opalai-r2-dev`, `0a5c7c2`). Bui
 5. You MAY add a case to `opal_ai/opal/agent/hooks/test_concierge_gate.sh` for the `$HOME/.local/bin` lookup. Change no
    other file.
 
+**ISSUER AMENDMENT 2 (2.0.0_SA_COO~AI, 2026-10-09 ~03:4xZ, row Z-S63): AC4 re-opens this order -- the Analyst gets a
+first prompt.** Launched on PROD `de5ce25fa3`, the Analyst window idles at its input prompt: `launcher.ps1` starts
+`claude.exe` with `--add-dir <refs>` only, so `prompt.md`'s "On launch" steps (identity gate, Teams engine arm) never run
+until someone types. AC1-AC3 stand as graded; you build and prove AC4 only.
+1. **Your nested base is `de5ce25fa3`** (opal_ai origin PROD = DEV), not `0a5c7c2`. Bound 1's commit form applies, on a
+   branch off `de5ce25fa3`.
+2. **The change, one line:** the `$analystCmd = ...` assignment in `opal/runtime/launcher.ps1` gains a trailing first
+   prompt, appended after the `--add-dir` argument as ` + ' ' + $q + '<prompt>' + $q`. The prompt is ONE sentence that
+   names the "On launch" steps of `prompt.md` (for example `Run your On launch steps from prompt.md, then serve Teams.`).
+   It carries no double quote and no single quote, because the whole command rides inside `-Command "..."`.
+3. Change nothing else. The ARGLEN guard and both `[System.Diagnostics.Process]::Start` launches stay. Never run the
+   launcher, never start claude.exe, never touch `C:\opal_runtime`.
+
 ## 2. BOUNDS
 
 1. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `0a5c7c2`. Commit with
@@ -119,6 +132,7 @@ unchanged). Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigati
   <criterion id="AC1" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC1.sh; echo "exit=$?"</invocation><expect>Start-Process -Credential=0; Process.Start>=2; temp-file=0; stdout-pipe>=1; --add-dir>=1; agent\refs>=1; OPAL_RUNTIME_CONFIG>=1; REFUSE ELEVATED>=1; .EnvironmentVariables=0; drive-letter literals=0; parse errors=0; behaviour 'LAUNCHER: REFUSE ELEVATED' rc=6 when elevated=True, else 'ERROR: config not found' rc=2; other files changed vs 0a5c7c2=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC2.sh; echo "exit=$?"</invocation><expect>arm1 HOME jq -> deny lines=0; arm2 no jq -> 'jq not found' lines>=1; arm3 PLAN: JQ lines=1 naming jq_exe=1; arm4 PLAN: JQ lines=0, PLAN lines=10 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC3.sh; echo "exit=$?"</invocation><expect>arm1 refs Write G1-deny=1; arm2 refs Edit G1-deny=1; arm3 state_dir Write deny=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="OA-f-9"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f9.AC4.sh; echo "exit=$?"</invocation><expect>BUILT: prompt=on-launch dq=0; parse errors=0; ARGLEN guard=1; Process.Start=2; other files changed vs de5ce25fa3=0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -168,9 +182,23 @@ Dry-run at base (main tree, `OA_F9_REF=0a5c7c2`):
 - f9.AC2 base: FAIL as expected (`arm1 HOME jq -> deny lines=1`; arm2 deny 1; `PLAN: JQ lines=0`; arm4 PLAN lines=10).
 - f9.AC3 base: PASS as expected (control: refs Write and Edit G1-denied, state_dir Write allowed).
 
-<status>complete</status>
+**AMENDMENT 2 RECORD (issuer):** row Z-S63 (ARMED, this seat) found on the item-0 close run's refusal arm, which Andrew
+ran ~03:1xZ (record @d54838c763): the Analyst launched cleanly on PROD `de5ce25fa3` and then served nothing. Andrew's
+Teams message at 03:14:32Z got no reply. Interim disarm: the operator types one first turn. This is the durable fix. A
+re-cut into round 2's one issuance modifies an order and adds no file (`.tools/to-pipeline-gate.py`, the one-issuance
+limb), so the change rides OA-f-9, which owns `launcher.ps1`. Gate on this modification: LIMB 6 does not fire; GATE (viii)
+grades it (`<placeholders>NONE`). Respawn slot `~24`, worker-light, nested `opal_ai=de5ce25fa3`, sparse cone `.tools`,
+`lib`, `org/modules`, `org/ref`, `org/standards`, `org/surprise_channel`, `org/projects`, `org/devices`, `org/missions`,
+`infra/logic` (row Z-W26-S1). Release: the nested commit reaches opal_ai DEV and PROD only by `0.0.0_AB_MSTR~Z`'s push on
+Andrew's word; until then Z-S63's interim disarm stands.
+
+Dry-run at base (`OA_F9A2_REF=de5ce25fa3`): f9.AC4 FAIL as expected (`BUILT: no-prompt`; parse 0, ARGLEN 1,
+Process.Start 2, other files 0 -- the controls hold). Scratch nested branch, deleted after: GREEN PASS with a prompt naming
+On launch (`BUILT: prompt=on-launch dq=0`); RED FAIL when the prompt does not name it (`BUILT: prompt=other`).
+
+<status>pending</status>
 <direct_act>true</direct_act>
 <slot>~24</slot>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
-<worker_class>worker</worker_class>
+<worker_class>worker-light</worker_class>
