@@ -1,0 +1,332 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "AMGT_CORPUS",
+ "round": 43,
+ "written_by": "2.0.0_SA_COO~C1",
+ "written_utc": "2026-10-09T20:17Z",
+ "decomposition_ref": "org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md@40a3c4f56d",
+ "denominators": {"fwd_in_prd_header": 22, "cells_in_decomposition": 116, "task_orders": 116, "task_orders_terminal_with_valid_proof": 2},
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- for every file the library's own folder list resolves to, the stored object is re-opened and matches the file on the synced drive byte for byte, and the count of objects equals the count of files scanned, both printed",
+   "cells": [
+    {"cell_id": "CRPS-c-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-1.report-bytes-as-filed", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-1.report-bytes-as-filed.proof_of_spec.json@49082f918c"}]},
+    {"cell_id": "CRPS-c-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction.proof_of_spec.json@563510dc16"}]},
+    {"cell_id": "CRPS-g-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence.proof_of_spec.json@9d5a93e53b"}]},
+    {"cell_id": "CRPS-i-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7.proof_of_spec.json@68cc1b6356"}]},
+    {"cell_id": "CRPS-o-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13.proof_of_spec.json@d1c92f63c1"}]}
+   ],
+   "claim": "COVERED",
+   "note": "REPORT-LEVEL NOTE (the schema has no top-level note field, so it rides the first row). (1) proof-of-spec-check was run on ALL 116 orders (python .tools/proof-of-spec-check.py <instance> --governing-order <order>, checker vintage e7c10e5b4b, 2026-10-09 ~20:0xZ): 2 VALID (TO-READ-R40-ap10b-lv, TO-REPIN-R40-ap10u-lr, both cell CRPS-ap-10), 114 INVALID. Every one of the 114 carries the alignment violation 'cell_ref ... does NOT exist in .../AMGT_CORPUS_DECOMP.md': the checker reads the decomposition at HEAD, which is v43.0 and declares only CRPS-as-1, CRPS-ap-10 and CRPS-as-2. Four (CRPS-i-1..i-4) also carry 'decomp_ref.vintage_commit 4051cbb215 does NOT resolve to a commit in this repo'. A separate read (git show <instance decomp_ref.vintage_commit>:<decomp_doc>) finds the order's cell in the decomposition at the instance's own vintage for 110 of 116; the 6 that do not are CRPS-e-2, CRPS-y-2 (cell absent at that vintage) and CRPS-i-1..i-4 (vintage unresolvable). So the COVERED claims below rest on terminal (last status complete) orders with proof instances that the checker reads INVALID at HEAD; that is stated, not hidden. (2) Cell-to-FWD mapping source: decomposition rows (current and kept round copies) whose first column or only cell id is the cell and which name a FWD, plus FWD ids in the order's WORKER FACE. 42 orders (41 distinct cells) name no FWD in either source and are not placed in any row: CRPS-aa-1, CRPS-aa-3, CRPS-ab-1, CRPS-ab-2, CRPS-ab-3, CRPS-ab-5, CRPS-ac-1, CRPS-ak-2, CRPS-ak-3, CRPS-al-1, CRPS-al-3, CRPS-am-1, CRPS-am-4, CRPS-an-1, CRPS-an-4, CRPS-ao-1, CRPS-ap-10, CRPS-ap-6, CRPS-ap-7, CRPS-aq-1, CRPS-aq-2, CRPS-aq-3, CRPS-aq-4, CRPS-ar-1, CRPS-i-4, CRPS-l-4, CRPS-s-1, CRPS-t-1, CRPS-t-2, CRPS-t-3, CRPS-u-1, CRPS-u-2, CRPS-v-1, CRPS-w-3, CRPS-x-2, CRPS-y-1, CRPS-y-2, CRPS-y-3, CRPS-z-1, CRPS-z-2, CRPS-z-4. Every FWD in the header has at least one mapped cell. (3) Round 43: CRPS-as-1 (the served /9 read) and CRPS-as-2 (this report) are issuer acts with no task order, so they cannot be cells in this schema (a cell needs >=1 task order); the decomposition names no FWD for as-1. Its evidence: org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r43_as1_served_read_20261009.txt@f15159c5ed (committed @f15159c5ed) reads 'as1 served 3/3' on opal-amgt-scoped-api LastModified 2026-10-09T19:51:25Z (BABA_US_Equity, SHOP_CN_Equity, 8766_JP_Equity MATCH). (4) done_when_text is the DONE WHEN clause of the PRD ENDPOINT fence (prd/AMGT_CORPUS_PRD.md@a0db38c8ae) with line wraps joined by single spaces; later AMENDED/ADDENDUM/CORRECTION blocks are not copied into it and are named in the row note where they exist. ROW: 5 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 5 INVALID (HEAD-decomposition alignment limb). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a query by security key returns that name's reports in period order; and the run prints, as a denominator, how many files resolved, how many did not, and the reason for each that did not",
+   "cells": [
+    {"cell_id": "CRPS-c-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-3.typed-per-report-record-and-period", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-3.typed-per-report-record-and-period.proof_of_spec.json@3522f1dacd"}]}
+   ],
+   "claim": "COVERED",
+   "note": "1 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 1 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- the folder list is read fresh from the library (never a transcribed list), each folder is resolved through the identity layer to a security key, and the output carries three counts that sum to the folder count: resolved, unresolved-with-reason, and ambiguous-with-candidates",
+   "cells": [
+    {"cell_id": "CRPS-c-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-4.backlog-folder-census-and-resolution", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-4.backlog-folder-census-and-resolution.proof_of_spec.json@b5b2c17763"}]}
+   ],
+   "claim": "COVERED",
+   "note": "1 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 1 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- for one backlog name the universe carries UNRESOLVED, a single act produces the induction request: it PRINTS what the induction WILL add before anything is added, REFUSES a name whose identity is ambiguous, and is driven end to end with a REFUSING TRANSPORT and the poison POSITIVE-CONTROLLED, so the run COULD NOT have reached the network rather than merely having not",
+   "cells": [
+    {"cell_id": "CRPS-c-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-5.induction-request-no-vendor-call", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-c-5.induction-request-no-vendor-call.proof_of_spec.json@6daefc4fcb"}]},
+    {"cell_id": "CRPS-p-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-2.fwd4-planted-drive", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-p-2.fwd4-planted-drive.proof_of_spec.json@bf0860c49e"}]},
+    {"cell_id": "CRPS-r-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run.proof_of_spec.json@dba1e7f6bb"}]}
+   ],
+   "claim": "COVERED",
+   "note": "3 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 3 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- for one covered name, the continuation artifact is produced and every field in it resolves to a passage in a named report; a field the reports do not state is ABSENT, never inferred and never defaulted",
+   "cells": [
+    {"cell_id": "CRPS-c-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction.proof_of_spec.json@563510dc16"}]},
+    {"cell_id": "CRPS-c-6", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-6.per-name-continuation-artifact", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-6.per-name-continuation-artifact.proof_of_spec.json@1930a67cff"}]}
+   ],
+   "claim": "COVERED",
+   "note": "2 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 2 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- the template for one business type is produced from the corpus and prints the denominator it was measured over (how many of that type's reports, of how many total) and the per-term counts behind each KPI it lists",
+   "cells": [
+    {"cell_id": "CRPS-c-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction.proof_of_spec.json@563510dc16"}]},
+    {"cell_id": "CRPS-c-7", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-7.sector-template-per-business-type", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-c-7.sector-template-per-business-type.proof_of_spec.json@90822a6566"}]},
+    {"cell_id": "CRPS-c-8", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-8.fund-form-per-fund", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-c-8.fund-form-per-fund.proof_of_spec.json@2aee6125fb"}]},
+    {"cell_id": "CRPS-e-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-e-3.sector-template-write-once", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-e-3.sector-template-write-once.proof_of_spec.json@317db60775"}]}
+   ],
+   "claim": "COVERED",
+   "note": "4 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 4 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- the typecast artifact lists the shared mnemonic core, the extended ratio set and the Opal Case Assumptions block, each with the count of workbooks carrying it out of the workbooks read",
+   "cells": [
+    {"cell_id": "CRPS-c-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-2.per-report-extraction.proof_of_spec.json@563510dc16"}]},
+    {"cell_id": "CRPS-c-9", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-9.generic-model-typecast", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-c-9.generic-model-typecast.proof_of_spec.json@0f7cb16163"}]}
+   ],
+   "claim": "COVERED",
+   "note": "2 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 2 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- one call by security key returns the prior reports, the continuation artifact, the sector template and the typecast, each with a content hash; a second call after a new report lands returns a changed hash for exactly the artifact that changed and unchanged hashes for the rest",
+   "cells": [
+    {"cell_id": "CRPS-c-10", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-10.one-call-substrate-read", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-c-10.one-call-substrate-read.proof_of_spec.json@135008066e"}]},
+    {"cell_id": "CRPS-d-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch.proof_of_spec.json@c9a219f98c"}]}
+   ],
+   "claim": "COVERED",
+   "note": "2 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 2 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a deliberate negative control runs the ingestion against a read-only copy of the library and completes; and a census of the project's own code prints zero write, move, delete or open-for-write calls against any path under the library root, with the denominator of files scanned",
+   "cells": [
+    {"cell_id": "CRPS-c-11", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-c-11.read-only-proof", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/AMGT_CORPUS.TO-CRPS-c-11.read-only-proof.proof_of_spec.json@4c50cbc076"}]},
+    {"cell_id": "CRPS-d-6", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-6.scanner-exempting-branch-control", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-d-6.scanner-exempting-branch-control.proof_of_spec.json@be7738ddc3"}]},
+    {"cell_id": "CRPS-g-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence.proof_of_spec.json@9d5a93e53b"}]},
+    {"cell_id": "CRPS-h-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-3.readonly-census-third-state", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-h-3.readonly-census-third-state.proof_of_spec.json@02ae5ab468"}]},
+    {"cell_id": "CRPS-i-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7.proof_of_spec.json@68cc1b6356"}]},
+    {"cell_id": "CRPS-j-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-j-2.fwd9-five-sites-resolved", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-j-2.fwd9-five-sites-resolved.proof_of_spec.json@f5bca56cc6"}]},
+    {"cell_id": "CRPS-o-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13.proof_of_spec.json@d1c92f63c1"}]},
+    {"cell_id": "CRPS-p-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-1.fwd9-inside-its-bound", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-p-1.fwd9-inside-its-bound.proof_of_spec.json@5c2951a388"}]}
+   ],
+   "claim": "COVERED",
+   "note": "8 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 8 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- IMB_LN_Equity renders the pack's pillars as bold lead plus paragraph, each openable to the report and the passage it came from, and each marked as the team's rather than generated",
+   "cells": [
+    {"cell_id": "CRPS-ap-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ap-2.pillar-opens-to-its-passage", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-ap-2.pillar-opens-to-its-passage.proof_of_spec.json@df6740cffc"}]},
+    {"cell_id": "CRPS-d-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-1.extraction-method-2-inline-leads", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-1.extraction-method-2-inline-leads.proof_of_spec.json@70defe1169"}]},
+    {"cell_id": "CRPS-d-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch.proof_of_spec.json@c9a219f98c"}]},
+    {"cell_id": "CRPS-d-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-3.composed-dossier", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-3.composed-dossier.proof_of_spec.json@bdfbd7ff6b"}]},
+    {"cell_id": "CRPS-g-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence.proof_of_spec.json@9d5a93e53b"}]},
+    {"cell_id": "CRPS-h-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-5.pillar-and-kpi-terms", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-h-5.pillar-and-kpi-terms.proof_of_spec.json@3f328d0ee0"}]},
+    {"cell_id": "CRPS-i-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7.proof_of_spec.json@68cc1b6356"}]},
+    {"cell_id": "CRPS-o-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13.proof_of_spec.json@d1c92f63c1"}]},
+    {"cell_id": "CRPS-p-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six.proof_of_spec.json@ae9748bf1f"}]},
+    {"cell_id": "CRPS-p-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-5.mlfp-pillar-body", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-p-5.mlfp-pillar-body.proof_of_spec.json@a53f4c4bfc"}]},
+    {"cell_id": "CRPS-v-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917"}]}
+   ],
+   "claim": "COVERED",
+   "note": "11 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 11 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit. PRD carries an ADDENDUM and a CORRECTION under this card (render half held open on AMGT_RESAPP FWD-21/FWD-23)."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- the passage renders labelled as the team's, BESIDE the filing roster, with the roster unchanged; and a name whose pack carries none reads ABSENT with its reason",
+   "cells": [
+    {"cell_id": "CRPS-d-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-3.composed-dossier", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-3.composed-dossier.proof_of_spec.json@bdfbd7ff6b"}]},
+    {"cell_id": "CRPS-p-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six.proof_of_spec.json@ae9748bf1f"}]},
+    {"cell_id": "CRPS-v-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917"}]}
+   ],
+   "claim": "COVERED",
+   "note": "3 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 3 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit. PRD carries an ADDENDUM: the render half has no home on AMGT_RESAPP's endpoint; outcome stays open on it."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- rows come from the typecast and the template for that business type; every row carries a figure or reads ABSENT with a reason; the team's Upside/Base/Downside cases render as the team's, cited, in the slot that is ABSENT today",
+   "cells": [
+    {"cell_id": "CRPS-ad-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape.proof_of_spec.json@cd34223691"}]},
+    {"cell_id": "CRPS-ad-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape.proof_of_spec.json@9c4cae1ff3"}]},
+    {"cell_id": "CRPS-ae-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ae-1.sheet-reads-like-the-analysts", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ae-1.sheet-reads-like-the-analysts.proof_of_spec.json@7c49295ebe"}]},
+    {"cell_id": "CRPS-d-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-3.composed-dossier", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-3.composed-dossier.proof_of_spec.json@bdfbd7ff6b"}]},
+    {"cell_id": "CRPS-e-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-e-2.model-block-22-mnemonics", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-e-2.model-block-22-mnemonics.proof_of_spec.json@317db60775"}]},
+    {"cell_id": "CRPS-f-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-f-2.hist-request-chunks", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-f-2.hist-request-chunks.proof_of_spec.json@0a5d0c3695"}]},
+    {"cell_id": "CRPS-g-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-1.model-cases-guard", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-g-1.model-cases-guard.proof_of_spec.json@5ded240c56"}]},
+    {"cell_id": "CRPS-g-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-2.dossier-model-rows-from-block", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-g-2.dossier-model-rows-from-block.proof_of_spec.json@9162530ba0"}]},
+    {"cell_id": "CRPS-g-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence.proof_of_spec.json@9d5a93e53b"}]},
+    {"cell_id": "CRPS-h-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-2.case-ratio-census-and-workbook-side-by-side", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-h-2.case-ratio-census-and-workbook-side-by-side.proof_of_spec.json@bbd15e187e"}]},
+    {"cell_id": "CRPS-i-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-2.band-carries-its-calibration-claim", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-i-2.band-carries-its-calibration-claim.proof_of_spec.json@2ec454dad5"}]},
+    {"cell_id": "CRPS-i-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-3.workbook-base-case-selected-and-cited", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-i-3.workbook-base-case-selected-and-cited.proof_of_spec.json@03022f5a33"}]},
+    {"cell_id": "CRPS-j-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-j-1.case-body-under-heading", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-j-1.case-body-under-heading.proof_of_spec.json@8945d6b4cb"}]},
+    {"cell_id": "CRPS-j-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-j-3.derive-stamp-carries-rule-inputs", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-j-3.derive-stamp-carries-rule-inputs.proof_of_spec.json@6a176cc9c4"}]},
+    {"cell_id": "CRPS-j-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-j-4.read-dossier-prefers-current-method", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-j-4.read-dossier-prefers-current-method.proof_of_spec.json@5cf660114f"}]},
+    {"cell_id": "CRPS-k-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-k-1.case-table-by-case", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-k-1.case-table-by-case.proof_of_spec.json@3f0d4f1a92"}]},
+    {"cell_id": "CRPS-l-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-l-1.case-unit-carries-its-claim", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-l-1.case-unit-carries-its-claim.proof_of_spec.json@75dd5905ad"}]},
+    {"cell_id": "CRPS-l-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-l-2.team-vs-rule-base-census", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-l-2.team-vs-rule-base-census.proof_of_spec.json@ac670eb8bd"}]},
+    {"cell_id": "CRPS-l-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-l-3.six-unreadable-case-tables", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-l-3.six-unreadable-case-tables.proof_of_spec.json@b110086294"}]},
+    {"cell_id": "CRPS-m-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-m-1.currency-by-intersection", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-m-1.currency-by-intersection.proof_of_spec.json@450f922b65"}]},
+    {"cell_id": "CRPS-m-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-m-2.positional-read-of-blank-base-cells", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-m-2.positional-read-of-blank-base-cells.proof_of_spec.json@1cfd1e6737"}]},
+    {"cell_id": "CRPS-n-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-n-1.dossier-to-canonical-address", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-n-1.dossier-to-canonical-address.proof_of_spec.json@ce3192a363"}]},
+    {"cell_id": "CRPS-p-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six.proof_of_spec.json@ae9748bf1f"}]},
+    {"cell_id": "CRPS-v-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917"}]}
+   ],
+   "claim": "COVERED",
+   "note": "24 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 24 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Cell not confirmed in the decomposition at its instance vintage: CRPS-e-2, CRPS-i-2, CRPS-i-3. PRD carries two AMENDED blocks under this card (v0.7 ADDENDUM B, v0.9 ADDENDUM D) that re-state DONE WHEN; the text here is the original DONE WHEN clause."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a census over the dossier's fields prints zero fields that are neither cited nor reason-bearing, with the denominator of fields scanned; and a negative control shows a deliberately uncitable field rendering ABSENT rather than blank or inferred",
+   "cells": [
+    {"cell_id": "CRPS-d-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-3.composed-dossier", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-3.composed-dossier.proof_of_spec.json@bdfbd7ff6b"}]}
+   ],
+   "claim": "COVERED",
+   "note": "1 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 1 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- for a named folder the read returns a dossier or a reason; and the three counts (resolved / ambiguous / empty-or-workbook-only) SUM TO THE FOLDER COUNT every time",
+   "cells": [
+    {"cell_id": "CRPS-ap-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ap-1.fence14-line-four-counts", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ap-1.fence14-line-four-counts.proof_of_spec.json@df6740cffc"}]},
+    {"cell_id": "CRPS-d-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-4.coverage-census-93-of-93", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-4.coverage-census-93-of-93.proof_of_spec.json@b011df6c7f"}]},
+    {"cell_id": "CRPS-e-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-e-5.coverage-empty-shell-disposition", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-e-5.coverage-empty-shell-disposition.proof_of_spec.json@9cc0599acc"}]},
+    {"cell_id": "CRPS-h-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-4.coverage-fence14-triple", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-h-4.coverage-fence14-triple.proof_of_spec.json@01f9c49f93"}]}
+   ],
+   "claim": "COVERED",
+   "note": "4 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 4 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit. PRD carries an AMENDED block (v0.8 ADDENDUM C): FOUR counts (adds UNRESOLVED-WITH-REASON); the text here is the original DONE WHEN clause."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- both render cited on the header posture line and the Posture tab, and the machine verdict is byte-unchanged by their presence",
+   "cells": [
+    {"cell_id": "CRPS-ad-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape.proof_of_spec.json@9c4cae1ff3"}]},
+    {"cell_id": "CRPS-ap-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ap-3.header-dossier-line-cited", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-ap-3.header-dossier-line-cited.proof_of_spec.json@df6740cffc"}]},
+    {"cell_id": "CRPS-d-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-3.composed-dossier", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-3.composed-dossier.proof_of_spec.json@bdfbd7ff6b"}]},
+    {"cell_id": "CRPS-p-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six.proof_of_spec.json@ae9748bf1f"}]},
+    {"cell_id": "CRPS-v-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917"}]}
+   ],
+   "claim": "COVERED",
+   "note": "5 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 5 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit. PRD carries an ADDENDUM and a CORRECTION (render half borrowed from AMGT_RESAPP FWD-26, ungraded)."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a PDF-only name renders pillars, management and cases from the PDF pack; and the docx path is KEPT AS THE CONTROL and still recovers what it recovered before",
+   "cells": [
+    {"cell_id": "CRPS-d-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-1.extraction-method-2-inline-leads", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-1.extraction-method-2-inline-leads.proof_of_spec.json@70defe1169"}]},
+    {"cell_id": "CRPS-d-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch.proof_of_spec.json@c9a219f98c"}]},
+    {"cell_id": "CRPS-j-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-j-1.case-body-under-heading", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-j-1.case-body-under-heading.proof_of_spec.json@8945d6b4cb"}]},
+    {"cell_id": "CRPS-k-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-k-1.case-table-by-case", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-k-1.case-table-by-case.proof_of_spec.json@3f0d4f1a92"}]},
+    {"cell_id": "CRPS-p-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six.proof_of_spec.json@ae9748bf1f"}]},
+    {"cell_id": "CRPS-v-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917"}]},
+    {"cell_id": "CRPS-w-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-w-1.dossier-pack-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-w-1.dossier-pack-shape.proof_of_spec.json@0276f44fa6"}]},
+    {"cell_id": "CRPS-x-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-x-1.dossier-method-bump", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-x-1.dossier-method-bump.proof_of_spec.json@16a44c6403"}]}
+   ],
+   "claim": "COVERED",
+   "note": "8 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 8 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a new report lands, a new report_id16 appears BESIDE the old, the dossier's inputs_sha16 changes, the page serves the newer pillars, and the prior as_of object still reads; and a rebuild with UNCHANGED inputs writes NOTHING and says so",
+   "cells": [
+    {"cell_id": "CRPS-d-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-2.continuation-pdf-pillar-branch.proof_of_spec.json@c9a219f98c"}]},
+    {"cell_id": "CRPS-d-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-3.composed-dossier", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-3.composed-dossier.proof_of_spec.json@bdfbd7ff6b"}]},
+    {"cell_id": "CRPS-h-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-1.dossier-newest-is-last-write", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-h-1.dossier-newest-is-last-write.proof_of_spec.json@7adb677b72"}]},
+    {"cell_id": "CRPS-j-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-j-4.read-dossier-prefers-current-method", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-j-4.read-dossier-prefers-current-method.proof_of_spec.json@5cf660114f"}]},
+    {"cell_id": "CRPS-p-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-3.fwd17-scratch-drive", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-p-3.fwd17-scratch-drive.proof_of_spec.json@986c886b9a"}]}
+   ],
+   "claim": "COVERED",
+   "note": "5 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 5 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a pillar's terms are readable on the page and the feed filters to them for at least one name",
+   "cells": [
+    {"cell_id": "CRPS-ap-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms.proof_of_spec.json@df6740cffc"}]},
+    {"cell_id": "CRPS-h-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-5.pillar-and-kpi-terms", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-h-5.pillar-and-kpi-terms.proof_of_spec.json@3f328d0ee0"}]},
+    {"cell_id": "CRPS-i-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-1.continuation-readers-select-method-version", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-i-1.continuation-readers-select-method-version.proof_of_spec.json@88f3b321cd"}]},
+    {"cell_id": "CRPS-p-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-p-4.served-regrade-six.proof_of_spec.json@ae9748bf1f"}]},
+    {"cell_id": "CRPS-v-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-v-2.six-render-outcomes-census-and-walk.proof_of_spec.json@005a5c7917"}]}
+   ],
+   "claim": "COVERED",
+   "note": "5 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 5 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Cell not confirmed in the decomposition at its instance vintage: CRPS-i-1."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- a census prints, for all 93, dossier-served / resolved-but-no-prose / unresolved-with-reason, and THE THREE SUM TO 93; the 60 today-unresolved folders are inducted by a SCRIPTED producer and re-ingested; and the 11 that can never carry prose (10 workbook-only, 1 empty) are NAMED with their reason rather than dropped from the denominator",
+   "cells": [
+    {"cell_id": "CRPS-d-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-4.coverage-census-93-of-93", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-d-4.coverage-census-93-of-93.proof_of_spec.json@b011df6c7f"}]},
+    {"cell_id": "CRPS-d-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-d-5.scripted-induction-producer", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-d-5.scripted-induction-producer.proof_of_spec.json@7e1f39f327"}]},
+    {"cell_id": "CRPS-e-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-e-1.curated-evidence-induction", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-e-1.curated-evidence-induction.proof_of_spec.json@77782b0da1"}]},
+    {"cell_id": "CRPS-e-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-e-4.production-sequence-runner", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-e-4.production-sequence-runner.proof_of_spec.json@317db60775"}]},
+    {"cell_id": "CRPS-e-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-e-5.coverage-empty-shell-disposition", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-e-5.coverage-empty-shell-disposition.proof_of_spec.json@9cc0599acc"}]},
+    {"cell_id": "CRPS-f-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-f-1.crosswalk-denominator-disclosure", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-f-1.crosswalk-denominator-disclosure.proof_of_spec.json@0e967f3590"}]},
+    {"cell_id": "CRPS-f-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-f-3.duplicate-content-one-extract", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-f-3.duplicate-content-one-extract.proof_of_spec.json@81c72a78e2"}]},
+    {"cell_id": "CRPS-g-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-3.census-fence-names", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~3/AMGT_CORPUS.TO-CRPS-g-3.census-fence-names.proof_of_spec.json@bae7f689bc"}]},
+    {"cell_id": "CRPS-g-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-g-4.nineteen-outcome-evidence.proof_of_spec.json@9d5a93e53b"}]},
+    {"cell_id": "CRPS-h-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-h-4.coverage-fence14-triple", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-h-4.coverage-fence14-triple.proof_of_spec.json@01f9c49f93"}]},
+    {"cell_id": "CRPS-i-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-i-5.nineteen-outcome-evidence-round7.proof_of_spec.json@68cc1b6356"}]},
+    {"cell_id": "CRPS-o-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-o-1.nineteen-outcome-evidence-round13.proof_of_spec.json@d1c92f63c1"}]},
+    {"cell_id": "CRPS-r-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-r-1.schedule-induction-run.proof_of_spec.json@dba1e7f6bb"}]}
+   ],
+   "claim": "COVERED",
+   "note": "13 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 13 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit. PRD carries an ADDENDUM: every number in the fence is a reading, not a constant (folder count read fresh)."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- over every name with a model block, a census of the rendered rows prints shown / refused / absent / unmapped with the denominator, and unmapped reads 0 (the five hard-coded rows -- Revenue/Sh, FCF yield, FCF margin, RoTA, Earnings margin, modelSheet.ts null mnemonics -- read the fields the block already pulls); a zero-valued figure whose sign is otherwise measured is SHOWN, not refused (control: BA's DPS); analyst-judgment rows (case multiples, case assumptions, peer selection) show the SharePoint value, cited; and a row that still cannot show says why in words a PM reads, never \"ABSENT\", \"REFUSED --\" or \"not read\"",
+   "cells": [
+    {"cell_id": "CRPS-ad-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape.proof_of_spec.json@cd34223691"}]},
+    {"cell_id": "CRPS-ad-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-2.zero-value-sign-over-refusal", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-ad-2.zero-value-sign-over-refusal.proof_of_spec.json@8393e0c6a4"}]},
+    {"cell_id": "CRPS-ad-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape.proof_of_spec.json@9c4cae1ff3"}]},
+    {"cell_id": "CRPS-ae-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ae-1.sheet-reads-like-the-analysts", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ae-1.sheet-reads-like-the-analysts.proof_of_spec.json@7c49295ebe"}]},
+    {"cell_id": "CRPS-aj-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer.proof_of_spec.json@bb6e248f1f"}]},
+    {"cell_id": "CRPS-ak-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ak-1.unit-families-for-the-52", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ak-1.unit-families-for-the-52.proof_of_spec.json@9e4c1243e0"}]},
+    {"cell_id": "CRPS-al-2", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-al-2.model-sheet-v3-rows", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-al-2.model-sheet-v3-rows.proof_of_spec.json@82cd74a3a3"}]},
+    {"cell_id": "CRPS-am-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-am-3.model-sheet-gap-reasons-and-currency", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-am-3.model-sheet-gap-reasons-and-currency.proof_of_spec.json@fac3d576fe"}]},
+    {"cell_id": "CRPS-ao-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ao-3.model-page-currency-marks-words", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-ao-3.model-page-currency-marks-words.proof_of_spec.json@edf17b2069"}]},
+    {"cell_id": "CRPS-ap-5", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ap-5.zero-dominated-in-plain-words", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~4/AMGT_CORPUS.TO-CRPS-ap-5.zero-dominated-in-plain-words.proof_of_spec.json@df6740cffc"}]}
+   ],
+   "claim": "COVERED",
+   "note": "10 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 10 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- for a name whose block carries forecast years, the tab renders 2026E, 2027E and 2028E beside the history columns from the served object, and a name without them reads the reason; the history columns are byte-unchanged",
+   "cells": [
+    {"cell_id": "CRPS-ad-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape.proof_of_spec.json@cd34223691"}]},
+    {"cell_id": "CRPS-ad-3", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-3.model-face-in-the-teams-shape.proof_of_spec.json@9c4cae1ff3"}]},
+    {"cell_id": "CRPS-ae-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ae-1.sheet-reads-like-the-analysts", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ae-1.sheet-reads-like-the-analysts.proof_of_spec.json@7c49295ebe"}]},
+    {"cell_id": "CRPS-ao-4", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-ao-4.sheet-fits-fy3-at-1440", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-ao-4.sheet-fits-fy3-at-1440.proof_of_spec.json@b5a51795e2"}]}
+   ],
+   "claim": "COVERED",
+   "note": "4 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 4 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "DONE WHEN EXERCISED -- the scheduled pull's own trigger, fired on demand, re-pulls EVERY name with a block (not only names with none), and every block's as_of advances to the run's date with the denominator of names printed; the next scheduled fire is the acceptance",
+   "cells": [
+    {"cell_id": "CRPS-aj-1", "task_orders": [{"id": "AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer", "status": "complete", "proof_of_spec_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer.proof_of_spec.json@bb6e248f1f"}]}
+   ],
+   "claim": "COVERED",
+   "note": "1 serving order(s), all last status complete; proof-of-spec-check at HEAD reads 0 VALID / 1 INVALID (HEAD-decomposition alignment limb; see report-level note on FWD-1). Each cell is present in the decomposition at its instance's vintage_commit. PRD carries a WAIT: grading runs only after Andrew's standing word for the recurring vendor pull."
+  }
+ ]
+}
