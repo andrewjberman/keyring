@@ -56,3 +56,22 @@ project waits on Andrew.**
      writer is built for `price_store`'s keys in this cell, but it does NOT take over yet. The switch is ONE later window with its own
      never-widen pair: dell2 re-points and there is a same-window rollback, never two writers. DEMQUE then retires `price_store`'s write
      path in the round after.
+
+## ADDENDUM 2 (~14:1xZ) -- the NAME:: ruling: a canonical CLASSIFICATION key, never an IDENTITY key for history (round-3 item 3)
+
+**Input:** `2.0.0_SA_COO~H1` msg 2520. Census `deliverables/0.9.0_WK_MDPF_SECHIST~10/name_key_census.txt` @183e35580f: 5,673 of 11,361
+rows are `NAME::`. There are 3 writers, all MDPF_SECCLASS (old-list-reclassify 4,303, secclass-model 1,257, s11-rows 113), and 0 rows have
+no known writer. No hop carries a `NAME::` key to the pull label or to gold's join.
+
+**Ruled:**
+- `NAME::` is CANONICAL as a classification key. It is the classifier's fallback row, which the BD and COT name paths read (MDPF_SECCLASS
+  FWD-16, SC-e-76/79/84). It stays, and MDPF_SECCLASS owns it.
+- `NAME::` is NOT an identity under C-IDENTITY. It names a string, not a security. One name can stand for several listings, and no price
+  history can be pulled by a name. So it never becomes a pull label or a join key. The census shows none does today, and the FWD-6 build
+  keeps it that way.
+- **FWD-6's build cell, cut on this ruling:**
+  - every non-ticker key form the table holds (CUSIP:, ISIN:, FIGI and the like) resolves to ONE identity through the existing resolver,
+    or is listed UNRESOLVED with its reason;
+  - a holding whose ONLY key is `NAME::` is listed UNRESOLVED-FOR-HISTORY with the reason "name key only". It is never guessed into a
+    ticker;
+  - negative arm: a planted `NAME::`-only row is listed with that reason and is never pulled.
