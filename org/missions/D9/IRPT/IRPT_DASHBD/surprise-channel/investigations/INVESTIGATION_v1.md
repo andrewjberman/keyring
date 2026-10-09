@@ -3539,3 +3539,130 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W49-S1 -- The registry has no custody master or bindings for the Orion source, so the adapter's declaration carries no registry_key and the run takes it on the command line; the firm's own bucket holds only irpt/ while its Orion data sits in the routed legacy alias.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "The registry has no custody master or bindings for the Orion source, so the adapter's declaration carries no registry_key and the run takes it on the command line; the firm's own bucket holds only irpt/ while its Orion data sits in the routed legacy alias.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72: the adapter resolves its firm and addresses from the registry; the 49 Financial declaration carries a registry_key naming a custody MASTER row.",
+  "world_is": "MEASURED 2026-10-09 ~04:0xZ: lookup of the firm key returns class FIRM with bucket_provisioned true and bindings aua_source/model_source/fee_scope/delivery_cadence all null; no MASTER row exists for the Orion/Fidelity custody. A listing of the registry bucket shows one prefix (irpt/); the Orion silver (api_dims positions_mv, performance, transactions, eclipse) and gold are in the bucket the entry's alias list names (plane bucket, routed true, lookup false). So orion_sources.json has no registry_key field (the naming gate refuses a typed firm token), the script takes --registry-key, and the bucket is derived from the alias. NEEDED, NOT ADDED (registry is outside the grant): a scopes.json MASTER row for the Orion/Fidelity custody carrying the firm and vendor, so a declaration can name it as 49 Financial's does, and a decision on whether the reporting-gold home for this firm is the provisioned firm bucket (irpt/ only) or the routed alias.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json (firm entry: bucket_provisioned true, bindings null, aliases with routed bucket)",
+      "lib/opal_naming.py lookup of the firm key, and an S3 list of the registry bucket (prefix irpt/ only) and of the routed alias (silver/, gold/, bronze/)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/orion_sources.json (doc field)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S2 -- The reported source is NET of fees and the contract's total_return_daily is GROSS: the contract-literal tie-out is 24 of 562 account-windows within 0.35 pp, and the same inputs with the fee left inside the return are 421 of 562.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "The reported source is NET of fees and the contract's total_return_daily is GROSS: the contract-literal tie-out is 24 of 562 account-windows within 0.35 pp, and the same inputs with the fee left inside the return are 421 of 562.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72: our total_return_daily compounded over the source's window ties to its reported return at 0.35 pp, each firm against its own reported source (PRD v0.8 @3eb7dbcf36).",
+  "world_is": "MEASURED: silver api_dims performance at snapshot 2026-10-08 reports twr_calc_method TWR, twr_tax_method Before-Tax, twr_fee_method Net of Fees, twr_annualized Annualized, window Rolling 3-Year, for 562 of 927 accounts. The contract (account_return_daily, C-FEERAIL) is gross of advisory fees with fee_amount null. Gross basis: 24 of 562 within 0.35 pp; 400 misses are class FEE_BASIS_GROSS_VS_NET (the net recomputation is within tolerance). Net basis: 421 of 562 (median gap 0.11 pp over the 483 computable windows). The record carries both. NEEDED: a ruling on whether C-TIEOUT for this firm compares on the source's fee basis (the net recomputation) or on the contract's gross basis with the fee difference classed, as this cell did.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (within, net_basis, class_counts)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (fee_amount_reason FEE_RAIL_UNUSED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S3 -- Two flow classes depart from the firm's ratified cashflow taxonomy and were chosen by measurement: Internal Account Journal In/Out and Federal/State Tax Withheld enter F_t as boundary-crossing flows.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "Two flow classes depart from the firm's ratified cashflow taxonomy and were chosen by measurement: Internal Account Journal In/Out and Federal/State Tax Withheld enter F_t as boundary-crossing flows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml v2: the journal pair is INTERNAL (ratified, intra-account) and the tax-withheld types are RETURN (CTO Item 2).",
+  "world_is": "MEASURED on the 562-window sample, net-of-fee basis, 0.35 pp: contributions and distributions only, 285 within (calendar-day/365 annualisation); adding the journal pair, 339; adding Federal and State Tax Withheld as outflows, 413 (293, 348, 421 under the declared trading-day/252 one). A journal leaves one account and arrives in another, so at account grain it crosses the boundary (the 49 Financial producer's own inter-account rule); withholding is cash taken from a client's distribution. The taxonomy governs NNA and is unchanged; the departure lives only in orion_sources.json (inter_account_comment, tax_withheld_comment) and is reproducible from flow_set_probe in the record. NEEDED: the CTO's word on whether the return adapter may differ from the NNA taxonomy on these two classes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (flow_set_probe)",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (Internal Account Journal In/Out; Federal/State Tax Withheld)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S4 -- No Eclipse tax lot rows are landed anywhere the firm's S3 holds Eclipse data, so every sampled account is NO_LOTS; the lot rows that do exist are the firm's own FIFO lots derived from transactions and are not Eclipse tax lots.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "No Eclipse tax lot rows are landed anywhere the firm's S3 holds Eclipse data, so every sampled account is NO_LOTS; the lot rows that do exist are the firm's own FIFO lots derived from transactions and are not Eclipse tax lots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72 / ADDENDUM 4 E3: lots_status is POPULATED only where Eclipse tax lots are SHOWN populated for the account (rows read, with a count).",
+  "world_is": "MEASURED 2026-10-09: the four Eclipse tables silver lands for the 2026-10-08 snapshot (model_composition 9 rows, models 18, portfolios_full 863, portfolios_simple 846) carry no lot-shaped column (0 of 169 columns); the 13 bronze Eclipse objects for the snapshot carry no lot-shaped name. The Eclipse catalog lists GET /v1/holding/holdings/{id}/taxlots, but no pull of it is landed. Census: NO_LOTS for 562 of 562 sampled accounts. For context only, gold/lots (built by the firm's FIFO script from transactions) holds 46,415 rows for 489 of the 562 accounts; it is derived, not Eclipse, and promotes nothing. NEEDED to reach POPULATED: a landed Eclipse taxlot pull per holding; not built here (a vendor call and an S3 write are outside the grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (lots_evidence)",
+      "data/orion/api/ECLIPSE_API_V1_ENDPOINT_CATALOG.md line 345",
+      "data/inf/scripts/gold/INF_B_02.canonical_lots.py (docstring: FIFO from Orion TRN silver)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S5 -- The source reports a return for 562 of its 927 accounts, all over one Rolling 3-Year window starting 2023-10-09 and annualised with a year-count the vendor does not state; 79 of the 562 hold zero value for part of the window, so their link breaks.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "The source reports a return for 562 of its 927 accounts, all over one Rolling 3-Year window starting 2023-10-09 and annualised with a year-count the vendor does not state; 79 of the 562 hold zero value for part of the window, so their link breaks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72: the comparison source's own window and a reported return per sampled account.",
+  "world_is": "MEASURED: twr_value is null for 365 of 927 accounts at the snapshot (their window starts run from 2023-10-11 to 2026-10-07, every one after the common 2023-10-09 start); the 562 with a value all start 2023-10-09 and end 2026-10-08 (752 trading days). The vendor states Annualized but no day-count; three conventions were tried on the same sample (net-basis within 413, 414, 421; gross 24 each) and trading-day/252 is declared as a HELD reading chosen by fit. 79 of the 562 hold a position value of zero for part of the window (accounts liquidated or emptied), so their daily link breaks and they are classed LINK_BROKEN_NO_BASE rather than compared. The sample is therefore a 3-year annualised view of mature accounts, not a short-window one. NEEDED: whether a second, shorter reported window exists in an earlier landed performance partition (the partitions since 2026-04-28 were not read beyond the latest snapshot).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (sample, annualisation_probe, class_counts)",
+      "silver api_dims performance snapshot_date=2026-10-08 (927 rows, 562 with twr_value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
