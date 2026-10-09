@@ -47,6 +47,19 @@ Copy no client identifier beyond the account keys the tie-out already carries. *
 
 <expected_criteria>DB52-2-AC1</expected_criteria>
 
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~16:1xZ): client account data stays OUTSIDE the repo (1.0.0_SA_CTO~DELL2 ruling msg 3617)
+
+Evidence carrying account numbers or client figures is written OUTSIDE the repo. The repo carries counts, sha256 and reason codes only.
+- **Inputs.** `~74/SENSITIVITY.json` and `~73/UNEXPLAINED_CLASSIFIED.json` were removed from box/dell2 @d2eb7316f2. Read them from
+  `C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~74/SENSITIVITY.json` and `.../~73/UNEXPLAINED_CLASSIFIED.json`.
+- **Private record.** Write the per-segment record (accounts, dates) to
+  `C:/dev/_irpt_private_evidence_20261009/IRPT_DASHBD/0.9.0_WK_IRPT_DASHBD~81/BD_DATES_TWO_SIDED.json`.
+- **Repo record.** `BD_DATES_TWO_SIDED.json` holds only {bd_source, vendor_calls, by_verdict, n_segments, private_record: {path, sha256}}.
+- **No 10-digit account token** may be committed. DB52-2-AC1 is amended to read the private record by path and sha256, and to refuse a repo record
+  carrying such a token.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

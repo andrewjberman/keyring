@@ -274,9 +274,9 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
       "THE OWED MEASUREMENT (amendment 5 (b): 'print it, stop, and report it'). Excluded weight over holdings_performance_daily, all 558 partitions 2024-07-09..2026-09-28, the six round-1 candidate accounts, 1,147 rows of which 1,099 status OK: median 0.000000, p75 0.000000, p90 0.000000, p99 0.000029, max 0.004978, days at exactly zero 1,086 of 1,099. Reading A (3 active + thread = 4 accounts) n=881, p99 0.000000, max 0.004978. Reading B (all 5 roster entries + thread = 6) n=1,099, identical max. NO CEILING IS PROPOSED HERE: ruling 18 gives that choice to the issuer and a producer does not pick the bound it is graded against.",
       "LEVERAGE AND NEGATIVE VALUE ARE ONE CONDITION, NOT TWO, which matters because the domain lists them as separate members and a reader would expect separate populations: leveraged true 390, negative_value non-zero 390, BOTH 390, leveraged-only 0, negative-only 0, and the two boolean masks are identical element-for-element over all 1,147 rows. Mechanically unsurprising once seen -- a short position carries a negative market value and produces leverage -- but it means tightening or relaxing either member moves the same 390 days.",
       "THE DOMAIN'S BINDING CONSTRAINT, measured against the ceiling's: out of domain on leverage/negative value = 390 of 1,099 OK rows (35.5%); out of domain on excluded weight at a 0.005 ceiling = 0 rows; at a 0.001 ceiling = 11 rows. So the member the issuer was asked to set is the one that does almost nothing, and the member already fixed by the ruling is the one that decides a third of the sample.",
-      "PER ACCOUNT, status-OK rows and how many the leverage member bars: 0010783709 (THREAD, not a TaxSMA book) 558 OK / 0 barred / 0%; 0027265115 (ACTIVE) 134 / 119 / 89%; 0035940058 (PENDING_RESOLUTION) 127 / 119 / 94%; 0076459710 (ACTIVE) 57 / 37 / 65%; 0084073310 (ACTIVE) 132 / 37 / 28%; 0091939812 (PENDING_RESOLUTION) 91 / 78 / 86%. The split is exactly along product lines, which is what turns this from a data quirk into a design question.",
+      "PER ACCOUNT, status-OK rows and how many the leverage member bars: acct#08137b81 (THREAD, not a TaxSMA book) 558 OK / 0 barred / 0%; acct#89d0916a (ACTIVE) 134 / 119 / 89%; acct#f08ffd13 (PENDING_RESOLUTION) 127 / 119 / 94%; acct#6b914f88 (ACTIVE) 57 / 37 / 65%; acct#ffa615d2 (ACTIVE) 132 / 37 / 28%; acct#d0cf6c92 (PENDING_RESOLUTION) 91 / 78 / 86%. The split is exactly along product lines, which is what turns this from a data quirk into a design question.",
       "THE PRODUCT IS LEVERAGED BY DESIGN, from the roster's own field rather than inferred from the numbers: every one of the five entries in s3://opal-data-assets/blackdiamond/49f/_ops/taxsma_roster.json carries `strategy` = 'Opal Tax SMA 200/145'. A 200/145 extension strategy holds roughly 200% long against 145% short, so `leveraged` true and a non-zero `negative_value` are the strategy operating normally. The thread account, which is not a TaxSMA book, is barred on 0 of 558 days -- the negative control that separates 'this product' from 'this feed'.",
-      "A SEPARATE DISCREPANCY FOUND WHILE RESOLVING THE SAMPLE, recorded because it sets every round-1 denominator: ISSUER AMENDMENT 1 reads 'the five roster accounts (from ...taxsma_roster.json, field schwab_account, status active)'. The roster holds FIVE entries of which THREE are `status active`; the other two are `pending_resolution` (0035940058 'Bump', 0091939812 'Macy', neither resolved in dim_account_xref). 'Five roster accounts' and 'status active' cannot both select the same set. EMPIRICALLY RESOLVED IN FAVOUR OF ALL FIVE: the quarantined MEASURED_THRESHOLDS_R1 recorded reconciled_account_days 1098, and the status-OK holdings rows over all six accounts number 1,099 -- a one-row difference consistent with a first-day exclusion, while Reading A would have given 881. So the prior pass used all five plus the thread account. Stated rather than assumed, because the issuer owns the sample definition."
+      "A SEPARATE DISCREPANCY FOUND WHILE RESOLVING THE SAMPLE, recorded because it sets every round-1 denominator: ISSUER AMENDMENT 1 reads 'the five roster accounts (from ...taxsma_roster.json, field schwab_account, status active)'. The roster holds FIVE entries of which THREE are `status active`; the other two are `pending_resolution` (acct#f08ffd13 'Bump', acct#d0cf6c92 'Macy', neither resolved in dim_account_xref). 'Five roster accounts' and 'status active' cannot both select the same set. EMPIRICALLY RESOLVED IN FAVOUR OF ALL FIVE: the quarantined MEASURED_THRESHOLDS_R1 recorded reconciled_account_days 1098, and the status-OK holdings rows over all six accounts number 1,099 -- a one-row difference consistent with a first-day exclusion, while Reading A would have given 881. So the prior pass used all five plus the thread account. Stated rather than assumed, because the issuer owns the sample definition."
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -296,18 +296,18 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "fabric": "laptop",
   "surfaced_by": "0.4.0_DS_ClientPlatform~S",
   "surfaced_at": "2026-10-01T14:30:00Z",
-  "one_line": "THE TIE-OUT'S CONVENTION COMPARISON CANNOT SEE THE DAYS THAT WOULD DECIDE IT, AND ITS abs_diff IS DOMINATED BY DAYS OPAL WITHHELD RATHER THAN BY ARITHMETIC. Two findings from one measurement. (a) END, START and MIDPOINT differ ONLY where external_flow is non-zero. Over the five eligible (account, period) pairs there are 10 flow-bearing account-days, of which EXACTLY ONE survives into the eligible population (2026-03-25, account 0027265115, flow $448,559.28, LARGE_FLOW/GRADED_AGREED). On three of the five periods ZERO flow days survive, so all three conventions are arithmetically IDENTICAL there -- and START/MIDPOINT are identical to nine decimals on ALL FIVE. The mechanical winner is START by a median margin of 0.000218941, which is one day in one account. (b) The abs_diff itself is large (median 1.6754%, max 3.6572%) because Opal's geometric link EXCLUDES the withheld days while Black Diamond's return INCLUDES them: on 0076459710 Opal links 34 of 38 days to +9.1259% against BD's +12.7830% over its full 38, and the two withheld days include the $1,108,201.80 inception funding. The two figures cover different day sets, so their difference is not a measure of agreement.",
+  "one_line": "THE TIE-OUT'S CONVENTION COMPARISON CANNOT SEE THE DAYS THAT WOULD DECIDE IT, AND ITS abs_diff IS DOMINATED BY DAYS OPAL WITHHELD RATHER THAN BY ARITHMETIC. Two findings from one measurement. (a) END, START and MIDPOINT differ ONLY where external_flow is non-zero. Over the five eligible (account, period) pairs there are 10 flow-bearing account-days, of which EXACTLY ONE survives into the eligible population (2026-03-25, account acct#89d0916a, flow $448,559.28, LARGE_FLOW/GRADED_AGREED). On three of the five periods ZERO flow days survive, so all three conventions are arithmetically IDENTICAL there -- and START/MIDPOINT are identical to nine decimals on ALL FIVE. The mechanical winner is START by a median margin of 0.000218941, which is one day in one account. (b) The abs_diff itself is large (median 1.6754%, max 3.6572%) because Opal's geometric link EXCLUDES the withheld days while Black Diamond's return INCLUDES them: on acct#6b914f88 Opal links 34 of 38 days to +9.1259% against BD's +12.7830% over its full 38, and the two withheld days include the $1,108,201.80 inception funding. The two figures cover different day sets, so their difference is not a measure of agreement.",
   "class": "BLOCKING",
   "hazard_standing": "INERT",
   "disarm_owner": "1.0.0_SA_CTO",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "THE DISCRIMINATING POPULATION, counted per period from the served gold: 0027265115 2026-04-08..2026-06-30 -> 58 days, 0 flow-bearing, 0 eligible; 0027265115 2026-07-01..2026-08-28 -> 42 days, 1 flow-bearing, 0 eligible (2026-07-07, -$2,423.40, FLOW_UNRECONCILED / NOT_GRADED_OUTSIDE_DOMAIN, withheld); 0076459710 2026-07-08..2026-08-28 -> 38 days, 2 flow-bearing, 0 eligible (2026-07-08 +$1,108,201.80 NOT_MEASURABLE / GUARD_NOT_REACHED and 2026-08-10 -$2,200.86 FLOW_UNRECONCILED, both withheld); 0027265115 2026-03-16..2026-06-30 -> 73 days, 3 flow-bearing, 1 eligible; 0027265115 2026-03-16..2026-08-28 -> 115 days, 4 flow-bearing, 1 eligible. TOTAL: 10 flow-bearing account-days across the five periods, 1 eligible.",
+      "THE DISCRIMINATING POPULATION, counted per period from the served gold: acct#89d0916a 2026-04-08..2026-06-30 -> 58 days, 0 flow-bearing, 0 eligible; acct#89d0916a 2026-07-01..2026-08-28 -> 42 days, 1 flow-bearing, 0 eligible (2026-07-07, -$2,423.40, FLOW_UNRECONCILED / NOT_GRADED_OUTSIDE_DOMAIN, withheld); acct#6b914f88 2026-07-08..2026-08-28 -> 38 days, 2 flow-bearing, 0 eligible (2026-07-08 +$1,108,201.80 NOT_MEASURABLE / GUARD_NOT_REACHED and 2026-08-10 -$2,200.86 FLOW_UNRECONCILED, both withheld); acct#89d0916a 2026-03-16..2026-06-30 -> 73 days, 3 flow-bearing, 1 eligible; acct#89d0916a 2026-03-16..2026-08-28 -> 115 days, 4 flow-bearing, 1 eligible. TOTAL: 10 flow-bearing account-days across the five periods, 1 eligible.",
       "WHY THAT MAKES THE COMPARISON EMPTY, as arithmetic rather than as opinion: END is (V_t - F_t)/V_(t-1) - 1 and START is (V_t - V_(t-1) - F_t)/(V_(t-1) + F_t). Set F_t = 0 and both reduce to V_t/V_(t-1) - 1; MIDPOINT's denominator V_(t-1) + F_t/2 reduces the same way. So on a zero-flow day the three conventions are not merely close, they are the SAME NUMBER, and a comparison over a population of zero-flow days has nothing to rank.",
       "THE MEASURED CONSEQUENCE, from the run: per-convention median |opal - bd| is END 0.016972979, START 0.016754038, MIDPOINT 0.016754038 -- START and MIDPOINT equal to nine decimals, which can only happen if no day in the population has a non-zero flow except where they coincide. p90 is 0.028732093 for both and 0.029068539 for END; max is 0.036571503 for all three.",
-      "THE abs_diff IS A DAY-SET MISMATCH, not an arithmetic disagreement, and the gap counts show it: the 116-day period links 104 days with 11 gap days in 11 segments; the 58-day period links 54 of 58; the 42-day links 39 of 42; 0076459710 links 34 of 38. Black Diamond's daysHeld for the same periods are 116, 58, 42 and 38 -- it holds every day. So Opal's number answers 'what did the measurable days do' and BD's answers 'what did the account do', and the difference between them is mostly the days Opal declined to measure.",
-      "THE LARGEST SINGLE CASE IS THE CLEAREST: 0076459710 over 2026-07-08..2026-08-28, Opal +0.091258795 against BD +0.127830298, a 3.657 percentage-point difference. The account's inception funding of $1,108,201.80 lands on 2026-07-08 and that day is NOT_MEASURABLE (no prior value, GUARD_NOT_REACHED), so Opal's link begins after the money arrived while BD's covers the arrival. Nothing about that difference is evidence of a defect in either producer.",
+      "THE abs_diff IS A DAY-SET MISMATCH, not an arithmetic disagreement, and the gap counts show it: the 116-day period links 104 days with 11 gap days in 11 segments; the 58-day period links 54 of 58; the 42-day links 39 of 42; acct#6b914f88 links 34 of 38. Black Diamond's daysHeld for the same periods are 116, 58, 42 and 38 -- it holds every day. So Opal's number answers 'what did the measurable days do' and BD's answers 'what did the account do', and the difference between them is mostly the days Opal declined to measure.",
+      "THE LARGEST SINGLE CASE IS THE CLEAREST: acct#6b914f88 over 2026-07-08..2026-08-28, Opal +0.091258795 against BD +0.127830298, a 3.657 percentage-point difference. The account's inception funding of $1,108,201.80 lands on 2026-07-08 and that day is NOT_MEASURABLE (no prior value, GUARD_NOT_REACHED), so Opal's link begins after the money arrived while BD's covers the arrival. Nothing about that difference is evidence of a defect in either producer.",
       "THE CIRCULARITY, stated plainly because it is the part that will not fix itself: a convention differs only where there is a flow, and a flow large or unreconciled enough to matter is exactly what drives day_quality to LARGE_FLOW, FLOW_UNRECONCILED or NOT_MEASURABLE. The eligible population is therefore selected AGAINST the days that carry the signal. Amendment 3's 'ONE eligible population' rule is right -- it stops the earlier defect of scoring a guard-substituted series against raw candidates -- and it cannot manufacture discriminating days that the gold withholds."
     ]
   },
@@ -334,9 +334,9 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "THE FIVE PERIODS AS THE RECORD STATES THEM, START against MIDPOINT: 0027265115 2026-03-16..2026-06-30 -> -0.097580 vs -0.097872 (DIFFER); 0027265115 2026-03-16..2026-08-28 -> -0.058650 vs -0.058954 (DIFFER); 0027265115 2026-04-08..2026-06-30 -> -0.098772 vs -0.098772 (identical); 0027265115 2026-07-01..2026-08-28 -> +0.043139 vs +0.043139 (identical); 0076459710 2026-07-08..2026-08-28 -> +0.091259 vs +0.091259 (identical).",
-      "THE TWO THAT DIFFER ARE EXACTLY THE TWO THAT CONTAIN THE ONE ELIGIBLE FLOW DAY (2026-03-25, account 0027265115, flow $448,559.28). The three that are identical are the three S10 already names as having ZERO eligible flow days. So the pattern is not a coincidence that weakens S10 -- it is S10's own mechanism showing through at period grain.",
-      "THE MEDIANS, which is what I actually read: per_convention_summary medians are START 0.016754038 and MIDPOINT 0.016754038, equal; END 0.016972979. With five periods the median is the third-smallest difference, which falls on 0027265115 2026-07-01..2026-08-28 -- a period with no eligible flow day, where all three conventions are the same number by construction. The tie is therefore an artifact of WHICH period the median selects.",
+      "THE FIVE PERIODS AS THE RECORD STATES THEM, START against MIDPOINT: acct#89d0916a 2026-03-16..2026-06-30 -> -0.097580 vs -0.097872 (DIFFER); acct#89d0916a 2026-03-16..2026-08-28 -> -0.058650 vs -0.058954 (DIFFER); acct#89d0916a 2026-04-08..2026-06-30 -> -0.098772 vs -0.098772 (identical); acct#89d0916a 2026-07-01..2026-08-28 -> +0.043139 vs +0.043139 (identical); acct#6b914f88 2026-07-08..2026-08-28 -> +0.091259 vs +0.091259 (identical).",
+      "THE TWO THAT DIFFER ARE EXACTLY THE TWO THAT CONTAIN THE ONE ELIGIBLE FLOW DAY (2026-03-25, account acct#89d0916a, flow $448,559.28). The three that are identical are the three S10 already names as having ZERO eligible flow days. So the pattern is not a coincidence that weakens S10 -- it is S10's own mechanism showing through at period grain.",
+      "THE MEDIANS, which is what I actually read: per_convention_summary medians are START 0.016754038 and MIDPOINT 0.016754038, equal; END 0.016972979. With five periods the median is the third-smallest difference, which falls on acct#89d0916a 2026-07-01..2026-08-28 -- a period with no eligible flow day, where all three conventions are the same number by construction. The tie is therefore an artifact of WHICH period the median selects.",
       "HOW THE ERROR HAPPENED, because the mechanism is more useful than the correction: I read the per-convention SUMMARY (three identical medians, p90s and maxes) and stated it as a PER-PERIOD fact. The summary was true; the sentence I derived from it was about a different grain. It is the same wrong-grain move as reading a day-level census as an account-level claim, and CLAUDE.md rule 24 (ii) names the axis -- SAME GRAIN -- that it crosses."
     ]
   },
@@ -512,7 +512,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
-## IRPT_DASHBD-W1-S5 -- the 1,498.38 USD residual on 0027265115 is a whole-window net of four offsetting classes, not one leg on 2026-07-07
+## IRPT_DASHBD-W1-S5 -- the 1,498.38 USD residual on acct#89d0916a is a whole-window net of four offsetting classes, not one leg on 2026-07-07
 
 ```json
 {
@@ -521,7 +521,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "fabric": "laptop",
   "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
   "surfaced_at": "2026-10-02T06:10:00Z",
-  "one_line": "TO-DB-b-6: the 1,498.38 USD residual on 0027265115 is not on 2026-07-07 and not one leg; it is the whole-window net of four offsetting classes (in-kind -7,252.16, margin interest +10,724.31, per-asset trade/merger -3,277.48, cash +1,303.71), and DB-6-AC1 sums is_residual legs by absolute value so a signed net can only pass through a derived net leg.",
+  "one_line": "TO-DB-b-6: the 1,498.38 USD residual on acct#89d0916a is not on 2026-07-07 and not one leg; it is the whole-window net of four offsetting classes (in-kind -7,252.16, margin interest +10,724.31, per-asset trade/merger -3,277.48, cash +1,303.71), and DB-6-AC1 sums is_residual legs by absolute value so a signed net can only pass through a derived net leg.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "spec_asserts": "TO-DB-b-6 cell: the residual sits on a flow day after a 925.02 fee leg and is made by ONE leg (in-kind valued differently, internal-here/external-at-vendor, or other); DB-6-AC1 sums the is_residual legs in absolute value to the residual.",
@@ -529,7 +529,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FLOW_RESIDUAL_0027265115_R2.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FLOW_RESIDUAL_acct#89d0916a_R2.json",
       "s3://opal-data-assets/blackdiamond/49f/bronze/reporting_performance/2026-08-30/reporting_performance_22596361_2026-08-28.json",
       "s3://opal-data-assets/schwab/08335338/silver/fact_trn/date=2026-07-07/data.parquet",
       "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r2/p2_6_ac1_flow_residual_record.py line 'resid_sum += abs(amount)'"
@@ -637,7 +637,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "spec_asserts": "TO-DB-b-7: 'run the producer for EVERY trading day after it through T-1 ... upload' and DB-7-AC2 'reproduces the served partition row for row'; the role writes ONLY the account_return_daily gold prefix.",
-  "world_is": "MEASURED: s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-28/ holds 6 rows (accounts 0010783709, 0027265115, 0035940058, 0076459710, 0084073310, 0091939812; manifest rows=6), so a scheduled run with no --accounts restriction would write ~7,800 accounts into a partition family of six. READ at account_return_daily.py main() (lines 1851-1856): every --upload ends with emit_method_row(..., tieout=args.tieout) -- a write to the dim_return_method prefix outside the role's grant, with tieout_tolerance_proposed null unless --tieout is passed. Handler decision (infra/aws/lambda/investor-reporting/reporting-gold/handler.py): accounts = account_ids of the gold's newest landed partition (event 'accounts' overrides); the producer's own load_declaration/firm_scope/first_data_dates/prefetch/compute_range/emit_day are composed as main() does, and emit_method_row is not called. The producer is unedited.",
+  "world_is": "MEASURED: s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-28/ holds 6 rows (accounts acct#08137b81, acct#89d0916a, acct#f08ffd13, acct#6b914f88, acct#ffa615d2, acct#d0cf6c92; manifest rows=6), so a scheduled run with no --accounts restriction would write ~7,800 accounts into a partition family of six. READ at account_return_daily.py main() (lines 1851-1856): every --upload ends with emit_method_row(..., tieout=args.tieout) -- a write to the dim_return_method prefix outside the role's grant, with tieout_tolerance_proposed null unless --tieout is passed. Handler decision (infra/aws/lambda/investor-reporting/reporting-gold/handler.py): accounts = account_ids of the gold's newest landed partition (event 'accounts' overrides); the producer's own load_declaration/firm_scope/first_data_dates/prefetch/compute_range/emit_day are composed as main() does, and emit_method_row is not called. The producer is unedited.",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
@@ -824,7 +824,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     "status": "GROUNDED",
     "evidence": [
       "lambda invoke irpt-49f-reporting-publish-lambda payload {} at 13:35:40Z: StatusCode 200, FunctionError Unhandled, ClientError (403) HeadObject at handler.py:158 (requestId a4019573-aaa5-4a52-91f8-d54dfe249a99)",
-      "list-object-versions platinum/reporting/: only account=0010783709/{series.json.gz,manifest.json} gained versions (o_ptRn2R..., CGN8oqs2..., 13:36:00Z); the other 10 keys unchanged",
+      "list-object-versions platinum/reporting/: only account=acct#08137b81/{series.json.gz,manifest.json} gained versions (o_ptRn2R..., CGN8oqs2..., 13:36:00Z); the other 10 keys unchanged",
       "infra/aws/terraform/investor-reporting/reporting-publish/iam.tf (dd3d644cd6): 'PutObject only -- no GetObject, no delete' on platinum/reporting/*"
     ]
   },
@@ -848,7 +848,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "spec_asserts": "TO-DB-b-10 BOUNDS: the vendor call is the one pull and NO other call; vendor_calls equals the performancePeriod requests (AC1) and is at most 5.",
-  "world_is": "MEASURED from infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py get_clientview_token() (lines 144-152): the bearer is minted by GET /session/token on the .bd.identity cookie, and the POST needs it. The run made 1 session-token GET and 3 performancePeriod POSTs (0027265115, 0076459710, 0084073310), all HTTP 200, 0 retries, 0 performanceSeries, and no call for the 2 unmapped accounts. BD_LIKEDAY_PULL_R4.json counts vendor_calls = 3 (the requests, as AC1 grades) and records session_token_mints = 1 beside it, so the extra request is on the record. No credential, cookie or token was written or printed.",
+  "world_is": "MEASURED from infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py get_clientview_token() (lines 144-152): the bearer is minted by GET /session/token on the .bd.identity cookie, and the POST needs it. The run made 1 session-token GET and 3 performancePeriod POSTs (acct#89d0916a, acct#6b914f88, acct#ffa615d2), all HTTP 200, 0 retries, 0 performanceSeries, and no call for the 2 unmapped accounts. BD_LIKEDAY_PULL_R4.json counts vendor_calls = 3 (the requests, as AC1 grades) and records session_token_mints = 1 beside it, so the extra request is on the record. No credential, cookie or token was written or printed.",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
@@ -857,7 +857,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
-  "notes": "For the L9 reader: a future per-use word should name the session-token GET as part of the pull. Also recorded, no action taken: 0084073310's first segment 2026-03-20..2026-08-04 (94 days, Opal +24.23%, BD +23.97%) precedes the roster trade_start_date 2026-08-05, and BD agrees with the gold over it. Owner: 2.0.0_SA_COO~P."
+  "notes": "For the L9 reader: a future per-use word should name the session-token GET as part of the pull. Also recorded, no action taken: acct#ffa615d2's first segment 2026-03-20..2026-08-04 (94 days, Opal +24.23%, BD +23.97%) precedes the roster trade_start_date 2026-08-05, and BD agrees with the gold over it. Owner: 2.0.0_SA_COO~P."
 }
 ```
 
@@ -870,13 +870,13 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "fabric": "laptop",
   "surfaced_by": "3.0.0_SA_CVO",
   "surfaced_at": "2026-10-02T18:45:00Z",
-  "one_line": "The round-4 tie-out's largest disagreement (0027265115, 2026-06-25..07-06, Opal +3.4935% against Black Diamond +2.2806%, 1.21 points over 7 like days) carries no stated reason, and its cause is findable: Opal books income +0.4627% on 06-25 alone, while Black Diamond reports the window's income as -2,470.31 on an account that is about 47 pct short. None of the 14 pairs carries a reason field.",
+  "one_line": "The round-4 tie-out's largest disagreement (acct#89d0916a, 2026-06-25..07-06, Opal +3.4935% against Black Diamond +2.2806%, 1.21 points over 7 like days) carries no stated reason, and its cause is findable: Opal books income +0.4627% on 06-25 alone, while Black Diamond reports the window's income as -2,470.31 on an account that is about 47 pct short. None of the 14 pairs carries a reason field.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "this seat's re-derivation (2026-10-02 18:3xZ): served gold opal-data-49financial/irpt/49financial/gold/account_return_daily, 7 of 7 trading days 06-25..07-06 for 0027265115, total_return_daily linked = +3.4935% (equal to the record); income_return 06-25 = 0.004627, other days 0.000001-0.000153; return_basis TWR on 7 of 7",
+      "this seat's re-derivation (2026-10-02 18:3xZ): served gold opal-data-49financial/irpt/49financial/gold/account_return_daily, 7 of 7 trading days 06-25..07-06 for acct#89d0916a, total_return_daily linked = +3.4935% (equal to the record); income_return 06-25 = 0.004627, other days 0.000001-0.000153; return_basis TWR on 7 of 7",
       "RAW_BD_PERIOD_0027265115.sanitised.json.gz (deliverables/0.9.0_WK_IRPT_DASHBD~1), dateRangePoints[3] 2026-06-25..07-06: timeWeightedReturns.return 0.022805706 (equal to the record), daysHeld 7, income -2,470.31, netAdditions 4,402.22, fees 0.0; the as-of point (2026-10-01) shortAllocation 0.4729",
       "TIEOUT_49F_BLACKDIAMOND_R4.json: 14 pairs, keys account..abs_diff; no reason field on any pair"
     ]
@@ -1061,7 +1061,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "hazard_standing": "ARMED",
   "disarm_owner": "1.0.0_SA_CTO",
   "spec_asserts": "C-VALUE (ratified): V_t is the custodian's own whole-account value, declared as dim_balance.net_mv_plus_cash; the order expected each pair beyond 0.35 pp to carry a stated reason and a code defect among them to be fixed and re-measured.",
-  "world_is": "MEASURED at all 6 window endpoints of the 3 pairs (DECOMPOSE_THREE_PAIRS_R6.json): Black Diamond's beginning and ending value = Opal's net_mv_plus_cash + dim_balance.margin_balance + Black Diamond's own accrual, difference 0.00 at 6 of 6. Schwab's own equity field (eqty_excl_option / eqty_incl_option) = net_mv_positions + margin_balance, so for a margin account net_mv_plus_cash is not the equity: e.g. 0084073310 on 2026-10-01 net_mv_plus_cash 1,009,937.16, margin_balance 5,579.04, equity 1,015,516.20 = Black Diamond's ending value to the cent. Replaying the windows with V + margin_balance (counterfactual, written nowhere): 0084073310 0.7078 -> 0.0264 pp; 0027265115 04-09..04-30 0.4555 -> 0.0493 pp; 0027265115 06-25..07-06 1.2130 -> 0.4738 pp (and -> 0.0044 pp with row S20's flow). The declaration's identity check (net_mv_plus_cash - net_mv_positions = money_mkt_funds + net_credit_debit, 92,407 of 92,407) tests the column against itself and cannot see margin_balance. The fix is a change of the ratified value basis in sources.json (outside this order's paths) and moves every margin account's served series, so it is not made here. Pairs 2 and 3 are recorded as defect=false (a basis difference against the ratified text, ruling owed), a classification the CTO may overturn.",
+  "world_is": "MEASURED at all 6 window endpoints of the 3 pairs (DECOMPOSE_THREE_PAIRS_R6.json): Black Diamond's beginning and ending value = Opal's net_mv_plus_cash + dim_balance.margin_balance + Black Diamond's own accrual, difference 0.00 at 6 of 6. Schwab's own equity field (eqty_excl_option / eqty_incl_option) = net_mv_positions + margin_balance, so for a margin account net_mv_plus_cash is not the equity: e.g. acct#ffa615d2 on 2026-10-01 net_mv_plus_cash 1,009,937.16, margin_balance 5,579.04, equity 1,015,516.20 = Black Diamond's ending value to the cent. Replaying the windows with V + margin_balance (counterfactual, written nowhere): acct#ffa615d2 0.7078 -> 0.0264 pp; acct#89d0916a 04-09..04-30 0.4555 -> 0.0493 pp; acct#89d0916a 06-25..07-06 1.2130 -> 0.4738 pp (and -> 0.0044 pp with row S20's flow). The declaration's identity check (net_mv_plus_cash - net_mv_positions = money_mkt_funds + net_credit_debit, 92,407 of 92,407) tests the column against itself and cannot see margin_balance. The fix is a change of the ratified value basis in sources.json (outside this order's paths) and moves every margin account's served series, so it is not made here. Pairs 2 and 3 are recorded as defect=false (a basis difference against the ratified text, ruling owed), a classification the CTO may overturn.",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
@@ -1115,11 +1115,11 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "spec_asserts": "Income is recognised on cash receipt from the CRO's classification table; the pair's reason must be measured.",
-  "world_is": "MEASURED for 0027265115: fact_trn 2026-06-25 carries INTRA/FC/IN CREDIT 4,429.53 'MARGIN INT ADJ', classed INTERNAL / 'Dividends and Interest' by SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, so it is not an external flow and stays inside the return; Black Diamond's window point 06-25..07-06 shows netAdditions 4,402.22. Treating the 4,429.53 as a flow on that day moves the pair from 0.4738 to 0.0044 pp (counterfactual, after the margin_balance addition of row S18). Separately, INTR/FC/IN DEBIT 3,106.83 on 06-29 ('INTEREST 05/28 THRU 06/28') is a debit outside the fixed income term by design (only QDV/NDV/PDV debits are admitted), so Opal's signed window income is 4,312.61 against Black Diamond's -2,470.31; the remainder is not measured here (Black Diamond's accrual source is not in the stored response). Whether a margin-interest adjustment is return or a contribution is not decidable from the Schwab bytes alone.",
+  "world_is": "MEASURED for acct#89d0916a: fact_trn 2026-06-25 carries INTRA/FC/IN CREDIT 4,429.53 'MARGIN INT ADJ', classed INTERNAL / 'Dividends and Interest' by SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, so it is not an external flow and stays inside the return; Black Diamond's window point 06-25..07-06 shows netAdditions 4,402.22. Treating the 4,429.53 as a flow on that day moves the pair from 0.4738 to 0.0044 pp (counterfactual, after the margin_balance addition of row S18). Separately, INTR/FC/IN DEBIT 3,106.83 on 06-29 ('INTEREST 05/28 THRU 06/28') is a debit outside the fixed income term by design (only QDV/NDV/PDV debits are admitted), so Opal's signed window income is 4,312.61 against Black Diamond's -2,470.31; the remainder is not measured here (Black Diamond's accrual source is not in the stored response). Whether a margin-interest adjustment is return or a contribution is not decidable from the Schwab bytes alone.",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "Schwab silver fact_trn date=2026-06-25 and date=2026-06-29, account 0027265115",
+      "Schwab silver fact_trn date=2026-06-25 and date=2026-06-29, account acct#89d0916a",
       "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (INTRA, INTR on FC/IN)",
       "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0027265115.sanitised.json.gz dateRangePoints[3]"
     ]
@@ -1129,7 +1129,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
-## IRPT_DASHBD-W2-S1 -- TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (0076459710 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling
+## IRPT_DASHBD-W2-S1 -- TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (acct#6b914f88 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling
 
 ```json
 {
@@ -1138,11 +1138,11 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "fabric": "laptop",
   "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
   "surfaced_at": "2026-10-03T01:40Z",
-  "one_line": "TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (0076459710 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling",
+  "one_line": "TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (acct#6b914f88 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "spec_asserts": "The order expects the equity basis to bring the pairs to the tolerance, with Black Diamond's accrual stated per pair (batch 193); a pair beyond 0.35 pp carries a measured reason.",
-  "world_is": "MEASURED over all 14 pairs, method_version 2: 10 within, 4 beyond. Beyond: 0027265115 06-25..07-06 0.4738 pp (S22; the 4,429.53 MARGIN INT ADJ credit, batch 195 RETURN; 0.0044 pp if that credit were a flow); 0076459710 08-11..08-19 0.4998 pp (round 4: 0.3307) and 0076459710 08-21..09-09 0.4608 pp (round 4: 0.0076): Black Diamond's value = equity + its accrual to the cent at 28 of 28 endpoints, its accrual moved +6,022.40 then -5,766.11, which alone is 0.4999 pp and 0.4501 pp of its beginning value, leaving 0.0001 pp and 0.0107 pp; the two windows mirror each other (receipt booked in the second); 0084073310 03-20..08-04 0.4045 pp (round 4: 0.2606): Black Diamond's return equals ending/beginning value - 1 (0.239661) so its 3,020.96 fee stays inside its return (0.3961 pp of beginning value) while Opal is gross of fee. Equity moved the largest round-4 pairs to 0.0264 pp (0084073310 08-21) and 0.0493 pp (0027265115 04-09), max abs diff 1.2130 -> 0.4998 pp. Opal's window fee flow for 0084073310 was inferred from the return, not read as a flow.",
+  "world_is": "MEASURED over all 14 pairs, method_version 2: 10 within, 4 beyond. Beyond: acct#89d0916a 06-25..07-06 0.4738 pp (S22; the 4,429.53 MARGIN INT ADJ credit, batch 195 RETURN; 0.0044 pp if that credit were a flow); acct#6b914f88 08-11..08-19 0.4998 pp (round 4: 0.3307) and acct#6b914f88 08-21..09-09 0.4608 pp (round 4: 0.0076): Black Diamond's value = equity + its accrual to the cent at 28 of 28 endpoints, its accrual moved +6,022.40 then -5,766.11, which alone is 0.4999 pp and 0.4501 pp of its beginning value, leaving 0.0001 pp and 0.0107 pp; the two windows mirror each other (receipt booked in the second); acct#ffa615d2 03-20..08-04 0.4045 pp (round 4: 0.2606): Black Diamond's return equals ending/beginning value - 1 (0.239661) so its 3,020.96 fee stays inside its return (0.3961 pp of beginning value) while Opal is gross of fee. Equity moved the largest round-4 pairs to 0.0264 pp (acct#ffa615d2 08-21) and 0.0493 pp (acct#89d0916a 04-09), max abs diff 1.2130 -> 0.4998 pp. Opal's window fee flow for acct#ffa615d2 was inferred from the return, not read as a flow.",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
@@ -5028,6 +5028,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-D2-W75-S1 -- All 74 W73-S1 DEFECT segments read BD_SIDE
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W75-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~75",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "All 74 W73-S1 DEFECT segments read BD_SIDE; 73 of the 74 turn on two conventions the producer declares (SERVICE FEE rows stay inside the return; income counts on cash receipt) and 1 on a net-zero securities transfer BD books as a withdrawal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json (per-segment both-sides values, custodian rows and tier)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_RESOLUTION.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py: the classify_and_sum comment on FEE-ADMIN and the module docstring on income on cash receipt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell expects each of the 74 segments to be either a producer defect with a test, or a Black Diamond-side record with evidence.",
+  "world_is": "Measured over the 74: the served series equals the custodian equity (dim_balance) on both boundary days in 74 of 74; BD's own identity (ending - beginning - netAdditions - netGains) holds to 2 cents in 74 of 74; every flow gap is matched to custodian rows (17 segments carry SERVICE FEE rows that BD books as net additions; 1 carries a net-zero securities transfer valued at the prior close); 65 boundary-value gaps are matched to income the custodian paid after the boundary day (46 as an exact row set, 18 bounded by paid income, 1 unattributed). The producer file is unchanged and no test was added, because no segment is a producer defect. The two conventions are the producer's own declared design (FEE-ADMIN stays in the return, amendment 5(d); income on cash receipt, C-METHOD), so BD_SIDE here means 'not a producer defect', not 'BD is wrong'; the CTO may want to rule whether the FWD-8 comparator should follow BD on either."
+}
+```
+
+## IRPT_DASHBD-D2-W75-S2 -- Dollars are explained for all 74 segments but the RETURN gap is not closed for most
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W75-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~75",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "Dollars are explained for all 74 segments but the RETURN gap is not closed for most: restating our daily series to BD's income and service-fee convention brings the linked return within 0.35pp of the tie-out's BD gross return in only 14 of 74.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json return_read.restated_minus_bd_gross_pp per segment",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/resolve_w73_s1.py sim_return"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A named dollar cause for a segment is expected to account for its return gap (the W73-S1 definition: the dollar gap does not account for the return gap).",
+  "world_is": "The restated return (INFERRED: money-market accrual spread linearly between payments, ex-date accrual from ex-date to payment, service fees as flows on their day) differs from bd_gross_return by 0.35pp or less in 14 of 74, by more than 0.35 and up to 2pp in 30, and by more than 2pp in 30 (the large tail is windows that end on a small balance after a large withdrawal, where the tie-out's fee add-back and the flow-day convention dominate). The FWD-8 re-grade will therefore still show most of these OUTSIDE at 0.35pp unless they are re-classed (FLOW_TIMING / FLOW_CONVENTION / near-zero base) or the comparator changes. Also: 3 of the 46 exact income row sets were found among 8 or more candidate rows and could be coincidental fits; 1 end-of-window boundary gap matches no custodian row and no income bound and is recorded UNATTRIBUTED (the served series equals the custodian equity that day)."
+}
+```
+
 ## IRPT_DASHBD-D2-W78-S1 -- R44 sizing dry run read UNDER; Monday 2026-10-12 07:41 ET first scheduled fire kept as the acceptance read
 
 ```json
@@ -5102,5 +5153,84 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W82-S1 -- DB-b-107: only 2 of the last 90 days have landed lot partitions, so the "heaviest of 90" is the heaviest of 2 and is the day DB-b-103 already sampled
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W82-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~82",
+  "surfaced_at": "2026-10-09T16:05:00Z",
+  "one_line": "The three lot tables hold only date=2026-10-07 and date=2026-10-08 in the 90-day window, so the day-selection has a denominator of 2 and its maximum, 2026-10-08, is the day DB-b-103 already ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face step 1: read the landed lot tables' daily row counts over the last 90 calendar days, print the number of days read and the top 5, choose the maximum; month-end 2026-09-30 is a candidate. The CTO's ruling is that one sample is not a margin and the heaviest day of the 90 is the one to size.",
+  "world_is": "Listing each of account_lot_realized, account_lot_unrealized_daily and account_activity_daily under irpt/49financial/gold/ returns exactly two date= partitions each (2026-10-07, 2026-10-08); date=2026-09-30 has no object. Manifest rows summed per day: 2026-10-08 585281 (35834 + 542546 + 6901), 2026-10-07 576018 (3245 + 565876 + 6897). The maximum is 2026-10-08, the same day DB-b-103 sized (377 s, 1661 MB), so this order's run is a second sample of the same day, not a heavier day. A heavier unlanded day (for example month-end) cannot be found by reading landed tables; the dry run computes from upstream and could be pointed at one, but the face names landed tables as the selection source and this worker did not widen it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~82/R44_HEAVY_DAY_DRYRUN.json selection",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~78/R44_SIZING_DRYRUN.json lots_rows_by_table"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W80-S1 -- DB-b-105: four staged pins of the gold function differ from HEAD (R44 had one), and the live read was get-function-configuration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W80-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~80",
+  "surfaced_at": "2026-10-09T15:58:00Z",
+  "one_line": "Over live oNgy4rnr, 4 of the 18 staged pins differ from their HEAD bytes (account_return_daily.py, sources.json, lib/opal_naming.py, reporting_policies.json); the release is built from the pins, so none is a member of R45.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-105 step 1: exactly one member may differ and it is handler.py; any other member differing from the LIVE bundle is a row and a STOP.",
+  "world_is": "Comparing the source map's pinned bytes with HEAD, 14 of 18 staged pins equal HEAD and 4 differ (account_return_daily.py, sources.json, lib/opal_naming.py, infra/logic/registry/reporting_policies.json), moved by other seats' commits (R44 found only reporting_policies.json). The live bundle holds the PIN bytes: the builder takes staged members from the pins, and the R44 apply verified every member against the live zip (R44_APPLY_RECORD.json member_census_vs_live), the gold function's pins unchanged since upload commit f0d129281f. So no member other than handler.py differs from the live bundle, and the census lists handler.py only; the apply cell must keep the pins. The local kit of the PINNED bytes plus the new handler returns the status key byte-equal to the old one. Separately, the live read used get-function-configuration (CodeSha256, State, size and timeout) rather than get-function, which also returns a pre-signed code download URL the order's no-download bound does not want fetched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~80/R45_RELEASE_CENSUS.json members_compared",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_APPLY_RECORD.json member_census_vs_live",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from@HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S5 -- client account data committed to git (one file already on the remote)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:56:03Z",
+  "one_line": "Client account data is committed to git: org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~76/W73_S2_EVIDENCE.json (121 distinct 10-digit account numbers with begin/end values, balances, fees and flows) is on origin box/dell2 AND origin CLOUD (github Opal-Capital/ajb_workspace); org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~75/W73_S1_EVIDENCE.json (74 accounts, values, fees, gains) is committed locally @f5645bb6e9 and goes out at the next box-sync push. The issuer's own packet asked whether this is acceptable; it is not -- the estate keeps client figures out of the repo (ADVI_BILLING held its real render outside git for exactly this reason).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files: both paths tracked (169,592 and 134,559 bytes)",
+      "this seat's parse: account-like keys n=74 and n=121, fields beginning_value, ending_value, fees, gain, net_gains, amount, dust_balance, max_balance",
+      "git merge-base --is-ancestor 1ba8eafcda origin/box/dell2 and origin/CLOUD: TRUE; f5645bb6e9 origin/box/dell2: FALSE (after git fetch, ~15:5xZ)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/IRPT_DASHBD_ROUND49_B_DRAIN_END_20261009.md @dfba2660aa (msg 3603)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2 (hold the box-sync push of f5645bb6e9; remove both files from the tree) and 1.0.0_SA_CTO~DELL2; purging them from origin's history is destructive git and Andrew's word",
+  "spec_asserts": "Client figures (account numbers with balances, fees and flows) do not enter the repository or its remote.",
+  "world_is": "One file with 121 accounts is already on the remote on two branches; a second with 74 accounts is one push away."
 }
 ```

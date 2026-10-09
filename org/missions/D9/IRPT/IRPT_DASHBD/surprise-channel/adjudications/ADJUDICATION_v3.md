@@ -65,7 +65,7 @@ Author: 3.0.0_SA_CVO, 2026-10-03 ~02:4xZ. L8 input: the issuer's drain-end recor
       "IRPT_DASHBD-W2-S1"
     ],
     "spec_asserts": "Spine L9 (CLAUDE.md rule 27): every investigation item is dispositioned on grounded evidence; an issuer's 'answered by ruling X' is checked against each finding the row holds.",
-    "world_is": "The four pairs beyond 0.35 pp at method_version 2 carry reasons that hold: accrual +6,022.40 (0.4999 pp, residual 0.0001) and -5,766.11 (0.4501 pp, residual 0.0107) on 0076459710; a 3,020.96 fee inside Black Diamond's return (0.3961 pp, residual 0.0084) on 0084073310; the margin interest adjustment on 0027265115 (equity ratio 0.027544 from Schwab silver against 0.022806). No further ruling is needed to grade FWD-8; the CTO may still revisit the bar at the round analysis.",
+    "world_is": "The four pairs beyond 0.35 pp at method_version 2 carry reasons that hold: accrual +6,022.40 (0.4999 pp, residual 0.0001) and -5,766.11 (0.4501 pp, residual 0.0107) on acct#6b914f88; a 3,020.96 fee inside Black Diamond's return (0.3961 pp, residual 0.0084) on acct#ffa615d2; the margin interest adjustment on acct#89d0916a (equity ratio 0.027544 from Schwab silver against 0.022806). No further ruling is needed to grade FWD-8; the CTO may still revisit the bar at the round analysis.",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [

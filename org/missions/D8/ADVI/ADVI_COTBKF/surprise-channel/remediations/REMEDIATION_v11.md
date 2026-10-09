@@ -16,7 +16,7 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-08 ~08:1xZ. Graduated at this co
   "evidence": [
    "investigation row ADVI_COTBKF-D2-W39-S1",
    "deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_18_DRAIN_END_20261008.md @99a88375ab",
-   "example 0QF879352 2023-07-14: lo 455.68 + sl 455.68, value drop 911.36, month -32.71% vs reported -0.18%"
+   "example acct#05dd4a9d 2023-07-14: lo 455.68 + sl 455.68, value drop 911.36, month -32.71% vs reported -0.18%"
   ],
   "remedy": "Treat an sl of the sweep fund that pays a same-day lo of cash for the same amount as one withdrawal, then re-grade (packet enrichment candidate 1).",
   "owner": "2.0.0_SA_COO~C2",

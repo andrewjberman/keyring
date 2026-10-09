@@ -23562,3 +23562,56 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~AMG",
+  "surfaced_at": "2026-10-09T16:20Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMGT-kk-1's AC1 cannot PASS from any box except site Z: its --admit list omits research_universe.source, and 2026-10-07.json (the reference) was built on site Z, not on the laptop the GO names.",
+  "class": "BLOCKING",
+  "spec_asserts": "AMGT_RESAPP.TO-AMGT-kk-1 @96a82dda90 AC1 expects 'every top-level field of 2026-10-07.json is present with an equal value or an admitted change ... C1-C5 PASS; R85 CROSSWALK AC1: YES; and exit=0', with --admit as_of,denominators.with_issuer_cik,research_universe.read_at,research_universe.folders,denominators.research_folders_live. AMENDMENT 2 + GO states 'run on the LAPTOP where the research library reads (2026-10-07.json was built there, 97 folders)'.",
+  "world_is": "2026-10-07.json's research_universe.source reads 'C:\\\\Users\\\\Opal Bloomberg\\\\OneDrive - Opal Capital\\\\Shared - Documents\\\\Asset Management\\\\Research' -- the SITE-Z user profile, not this laptop. round86_prep/GROUP_REPUBLISH_NOTES.md section 1 quotes that same path while calling the box 'the laptop'. On THIS laptop the same shared library resolves to 'C:\\\\Users\\\\AndrewBerman\\\\OneDrive - Opal Capital\\\\Shared - Documents\\\\Asset Management\\\\Research' (env:OneDriveCommercial+relative, OPAL_RESEARCH_LIBRARY_ROOT unset) and lists 102 folders. So a CORRECT republish from here necessarily changes research_universe.source, which --admit does not name, and C5 FAILS on exactly that one leaf. Graded BEFORE any put, against the --out candidate: C1 PASS (243 of 243 prior records present), C2 PASS, C3 PASS (204 of 243 issuer.cik measured, 0 bad), C4 PASS (4 of 4), C5 FAIL (1 not admitted ['research_universe.source']); research_universe folders 102; R85 CROSSWALK AC1: NO; exit=1. Every OTHER leaf is equal or admitted: as_of, denominators.research_folders_live 97->102, denominators.with_issuer_cik <MISSING>->204, research_universe.folders 97->102, research_universe.read_at. The field must name the device that did the read, so writing site Z's path from here would be a false disclosure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-kk-1.republish-the-name-list-with-research-folders.md @96a82dda90 (AC1 invocation + --admit list)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round86_prep/GROUP_REPUBLISH_NOTES.md section 1 (quotes the 10-07 source path as 'the laptop')",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_crosswalk.py --crit AC1 --path <candidate> run on the laptop 2026-10-09 ~16:1xZ (C5 NOT ADMITTED research_universe.source)",
+      "s3://opal-data-harvest/crosswalk/v1/2026-10-07.json VersionId XledA4XthVEOE3snOolYp7lkbarhPNkx (research_universe.source)"
+    ]
+  },
+  "notes": "ASK, one line, to the issuer: add research_universe.source to AC1's --admit (the republish is then clean and AC1 reads YES), or re-cut the act to site Z so the path matches. NO put was made pending that call -- the order's own pre-publish diff requires every field 'equal or admitted', and admission is the issuer's, not this seat's. The prior VersionId of crosswalk/v1/2026-10-09.json is recorded (CHWQWAM0oNxOpU_5Hs8_fy5RUZ_Sgl20) so the act is ready to run the moment the call lands. Note the republish is what RE-ARMS the new AC3 guard for later rounds: the served latest (today's key) currently carries research_universe absent, so served_folders is None and the guard is correctly inert right now."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~AMG",
+  "surfaced_at": "2026-10-09T16:20Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "owned-paths-validate has NO route for a non-worker seat whose task order declares a lib/ path: the 'task order is the grant' clause is hard-keyed to 0.9.0_WK_<CODE>~<n>, so an AE seat's only route is the audited author override.",
+  "class": "OBSERVATION",
+  "spec_asserts": "CLAUDE.md: \"A worker's write surface is exactly the <paths> its non-terminal order names (.tools/owned-paths-validate.py)\". AMGT-kk-1's <paths> block names lib/research/identity/crosswalk.py and lib/research/identity/tests/test_crosswalk_refuses_absent_library.py, and AMENDMENT 1 records 'paths +2'.",
+  "world_is": "owned-paths-validate.py:225 _owns_task_order_paths requires the agent to match _WORKER_SERIAL_RE = ^0\\\\.9\\\\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$ (:124). 0.7.0_AE_CloudOps~AMG cannot match it whatever its order declares, so both declared lib/ paths refused as lane=BASE_EXEC (permitted: CTO + COO + CVO). Measured: two BLOCK rows in org/git-author-override-audit.log at 15:51:08Z and 15:52:54Z, then OVERRIDE at 15:56:13Z ('--author-override BASE_EXEC applied'), commit f2dbac84a4. The validator's own rationale comment (:121-123) records the same route being taken at v3's first drain: 'committed both real surfaces its order named through the audited override because no lane admitted it'. Separately the registry's worker_grant stanza is noted there as 'the real one is 0.0.0_AB_MSTR's to land'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/owned-paths-validate.py:112-124 (the clause and _WORKER_SERIAL_RE), :225-236 (_owns_task_order_paths)",
+      "org/git-author-override-audit.log lines 47405, 47410, 47411 (two BLOCKs then the OVERRIDE)",
+      "commit f2dbac84a4 (the guard, landed under the override)"
+    ]
+  },
+  "notes": "Not a blocker -- the audited override is the documented route and it is on the record. Surfaced because the gap is structural, not incidental: any seat that is not a 0.9.0_WK_* worker will hit it whenever an order declares a path outside its lane, and the audit log then carries an OVERRIDE row that reads like a bypass rather than an authorised write. Owner is the grantor (SoD) 0.0.0_AB_MSTR."
+}
+```

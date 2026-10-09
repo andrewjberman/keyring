@@ -1463,3 +1463,57 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S15 -- BLOCKING: the resident worker refuses every ticket-bound request; its packaged AnalysisSubmissionRequest schema predates `ticket_id`
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T16:02:00Z",
+  "one_line": "Release 1 read 5 (REQ-4b5155ac, ticket-bound) never left RECEIVED: the resident worker refuses it SubmissionRefused CLOSED_COMPOSITION_REQUIRED every 15 min since 14:59Z. The worker is alive, not stuck. Acceptance (irpt-ycharts-generate tdpterTM) admits ticket_id; the resident's closed RequestComposition resolves browser -> its packaged AnalysisSubmissionRequest, which has no ticket_id.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-11 (ticket_id optional on AnalysisSubmissionRequest v1, @5be2acd7cc) makes a ticket-bound request generate end to end; release 1 read 5 expects READY.",
+  "world_is": "Host i-0167fd745ad906a66 runs irpt-analysis-resident from /opt/irpt-resident/e606008994-st27; its AnalysisSubmissionRequest.schema.json sha256 ed84ac362c90 carries ticket_id 0 times, as do st28 and st29 and every other staged copy (41 of 41). Disarm owner 2.0.0_SA_COO~G2. Ruled in decomposition R2 AMENDMENT 3: release 4 stages the schema at or after 5be2acd7cc and release 1 read 5 is re-run after it. HEAD's copy is a6f224cd834e. composition_admission.py:54 maps the jsonschema ValidationError to CLOSED_COMPOSITION_REQUIRED. irpt-generation: 0 visible, 1 in flight, DLQ 7. Fails closed: no wrong output, no generation for any ticket-bound request until the resident carries the schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SSM read-only commands f03a0b83-58e3-4ed0-a39b-1bb8777f1e31 and the two after it: journalctl -u irpt-analysis-resident, find + sha256sum of the packaged schema copies",
+      "aws sqs get-queue-attributes irpt-generation / irpt-generation-dlq at ~15:55Z",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py:54",
+      "laptop result commit 60cfbecb26 (relay msg 3601): 3a TRUE, 4_record TRUE, 4_route TRUE, 5 ANALYSIS_REPORT_NOT_READY"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S16 -- BLOCKING: release 1 rev 4 shipped split -- every irpt-status call raised TypeError; no gate saw a call-signature skew
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T16:30:00Z",
+  "one_line": "Live rev 4 VC/r14ka (15:43Z) raised TypeError build_retained_repositories() unexpected kwarg additional_policy_revisions at status_installed.py:137 on every call (52 events by 16:24Z; reported by 2.0.0_SA_COO~G2 msg 3675). Branch B ordered (Y1 AMENDMENT 5 @60505b0ebf, CTO msg 3677).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "Pair REVISION 4 gates: census vs live 1 member, symbol closure missing=0, _authz 22/22, test_status_installed_revisions 6 passed -- read as 'the built zip runs'.",
+  "world_is": "irpt-status stages composition.py at pin 80a79a7462, which has 0 occurrences of the kwarg; it arrived at f60e6f1d2a (YCDGEN~3) and 2aa217ec58 (IB-pr-369), both after the pin. symbol_closure checks NAMES not call signatures; the tests import the repo-HEAD composition.py, not the pinned member; R0-R2 never made a real call. Disarm owner 2.0.0_SA_COO~Y2: rev 3 re-promoted by the applier; the re-cut co-stages composition.py and adds a live-call arm (one real GET answers 200) before the ledger closes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events /aws/lambda/irpt-status --filter-pattern additional_policy_revisions, last hour: 52 events, first traceback status_installed.py:137 compose_ports",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.staged_from[19]: composition.py pin 80a79a7462",
+      "git show 80a79a746284:infra/aws/lambda/investor-reporting/reports/composition.py | grep -c additional_policy_revisions -> 0; HEAD -> 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

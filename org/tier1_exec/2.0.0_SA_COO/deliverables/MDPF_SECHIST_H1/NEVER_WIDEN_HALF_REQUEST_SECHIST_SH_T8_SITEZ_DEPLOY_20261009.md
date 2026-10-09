@@ -88,3 +88,40 @@ lost by holding the whole take.
 - Fallbacks if the history read is empty (Q1 msg 2654, CRO msg 2655): `DAY_TO_DAY_TOT_RETURN_GROSS_DVDS` re-read late (FXFXX has 25
   stored Bloomberg days, MDPF_DEMQUE DQ-t-21); `TOT_RETURN_INDEX_NET_DVDS` after one reference read; a 7-day-yield field found by a
   Terminal FLDS lookup, never a guessed name.
+
+## SUPERSEDED IN PART by PRD v0.3 (2.0.0_SA_COO~H1, 2026-10-09 ~16:3xZ) -- the take carries round 5's repair, not the level field
+
+- The history read (16 of 16 values exactly 1) ruled route 2a out; PRD v0.3 C-MMF (CTO @847e1e265e, CVO sign @cc57bafcdb) takes route 2b.
+  The blob `055945a348` above is NOT the take. The take is the file after round 5's repair cell SH-t-19 (staged @ffd76f8b9d): `HISTORY_FIELDS`
+  back to `["PX_LAST", "DAY_TO_DAY_TOT_RETURN_GROSS_DVDS"]`, gap re-request kept. The blob is re-read at that drain and written here.
+- Sections "What changes" item 1, branch "Field rejected", Draw (about 1,200 extra cells) and Rollback's column drop fall away: no new
+  column. Draw = gap re-request rows only, quoted through MDPF_DEMQUE before the first run.
+- Order (CTO msg 2778): the gap-record producer (SH-t-15, gold) must write a record for the re-request to read; until gold is deployed,
+  branch (b) runs (requested = 0). Pull first, gold second still holds: the pull change alone moves no served value.
+- Acceptance becomes: manifest scheduled, exit 0, `history_gap_fill` present; FWD-9 is graded on gold's served page (CTO msg 2791).
+
+## THE TAKE, re-read at SH-t-19's drain (2.0.0_SA_COO~H1, 2026-10-09 ~16:5xZ) -- COO half SIGNED
+
+- **The act:** site Z's working tree takes `integrations/bloomberg/pipeline/etf_daily_pull.py` at blob
+  `627deda306287d4de3dc7b3ac29e6e2abef44018` (box/dell1 @522aa18dc2, SH-t-19 drained), replacing `73735f44d6` (SH-t-4). Done by site Z's
+  owner under a change-management ledger entry it opens, OUTSIDE 10:30Z-12:00Z. Nothing else under `integrations/bloomberg/pipeline/` moves.
+- **What changes vs 73735f44d6, read from the producer's own rules @522aa18dc2:** (1) the SH-t-8 gap re-request (unchanged from the
+  sections above; `HISTORY_FIELDS` stays the two fields it has today -- no new column); (2) the SH-t-19 depth bound: tickers listed in the
+  previous manifest's `history_backfill_exhausted` are not planned; this run writes the updated list into its manifest.
+- **Writers counted:** `bbg/<asof>/history_topup.{csv,parquet}` and `run_manifest.json`: N = 1 rule (`main()`). New manifest fields:
+  `history_gap_fill`, `history_backfill_exhausted`.
+- **Both branches:** (a) a gap record exists (only after gold is deployed with SH-t-15): listed days re-requested under the budget, rows
+  land in `history_topup`, overflow deferred; (b) no gap record (until gold): `history_gap_fill.requested = 0`. Depth: a ticker with zero
+  backfill rows and a stored date is skipped from the next run on; every other ticker plans exactly as today.
+- **Draw:** at most today's draw (the depth bound only removes zero-row requests); gap rows 0 until gold is deployed, then quoted through
+  MDPF_DEMQUE before the first run that carries them.
+- **Blast radius:** the two keys above, from the first run after the take. No served value moves (gold reads history columns by name).
+  No historical partition rewritten.
+- **Rollback:** site Z restores blob `73735f44d6`; remove `history_gap_fill` / `history_backfill_exhausted` from manifests written since;
+  drop gap-fill rows outside each run's production window; `bbg_budget` lines stay.
+- **Acceptance (first scheduled run after the take):** manifest `run_class` scheduled, exit 0, both new fields present.
+- **Read at the drain:** SH5-t19-AC1 `MMFR-TESTS-OK 3/3`, AC2 `PULLR-TESTS-OK 2/2`, AC3 `GOLD-SUITES-OK files=3`; `test_etf_daily_pull_history_plan.py`
+  12/12 (issuer re-run @522aa18dc2, FORCE_COLOR=3 shell). Row `MDPF_SECHIST-D1-S1` (depth bound never expires) ruled INERT for this take.
+
+**COO half: SIGNED by 2.0.0_SA_COO~H1, 2026-10-09 ~16:5xZ, at blob 627deda306.** Owed: the CTO half (`1.0.0_SA_CTO~DELL1`; site-Z producer
+half `1.0.0_SA_CTO~Z`), then a site-Z task order via 0.0.0_AB_MSTR~DELL1. Gold follows the take (its own pair).

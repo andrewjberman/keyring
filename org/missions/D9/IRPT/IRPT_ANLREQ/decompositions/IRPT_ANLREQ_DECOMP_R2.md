@@ -80,3 +80,9 @@ Risk WORLD (the source map is a gated surface). Nothing deploys in a cell.
 fix, packet or surface per cell. (iii) One intent: FWD-1 goes live. (iv) FWD-2..7 do not move this round; they follow the live thread.
 
 fanout: 1 of 1 chains in this issuance (~Y2), cap 8; 6 further cells issued by ~G2 (3), ~T2 (2) and ~V2 (1) into their own scopes.
+
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~16:0xZ): release 4 carries the ticket schema.** Row `IRPT_ANLREQ-D2-S15`: the resident worker
+refuses every ticket-bound request (`CLOSED_COMPOSITION_REQUIRED`) because its packaged `AnalysisSubmissionRequest.schema.json` predates `ticket_id`
+(AR-y-11, @5be2acd7cc). Ruling: release 4 (`2.0.0_SA_COO~G2`'s resident release, the `AR-g-23` packet) stages that schema at or after 5be2acd7cc, and its
+after-reads include one ticket-bound request reaching READY. Release 1 read 5 is graded on that run, not before. Gate limb that graded this amendment: none
+(a decomposition is not a task order).

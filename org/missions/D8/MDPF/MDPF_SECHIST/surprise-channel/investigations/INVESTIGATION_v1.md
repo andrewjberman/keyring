@@ -272,3 +272,51 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The mnemonic is a one-constant edit. Its first real confirmation is the first live history_topup carrying a non-null column of that name (the site-Z take is a separate WORLD act). If the terminal rejects the name, gold's C-MMF rule (TO-SH-t7) finds no level and blanks the day, which is its stated behaviour for a day with neither input."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W14-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~14",
+  "surfaced_at": "2026-10-09T16:10:00Z",
+  "one_line": "TO-SH-t15 makes the scheduled gold Lambda write s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=<date>/gap_record.json; the write sits outside gold's _assert_write_boundary and needs an S3 PutObject grant on that prefix that no cell in this round adds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "FILE data/etfs/scripts/gold/etf_positioning_gold.py produce_gap_record() calls etf_history_gap_record.write_record, whose key is lib.opal_naming address('bloomberg','etfs','silver','history_gaps','as_of=<d>','gap_record.json') = bloomberg/etfs/silver/history_gaps/as_of=<d>/gap_record.json in bucket opal-data-etfs (printed by the builder for 2026-10-08).",
+      "FILE etf_positioning_gold.py _assert_write_boundary admits only opal-data-etfs/gold/; the gap write does not pass through it (write_record is the silver module's own writer), so the boundary is not a gate on this key.",
+      "NOT RUN: the Lambda role's policy was not read (comp-iam is declared not applicable to this cell); whether it already holds s3:PutObject on that prefix is unmeasured."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the Lambda write grant is checked at the deploy pair, not in this cell (preflight comp-iam).",
+  "world_is": "Without s3:PutObject on bloomberg/etfs/silver/history_gaps/* for the gold Lambda role, every scheduled run logs 'gap record: WRITE FAILED' and continues: gold still blanks over the gap that day (in-memory record) but no record persists, so the next pull cannot re-request from it (FWD-4 degrades silently, FWD-5 holds). Read grant on bbg/ already exists (load_history lists and reads it)."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~H1",
+  "surfaced_at": "2026-10-09T16:50:00Z",
+  "one_line": "SH-t-19's depth bound marks a ticker exhausted for good when its backfill returns zero rows, and a per-security vendor error returned as an empty response also reads as zero rows, so one transient error removes that ticker from depth backfill permanently.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE integrations/bloomberg/pipeline/etf_daily_pull.py @522aa18dc2 history_backfill_exhausted: a planned ticker with a stored date and rec rows == 0 joins the set; the set is the union with the prior manifest's list (never shrinks)",
+      "FILE same, depth loop near :745-760: backfill_info[ticker] = {rows: _n} with _n = 0 when the returned row list is empty; a group that raises leaves its tickers absent (not marked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SH-t19 repair (3): a ticker whose last backfill returned no row older than its earliest stored date is not planned again.",
+  "world_is": "Zero rows from a per-security error and zero rows from a genuinely short history read the same, and nothing ever removes a ticker from the list. Issuer ruling (2.0.0_SA_COO~H1): accepted for round 5 -- no served value moves (depth only), the 2026-10-12 manifest's list is read at SH-t-20 and any ticker in it with known older vendor history is the trigger for a later expiry repair; owner 2.0.0_SA_COO~H1."
+}
+```

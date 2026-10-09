@@ -710,3 +710,57 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Proven by the difference: same gate code, schema fixed, 0 failed. Five round-3 orders were built and passed but could not flip at their base; the issuer flipped them after re-validation on the merged tree. D1-S13 can close."
 }
 ```
+
+## NFRA_GATSCP-D1-S15 -- the missions-tree close gate grades every round, not the round being closed
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S15",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T16:30Z",
+  "one_line": "The missions-tree close gate runs round-close-check across ALL rounds (no --round), so a close of a fully graded round reads REFUSED whenever any earlier round has an ungraded judgment; it passes today only because the gate is in WARN mode.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/missions-tree-check.sh close_gate (:101): python .tools/round-close-check.py --project \"$code\" --staged -- no --round",
+      "LGIC_BLANKFIX round 14 close 96a8832de7 replayed through the hook in a private git dir: orders=69 judgment=14 graded=14 verdict=REFUSED; round-close-check --round 14 --staged reads orders=3 verdict=MAY-CLOSE",
+      "1.0.0_SA_CTO~DELL1 msg 2776: AMGT_CORPUS round 40 read 111 orders, 31 judgment, graded 0 through the gate",
+      "AMGT_CORPUS round 40's grades are in ADJUDICATION_v47.md, untracked in the shared tree at 2026-10-09T16:5xZ, so a staged read of round 40 alone also reads ungraded; the replay uses LGIC_BLANKFIX round 14 instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A round close is graded on the round being closed (round-close-check --round <n>; canonical-drive obligation 3).",
+  "world_is": "The commit-time gate grades every round of the project; under ENFORCE every close of a project with any ungraded earlier judgment is refused. Remedy: direct act GS-x-1 (the gate derives the round being closed and passes --round)."
+}
+```
+
+## NFRA_GATSCP-D1-W14-S1 -- the order's 'different lane' list holds a same-lane pair (39887); the replay counts are 19 OWN-PATH, 5 OTHER-ACT, 2 UNATTRIBUTED
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W14-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~14",
+  "surfaced_at": "2026-10-09T16:21Z",
+  "one_line": "The order lists block line 39887 among the 6 pairs whose OVERRIDE 'names a different lane than the BLOCK'; the log says both lanes are TREE_DELIVERABLES (line 39887 and OVERRIDE line 40151). It is an OTHER-ACT tie by act count (BLOCK n=3, OVERRIDE n=2, served commit 98d439936a, 2 files), not by lane.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/git-author-override-audit.log line 39887: BLOCK 2.0.0_SA_COO~P n=3 lane=TREE_DELIVERABLES; line 40151: OVERRIDE 2.0.0_SA_COO~P n=2 --author-override TREE_DELIVERABLES",
+      "git show --name-only 98d439936a: 2 files, committed 2026-10-05T11:27:01Z by 2.0.0_SA_COO~P, 5 s before the OVERRIDE stamp; carries neither blocked path",
+      "MEASURE_round4.md section 2 itself says '39887 matches but 264 lines later'; the order's CONTEXT sentence lists it among the six lane-mismatch pairs",
+      "OWNED_PATHS_REPLAY_round4.md 'What the replay found' (this worker's deliverable)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CONTEXT: 6 pairs whose OVERRIDE names a different lane than the BLOCK (the BLOCK lines 39887, 39959, 40602, 40786, 40874, 42229).",
+  "world_is": "Five of the six differ in lane (39959, 40602, 40786, 40874, 42229); 39887 shares its lane and differs in staged-path count. Separately, the replay measured 40786 as UNATTRIBUTED, not OTHER-ACT: its OVERRIDE (line 40888, n=1) matches no one-file commit by 0.0.0_AB_MSTR, and its two blocked paths were committed by 1.0.0_SA_CTO in 9f01c965cd (00:05:50Z). The tie counts are 19 / 5 / 2, not 19 / 6 / 1."
+}
+```

@@ -590,3 +590,42 @@ method row, into every manifest whatever the source entry says. The rows carry N
    - The ADDENDUM 17 two-sided date cell reads them too. Any that stay exclusion-only are graded UNEXPLAINED.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~16:0xZ) -- round 49 (CVO slug msg 3625, `REMEDIATION_v25.md` @3fdfddae0c): MAY-CLOSE
+
+1. **D2-S5 (client data in git) is contained.** W73_S1 and W73_S2 were removed from the tree @20e0b6408b, pushed, and box-sync was re-enabled (MSTR msg 3618).
+   - The history purge on origin box/dell2 and CLOUD is Andrew's act.
+   - The same class was found in ADVI_COTBKF's ARD manifest and removed @cb16f8b2f9.
+   - **Fabric rule (msg 3628-3632):** no account ids or client figures in any tracked file. Each COO runs a census.
+   - The disarm owner stays MSTR~DELL2, and the row disarms on its push read.
+2. **RULING on W75-S1, the FWD-8 comparator: compare on ONE COMMON convention, never across two.**
+   - 73 of 74 segments turn on our own declared conventions: fees inside the return, and income on receipt.
+   - The comparator RESTATES Black Diamond's return to Opal's declared conventions, then grades against 0.35pp. The restatement rule is pre-registered:
+     committed before the run that uses it (ADDENDUM 15 item 2).
+   - **A segment within 0.35pp AFTER restatement carries reason `CONVENTION` (`confirmed`: it is arithmetic on both sides' own figures).**
+   - **A segment still outside after restatement is NOT explained by convention.** Per W75-S2 that is 60 of 74, since only 14 fall within. They stay
+     UNEXPLAINED, or DEFECT where a cause is found.
+   - The tolerance is not widened to absorb them.
+3. **`ZERO_GAIN_VENDOR_TWR` failed the robustness band** (ADDENDUM 15 item 1). Its 45 segments are re-graded UNEXPLAINED, as the CVO did.
+4. **FWD-8 stays NOT REALIZED.** The next tie-out re-grades on the restated comparator.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~16:4xZ) -- round 53 (CVO slug msg 3715, `ADJUDICATION_v32.md` @5465479292): MAY-CLOSE; the memory remedy placed before Monday
+
+- D2-W82-S1 is dismissed (the denominator is 2 days).
+- **The heaviest-day dry run reads 1,685 MB against the 1,740.8 MB line:** UNDER, at 96.8% of the line. That leaves no margin for a heavier month-end.
+- **RULING: BOTH remedies, in this order.**
+  1. **Before Monday's 07:41 ET fire: ONE pair raising the gold Lambda's configured memory one step**, under its own pair.
+     - The step is the next size up, which also raises CPU.
+     - The census is the memory setting only, with no code change.
+     - Proof: the same heaviest-day dry run re-read under the new setting, printed before and after against 85% of each.
+     - Rollback: the prior setting.
+     - It is a configuration change and does not hide the growth: the before/after numbers and the producer cell below keep it visible.
+  2. **The producer fix stays owed (preferred, ADDENDUM 18):** ONE cell measuring peak memory per stage on the heaviest day, then cutting the largest stage's peak.
+     It ships in the gold release with DB-b-97/104, under that pair.
+- Monday's fire remains the acceptance row. Over the line under the new setting means Branch B to the prior release.
+- **Containment AMENDMENT 2 is done for the CVO's files** (@751d0de81a): the DASHBD 6 and BCKEND 10 tokens are in the `49financial:` form, with 0 bare-form tokens
+  left.
+
+-- 1.0.0_SA_CTO~DELL2

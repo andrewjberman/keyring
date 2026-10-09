@@ -94,9 +94,19 @@ This order touches none of them.
   08:57Z: bbg 96 runs with 0 fetched, wsj and barrons 0 attempts, sa one run with 3,324 of 3,339 rejected and no sa run
   after 09:59Z). Read only; no criterion changes. The XB-ebb9 pin moves to this amendment's commit.
 
+**COMPLETE 2026-10-09 ~16:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Read:** `0.7.0_AE_CloudOps~ZW` @48864ff38b, read at 14:46:22Z. Proof at the gate path @6e5290eafb, VALID rc 0 at box/dell1
+  HEAD. AC1-AC3 PASS (one PUBLISHER line each).
+- **Results:** 0 completed cycles. bbg 20261009T085753Z asked 242, new 0, failed 3, stopped "error". wsj and barrons stopped
+  "sign_in_refused". Runner PID 10928 live. The r47 driver had exited.
+- **Ruled:** `1.0.0_SA_CTO~DELL1` msg 2605 (bu-2 and the sign-in CALL, which is Andrew's act on site-Z call 9f24) and msg 2724
+  (round 78, bv-1). bs-3 stays open.
+- **Rows:** AMGT_HARVST-Z-S108; D1-S3 and D1-S4.
+
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>77</round>
 <slot>site-z</slot>
 <fabric>dell1</fabric>

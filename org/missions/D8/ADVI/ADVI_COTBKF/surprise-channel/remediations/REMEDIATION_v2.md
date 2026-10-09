@@ -9,7 +9,7 @@ Clocks advanced in place at this compile (state fields only) in REMEDIATION_v1.m
 seat (grade file `org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_4_L9_GRADE_20261007.md`):
 - W6-S2: REMEDIATED and closed. CB-d-1's census names all 40 of the account's buckets with a verdict (BARRED from the registry, never
   opened) and re-reads the coverage line (1,720 of 4,634 priced). The two buckets it could not list are carried by W12-S2.
-- W10-S4: REMEDIATED and closed. The crosswalk is re-read with B3S775239 scored (0.600, NOT_MATCHED, its in-kind exit of 2026-04-07 named),
+- W10-S4: REMEDIATED and closed. The crosswalk is re-read with acct#a2618be7 scored (0.600, NOT_MATCHED, its in-kind exit of 2026-04-07 named),
   and the near-matches are listed for Andrew (21).
 - W11-S2: REMEDIATED and closed. Every account that ends before 2026-06-23 carries a row (1,450 of 1,450), so every round-3 target is
   followed or says why it stops.

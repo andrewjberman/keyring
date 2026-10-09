@@ -82,9 +82,19 @@ This order touches none of them.
   `.tools/to-pipeline-gate.py` `_proof_instance_candidates` searches `deliverables/*/<name>` one level only, so bu-1's
   `round77/` instance could not be found at its flip. No criterion changes.
 
+**COMPLETE 2026-10-09 ~16:1xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Read:** `0.7.0_AE_CloudOps~ZW` @6e5290eafb, read at 15:42:26Z, proof VALID rc 0 at box/dell1 HEAD. AC1 PASS (3 FAILED KEY
+  lines), AC2 PASS (`RUNNER LOG: NONE` with the task action), AC3 PASS (current cycle 20261009T130038Z, 44 keys done).
+- **Results:** the 3 failed keys carry only `error` (run-record events empty, `no_outcome_recorded`). The run summary shows
+  88 pairs no_new_articles, retry 3, never_started 151, stopped "error". The task has no output log. No traceback recovered.
+- **Ruled:** `1.0.0_SA_CTO~DELL1` msg 2724: round 78 bv-1 (keep the detail; a pair error counts as failed and the cycle runs on;
+  5 consecutive errors stop; the runner writes a log). Issued @878f9466df.
+- **Rows:** AMGT_HARVST-Z-S109.
+
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>77</round>
 <workstream>B</workstream>
 <slot>site-z</slot>

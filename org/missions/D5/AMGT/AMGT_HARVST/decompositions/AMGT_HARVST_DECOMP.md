@@ -3716,3 +3716,26 @@ is added; the wsj and barrons hand sign-in goes to site Z as a crossbox CALL, no
 | `HVST-bu-2` | `bu-2` | **Why bbg's first cycle stopped on "error".** The checkpoint's failed keys and their errors verbatim, the run summary's error fields, the runner log around 12:55Z, and the current cycle's progress. Read-only; restart nothing. | LOCAL | `0.7.0_AE_CloudOps~ZW` |
 
 **Checks dry-run at the base before the cut:** `bu-2` AC1, AC2, AC3 base: FAIL as expected (no such file).
+
+## 91. ROUND 78 -- a pair error does not stop the cycle (`1.0.0_SA_CTO~DELL1` msg 2724, on HVST-bu-2 @6e5290eafb), 2026-10-09 ~16:0xZ
+
+bu-2 read why bbg's first cycle stopped. 88 pairs were no_new_articles, then 3 pair jobs returned `error`, and the driver's
+transient-stop rule stopped the publisher with 151 pairs never started. The error text is dropped by `record_job_outcome`,
+and the runner writes no log. r47 (sa) stopped the same way at 134 of 242 (bs-4's closure read, STOPPED-INCOMPLETE). The CTO
+ruled (a) keep the detail, (b) in cycle mode a pair error counts as failed and the cycle runs on, with 5 consecutive errors
+still stopping the publisher, and (c) a log. The merge goes under the site-Z producer pair. Carried: bs-3 (needs Andrew's
+WSJ/Barron's sign-in at site Z, site-Z call 9f24), bs-4 (r47 incomplete), bu-1/bu-2 flips.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bv`**.
+- **Fan-out:** 1 of 1 chain, cap 8.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bv-1` | `bv-1` | **A pair error keeps its detail, counts as failed, and the cycle runs to the end of the list.** `MAX_CONSECUTIVE_PAIR_ERRORS = 5` still stops the publisher, with the last detail as the reason. A cycle that reached every pair is completed with `failed` and `failures` stated. The runner appends its output to `<state-dir>/cycle_runner.log`. Fixture tests and a mutant. | SERVED | worker ~133 |
+
+**Then (not orders):** bv-1's merge under the site-Z producer pair (COO + `1.0.0_SA_CTO~Z`); the re-pin of site Z's runner to
+the merged commit (a WORLD act under its own pair); the live read of bbg's next cycle (242 of 242, details kept).
+
+**Checks dry-run at the base before the cut:**
+- `bv-1` AC1 base: FAIL as expected (no test file). AC2 base: PASS (53 passed). Full `lib/opal_data_harvest` suite at the base:
+  5 failed, 770 passed, 3 skipped (pre-existing; named in the order).

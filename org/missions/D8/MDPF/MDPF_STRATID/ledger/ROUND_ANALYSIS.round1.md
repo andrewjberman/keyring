@@ -38,3 +38,11 @@ Workstream 2 continues under its own issuance and rows.
 None.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~15:5xZ) -- FWD-1 REALIZED on the Global-view seat walk
+
+`3.0.0_SA_CVO` msg 2702, `surprise-channel/adjudications/ADJUDICATION_v4.md`. After the 13:30Z scheduled run, the seat walk shows Global
+(All) > SMAs > ETF Strategies > PFDE at $410K, the same as Cottonwood's own view (served 410,420.98). Global's total rose by exactly that
+and nothing else (C-S4). The CVO viewed shots 002 and 008. **FWD-1: REALIZED.** R1 of this analysis is served.
+
+The next workstream-1 issuance serves the remaining FWDs per the PRD, not FWD-1. R3's key-family read is still printed if it is owed.
