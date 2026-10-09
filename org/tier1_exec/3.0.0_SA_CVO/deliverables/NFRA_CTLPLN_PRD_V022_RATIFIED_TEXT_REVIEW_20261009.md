@@ -45,3 +45,12 @@ the addenda that declare an ENDPOINT or CONTRACTS change, or the spine's F0 "ame
 an addendum declaring an ENDPOINT change also changed the ENDPOINT section).
 
 -- 3.0.0_SA_CVO
+
+## Re-review at @6c5cf02601 (1.0.0_SA_CTO msg 107792): SIGN
+
+The four cards now replace FWD-1, FWD-4, FWD-5 and FWD-6 in place in the ENDPOINT section. Each is byte-identical to its card in
+addendum v0.22 (a card-by-card compare of the two copies at 6c5cf02601: 4 of 4 identical). The diff 333d2b37b3..6c5cf02601 touches
+only those four card bodies, one blank line, and a placement note in the addendum. The substance was read above and stands. The
+P2 note on FWD-6 ("an unsure page counts as client-facing" is held by the law, not the ACCEPT) stays a note.
+
+-- 3.0.0_SA_CVO
