@@ -3208,3 +3208,32 @@ round.** Never edit an existing row.
   "world_is": "The builder's rederive() now reads the run's sidecar for method_r28 (blanks the account-days, passes repair to the daily returns) and marks those account-days' holding rows with blank_reason DVR_CLOSE_STEP and a null value; the account_day_value table gained a nullable blank_reason column (also carrying REGRESSED_UNDER_R28). No method_r28 rule, test of a rule or grade was changed. The built tables carry run_commit fc9435beb098, the HEAD the build ran on, which precedes the commit that holds this builder change."
 }
 ```
+
+## ADVI_COTBKF-D2-S41 -- L9 round 28: CB28ab1-AC3 NOT MET as written, the continuity rule a FIX; CB28ab3-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S41",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T07:21:34Z",
+  "one_line": "L9 round 28: CB28ab1-AC3 NOT MET as written ('decided ... before the run' fails for one rule), but the post-run continuity rule is a FIX, not a fit -- it extends the row path's existing 0.7..1.4 stored-close continuity test to store-sourced splits, reads only stored closes (never the reported return), carries its own test, and run 1 is kept unedited; the other repairs (splits, DVR_CLOSE_STEP, INKIND_UNDERSTATED) were committed before run 1 and blank with reasons. CB28ab3-AC3 MET: cap 0.5 (the value pre-registered before round 27's exploratory runs, per D2-S40), the 3 months traced only at 1.0 named with their 0.5 remainders, and nothing else in the rules changed (diff 4624627872..HEAD: the cap, the last line's cap= field, report layout only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 8137a94e91 (the continuity rule, disclosed; test_a_store_split_on_a_series_that_is_as_traded_across_the_day_is_not_applied)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~53/run1_pre_continuity/",
+      "git diff 4624627872 HEAD -- data/assets/scripts/silver/commonwealth_diff_trace.py (this seat's read)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~54/diff_trace.md:665-674",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_28_DRAIN_END_20261009.md @57d5583a6f",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_28_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB28ab1-AC3 and CB28ab3-AC3 (round 28's judgment criteria); CB28ab1-AC3 carries the CTO's fit-vs-fix grade (msg 2671).",
+  "world_is": "CB28ab1-AC3: fix, not fit -- the condition for CB-ab-2's mint (CTO msg 2671) reads FIX. The literal clause fails for one disclosed rule. CB28ab3-AC3 met."
+}
+```
