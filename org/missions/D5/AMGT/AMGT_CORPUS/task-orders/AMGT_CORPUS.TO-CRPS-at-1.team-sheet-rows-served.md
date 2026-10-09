@@ -68,6 +68,12 @@ extract.BRONZE_REQUEST)`, keys `security_key=<KEY>/<report_id>/<file name>`; lis
 lib/research/corpus/team_sheet.py
 lib/research/corpus/tests/test_team_sheet_round44.py
 lib/research/api/scoped_amgt.py
+lib/research/corpus/dossier.py
+lib/research/corpus/tests/test_dossier_method_bump.py
+lib/research/corpus/tests/test_dossier_case_body.py
+lib/research/corpus/tests/test_dossier_case_unit.py
+lib/research/corpus/tests/test_dossier_case_positional.py
+lib/research/corpus/tests/test_dossier_heading_only_round40.py
 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-at-1.team-sheet-rows-served.proof_of_spec.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-at-1.team-sheet-rows-served.md
@@ -80,8 +86,10 @@ Read-only: the whole repository, in particular `org/missions/D5/AMGT/AMGT_CORPUS
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-at-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round44/at1_check.py"</invocation><expect>(?m)^at1 build 2/2 control 1/1$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-at-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m pytest -q -p no:cacheprovider lib/research/corpus/tests/test_team_sheet_round44.py 2&gt;&amp;1 | tail -1 | sed 's/\x1b\[[0-9;]*m//g'</invocation><expect>(?m)^\d+ passed in [\d.]+s$</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-at-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; grep -c "team_sheet import\|import team_sheet\|team_sheet\.rows_for" lib/research/api/scoped_amgt.py</invocation><expect>(?m)^0$</expect></criterion>
 </proof_of_spec>
 
+- AC3 (AMENDMENT 1): the serving API never calls the team-sheet reader; it reads the field from the served dossier.
 - AC1: the classes sum to the served names, every both-sheet workbook carries `model_rows_beside`, and your rows equal the check's
   independent derivation on every name with an own workbook; the control names read the classes the check derives.
 - AC2: your tests pass.
@@ -94,6 +102,26 @@ Read-only: the whole repository, in particular `org/missions/D5/AMGT/AMGT_CORPUS
 3. Only if AC1 and AC2 pass, append a new status tag reading complete at the END of this file, in the SAME commit as your instance.
 4. Report ONCE: the change, AC1's lines (classes, rows match, build/control), AC2's line, the census class line, your commit hashes, any row.
 
+## 6. AMENDMENT 1 (2026-10-09 ~21:2xZ, the issuer's own, on the CTO's ruling msg 3196)
+
+The serving API's role holds no read on the bronze workbooks, and the CTO ruled it gets none: the API reads only served tiers. So
+`team_sheet` is computed ONCE, at dossier build time, and stored in the gold dossier, which the API already reads. Your reader stays
+(`team_sheet.rows_for` / `census` and its rules are unchanged, and AC1 still grades them); only WHERE it runs changes.
+
+**Do, and only this:** take the amendment by merging `box/dell1` into your branch (`git merge --no-edit box/dell1`), then:
+1. `lib/research/corpus/dossier.py` `build` (about line 1461): add `fields["team_sheet"] = team_sheet.rows_for(security_key,
+   client=client)` (the same shape; a raised read stores class None, rows [], and a reason in words). Bump `METHOD_VERSION` from
+   `amgt-corpus-dossier/9` to `amgt-corpus-dossier/10` and update ONLY that literal in the five tests now in `<paths>` that pin it.
+2. `lib/research/api/scoped_amgt.py` `read_thesis_bundle` (about line 3691): `model["team_sheet"]` is read from the served dossier
+   document the function already reads (`dossier_read`, about line 3686), field `team_sheet`, as stored. When the served dossier has
+   no such field (an older method), serve `{"class": None, "workbook_key": None, "sheet": None, "rows": [], "model_rows_beside":
+   None, "reason": "This name's served dossier was written before the team sheet was added."}`. Remove `_team_sheet_rows` and every
+   import or call of the team-sheet module from that file (AC3 greps for them).
+3. Tests: `build` stores the field (stub the reader); the bundle serves the stored field and the older-dossier reason.
+
+Re-run AC1, AC2 and AC3, the five method-pinning tests, update your instance (AC3 added), run the checker after your final commit,
+and append the status tag reading complete at the END of this file only if AC1-AC3 pass. Report once.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** close read @987284b18e item 1. Base HEAD 732412e179: at1 build 0/2 control 0/1. Served only after AMGT_RESAPP redeploys the scoped API (read_thesis_bundle is its served product) -- an issuer ask at the drain, as /9's leg p. Master template absent from the store: CTO asked at the cut.
@@ -103,3 +131,5 @@ Read-only: the whole repository, in particular `org/missions/D5/AMGT/AMGT_CORPUS
 <slot>~1</slot>
 <fabric>dell1</fabric>
 <status>complete</status>
+<!-- REOPENED 2026-10-09 ~21:3xZ by the issuer 2.0.0_SA_COO~C1 for AMENDMENT 1 (row D1-W1-S6: the order was terminal, so the gate refused the amendment's paths). -->
+<status>pending</status>
