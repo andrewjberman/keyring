@@ -119,3 +119,36 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "The order's row-id line also moves to the gate grammar COMM_ASSIST-Z-S<k> in A3 (Z-S1's note)."
 }
 ```
+
+## COMM_ASSIST-Z-S3 -- PHASE B is BRANCH B: the plan reads Branch A exactly, but the package carries 827 lines the halves never reviewed (opal_naming.py among them)
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S3",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA",
+  "surfaced_at": "2026-10-09T16:43:11Z",
+  "one_line": "PHASE B went BRANCH B and applied nothing: the targeted plan reads Branch A's exact shape (0 add / 3 change / 0 destroy, module only, no key line), but the package it would ship is built from 827 lines of packaged-path change since the halves' baseline b1b8f5b4fe -- including lib/opal_naming.py, which all three halves declare UNCHANGED. The plan cannot see this, because source_code_hash moves identically either way.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PHASE_B_PLAN_NOT_APPLIED.txt: 'Plan: 0 to add, 3 to change, 0 to destroy'; the three addresses are module.ldo_001.aws_iam_policy.exec (:44), .aws_lambda_function.handler (:100), .ingress[0] (:124). No aws_kms_key, no silver_reader, no second_reader. That IS Branch A as the COO half re-cut 1 states it -- the counts alone would have authorised the apply.",
+      "BRANCH B LIMB, COO half Branch B: 'a packaged-path diff since b1b8f5b4fe outside the table above'. Measured git diff --stat b1b8f5b4fe..HEAD over EVERY path build.sh packages (handlers.py, modules/ldo/runtime/ldo.py, data/transcripts/scripts/teams_chat, daily_reports/eod/{post_format.py,VOICE.md}, lib/opal_naming.py, org/standards/NAMING_SCHEMA.json, infra/logic/registry/*.json): 7 files, +827 -6.",
+      "LIMB 1 -- lib/opal_naming.py CHANGED (+2 -1): _is_cadence now also matches cadence.interval_form.token_regex. The COO half says verbatim 'Unchanged since the live build: handlers.py, ldo.py, daily_reports/eod/, lib/opal_naming.py, NAMING_SCHEMA.json'; the CTO half's signing table repeats it ('opal_naming.py and daily_reports/ are unchanged'). A packaged file all three halves recorded as unchanged has changed.",
+      "LIMB 2 -- infra/logic/registry/reporting_policies.json has a CHANGED LEAF, not an addition: firms [\"cottonwood\"] -> [\"cottonwood\", \"49financial\", \"inflection\"] on the irpt reporting policy. Both halves measured the registry as '0 removed, 0 changed' leaf by leaf; this is a changed value, and it names two further firms inside a package deployed from a COMM tree.",
+      "LIMB 3 -- infra/logic/registry/legacy_addresses.json changed (+20) and is NOT one of the seven registry files either half's table names (event_rules, key_rulings, name_rulings, reporting_policies, root_map, scopes, systems). It is packaged all the same: build.sh:28 copies infra/logic/registry/*.json by glob, so the half's enumeration is narrower than the build's.",
+      "NOT A DEFECT, checked and cleared before filing: opal_naming.py's new branch reads cad['interval_form']['token_regex'], and NAMING_SCHEMA.json is unchanged since the baseline, so a KeyError in the Lambda looked possible. The packaged schema DOES carry cadence.interval_form.token_regex, and _is_cadence('daily') returns True against the built dist/pkg. No runtime break; the import test (rc=0) would not have caught one anyway, since the call is not at import.",
+      "THE BUILD IS DETERMINISTIC, so the hash move is evidence of input change and not of build noise: build.sh:7 'Zipped with fixed timestamps so identical inputs give an identical zip (source_code_hash is stable)'. The same tree built 261471 bytes / +VT4f32xh... at 13:0xZ and 261765 bytes / hnffNee... at 16:2xZ.",
+      "Steps 1-5 all read as expected and are not the blocker: secret ARN recorded by describe-secret (value never read), variable default committed 780f31c7cd, ledger opened and its entry AND sentinel committed d109b36f3c BEFORE the act, both functions still xWURpe/n... with MAIL_BEARER_SECRET null, policy still v3, rollback zip saved and hashing to the live value, both builds rc=0, import test rc=0. Act time 16:16Z, outside the 20:00Z-21:45Z End of Day stop."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Branch A is 0 add / 3 change / 0 destroy over module.ldo_001 only, and the package deployed is the one the halves reviewed: the measured 12-file diff a5fde91788..b1b8f5b4fe, with opal_naming.py, handlers.py, ldo.py, daily_reports/eod/ and NAMING_SCHEMA.json unchanged and the 7 registry files purely additive.",
+  "world_is": "The plan satisfies Branch A exactly. The PACKAGE does not: 7 packaged files moved +827 -6 since b1b8f5b4fe, one of them a file the halves call unchanged, one a changed registry leaf naming two more firms, one a registry file outside the halves' enumeration. Nothing was applied: no safe-apply ran, no lock was taken (-lock=false), no function, policy or key changed, no mail was sent and nothing was invoked. Both functions remain at xWURpe/n... with no MAIL_BEARER_SECRET and the policy at v3.",
+  "notes": "ARMED, and this is the part that needs a decision rather than a note: step 2's commit 780f31c7cd leaves the secret ARN as the variable's COMMITTED DEFAULT while the act is deferred. That is deliberate under the halves (committed, never -var, because the root is shared) but it now means ANY apply of infra/aws/terraform/transcripts by any project -- NFRA_TRNSPT owns the rest of it -- lands MAIL_BEARER_SECRET and this unreviewed package without passing Branch A. Three dispositions, all the issuer's with the signers: (a) re-sign the halves on the measured b1b8f5b4fe..HEAD packaged diff and re-cut the apply; (b) revert 780f31c7cd to default \"\" until the re-sign, which re-disarms the shared root; (c) pin the package by building at b1b8f5b4fe. This seat applied nothing and holds. ALSO FOR THE RECORD: the halves' Branch B enumerates 7 registry files by name while build.sh:28 packages them by glob, so the enumeration cannot keep up with the build -- the durable fix is to state the packaged set as the glob."
+}
+```

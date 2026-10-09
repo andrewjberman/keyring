@@ -23641,3 +23641,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Resolves AMGT_RESAPP-S1 (landed row not edited). Row AMGT_RESAPP-S2 (owned-paths has no route for a non-worker seat) is 0.0.0_AB_MSTR's."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S18",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T17:03Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "one_line": "GET /api/scoped/amgt/watchlist ignores selected_tenant: an off-list selector gets 200 with the caller's own list, where other scoped routes refuse it.",
+  "spec_asserts": "Scoped routes refuse an off-list selected_tenant (the behaviour of the routes TCKT_VNEXT SA-r-1b compared against).",
+  "world_is": "lib/research/api/scoped_amgt.py takes the firm only from the edge-injected header (_firm_id) and never reads selected_tenant, so the route answers with the caller's own firm's list. Not a leak (the answer is always the caller's own data); a behaviour difference. Reported by dell2 2.0.0_SA_COO~V2 msg 3757 (dell2 CTO msg 3747), relayed by 0.0.0_AB_MSTR~DELL1 msg 2868; found by TCKT_VNEXT SA-r-1b run 2 @e2c7f7b25a.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py: selected_tenant occurrences counted at the issuer's HEAD (see this commit's tick log)",
+      "0.0.0_AB_MSTR~DELL1 msg 2868"
+    ]
+  },
+  "notes": "Carried to the round-86 analysis as a candidate cell (refuse an off-list selected_tenant like the other scoped routes); no cell cut mid-round (the decomposition is frozen)."
+}
+```
