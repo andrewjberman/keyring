@@ -2444,3 +2444,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "resident_worker.py was not edited (code arm stopped per the cell). If the issuer still wants the field, the cell needs paths acceptance.py and submission_service.py (and a decision on the premise above); then case 1 flips and strict xfail turns the suite red until the marker is removed."
 }
 ```
+
+## IRPT_YCDGEN-D2-S4 -- no partner firm has a FIRM_OPERATIONS-capable row; cottonwood has no FIRM_ADVISOR-capable row
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T01:56:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "No registered partner firm has a row E5 can resolve as FIRM_OPERATIONS (0 admin users at every firm), and cottonwood has no FIRM_ADVISOR-capable row either: an on-behalf upload for cottonwood is impossible on current data",
+  "spec_asserts": "E5 (served.py _advisor_owner) accepts an on-behalf owner of class FIRM_ADVISOR (an advisorId from the partner row's advisorKey) or FIRM_OPERATIONS (role/advisorRole admin with a verified firm), per resolve_prospect_owner (_scope/prospect.py:34).",
+  "world_is": "advisor_census.py (read-only, counts only) 2026-10-09 ~01:54Z: 49financial 11 partner rows, 11 with advisorKey, 11 active users all role user, 0 admin; inflection 7 rows, 6 with advisorKey, 7 active role user, 0 admin; cottonwood 5 rows, 0 with advisorKey, 5 active role user, 0 admin. So FIRM_OPERATIONS is unreachable at every firm, and a cottonwood on-behalf filer (svc lists cottonwood) is always refused 'verified firm advisor or operations owner required'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/ADVISOR_CENSUS_20261009.txt @c7ba00eea0",
+      "_scope/prospect.py:34",
+      "_scope/resolve.py:239-241"
+    ]
+  },
+  "notes": "CTO~DELL2 ruling msg 2148: the seat-driven F1 moves to 49financial (svc's allowedFirmIds swapped cottonwood -> 49financial under a pair after st27). Whether any firm should carry an operations owner is a data question for the partner-onboarding owner, not this project."
+}
+```
