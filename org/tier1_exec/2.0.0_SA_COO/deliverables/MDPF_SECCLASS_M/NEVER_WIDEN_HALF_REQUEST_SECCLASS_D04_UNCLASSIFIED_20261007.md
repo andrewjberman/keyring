@@ -98,6 +98,14 @@ only). Before signing, the issuer reads every consumer of `PlatinumFirmMixSummar
 `unclassified` would lose the residue line. That is a reader break, and it moves this half to a key-case amendment of the build
 (serve `unclassified`) before any act.
 
+**Key-case reader question: CLOSED, no reader break (~05:0xZ).** The census is `comp-find 'getPlatinumFirmMixSummary|PlatinumFirmMixSummary'
+portal/src`: 11 hits over 1,368 files, and two consumers.
+- `ClientsTab.tsx:342-359` reads `mix.mix_periods` (views) and `mix.composition` (through `normalizeMixTo4Class`). Its own request
+  leaves `composition` byte-unchanged.
+- `AuthContext.tsx:67` prefetches only.
+No portal consumer reads the top-level `mix`, so the move to `Unclassified` drops no rendered line. The lower-case `unclassified` in
+`composition.ts:42` keys `composition.mix[]`, which e60 does not touch.
+
 **Tests at the merge (worktree `coo_m1_e60` @abdbb3038e):** test_d04_unclassified_line.py 5 passed; BD gold suite 96 passed, 1 failed.
 The one failure is pre-existing at box/dell1 (row MDPF_SECCLASS-D1-S19, the retired ship-every-_shared rule), not this build.
 
