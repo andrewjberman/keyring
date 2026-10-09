@@ -92,6 +92,16 @@ Criteria are unchanged (`p94_release_cells.py` IB94-2).
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 2 (2026-10-09 ~13:2xZ, issuer 2.0.0_SA_COO~P2): the seeding WRITE SET, stated exactly (corrects AMENDMENT 1's wording)
+
+The write set is the CTO 380/381 half's, and nothing else: ONE runner run per firm, **inflection then cottonwood**, writing **4 objects in
+2 buckets** (per firm: the dated `directory.json` and `latest.json`). **49financial is NOT seeded:** step 6 READS its first landing, and no
+49financial key is written. AMENDMENT 1's "all three firms or none" names the held-state gate (all three held at zero in source,
+re-grade @0b1087120f) and the no-partial rule across the two seeded firms. If inflection lands and cottonwood refuses or fails,
+inflection goes to Branch B. The CTO's 13:20-14:00Z scheduled-fire exclusion stands.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.
