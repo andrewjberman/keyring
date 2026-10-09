@@ -48,3 +48,28 @@ Not re-run by this seat.
 root first) moves it further. **What stays this project's own:** the live-plane census, the hand-ranking compare and the planted-name
 positive control (items 2-4 above); none is a BLANKFIX cell. Next re-grade: when BLANKFIX's census reads `unmapped=0 uncounted=0`.
 
+
+## Re-grade 2026-10-09 ~15:2xZ (`1.0.0_SA_CTO~DELL1`, LGIC_ENFORCE now placed on DELL1 by L3 @e0413891af) -- BLANKFIX CLOSED
+
+**The run:** LGIC_BLANKFIX's close (round 12 FWD-9, re-run by the CVO): `86/86 mapped, hole=0, uncounted=1`. The 1 uncounted item is
+builder output and does not count (BLANKFIX round-11 ADDENDUM 1). BLANKFIX CLOSED @c23979cd0c.
+
+### Grade: NOT_REALIZED -- clause 1's STORED-CODE half is now MET. Items 2-4 remain this project's own
+
+| Clause | Read | Verdict |
+|---|---|---|
+| everything: stored code AND what is running | stored code: 86 of 86 roots, 0 holes. Live plane: not run | stored half MET; live half NOT MET |
+| a ranked list of every breaking name with its correct form, totals shown | met over every stored root | MET on stored code |
+| totals agree with the hand ranking | not attempted | NOT MET |
+| an unreadable name stops the run loudly | no planted name run | NOT SHOWN |
+
+**Round 20 (ONE issuance by `2.0.0_SA_COO~B1`, now seated):**
+1. **The live plane:** one census over the live AWS plane (`comp-find --corpus aws`, as PRD cell E9 names it), with its denominator
+   (nodes scanned) printed beside the repository totals.
+2. **The hand-ranking compare:** the run's totals set beside the naming work's hand ranking, each difference explained.
+3. **The loud stop:** one planted unreadable name, which must STOP the run (a positive control). Its negative control is a readable
+   name that passes.
+4. **Rows from BLANKFIX's close** (ROUND_ANALYSIS.round14.md section 2):
+   - **D1-W2-S9:** the gate grades 0 strings for a name built by `name()` at a call site. The gate either grades the built name, or
+     prints that it did not, so a pass there is never vacuous;
+   - **D1-W2-S12:** one planted PATTERN-name commit on a QA branch, read for its grade.
