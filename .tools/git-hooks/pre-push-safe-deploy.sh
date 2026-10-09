@@ -105,7 +105,7 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
             continue
         fi
         _dpaths=(); while IFS= read -r _p; do [ -n "$_p" ] && _dpaths+=("$_p"); done < <(printf '%s\n' "$_dl" | sed -n 's/^DEPLOYABLE //p')
-        _ln="$(python "$REPO_ROOT/.tools/deploy-ledger-names.py" --repo-root "$REPO_ROOT" "${_dpaths[@]}" 2>/dev/null | tr -d '\r' || true)"
+        _ln="$(python "$REPO_ROOT/.tools/deploy-ledger-names.py" --repo-root "$REPO_ROOT" --rev "$LOCAL_SHA" "${_dpaths[@]}" 2>/dev/null | tr -d '\r' || true)"
         _led=()
         if printf '%s\n' "$_ln" | grep -q '^LEDGER-OPEN-ENTRIES n='; then
             while read -r _k _p _s; do [ "$_k" = "LEDGERED" ] && _led+=("$_p"); done <<< "$_ln"
@@ -114,8 +114,9 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
         fi
         while read -r _k _p _s; do
             [ "$_k" = "HELD" ] || continue
-            echo "deploy gate: HELD-DEPLOY $_p -- no OPEN change-management ledger names it; not deployed (the push goes through)" >&2
-            echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  path=$_p  reason=no-open-ledger-names-it" >> "$_audit" 2>/dev/null || true
+            # $_s is "ledger-names-path-not-this-build:<slug>" when an OPEN ledger names the path but pins another build (row IRPT_BCKEND-D2-S28)
+            echo "deploy gate: HELD-DEPLOY $_p -- ${_s:-no OPEN change-management ledger names it}; not deployed (the push goes through)" >&2
+            echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  path=$_p  reason=${_s:-no-open-ledger-names-it}" >> "$_audit" 2>/dev/null || true
         done <<< "$_ln"
         if [ "${#_led[@]}" -gt 0 ]; then
             echo "deploy gate: $REMOTE_REF -- deploying ${#_led[@]} ledgered file(s) of ${_dn} deploy-scope file(s)" >&2
