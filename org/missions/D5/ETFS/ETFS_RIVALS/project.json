@@ -2,13 +2,13 @@
   "project_code": "ETFS_RIVALS",
   "macro_code": "ETFS",
   "directive": "D5",
-  "fabric": "site-z",
+  "fabric": "dell1",
   "pipeline": "etfs-rivalfunds-daily",
   "status": "active",
   "dep_stage": "EXECUTING",
   "created": "2026-09-30",
   "registered_under_tree": "2026-09-30",
-  "placement": "SITEZ",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "ETFS_POSITIONING",
@@ -91,16 +91,18 @@
   ],
   "decomposition_lineage": [],
   "leads": {
-    "cto": "1.0.0_SA_CTO~Z",
-    "coo": "2.0.0_SA_COO~RV",
+    "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
+    "coo": "2.0.0_SA_COO~V1 (dell1), seated ~01:5xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1407); CVO 3.0.0_SA_CVO~RV1",
     "cvo": "3.0.0_SA_CVO~Z",
     "cro": "4.0.0_SA_CRO~Z",
     "workers": "0.9.0_WK_ETFS_RIVALS~<n>, per the L6 issuance"
   },
-  "coo_lane": "2.0.0_SA_COO~RV",
-  "fabric_ruling": "site-z -- D5 is placed SITEZ (DIRECTIVES.yaml D5 placement: 'We're going to take D5 to this device'), and the Bloomberg leg needs the logged-in Terminal on this box (brief IV.3). Moved from D4 on Andrew's word ('ok yeah RIVALS should be on D5 Asset Management', @e6de2392c2; 'yes it can, ETFS can also be included in D5 as one of the macros', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_063xZ_ETFS_INCLUDED_IN_D5_MACROS_ETFS_RIVALS_TO_D5.md).",
+  "coo_lane": "2.0.0_SA_COO~V1",
+  "fabric_ruling": "dell1 -- Andrew-direct 2026-10-09 ~01:5xZ (relayed by 0.0.0_AB_MSTR~Z bus d21f51be, site Z CTO msg 32243), VERBATIM: \"i just canceled your spawns, those agents are on DE...",
   "blocking": "Round 2 ISSUED by 2.0.0_SA_COO~RV (PRD v0.3 C-GOLD-MODEL): 9 task orders (RIV-m-1, g0-1, b-1, e-1, g1-2, g2-1, g5-2, p-2, d-3); wave 1 slots ~1-~4 spawned (g0-1, b-1, e-1, m-1); g1-2 -> g2-1 -> p-2 on ~1 and g5-2 on ~3 follow their merges; the join RIV-d-3 (slot ~5) spawns after every other order merges and a never-widen pair is signed (1.0.0_SA_CTO~Z + 2.0.0_SA_COO~RV).",
   "thread_counter": 0,
   "threads": [],
-  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was SITEZ. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
+  "placement_ruling": "Andrew-direct 2026-10-09 ~01:5xZ (relayed by 0.0.0_AB_MSTR~Z bus d21f51be, site Z CTO msg 32243), VERBATIM: \"i just canceled your spawns, those agents are on DELL1 now, thats where they can work\" -- moves ETFS_RIVALS and AMGT_CORPUS to dell1 NOW, mid-round, overriding dell1 CTO term 4; under Andrew-direct 2026-10-08 ~22:5xZ (@b7361ceb2a). Re-placed at L3 by 1.0.0_SA_CTO~DELL1. PRODUCER RULE: site-Z producers in the census (@6a308cd424) stay at site Z; a dell1 change to a site-Z producer path (incl. a module an ACTIVE site-Z producer imports) is a site-Z deploy under a never-widen pair carrying 1.0.0_SA_CTO~Z's half before the merge.",
+  "fabric_ruling_prior": "site-z -- D5 is placed SITEZ (DIRECTIVES.yaml D5 placement: 'We're going to take D5 to this device'), and the Bloomberg leg needs the logged-in Terminal on this box (brief IV.3). Moved from D4 on Andrew's word ('ok yeah RIVALS should be on D5 Asset Management', @e6de2392c2; 'yes it can, ETFS can also be included in D5 as one of the macros', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_063xZ_ETFS_INCLUDED_IN_D5_MACROS_ETFS_RIVALS_TO_D5.md).",
+  "handover_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md @0953984a75"
 }
