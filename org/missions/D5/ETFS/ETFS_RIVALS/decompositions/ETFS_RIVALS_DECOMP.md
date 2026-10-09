@@ -1186,3 +1186,19 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
 - Out of bounds: `gold_canonical_shape.py`, `render.py`, `publish_page.py`, `price_series.py`, `enrichment_bloomberg.py`;
   no S3, no deploy. The served rebuild of the affected (fund, capture) pairs is the issuer's act under its own pair, after
   the round-28 J1 reads (ADDENDUM 3).
+
+### `RIV-wf-1` -- the holdings calendar classifies a capture against the PREVIOUS capture's claim (new / repeat / regressed); a Bloomberg row's delivered_on is the requested date (CTO ruling ADDENDUM 4, msg 2128; row D1-S7) -- APPENDED 2026-10-09, revision 1.23
+- Measured: canonical_shape partitions are the vendor's claimed as-of (date=2026-10-05 holds capture 20261007T110910Z,
+  requested 10-06, claims 10-05); the calendar (`gold_holdings_coverage.classify`) compares the claim with the REQUESTED
+  day, so CGIC, whose file always lags one trading day, reads `repeat` every day (10-01..10-06) although each capture is a
+  new report. RIV-we-1 set `delivered_on` to the partition (the as-of), not the delivery day.
+- Interface:
+  1. `classify(expected, actual, periodic, prev_actual=None)`: with a previous capture's claim for the same fund and
+     source: newer -> `new`, equal -> `repeat`, older -> `regressed`. With none (the first capture), today's rule. `gap`
+     (no capture, undated, or dated after the expected day) and `periodic` keep their meaning. `STATUSES` gains `regressed`.
+  2. `build_rows` passes each fund-source's previous capture claim, in expected-day order.
+  3. `gold_canonical_shape.build_bloomberg_rows(..., requested_date=None)`: `delivered_on` = the capture's requested date
+     (the sidecar's `requested_date`, passed by the caller); None -> the partition, as today. Forward-only (no rebuild).
+  4. `render.py` `CAL_STATUSES` and `page_theme.py` show `regressed` with its own label and color; the page keeps ONE script.
+- Out of bounds: `gold_trade_schedule.py`, `publish_page.py`, `price_series.py`, `enrichment_bloomberg.py`; no S3, no
+  deploy (WS2 guards).
