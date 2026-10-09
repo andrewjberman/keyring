@@ -8465,6 +8465,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
-}
+},
+    {
+     "id": "AMGT_HARVST-D1-S5",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-09T20:19:06Z",
+     "one_line": "After bw-1's re-pin, site Z's reaper dry run lists TWO exempt python processes: PID 29192 (new pin b5a7a3a4b6) and PID 37816 (old pin c1be67f53c). Their parentage is not recorded, so whether a second runner shares the one state dir is unproven.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "HVST-bw-1 step 2 / C-c: no other runner or backfill_driver process is alive after the stop; one runner runs from the new pin with the carried state dir.",
+     "world_is": "bw-1 @abdcceb042 (box/sitez): bw1_ac3.out line 289 and bw1_gc_classifier_dryrun.out line 64 list EXEMPT PID 37816 python.exe WORKTREE .../wk-harvest-runner-pin-c1be67f53c (command line), beside EXEMPT PID 29192 (new pin). bw1_live.out shows 29192 as the cycle_runner with --state-dir under the old pin, as ordered. The old cycle 20261009T170903Z ended stopped_by_operator at 19:53:06Z. Likely reading, NOT measured: 37816 is the collector job subprocess the new runner spawns, whose command line carries the old pin's runtime-root path. bw-2 AMENDMENT 1 reads the process tree (pid, parent pid, command line).",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_ac3.out @abdcceb042",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_live.out @abdcceb042"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

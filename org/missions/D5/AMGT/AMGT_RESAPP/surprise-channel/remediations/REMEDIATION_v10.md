@@ -32,293 +32,301 @@ Stamp boundary: L8/L9/L10 round-10 stamps are this seat's. The canonical tool wa
 
 ```json
 [
- {
-  "id": "AMGT_RESAPP-Z-S88",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "mechanism": "The deleted-table producer failure was real at the measured 09-14 log vintage. The repaired declaration/policy, QA result (10 rows), saved deployed-adapter response (10 rows) and owner disarm S98 support recovery of that cause. The organic scheduled fire remains unobserved at this review; recovery does not prove article inflow (S96).",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept the completed producer repair and S98 disarm; retain the QA versus scheduled-run distinction in L10.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
+  {
+    "id": "AMGT_RESAPP-Z-S88",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "The deleted-table producer failure was real at the measured 09-14 log vintage. The repaired declaration/policy, QA result (10 rows), saved deployed-adapter response (10 rows) and owner disarm S98 support recovery of that cause. The organic scheduled fire remains unobserved at this review; recovery does not prove article inflow (S96).",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept the completed producer repair and S98 disarm; retain the QA versus scheduled-run distinction in L10.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "2.0.0_SA_COO~W",
+      "at": "2026-09-15T05:43:30Z"
+    }
   },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "2.0.0_SA_COO~W",
-   "at": "2026-09-15T05:43:30Z"
+  {
+    "id": "AMGT_RESAPP-Z-S89",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "The uncommitted two-line edit was the migration guard, not discardable residue. HEAD now contains the harvest bucket name at ea6cd450fa, drained 5c95c00268, with no working-tree difference. Owner S99 arrived after the packet and disarms it. The mount plan mentions the bucket once in refresh output but proposes zero bucket changes.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept the in-lane committed convergence and owner S99 disarm. Do not restore the pre-migration declaration.",
+    "owner": "4.0.0_SA_CRO~Z",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "4.0.0_SA_CRO~Z",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "4.0.0_SA_CRO~Z",
+      "at": "2026-09-15T05:43:30Z"
+    }
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S92",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "A single route page was mistaken for the whole set. The amended order uses measured before N, subset preservation and +11. Independent saved-set comparison gives 85 before, 96 after, exactly 11 added and zero lost; the repair preserves the substantive bar.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept the amended route census and the completed 85-to-96 set transition; retain pagination and set-difference checks in future cuts.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S95",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "Both saved ranking payloads contain 10 ticker rows and zero security_key fields. RankedList passes row.ticker; BABA US yields zero figures, while BABA_US_Equity yields 13 header and 183 fiscal figures. The screenshot and saved responses corroborate the seam. This is an existing identity/Lead Panel cell defect, not evidence that a new outcome is needed.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Recut the existing identity-to-navigation seam. A ranked-row click must resolve the same canonical security and figure set as the direct-key control; retain an unresolved-name negative control. The CTO reads the remedy and COO chooses its implementation home.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "2.0.0_SA_COO~W",
+      "at": "2026-09-15T22:21:34Z"
+    }
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W17-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "The patch was absent from the issued worktree because it was untracked, although the order named it. The worker used the exact named patch from the shared tree and checked its pre/post image hashes; the resulting two-line change is now committed. This specific repair is established, while future issuance must carry readable dependencies at its pin.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept this content-verified repair. Future cuts must commit named read dependencies before fanout or explicitly provide their authorized reachable location.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W17-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "mechanism": "The root could not evaluate without the artifact, and a whole-root producer plan counted the mount. The issuer amendment supplied the artifact prerequisite and a targeted producer plan, followed by the whole-root mount plan. Saved logs show 0/4/0 then 19/0/0; S97 records the owner disarm.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept the executed amendment and disarm. Preserve the root evaluation ordering and targeted-versus-whole-root distinction.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "2.0.0_SA_COO~W",
+      "at": "2026-09-15T05:43:30Z"
+    }
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W17-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "mechanism": "The five-package enumeration omitted three reached modules. The issuer replaced it with a closure before the final upload/mount. Independent source AST closure reproduces 23 seeds, 30 final entries, 20 required modules, zero missing; the seed-only control misses exactly the three reported modules. Saved upload logs carry the 75917-byte artifact.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept the amended transitive-closure repair and W17-S6 evidence of its execution; retain function-scope imports and package initializers in the closure.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "2.0.0_SA_COO~W",
+      "at": "2026-09-15T05:43:30Z"
+    }
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W17-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "The literal AC2 status-line expectation is not met after the predecessor committed the changes. The history and source counts support the consolidation itself. A valid proof schema and a plausible replacement read do not make the named invocation emit the required status lines; the mismatch remains in the issued face.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "At the next issuer cut, make the criterion explicitly read committed history/source state on a rerun. Preserve this terminal record and its measured divergence; do not recreate uncommitted changes to force a status output.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "CLOSED_UNREMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~348/DISPOSITION_LEDGER.json@4c3f3fcb2e: its object is a criterion or instruction in a terminal order (a round-10 order, status complete: AC2 status-line expectation; the divergence is preserved on the row); no open order carries it (the task-orders folder holds only ll-1..ll-4 and two cancelled/staged orders non-terminal) and the lesson i"
+      }
+    },
+    "closed": true
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W17-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "AC5 literally expects state-resources 22 and success strings; the output is 23 and six blank tails. The identified extra data source and six imported addresses explain the difference and support the import act, but the literal expectation is not satisfied. The amendment changed the denominator without changing this bar.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "At the next issuer cut, enumerate the six required managed addresses separately from data-source state entries and retain full import output. Record this criterion mismatch in L10; never repeat an import merely to recover a success string.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "CLOSED_UNREMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~348/DISPOSITION_LEDGER.json@4c3f3fcb2e: its object is a criterion or instruction in a terminal order (a round-10 order, status complete: AC5 22-versus-23 state-resources bar; the import is not to be repeated); no open order carries it (the task-orders folder holds only ll-1..ll-4 and two cancelled/staged orders non-terminal) and the lesso"
+      }
+    },
+    "closed": true
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S96",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "The ranking and coverage readers address the DynamoDB articles table, while the commissioned harvest writes publication bodies/links to S3. No connecting reader/writer is established in the supplied bounded census. The repaired daily producer can therefore succeed while lacking the newly harvested content. This is the CTO-held article-store contract choice already named for the addendum.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Carry the store/reader contract choice in the planned PRD addendum. Require traceable publication input to reach both ranking and coverage with a difference control. No vendor call, new model call, ETF-plane read, or mid-round cell is authorized by this finding.",
+    "owner": "1.0.0_SA_CTO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "1.0.0_SA_CTO~W",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "1.0.0_SA_CTO~W",
+      "at": "2026-09-15T20:32Z"
+    }
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W16-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "mechanism": "The chunk-name predicate cannot find the barrel-named emitted asset. The issuer amended AC5 to a content scan; the retained 55-JS-asset denominator, two positive strings in the same chunk, and zero-match control support the corrected build-presence claim.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Accept the content-based criterion amendment and W16-S3 rerun. Do not rename a correct chunk to satisfy a broken predicate.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true
+  },
+  {
+    "id": "AMGT_RESAPP-Z-C-S196",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "FWD9 remains unimplemented at the served drafting boundary: read_thesis_bundle returns drafted_sections=[]; both saved thesis payloads have zero sections. The actual ThesisTab controlled render labels a generated sentence but puts its evidence only in title, with zero visible evidence. Figure check badges cannot discharge a prose/evidence requirement.",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
+    ],
+    "remedy": "Recut the existing drafting/adapter/Thesis connection so actual generated sentences and their source evidence reach the page, and render the evidence visibly beside each machine-marked sentence. Exercise generated and firm-text controls, plus absent input; a tooltip alone and figure badges are insufficient.",
+    "owner": "2.0.0_SA_COO~W",
+    "round": "v10",
+    "remediation": {
+      "state": "REMEDIATED",
+      "owner": "2.0.0_SA_COO~W",
+      "round": "v10"
+    },
+    "closed": true,
+    "disarm": {
+      "state": "DISARMED",
+      "owner": "2.0.0_SA_COO~W",
+      "at": "2026-09-15T22:21:34Z"
+    }
   }
- },
- {
-  "id": "AMGT_RESAPP-Z-S89",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "mechanism": "The uncommitted two-line edit was the migration guard, not discardable residue. HEAD now contains the harvest bucket name at ea6cd450fa, drained 5c95c00268, with no working-tree difference. Owner S99 arrived after the packet and disarms it. The mount plan mentions the bucket once in refresh output but proposes zero bucket changes.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept the in-lane committed convergence and owner S99 disarm. Do not restore the pre-migration declaration.",
-  "owner": "4.0.0_SA_CRO~Z",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "4.0.0_SA_CRO~Z",
-   "round": "v10"
-  },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "4.0.0_SA_CRO~Z",
-   "at": "2026-09-15T05:43:30Z"
-  }
- },
- {
-  "id": "AMGT_RESAPP-Z-S92",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "mechanism": "A single route page was mistaken for the whole set. The amended order uses measured before N, subset preservation and +11. Independent saved-set comparison gives 85 before, 96 after, exactly 11 added and zero lost; the repair preserves the substantive bar.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept the amended route census and the completed 85-to-96 set transition; retain pagination and set-difference checks in future cuts.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true
- },
- {
-  "id": "AMGT_RESAPP-Z-S95",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "mechanism": "Both saved ranking payloads contain 10 ticker rows and zero security_key fields. RankedList passes row.ticker; BABA US yields zero figures, while BABA_US_Equity yields 13 header and 183 fiscal figures. The screenshot and saved responses corroborate the seam. This is an existing identity/Lead Panel cell defect, not evidence that a new outcome is needed.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Recut the existing identity-to-navigation seam. A ranked-row click must resolve the same canonical security and figure set as the direct-key control; retain an unresolved-name negative control. The CTO reads the remedy and COO chooses its implementation home.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "2.0.0_SA_COO~W",
-   "at": "2026-09-15T22:21:34Z"
-  }
- },
- {
-  "id": "AMGT_RESAPP-Z-W17-S1",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "mechanism": "The patch was absent from the issued worktree because it was untracked, although the order named it. The worker used the exact named patch from the shared tree and checked its pre/post image hashes; the resulting two-line change is now committed. This specific repair is established, while future issuance must carry readable dependencies at its pin.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept this content-verified repair. Future cuts must commit named read dependencies before fanout or explicitly provide their authorized reachable location.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true
- },
- {
-  "id": "AMGT_RESAPP-Z-W17-S2",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "mechanism": "The root could not evaluate without the artifact, and a whole-root producer plan counted the mount. The issuer amendment supplied the artifact prerequisite and a targeted producer plan, followed by the whole-root mount plan. Saved logs show 0/4/0 then 19/0/0; S97 records the owner disarm.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept the executed amendment and disarm. Preserve the root evaluation ordering and targeted-versus-whole-root distinction.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "2.0.0_SA_COO~W",
-   "at": "2026-09-15T05:43:30Z"
-  }
- },
- {
-  "id": "AMGT_RESAPP-Z-W17-S3",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "mechanism": "The five-package enumeration omitted three reached modules. The issuer replaced it with a closure before the final upload/mount. Independent source AST closure reproduces 23 seeds, 30 final entries, 20 required modules, zero missing; the seed-only control misses exactly the three reported modules. Saved upload logs carry the 75917-byte artifact.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept the amended transitive-closure repair and W17-S6 evidence of its execution; retain function-scope imports and package initializers in the closure.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "2.0.0_SA_COO~W",
-   "at": "2026-09-15T05:43:30Z"
-  }
- },
- {
-  "id": "AMGT_RESAPP-Z-W17-S4",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "mechanism": "The literal AC2 status-line expectation is not met after the predecessor committed the changes. The history and source counts support the consolidation itself. A valid proof schema and a plausible replacement read do not make the named invocation emit the required status lines; the mismatch remains in the issued face.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "At the next issuer cut, make the criterion explicitly read committed history/source state on a rerun. Preserve this terminal record and its measured divergence; do not recreate uncommitted changes to force a status output.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "OPEN",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": false
- },
- {
-  "id": "AMGT_RESAPP-Z-W17-S5",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "mechanism": "AC5 literally expects state-resources 22 and success strings; the output is 23 and six blank tails. The identified extra data source and six imported addresses explain the difference and support the import act, but the literal expectation is not satisfied. The amendment changed the denominator without changing this bar.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "At the next issuer cut, enumerate the six required managed addresses separately from data-source state entries and retain full import output. Record this criterion mismatch in L10; never repeat an import merely to recover a success string.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "OPEN",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": false
- },
- {
-  "id": "AMGT_RESAPP-Z-S96",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "mechanism": "The ranking and coverage readers address the DynamoDB articles table, while the commissioned harvest writes publication bodies/links to S3. No connecting reader/writer is established in the supplied bounded census. The repaired daily producer can therefore succeed while lacking the newly harvested content. This is the CTO-held article-store contract choice already named for the addendum.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Carry the store/reader contract choice in the planned PRD addendum. Require traceable publication input to reach both ranking and coverage with a difference control. No vendor call, new model call, ETF-plane read, or mid-round cell is authorized by this finding.",
-  "owner": "1.0.0_SA_CTO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "1.0.0_SA_CTO~W",
-   "round": "v10"
-  },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "1.0.0_SA_CTO~W",
-   "at": "2026-09-15T20:32Z"
-  }
- },
- {
-  "id": "AMGT_RESAPP-Z-W16-S2",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "BLOCKING",
-  "hazard_standing": "INERT",
-  "mechanism": "The chunk-name predicate cannot find the barrel-named emitted asset. The issuer amended AC5 to a content scan; the retained 55-JS-asset denominator, two positive strings in the same chunk, and zero-match control support the corrected build-presence claim.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Accept the content-based criterion amendment and W16-S3 rerun. Do not rename a correct chunk to satisfy a broken predicate.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true
- },
- {
-  "id": "AMGT_RESAPP-Z-C-S196",
-  "project": "AMGT_RESAPP",
-  "fabric": "site-z",
-  "class": "OBSERVATION",
-  "hazard_standing": "ARMED",
-  "mechanism": "FWD9 remains unimplemented at the served drafting boundary: read_thesis_bundle returns drafted_sections=[]; both saved thesis payloads have zero sections. The actual ThesisTab controlled render labels a generated sentence but puts its evidence only in title, with zero visible evidence. Figure check badges cannot discharge a prose/evidence requirement.",
-  "evidence": [
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
-   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_VERIFY_20260915_W.json"
-  ],
-  "remedy": "Recut the existing drafting/adapter/Thesis connection so actual generated sentences and their source evidence reach the page, and render the evidence visibly beside each machine-marked sentence. Exercise generated and firm-text controls, plus absent input; a tooltip alone and figure badges are insufficient.",
-  "owner": "2.0.0_SA_COO~W",
-  "round": "v10",
-  "remediation": {
-   "state": "REMEDIATED",
-   "owner": "2.0.0_SA_COO~W",
-   "round": "v10"
-  },
-  "closed": true,
-  "disarm": {
-   "state": "DISARMED",
-   "owner": "2.0.0_SA_COO~W",
-   "at": "2026-09-15T22:21:34Z"
-  }
- }
 ]
 ```
 
