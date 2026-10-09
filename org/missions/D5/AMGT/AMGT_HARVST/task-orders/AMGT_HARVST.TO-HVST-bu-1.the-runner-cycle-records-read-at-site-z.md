@@ -40,6 +40,10 @@ worktree (or the dir `bs3_plan.out` printed). Write one file,
 4. Under each publisher line, the newest record's `cycle_id`, `started_at`, `ended_at`, `completed`, `asked`, `new`,
    `already_held`, `failed` and `stopped` (if any).
 Copy each publisher's newest COMPLETED record (if any) beside it as `bu1_<p>_newest.cycle.json`, unchanged.
+5. (AMENDMENT 1) Also, in the same file: `R47 DRIVER: <pid list or NONE>` (python processes whose command line holds
+   `backfill_driver`), the output of `bash .tools/detached-job.sh list`, and the last 40 lines of
+   `.runtime/harvest-backfill/r47_sa_run2.out`, verbatim. The persisted run records show one sa run (08:54Z to 09:59Z,
+   3,324 of 3,339 rejected) and none after it.
 
 A failed read is a FINDING printed whole in the file. Restart nothing, even if the runner looks stopped: that is a
 finding for the issuer.
@@ -86,6 +90,9 @@ This order touches none of them.
 - `0.7.0_AE_CloudOps~ZW` read NOT REGISTERED at ~13:06Z, with its last commit at ~09:0xZ. `[STUCK]` went to
   `0.0.0_AB_MSTR~Z` (13:06Z). The order goes by crossbox ORDER through `0.0.0_AB_MSTR~DELL1`.
 - Checks dry-run at the base: AC1, AC2 and AC3 FAIL as expected (no such file).
+- **AMENDMENT 1 (2026-10-09 ~13:4xZ, issuer):** step 5 added, on row AMGT_HARVST-D1-S3 @db4e94d393 (S3 run records since
+  08:57Z: bbg 96 runs with 0 fetched, wsj and barrons 0 attempts, sa one run with 3,324 of 3,339 rejected and no sa run
+  after 09:59Z). Read only; no criterion changes. The XB-ebb9 pin moves to this amendment's commit.
 
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>

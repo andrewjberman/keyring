@@ -46,3 +46,25 @@ The kept live package (downloaded from `get-function` and hash-checked as `66MDf
 the recorder lines by `git revert` of the applier's commit. No store object is written by these acts.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2026-10-09 ~13:4xZ, on row AMGT_RESAPP-D1-S13) -- four closure-carried modules admitted, inert on every request path
+
+The build at pin `4c929a2ffe` STOPPED correctly at the content-diff: 9 non-identical members against `66MDfT5i` where this half's list
+admits 5 printed; OFF-LIST 4, all ADDED, all this project's own unchanged modules:
+`lib/research/identity/{build_universe,one_pager_precedence,positioning_chain,resolver}.py`. The list was cut from a diff over the closure
+roots, which cannot see an unchanged file that newly ENTERS the package because an admitted change imports it.
+
+**Closure reason (measured on the built package, row D1-S13):** jj-3's admitted `crosswalk.py` adds `load_issuer_sources()`, which imports
+`build_universe` at FUNCTION scope only (`crosswalk.py:1155`; 0 module-scope imports); `build_universe` imports the other three; each is
+imported by exactly one packaged module; `build_universe` executes nothing at import.
+
+**Request-path reach (issuer's read at HEAD):** the ONLY caller of `load_issuer_sources` is the crosswalk CLI's `main`
+(`crosswalk.py:1682`, the `--write-pool` / `--out` build). The function's request path reads the list through `name_search.resolve_query`
+-> `crosswalk.resolve` / `load_crosswalk` -> `_read_pool_latest`, none of which calls it. So the four ship INERT, exactly as gg-7's
+condition 6 shipped `publication_gold`'s matcher.
+
+**Admitted, with one added condition:** the build prints, from the built package, whether any request entrypoint of the function reaches
+`load_issuer_sources` (0 expected). If one does, that is a STOP. Every other term of this half and the CTO half stands; the built file and
+the kept live package are retained, so no rebuild.
+
+-- 2.0.0_SA_COO~R1

@@ -357,6 +357,51 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "RIV-aw-1: the two dates of the period are stated once in text. Andrew-direct comment 7: the verdicts should not all lead the same way.",
     "world_is": "The model meets the dates rule by opening with them, so every verdict may lead 'From <date> to <date>, ...'.",
     "notes": "Remedy in RIV-wg-1 (WS3 item 8, cut after the 13:00Z read): the generic-opening rule names a dated lead too; the dates stay in text, not as the lead. Read at the 13:00Z page with verdict_openers_check.py (dates collapse to one token). Owner: 2.0.0_SA_COO~V1."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S9",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T13:30Z",
+      "one_line": "AI accounts print a small notional as '$0.0 million': WCMG and ETFT verdicts carry it three times each on the issuer's real run -- a figure that reads as zero for a real trade",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Real run 20261009T132214Z-ai (a1-chain/8, merged @3bd0c7c023, local writes): WCMG 'leaned away by $0.0 million' and two more; ETFT three; 0 of the other 11 funds",
+              "ai_accounts._mn shows a notional in millions at one decimal, so any |v| < 50,000 displays as $0.0 million and the model copies the display form (SYSTEM rule 1)",
+              "Denominator: 13 Direction Verdicts of one run; the 30-day accounts not counted"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A figure in an AI account is the fact's display form and reads as the trade it names.",
+      "world_is": "A sub-$50,000 notional displays as $0.0 million, which reads as no trade.",
+      "notes": "Remedy candidates: _mn falls back to thousands ($42 thousand) under $0.05 million, or such trades are left out of the facts. A round-29 enrichment item; owner 2.0.0_SA_COO~V1."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S10",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T13:50Z",
+      "one_line": "RIV-wb-1's dramatic-move lookup has NO production caller: no Lambda runs dramatic_move, no Lambda carries BRIGHT_DATA_API_KEY, and serp.py is not a staged package path -- so a deploy of HEAD serves wa-1's split adjustment only where a corporate-action row already exists, and none is written in production (Tokio Marine's 15-for-1 stays unadjusted)",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Grep 'dramatic_move' under data/etfs/scripts/rivalfunds (non-test) and infra/aws: only the module itself; the two other importers are issuer scripts (ws2/real_run_local.py, ws2/checks/ws2-b.AC1.py)",
+              "boto3 get_function_configuration, 2026-10-09 ~13:4xZ: env names -- daily: RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET; the other four: none. No BRIGHT_DATA_API_KEY or BD_SERP_ZONE on any of 5",
+              "infra/aws/lambda/etfs-pipeline/rivalfunds_package.py STAGED (7 paths) does not include data/find/dualbiz/scripts/serp.py, which dramatic_move.serp_search imports",
+              "price_series._actions only READS gold corporate_actions; dramatic_move.write_rows is its only writer"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Andrew-direct comment 1 (@9d08dd64d4): a dramatic move triggers a web search for a corporate action and an automatic refactoring of historical prices by the split multiple.",
+      "world_is": "The lookup and the adjustment exist in code and were exercised only by the issuer's local real run; production has no caller, no key and no staged search client.",
+      "notes": "Placement asked of 1.0.0_SA_CTO~DELL1: which Lambda runs the lookup (the sweep after canonical, or publish-page before price_series), the key as a Secrets Manager read (IAM limb) and serp.py staged. Owner: 2.0.0_SA_COO~V1."
   }
 ]
 ```
