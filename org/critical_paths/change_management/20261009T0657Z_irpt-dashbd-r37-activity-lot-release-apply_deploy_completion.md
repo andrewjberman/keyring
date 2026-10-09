@@ -12,11 +12,14 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| P1 | verify | 18 pins + 3 tf files restored to efeb21df71 + artifact upload (sha256 ciTGx5UVE3BJ4mMgwlzSYCDpYBkvtefHbNlT2KCxh5Y=) + targeted plan | Plan: 0 to add, 3 to change, 0 to destroy |  | OPEN |
-| D1 | activation | safe-apply of the saved plan, infra/aws/terraform/investor-reporting/reporting-gold | Apply complete, 3 changed |  | OPEN |
-| V1 | verify | readback CodeSha256 + source map record + population dry_run | CodeSha256 = source map, dry_run under 1740.8 MB and 765 s, 0 objects written |  | OPEN |
+| P1 | verify | 18 pins + 3 tf files restored to efeb21df71 + artifact upload (sha256 ciTGx5UVE3BJ4mMgwlzSYCDpYBkvtefHbNlT2KCxh5Y=) + targeted plan | Plan: 0 to add, 3 to change, 0 to destroy | 18 pins set + re-read (all sha256 equal, c0afa6f55e on origin/CLOUD) in lambda-source-map.json @86cf34a68d; artifact uploaded version pPnoTZs86qlqo2waxfP4h2ogXwq3hoR5 (prior latest HJZgXM5o8nsaP1ED.7K_OJ2cCuD_RrMX) sha256 ciTGx5UVE3BJ4mMgwlzSYCDpYBkvtefHbNlT2KCxh5Y=; iam.tf locals.tf lambda.tf restored to efeb21df71 bytes sha256 2c0ed377/5fe82384/9ae18719 = packet; targeted terraform plan -out: Plan: 0 to add, 3 to change, 0 to destroy; anchor CodeSha256 Mex71Y5g re-read live before | CLOSED 20261009T070123Z |
+| D1 | activation | safe-apply of the saved plan, infra/aws/terraform/investor-reporting/reporting-gold | Apply complete, 3 changed | HALT_ACK-free SAFE_APPLY_TERRAFORM=main terraform.exe .tools/safe-apply.sh -chdir=infra/aws/terraform/investor-reporting/reporting-gold apply r37.tfplan, 2026-10-09 07:03Z: Apply complete! Resources: 0 added, 3 changed, 0 destroyed. | CLOSED 20261009T070452Z |
+| V1 | verify | readback CodeSha256 + source map record + population dry_run | CodeSha256 = source map, dry_run under 1740.8 MB and 765 s, 0 objects written | get-function-configuration CodeSha256 ciTGx5UVE3BJ4mMgwlzSYCDpYBkvtefHbNlT2KCxh5Y= = source map deployed_code_sha256 @54713f105d (anchor Mex71Y5g differs); population dry_run date=2026-10-07 RequestId 07de1f15-d5d2-4175-9107-42ec114ac0d0 7604 accounts lots rows 569121 (realized 3245 unrealized 565876) REPORT Duration 334666.89 ms Max Memory Used 1632 MB of 2048 (under 765000 ms and 1740.8 MB), 0 objects written (returns 1132/1132; four new prefixes 0/0) | CLOSED 20261009T071425Z |
 | A1 | verify | first fire A1-A7 incl A4 DELTA=0 and A7 18 member hashes | fire request id + A1..A7 read |  | OPEN |
 
 ## Log
 
 - 20261009T065704Z OPENED by 0.9.0_WK_IRPT_DASHBD~55 with 4 leg(s)
+- 20261009T070123Z LEG P1 closed: 18 pins set + re-read (all sha256 equal, c0afa6f55e on origin/CLOUD) in lambda-source-map.json @86cf34a68d; artifact upl
+- 20261009T070452Z LEG D1 closed: HALT_ACK-free SAFE_APPLY_TERRAFORM=main terraform.exe .tools/safe-apply.sh -chdir=infra/aws/terraform/investor-reporting
+- 20261009T071425Z LEG V1 closed: get-function-configuration CodeSha256 ciTGx5UVE3BJ4mMgwlzSYCDpYBkvtefHbNlT2KCxh5Y= = source map deployed_code_sha256 @54
