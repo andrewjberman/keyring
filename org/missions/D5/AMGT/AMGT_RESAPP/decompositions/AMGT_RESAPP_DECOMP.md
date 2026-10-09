@@ -9254,3 +9254,62 @@ fanout:
   egress: none in any order
   portal_ref: 8d2a08a9   # origin/DEV at the cut
 ```
+
+## 89. ROUND 81 -- THE LAZY IMPORT, THE STORE HALF OVER FIVE 20-F NAMES, THE FWD-18 WALK, THE NAME-RESOLVING ROUTE, ONE DATE FORM, REDEPLOY. Six orders
+
+**Input:** the CTO~DELL1 round-80 analysis `ledger/ROUND_ANALYSIS.round80.md` @6d8d699c09 (R1-R5, enrichment items 1-4) and its ADDENDUM 1
+@62c6adbde9 (round 81 opens with the lazy-import cell; the VC++ runtime install is a person's act, not a precondition); the route ruling
+@9e03417c14. Grounded in `deliverables/2.0.0_SA_COO~R1/round81_prep/` @2a2b247b7c and at the cut.
+
+### 89a. MEASURED AT THE CUT
+
+- **Store half:** dd-1's census reads 0 of 5 stored 20-F names with a business section, 4 of 5 risk items from the removed fallback,
+  5 of 5 at parser 1.0.0. `fetch` and `analyze` do not import on dell1 (`document.py:56` imports PyMuPDF; installed, needs the VC++
+  runtime, an admin act -- MSTR~DELL1 msg 1693). Three served keys move per name; rollbacks re-write prior VersionIds (R2, no delete).
+- **Route:** on live `OUOsYXa`, `AMD`, `Advanced Micro Devices`, `ABNB`, `Microsoft`, `Micro` all 404; `name_search.resolve_query` gives one
+  candidate for the first four, three for `Micro`, none for `zzqx`.
+- **Date form:** the served /freshness sentences carry `YYYY-MM-DD` (`collector_record.py:92,96`; `owner_line.py:57-61`); no date helper
+  exists under `lib/`.
+
+### 89b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-ee-1` | the security route resolves a typed name or ticker (R3) | `~318` | worker | LOCAL | `api/scoped_amgt.py` (404 branch), new test | the route, through ee-6 |
+| `AMGT-ee-2` | one date form in the served /freshness words (row D1-S1) | `~319` | worker-light | LOCAL | new `freshness/long_day.py`, `collector_record.py`, `lists/owner_line.py`, tests | item 3, through ee-6 |
+| `AMGT-ee-3` | PyMuPDF imported only where a PDF is read (R1 fallback, ADDENDUM 1) | `~320` | worker-light | LOCAL (merge: site-Z deploy) | `filings/document.py` imports, one test | ee-4 on dell1 |
+| `AMGT-ee-4` | the store half: re-cut and re-analyze the five stored 20-F names, ASML NA first (R1, R2) | `~321` | worker | WORLD | three served keys per name; ledger | FWD-18 |
+| `AMGT-ee-5` | the walk on DEV: FWD-18 on ASML NA after its stored text is read first | `~322` | worker | LOCAL (a read) | own deliverables | FWD-18 (CVO AC3) |
+| `AMGT-ee-6` | the redeploy: ee-1 + ee-2 (+ dd-1's section_coverage), then the /freshness snapshot event | `0.7.0_AE_CloudOps~DELL1` | seat order | WORLD | Lambda artifact, ledger | the route, item 3 |
+
+**Not cut:** FWD-16 (Andrew's 2026-09-15 hold); R4 (DSGN_AMGTV1 round 58); R5's two rows (carried by 0.0.0_AB_MSTR~DELL1); the 41 of 1,122
+stored drafting records with a letterless heading (no reader serves them, R2 of the analysis).
+
+### 89c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: enrichment items 1-4 + ADDENDUM 1. Item 1 -> ee-3 (its precondition), ee-4, ee-5; item 2 -> ee-1, ee-6; item 3 -> ee-2,
+  ee-6; item 4 -> not cut. Uncovered: FWD-16.
+- **(ii) Same grain:** one module or one act per cell; ee-4 is one act repeated over five names under one pair.
+- **(iii) Intent:** one axis per cell; ee-1 is the round's only writer of `scoped_amgt.py`.
+- **(iv) What a cell does NOT move:** ee-1 moves no body that resolves today (AC2); ee-2 moves sentences only, every date field stays ISO;
+  ee-3 moves no logic; ee-4 writes three keys per name and deletes nothing; ee-5 is read-only; ee-6 moves the function's code and invokes
+  the existing snapshot event, no IAM, no route added.
+- **Write sets:** ee-1, ee-2, ee-3 are disjoint files (two share no folder file). 0 overlaps.
+
+### 89d. EDGES AND FAN-OUT
+```
+ee-1 --> ee-6
+ee-2 --> ee-6
+ee-3 --> ee-4 --> ee-5
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 2             # {ee-1, ee-2, ee-6} and {ee-3, ee-4, ee-5}
+  wave_0: [ee-1 ~318, ee-2 ~319, ee-3 ~320]   # 3 roots, cap 8
+  wave_1: [ee-6 0.7.0_AE_CloudOps~DELL1 (staged: ee-1, ee-2 drained + pair), ee-4 ~321 (staged: ee-3 merged as a site-Z deploy + pair)]
+  wave_2: [ee-5 ~322 (staged: ee-4's ASML NA AC1/AC2 YES)]
+  merge_hold: ee-3 (document.py is a site-Z producer path: 1.0.0_SA_CTO~Z's half before its merge)
+  no_s3_deletes: true
+  egress: ee-4 only (SEC EDGAR + one model call per name; open under law edit 4d77a9c3ea); no Bloomberg call in any order
+  portal_ref: 8d2a08a9 (origin DEV at the cut; ee-5's GO re-reads it)
+```

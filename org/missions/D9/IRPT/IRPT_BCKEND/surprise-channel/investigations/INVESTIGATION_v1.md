@@ -22888,3 +22888,159 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The code admits the named class (alternative b), in served.py rather than in the writer, so no roster row is applied. Not exercised live: the persist read-back is the E2a apply."
 }
 ```
+
+## IRPT_BCKEND-D2-S26 -- Resolves D2-W196-S1: both release zips already package lib/opal_naming.py and the registry; the release census proves the lookup
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S26",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T04:15:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W196-S1 (IB-pr-385 reads cottonwood through lib/opal_naming.py lookup(), so a zip without lib/ and the registry refuses svc-custody-statement on all three routes). Measured at box/dell2 HEAD dd02e66933: infra/aws/lambda/ci/lambda-source-map.json's irpt-export-render (:4637) and irpt-ycharts-generate (:3980) entries each already package opal_naming.py, reporting_policies.json and scopes.json. Nothing is missing from today's source maps. The release of IB-pr-385 (its own pair, after IB-pr-383) carries one more replay arm: the built zip, imported offline, resolves cottonwood through lookup() and admits svc-custody-statement on custody-report-persist, with a negative control (the subject refused once the registry is removed from the extracted tree). The failure mode is fail-closed (refusal, never widening).",
+  "one_line": "The packaging is already there; the release replay proves the lookup from the built zip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda-source-map.json at dd02e66933: irpt-ycharts-generate and irpt-export-render segments each contain opal_naming.py, reporting_policies.json, scopes.json",
+      "p95_svc.py at the drained branch: IB95-2-AC1 PASS (23), IB95-2-AC2 PASS (291)"
+    ]
+  },
+  "spec_asserts": "A release zip without lib/opal_naming.py and the registry refuses the new subject.",
+  "world_is": "Both host functions already package them; the release replay arm proves it from the built bytes."
+}
+```
+
+## IRPT_BCKEND-D2-W197-S1 -- The stored REQUEST_COMPOSITION document itself carries the ownership members (resolved.owner, resolved.input_owner), so 'never owner' cannot be met by
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W197-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~197",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The stored REQUEST_COMPOSITION document itself carries the ownership members (resolved.owner, resolved.input_owner), so 'never owner' cannot be met by withholding the index row alone; the surface strips them from the returned document.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/request_composition.py:28-35 validate_bindings reads frozen['resolved']['owner'] and resolved.get('input_owner'): both are members of the stored document.",
+      "infra/aws/lambda/investor-reporting/reports/commentary_composition.py strip_ownership removes every member keyed owner or input_owner and returns redacted_count; tests/test_svc_commentary.py test_svc_commentary_surface_returns_the_document_and_sha256_and_never_the_owner asserts neither the word owner nor the advisor id appears in the answer."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-386: the response is the composition document and its sha256, never owner.",
+  "world_is": "The document contains owner (account ids, principal id, firm) and per-source binding blocks. The surface returns the document with the two ownership members removed and the retained artifact's own sha256 (the hash the READY item's composition_ref carries), so the returned bytes do not hash to sha256; a consumer verifies the sha256 against composition_ref, not against the returned JSON. The per-source `binding` members (firm_id, principal_id, principal_class, advisor_id) are NOT stripped: the TO names owner, and widening the redaction to every identity-bearing member is the CTO's call if the commentary needs less."
+}
+```
+
+## IRPT_BCKEND-D2-W197-S2 -- The new Lambda's artifact registration (infra/aws/lambda/ci/lambda-source-map.json) and the commentary role's invoke attachment lie outside this order
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W197-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~197",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The new Lambda's artifact registration (infra/aws/lambda/ci/lambda-source-map.json) and the commentary role's invoke attachment lie outside this order's <paths>, so the release pair must carry both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/commentary_composition.tf header lists the artifact members the zip must carry.",
+      "infra/aws/terraform/transcripts/commentary.tf owns outlook-global-commentary-draft-role (NAMES.json role.name) and its DecryptWithTheIrptKey statement; the order's <paths> hold neither that root nor ci/lambda-source-map.json."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-386: write any new route, Lambda or IAM resource as code and DESIRED Terraform only, nothing applied.",
+  "world_is": "The Lambda, its role and policy, and the caller's invoke policy are declared in the export root (aws_iam_policy.commentary_composition_invoke, output commentary_composition_invoke_policy_arn). Two acts remain for the release pair: registering the zip in lambda-source-map.json, and attaching the invoke policy to the commentary role from the transcripts root (which should also drop that role's standing kms:Decrypt on the irpt key, unused by this read)."
+}
+```
+
+## IRPT_BCKEND-D2-S27 -- the one-attempt probe after TO-APPLY-26 is still refused, and the policy read names the exact missing resource
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S27",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T04:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The single read-only SendCommand probe MSTR asked for (msg 2432 via 2.0.0_SA_COO~P2 msg 2436) was REFUSED after NFRA_CTLPLN.TO-APPLY-26 applied at 03:52:21Z, so the standing shell parity does NOT cover i-02448edb624a7a7cf; the identity policy read shows exactly why and exactly what is missing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ssm send-command --instance-ids i-02448edb624a7a7cf --document-name AWS-RunShellScript --parameters commands=[\"true\"] -> AccessDeniedException: no identity-based policy allows the ssm:SendCommand action (04:4xZ, after the 03:52:21Z apply)",
+      "the identity carries 2 attached policies and 0 inline: cloudops-dell2-agent-bus-policy and cloudops-dell2-agent-ssm-policy",
+      "cloudops-dell2-agent-ssm-policy default version v7, 4 statements; the only SendCommand ALLOW is Sid SendResidentDocumentsToResidentHost whose Resource list is exactly 4 entries: instance/i-0167fd745ad906a66, document/irpt-ycharts-deploy, document/irpt-ycharts-run, document/AWS-RunShellScript",
+      "the Deny statement DenyShellDocuments lists 7 documents and does NOT include AWS-RunShellScript, so no Deny is what blocks this send"
+    ]
+  },
+  "spec_asserts": "MSTR msg 2432, relayed as P2 msg 2436: the laptop applied standing shell parity (aws_iam_policy.dell2_ssm, 0/1/0) at 03:52:21Z, and one attempt would settle whether it covers the runner host.",
+  "world_is": "It does not cover it. The refusal is unchanged and the cause is now exact rather than inferred: the single SendCommand ALLOW names ONE instance, the ycharts resident host, and the runner host is absent from that Resource list. Two things follow that a bare retry would not have shown. First, the blocker is an ABSENT ALLOW and not a DENY -- AWS-RunShellScript is explicitly allowed in the same statement and appears in no Deny -- so the minimal fix is adding arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf to that Resource list, with no Deny to unwind. Second, the statement is NAMED SendResidentDocumentsToResidentHost and its three document ARNs are ycharts-specific, so widening it to a second, unrelated host may be the wrong shape; a separate statement for the runner host would keep the existing Sid honest. That choice belongs to the laptop seat that owns the policy, not to this applier. IB-pr-383 legs S1, S2 and V1 stay parked and its ledger stays RED, per MSTR instruction.",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2"
+}
+```
+
+## IRPT_BCKEND-D2-W198-S1 -- IB96-1-AC2 collides with 4 drained tests that assert internal callers keep any-firm reach
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W198-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~198",
+  "surfaced_at": "2026-10-09T04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "IB96-1-AC2 (whole _authz/tests suite passes) cannot be met as written: 4 drained tests in files outside this order's paths assert the very internal-caller behaviour IB-pr-387 removes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p96_cells.py . IB96-1-AC2 -> 'FAIL: _authz suite rc 1: 4 failed, 299 passed'; at base 89fe99c780 the suite passes; with served.py changed and test_allowed_firm_ids.py added, IB96-1-AC1 PASS (12 passed)",
+      "tests/test_service_allowed_firms.py::test_non_service_internal_subject_unchanged:84-85 -- a user-type internal caller whose row is the STRING 'cottonwood' selects inflection and is expected ADMITTED; the order says a non-list value is refused",
+      "tests/test_served_on_behalf_create.py::test_served_keeps_todays_owner_for_an_internal_subject_whose_list_omits_the_firm:277-285 -- an internal filer whose list is [OTHER] selecting FIRM is expected ADMITTED; the order says an unlisted firm is refused",
+      "tests/test_served_on_behalf_create.py::test_served_refuses_unlisted_firm:191-194 and ::test_served_refuses_all:197-199 -- expect public_reason_code INVALID_INPUT (uploads.py rule); with the narrowing the same requests are refused earlier as FIRM_BINDING (listed_world(allowed='ALL') builds list('ALL') = ['A','L','L'], a non-empty list)"
+    ]
+  },
+  "spec_asserts": "Order IB-pr-387: extend the profile-row narrowing to internal callers; the whole _authz/tests suite still passes; edit only the granted paths (served.py, test_allowed_firm_ids.py).",
+  "world_is": "The narrowing is implemented (served.py Entry._internal_allowed_firms + the else branch in handle; amendment 1 lookup-error fail-closed included; 12 allowed_firm_ids tests pass), but 4 pre-existing tests encode the old any-firm reach for internal callers (IB-pr-366 and IB-pr-271 vintage). Their files are not in <paths>, and the refusal clause forbids weakening a test. Needs the issuer to grant those two test files (expectations to FIRM_BINDING / refused) or to rule a carve-out for the on-behalf-create operation. Status left open; nothing weakened."
+}
+```
+
+## IRPT_BCKEND-D2-W198-S2 -- 'ALL' alone is refused INVALID_INPUT, not FIRM_BINDING
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W198-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~198",
+  "surfaced_at": "2026-10-09T05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Ruling item 3 says test_served_refuses_all asserts FIRM_BINDING, but the string 'ALL' alone is unrestricted in served.py so the refusal is uploads.py INVALID_INPUT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served.py _internal_allowed_firms: 'ALL' alone returns None (no narrowing); with the fixture fixed to pass the string 'ALL', pytest test_served_refuses_all got public_reason_code INVALID_INPUT, UPLOAD_CREATOR_MUST_BE_CURRENT_ACTOR",
+      "test_served_refuses_unlisted_firm ([OTHER]) does get FIRM_BINDING"
+    ]
+  },
+  "spec_asserts": "Ruling on D2-W198-S1 item 3: test_served_refuses_unlisted_firm and test_served_refuses_all both assert FIRM_BINDING.",
+  "world_is": "Only the unlisted-firm case is FIRM_BINDING. The 'ALL' case remains a refusal with INVALID_INPUT because ALL alone is unchanged by design; served.py cannot change, so that test asserts INVALID_INPUT (still a refusal, no admission)."
+}
+```

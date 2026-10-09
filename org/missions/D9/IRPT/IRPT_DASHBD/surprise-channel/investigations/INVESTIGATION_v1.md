@@ -3540,6 +3540,133 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-W49-S1 -- The registry has no custody master or bindings for the Orion source, so the adapter's declaration carries no registry_key and the run takes it on the command line; the firm's own bucket holds only irpt/ while its Orion data sits in the routed legacy alias.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "The registry has no custody master or bindings for the Orion source, so the adapter's declaration carries no registry_key and the run takes it on the command line; the firm's own bucket holds only irpt/ while its Orion data sits in the routed legacy alias.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72: the adapter resolves its firm and addresses from the registry; the 49 Financial declaration carries a registry_key naming a custody MASTER row.",
+  "world_is": "MEASURED 2026-10-09 ~04:0xZ: lookup of the firm key returns class FIRM with bucket_provisioned true and bindings aua_source/model_source/fee_scope/delivery_cadence all null; no MASTER row exists for the Orion/Fidelity custody. A listing of the registry bucket shows one prefix (irpt/); the Orion silver (api_dims positions_mv, performance, transactions, eclipse) and gold are in the bucket the entry's alias list names (plane bucket, routed true, lookup false). So orion_sources.json has no registry_key field (the naming gate refuses a typed firm token), the script takes --registry-key, and the bucket is derived from the alias. NEEDED, NOT ADDED (registry is outside the grant): a scopes.json MASTER row for the Orion/Fidelity custody carrying the firm and vendor, so a declaration can name it as 49 Financial's does, and a decision on whether the reporting-gold home for this firm is the provisioned firm bucket (irpt/ only) or the routed alias.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json (firm entry: bucket_provisioned true, bindings null, aliases with routed bucket)",
+      "lib/opal_naming.py lookup of the firm key, and an S3 list of the registry bucket (prefix irpt/ only) and of the routed alias (silver/, gold/, bronze/)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/orion_sources.json (doc field)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S2 -- The reported source is NET of fees and the contract's total_return_daily is GROSS: the contract-literal tie-out is 24 of 562 account-windows within 0.35 pp, and the same inputs with the fee left inside the return are 421 of 562.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "The reported source is NET of fees and the contract's total_return_daily is GROSS: the contract-literal tie-out is 24 of 562 account-windows within 0.35 pp, and the same inputs with the fee left inside the return are 421 of 562.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72: our total_return_daily compounded over the source's window ties to its reported return at 0.35 pp, each firm against its own reported source (PRD v0.8 @3eb7dbcf36).",
+  "world_is": "MEASURED: silver api_dims performance at snapshot 2026-10-08 reports twr_calc_method TWR, twr_tax_method Before-Tax, twr_fee_method Net of Fees, twr_annualized Annualized, window Rolling 3-Year, for 562 of 927 accounts. The contract (account_return_daily, C-FEERAIL) is gross of advisory fees with fee_amount null. Gross basis: 24 of 562 within 0.35 pp; 400 misses are class FEE_BASIS_GROSS_VS_NET (the net recomputation is within tolerance). Net basis: 421 of 562 (median gap 0.11 pp over the 483 computable windows). The record carries both. NEEDED: a ruling on whether C-TIEOUT for this firm compares on the source's fee basis (the net recomputation) or on the contract's gross basis with the fee difference classed, as this cell did.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (within, net_basis, class_counts)",
+      "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json (fee_amount_reason FEE_RAIL_UNUSED)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S3 -- Two flow classes depart from the firm's ratified cashflow taxonomy and were chosen by measurement: Internal Account Journal In/Out and Federal/State Tax Withheld enter F_t as boundary-crossing flows.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "Two flow classes depart from the firm's ratified cashflow taxonomy and were chosen by measurement: Internal Account Journal In/Out and Federal/State Tax Withheld enter F_t as boundary-crossing flows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml v2: the journal pair is INTERNAL (ratified, intra-account) and the tax-withheld types are RETURN (CTO Item 2).",
+  "world_is": "MEASURED on the 562-window sample, net-of-fee basis, 0.35 pp: contributions and distributions only, 285 within (calendar-day/365 annualisation); adding the journal pair, 339; adding Federal and State Tax Withheld as outflows, 413 (293, 348, 421 under the declared trading-day/252 one). A journal leaves one account and arrives in another, so at account grain it crosses the boundary (the 49 Financial producer's own inter-account rule); withholding is cash taken from a client's distribution. The taxonomy governs NNA and is unchanged; the departure lives only in orion_sources.json (inter_account_comment, tax_withheld_comment) and is reproducible from flow_set_probe in the record. NEEDED: the CTO's word on whether the return adapter may differ from the NNA taxonomy on these two classes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (flow_set_probe)",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (Internal Account Journal In/Out; Federal/State Tax Withheld)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S4 -- No Eclipse tax lot rows are landed anywhere the firm's S3 holds Eclipse data, so every sampled account is NO_LOTS; the lot rows that do exist are the firm's own FIFO lots derived from transactions and are not Eclipse tax lots.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "No Eclipse tax lot rows are landed anywhere the firm's S3 holds Eclipse data, so every sampled account is NO_LOTS; the lot rows that do exist are the firm's own FIFO lots derived from transactions and are not Eclipse tax lots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72 / ADDENDUM 4 E3: lots_status is POPULATED only where Eclipse tax lots are SHOWN populated for the account (rows read, with a count).",
+  "world_is": "MEASURED 2026-10-09: the four Eclipse tables silver lands for the 2026-10-08 snapshot (model_composition 9 rows, models 18, portfolios_full 863, portfolios_simple 846) carry no lot-shaped column (0 of 169 columns); the 13 bronze Eclipse objects for the snapshot carry no lot-shaped name. The Eclipse catalog lists GET /v1/holding/holdings/{id}/taxlots, but no pull of it is landed. Census: NO_LOTS for 562 of 562 sampled accounts. For context only, gold/lots (built by the firm's FIFO script from transactions) holds 46,415 rows for 489 of the 562 accounts; it is derived, not Eclipse, and promotes nothing. NEEDED to reach POPULATED: a landed Eclipse taxlot pull per holding; not built here (a vendor call and an S3 write are outside the grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (lots_evidence)",
+      "data/orion/api/ECLIPSE_API_V1_ENDPOINT_CATALOG.md line 345",
+      "data/inf/scripts/gold/INF_B_02.canonical_lots.py (docstring: FIFO from Orion TRN silver)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W49-S5 -- The source reports a return for 562 of its 927 accounts, all over one Rolling 3-Year window starting 2023-10-09 and annualised with a year-count the vendor does not state; 79 of the 562 hold zero value for part of the window, so their link breaks.
+
+```json
+{
+  "id": "IRPT_DASHBD-W49-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~49",
+  "surfaced_at": "2026-10-09T04:14:00Z",
+  "one_line": "The source reports a return for 562 of its 927 accounts, all over one Rolling 3-Year window starting 2023-10-09 and annualised with a year-count the vendor does not state; 79 of the 562 hold zero value for part of the window, so their link breaks.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72: the comparison source's own window and a reported return per sampled account.",
+  "world_is": "MEASURED: twr_value is null for 365 of 927 accounts at the snapshot (their window starts run from 2023-10-11 to 2026-10-07, every one after the common 2023-10-09 start); the 562 with a value all start 2023-10-09 and end 2026-10-08 (752 trading days). The vendor states Annualized but no day-count; three conventions were tried on the same sample (net-basis within 413, 414, 421; gross 24 each) and trading-day/252 is declared as a HELD reading chosen by fit. 79 of the 562 hold a position value of zero for part of the window (accounts liquidated or emptied), so their daily link breaks and they are classed LINK_BROKEN_NO_BASE rather than compared. The sample is therefore a 3-year annualised view of mature accounts, not a short-window one. NEEDED: whether a second, shorter reported window exists in an earlier landed performance partition (the partitions since 2026-04-28 were not read beyond the latest snapshot).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~49/INF_RETURNS_TIEOUT.json (sample, annualisation_probe, class_counts)",
+      "silver api_dims performance snapshot_date=2026-10-08 (927 rows, 562 with twr_value)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-W48-S1 -- No Commonwealth-reported window overlaps the Black Diamond source's value coverage for the same account, so Co
 
 ```json
@@ -3586,6 +3713,192 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     "evidence": [
       "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~48/adapter_source.json",
       "commonwealth silver performance schema (NetGross: bool)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S1 -- The step-7 dry_run read 304 MB and 29.4 s because it computed one day with no source partition (SOURCE_LAG), so it does not size the class or lots sta
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "The step-7 dry_run read 304 MB and 29.4 s because it computed one day with no source partition (SOURCE_LAG), so it does not size the class or lots stage; row W23-S2 is not discharged by it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-70 step 7 and CTO condition 1: a {\"dry_run\": true} invoke reads the Lambda's own Duration and Max Memory Used against 900 s and 2048 MB before the organic fire, as the lots-stage sizing (packet Unmeasured, W23-S2).",
+  "world_is": "MEASURED 2026-10-09 04:03Z, RequestId ef733674-6c4d-4f9f-b6e4-045778c0a185: Duration 29367.78 ms, Max Memory Used 304 MB. The log shows 'computing 1 day(s) 2026-10-08..2026-10-08', '2026-10-08 SOURCE_LAG: no balance partition', 0 rows, and 'lots newest landed: account_activity_daily=None ...' with empty class_rows, lots_rows and lots_catch_up. The newest dim_balance partition is date=2026-10-07 and balance partitions land about 09:46Z the following day (date=2026-10-06 LastModified 2026-10-07T09:46:56Z; date=2026-10-07 2026-10-08T09:46:43Z). The function ran no class or lots compute, so AC2 reads PASS on numbers that carry no information about the 7,604-account lots stage (kit reference 1672.3 MB, 374.93 s). The first fire is the first at-scale run on the Lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json dry_run.report_line",
+      "aws s3api list-objects-v2 opal-data-assets schwab/08335338/silver/dim_balance/ date=2026-10-06 and date=2026-10-07 LastModified",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R35.md Unmeasured"
+    ]
+  },
+  "notes": "Not a STOP: the dry_run was under 85% and wrote 0 objects, as the order's criterion reads. The first fire is held until the 2026-10-08 silver partitions land (about 09:46Z), because an ad hoc fire before then is a SOURCE_LAG no-op; its REPORT line is the real sizing read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S2 -- record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, outside this order's grant, so the source ma
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, outside this order's grant, so the source map was stamped by its scoping half record-deploy-scope.py directly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-70 step 6: run infra/aws/lambda/ci/record-terraform-deploy.sh so the source map's deployed_code_sha256 records the live hash; the order's grant names the source map and not infra/aws/terraform/**.",
+  "world_is": "MEASURED by reading the script (lines 448, 800-827, 886-888): after the stamp it runs a CHANGELOG writer on infra/aws/terraform/<pipeline>/CHANGELOG.json, git-adds it and commits it with the source map. That path is not in <paths>. Ran instead: python infra/aws/lambda/ci/record-deploy-scope.py investor-reporting --function irpt-49f-reporting-gold-lambda --code-sha256 <live CodeSha256>, which is the wrapper's own stamping step (1 of 15 rows stamped, 14 untouched), committed @443bd67448. No CHANGELOG entry exists for this deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh:448,800-827,886-888",
+      "infra/aws/lambda/ci/record-deploy-scope.py",
+      "infra/aws/lambda/ci/lambda-source-map.json @443bd67448"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S3 -- The worktree has no terraform binary and no .terraform, so init and the plan used the main checkout's terraform.exe and a local-directory provider mir
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "The worktree has no terraform binary and no .terraform, so init and the plan used the main checkout's terraform.exe and a local-directory provider mirror of aws 5.100.0, with no download.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-70 step 4 runs the targeted terraform plan in infra/aws/terraform/investor-reporting/reporting-gold/ from the worktree, and the order forbids downloading any package or program.",
+  "world_is": "MEASURED: .tools/terraform.exe is absent in the worktree and the root has no .terraform. Used C:/dev/ajb_workspace/.tools/terraform.exe (v1.15.8, SAFE_APPLY_TERRAFORM for the apply) and ran terraform init -plugin-dir=<the ycharts root's .terraform/providers>, which holds aws 5.100.0 windows_amd64; init completed with no network fetch of the provider. The lock file and .terraform are git-ignored (git status clean after init).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform init output 'successfully initialized' 2026-10-09 ~03:57Z",
+      "git status --porcelain infra/aws/terraform/investor-reporting/reporting-gold (empty after init)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S4 -- Pins 0-4 leave four CHANGED bundle members (opal_naming.py, systems.json, exemptions.json, reporting_policies.json) packaged at their older source-map
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "Pins 0-4 leave four CHANGED bundle members (opal_naming.py, systems.json, exemptions.json, reporting_policies.json) packaged at their older source-map pins, not the HEAD bytes the packet's file list prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-70 step 3 sets pins 0 to 4 exactly as the packet's Preconditions table lists; the packet's file list prints sha256 at HEAD for all 19 members and marks opal_naming.py, systems.json, exemptions.json and reporting_policies.json CHANGED.",
+  "world_is": "MEASURED: the built bundle stages those four from the pins already in the source map (b5dc2e63d1, 224058ea3f, 8b4c15c6ba, 11bf813387), whose sha256 values (for example opal_naming.py 4eb46f70...) differ from the packet's list (9d301e1c...). The packet itself says the four are outside this function's data path (a census switch, a vendor row, a bucket-policy exemption row, an unrelated policy row), and the order lists pins 0 to 4 only, so they were left. The deployed bundle is the signed behaviour; its bytes for those four members are the older ones.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @d5c11dc683 staged_from",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R35.md 'The build's file list'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S5 -- The amended sizing read (dry_run + backfill, population, 2026-10-07) logged LOTS_SKIPPED on a realized-lot key repeat in batch 2 of 8, so lots_rows is
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:17:24Z",
+  "one_line": "The amended sizing read (dry_run + backfill, population, 2026-10-07) logged LOTS_SKIPPED on a realized-lot key repeat in batch 2 of 8, so lots_rows is 0 and precondition 3 is not met; the first fire was NOT run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "Ruling AMENDMENT 1 on TO-DB-b-70: a {dry_run, backfill D..D, accounts population} invoke on the newest landed returns day sizes the lots stage over the population (accounts >= 7000, lots_rows > 0) at under 85% of 900 s and 2048 MB; the R35 packet (S33) measured no refusal on the kit run of 2026-10-06 and says the producer refuses only a row identical in every column or a repeat of the whole realized key.",
+  "world_is": "MEASURED 2026-10-09 04:13Z, RequestId c42b0fd6-494f-4444-8cf7-d1e02ff8c38b (the live function, population 7604, event dry_run + accounts population + backfill 2026-10-07..2026-10-07): rows 6897 DRY, class rows 25019 DRY, then 'LOTS_SKIPPED 2026-10-07 SystemExit: REFUSED: realized lot id <two ids joined by /> repeats with the same closing date and quantity: the key is not unique', after 'batch 2 of 8'. Duration 129821.09 ms, Max Memory Used 1200 MB (to the refusal; the stage did not finish, so these are not the lots stage's peaks). lots_rows {} and lots_failed one entry. Gold prefix object counts before and after equal (returns 1132, the other four 0). The 2026-10-07 data therefore carries a realized-lot key repeat the 2026-10-06 kit run did not, and the deployed producer (account_activity_lots.py @18a7702338) refuses it. Consequence if left alone: the 07:41 ET scheduled fire runs the lots catch-up (activity table empty, so oldest days first, up to 10), each day that carries a repeat is LOTS_SKIPPED, returns and class are still written, and after-read A1 (zero LOTS_SKIPPED) cannot pass. Separately, the first attempt (RequestId 2b6a404d-cdad-4dbb-889e-f8f82af94215) put accounts inside the backfill object as the ruling's text shows and was REFUSED at once (accounts is an event-level key per handler.py:31 and :499), nothing written; the second used the handler's documented shape.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json dry_run and dry_run_first",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:494-531",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R35.md S33 and Branch B"
+    ]
+  },
+  "notes": "STOPPED here per the ruling's item 4 (the read did not pass): no first fire, A1 to A6 unread, ledger leg A1 open. The sizing read to try next is the same event on 2026-10-06, the day the kit ran clean, or a list of accounts without the repeat; the issuer decides. Plain Lambda facts for the decision: 2 of 8 batches took about 130 s in total with the returns and class stages first, so the full stage is not read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S6 -- W47-S1 disarmed by AMENDMENT 2: the sizing read that did not size the class or lots stage no longer gates anything, because the release it gated is ro
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:40:00Z",
+  "one_line": "W47-S1 disarmed by AMENDMENT 2: the sizing read that did not size the class or lots stage no longer gates anything, because the release it gated is rolled back (commit 310380d8cd).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "AMENDMENT 2 on TO-DB-b-70 (CTO ruling msg 2393): roll the R35 release back to the anchor CodeSha256 Mex71Y5g...Z44= before the 11:41Z scheduled fire.",
+  "world_is": "Rolled back 2026-10-09 04:31Z by one safe-apply of a saved plan of 0 to add, 3 to change, 0 to destroy (commits 0709c0a960, bfd71e73c9, 310380d8cd): live CodeSha256 is the anchor Mex71Y5g...Z44=, the artifact key's latest version is the anchor bytes (copy-object, content-sha256 equal), and the role policy writes the returns prefix only. The class and lots stages are no longer in the served code, so the 11:41Z fire runs the prior returns-only code. Row W47-S1 (the 304 MB read of one SOURCE_LAG day) is moot: no served code carries the class or lots stage. Round 37 re-sizes before a re-apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json rollback",
+      "commit 310380d8cd",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda CodeSha256 Mex71Y5gk9RYE9q885knj3Ph12xV2Y9eVqMl3uJ1Z44= (2026-10-09T04:31Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S7 -- W47-S5 disarmed by AMENDMENT 2: the lots key refusal (realized-lot key repeat) is no longer reachable by any served code, because the release is rolle
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:40:00Z",
+  "one_line": "W47-S5 disarmed by AMENDMENT 2: the lots key refusal (realized-lot key repeat) is no longer reachable by any served code, because the release is rolled back (commit 310380d8cd).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "AMENDMENT 2 on TO-DB-b-70 (CTO ruling msg 2393): roll the R35 release back to the anchor CodeSha256 Mex71Y5g...Z44= before the 11:41Z scheduled fire.",
+  "world_is": "Rolled back 2026-10-09 04:31Z by one safe-apply of a saved plan of 0 to add, 3 to change, 0 to destroy (commits 0709c0a960, bfd71e73c9, 310380d8cd): live CodeSha256 is the anchor Mex71Y5g...Z44=, the artifact key's latest version is the anchor bytes (copy-object, content-sha256 equal), and the role policy writes the returns prefix only. The class and lots stages are no longer in the served code, so the 11:41Z fire runs the prior returns-only code. Row W47-S5 (LOTS_SKIPPED on a realized-lot key repeat) stays a defect in the repo's unreleased lots code for round 37 to fix (the lot key); it harms no served path now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json rollback",
+      "commit 310380d8cd",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda CodeSha256 Mex71Y5gk9RYE9q885knj3Ph12xV2Y9eVqMl3uJ1Z44= (2026-10-09T04:31Z)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"

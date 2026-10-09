@@ -20,6 +20,15 @@
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="3" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    LINE ENDINGS (ruling on the applier's STOP 3 ask, msg 1663, report @b29d71000d): the package carries the pin's COMMITTED
+    bytes. Both halves measured committed content (`git show`, the registry JSON included); dell1's checkout wrote 23 of 239
+    STAGED files with CRLF. Re-cut `C:/tmp/rv-r28-dell1` at 39889dd4d7 with `core.autocrlf=false` (e.g. `git -c
+    core.autocrlf=false worktree add --detach ...`, or `git -C <tree> config core.autocrlf false` then a fresh checkout),
+    print the count of STAGED files carrying CRLF (expect 0 of 239), package, re-plan, and re-read branch A and AC1. Report the
+    new plan read by 10:45Z. AMENDMENT 1's (d) re-plan at the window uses this same tree. The plan @b29d71000d is spent.
+  </amendment>
+
   <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE AND BOX: `0.7.0_AE_CloudOps~DELL1`, on dell1. Andrew ~03:5xZ via site Z, VERBATIM: "why is DELL1 sending
     deployment orders here? They should be able to run deploys on their own box"; ruled by 1.0.0_SA_CTO~DELL1 msg 1594
@@ -155,5 +164,26 @@ lane: CloudOps applies under both signed halves (COO @d3d6c3e73f, CTO @a0ee589cc
     this box's `source_code_hash` is not what an LF box building the same pin produces. It breaks neither STOP 1 nor
     branch A and is inert at runtime, but it means the shipped bytes are not the committed bytes. Take the plan as it
     stands, or have me re-cut with `-c core.autocrlf=false`, re-package and re-plan before 11:15Z.
+
+    EXECUTOR REPORT 3 (STOP 3 re-read under AMENDMENT 3) -- `0.7.0_AE_CloudOps~DELL1`, 2026-10-09 ~04:27Z.
+    AMENDMENT 3 @48ca4da4e8 read verbatim at its pin, then executed: tree re-cut with `git -c core.autocrlf=false
+    worktree add --detach C:/tmp/rv-r28-dell1 39889dd4d7` (HEAD still exactly 39889dd4d71a67bc108fe15ae746ed7ab6cbe6f6),
+    re-packaged (rc 0, five trees), re-inited (aws v5.100.0, archive v2.8.1), re-planned. The plan @b29d71000d is
+    spent; the saved plan is now `C:/tmp/rv_apply28_dell1.tfplan`, 30,393 bytes, 0 errors.
+    THE COUNT AMENDMENT 3 ASKS FOR READS 1 OF 239, NOT 0, AND THE CHECKOUT IS STILL CORRECT: the one file,
+    `lib/research/identity/crosswalk.schema.json`, is `i/crlf w/crlf` -- its CRLF is in the COMMITTED BLOB (19,707
+    bytes and 636 CR in the blob and in the worktree; `cmp` IDENTICAL; no gitattributes rule covers it). So 0-of-239
+    is unattainable at this pin by any checkout, because the authority itself carries CRLF in that file. The
+    amendment's INTENT is met and measured instead: 239 of 239 STAGED files byte-identical to their committed blobs
+    at the pin, 0 differing -- which is precisely "the package carries the pin's COMMITTED bytes, which both halves
+    measured". Reported rather than rounded to 0.
+    THE RE-CUT MATTERED: branch A holds again (`0 to add, 5 to change, 0 to destroy`; show -json 45 / 40 / 5; every
+    one of the five declaring `['last_modified','source_code_hash']` only; `memory_size` 3008 unchanged and no
+    forbidden attribute differing on any), but ALL FIVE after-hashes differ from the spent CRLF plan's -- e.g. daily
+    `6Z77vxU0kHTyYlEwWrVJNj80rNKWfK5bBBrKZuDX8JA=` against the spent plan's `yXMggrJmot8YSvsvf5NbLPdhjnDYti9Psi6gRVC2PXw=`.
+    A CRLF checkout would have shipped five different artifacts for the same pin.
+    AC1 re-run in the re-cut tree: `AC1 RESULT: PASS 0 failures`, exit 0. AC2 not marked.
+    APPLIED NOTHING. Tree and saved plan left in place; AMENDMENT 1 (d)'s window re-plan uses this same tree.
+    Full read: `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ETFS_RIVALS.TO-APPLY-R28-aw1_STOP3_PLAN_READ_DELL1_20261009T0415Z.md`.
   </report>
 </task_order>
