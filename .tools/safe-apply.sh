@@ -316,6 +316,20 @@ else
     sed -e 's/^/  [naming-plan-gate] terraform: /' "$NPLAN_TMP.err" >&2
   fi
 fi
+# MS-s-2: for a SCOPED apply the plan JSON rendered above is the plan the apply runs; keep it (SA_SCOPED_JSON) for the tag-authz
+# and tombstone stages below, which grade it instead of re-planning the whole tree. SA_SCOPED_ERR keeps the render's stderr for
+# those stages' "could not produce a plan" messages. An unrendered scoped plan leaves SA_SCOPED_JSON empty. An UNSCOPED apply
+# sets neither, and both stages plan the whole tree exactly as before.
+SA_SCOPED_JSON=""; SA_SCOPED_ERR=""
+if [ "$SA_SCOPED" -eq 1 ]; then
+  [ -s "$NPLAN_TMP.err" ] && SA_SCOPED_ERR="$(cat "$NPLAN_TMP.err")"
+  if [ "$NPLAN_RENDERED" -eq 1 ] && [ -f "$NPLAN_TMP.json" ]; then
+    SA_SCOPED_JSON="$NPLAN_TMP.scoped.json"
+    cp "$NPLAN_TMP.json" "$SA_SCOPED_JSON" 2>/dev/null || SA_SCOPED_JSON=""
+    # an exec replaces the process (no trap fires), so the success path removes the file itself, before the exec
+    [ -n "$SA_SCOPED_JSON" ] && trap 'rm -f "$SA_SCOPED_JSON" 2>/dev/null' EXIT
+  fi
+fi
 rm -f "$NPLAN_TMP" "$NPLAN_TMP.bin" "$NPLAN_TMP.json" "$NPLAN_TMP.err" 2>/dev/null
 if [ "$NPLAN_BLOCKED" -eq 1 ]; then
   echo "safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=$NPLAN_RC). Nothing was planned further or applied." >&2
@@ -423,9 +437,22 @@ if [ "$DT_FOUND" -eq 1 ]; then
     echo "safe-apply: $CHDIR_TREE sets default_tags -- running the comp-tagauthz pre-apply authorization gate." >&2
     # stderr is CAPTURED, never discarded: the emptiness of this read carries a verdict
     # (fail-closed), and a discarded cause is why a missing binary reads as a dangerous plan.
-    if "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TAG_TMP.bin" >/dev/null 2>"$TAG_TMP.err" \
+    # MS-s-2: a SCOPED apply grades the plan JSON the naming plan stage rendered for THIS apply (SA_SCOPED_JSON); an unscoped
+    # apply plans the whole tree, as before. A scoped apply whose plan did not render is "could not produce a plan" below.
+    TAG_PLAN_JSON="$TAG_TMP.json"; TAG_PLAN_OK=0
+    if [ "$SA_SCOPED" -eq 1 ]; then
+      : > "$TAG_TMP.err"
+      if [ -n "$SA_SCOPED_JSON" ] && [ -f "$SA_SCOPED_JSON" ]; then
+        TAG_PLAN_JSON="$SA_SCOPED_JSON"; TAG_PLAN_OK=1
+      elif [ -n "$SA_SCOPED_ERR" ]; then
+        printf '%s\n' "$SA_SCOPED_ERR" > "$TAG_TMP.err"
+      fi
+    elif "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TAG_TMP.bin" >/dev/null 2>"$TAG_TMP.err" \
        && "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} show -json "$TAG_TMP.bin" > "$TAG_TMP.json" 2>>"$TAG_TMP.err"; then
-      "$CTZ" check --default-tags-tree "$CHDIR_TREE" --from-plan "$TAG_TMP.json" >&2
+      TAG_PLAN_OK=1
+    fi
+    if [ "$TAG_PLAN_OK" -eq 1 ]; then
+      "$CTZ" check --default-tags-tree "$CHDIR_TREE" --from-plan "$TAG_PLAN_JSON" >&2
       rc=$?
       rm -f "$TAG_TMP" "$TAG_TMP.bin" "$TAG_TMP.json" "$TAG_TMP.err" 2>/dev/null
       if [ "$rc" -ne 0 ]; then
@@ -487,9 +514,17 @@ TOMBSTONE_GATE="$SCRIPT_DIR/tombstone-gate.py"
 TOMBSTONE_REG="$SCRIPT_DIR/../infra/aws/terraform/tombstones.json"
 if [ -f "$TOMBSTONE_GATE" ] && [ -f "$TOMBSTONE_REG" ]; then
   TS_TMP="${TMPDIR:-/tmp}/safe-apply-tombstone-$$"
-  if "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TS_TMP.bin" >/dev/null 2>&1 \
+  # MS-s-2: a SCOPED apply grades the plan JSON the naming plan stage rendered for THIS apply (SA_SCOPED_JSON); an unscoped
+  # apply plans the whole tree, as before. A scoped apply whose plan did not render takes the "could NOT plan" branch.
+  TS_PLAN_JSON="$TS_TMP.json"; TS_PLAN_OK=0
+  if [ "$SA_SCOPED" -eq 1 ]; then
+    if [ -n "$SA_SCOPED_JSON" ] && [ -f "$SA_SCOPED_JSON" ]; then TS_PLAN_JSON="$SA_SCOPED_JSON"; TS_PLAN_OK=1; fi
+  elif "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} plan -input=false -lock=false -out="$TS_TMP.bin" >/dev/null 2>&1 \
      && "$TERRAFORM" ${CHDIR_TREE:+-chdir="$CHDIR_TREE"} show -json "$TS_TMP.bin" > "$TS_TMP.json" 2>/dev/null; then
-    python "$TOMBSTONE_GATE" --plan-json "$TS_TMP.json" --register "$TOMBSTONE_REG" >&2
+    TS_PLAN_OK=1
+  fi
+  if [ "$TS_PLAN_OK" -eq 1 ]; then
+    python "$TOMBSTONE_GATE" --plan-json "$TS_PLAN_JSON" --register "$TOMBSTONE_REG" >&2
     TS_RC=$?
     rm -f "$TS_TMP.bin" "$TS_TMP.json"
     if [ "$TS_RC" -ne 0 ]; then
@@ -505,6 +540,8 @@ if [ -f "$TOMBSTONE_GATE" ] && [ -f "$TOMBSTONE_REG" ]; then
 else
   echo "safe-apply: WARN -- tombstone gate or register missing; resurrection check DID NOT RUN." >&2
 fi
+
+[ -n "${SA_SCOPED_JSON:-}" ] && rm -f "$SA_SCOPED_JSON" 2>/dev/null   # MS-s-2: the exec below skips the EXIT trap
 
 # Checkpoint passed (empty inbox, or routine acked, or audited STOP override).
 #
