@@ -4086,6 +4086,31 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "One small in-place insertion into a worker-authored test file was made with a python str.replace, not Edit. The edit is a plain text insertion, no other bytes moved.",
   "notes": "Recorded as a deviation of form; no output depends on the route.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-S2",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~C1",
+  "surfaced_at": "2026-10-09T21:27:47Z",
+  "one_line": "The served /9 dossiers carry no team cases for 6 PDF names (8035 JP, BZLFY, HEI, SNPS, TSM, V): the /8 and /9 writes ran on dell1 with fitz stubbed, so the PDF word reader returned nothing.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r44_fwd16_census_v9_20261009.txt: cases LOST 8 rows total, 6 of them cases 3->0 on those names (before = 2026-09-29 objects, after = served /9)",
+      "stored objects read per method with checks/round40/ap8_fwd16_census.py _cases: TSM_US_Equity and V_US_Equity and 8035_JP_Equity carry 3 cases at /6 and /7 and 0 at /8 and /9; ASML_NA_Equity 3 at every method (control)",
+      "dossier.build in memory with the real fitz (loads since MSTR msg 3108, 20:03Z): TSM_US_Equity and V_US_Equity return upside/base/downside all VALUE",
+      "the /8 (round 41) and /9 (round 42) writes ran with sys.modules['fitz'] stubbed (scratchpad dossier_write.py / dossier_write_threads.py); _pdf_words_reader reads PDF words through fitz",
+      "/9 served by opal-amgt-scoped-api since 2026-10-09T19:51:25Z (CloudOps~RA1 msg 3105)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-16: a PDF-only name renders pillars, management and cases from the PDF pack; the round-42 pair's leg v reads the served values unchanged except the 12 tabled.",
+  "world_is": "Six names serve no team cases since 19:51Z; the ar-2 leg v compared section fields and risks only, never cases, so it read build 1/1 over the loss.",
+  "notes": "Disarm: a re-write with fitz loading (the at-1 /10 write, or a re-pin of the API to /7 by AMGT_RESAPP) -- put to 1.0.0_SA_CTO~DELL1 at 21:27Z. Every future dell1 write runs only where `import fitz` loads for real; a stub is for read-only recompose.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```

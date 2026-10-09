@@ -510,6 +510,27 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "A11: the pad moves no figure and st_u2_regress.py must read U2-REGRESS-OK; the grant is mdpf_gold_consolidator.py and the new test file only.",
   "world_is": "An existing round-1 test pins the exact added-key set of the overlay, so the A11 pad necessarily fails it; the regress chain reads BAD until the issuer widens the grant or edits the line."
-}
+},
+  {
+    "id": "MDPF_STRATID-D1-S8",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T21:35:00Z",
+    "one_line": "DISARM of MDPF_STRATID-D1-S7: both homes carry opal_unidentified and the key-set pad. Runner: opal_unidentified.py first-minted 20:30:33Z (sha256 6b9c1d7f == pin), isolated import of the runner S3 copies IMPORT-OK. Lambda: package at 88e974ca10 live 21:10:34Z, qa_local 21:11:54Z green 16 of 16 errors [] with L-1 key-set identity PASS on all 4 artifact types.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer download of the live mdpf-gold-lambda package 21:1xZ: mdpf_gold_consolidator.py, opal_unidentified.py, mdpf_category_registry.py, build_cottonwood_mdpf_slice.py == git show 88e974ca10 (4 of 4)",
+        "CloudOps~DELL1 msg 3216: qa_local 21:11:54Z status green, errors [], a4_objects_built 16, 'L-1 key-set identity PASS' x4; previous pin as negative control",
+        "slice sha256 7ab6f5ce identical at HEAD, in s3 assets_gold and at 88e974ca10"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row D1-S7: the deployed slice imports a module absent from both homes, and its new key breaks the L-1 key-set identity.",
+    "world_is": "Both are fixed in both homes and proven on the shipped bytes. The scheduled 2026-10-10 12:52Z dispatch and 13:30Z fire are the real runs (ledger L4)."
+  }
 ]
 ```
