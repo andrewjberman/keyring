@@ -17,6 +17,23 @@
 <owned_cells>RIV-tc-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    STEP 2, THE aw-1.AC1 CHECK, RULED (your report @c8126238a0, STOPPED at step 2 -- correctly). aw-1.AC1's arm (a)
+    pins `PROMPT_VERSION == "a1-chain/7"`. RIV-wg-1, merged on dell1 and in box/sitez since your base 99d0d5cea8, moved it
+    to `a1-chain/8` on purpose: the Direction Verdict's fund-specific lead (CVO grades wg-1 J1 MET, ADDENDUM 4). Arm (a)
+    is SUPERSEDED. It is not a tc-1 defect, and `enrichment_bloomberg.py` does not import `ai_accounts`. Step 2 now reads:
+    - tc-1.AC1, tw-1.AC1, tw-1.AC2 each print their PASS line (as you measured);
+    - aw-1.AC1 prints `AC1 RESULT: FAIL 1 failure(s): a` with the failure naming `PROMPT_VERSION 'a1-chain/8'`, and
+      arms b-j PASS; any OTHER failing arm still STOPS you;
+    - `python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/ws3_item8_prep/item8_generic_opener_check.py`
+      prints `ITEM8 RESULT: PASS 0 failures` (the check that supersedes arm (a));
+    - `python -m pytest -q rivalfunds/tests` from `data/etfs/scripts` reports 0 failed.
+    Your step 3 read (RIVALFUNDS_HISTORY_OWED unset or empty in the User and Machine environment, none in the task action
+    or the vehicle CMD) and your step 4 read (no 1.0.0_SA_CTO~Z half or refusal at 574fe5ce6b) stand; re-read both at
+    the act. Then step 5. Everything else stands: never inside 10:55Z-11:15Z, before 2026-10-10 10:45Z. The pair is
+    unchanged: COO @ad8220f702, CTO @7fc81ef638 with ADDENDUM 1. Gate limb: none grades this modification.
+  </amendment>
+
   <objective>
     Merge branch `wk-ETFS_RIVALS-22` at commit b0b65368fb, whole, into `box/sitez` in the working tree the scheduled
     11:00Z vehicle (Scheduled Task OPAL_BBGTML_daily_pull) runs from, after the three reads below pass. It must land
