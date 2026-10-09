@@ -608,3 +608,19 @@ No new cell. `OA-f-9` gains AC4 (its order's ISSUER AMENDMENT 2): `opal_ai/opal/
 line ends with a one-sentence first prompt naming `prompt.md`'s "On launch" steps, so the identity gate and the Teams arm
 run unattended. LOCAL, one line, nested base `de5ce25fa3`. Chain: alone, slot `~24` respawned. The release is a later
 push by `0.0.0_AB_MSTR~Z` on Andrew's word; Z-S63's interim disarm (the operator types one first turn) stands until then.
+
+## ADDENDUM R2-A15 -- the first prompt reaches claude (row Z-S64; issuer ruling, obligation 7; CTO~Z msg 32614)
+
+No new cell. `OA-f-9` gains AC5 (its order's ISSUER AMENDMENT 3), which supersedes AC4: claude 2.1.295's `--add-dir` is
+variadic, so `launcher.ps1:172` puts ` -- ` before the first prompt. LOCAL, one token, nested base `8cdc7b9735`. Built by
+slot `~24` (opal_ai `c9983bd`), drained @256d955e74, pushed DEV and PROD; the live step-4 run 2 read whoami unattended.
+
+## ADDENDUM R2-A16 -- the Analyst's copies carry the post-move Teams fixes (rows Z-S67, Z-S68; issuer ruling, obligation 7)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-15` | `opal_ai/opal/agent/skills/bbg-teams-assist/SKILL.md` and `opal_ai/opal/agent/refs/RELAUNCH.md`: the watcher pin is the Opal Bloomberg oid (`517aa5ee-...`), the skill's arm line runs under `timeout 1770`, and step 0b SENDER GATE (Andrew-direct 2026-10-09 ~03:3xZ) is ported byte-for-byte from the workspace copy @33837fdea8 | LOCAL |
+
+Chain: alone, slot `~25`, nested base `c9983bd2ac`. It precedes the OA-t-1 r2 cutover merge: that merge deletes the two
+workspace files, and five post-move commits to them (16fb949b5b, 8773f12204, ef8c4e57a1, 0c9fbd0876, 8dc1796e31) live
+only there. 8dc1796e31's P3 row is RETIRED, not ported (workspace-only, LD-0580).

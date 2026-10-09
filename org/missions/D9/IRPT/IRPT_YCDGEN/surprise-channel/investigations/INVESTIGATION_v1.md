@@ -2868,3 +2868,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Not a producer defect: OPAL was chosen. The per-firm research principal is provisioned for cottonwood only, so every other firm's Opal request will fail the same way. Remedy (to the CTO for round 7): mint the research role per allowed firm through the naming builder, with its read grants, and widen the runner's AssumeRole to those roles. X1/W2 proceed when irpt-generation reads 0/0 after the DLQ move."
 }
 ```
+
+## IRPT_YCDGEN-D2-S20 -- st29 F1: Opal produced the 49financial report; irpt-status refuses to serve it (packaged registry lag)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S20",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T12:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "st29 F1 on 49financial: the Opal engine produced the report (0 YCharts markers), but irpt-status refuses to serve it -- RetentionRefused 'invalid retention reference', because the Lambda's packaged registry still lists the research row as firms [cottonwood]",
+  "spec_asserts": "FWD-1: a non-Andrew filer's Overview is produced by the Opal engine AND served (status READY, sections readable).",
+  "world_is": "MEASURED. F1 REQ-5e4149d2863aea31cc87d660 was submitted at 12:00:26Z on st29 (f0ff4f1653, research row firms=3). Resident journal: RESOLVE READY 12:00:17Z; PDF render (pypdf FontBBox warnings) 12:00:32-33Z; POLL handled=1 at 12:00:39Z; 0 YCharts markers (SSM f02d8b3e). Portal status and sections at 12:00:39Z and 12:02:18Z: UNAVAILABLE / public_reason_code UNEXPECTED. CloudWatch /aws/lambda/irpt-status at 12:02:18Z: exception_type RetentionRefused, exception_text 'invalid retention reference', operation status-job. reporting_policies.json is staged in irpt-status (and irpt-ycharts-generate) at a pin whose research row names cottonwood only; the st29 fix reached the resident package alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch irpt-status corr-a9376ea80c21 RetentionRefused",
+      "resident journal SSM f02d8b3e",
+      "F1_RUN_RECORD_ST29_20261009.json / F1_READBACK_ST29_20261009.json (scrubbed)"
+    ]
+  },
+  "notes": "Remedy: the irpt-status and irpt-ycharts-generate releases must stage reporting_policies.json at >= 23e39f11d7 (the research row with 3 firms). 2.0.0_SA_COO~Y2's IRPT_ANLREQ round-2 release 1 re-pins both functions (DECOMP_R2). The produced report persists after st29's X1; a served read can be re-tried once irpt-status carries the row, by a principal allowed on 49financial."
+}
+```
