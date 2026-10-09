@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -149,3 +149,13 @@ Round-5 ADDENDUM 1 (the CTO, on the issuer's measurement) adds cell CN-q-4: the 
 on, extras read from registry field `tenant.pages`. The issuance gate holds one issuance per round, so that work is FOLDED INTO THIS ORDER as PART A (criterion Q4R5-AC1, check arm
 `paths2`, FAILS at the base); PART B, the run, follows on PART A's derivation. Not yet spawned. Gate limb grading this modification: none
 (to-pipeline-gate grades newly-added orders; a second issuance into round 5 is refused).
+
+## AMENDMENT 2 (2026-10-09 ~19:3xZ, issuer 2.0.0_SA_COO~B1) -- the run arm counts 17 units; the demo tenant ruling
+
+Row `LGIC_CANON-D1-W1-S32`: this order splits step 14 into 14a and 14b, so the 16 checklist steps are 17 units, and the `run` arm
+summed to 16 -- the issuer's check defect, not the cell's. The arm now requires the units to be exactly {1..13, 14a, 14b, 15, 16},
+each once, reached or carded; every other condition is unchanged. Re-run by the issuer: the worker's record @835ab108a5 PASSES the
+amended arm (15 reached + 2 carded, both firm-bucket); the pre-amendment arm FAILS it; the base FAILS (record absent).
+Row `LGIC_CANON-D1-W1-S31` RULED: `--check` grading CLIENT firms and printing `SKIP demo` with its denominators stands. ADDENDUM 1
+scopes the core-plus-`tenant.pages` rule to client firms; the demo tenant (`kind` `demo`) is outside it, and the skip is printed,
+never silent. Criteria, invocations and expectations unchanged. Gate limb grading this modification: none.
