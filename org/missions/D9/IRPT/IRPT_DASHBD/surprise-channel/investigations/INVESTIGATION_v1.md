@@ -3850,3 +3850,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W47-S6 -- W47-S1 disarmed by AMENDMENT 2: the sizing read that did not size the class or lots stage no longer gates anything, because the release it gated is ro
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:40:00Z",
+  "one_line": "W47-S1 disarmed by AMENDMENT 2: the sizing read that did not size the class or lots stage no longer gates anything, because the release it gated is rolled back (commit 310380d8cd).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "AMENDMENT 2 on TO-DB-b-70 (CTO ruling msg 2393): roll the R35 release back to the anchor CodeSha256 Mex71Y5g...Z44= before the 11:41Z scheduled fire.",
+  "world_is": "Rolled back 2026-10-09 04:31Z by one safe-apply of a saved plan of 0 to add, 3 to change, 0 to destroy (commits 0709c0a960, bfd71e73c9, 310380d8cd): live CodeSha256 is the anchor Mex71Y5g...Z44=, the artifact key's latest version is the anchor bytes (copy-object, content-sha256 equal), and the role policy writes the returns prefix only. The class and lots stages are no longer in the served code, so the 11:41Z fire runs the prior returns-only code. Row W47-S1 (the 304 MB read of one SOURCE_LAG day) is moot: no served code carries the class or lots stage. Round 37 re-sizes before a re-apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json rollback",
+      "commit 310380d8cd",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda CodeSha256 Mex71Y5gk9RYE9q885knj3Ph12xV2Y9eVqMl3uJ1Z44= (2026-10-09T04:31Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S7 -- W47-S5 disarmed by AMENDMENT 2: the lots key refusal (realized-lot key repeat) is no longer reachable by any served code, because the release is rolle
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:40:00Z",
+  "one_line": "W47-S5 disarmed by AMENDMENT 2: the lots key refusal (realized-lot key repeat) is no longer reachable by any served code, because the release is rolled back (commit 310380d8cd).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "AMENDMENT 2 on TO-DB-b-70 (CTO ruling msg 2393): roll the R35 release back to the anchor CodeSha256 Mex71Y5g...Z44= before the 11:41Z scheduled fire.",
+  "world_is": "Rolled back 2026-10-09 04:31Z by one safe-apply of a saved plan of 0 to add, 3 to change, 0 to destroy (commits 0709c0a960, bfd71e73c9, 310380d8cd): live CodeSha256 is the anchor Mex71Y5g...Z44=, the artifact key's latest version is the anchor bytes (copy-object, content-sha256 equal), and the role policy writes the returns prefix only. The class and lots stages are no longer in the served code, so the 11:41Z fire runs the prior returns-only code. Row W47-S5 (LOTS_SKIPPED on a realized-lot key repeat) stays a defect in the repo's unreleased lots code for round 37 to fix (the lot key); it harms no served path now.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json rollback",
+      "commit 310380d8cd",
+      "aws lambda get-function-configuration irpt-49f-reporting-gold-lambda CodeSha256 Mex71Y5gk9RYE9q885knj3Ph12xV2Y9eVqMl3uJ1Z44= (2026-10-09T04:31Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
