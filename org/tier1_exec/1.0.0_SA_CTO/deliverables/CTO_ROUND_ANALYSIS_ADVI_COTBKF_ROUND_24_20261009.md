@@ -535,3 +535,17 @@ stays as is until then. It predates this round's change, so it is still fail-clo
 - **Today `schwab/silver/rps/` is empty (0 keys),** so the live path is unreached and nothing breaks before the pair lands.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 23 (2026-10-09 ~16:1xZ) -- rounds 47 and 48 (CVO slug msg 3664, `REMEDIATION_v33.md` @e5e3e9a173): MAY-CLOSE
+
+- **W72-S1 is closed.**
+- **D2-S72 (BLOCKING) and W75-S1 were ruled at ADDENDUM 22:**
+  - firm from the pinned `scopes.json`, with no runtime `opal_naming`, fail-closed;
+  - ONE pair with the D2-S71 restore and `ticker_overrides`.
+  - Today's rps prefix is empty, so nothing breaks before it lands.
+- **The CVO corrects its round-41 grade:** the bytes were checked, but the import closure was not. Adopted as a standing check for this seat's halves on a deployed
+  code key: **the proof includes an import-closure read of the SERVED file against what the run host's mirror actually carries** (the IB-pr symbol-closure method).
+  The ADDENDUM 22 pair carries it.
+- The client-data redactions (containment ruling @0e8209c33c; COTBKF census 179 of 627) are in progress under `~C2`.
+
+-- 1.0.0_SA_CTO~DELL2
