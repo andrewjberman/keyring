@@ -1,0 +1,107 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "NFRA_IAMROLES202609",
+  "round": 5,
+  "written_by": "2.0.0_SA_COO~ZI",
+  "written_utc": "2026-10-09T14:16Z",
+  "decomposition_ref": "org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R5.md@c52a275259",
+  "denominators": {
+    "fwd_in_prd_header": 8,
+    "cells_in_decomposition": 4,
+    "task_orders": 4,
+    "task_orders_terminal_with_valid_proof": 4
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a reviewer has actually answered the question with that evidence attached, rather than an opinion",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "Not re-cut in round 5 per ROUND_ANALYSIS.round4.md: REALIZED at round 4."
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "real roles have been read and their unused permissions named, over a stated lookback",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "Not re-cut in round 5 per ROUND_ANALYSIS.round4.md: REALIZED at round 3."
+    },
+    {
+      "fwd_id": "FWD-3",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "at least one real policy has been surfaced as perfectly scoped and yet requiring nothing of whoever calls it",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "Not re-cut in round 5 per ROUND_ANALYSIS.round4.md: REALIZED at round 4."
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "APPLIED",
+      "done_when_text": "each one is either in code or carries a named owner and a reason",
+      "cells": [
+        {
+          "cell_id": "IAM-v-1",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-1.accept-rows-8-and-10-as-owner-of-record.md"
+          ]
+        },
+        {
+          "cell_id": "IAM-v-2",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-2.accept-the-other-ten-and-plan-per-family.md"
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED; MECHANICAL BARS MET, AC4 x2 UNGRADED. Owner of record 0.7.0_AE_CloudOps~Z (CTO ruling @fa8ec0e726) accepted rows 8/10 (ACCEPTANCE_ROWS_8_10.md @1ca645fd25, v-1 complete @1416282c74) and the other ten (ACCEPTANCE_ROWS_TEN.md @36fae05ea5, ADOPTION_PLAN_TEN.md @59112aafed, v-2 complete @38b456ff1c), none refused. The row edits in GOVERNANCE_DISPOSITION.md landed as issuer carriers @3bd5f1d1d4 and @8909011839 under the audited TREE_DELIVERABLES override (amendment A1 @193ee5ac41, row Z-S19): the acceptance of record is the lane's own document. ISSUER REAL RUN at close on the COMMITTED blob: rows=16 unowned=0 (12 0.7.0_AE_CloudOps~Z, 3 1.0.0_SA_CTO~Z, 1 DECLARED). The bar is a NAMED OWNER, not adoption: no role moved into Terraform this round; ADOPTION_PLAN_TEN.md groups the ten into six families for a later round."
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "a real narrowing has been checked in advance and the check was believed",
+      "cells": [
+        {
+          "cell_id": "IAM-v-3",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-3.predict-one-narrowing-before-it-is-made.md"
+          ]
+        },
+        {
+          "cell_id": "IAM-v-4",
+          "task_orders": [
+            "org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-4.narrow-and-read-the-outcome-against-the-prediction.md"
+          ]
+        }
+      ],
+      "claim": "COVERED",
+      "note": "COVERED; MECHANICAL BARS MET, AC4 x2 UNGRADED. v-3 (worker ~13, drained @76c5f426ca) predicted, BEFORE the change, that removing secretsmanager:DescribeSecret from smartx-assets-pull-role (smartx-pipeline/assets-pull-iam.tf:101) breaks nothing (predicted_breaks []), with falsifiers F1-F4 and the window = the first 13:02Z run after the apply. Never-widen pair signed (COO @3245bd635e, CTO @8e981e7cbc). v-4 (0.7.0_AE_CloudOps~Z) applied @e02476796b ~10:36Z via safe-apply (plan graded per-Sid: removed exactly ReadAuthBundle:DescribeSecret), read the window run (RequestId a26ac8e5, 740 s, inside the predicted 537-859 s) and recorded MATCHES-PREDICTION: yes, 0 of 4 falsifiers (@2cbd044a43); ledger iamroles-fwd5-narrowing closed; v-4 complete @1d4c397f40. The run ended in the BASELINE DirtyRunError (row Z-W13-S1, 30 of 30 prior days), read as Branch A per the pair. ISSUER REAL RUN at close (live, 14:15Z): DescribeSecret implicitDeny and GetSecretValue allowed on two of the five secrets; the issuer's own 13:15Z log read of the window run: 0 AccessDenied, 0 DescribeSecret. ONE permission on ONE role; no population claim."
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "each of the known past plans has been established as done or not done, on evidence",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "Not re-cut in round 5 per ROUND_ANALYSIS.round4.md: REALIZED at round 3."
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "APPLIED",
+      "done_when_text": "the assessment reports the two differently, at permission grain",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "Not re-cut in round 5 per ROUND_ANALYSIS.round4.md: REALIZED at round 3."
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "it has actually been re-run and produced a comparable answer",
+      "cells": [],
+      "claim": "UNCOVERED",
+      "note": "Not re-cut in round 5 per ROUND_ANALYSIS.round4.md: REALIZED at round 4."
+    }
+  ]
+}

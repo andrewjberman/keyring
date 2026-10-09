@@ -488,5 +488,29 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "world_is": "find-insure/bright-data/api-key will have a consumer outside FIND_INSURE (and already serves find-dualbiz's serp.py by default).",
       "notes": "Owner to inform: FIND_INSURE's COO/CTO. Consumer of record: ETFS_RIVALS, 2.0.0_SA_COO~V1; env RIVALFUNDS_SERP_SECRET on etfs-rivalfunds-daily-lambda; policy statement GetSerpSecret in infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json."
   }
+,
+  {
+      "id": "ETFS_RIVALS-D1-S12",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "0.7.0_AE_CloudOps~RV1",
+      "surfaced_at": "2026-10-09T14:42Z",
+      "one_line": "COO condition 5's snapshot asks for 20 trading days of holdings_coverage; the world holds 19 -- date=2026-10-09 does not exist, so CTO condition 8's per-key read has one key with no pre-image and no rollback bytes",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "coverage_snapshot.py take C:/tmp/rv-ws23-covsnap 2026-10-09 20, run 14:40Z: 'SNAPSHOT: 19 of 20 keys saved', '2026-10-09: ABSENT'",
+              "WS23_COVERAGE_SNAPSHOT_MANIFEST.json: 20 entries, 19 saved, 1 absent, absent day ['2026-10-09'] (sha256 6bbc0347ecc7abfe1fc9cf2b3a6dfe1173c858fdf6a2f94237150f6d69c1b3eb)",
+              "the 2026-10-08 key reads {'gap': 11, 'new': 2}, so the two most recent partitions are the thin ones",
+              "coverage_snapshot.py docstring: 'A missing key is recorded as absent', and compare prints 'was absent, now PRESENT' without counting it as a stop line"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "COO half condition 5: 'the applier copies every rivalfunds/etfs/gold/holdings_coverage/date=<D>/holdings_coverage.parquet for the 20 trading days ending 2026-10-09'. CTO half condition 8: 'each of the 20 snapshot keys is printed as unchanged or changed'.",
+      "world_is": "19 of the 20 keys exist. date=2026-10-09 is absent at 14:40Z, after today's 13:00Z sweep. For that one key the condition 8 read cannot be unchanged-or-changed, and the condition 5 rollback has no bytes to restore: if the 2026-10-10 run creates it, the rollback for that key is 'delete or leave', never 'restore'. The other 19 keys carry full pre-images (bytes + sha256 + status counts), so the in-place writer's rollback is intact everywhere it has a prior state.",
+      "notes": "Not a blocker and the apply proceeded: the snapshot instrument records absence by design, 2026-10-09 is inside the last-10-trading-day window G2 is allowed to write, and a first-ever write of an absent key is not a widening of served state. For L2 (the issuer's): grade 19 keys unchanged-or-changed, and grade 2026-10-09 separately as created-or-still-absent. Surfaced by the applier, 0.7.0_AE_CloudOps~RV1; disposition is the CVO's/issuer's."
+  }
 ]
 ```
