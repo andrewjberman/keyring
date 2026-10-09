@@ -4,7 +4,7 @@
 {
  "project": "MDPF_DEMQUE",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/bbg-backfill-demand-queue-brief-20261008.md@91f5c90ec2",
