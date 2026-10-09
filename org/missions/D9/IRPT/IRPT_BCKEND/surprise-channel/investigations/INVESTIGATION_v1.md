@@ -23621,3 +23621,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S35 -- disposition of D2-S31: disarmed by the release-6b re-cut of TO-APPLY-Y77
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S35",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T08:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Disarmed for release 6b: the CTO half (msg 2888) measured served.py at pin 66207bce7d equal to 74a62fb46c, so 6b reverts nothing of IB-pr-390; TO-APPLY-Y77 AMENDMENT 2 applies 6b (built tdpterTM, rollback ZA0QJ5Wt) and never V6EiBNcJ.",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S31 (Y77 signed against V6EiBNcJ / live_before 5FRkux2o after IB-pr-390 landed): disarmed by the release-6b re-cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/release6_custody/NEVER_WIDEN_PAIR_RELEASE6B_CUSTODY.md @ba6fcb1c14",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_RELEASE6B_CUSTODY_CTO_HALF.md (msg 2888)",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_BCKEND.TO-APPLY-Y77.irpt-ycharts-generate-release6-custody.md AMENDMENT 2"
+    ]
+  },
+  "spec_asserts": "Y77 applies a signed build that carries the live served.py.",
+  "world_is": "After the re-cut it does: 6b at 66207bce7d carries 390's served.py byte-equal; V6EiBNcJ is never applied."
+}
+```
