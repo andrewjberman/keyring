@@ -24802,3 +24802,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S60 -- BLOCKING: three LIVE irpt functions ship call-signature splits; served.py calls keywords its packaged callees do not accept
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S60",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T16:40:00Z",
+  "one_line": "A signature-closure sweep of the 13 fetchable live irpt-* zips (17 functions; 4 fetch failures) finds keyword splits symbol_closure cannot see: served.py:1006 InteractiveAccess(profile_reader=) in irpt-status and irpt-performance-adapter (packaged interactive_access.py: __init__(read_headers, data_firm, *, ordinary_authorizer)); served.py:1021 guard_prospect(authorize_owner=, resolve_owner=) in irpt-narrative. CloudWatch also shows irpt-performance-adapter raising Enforcer.__init__() unexpected keyword load_report_owner (2 events in 24h), which this check did not catch.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "A release pair's census, symbol closure and co-change closure establish that the built zip runs on its paths (IB-pr-366 made the served CREATE path pass profile_reader).",
+  "world_is": "Each named call raises TypeError when its path is taken. irpt-status rev 4 took one on every call (IRPT_ANLREQ row D2-S16, now being rolled back to rev 3, which still carries the profile_reader split on the CREATE_INPUT path). The 24h irpt-* log sweep (18 groups) shows TypeError 'unexpected keyword argument' only in irpt-status (52) and irpt-performance-adapter (2, Enforcer). Instrument: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/signature_closure.py <zip>. It covers direct calls to names bound by from-imports of packaged modules; it does not cover attribute calls (module.Cls(...)), which is why the Enforcer split is absent. Unfetched: irpt-49f-reporting-read-lambda, irpt-export-render, irpt-holdings-refresh-lambda, irpt-ycharts-generate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function Code.Location for each irpt-* function at ~16:38Z, then signature_closure.py on the downloaded zip (13 fetched)",
+      "aws logs filter-log-events '\"unexpected keyword argument\"' over the 18 /aws/lambda/irpt-* groups, last 24h",
+      "rev 3 artifact s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-status.zip version mkD1gV_C... (sha t6OJTCcm): 1 mismatch (profile_reader)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-D2-W276-S1 -- IB-pr-414: on the b410 build the e56 cost is small on this harness -- 310 extra CUSIP-key lookups and no wall-time rise, not the 9x row W269-S2 measured on the unfixed IB-pr-403 build
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W276-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~276",
+  "surfaced_at": "2026-10-09T16:09:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 1 asks for the e56 fallback cost on four trees; on one sequential harness b410 makes 123,315 table lookups (310 of them CUSIP-key fallbacks) against pre404's 123,005, and runs 420.5 s against pre404's 380.2 s, so the e56 cost is inside the pre404 x 2 wall-time line without any change to dell1's e56 code.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~276/IB115-1_memory_census.json trees.<tree>.table_lookups / table_lookups_cusip_key / wall_time_s / cpu_time_s: pre404 123005/0/380.2/293.4; b404 123005/0/437.4/336.2; b410 123315/310/420.5/314.9; fix 123315/310/417.2/319.5",
+      "mem_harness.py counts every call of _NarrowedClassifier.canonical_lookup unmemoised; the census runs were sequential and alone, on a shared machine with other seats' load (cpu_time_s is given beside wall time)",
+      "the 9x premise belonged to the IB-pr-403 build that asked the table for CUSIP:<id> on every node; IB-pr-410's ticker= fix (9b7256a99f) leaves the CUSIP key to a symbol miss, 310 calls here"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-414 AMENDMENT 1: the e56 fallback cost is about 9x on the 49F producer and may need a row if it cannot be brought under pre404 x 2 inside the gate code.",
+  "world_is": "On the b410 bytes (IB-pr-410's build) with the fix, the 49F producer's wall time is 417.2 s against a pre404 x 2 line of 760.4 s and its peak 3,139,624,960 B against the limit 3,650,722,201 B; nothing in the e56 code needed a change."
+}
+```
+
+## IRPT_BCKEND-D2-W276-S2 -- IB-pr-414: replay realities -- inflection REFUSES on real inputs in every tree (source_frontier_older, the served index is already ahead of the replay's business date), and the narrow bundle's gate region now differs from b404's by design
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W276-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~276",
+  "surfaced_at": "2026-10-09T16:09:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two facts for later cells: (1) replayed after the real 10-09 fire, inflection's served index is already ahead of the 2026-10-08 replay date, so every tree (b404, b410, fix404, fix) REFUSES it on source_frontier_older (1) -- identical decisions, but a REFUSED not a PUBLISHED; (2) earlier cells' compose scripts assert the gate code is byte-identical between members, which the memory fix changes on purpose.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gate_<tree>_inflection.json decisions in this worker's scratch (deleted at close; the verdicts are in IB115-1_gate_decision_replay.json fix_vs_b404_gate_decision_inflection: identical, REFUSED [source_frontier_older 1])",
+      "compose_410.py / compose_406.py check 'Gate code byte-identical in both members'; the fix changes served_publication and adds _gate_fold_served_node / _gate_served_keys / PUBLISH_GATE_SERVED_BATCH, and evaluate_publish_gate's served-side lines"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-414: the fix's gate decision is identical to b404's at the 3 firms on real inputs.",
+  "world_is": "Identical at 3 firms (49financial PUBLISHED, cottonwood PUBLISHED, inflection REFUSED on a stale replay date); a later release cell that diffs the gate region against b404 must expect the memory fix there."
+}
+```

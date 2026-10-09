@@ -793,3 +793,32 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S18 -- irpt-status 500s on 7 live routes after its 15:43:11Z redeploy (TypeError in build_retained_repositories); 6 of the 27 ungradeable and FWD-1's hop (e) blocked
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S18",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-09T16:32:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "irpt-status answers HTTP 500 on 7 live routes after its 2026-10-09T15:43:11Z redeploy: TypeError build_retained_repositories() got an unexpected keyword argument 'additional_policy_revisions'. 6 of the 27 clamped routes therefore cannot be graded for the firm clamp at HEAD, and FWD-1 cannot complete because hop (e) polls one of them. Measured before and after: the same routes answered 200 with sane refusal envelopes at 15:40Z.",
+  "disarm_owner": "the IRPT_BCKEND release line that deployed irpt-status at 15:43:11Z, routed via 2.0.0_SA_COO~V2 to the owning COO/CTO; TCKT_VNEXT builds nothing on it and this seat changes no code",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED LIVE 16:19Z through CloudFront (run SA-r-1b-2026-10-09T16:19:13Z): HTTP 500 on GET /api/scoped/investor-reporting/status, /status/{jobId}, /analysis/requests, /analysis/requests/{requestId}, /analysis/requests/{requestId}/pdf, /analysis/{jobId}/sections, and the live-only /analysis/requests/{requestId}/original -- for the own firm AND both off-list firms, so the clamp is not reached",
+      "THE HOST'S OWN LOG: /aws/lambda/irpt-status, 47 matching events over 16:18-16:26Z: '[ERROR] TypeError: build_retained_repositories() got an unexpected keyword argument additional_policy_revisions', Traceback /var/task/read_memo.py line 93 in scoped then /var/task/served...",
+      "DEPLOYED STATE: irpt-status CodeSha256 VC/r14kaXm6FqaZOOFm3fT+8qngsyGI5Yr7U+DgYx64=, LastModified 2026-10-09T15:43:11Z (get-function-configuration)",
+      "BEFORE/AFTER BRACKET: at 15:40Z (run SA-r-1-2026-10-09T15:40:57Z, trace committed @e652ac4d3e) the same routes answered 200 with refusal envelopes -- own firm NOT_FOUND / INVALID_INPUT, cottonwood FIRM_BINDING. The 15:43:11Z deploy sits inside the window between the two measurements",
+      "WHY reread_27.py STILL READS CLAMPED: it hashes the deployed served.py member (87d9ecc4) and those clamp bytes ARE present. A member-hash check cannot see a runtime TypeError raised on the way to that code, so 'CLAMPED' and '500' are both true at once -- the member hash is not a liveness oracle"
+    ]
+  },
+  "spec_asserts": "The 27 formerly-MORE_THAN_ONE routes are clamped and answer: each serves its one firm and refuses an off-list firm (reread_27.py READ27 27/27 rc 0, measured 16:18Z). Pair v2.2 step 4 grades every firm-scoped route on that answer, and FWD-1's hop (e) polls GET /analysis/requests/{requestId} to READY.",
+  "world_is": "7 irpt-status routes raise before any firm logic runs and return 500 to every caller, so 6 of the 27 are ungradeable at HEAD and hop (e) cannot reach READY. The clamp itself is not implicated -- it was measured working on these same routes 39 minutes earlier; what changed is a deploy that landed a call site without the signature it calls. This is the half-landed-deploy shape, found from outside by a seat that deployed nothing.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
