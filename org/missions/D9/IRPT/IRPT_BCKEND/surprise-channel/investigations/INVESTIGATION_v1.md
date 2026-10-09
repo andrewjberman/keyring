@@ -22622,3 +22622,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The stale assertion belongs to a sibling suite the cut did not name. The custody half of that test should assert the custody service is reached (as test_generate_installed_custody.py (a) does) and keep the ComparisonCatalogueRequired and prospect halves; the class CustodyFactoryRequired is kept in the module so the name still imports."
 }
 ```
+
+## IRPT_BCKEND-D2-W223-S4 -- Disposition: S1 and S3 resolved by AMENDMENT 1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W223-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~223",
+  "surfaced_at": "2026-10-09T03:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Rows IRPT_BCKEND-D2-W223-S1 and IRPT_BCKEND-D2-W223-S3 are resolved by the issuer's AMENDMENT 1 (b9cc978f94): the symbol-closure checker treats a guarded ImportFrom fallback as optional, and the order's paths now admit the stale test, which is updated at 8ebdf8d0a7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disposition of S1 and S3: both resolved by AMENDMENT 1; AC3 reads missing=0 PASS and both test files pass (13 and 6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash y71_ac2.sh at 8ebdf8d0a7: 'symbol_closure modules=66 pairs=296 missing=0 optional_fallbacks=2' then 'symbol_closure PASS'.",
+      "pytest test_generate_installed.py: 13 passed; test_generate_installed_custody.py: 6 passed."
+    ]
+  },
+  "spec_asserts": "TO IB-yr-761 AMENDMENT 1: S1 checker amended, S3 test path admitted.",
+  "world_is": "Both conditions hold as the amendment states; S2 is answered in the amendment (SSE-S3, no KMS statement) and its grant is unchanged."
+}
+```
