@@ -8233,6 +8233,52 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S2",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:13:29Z",
+  "one_line": "AMENDMENT 2 (flag at LOWER / CAP_MID >= 0.2) flags 5 of 413 alias rows (Booking, Cadence, Orange x2, Visa) and the census CVO ROWS reads 14 of 14 removed, so the condition of AMGT_HARVST-D1-W132-S1 no longer holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMGT_HARVST-D1-W132-S1: under AMENDMENT 1 (LOWER > CAP_MID) 0 of 413 aliases flag and CVO ROWS reads 0 of 14; the order's AMENDMENT 2 (1.0.0_SA_CTO~DELL1 ADDENDUM 5, msg 2380) item 3 requires 14 of 14.",
+  "world_is": "With _COMMON_WORD_RATIO = 0.2 the same silver counts (20,908 articles, unchanged) flag Booking (106 v 106, 1.000), Cadence (92 v 384, 0.240), Orange x2 (55 v 236, 0.233), Visa (362 v 1628, 0.222); the nearest miss is Waste Management 0.174. Census on served rebuild #12 (50,026 tested pairs; BEFORE equals served on 50,026 of 50,026): R31 MENTIONS before 205470, after 202754, removed 2716; pairs removed 781; counted down 0; CVO ROWS 14 of 14 removed. The rule was not tuned: the threshold is the one the order names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_aliases.json",
+      "e9be6a3bcc:lib/research/harvest/publication_gold.py"
+    ]
+  },
+  "adjudicates": [
+    "AMGT_HARVST-D1-W132-S1"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Superseded by AMENDMENT 2 of the order: at ratio >= 0.2 the census reads CVO ROWS 14 of 14 removed (bt1_census.out @e9be6a3bcc), so the 0 of 14 result of AMENDMENT 1 no longer stands."
+},
+{
+  "id": "AMGT_HARVST-D1-W132-S3",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~132",
+  "surfaced_at": "2026-10-09T12:13:29Z",
+  "one_line": "Under AMENDMENT 2 most removed mentions read as true company mentions (my plain reading of the four 10-row samples: Visa 10, Booking 9, Cadence 9, Orange 9 of 10), because the second anchor misses the company's own long name or a ticker the securities file does not hold; not a grade, and the rule was not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order's R31: the second anchor is the security's ticker, its full legal or company name, or a non-common alias of the same security; the CTO STOPs an alias whose removals are mostly true company mentions (AMENDMENT 2 item 2).",
+  "world_is": "In the r75 securities file V_US_Equity has ticker_aliases [] and no ticker_anchor_symbols, aliases ['Visa Inc', 'Visa']; BKNG_US_Equity aliases ['Booking Holdings Inc', 'Booking'] and company 'Booking Holdings Inc'; CDNS_US_Equity aliases ['Cadence'] and company 'Cadence' (the company string is the common alias, so it cannot anchor); ORA_FP_Equity company 'Orange', aliases ['Orange'], ticker 'ORA'. So 'Visa ( V )', 'Booking Holdings' (no 'Inc'), 'Cadence Design Systems' and 'Orange SA ( OTC:ORANY )' (the ORANY ticker belongs to the other security) carry no anchor, and every Visa/Booking/Cadence/Orange mention in them is removed. Removed counts in bt1_census.out: Visa 2050 mentions over 549 pairs, Orange 618 mentions over 201 pairs (two listings), Cadence 31 over 15, Booking 17 over 16. The samples (10 each, article key ascending, every k-th) read by me as about the company: Visa 10, Booking 9 (1 is 'Flight Booking' in a title), Cadence 9 (1 is Cadence Bancorporation), Orange 9 (1 is Orange County). No verdict, no tuning: the CVO grades the samples and the CTO decides the STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/bt1_census.out",
+      "e9be6a3bcc:org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/common_word_aliases.json",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/securities.universe.r75.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
