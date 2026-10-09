@@ -22392,6 +22392,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "For the issuer: a round-81 order for a worker on dell1 would carry the D1 coordinate in its id form."
+},
+{
+  "id": "AMGT_RESAPP-D1-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T02:21:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "Round-80 cut defects at the issuer: (a) r80_dd2.py P6 expected clean_location(None) == '' while order AMGT-dd-2 says a non-string is returned unchanged; (b) every round-80 order named row id form AMGT_RESAPP-R1-W<n>-S<k>, a coordinate the device register does not hold (dell1 is D1).",
+  "spec_asserts": "Order AMGT-dd-2 step 2: 'Non-string input is returned unchanged.' The row gate: a row id's coordinate is a device register row_coordinate (org/devices/DEVICES.json: '', Z, D1, D2).",
+  "world_is": "(a) dd-2's AC1 read FAIL on P6 alone (worker ~316 report; its branch row AMGT_RESAPP-R1-W316-S1); the issuer amended P6 to expect None, and AC1 on the shared tree reads R80 R2 AC1 SERVED: YES. (b) the merge's row gate refused the R1 row with no override path; the issuer withdrew it on the branch (@91465662e7, audited override) and carries it here. Worker ~317 minted its rows as D1 (AMGT_RESAPP-D1-W317-S3 records the same refusal).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round80/checks/r80_dd2.py line 70 (AMENDMENT 1)",
+      "wk-AMGT_RESAPP-316 @be1966317b (the R1 row) and @91465662e7 (its withdrawal)",
+      "org/devices/DEVICES.json row_coordinate fields"
+    ]
+  },
+  "notes": "Remedy for later rounds: the issuer's orders name id form AMGT_RESAPP-D1-W<n>-S<k>; the open order dd-1 (re-opened) is amended to D1 in the same commit as this row; dd-4 mints no rows of its own form."
 }
 ]
 ```

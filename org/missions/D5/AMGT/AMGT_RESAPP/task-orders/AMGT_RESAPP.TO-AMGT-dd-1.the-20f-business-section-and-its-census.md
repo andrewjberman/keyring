@@ -55,7 +55,7 @@ never uses it, so the filings test folder errors at collection here. In your NEW
 check does (`try: import fitz` / `except Exception: sys.modules["fitz"] = types.ModuleType("fitz")`) before importing
 the module. Report the folder's collection errors in your report and file no row for them.
 
-Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-R1-W315-S<k>`,
+Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: id form `AMGT_RESAPP-D1-W315-S<k>`,
 `disarm_owner` `2.0.0_SA_COO~R1`.
 
 ## 2. BOUNDS
@@ -71,6 +71,7 @@ Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing. Rows: i
 lib/research/filings/document.py
 lib/research/filings/fetch.py
 lib/research/filings/section_census.py
+lib/research/filings/section_coverage.py
 lib/research/filings/tests/test_document.py
 lib/research/filings/tests/test_section_census.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~315/
@@ -118,3 +119,4 @@ site-Z deploy under a never-widen pair and waits for 1.0.0_SA_CTO~Z's half.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>in_progress -- REOPENED by the issuer 2026-10-09T02:1xZ at the drain (AMENDMENT 1). The worker's commit 12e33085f3 reads VALID, but the drain's hygiene run on its branch FAILS lib/research/filings/tests/test_section_coverage.py::test_wanted_table_equals_the_producers: section_coverage._WANTED (the Lambda's copy of fetch.EXCERPT_ITEMS) lacks the new 20-F business key. Grant added to paths: lib/research/filings/section_coverage.py. Graded by no gate limb (a modification; LIMB 6 fires on newly-added orders only). Served effect: at the next redeploy (dd-4) each 20-F name's passage_coverage lists Item 4.B as wanted; dd-4's pair names it.</status>

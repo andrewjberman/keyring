@@ -104,3 +104,4 @@ FWD-1 (NO). AC2 base: the account reads `armed=no armedBy=none` (py -3.12, 01:3x
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @a68418f40a (walk bb5273f8dd, proof 668c7475e3 VALID rc=0). Re-run on the shared tree: R80 DD3 WALK RECORD: YES (17 captures, both heads, PORTAL_REF 8d2a08a92b5e); AC2 armed=no armedBy=none. On portal 8d2a08a9: FWD-1 AMD draws the 6-row Revenue by segment table (Data Center 16,635, Fiscal year 2025) equal to the served segment_table, while the lower 'Business segments -- from the filing' panel still reads its no-analysis sentence; FWD-7 draws the served Seeking Alpha sentence on 10 of 10 rows, 1 of 95 flagged stale (Lenovo 992 HK). AC3 is the CVO's L9 read. Rows D1-W317-S1 (walker DeleteParameter denied on disarm), S2 (walk script's bare python lacks bcrypt), S3 (R1 id form refused).</status>
