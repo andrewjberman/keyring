@@ -18832,5 +18832,20 @@
 2026-10-09T10:17:46Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-crps-r40-4  branch=wk-AMGT_CORPUS-40-4  reason=merged into CLOUD; --force discards 23 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.28 h
 2026-10-09T10:18:46.415318+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=12360 reason='to=2.0.0_SA_COO~ZI' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 157 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
 2026-10-09T10:26:39Z SPAWN 0.7.0_AE_CloudOps~ZG by 0.0.0_AB_MSTR~Z via ajb2 (Codex lane, NFRA_GATSCP TO-GS-e-2, dell1 N1 msg 2259) pid 3848
+2026-10-09T10:37:31Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=8  session_pids=92  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=19  msys_joined=7  ms=1256
 2026-10-09T10:54:57Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=42  session_pids=662  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=75  msys_joined=40  ms=917
+2026-10-09T10:33:57.548163+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=29532
+2026-10-09T10:33:57.562130+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZC pid=34728
+2026-10-09T10:33:57.578672+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZW pid=8072
+2026-10-09T10:37:37.125762+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=39424 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T10:38:50.576145+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=28312 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T10:39:05.026062+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=34424 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T10:43:38Z SPAWN 0.7.0_AE_CloudOps~ZG by 0.0.0_AB_MSTR~Z via ajb2 -NoProfile (relaunch: first window stopped at the ps-lock PIN prompt because -NoProfile was omitted) pid 11864
+2026-10-09T10:46:58.185824+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZG pid=6876
+2026-10-09T10:57:01.248181+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZQ pid=6204
+2026-10-09T10:57:01.456003+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=5124
+2026-10-09T10:57:01.803302+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZC pid=29840
+2026-10-09T10:57:01.906707+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZW pid=12768
+2026-10-09T10:49:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL2  host=DESKTOP-N8RJV0A  sessions=40  session_pids=644  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=74  msys_joined=32  ms=1230
+2026-10-09T11:02:07.230295+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZG pid=35220
 2026-10-09T10:57:18.216687+00:00 IDENTITY_CROSS_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=16712 reason='-' conflict='IDENTITY CONFLICT -- NOT REGISTERED. PID 16712 is currently 2.0.0_SA_COO~W1 (live 13s ago); you claimed 3.0.0_SA_CVO. A process cannot hold two identities. If you compacted and re-derived your serial from .comp-graph/.agent_context, that file is SHARED and is NOT an identity source -- you are 2.0.0_SA_COO~W1. Legitimate override: register_agent(..., identity_override="<reason>") (audited).'

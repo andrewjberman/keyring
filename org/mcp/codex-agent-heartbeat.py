@@ -133,11 +133,14 @@ async def run(
             result = await comms.heartbeat(
                 serial, summary=compute_summary(runtime_dir, note)
             )
-        except PermissionError as exc:
+        except OSError as exc:
             # server.py's liveness write retries 5 x 50 ms and then RE-RAISES on purpose, so a refusal is never
             # silent. Uncaught here it ended this helper, and nothing restarts it: site Z 2026-09-15, 4.0.0_SA_CRO~W
             # deaf ~50 min (0.0.0_AB_MSTR 97221). So it is LOUD and RETRIED: printed on every refused beat, with
             # liveness recovered on the next write that succeeds.
+            # OSError, not only PermissionError: msvcrt.locking raises OSError Errno 36 ("Resource deadlock
+            # avoided") once its own retries run out, and that ended three lanes' helpers at once on site Z
+            # 2026-10-09 07:53:47Z (~ZV ~ZC ~ZW; 2h40m deaf; 0.0.0_AB_MSTR~Z msg 32678).
             perm_failures += 1
             print(f"ERROR: heartbeat liveness write refused ({exc}); consecutive={perm_failures}; "
                   f"retrying next beat in {interval_seconds:g}s", file=sys.stderr, flush=True)

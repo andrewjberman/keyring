@@ -99,7 +99,7 @@ Rows: id `NFRA_OPLGTW-Z-W47-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Pre-cut: ab1.AC1 base FAIL as expected (test_og_ab1_carry.py and the registration test absent; test_advi_site_to_s3.py
   27 passed); ab1.AC2 base FAIL as expected (tool not registered; census 42 of 42 classified).
 
-<status>pending</status>
+<status>complete</status>
 <round>33</round>
 <workstream>ADVI-E2</workstream>
 <slot>~47</slot>

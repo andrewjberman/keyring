@@ -1461,5 +1461,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "Step 7 landed as stated. Step 8 required no edit: the three test files compare against parse_silver.COLUMNS rather than a literal column list, so they went green with the fold fix alone.",
     "notes": "Resolves D2-W2-S7 (existing row not edited)."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-09T11:05:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "The headless /hx/transcripts route refuses ALL 4 allowlisted meetings with 403 meeting_not_allowed for the stored bearer, so the pull TO-APPLY-p18 creates will see 4 and land 0 on its invoke and on every scheduled fire until the gateway HOST's own allowlist carries those 4 meeting ids.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GatewayTransport(secrets_reader=gateway_client.read_bearer).list_meeting_transcripts over all 4 rows of meeting_allowlist.load() (denominator printed, 4 of 4 probed): allowed=0 refused_403=4 other=0; every one status=403 error=meeting_not_allowed, for monday_meeting, ocio_ic, asset_management_ic and research_meeting",
+        "NEGATIVE CONTROL, the same call with a wrong 64-char bearer: status=401 error=unauthorized. The route discriminates on the bearer, so the 403 is the HOST allowlist and not the token -- ABSENT vs EXERCISED-AGAINST, CLAUDE.md 22a",
+        "the MCP gateway tool path (list_meeting_transcripts under the signed-in user's delegated identity) returns status 200 count=20 for the SAME monday_meeting id; the two surfaces disagree, and the pull uses the headless one (data/transcripts/scripts/teams/gateway_client.py:22 BEARER_SECRET, :198 GatewayTransport)",
+        "gateway/transcripts/bearer: describe-secret carries 7 metadata keys (ARN, CreatedDate, Description, LastAccessedDate, LastChangedDate, Name, VersionIdsToStages) and NO RotationEnabled or NextRotationDate; the payload is a 64-byte opaque string with no JWT exp claim, so its expiry is ABSENT, not near"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-p18 COO half: step 1 S04 'the gateway's transcript tools are live'; and the first branch, 'A scheduled fire finds a new allowlisted meeting: it lands bronze, then silver, for that meeting only. The first research_meeting landing is FWD-2's acceptance.'",
+    "world_is": "S04 as the order words it is MET on the gateway's tool surface (one call by name, status 200, count 20). The surface the pull Lambda actually calls is the headless /hx/transcripts route, and it admits none of the 4 allowlisted meetings for the stored bearer. The bearer itself is live (403, not the control's 401). So the p18 apply lands its 9 resources and the Lambda runs, but the FIRST-LANDING branch -- FWD-2's acceptance -- is unreachable until the gateway host's allowlist is widened. Nothing served moves either way; the fire logs and lands nothing, which the COO half's second branch already admits.",
+    "notes": "Owner: the gateway host's allowlist is NFRA_OPLGTW's surface, not this project's and not this seat's -- routed to 2.0.0_SA_COO~T2 in the p18 report, which carries it to the CTO. This seat did NOT widen anything and did not work around the refusal. The apply proceeded: the order's STOP conditions are S04, S05 and KMS, and all three read MET. Re-probe is one read: the 4-meeting probe above."
+  }
 ]
 ```
