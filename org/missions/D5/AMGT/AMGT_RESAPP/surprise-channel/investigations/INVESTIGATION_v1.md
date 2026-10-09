@@ -22698,3 +22698,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Change-management entry amgt-resapp-r81-ee4-store-half-dell1: legs closed with the STOPPED proof, no leg claims a rewrite. Open for the issuer: whether the new ASML UNRESOLVED-SOURCE.json state key is acceptable to leave in place (it makes a future CHANGED outcome for ASML write a held marker, and would surface its reason if ASML's drafting ever went ABSENT), and whether the BABA, NU, PBR and SAP cuts should be dry-run (build_source_object without --write-pool) before any further write, since the same cutter would now be applied to them. I made no dry run: the order's act is the write."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W327-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~327",
+  "surfaced_at": "2026-10-09T07:20:41Z",
+  "one_line": "AMGT-gg-5 AC1 cannot read YES on the worker's commit: the order forbids editing scoped_amgt.py, and the route serves price_series only once the issuer's one wiring line passes the loader",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order's AC1 invocation runs the in-process handler (scoped_amgt.handler) on the tree. scoped_amgt.py:6728 calls timeline_api.get_timeline without price_loader; the order (section 1 item 4) reserves that line for the issuer at the merge, so the worker commit serves no price_series and AC1 prints 'FAIL T2 price_series: None', 'FAIL T3 ... source named: ''', 'R82 TIMELINE AC1 SERVED: NO', exit=1.",
+      "Control that the reader and route do the work: the same check re-run in a scratch wrapper (.scratch/wired.py, not committed) that binds price_loader=lib.research.price.price_history.timeline_price_loader onto timeline_api.get_timeline, against the live stored objects (read only) printed 'PASS T2 price_series: 192 points, 2026-01-02 .. 2026-10-07', 'PASS T3 prices inside 2026-01-01..2026-10-08 and source named', 'R82 TIMELINE AC1 SERVED: YES', exit=0.",
+      "The reader's own tests (lib/research/price/tests/test_price_history.py, 14 plants incl. the route with and without a loader) pass; the price folder is 56 passed."
+    ]
+  },
+  "spec_asserts": "The order's AC1 expects 'R82 TIMELINE AC1 SERVED: YES; and exit=0' from the worker's commit, while its section 1 item 4 forbids the worker to edit scoped_amgt.py, the only place the loader is passed.",
+  "world_is": "Two clauses of one order cannot both hold at the worker's HEAD: AC1 reads NO and exits 1 until the issuer adds the wiring line at the merge; it reads YES the moment the line is in (measured through a scratch wrapper doing exactly that).",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Wiring line for the issuer: in scoped_amgt.py _serve_timeline_body, the get_timeline call (~:6728-6735) gains `price_loader=__import__('lib.research.price.price_history', fromlist=['x']).timeline_price_loader,` after `word_cloud_builder=_word_cloud_block,` -- or the same via a normal `from lib.research.price import price_history` in the function and `price_loader=price_history.timeline_price_loader`. No IAM change (bloomberg/harvest/bronze/* already read). A raising loader turns the whole timeline into the route's error envelope, as the word-cloud builder does; AC1 should be re-run at the merge."
+}
+```

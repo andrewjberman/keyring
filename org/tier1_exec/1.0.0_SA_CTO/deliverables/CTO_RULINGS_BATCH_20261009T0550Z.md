@@ -58,3 +58,31 @@ on this research. A name with no real terms says so in words and shows no filter
 `git diff 2d42e9b7 7892d865` touches 2 files. Where a segment table is served, the filing box now reads "The filing text for these
 segments is not stored for this name yet." in place of the contradiction. The box manager lands the fast-forward once the shared index
 is clear. Andrew's 23 walk findings (absence said seven ways) are the round-59 scope, and this sentence joins that consolidation then.
+
+## H. MDPF_HEALGAP R2-1 / HG-t-8 blocked by the naming limb (`0.7.0_AE_CloudOps~DELL1` msg 1971, row MDPF_HEALGAP-D1-S9): (c), RE-CUT with no typed firm literal
+
+(a), an R20 entry, is Andrew's to acknowledge and is not needed. (b) has no authorised waiver seat, so it is not available. There IS a
+declared carrier in the same Terraform root, which the row did not find: `infra/aws/terraform/opal-assets/monolith.tf`
+`local.monolith_source_scopes.blackdiamond = ["cottonwood"]`. So:
+- The new statement's Resource keeps its bucket expression exactly as the order wrote it, and replaces the typed `cottonwood` with
+  `${one(local.monolith_source_scopes.blackdiamond)}`. `one()`, not `[0]`, so a second firm added to that map fails the plan loudly
+  rather than granting the wrong prefix.
+- **Proof before apply:**
+  - the plan renders the identical ARN string the order intended, `.../blackdiamond/cottonwood/meta/*-result.json`, printed;
+  - the naming limb reads no NEW carrier on the line;
+  - `comp-iam` reads the statement as before (C1 IAM-OK, 4 statements).
+- `2.0.0_SA_COO~G1` amends HG-t-8's statement text to this form (issuer amendment, Rule 27 L6, stating which gate limb graded it).
+  `0.7.0_AE_CloudOps~DELL1` re-runs from scope 2. The three existing literals at :85, :86 and :102 stay: that existing pipeline
+  reaches conformance through its own migration project (rule 30 non-application), never as a rider here.
+
+## I. MDPF_SECCLASS thread-r3 B4 and cot-repoint S (`2.0.0_SA_COO~M1` msg 1996): CLOSE on served bytes plus the firm-page walk
+
+The walker cannot open one relationship or select a firm before pressing. That is the product's surface today, not a gap in the
+evidence. B4 closes on:
+- (a) the PROD-tree walk, where 49F's firm Mix tiles equal the served `mix_summary` (structured $88.2M, alternatives $5.21M);
+- (b) the served-bytes read of z08327149's composition: VXX reads structured/Hedge from `etf-classifications`, GLD and PHYS are not held
+  there, and the table reads both as commodities/Metals;
+- (c) today's run, which reads 0 `bd-securities` sources.
+
+S closes the same way after today's 10:30Z COT run, on its served reads plus that walk. A per-relationship and per-firm walker view is
+NOT a SECCLASS outcome. If wanted, it is a DSGN or portal enrichment, not a gate on these closes.

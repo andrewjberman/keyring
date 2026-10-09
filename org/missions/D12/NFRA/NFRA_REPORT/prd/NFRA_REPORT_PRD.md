@@ -9,7 +9,9 @@ citations behind.*
 **L1 owner:** `4.0.0_SA_CRO~Z` · **L2-L4 owner + author:** `1.0.0_SA_CTO~Z` · **L5-L6:** `2.0.0_SA_COO~ZZ` · **L8-L10:** `3.0.0_SA_CVO~Z` · **Integrator:** `0.0.0_AB_MSTR~Z`
 **Brief (L1):** `docs/briefs/global-infrastructure-reporting-brief-20260909.md` @`37ff80867a`
 **Endpoint (L2):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_GLOBAL_INFRA_REPORTING_20260909.md`
-**Version:** v0.7, 2026-09-10 ~03:0xZ -- **v0.7 CLOSES THE LAST OPEN CALL ON THIS PRD: `FWD-4`'s
+**Version:** v0.9, 2026-10-09 ~07:5xZ -- **v0.9 IS THE ROUND-4 ANSWER AND THE END STATE:** FWD-13 and FWD-15 are RETIRED,
+the endpoint is Andrew's 2026-09-17 ratified spec (already served), and the enrichment list is empty (see END STATE under the
+ENDPOINT block). Before it, the 2026-09-10 recut folded FWD-13..FWD-21 into this ENDPOINT (`2b6cf72067`), and v0.8 corrected the header's outcome count (`1ed4ade1bb`). Before that, v0.7 (2026-09-10 ~03:0xZ) -- **v0.7 CLOSES THE LAST OPEN CALL ON THIS PRD: `FWD-4`'s
 attribution axis has FOUR MEMBERS -- `Dashboard | Website | Gateway | Graph`** (Andrew-direct
 2026-09-10, *"go with your recs on all six"*, on the card recommending exactly that). `UNGROUPED`
 survives, re-scoped to a live surface outside all four. Before it, **v0.6 FOLDED ANDREW'S si2 RULING** (VERBATIM: *"I would include si2 under the Dashboard."*): `canonical-schwab-si2` is attributed to **Dashboard** and is no longer an ungrouped surface; the THIRD-MEMBER half of that open call remains OPEN and is marked so. Before it, **v0.5 WAS THE ROUND-1 ADDENDUM FOR AN OUTCOME NO CELL SERVED (rule 27).** ARMED row `NFRA_REPORT-Z-S1` (`2.0.0_SA_COO~ZZ`, msg 20627) measured that `FWD-4` was cut into NO cell: `S1` bundled TWO outcomes, `RP-s-1` mirrored it BY ID and cut only the FWD-2 half, and L6's coverage limb compares row IDS so it passed 12-of-12 while content coverage did not. **`S1` is NARROWED to `FWD-2` and the attribution limb becomes its OWN row `S13`** -- which also makes `RP-s-1` an exact mirror of the narrowed `S1` rather than a deficient cell, so nothing is reopened and no certified work is rewound. Censused: 2 of 12 rows named multiple outcomes; `S2` is deliberately left as is for a stated reason. Before it, **v0.4 DISARMED ARMED ROW `NFRA_REPORT-Z-W2-S2`**: section 6's first ruling collapsed TWO axes into one and dropped `Graph`; `FWD-4` now carries a mandatory rendered `UNGROUPED` value so no live surface leaves the axis silently; and ruling 15b's open sub-item is discharged (the Graph group is NOT empty -- 3 of 3 ECS services running). The member NAMES go to Andrew as an open call. Before it, **v0.3 ADDED SECTION 9, THE ADVERSARY GRID**, on Andrew-direct
@@ -36,7 +38,7 @@ before landing (see its `CONFIRMED` line).
  "project": "NFRA_REPORT",
  "directive": "D12",
  "fabric": "site-z",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/global-infrastructure-reporting-brief-20260909.md@37ff80867a",
  "endpoint_outcomes": [
@@ -52,9 +54,7 @@ before landing (see its `CONFIRMED` line).
   "FWD-10",
   "FWD-11",
   "FWD-12",
-  "FWD-13",
   "FWD-14",
-  "FWD-15",
   "FWD-16",
   "FWD-17",
   "FWD-18",
@@ -179,14 +179,9 @@ by rule, and carry no technical language.*
                     to go and assemble that picture themselves before they can judge
                     it.
 
-  FWD-13 The morning email a person actually receives carries the new edition's
-         structure with TODAY's live numbers
-         DONE WHEN  EXERCISED -- a real 9 AM email has arrived carrying live collected
-                    values, and a person has checked at least one row's state and
-                    delta against the underlying data and found it right
-         ACCEPT     Andrew opens the morning email and sees per-row state, per-row
-                    delta and attribution over real numbers. NOT a specimen, NOT a
-                    file in the repo -- the email.
+  [retired] FWD-13 v0.9 (2026-10-09, 1.0.0_SA_CTO~Z) -- it was the bar on the round-4
+         edition, which Andrew replaced on 2026-09-17 ("Yeah we can use the old
+         one"). Number left vacant. See END STATE below this block.
 
   FWD-14 The report's facts come from the live collection, never from a literal
          DONE WHEN  APPLIED -- the deployed path contains no hand-written fact list;
@@ -195,13 +190,10 @@ by rule, and carry no technical language.*
          ACCEPT     Two mornings in a row differ wherever the world differed, and
                     nothing on the page was typed in by hand.
 
-  FWD-15 Nothing a reader relies on today disappears in the swap
-         DONE WHEN  EXERCISED -- the first new edition has been compared against a
-                    saved copy of the last old one, and every section the old email
-                    carried is present in the new one or its removal is recorded
-                    with a reason
-         ACCEPT     A named before/after comparison exists and no section vanishes
-                    silently.
+  [retired] FWD-15 v0.9 (2026-10-09, 1.0.0_SA_CTO~Z) -- it guarded the swap to the
+         edition. The swap was reversed on Andrew's word, so nothing was swapped
+         out. Graded FAILED at round 4 (Z-C-S16), and that grade stands on the
+         record. Number left vacant.
 
   FWD-16 Every section is in the email, every morning
          DONE WHEN  EXERCISED -- a morning has passed in which a section had nothing
@@ -252,6 +244,29 @@ by rule, and carry no technical language.*
                     it belongs to, as part of the morning picture -- not in a separate
                     report that nobody opens.
 ```
+
+> **END STATE -- v0.9, 2026-10-09, `1.0.0_SA_CTO~Z`, answering `3.0.0_SA_CVO~Z`'s round-4 L10 slug (msg 32498,
+> `REMEDIATION_v4.Z.md` @95d711f592).** On 2026-09-17 Andrew took this project off the canonical workflow, VERBATIM: *"The
+> NFRA_REPORT shouldnt even be that hard to do, i dont think we even need canonical-workflow for this, there should be
+> enough prior art at this point, id have CRO~N just finish the project end to end"*
+> (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_NFRA_REPORT_SPAWN_CRO_N_RESEARCH.md`). In the
+> same session he ratified the target output, VERBATIM: *"Old-style prose detail as primary body. Both costs breakdowns. Maybe
+> a table where the various IDs and labels are on the right column and the simplified/summary name on the left column. Also,
+> add a section somewhere, maybe in an additional column all the way to the right that has a brief summary of what the
+> function does. Yeah we can use the old one. Audience is just me."*
+> (`org/tier1_exec/4.0.0_SA_CRO~N/deliverables/ANDREW_DIRECT_20260917_1345Z_NFRA_REPORT_TARGET_SPEC_RATIFIED.md` @da2c3c479a).
+> **From that word on, the project's endpoint is that spec, not the FWD ledger above.**
+> - **Served and verified:** `4.0.0_SA_CRO~N` deployed `format_report` plus the RESOURCE REFERENCE table
+>   (`67168eba8c`, `013f755c74`; NEVER-2 ledger `20260917T1420Z_...` CLOSED). `3.0.0_SA_CVO~Z` read the live function at
+>   2026-10-09 07:1xZ: CodeSha256 `iU6tKUas...`, equal to that ledger's post-state. It has fired daily since 2026-09-18.
+> - **FWD-13 and FWD-15 are RETIRED** (above). Every other FWD stands as graded at round 4 and is not re-graded:
+>   Andrew's word ended the ledger as this project's close rule, so no outcome is owed against it.
+> - **The one question left open on 2026-09-17** (keep the edition's "does anything need Andrew" header over the prose body?)
+>   **is ruled NO.** His answer describes the body only, and `format_report` already opens with its STATUS SUMMARY. Adding
+>   the header would widen his spec on the driver's own initiative.
+> - **Not carried:** the section-discrimination bar `Z-W2-S7` asked for; it was owed only if FWD-13 and FWD-15 were
+>   re-specified. `Z-S26` (the round-close-check id fallback) is `2.0.0_SA_COO~C`'s and does not hold this project.
+> - **Enrichment list: EMPTY.** No round 5. The project closes on this PRD's ratified-text sign-off.
 
 > ⛔ **CARRIER CORRECTION, 2026-09-10 ~18:5xZ -- THIS IS THE ROOT-CAUSE FIX AND NOT A FORMATTING
 > TIDY-UP.** `FWD-13`, `FWD-14` and `FWD-15` were authored on 2026-09-10 in a SEPARATE FILE

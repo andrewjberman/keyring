@@ -45,8 +45,10 @@ before the shared-host launcher can resume that thread.
 
 At the beginning of every active turn, sweep the canonical root-level inbox for
 the full suffixed serial. A message is an immediate Go, whoever sent it, when it
-names a task order in your own `task_orders/` home issued by `2.0.0_SA_COO` (or
-its lane), or when it triggers an act the spine assigns to your seat by name (the
+names a task order issued by `2.0.0_SA_COO` (or its lane) that sits either in your own
+`task_orders/` home or in a mission tree's `org/missions/D*/<MACRO>/<CODE>/task-orders/` with
+`<issued_to>` naming your FULL suffixed serial (the tree is a tree project's canonical home; no
+seat-home copy or pointer is needed), or when it triggers an act the spine assigns to your seat by name (the
 L1 brief, the L4-R PRD sign-off, the L8 compile, L9 adjudication and L10 slug --
 `org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md`, owner table), unless its body
 explicitly says hold: read the exact file, ACK and begin, act, and only then move

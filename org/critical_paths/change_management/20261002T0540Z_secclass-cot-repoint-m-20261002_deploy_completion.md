@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-02T05:40:50.599813+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / walker slot from 0.0.0_AB_MSTR (Andrew-direct 2026-10-06 item 3) for the leg-S page walk (firm Mix chart, Books donut, one advisor Mix); data half measured world-done 2026-10-08: 11:36Z fire, 8 classes sum 1.000000, 219 of 219 client timeseries sum to 1 (held since 2026-10-08T18:51:30.307921+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / 1.0.0_SA_CTO~DELL1 ruling I (CTO_RULINGS_BATCH_20261009T0550Z.md, msg 2000): leg S closes on the 2026-10-09 10:30Z scheduled COT gold run's served reads (acceptance 1) plus the PROD-tree firm walk of 2026-10-09 (tmp/ui-walk/20261009T073438Z + 073722Z); a per-firm walker view is not a SECCLASS outcome. The walker slot (MSTR msg 1979) was used and released 07:39Z. (held since 2026-10-09T07:42:36.516695+00:00)
 **Deploy:** MDPF_SECCLASS Cottonwood re-point: Cottonwood gold classifies from the canonical table by the ruled rule; halves COO @40cc2e2108 (blob 59c1da5458) + CTO CTO_HALF_SECCLASS_COT_REPOINT_20261002.md (batch 113, CONDITIONAL: G, R, S wait until leg P's readers are on every deployed portal build, PROD included -- a PROD promote is Andrew's act). Opened LATE, after leg P's DEV push (05:4xZ); no other leg had run
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -32,3 +32,5 @@
 - 20261002T173732Z LEG G closed: Same safe-deploy run, after the shipped artifacts: 'OK: safe-deploy gate PASS -- all 6 file(s) deployed and verified'; V
 - 20261002T192359Z LEG R closed: Leg W first, per CTO ADDENDUM 2 (batch 179 @c95d16a3db): runner i-0643a5bee8a8feabf stopped; rollback versions recorded 
 - 20261008T185130Z HELD-SOVEREIGN-GATED gate=external/walker slot from 0.0.0_AB_MSTR (Andrew-direct 2026-10-06 item 3) for the leg-S p
+- 20261009T074236Z HOLD RELEASED -> OPEN
+- 20261009T074236Z HELD-SOVEREIGN-GATED gate=external/1.0.0_SA_CTO~DELL1 ruling I (CTO_RULINGS_BATCH_20261009T0550Z.md, msg 2000): leg

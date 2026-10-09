@@ -152,7 +152,7 @@ Instrument controls:
   `mdpf_get_model_benchmarks` and `send_chat_message`. Fixed to read the gateway's own `TOOL_CLASSES` sets: 70 tools.
 - On a planted fixture of 3 real tool names and 1 fake, it reports unknown 1, naming the fake.
 
-<status>issued</status>
+<status>complete</status>
 <round>8</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

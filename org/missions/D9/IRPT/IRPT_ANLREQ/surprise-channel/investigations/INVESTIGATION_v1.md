@@ -916,3 +916,29 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W65-S1 -- round 2: the lane tell in validate_public_request (input_id) is not stored on the acceptance record; the packager reads the stored owner shape instead
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W65-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~65",
+  "surfaced_at": "2026-10-09T08:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-AR-g-22 says to decide the custody lane the way validate_public_request does (an input_id basis is prospect, client_id/snapshot_id/account_ids is custody), but DynamoAcceptance.accept stores only browser_sha256, never the browser body, so the packager cannot read input_id; it decides from the stored owner instead (custody-owner-v1 + non-empty account_ids + no prospect_input_id = custody; anything else without prospect_input_id refuses ORIGINAL_REF_ABSENT). Two consequences: a non-OPAL custody owner without schema_version custody-owner-v1 would refuse rather than send I5', and test (f)'s bare-owner fixture still refuses ORIGINAL_REF_ABSENT by this rule.",
+  "spec_asserts": "TO-AR-g-22 cell item 3: 'Read how ycharts/generate/submission.py validate_public_request (:45) tells a custody basis from a prospect input_id basis, and what the stored record keeps of it. ... If the record cannot tell the lanes apart, file a row and refuse.'",
+  "world_is": "The record keeps owner (the verified owner: schema_version 'custody-owner-v1' with account_ids and snapshot_id on a custody request, 'prospect-owner-v1' with prospect_input_id and account_ids [] on a prospect request, per _scope/custody.py:82, reports/request_composition.py:43-59 and submission.py:132-158) and browser_sha256, but not the browser body. The owner tells the two OPAL lanes apart, so the packager neither guesses nor refuses on those; the only unplaced case is a record whose owner is neither shape, which refuses by name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:107-112: the stored record is identity, owner, browser_sha256, composition_ref, accepted_at (plus ticket_id); no browser body",
+      "infra/aws/lambda/investor-reporting/reports/request_composition.py:40-59: an OPAL_GLOBAL custody owner is custody-owner-v1 with account_ids and no prospect_input_id; a prospect owner is prospect-owner-v1 with prospect_input_id",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_packager_i7.py test_e_*: custody sends original_ref null; prospect, bare-owner, empty-accounts and mixed-schema owners refuse ORIGINAL_REF_ABSENT"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

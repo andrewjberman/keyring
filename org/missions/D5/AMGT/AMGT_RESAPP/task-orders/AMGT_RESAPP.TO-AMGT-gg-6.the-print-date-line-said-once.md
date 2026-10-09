@@ -81,3 +81,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @23da81a54e (build 0c685343ea, proof 96f65f006a VALID rc=0). Re-run by the issuer on the branch: R82 PRINT AC1: YES (AMD 22 header lines, the phrase once, at the end of the Header block), AC2: YES (21 of 21 figure lines equal today's minus the phrase); api folder 2 failed (pypdf absent on dell1), 878 passed. Served only through AMGT-gg-7.</status>
