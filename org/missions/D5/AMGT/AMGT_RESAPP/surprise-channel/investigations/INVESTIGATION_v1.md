@@ -22898,3 +22898,131 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Also seen: a short complete sentence that starts a paragraph (under 60 chars, ends in final punctuation) is still read as a heading and dropped, as it was before; and Item 4.B coverage reads 102.4% on r83_passages.py because that check divides joined-text chars (which carry the added single spaces) by stripped line chars."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W332-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~332",
+  "surfaced_at": "2026-10-09T09:52:57Z",
+  "one_line": "fetch.py:417 stamps the source object's `language` from document.detect_language over the HEAD of the whole document (the cover page), so an English 20-F is labelled pt (BABA) or es (SAP); analyze then writes the whole draft in that language and the verbatim gate holds all 40 sentences. BABA was rolled back; SAP was not run.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order AMGT-hh-4 and the pair expect each of BABA, NU and SAP to produce a new silver part, analysis and draft whose served sentences cite the business section, the same as ASML NA; a name whose model run fails or refuses is rolled back.",
+  "world_is": "BABA: fetch 09:42:53Z wrote source.json language=pt (detect_language over the full document head: en 0 hits, pt 13); detect_language over BABA's own excerpt returns en (1501 en hits). analyze 2.1.0 forwards the declared language and writes the prompt rule 'THE FILING IS WRITTEN IN Portuguese'; the analysis (analysis.json language=pt) and draft (VersionId _Io_yi0xEdFc6XV7uN76WcFZurKS4xB5, 85255 B) are Portuguese, sentences served 0, held_no_span 40, no thesis driver. The run did not fail or refuse, but the draft would serve nothing, so BABA was rolled back in the same act (analysis yIcDOS4HT5Q6_gLfUt0lbYCj90Qm1tPR and drafting qUdrTs_2twkBesSoTueePYoDsVGcWite byte-equal to the priors; silver part-20261009T094719Z re-carries the prior row). A read-only local fetch of SAP (no --write-pool) gives language=es and of NU gives en. SAP was therefore NOT fetched with --write-pool and not analyzed (a run would only be rolled back); NU was fetched, analyzed (38 of 40 sentences on span, USD 0.8039) and landed. The ASML run is unaffected (language=en).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/fetch.py:417 (\"language\": document.detect_language(text)[\"language\"], text = the whole document)",
+      "lib/research/filings/analyze.py:1419-1433 _source_language (trusts source_object['language'])",
+      "deliverables/0.9.0_WK_AMGT_RESAPP~332/diff_BABA_US_Equity.txt and after_rollback_BABA_US_Equity.json",
+      ".scratch/analyze_BABA_US_Equity.log (worker worktree; not committed): PASS1 71 citations, DRAFTING sentences 40 verbatim_PASS 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because a rerun of fetch+analyze for BABA or SAP (or any 20-F whose cover page tallies a foreign stopword set) writes a non-English draft over the served one. The repair is in the producer (detect over the excerpt, or analyze re-detecting) and outside this order's paths. NU's prior silver row, analysis and draft are untouched by the rollback; its new keys stand."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W332-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~332",
+  "surfaced_at": "2026-10-09T09:52:57Z",
+  "one_line": "The drafting_build --splice-driver step was not re-run on ASML NA's new draft: its dry-run moves only the provenance key, because analyze 2.1.0 already writes the analysis's own thesis_driver into the draft.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "ee-4 step 4: if the splice ran on the name's prior draft, re-run it on the new draft and say so. The prior ASML draft (iaClXu9Z) carried thesis_driver_provenance, so a splice had run on it.",
+  "world_is": "The new ASML draft (AHblHQYsQKRuezgUjaX9aNuVzcqgpI6A) thesis_driver equals the new analysis's thesis_driver (True); `drafting_build --splice-driver --only-keys ASML_NA_Equity --dry-run` prints moved_keys=['thesis_driver_provenance'] and wrote nothing. A live splice would add only that provenance key (one more drafting write). BABA's and NU's prior drafts carried no provenance key. Not re-run; AC2 reads YES without it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/drafting_build.py:585-604 splice_driver, :614-700 _splice_driver_pool",
+      "deliverables/0.9.0_WK_AMGT_RESAPP~332/PRE_ACT_RECORD.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the provenance key is wanted on the served draft, one splice write on ASML NA's drafting key is the remainder."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S12",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T10:04:00Z",
+  "one_line": "DISARM of AMGT_RESAPP-D1-W332-S1 (ARMED): no order of round 83 re-runs BABA, SAP or PBR; BABA was rolled back byte-equal and SAP never written, so no non-English draft can replace a served one. The language-stamp repair is carried to round 84.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Row AMGT_RESAPP-D1-W332-S1 is ARMED: fetch.py:417 stamps a source's language from the head of the whole document (BABA reads pt, SAP es), so a re-run of fetch and analyze on either writes a non-English draft over the served one.",
+  "world_is": "Issuer ruling at hh-4's close: BABA_US_Equity, SAP_GY_Equity and PBR_US_Equity are HELD -- no store half runs them until the language stamp is repaired and proven on their stored filings. BABA's analysis and drafting were re-written to their prior bytes with the prior silver row re-carried; SAP's keys equal the pre-act record; PBR was not touched. The repair (fetch.py, a site-Z producer path) is round83/CARRIED_TO_ROUND84.md item 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_AMGT_RESAPP~332/diff_BABA_US_Equity.txt and after_rollback_BABA_US_Equity.json (merged @f39219d33f)",
+      "org/critical_paths/change_management/ entry amgt-resapp-r83-hh4-store-half-dell1 CLOSED (L2 rolled back, L4 not executed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarms AMGT_RESAPP-D1-W332-S1 by a new item, as the row gate requires for an investigation row."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W333-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~333",
+  "surfaced_at": "2026-10-09T09:59:07Z",
+  "one_line": "AMGT-hh-5 cannot start: the walker account is armed by another holder (DESKTOP-HK1UU7N:22288:c2a1066b) and a live walk.mjs plus a dev server already hold port 5174; the order says stop.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ee-5 face (cited by hh-5): if `ui_walker_account.py status` reads armed by anyone else when you start, file a BLOCKING row and stop. The hh-5 face expects the account dormant and port 5174 free for this worker's own dev server.",
+  "world_is": "Read twice, 20 s apart, at 2026-10-09T09:57Z-09:58Z: status=active armed=yes (2.2 then 2.8 min ago) armedBy=DESKTOP-HK1UU7N:22288:c2a1066b. Process list: node walk.mjs --base http://localhost:5174 --security AMD --security Lenovo --max-minutes 15 (pid 28480) is running, and node scripts/dev-live.mjs --port 5174 (pid 32648) listens on 5174; both belong to another seat's walk (tmp/ui-walk/20261009T095512Z is the newest walk dir). Holder pid 22288 is not in tasklist, so the holder id is the walk's launcher, not necessarily this process. This worker did not arm, did not disarm the other holder's lease, did not start a dev server, ran no walk, and wrote no WALK_ROUND83.md. The stored-text read was not run either, since the order is to stop. Sibling worktrees /c/tmp/r83-329..332 exist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status (twice) at 2026-10-09T09:57-09:58Z",
+      "Get-CimInstance Win32_Process: pids 28480 (walk.mjs) and 32648 (dev-live.mjs --port 5174)",
+      "netstat -ano: [::1]:5174 LISTENING pid 32648"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Re-issue hh-5 once that walk has disarmed (status armed=no armedBy=none) and port 5174 is free, or tell this worker which seat owns the lease. If the lease is orphaned, a dead holder is disarmed only by the issuer's word: this worker did not touch it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W333-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~333",
+  "surfaced_at": "2026-10-09T10:09:37Z",
+  "one_line": "The contention in AMGT_RESAPP-D1-W333-S1 cleared by itself within minutes, so this worker ran the hh-5 walk after all; the order said stop, and the issuer may regrade that choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ee-5 face (cited by hh-5): if the walker reads armed by anyone else when you start, file a BLOCKING row and stop.",
+  "world_is": "After row W333-S1 was committed (f931b9fe75), a re-read at about 10:01Z showed status=disabled armed=no armedBy=none and 0 listeners on port 5174 (the other seat's walk had disarmed and stopped its server). This worker then armed its own lease (holder DESKTOP-HK1UU7N:30376:05c91aec, 10:05:20Z-10:06:10Z), walked once and disarmed with the login-refused proof printed. It did not touch the other holder's lease. The walk record is WALK_ROUND83.md beside this order's proof.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status read at about 10:01Z and 10:04Z",
+      "tmp/ui-walk/20261009T100516Z/ (gitignored) walk_stdout.log copied to deliverables/0.9.0_WK_AMGT_RESAPP~333/data/walk_stdout.log"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Row W333-S1 stays as filed (rows are never edited); this row is its sequel."
+}
+```

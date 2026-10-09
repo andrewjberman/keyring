@@ -62,6 +62,7 @@ C-ANALYZER-PRICED-FIRST + G-25: no Access Analyzer.  G-21: no alert, alarm, moni
 
 <paths>
 org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.7.0_AE_CloudOps~Z/fwd5/
+infra/aws/terraform/smartx-pipeline/assets-pull-iam.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -87,7 +88,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>staged</status>
+<status>pending</status>
 <round>5</round>
 <slot>0.7.0_AE_CloudOps~Z</slot>
 <fabric>site-z</fabric>

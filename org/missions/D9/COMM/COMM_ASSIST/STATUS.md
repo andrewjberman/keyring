@@ -1,12 +1,20 @@
 # COMM_ASSIST -- status
 
 Seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
-Contract: `prd/COMM_ASSIST_PRD.md` v0.2, ADMITTED (`805fec22c5`; registered `b0a34bddfb`). Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
-seat; last 2026-10-09 ~08:5xZ.
+Contract: `prd/COMM_ASSIST_PRD.md` v0.3 (header fabric site-z, `c225bcc74e`), ADMITTED. Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
+seat; last 2026-10-09 ~09:5xZ.
 
-**Round 11 (CA-d-1, the mail key's wiring, inert while empty):** terminal, drained `3005ccc5f9`; AC1 and AC2 re-run PASS on site Z;
-`CAd1-AC3` (judgment) is ungraded, so `round-close-check` reads REFUSED. L8 packet:
-`deliverables/2.0.0_SA_COO~ZZ/ROUND11_L8_PACKET_20261009.md`. Rows below dated before this line were written on the laptop.
+**Round 11** (CA-d-1, the mail key's wiring) CLOSED: CAd1-AC3 PASS (Z-C-S1), `b1b8f5b4fe`; CTO analysis `4c14e95965`.
+
+**Round 12 (EXECUTING, issued `f8b46c5aa5`):** CA-d-2, the FWD-4 mail deploy, `staged`. All three never-widen halves are SIGNED: COO
+`743fcd4598`, CTO `9e7932bc79`, CVO `0f9a3799f6`. GO waits on NFRA_OPLGTW `TO-OG-ap-3` AC1 (the secret
+`gateway/mail/commassist-bearer`) and on a fresh `0.7.0_AE_CloudOps` lane: the order is re-addressed off `~Z` (rule 27 seating).
+E2 (FWD-3) is conditional on the ~22:00Z read.
+
+**Carried to round 13 (CTO ruling msg 32638 on the CVO's point):** pin `mail_requests.firm_domains()` to C-MAIL's five named parties.
+Today it considers every registry client firm with an `email_domain`, and only the gateway's domain table holds the line.
+
+Rows below dated before round 11's close were written on the laptop.
 
 ## Where it stands
 

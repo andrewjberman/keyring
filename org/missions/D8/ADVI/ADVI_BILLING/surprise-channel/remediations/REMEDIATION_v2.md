@@ -21,11 +21,11 @@ Graduated at round 2's L8 (ADJUDICATION_v2.md), round label v3: 5 rows, OPEN. Ro
     "owner": "2.0.0_SA_COO~B2",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B2",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_BILLING-D2-W4-S2",
@@ -63,11 +63,11 @@ Graduated at round 2's L8 (ADJUDICATION_v2.md), round label v3: 5 rows, OPEN. Ro
     "owner": "2.0.0_SA_COO~B2",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B2",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_BILLING-D2-W3-S2",

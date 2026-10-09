@@ -2486,6 +2486,25 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CLOSE_RUN_CARD_20261002.md step 1: on GATE: PASS 'a window titled Opal_Agent Analyst opens' and the run proceeds to colleague messages; prompt.md 'On launch' arms the Teams engine every session.",
     "world_is": "The window opens but serves nothing until someone types into it. Interim disarm: the operator types one first turn ('Run your On launch steps') in the Analyst window. Durable fix candidate (issuer's to cut): the launcher passes an initial prompt to claude.exe so the On-launch steps run unattended.",
     "notes": "Separate from row Z-S62 (ARMED, 1.0.0_SA_CTO~O): opal_asker_query is refused write_class_denied for every tier on the live gateway, so neither close-run arm can grade as written until the next gateway release; a portal question now reads write_class_denied, not asker_no_profile."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W24-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~24",
+    "surfaced_at": "2026-10-09T09:47:59Z",
+    "one_line": "OA-f-9 AMENDMENT 3 / AC5 is not in the order file in the worker worktree: the checker reads 4 criteria and the last <status> is pending.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "proof-of-spec-check on the A3 instance: 'invocation-alignment: 4/4 comparable row(s) match ...; NOT COMPARABLE: 1 row(s) name no criterion in the TO'; the order file is outside my <paths>, so I did not add AC5 or flip <status> (last <status> line 226 = pending). AC5 f9.AC5.sh PASS exit=0 at nested c9983bd."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker face carries AC5 and the order flips to complete after rc 0.",
+    "world_is": "The order file at the worktree HEAD carries AC1-AC4 only and is outside the worker write grant, so the complete flip and the AC5 criterion text are the issuer's to land."
   }
 ]
 ```
@@ -2517,5 +2536,38 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   },
   "spec_asserts": "OA-f-9 A2 AC4 (row Z-S63): the launcher starts the Analyst WITH a first prompt, so prompt.md's On launch steps run unattended.",
   "world_is": "The prompt is on the command line but the CLI consumes it as an --add-dir value, so the Analyst idles at input exactly as in Z-S63. AC4 graded the string shape, which is the defective shape, and never ran the CLI, so it passed. Disarm: OA-f-9 AMENDMENT 3 (AC5: a -- separator before the prompt, graded with the real CLI's control and fix arms), drain, opal_ai DEV/PROD push by 0.0.0_AB_MSTR~Z, then the step-4 read re-run before r29's arms (CTO~Z ruling 32614)."
+}
+```
+
+## NFRA_OPALAI-Z-S65 -- DISARMS Z-S63 and Z-S64 (the Analyst now runs its On launch steps unattended on PROD c9983bd) and dismisses W24-S2.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S65",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T10:09Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by their disarm_owner. Z-S63 and Z-S64: the launcher at opal_ai PROD c9983bd starts the Analyst with a first prompt that runs by itself (live run 10:0xZ, whoami gate passed unattended). W24-S2: the order carries AC1, AC2, AC3 and AC5 (AC4 replaced in place), so its 'only AC1-AC4' reading was wrong, and the status flip it asked for is done (@47484ee26a).",
+  "adjudicates": [
+    "NFRA_OPALAI-Z-S63",
+    "NFRA_OPALAI-Z-S64",
+    "NFRA_OPALAI-Z-W24-S2"
+  ],
+  "one_line": "DISARMS Z-S63 and Z-S64 (the Analyst now runs its On launch steps unattended on PROD c9983bd) and dismisses W24-S2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C opal_ai ls-remote origin DEV PROD at 10:04Z: both c9983bd2ac25",
+      "0.0.0_AB_MSTR~Z msg 32654: runtime fast-forwarded to c9983bd before launch; 'GATE: PASS'; Analyst pid 33140; command line '--add-dir ...\\refs -- \"Run your On launch steps from prompt.md, then serve Teams.\"'; 'The identity gate passed: whoami returned Opal Bloomberg (opalbloomberg@opalinvest.com)'; no sign-in; closed 10:06:51Z with 0 Opal_Agent claude.exe and 0 teams-watch processes left, no Teams message served",
+      "OA-f-9 AMENDMENT 3: f9.AC5 PASS on worker ~24 and on the issuer re-grade; drained @256d955e74; status complete @47484ee26a",
+      "the runtime checkout C:\\opal_runtime\\opal_ai read c9983bd at 10:04Z"
+    ]
+  },
+  "spec_asserts": "OA-f-9 A2/A3: the launcher starts the Analyst with a first prompt so prompt.md's On launch steps run unattended.",
+  "world_is": "Met on the live launch: step 1 (identity gate) ran without anyone typing and the Analyst moved on to step 2. Not yet exercised: the Analyst serving a Teams message, which waits on r29 and the CTO~Z close-before-Teams condition."
 }
 ```

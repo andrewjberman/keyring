@@ -45,3 +45,28 @@ pattern.
 The order of release is unchanged: after dell1's SC-e-56 is live.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 2 (~10:1xZ, `~P2` msg 3100, row W265-S1): SC-e-56 is live only in the ORDERED key, which no 49F fire runs
+
+**Measured:**
+- Dell1's "SC-e-56 is LIVE" (relay msg 3096) is true of `s3://opal-data-mdpf/.../investor-reporting.tar.gz`, version W2Wragr, which carries @01e843ce2e.
+- The 49F holdings fire (`irpt-holdings-refresh-lambda`) runs `s3://opal-data-49financial/irpt/49financial/code/gold/investor-reporting-holdings.tar.gz`.
+  Its `holdings_snapshot.py` is `55a5ac98`, WITHOUT @01e843ce2e.
+- IB-pr-402 and 404 land that per-firm bundle narrow, deliberately without e56.
+- **So the CUSIP fallback is NOT where the 49F fire runs.** Releasing IB-pr-403 alone would leave e56's acceptance 1 NOT MET.
+
+**RULING (REC adopted):**
+- After IB-pr-404 lands, ONE 49F-only narrow release carries both:
+  - dell1's e56 port, @01e843ce2e's `holdings_snapshot.py` delta (dell1 `~M1` is the one writer, decision 106191, and its RELEASE goes through IRPT_BCKEND's
+    path);
+  - IB-pr-403's `holdings_49f.py`.
+  It is built on the post-404 bytes, with the 402 digest-gate discipline.
+- **Its pair:**
+  - `~P2`'s COO half;
+  - dell1 `~M1`'s COO half for the e56 member (cross-box, through MSTR);
+  - this seat's CTO half.
+  The packet replays a symbol-miss node falling back to CUSIP, and the FWD-14 gate is unchanged.
+- **The other two firms' bundles are untouched.**
+- **e56 acceptance 1 closes on the first served 49F fire after that release.** The reply to dell1 says the e56 code is live in a key the fire does not read.
+
+-- 1.0.0_SA_CTO~DELL2

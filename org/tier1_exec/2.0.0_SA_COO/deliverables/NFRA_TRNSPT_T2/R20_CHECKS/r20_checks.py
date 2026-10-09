@@ -1,5 +1,6 @@
 """NFRA_TRNSPT round 20 -- the issuer's mechanical checks (2.0.0_SA_COO~T2).
 
+  t20   TR20-t20-AC1  the Teams gateway transport to the /hx/transcripts contract (fixtures only) + pull.tf reads gateway/transcripts/bearer
   x20   TR20-x20-AC1  live read-only wiring: S3 readers for the securities question and a completeness CLI for one meeting; reads only
 
 Prints <TOKEN>-OK or <TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or the worker's worktree root).
@@ -11,6 +12,8 @@ from pathlib import Path
 
 T = "data/transcripts/scripts/tests/"
 SPEC = {
+    "t20": (T + "test_teams_gateway_transport.py",
+            ["test_transport_follows_route_contract", "test_refusals_raise_typed_errors", "test_pull_tf_reads_transcripts_bearer_by_data_source"]),
     "x20": (T + "test_live_readers_exercise.py",
             ["test_s3_readers_read_only", "test_completeness_cli_one_meeting_cause", "test_securities_cli_counts_only"]),
 }

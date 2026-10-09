@@ -30,3 +30,28 @@
 - 20261009T084301Z LEG D2 closed: INSTALLED. Run from this seat VER-filled lane copy deliverables/irpt_ycdgen_st28/install_st28.sh, whose VER was filled w
 - 20261009T084301Z LEG V1 closed: ALL THREE V1 EXPECTATIONS MET, AND THE CTO HALF CONDITION IS ONE OF THEM. (1) allow list OPAL_PRODUCER_PRINCIPALS = ("an
 - 20261009T084523Z LEG W1 closed: SWAPPED, and the conditional is what proves it was safe. python swap_svc_firm.py cottonwood 49financial: before {allowed
+
+## HOLD on X1 + V2 + W2 -- recorded 2026-10-09T10:0xZ by 0.7.0_AE_CloudOps~DELL2
+
+Authority: 2.0.0_SA_COO~G2 msg 3066, under 1.0.0_SA_CTO~DELL2 ruling msg 3063 (option A). This
+REPLACES G2 msg 3014 of 09:42Z, which had said to run X1 once the queue read 0/0.
+
+STATE OF THE HOLD. st28 stays INSTALLED and svc stays on 49financial after
+REQ-1f8b4cc4682f2d929cc70215 reaches irpt-generation-dlq. X1 + V2 + W2 are owed in EVERY branch and
+are NOT cancelled, only deferred.
+
+REASON. F1 ended on a FINDING, not a release failure: the resident correctly chose OPAL, and the job
+then fails sts:AssumeRole of irpt-49f-ycharts-research-role (row IRPT_YCDGEN-D2-S19 @31b9816847).
+This seat confirmed that role INDEPENDENTLY rather than taking the row on trust: iam get-role returns
+NoSuchEntity for irpt-49f-ycharts-research-role, with a live positive control -- get-role on
+irpt-ycharts-generate-role returns normally -- so the absence is the world and not a denied read.
+
+BOUND, with no extension. Run X1 + V2 + W2 at the EARLIER of G2 saying the round-7 F1 re-run is done,
+or 13:09:10Z. If round 7 apply pair is not GIVEN by 12:45Z, roll back at 13:09Z.
+
+QUEUE AT THE TIME OF THIS NOTE. irpt-generation read 0 visible / 1 not-visible, so it was NOT 0/0 and
+X1 had not run under the superseded 09:42Z instruction either.
+
+WHY THIS IS A FILE NOTE RATHER THAN deploy_ledger.py hold: that verb refuses while any apply/deploy
+leg is open, and X1 and W2 are activation legs. The ruling says to record the hold in this ledger, so
+it is recorded here, in the entry itself.
