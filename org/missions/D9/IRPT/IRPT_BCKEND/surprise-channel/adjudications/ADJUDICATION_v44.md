@@ -12,7 +12,7 @@ laptop. The four ARMED directory rows in REMEDIATION_v34 disarm only on that aft
 ```json
 [
   {
-    "id": "IRPT_BCKEND-C-S319",
+    "id": "IRPT_BCKEND-C-S320",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "3.0.0_SA_CVO",
