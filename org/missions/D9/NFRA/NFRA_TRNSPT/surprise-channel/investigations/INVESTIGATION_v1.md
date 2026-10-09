@@ -1352,6 +1352,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "CTO ADDENDUM 7: the Teams pull apply proves FWD-2 on its first scheduled research_meeting landing.",
     "world_is": "Applied as written, the function would run hourly and land nothing (stub transport), and its bearer secret is absent. The apply is the wrong next act; the transport and the secret name come first.",
     "notes": "The applier did not read a neighbouring secret (a valid expiry from the wrong secret is a false pass). KMS CreateGrant limb PASSED."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:15:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Implementing GatewayTransport turns two stub-asserting tests in test_teams_pull.py red (test_gateway_stub_names_routes_and_makes_no_call, test_cli_dry_run_line_and_gateway_exit); the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_pull.py:120-124 asserts GatewayToolsAbsent 'S04 not landed: ...' from GatewayTransport('https://example.invalid','tok'); :143-144 asserts pull.main(['--transport','gateway']) prints 'GATEWAY-TOOLS ABSENT tool list_meeting_transcripts -> GET /me/onlineMeetings/'",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at wk-NFRA_TRNSPT-2: 410 passed, 2 failed (those two); test_teams_gateway_transport.py 3 of 3 pass",
+        "data/transcripts/scripts/teams/pull.py:233-240 main() --transport gateway constructs GatewayTransport() with no bearer, so it now prints 'GATEWAY-TOOLS ABSENT pass one, or a secrets_reader for gateway/transcripts/bearer' and exits 3 (no network, no AWS call is made)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20: 'Keep test_teams_pull.py and every other test green' while GatewayTransport stops being a stub.",
+    "world_is": "Both assertions test the stub that this order replaces, so they cannot stay green; test_teams_pull.py is not in <paths>. Also pull.py main() has no live wiring for the gateway arm (it never passes a bearer or secrets reader); only the lambda handler wires it. The base URL is the contract's literal, so a non-contract base_url (the old test's example.invalid) raises ValueError rather than opening a socket.",
+    "notes": "Not worked around: the two tests were not edited and the stub message was not kept to satisfy them. The issuer may admit test_teams_pull.py in a later order's paths (replace the two with the typed-transport assertions) and decide whether pull.py main() should read the bearer through read_bearer."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:15:00Z",
+    "one_line": "The /hx/transcripts contract returns the transcript body only; the pull's fmt 'metadata' read (pull.py:98) has no route, so GatewayTransport raises GatewayFormatUnsupported for it and a live pull cannot yet land a meeting.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the cell: derive the metadata object from the list row's createdDateTime/endDateTime, or ask the gateway owner for a metadata path)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/HX_TRANSCRIPTS_ROUTE_CONTRACT_COPY_f67fbc2390.md: two GET paths only; the single-transcript answer is {meeting_id, transcript_id, createdDateTime, endDateTime, content, byte_count, sha256}",
+        "data/transcripts/scripts/teams/pull.py:97-98 reads read_meeting_transcript(meeting_id, row['id'], 'vtt') and then (..., 'metadata') for every row; the fixture holds <stem>.<tid>.metadata.vtt files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20: read_meeting_transcript(meeting_id, transcript_id, fmt) -> the content bytes of GET .../transcripts/{tid}.",
+    "world_is": "The route has one body and no second format. fmt 'vtt' returns the verified content bytes; fmt 'metadata' raises GatewayFormatUnsupported (a ValueError) rather than return the vtt bytes under a metadata name. pull.run would raise at the metadata read on its first live row. Inert until the Teams pull is applied against the live route.",
+    "notes": "Not worked around: no metadata object was synthesised and pull.py was not edited (outside paths). The contract names no metadata surface, so the choice is the CTO's."
   }
 ]
 ```

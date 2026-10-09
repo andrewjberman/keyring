@@ -700,3 +700,30 @@
   "world_is": "No neighbour reads the tier-home rule; the one pattern for registry-file-as-plan-time-data is opal_name's own file() of exemptions.json, which this follows. The source (smartx) and table (fee_statement) segments are typed in the .tf; a registry change to the FIRM bronze home changes the plan, and the test fails if the join ever diverges from address()."
 }
 ```
+
+## ADVI_BILLING-D2-S5 -- FWD-3 REALIZED on the round-3 real render
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S5",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:15:45Z",
+  "one_line": "FWD-3 graded REALIZED on the round-3 real render (portal DEV 6d383958, household z08219260; private PNG on dell2, sha256 8e941d5e... matches the record, viewed by this seat): both accounts now state 'No money moved in or out this quarter' and 'Nothing excluded', backed by the served object's flows_in_period [] and excluded_value 0, beside the value charged on, the flat schedule, days, both components with reasons and the 10 steps. Every FWD-3 ACCEPT clause is shown on real data. Correction to this seat's round-2 remedy (D2-S4): it also asked for the prior-quarter true-up from a SMArtX statement; that true-up sits in Schwab's DEBIT, so it is a reason for the debit difference (FWD-1's comparison, E2), not part of how Opal works out the fee (FWD-3).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/r3_close/DRAIN_END_R3.md @a62249088d",
+      "C:/dev/advi_billing_private/r3_close/r3_realrun_fee_panel.png (dell2, private; this seat's sha256 prefix 8e941d5ea9344a60)",
+      "org/missions/D8/ADVI/ADVI_BILLING/prd/ADVI_BILLING_PRD.md:45-50 (FWD-3)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_BILLING_ROUND_3_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 ACCEPT: the value charged on, the schedule and tiers, any adjustment for money moved in or out during the quarter, and anything left out; they can answer 'why is my fee this number?'.",
+  "world_is": "REALIZED on real data. The true-up's method remains unknown and is carried by E2 for FWD-1's difference reason."
+}
+```
