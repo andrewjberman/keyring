@@ -94,6 +94,21 @@ FABRIC_ENUM = ("laptop", "site-z", "dell1", "dell2")
 # NFRA_CTLPLN.TO-CT-c-6 (round 3, PRD C-PLACEMENT, FWD-7; CTO msg 105973): dell1 and dell2 joined the enum as
 # boxes of their own. Rule-24 record: org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~5/FABRIC_ENUM_RULE24_RECORD.md
 # .tools/missions-tree-index.py reads this tuple by AST (no second literal).
+# NFRA_CTLPLN.TO-CT-t-3 (FWD-2): the gate DECIDES on _fabric_values() -- the device register read through lib/devices.py --
+# so a box added to org/devices/DEVICES.json is admitted here with no edit. FABRIC_ENUM above stays a literal ONLY as the
+# AST carrier .tools/missions-tree-index.py and org/standards/PROJECT_TREE.contract.json (`value_enums`) still resolve; the
+# gate decides on nothing else, and .tools/tests/test_no_hand_listed_boxes.py compares the two.
+
+
+def _fabric_values():
+    """The fabric values the device register allows (lib/devices.py placement_values), loaded by file path. An unreadable
+    register raises: the callers refuse (fail-closed), never fall back to FABRIC_ENUM."""
+    import importlib.util as _ilu
+    spec = _ilu.spec_from_file_location(
+        "opal_devices_for_gate", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "lib", "devices.py"))
+    mod = _ilu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.placement_values()
 
 # GATE (i) -- Andrew-direct 2026-09-03 (state of record @716a9bc7ce call 3, LD-0521; his conditional
 # "If there's any chance of doing this out of order, we need more gates" became his ask): L7 WORKERS ARE
@@ -2325,13 +2340,17 @@ def check_project_stage(root, rel):
     # cannot have work dispatched against it -- the laptop and site-Z fabrics are different worlds
     # and the choice was being made implicitly, by whoever happened to pick up the TO.
     fabric = doc.get("fabric")
+    try:
+        values = _fabric_values()
+    except Exception as exc:  # noqa: BLE001
+        return ["%s: project %s -- the device register is unreadable (%s) -- fail-closed" % (rel, cand, exc)]
     if fabric is None:
         return ["%s: project %s declares NO fabric. Step 3 requires the laptop-vs-site-Z call to "
                 "be MADE and RECORDED before a TO is cut against it. Set \"fabric\" to one of: %s"
-                % (rel, cand, " | ".join(FABRIC_ENUM))]
-    if str(fabric).strip().lower() not in FABRIC_ENUM:
+                % (rel, cand, " | ".join(values))]
+    if str(fabric).strip().lower() not in values:
         return ["%s: project %s has fabric=%r, which is NOT in the ratified enum (%s)"
-                % (rel, cand, fabric, " | ".join(FABRIC_ENUM))]
+                % (rel, cand, fabric, " | ".join(values))]
     return []
 
 
@@ -3149,9 +3168,10 @@ def sweep(root):
     print()
     print("[to-pipeline-gate --sweep] fabric across org/projects/  (step-3 laptop-vs-site-Z fork)")
     print("  DENOMINATOR: %d project JSON(s), %d unreadable" % (total, unreadable))
+    fabric_ok = _fabric_values()
     for k in sorted(fabric_counts, key=lambda x: (-fabric_counts[x], x)):
         flag = "  <- not in the ratified enum" if (
-            k != "<ABSENT>" and k.strip().lower() not in FABRIC_ENUM) else ""
+            k != "<ABSENT>" and k.strip().lower() not in fabric_ok) else ""
         print("    %-16s %4d  (%.1f%%)%s"
               % (k, fabric_counts[k], 100.0 * fabric_counts[k] / max(total, 1), flag))
     fabsent = fabric_counts.get("<ABSENT>", 0)
