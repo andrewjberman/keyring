@@ -5,7 +5,7 @@
  "project": "IRPT_ANLREQ",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_223xZ_ANALYSIS_REQUEST_END_TO_END_ONE_PROJECT_CLOSER_TRACE.md@2b21a349d1",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -37,7 +37,8 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
   FWD-2  The form fits the request and catches a bad request before it files
          DONE WHEN  EXERCISED -- the form offers the analysis types and the Opal models as checkboxes plus a field for other ETFs; a mistyped ETF is caught
                     and a correction offered, and a swap is accepted, before the ticket is created
-         ACCEPT     a person who types an ETF wrong is told before filing and can pick the right one; a person who wants a model swapped can say so in the form
+         ACCEPT     a person who types an ETF wrong is told before filing and can pick the right one; a holding that is unknown or cannot be priced is
+                    replaced by a confirmed candidate security before filing (the security swap), never by an unverified guess
          SOURCE     Andrew ("typo check and swap ability completely ironed out"); CRO trace hops 1-2
 
   FWD-3  The investment commentary is written from the report itself, and stays a draft until a person sends it
@@ -87,14 +88,17 @@ Registered @07d6672dbe, under D9/IRPT, placement DELL2.
 | C-SOURCES: contracts are cited, not copied | this project | C-PACKAGE, C-ONE-DOOR and C-TYPE live in `org/missions/D7/TCKT/TCKT_VNEXT/prd/TCKT_VNEXT_PRD.md`. C-KIMI and C-WIPE-GATE live in `org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md`. The upload door and E5 live in IRPT_BCKEND. This PRD cites each at its path and never restates it, so each rule has one home. |
 | C-PACKAGER: one principal attaches the package | this project | The package's last hop is the branded PDF render, which runs after the commentary. That hop's principal is the ONE `package_principal` named in the type definition. It is firm-bound by its PROFILE row (internal-caller narrowing, IB-pr-387), and never ALL. |
 | C-FIRM: firm reach | consumed | Every principal on the journey reaches exactly the request's firm: svc-commentary by tenant-bound `get()`; the test filer by its PROFILE row [49financial]; the packager by its row. ALL never admits. |
+| C-ABSORB: what MOVES into this project (the brief's "compress into ONE project") | this project | **Moves in, owned and issued here.** (a) IRPT_BCKEND `~Y2`'s Analysis lane: the upload door and resolution `infra/aws/lambda/investor-reporting/intake/{uploads,upload_resolution,upload_suggestions,resolution_kimi}.py`, the security swap (today `KIMI_WEB_SEARCH_UNVERIFIED`, `resolution_kimi.py:159-165`; candidates from `etf-classifications`, ex-IRPT_YCDGEN FWD-16), and generation submit. (b) IRPT_YCDGEN whole: the Opal engine and brand `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/{opal_producer,layout_overview}.py`, report types and vendor retirement. (c) NFRA_TRNSPT FWD-10 and FWD-11: the commentary drafter `data/transcripts/scripts/commentary/*` and its Lambda `commentary.tf`. (d) The READY event H1 (from `~P2`'s queue). (e) TCKT_VNEXT's Analysis Request scope: the `analysis_request` type definition, `POST /tickets/{id}/package`, `portal/src/pages/TicketCenter/` Analysis Request parts. **Keeps the remainder:** IRPT_BCKEND (`~P2`: auth, routes, directory, holdings, `irpt-export-render` as the shared renderer); NFRA_TRNSPT (FWD-1..9: transcripts, company read, mail); TCKT_VNEXT (non-analysis types). **Lanes:** `~Y2` is the ONE driver, issuing the FWD-1 thread and the round analysis. `~G2` (engine and brand), `~T2` (commentary) and `~V2` (ticket) continue as this project's workstreams with disjoint write surfaces, each issuing only into its own workstream scope (rule 27). No hop of FWD-1 parks on another project's cell. Each source PRD gains a one-line addendum pointing here at its next round boundary; in-flight orders and signed pairs complete where they are. |
 | C-NAMES: rule 30 | consumed; LGIC | Every new S3 address and resource name is `lib/opal_naming.py` `address()` / `name()` output, printed in the order that writes it. |
 
 ## 2. THREAD -- FWD-1, round 1
 
 The thread is one seat-driven request on DEV, for a 49financial client with an eligible advisor (E5), through hops 1 to 9. Each hop is read
 on its own artifact.
-- Round 1 cuts one cell per MISSING or INCOMPLETE hop it can build now.
-- It parks the hops whose owner is another project's open cell (4 and 6), naming the owner and the un-park condition.
+- Round 1 cuts one cell per MISSING or INCOMPLETE hop. Every hop is this project's own cell under C-ABSORB, including 4 (H1) and 6 (the
+  commentary Lambda), so none parks on another project.
+- A hop that waits on another box (for example a laptop KMS key-policy grant) parks that ONE hop with its owner, date and un-park condition,
+  as a pre-arranged input, and the driver moves on in the same tick.
 
 ## 3. ENRICHMENT BACKLOG (ordered)
 
@@ -117,21 +121,37 @@ on its own artifact.
 |---|---|---|---|---|
 | S1 | FWD-1, 2 | `portal/src/pages/TicketCenter/` (the Analysis Request form: models, other ETFs, typo check, swap) | this project, portal review route | product file |
 | S2 | FWD-1, 4 | `infra/aws/lambda/ticket_center/lambda_function.py` (the package route's principal, failure states on the ticket) | this project with TCKT_VNEXT | SERVED at deploy |
-| S3 | FWD-1 | the upload door, E5 and `POST .../analysis` | IRPT_BCKEND (~Y2) | SERVED at deploy |
-| S4 | FWD-1, 3 | the Opal engine's layout (commentary section) and the PDF render | IRPT_YCDGEN (~G2) | resident release |
-| S5 | FWD-1, 3 | the commentary Lambda and its READY trigger (H1) | NFRA_TRNSPT (~T2), IRPT_BCKEND (~P2) | SERVED at deploy |
+| S3 | FWD-1, 2 | the upload door, E5, `POST .../analysis`, and the backend security swap (`intake/*`) | this project, `~Y2` (C-ABSORB a) | SERVED at deploy |
+| S4 | FWD-1, 3 | the Opal engine's layout (commentary section) and the PDF render | this project, workstream `~G2` (C-ABSORB b) | resident release |
+| S5 | FWD-1, 3 | the commentary Lambda and its READY trigger (H1) | this project, workstream `~T2` (C-ABSORB c, d) | SERVED at deploy |
 | S6 | FWD-1, 5 | the ticket page's package files, opened through IRPT's signed-link reader | this project, portal | product file |
 | S7 | FWD-6 | the Analysis tab under `portal/src/pages/InvestorReporting/`, the manual path | this project, after FWD-1 | product file |
 
-## 6. BRIEF COVERAGE
+## 6. BRIEF COVERAGE (one row per brief item; brief @2b21a349d1, 14 items)
 
-| Brief item | Where |
-|---|---|
-| Hops 1-2 (form, check and swap) | FWD-2, S1 |
-| Hops 3-9 | FWD-1, the THREAD |
-| Commentary from the report | FWD-3, S5 |
-| No-stop rule | FWD-4, C-ONE-JOURNEY |
-| Firm fence | FWD-5, C-FIRM |
-| The Analysis tab after | FWD-6, S7 |
+| # | Brief item | Carried as (content, path, guard, proof gap) |
+|---|---|---|
+| 1 | the type of analysis | FWD-2. The form offers the report types the engine serves (Overview, Comparison, Multi-Comp; `ycharts/generate/comparison_catalogue.py`). S1 |
+| 2 | Opal-model checkboxes and an other-ETF input | FWD-2. Model checkboxes from the comparison catalogue; free ETF tickers, each resolved before filing. S1 and S3 |
+| 3 | the holdings Excel attached | FWD-1. Through the upload door (C-ONE-DOOR, TCKT_VNEXT); the ticket stores the handle, never the bytes. S3 |
+| 4 | typo check and swap, frontend and backend | FWD-2. A mistyped ETF gets a correction offer; an unknown or unpriceable holding is SWAPPED for a confirmed `etf-classifications` candidate. The backend is `intake/upload_suggestions.py` and `resolution_kimi.py` (C-ABSORB a); the frontend is S1. Proof gap: `KIMI_WEB_SEARCH_UNVERIFIED` today |
+| 5 | a ticket in the open Ticket Center page | FWD-1. An `analysis_request` ticket, open until the package lands. S2. Proof gap: 0 filed end to end |
+| 6 | the backend generates the full report | FWD-1. Generation submit and the Opal engine (C-ABSORB a, b). S3 and S4 |
+| 7 | commentary from the report's key surfaces | FWD-3. The drafter reads the report's composition through `get()`, tenant-bound, with abstract fields only (C-KIMI). S5 |
+| 8 | the package attached: report, branded PDF with commentary, original Excel | FWD-1. `POST /tickets/{id}/package`, pointers only (C-PACKAGE), by the one packager (C-PACKAGER). S2 and S6. Proof gap: no signed-link open yet (hop 9) |
+| 9 | ONE workflow, the form primary | FWD-1 and C-ONE-JOURNEY |
+| 10 | the Analysis tab after, as the manual path | FWD-6. S7, cut after FWD-1 |
+| 11 | measure each COO workstream | Section 1, the nine-hop state measured per lane (`~Y2`, `~G2`, `~T2`, `~V2`, `~P2`) |
+| 12 | the closer-style trace, then the frontend | Section 1 (the CRO trace @9076346655) and the backlog order: backend hops before the Analysis tab |
+| 13 | COMPRESS into ONE project | C-ABSORB. The cells and paths that move in, the remainder per source project, one driver plus workstream lanes |
+| 14 | the defect: stopping on another agent's or box's deliverable | FWD-4, C-ONE-JOURNEY, and C-ABSORB (no hop parks on another project's cell; a cross-box wait is a pre-arranged input with owner and date) |
+
+## v0.2 (2026-10-09 ~04:4xZ, `1.0.0_SA_CTO~DELL2`) -- on `4.0.0_SA_CRO~DELL2`'s brief-half refusal (msg 2416, review @5e8b383ce6)
+
+- **R1:** C-ABSORB is added. S3-S5 move into this project, and hops 4 and 6 become its own cells.
+- **R2:** FWD-2's swap is the security swap, and its backend owner is named.
+- **R3:** BRIEF COVERAGE now has one row per brief item (14), each with its content.
+
+FWD-2's ACCEPT changed, so the CVO's ratified-text half re-opens too.
 
 -- 1.0.0_SA_CTO~DELL2
