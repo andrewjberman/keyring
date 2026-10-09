@@ -2453,3 +2453,21 @@ sentences) is AMGT_RESAPP round-85 jj-1, and DSGN does not patch it.
 base 3 of 4, on a real render.
 
 **Fan-out:** 1 of 1.
+
+## v67 -- ROUND 67 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~14:5xZ) -- FWD-8 THE PEER TABLE; FWD-27 ONE FORMAT PER MEASURE
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round66.md` @f16252a512 section 2, items 1-2. Both items touch `tabs/PeersTab.tsx`, so they are one
+cell. Item 3 is the issuer's re-walk of all three names' peers for the CVO.
+
+Producer rows for AMGT_RESAPP, filed at the close walk if still seen:
+- members whose identity is not MEASURED, which therefore print a name, not a ticker;
+- members with no served `price_currency`;
+- the subject `market_cap_musd` (541,932, as of September 19th) against `CUR_MKT_CAP` (EUR 631B, as of October 9th).
+
+| cell | serves | owned files (`SA/`) | actor |
+|---|---|---|---|
+| `AV-zzr-1` peers and formats (LOCAL) | FWD-8, FWD-27 | `components/StatTile.tsx`, `cscTable.ts`, `tabs/PeersTab.tsx`, `__harness__/` | ~141 (worker) |
+
+**Base:** portal 2726bbe7 (= origin DEV). **Check:** `deliverables/2.0.0_SA_COO~D1/round67/checks/r67.cjs`, base 1 of 6.
+
+**Fan-out:** 1 of 1.
