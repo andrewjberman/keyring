@@ -178,3 +178,28 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "world_is": "The trunk kept moving under the packaged paths after the halves were measured; a pinned build is the only way the measured table equals what ships."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S5",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-09T19:22:53Z",
+  "one_line": "Since the 18:33Z mail deploy, the poller's mail route has LISTED ZERO messages across 10 polls / 36 calls in ~48 min, every party domain included (Opal internal among them, Friday afternoon). Calls succeed (failed 0, refused 0), so either no party mail arrived or the route reads a mailbox or cursor other than the one intended.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/r12/checks/d2_mail_day.py --day 2026-10-09 at 19:21Z: poll_lines=10 domains=40 listed=0 fetched=0 sent=0 calls=36 refused=0 failed=0; considered_lines=0.",
+      "Deploy a3057a3ed1: the mail step went live at 18:33Z (mail_poll calls 4, domains 4, failed 0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4: mail from the five parties naming Andrew reaches the poller.",
+  "world_is": "Zero listed in ~48 min. The discriminating act is the close plan's 19:30Z driver: one Opal-staff mail naming Andrew. If it is listed, the zero was organic; if not, the route's mailbox or cursor is the defect.",
+  "notes": "Not BLOCKING: the close plan's driver mail is the falsifier and is already scheduled. The issuer resolves this row on that read."
+}
+```
