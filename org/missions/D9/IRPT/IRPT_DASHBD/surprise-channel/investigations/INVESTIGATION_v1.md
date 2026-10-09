@@ -4529,6 +4529,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-D2-W63-S1 -- The worktree had no .terraform and no .tools/terraform.exe, so init and the plan used the main checkout's terraform.exe and a local-directory provider
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W63-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~63",
+  "surfaced_at": "2026-10-09T13:10:00Z",
+  "one_line": "The worktree had no .terraform and no .tools/terraform.exe, so init and the plan used the main checkout's terraform.exe and a local-directory provider mirror of aws, with no download.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-88 step 4 runs the targeted plan and one safe-apply from the worktree and forbids downloading any package or program; the order names no init step.",
+  "world_is": "MEASURED: .tools/terraform.exe is absent in the worktree and the root had no .terraform ('Backend initialization required'). Ran C:/dev/ajb_workspace/.tools/terraform.exe init -reconfigure -plugin-dir=<the ycharts root's .terraform/providers> (the precedent of row IRPT_DASHBD-D2-W47-S3); init completed with no provider fetch; the backend is the declared S3 state, no state moved. .terraform and the lock file are git-ignored; r41.tfplan was deleted after the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform init output 'Terraform has been successfully initialized!' 2026-10-09 ~12:50Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R41_PLAN_OUTPUT.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W63-S2 -- The delta's one-changed-member premise holds for the built artifact (the 17 other members are built from their pins), but infra/logic/registry/reporti
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W63-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~63",
+  "surfaced_at": "2026-10-09T13:10:00Z",
+  "one_line": "The delta's one-changed-member premise holds for the built artifact (the 17 other members are built from their pins), but infra/logic/registry/reporting_policies.json at HEAD differs from its pin, and the new account_activity_lots.py pin is the DB-b-87 drain commit, not on origin/CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-88 names account_activity_lots.py as the ONE changed member and says to pin it to the commit carrying DB-b-87's bytes on origin/CLOUD, or the drain commit with a line saying so.",
+  "world_is": "MEASURED: 17 of 18 pins have blobs at HEAD equal to the pinned sha256; the exceptions are account_activity_lots.py (the intended change) and infra/logic/registry/reporting_policies.json (HEAD sha256 1479826b57..., pin 0c35aeeaa8 sha256 dc0eccfde8...; changed by eab13e88d3 and 589aee38f0, other seats' commits already on origin/CLOUD). The artifact stages from the pin, so that member is unchanged in the zip (builder 'sha256 verified' on 18 of 18). The new pin 0a41f929a3 (blob db068fe88b = 9c980c6c15's) is not an ancestor of origin/CLOUD at the local ref 6be2fbae1c; origin/CLOUD still carries the R37 bytes 63f9e20f. A later rebuild needs that commit to resolve; git show fails closed if it does not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 0a41f929a3 origin/CLOUD -> not an ancestor",
+      "infra/aws/lambda/ci/lambda-source-map.json @d87079fd89",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R37_DELTA_PACKET_1008.md section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W63-S3 -- The 'Apply complete! Resources: ...' line of the one safe-apply was above the 15-line tail window and was not captured; completion is evidenced by rc 
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W63-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~63",
+  "surfaced_at": "2026-10-09T13:10:00Z",
+  "one_line": "The 'Apply complete! Resources: ...' line of the one safe-apply was above the 15-line tail window and was not captured; completion is evidenced by rc 0, the live CodeSha256 readback and a post-apply plan reading No changes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-88 step 4 says run ONE safe-apply, then read back CodeSha256 and stamp it; the REPORT names the apply line.",
+  "world_is": "MEASURED: the apply was run with output piped through tail -15, which showed only the Terraform outputs block; the saved plan (r41.tfplan, Plan: 0 to add, 1 to change, 0 to destroy) was applied once and not re-run. Effects read afterwards: get-function-configuration CodeSha256 yIAQjspL0nPX6tJOHxD+Dv0REVoZyBNRkhmHQxUVuEE= (was ciTGx5UV...), LastModified 2026-10-09T12:55:44.000+0000, State Active; a post-apply targeted plan: 'No changes. Your infrastructure matches the configuration.'; the role policy's 7 statement sids are unchanged. The Terraform outputs block printed in the tail lists read/write ARNs of the pre-release set; INFERRED (not measured): they are state outputs a targeted apply did not refresh; the role policy itself, read by get-role-policy, carries the six-gold-prefix statements.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration after the apply",
+      "terraform plan -target (post-apply) 'No changes'",
+      "aws iam get-role-policy sids: ListExactlyTheSixGoldPrefixes, ReadTheSixGoldPrefixesOnly, WriteTheFiveGoldPrefixesOnly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-W67-S1 -- the owned read IB-pr-405 serves no sha256 for the persisted object (report_index is {report_id, revision, retention_ref}, additionalProperties false), so verify-persisted's sha256 check has nothing to compare today
 
 ```json
