@@ -2109,3 +2109,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "When a later gate refuses an overridden commit, the row for that unlanded attempt can stay in the working copy and ride into the next commit that stages the file, as an audit row of an attempt that permitted nothing. Over-recording, never under-recording; the naming-stage and commit-failure cases are held and exercised."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S5 -- msg_sha256 binds the message text as PASSED to safe-commit.sh (the -F bytes, or -m texts joined by a blank line), not the bytes git stores after its own message cleanup
+
+```json
+{
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T08:50:05Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "LGIC_BLANKFIX-D1-W1-S5",
+  "one_line": "msg_sha256 binds the message text as PASSED to safe-commit.sh (the -F bytes, or -m texts joined by a blank line), not the bytes git stores after its own message cleanup",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      ".tools/safe-commit.sh override block (BF-y-2): NP_MSGFILE is written from COMMIT_ARGS (-F file bytes; -m texts joined by a blank line); the commit itself is `git commit --only \"${COMMIT_ARGS[@]}\"`, which applies git's default cleanup (whitespace mode for -F/-m: trailing whitespace and surrounding blank lines stripped, one trailing newline added)",
+      "exercise_override_bound.py B1/B2 hold the hash against the text as passed (-F bytes; two -m texts joined by a blank line); a stored-message hash was not computed, and `-F -` (stdin) is read by no override reader at all, as before BF-y-2"
+    ]
+  },
+  "spec_asserts": "BF-y-2: msg_sha256 = sha256 of the exact committed message (the -m/-F text, as passed).",
+  "world_is": "The binding is to the text safe-commit.sh is handed, which is what the gate can be handed before the commit exists; git's cleanup can change trailing whitespace and blank lines in the stored message, so the stored message may differ from the hashed text in whitespace only. The row still cannot admit a commit whose message text differs in any other byte (B7 holds one extra byte refused). A reader who needs the stored message's own hash would have to hash it after the commit, which is outside this gate. The row's trust base is unchanged: a seat that can stage a row and hash its own message can still forge one."
+}
+```
