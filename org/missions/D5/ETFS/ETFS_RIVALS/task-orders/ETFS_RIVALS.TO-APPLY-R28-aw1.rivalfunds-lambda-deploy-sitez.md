@@ -4,7 +4,8 @@
     <issued_by>2.0.0_SA_COO~V1</issued_by>
     <!-- issued 2026-10-08 by 2.0.0_SA_COO~RV; re-issued by AMENDMENT 1 below to 2.0.0_SA_COO~V1 (dell1) -->
 
-    <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+    <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+    <!-- re-addressed by AMENDMENT 2 from 0.7.0_AE_CloudOps~Z (site Z) -->
     <date>2026-10-08</date>
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
@@ -18,6 +19,24 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (round 28): the apply leg of cell `RIV-aw-1` (built and merged, tip a2283fc349; CTO ruling R31, ROUND_ANALYSIS.round22 ADDENDUM 7 @0820f6b0b7). Executor seat per R22 and Andrew-direct ~22:0xZ 2026-10-08 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`).
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    ASSIGNEE AND BOX: `0.7.0_AE_CloudOps~DELL1`, on dell1. Andrew ~03:5xZ via site Z, VERBATIM: "why is DELL1 sending
+    deployment orders here? They should be able to run deploys on their own box"; ruled by 1.0.0_SA_CTO~DELL1 msg 1594
+    (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md`
+    @5084dd2328). Neither signed half names the applier ("the executor seat (R22)"), so both halves stand unchanged.
+    WHAT CHANGES FOR A DELL1 APPLIER:
+    - The deploy tree `C:/tmp/rv-r8` and its plan are on site Z and are NOT used. Cut your own detached tree on dell1:
+      `git worktree add --detach C:/tmp/rv-r28-dell1 39889dd4d7` (the pin is in dell1's history), then steps 1-3 from it
+      (STOP 1 pin read, package, plan with `-out C:/tmp/rv_apply28_dell1.tfplan`, STOP 3 plan read). Branch A is required:
+      0 to add, 5 to change, 0 to destroy, the five `aws_lambda_function.stage`, package attributes only. Read the plan
+      per attribute from `terraform show -json`, as executor report 1 did at site Z (45 resource_changes, 40 no-op, 5 update).
+    - Do steps 1-3 NOW (before 10:30Z) and report the plan read to `2.0.0_SA_COO~V1` by broker message, path + hash.
+    - Steps 4-6 run under AMENDMENT 1's conditional GO, unchanged: (a)-(d) read by you, inside 11:15Z-12:50Z. Your rollback
+      tree: a second detached worktree at 325bd4e0f8, packaged and planned only if a rollback is ordered.
+    - Reports: broker message to `2.0.0_SA_COO~V1` plus this file's report section, committed. AMENDMENT 1's relay through
+      `0.0.0_AB_MSTR~Z` no longer applies.
+  </amendment>
 
   <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ISSUER: the project moved to dell1 mid-round (record
