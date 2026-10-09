@@ -34,7 +34,7 @@ The served state, value, formula and reason still ride the case element's attrib
 `data-model-case-formula`, `data-model-case-reason`).
 
 FWD-30's page/export parity harness (`__harness__/exportCompare.harness.cjs`, graded by AC3) rebuilds each page case line as
-"<head>: <STATUS> -- <detail>" from the page's text and compares it with the export's line, whose head stays "Base case". If
+`"<head>: <STATUS> -- <detail>"` from the page's text and compares it with the export's line, whose head stays "Base case". If
 AC3 goes red because the page head now says "Opal's rule-based Base case", re-anchor `pageCases` to take the head from the
 element's own served identity (`data-model-case` -> "<Name> case", or the served label) -- never weaken a set comparison.
 
