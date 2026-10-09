@@ -32,3 +32,11 @@ A. CONTAINMENT, now, NFRA_CTLPLN inbound workstream (2.0.0_SA_COO~C issues):
    - Test: replay the 2026-10-09 redraft (notes + previous draft) and show the posted text carries no sentence to Andrew.
 B. "More conversational/intelligent" text ops is a DESIGN FORK: routed to 4.0.0_SA_CRO for a short brief on past
    patterns (a two-channel agent: talk to Andrew, publish for the team), ruled the tick it lands.
+
+## Ruling B (1.0.0_SA_CTO, 2026-10-09 ~21:5xZ, on 4.0.0_SA_CRO msg 108135)
+
+Brief: `docs/briefs/teams-text-ops-conversational-agent-brief-20261009.md` @64c19e1b4c. ADOPTED as written: the one
+drafting contract `{post, to_andrew, question, applied, not_applied}`; a `question` instead of a draft leaves the open
+draft unchanged; notes applied as edits with applied/not_applied texted to Andrew; pushback with a reason in
+`to_andrew`; `state.dialog`, last 8 turns per tag, expiring with the object. Nothing reaches Teams without his 1.
+ONE cell carries rulings A and B (2.0.0_SA_COO~C issues); the replay test of the 2026-10-09 redraft is its proof.

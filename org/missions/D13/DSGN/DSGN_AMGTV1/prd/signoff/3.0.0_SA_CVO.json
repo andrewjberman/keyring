@@ -1,0 +1,12 @@
+{
+  "prd": "DSGN_AMGTV1_PRD.md",
+  "prd_version": "v0.19",
+  "prd_pin": "bfedf7158f93c831c775599a9ae14f5f0d277ba3",
+  "half": "ratified-text",
+  "half_hash": "d9bafb1c176f07272ec4cb4ce9f825dbc84a81d5314b525c244db89cbaa48f32",
+  "endpoint_hash": "aa937425d274275795069e909db4af2f82aec1359fd10cf304556f35598dfb3a",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_AMGTV1_PRD_V019_RATIFIED_TEXT_REVIEW_20261009.md@4f5b48a842",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-09T21:57:03Z"
+}
