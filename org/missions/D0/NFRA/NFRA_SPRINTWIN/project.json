@@ -6,6 +6,7 @@
   "pipeline": "daily-sprint-generator",
   "status": "active",
   "dep_stage": "PRD",
+  "coo_lane": "2.0.0_SA_COO~SW",
   "created": "2026-10-04",
   "registered_under_tree": "2026-10-04",
   "placement": "SITEZ",

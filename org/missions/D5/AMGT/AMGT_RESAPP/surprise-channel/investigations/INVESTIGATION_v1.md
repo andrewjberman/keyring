@@ -22640,3 +22640,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Not fixed by this seat: .claude/skills/cloud-ops/SKILL.md is outside this order's <paths>, and the skill is a shared launch surface whose edit belongs to whoever owns it (its own refresh line names 1.0.0_SA_CTO~X, Andrew-direct 2026-08-25). Filed and kept working, per the surprise-channel rule. Suggested minimal edit, for whoever owns it: name the recorder's real path in the wrapper table beside the ledger row, and stat the table's other four rows while in there so the fix carries a denominator rather than a single-row patch."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S9",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T06:16Z",
+  "one_line": "to-check.py reads the FIRST paired <status> in an order file while the fabric's convention APPENDS each new status, so 331 of 5020 tracked task orders whose terminal line says complete/superseded/cancelled are reported ACTIVE -- including this round's ee-6 and round 80's dd-4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Noticed on my own closed order and then measured rather than generalized from it: after AMGT_RESAPP.TO-AMGT-ee-6 was flipped and committed @0e2bbc65ab, `python .tools/to-check.py --all --assignee 0.7.0_AE_CloudOps~RA1` still reads '1 active TOs ... Status: staged'.",
+      "The parse rule, read at the bytes rather than inferred: .tools/to-check.py:120 is `m = re.search(r\"<status>(.*?)</status>\", masked, re.DOTALL | re.IGNORECASE)` -- the FIRST paired element after inline code spans are masked. Its own comment block at :76-95 (FIX C) documents that choice deliberately, and FIX C was aimed at UNPAIRED backticked mentions of the tag in worker-face prose, not at files carrying several real status elements.",
+      "The convention it meets: this project's orders APPEND a new <status> element per GO / amendment / close and never edit the first one, so the first paired element stays the record-face original (`staged`) for the life of the order. ee-6 carries 4 status elements: staged, pending (AMENDMENT 1 + GO), pending (AMENDMENT 2), complete.",
+      "CONTROL, which is what moves this off 'my file is malformed': round 80's AMGT_RESAPP.TO-AMGT-dd-4 -- landed, ledger closed 7 of 7, terminal line 'complete -- landed by 0.7.0_AE_CloudOps~DELL1' -- also reads '[ACTIVE] ... AMGT_RESAPP.TO-AMGT-dd-4' under to-check. Two files, same shape, same misread, and the second one was not written by me.",
+      "DENOMINATOR, printed: 5020 tracked task-order .md files scanned under org/missions, org/tier1_exec, org/tier2_senior and org/tier3_junior (both the task_orders/ and task-orders/ spellings). Of those, 331 carry two or more paired <status> elements whose LAST is terminal (complete / superseded / cancelled) while the FIRST is not. Every one of those 331 reads ACTIVE through this instrument. Masking matched to-check's own rule (inline code spans blanked) so the count is measured against the same text the tool sees, not against raw bytes.",
+      "The 331 are not one project's habit: the sample spans NFRA_REPORT and AMGT_CORPUS as well as AMGT_RESAPP, i.e. the append convention is fabric-wide.",
+      "NOT A PARSE ERROR, which is why it is quiet: the same run reports `parse_errors=0`. The tool is doing exactly what it says; the two conventions simply disagree about which element is authoritative."
+    ]
+  },
+  "spec_asserts": "org/XXX.md's task-order section: statuses are `staged` / `pending` / `complete` / `superseded` / `cancelled`, and `/to-check` is described as the 'Active task-order view ... never drops a file', which a reader uses to answer what is still open. AMGT_RESAPP.TO-AMGT-ee-6 section 5: 'Flip `<status>` to `complete` only if every criterion PASSES.'",
+  "world_is": "Both halves are behaving as written and the result is still wrong for a reader. The order files append; the instrument reads the first element. So 331 of 5020 orders whose own terminal line says they are finished are counted ACTIVE, with parse_errors=0 and no warning anywhere -- a closed order and an open one read identically through the one view whose job is to tell them apart. The failure direction is the unsafe one for a drive tick or a round-close read: it over-reports open work, so a COO or CVO reading to-check sees obligations that do not exist, and the signal gets discounted. WHAT THIS ROW DOES NOT ESTABLISH: which element the fabric INTENDS to be authoritative. That is a convention ruling, not a measurement -- either the instrument should read the LAST paired status, or orders should edit the first element in place instead of appending. Both are coherent; picking one is the issuer's or the CTO's call, and nothing here was changed to pre-empt it.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Found off-task, immediately after ee-6's own close, and filed rather than chased -- nothing was edited. ee-6 itself is genuinely complete regardless of how this is ruled: terminal <status> complete at 0e2bbc65ab, proof-of-spec instance VALID rc=0, ledger amgt-resapp-r81-ee6-scoped-api-dell1 CLOSED 9 of 9 @ee05683b1c, AC1 R81 DEPLOYED YES 2 of 2 and AC2 R80/R79 YES. Cost of the measurement: one scripted read, no live calls. Routed to the issuer rather than to the tool's owner because the convention side of the disagreement is the project's, and a one-line fix to to-check.py without that ruling would silently re-classify 331 orders across several projects at once."
+}
+```

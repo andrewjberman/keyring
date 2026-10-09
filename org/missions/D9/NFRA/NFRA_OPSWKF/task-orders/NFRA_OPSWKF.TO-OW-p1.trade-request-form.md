@@ -36,12 +36,16 @@ as a Ticket Center ticket. **READ first:**
 - `portal/src/api/endpoints/trade-submission.ts` (`submitTrade` and the securities types, `:239-241`);
 - the TradeSubmission page under `portal/src/pages/` (its securities entry).
 
-**Fields:** fund; weights as-of date; a securities grid (symbol, weight, action), reusing the TradeSubmission page's securities
+**AMENDMENT 1 (issuer, ~06:0xZ, row NFRA_OPSWKF-D2-W1-S1):** the ticket type now also requires `answers.firm` (a firm id,
+server-checked against the filer's allowed firms). The form carries a firm field defaulting to the signed-in user's firm (read it the
+way `AnalysisRequestParts.tsx` fills its `firm` answer), and call 1's `answers` includes `firm`. The engine body is unchanged.
+
+**Fields:** firm; fund; weights as-of date; a securities grid (symbol, weight, action), reusing the TradeSubmission page's securities
 types and, if it is importable as-is, its entry component, READ only; trade comments; one attestation checkbox.
 
 **One submit does two calls, in order:**
 1. Ticket create, with `type: "trade_request"`, a title (`Trade request: <fund>`) and
-   `answers: {fund, weights_as_of, trade_comments, attestations_confirmed: true}`.
+   `answers: {firm, fund, weights_as_of, trade_comments, attestations_confirmed: true}`.
 2. `POST /api/general/trades/submit`, with `{fund, weights_as_of, securities, trade_comments, attestations, ticket_id: <the new
    ticket id>}` and NO `initiator_email` or `initiator_name`, because the engine now reads the submitter from the token. If
    `submitTrade`'s TypeScript type demands those fields, declare your own body type in your file and call the same endpoint
