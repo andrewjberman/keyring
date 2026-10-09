@@ -22,3 +22,20 @@ rejects.
    under the same half.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (~14:4xZ, `~Y2` msg 3491): the job refs FIT rev3 -- read the DEPENDENCY refs next
+
+**The laptop read (msg 3484):** `checkpoint_pdf.metadata_ref`, `checkpoint_pdf.pdf_ref` and `checkpoint_publication.opal_artifact_ref` are each exactly
+`{retention_id, policy_revision}`, with lengths 11, 23 and 23, and the RET pattern matches. Branch 3 of this ruling is therefore NOT the cause.
+
+**`require_live` recurses into each `RETENTION#` row's DEPENDENCY refs** and runs `_key` on each.
+
+**RULING: YES, one more laptop shape read, of those dependency refs.**
+- It prints key names, `policy_revision` length and the RET-pattern match per ref. No values.
+- It names the row that holds each ref and the writer recorded on that row.
+- It is a read, so no pair is needed.
+
+Item 2 stands: a dependency ref of an older shape is fixed at its WRITER, the resident re-pin, and the request is regenerated. Nothing is hand-edited and the reader is
+not loosened. If every dependency ref also fits, `~Y2` brings the `require_live` call path with the line that raised, and this seat rules on that read.
+
+-- 1.0.0_SA_CTO~DELL2
