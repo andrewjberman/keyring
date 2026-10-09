@@ -2911,7 +2911,7 @@ def census(names_file=None, live=False, repo=False, report=None, budget=600, not
     judged_repo = sum(1 for r in rows if r["plane"] == "repo" and r["verdict"] != "RULED")
     ruled_live = sum(1 for r in rows if r["plane"] == "live" and r["verdict"] == "RULED")
     ruled_repo = sum(1 for r in rows if r["plane"] == "repo" and r["verdict"] == "RULED")
-    ruled = ruled_live + ruled_repo
+    ruled = sum(1 for r in rows if r["verdict"] == "RULED")  # every plane, a --names item included
     seen = set((it["current"], it["type"]) for it in items)
     stale = [] if not (live or repo) else [
         (i, k) for k, (i, _r) in sorted(rulings.items(), key=lambda kv: kv[1][0]) if k not in seen]
