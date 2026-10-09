@@ -112,7 +112,7 @@ so it goes first. Battery dry-run at base ac135370d2 (`round8/checks/`):
 - d7.AC2 FAIL as expected: 0 of 3. Each dataset states 2026-08-10 `held` against 2026-10-07 served.
 - d7.AC3 PASS as expected: the regression control, ROUTING 24 of 27.
 
-<status>issued</status>
+<status>complete</status>
 <round>8</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
