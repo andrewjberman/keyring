@@ -1820,3 +1820,11 @@ Label `<round>32</round>`, ONE issuance, eight cells in six chains.
   those two principals' grants, set to 13 calendar months, no other field or principal, rollback = the prior reach per
   key, CTO+COO halves before it; until OG-bf-1 lands a date without a qualified record answers unavailable; R55's other
   terms stand (the 12-hour window before the 07:00 ET send).
+- **OG-rl-15 CUT as workstream RELEASE-R29** (2026-10-09 ~01:2xZ, slot ~43, worker; the round-32 issuance at HEAD admits a second order only under its own workstream, gate (x)) after its four build cells drained, on `1.0.0_SA_CTO~O` msg
+  32184 (R55's sign-in precondition MET, Andrew ~00:4xZ @6938d82aad). Phase A by the worker; Phase B's deploy by
+  `0.7.0_AE_CloudOps~Z` (msg 32057) under an apply order cut after the CTO + COO + CVO halves; Phase C (post-deploy
+  read, the 13-month grant write, drain-back) by the worker. Deploy window 11:00Z-23:00Z (R55/R49).
+- **OG-bf-1 A1** (@8f0b2e4660): Phase B signed for 08242234 only (W); Phase C builds the CTO-ruled Y leg (the 49F
+  dispatcher skips a non-T-1 record); Phase D writes 08335338 after Y. **OG-tm-1 A1/A2** (@f49624438b, @3998bbe5a7):
+  slm-only difference proceeds (CTO 32147); the data/assets/scripts/silver mirror (row S4) before Leg C; both halves
+  signed (COO @3998bbe5a7, CTO @4149c01c23).

@@ -67,6 +67,15 @@ Every change mirrors the existing two masters exactly; never a new structure.
    the new bytes' MD5) and the ad-hoc QA pull's timing. Halves owed: `1.0.0_SA_CTO~O` and `2.0.0_SA_COO~O`.
 9. Commit Phase A and REPORT. Then STOP: the issuer continues you with the signed halves' paths, or with a ruling.
 
+### AMENDMENT A2 (issuer, 2026-10-09 ~01:0xZ) -- close row S4 before Leg C
+
+The COO half (`deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-tm-1_20261009.md`) requires the source mirror first.
+Apply `deliverables/0.9.0_WK_NFRA_OPLGTW~39/data_assets_mirror.patch` to `data/assets/scripts/silver/` (the four files now
+in `<paths>`), run that package's tests (state totals; 46 of 46 expected), commit, then repin `silver.tf`'s
+`silver_build_commit.schwab` to THAT commit and rebuild the converter artifact from the pin; record its sha256 and prove
+the vendored package equals the source byte for byte. Disposition row S4 in the channel (a new citing row, never an edit
+of S4). Then report and STOP: the applier acts only after both halves are at HEAD.
+
 ### PHASE B -- after both halves are signed AND site Z's applier has applied (the issuer's continuation names both)
 
 The applies are NOT yours. On Andrew's word of 2026-10-08 ~22:0xZ (relayed by `0.0.0_AB_MSTR~Z`, msg 32057), site Z's
@@ -95,6 +104,10 @@ Phase A commit, the three roots' targeted resources, the code-object upload and 
 ## 3. SURFACES
 
 <paths>
+data/assets/scripts/silver/conversion_manifest.py
+data/assets/scripts/silver/silver_registry.py
+data/assets/scripts/silver/tests/test_schwab_runtime.py
+data/assets/scripts/silver/tests/test_conversion_manifest.py
 infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1
 infra/aws/terraform/canonical-schwab-ec2/monolith-daily-schedule.tf
 infra/aws/terraform/canonical-schwab-ec2/monolith-iam.tf
@@ -145,6 +158,8 @@ Rows: id `NFRA_OPLGTW-Z-W39-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - A1 (2026-10-09): STEP 0 rewritten on OG-en-1's record (the slm-only difference); graded by no gate limb as a
   modification of a non-<placeholders> order (GATE (viii) grades only an order declaring <placeholders>; this one
   declares NONE, so viii applies and reads NONE).
+- A2 (2026-10-09): row S4's source mirror added to <paths> (data/assets/scripts/silver, four files) and required before
+  Leg C, per the COO half. Graded by no gate limb as a modification (placeholders NONE).
 - Pre-cut: see the issuance commit.
 
 <status>pending</status>

@@ -5718,6 +5718,28 @@ carries none.
     "dismissal_reason": "Neither hazard can fire. S11: the precondition it named (no GetObject grant) no longer holds on the APPLIED plane, and the read-back it said would fail nightly passed live. S9: it was ARMED only if the boto3-only script went onto the evening EC2 documents; that publish was cancelled, and the morning bd-silver-merge Lambda imports boto3 from its runtime. MX-s-19 disables the evening rules and publishes no document version, so it does not re-arm S9.",
     "spec_asserts": "Every ARMED row is disarmed by its disarm_owner before the round closes.",
     "world_is": "Both rows are disarmed by measurement: one by a live run, one by a cancellation that removed the act it depended on."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S84",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T00:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The BD transactions chunk sweep's OLDER restatement chunks fail HTTP 401 at the tail of the run on 2 of 2 live runs read (10-08: 1 of 5 chunks; 10-09: 2 of 5). The sweep reuses one bearer for every sub-pull with no re-mint, so the 'self-heals next run' claim depends on a token that lapses during the ~11-minute run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bd-49f-runner run 2026-10-08T00:00:19Z (RequestId 9c228e2b-4c66-424e-ba30-170c887d7ea5): 'WARN: txn restatement chunk [2026-09-24..2026-09-26] failed ... HTTP 401'; the following allocations call logged 'AUTH-401 ... re-mint bearer + retry'.",
+        "bd-49f-runner run 2026-10-09 (stream 2026/10/09/[$LATEST]97d1964bb5574f8a8135ecbf5e0f0259): WARN 401 on chunks [2026-09-28..2026-09-30] and [2026-09-25..2026-09-27]; sentinel emitted, RESULT failed=[].",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py:802-834 _ingest_transactions_chunked: one cookie/token passed to every _ingest_one; an older-chunk exception is appended to older_failures and logged 'self-heals next run'; no re-mint in the loop (the runner's re-mint path is per table call, lambda_function.py:256-285)."
+      ]
+    },
+    "spec_asserts": "cot_bronze_ingest.py:809: an older restatement chunk's failure is a transient that 'self-heals next run'.",
+    "world_is": "On both runs read, the failures sit at the END of the sweep, which is the shape of a bearer lapsing mid-run rather than a random transient. Each run's oldest windows are the ones that fail, so a BD restatement of a transaction about 9-14 days old may never be re-landed. The newest chunk, the sentinel and silver are unaffected.",
+    "notes": "INERT: nothing served is wrong today, and the run_date window lands. It ARMS if a BD restatement falls in a window that fails on consecutive runs. Not this lane's write surface: the engine is under data/cot/ (read-only to NFRA_MCPINDEX; MX-s-18 AC2) and is downloaded from s3://opal-data-bd/code/bronze/ at runtime. Candidate remedy, not attempted: re-mint once per chunk on a 401, the same pattern the runner applies per table. Denominator: 2 runs read (10-08, 10-09). Earlier runs were not read."
   }
 ]
 ```
