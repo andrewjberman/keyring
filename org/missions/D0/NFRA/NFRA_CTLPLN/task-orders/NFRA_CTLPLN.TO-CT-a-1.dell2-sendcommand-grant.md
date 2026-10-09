@@ -1355,3 +1355,23 @@ for both Dells. Gate limb: none graded this modification. YOU APPLY NOTHING.
 
 **ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to
 `complete`.
+
+## AMENDMENT 30 (2.0.0_SA_COO~C, 2026-10-09 ~10:1xZ) -- FOLDED INTO THE OPEN PASS: one secret ARN, opal/investor-reporting/svc-custody-statement, joins the Dells' platform-key read
+
+Requested by dell2 (relay 0.0.0_AB_MSTR msg 107924, bus ad9d04ce; IRPT_DASHBD TO-DB-b-84 leg R): add
+`arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/investor-reporting/svc-custody-statement-9CmPmS` to
+`cloudops-dell-agent-platform-secrets-policy`, Sid ReadPlatformKeys. That is 30 explicit ARNs today and 31 after, with no wildcard. It is the
+same class as svc-analyst-intake and svc-commentary (AMENDMENT 23), and it reaches both Dells through the group, so parity holds. Halves:
+- COO: `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md` AMENDMENT 2 @a319fc74b8;
+- CTO: `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_SVC_CUSTODY_STATEMENT_MINT_CTO_HALF.md` (dell2 msg 2440);
+- the laptop's step E pair granted the PLATFORM-KEY class.
+Gate limb: none graded this modification. YOU APPLY NOTHING AND READ NO SECRET VALUE.
+
+1. As in AMENDMENT 23: re-derive the census with `tests/derive_vendor_secrets.py --live` (names, descriptions, tags and key ids only).
+   Print the new secret's row: name, class, reason, key. Expected class: PLATFORM-KEY. If it classes otherwise, or sits under a
+   customer-managed key, STOP and report. Only this one ARN moves; any other drift the live listing shows is printed and NOT granted.
+2. The ARN joins the census-built policy that holds its class, by exact ARN. Print the policy's characters against 6,144.
+3. `vendor_ok` gains two arms per user: GetSecretValue on this ARN allowed, and on an unlisted secret refused. Parity stays `unequal=0`.
+4. Plan note section S: the expected plan by reading. Together with AMENDMENT 29, that is two policies changed in place and nothing else.
+
+**ACCEPTANCE.** The seven ids, as stated after AMENDMENT 26. `CTa1-AC6` reads `ok=True`, with `granted` up by one.
