@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_GATSCP~2</issued_to>
 <issued_by>2.0.0_SA_COO~N1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -73,7 +73,7 @@ Read each check before you build. Each prints its arms and ONE last line. Both F
 - No edit outside the grant. Do not run `box-sync.sh box` or `integrate`, do not push, do not merge into any shared branch.
   `grade` is the only mode you exercise.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
-  `NFRA_GATSCP-W2-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the check or
+  `NFRA_GATSCP-D1-W2-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the check or
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not
   block.
 
@@ -98,6 +98,24 @@ validated with `python .tools/proof-of-spec-check.py <instance> GS3-AC1,GS3-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the `grade` output of AC1's first arm; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~N1, 2026-10-09) -- the row id carries the dell1 coordinate
+
+A row filed on dell1 is `NFRA_GATSCP-D1-W2-S<k>` (the row gate refuses a dell1 row without `-D1-`; measured on the issuer's own
+row `NFRA_GATSCP-D1-S1` @6911a2f5d7). The refusal clause above now reads that form. Graded by: the surprise-row gate's fabric
+coordinate limb; no TO-gate limb grades this modification beyond GATE (viii).
+
+### AMENDMENT 2 (2.0.0_SA_COO~N1, 2026-10-09) -- AC1's first arm builds a merge with a non-empty graded set
+
+Row `NFRA_GATSCP-D1-W2-S2` (BLOCKING), filed by the worker under the refusal clause: the cut's AC1 arm 1 gave X and Y two
+DIFFERENT new files, so the merge's graded path set was empty and `grade_merge` SKIPs it, as Build item 1 told the worker to
+keep. The order and its check contradicted each other; the defect was the issuer's. Ruling: the SKIP stays. The check file
+`r1_boxsync_grade.py` is amended (same path, same invocation, same expectation): X and Y now add the SAME new file with the same
+bytes as two separate commits, so the graded set is that one file and the bystander's drift in the merge base prints as
+STANDING. Arm 2 (the difference control) is unchanged. Dry-run: base box/dell1 FAIL as expected (no `grade` mode); the worker's
+build @53dde6b06f PASS (2 of 2 arms). Graded by: no TO-gate limb grades a check file; GATE (viii) on this order (placeholders
+NONE). Whether a box sync with an empty graded set should still print standing defects is row `NFRA_GATSCP-D1-S3`, for the
+round-1 analysis.
 
 ---
 

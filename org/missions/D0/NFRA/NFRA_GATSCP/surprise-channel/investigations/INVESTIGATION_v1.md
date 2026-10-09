@@ -57,3 +57,51 @@
   "notes": "Worker 2 of NFRA_GATSCP. The rest of the order is built: grade mode, grade_merge tree check, fast-lane tree check, self-test arm (GS3-AC2 passes)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W2-S3",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~2",
+  "surfaced_at": "2026-10-09T08:23Z",
+  "one_line": "NFRA_GATSCP-D1-W2-S2 is resolved by AMENDMENT 2 @f980747a55: r1_boxsync_grade.py now adds the same new file on both sides, so the graded set is non-empty; GS3-AC1 last line 'GS-T3-BOXSYNC ok=True arms=2 failed=0'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python r1_boxsync_grade.py at the amended bytes (git show f980747a55): rc=0; bystander-lands PASS standing_LGIC_BLANKFIX=True (graded=1/0); own-refused PASS rc=1 (graded=1/1); last line 'GS-T3-BOXSYNC ok=True arms=2 failed=0'",
+      "box-sync.sh and safe-merge.sh unchanged since c8d936bf7a; the SKIP stays"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the check builds a merge with a non-empty graded set and the SKIP stays.",
+  "world_is": "Amended check passes 2 of 2 arms against the unchanged build; D1-W2-S2 (issuer-side defect) is resolved by the amendment.",
+  "notes": "Worker 2 of NFRA_GATSCP closing TO-GS-t-3."
+}
+```
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W2-S4",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~2",
+  "surfaced_at": "2026-10-09T08:27Z",
+  "one_line": "The lane gate refuses committing the amended check file r1_boxsync_grade.py on this branch: the order's <paths> does not name it (lane TREE_DELIVERABLES, ADHC_OWNPTH.005), so the copy of f980747a55 stays uncommitted in the worktree; the bytes already exist at f980747a55 on box/dell1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit with the four paths of the close instruction: 'VIOLATION: .../round1_prep/checks/r1_boxsync_grade.py -- lane=TREE_DELIVERABLES ... WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'",
+      "order <paths> block: .tools/box-sync.sh, .tools/safe-merge.sh, INVESTIGATION_v1.md; the order also says the check files are READ-only for the worker"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Close instruction step 5: one commit carrying the order, the check copy, the proof instance and the investigation file.",
+  "world_is": "The gate admits only the order's <paths>; the check copy cannot ride this branch's commit. The three other paths are committed; the criteria were run against the byte-identical copy in the worktree. The issuer may take the check file from f980747a55 at the drain.",
+  "notes": "No override used."
+}
+```
