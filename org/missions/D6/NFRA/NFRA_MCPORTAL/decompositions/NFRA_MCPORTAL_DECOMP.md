@@ -489,3 +489,67 @@ the form of the G-R3 ruling. The decomposition does not change.
    placement, and Andrew may move it.
 4. FWD-15 to FWD-19, C13 to C16, the open-calls read (C11's second prefix) and the git-state columns are subtracted and
    belong to later rounds.
+
+# ROUND 5 -- FWD-14 GOES LIVE (L5, v5)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v5",
+ "step": 5,
+ "round": 5,
+ "input": "org/missions/D6/NFRA/NFRA_MCPORTAL/ledger/ROUND_ANALYSIS.round4.md@460bc0af2f (section 5, E1-E3 + the two re-cuts)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@cecf26d2c9 (v0.5, ratified-text half signed @8de5b2dc76)",
+ "author": "2.0.0_SA_COO~MP",
+ "cells": 5,
+ "chains": 3,
+ "join_cells": 1,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~MP`. **Input:** the CTO's rounds 3-4 analysis @460bc0af2f, section 5, cut in ONE issuance. Every
+cell of the rectangle is issued here, gated cells STAGED on their gates (row Z-S19: a round's cells are cut in its one
+issuance or not in that round).
+
+## R5.1 THE CELLS -- 5
+
+| Cell | From | Builds / runs | Assignee | Write surface | Risk |
+|---|---|---|---|---|---|
+| `MP-x-3` | E1, R-12 | the gateway role's read grant under ruling (a): GetObject on `fabric/activity/v1/*` and `fabric/open-calls/v1/*`, ListBucket conditioned on those two; `graph-read.tf` R3 text carve-out; `safe-apply`; NEVER-2 ledger; simulation read-back with a refused third prefix | `0.7.0_AE_CloudOps~MP` | `infra/aws/terraform/opal-gateway/mcportal_fabric_read.tf`, `graph-read.tf` (comments), ledger paths | WORLD |
+| `MP-x-4` | E2, R-13 | the NARROW gateway release on the live base after NFRA_OPLGTW r29: MP-x-1's gateway commit plus mcportal `d60b4e0`; the on-host cold `_compute(6)` at most 30 s (else cache or narrow the default window first); NEVER-2 ledger; manifest record | `0.7.0_AE_CloudOps~MP` | `infra/aws/ec2/EC2_MANIFEST.json`, `app/admin_fabric.py` only if R-13's load condition forces a change, ledger paths | WORLD |
+| `MP-x-5` | E3, R-14 | the close run: the issuer cards Andrew ONCE; he opens the page and names one box's projects; the worker records the window and his words, reads the store for that minute, and carries the round's JUDGMENT criterion | worker `~5` | its deliverables only | WORLD |
+| `MP-c-2` | R-15 | MP-c-1, the FWD-1 close run, re-cut UNCHANGED (same checks `round3/checks/c1.AC*`) | worker `~1` | its deliverables only | WORLD |
+| `MP-v-2` | R-15 | MP-v-1, FWD-2's live arms, re-cut; one change: the route census is 6 and the walk adds `GET /api/admin/fabric/boxes` (MP-x-1's route; checks `round5/checks/v2.AC*`) | worker `~3` | its deliverables only | WORLD |
+
+## R5.2 DEPENDENCY EDGES AND CHAINS
+
+```
+chain A   MP-x-3 --> MP-x-4 --> MP-x-5      the release's AC3 reads the live store through x-3's grant; the close run reads the released page
+chain B   MP-c-2                            G-CLOSE (r29 live + Andrew's sitting with Alyssa)
+chain C   MP-v-2                            G-2ND + MP-x-4 drained (its walk includes the new route)
+joins     MP-x-4 (x-3 applied + G-REL: NFRA_OPLGTW r29 drained by 2.0.0_SA_COO~O)
+```
+
+**Fan-out:** `N = 1 of M = 3 chains, cap 8` at the issuance (chain A's head, MP-x-3).
+
+**Applier lane:** `0.7.0_AE_CloudOps~MP`, a FRESH lane for this project. Msg 32061 moves site Z's applies onto a site-Z
+CloudOps seat, and `~Z` is refused by rule 27's one-project-per-Tier-2-seat check (it holds three other projects). Chains B and C start when their gates
+land; MP-x-4 and MP-x-5 follow within chain A.
+
+## R5.3 GATES
+
+- **MP-x-3:** none. Starts at the issuance.
+- **G-REL (MP-x-4):** MP-x-3 drained, and NFRA_OPLGTW r29 drained by `2.0.0_SA_COO~O`. The issuer asks `2.0.0_SA_COO~O` once
+  for r29's drain. Holder: `2.0.0_SA_COO~O`.
+- **G-SEE (MP-x-5):** MP-x-4 drained; the issuer cards Andrew ONCE (R-14). Holder: Andrew.
+- **G-CLOSE (MP-c-2):** r29 live and Andrew's sitting with Alyssa done; the issuer writes `c1_run.json`. Holder: Andrew.
+- **G-2ND (MP-v-2):** MP-x-4 drained and a person signs in as `Opal Bloomberg` in the worker's headed Edge window. Holder:
+  Andrew (one card).
+
+## R5.4 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. r29's base commit, the host's cold-read time and the bundle size are measured by MP-x-4.
+2. FWD-15 to FWD-19 are subtracted (analysis section 5): FWD-15 to FWD-17 are cut the round after FWD-14 grades REALIZED.
+3. Z-S14 belongs to NFRA_OPLGTW (R-17). The round-1 ARMED rows C-S8, C-S10 and W3-S3 are this issuer's by transfer (R-18),
+   and W3-S2 is re-read at this cut; those are row acts, not cells.
