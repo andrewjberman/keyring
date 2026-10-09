@@ -344,3 +344,14 @@
 2026-10-09T17:47:50Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_consolidator.py  reason=ledger-names-path-not-this-build:mdpf-stratid-r2-global-fold
 2026-10-09T17:51:48Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py  reason=no-open-ledger-names-it
 2026-10-09T17:52:58Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/gold/tests/test_cottonwood_unidentified_wiring.py  reason=no-open-ledger-names-it
+2026-10-09T19:19:15Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_consolidator.py  reason=no-open-ledger-names-it
+2026-10-09T19:19:15Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_parquet.py  reason=no-open-ledger-names-it
+2026-10-09T19:19:15Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/tests/test_mdpf_gold_parquet.py  reason=no-open-ledger-names-it
+2026-10-09T19:21:17Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_consolidator.py  reason=no-open-ledger-names-it
+2026-10-09T19:21:17Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_parquet.py  reason=no-open-ledger-names-it
+2026-10-09T19:21:17Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/tests/test_mdpf_gold_parquet.py  reason=no-open-ledger-names-it
+2026-10-09T19:24:19Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_backfill.py  reason=no-open-ledger-names-it
+2026-10-09T19:24:19Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_consolidator.py  reason=no-open-ledger-names-it
+2026-10-09T19:24:19Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/mdpf_gold_parquet.py  reason=no-open-ledger-names-it
+2026-10-09T19:24:19Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/tests/test_mdpf_gold_backfill.py  reason=no-open-ledger-names-it
+2026-10-09T19:24:19Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/mdpf/scripts/gold/tests/test_mdpf_gold_parquet.py  reason=no-open-ledger-names-it

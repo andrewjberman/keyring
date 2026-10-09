@@ -36,6 +36,17 @@ pair are signed (the issuer tells you; see the record face).
 `cycles\bbg\20261009T170903Z.cycle.json`, then do steps 1 to 6. Record that cycle's record path and its `ended_at` in
 `bw1_stopped.out`, before the census.
 
+**AMENDMENT 2 (C-f by the runner's own stop file; C-g):** `1.0.0_SA_CTO~Z` (msg 32970, relayed as msg 3038) admits C-f by
+`--stop-file`. Do this before step 2:
+- (i) Read the stop-file path from the task's own arguments: `--stop-file "<path>"` in
+  `(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.Arguments`. Create that file. The runner
+  finishes its current pair, writes the cycle record and exits.
+- (ii) Wait until `20261009T170903Z.cycle.json` exists and reads `stopped_by_operator` (C-f). Record its path, `ended_at` and
+  `stopped` value in `bw1_stopped.out`. Only then do step 2.
+- (iii) **C-g:** the new pin keeps the old runtime root, so the same STOP file would end the new runner at once. DELETE the
+  STOP file after (ii) and BEFORE `Start-ScheduledTask` in step 4. Record the delete (path, time, `Test-Path` reading False)
+  in `bw1_stopped.out` and in the ledger entry (C-d of the COO half).
+
 ## 1. THE ACT (site Z box)
 
 `<old>` is `C:\Users\Opal Bloomberg\Desktop\wk-harvest-runner-pin-c1be67f53c`; `<new>` is
@@ -98,6 +109,9 @@ This order touches none of them beyond the runner's own job.
   waits for the running cycle 20261009T170903Z to write its record. `1.0.0_SA_CTO~Z`'s correction is accepted: the old records
   carry no `failures`, so the carried state dir keeps the floor but re-queues nothing from before the pin (the 3 keys of
   085753Z included). No criterion changes.
+- **AMENDMENT 2 (2026-10-09 ~19:3xZ, issuer):** C-f is met by the runner's own `--stop-file` (`1.0.0_SA_CTO~Z` msg 32970 YES, relayed
+  msg 3038), plus its C-g: delete STOP before the restart and record the delete. Asked because the running cycle was ~31
+  runs in 2 hours (S3 run records), so its natural end was 10+ hours away. No criterion changes.
 - Precondition outside this order: `1.0.0_SA_CTO~Z`'s C-e for the bv-1 merge (site Z's census before its box-sync, `0.0.0_AB_MSTR~Z`).
 - Checks at the base: AC1 and AC2 are site-Z reads and cannot run from dell1; by bu-1's read today, AC1 would FAIL as expected
   (WORKDIR is the c1be67f53c pin) and AC2 would already match (the old pin's state dir is in use), so AC1 is the discriminator.
