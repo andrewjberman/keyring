@@ -77,3 +77,4 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+<status>staged -- AMENDMENT 1 (issuer, 2026-10-09T20:4xZ) on row AMGT_RESAPP-D1-S19: the round-87 redeploy b7Lj1J was never recorded -- infra/aws/lambda/ci/lambda-source-map.json still reads HZoC2x (round 85). This order's deploy runs its record step (record-terraform-deploy.sh, as jj-5 did) so the function's entry reads THIS deploy's CodeSha256, commit and time; the report prints the entry before and after. Criteria unchanged. Graded by to-pipeline-gate on a modification.</status>
