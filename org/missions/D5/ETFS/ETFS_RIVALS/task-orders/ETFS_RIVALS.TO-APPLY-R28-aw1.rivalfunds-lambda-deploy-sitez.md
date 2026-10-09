@@ -1,7 +1,9 @@
 <task_order>
   <metadata>
     <id>ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez</id>
-    <issued_by>2.0.0_SA_COO~RV</issued_by>
+    <issued_by>2.0.0_SA_COO~V1</issued_by>
+    <!-- issued 2026-10-08 by 2.0.0_SA_COO~RV; re-issued by AMENDMENT 1 below to 2.0.0_SA_COO~V1 (dell1) -->
+
     <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
     <date>2026-10-08</date>
     <status>pending</status>
@@ -16,6 +18,27 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (round 28): the apply leg of cell `RIV-aw-1` (built and merged, tip a2283fc349; CTO ruling R31, ROUND_ANALYSIS.round22 ADDENDUM 7 @0820f6b0b7). Executor seat per R22 and Andrew-direct ~22:0xZ 2026-10-08 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`).
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    ISSUER: the project moved to dell1 mid-round (record
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_015xZ_RIVALS_CORPUS_TO_DELL1_NOW_MID_ROUND.md`,
+    re-placed @a0db38c8ae). The issuer is now `2.0.0_SA_COO~V1`; `2.0.0_SA_COO~RV` has no live process. Everywhere below,
+    "2.0.0_SA_COO~RV" reads "2.0.0_SA_COO~V1".
+    THE SECOND GO IS GIVEN HERE, CONDITIONALLY. This order file is the only carrier between dell1 and site Z (1.0.0_SA_CTO~DELL1
+    msg 1440), and it travels by box-sync, so a GO sent after 11:00Z could miss the window. Step 4 therefore runs on 2026-10-09
+    without a further word from the issuer when ALL of these hold, read by you before the apply:
+    (a) the five rivalfunds Lambdas' runs of the 11:00Z chain have each logged a REPORT line in CloudWatch Logs (all five
+        functions the chain invokes that day; print each REPORT line whole);
+    (b) no REPORT shows Duration above 720,000 ms, and no run of the chain logged `Status: timeout`, a `Task timed out`,
+        or an unhandled error;
+    (c) the clock reads between 11:15Z and 12:50Z;
+    (d) a re-plan at pin 39889dd4d7 in `C:/tmp/rv-r8` reads branch A again (0/5/0, package only), packaged first.
+    Any of (a)-(d) not met: apply NOTHING, record which one in the report section, commit it, and tell `0.0.0_AB_MSTR~Z` the
+    hash so it reaches `0.0.0_AB_MSTR~DELL1`. The issuer reads the REPORT lines from dell1 independently; a WITHDRAW, if
+    sent, arrives as AMENDMENT 2 in this file and overrides this GO when it is on `box/sitez` before you apply.
+    REPORTS go in this file's report section, committed and pushed, hash to `0.0.0_AB_MSTR~Z`. The L2 leg of the ledger entry
+    you open in step 4 is read and closed by `2.0.0_SA_COO~V1`.
+  </amendment>
 
   <objective>
     Deploy the rivalfunds code package at pin 39889dd4d7 to the five rivalfunds Lambdas (daily, fetch-holdings,

@@ -379,3 +379,60 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "world_is": "Step 2 is done and step 3 is not executable by the seat the order names. The claim set WAS built to section 2 exactly in the minting process (sub, userType service, tier service, name, iss opal-portal-auth, aud opal-portal-api, iat, exp = iat + 90 days, with firmId/role/advisorId/allowedPages/allowedTabs/firmRole absent), and exp reads 2027-01-07T01:13:37Z which is iat + 90 days -- but THAT IS THE PRODUCER'S OWN ACCOUNT OF WHAT IT SIGNED, not the independent read of stored bytes the step asks for, and this row does not dress it up as one. The remedy is a laptop act either way, because the Dells cannot write IAM: add one secretsmanager:GetSecretValue statement for cloudops-dell2-agent-user on this exact ARN so this seat can finish steps 3-7, or have a laptop seat run step 3 and the four arms and return the result as a file (the standing rule of msg 215 shape). Re-running the mint is NOT the remedy: the secret exists, and a second create would mint a second token. Current risk is low and stated rather than assumed: no reader is granted to anyone yet, so nothing can consume the token, and the pair's own position is that the real control is leg D's code clamp plus the CREATE-only matrix, both of which are deployed and verified."
 }
 ```
+
+## TCKT_VNEXT-D2-S9 -- the svc-commentary read grant reaches dell1 as well as dell2 (shared Dell platform-key policy); the pair names dell2 only
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T02:13:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S9",
+  "one_line": "The svc-commentary read grant reaches dell1 as well as dell2: the laptop put the one ARN in the SHARED Dell platform-key policy, while the signed pair (COO AMENDMENT 1 @b70dd6fbad, CTO 1.2) names dell2's allow-list only.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule: accept the parity with svc-analyst-intake on both Dells, or narrow to dell2; carried in the F10 slug)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 2170 relaying laptop 2.0.0_SA_COO~C msg 107630: cloudops-dell2-agent-user AND cloudops-dell1-agent-user each allowed GetSecretValue on opal/ticketing/svc-commentary-pXsmuU (policy default v3)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/F10_DEPLOY/NEVER_WIDEN_PAIR_SVC_COMMENTARY_MINT.md COO-half AMENDMENT 1: 'add the ONE ARN ... to dell2's existing secretsmanager:GetSecretValue allow-list'"
+    ]
+  },
+  "spec_asserts": "One reader is added: cloudops-dell2-agent-user.",
+  "world_is": "Two readers were added, dell2 and dell1, through the shared Dell platform-key policy. That matches how svc-analyst-intake is held, but it is one identity wider than the pair says.",
+  "notes": "No dell1 seat holds TCKT_VNEXT work. A read by dell1 would be a credential first-read, which the standing rule requires it to report."
+}
+```
+
+## TCKT_VNEXT-D2-S10 -- leg M step 4 is unsatisfiable without an attachment the pair never supplies, and step 6's expected 400 comes from the attachment check rather than the firm clamp (a status-only false pass)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S10",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T02:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Leg M's positive arm cannot succeed as written and its second negative arm cannot exercise what it is for: analysis_request requires an attachment {upload_id, input_id} with input_id matching ^portfolio_[0-9a-f]{64}$ and NO svc-commentary exemption, while the mint pair's step 4 supplies no attachment -- and because _validate_attachment (line 1063) runs BEFORE _create_firm_allowed (line 1072), the off-list-firm arm returns the expected 400 for the WRONG reason, so a status-only reading of it is a false pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~02:1xZ through https://opalinvest.dev with the real svc-commentary token: step 4 POST /api/scoped/tickets, ticket_type analysis_request, answers.firm cottonwood, report_type Overview, report_request_id test-f10-20261009-one, draft_commentary {text,model,generated_at,status=DRAFT} -> HTTP 400 {\"error\": \"attachment is required: {upload_id, input_id}\"}. No ticket was created, so created_by could not be read",
+      "infra/aws/lambda/ticket_center/lambda_function.py:643-657 _validate_attachment: the attachment is unconditionally required for a type that declares one; the only svc-commentary exemption in the type definition is on the QUESTION 'household' (line 89 optional_for: [SVC_COMMENTARY]), and there is no equivalent on the attachment",
+      "ORDERING, line-cited: _validate_attachment is called at :1063 and _create_firm_allowed at :1072. So an svc-commentary create for an off-list firm WITHOUT an attachment refuses at :1063 and NEVER REACHES the firm clamp at :1072",
+      "MEASURED consequence: step 6 (firm=demo, off COMMENTARY_ALLOWED_FIRMS) returned HTTP 400 -- the status the arm expects -- with body {\"error\": \"attachment is required: {upload_id, input_id}\"}, identical to step 4's. The firm clamp was never exercised. A tester comparing only the status code would record a PASS for an arm that tested nothing, which is the ABSENT != EXERCISED-AGAINST shape",
+      "THE TWO ARMS THAT DID RUN CLEANLY, both meaningful: step 5 arm 1a GET /api/scoped/investor-reporting/directory/search?selected_tenant=cottonwood -> HTTP 200 but ok:false, state UNAVAILABLE, 0 rows (no firm data); step 5 arm 1b GET /api/scoped/advisor-intelligence/artifacts/architect_leaderboard.json -> HTTP 403 'Missing firm identity', which is a direct live confirmation of the pair's central claim that the token carries NO firm reach; step 7 GET /api/scoped/tickets -> HTTP 403 {\"error\": \"forbidden: LIST is not permitted to principal class 'svc-commentary'\", \"action\": \"LIST\", \"principal_class\": \"svc-commentary\"}",
+      "step 3 PASSED independently on the STORED bytes before any arm ran: 8 claims, names exactly section 2's set, fixed values matching, the six forbidden claims absent, exp - iat = 7776000 s = exactly 90.00 days; secret VersionId 2950da39-7bc4-4803-b98e-fba53b7d92cb",
+      "the attachment's input_id pattern ^portfolio_[0-9a-f]{64}$ is the analysis-input-upload flow's own output shape (release 3 recorded input_id portfolio_7112270b57ed..), so satisfying step 4 requires a COMPLETED analysis upload first -- a dependency the mint pair does not name"
+    ]
+  },
+  "spec_asserts": "NEVER_WIDEN_PAIR_SVC_COMMENTARY_MINT.md section 4 step 4: 'The token through the CloudFront API path does POST /api/scoped/tickets with an analysis_request for cottonwood, a draft_commentary (status DRAFT, text [TEST TCKT_VNEXT F10] draft) and a report_request_id test-f10-<run>. Expect 201; created_by == svc-commentary.' Step 6: 'the same token creates an analysis_request for demo (off the list). Expect 400.'",
+  "world_is": "Step 4 as written is not satisfiable: the body it specifies is complete except for an attachment the ticket type requires unconditionally, and the required input_id is a portfolio_<64 hex> id that only a completed analysis-input-upload produces. So leg M's positive arm has an unnamed dependency on that upload flow. Step 6's expected 400 IS returned, but by the attachment check rather than the firm clamp, so the arm does not currently test the thing it exists to test; its status assertion is satisfiable without the clamp working at all. Steps 3, 5 and 7 are genuinely satisfied and are recorded as PASS. Nothing is asked of this seat beyond the record and the ask: the remedy is the issuer's -- either supply a real {upload_id, input_id} for step 4 (which makes step 6 reach the clamp too), or re-cut step 6 to assert the firm-refusal REASON rather than the status alone. No ticket was created, so there is no test ticket to close under step 8 and none is claimed."
+}
+```

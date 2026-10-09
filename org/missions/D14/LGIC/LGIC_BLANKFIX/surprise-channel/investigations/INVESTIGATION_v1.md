@@ -1677,3 +1677,55 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The all output carries the reason only on the 242 round-7 lines of mapped roots (13 of the 17 residual now); the other names sit behind a count. The script counts them by calling root_names for each UNMAPPED root, a second read of the same repository at the same bytes, not a second all run. Round-8 input for the lane of opal_naming_rootcheck.py: print the unmapped roots' UNCOUNTED lines too, or the by-reason count of the estate stays a two-source read."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S7 -- the not-judged cards still skip 47 names of the news and portal systems for a reason systems.json no longer holds
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-09T01:54:56Z",
+  "one_line": "47 name lines in the mapped roots (45 in news-pipeline, 2 in portal-auth and data-refresh) are skipped by a card that says the token (news, portal) is unresolved or in no vocabulary, while grade() reads the same names and returns a canonical form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/systems.json: key news (PRODUCT, owner_basis Andrew-direct 2026-10-07 'Yes confirm as written') and key portal (PLATFORM_SUBSYSTEM) are system rows",
+      "python lib/opal_naming_rootcheck.py news-pipeline --map infra/logic/registry/root_map.json: 59 HOLE lines, 45 of them 'skipped by a card; the card gives no correct name'; opal_naming.grade('news-ingestion-lambda-role', 'IAM_ROLE') returns CONFORMANT and grade('NewsIngestionPolicy', 'IAM_POLICY') returns OUT-OF-PATTERN with canonical news-ingestion-policy",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/REGISTRY_ROWS_round8.json: 47 name rulings drafted over those cards, each citing the card's own reason and the system row that now answers it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6 owner table H4: a card that gives no correct name is a registry ruling of 4.0.0_SA_CRO (the card's canonical form or its no_name_owed line).",
+  "world_is": "The cards were written against a registry in which news and portal were unresolved (OWNER_CARDS_R4.md Card 2); the registry has since resolved both, the cards were not revisited, and the root check still prints HOLE for each. A name ruling answers the line without editing the card file; a retired card would answer it too. The cell drafted the rulings and did not touch the card file (NOT_JUDGED_R13.json, outside the grant). The cards on the words 'security' and 'cache' (security-ops, portal-auth) are not stale: the grader still raises there, and 7 drafted rulings carry an explicit rename target (secops-..., portal-cache-...)."
+}
+```
+
+## LGIC_BLANKFIX-W4-S8 -- the platinum key grammar admits no folder below a table, so drafted canonicals fold a folder into the table word
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-09T01:54:56Z",
+  "one_line": "grade() raises K4a on a platinum key such as mdpf/global/platinum/model_portfolios/views/ ('views' is not an entity partition {entity}={id}); the drafted key rulings therefore spell a folder into the table word (model_portfolios_views, macro_timeseries, market_overview_details).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c \"import sys; sys.path.insert(0,'lib'); import opal_naming as o; print(o.grade('mdpf/global/platinum/model_portfolios/views/','S3Key'))\" raises RaiseDefect K4a: 'views' is not an entity partition {entity}={id}; the same path under gold grades CONFORMANT",
+      "infra/aws/lambda/smartx_ingestion_pipeline/precompute_views.py:45 S3_OUTPUT_PREFIX = 'json/model_portfolios/views/'; infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py:57 DETAILS_PREFIX = 'json-tiered/market-overview/details/'",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/REGISTRY_ROWS_round8.json: rows json/model_portfolios/views/, json/macro/timeseries/, json-tiered/market-overview/details/ and the other json-tiered and json/market/ rows carry a flattened table word"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The key_rulings.json row_fields: canonical is the whole correct address under key.grammar, which grade() returns CONFORMANT.",
+  "world_is": "The served keys of the portal bucket are folder trees (family/subfamily/file) and the platinum grammar reads one table level and then entity partitions. The drafted canonicals are CONFORMANT but are not a folder-for-folder move, so a served-output act that follows them also renames the portal's request paths. Whether the grammar should admit a sub-folder, or the registry's owner prefers the gold tier for these keys, is the CRO's and the CTO's call; every such row says it is a target name only."
+}
+```

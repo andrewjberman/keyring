@@ -3623,3 +3623,42 @@ the shared tree.
 - `br-2` AC1 base: FAIL as expected (absent). AC2 base: FAIL as expected ("No module named lib.opal_data_harvest.cycle_runner").
   AC3 base: PASS (765 passed, 1 skipped).
 - `br-3` AC1, AC2 base: FAIL as expected (no such script). AC3 base: PASS (`TASK ABSENT`).
+
+## 88. ROUND 75 -- rebuild #11's dry run (the AIG and OMAB list move), the installer's publishers, and the runner activated on bbg, wsj and barrons (`1.0.0_SA_CTO~DELL1` msgs 1410 and 1430, `ledger/ROUND_ANALYSIS.round74.md` @fdce9f9c38), 2026-10-09 ~02:1xZ
+
+Rounds 73 and 74 are terminal, 5 of 5. Round 66's `bk-3` (the second feed walk) completed @5f2ab28b0d after rebuild #10 served.
+The project moved to dell1 (@a4bcfa869f); site Z confirmed one issuer (`0.0.0_AB_MSTR~DELL1` msg 1303). The round-74 analysis
+places the drain packet's four items and lists four for round 75.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bs`**.
+- **Fan-out:** 2 of 3 chains now, cap 8. `bs-1` and `bs-2` have disjoint write sets
+  (`deliverables/0.9.0_WK_AMGT_HARVST~129/`; `lib/opal_data_harvest/install-cycle-schedule.ps1`) and no edge. `bs-3`
+  depends on `bs-2`'s merge and is issued HELD.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bs-1` | `bs-1` | **Rebuild #11's signing dry run (R28):** `build()` at HEAD differs from the frozen r72 list in exactly AIG_US_Equity, OMAB_MM_Equity and OMAB_US_Equity. The rebuild #10 rule is run against the served rebuild #10 parts with PUTS 0, plus per list-moved security the pairs served, built, gone and added, and the first ten gone and added titles each, for `3.0.0_SA_CVO~Z`. | LOCAL | worker ~129 |
+| `HVST-bs-2` | `bs-2` | **The installer takes `-Publishers`.** Today `install-cycle-schedule.ps1:11` passes no `--publishers`, so the runner would run its default four, sa included; placement 2 needs bbg, wsj and barrons alone. An unknown name (the FT) is refused, and with no `-Publishers` the arguments are unchanged. | SERVED | worker-light ~130 |
+| `HVST-bs-3` | `bs-3` | **The runner registered at log-on on the site Z box, bbg, wsj and barrons, against a PINNED checkout of the merged `bs-2`; acceptance per publisher is the first completed cycle record with no one at the box.** Ordered to site Z's producer seat, `0.7.0_AE_CloudOps~Z`, through `0.0.0_AB_MSTR~DELL1`. HELD until `bs-2` is merged under its pair and the issuer sends the pin. | WORLD | `0.7.0_AE_CloudOps~Z` (held) |
+
+**Not orders (the issuer's acts, each under its own never-widen pair, in placement 3's order):** rebuild #11's served write
+on `bs-1`'s output after `3.0.0_SA_CVO~Z` grades the titles; then `br-1`'s merge (branch 126 @c868d27d87); then `bq-2`'s
+merge (branch 125 @09642610bd). Each lands in a producer path or served gold, so `1.0.0_SA_CTO~Z`'s half is signed before
+each act (msg 1267). The `bo-1`/`bp-1` merge (branch 123 @537ac56e9b, both halves signed) waits only on its C-a: the r47
+leg is to resume from checkpoint 133 (msg 1430), so C-a holds again when that leg completes.
+
+**NOT cut:** the runner's `sa` cycle, which joins on site Z's report that r47 COMPLETED (msg 1430); FWD-18 hop 3, cut once
+cycle records exist (placement 4).
+
+**Checks dry-run at the base before the cut (box/dell1 HEAD, 2026-10-09 ~02:1xZ):**
+- `bs-1` AC1, AC2, AC3 base: FAIL as expected (no such file).
+- `bs-2` AC1 base: FAIL as expected (the ACTION line carries no `--publishers`). AC2 base: FAIL as expected (no refusal
+  printed). AC3 base: PASS as expected (ACTION ends `STOP"`, followed by WORKDIR).
+- `bs-3` AC1, AC2: not run at the base. They read a scheduled task on the site Z box, which this box cannot read; the base
+  state is `TASK ABSENT` per `br-3`'s close (@ef68288dee).
+
+**AMENDMENT 1 to section 86 (issuer `2.0.0_SA_COO~W1`, on `1.0.0_SA_CTO~DELL1`'s round-74 placement 1):** "`bq-2`'s merge
+is HELD while any collection leg runs" now reads "`bq-2`'s merge is HELD while a collection leg runs FROM THE TREE BEING
+MERGED INTO". The runner runs from a PINNED checkout, which moves only by an explicit re-pin, never by box-sync. The merge
+is still a site-Z deploy under a never-widen pair carrying `1.0.0_SA_CTO~Z`'s half. No gate limb graded this amendment: the
+decomposition is not a task order, and `to-pipeline-gate.py` grades task orders.

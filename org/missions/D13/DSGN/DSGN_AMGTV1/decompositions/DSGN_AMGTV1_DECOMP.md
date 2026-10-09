@@ -2257,3 +2257,26 @@ took it. This round's list and `round54/checks/r54.cjs` are the next DSGN_AMGTV1
 1 of 4 (arms 1-3 FAIL as expected, PLANTED passes); `round53/checks/r53a.cjs` 3 of 3; `round29/checks/battery29.sh` ALL PASS (0 skipped).
 **Chains:** 1. **Fan-out:** 1 of 1. **Risk:** LOCAL. **Rows:** a dell1 row reads `DSGN_AMGTV1-D1-W119-S<k>`.
 **Then:** the drain, battery29 and the Freshness bun test on the candidate, a /freshness real run, and CTO review.
+
+## v56 -- ROUND 56 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~02:1xZ) -- ONE DATE FORM ON /freshness (DIRECT ACT)
+
+**Rectangle:** the round-55 analysis's enrichment list (`ledger/ROUND_ANALYSIS.round55.md`, msg 1391):
+1. R1, one date form across `/freshness` -> cell `AV-zzh-1`. The house form is the long date: `PageEnd` through `formatPanelTimestamp`,
+   and Security Analysis round-9 ruling 1 (`dateWords.ts` `longDate`, AV-o-1). The page-drawn days take it, and the ISO day moves to
+   `data-day`.
+2. R2, Lenovo 992 HK -> not a cell. The row `AMGT_HARVST-D1-S2` is written, but the HARVST channel refuses every plain commit on the
+   pre-existing duplicate `Z-S106`. The row is parked at `deliverables/2.0.0_SA_COO~D1/round56/HARVST_ROW_D1-S2_PARKED.json`, to land
+   when the laptop CTO's gate fix admits it (1.0.0_SA_CTO~DELL1 msg 1426).
+3. Round-54 items AV-zzg-1 did not serve -> NONE. The hand-over's list was the CTO finding, Z-S25 and Z-S26, and all three were served
+   (round 55 MET). Z-S24 travels with AMGT_RESAPP.
+R1 residual: the served sentences hold ISO days, printed verbatim -> row `AMGT_RESAPP-D1-S1` @76a7a2fc8a (producer ask).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzh-1` DIRECT ACT (under the size floor; `<risk>LOCAL</risk>`) | FWD-27 (one date format) | `pages/Freshness/Freshness.tsx`, `pages/Freshness/freshnessRows.ts`, `pages/Freshness/Freshness.test.tsx` | ~120 (worker-light) |
+
+**Base:** portal 8d2a08a9. **Check:** `deliverables/2.0.0_SA_COO~D1/round56/checks/r56.cjs`. At the base it reads 2 of 5 (arms 1-3 FAIL
+as expected; CONTROLS and PLANTED pass). On a scratch reference edit it reads 5 of 5. The filtered bun test matches 0 tests at the
+base (exit=1).
+**Chains:** 1. **Fan-out:** 1 of 1. **Risk:** LOCAL. **Rows:** `DSGN_AMGTV1-D1-W120-S<k>`.
+**Then:** the drain, tsc and eslint on the Freshness files, a signed-in /freshness real run, and CTO review.

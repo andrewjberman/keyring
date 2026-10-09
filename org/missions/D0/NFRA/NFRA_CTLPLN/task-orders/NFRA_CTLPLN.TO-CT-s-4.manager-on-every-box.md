@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -201,3 +201,27 @@ made a duplicate of another box's live seat. Gate limb: none graded this modific
 after `dead=`, the issuer changes it by this amendment to `SEAT-LIVENESS device=laptop seats=`; write the proof row's `expect`
 equal to the order's text as you find it after this amendment. Rewrite the proof instance, validate, flip to `complete`.
 
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-09 ~02:2xZ) -- REOPENED, SHORT: a STAGED order is not open work, and an order's status is its LAST tag
+
+The tool's next defect came from the field. `0.0.0_AB_MSTR` msg 107619 relayed dell1's manager (bus 4dabb0a4) verbatim:
+"seat-liveness counts a STAGED task order as open work, so it reads a correctly idle seat as HUNG. Case:
+0.7.0_AE_CloudOps~DELL1 flagged HUNG (99 min) on AMGT_RESAPP.TO-AMGT-dd-4, which reads [status tag: staged] at HEAD ...
+Ask: exclude staged (not yet GO'd) orders from the HUNG test." The reader is `open_orders_to()` in `.tools/seat-liveness.py`
+(about lines 131-155). It treats every non-terminal status as open, and it takes the FIRST status word in the file.
+`1.0.0_SA_CTO` msg 107528, the gate owner's ruling, says: "an order's status is its LAST <status> tag". Gate limb: none graded
+this modification.
+
+1. **The LAST tag.** An order's status is the last `<status>` tag in the file whose word is in `SL.STATUS_WORDS`, not the first.
+2. **Staged is not open work.** An order whose status (rule 1) is `staged` is waiting on its GO. It counts neither toward HUNG nor
+   toward DEAD or ELSEWHERE. A seat whose only non-terminal orders are staged is classed as if it had no open order. Where the
+   seat's reason line names its orders, it adds `staged=<n>` so the staged work stays visible.
+3. Tests in `.tools/tests/test_manager_on_every_box.py`:
+   - a live, silent seat whose only order is staged reads QUIET, never HUNG;
+   - the same seat with one pending order beside the staged one reads HUNG still;
+   - an order reading `pending` then `complete` (last tag complete) is not open;
+   - an order reading `complete` then `pending` (last tag pending) is open.
+4. Run the tool on this machine and report its last line.
+5. Do NOT edit `.tools/seat-list.py`; it is outside this grant. If its own status reader shares the first-tag defect, file a row
+   (`spec_asserts` + `world_is`) and keep working.
+
+**ACCEPTANCE.** `CTs4-AC1`, `CTs4-AC2` and `CTs4-AC3` are unchanged. Rewrite the proof instance, validate it, and flip to `complete`.

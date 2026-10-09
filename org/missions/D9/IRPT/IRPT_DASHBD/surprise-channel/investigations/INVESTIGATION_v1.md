@@ -3410,3 +3410,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "world_is": "Nothing served moves (the tie-out is project-owned). The effect on DB-b-65's 79 is unmeasured: the shim only changes accounts with negative daily values in the window, and near-zero-balance accounts are exactly where those occur. Re-run E3 with round 31's own mean (or the reader's, under its own name) inside the same repair cell as W40-S1/W42-S1."
 }
 ```
+
+## IRPT_DASHBD-W43-S1 -- The round 33 shim never reached the near-zero classification: it fed only the cross-tab against round 32's classify, so the shim-free re-run leaves the 153 rows, the 79 fixed and every ~35/~36/~39 record unchanged.
+
+```json
+{
+  "id": "IRPT_DASHBD-W43-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~43",
+  "surfaced_at": "2026-10-09T02:03:07Z",
+  "one_line": "The round 33 shim never reached the near-zero classification: it fed only the cross-tab against round 32's classify, so the shim-free re-run leaves the 153 rows, the 79 fixed and every ~35/~36/~39 record unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-66 / row S36: DB-b-65's 79 fixed rests on a substituted fee base and is not counted until a shim-free re-run; the re-run is expected to change records only where the shim was wrong.",
+  "world_is": "MEASURED shim-free on the 153: near_zero_e3.py's own classify and landed_gain_return call the reader of record's daily_mean_value (positive_only=True) directly, so the shim (which rebinds a name only round 32's large_flow_e3.classify read) never touched them. The shim-free run gives the same 153 rows in the same sub-classes as NEAR_ZERO_E3.json, fixed_within 79 of 79, and round 32's classify reproduces its recorded 170-row counts with the reader's daily_mean_value at positive_only=False. Re-running the ~36, ~39 and ~35 modules on the same read of S3: all six output files byte-identical. Tie-out: the reader alone grades 8,385 of 9,078 within, 31 of them among the 153 (the BD_FEE_FIELD_IS_FLOW rule the reader adopted in round 33); with the 48 GAIN_AGREES_NEAR_ZERO_BASE rows graded on landed gain the total is 8,433, not 8,385 plus 79.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~43/NEAR_ZERO_SHIMFREE_E1.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~42/near_zero_e3.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
