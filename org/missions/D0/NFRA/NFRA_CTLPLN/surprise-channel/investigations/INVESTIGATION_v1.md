@@ -5881,3 +5881,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The group's S3 policy lets both Dells put under the opal buckets, so dell1's PutObject is refused only at the key, not at S3. The field dell1_generate_refused reads True when dell1's GenerateDataKey is not allowed AND the composed write (S3 leg and key leg) is refused; the S3 leg stays allowed and is printed. Row NFRA_CTLPLN-W14-S44 (dell2's write failing at GenerateDataKey) is resolved by amendment 25 for dell2 once applied; dell1's real PutObject still fails at the key, by the CTO's ruling (b), 'dell1 is not asked'."
 }
 ```
+
+## NFRA_CTLPLN-W14-S46 -- The transcripts root carries another cell's undeployed changes (commentary.tf: a new terraform_remote_state data source, the commentary policy and function), so an UNTARGETED plan or apply of the root
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:44:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S46",
+  "one_line": "The transcripts root carries another cell's undeployed changes (commentary.tf: a new terraform_remote_state data source, the commentary policy and function), so an UNTARGETED plan or apply of the root moves more than the one key policy this order builds; the apply of the key policy should be targeted at aws_kms_key.transcripts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resource-address diff of infra/aws/terraform/transcripts between 5c1d0af92c (the state whose key policy is live) and this branch: added data.terraform_remote_state.irpt_core; body-changed aws_iam_policy.commentary, aws_lambda_function.commentary and aws_kms_key.transcripts; the first three arrive with box/laptop commit 424998b161 (NFRA_TRNSPT TO-TR-c17, 'DESIRED, not applied').",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment26.plan_by_reading.txt"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 26 item 6: plan note section O gives the expected plan by reading for each root (identity, transcripts), and 'nothing else may move'.",
+  "world_is": "For the identity root the diff against the last applied state is exactly one added resource. For the transcripts root the tree also holds NFRA_TRNSPT's pending commentary changes, so 'nothing else moves' holds for this order's edit (only aws_kms_key.transcripts changed by it) but not for the root as a whole; section O says so and names the target. INERT: every apply of the root carries those changes whether or not this order's edit is applied."
+}
+```
+
+## NFRA_CTLPLN-W14-S47 -- KMS returns the principal list of a key-policy statement in no fixed order, so check_transcripts_dell_decrypt.py's 'live key policy equals the render' guard read False on one run and True on the next 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:44:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S47",
+  "one_line": "KMS returns the principal list of a key-policy statement in no fixed order, so check_transcripts_dell_decrypt.py's 'live key policy equals the render' guard read False on one run and True on the next with the live key unchanged; the comparison now treats a principal list as a set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "same command, same live key policy, two consecutive runs on 2026-10-09: live_same False then True before the fix; the saved normalised statement showed principals [dell2, dell1] in one read and [dell1, dell2] in another.",
+      "after the fix (norm_statement sorts list values): three consecutive runs read live_same True."
+    ]
+  },
+  "spec_asserts": "Row NFRA_CTLPLN-W14-S40 and AMENDMENT 6 item 2 treat the guard's False as the apply having happened ('false after the apply by construction').",
+  "world_is": "A False from this guard has a second cause that needs no apply: principal-list order. A False read before the fix was therefore not by itself evidence that the key policy had been applied. Fixed in tests/check_transcripts_dell_decrypt.py (norm_statement); the guard is unchanged otherwise."
+}
+```
