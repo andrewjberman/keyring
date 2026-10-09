@@ -4,10 +4,10 @@
  "directive": "D9",
  "macro_code": "IRPT",
  "fabric": "dell2",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "One Analysis Request end to end: the Ticket Center form to a finished package (report, branded Opal PDF with commentary, original Excel) on the same open ticket",
  "generated_from": "org/missions/D9/IRPT/IRPT_ANLREQ/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T03:46:29Z"
+ "generated_at": "2026-10-09T04:23:43Z"
 }

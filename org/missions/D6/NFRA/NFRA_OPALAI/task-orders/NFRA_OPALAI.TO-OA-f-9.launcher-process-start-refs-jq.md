@@ -196,7 +196,7 @@ Dry-run at base (`OA_F9A2_REF=de5ce25fa3`): f9.AC4 FAIL as expected (`BUILT: no-
 Process.Start 2, other files 0 -- the controls hold). Scratch nested branch, deleted after: GREEN PASS with a prompt naming
 On launch (`BUILT: prompt=on-launch dq=0`); RED FAIL when the prompt does not name it (`BUILT: prompt=other`).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~24</slot>
 <fabric>site-z</fabric>

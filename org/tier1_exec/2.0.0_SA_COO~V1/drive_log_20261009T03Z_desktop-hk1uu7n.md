@@ -32,3 +32,14 @@ AMENDMENT 1 conditional GO), Z-S79 disarm act (c07077f4e1; word to 3.0.0_SA_CVO~
 - 11:00Z+: REPORT lines of the five functions (r27 L2 first half; aw-1 condition b read independently).
 - 11:15Z: the transcription on box/sitez -> tw-1 J1 to the CVO.
 - 13:00Z+: sweep REPORT and served page -> r27 L2 close; aw-1 J1 counts.
+
+## Ticks 2-5 and the rulings (03:31Z-04:0xZ)
+
+- Ticks 2-4 empty (event-gated); tick 4 THIRD-EMPTY-TICK -> UB-20261009T034714Z-48b3 to 4.0.0_SA_CRO~DELL1. Tick 5 WAITING.
+- Andrew ~03:5xZ via site Z, ruled by CTO~DELL1 msg 1594 and site Z CTO 32344: aw-1 apply to 0.7.0_AE_CloudOps~DELL1
+  (AMENDMENT 2 @dcd02aa134; order msg 1602). The relay's move to ~ZV (@c1f5ee3e0d) is WITHDRAWN by AMENDMENT 3 (CTO~DELL1
+  msg 1610: the ~Z* lanes hold until Andrew answers site Z on site-bound acts).
+- Act-3 call 8276 ruled (a) in XA-20261009T033809Z-8c1a (laptop CTO 03:42Z): one standing tier-3 request on Q1's queue.
+  Its condition 1 (the vehicle reads the queue state before each draw) has no state to read and no reader: row
+  ETFS_RIVALS-D1-S2, BLOCKING/ARMED, disarmed by this seat holding the switch unset. The call's close needs the ruling
+  file on disk (not yet synced to dell1).

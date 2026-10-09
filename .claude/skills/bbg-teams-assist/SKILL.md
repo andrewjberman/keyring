@@ -54,6 +54,13 @@ the gateway (NFRA_OPLGTW). This step is defence in depth (ruled by `1.0.0_SA_CTO
   identity not shown @opalinvest.com`, and move on.
 - A sender whose identity the gateway cannot yet show is the gateway's to fix (NFRA_OPLGTW), never this seat's to guess
   from a display name.
+- **The field to read (AMENDMENT 1, on `0.0.3_BG_BBGTerminal` msg 32349).** The POLL carries only `from_name`, but the READ path
+  (`list_chats` / the thread read the serve loop already does) returns `from.user` = {id, displayName, userIdentityType,
+  tenantId}. PASS = `userIdentityType == "aadUser"` AND `tenantId == "6810043e-d171-4adc-9975-068b35e179da"` (Opal's tenant:
+  the tenant in this seat's own token subject, whose `whoami` is `opalbloomberg@opalinvest.com`). Anything else, including
+  a missing field, a federated/external type or another tenant, is NO send. Residual, stated: a GUEST account invited into
+  Opal's tenant may share that tenantId without holding an @opalinvest.com UPN. The gateway's UPN gate (NFRA_OPLGTW) closes
+  that case. Until it is live, a sender whose displayName or id marks a guest (`#EXT#`) is NO send.
 
 **1. ACK — immediately, before any research, before classification finishes.**
 Send a short, human, receipt-only reply in-thread (`send_chat_message`; channels:

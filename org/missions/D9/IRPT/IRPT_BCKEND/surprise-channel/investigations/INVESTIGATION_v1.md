@@ -22914,3 +22914,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both host functions already package them; the release replay arm proves it from the built bytes."
 }
 ```
+
+## IRPT_BCKEND-D2-W197-S1 -- The stored REQUEST_COMPOSITION document itself carries the ownership members (resolved.owner, resolved.input_owner), so 'never owner' cannot be met by
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W197-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~197",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The stored REQUEST_COMPOSITION document itself carries the ownership members (resolved.owner, resolved.input_owner), so 'never owner' cannot be met by withholding the index row alone; the surface strips them from the returned document.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/request_composition.py:28-35 validate_bindings reads frozen['resolved']['owner'] and resolved.get('input_owner'): both are members of the stored document.",
+      "infra/aws/lambda/investor-reporting/reports/commentary_composition.py strip_ownership removes every member keyed owner or input_owner and returns redacted_count; tests/test_svc_commentary.py test_svc_commentary_surface_returns_the_document_and_sha256_and_never_the_owner asserts neither the word owner nor the advisor id appears in the answer."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-386: the response is the composition document and its sha256, never owner.",
+  "world_is": "The document contains owner (account ids, principal id, firm) and per-source binding blocks. The surface returns the document with the two ownership members removed and the retained artifact's own sha256 (the hash the READY item's composition_ref carries), so the returned bytes do not hash to sha256; a consumer verifies the sha256 against composition_ref, not against the returned JSON. The per-source `binding` members (firm_id, principal_id, principal_class, advisor_id) are NOT stripped: the TO names owner, and widening the redaction to every identity-bearing member is the CTO's call if the commentary needs less."
+}
+```
+
+## IRPT_BCKEND-D2-W197-S2 -- The new Lambda's artifact registration (infra/aws/lambda/ci/lambda-source-map.json) and the commentary role's invoke attachment lie outside this order
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W197-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~197",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The new Lambda's artifact registration (infra/aws/lambda/ci/lambda-source-map.json) and the commentary role's invoke attachment lie outside this order's <paths>, so the release pair must carry both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/commentary_composition.tf header lists the artifact members the zip must carry.",
+      "infra/aws/terraform/transcripts/commentary.tf owns outlook-global-commentary-draft-role (NAMES.json role.name) and its DecryptWithTheIrptKey statement; the order's <paths> hold neither that root nor ci/lambda-source-map.json."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-386: write any new route, Lambda or IAM resource as code and DESIRED Terraform only, nothing applied.",
+  "world_is": "The Lambda, its role and policy, and the caller's invoke policy are declared in the export root (aws_iam_policy.commentary_composition_invoke, output commentary_composition_invoke_policy_arn). Two acts remain for the release pair: registering the zip in lambda-source-map.json, and attaching the invoke policy to the commentary role from the transcripts root (which should also drop that role's standing kms:Decrypt on the irpt key, unused by this read)."
+}
+```

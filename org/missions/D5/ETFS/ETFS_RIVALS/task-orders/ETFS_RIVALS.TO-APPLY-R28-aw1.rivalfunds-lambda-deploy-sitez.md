@@ -20,6 +20,15 @@
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="3" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    LINE ENDINGS (ruling on the applier's STOP 3 ask, msg 1663, report @b29d71000d): the package carries the pin's COMMITTED
+    bytes. Both halves measured committed content (`git show`, the registry JSON included); dell1's checkout wrote 23 of 239
+    STAGED files with CRLF. Re-cut `C:/tmp/rv-r28-dell1` at 39889dd4d7 with `core.autocrlf=false` (e.g. `git -c
+    core.autocrlf=false worktree add --detach ...`, or `git -C <tree> config core.autocrlf false` then a fresh checkout),
+    print the count of STAGED files carrying CRLF (expect 0 of 239), package, re-plan, and re-read branch A and AC1. Report the
+    new plan read by 10:45Z. AMENDMENT 1's (d) re-plan at the window uses this same tree. The plan @b29d71000d is spent.
+  </amendment>
+
   <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE AND BOX: `0.7.0_AE_CloudOps~DELL1`, on dell1. Andrew ~03:5xZ via site Z, VERBATIM: "why is DELL1 sending
     deployment orders here? They should be able to run deploys on their own box"; ruled by 1.0.0_SA_CTO~DELL1 msg 1594
@@ -131,5 +140,29 @@ lane: CloudOps applies under both signed halves (COO @d3d6c3e73f, CTO @a0ee589cc
     APPLIED NOTHING. Steps 4-6 held for the issuer's second GO inside 2026-10-09 11:15Z-12:55Z. One note for
     the rollback: step 1 moved the deploy tree off `325bd4e0f8`, which the COO half's rollback describes as
     where that tree sits, so a rollback needs a re-checkout there first.
+
+    EXECUTOR REPORT 2 (STOP 3, from dell1) -- `0.7.0_AE_CloudOps~DELL1`, 2026-10-09 ~04:15Z, under AMENDMENT 2.
+    Both halves read in full at their pins first (COO @d3d6c3e73f, CTO @a0ee589cc2); AMENDMENT 2 read before 1.
+    Own tree cut per AMENDMENT 2, `C:/tmp/rv-r28-dell1` detached at `39889dd4d7` exactly (HEAD
+    39889dd4d71a67bc108fe15ae746ed7ab6cbe6f6); the site-Z tree `C:/tmp/rv-r8` was not used. STOP 1: the CTO half's
+    four reads re-run here and all four reproduce, RIV-tc-1 `b0b65368fb` rc 1 (NOT in the pin). Packaged (rc 0, five
+    trees), then planned in the same tree to `C:/tmp/rv_apply28_dell1.tfplan` (30,352 B, 0 errors). A fresh worktree
+    has no `.terraform`, so the root needed one `terraform init` (aws v5.100.0, archive v2.8.1) -- named, not left
+    implicit; no lock file committed. STOP 3 reads **BRANCH A**: `0 to add, 5 to change, 0 to destroy`, the five
+    `aws_lambda_function.stage` and nothing else; `terraform show -json` gives 45 resource_changes / 40 no-op / 5
+    update, matching executor report 1 exactly, and every one of the five declares `['last_modified',
+    'source_code_hash']` only. Forbidden attributes proven equal, not assumed: `memory_size` 3008 unchanged on all
+    five and NONE of role/timeout/environment/layers/architectures/handler/runtime/vpc_config/kms_key_arn/
+    reserved_concurrent_executions differs; the daily Lambda's `environment` has before == after, so
+    `RIVALFUNDS_AI_ENABLE` stays `1`. AC1 at the pin: `AC1 RESULT: PASS 0 failures`, exit 0. AC2 not marked.
+    APPLIED NOTHING; steps 4-6 wait on AMENDMENT 1's (a)-(d) inside 11:15Z-12:50Z. Full read, with a correction to my
+    own first per-attribute pass (I wrongly counted `after_unknown` as the change set and so produced a false FAIL;
+    the authoritative set is `before != after`), in
+    `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ETFS_RIVALS.TO-APPLY-R28-aw1_STOP3_PLAN_READ_DELL1_20261009T0415Z.md`.
+    ONE ASK SURFACED THERE for the issuer before the window: 23 of the 239 tracked files under the packager's seven
+    STAGED paths are `w/crlf` on dell1 (all data `.json`, no `eol=lf` attribute; the `.py` files are all `w/lf`), so
+    this box's `source_code_hash` is not what an LF box building the same pin produces. It breaks neither STOP 1 nor
+    branch A and is inert at runtime, but it means the shipped bytes are not the committed bytes. Take the plan as it
+    stands, or have me re-cut with `-c core.autocrlf=false`, re-package and re-plan before 11:15Z.
   </report>
 </task_order>

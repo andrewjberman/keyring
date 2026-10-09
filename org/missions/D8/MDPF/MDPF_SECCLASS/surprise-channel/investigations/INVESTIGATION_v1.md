@@ -5877,3 +5877,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found while measuring the SC-e-71 release (half request NEVER_WIDEN_HALF_REQUEST_SECCLASS_SEED_NAMES_E71_20261009.md). Inert: it moves no data, but it is a self-report that cannot be trusted as a verdict -- an applier who reads 'Items written: 15' after a dry run could skip the real run or report it done. Remediation is the CVO's; the seed script's owner is not this seat."
 }
 ```
+
+## MDPF_SECCLASS-D1-S19 -- a BD gold test pins the retired ship-every-_shared-module deploy rule and fails at HEAD
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S19",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T04:20Z",
+  "one_line": "data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py::test_deploy_tool_ships_the_shared_modules_beside_the_gold_files FAILS at box/dell1 HEAD: it pins the old rule that any BD gold deploy carries the _shared modules, which the named-file rule (CTO msg 107147, safe_deploy_core.shipped_artifacts_for) retired on 2026-10-08. The BD gold suite reads 1 failed / 96 passed for every candidate until the test follows the rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "box/dell1 (control) ~04:2xZ: `python -m pytest -q tests/test_etf_classifier_deployed_resolution.py` in data/black_diamond/scripts/gold -> 1 failed, 6 passed; AssertionError: assert ('opal-data-bd', 'code/gold/lib/_shared/etf_classifi...",
+      "worktree coo_m1_e60 (box/dell1 + e60 held line @abdbb3038e): the whole BD gold suite reads 1 failed, 96 passed -- the same one test; e60's own test_d04_unclassified_line.py 5 passed.",
+      ".tools/safe_deploy_core.py shipped_artifacts_for docstring: 'RULE (1.0.0_SA_CTO msg 107147 ...): a deploy ships only the files its own ledger names' -- an artifact rides only when its own repo path is named; last tool commit 0b7ff14c13 (10-08 15:59, 4.0.0_SA_CRO~B)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The BD gold test suite passes at HEAD, so a candidate's suite run is a clean signal.",
+  "world_is": "One test pins the retired ship-everything rule and fails at HEAD for every candidate, so 'suite green' cannot be read as a pass without naming this test. It moves no data and blocks no deploy.",
+  "notes": "SURFACED, NOT CHASED: found while preparing the e60 release (XA-20261009T034917Z-0eb1). The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route. e60's pair will name this test as the one pre-existing failure."
+}
+```
