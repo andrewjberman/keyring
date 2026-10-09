@@ -1200,6 +1200,14 @@ RULES = [
      "fast query layer over the SERVED cloud graph, which the estate refreshes on its own schedule "
      "(nightly derive-runner + incremental updater). Rule 20: default to QUERY, never rebuild to "
      "answer a traversal -- and since 2026-09-09 (CG-s-30) there is no agent-routed rebuild to run"),
+    (["canonical source", "canonical source of", "where does this value come from", "where does it come from",
+      "which source is canonical", "origin of this value", "value origin", "served from the canonical",
+      "reads a served artifact", "is this value canonical"],
+     "where a served or consumed value comes from, and whether that source is the canonical one (comp-dataflow)",
+     ["comp-dataflow origin <script-or-field>", "comp-dataflow gate <script>"],
+     "value-ORIGIN trace + canonical-source assertion: does a value come from the canonical source or from a served/"
+     "legacy artifact (a producer reading a served artifact is the layer grammar backwards). Added from the top "
+     "no-fit clusters of the 2026-10-08 router review"),
     (["who else is working on", "who is working on", "who else is on", "which box is working on",
       "which boxes touched", "overlap between boxes", "cross-box overlap", "overlap map", "two boxes on",
       "who touched this", "who changed this today", "activity by box", "per-box activity"],
@@ -1689,6 +1697,27 @@ def _print_surfaces():
 
 RAIL_LOG = os.path.join(WS, "org", "mcp", "comp-which-rail.log")
 
+# WHO ASKED, AND WAS IT REAL (comp-tool audit, Andrew-direct 2026-10-08 ~23:0xZ, call 2). The 30-day review measured
+# that no comp-which row named the asking seat and harness probes were counted as agent questions
+# (org/tier1_exec/4.0.0_SA_CRO/deliverables/COMP_WHICH_ROUTER_REVIEW_20261008.md, recommendations 2-3).
+_HARNESS = os.environ.get("COMP_WHICH_HARNESS", "") == "1"
+_VETTED_STATE = {"v": ""}   # "1" a curated rule fired; "0" the menu is fuzzy guesses; "" not a ranked route
+
+
+def _asker_serial() -> str:
+    """The asking seat: OPAL_AGENT_SERIAL, else this Claude session's serial file; '-' when neither exists."""
+    s = os.environ.get("OPAL_AGENT_SERIAL", "").strip()
+    if s:
+        return s
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID", "").strip()
+    if sid:
+        try:
+            with open(os.path.join(WS, "org", "mcp", "sessions", sid + ".serial"), encoding="utf-8") as fh:
+                return fh.read().strip() or "-"
+        except OSError:
+            pass
+    return "-"
+
 # identifier-ish token patterns, in extraction-priority order (most specific first)
 _TERM_PATS = [
     re.compile(r"[A-Za-z_][\w./-]*\.(?:parquet|tsx|ts|py|json|md|yaml|yml|sh|hcl|tf)\b"),  # filenames
@@ -1715,6 +1744,48 @@ def _extract_term(q: str):
 
 
 _PATH_RX = re.compile(r"(?<![\w/])([A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+)")
+
+
+_READ_WORDS = re.compile(r"\b(read|reread|re-read|open|show|inspect|view|contents?|look at|print|cat|tail|head of|"
+                         r"what does .* say|what is in)\b", re.I)
+_PATHISH = re.compile(r"(?:[A-Za-z]:[\\/]|/|\.{0,2}[\\/]?)?[\w.~-]+(?:[\\/][\w.~ -]+)+|[\w.-]+\.[A-Za-z0-9]{1,6}")
+
+
+def _existing_paths(q: str) -> list:
+    """Paths named in the question that exist as FILES (repo-relative, cwd-relative or absolute)."""
+    out = []
+    for tok in _PATHISH.findall(q.replace('"', " ").replace("'", " ")):
+        tok = tok.strip().rstrip(".,;:)")
+        if len(tok) < 3:
+            continue
+        cand = tok
+        m = re.match(r"^/(?:cygdrive/)?([a-zA-Z])/(.*)$", cand)
+        if m:
+            cand = "%s:/%s" % (m.group(1), m.group(2))
+        for base in ("", WS, os.getcwd()):
+            full = cand if not base else os.path.join(base, cand)
+            if os.path.isfile(full):
+                out.append(tok)
+                break
+    return list(dict.fromkeys(out))
+
+
+def _known_path_route(q: str):
+    """A question that names an existing file and asks to read it needs no router: answer with comp-read.
+    58% of 30 days of organic comp-which questions were this shape and the ranker sent them to unrelated tools
+    (COMP_WHICH_ROUTER_REVIEW_20261008.md, recommendation 1). Returns an exit code, or None to route normally."""
+    paths = _existing_paths(q)
+    if not paths or not (_READ_WORDS.search(q) or len(q.split()) <= 3):
+        return None
+    _log_rail("ROUTE-KNOWN-PATH", "comp-read", paths[0], q)
+    if _JSON:
+        return _emit_json("known-path", ["comp-read"], {"comp-read": "comp-read %s" % paths[0]},
+                          {"comp-read": "read a known file"}, paths[0], q)
+    print("comp-which -- KNOWN PATH: the question names a file that exists, so no router is needed.\n")
+    for path in paths[:5]:
+        print("  comp-read %s        # or the native Read tool; add --for \"<question>\" to ask of it" % path)
+    print("\n  (a known path never needs comp-which first; route only when you do not know which tool answers)")
+    return 0
 
 
 def _extract_path(q: str):
@@ -1760,6 +1831,11 @@ def _log_rail(decision: str, intent: str, term, q: str) -> None:
         n = len([c for c in str(intent).split("+") if c.strip()])
         extra = "route_id=%s  n=%d  " % (rid, n)
         _handoff_route(rid, n)
+    extra += "serial=%s  " % _san(_asker_serial(), 60)
+    if _VETTED_STATE["v"]:
+        extra += "vetted=%s  " % _VETTED_STATE["v"]
+    if _HARNESS:
+        extra += "harness=1  "
     line = '%s  %s  tool=comp-which  intent=%s  term=%s  %sq="%s"\n' % (
         ts, _san(decision, 40), _san(intent), _san(term), extra, _san(q))
     try:
@@ -2287,6 +2363,7 @@ def _default_router(q, qtok, hits, term, list_intent):
     # the caveat does, and a number is the strongest credibility signal this fabric has. Frame first,
     # evidence second -- otherwise the caveat is arguing against an impression already formed.
     no_fit = (ranked_all and ranked_all[0].score < _VETTED_BAND)
+    _VETTED_STATE["v"] = "0" if no_fit else "1"
     if no_fit:
         print("  !! NO CURATED RULE MATCHED THIS QUESTION -- READ THIS BEFORE THE LIST BELOW.")
         print("     Every candidate scored below the vetted band. These are FUZZY GUESSES, not a")
@@ -2420,6 +2497,9 @@ def main() -> int:
         return _print_surfaces()
     q = " ".join(sys.argv[1:]).strip()
     qtok = _tokens(q)
+    known = _known_path_route(q)
+    if known is not None:
+        return known
     # CE-p-4: RESET THE PER-QUESTION SUBJECT STATE. Module-level state is safe in the cold CLI
     # (one question per process) and is NOT safe on the WARM in-process path -- comp-which-
     # routing-test.py:411 `_run_comp_which_warm` calls this main() repeatedly inside ONE

@@ -607,18 +607,6 @@ contracts:
       "2": {class: verdict, meaning: "usage / could-not-evaluate (fail-closed)"}
     exit_source: "manifest_check_cli.py completeness family (gate-firing) @2026-07-23"
 
-  comp-honesty:
-    coverage: "the honesty checks over the queried surface (claim-vs-implementation drift)"
-    blind_spots:
-      - "checks the declared honesty rules; a drift class with no rule is not surfaced"
-    plane: desired
-    grain: artifact
-    scope: estate
-    vintage: "source/record at HEAD"
-    exit_codes:
-      "1": {class: verdict, meaning: "honesty finding"}
-      "2": {class: verdict, meaning: "UNVERIFIABLE / scope"}
-    exit_source: "NFRA_TOOLCHECK P1 gate-firing matrix @2026-07-23"
 
   comp-freshness:
     coverage: "the S3/DDB artifacts declared in the freshness chain manifest for the queried pipeline/script"

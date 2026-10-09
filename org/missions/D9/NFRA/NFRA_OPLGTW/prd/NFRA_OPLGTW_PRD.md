@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.0",
+  "prd_version": "v2.1",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -18,7 +18,13 @@
     "FWD-10",
     "FWD-11",
     "FWD-12",
-    "FWD-13"
+    "FWD-13",
+    "FWD-14",
+    "FWD-15",
+    "FWD-16",
+    "FWD-17",
+    "FWD-18",
+    "FWD-19"
   ],
   "status": "RATIFIED"
 }
@@ -165,6 +171,66 @@ ACCEPT: Tax SMA accounts are collected every business day by the existing puller
 PROOF: The list-only run beside a control master; then a day's files landed, converted and queried.
 
 SOURCE: as FWD-10, answer 1: "WE should assess if this works and if so, and we get the data in the same shape (via running it exactly same structure), then it needs to be added to the daily job."
+
+FWD-14  — Alyssa reads one Tax account's quarter end to end (v2.1, the thread)
+
+DONE WHEN: EXERCISED — under Alyssa's own grant, one Tax account on master 08335338 answers its Q3 2026 reconciliation inputs, and each figure is read against the custodian's statement.
+
+ACCEPT: For the account and quarter she names, she reads the value at quarter start and at quarter end, contributions, withdrawals, realized gain/loss for the quarter and the change in unrealized gain/loss. Each value names the source field it came from. A figure that does not tie to the statement says why.
+
+PROOF: The one account's quarter, read through Claude under her principal, set beside its monthly statement and the workbook's figures.
+
+SOURCE: Andrew-direct 2026-10-08 ~22:0xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ALYSSA_TAX_WORKFLOW_SINCE_INCEPTION_GL_LOTS_LAST4_KEY_SCHWAB_AND_BD.md` @618699ceeb): "We just have to be able to give her the right information"; brief `docs/briefs/oplgtw-tax-workflow-midstream-brief-20261008.md` @dae0456eb4, O1.
+
+FWD-15  — Alyssa finds the account from the key her sheets hold (v2.1)
+
+DONE WHEN: EXERCISED — lookups by last four digits plus a name, and by full number, each return exactly one account or an explicit ambiguity.
+
+ACCEPT: A last-four-plus-name or full-number request resolves to one account. When it matches more than one, the answer says so and lists the candidates; it never picks one. Last four alone is never a key. The identity rule is the one MDPF_TAXSMA already holds (`00` + eight digits), reused, not re-derived.
+
+PROOF: A unique key, a key that collides in 08335338, and a key that matches only a different client's account, each answered correctly.
+
+SOURCE: as FWD-14: "making sure that we at least have the last 4 digits of the account in there for keying's sake"; brief O2 and G-2.
+
+FWD-16  — Since-inception record as of the date she picks (v2.1)
+
+DONE WHEN: EXERCISED — for two Tax accounts, the value at inception, every flow since and the value on a chosen date are read and checked against source.
+
+ACCEPT: The inception date is the Tax SMA roster's, never the custodian's account-open date. Flows include contributions, withdrawals, securities transferred in or out at market value, and advisory fees, each labelled; an unlisted code stays `unclassified`. The gateway serves the inputs and computes no return.
+
+PROOF: Two accounts whose roster inception falls inside the served window, recomputed from silver rows and compared with the answer.
+
+SOURCE: as FWD-14: "being able to get that since inception value for every given tax account"; brief O3, G-3, G-9.
+
+FWD-17  — Tax lots and gains as her report prints them (v2.1)
+
+DONE WHEN: EXERCISED — for one quarter end, realized gain/loss in four buckets and the lots held on that date are read and tied to Schwab's totals.
+
+ACCEPT: Realized gain/loss splits short-term and long-term, gains and losses, for the quarter and since inception, at lot grain. Lots are those held ON the quarter-end date, never today's lots repriced, including short positions, with unrealized gain/loss split the same four ways. A lot with no reported cost basis says so and is never read as zero. The top-10 holdings by weight as of quarter end are served from the positions data.
+
+PROOF: One account-quarter's buckets tied to Schwab's totals line; one missing-basis lot shown as missing.
+
+SOURCE: as FWD-14: "realized gains losses, unrealized gains losses, and any kind of tax slots or cost basis"; brief O4, O5, O9, G-7, G-8, G-10.
+
+FWD-18  — The same answers for a Black Diamond Tax account (v2.1)
+
+DONE WHEN: EXERCISED — one Tax account held through Black Diamond answers FWD-14 to FWD-17 in the same field shape as a Schwab account.
+
+ACCEPT: Alyssa asks without naming the source; the answer names it. Only the Tax SMA roster's Black Diamond accounts are granted; no other Black Diamond account or firm data is served.
+
+PROOF: One Black Diamond Tax account's quarter beside one Schwab Tax account's, same fields.
+
+SOURCE: as FWD-14: "Alyssa is going to need to go to both of those places"; brief O6, G-1.
+
+FWD-19  — The Tax SMA master's accounts reach back to their inception (v2.1)
+
+DONE WHEN: EXERCISED — a 08403355 account answers FWD-14 for a date before collection began.
+
+ACCEPT: The 08403355 history is backfilled to the earliest roster inception among its accounts, in the same structure as the other masters. If Schwab serves no files before a date, the outcome reports that date and stops there.
+
+PROOF: The backfill's enumerate record, then one pre-collection date answered.
+
+SOURCE: as FWD-14: "we will have to do a backfill uh, on whatever the contents are of this new Schwab master"; brief O7, IV.C, G-5.
 
 ## CONTRACTS
 
@@ -705,3 +771,67 @@ data; no grant mutation from MCP; original Parquet and bronze stay unavailable; 
 **Sign-off.** ENDPOINT (FWD-10 to FWD-13) and CONTRACTS (C1, C2, C3, C4) change. The ratified-text half re-opens for
 `3.0.0_SA_CVO~Z` (signing for the ~O CVO seat until it is seated, msg 31856). The brief half: the brief is
 `4.0.0_SA_CRO~Z`'s assessment, accepted as written by the CRO (CLAUDE.md rule 27, PROPORTIONATE SIGN-OFF).
+
+### v2.1 addendum (2026-10-08 ~23:2xZ, 1.0.0_SA_CTO~O) -- Alyssa's Tax SMA quarter: the thread, the key, since inception, lots as of quarter end, Black Diamond, the 08403355 backfill
+
+Input: Andrew-direct 2026-10-08 ~22:0xZ, verbatim in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ALYSSA_TAX_WORKFLOW_SINCE_INCEPTION_GL_LOTS_LAST4_KEY_SCHWAB_AND_BD.md`
+@618699ceeb, and his ~21:2xZ "asap" (`ANDREW_DIRECT_20261008_212xZ_ALYSSA_13M_AND_TAX_SMA_MASTER_ASAP.md` @6233bae5de). Brief:
+`docs/briefs/oplgtw-tax-workflow-midstream-brief-20261008.md` @dae0456eb4 (`4.0.0_SA_CRO~Z`, midstream). Endpoint: FWD-14 to
+FWD-19 above; FWD-14 is the thread and every other outcome widens it. Round 32 is issued and frozen: this addendum is cut
+from round 33 on.
+
+**Scope bound, his words:** "We don't have to do the whole workflow for her. We just have to be able to give her the right
+information." Every outcome is a read. The gateway computes no return (QTD, YTD or annualized); Alyssa's report and its
+scripts stay hers.
+
+1. **The Tax population and its grant (C2, FWD-14, FWD-18).** The Tax SMA roster (MDPF_TAXSMA's reader, reused) is the
+   account list. Alyssa's grant carries `account_identity`, every Tax account in each of the three sources (masters 08335338
+   and 08403355, and Black Diamond), a window reaching each account's roster inception, and the datasets below. It carries
+   no download operation: Andrew at the laptop, 2026-10-08 ~19:2xZ, "no downloads needed yet"
+   (`ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md` line 105). The hidden
+   classes of v2.0 item 1 stay hidden.
+2. **v2.0 item 1's last line is struck** ("Any other principal needs his own word"): his 17:4xZ answer was (a), named Opal
+   staff, and set no further gate (`3.0.0_SA_CVO~Z` review note 1, msg 32002). Each grant is still an operator act under C2.
+3. **Black Diamond (C3, C4, FWD-18).** The Cottonwood RIA's Black Diamond silver (`blackdiamond/cottonwood/silver/`:
+   `fact_holdings`, `fact_realized`, `fact_unrealized`, `fact_transactions`) is a source for the roster's Black Diamond Tax
+   accounts only, read only, scoped by account in the grant. This reads his ~22:0xZ words ("there are the ones that are in
+   Black Diamond", "Alyssa is going to need to go to both of those places") as covering those accounts and nothing wider in
+   that firm's data. The producer is OPAL_TAXSMA_PT2 (laptop fabric); its table addresses and freshness are its owner's
+   answer, asked cross-fabric 2026-10-08 ~22:0xZ. The answer shape is the Schwab one, with the source named.
+4. **The account key (C4, FWD-15).** A lookup tool takes a full number, or last four plus a name. Measured: in 08335338,
+   1,831 of 5,320 distinct last-fours belong to more than one account, so last four alone is refused as a key. An ambiguous
+   match returns its candidates and picks none.
+5. **Since inception (C3, FWD-16).** The window floor for a Tax account is its roster inception date. The completion-marker
+   backfill (v2.0 item 4) reaches back to the earliest roster inception among the granted accounts; 13 calendar months
+   remains the cap. Flow labels add `security_transfer_in`, `security_transfer_out` (at market value) and `advisory_fee` as
+   required members of the v2.0 item 3 table.
+6. **The value field (C4, FWD-14).** The quarter-end value is served as `eqty_incl_option` (9 of 9 tie to the workbook within
+   $1 at 2026-09-30; `net_mv_plus_cash` ties 0 of 9). `net_mv_plus_cash` may be served beside it, each named; neither is
+   substituted for the other. MDPF_TAXSMA's contract values Tax accounts on `net_mv_plus_cash`; that difference is surfaced to
+   its owner, not resolved here.
+7. **Lots and gains (C4, FWD-17).** Realized gain/loss in four buckets (short/long term x gain/loss) from `fact_rld`,
+   `fact_rly`, `fact_rty`, and Black Diamond `fact_realized`. Unrealized gain/loss and cost basis from the lots held on the
+   requested date (`fact_ult`; Black Diamond `fact_unrealized`), short positions included. A lot whose basis the source marks
+   missing returns `cost_basis: null` with `basis_status: missing`, never zero. Top-10 holdings from `dim_position`/`fact_rps`
+   and Black Diamond `fact_holdings`. Sector allocation is NOT served: no source exists in either custodian's silver.
+8. **The 08403355 backfill (C3, FWD-19).** After v2.0 item 5 admits the master, the existing backfill script
+   (`infra/aws/ec2/canonical-schwab-si2/sdd-backfill-08335338.ps1`, master parameterized or copied) runs from the earliest
+   roster inception among the master's accounts. Infrastructure under CLAUDE.md rule 13, placed with the AE lane by the
+   issuer's order; a never-widen act with halves.
+
+**Rules that do not move.** One master or source per call, never summed across sources or dates; prompt-like text in data
+stays data; no grant mutation from MCP; FWD-1 to FWD-13 are unchanged.
+
+**Acceptance (added to the matrix).**
+- A26 (FWD-14): the thread account's quarter under Alyssa's principal, beside its statement.
+- A27 (FWD-15): a unique key, a colliding key and a wrong-client key, each answered as item 4 says; last four alone refused.
+- A28 (FWD-16): two accounts' since-inception records recomputed from silver; the floor is the roster date.
+- A29 (FWD-17): one account-quarter's four buckets tied to Schwab's totals line; a missing-basis lot reads missing.
+- A30 (FWD-18): one Black Diamond Tax account beside one Schwab Tax account, same fields; a non-roster Black Diamond account
+  refused.
+- A31 (FWD-19): the backfill enumerate record; one pre-collection date answered.
+
+**Sign-off.** ENDPOINT (FWD-14 to FWD-19) and CONTRACTS (C2, C3, C4) change. The ratified-text half re-opens for
+`3.0.0_SA_CVO~Z`. The brief half: the brief is `4.0.0_SA_CRO~Z`'s, accepted as written by the CRO (rule 27, PROPORTIONATE
+SIGN-OFF).

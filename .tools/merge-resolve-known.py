@@ -88,22 +88,37 @@ def union_channel(base, ours, theirs):
     if any(p is None for p in parts):
         return None, 'a row id appears twice in one version'
     (bp, bs), (op, os_), (tp, ts) = parts
-    ok, pre = three(bp, op, tp)
+    # Trailing blank lines are the SEPARATOR between rows, not row content: the last row of a file gains one when a side
+    # appends after it (LGIC_BLANKFIX b55c75111d, 2026-10-08 22:52Z -- both sides "changed" row W4-S5 by a blank line).
+    # Compare and emit every part with its trailing newlines stripped, and join with exactly one blank line.
+    # Compare on the text with trailing whitespace stripped; EMIT each part's original bytes (base's when unchanged),
+    # adding a blank line only where a part does not already end with one, so a clean union stays byte-identical.
+    norm = lambda s: None if s is None else s.rstrip('\r\n')  # noqa: E731
+
+    def pick(b, o, t):
+        ok, v = three(norm(b), norm(o), norm(t))
+        if not ok or v is None:
+            return ok, None
+        for raw in (b, o, t):
+            if raw is not None and norm(raw) == v:
+                return True, raw
+        return True, v
+
+    ok, pre = pick(bp, op, tp)
     if not ok:
         return None, 'the preamble changed differently on both sides'
     bd, od, td = dict(bs), dict(os_), dict(ts)
     order = [i for i, _ in bs] + [i for i, _ in os_ if i not in bd] + [i for i, _ in ts if i not in bd and i not in od]
-    out = [pre or '']
+    out = [pre] if pre else []
     for i in order:
-        ok, v = three(bd.get(i), od.get(i), td.get(i))
+        ok, v = pick(bd.get(i), od.get(i), td.get(i))
         if not ok:
             return None, 'row %s changed differently on both sides' % i
         if v is None:
             continue
-        if out and not out[-1].endswith('\n'):
-            out[-1] += '\n'
-        if len(out) > 1 and not out[-1].endswith('\n\n'):
-            out[-1] += '\n'
+        if out and not re.search(r'\n[ \t\r]*\n$', out[-1]):
+            eol = '\r\n' if out[-1].endswith('\r\n') else '\n'
+            out[-1] = out[-1] + (eol if out[-1].endswith('\n') else eol + eol)
         out.append(v)
     text = ''.join(out)
     return (text if text.endswith('\n') else text + '\n'), 'section-union'

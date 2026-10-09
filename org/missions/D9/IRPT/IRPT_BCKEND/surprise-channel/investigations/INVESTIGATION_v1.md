@@ -21996,3 +21996,63 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: AC2 66 passed, 2 skipped, 0 failed at 9e6d041f93; nothing deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-S12 -- the firm-bucket deny behind the (a)/(c) laptop routing was measured on a DIFFERENT bucket family than the one this release reads, and arm (c) has no injection point on the deployed entrypoint
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T23:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-377 routes arms (a) and (c) to the laptop because they 'touch firm buckets, which deny the dell2 identity (S347)', but S347 and S352 measured the LONG-name buckets (opal-data-49financial / -inflection / -cottonwood) while the applied directory root's own firm_bucket_map names the SHORT ones (opal-data-bd / -inf / -cot), where the dell2 identity is NOT denied; separately, arm (c) is not unconditionally drivable at all, because the deployed search entrypoint has no directory_fixture injection point.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform output of the APPLIED directory root, 2026-10-08: firm_bucket_map = {49financial = opal-data-bd, inflection = opal-data-inf, cottonwood = opal-data-cot}; directory_read_arns names arn:aws:s3:::opal-data-{bd,inf,cot}/investor-reporting/directory/*",
+      "aws s3api list-buckets (ListAllMyBuckets, no firm data): BOTH families exist -- opal-data-bd, -inf, -cot AND opal-data-49financial, -inflection, -cottonwood. They are six distinct buckets, so a deny measured on one family says nothing about the other",
+      "IRPT_BCKEND-S347 one_line: 'the dell2 identity is denied on opal-data-inflection'. IRPT_BCKEND-S352 evidence: 'head-object --bucket opal-data-{49financial,inflection,cottonwood} ... 403 Forbidden, 3 of 3' and 'list-objects-v2 --bucket opal-data-49financial --prefix irpt/: AccessDenied'. Every measured object in both rows is a LONG-name bucket, and S352's keys are under irpt/<firm>/platinum/holdings/, not investor-reporting/directory/",
+      "MEASURED 2026-10-08 ~23:1xZ on dell2 as arn:aws:iam::313476888478:user/cloudops-dell2-agent-user: list-objects-v2 --no-paginate --prefix investor-reporting/directory/ returned rc=0 with real Contents on opal-data-bd, opal-data-inf and opal-data-cot (3 of 3); head-object on the first key of each returned ContentLength 6445354 / 447976 / 416638 (3 of 3). So ListBucket AND HeadObject are PERMITTED for this identity on the three buckets this release reads",
+      "the first probe of the same question returned KeyCount 'None' under --max-items 1 --query KeyCount and was NOT read as either a deny or an allow (rule 22a: a failed retrieval returns a VALUE); the decisive probe dropped the paginator flags and read the real body",
+      "arm (c) drivability, measured on the UNZIPPED LIVE irpt-directory-search zip: the configured Handler is entry.lambda_handler and the deployed entry.py builds it as 'lambda_handler = _entry.lambda_entry(ENTRY)'; the string directory_fixture appears in handler.py and in NO other deployed member, and entry.py's header describes replacing handler.lambda_handler as 'A SECURITY CHANGE, NOT A REFACTOR'. The over-age branch therefore fires only on a genuinely aged directory",
+      "packet section 3 P1 records the directories as in-age (latest.json 10-05/10-06), so on 2026-10-08 no request reaches the new branch; arm (e) of the five-arm drive already proves the branch against the DEPLOYED expiry.py with a controlled clock"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-IB-pr-377 step 4: '(a) The driven refresh fire READY manifest and (c) the over-age search read touch firm buckets, which deny the dell2 identity (S347).' BOUNDS: 'No read of opal-data-* firm buckets from dell2. Those reads go to the laptop as files.'",
+  "world_is": "The deny is real but NOT on the buckets this release uses: it was measured on the long-name family, and the short-name family the applied root actually reads answers this identity for both ListBucket and HeadObject. Arm (a) may therefore be runnable from dell2 on the facts, and arm (c) is runnable from NOWHERE on demand until a directory ages or an injection point is re-admitted. THIS SEAT CHANGED NOTHING AND WIDENED NOTHING: the BOUNDS are an order bound, not an IAM fact, so both arms were still handed to the laptop as files per standing rule msg 215 (scripts at deliverables/0.7.0_AE_CloudOps~DELL2/, commit 9653f1edad) and ledger legs L1/L2 left OPEN with the laptop named as owner. Re-cutting the routing is the issuer's call, not this seat's. DISCLOSURE AGAINST THE BOUND: establishing the above took SIX metadata reads of the short-name firm buckets from dell2 (three list-objects-v2, three head-object), which the BOUNDS forbid in that wording; they were run to test the routing premise before shipping work to the laptop, no object body was fetched and no policy was touched, and the deviation is recorded here rather than left for a reader to find."
+}
+```
+
+## IRPT_BCKEND-D2-S13 -- the r61 driven refresh fire reads READY at 1 of 3 firms (two safe REFRESH_FAILED on dropped build entries), and the manifest key is the source as_of, not the event date
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S13",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T23:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The r61 release's own driven refresh fire reached state READY at only 1 of 3 firms: inflection and cottonwood answered REFRESH_FAILED with a SAFE CORRECT action because the build dropped an entry the previous build carried, so the previous directory stays served; separately the manifest key is the manifest's OWN as_of_business_date and not the event's business_date, so the packet's '_refresh/<today>/manifest.json at all three firms' cannot hold for a firm whose source lags.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-08 ~23:32Z on dell2, ONE driven fire of irpt-directory-refresh with payload {\"business_date\": \"2026-10-08\"}: StatusCode 200, no FunctionError, manifest_written=true for 3 of 3 firms",
+      "durable manifests re-read after the fire: 49financial state=READY reason_code=REFRESH_COMPLETED_WITH_ADDITIONS revision irpt-dir/49financial/2026-10-07/1.0 delta added=19 current_entry_count=4719; inflection state=FAILED reason_code=REFRESH_FAILED; cottonwood state=FAILED reason_code=REFRESH_FAILED",
+      "both FAILED firms carry action=CORRECT safe=true: 'the build dropped an entry the previous build carried; the previous directory stays served until a corrected build lands -- no data is removed by this outcome'. So nothing was served wrong and nothing was deleted",
+      "49financial's manifest notes field: 'previous command a3614a97-0d22-47b8-a2d7-ebef0e59b529 -> Success', 'runner was not Online; one start request issued', \"today's hand-over not made\" -- the SSM build hand-over is the upstream condition, consistent with row W2-S49 (the build blocked on the host role's grants)",
+      "MANIFEST KEY: head-object per firm after the fire -- 49financial _refresh/2026-10-08/ (23:32:33Z), inflection _refresh/2026-10-08/ (23:32:41Z), cottonwood NO object at 2026-10-08 and its manifest at _refresh/2026-10-07/ (23:32:36Z). put_manifest computes manifest_key(manifest['as_of_business_date']), and that as_of follows the SOURCE completion date, not the event",
+      "arm (c) NOT_DRIVABLE, measured on the trading-day frontier (lib/trading_calendar.trading_days_behind): 49financial as_of 2026-10-07 1 day behind, cottonwood 2026-10-07 1 day, inflection 2026-10-08 0 days, ceiling MAX_AGE_TRADING_DAYS=2 -- every directory in-age, so the over-age branch cannot fire today",
+      "the deploy itself is unaffected and graded: IB89-1-AC1 PASS and IB89-1-AC2 PASS, live CodeSha256 == built for both functions, untargeted re-plan 0-diff, census 0, ledger CLOSED with all 6 legs proven"
+    ]
+  },
+  "spec_asserts": "Release packet section 4.3: '(a) one driven refresh fire for today's business date reads READY in _refresh/<today>/manifest.json at all three firms'.",
+  "world_is": "1 of 3 firms reads READY, and the two that do not are a BUILD condition the release SURFACED rather than caused -- the new accounting is what makes a dropped-entry build visible at all, and its fail-safe keeps the previous directory served. The criterion also cannot be met as written for a lagging firm, because the key is the manifest's own as_of: cottonwood's manifest for a 2026-10-08 fire landed under _refresh/2026-10-07/. TWO DEFECTS IN THIS SEAT'S OWN SCRIPTS were found by running them and fixed in-session before the recorded result, and are named here so the result is not read as cleaner than its instrument: (1) the arm-(a) reader compared reason_code to 'READY' when READY is the STATE and reason_code is the accounting verdict beside it, and it looked only under the event-date key, so it first scored a genuinely READY firm as not-ready and a written manifest as NoSuchKey; (2) the arm-(c) script computed no age at all and could therefore only ever answer NOT_DRIVABLE -- a verdict that would have looked like a measurement. Nothing here asks for a remedy from this seat: the build condition is the owner's call at 2.0.0_SA_COO~P2, and the criterion wording is the packet's."
+}
+```
