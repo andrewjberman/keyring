@@ -1528,5 +1528,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "The gate treats the literal 'transcripts' in a new source-map value as a hand-kept carrier and refuses the commit, so the shape cannot be copied whole for this system. Nothing in the three entries is lost for CI: source_dir, files, tf_file, tf_resource and iam_role are present. Pin note: outlook-global-transcripts-pull-lambda's last_deployed_commit is 8f82af62816ee2280ac820cb78168a07fc743fe7, the apply-1 code pin in ledger nfra-trnspt-c3-driven-positive-arm-20261007 (apply 2 at 2026-10-07T23:59:05Z changed WINDOW_DAYS only; live CodeSha256 VGIq85Xx... unchanged and equals the ledger's); the earlier mail-pull-schedule ledger names e3707e911f, which is the superseded code.",
     "notes": "Owner: the issuer or the naming-gate owner, to say whether a registry row should let 'pipeline' carry this system. This seat added nothing typed to get past the gate; it dropped the field."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T11:55:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (before the never-widen pair that applies aws_iam_role.silver_reader names a holder: decide whether the role's grant may include silver/research_meeting, or whether held-out text is wiped/blanked at the writer)",
+    "one_line": "A Research silver object carries held-out rows (>=1 residual wipe flag) with their text unwiped-to-clean; the only filter is reader-side (holdout.visible_rows), so a silver-only role reading S3 directly reads those rows' bytes.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/research_fold.py:_fold_one builds every row with 'text': b['text'] (the wipe_blocks output) and 'held_out': per_block[i] > 0; a held-out row's text is stored as-is, not blanked",
+        "data/transcripts/scripts/teams/holdout.py:visible_rows is the one filter: it drops held_out rows at read time and returns only a count; nothing at the writer or in the bucket enforces it",
+        "research_fold.write_all puts parquet under teams/transcripts/silver/research_meeting/..., a prefix the new silver_reader policy (readers.tf) grants s3:GetObject on (read of source files only; no S3 read made)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-r21: the silver-only role is the narrower reader; privacy for held-out rows is assumed to be held by silver content being wiped.",
+    "world_is": "The silver tier's wipe is not complete for held-out rows by design (TR-w-9: held out is the residual-flag case, filtered at the reader). The role built here, with its trust admitting nobody, is inert; once a holder is named it can read those rows' stored text through plain S3 GetObject, bypassing visible_rows.",
+    "notes": "Armed only in the sense that applying the role with a named holder widens who can read held-out text. This order applies nothing and the default trust admits nobody. The apply order's COO/CTO halves should read this row; the fix options are the issuer's (blank text where held_out at write, or exclude the research_meeting prefix from the grant)."
+  }
 ]
 ```
