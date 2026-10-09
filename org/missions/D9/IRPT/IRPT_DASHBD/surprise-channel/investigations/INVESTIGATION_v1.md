@@ -4743,3 +4743,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S4 -- Resolves and disarms D2-S3: 1.0.0_SA_CTO~DELL2 restored commit_or_etag "type": "string" @1f256cfc64
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_DASHBD-D2-S3. 1.0.0_SA_CTO~DELL2 restored \"type\": \"string\" on artifacts_produced[].commit_or_etag @1f256cfc64 (its row IRPT_BCKEND-D2-S52), an ancestor of box/dell2 HEAD (is-ancestor read). The proof-of-spec-check on IRPT_DASHBD.TO-DB-b-91's proof reads VALID again at HEAD, and the DB-b-91 AMENDMENT 1 commit that was refused now lands. origin/CLOUD carries the fix once the laptop integrator takes box/dell2 (MSTR msg 3384).",
+  "one_line": "D2-S3 disarmed: schema type restored @1f256cfc64; proof checks VALID again on dell2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1f256cfc64 HEAD (box/dell2)",
+      "MSTR~DELL2 msg 3384"
+    ]
+  },
+  "spec_asserts": "A proof check returns a verdict, never a tool error.",
+  "world_is": "The schema reads type string again at HEAD."
+}
+```
