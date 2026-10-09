@@ -86,6 +86,47 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Decomp hop 6 and the DQ-t-5 cell: a new Yahoo row in silver/historical_prices.parquet reaches a Cottonwood client's page through canonical_prices.parquet.",
     "world_is": "Even with S_00 scheduled and the Tier-2 objects landed, no Cottonwood page value changes: pages are fed from gold/canonical/holdings built from silver/holdings market_value. Hop 6 needs a consumer decision (which holdings are Yahoo-priced), not only a schedule."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W7-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~7",
+    "surfaced_at": "2026-10-09T01:23:44Z",
+    "one_line": "build_canonical_prices_v2.py accepts only --dry-run (no --upload; it always writes), so the S_00 ssm.tf step cannot pass \"$UPLOAD_FLAG\" ('--upload' would exit 2 on argparse); the step passes --dry-run under DRY_RUN and no flag otherwise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/cot/scripts/gold/build_canonical_prices_v2.py main(): add_argument('--dry-run') is the only argument; Step 6 uploads unconditionally",
+        "infra/aws/terraform/cot-pipeline/ssm.tf run_gold: UPLOAD_FLAG='--upload' (or '--dry-run' when DRY_RUN=true)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker face DQ-t-8 item 3: the S_00 line is run_gold S_00 build_canonical_prices_v2.py \"$UPLOAD_FLAG\" optional, if the script honours that form.",
+    "world_is": "The script does not honour --upload; the step uses an inline conditional emitting --dry-run only when DRY_RUN=true (still matches AC2's regex). Issuer to confirm at apply."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-W7-S2",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~7",
+    "surfaced_at": "2026-10-09T01:29:04Z",
+    "one_line": "Naming gate refuses the unchanged original literal silver/historical_prices.parquet at build_canonical_prices_v2.py:318 and the test's same literal; no compliant form exists without splitting, so the order is BLOCKED.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh on the repair: [naming-gate] NAMING REFUSE data/cot/scripts/gold/build_canonical_prices_v2.py:318 silver/historical_prices.parquet -> {source}/{scope}/silver/historical_prices.parquet; why: EXISTING and OUT-OF-PATTERN as S3Key in a surface remediations.json assigns to the live remediation ADVI_FIRMBKTS: REFUSE unless the diff removes it",
+        "safe-commit.sh on the repair: [naming-gate] NAMING REFUSE data/cot/scripts/gold/test_s00_missing_tier2.py:46 silver/historical_prices.parquet; why: NEW and OUT-OF-PATTERN as S3Key: REFUSE",
+        "line 318 is in load_historical_prices(), byte-identical to base 9c66868b3a (diff shows no change there); the file now touched trips the gate on a pre-existing literal"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling: restore both loaders byte-identical to base and handle the absent key at a _load_tier2() call site, commit passes the naming gate.",
+    "world_is": "Edits are complete in the worktree (uncommitted): both checks pass (S00-OK, SCHED-OK), proof VALID rc=0. The commit is refused by the naming gate for the original literal (a line not changed) and the test's literal. Not re-split. Needs an issuer decision (gate exemption for the existing literal, or an ADVI_FIRMBKTS-conformant key for the test)."
   }
 ]
 ```

@@ -4,12 +4,17 @@
 <issued_to>0.9.0_WK_MDPF_DEMQUE~7</issued_to>
 <issued_by>2.0.0_SA_COO~Q1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
 <placeholders>NONE</placeholders>
 <round>2</round>
+**SUPERSEDED** by `1.0.0_SA_CTO~DELL1` msg 1368 (2026-10-09 ~01:3xZ), on the issuer's REC (msg 1366): under the FWD-1 ruling (CTO adjudication
+`CTO_ADJUDICATION_MDPF_DEMQUE_20261009T0108Z.md`) MDPF_DEMQUE's store is the queue's own price store, not `canonical_prices.parquet`. The naming
+gate refuses any diff to `build_canonical_prices_v2.py` keeping its existing literal (surface of the live remediation ADVI_FIRMBKTS; row
+`MDPF_DEMQUE-D1-W7-S2`). The tolerant-load + optional S_00 step route to ADVI_FIRMBKTS as an input:
+`deliverables/2.0.0_SA_COO~Q1/ADVI_FIRMBKTS_INPUT_S00_TOLERANT_LOAD.patch`. Worker branch `wk-MDPF_DEMQUE-7` kept, not merged.
 **Directive:** D8 | **Fabric:** laptop (placement dell1) | **Decomp cell:** `DQ-t-8` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 2) |
 **outcome_ref:** FWD-1 | **depends_on:** none
 
