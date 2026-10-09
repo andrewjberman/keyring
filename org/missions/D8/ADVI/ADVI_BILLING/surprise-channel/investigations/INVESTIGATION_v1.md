@@ -415,3 +415,29 @@
   "world_is": "d08 asserts the empty entry's exact keys itself and withholds only those entries from the census grade. A durable fix is empty-list tolerance in the base differ (an empty list satisfies any element contract, as an empty map already does)."
 }
 ```
+
+## ADVI_BILLING-D2-W5-S1 -- The order says write to the builder's address, but the naming gate refuses the scope literal in a gateway file
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W5-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~5",
+  "surfaced_at": "2026-10-09T08:50Z",
+  "one_line": "The order says write to the builder's address, but the naming gate REFUSES a hand-kept copy of the scope segment in any committed gateway file, so the module takes the destination ROOT from the environment (ADVI_FEE_STATEMENT_S3_ROOT) and the deploy must set it from address() output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh naming limb output 2026-10-09: NAMING REFUSE site_to_s3.py (and a generated fee_statement_location.json) -- a NEW hand-kept carrier of the firm scope key outside every permitted context: read it through lookup(); .tools/naming-gate.py judge() at line 1720",
+      "app/gen_rivalfunds_location.py precedent does not transfer: its scope is not a carrier, and a generated file must be a lib/opal_naming.py generate target (naming-gate.py ~1851), which is outside this grant",
+      "the gateway host carries no lib/ (app/gen_rivalfunds_location.py docstring), so the module cannot call address() at run time"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-3 item 1: the module writes to EXACTLY lib/opal_naming.py address(<smartx>,<scope>,'bronze','fee_statement','quarter=<q>','<name>.xlsx'); 'read how the gateway imports the builder (or vendors it) and follow that'.",
+  "world_is": "The module holds no bucket or prefix literal. destination_root() reads ADVI_FEE_STATEMENT_S3_ROOT = the builder's address for the table without the partition, refuses (fail closed, before any Graph read) when it is unset or not shaped s3://<bucket>/<prefix>/bronze/fee_statement/, and appends only quarter=<q>/<sanitized name>.xlsx. The tests set the variable from address() and assert the written key equals the builder's full address. The issuer must set the variable at deploy from builder output (Terraform opal_name/address), the same step that adds the s3:PutObject grant; a configured value that is wrong is the one way the destination can differ from the builder, so the deploy proof should print the variable beside address()."
+}
+```
