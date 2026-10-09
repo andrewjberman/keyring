@@ -2601,3 +2601,57 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Z-S57 was disarmed on 10-06 but read open to the census; Z-S62 stays ARMED until r29 serves (its disarm)."
 }
 ```
+
+## NFRA_OPALAI-Z-S67 -- The held OA-t-1 r2 parent half (branch wk-NFRA_OPALAI-12, built 10-01) deletes two files that HEAD edited afterwards; merged at the cutover as it stands, it would drop those edits silently (PRD C11).
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S67",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T11:47Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~AI",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The held OA-t-1 r2 parent half (branch wk-NFRA_OPALAI-12, built 10-01) deletes two files that HEAD edited afterwards; merged at the cutover as it stands, it would drop those edits silently (PRD C11).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-tree --write-tree --name-only --messages HEAD wk-NFRA_OPALAI-12 at 11:4xZ: rc=1, CONFLICT (modify/delete) on .claude/skills/bbg-teams-assist/SKILL.md and org/tier0_utility/0.0.3_BG_BBGTerminal/refs/RELAUNCH.md",
+      "edits on HEAD since merge-base 1ee7b1a077: SKILL.md +32/-3 (16fb949b5b oid pin, 0c9fbd0876 read-path tenant field, ef8c4e57a1 SENDER GATE, 8773f12204 bounded Monitor); RELAUNCH.md +11/-5 (8dc1796e31 Teams pin by oid, P3 fence row retired)",
+      "git merge-tree HEAD wk-NFRA_OPALAI-11 (OA-t-3 parent half): rc=0, clean"
+    ]
+  },
+  "spec_asserts": "OA-t-1: code moves and is never copied; PRD C11: the cutover drops nothing silently.",
+  "world_is": "The move was made at 10-01. Five later commits changed the parent copies of two moved files; those edits exist only in the workspace, so a cutover merge that deletes the files loses them. Both branches are 15k commits behind HEAD. Disarm owner is the issuer: before the cutover merge, rule each edit as either PORTED into the opal_ai copy (a repair cell) or RETIRED with the BG launch (it binds only 0.0.3_BG_BBGTerminal), recorded per commit; then re-run the merge dry-run to rc=0 or a recorded resolution."
+}
+```
+
+## NFRA_OPALAI-Z-S68 -- The Analyst's Teams watcher pin --identity opalbloomberg (opal_ai c9983bd, skill :32 and RELAUNCH :57) matches no token record since the 10-08 reauth, so the Analyst's organic Teams serve dies at the arm; its copies also lack Andrew's 10-09 sender gate.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S68",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T11:58Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~AI",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The Analyst's Teams watcher pin --identity opalbloomberg (opal_ai c9983bd, skill :32 and RELAUNCH :57) matches no token record since the 10-08 reauth, so the Analyst's organic Teams serve dies at the arm; its copies also lack Andrew's 10-09 sender gate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C opal_ai grep -F -- '--identity opalbloomberg' c9983bd -- opal/agent: 3 hits (RELAUNCH.md:57, SKILL.md:32, SKILL.md:154); 'SENDER GATE' 0 hits; the oid 517aa5ee 0 hits",
+      "workspace commit 16fb949b5b (1.0.0_SA_CTO~Z, 2026-10-09): the name pin 'could never match: self_id() reads the token sub (<tid>/<oid>), and the token carries no preferred_username or upn'; the opal-gateway-bbg record's oid is 517aa5ee-...",
+      "f15.AC1 dry-run at c9983bd2ac: name pins left=3, skill oid pins=0, sender gate before ACK=no"
+    ]
+  },
+  "spec_asserts": "FWD-1: the released Analyst, running on its own, answers a named colleague's real question; prompt.md On launch step 2 arms the Teams engine with the identity pin.",
+  "world_is": "Step 1 (whoami) now runs unattended (Z-S65), but step 2's pin selects no token, so the watcher exits [TEAMS-IDENTITY-FAIL] rc=2 and no organic message is ever served. The deliberate step-4 run does not go through the watcher, so it is not blocked by this. Disarm: OA-f-15 (cut @ this issuance), drained and pushed to opal_ai DEV/PROD."
+}
+```

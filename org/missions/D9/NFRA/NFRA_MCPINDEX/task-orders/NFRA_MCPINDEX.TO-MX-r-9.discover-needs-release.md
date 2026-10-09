@@ -93,7 +93,33 @@ box/sitez's gateway tree also carries ADVI_BILLING E2's UNRELEASED gateway tool 
 - Row NFRA_OPLGTW-Z-W47-S2 lists 3 gateway suites already failing on box/sitez (not E2's). Read them as part of the
   BEFORE red, beside Z-S88.
 
-Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-AMX-S<k>` (next free k), fabric `site-z`,
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-09 ~11:4xZ; row Z-S90 by the applier, ruled Z-S91).**
+- **The `.env` key equality is a RULE, never a count.** Before == after, both read from the THEN-LIVE ref at the act. The
+  ANNOUNCE's 51 is void.
+  - Once r29 is live, the set is expected to be 52. It includes OG-md-1's `MAIL_SENDER_DOMAIN_TABLE`, which rides r29
+    and is present on both sides.
+  - E2's `ADVI_FEE_STATEMENT_S3_ROOT` must be ABSENT on both sides.
+  - The never-widen halves name the rule, and the count the applier reads at the act.
+- **The deploy script is the live ref's copy, cut by construction in the deploy-only tree.** box/sitez HEAD's also
+  carries OG-md-1's `rm -f .../mail_sender_domain_table.txt` line.
+- **Row ids:** `NFRA_MCPINDEX-Z-S<k>` (next free k), the grammar `.tools/surprise-row-gate.py` admits. The earlier
+  `Z-AMX-S<k>` is withdrawn.
+
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-09 ~12:0xZ; cause NFRA_OPLGTW-Z-S74 @3b20e9156f).** r29's deploy was halt-gate
+BLOCKED rc=3, "SERIAL RESOLVES TO NO KNOWN AGENT", from a SPARSE release worktree.
+- **Why:** `.tools/halt-gate-check.sh` `halt_gate_validate_serial` looks for the base's folder under
+  `${HALT_GATE_REPO_ROOT}/org/<tier>/` and the lane's inbox under `${HALT_GATE_INBOX_ROOT}/<base>/~<lane>`. Both read
+  the deploy tree's DISK, not its commit.
+- **Measured for you (12:0xZ, the shared checkout):** `org/tier2_senior/0.7.0_AE_CloudOps/` exists, and so does
+  `org/mcp/inbox/0.7.0_AE_CloudOps/~MX/`. You pass there.
+- **Ruling, inside this order:** when PHASE B's deploy runs from a linked or sparse tree, export
+  `HALT_GATE_REPO_ROOT` and `HALT_GATE_INBOX_ROOT` pointing at the SHARED checkout
+  (`C:/Users/Opal Bloomberg/Desktop/ajb_workspace`, and its `org/mcp/inbox`).
+  - The gate still runs, still scans your own inbox, and still fails closed.
+  - This is NOT `HALT_OVERRIDE` and you never use that.
+  - Print the gate's verdict line in your PHASE B record.
+
+Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 
 ## 2. BOUNDS

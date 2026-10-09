@@ -55,6 +55,14 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--dashboard-window') opt.dashboardWindow = true
   // --press "<label>" (repeatable, plain routes only): press that tab/radio/button by its exact label after the load, wait
   // for the page to settle (PRESS_SETTLE_MS), shoot and check; a DO_NOT_CLICK word is refused. For a chart behind a tab.
+  // --security-press <css> (repeatable, /security-analysis): after each --security name's overlay shot, press the first visible
+  // match and shoot the after-state (step <sec>-press-<k>). --window-press <css> (repeatable): on the Thesis tab open the
+  // Investment-thesis card, press the first visible match inside the dialog, read document.activeElement, shoot, Escape; one
+  // record per press in window-press.json. A target whose text matches DO_NOT_CLICK.test is refused (walker:press-refused);
+  // a missing target is walker:press-not-found. Read-only: the network guard is unchanged.
+  else if (a === '--security-press') (opt.securityPresses = opt.securityPresses || []).push(String(argv[++i] || ''))
+  else if (a === '--window-press') (opt.windowPresses = opt.windowPresses || []).push(String(argv[++i] || ''))
+  // both presses test DO_NOT_CLICK.test (walker:press-refused) and record walker:press-not-found; see windowPresses() and walkSecurityAnalysis()
   else if (a === '--press') (opt.presses = opt.presses || []).push(String(argv[++i] || ''))
   // --contrast-table (plain routes): every visible interactive control's (ground, ink) pair at rest, on hover and, where
   // the control says so (aria-pressed / aria-selected / aria-current), selected -- graded against SC 1.4.3. Run after the
@@ -529,6 +537,35 @@ async function waitForLoaded(page) {
 }
 const loadStates = []
 
+const windowPressRecords = []
+async function windowPresses(page, sec) {
+  step = `amgt ${sec} thesis window`
+  const card = page.locator('[data-thesis-card="investment_thesis"]').first()
+  if (!(await card.count().catch(() => 0))) { findings.push({ step, check: 'walker:press-not-found', claim: 'measured', observed: 'Investment-thesis card not found' }); return }
+  await card.click({ timeout: 4000 }).catch(() => {})
+  await settle(page, 1500)
+  await checks(page, `${sec}-Thesis-window`)
+  let k = 0
+  for (const css of opt.windowPresses) {
+    k += 1
+    const hit = page.locator('[role="dialog"]').locator(css).locator('visible=true').first()
+    if (!(await hit.count().catch(() => 0))) { findings.push({ step, check: 'walker:press-not-found', claim: 'measured', observed: `--window-press ${css}: no visible match in the dialog` }); windowPressRecords.push({ security: sec, css, pressed: false, focused: null, focused_in_view: null }); continue }
+    const txt = ((await hit.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim()
+    if (DO_NOT_CLICK.test(txt)) { findings.push({ step, check: 'walker:press-refused', claim: 'measured', observed: `--window-press ${css}: text "${txt.slice(0, 60)}" names a write word; not pressed` }); windowPressRecords.push({ security: sec, css, pressed: false, focused: null, focused_in_view: null }); continue }
+    const pressed = await hit.click({ timeout: 4000 }).then(() => true).catch(() => false)
+    await page.waitForTimeout(1500)
+    const f = await page.evaluate(() => {
+      const e = document.activeElement
+      if (!e) return { tag: null, id: null, data_thesis_passage: null, in_view: false }
+      const r = e.getBoundingClientRect()
+      return { tag: e.tagName, id: e.id || null, data_thesis_passage: e.getAttribute('data-thesis-passage'), in_view: r.top >= 0 && r.top < window.innerHeight }
+    }).catch(() => ({ tag: null, id: null, data_thesis_passage: null, in_view: false }))
+    await checks(page, `${sec}-Thesis-window-press-${k}`)
+    await page.keyboard.press('Escape').catch(() => {})
+    windowPressRecords.push({ security: sec, css, pressed, focused: { tag: f.tag, id: f.id, data_thesis_passage: f.data_thesis_passage }, focused_in_view: f.in_view })
+  }
+}
+
 async function walkSecurityAnalysis(page, route) {
   for (const subject of ['Chatter', 'Price']) {
     if (!timeLeft()) return
@@ -558,6 +595,19 @@ async function walkSecurityAnalysis(page, route) {
     const pickWait = await waitForLoaded(page)
     loadStates.push({ security: sec, step: 'overlay', state: pickWait.state, waited_ms: pickWait.waited_ms })
     await checks(page, `${sec}-overlay`)
+    let pk = 0
+    for (const css of opt.securityPresses || []) {
+      pk += 1
+      step = `amgt ${sec} security-press ${pk}`
+      const hit = page.locator(css).locator('visible=true').first()
+      if (!(await hit.count().catch(() => 0))) { findings.push({ step, check: 'walker:press-not-found', claim: 'measured', observed: `--security-press ${css}: no visible match` }); continue }
+      const txt = ((await hit.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim()
+      if (DO_NOT_CLICK.test(txt)) { findings.push({ step, check: 'walker:press-refused', claim: 'measured', observed: `--security-press ${css}: text "${txt.slice(0, 60)}" names a write word; not pressed` }); continue }
+      await hit.click({ timeout: 4000 }).catch(() => {})
+      await settle(page, 2500)
+      await waitForLoaded(page)
+      await checks(page, `${sec}-press-${pk}`)
+    }
     await walkTimelineDays(page, sec)
     await walkTimeline(page, sec)
     for (const tab of AMGT_TABS) {
@@ -568,6 +618,7 @@ async function walkSecurityAnalysis(page, route) {
       const tabWait = await waitForLoaded(page)
       loadStates.push({ security: sec, step: tab, state: tabWait.state, waited_ms: tabWait.waited_ms })
       await checks(page, `${sec}-${tab}`)
+      if (tab === 'Thesis' && (opt.windowPresses || []).length) await windowPresses(page, sec)
       await exploreScope(page, 'body', `${sec}-${tab}`)
       if (opt.deep) await pressAll(page, 'body', `${sec}-${tab}`, 10)
     }
@@ -1666,6 +1717,7 @@ try {
   for (const f of unique) counts[f.check] = (counts[f.check] || 0) + 1
   const doc = { schema_version: '1.1', tool: 'ui-walk', stamp, base: opt.base, routes: opt.routes, clients: opt.clients, minutes: +((Date.now() - t0) / 60000).toFixed(1), screenshots: shotN, raw_finding_count: findings.length, finding_count: unique.length, counts, guard_aborts: guard.length, telemetry_stubbed: stubbed, api_issues: apiIssues, console_errors: consoleErrors, drill_paths: drillPaths, findings: unique }
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
+  if (windowPressRecords.length) writeFileSync(path.join(OUT, 'window-press.json'), JSON.stringify(windowPressRecords, null, 1))
   if (loadStates.length) writeFileSync(path.join(OUT, 'load-states.json'), JSON.stringify(loadStates, null, 1))
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
