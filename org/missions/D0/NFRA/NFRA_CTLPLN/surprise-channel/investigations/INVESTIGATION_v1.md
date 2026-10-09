@@ -6500,3 +6500,82 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Interim route taken: MSTR resends, ~CT1 acks as moot, both sides close. Candidate fix for the next round: a `withdraw --id --reason` verb for the opener while state is OPEN, recorded as a fourth terminal state."
 }
 ```
+
+## NFRA_CTLPLN-S9109 -- crossbox-call.py send-pending runs bare 'bash' through subprocess, which Windows resolves to WSL bash in System32, so every send on a Windows box exits rc=1
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9109",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T18:20:00Z",
+  "one_line": "send_pending builds its default command as shlex.split('bash <agentbus-sqs.sh> send'); CreateProcess searches System32 before PATH, so 'bash' is WSL bash and fails 'execvpe(/bin/bash) failed' on every pass, although shutil.which('bash') reads Git bash -- the root cause of send-pending rc=1 beside a manual send rc=0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-call.py:388 cmd = shlex.split(os.environ.get(\"CROSSBOX_SEND_CMD\", \"\").strip() or \"bash %s send\" % ...) -- bare 'bash', no resolver.",
+      ".tools/git_bash_resolver.py:55 bash_argv(script, *args) exists for exactly this case (CLAUDE.md Git section).",
+      "0.0.0_AB_MSTR msg 108084, measured on the laptop: subprocess.run(['bash','-c','echo ok']) rc=1 with 'WSL (9 - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed'; XB-9ec5 and XB-0655 failed this way."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The manager's send-pending delivers every OPEN cross-box file on any box (CT-s-6).",
+  "world_is": "On a Windows box the default send command never reaches Git bash; only a manager who sets CROSSBOX_SEND_CMD to the full Git bash path gets a send through.",
+  "notes": "Interim route: 0.0.0_AB_MSTR runs send-pending with CROSSBOX_SEND_CMD set to the full Git bash path. Fix for the next round, one line: build the default argv with git_bash_resolver.bash_argv(agentbus-sqs.sh, 'send'). Pairs with S9108."
+}
+```
+
+## NFRA_CTLPLN-D1-S6 -- seat-liveness reads HUNG for a seat whose pending orders wait only on the issuer's dated read
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T18:28Z",
+  "one_line": "seat-liveness.py classed 0.7.0_AE_CloudOps~RV1 HUNG (2 open orders, nothing for 81m) when both applies were done and the orders stay pending only for the issuer's dated L2 read on 2026-10-10; the HUNG limb cannot tell owed work from an issuer-side wait.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-liveness.py at 18:24Z: 0.7.0_AE_CloudOps~RV1 HUNG orders=2 ETFS_RIVALS.TO-APPLY-WI1, TO-APPLY-WS2WS3, nothing for 81m",
+      "/unstick --peek 18:25Z: no approval prompt; last turn 'Re-armed. Holding quiet.'; inbox watcher running",
+      "2.0.0_SA_COO~V1 msg 2969: WS2WS3 live 14:48:39Z report @8ad8b51083 graded @b35333c714; WI1 live 15:22:10Z report @909e43668c graded @9301fbe5d0; pending only for AC2 + ledger L2 reads of the 2026-10-10 11:00Z and 13:00Z runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HUNG = alive by process, an open task order, nothing in 45 minutes: a seat that owes work and is not doing it (/govern Step 3a.2).",
+  "world_is": "An order whose remaining criteria are the issuer's dated reads leaves the executor idle by design; seat-liveness reads it HUNG and /govern would run /unstick on a healthy seat (the peek-first rule caught it here). Remedy for the owner: a carve-out for orders whose open criteria are issuer reads, or a dated-wait field the limb reads."
+}
+```
+
+## NFRA_CTLPLN-D1-S7 -- round-close-check counts only order-level judgment criteria; a graded never-widen pair condition reads judgment=0
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T18:38Z",
+  "one_line": "round-close-check.py (C-SEATS clause 7, cell CT-s-8) counts only order-level judgment criteria, so AMGT_RESAPP round 86's CVO grade of kk-3 condition 4 (a never-widen pair condition) is invisible and the round reads judgment=0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round86.md section 1 (cited by 1.0.0_SA_CTO~DELL1 msg 2989)",
+      ".tools/round-close-check.py header: NFRA_CTLPLN workstream SEATS, cell CT-s-8; contract C-SEATS clause 7",
+      "routed here because NFRA_GATSCP (which last built the tool) is CLOSED @45f5fc4fd9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A round may count finished only when every judgment it owes is graded by the CVO (C-SEATS clause 7).",
+  "world_is": "A pair-condition grade lives outside any order's criteria, so the tool neither requires nor sees it. Close (1.0.0_SA_CTO~DELL1): a pair-condition grade appears in the round's judgment count."
+}
+```

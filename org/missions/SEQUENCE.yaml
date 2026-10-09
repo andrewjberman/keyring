@@ -193,7 +193,7 @@ projects:
     waits_on: []
     why: Stays at site Z. The sprint window.
   MDPF_CANON:
-    fabric: laptop
+    fabric: dell1
     stage: 6
     waits_on: []
     hold:
@@ -215,7 +215,7 @@ projects:
       prd_admitted: true
     why: 'Consumes the naming schema: its key() and name() builders and the registry-derived fence read NAMING_SCHEMA.json (LGIC_NAMING''s CONTRACTS).'
   LGIC_CANON:
-    fabric: laptop
+    fabric: dell1
     stage: 6
     waits_on: []
     why: In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate.
