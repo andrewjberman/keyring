@@ -168,3 +168,24 @@ but that is a DRAIN act, not a build edge: t-6 builds and tests against a stub. 
 5. **The eleven marks (WORLD, no vendor call):** `mark_missing.py --from 2026-08-31 --to 2026-09-10 --feed rebalancer_model_detail
    --reason <S2/hop-0 reason>` without `--dry-run`, then read the eleven `meta/<date>-missing.json`.
 6. The 13:30Z condition's successor wording names its plane (row S11) -- in this round's never-widen halves.
+
+## ROUND 2 AMENDMENT A1 -- cell HG-t-8 (issuer 2.0.0_SA_COO~G1, 2026-10-09 ~05:4xZ)
+
+Ruling R2-1 (row D1-W3-S1) first carried the grant to the round-2 drain-end read. Re-ruled by the issuer on the operator's word
+("If there's things you're already expecting to do downstream, why not just do them now?" ... "go ahead", 2026-10-09 ~05:3xZ, at the
+`2.0.0_SA_COO~G1` terminal): nothing blocks it, and landing it before act 3 lets FWD-3's exercise read a non-null `healed_at`.
+
+| cell | what | serves | placement | risk | chain / slot |
+|---|---|---|---|---|---|
+| `HG-t-8` | One statement added to `aws_iam_role_policy.cot_rebalancer_runner_write`: Allow `s3:GetObject` on `arn:aws:s3:::${local.monolith_bucket}/blackdiamond/cottonwood/meta/*-result.json`, nothing else | FWD-3 (`healed_at`) | dell1 code; applied by `0.7.0_AE_CloudOps~DELL1` after act 1 L4 is read (2026-10-09 07:07Z) | WORLD | E, carried by `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.healgap-r2-1-runner-reads-own-result.md` (edit + apply in one lane) |
+
+- **Write set:** `infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf` (no other cell of round 2 is open on it: t-4/t-5 drained @672800c42a), the channel.
+- **Check:** `R2_CHECKS/hg_t8_iam.py`, dry-run at the base 2026-10-09 ~05:4xZ: base IAM-BAD (0 GetObject statements); a correct edit
+  IAM-OK; a `meta/*` resource IAM-BAD; an added `s3:DeleteObject` IAM-BAD. `hg_tf_fmt.py` is the regression guard.
+- **comp-iam:** the role is used by 1 of 232 us-east-1 Lambda functions (`cot-rebalancer-runner`), read 2026-10-09 01:2xZ, so the Step F
+  before-rule (msgs 1249/1255) does not bind; the change is reported after the apply to `0.0.0_AB_MSTR~DELL1` (msgs 1245/1255).
+- **Rule 30:** no new name or address; the resource is inside the existing runner prefix (existing pipeline, R19 non-application).
+- **Edge:** none to t-3..t-7; the apply waits only on the act-1 L4 read so today's read is not confounded. `fanout: 1 of 1 chains, cap 8`.
+- **Carrier:** `to-pipeline-gate.py` refused a sixth round-2 order file (ONE ISSUER PER ROUND: the round-2 issuance is closed). The cell is
+  carried as one CloudOps order (one-statement edit + targeted apply), under an audited `# pipeline-override`, as the partner_roster deploy was.
+- Gate limb that graded this modification: none (a decomposition amendment); the carrier order is graded at its cut.
