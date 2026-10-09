@@ -1004,3 +1004,21 @@ Round 47 is already issued, so the CTO's FWD-8 cell is cut in its own round.
 The tolerance is Andrew's word (open call 2f53, REC 0.35pp); this cell runs regardless.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~73`, cut from box/dell2.
+
+
+## 51. ROUND 49, WORKSTREAM B (2026-10-09 ~15:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 15, msg 3492, and ADDENDUM 13.2, msg 3501)
+
+Round 48 is MAY-CLOSE, and FWD-8 is NOT REALIZED: 197 DEFECT segments, and every reason is inferred.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-99` | E1, FWD-8: classifier threshold sensitivity, pre-registration, per-reason claim and robustness | LOCAL | DB-b-98 | B49-1 |
+| `DB-b-100` | E2, FWD-8: the 74 W73-S1 DEFECT segments -- a producer fix with a test, or a Black Diamond-side two-sided read | WORLD (producer floor) | DB-b-98 | B49-2 |
+| `DB-b-101` | E3, FWD-8: the 123 W73-S2 DEFECT segments -- the same | WORLD (producer floor) | DB-b-98 | B49-3 |
+| `DB-b-102` | E4, FWD-11: method_version from the firm's sources entry, never a default 2 (ADVI_COTBKF's CB-al-2 waits on it) | WORLD (producer floor) | DB-b-96 | B49-4 |
+
+**Shared write surface.** DB-b-100, DB-b-101 and DB-b-102 may each touch `account_return_daily.py`. They are cut in parallel and drained one at a
+time, each re-graded after the last drain. A conflict is resolved at the drain, by the issuer, in the worker worktree. Producer fixes ship later
+under their own pairs.
+
+**fanout:** 4 of 4 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~74` to ~77, cut from box/dell2.
