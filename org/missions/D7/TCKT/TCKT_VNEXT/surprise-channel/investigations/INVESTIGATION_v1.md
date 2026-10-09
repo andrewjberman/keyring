@@ -600,3 +600,31 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "notes": "Read-only calls only, from the worker's first test run and one probe, before the stand-in landed. No IAM or data effect. A box without credentials never saw this."
 }
 ```
+
+## TCKT_VNEXT-D2-S13 -- L9 workstream SA: SA-c1-AC2 MET, TO-APPLY-SA1 AC2 MET
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S13",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T05:21:38Z",
+  "one_line": "L9 workstream SA: SA-c1-AC2 MET -- the census N=117 (116 declared routes over 8 roots + the console-only $default) equals the live route count this seat read over every page at ~03:3xZ; each verdict cites its line, and the 3 it cannot resolve from source are named UNRESOLVED, not forced. TO-APPLY-SA1 AC2 MET -- live package = uploaded zip, the deployed lambda_function.py = the pin's bytes (21fe06e0), env 8 keys unchanged, unauthenticated POST 401, ItemCount 13, replan 0-diff; the plan's s3_object_version move is this module's pinned-artifact mechanics (same as F10's accepted plan).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D7/TCKT/TCKT_VNEXT/ledger/L8_PACKET.SA.md @8c48e44f64",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~6/SA_ROUTE_CENSUS.json",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/tckt_sa1/SA1_after_reads.json",
+      "this seat's live reads ~05:2xZ: opal-ticket-api CodeSha256 ywAvsfx/j3RT... (= the uploaded package), LastModified 2026-10-09T04:57:46Z, Successful, 8 env keys; git show 6e19a53535:infra/aws/lambda/ticket_center/lambda_function.py sha256 21fe06e0d46bbfe5... (= the deployed member)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_SA_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SA-c1-AC2 and TO-APPLY-SA1 AC2 (the two judgment criteria of workstream SA).",
+  "world_is": "Both met as written; notes in the grade file."
+}
+```
