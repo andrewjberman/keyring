@@ -30,7 +30,7 @@ Rule `method_r28` added split repairs in `commonwealth_daily_valuation.py`:
 - `apply_splits` at line 380;
 - `LAST_PLAN` at line 296 holds the last run's plan.
 
-On accounts **B3S728504 and B3S728506**, `method_r28`'s day values are 2.43-2.47x `method_r26`'s on EVERY valued day (row
+On accounts **acct#79d02c2c and acct#4a890dd1**, `method_r28`'s day values are 2.43-2.47x `method_r26`'s on EVERY valued day (row
 ADVI_COTBKF-D2-S45). Monthly returns still mostly match, because a constant factor cancels in a return. The served levels in
 `account_day_value` differ from r26 by that factor, and which level is right is unmeasured.
 

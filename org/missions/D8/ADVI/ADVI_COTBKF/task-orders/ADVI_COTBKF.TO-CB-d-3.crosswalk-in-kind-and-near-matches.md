@@ -25,7 +25,7 @@
 `CB-d-3`, FWD-8: "for each Commonwealth account, a person sees the matching current Cottonwood account, or a plain statement that it is not
 yet matched, and why." Round 3's crosswalk (`data/assets/scripts/silver/commonwealth_crosswalk.py`, read it first) scores an account only if
 its last activity is on or after 2026-04-22 (the start of current holdings history), so 758 rows read `CLOSED_BEFORE_CURRENT_HISTORY`
-without being scored -- including B3S775239, which left IN KIND on 2026-04-07 (row ADVI_COTBKF-W10-S4). CTO ruling 4: **score every in-kind
+without being scored -- including acct#a2618be7, which left IN KIND on 2026-04-07 (row ADVI_COTBKF-W10-S4). CTO ruling 4: **score every in-kind
 exit whatever its date**; and the near-matches (score at least 0.65 and below the 0.8 bar; 17 in round 3) are **NOT decided by a seat** --
 FWD-9's ACCEPT says a link is never guessed. They are listed for Andrew to put to Cottonwood, each with its two accounts and the evidence, and
 stay "not matched, awaiting a person". You prove it on the real tables into a LOCAL directory. You write NOTHING to S3.
@@ -59,7 +59,7 @@ and appears in the near-match list; a 0.85 score still matches.
 
 <criterion id="CB4d3-AC3" cell_refs="CB-d-3" judgment="true"/>
 `CB4d3-AC3` -- JUDGMENT, graded by `3.0.0_SA_CVO` at L9: the near-match list is readable by Andrew without the method and each entry's
-evidence is right; B3S775239's row now says what happened to it.
+evidence is right; acct#a2618be7's row now says what happened to it.
 
 <expected_criteria>CB4d3-AC1,CB4d3-AC2,CB4d3-AC3</expected_criteria>
 
@@ -92,7 +92,7 @@ FAIL). Instance at `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_
 validated with `python .tools/proof-of-spec-check.py <instance> CB4d3-AC1,CB4d3-AC2,CB4d3-AC3` BEFORE the flip.
 </proof_of_spec>
 
-**REPORT:** the `CROSSWALK` line against round 3's, the reason counts, the near-match count and three entries, B3S775239's row, commits;
+**REPORT:** the `CROSSWALK` line against round 3's, the reason counts, the near-match count and three entries, acct#a2618be7's row, commits;
 copy `near_matches.md` into your deliverables folder.
 
 ---
