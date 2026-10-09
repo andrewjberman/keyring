@@ -6527,3 +6527,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Interim route: 0.0.0_AB_MSTR runs send-pending with CROSSBOX_SEND_CMD set to the full Git bash path. Fix for the next round, one line: build the default argv with git_bash_resolver.bash_argv(agentbus-sqs.sh, 'send'). Pairs with S9108."
 }
 ```
+
+## NFRA_CTLPLN-D1-S6 -- seat-liveness reads HUNG for a seat whose pending orders wait only on the issuer's dated read
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T18:28Z",
+  "one_line": "seat-liveness.py classed 0.7.0_AE_CloudOps~RV1 HUNG (2 open orders, nothing for 81m) when both applies were done and the orders stay pending only for the issuer's dated L2 read on 2026-10-10; the HUNG limb cannot tell owed work from an issuer-side wait.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-liveness.py at 18:24Z: 0.7.0_AE_CloudOps~RV1 HUNG orders=2 ETFS_RIVALS.TO-APPLY-WI1, TO-APPLY-WS2WS3, nothing for 81m",
+      "/unstick --peek 18:25Z: no approval prompt; last turn 'Re-armed. Holding quiet.'; inbox watcher running",
+      "2.0.0_SA_COO~V1 msg 2969: WS2WS3 live 14:48:39Z report @8ad8b51083 graded @b35333c714; WI1 live 15:22:10Z report @909e43668c graded @9301fbe5d0; pending only for AC2 + ledger L2 reads of the 2026-10-10 11:00Z and 13:00Z runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "HUNG = alive by process, an open task order, nothing in 45 minutes: a seat that owes work and is not doing it (/govern Step 3a.2).",
+  "world_is": "An order whose remaining criteria are the issuer's dated reads leaves the executor idle by design; seat-liveness reads it HUNG and /govern would run /unstick on a healthy seat (the peek-first rule caught it here). Remedy for the owner: a carve-out for orders whose open criteria are issuer reads, or a dated-wait field the limb reads."
+}
+```
