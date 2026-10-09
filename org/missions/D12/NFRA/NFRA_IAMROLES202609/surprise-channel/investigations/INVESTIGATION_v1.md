@@ -1325,3 +1325,31 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
 }
 ]
 ```
+
+## Z-S20 -- the issuer routes Z-W13-S1 / Z-W13-S2 (two other pipelines' failures found in passing) and carries S1 into v-4 as its baseline
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S20",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-09T09:50:37Z",
+    "one_line": "Issuer's disposition of Z-W13-S1 and Z-W13-S2 (both ARMED, disarm_owner this seat): both are defects OUTSIDE this project, found while v-3 searched for a candidate; this project fixes neither, and neither holds the round. S1 is carried into v-4 as the failing baseline its outcome is read against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W13-S1 and Z-W13-S2 name 2.0.0_SA_COO~ZI as disarm_owner.",
+    "world_is": "S1 (smartx-assets-daily-pull raised DirtyRunError on 30 of 30 daily runs, 2026-09-09..2026-10-08) belongs to the smartx pipeline's owner; this seat's only exposure is v-4's outcome read, and NEVER_WIDEN_ROUND5_FWD5_NARROWING_COO_HALF.md names that baseline so a failed run is not misread as a break (the F1-F3 discriminators decide). S2 (DynamoDB table opal-etfs-ownership-daily deleted 2026-08-07, etfs-canon-fanin failing every run) belongs to the ETFs pipeline's owner; v-3 rejected that candidate for it. Both are routed to 1.0.0_SA_CTO~Z, the site-Z fabric CTO, with the never-widen pair request for v-4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W13-S1 and Z-W13-S2 as drained @76c5f426ca",
+        "ledger/NEVER_WIDEN_ROUND5_FWD5_NARROWING_COO_HALF.md section 'Both branches', the baseline paragraph"
+      ]
+    },
+    "notes": "Cites Z-W13-S1, Z-W13-S2. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```
