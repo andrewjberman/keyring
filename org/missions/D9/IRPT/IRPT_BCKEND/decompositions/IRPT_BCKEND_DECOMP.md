@@ -2402,3 +2402,19 @@ Workers come from ~P's agreed block ~260..~299 (~M2 msg 2557, ~Y2 msg 2560). Che
 
 fanout: 2 of 2 chains, cap 8, reason: independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~260 and ~261. The FWD-14 deploy is a never-widen
 pair after the cell.
+
+## 92. ROUND 99, WORKSTREAM ~P (2026-10-09 ~06:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2690 via ~V2 msg 2691)
+
+IB-pr-390 (385+387 release packet, under AMENDMENT 1) holds two of the eight served.py hosts out:
+- irpt-holdings: parity gate, row W201-S5;
+- irpt-narrative: TypeError on the new served.py, row W201-S6.
+
+The CTO orders their fix and release as the next cell, because IRPT_ANLREQ FWD-1's seat run starts only when every route reads ONE. The
+cell branches from IB-pr-390's code pin (@74a62fb46c), so it builds on the new served.py. Round 98 is drained (@1aad66a284); IB-pr-392 (H1
+withdrawn) is complete @f8b570d0f4. Check `deliverables/2.0.0_SA_COO~P2/checks/r99/p99_held_hosts.py`: AC1 and AC2 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-394` | irpt-narrative TypeError + irpt-holdings parity gate fixed, restaged, release packet | FWD-2 | WORLD | IB-pr-390 code pin @74a62fb46c | P99-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell, two hosts on the same served.py. Assignee: 0.9.0_WK_IRPT_BCKEND~262.
