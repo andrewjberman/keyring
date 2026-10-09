@@ -244,11 +244,19 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
     Investigation-file rows: only a CVO-kind author counts (a doer's own surprise rows name criteria all the time and are
     not grades); a CVO-kind doer is a self-grade."""
     pat = re.compile(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(crit_id))
+    # A generic id (AC3) is a substring of every order's AC3 and of any check-script name (rl9.AC3.sh): the row must
+    # also name THIS order (its to_id or the short id after "TO-"), or a stale row from another round grades it.
+    short = order["id"].split(".TO-", 1)[-1]
+    order_pat = None
+    if re.fullmatch(r"AC\d+[a-z]?", crit_id):
+        names = [re.escape(order["id"]), "TO-" + re.escape(short)] + ([re.escape(short)] if re.search(r"[A-Za-z]", short) else [])
+        order_pat = re.compile(r"(?<![A-Za-z0-9])(?:%s)(?![A-Za-z0-9])" % "|".join(names))
     doers = {base_of(order["issued_by"]), base_of(order["issued_to"])} - {""}
     self_hit = None
     for source, rows in (("adjudication", adj_rows), ("investigation", inv_rows)):
         for _path, row in rows:
-            if not pat.search(json.dumps(row)):
+            text = json.dumps(row)
+            if not pat.search(text) or (order_pat and not order_pat.search(text)):
                 continue
             who = author_of(row)
             if not who:
@@ -418,6 +426,19 @@ def selftest() -> int:
         case("all present is MAY-CLOSE", run(), "orders=2", "judgment=1", "graded=1", "ungraded=0", "self_graded=0", "verdict=MAY-CLOSE")
         reset(where="investigation")
         case("a CVO-kind row in the investigation file grades", run(), "graded=1", "verdict=MAY-CLOSE")
+        # A generic id (AC2): a CVO row naming AC2 only through another object (rl9.AC2.sh) must not grade this order.
+        reset()
+        w(base + "/task-orders/TEST_PROJ.TO-1.one.md", order.replace("T1-AC2", "AC2"))
+        w(base + "/deliverables/0.9.0_WK_TEST_PROJ~1/TEST_PROJ.TO-1.one.proof_of_spec.json", json.dumps(
+            {"to_id": "TEST_PROJ.TO-1", "acceptance": [
+                {"criterion_id": "T1-AC1", "status": "PASS"},
+                {"criterion_id": "AC2", "status": "UNVERIFIABLE-BY-INSTRUMENT", "judgment": True}]}))
+        stale = {"id": "TEST_PROJ-C-S9", "surfaced_by": "3.0.0_SA_CVO", "evidence": ["checks/rl9.AC2.sh re-run: PASS"]}
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([stale]))
+        case("a generic AC id named only by another object does not grade", run(), "graded=0", "ungraded=1", "verdict=REFUSED")
+        stale["adjudicates"] = "TEST_PROJ.TO-1 AC2"
+        w(base + "/surprise-channel/adjudications/ADJUDICATION_v1.md", "```json\n%s\n```\n" % json.dumps([stale]))
+        case("a generic AC id with the order named grades", run(), "graded=1", "verdict=MAY-CLOSE")
         reset(seen=NOW - 100000)
         case("a CVO seat gone stale is ABSENT", run(), "reviewer=ABSENT", "verdict=REFUSED")
         reset(proof=False)

@@ -4,8 +4,8 @@
 {
  "project": "COMM_ASSIST",
  "directive": "D9",
- "fabric": "laptop",
- "prd_version": "v0.2",
+ "fabric": "site-z",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md@779f5428bc",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4"],
