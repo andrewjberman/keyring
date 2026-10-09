@@ -22306,6 +22306,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A citing row, not an edit of Z-S369: its standing is the CVO's to move. The sentence the row should carry until the word: 'ICT_US_Equity is named INTL CONTAINER TERM SVCS INC from the stored Bloomberg row; the IDVZ holding is the same security by its stored identifier; whether it stays a key apart from ICT_PM_Equity is not decided.' Carried to the next round's owner with the project's move to DELL1."
+},
+{
+  "id": "AMGT_RESAPP-D1-W315-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~315",
+  "surfaced_at": "2026-10-09T02:32:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "BLOCKING",
+  "one_line": "AMENDMENT 1 asks for a filings folder reading 0 failed, but lib/research/filings/tests/test_section_coverage.py::test_one_section_lists_the_other_as_not_covered fails once section_coverage._WANTED['20-F'] carries business; that test file is not in the order's paths.",
+  "spec_asserts": "Order dd-1 AMENDMENT 1: make _WANTED['20-F'] equal the producer's table, change nothing else in section_coverage.py, and the whole filings test folder reads 0 failed.",
+  "world_is": "With _WANTED['20-F'] = [business, risk, mdna] (edited, fitz stubbed on PYTHONPATH so test_no_analyze's subprocess imports): 191 passed, 1 failed. test_wanted_table_equals_the_producers now PASSES. test_one_section_lists_the_other_as_not_covered (test_section_coverage.py:41-46) plants a 20-F source with keys=('risk',) and asserts not_covered == [('mdna', ...)] only; with business wanted, not_covered is business then mdna, so the left side carries one more item. The assertion encodes the old two-key 20-F table. Fix is one expectation line in a test file the order's <paths> does not grant, so it was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/tests/test_section_coverage.py:41-46 on branch wk-AMGT_RESAPP-315",
+      "pytest lib/research/filings/tests/ (fitz stub) last line: 1 failed, 191 passed in 12.25s",
+      "lib/research/filings/section_coverage.py _WANTED['20-F'] edited by this worker's commit on branch wk-AMGT_RESAPP-315"
+    ]
+  },
+  "notes": "Without a fitz stub on PYTHONPATH test_no_analyze.py::test_battery_import_reaches_no_analyze_module also fails (it runs a subprocess importing document.py -> fitz); that one is the box's missing PyMuPDF, not this change. Candidate fix for the issuer: grant test_section_coverage.py and change the expectation to [('business', 'Item 4.B. Business Overview'), ('mdna', ...)]."
 }
 ]
 ```
