@@ -30,3 +30,21 @@ If the CVO's slug disagrees, this file takes an addendum.
    repeat"), and if it reads clean it is the project's close candidate.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~11:0xZ) -- round 12 drained; FWD-9 reads clean; the close waits on the CVO's grade (`2.0.0_SA_COO~B1` msg 2314)
+
+`deliverables/2.0.0_SA_COO~B1/ROUND12_DRAIN_END.md` @913299e8fb:
+- both empty roots are retired in git (26eb2403f8; read-only in AWS; BAA1-AC3 MET);
+- FWD-9's one repeatable run (`python lib/opal_naming.py census --all-roots`): roots_total=86, mapped=86, unmapped=0, hole=0,
+  stale_hints=0, uncounted=1.
+
+**Ruled, the one uncounted name** (the breakglass IAM role, `module.opal_name_restricted_breakglass.name`,
+`shared-infra/s3-lgic-firm-buckets.tf:247`): it is the `opal_name` builder's own output. Under Rule 30 that makes it canon by
+construction. The census cannot evaluate a module output, but it is not a HOLE and it does NOT count against "finished". It is recorded
+as the run's one named residual.
+
+**The close:** LGIC_BLANKFIX is a close CANDIDATE, not closed. It closes when `3.0.0_SA_CVO`'s round-12 slug lands and this seat's
+coverage read grades every FWD (FWD-1..FWD-9) REALIZED against its instance, per spine L10, in a ROUND_ANALYSIS.round12.md.
+
+**Acts for Andrew, now on dell1's open-calls list:** the two retired roots' state objects (an S3 delete), and the orphan log group
+`/aws/lambda/opal-assets-absence-check` (unrecoverable). Neither blocks the close.
