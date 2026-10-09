@@ -2299,3 +2299,30 @@ OVER_AGE. Check `deliverables/2.0.0_SA_COO~P2/checks/r93/p93_cells.py`: AC1, AC2
 | `IB-pr-381` | writer census; runner carry + source_client_ids; previous state = served directory; one release packet for 380 + 381 | FWD-7 | WORLD | IB-pr-380 (PASS, drained) | P93-a |
 
 fanout: 1 of 1 chains, cap 8, reason: (a) gates (b)-(c), and one release covers both. Assignee: 0.9.0_WK_IRPT_BCKEND~189.
+
+## 87. ROUND 94, WORKSTREAM ~P (2026-10-09 ~02:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 2151 and 2128)
+
+IB-pr-381 (round 93) is graded 3/3 PASS under AMENDMENT 1 and drained @93e31749b4. Its findings:
+- the served directory has 1 writer, the runner;
+- the served directories already lost the entry, so a per-firm seeding run is needed (row S1).
+
+Both halves of the ONE release are GIVEN: COO @8323d3fb19 and CTO @f0a2f049f7, with conditions:
+- no seeding concurrent with a scheduled fire;
+- the replay re-run on the real artifacts;
+- S71 shown red at base;
+- 49financial's first landing read.
+
+S4 (the runner should refuse to land a build that drops an entry still in the source) is ruled yes, as a cell AFTER this release. CTO
+msg 2128 separately gives ~P the three production custody ports for release 6 (contract @859ae01405); ~M2 builds port 2 and ~Y2
+wires release 6. The directory release stays first in ~P's order.
+
+Checks: `deliverables/2.0.0_SA_COO~P2/checks/r94/p94_cells.py` (IB94-1, AC1-AC3 FAIL at base) and `.../r94/p94_release_cells.py` (IB94-2,
+AC1-AC2 FAIL at base).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-383` | apply the ONE directory release (refresh 6eOFTopG + runner bundle 2e3e6648), seed inflection and cottonwood, after-read READY 3/3 | FWD-7 | WORLD | IB-pr-380, IB-pr-381 (drained); both halves | P94-a |
+| `IB-pr-382` | production custody ports current_selection, interpret_source, validate_evidence + read set for release 6 | FWD-8 / CUSTDY E2a | WORLD | none (port 2 ~M2, installer ~Y2 in parallel) | P94-b |
+
+fanout: 2 of 2 chains, cap 8, reason: independent chains (directory release; custody ports). Assignees: 0.7.0_AE_CloudOps~DELL2 (383),
+0.9.0_WK_IRPT_BCKEND~190 (382). The S4 refuse-drop cell is cut after 383 lands.

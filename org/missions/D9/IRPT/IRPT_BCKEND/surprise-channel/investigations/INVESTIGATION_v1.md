@@ -22277,3 +22277,164 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Admission is proven (release 3: RESOLVING -> NORMALIZED); the actor and owner as stored are not yet read back. Disarm: release 5 (TO-APPLY-Y72) after-read 4 returns all three booleans true before any delete; this row then closes GRADUATED."
 }
 ```
+
+## IRPT_BCKEND-D2-S18 -- release 5's served upload dies on a RetentionPolicy.reference arity mismatch, which the symbol closure and the import census both structurally cannot see; branch B executed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S18",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T01:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Release 5 carries a REAL served regression that neither of its two gates can see: the analysis-input-upload operation dies with 'RetentionPolicy.reference() takes 3 positional arguments but 4 were given' and answers public UNEXPECTED, so read 4 fails and branch B fired; the symbol closure passes because every NAME resolves and the import census passes because every module IMPORTS -- an arity mismatch is a CALL-TIME property and is invisible to both.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 on dell2, release-5 bytes (4HEH1aDN) live: TWO direct-invoke on-behalf template uploads, corr-38577d44df00 at 01:48:08Z and corr-a2900f1b38cd at 01:49:52Z, each logged {\"event\":\"irpt_internal\",\"exception_text\":\"RetentionPolicy.reference() takes 3 positional arguments but 4 were given\"} followed by {\"event\":\"irpt_error\",\"operation\":\"analysis-input-upload\",\"public_reason_code\":\"UNEXPECTED\"}",
+      "POSITIVE CONTROL: after the branch-B rollback to Un0wVZqj, the IDENTICAL invoke at 01:53:10-01:53:13Z (RequestId c6c9507f-5fb8-4290-b392-e9a35cd55a5b) logged NO irpt_internal and NO irpt_error -- 15 events read over a 7-minute window with the denominator printed. The arity error appears on release 5 and does not appear on the rolled-back bytes, so release 5 is the cause",
+      "BOTH OF THIS RELEASE'S GATES PASSED ON THE SAME BYTES: symbol_closure.py on the uploaded zip read modules=62 pairs=273 missing=0 PASS, and the import census read modules 62, failed {} -- twice. Neither is wrong; they answer different questions. The closure proves every imported NAME exists; the census proves every module IMPORTS. An argument-count mismatch at a call site is neither, and only running the operation surfaced it",
+      "the release's three changed members are custody_submission.py, composition.py and repository.py, where composition.py and repository.py are the E9 modules round 71 STAGED into the package to fix row D2-S16. RetentionPolicy.reference is the signature at issue, so the fix for the import gap introduced a call-signature gap in the same area",
+      "NOTHING WAS ADMITTED: the operation answered UNEXPECTED with no upload_id, which by uploads.py's path is a refusal BEFORE uploads.create, so no retention, artifact, UPLOAD# or NORMALIZATION# row and no resolve_upload message. That is DERIVED FROM THE ERROR, not independently verified -- a direct read of irpt-requests from dell2 is AccessDenied on kms:Decrypt (the standing limit, CTO 107133 / ADDENDUM 3), so confirming the absence is the laptop's read",
+      "the synthetic test filer was put for read 3, read back active, and DELETED with a consistent get-item reading NOT FOUND, both before and after this arm",
+      "BRANCH B EXECUTED per the order's step 9: re-promoted nA7hze1zlQfF55Q05.Vxr4E3v8kCE7HW as 0JwTG2RprPYoLoRmFUXJREfiGKlERII3, targeted apply from a plan reading 0 to add 1 to change 0 to destroy, live re-read Un0wVZqj, Active, Successful"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-APPLY-Y72 step 5 read 4: the on-behalf admit's first answer is RESOLVING with an upload_id, and 'Read 4 FAILS only if the first answer is a refusal or has no upload_id'. The CTO half's conditions name the symbol closure on the uploaded zip and the import census as the gates.",
+  "world_is": "Read 4's first answer was a refusal (public UNEXPECTED) with no upload_id, twice, so read 4 FAILS by the criterion's own wording and branch B is the correct and executed outcome. The important part is not the bug but the GAP IT REVEALS IN THE GATE SET: this release was built with two new pre/post-apply gates added specifically because release 4 shipped a broken import, and both passed on bytes whose served operation cannot run. Name resolution and import success are necessary and not sufficient; the only instrument that caught this was invoking the operation. Note also that the earlier HALT (msg 2056) was RIGHT that release 5 had a served problem and WRONG about which one -- it cited svc Cottonwood NOT_AUTHORIZED, which is E5's pre-existing 'must name the firm advisor' refusal, while the actual regression is this arity error on analysis-input-upload. A correct instinct with a mis-attributed cause is still worth separating, because the rescind that followed restored bytes that were in fact broken. The fix is a code decision for the owning seat: reconcile RetentionPolicy.reference's signature with its caller across the staged composition.py/repository.py pair, and consider an arity or signature check on the packaged call graph beside the existing closure."
+}
+```
+
+## IRPT_BCKEND-D2-W189-S1 -- The served directory has already lost the removed entry at both firms (inflection since the 2026-10-06 build, cottonwood
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W189-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~189",
+  "surfaced_at": "2026-10-09T01:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule whether the one-time seeding run is signed and its blast radius), then the applier (2.0.0_SA_COO~P2 routes it); before cottonwood's OVER_AGE on 2026-10-12",
+  "one_line": "The served directory has already lost the removed entry at both firms (inflection since the 2026-10-06 build, cottonwood since 2026-10-07), so a runner that carries from the served directory restores nothing; terminated_count 1 with the entry served needs one reconciling runner run per firm from the last accounted-completion build.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live reads (AWS, this session): inflection latest.json names 2026-10-08/directory.json (294 entries), which lacks the dropped client key; the 2026-09-25 build (292 entries, the last accounted-completion build) holds it. Cottonwood latest.json names 2026-10-07/directory.json (269 entries), which lacks it; 2026-10-05 (270 entries) holds it. The runner landed a build on every 09:40 ET fire from 2026-10-06 regardless of the refresh verdict (IB93-1_directory_writers.json).",
+      "Replay on the real inputs through the BUILT runner bundle (deliverables/0.9.0_WK_IRPT_BCKEND~189/IB93-1_release_replay.json, runner arms): previous = the served directory -> carried 0 keys at both firms (landed 294 and 269 entries, no marked entry); previous = the last accounted-completion build via --previous-key (inflection 2026-09-25, cottonwood 2026-10-05) -> carried 1 key (1 entry at inflection, 2 entries at cottonwood), landed 295 and 271 entries, the built refresh READY with terminated_count 1.",
+      "Refresh replay on the real bucket state: the built refresh over the UNSEEDED served artifacts is REFRESH_FAILED for a 2026-10-08 fire (the artifacts state no source_client_ids yet) and, for a fire dated 2026-10-09, READY with terminated_count 0 at inflection (served directory as previous state, 0 additions): no false additions, and no entry restored."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-381 steps (b)/(c) and AC3: the runner lands the previous SERVED directory's source-removed entries TERMINATED, the previous state is the served directory, and on both firms' real inputs the built release is READY with terminated_count 1 and the entry carried in the landed directory.",
+  "world_is": "The rule is built as ordered and proven by tests, but on the real inputs the served directory no longer holds the entry, so the ordered rule carries nothing at either firm. AC3's 'carried in the landed directory' is reachable only with an input the order did not name: I added `--previous-key <dated directory.json>` to the runner (one firm per run), and the replay's `built` arm is that seeded run. A scheduled run after the release will land the same directory as today without the entry; the after-read (terminated_count 1 AND the entry present in the served directory) needs ONE seeding runner run per firm (a WORLD act writing the dated directory.json and latest.json of two firms; rollback by S3 version, recorded in the packet). The packet carries it as Branch A step 2 for a ruling; nothing was run."
+}
+```
+
+## IRPT_BCKEND-D2-W189-S2 -- test_refresh_previous_state.py arm (ii) of the W2-S57 mutant test pinned `previous_entries() is None` for a previous man
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W189-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~189",
+  "surfaced_at": "2026-10-09T01:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "test_refresh_previous_state.py arm (ii) of the W2-S57 mutant test pinned `previous_entries() is None` for a previous manifest without a directory_key; rule (c) makes that case read the served directory, so the assertion was changed on purpose.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/directory/tests/test_refresh_previous_state.py::test_the_mutants_previous_manifest_reproduces_row_w2_s57s_exact_symptom failed at the first run after the rule landed: the mutant's previous_manifest has no directory_key, so previous_entries() had nothing to fetch (None) before the rule.",
+      "After the change the arm asserts the served fallback (previous_entry_count 3, added 0) and still reproduces the old symptom when there is no served directory (no pointer: previous_entries() None, compute_delta(None, ...) added == every entry). The directory suite is otherwise unchanged and passes."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-381 (c): the previous state is the served directory; and the refusal clause: never weaken a test.",
+  "world_is": "An existing test asserted the exact behaviour the order overturns. I kept its input and its discrimination of the mutant, and changed what it asserts for the one case the rule changes; the symptom it guarded is closed at this layer by the fallback and remains reproducible without a served directory. The change is in the same commit as the rule and is visible in its diff."
+}
+```
+
+## IRPT_BCKEND-D2-W189-S3 -- AC2's 'the whole G/tests suite passes' cannot be met at this base: tests/test_holdings_rearm_trigger.py::test_rearm_trig
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W189-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~189",
+  "surfaced_at": "2026-10-09T01:26Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (amend AC2's whole-suite clause, stating the gate limb, or route the S71 guard to its holdings owner)",
+  "one_line": "AC2's 'the whole G/tests suite passes' cannot be met at this base: tests/test_holdings_rearm_trigger.py::test_rearm_trigger_live is a LIVE guard that already fails (S71 ARMED), with none of this order's files touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run at base 2c1f4f425d before any edit: `python -m pytest -q -p no:cacheprovider tests` in data/assets/scripts/gold/investor_reporting -> 1 failed, 341 passed. Run at the pin: 1 failed and the rest passing (the same single failure; the extra passes are this order's new runner tests).",
+      "The failure text: 'S71 ARMED: irpt-holdings-snapshot is ENABLED while bundle(s) irpt_holdings_49f, irpt_holdings_cot, irpt_holdings_inf lack a repo file the runner opens: infra/logic/registry/legacy_addresses.json' -- the guard reads the schedule state and the served standalone holdings bundles live, and probes the repo runner's opened files.",
+      "p93_cells.py AC2 runs `pytest tests` whole and requires rc 0; the issuer's dry-run recorded 0 of 342 selected at base and did not surface the failing 342nd."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-381 AC2: both suites pass whole.",
+  "world_is": "The runner suite cannot pass whole while a live holdings guard, outside this order's paths and unrelated to the directory, is red. I did not touch, skip or deselect it (the refusal clause). The new `terminated_carry_forward` tests and every other test pass; the directory suite passes whole. AC2 grades FAIL on the whole-suite clause until the guard is cleared (a holdings bundle mint carrying legacy_addresses.json) or the issuer amends the clause."
+}
+```
+
+## IRPT_BCKEND-D2-W189-S4 -- The runner lands a build even when a previous client is missing from it while still in the source (a build fault); the r
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W189-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~189",
+  "surfaced_at": "2026-10-09T01:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule whether the runner refuses a landing with held_in_source > 0)",
+  "one_line": "The runner lands a build even when a previous client is missing from it while still in the source (a build fault); the refresh can only judge it afterwards, and not at all on the first fire after a gap longer than its 10-trading-day window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Replay, negative arm (the dropped key put back into the source only): the built runner lands 294 and 269 entries with held_in_source 1 and carries nothing (the ordered 'NOT carried'), i.e. the faulty build is landed to the served directory; the built refresh over it is REFRESH_FAILED at cottonwood and at inflection for a 2026-10-08 fire, but READY with terminated_count 0 for an inflection fire dated 2026-10-09 (its previous state is the served directory, which is the landed artifact itself).",
+      "IB93-1_directory_writers.json: the verdict never gates the artifact (the refresh has no PutObject on directory.json or latest.json), so the served directory carries whatever the runner landed. That is why the served inflection 2026-10-08 build lacked the entry while every verdict was REFRESH_FAILED."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-381 (b): an entry in the source but missing from the build is NOT carried (the negative arm); CTO msg 1959: it stays REFRESH_FAILED.",
+  "world_is": "Built as ordered: not carried, and the refresh fails it when it has an older accounted build to compare with. Left alone, a build fault at a firm can still reach the served directory (the runner does not refuse), and out of window the refresh compares the landed artifact with itself. Whether the runner should refuse to land when held_in_source > 0 is a design call I did not make; it would stop the directory advancing on a build fault."
+}
+```
+
+## IRPT_BCKEND-D2-W189-S5 -- Three bounded costs of the release that the order did not name: the dated directory.json grows by about 7 percent, 49fin
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W189-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~189",
+  "surfaced_at": "2026-10-09T01:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Three bounded costs of the release that the order did not name: the dated directory.json grows by about 7 percent, 49financial's source keys were proven on a constructed frame only, and a first-ever landing for a firm with no served pointer is refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Size (replay, real inputs): inflection served 566,643 bytes -> seeded landing 603,479 (+36,836, +6.5 percent); cottonwood 538,204 -> 578,745 (+40,541, +7.5 percent). source_client_ids is 1,026 and 1,081 opaque keys. The search readers read directory.json per request through latest.json, so the extra bytes are read per request.",
+      "49financial: its source needs the assumed principal irpt-49f-directory-read-role; sts:AssumeRole is AccessDenied for this seat (cloudops-dell2-agent-user), so source_raw_keys_49f ran only on a constructed frame (tests). The runner therefore guards the computation: unreadable keys omit the field (the refresh reads UNKNOWN and fails closed) and the landing proceeds only when no previous client is missing; otherwise it is refused (two tests).",
+      "read_previous_served raises when the pointer read fails for any reason other than NoSuchKey/404. The host role has no s3:ListBucket on the destination, so a missing key arrives as 403 (row W2-S50's finding) and a brand-new firm's first landing would be refused as 'unreadable'. No such firm exists today (the three firms all have pointers)."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-381 BOUNDS: the minimum code that works.",
+  "world_is": "The release is correct on the replayed firms. These three are consequences to know about at sign-off, none armed today."
+}
+```

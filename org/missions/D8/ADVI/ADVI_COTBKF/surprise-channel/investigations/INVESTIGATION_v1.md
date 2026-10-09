@@ -2679,3 +2679,29 @@ round.** Never edit an existing row.
   "world_is": "Both met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-W49-S1 -- FWD-3 local daily-returns file grades 1,685 MATCH, not the 3,098 reported; nothing served
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W49-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~49",
+  "surfaced_at": "2026-10-09T02:08:35Z",
+  "one_line": "CB-z-3 FWD-3: the only daily-returns file on this box (.scratch/advi_cotbkf/fwd3/daily_returns.parquet, 2026-10-08 01:27) grades MATCH 1,685 of 82,593 months, not the 3,098 the round-25 real run reports; no daily-returns table is in Opal's store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_monthly_grade.py --returns .scratch/advi_cotbkf/fwd3/daily_returns.parquet: MONTHLY-GRADE months=82593 match=1685 diff=1931 ungradable=78977",
+      "aws s3 ls s3://opal-data-assets/commonwealth/cottonwood/silver/: 8 tables, none daily returns",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~49/ENDPOINT_READ_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order expects FWD-3's instrument to read the method_r25 grade (MATCH 3,098 of 82,593 per round 25).",
+  "world_is": "The returns file the instrument can read is older than or built differently from the method_r25 run; this worker did not rebuild it (a rebuild writes the local data dir and needs the price caches), so the FWD-3 row reports 1,685 as measured and the 3,098 as unreproduced. The grade is NOT either way: the daily series is not served and 78,977 months are ungradable."
+}
+```

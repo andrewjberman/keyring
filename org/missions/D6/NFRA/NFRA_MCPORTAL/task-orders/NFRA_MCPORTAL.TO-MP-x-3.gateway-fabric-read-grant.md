@@ -38,7 +38,9 @@ relayed as msg 32030:
 
 Build and apply, in order:
 1. **`infra/aws/terraform/opal-gateway/mcportal_fabric_read.tf` (new).** It holds ONE `aws_iam_role_policy`,
-   `gw_mcportal_fabric_read`, with name `"${var.name}-mcportal-fabric-read"` (that is, `opal-gateway-mcportal-fabric-read`)
+   `gw_mcportal_fabric_read`, with name `"gateway-mcportal-fabric-read-policy"` -- a LITERAL, the output of
+   `lib/opal_naming.py name('gateway', None, 'mcportal-fabric-read', 'policy')` (AMENDMENT 1, row Z-S21), the same form as the
+   two MCPORTAL policies already on this role in `mcportal_grant_writer.tf`
    and role `aws_iam_role.gw.id`. It has two statements:
    - `s3:GetObject` on `arn:aws:s3:::opal-313476888478-globgrph/fabric/activity/v1/*` and `.../fabric/open-calls/v1/*`;
    - `s3:ListBucket` on `arn:aws:s3:::opal-313476888478-globgrph`, with the condition `StringLike` `s3:prefix` =
@@ -55,7 +57,7 @@ Build and apply, in order:
 3. **Preflight.** Run `comp-iam gaps` and record its output in the ledger entry.
 4. **Rollback, named before the act.** Because the policy is new, the rollback is a targeted destroy of
    `aws_iam_role_policy.gw_mcportal_fabric_read`, or `aws iam delete-role-policy --role-name opal-gateway-role
-   --policy-name opal-gateway-mcportal-fabric-read`. Write both into the ledger entry.
+   --policy-name gateway-mcportal-fabric-read-policy`. Write both into the ledger entry.
 5. **NEVER-2 ledger, on THIS branch, in this order.**
    - Run `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-r4-fabric-read-grant`. The legs are: plan,
      apply, read-back.
@@ -92,7 +94,7 @@ Read, never write: `infra/aws/terraform/opal-gateway/main.tf`, `secrets-iam.tf`,
 `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round4/checks/`.
 
 Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md`, with id
-`NFRA_MCPORTAL-Z-A7-S<k>` (the next free k for A7). `disarm_owner` on an ARMED row is `2.0.0_SA_COO~MP`. Rows are
+`NFRA_MCPORTAL-Z-S<k>` (the next free seat-row k; AMENDMENT 1: `A7` is not in the id grammar). `disarm_owner` on an ARMED row is `2.0.0_SA_COO~MP`. Rows are
 append-only.
 
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the close commit)
@@ -130,7 +132,7 @@ and 32035) say "cut the cell under our pair".
 - no write, no other bucket prefix, and no other resource;
 - `graph-read.tf` changes in comments only;
 - no served output moves.
-Rollback per key: `aws iam delete-role-policy --role-name opal-gateway-role --policy-name opal-gateway-mcportal-fabric-read`.
+Rollback per key: `aws iam delete-role-policy --role-name opal-gateway-role --policy-name gateway-mcportal-fabric-read-policy`.
 
 The bucket reads at the cut were SSE-S3 with no bucket policy, so no KMS grant is needed. Checks dry-run at base
 202c512520:
@@ -138,6 +140,13 @@ The bucket reads at the cut were SSE-S3 with no bucket policy, so no KMS grant i
 - AC2 FAILS (3 of 6; the three positive arms read implicitDeny, and the three negative arms already read implicitDeny,
   so the positive arms are the discriminators);
 - AC3 FAILS (the file is absent).
+
+**AMENDMENT 1 (2026-10-09 ~03:1xZ, the issuer, on row Z-S21):**
+- safe-apply's naming plan limb refused `opal-gateway-mcportal-fabric-read`, and AC1 pinned that name.
+- Ruled option (a): the name becomes the builder's `gateway-mcportal-fabric-read-policy`, as a literal. AC1's lookup moves
+  with it. This needs no override and no law change.
+- Row ids move from the illegal `A7` coordinate to `Z-S<k>`.
+- Row Z-S21's option (c), the commit limb RAISEing a name the apply limb then refuses, stays on the row for the gate's owner.
 
 <status>pending</status>
 <round>5</round>
