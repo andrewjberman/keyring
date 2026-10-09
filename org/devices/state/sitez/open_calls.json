@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-08T23:17:59Z",
- "written_by": "1.0.0_SA_CTO~O",
+ "written_at": "2026-10-09T04:38:09Z",
+ "written_by": "1.0.0_SA_CTO~Z",
  "rows": [
   {
    "id": "sitez-20261008T165918Z-97ab",
@@ -651,6 +651,183 @@
     }
    },
    "closed": null
+  },
+  {
+   "id": "sitez-20261009T011758Z-107a",
+   "project": "AMGT_RESAPP",
+   "subject": "May the issuer run ABNB's model-block Bloomberg pull (one call, under its own never-widen pair) in the next round? Carried twice, rounds 78 and 79. REC yes, in the first round after the DELL1 move, pair drafted first",
+   "asked_by": "2.0.0_SA_COO~Z",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round79/DRAIN_END_PACKET.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T01:17:58Z",
+   "kind": "fork",
+   "scope": {
+    "measured_at": "2026-10-09T01:17:58Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "lib/research/api/scoped_amgt.py overlaps the write set of AMGT_HARVST placed on dell1 (lib/research/api/scoped_amgt.py)",
+      "infra/aws/terraform/harvest overlaps the write set of AMGT_HARVST placed on dell1 (infra/aws/terraform/harvest)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/harvest declares amgt-global-freshness-snapshot-daily, amgt-global-freshness-snapshot-scheduler-policy, amgt-global-freshness-snapshot-scheduler-role (+13), also declared by root infra/aws/terraform/harvest named by AMGT_HARVST on dell1"
+     ],
+     "shared": [
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/filings/drafting_build.py is on the shared branch (lib)",
+      "lib/research/filings/tests is on the shared branch (lib)",
+      "lib/research/drafting is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T02:07:59Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_014xZ_RESAPP_BBG_ASKS_VIA_BACKFILL_QUEUE_NO_UNBLOCK_NEEDED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T01:25:38Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "Bloomberg call: Andrew's per-use word (CLAUDE.md vendor rule); REC yes, one model-block pull for ABNB under its own pair, run on site Z"
+   }
+  },
+  {
+   "id": "sitez-20261009T011759Z-493c",
+   "project": "AMGT_RESAPP",
+   "subject": "May one Bloomberg identity read of 'ICT US Equity' (ID_ISIN, ID_SEDOL1, ID_BB_GLOBAL, EXCH_CODE) decide whether ICT_US_Equity and ICT_PM_Equity are one key or two (row Z-S369/Z-S377)? REC yes, folded into the ABNB pull's pair so it costs one sign-in",
+   "asked_by": "2.0.0_SA_COO~Z",
+   "source": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round79/reads/Z_S369_ICT_POOL_READ.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T01:17:59Z",
+   "kind": "fork",
+   "scope": {
+    "measured_at": "2026-10-09T01:17:59Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest",
+     "infra/aws/terraform/yang-pipeline",
+     "infra/aws/terraform/nfra-agentbus-alyssa01",
+     "infra/aws/terraform/seeking-alpha"
+    ],
+    "evidence": {
+     "paths": [
+      "lib/research/api/scoped_amgt.py overlaps the write set of AMGT_HARVST placed on dell1 (lib/research/api/scoped_amgt.py)",
+      "infra/aws/terraform/harvest overlaps the write set of AMGT_HARVST placed on dell1 (infra/aws/terraform/harvest)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of AMGT_HARVST placed on dell1 (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/harvest declares amgt-global-freshness-snapshot-daily, amgt-global-freshness-snapshot-scheduler-policy, amgt-global-freshness-snapshot-scheduler-role (+13), also declared by root infra/aws/terraform/harvest named by AMGT_HARVST on dell1"
+     ],
+     "shared": [
+      "lib/research/api/scoped_amgt.py is on the shared branch (lib)",
+      "lib/research/filings/drafting_build.py is on the shared branch (lib)",
+      "lib/research/filings/tests is on the shared branch (lib)",
+      "lib/research/drafting is on the shared branch (lib)",
+      "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
+      "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T02:08:00Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_014xZ_RESAPP_BBG_ASKS_VIA_BACKFILL_QUEUE_NO_UNBLOCK_NEEDED.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T01:25:39Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "Bloomberg call: Andrew's per-use word (CLAUDE.md vendor rule); REC yes, one 4-field identity read of ICT US Equity, run on site Z"
+   }
+  },
+  {
+   "id": "sitez-20261009T041311Z-0266",
+   "project": "NFRA_OPALAI",
+   "subject": "Push opal_ai DEV and PROD de5ce25fa3 -> 8cdc7b9735 (launcher gives the Analyst a first prompt) REC yes",
+   "asked_by": "2.0.0_SA_COO~AI",
+   "source": "org/tier1_exec/2.0.0_SA_COO~AI/drive_log_20261009T04Z_opal_bloomberg.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T04:13:11Z",
+   "kind": "fork",
+   "context": "Row Z-S63: the Analyst idles at launch because launcher.ps1 passes no first prompt. OA-f-9 A2 fixed it (one line, AC4 PASS, local r2-dev 8cdc7b9735). The launcher pulls PROD, so the fix reaches the Analyst only after the push; the push is MSTR~Z's on Andrew's word.",
+   "rec": "yes: fast-forward, one file, one line, issuer re-graded; without it every launch needs a typed first turn",
+   "scope": {
+    "measured_at": "2026-10-09T04:13:11Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".claude/skills/bbg-teams-assist/SKILL.md is on the shared branch (.claude)",
+      ".tools/hooks/bg-concierge-gate.sh is on the shared branch (.tools)",
+      ".tools/hooks/tests/test_bg_concierge_gate.sh is on the shared branch (.tools)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T04:38:09Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_043xZ_SELF_DRIVE_60M_SITEZ_NFRA_AND_PUSHES_NEED_NO_ANDREW.md",
+    "crossbox": null,
+    "ruled_by": "andrew",
+    "xadj": null
+   },
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T04:16:49Z",
+    "by": "1.0.0_SA_CTO~Z",
+    "reason": "Shared-branch push (org/XXX.md SHARED-BRANCH LAW: DEV/PROD pushed only by 0.0.0_AB_MSTR~Z on Andrew's word); REC yes: one-line fast-forward de5ce25fa3->8cdc7b9735, AC4 PASS on r2-dev, the Analyst launcher pulls PROD"
+   }
   }
  ]
 }

@@ -9313,3 +9313,61 @@ fanout:
   egress: ee-4 only (SEC EDGAR + one model call per name; open under law edit 4d77a9c3ea); no Bloomberg call in any order
   portal_ref: 8d2a08a9 (origin DEV at the cut; ee-5's GO re-reads it)
 ```
+
+## 90. ROUND 82 -- THE 20-F CUTTER REPAIR, THE STORE HALF UNDER A FOUR-WRITE PAIR, THE FWD-18 WALK, UNVGY'S REASON AND FEED MENTIONS, THE TIMELINE PRICE SERIES, THE PRINT LINE ONCE, REDEPLOY. Seven orders
+
+**Input:** the CTO~DELL1 round-81 analysis `ledger/ROUND_ANALYSIS.round81.md` @284169f039 (R1-R2, enrichment items 1-5). Grounded in
+`deliverables/2.0.0_SA_COO~R1/round82_prep/` (GROUP_CUT_NOTES @57ab64a630; GROUP_API_NOTES; GROUP_PRINT_NOTES).
+
+### 90a. MEASURED AT THE CUT
+
+- **Cutter:** on the five real stored 20-F filings (cached, no fetch) the merged cutter cuts 6 of 15 cells: ASML and PBR (integrated
+  reports) nothing; NU risk ("A. Risk Factors" in the body); SAP business ("ITEM 4. INFORMATION ABOUT SAP"). r82_cut AC1 NO, AC2 YES.
+- **UNVGY:** the served forecast reason is the false "pulled before C-MODEL-FORECASTS" text; every gap is per-period.
+- **Feed:** AMD 22, BA 75, NVDA 117 items, none with mentions; gold rows carry mention_count.
+- **Timeline:** no price series; stored price history under bloomberg/harvest/bronze/price_history_px_last (95 tickers), read only from
+  integrations/; the role already reads the prefix.
+- **Print:** the PDF header says "date not stored with this figure" on 10-11 of ~21 lines per name; rich text 0.
+- **Site Z:** 1.0.0_SA_CTO~Z is down for the reboot (msgs 1924, 1933): gg-1's merge (a site-Z producer path) waits for its half.
+
+### 90b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-gg-1` | the 20-F cutter cuts each filing's own headings (R1) | `~323` | worker | LOCAL (merge: site-Z deploy) | `filings/document.py`, its test | FWD-18 (through gg-2) |
+| `AMGT-gg-2` | the store half under a four-write pair, ASML NA first | `~324` | worker | WORLD | four keys per name; ledger | FWD-18 |
+| `AMGT-gg-3` | the FWD-18 walk on ASML NA | `~325` | worker | LOCAL (a read) | own deliverables | FWD-18 (CVO AC3) |
+| `AMGT-gg-4` | UNVGY's reason + feed mentions | `~326` | worker | LOCAL | `api/scoped_amgt.py`, one test | items 3, 4b, through gg-7 |
+| `AMGT-gg-5` | a per-day price series on the timeline | `~327` | worker | LOCAL | new `price/price_history.py`, `harvest/timeline_api.py`, one test | item 4a, through gg-7 (wiring line: issuer) |
+| `AMGT-gg-6` | the print line said once | `~328` | worker-light | LOCAL | `print/render_pack.py`, one test | item 4c, through gg-7 |
+| `AMGT-gg-7` | the redeploy (gg-4, gg-5, gg-6) | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | Lambda artifact, ledger | items 3, 4a-c |
+
+**Not cut:** FWD-16 (Andrew's 2026-09-15 hold); the R2 tooling rows D1-S7 and D1-S9 (0.0.0_AB_MSTR~DELL1 carries them to their owners;
+D1-S8 fixed by the CTO @2be72692dd).
+
+### 90c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: enrichment items 1-4 + R1. Item 1 -> gg-1; item 2 -> gg-2, gg-3; item 3 -> gg-4; item 4a -> gg-5; 4b -> gg-4;
+  4c -> gg-6; serving -> gg-7. Uncovered: FWD-16.
+- **(ii) Same grain:** one module or one act per cell; gg-4 joins two fixes because both edit `scoped_amgt.py`.
+- **(iii) Intent:** gg-4 is the round's only writer of `scoped_amgt.py` (gg-5's one wiring line is the issuer's at the merge).
+- **(iv) What a cell does NOT move:** gg-1 moves no 10-K or fixture cut (AC2) and writes nothing; gg-2 writes four keys per name and
+  deletes nothing; gg-3 is read-only; gg-4 moves only the reason sentence and adds `mentions`; gg-5 adds `price_series` only when a
+  loader is passed; gg-6 moves only the header's date phrase; gg-7 moves the function's code.
+- **Write sets:** gg-1, gg-4, gg-5, gg-6 are disjoint files. 0 overlaps.
+
+### 90d. EDGES AND FAN-OUT
+```
+gg-1 --> gg-2 --> gg-3
+gg-4, gg-5, gg-6 --> gg-7
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 2
+  wave_0: [gg-1 ~323, gg-4 ~326, gg-5 ~327, gg-6 ~328]   # 4 roots, cap 8
+  wave_1: [gg-7 0.7.0_AE_CloudOps~RA1 (staged: gg-4/5/6 drained + wiring + pair), gg-2 ~324 (staged: gg-1 merged under 1.0.0_SA_CTO~Z + pair)]
+  wave_2: [gg-3 ~325 (staged: gg-2's ASML NA YES)]
+  merge_hold: gg-1 (document.py: 1.0.0_SA_CTO~Z's half; that seat is down for the site Z reboot)
+  no_s3_deletes: true
+  egress: gg-2 only (SEC EDGAR + one model call per name); no Bloomberg call in any order
+```

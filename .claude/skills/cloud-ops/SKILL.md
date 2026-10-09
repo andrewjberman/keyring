@@ -15,7 +15,7 @@ You are operating in a pre-approved cloud-ops profile. The wildcards in `.claude
 - `terraform *` (any binary path: `.tools/terraform.exe`, `terraform`, `terraform.exe`) — plan, apply, refresh, init, import, state ops
 - `.tools/*` — full canonical set (the wildcard covers all; named for reference):
   - **Compiler tools**: `comp-blast`, `comp-pipescript`, `comp-iam`, `comp-routes`, `comp-transform`, `comp-cache`, `comp-validate`, `comp-platinum`, `comp-pii`, `comp-trace`, `comp-build`, `comp-registry sync`
-  - **Commit + deploy discipline**: `safe-commit.sh`, `safe-apply.sh`, `safe-deploy.sh`, `safe-ec2-deploy.sh`, `commit-gate.sh`, `halt-gate-check.sh`, `record-terraform-deploy.sh`
+  - **Commit + deploy discipline**: `safe-commit.sh`, `safe-apply.sh`, `safe-deploy.sh`, `safe-ec2-deploy.sh`, `commit-gate.sh`, `halt-gate-check.sh` (and `infra/aws/lambda/ci/record-terraform-deploy.sh`, which is NOT under `.tools/`)
   - **Misc**: `jq`, `terraform.exe`, `git-hooks/install-*.sh`
 - EC2 lifecycle ops via SSM (`aws ssm send-command`, `aws ssm get-command-invocation`, `aws ssm list-commands`)
 - S3 list / cp / sync via Bash and PowerShell
