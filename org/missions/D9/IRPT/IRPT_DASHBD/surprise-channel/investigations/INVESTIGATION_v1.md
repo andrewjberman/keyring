@@ -4822,3 +4822,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "world_is": "The schema reads type string again at HEAD."
 }
 ```
+
+## IRPT_DASHBD-D2-W68-S3 -- Resolves IRPT_DASHBD-D2-W68-S2: schema fix 1f256cfc64 is an ancestor of the worker branch via merge beaa8bc8a6
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T14:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-D2-W68-S2. Schema fix 1f256cfc64 reached branch wk-irpt-dashbd-45-68 via merge commit beaa8bc8a6 (is-ancestor read, rc 0); proof-of-spec-check on the TO-DB-b-93 proof now prints VALID (rc=0).",
+  "one_line": "W68-S2 resolved: schema fix 1f256cfc64 merged into the worker branch @beaa8bc8a6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1f256cfc64 HEAD -> rc 0 at beaa8bc8a6",
+      "proof-of-spec-check TO-DB-b-93 proof -> VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "A proof check returns a verdict, never a schema-caused INVALID.",
+  "world_is": "With the fix merged, the proof check returns VALID."
+}
+```
