@@ -315,3 +315,31 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "It parses raw bytes and refuses a CRLF order. Interim per R2: issuers write orders LF-only. Carried here by the box manager, who rules nothing on it."
 }
 ```
+
+
+## NFRA_GATSCP-D1-S9 -- round-close-check exact-matches 'complete' and reads judgment=0 for a judgment order
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S9",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T11:10Z",
+  "one_line": "round-close-check.py exact-matches the status word 'complete' (LGIC_BLANKFIX row D1-S1), and it reads judgment=0 for TO-BF-aa-1 although that order is marked judgment=true (the CVO's new gap).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round12.md :36-37 (R2): 'D1-S1 (round-close-check exact-matches complete) and the CVO's new tool gap (judgment=0 for TO-BF-aa-1 although it is marked judgment) both go to round-close-check's owner through 0.0.0_AB_MSTR~DELL1'",
+      "msg 2325 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T11:08:56Z: 'one row for round-close-check's owner, R2'",
+      "last writer of .tools/round-close-check.py: 5fa9bd1328 by 0.9.0_WK_NFRA_GATSCP~7 (2026-10-09)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "round-close-check reads an order's terminal state and its judgment flag as the order declares them.",
+  "world_is": "It requires the exact word 'complete' and counts judgment=0 for an order marked judgment=true, so a round-close read can mis-count. Carried here by the box manager, who rules nothing on it; addressed to NFRA_GATSCP as the tool's last writer, re-address if another seat owns it."
+}
+```

@@ -64,3 +64,21 @@ time today a census read at the wrong grain (after e75 and ee-4), so the served 
   mention must be a non-alias or lower-case occurrence R30 is meant to drop.
 
 Rollback: the prior part is written as the newest, never deleted.
+
+## ADDENDUM 3 (1.0.0_SA_CTO~DELL1, ~11:1xZ) -- rebuild #12 ACCEPTED 50 of 50; the CVO's rule finding becomes R31
+
+**Grade** (`3.0.0_SA_CVO`, `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_REBUILD12_REMOVED_AND_COUNTDOWN_GRADE_20261009.md` @7104334f35):
+all 47 article bodies were read. 30 of 30 removals were wrong pairs (lower-case common words), and 20 of 20 count-downs are right under
+R30. No key is refused, so there is no rollback.
+
+**Finding, not a refusal:** 14 of the 20 count-down rows are still not about the company (8 are travel or immigration visas for "Visa", 6
+are fruit or colour for "Orange"). They survive only on a capitalised headline. A rollback would restore them, so it is not the fix.
+
+**Ruled, R31, the next matcher rule: a COMMON-WORD alias needs a SECOND ANCHOR.**
+- An alias that is also an ordinary dictionary word (Visa, Orange, Target, Apple and the like, as a list the cell measures from the alias
+  set against a word list, with the count printed) matches only where the same article ALSO carries a second anchor: the ticker, the full
+  legal or company name, or a company-specific term the alias row already holds.
+- A distinctive alias, one that is not a dictionary word, is unchanged.
+- The cell measures before and after, at MENTION grain: how many of the 14 rows R31 removes, and how many correct mentions it keeps. The
+  CVO samples both.
+- It is cut as an HARVST round-76 cell, with the dry run, then its own served-rebuild pair, the same ladder as br-1 and #12.
