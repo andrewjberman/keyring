@@ -22,6 +22,9 @@ unmerged at the run). Row D1-C-S3.**
 **ADDENDUM 4 (~13:45Z, on COO~V1 msg 2488): RIV-wg-1 J1 MET on the issuer's real 13-fund run (a1-chain/8); the name-abstracted
 frame still repeats (6 of 13) -- a round-29 item. Row D1-C-S5.**
 
+**ADDENDUM 5 (~14:20Z, on COO~V1 msg 2526): RIV-wh-1 J1 MET (0 '$0.0 million', 0 bare identifiers over 26 items, real run
+a1-chain/8). Row D1-C-S6.**
+
 ```json
 [
   {
@@ -132,6 +135,28 @@ frame still repeats (6 of 13) -- a round-29 item. Row D1-C-S5.**
         "task-orders/ETFS_RIVALS.TO-RIV-wg-1.direction-verdict-fund-specific-lead.md:50-52 (J1)",
         "2.0.0_SA_COO~V1 msg 2488",
         "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S8, ETFS_RIVALS-D1-S9"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "RIV-wh-1 J1 MET on the issuer's real 13-fund run (a1-chain/8, local writes): 0 '$0.0 million' and 0 bare identifiers across the 26 items. Small notionals now read in thousands, and one cross-checks against the page: WCMG's Valero trim '$37 thousand' equals the $37,136 sale in this seat's 07:2xZ dialog read. This repairs the plain-English defect behind aw-1's NOT MET (D1-C-S4) in the code; the served page carries it only after the WS2/WS3 deploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wh-1 J1 (task order :43): on the issuer's real 13-fund run, 0 '$0.0 million' and 0 bare identifiers in any item.",
+    "world_is": "- Artifact: deliverables/2.0.0_SA_COO~V1/round28/WH1_J1_REAL_RUN_20261009.md @8da1582b50, 26 items verbatim from run 20261009T140542Z-ai, prompt a1-chain/8, box/dell1 @b48273e3d0 (wh-1 merged @eeba3cad15), local writes only. Not served.\n- This seat's census over the item section only (the record's header table quotes the served run's '$0.0 million' and '037833100', and a whole-file count reads 1 and 1 from that table): '$0.0 million' 0; tokens shaped like a CUSIP, an ISIN or '<ticker>_<cc>_Equity' 0; '$0 thousand' 0; ' thousand' 15 in the item texts. The issuer's 35 may count fields beyond `text`; the record holds text only. GQGU now names 'Apple Inc' where the CUSIP stood. MET.\n- Cross-check of a converted figure: WCMG activity_30d and direction_verdict read 'trimmed Valero Energy Corp by $37 thousand'. The page dialog this seat read at 07:2xZ (D1-C-S1) showed 'Sold between 2026-09-03 and 2026-09-08: $37,136'. Consistent.\n- Still open, not in this J1: aw-1's served NOT MET stands until a 13:00Z sweep runs this code. The name-abstracted Direction Verdict frame (D1-C-S5) and the 'last 365 days' wording beside a later start (D1-C-S4 (b)) are unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WH1_J1_REAL_RUN_20261009.md @8da1582b50",
+        "task-orders/ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts.md:43 (J1)",
+        "2.0.0_SA_COO~V1 msg 2526",
+        "this file, ETFS_RIVALS-D1-C-S1 (Valero dialog read) and ETFS_RIVALS-D1-C-S4"
       ]
     },
     "disposition": "GRADUATED"

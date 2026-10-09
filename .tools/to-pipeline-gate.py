@@ -1104,6 +1104,9 @@ def _self_test():
          lambda: _is_terminal_flip(None, "<status>pending</status>\n<status>complete</status>\n") == "complete"),
         ("last-tag: a re-edit that keeps the same tags is still graded (only a REMOVED duplicate is exempt)",
          lambda: _is_terminal_flip("<status>complete</status>\n", "<status>complete</status>\nmore\n") == "complete"),
+        ("crlf: a CRLF order and its LF twin read the same (placeholders element matches)",
+         lambda: _lf("<placeholders>NONE</placeholders>\r\n<status>pending</status>\r\n") == "<placeholders>NONE</placeholders>\n<status>pending</status>\n"
+         and PLACEHOLDERS_TAG_RE.search(_lf("<placeholders>NONE</placeholders>\r\n")) is not None),
     ]
     failed = 0
     for name, fn in arms:
@@ -2153,16 +2156,6 @@ def _staged_modified(root):
             if len(ln.split("\t")) >= 2 and ln.split("\t")[0].strip().startswith("M")}
 
 
-def _head_blob(root, rel):
-    """The content of rel at HEAD, or None (absent at HEAD, or unreadable)."""
-    try:
-        out = subprocess.run(["git", "show", "HEAD:" + rel.replace("\\", "/")], cwd=root, capture_output=True,
-                             text=True, encoding="utf-8", errors="replace", timeout=30)
-    except Exception:  # noqa: BLE001
-        return None
-    return out.stdout if out.returncode == 0 else None
-
-
 def _repo_root():
     try:
         out = subprocess.run(["git", "rev-parse", "--show-toplevel"],
@@ -2976,13 +2969,18 @@ def _is_terminal_flip(head_text, staged_text):
     return word
 
 
+def _lf(text):
+    """Normalise line endings on read (CRLF and a lone CR -> LF); the element regexes end a tab-or-space star dollar and cannot match before a CR."""
+    return text.replace("\r\n", "\n").replace("\r", "\n")
+
+
 def _head_blob(root, rel):
     """The HEAD content of rel, or None (a new file, or unreadable)."""
     try:
         out = subprocess.run(["git", "show", "HEAD:" + rel], cwd=root, capture_output=True, timeout=30)
     except Exception:  # noqa: BLE001
         return None
-    return out.stdout.decode("utf-8", errors="replace") if out.returncode == 0 else None
+    return _lf(out.stdout.decode("utf-8", errors="replace")) if out.returncode == 0 else None
 
 
 def _staged_blob(root, rel):
@@ -2996,7 +2994,7 @@ def _staged_blob(root, rel):
         return None
     if out.returncode != 0:
         return None
-    return out.stdout.decode("utf-8", errors="replace")
+    return _lf(out.stdout.decode("utf-8", errors="replace"))
 
 
 # The order's own <proof_of_spec> block may NAME its instance (row IRPT_BCKEND-W42-S4, 1.0.0_SA_CTO ruling): an

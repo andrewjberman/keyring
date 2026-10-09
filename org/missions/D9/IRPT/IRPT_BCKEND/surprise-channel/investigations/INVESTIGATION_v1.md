@@ -24583,3 +24583,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The suite is a different size today (198 collected, 0 skipped, against 198 with 13 skipped), and the red set is a subset of the nine (the upload-contract, status-handler, fixture-source and the export-receipt / submit-export controls now pass). The packet prints both lists; this cell's paths touch no target of either. Not investigated why the set moved (not this order's cell)."
 }
 ```
+
+## IRPT_BCKEND-D2-S55 -- Resolves and disarms D2-S25: the dell2 applier identity now commands the mdpf-daily-runner host; IB-pr-383 S1 and S2 ran rc=0
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S55",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-09T14:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-S25 as its disarm_owner. The refusal it recorded at 03:57Z (cloudops-dell2-agent-user denied ssm:SendCommand on i-02448edb624a7a7cf) no longer holds: the grant has since landed, and the same identity sent IB-pr-383 S1 (inflection, rc=0, 14:06:14Z) and S2 (cottonwood, rc=0, 14:08:38Z) to that instance. Report: 0.7.0_AE_CloudOps~DELL2 msg 3427.",
+  "one_line": "D2-S25 resolved: ssm:SendCommand on the mdpf-daily-runner host now succeeds from the dell2 applier identity (two live sends rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DELL2 msg 3427 (20261009T141022Z): two SSM sends to i-02448edb624a7a7cf, S1 rc=0 14:06:14Z and S2 rc=0 14:08:38Z, writing 4 objects in 2 buckets",
+      "the sends are live SendCommand results from the identity S25 recorded as refused, so they falsify S25's world_is directly"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 steps 5-6 run on the mdpf-daily-runner host from the seat the order is addressed to.",
+  "world_is": "They did: both seeding sends ran from 0.7.0_AE_CloudOps~DELL2's identity with rc=0."
+}
+```
+
+## IRPT_BCKEND-D2-W275-S1 -- No standalone document schema for the custody report; response contracts carry the data type in $defs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W275-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~275",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No standalone document schema exists for the custody report reference or read answer; the two new response contracts carry the data type in their own $defs, self-referenced by $id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py _documents_of asserts a data $ref and _data_for reads fixtures/<document>.valid.json; the v1 registry (_response_validator) lists only top-level v1/*.schema.json; the grant admits no new v1/*.schema.json",
+      "published: docs/contracts/investor-reporting/v1/responses/custody-report-{read,persist}.response.schema.json with fixtures custody-report-{read,persist}.response.{valid,invalid}.json"
+    ]
+  },
+  "spec_asserts": "The order says every data $ref resolves to a published document schema; the grant lists only the two responses files and _contracts/.",
+  "world_is": "No custody document schema is published in v1/ (PerformanceReport.retained_ref is kind PERFORMANCE only). Adding one is outside this order's paths, so data refs the response file's own $defs (opal://.../responses/<op>.response.schema.json#/$defs/<Type>), which resolves to a published file and keeps the test unweakened. A later cell may promote them to v1/CustodyReport*.schema.json; the read's `report` member is typed only as an object (its members are not described, none invented)."
+}
+```

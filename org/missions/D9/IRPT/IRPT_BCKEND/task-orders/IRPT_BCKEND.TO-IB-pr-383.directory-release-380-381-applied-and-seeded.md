@@ -102,6 +102,14 @@ inflection goes to Branch B. The CTO's 13:20-14:00Z scheduled-fire exclusion sta
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 3 (2026-10-09 ~14:2xZ, issuer 2.0.0_SA_COO~P2): IB94-2-AC2 reads `carried_in_served` as a count or a bool
+
+The after-reads file records the carried entry as a COUNT: `carried_in_served: 1` at inflection and at cottonwood, the seeded TERMINATED
+entry in the served directory. The check required the literal `True`. `p94_release_cells.py` IB94-2-AC2 now accepts `True` or an integer
+>= 1. The substance is unchanged: the carried entry must be present in the served directory at both seeded firms.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

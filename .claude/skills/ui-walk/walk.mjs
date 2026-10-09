@@ -391,8 +391,12 @@ async function walkThread(page, route, name) {
   await page.goto(opt.base + route, { waitUntil: 'domcontentloaded', timeout: 30000 })
   await settle(page, 2500)
   await amgtLeadState(page, 'Price')
+  await waitPriceBars(page) // the bars arrive after the face; the lead-list step already waits for them, the thread did not
   const rows = page.locator('[data-price-bar]')
-  const lead = page.locator('li:has([data-price-bar])').filter({ hasText: name }).first()
+  // The row is an <li> holding the bar on older builds; on the redesigned page the [data-price-bar] element is the row itself (the same
+  // fallback readPriceBars uses), so match the <li> first and the bar element second.
+  const liRow = page.locator('li:has([data-price-bar])').filter({ hasText: name }).first()
+  const lead = (await liRow.count().catch(() => 0)) ? liRow : page.locator('[data-price-bar]').filter({ hasText: name }).first()
   const nRows = await rows.count().catch(() => 0)
   if (!(await lead.count().catch(() => 0))) {
     findings.push({ step, check: 'thread:name-not-found', claim: 'measured', observed: `no row of the Trending x Price list (${nRows} rows) reads the company name "${name}"`, rule: 'FWD-1: the PM picks the company out of the list by its name' })
@@ -404,6 +408,10 @@ async function walkThread(page, route, name) {
   step = `thread ${name} open`
   await lead.click({ timeout: 4000 }).catch(() => {})
   await settle(page, 3000)
+  // the header's key figures come from /overlay, which can answer after the flat settle; wait for the loaded state as the
+  // --security path does, so the header shot shows the figures and not the skeleton
+  const threadWait = await waitForLoaded(page)
+  loadStates.push({ security: name, step: 'thread-header', state: threadWait.state, waited_ms: threadWait.waited_ms })
   await checks(page, 'thread-2-header-cards')
   step = `thread ${name} financials`
   const fin = page.locator('[data-header-card="financials"]').first()
