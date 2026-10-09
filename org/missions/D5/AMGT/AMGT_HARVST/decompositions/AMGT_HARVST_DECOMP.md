@@ -3705,3 +3705,14 @@ Issuer `2.0.0_SA_COO~W1`. Series **`bu`**.
 
 **Checks dry-run at the base before the cut:**
 - `bu-1` AC1, AC2, AC3 base: FAIL as expected (no such file).
+
+**AMENDMENT 1 to section 90 (2026-10-09 ~15:0xZ, issuer), WORKSTREAM `B`** (`1.0.0_SA_CTO~DELL1` msg 2605). bu-1 landed @48864ff38b
+(0 completed cycles; bbg stopped "error", failed 3; wsj and barrons stopped "sign_in_refused"; r47 JOB-EXIT rc=0). One read cell
+is added; the wsj and barrons hand sign-in goes to site Z as a crossbox CALL, not a cell.
+- **Fan-out:** 1 of 1 chain, cap 8.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bu-2` | `bu-2` | **Why bbg's first cycle stopped on "error".** The checkpoint's failed keys and their errors verbatim, the run summary's error fields, the runner log around 12:55Z, and the current cycle's progress. Read-only; restart nothing. | LOCAL | `0.7.0_AE_CloudOps~ZW` |
+
+**Checks dry-run at the base before the cut:** `bu-2` AC1, AC2, AC3 base: FAIL as expected (no such file).

@@ -10,15 +10,19 @@
  "subject": "R4-B post-commit hook fires at ledger OPEN: trigger only on CLOSED",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CALL_R4B_POSTCOMMIT_FIRES_ON_LEDGER_OPEN_20261009.md",
  "opened_at": "2026-10-09T14:35:30Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
-  "at": null,
-  "bus_message_id": null
+  "at": "2026-10-09T14:42:19Z",
+  "bus_message_id": "e8302452-1572-4cb5-9dd9-d1cbabfca828"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T15:13:55Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "7bd13f7a-00d5-4424-a7d8-e2f5c726e108"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-09T15:16:07Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
   "to_at": null,
   "to_by": null
  }

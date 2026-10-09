@@ -508,3 +508,56 @@ so the field reads NULL. `emit_day(upload=True)` then writes a manifest claiming
    - The cell above runs regardless of the number he picks.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~14:4xZ) -- round 48 (CVO slug msg 3490, `ADJUDICATION_v29.md` @9e4cefbb3a): MAY-CLOSE; FWD-8 NOT REALIZED
+
+Of 990 outside segments, 793 are reasoned and **197 are DEFECT** (W73-S1: 74; W73-S2: 123). FWD-8 stays NOT REALIZED while any DEFECT stands. The tolerance is
+0.35pp (laptop CTO ruling @ea01eb1e34; Andrew's word supersedes it) and is never widened.
+
+**Round 49 enrichment (`~D2`):**
+1. **Sensitivity on the classifier's thresholds, LOCAL.** Counts per reason at 0.5% and 2% of peak, beside the 1% cut, and at the $1/0.1% tie's neighbours.
+   - The 156 segments resting on the 1% cut are printed at each setting.
+   - If a reason's count moves by more than half across the band, the reason is NOT robust. Those segments are re-graded UNEXPLAINED, not reasoned.
+2. **Pre-registration from now on.** Any changed threshold is committed BEFORE the run that grades it: rule commit, then output commit, checked by order. A threshold
+   tuned after seeing results is refused.
+3. **Every reason carries its claim** in a field: `inferred` (from our data) or `confirmed` (Black Diamond's own record). All 793 read `inferred` today. FWD-8 may be
+   REALIZED on `inferred` reasons only where the reason is mechanical: flow timing or an income date read from both sides' transaction dates. A reason without a
+   two-sided read stays NOT-REALIZED until confirmed.
+4. **The 197 DEFECTs: ONE cell per class.** W73-S1 (74) and W73-S2 (123) each get a fix of our producer's defect, or a two-sided read showing it is Black Diamond's.
+   - Fixes ride their own pairs.
+   - FWD-8 re-grades on the next tie-out after both land.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.2 (~14:4xZ, `~C2` msg 3495, row W70-S1): `method_version` is a default claim -- the producer change comes FIRST
+
+CB-aq-1 drained @9a7eaa849a: 3,325 days, with all three method fields present (0 of 9,975 absent). But `build_manifest()` writes `method_version: 2`, the custodian-equity
+method row, into every manifest whatever the source entry says. The rows carry NULL.
+
+**RULING: NOT minted as is.**
+- A manifest that names the custodian method beside positions-based fields is the exact default claim ADDENDUM 13.1 forbids. A consumer reading `method_version` would
+  be told something false.
+- **IRPT_DASHBD owes ONE LOCAL producer cell first:** `build_manifest()` takes `method_version` from the firm's sources entry.
+  - A positions-based entry names its own method row (a new row in the method table, with its rule-24 record). It never reuses row 2.
+  - A firm with no method declared writes `method_version: absent`.
+  - Negative arm: a positions-based firm's manifest never reads 2.
+  - The existing custodian firms keep 2 explicitly from their entries.
+- **CB-al-2's mint waits on that cell's drain.** Then it re-runs through the producer as built, under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~15:0xZ) -- round 47 (CVO slug msg 3538, `ADJUDICATION_v30.md` @84387e2a60): MAY-CLOSE
+
+1. **R44 is LIVE** at `oNgy4rnr` (14:34Z) by the CVO's read. W62-S1 is closed.
+2. **DB-b-97 (a backfill clears the lots-not-computed record) is NOT in R44,** so W69-S2 stays open on live code.
+   - It ships in the NEXT gold Lambda release, under its own pair, as the R44 half placed it.
+   - The census against live `oNgy4rnr` shows only DB-b-97's members.
+   - Until then, a backfilled day can still read "not computed" on the page. That is a stale statement, never a wrong figure.
+3. **Ledger S1 (first-fire sizing at 85%) is the R44 half's condition 4,** and it is read at the first scheduled fire after 14:34Z.
+   - `~D2` prints duration and max memory against 85% of the timeout and the configured memory.
+   - Either one over: Branch B to `yIAQjspL`.
+4. **The drain's line-union merge produced two malformed channel rows.** The row gate refused them, so nothing landed.
+   - `~D2` re-appends the two rows cleanly on the shared index, as CLAUDE.md 14b says for append-only files: take the shared index's race; do not isolate.
+   - The merge-driver behaviour is a tooling note for the safe-merge owner, via MSTR, and is not this project's cell.
+
+-- 1.0.0_SA_CTO~DELL2

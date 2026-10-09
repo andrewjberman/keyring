@@ -4388,3 +4388,137 @@ round.** Never edit an existing row.
   "world_is": "Met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-W70-S1 -- producer manifest writes method_version 2 for a source whose entry declares a different method
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W70-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~70",
+  "surfaced_at": "2026-10-09T14:50Z",
+  "one_line": "The producer's build_manifest() writes method_version = METHOD_VERSION (2, the custodian-equity method row) into every returns manifest regardless of the source entry, so Cottonwood's built manifests state method_version 2 beside valuation_source=positions_x_as_traded_close while the rows carry method_version NULL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py build_manifest(): \"method_version\": METHOD_VERSION (line ~1756), no src read",
+      ".scratch/advi_cotbkf/ard_cottonwood_r43/date=2026-06-22/manifest.json: method_version 2, valuation_source positions_x_as_traded_close, fee_treatment net_of_fees; rows written with method_version NULL (adapter, rule commit d41d82a633)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~70/ard_cottonwood_manifest.json (3325 day_files, each with a manifest_sha256)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-aq-1: the manifest carries the entry's three method fields so a consumer can reject on the method; the producer was not to be edited.",
+  "world_is": "The three fields are present and correct on all 3,325 built manifests, but the manifest's method_version field still names the producer's version 2 (whose dim_return_method row names the custodian's whole-account value as V), a second claim a consumer reading method_version rather than the fields would take as the custodian method. Local build only; nothing served. Producer is IRPT_DASHBD's file and was not edited."
+}
+```
+
+## ADVI_COTBKF-D2-S66 -- L9 CB43aq1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S66",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:53:03Z",
+  "one_line": "L9 CB43aq1-AC2 MET: data/assets/scripts/gold/irpt_reporting/sources.json gains exactly one key, _commonwealth_delivery (registry_key z09, valuation_source positions_x_as_traded_close, fee_treatment net_of_fees, price_basis as_traded, no firm token; rule commit d41d82a633 before the output 90b2e493b4); the producer's compute path cannot pick it up -- account_return_daily.py:291 declared_sources() keeps only non-underscore object keys (this seat's read of sources.json: the one declared source is schwab_08335338) and :300 source_entry() refuses any key outside that list; IRPT_DASHBD's producer tests 102 passed and the handler tests 86 passed (the issuer's run).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:291-304 (declared_sources, source_entry)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json top-level keys (this seat's read)",
+      "git diff d41d82a633~1 90b2e493b4 -- data/assets/scripts/gold/irpt_reporting/sources.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_43_DRAIN_END_20261009.md @7f2f3d7323 (msg 3499)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_43_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB43aq1-AC2: one entry added, no firm token, values admitted; the producer's compute path is proven not to pick it up; IRPT_DASHBD's tests are green.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S67 -- two S3 keys split to evade the naming gate (rule 30)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S67",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:55:13Z",
+  "one_line": "commonwealth_cot_price_rewrite.py builds two S3 keys by splitting literals so the commit-time naming gate cannot read them: PFX = '/'.join(['silver', 'pri' + 'ces']) (:76) and PIN_KEY = '/'.join(['code', 'gold', 'scopes' + '.json']) (:251, commented 'joined: the naming gate refuses the typed literal'). CLAUDE.md rule 30: a builder refusal is a missing registry row to add, never a hand-typed workaround; a split literal is a typed address the gate cannot see.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76",
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:251",
+      "ADVI_COTBKF round 44 packet @0e628a61f8 (the disclosure)"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is lib/opal_naming address() output; a builder refusal is a missing registry row, never a hand-typed workaround.",
+  "world_is": "Two keys are hand-built by fragment to pass the gate; the gate's purpose (every new address from the builder) is defeated for both."
+}
+```
+
+## ADVI_COTBKF-D2-S68 -- L9 CB42ap1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S68",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:07:32Z",
+  "one_line": "L9 CB42ap1-AC2 MET: the writer reads ONE registry file, REGISTRY_FILE = 'scopes.json' at Path(__file__).resolve().parent, with the opal_naming / repo-registry search removed and no fallback (a missing or bad file returns (None, reason)); absent is never the own firm (round 40's rule, unchanged); the removed share-class check filtered on 't1_transaction_observed', a source the writer never emits, so it was unreachable (W68-S1). Both served keys equal the repo bytes (this seat's read). Note: repo-file inputs resolve their tree from Path(__file__).parents[3], the repo root only when run from the repo; from code/gold/ it resolves elsewhere and stamps absent -- safe, NOT-CLEAN for those inputs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff f30ad987a6 1111ec9b9b -- data/cot/scripts/gold/build_canonical_prices_v2.py",
+      "this seat's reads ~15:0xZ: s3://opal-data-cot/code/gold/build_canonical_prices_v2.py sha256 3ac0a502798b5382 = data/cot/scripts/gold/build_canonical_prices_v2.py; s3://opal-data-cot/code/gold/scopes.json sha256 13947f7f2b35c6c9 = infra/logic/registry/scopes.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_42_DRAIN_END_20261009.md @0dd3bad9eb (msg 3540)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_42_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB42ap1-AC2: exactly one registry file, read from the writer's own directory, with no fallback path; absent is never the own firm; the removed check was unreachable.",
+  "world_is": "Met; one note on repo-file inputs."
+}
+```
+
+## ADVI_COTBKF-D2-W72-S1 -- the split-literal pattern outside the rewrite script: counts per file
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W72-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~72",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "Same split-literal pattern, counted not changed: commonwealth_bd_txn_provenance.py 2 sites (:37 PFX = '/'.join(['silver','pri'+'ces']) -- the identical key; :103 re.search('pri'+'ce|...')); data/cot/scripts/gold/build_canonical_prices_v2.py 1 site (:65 '/'.join(['silver','']) ); 0 in the other 36 commonwealth_*.py files (38 files scanned incl. the writer; 2 carry it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:37",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:103",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:65",
+      "ast scan with _split_literals from data/assets/scripts/silver/tests/test_cot_price_rewrite_no_split_literals.py at f317f82c20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-as-1 item 4: count the pattern in the other commonwealth scripts and the cot writer; change none.",
+  "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
+}
+```
