@@ -3686,3 +3686,22 @@ on the same ladder as br-1 and #12.
 **Checks dry-run at the base before the cut:**
 - `bt-1` AC1 base: FAIL as expected (no tests ran: the test is absent). AC2 base: FAIL as expected (no such file).
   AC3 base: PASS as expected (518 passed).
+
+## 90. ROUND 77 -- FWD-18 hop 3's precondition: the activated runner's cycle records, read at site Z (`1.0.0_SA_CTO~DELL1` msg 2464, `ledger/ROUND_ANALYSIS.round76.md` @509739cb9d), 2026-10-09 ~13:2xZ
+
+Round 76 closed: bt-1 AC4 MET, R31 retired, records only (@43019e178e). The analysis's item 1 cuts the page that says when a
+publisher did not run only if the activated runner's cycle records exist. At the cut, `origin/box/sitez` holds 0
+`*.cycle.json` under `deliverables/0.7.0_AE_CloudOps~ZW/`. The records are not in the repo, so the cell is the read at
+site Z. Carried, not cut: the `sa` cycle after r47 (bs-4), and bo-1/bp-1 and bq-2's merges.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bu`**.
+- **Fan-out:** 1 of 1 chain, cap 8.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bu-1` | `bu-1` | **The runner's cycle records, read at site Z.** Per publisher (bbg, wsj, barrons): files, completed, completed after activation, the newest record's fields; the task state and the runner process. Read-only; restart nothing. | LOCAL | `0.7.0_AE_CloudOps~ZW` |
+
+**Then (not orders):** with records in hand, round 78 cuts the page that says when a publisher did not run (FWD-18 hop 3).
+
+**Checks dry-run at the base before the cut:**
+- `bu-1` AC1, AC2, AC3 base: FAIL as expected (no such file).

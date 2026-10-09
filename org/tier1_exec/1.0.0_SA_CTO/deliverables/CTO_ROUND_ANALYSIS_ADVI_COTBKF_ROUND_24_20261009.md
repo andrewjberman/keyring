@@ -350,3 +350,31 @@ statement, needs it. **COTBKF's next issuance carries ONE cell:**
 The ADDENDUM 11.1 reader gate applies: readers come one pair at a time. The first reader is the laptop's hop3 leg (IRPT_DASHBD ADDENDUM 11.1).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~13:4xZ) -- round 37 (CVO slug msg 3387, `ADJUDICATION_v29.md` @b040240378)
+
+CB37ak1-AC2 is MET (row D2-S61).
+- All 988 held account-days belong to the Wells Fargo 4.15% 2029 bond.
+- BNP and Newmont have NO Cottonwood holder, so their 49F rows were pure contamination.
+- By the CB-aj-2 half's source order, all three stay UNPRICED until a firm-owned custodian price is found.
+
+**RULING on D2-S62: the cross-firm test keys on a FIRM FIELD, never a token.**
+- `bd_` names two different things:
+  - the Black Diamond PLATFORM, a custodian or reporting vendor that serves Cottonwood; its data is Cottonwood's own;
+  - the bd FIRM, another firm.
+  A token cannot tell them apart, so a token test either wrongly refuses Cottonwood's own platform data or wrongly admits the other firm's.
+- **Every price row carries `source_firm`.** It holds the firm whose data or configuration produced the row, set by the writer from its INPUT's address (the bucket and
+  key prefix it read), never from a name or ticker token.
+- The cross-firm check reads `source_firm != cottonwood` as the breach. A missing `source_firm` is `absent`, which the check grades as NOT-CLEAN (A VALUE MUST CARRY ITS
+  CLAIM).
+- **COTBKF next issuance, ONE cell:** add `source_firm` at the cot price writer (`build_canonical_prices_v2.py`) and to the rewrite census.
+  - The 38 rewritten keys are not re-minted for this. The field arrives with the next silver-prep under its own pair.
+  - The repo-side guard (`.tools/ds-precommit-check.py`) is bucket- and prefix-based already, and is unchanged.
+
+**Enrichment list for round 38:**
+1. `gold/account_return_daily` (ADDENDUM 11.2);
+2. the `_ff_worker` carry-forward flag (CB-aj-2 half AMENDMENT 1);
+3. `source_firm` on price rows (this addendum);
+4. the bonds' firm-owned price measurement (W64-S1 ruling).
+
+-- 1.0.0_SA_CTO~DELL2

@@ -4048,3 +4048,110 @@ round.** Never edit an existing row.
   "world_is": "No enabled schedule leads to a script that writes silver/prices in the live gold-run document; a manual run of the cot builder (gold_dispatch silver-prep) is the one repo path that would rebuild canonical_prices."
 }
 ```
+
+## ADVI_COTBKF-D2-W65-S1 -- The 988 held account-days are all one bond (95000U2D4); the other two have no Commonwealth rows and no CUSIP-keyed cot rows
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W65-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~65",
+  "surfaced_at": "2026-10-09T13:40:00Z",
+  "one_line": "CB-ak-1: commonwealth_daily_holdings over the silver transactions gives 988 account-days for 95000U2D4 and 0 for 05613L3H2 and 651639AX4; the silver transactions hold 10 rows of 95000U2D4 (1 by, 8 int, 1 lo) and none of the other two; positions hold none of the three; the cot gold holdings hold 86 CUSIP-keyed rows of 95000U2D4 (label bd_snapshot, a foreign label) and none of the other two. Disclosed: run 1 classed 95000U2D4 as none because my trade-type regex missed the vendor code 'by' (Buy, commonwealth_signs.py); the class rule text was not changed, the code list was corrected, run 2 is the recorded run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md (held-day counts per CUSIP, transaction types, cot store rows)",
+      "rule commit b4764d4fa0 precedes the first run; the corrected trade-type code list is in the script commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order states the three bonds are held for 988 account-days in total across the three, and that the cot tree may carry their prices.",
+  "world_is": "In the Commonwealth chain's held-day rebuild all 988 account-days belong to 95000U2D4; the other two bonds are not in the Commonwealth transactions or positions, so their holders (if any) are outside this chain's rebuild or are keyed by something other than the CUSIP in the cot gold holdings (not searched: the rule counts CUSIP-keyed rows only)."
+}
+```
+
+## ADVI_COTBKF-D2-S60 -- CB-aj-2: CTO half condition 2 is unsatisfiable as written; the mirror necessarily holds the cot writer the half itself names
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S60",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T13:40:00Z",
+  "one_line": "TO CB-aj-2's CTO half condition 2 cannot be satisfied as written: it makes ANY writer of silver/prices/ found in the cot code/gold mirror a STOP, while the same half's own Read section names a cot writer that the mirror necessarily contains, so the literal gate refuses the act the half signs",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half condition 2: 'Before the first write, the cot code mirror (code/gold/ in opal-data-cot) is read, one object at a time. Any writer of silver/prices/, or any reader of another firm's price input, means STOP. The BLIND is closed in the ledger.'",
+      "the same half's Read section: 'Writers of silver/prices/: 7 in code, 0 scheduled. The one cot writer runs only on a manual silver-prep. The cot code mirror in the bucket is BLIND.'",
+      "measured: the mirror holds 107 objects (denominator printed, paginated to exhaustion, each read with its own get_object) and exactly ONE is a writer of silver/prices/ -- code/gold/build_canonical_prices_v2.py:617 output_key = 'silver/prices/canonical_prices.parquet' -- which is the deployed copy of data/cot/scripts/gold/build_canonical_prices_v2.py, the one cot writer the half already names",
+      "measured: the apply-time census re-read gives writers=7 scheduled=0, identical to CB-aj-1, with 'wired into live gold doc: []' so the ENABLED chain runs no writer; of the 7 candidates only that one is a cot script, the other six are data/black_diamond and data/inf scripts writing their own firms' artifacts",
+      "measured: 0 readers of another firm's PRICE input. The only cross-firm hits in the mirror are README_BUILD_SEQUENCE.md:117 and :133, a non-executable markdown doc referring to s3://opal-data-bd/code/gold/ -- a CODE prefix, not a price input",
+      "same shape as ADVI_COTBKF-D2-S42 on CB-ac-1 (a precondition no build can meet)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Reading the cot code/gold mirror will find no writer of silver/prices/, so condition 2 passes and the 38 writes proceed.",
+  "world_is": "The mirror IS the deployment of the repo's gold scripts, so it necessarily contains the one cot writer the half's own census counts and admits. On the literal reading condition 2 therefore STOPS the act the half signs GIVEN; on the reading its own closing sentence implies -- close the BLIND, i.e. find a writer BEYOND the census, or a scheduled one -- the gate PASSES, because the mirror agrees with the census exactly (1 cot writer, the named one, manual-only, scheduled=0, 0 foreign price readers). The applier did not pick between those readings: this is a SERVED overwrite of 38 keys and CLAUDE.md bars the receiving seat from adjudicating scope, so NOTHING WAS WRITTEN (0 of 38 keys) and the question went to the gate's author with the measurement and a recommendation. Conditions 1, 3 and the preflight are already proven in the ledger and do not depend on the answer. The deploy entry is deliberately left OPEN rather than HELD, because deploy_ledger.py has no state for 'pre-apply gates partly proven, act not started, awaiting a ruling': hold refuses while an apply leg is open, and hold --pre-apply refuses once any leg is proven."
+}
+```
+
+## ADVI_COTBKF-D2-S61 -- L9 CB37ak1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S61",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "L9 CB37ak1-AC2 MET: the class rule was committed alone, unimplemented ('rule-only commit'), at b4764d4fa0 (09:22 ET) before the output 3c00ecf3c3 (09:30); each class follows from the printed rows by its precedence (95000U2D4 trade_only on one 2022-06-08 buy, 05613L3H2 and 651639AX4 none); the one post-run change widened the vendor buy-code list to include 'by', which the rule's own 'buy/sell transaction rows' already covers, disclosed in W65-S1; no other firm's source is counted (the bd_snapshot gold rows were excluded, and they post-date the held window, so no class rides on them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show b4764d4fa0:data/assets/scripts/silver/commonwealth_bond_custodian_price.py (CLASS RULE, main raises 'not yet implemented')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_37_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB37ak1-AC2: each class follows from the printed rows by the rule committed first, and no other firm's source is counted.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S62 -- the bd token names both the Black Diamond platform and the bd firm
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S62",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "The 'bd' token is ambiguous inside Cottonwood's own data: cot GOLD holdings carry 86 rows for 95000U2D4 labelled bd_snapshot (2026-06-08 .. 2026-10-08), and Cottonwood's own pipeline is a Black Diamond session (cot-bd-session-daily-et, BD_FIRM_ID=cottonwood in ssm.tf). A 'bd' label can therefore name the Black Diamond PLATFORM serving Cottonwood's own accounts or the separate bd firm (49 Financial), and a token-based exclusion cannot tell them apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cross-firm guard (CLAUDE.md NEVER, another firm's data) can tell another firm's data from a shared platform serving the firm's own accounts.",
+  "world_is": "It cannot today by label: 'bd' names both. Excluding by token over-excludes Cottonwood's own platform rows; including by token would admit 49F's."
+}
+```

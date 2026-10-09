@@ -24441,3 +24441,120 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Content-addressed rows are SHARED by every upload of the same bytes; a list derived from one upload deleted a row later requests still reference. Rule for this lane's future cleanups: walk the retention dependency tree (RETENTION#<id> rows, as the laptop's principal-free walk did) and exclude any row another live request references, before naming a key. Ruling 2026-10-09 ~13:3xZ: no PITR restore (test requests only); Y1 reads 3a/4_route/5 re-run on a fresh synthetic request; the three broken test requests join the next cleanup list under Andrew's word."
 }
 ```
+
+## IRPT_BCKEND-D2-S52 -- the decomposition was truncated from 142 cells to 3 by the round-109 and 110 issuances, so 300 of 301 task orders now cite a cell that is not there and proof-of-spec refuses the alignment limb
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S52",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T13:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "IRPT_BCKEND_DECOMP.md went 2562 lines to 15 to 29 across two issuances; it now holds 3 distinct cells where it held 142, and every order whose cell was dropped cannot have its proof of spec validated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "line counts and cell counts across the commits that touched the file, newest first: 38a80bb2fe (round 110 issuance) 29 lines; ef1f7f8409 (round 109 issuance) 15 lines; f4ecd2ab52 (round 108 issuance) 2562 lines; 074cfafc99 (round 107) 2547 lines",
+      "distinct cells, denominator printed: at f4ecd2ab52 the file carried 274 IB-pr-* mentions over 142 DISTINCT cells; at HEAD it carries 4 mentions over 3 distinct cells",
+      "IB-pr-397 specifically: 2 hits at f4ecd2ab52, 0 hits at ef1f7f8409 and at HEAD",
+      "project-wide blast radius, measured over every task order in the project: 301 task-order files scanned; 300 (order, cell) pairs cite a cell_refs value that is ABSENT from the decomposition at HEAD; 300 distinct cells dangling",
+      "the consequence this seat hit: proof-of-spec-check.py on IRPT_BCKEND.TO-IB-pr-397's instance, run from its own worktree, returns rc=1 INVALID with 'VIOLATION: alignment: cell_ref IB-pr-397 (cited by [IB102-1-AC1]) does NOT exist in ... IRPT_BCKEND_DECOMP.md -- a citation to a cell that is not there is worse than no citation'. The instance does not cite the cell itself (0 cell_refs keys in it); the checker reads it from the ORDER's <criterion cell_refs=\"IB-pr-397\">",
+      "SEPARATE AND NOT CONFLATED: the already-validated IB-pr-395 and IB-pr-398 instances now return rc=2 from the shared tree -- 'NOT-A-VERDICT: this is a tool failure (rc=2), not an INVALID instance (rc=1)', on '74a62fb46c'. That is a different failure mode from the alignment violation and its cause is NOT established here; it is recorded so nobody reads it as the same finding. Both instances were VALID (rc=0) when they were landed earlier today"
+    ]
+  },
+  "spec_asserts": "Every task order carries <decomp_ref> naming a section and cell of org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md, and the proof-of-spec instance must validate with .tools/proof-of-spec-check.py BEFORE the <status> flip to complete. CLAUDE.md 27: mid-round the spec AND the decomposition are FROZEN.",
+  "world_is": "The decomposition is not frozen and is no longer a superset of what the orders cite: two consecutive issuances replaced it with a round-109/110-only document, dropping 139 of its 142 cells. So a seat that completes an order correctly still cannot validate its deliverable, because the alignment limb refuses a citation whose cell the carrier no longer holds -- and the limb is right to refuse. This is live for 300 of 301 orders in the project, not just this one. It is the issuer's carrier: L5 decomp is 2.0.0_SA_COO only, and this seat neither edits nor reconstructs it. WHAT IT DOES AND DOES NOT BLOCK for IB-pr-397: the ACT is complete and verified -- the reader is live at ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, the apply was exactly the 5 signed resources, the post-apply full plan reads exactly the 6 foreign AR-t-13 adds, IB102-1-AC1 PASSES and the deploy ledger is CLOSED with all 5 legs proven, so NOTHING is half-landed. Only the bookkeeping flip of <status> to complete is withheld, because the order requires a validated instance before it and this seat will not flip on an instance that does not validate. The fix is the issuer restoring the dropped cells (or re-pointing the orders' decomp_ref), after which the instance validates unchanged.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S53 -- Resolves D2-W269-S1: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S53",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W269-S1 (BLOCKING). Root cause, measured by ~269: IB-pr-403's CUSIP security_id on 115,412 SmartX nodes removes the TICKER id that holdings_snapshot.fill_display_from_facts reads (:803), so display.symbol drops and 13,892 nodes lose their class; the FWD-14 gate then refuses 49F. The defect is IB-pr-403's, inside ~P's decomposition. Issuer ruling: cell IB-pr-410 (round 111) adds a ticker= fact on every SmartX SECURITY node with a ticker (as custody rows already carry), rebuilds the 49F narrow bundle on IB-pr-404's live bytes with the e56 member, and replays it with fwd14_gate_unchanged and smartx_class_parity identical. IB-pr-406's artifact is superseded; nothing was uploaded.",
+  "one_line": "W269-S1 resolved: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle; IB-pr-406's artifact is superseded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB107-1_49f_bundle_replay.json @5bfc1788af: fwd14_gate_unchanged FAIL (base PUBLISHED, built REFUSED classified_security_lost 53)",
+      "holdings_snapshot.py:803 symbol = fact('ticker=') or TICKER security_id",
+      "TO-IB-pr-410 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 changes only the security_id namespace of SmartX nodes.",
+  "world_is": "It also removed the ticker that display and classification read; IB-pr-410 restores it as a fact."
+}
+```
+
+## IRPT_BCKEND-D2-S54 -- Resolves and disarms D2-W272-S1: the CTO signs the row-listed caller's class as built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S54",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:32:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-W272-S1. A row-listed Opal internal caller classes OPAL_GLOBAL on IB-pr-409's build (live: UNKNOWN), bound to its listed firm; the six hosts released under IB-pr-390's shared served.py (pair @567612e686 / @b97ebb6b98) give that caller the same class. The CTO half on IB-pr-409 (@28563e702c, msg 3370) rules: sign as built. IB-pr-401 is re-pointed to IB-pr-409's artifact (AMENDMENT 3).",
+  "one_line": "W272-S1 resolved: the CTO signs the row-listed caller's class as built (matches the six IB-pr-390 hosts).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half NEVER_WIDEN_IB_pr_409_NARRATIVE_NO_ROW_UNKNOWN_CTO_HALF.md @28563e702c",
+      "COO half @e4227621a6"
+    ]
+  },
+  "spec_asserts": "No served move widens a caller's reach beyond what its pair signs.",
+  "world_is": "The row-listed caller's class is now signed by both halves."
+}
+```
+
+### IRPT_BCKEND-D2-S52 -- ARMED: PROOF_OF_SPEC.schema.json has prose in a `type` keyword; proof-of-spec-check now fails rc=2 for EVERY instance, fabric-wide
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
+- **disarm_owner:** `1.0.0_SA_CTO~DELL2` -- it authored the commit and owns `org/standards/`; this
+  seat does not, so it reports rather than edits.
+- **state:** ARMED. This is not a latent hazard: it is blocking `complete` flips right now, for any
+  seat, because `.tools/to-pipeline-gate.py` requires a VALID instance and the checker cannot return
+  a verdict at all.
+- **spec_asserts:** `python .tools/proof-of-spec-check.py <instance>` returns rc=0 VALID or rc=1
+  INVALID, and the gate admits a `complete` flip on rc=0.
+- **world_is:** it returns **rc=2 TOOL-ERROR** for every instance.
+  `jsonschema.exceptions.UnknownType: Unknown type "string aws_resource ADDED 2026-10-09 ..."`.
+  The cause is one keyword: `$.properties.artifacts_produced.items.properties.commit_or_etag.type`
+  holds a **466-character prose string** beginning `string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO,
+  row IRPT_DASHBD-S41): a live AWS resource that is neither an S3 object nor DynamoDB rows ...`.
+  A JSON Schema `type` must be one of the seven primitives, so the validator cannot resolve it and
+  dies before grading anything.
+- **when, measured:** introduced by `e7c10e5b4b` (`1.0.0_SA_CTO`), authored 2026-10-09T09:00:45-04:00
+  = **13:00:45Z**. At the previous commit `72a2636203` the same keyword read exactly `'string'`
+  (length 6). The prose plainly belongs in the `kind` enum's **description**, where the sibling
+  `s3_object` and `ddb_rows` notes live; it landed in `commit_or_etag.type` instead.
+- **THE CONTROL THAT MAKES THIS GENERAL, not a quirk of my file:** three instances that this seat
+  validated **rc=0 VALID earlier today** -- `IRPT_YCDGEN.TO-APPLY-r7`, `TCKT_VNEXT.TO-APPLY-SA1` and
+  `IRPT_YCDGEN.TO-APPLY-st29` -- were re-run unchanged after 13:00:45Z and all three now return
+  rc=2. Nothing about those files changed; only the schema did.
+- **why it was not caught at once:** the break fails CLOSED and LOUD, but only for whoever validates
+  next. Every validation this seat ran today before 13:00Z passed, so the window between the commit
+  and the first failure was invisible. A schema edit has no gate of its own.
+- **the fix, stated so it needs no diagnosis:** set that keyword back to `"type": "string"` and move
+  the `aws_resource` prose into the `kind` enum's `description`. One token.
+- **blocked on it:** `IRPT_BCKEND.TO-APPLY-Y77`'s flip. Its three criteria are graded PASS by the
+  issuer's own check (`y77_cells.py`, re-run by this seat) and its instance is written; only the
+  validation step is unavailable. The same is true for any other seat holding a finished order.
