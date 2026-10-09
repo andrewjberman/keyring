@@ -58,3 +58,32 @@
 ```
 
 
+## IRPT_ANLREQ-D2-S1 -- hop 9 (I6): only the Report opens; PDF reader not in the portal client, commentary and original have none
+
+```json
+{
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T05:25:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_ANLREQ-D2-S1",
+  "one_line": "Hop 9 (I6) is only partly openable: of the package's four files only the Report has a portal reader (getOwnedAnalysisRequest); the Branded PDF reader exists server-side (ops/owned_report.py:153 pdf(), route analysis-request-pdf) but is absent from the portal client's IR_ROUTE_TABLE, and Commentary and Original file have no reader at all -- the ticket page shows those three as '(no reader yet)'.",
+  "disarm_owner": "2.0.0_SA_COO~V2 (portal client: add the existing PDF route; carried to the round-1 analysis) with 2.0.0_SA_COO~Y2 / ~G2 (a reader for the commentary and the original file, IRPT side)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker 0.9.0_WK_IRPT_ANLREQ~13 report on IRPT_ANLREQ.TO-AR-v13 (portal c34ff9c0): 'analysis-request-pdf is not in the client's IR_ROUTE_TABLE'; adapt.ts says no page calls it yet",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:153 def pdf(...) returns download_route.url (signed)",
+      "decompositions/IRPT_ANLREQ_DECOMP_R1.md I6: 'each ref opens through IRPT's signed-link reader under the VIEWER's own scope'"
+    ]
+  },
+  "spec_asserts": "FWD-1 hop 9: an Opal person opens the report, the branded PDF with commentary, and the original Excel from the ticket page (I6).",
+  "world_is": "Only the report opens; PDF, commentary and original are listed as text with '(no reader yet)'.",
+  "notes": "AR-v-13 was barred from adding an endpoint by its order; the PDF needs only a client route entry for an existing server route."
+}
+```
+
+
