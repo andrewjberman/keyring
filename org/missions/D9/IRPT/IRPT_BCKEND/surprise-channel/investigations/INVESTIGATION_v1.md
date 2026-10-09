@@ -23431,3 +23431,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The packet lists the two held-out routes (GET .../holdings/{accountSetId}, GET .../narrative/{reportId}) as NOT YET NARROWED and states that the follow-up cell is UNCUT, to be cut by 2.0.0_SA_COO~P2 with the scope of rows S5 and S6. The worker did not invent a cell id."
 }
 ```
+
+## IRPT_BCKEND-D2-W261-S1 -- FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "FWD-14's multi_asset condition cannot fire through run_firm today: the v1 contract rejects multi_asset at validation, before the gate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py ASSET_CLASS_VALUES (SC-e-56 comment: multi_asset left) and classify_security raising on a class outside it",
+      "run_firm with the real validator on a multi_asset fixture: RuntimeError 'asset_class: multi_asset is not one of [equity, fixed_income, alternatives, structured, commodities, cash, other, unclassified]' (tests/test_holdings_publish_gate.py, the arms that stand validation aside)"
+    ]
+  },
+  "spec_asserts": "PRD FWD-14 ACCEPT: WORSE is any multi_asset; on WORSE the index does not move and one refusal record names the condition, count and ids.",
+  "world_is": "Today a multi_asset class is stopped upstream as a build defect (a bare raise, no refusal record) because the published contract enum and the classifier both exclude it. The gate refuses it WITH a record only if validation ever admits it; the tests prove that arm by standing validate_snapshot aside. No decision asked: reported so a reader does not take the arm for exercised-in-production."
+}
+```
+
+## IRPT_BCKEND-D2-W261-S2 -- The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W261-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~261",
+  "surfaced_at": "2026-10-09T06:43:32Z",
+  "one_line": "The v0.32 closed-account exemption reads the landed directory's TERMINATED marking; Cottonwood's source records none, so a closed COT account would still freeze that firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:815 and :824 -- cottonwood fact_allocations carries no account status column at this vintage -> termination UNKNOWN on every entry",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:623 (49F: RELATIONSHIP entry TERMINATED only when every account is closed) and :725 (INF: only when no row is_active)",
+      "holdings_snapshot.py closed_account_ids(): collects account ids of entries whose termination.indicator == TERMINATED; an absent directory names none (fails closed)"
+    ]
+  },
+  "spec_asserts": "PRD v0.32: an account the firm's source records as closed or terminated is LISTED, never refused, so an ordinary closure cannot freeze the firm.",
+  "world_is": "The exemption is exactly as wide as the source's own closure marking. 49F account-level closures and fully closed relationships are recognized; a partly closed 49F relationship is not (its entry stays ACTIVE); Cottonwood has no closure column at all, so a closed COT account that leaves the candidate is REFUSED as account_lost and every later fire refuses too until the source gains a closure fact. Left alone this is the freeze v0.32 was written to prevent, for COT. Disarm: a cell that gives COT (and partly closed 49F relationships) a source closure marking, or a CTO ruling on another source."
+}
+```

@@ -2402,3 +2402,21 @@ Workers come from ~P's agreed block ~260..~299 (~M2 msg 2557, ~Y2 msg 2560). Che
 
 fanout: 2 of 2 chains, cap 8, reason: independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~260 and ~261. The FWD-14 deploy is a never-widen
 pair after the cell.
+
+## 93. ROUND 100, WORKSTREAM ~P (2026-10-09 ~06:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2726 and Andrew's release-now)
+
+IB-pr-390's pair is complete: COO half @567612e686, CTO half @b97ebb6b98 (msg 2726), with conditions:
+- the replay is re-run before the ledger;
+- the ledger states the pin and the six sha256;
+- after-read 2 is satisfied by the replay, with no profile edit;
+- the two held hosts stay held.
+
+Andrew's word (via ~V2 msg 2536) releases it now and standalone. MSTR seated `0.7.0_AE_CloudOps~IB2` for it (msg 2725). Round 98's IB-pr-393
+(FWD-14) is complete and drained @42793c81fc; its row W261-S2 (cottonwood closed-account marking) is asked of the CTO before its pair.
+Check `deliverables/2.0.0_SA_COO~P2/checks/r100/p100_apply_390.py`: AC1 and AC2 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-395` | apply IB-pr-390 on 6 hosts (replay before ledger; held hosts untouched) | FWD-2 / IRPT_ANLREQ FWD-1 | WORLD | IB-pr-390 pair GIVEN | P100-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release. Assignee: 0.7.0_AE_CloudOps~IB2.

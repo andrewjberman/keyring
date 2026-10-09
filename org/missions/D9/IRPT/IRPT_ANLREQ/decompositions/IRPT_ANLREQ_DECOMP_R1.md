@@ -133,6 +133,16 @@ ticket in this journey.**
 | 8 Attach | MISSING | `AR-v-12` + `AR-g-12` | ~V2 / ~G2 | ~V2 names the `package_principal` in the type definition (bound to its PROFILE row's firm, C-PACKAGER). ~G2's packager makes the I5 call after the render |
 | 9 Ticket page | MISSING | `AR-v-13` | ~V2 | The ticket page lists the package's files, and each opens through I6 |
 
+**AMENDMENT 7 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~07:0xZ, on rows `D2-W41-S11` and `D2-W41-S16`): two cells the lanes cut inside
+their own scopes are registered here, so their criteria resolve.**
+
+| hop | state | cell | lane | what EXISTS at the end |
+|---|---|---|---|---|
+| 6 Commentary (store) | MISSING | `AR-t-13` | ~T2 | The DRAFT persists through ONE named writer to the `ANALYSIS_COMMENTARY` store (I4s, AMENDMENT 1); folded into `AR-t-12`'s order (`<owned_cells>AR-t-12 AR-t-13</owned_cells>`) |
+| 7 Package (poll) | MISSING | `AR-g-13` | ~G2 | The resident host polls I4 (`commentary_ready`) into the packager (AMENDMENT 4) |
+
+**10 cells** after this amendment. Gate limb: none (a decomposition document).
+
 **8 cells**: ~Y2 1, ~V2 3, ~G2 2, ~T2 2. Hops 2 and 3 are graded by the thread run, not cut.
 
 **Release note for `AR-y-11`:** `submission.py` and `acceptance.py` are staged in `irpt-status`, and `entry.py` in

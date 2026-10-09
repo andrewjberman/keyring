@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.32",
+ "prd_version": "v0.33",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -118,7 +118,7 @@ Brief: `docs/briefs/investor-reporting-ir-bk-brief-20260910.md` @`2acf23d8fd`, 5
 
   FWD-14 A firm's holdings publication never gets worse from one fire to the next: a worse candidate is refused and the last good one keeps serving
          DONE WHEN  EXERCISED -- one QA run fed a candidate that drops one classified security's class is refused, writes its refusal record and keeps serving the prior; the same run with the class restored re-points; both in one trace
-         ACCEPT     in the producer's publish step, before the firm's index moves, the candidate is compared with the publication the firm serves now; WORSE is any of: reconcile difference above 0.01; any multi_asset; any class outside the six; a security classified at the prior and unclassified now; an account present at the prior and absent now, unless the firm's source records it closed or terminated (listed, never refused); a source trading-day frontier older than the prior's; on WORSE the index does not move, the firm keeps its last good publication, and one refusal record per firm names the failed condition, its count and the ids; other firms publish independently; new unclassified positions are listed, never refused; a first publication passes on the absolute conditions only
+         ACCEPT     in the producer's publish step, before the firm's index moves, the candidate is compared with the publication the firm serves now; WORSE is any of: reconcile difference above 0.01; any multi_asset; any class outside the six; a security classified at the prior and unclassified now; an account present at the prior and absent now, unless the firm's source records it closed or terminated (listed, never refused), and for a firm whose source carries no termination marking at all it is listed and never refuses by itself; a source trading-day frontier older than the prior's; on WORSE the index does not move, the firm keeps its last good publication, and one refusal record per firm names the failed condition, its count and the ids; other firms publish independently; new unclassified positions are listed, never refused; a first publication passes on the absolute conditions only
          PROOF      the seat-driven QA trace above (both arms), then the first scheduled fire after the deploy read back per firm: PUBLISHED or REFUSED, with the record
          OWNER      IRPT_BCKEND (workstream 2.0.0_SA_COO~P2)
          CONSTRAINT a gate on the producer's own write, never a monitor or alert (CLAUDE.md moratorium); the refusal record's address is lib/opal_naming.py address() output, beside the manifest; the producer change moves served output and needs a never-widen pair; it retires S392's manual pin/read (e62e56_post_fire_read.py)
@@ -755,5 +755,16 @@ ENDPOINT is not edited.
 - **The defect:** an ordinary account closure would be refused. The kept prior still holds the account, so every later fire would refuse too and the
   firm would freeze.
 - **The fix:** an account the firm's source records as closed or terminated is LISTED, never refused. The clause is taken verbatim from the CVO's fix.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM v0.33 -- FWD-14: account-lost cannot refuse where the firm records no closures (L4; ENDPOINT changed: the ratified-text half re-opens)
+
+- **Source:** row IRPT_BCKEND-D2-W261-S2 (ARMED), `2.0.0_SA_COO~P2` msg 2728.
+- **The defect:** Cottonwood's landed directory marks every entry UNKNOWN. The v0.32 exemption reads a TERMINATED marking, so it can never fire for
+  Cottonwood, and one closed account would freeze the firm. That is the defect v0.32 meant to close.
+- **The fix:** for a firm whose source carries no termination marking at all, account-lost is LISTED in the refusal record and never refuses by
+  itself. The other five conditions still refuse, so a lost account that also loses value or classes is still caught.
+- **When this is re-read:** once Cottonwood's source carries real termination markings. Owner `2.0.0_SA_COO~P2`; no cell is ordered.
 
 -- 1.0.0_SA_CTO~DELL2
