@@ -21,11 +21,11 @@ Graduated at the rounds-17-19 L8 (ADJUDICATION_v10.md), round label v20: 3 rows,
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v20",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v20"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-D2-S10",
@@ -42,11 +42,11 @@ Graduated at the rounds-17-19 L8 (ADJUDICATION_v10.md), round label v20: 3 rows,
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v20",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v20"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-D2-S9",

@@ -1092,3 +1092,40 @@
   "world_is": "Met as written."
 }
 ```
+
+### IRPT_ANLREQ-D2-S8 -- APPLY-Y1 reads 3, 4 and 5 are UNEXERCISABLE by this seat, on one root cause
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2`
+- **disarm_owner:** `2.0.0_SA_COO~Y2` (it chooses the arm; this seat cannot)
+- **state:** BLOCKING-CANDIDATE (not ARMED: nothing is half-landed, and nothing degrades while it waits)
+- **spec_asserts:** TO-APPLY-Y1 step 5 reads 3 on "ONE template-lane request of the test filer",
+  step 6 read 4 on "a ticketed request", read 5 on "an existing READY request". Round 77's own check
+  (`checks/r77/y77_cells.py:50,77-78`) DEFERS its read 5a to this order's read 4, so the issuer
+  expects read 4 to be exercisable on dell2.
+- **world_is:** all three need a request this seat can both FIND and READ AS ITS OWNER, and it can do
+  neither. Measured, in order:
+  1. a synthetic advisor cannot OWN one. `intake/uploads.py:188-195 _allow` refuses unless
+     `authorize_current(principal, owner) is True`; a freshly minted advisor has no directory access,
+     so the live upload answered `InputAccessDenied / INPUT_ACCESS_DENIED` (internal), masked to
+     public `NOT_AUTHORIZED`. Read from CloudWatch, not inferred from the public code.
+  2. an EXISTING request cannot be enumerated here. `dynamodb Scan` on `irpt-requests` returns
+     `AccessDeniedException: KMS key access denied ... user/cloudops-dell2-agent-user is not
+     authorized to perform: kms:Decrypt on resource: .../key/7f4d3042-10d8-49a7-b55e-3c963cea8111`.
+     This is the same limit `y77_cells.py:50` records as "irpt-requests is not decryptable here",
+     now measured directly with the key named.
+  3. so the Lambda is the only reader that can decrypt, and it serves an owned record only to its
+     authorized owner -- an owner this seat cannot enumerate (2) or become (1).
+- **what this is NOT:** reads 3-5 have not FAILED. Nothing says the release misbehaves; the four
+  reads that DO exercise it all pass (step 0 at the new pin, live == built `BjUZjt2o`, both re-plans
+  0, and exactly ONE `/original` route on the api out of a 119-route denominator with `NextToken`
+  null). ABSENT is not EXERCISED-AGAINST, so this does not meet the order's Branch B, which fires on
+  a read that fails. Rolling back a release that nothing has impeached, because the applier lacks a
+  test identity, would be the wrong act.
+- **the two fixes this seat REFUSED, and why:** granting the synthetic advisor directory access, or
+  granting this device `kms:Decrypt` on the requests key. Both WIDEN access to clear a test. This
+  seat measurably holds `iam:CreatePolicyVersion` and `iam:SetDefaultPolicyVersion` on `*`, so it
+  could perform the second one unaided -- which is the reason not to, not a reason to.
+- **the arm this seat recommends:** the laptop runs reads 3-5, exactly as it ran Y75's X-1 read-back
+  for the same decryption reason, and returns the booleans plus the link's sha256 and expiry (never
+  the link). The alternative is the issuer naming an existing request id and an identity authorized
+  to read it.
