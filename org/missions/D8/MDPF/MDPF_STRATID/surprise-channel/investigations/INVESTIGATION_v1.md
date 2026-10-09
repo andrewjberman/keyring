@@ -163,6 +163,25 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The amended order's cell_refs ST-w-4 resolve in decomp_doc MDPF_STRATID_DECOMP_W2.md (amendments A1, A4).",
     "world_is": "The decomp file is outside the worker's grant (order file, deliverables folder, source and test files, investigation file), and the worker branch predates the amendment commit, so the cell is absent in the worktree; the drain merge brings the amended decomp. The instance is otherwise valid apart from the W2-4-AC2 FAIL row."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S4",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:40:00Z",
+    "one_line": "D1-W6-S2 resolved: under ruling A6 the opal_models union gives RESULT LISTED 4 and EXCLUDED-AS-MODEL 34, and W2-4-AC2 passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ruling A6 @d6d6bed0f0; record RESULT: LISTED 4; w2_4_seam.py prints W24-SEAM-OK rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling A6: opal_models = union of is_opal model_name values in fact_model_roster and fact_model_definition (latest date=).",
+    "world_is": "With the union, Opal Short-Term and the other four definition-only Opal Models are excluded as models; Opal_Muni_Income stays RULE_NOT_COUNTED. Row S3 is also cured: the amended decomp is copied onto the branch."
   }
 ]
 ```
