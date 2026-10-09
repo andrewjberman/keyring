@@ -46861,3 +46861,44 @@ REFUSED_20261008)
 2026-10-09T14:52:17Z PASS  0.7.0_AE_CloudOps~Z  2  (all paths in-lane)
 2026-10-09T14:52:37Z PASS  0.9.0_WK_NFRA_OPLGTW~49  2  (all paths in-lane)
 2026-10-09T14:52:51Z LANDED-2P  0.7.0_AE_CloudOps~Z  38b5e4b432  paths=2  validate=60.12s  wait=0.95s  hold=6.00s  build=3.87s  ref=1.17s  post-commit=15.16s  attempt=1
+2026-10-09T14:55:22Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane)
+2026-10-09T14:55:27Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane)
+2026-10-09T14:55:34Z LANDED-2P  2.0.0_SA_COO~S1  362882be61  paths=1  validate=12.35s  wait=0.13s  hold=1.50s  build=0.96s  ref=0.50s  post-commit=3.64s  attempt=1
+2026-10-09T14:55:36Z LANDED-2P  0.0.0_AB_MSTR~DELL1  593af697c3  paths=2  validate=10.18s  wait=0.11s  hold=1.62s  build=0.95s  ref=0.64s  post-commit=3.48s  attempt=1
+2026-10-09T14:56:59Z PASS  0.7.0_AE_CloudOps~RV1  3  (all paths in-lane)
+2026-10-09T14:57:01Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T14:57:04Z PASS  0.9.0_WK_DSGN_AMGTV1~141  2  (all paths in-lane)
+2026-10-09T14:57:12Z LOCK-WAIT  1.0.0_SA_CTO~DELL1  1s
+2026-10-09T14:57:17Z LANDED-2P  0.7.0_AE_CloudOps~RV1  8ad8b51083  paths=3  validate=17.02s  wait=0.21s  hold=1.92s  build=1.16s  ref=0.69s  post-commit=5.81s  attempt=1
+2026-10-09T14:57:19Z LANDED-2P  1.0.0_SA_CTO~DELL1  7e1a0feb2f  paths=1  validate=15.60s  wait=1.59s  hold=1.90s  build=1.19s  ref=0.63s  post-commit=4.76s  attempt=1
+2026-10-09T14:57:36Z PASS  2.0.0_SA_COO~Q1  1  (all paths in-lane)
+2026-10-09T14:57:52Z LANDED-2P  2.0.0_SA_COO~Q1  9c613dea5b  paths=1  validate=16.06s  wait=0.17s  hold=1.77s  build=1.13s  ref=0.58s  post-commit=4.72s  attempt=1
+2026-10-09T14:58:38Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane)
+2026-10-09T14:58:29Z PASS  0.9.0_WK_AMGT_RESAPP~344  4  (all paths in-lane)
+2026-10-09T14:58:52Z LANDED-2P  2.0.0_SA_COO~R1  9682b794c3  paths=1  validate=14.03s  wait=0.11s  hold=1.46s  build=0.93s  ref=0.49s  post-commit=4.02s  attempt=1
+2026-10-09T14:59:19Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane)
+2026-10-09T14:59:32Z LANDED-2P  2.0.0_SA_COO~V1  b35333c714  paths=1  validate=11.99s  wait=0.10s  hold=1.26s  build=0.78s  ref=0.45s  post-commit=3.71s  attempt=1
+2026-10-09T14:59:31Z PASS  0.9.0_WK_ETFS_RIVALS~34  4  (all paths in-lane)
+2026-10-09T14:59:33Z BLOCK  2.0.0_SA_COO~D1  1  (1 violation(s): VIOLATION: org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/subjectrow.cjs -- lane=TREE_DELIVERABLES (Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.); agent=2.0.0_SA_COO~D1 not in permitted_agents;)
+2026-10-09T14:59:40Z MERGE-ATTEMPT  2.0.0_SA_COO~D1  rc=0  secs=5.06  graded=0/2 fast-lane  args=(wk-DSGN_AMGTV1-141 -m drain(DSGN_AMGTV1.TO-AV-zzr-1 partial, 2.0.0_SA_COO~D1): merge worker 0.9.0_WK_DSGN_AMGTV1~141 -- build + proof (AC2 FAIL on the stale subjectrow anchor, now re-anchored) + rows S1/S2; status left pending for the re-seated close-out)  first=(none)
+2026-10-09T15:00:11Z BLOCK  2.0.0_SA_COO~D1  1  (1 violation(s): VIOLATION: org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/subjectrow.cjs -- lane=TREE_DELIVERABLES (Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.); agent=2.0.0_SA_COO~D1 not in permitted_agents;)
+2026-10-09T15:00:26Z PASS  0.9.0_WK_AMGT_RESAPP~344  3  (all paths in-lane)
+2026-10-09T15:00:49Z PASS  0.9.0_WK_ETFS_RIVALS~34  1  (all paths in-lane)
+2026-10-09T15:01:10Z PASS  0.9.0_WK_AMGT_RESAPP~344  1  (all paths in-lane)
+2026-10-09T15:01:29Z PASS  2.0.0_SA_COO~W1  4  (all paths in-lane)
+2026-10-09T15:01:44Z PASS  2.0.0_SA_COO~D1  1  (all paths in-lane)
+2026-10-09T15:01:49Z LANDED-2P  2.0.0_SA_COO~W1  115c7f6cb0  paths=4  validate=30.75s  wait=0.11s  hold=1.54s  build=0.99s  ref=0.52s  post-commit=4.29s  attempt=1
+2026-10-09T15:01:56Z LANDED-2P  2.0.0_SA_COO~D1  f1bce3cf03  paths=1  validate=12.85s  wait=0.14s  hold=1.52s  build=1.03s  ref=0.45s  post-commit=3.12s  attempt=1
+2026-10-09T15:02:01Z PASS  2.0.0_SA_COO~S1  3  (all paths in-lane)
+2026-10-09T15:02:07Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T15:02:14Z LANDED-2P  2.0.0_SA_COO~S1  f150585b25  paths=3  validate=11.98s  wait=0.14s  hold=1.66s  build=1.08s  ref=0.53s  post-commit=4.92s  attempt=1
+2026-10-09T15:02:18Z LANDED-2P  0.0.0_AB_MSTR~DELL1  658420fb1b  paths=1  validate=10.07s  wait=0.13s  hold=1.50s  build=0.95s  ref=0.51s  post-commit=3.98s  attempt=1
+2026-10-09T15:02:33Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane)
+2026-10-09T15:02:41Z PASS  2.0.0_SA_COO~Q1  1  (all paths in-lane)
+2026-10-09T15:02:44Z LANDED-2P  2.0.0_SA_COO~V1  284de73f99  paths=1  validate=11.66s  wait=0.10s  hold=1.57s  build=0.95s  ref=0.58s  post-commit=3.91s  attempt=1
+2026-10-09T15:02:45Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane)
+2026-10-09T15:02:50Z LANDED-2P  2.0.0_SA_COO~Q1  983eb8906f  paths=1  validate=9.31s  wait=0.10s  hold=1.26s  build=0.84s  ref=0.38s  post-commit=3.09s  attempt=1
+2026-10-09T15:02:58Z LANDED-2P  2.0.0_SA_COO~R1  96a82dda90  paths=1  validate=11.40s  wait=0.09s  hold=1.31s  build=0.86s  ref=0.41s  post-commit=5.35s  attempt=1
+2026-10-09T15:03:29Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane)
+2026-10-09T15:03:36Z LANDED-2P  0.0.0_AB_MSTR~DELL1  abb924b3f7  paths=2  validate=5.90s  wait=0.08s  hold=1.17s  build=0.68s  ref=0.46s  post-commit=3.35s  attempt=1
+2026-10-09T15:03:44Z PASS  0.9.0_WK_ETFS_RIVALS~34  1  (all paths in-lane)

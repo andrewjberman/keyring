@@ -23337,3 +23337,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Ledger amgt-resapp-r85-jj5-scoped-api-dell1: L1-L5 closed with proof (act 1 the recorder, conditions 8 and 9, the rollback capture, the wheels); L6 is where the STOP lands and is NOT closed; L7-L11 unattempted. ACT 1 IS COMPLETE AND INDEPENDENT of this STOP -- the recorders no longer write the source map's top-level key, the key is gone, AC2 reads R85 SOURCEMAP AC1: YES, and condition 9 holds -- so the round-85 recorder work can be kept whichever way this is ruled. The built file (42,0xx,xxx B) and the kept live package are both retained, so whoever applies does not need to rebuild. For the issuer, the two routes dd-4's row D1-S4 used in the same situation: an ADDENDUM admitting the four with their closure reason printed (the cheap route, and the reason is already measured above), or a re-cut at a pin whose crosswalk.py does not reach build_universe (which would mean dropping jj-3's issuer build, i.e. the round's point). A third route exists and is worth naming because it is the only one that changes the generator rather than the list: cut the pair's admitted list from the BUILD's closure instead of from a diff over the roots, so the two instruments stop disagreeing."
 }
 ```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W344-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~344",
+  "surfaced_at": "2026-10-09T14:45:23Z",
+  "one_line": "Two existing test files (test_add_security_batch.py, test_crosswalk_write_validates.py) drive add_security._build_document without stubbing load_issuer_sources, so a fail-closed load made 11 identity tests fail; I made the add_security load fail-open with a WARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order s.1: add_security passes crosswalk.load_issuer_sources() into its build; order AC2: the identity folder passes with 0 failed; bounds s.4: edit the two writers and the new test file only.",
+  "world_is": "Unstubbed, load_issuer_sources raises (boto3.client patched to AssertionError in 9 tests; 'no stored SEC ticker-to-CIK object' RuntimeError in 2). Those test files are outside my write grant, so add_security._build_document catches the load error, prints 'WARN: issuer sources unreadable' to stderr and builds with issuer_sources=None (document unchanged, no issuer field). Consequence: on a live --write-pool with the store unreadable, the pool would be put without issuer on new records instead of refusing. The alternative (fail closed, stub the two test files) needs a path grant on them. build_universe.union_main stays fail-closed (its tests did not need it).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/add_security.py _build_document (try/except around crosswalk.load_issuer_sources)",
+      "lib/research/identity/tests/test_writers_carry_issuer.py test_unreadable_sources_build_without_issuer_and_warn",
+      "pytest lib/research/identity before the catch: 11 failed, 244 passed; after: 256 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W344-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~344",
+  "surfaced_at": "2026-10-09T14:45:23Z",
+  "one_line": "build_universe.py builds no crosswalk document (no build_crosswalk call; it reads the served list via load_crosswalk), so there was no 'build they call' to pass issuer_sources into; I added an optional issuer_sources argument to build_union that stamps issuer on each union name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order s.1 and preflight: build_universe passes crosswalk.load_issuer_sources() into the build it calls, so a record it adds carries issuer.cik.",
+  "world_is": "build_universe.build_union assembles universe/v1 names from crosswalk.load_crosswalk + the SEC cache and carries only a top-level filing cik, never issuer. I added build_union(issuer_sources=None) (None leaves names unchanged) that sets name['issuer'] via crosswalk._issuer_for on security_key, and union_main reads crosswalk.load_issuer_sources(sec_cache_path=...) at call time (function scope, CLI only, no request path). This adds an optional `issuer` key to universe/v1 names on the next --write-pool; no consumer of that key exists and no write was made here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/build_universe.py build_union and union_main",
+      "lib/research/identity/tests/test_writers_carry_issuer.py BuildUniverseCarriesIssuer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
