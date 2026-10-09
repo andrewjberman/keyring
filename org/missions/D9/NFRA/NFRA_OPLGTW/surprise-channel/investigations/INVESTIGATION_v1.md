@@ -11011,3 +11011,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Batches 1-3 timings: puller 29.5 / 29.8 / 28.5 min, converter drain +8.2 / +8.0 / +8.0 min after the puller, one batch about 38 min; remaining 6 batches plus closing run estimated about 4 h (2.6 s per file, 3,688 files left plus a 2-3 min closing run). Batches 4-9 reach back into 2024-2025, so more dates may carry the same drift; unmeasured."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T15:40:36Z",
+  "one_line": "Resolution of NFRA_OPLGTW-Z-W46-S3 (the S3 row itself is not edited): both halves carry AMENDMENT 1, so six era-C dates (2025-12-12, 15, 16, 17, 18, 19) are recorded 'held: vendor drift (RPS pin)' and OG-bh-1 resumes at batch 4 under the narrowed stop rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half AMENDMENT 1 @f77e32d7c3 (deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_OG-bh-1_20261009.md): a date failing ONLY with an RPS SchemaDriftError is recorded 'held: vendor drift' and does not stop the run; every other stop stands; the pin extension is a separate cell for 0.7.0_AE_CloudOps~Z.",
+      "COO half AMENDMENT 1 @eea4aebe10 (deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_HALF_COO_OG-bh-1_20261009.md): same ruling; DLQ may rise by the held RPS files' count and any rise above it stops; the 12:15Z sweep retries the held files and withholds the lane's sweep markers until the pin lands (accepted).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json: held = the six dates, amendment_1.resumed_utc 2026-10-09T15:38:36Z. bh1_drive.py edited before resuming: a not-qualified era B/C date is held only if the converter log shows a SchemaDriftError on its single rps key AND every closure finding is one of fact_rps, fact_rps_s2, dim_position, dim_balance; any other ERROR line, any converter Errors count above 3 x the drift files, or a DLQ rise above the newly held count stops the driver."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W46-S3: a date not qualified for a reason other than missing siblings stops the run (COO half section 3).",
+  "world_is": "The stop rule is narrowed in one case by the two amendments; the held dates stay NOT qualified (the Gateway never serves an incomplete date) and are not re-run by this order. Held dates will read open under bh1.sh AC2.",
+  "notes": "Cites S3 as resolved by ruling, not by repair: the 28 columns are still unknown to the pin."
+}
+```
