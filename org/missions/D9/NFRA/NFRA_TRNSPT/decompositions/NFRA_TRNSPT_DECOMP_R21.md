@@ -24,3 +24,16 @@ Domain: ADDENDUM 12's two round-21 items. (1) = TR-m-21 + TR-g-21; (2) = TR-p-21
 ## Battery
 
 Check `org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R21_CHECKS/r21_checks.py` at base 37ad2cddeb: `R21-M21-FAIL` (0 of 3 resources mapped).
+
+## AMENDMENT 1 (issuer, 2026-10-09 ~11:5xZ) -- CTO ADDENDUM 12.1 (msg 3213) adds item 3
+
+"Round 21 adds item 3: FWD-5's narrower reader role ... reads Teams and outlook SILVER only, never bronze, through `name()`, under a never-widen
+pair ... Its proof is FWD-8's pattern ... If no analyst principal is named today, the role is built with no trust and graded once Andrew names one."
+
+| cell | item | outcome | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|
+| `TR-r-21` | (3) the silver-only reader role built plan-only: names via `name()`, GetObject on the two silver prefixes, a decrypt-only key statement via S3, trust that admits nobody while no holder is named | FWD-5 | dell2 worker (workstream `readers`) | WORLD (path floor) | worker | -- |
+| `TR-a-21` | (3) its apply under a never-widen pair (COO half + CTO half, the holder named or none), then FWD-8's pattern: one wiped silver read allowed, one bronze read refused | FWD-5 | ISSUER pair + applier | WORLD | -- | TR-r-21; a principal that can assume it for the proof (none while trust is empty: the proof then reads the role's simulated policy, graded again when Andrew names a holder) |
+
+Chains: A (TR-m-21 -> TR-g-21) and B (TR-r-21 -> TR-a-21), 2 of 2 worker chains, cap 8. Rule 24: ADDENDUM 12.1's item 3 = TR-r-21 + TR-a-21;
+remainder none. Battery: `r21_checks.py r21` at base da995dba71: `R21-R21-FAIL absent`.
