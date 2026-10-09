@@ -22,3 +22,7 @@ VERBATIM:
 
 `org/ref/LIVE_ARMS.md`: this seat does not write its own row. One line to `1.0.0_SA_CTO` names this record so that the DELL2 row can be
 amended from 60m over 5 projects to 30m over 7.
+
+## SUPERSEDED 2026-10-09 ~03:4xZ
+
+Re-armed on Andrew-direct ~03:4xZ over every dell2 project (10): `ANDREW_DIRECT_20261009_034xZ_SELF_DRIVE_30M_EVERY_DELL2_PROJECT_AND_DISCRETION_ON_THREE_ACTS.md`. Cron b0f6db2a is replaced.

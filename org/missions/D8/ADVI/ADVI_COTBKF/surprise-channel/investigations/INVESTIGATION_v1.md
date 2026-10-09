@@ -2812,3 +2812,29 @@ round.** Never edit an existing row.
   "world_is": "All three met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-W51-S1 -- CB-aa-2 weight fallback and list population
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W51-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~51",
+  "surfaced_at": "2026-10-09T03:31Z",
+  "one_line": "CB-aa-2 weight rule has no stated value for a security with no purchase row (1,540 of 4,372 listed): this worker used the largest inbound amount (1,428), else weight 1.0 (112), with weight_basis printed per row; and the list holds 4,372 securities where the CRO's section 6 tier counts sum to 3,226",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/PRICE_NEED/COTTONWOOD_PRICE_NEED_RANKED.md (weight_basis: BUY 2832, INBOUND 1428, NONE 112; P1 2155, P2 195, P3 2022)",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261008_COTTONWOOD_YAHOO_PRICE_BACKFILL_STRUCTURE.md section 6 (P1 1,714, P2 64, P3 1,448)",
+      "data/assets/scripts/silver/commonwealth_price_need.py module docstring (the weight rule); RECONCILE account_days=1691729 mismatched=0 against the run's holdings - priced_holdings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order scores held days x holding accounts weighted by the largest single purchase amount, and tiers the securities by the CRO's rule; it does not say what weight a security without a purchase row takes, and it does not state the population the CRO's tier counts were taken over.",
+  "world_is": "1,540 listed securities have no `by` row (they enter by in-kind transfer or contribution); weight 0 would zero their score and tie them, so the script takes the largest inbound line amount (commonwealth_signs share-in types), else 1.0, and prints weight_basis BUY/INBOUND/NONE on every row. The list counts every non-cash security held on an unpriced account-day in the default run (4,372, the unpriced holding days equal holding_days - priced = 15,986,926), a wider population than the CRO's 3,226; the CRO's population definition was not available to this worker, so the difference is recorded, not reconciled. The weight rule is the CTO's or CRO's to change; the script reads one function (purchase_weights)."
+}
+```

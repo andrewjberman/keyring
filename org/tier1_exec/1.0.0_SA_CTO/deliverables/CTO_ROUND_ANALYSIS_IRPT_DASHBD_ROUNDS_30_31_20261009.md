@@ -130,3 +130,26 @@ the laptop through MSTR~DELL2.
 gap, not a fix.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-09 ~03:4xZ) -- round 35 (CVO slug msg 2299, `ADJUDICATION_v20.md` @e9d4ac3755) and FWD-11
+
+**Measured:**
+- MAY-CLOSE, 3 rows dismissed, ARMED 0.
+- The R35 activity-and-lot packet was re-cut. Served-pandas peak is 1,500.7 / 1,672.3 MB of 2,048, and duration is 375 to 447 s of 900.
+- The blast radius equals round 26's.
+- Both halves are GIVEN: COO @cbad72eb7b, CTO @75acbfcb50. The pre-apply rollback anchor is @3285eae1a5.
+
+**Andrew-direct ~03:3xZ (msg 2318):** "You should be doing this not just for 49 Financial, but for all clients, inflection and cottonwood
+too." The PRD is amended to v0.8 with **FWD-11** @e8b44a8379. The CVO's re-sign of the ratified-text half is asked.
+
+**Round 36 enrichment (ONE issuance):**
+
+| # | Cell | Criteria (3 or fewer) |
+|---|---|---|
+| E1 | The 49 Financial R35 release APPLY under both halves | preconditions 1 to 3 in order (pins, plan exactly 0/3/0, a dry_run under 85% of both limits); A1 to A6 read on the first fire; A4 DELTA=0 before any second fire |
+| E2 | FWD-11, Cottonwood: its adapter's gold `account_return_daily` from Black Diamond (C-ADAPTERS), on a sample, tied out against BD's own return (C-TIEOUT) | the sample's within-tolerance count printed with its denominator; every miss classed; no write to served gold (offline) |
+| E3 | FWD-11, Inflection: the same from Orion, with lots `NO_LOTS` until Eclipse tax lots are shown populated | the same criteria, plus the lots status named per account |
+
+Each firm's served release later goes under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
