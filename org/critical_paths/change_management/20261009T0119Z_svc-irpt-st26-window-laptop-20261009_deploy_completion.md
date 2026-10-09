@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| ADD | activation | svc-irpt secret resource policy ADD | LiveBEFORE setequal;signedADD put;3principal simulation |  | OPEN |
+| ADD | activation | svc-irpt secret resource policy ADD | LiveBEFORE setequal;signedADD put;3principal simulation | LiveBEFORE setequal;putADD01:20:12-15Z;liveADD setequal;dell2allowed,dell1explicitDeny,walkerallowed;noGetSecretValue | CLOSED 20261009T012154Z |
 | REMOVE | activation | svc-irpt secret resource policy BEFORE restored atX1 or06Z | LiveADD setequal;signedBEFORE put;3principal simulation |  | OPEN |
 
 ## Log
 
 - 20261009T011911Z OPENED by 0.7.0_AE_CloudOps with 2 leg(s)
+- 20261009T012154Z LEG ADD closed: LiveBEFORE setequal;putADD01:20:12-15Z;liveADD setequal;dell2allowed,dell1explicitDeny,walkerallowed;noGetSecretValue
