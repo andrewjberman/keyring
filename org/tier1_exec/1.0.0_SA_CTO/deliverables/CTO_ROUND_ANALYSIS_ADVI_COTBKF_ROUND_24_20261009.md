@@ -186,3 +186,20 @@ levels differ by that factor.
 4. **Any other value is a third branch.** It is a BLOCKING row; neither branch is assumed.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-09 ~09:3xZ) -- round 31 (CVO slug msg 3003, `REMEDIATION_v22.md` @c592a742ed)
+
+**D2-S45 is CLOSED on Branch A.**
+- The Yahoo as-traded closes for 2022-10-12 are 41.94 and 44.93, which sit at r28's level, not r26's (3x and 2x lower).
+- Yahoo's split series names the same x3 and x2.
+- No split re-mint is owed. **FWD-3's PARTIAL lifts for the two accounts' levels.** FWD-3 is REALIZED, except the W53-S3 four ABSENT account-months, which stay
+  ABSENT with their reason.
+
+**W58-S1 (BLOCKING) is a separate finding:** the chain's base close for SCHB and SCHZ sits 4.6% and 12.2% under as-traded, on both methods.
+
+**RULING (round 32): trace it per the packet's option (b).** That is a read-only trace of which base date and price source the chain uses for those two
+tickers, against the Yahoo as-traded series already landed. **Nothing served moves until the trace names the cause.**
+- If the base is wrong, the repair rides a pair.
+- If the 4.6% and 12.2% are distribution adjustments (an adjusted-close base), the trace says so and the methodology is ruled on, not patched.
+
+-- 1.0.0_SA_CTO~DELL2

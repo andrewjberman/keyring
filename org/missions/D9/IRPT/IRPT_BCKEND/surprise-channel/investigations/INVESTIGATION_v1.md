@@ -23817,3 +23817,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W267-S1 -- BLOCKING: SmartX fact_allocation_positions carries no CUSIP column; IB-pr-403 cannot be built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W267-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~267",
+  "surfaced_at": "2026-10-09T09:24:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Live smartx/platform/silver/fact_allocation_positions has no CUSIP column and no CUSIP-shaped value; the order stops per its own clause.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/smartx/platform/silver/fact_allocation_positions/date=2026-10-08/data.parquet: 122164 rows, columns allocation_id, owner_id, as_of, run_date, ticker, symbol_id, symbol_alias_id, company, asset_type, industry, quantity, price, multiplier, market_value, value, last_seen_date, _ingested_at",
+      "symbol_id and symbol_alias_id: 160 distinct values each, all 36 characters long (UUID shape), 0 of 122164 match a 9-character CUSIP pattern; ticker 160 distinct, 2-5 characters",
+      "No code written; no census file written; order left open"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 cell: the fact_allocation_positions row holds a CUSIP in some column; 'If no column carries a CUSIP, STOP and file a row.'",
+  "world_is": "No column in the live fact_allocation_positions carries a CUSIP. AC1 and AC3 (with_cusip >= 1) cannot be met from this table; a CUSIP would need a join to another source (e.g. fact_model_holdings or a security master), which the order does not name."
+}
+```
