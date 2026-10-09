@@ -10933,3 +10933,54 @@ name the one known failure instead of silently inheriting it.
   "notes": "The Phase A deliverables committed at d757fc5c0b describe the pre-A6 candidate; they are superseded by the files committed after this row."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T08:03:46Z",
+  "one_line": "The Tax SMA master's source history starts 2023-10-03, not 'maybe April 2026': 758 business dates and 6002 vendor files over three years, so the order's full backfill is about 5,800 silver-converter invocations on a function with reserved concurrency 2, and the oldest 248 dates carry only rld and tcf.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_census_record.json: command_id fd109a83-6c02-4f4f-a3a9-b16a5d46a17d, lookback_days 2000 (window 2021-04-18..2026-10-09), earliest_served 2023-10-03, 758 served_dates, enumerated 6002, 16 types; bh1.sh AC1 PASS exit 0.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/ssm_invocation_census_400.json and ssm_invocation_census_800.json: each earlier window's earliest DATE is its own first day (2025-09-04; 2024-07-31), and every shared date's file count equals the 2000-day run's (0 differences).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_plan.md section 1: eras A 2023-10-03..2024-09-26 (248 dates, 526 files, rld+tcf), B 2024-09-27..2025-10-16 (265, 2735), C 2025-10-17..2026-10-08 (245, 2741); tcf/tcfx/tnn are NAMED_HOLES (1069 files)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's cell text (Andrew-direct): 'it probably doesnt go even 1 year, i expect maybe april 2026'; the decomposition's batch sizing and the preflight's pull windows assume a short history.",
+  "world_is": "The source serves 2023-10-03..2026-10-08 for 08403355 (08335338's own bronze reaches 2023-07-12, 08242234's 2023-01-17). Nothing was written; Phase A only. The ask (W/NEVER_WIDEN_ASK_OG-bh-1.md section 7 item 1) puts era A's scope to the halves because 08335338 has no completion record before 2025-09-08 and so gives no precedent for a date holding only rld and tcf.",
+  "notes": "Not a blocker for the signed halves' decision; it changes the size of Phase B (nine batches plus a closing run), not its path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W46-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~46",
+  "surfaced_at": "2026-10-09T08:03:46Z",
+  "one_line": "The order's design for staying under SSM's 24,000-character cap (one DATE line per date) does not hold with the puller's own log prefix: the 800-day census run (758 dates would be ~534 shown) was cut at exactly 24,000 characters and lost its per-type lines and the TASK_UNREGISTERED / COPY_DELETED lines; stripping the '[timestamp] ' prefix on the box brought the 2000-day run to 16,461 characters.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/ssm_invocation_census_800.json: StandardOutputContent length 24000, ends '---output truncated--'; command b06d7458-a301-466a-9712-a160e90e12d6 (Status Success).",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~46/ssm_invocation_census_2000.json: length 16461, ends 'TASK_UNREGISTERED=True / COPY_DELETED=True'; command fd109a83-6c02-4f4f-a3a9-b16a5d46a17d. The one -replace edit is unchanged; only the wrapper's Get-Content print strips the prefix.",
+      "The 800-day run's cleanup lines were cut from its output; the box state was read afterwards by SSM 1ec6a545-1b98-459a-9634-6db0f17e12d8 (Success): TASKS= (no OpalOgBh1* task registered), DIR_EXISTS=False."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order, step 1: log one 'DATE <YYYY-MM-DD> <n>' line per business date so the output stays under SSM's 24,000-character cap.",
+  "world_is": "With the Log function's '[2026-10-09T07:39:27Z] ' prefix a DATE line is 40 characters; about 530 dates fill the cap. Phase B's SSM wrappers must print compactly (batch summaries, not per-file lines) for the same reason."
+}
+```
