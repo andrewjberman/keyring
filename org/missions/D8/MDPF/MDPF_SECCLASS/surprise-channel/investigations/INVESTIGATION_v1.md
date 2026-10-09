@@ -5958,3 +5958,32 @@ by dell1 or by this seat.
   "notes": "Named seat, per the ruling: 2.0.0_SA_COO~M1 signed the COO half with the single-class census. Forward rule: later pairs over this writer census every class outside the six. (Id D1-S20 was already taken by another row; this is D1-S21.)"
 }
 ```
+
+## MDPF_SECCLASS-W41-S5 -- SC-e-60 moves the served top-level mix keys: lower-case `unclassified`/`other` leave, `Unclassified` arrives, and no reader of the key was censused
+
+```json
+{
+  "id": "MDPF_SECCLASS-W41-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~41",
+  "surfaced_at": "2026-10-07T14:07:57Z",
+  "one_line": "TO-SC-e60 says serve the residual as an `Unclassified` line; D_04's served top-level mix already carried C_06's own lower-case `unclassified` and `other` classes as keys (CTO batch 99/117), so the same weight now moves from those keys to a new title-case key, and the manifest maps no portal endpoint or component to platinum/firm/mix_summary.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py@35365ec33c _firm_top_level_mix and build_firm_mix_summary",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:178-183 MIX_ASSET_CLASSES carries unclassified and other",
+      "comp-pipescript io D_04: platinum/firm/mix_summary.json is a terminal write, no PORTAL CONSUMERS entry for it",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_D04_UNCLASSIFIED_20261007.md (Blast radius, readers; both branches)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e60: the residual is served as its own `Unclassified` line and the served mix sums to 1.0.",
+  "world_is": "Before the change the served mix summed to 1.0 only when C_06's classes covered its total, and carried the unknown as lower-case `unclassified`. The candidate puts the unknown, `other` and any uncarried dollars on one `Unclassified` key (the order's named key) and stops serving the two lower-case keys; the composition donut is unchanged. A reader keyed on the lower-case spelling would not find it after the next D_04 run. The served bytes and the 49F reader are not readable from dell1 (W25-S1), so the reader side is inferred, not measured.",
+  "notes": "The signers decide whether the key stays `Unclassified` or reads `unclassified` (one constant, UNCLASSIFIED_LINE, plus the test). Held off CLOUD until the half signs."
+}
+```
+
