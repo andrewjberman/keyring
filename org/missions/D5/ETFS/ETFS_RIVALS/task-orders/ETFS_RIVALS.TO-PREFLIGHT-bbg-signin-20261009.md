@@ -5,6 +5,7 @@
     <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
     <date>2026-10-09</date>
     <status>pending</status>
+<!-- graded 2026-10-09 ~10:46Z by 2.0.0_SA_COO~V1 on the report at origin/box/sitez (read 10:46Z): AC1 MET (issuer grade; status stays open: the complete flip needs a proof-of-spec instance the site-Z executor did not write) -- credentials OK; bloomberg_health ok:true 10:37:50Z; ONE reference_data draw SPY US Equity PX_LAST 10:37:57Z returned 773.93; no sign-in. Reachability at the instant only; the 11:00Z run is the J1 read. Draw booked tier-1 by 2.0.0_SA_COO~Q1. -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -50,6 +51,20 @@ lane: 0.7.0_AE_CloudOps~ZV, the site-Z lane for ETFS_RIVALS's site-bound acts (m
 </proof_of_spec>
 
   <report>
+    Executed 2026-10-09 by 0.7.0_AE_CloudOps~ZV at 06:37 Eastern (10:37Z), within the authorized window.
+    Runtime restored and measured GREEN 9/9 before execution; prior wake had been blocked by absent heartbeat/liveness.
+    Step 1: python integrations/bloomberg/auth/bbg_credentials.py --check exited 0:
+    CREDENTIAL: OK  secret=bloomberg/terminal/login  user_len=12 user_sha256=f713879ee035 pw_len=9 pw_sha256=b52a0db305ea
+    Step 2 at 10:37:50.422466Z: bloomberg_health {"ok": true, "endpoint": "127.0.0.1:8194", "service": "//blp/refdata"}.
+    Health invoked the existing blp_client.health implementation that bloomberg_health delegates to, under Python311.
+    Step 3: exactly ONE reference_data request, security SPY US Equity, field PX_LAST, no overrides or additional fields.
+    Start 10:37:57.125497Z; completed 10:37:57.531319Z; returned {"SPY US Equity": {"PX_LAST": 773.93}}; exit 0.
+    Step 4: not needed. No fill, submit, retry, pull, vehicle leg, or scheduled-task invocation ran.
+    Total metered draws: 1 (tier-1 request for COO~Q1 booking on MDPF_DEMQUE).
+    Reachability is proven at the measured instant; persistence until the scheduled fire is not claimed. AC1 grade and status remain with issuer.
+    Push state LOCAL on box/sitez; origin/box/sitez measured 667902f5c023200582f75836a2c9824a6956ec87 before report commit.
+    Commit hash is delivered to MSTR~Z after safe-commit; no push by this seat.
+
     Once, in this section, committed before 10:50Z, hash to `0.0.0_AB_MSTR~Z` so it reaches `0.0.0_AB_MSTR~DELL1`: each
     step's output line, whether a sign-in ran, the draw count (1 or 2) with security, field and time, and the measured push
     state. AC1 (the Terminal was reachable at the pre-flight) is the issuer's to grade.
