@@ -26,10 +26,16 @@ only after (a) the list-only run matches the control, (b) the daily puller, its 
 other two), the box's write grant and the silver conversion carry it in the SAME structure as the other two masters,
 and (c) a day lands, converts and qualifies.
 
-**STEP 0, the condition.** Read `deliverables/0.9.0_WK_NFRA_OPLGTW~39/g5_enumerate_record.json`. Continue ONLY if
-`runs.08403355.outcome` is `FILES`, the two type sets are equal (`side_by_side` both empty) and `grammar_equal` is
-true. Otherwise STOP: write `W/tm1_condition.result.md` saying which part failed, flip nothing, and report. That stop
-is this order's correct end, not a failure of yours.
+**STEP 0, the condition (AMENDMENT A1, issuer, 2026-10-09 ~00:0xZ).** `OG-en-1`'s record
+(`deliverables/0.9.0_WK_NFRA_OPLGTW~39/g5_enumerate_record.json`, drained @8ba9b3d865) reads: 08403355 `FILES`, 226
+files over 2026-09-08..2026-10-08, 13 types, per-type counts EQUAL to the control's on all 13; the control's one extra
+type is `slm` (22 files, the `{master}.CS{MMDDYY}.{TYPE}.zip` form), so `types_only_in_08335338` is `["slm"]` and
+`grammar_equal` is false only through `slm`. PHASE A proceeds on that record (it changes nothing live). Whether the
+`slm` absence is "the same shape" is `1.0.0_SA_CTO~O`'s ruling, given before or with its half; the ask must carry it:
+(a) whether the puller, the silver converter or any consumer REQUIRES an `slm` file per master/date (read their code),
+(b) what the silver conversion and the completion record do for a master/date with no `slm` input, and (c) the CTO
+half's place to state the shape ruling. PHASE B does not start without that ruling at HEAD. Any OTHER difference from
+the record above (a third-run read, a changed count) is a STOP: write `W/tm1_condition.result.md` and report.
 
 ### PHASE A -- build and plan; NO world act
 
@@ -136,9 +142,12 @@ Rows: id `NFRA_OPLGTW-Z-W39-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - The gateway's contract lines ride `OG-cm-1`'s contract file as a merge hookup; the gateway serves 08403355 only
   after the release that carries that contract (`OG-rl-15` or the next).
 - Deeper history for 08403355 than the puller's 30-day lookback is not in this cell; it is a row for the CTO.
+- A1 (2026-10-09): STEP 0 rewritten on OG-en-1's record (the slm-only difference); graded by no gate limb as a
+  modification of a non-<placeholders> order (GATE (viii) grades only an order declaring <placeholders>; this one
+  declares NONE, so viii applies and reads NONE).
 - Pre-cut: see the issuance commit.
 
-<status>staged</status>
+<status>pending</status>
 <round>32</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>
