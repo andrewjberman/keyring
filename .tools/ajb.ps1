@@ -344,7 +344,7 @@ function ajb {
             # NFRA_OPLGTW-Z-S67): no longer user-level, so no other session loads the Bloomberg account's sign-in.
             # STRICT set (1.0.0_SA_CTO~Z ruling @e46928ecc8, msg 32189, on Andrew's ~00:4xZ "adjudicated by the CTO
             # internally", record @6938d82aad): the seat loads EXACTLY opal-gateway-bbg, bloomberg, opal-agent-comms,
-            # so it never holds Andrew's opalgateway identity. Assembled at launch into a temp file: bbg from
+            # so it never holds Andrew's opalgateway identity. Assembled at launch into the session folder: bbg from
             # .tools/bg-gateway.mcp.json, opal-agent-comms from the repo .mcp.json, bloomberg from ~/.claude.json
             # (never typed into the repo). A missing piece falls back to the additive launch and says so.
             $bgMcp = Join-Path $ws '.tools\bg-gateway.mcp.json'
@@ -358,7 +358,7 @@ function ajb {
                 if ($blp) { $bgSet['bloomberg'] = $blp }
             } catch { Write-Host "[ajb] WARN: BG strict MCP set could not be read: $($_.Exception.Message)" -ForegroundColor Yellow }
             if ($bgSet.Count -eq 3) {
-                $bgStrict = Join-Path $env:TEMP "opal-bg-mcp-$bgSid.json"
+                $bgStrict = Join-Path $sessDir "$bgSid.mcp.json"   # session folder, gitignored (AMENDMENT 1 @6abc00a2d5)
                 [System.IO.File]::WriteAllText($bgStrict, (@{ mcpServers = $bgSet } | ConvertTo-Json -Depth 10))
                 $claudeArgs += @('--strict-mcp-config', '--mcp-config', $bgStrict)
                 Write-Host "[ajb] BG MCP: STRICT, exactly $($bgSet.Keys -join ', ') ($bgStrict)" -ForegroundColor Cyan
