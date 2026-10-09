@@ -35,6 +35,15 @@ Rollback is version `GbQOO4bhv7LjZ0kiUVyc5V4TSDK85GNZ` through the same path.
 
 <expected_criteria>IB102-2-AC1</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~09:3xZ, issuer 2.0.0_SA_COO~P2): IB102-2-AC1 grades the replay against the signed packet
+
+The check required every re-run arm to read `identical` or `expected-diff`. The signed packet's own replay (`0.9.0_WK_IRPT_BCKEND~262/IB99-1_release_replay.json`)
+carries narrative-side verdicts `admitted` and `WIDENS irpt-narrative`, and the CTO half signed holdings on exactly that packet. So
+`p102_cells.py` IB102-2-AC1 now requires each re-run arm to match the packet arm for arm, with no `UNEXPECTED` verdict and no `WIDENS`
+naming irpt-holdings. Nothing else changes.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.
