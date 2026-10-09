@@ -16,11 +16,11 @@
     },
     "relationship_id": {
       "type": "string",
-      "meaning": "dim_relationship relationship_id (rel_<hex>) of the household"
+      "meaning": "dim_relationship relationship_id (rel_<hex>) holding the household's accounts; null if none holds them"
     },
     "client_key": {
       "type": "string",
-      "meaning": "the portal's household key (rel_z...), the EXACT crosswalk row d05_client_detail.py reads; also the object's file name"
+      "meaning": "the portal's household key = the Black Diamond relationship_id (z-prefixed) on the account fee lines, which names the served platinum client summary; also the object's file name"
     },
     "quarter": {
       "type": "string",
@@ -79,19 +79,19 @@
         },
         "schedule": {
           "type": "object",
-          "meaning": "the fee schedule applied",
+          "meaning": "the ADVISOR fee schedule applied: the account's own Black Diamond schedule (the BD fee line's account_fee_schedule / basis_points)",
           "fields": {
             "label": {
               "type": "string",
-              "meaning": "what the schedule is"
+              "meaning": "the BD account_fee_schedule label, e.g. '49F - Flat 1'"
             },
             "rate_type": {
               "type": "string",
-              "meaning": "how the rate is applied"
+              "meaning": "the BD fee_schedule_rate_type"
             },
             "basis_points": {
               "type": "number",
-              "meaning": "combined annual rate in basis points (ADVISOR + PLATFORM)"
+              "meaning": "the account's annual ADVISOR rate in basis points (100 = rate 0.0100), from the BD fee line"
             },
             "flat_fee": {
               "type": "number",
@@ -110,12 +110,12 @@
             "held",
             "absent"
           ],
-          "meaning": "how the value was come by; a consumer rejects on this field. measured = read from a named source by an instrument; inferred = derived from measured values by a stated rule; held = carried from an earlier record without re-reading; absent = no value could be had.",
+          "meaning": "how the account's ADVISOR schedule was come by; a consumer rejects on this field. measured = read from the BD fee line in the quarter's first month; inferred = the account has no fee line that month and the latest earlier line is used (schedule_source says so); held = carried from an earlier record without re-reading; absent = no value could be had.",
           "type": "string"
         },
         "schedule_source": {
           "type": "string",
-          "meaning": "the document the rates were read from"
+          "meaning": "the BD fee line the schedule was read from, by partition key"
         },
         "flow_adjustment": {
           "type": "number",
@@ -123,7 +123,7 @@
         },
         "flows_in_period": {
           "type": "array",
-          "meaning": "EXTERNAL flows from the gold flow_ledger between valuation_date (exclusive) and the ADVISOR debit date (inclusive): {date, final_class, signed_amount}"
+          "meaning": "EXTERNAL flows from the gold flow_ledger between valuation_date (exclusive) and the ADVISOR debit date (inclusive): {date, amount, note}; amount = signed USD, note = the ledger's class"
         },
         "excluded_value": {
           "type": "number",
@@ -154,8 +154,8 @@
               ]
             },
             "rate": {
-              "type": "number",
-              "meaning": "annual rate as a fraction (0.003175 = 31.75 basis points) applied as value x rate x days_in_period / days_in_year"
+              "type": "number|null",
+              "meaning": "annual rate as a fraction (0.0100 = 100 basis points) applied as value x rate x days_in_period / days_in_year; null only when the component's schedule_claim is absent (PLATFORM: the SMArtX schedule is not held in Opal)"
             },
             "debit_code": {
               "type": "string",
@@ -166,8 +166,8 @@
               ]
             },
             "computed_fee": {
-              "type": "number",
-              "meaning": "USD, round(billable_value x rate x days_in_period / days_in_year, 2)"
+              "type": "number|null",
+              "meaning": "USD, round(billable_value x rate x days_in_period / days_in_year, 2); null only when the component's schedule_claim is absent"
             },
             "debited_fee": {
               "type": "number|null",
@@ -179,11 +179,11 @@
             },
             "difference": {
               "type": "number|null",
-              "meaning": "USD, computed_fee - debited_fee: positive = Opal computed more than Schwab debited; null when NO_DEBIT"
+              "meaning": "USD, computed_fee - debited_fee: positive = Opal computed more than Schwab debited; null when NO_DEBIT or when computed_fee is null"
             },
             "reconcile_class": {
               "type": "string",
-              "meaning": "agreement with Schwab for this component",
+              "meaning": "agreement with Schwab for this component; a component with a debit and no computed fee is DIFFERS with the reason that the schedule is not held",
               "enum": [
                 "NO_DEBIT",
                 "MATCH",
@@ -193,6 +193,16 @@
             "difference_reason": {
               "type": "string|null",
               "meaning": "plain-English reason; REQUIRED (non-empty) when DIFFERS, null otherwise"
+            },
+            "schedule_claim": {
+              "type": "string",
+              "enum": [
+                "measured",
+                "inferred",
+                "held",
+                "absent"
+              ],
+              "meaning": "how this component's rate was come by (same enum as claim_enum): ADVISOR carries the account's schedule_claim; PLATFORM carries absent in 0.1.0 because no per-account SMArtX platform/model rate is held in Opal. A consumer rejects a null rate/computed_fee that does not carry absent."
             }
           }
         }
@@ -208,15 +218,15 @@
         },
         "computed_fee": {
           "type": "number",
-          "meaning": "USD, sum of every component's computed_fee"
+          "meaning": "USD, sum of the non-null computed_fee over the components (0.1.0: the ADVISOR components)"
         },
         "debited_fee": {
           "type": "number",
-          "meaning": "USD, sum of every component's debited_fee (NO_DEBIT counts 0.0)"
+          "meaning": "USD, sum of debited_fee over the SAME components that have a computed_fee (NO_DEBIT counts 0.0), so the household comparison is like-for-like; the debits of components with no computed fee are on those components and in steps"
         },
         "difference": {
           "type": "number",
-          "meaning": "USD, computed_fee - debited_fee"
+          "meaning": "USD, computed_fee - debited_fee over the comparable components"
         },
         "reconcile_class": {
           "type": "string",
@@ -251,11 +261,11 @@
     "members": {
       "NO_DEBIT": "no Schwab row for the component's debit_code on its debit date; debit_date, debited_fee, difference are null",
       "MATCH": "a debit exists and |difference| <= 0.01 USD",
-      "DIFFERS": "a debit exists and |difference| > 0.01 USD; difference_reason is required"
+      "DIFFERS": "a debit exists and |difference| > 0.01 USD, or a debit exists with no computed fee (schedule not held); difference_reason is required"
     },
     "rule_24_record": {
       "domain": "one account or household x quarter, after the fee is computed",
-      "i_mece": "members from {debit present?} x {|diff| <= 0.01}: absent -> NO_DEBIT; present and within -> MATCH; present and outside -> DIFFERS; the fourth cell (absent and within) is unreachable because difference is null when absent. 2 x 2 grid, 4 cells, 3 members, 1 empty by construction.",
+      "i_mece": "members from {debit present?} x {|diff| <= 0.01 or not computable}: absent -> NO_DEBIT; present and within -> MATCH; present and outside, or present and not computable -> DIFFERS; the fourth cell (absent and within) is unreachable because difference is null when absent. 2 x 2 grid, 4 cells, 3 members, 1 empty by construction.",
       "ii_same_grain": "every member classifies the same unit: one component (account) or one household for the quarter",
       "iii_intent_coherence": "one axis: agreement with Schwab's debit, not which side is right",
       "iv_state_coherence": "a schedule fix moves computed_fee and so can move MATCH/DIFFERS; it never moves debited_fee, which is read from fact_trn, and never moves NO_DEBIT, which depends on Schwab alone"
@@ -263,5 +273,6 @@
   },
   "tolerance_usd": 0.01,
   "difference_sign": "computed_fee - debited_fee",
-  "scope_note": "0.1.0 models neither the prior-quarter true-up carried on the 07-07 debit nor flows (flow_adjustment 0.0); both are named as reasons on a DIFFERS, not computed."
+  "scope_note": "0.1.0 models neither the prior-quarter true-up carried on the 07-07 debit nor flows (flow_adjustment 0.0); both are named as reasons on a DIFFERS, not computed. The PLATFORM (SMArtX) schedule is not held in Opal: its component carries null rate and computed_fee, schedule_claim absent, and the SMFEE debit as measured.",
+  "amendment": "AMENDMENT 1 (2.0.0_SA_COO~B2 2026-10-09): household key = BD relationship_id; ADVISOR rate = the account's own BD schedule; PLATFORM component with null rate and fee; flows_in_period {date, amount, note}."
 }
