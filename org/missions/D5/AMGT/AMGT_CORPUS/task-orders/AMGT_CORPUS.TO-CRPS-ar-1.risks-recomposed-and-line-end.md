@@ -65,6 +65,7 @@ lib/research/corpus/tests/test_dossier_case_body.py
 lib/research/corpus/tests/test_dossier_case_unit.py
 lib/research/corpus/tests/test_dossier_case_positional.py
 lib/research/corpus/tests/test_dossier_heading_only_round40.py
+lib/research/corpus/tests/test_dossier_passage_edges_round41.py
 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ar-1.risks-recomposed-and-line-end.proof_of_spec.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-ar-1.risks-recomposed-and-line-end.md
@@ -94,6 +95,18 @@ Read-only: the whole repository, in particular the issuer's check `org/missions/
 2. Only if AC1-AC3 pass, append a new status tag reading complete at the END of this file, in the SAME commit as your instance.
 3. Report ONCE: the change and why, AC1's output lines (its counts and risks lines), AC2's and AC3's lines, your commit hashes, and any row.
 
+## 6. AMENDMENT 1 (2026-10-09 ~18:5xZ, the issuer's own; your row AMGT_CORPUS-D1-W1-S2)
+
+Your row is right: AC3 runs `test_dossier_passage_edges_round41.py`, which `<paths>` did not grant, and two of its assertions
+(`test_sentence_that_cannot_be_completed_ends_with_an_ellipsis`, `test_docx_cut_before_a_heading_ends_with_an_ellipsis_not_a_comma`)
+expect a `...` on a block that does not continue -- the defect this cell fixes. Ruling: `<paths>` now grants that file (added above).
+
+**Do, and only this:** take the amendment by merging `box/dell1` into your branch (`git merge --no-edit box/dell1`). In that file,
+change those two tests so they assert the round-42 rule (no `...` where the block does not continue; keep the trailing-comma drop
+the second one checks), and rename them to say so. Change no other code. Re-run AC1-AC3 by their invocations, update your instance
+(AC3 PASS by output, row D1-W1-S2 resolved by this amendment), run the checker after your final commit, and append the status tag
+reading complete at the END of this file only if all three pass. Report once.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-41 analysis s.2 item 1 (msg 2982); CTO half ADDENDUM 1 (msg 2968). Base HEAD b0213f2871: ar1 build 0/1 control 1/1 (ell_false 15, risks outside 23). round 41's aq12 aq1 arm is NOT a criterion here: it counts a whole line without a period as CUT, which this cell makes correct. The served half is the issuer's ar-2 at /9.
@@ -102,3 +115,4 @@ Read-only: the whole repository, in particular the issuer's check `org/missions/
 <round>42</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
