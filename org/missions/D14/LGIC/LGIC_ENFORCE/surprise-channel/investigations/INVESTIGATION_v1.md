@@ -6070,3 +6070,29 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "Remedy is the gate owner's: an absent required registry input should REFUSE (or exit with a distinct error), never degrade to WARN. Until then, the negative control for any naming verdict is to confirm LEGACY_SERVED_PATHS.json is present in the worktree that ran the gate."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-D1-W1-S1",
+  "project": "LGIC_ENFORCE",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+  "surfaced_at": "2026-10-09T16:19:55Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The r20 census report carries 121 of its 478 carded (NOT-JUDGED) entries whose name grade() no longer RAISES on at the same registry, so the run files them as unjudged and the ranked list omits names the check can read.",
+  "spec_asserts": "FWD-5 (PRD line 132) and R-29: a name the check cannot read STOPS the run unless carded; a card exists only because grade() RAISES on that name, so every name the check CAN read is judged and ranked.",
+  "world_is": "Measured from the worktree HEAD (registry hash f936f6350cc5c404, equal to the r20 report's): of the 478 not_judged entries in org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NAMING_CENSUS_REPORT.r20.md (268 distinct (name, type)), grade(name, type) RAISES for 357 entries (212 distinct) and returns a verdict for 121 entries (56 distinct): 56 live + 65 repo; the verdicts are OUT-OF-PATTERN for 50 distinct and CONFORMANT for 6. Examples: (opal-data-news-av, S3_BUCKET) -> OUT-OF-PATTERN opal-data-news; (opal-news-articles, DYNAMODB_TABLE) -> OUT-OF-PATTERN news-articles-table. Their cards still say 'unresolved token' / B2 V2 for 'news', which is a PRODUCT key in systems.json at HEAD (added 93790c036e, 2026-09-21), so the card text is stale against the registry the run read. lib/opal_naming.py census_judge() cards on (plane, name) alone (nj_index) and never re-grades a carded name, so the stale card is not caught. Found while reading the machine side of EN-z-2: hand-compare.r20.result.md records opal-data-news-av as a difference whose machine side is grade() at HEAD, not an r20 row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Count run from the worktree root: for each r20 not_judged entry, lib/opal_naming.py grade(name, type): 478 entries, 121 return a verdict, 357 raise; distinct (name, type): 268, 56 return a verdict, 212 raise.",
+      "lib/opal_naming.py census_judge() builds nj_index = set((plane, name)) from the --not-judged list and skips grade() for a carded item (lines 2782-2808 at HEAD).",
+      "infra/logic/registry/systems.json at HEAD carries {key: news, class: PRODUCT}; at 54659987c0 'news' is in the unresolved list (read in build_hand_compare_r20.py)."
+    ]
+  },
+  "disarm_owner": "2.0.0_SA_COO~B1",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not decided here and not edited here: NOT_JUDGED_R20.json and the r20 report are EN-z-1's output and outside this order's paths. The remedy (re-card against a fresh RAISE check, or have census_judge() verify a card still RAISES) is the issuer's to cut; until then the r20 ranked list omits these 56 names and FWD-5's 'every name' is short by them."
+}
+```
