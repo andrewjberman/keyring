@@ -9,7 +9,7 @@
   "fabric_ruling": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "ROUND_CLOSE",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-08",
   "registered_under_tree": "2026-10-08",
   "pods": [],
