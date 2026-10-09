@@ -8385,6 +8385,25 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-D1-W133-S1",
+  "project": "AMGT_HARVST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_HARVST~133",
+  "surfaced_at": "2026-10-09T16:15:00Z",
+  "one_line": "HVST-bv-1 makes a cycle with failed pairs completed:true, and the floor of the next cycle is the last completed cycle's started_at, so the window of a failed pair is skipped by the next cycle.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "HVST-bv-1 item 2: failed pairs stay in the checkpoint's retry set so the next cycle asks them again; item 3: a cycle that reached every pair is completed true even when failed > 0.",
+  "world_is": "cycle_runner.floor_for (lib/opal_data_harvest/cycle_runner.py) takes the next cycle's --floor from the UTC date of the last completed record's started_at, and each cycle writes a FRESH checkpoint (cycles/<P>/<cycle_id>.checkpoint.json), so the retry set of a finished cycle is never read by the next one. With bv-1 a cycle with failed > 0 now moves the floor; a failed pair is asked again only for articles newer than that floor, and the articles between the old and the new floor, which the failed pair never collected, are not asked for. Measured: code read only, no run. Not measured: how long a failed pair stays failed in practice, and the floor's granularity (a date, so a same-day failure is re-asked). Owner: 2.0.0_SA_COO~W1 (the round-78 analysis).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_data_harvest/cycle_runner.py floor_for and run_cycle @d68e68d25d"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
