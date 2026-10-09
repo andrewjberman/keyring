@@ -53,9 +53,9 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     },
     "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~V2",
-      "at": null
+      "at": "2026-10-09T08:10:00Z"
     }
   },
   {
