@@ -6145,3 +6145,51 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "Not decided here and not edited here: NOT_JUDGED_R20.json and the r20 report are EN-z-1's output and outside this order's paths. The remedy (re-card against a fresh RAISE check, or have census_judge() verify a card still RAISES) is the issuer's to cut; until then the r20 ranked list omits these 56 names and FWD-5's 'every name' is short by them."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W2-S152",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+ "surfaced_at": "2026-10-09T16:27:12Z",
+ "one_line": "The commit gate printed 'NAMING-GATE: PASS 0 graded' and no NAMING line for a planted per-firm stored-file prefix that place() places as PATTERN: a pattern name is neither graded nor reported as skipped.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Commit a09b284984 on qa/lgic-enforce-r20-s12 (never merged): infra/aws/lambda/zz-lgic-enforce-r20-s12/probe.py adds PROBE_PREFIX = os.environ.get('IRPT_DIRECTORY_PREFIX', 'investor-reporting/directory'), the shape of infra/aws/lambda/investor-reporting/directory/handler.py:53; safe-commit rc=0, gate output 'NAMING-GATE: PASS 0 graded', denominator 1 path in the diff, 1 seen, 0 unseen.",
+   "place('investor-reporting/directory','S3Key','investor-reporting/directory') returns kind PATTERN (run from the worktree root at 9f96f3739d).",
+   "A first attempt planting the same line at infra/aws/lambda/investor-reporting/directory/zz_qa_pattern_probe.py (a MAPPED root) printed the same 'NAMING-GATE: PASS 0 graded' before the lane gate refused that path as outside the order's <paths>; no commit was made there. Not measured: whether the gate's zero is because it skips a PATTERN, because the literal sits in an os.environ.get default, or because the post-image has no new stored name."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "FWD-5 / D1-W2-S12: place() returns PATTERN for the per-firm names and the commit-gate behaviour on such a name is measured; a name the check cannot grade is reported, not silent.",
+ "world_is": "On one planted commit the gate graded nothing for the PATTERN name and printed no line saying it skipped it, so the grade_line of PATTERN_COMMIT_R20.json is NONE. The count '0 graded' is the only trace. Whether that is by design (a pattern is not a name) is the gate owner's to say."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-D1-W2-S153",
+ "project": "LGIC_ENFORCE",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+ "surfaced_at": "2026-10-09T16:30:01Z",
+ "one_line": "check_en_r20.py s12 cannot pass a grade_line NONE record: its row_id regex LGIC_ENFORCE-[A-Z0-9]+-S\\d+$ rejects every worker row id, which the row gate requires to carry W<n>, so Z5R20-AC1 FAILs on a true NONE.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~B1/fixed_inputs/r20/check_en_r20.py arm_s12: need(re.match(r'LGIC_ENFORCE-[A-Z0-9]+-S\\d+$', rec.get('row_id')), 'grade_line NONE needs a surprise row_id'). Run at 91f73a0f52 from the worktree root: 'FAIL-R20-S12: grade_line NONE needs a surprise row_id', rc=1, with row_id LGIC_ENFORCE-D1-W2-S152.",
+   ".tools/surprise-row-gate.py line 648: a worker's NEW row without W<n> is refused ('a worker mints <CODE>-W<n>-S<k>'); the order's refusal clause names the id form LGIC_ENFORCE-D1-W<n>-S<k>. The regex admits LGIC_ENFORCE-D1-S152 (no W) and refuses LGIC_ENFORCE-D1-W2-S152 (the row actually filed).",
+   "The planted commit, the PATTERN place kind, the commit on the QA branch only and the NONE grade_line are each true and each passed the arm's earlier needs; the arm fails only at the row_id shape. The arm and its expected value are not edited here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order: grade_line NONE with a row_id of the surprise row filed, id LGIC_ENFORCE-D1-W<n>-S<k>; criterion Z5R20-AC1 expects PASS-R20-S12.",
+ "world_is": "The arm accepts no row id a worker may mint, so a gate that grades nothing for the planted name (the measured case) can never pass Z5R20-AC1. Left open for the issuer to amend the arm's regex or the order; the arm is not edited by this worker."
+}
+```
