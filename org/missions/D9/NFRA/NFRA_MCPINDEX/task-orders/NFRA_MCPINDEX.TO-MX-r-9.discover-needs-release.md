@@ -93,7 +93,19 @@ box/sitez's gateway tree also carries ADVI_BILLING E2's UNRELEASED gateway tool 
 - Row NFRA_OPLGTW-Z-W47-S2 lists 3 gateway suites already failing on box/sitez (not E2's). Read them as part of the
   BEFORE red, beside Z-S88.
 
-Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-AMX-S<k>` (next free k), fabric `site-z`,
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-09 ~11:4xZ; row Z-S90 by the applier, ruled Z-S91).**
+- **The `.env` key equality is a RULE, never a count.** Before == after, both read from the THEN-LIVE ref at the act. The
+  ANNOUNCE's 51 is void.
+  - Once r29 is live, the set is expected to be 52. It includes OG-md-1's `MAIL_SENDER_DOMAIN_TABLE`, which rides r29
+    and is present on both sides.
+  - E2's `ADVI_FEE_STATEMENT_S3_ROOT` must be ABSENT on both sides.
+  - The never-widen halves name the rule, and the count the applier reads at the act.
+- **The deploy script is the live ref's copy, cut by construction in the deploy-only tree.** box/sitez HEAD's also
+  carries OG-md-1's `rm -f .../mail_sender_domain_table.txt` line.
+- **Row ids:** `NFRA_MCPINDEX-Z-S<k>` (next free k), the grammar `.tools/surprise-row-gate.py` admits. The earlier
+  `Z-AMX-S<k>` is withdrawn.
+
+Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 
 ## 2. BOUNDS

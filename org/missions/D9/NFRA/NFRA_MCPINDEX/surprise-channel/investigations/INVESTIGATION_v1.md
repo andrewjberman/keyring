@@ -6116,6 +6116,30 @@ carries none.
     "spec_asserts": "A2: 'HEAD's adds E2's env line' (one line, one project); the ANNOUNCE: '.env KEY set, before: 51 keys / After: 51 keys'.",
     "world_is": "Two keys, two projects. OG-md-1's MAIL_SENDER_DOMAIN_TABLE ships inside r29, so the moment r29 deploys the live rendered .env carries 52 keys; E2's ADVI_FEE_STATEMENT_S3_ROOT is in neither the live ref nor r29 and correctly stays out. A1's 'every pin is VOID' already covers the 51, so the ORDER is self-correct when A2 is read as a RULE; the exposure is a half or an applier anchoring on the literal 51.",
     "notes": "DISARM (disarm_owner's act): The issuer writes both never-widen halves naming the .env key equality as a RULE (before == after, read from the then-live ref at the act), or naming 52 explicitly once r29 is deployed -- never the ANNOUNCE's 51. Nothing in the applier's lane can disarm it: the halves are not this seat's to write. Surfaced BEFORE the GO and before the halves are written, which is the only window where it is free. No act of this seat is blocked: PHASE B still waits on r29 + OG-rl-15, and the applier measures before/after on the then-live ref either way. Also measured for the record: box/sitez HEAD's deploy-to-ec2.sh carries a third delta beyond the two keys (a 'sudo rm -f .../deploy/mail_sender_domain_table.txt' line, OG-md-1's), which is a further reason A2's 'run the LIVE ref's copy' is the right instruction -- the deploy-only tree cut at the live ref satisfies it by construction. SECOND FINDING, mechanical: A1 and A2 both instruct rows under id grammar <CODE>-Z-AMX-S<k>, and .tools/surprise-row-gate.py REFUSES it -- the admitted grammar is <CODE>-(Z-)?(W<n>-|C-)?S<k> (annex v3.2 section 4), which has no free-text lane segment. Measured: this id was the only non-conforming one of 266 rows in this channel. Filed under the grammatical NFRA_MCPINDEX-Z-S90 instead (next free k in the series the issuer itself uses, Z-S89 being the latest). The override path was NOT taken: an audited override would land a permanently non-conforming id into the standing corpus baseline. This will refuse EVERY row this lane files, including a BLOCKING row at the apply, so the order text wants the AMX segment dropped. Owner of that edit: 2.0.0_SA_COO~MI."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S91",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T11:34Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S90"
+    ],
+    "one_line": "RULES Z-S90 (ARMED; the applier 0.7.0_AE_CloudOps~MX's two findings): CONFIRMED and DISARMED by MX-r-9 AMENDED A3 -- the .env key equality is a RULE read from the then-live ref (expected 52 after r29: OG-md-1's MAIL_SENDER_DOMAIN_TABLE rides r29; E2's ADVI_FEE_STATEMENT_S3_ROOT absent both sides); the never-widen halves name the rule plus the count read at the act, never the ANNOUNCE's void 51; the order's row grammar is NFRA_MCPINDEX-Z-S<k>, the AMX segment withdrawn.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S90's measurements: deploy-to-ec2.sh 40099 B at aa75078e1b vs 42341 B at box/sitez HEAD; MAIL_SENDER_DOMAIN_TABLE 0 / 9 / 9 occurrences at live / r29 91811b648a / HEAD; ADVI_FEE_STATEMENT_S3_ROOT 0 / 0 / 4.",
+        "MX-r-9 A3 (this commit) states the rule, the expected set, the absent key and the admitted row grammar."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "No half or applier can anchor on 51 any longer: the order names the rule and the two keys by name; the applier's rows now pass the row gate.",
+    "notes": "The COO half of MX-r-9's never-widen pair is written at the GO by this seat, naming the rule and the count read on the then-live host."
   }
 ]
 ```
