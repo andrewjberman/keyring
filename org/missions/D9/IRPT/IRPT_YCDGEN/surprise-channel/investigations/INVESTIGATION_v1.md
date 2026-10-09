@@ -2839,3 +2839,32 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "Both met: one on a fixed check re-run, one on a ruled census whose unreachable case is confirmed in the code."
 }
 ```
+
+## IRPT_YCDGEN-D2-S19 -- st28 F1: no 49financial research role; the Opal path reaches cottonwood only
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S19",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T09:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "st28 F1 on 49financial: the Opal path cannot run for any firm but cottonwood -- the runner role may assume only irpt-cot-ycharts-research-role, and irpt-49f-ycharts-research-role does not exist",
+  "spec_asserts": "FWD-1: the Opal engine serves a non-Andrew filer's Overview; st28 put svc on the allow list and on 49financial for that one run (CTO msg 2148).",
+  "world_is": "MEASURED. F1 submit at 09:13:27Z (REQ-1f8b4cc4682f2d929cc70215) was accepted QUEUED; producer selection held (0 YCharts markers in the resident journal since 09:12). The resident journal logged 'IRPT_RESIDENT_POLL retained_for_retry class=ClientError' at 09:13:27Z and 09:28:27Z. CloudTrail at both seconds: sts:AssumeRole AccessDenied for assumed-role/irpt-ycharts-runner-role/i-0167fd745ad906a66 on arn:aws:iam::313476888478:role/irpt-49f-ycharts-research-role. iam get-role irpt-49f-ycharts-research-role: NoSuchEntity. The runner role's only AssumeRole statement (AssumeTheFirmResearchPrincipal) names irpt-cot-ycharts-research-role. irpt-generation redrive: maxReceiveCount 5, visibility 900 s, so the message goes to irpt-generation-dlq at about 10:28Z, and until then the request reads QUEUED to its filer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail sts AssumeRole AccessDenied 2026-10-09T09:13:27Z and 09:28:27Z",
+      "resident journal via SSM 2aa69757 and 14ca8aef",
+      "iam get-role NoSuchEntity irpt-49f-ycharts-research-role",
+      "runner role AssumeTheFirmResearchPrincipal -> irpt-cot only"
+    ]
+  },
+  "notes": "Not a producer defect: OPAL was chosen. The per-firm research principal is provisioned for cottonwood only, so every other firm's Opal request will fail the same way. Remedy (to the CTO for round 7): mint the research role per allowed firm through the naming builder, with its read grants, and widen the runner's AssumeRole to those roles. X1/W2 proceed when irpt-generation reads 0/0 after the DLQ move."
+}
+```

@@ -1,0 +1,201 @@
+{
+ "captured_by": "2.0.0_SA_COO~T2",
+ "purpose": "W1-S7 re-wipe pair: prior VersionId per key (rollback source)",
+ "series": {
+  "monday_meeting": [
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-06-08/MM-20260608-0855.parquet",
+    "version_id": "Mw5zs5iuvnfdJsIaej0ZzTwVsTbGHNFd",
+    "size": 29187,
+    "last_modified": "2026-09-30T22:48:22Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-06-15/MM-20260615-0857.parquet",
+    "version_id": "wqf7QGrCF1x.nmiP6njRzFfFHFR3B_yH",
+    "size": 16078,
+    "last_modified": "2026-09-30T22:48:22Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-06-29/MM-20260629-0857.parquet",
+    "version_id": "bym4nqW.XLAeDb7RJB6cmQ0xWZHT6w86",
+    "size": 21769,
+    "last_modified": "2026-09-30T22:48:23Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-07-06/MM-20260706-0857.parquet",
+    "version_id": "vry2nIUCCKqvTHvSWERDuJ4ykj4d9AVm",
+    "size": 16149,
+    "last_modified": "2026-09-30T22:48:24Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-07-13/MM-20260713-0857.parquet",
+    "version_id": "4AObG85sT_9QPYeTuFyHfnm2H8YRx0Le",
+    "size": 21072,
+    "last_modified": "2026-09-30T22:48:24Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-07-21/MM-20260721-0858.parquet",
+    "version_id": "MjVtnQKH2P03GRMyE98AylnmdnmM.49l",
+    "size": 24792,
+    "last_modified": "2026-09-30T22:48:25Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-07-27/MM-20260727-0856.parquet",
+    "version_id": "3XidqKXLX8j6PoNq6hsuIcLvgk3JOiLp",
+    "size": 15874,
+    "last_modified": "2026-09-30T22:48:26Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-08-03/MM-20260803-0858.parquet",
+    "version_id": "m3NtcDPO9RhrLB.QOAevm5equjREp9Gt",
+    "size": 45450,
+    "last_modified": "2026-09-30T22:48:26Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-08-10/MM-20260810-0856.parquet",
+    "version_id": "EEmFtNUvgJw9pQ29ZO7fJ4V5eTn6zlfW",
+    "size": 43089,
+    "last_modified": "2026-09-30T22:48:27Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-08-17/MM-20260817-0857.parquet",
+    "version_id": "5brSF6zzKQB8Df2l.zIN4.gEdZeT5IGQ",
+    "size": 26569,
+    "last_modified": "2026-09-30T22:48:28Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-08-24/MM-20260824-0857.parquet",
+    "version_id": "E.xUwnnQcPUQKrzM9EO.PUORJaMlNwCj",
+    "size": 45059,
+    "last_modified": "2026-09-30T22:48:28Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-08-31/MM-20260831-0856.parquet",
+    "version_id": "MEa.kmzfCnfqDjSk7l.fPemyXUf1MMM1",
+    "size": 46720,
+    "last_modified": "2026-09-30T22:48:29Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-09-08/MM-20260908-0857.parquet",
+    "version_id": "ltLzo0tjMM9W_VmFuFV.pm8CQzJBVJPJ",
+    "size": 36235,
+    "last_modified": "2026-09-30T22:48:30Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-09-14/MM-20260914-0858.parquet",
+    "version_id": "WrXn_gEZqxyQqIKh6Zp85OThTO17bSq1",
+    "size": 47678,
+    "last_modified": "2026-09-30T22:48:31Z"
+   },
+   {
+    "key": "teams/transcripts/silver/monday_meeting/date=2026-09-28/MM-20260928-0858.parquet",
+    "version_id": "TqDm1JyTMZygn8SGfWGBkEXG2LuD04ph",
+    "size": 40734,
+    "last_modified": "2026-10-01T00:21:28Z"
+   }
+  ],
+  "ocio_ic": [
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-06-16/ICO-20260616-0959.parquet",
+    "version_id": "ZR13TfhamQW7M4o8_sX3An.I8uaFQUnr",
+    "size": 37339,
+    "last_modified": "2026-09-30T22:48:32Z"
+   },
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-06-30/ICO-20260630-0958.parquet",
+    "version_id": "qV.EODRTFHP6i.UO4MqEksNuD_2M3Aq3",
+    "size": 46652,
+    "last_modified": "2026-09-30T22:48:33Z"
+   },
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-07-13/ICO-20260713-1100.parquet",
+    "version_id": "u809kmR98A1BHMwblo3Egt99mCjIwKjV",
+    "size": 43334,
+    "last_modified": "2026-09-30T22:48:33Z"
+   },
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-07-28/ICO-20260728-0956.parquet",
+    "version_id": "tNbmg2bBCqW._ryds2AcoXfmw7_.eNGE",
+    "size": 44751,
+    "last_modified": "2026-09-30T22:48:34Z"
+   },
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-08-11/ICO-20260811-0958.parquet",
+    "version_id": "eLDvr9PcoH5chFnBVJ0a_js0Q7uc2_Ay",
+    "size": 37729,
+    "last_modified": "2026-09-30T22:48:36Z"
+   },
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-08-31/ICO-20260831-1114.parquet",
+    "version_id": "AhuKBp6hD3ehb4101_FYhi0Bf8BVb0HP",
+    "size": 31186,
+    "last_modified": "2026-09-30T22:48:36Z"
+   },
+   {
+    "key": "teams/transcripts/silver/ocio_ic/date=2026-09-08/ICO-20260908-0958.parquet",
+    "version_id": ".uIyGmha9qZ8EyiyveWDRic6ddfK4VmD",
+    "size": 44353,
+    "last_modified": "2026-09-30T22:48:37Z"
+   }
+  ],
+  "asset_management_ic": [
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-06-09/ICA-20260609-0958.parquet",
+    "version_id": "I_ANolTM_EFrj4mLDrL7UxUQx8aRNf8O",
+    "size": 36614,
+    "last_modified": "2026-09-30T22:48:38Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-07-07/ICA-20260707-0958.parquet",
+    "version_id": "cEMxrOoC9oYBWsJhm4pQqOXibsowwj5x",
+    "size": 30837,
+    "last_modified": "2026-09-30T22:48:39Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-07-21/ICA-20260721-0958.parquet",
+    "version_id": "EnL7dVXG_qlDaVCYyjgw.njXjE_QtsJY",
+    "size": 38972,
+    "last_modified": "2026-09-30T22:48:39Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-08-04/ICA-20260804-1000.parquet",
+    "version_id": "0FdoRjPxnuQUyaVC7E5lNZUQD0gNxyVa",
+    "size": 34499,
+    "last_modified": "2026-09-30T22:48:40Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-08-18/ICA-20260818-0957.parquet",
+    "version_id": "fXeBUNLZASDv8WPFd20JOeK.z.GD6g0M",
+    "size": 47469,
+    "last_modified": "2026-09-30T22:48:40Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-09-01/ICA-20260901-0958.parquet",
+    "version_id": "tz9sBYIADeLYsiPWkSX2xPldDEP1ceaX",
+    "size": 41561,
+    "last_modified": "2026-09-30T22:48:41Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-09-15/ICA-20260915-0957.parquet",
+    "version_id": "5SU9CvQdf3NYhFftaBaaClZmOwIBUaPZ",
+    "size": 40469,
+    "last_modified": "2026-09-30T22:48:42Z"
+   },
+   {
+    "key": "teams/transcripts/silver/asset_management_ic/date=2026-09-29/ICA-20260929-0959.parquet",
+    "version_id": "5PV30cTlgvva.4nnPRB6eo28XF9zf7Rh",
+    "size": 42778,
+    "last_modified": "2026-09-30T22:48:43Z"
+   }
+  ]
+ },
+ "counts": {
+  "monday_meeting": 15,
+  "ocio_ic": 7,
+  "asset_management_ic": 8
+ },
+ "total_keys": 30,
+ "excluded": {
+  "research_meeting": "29 keys written ALREADY WIPED by research_fold (held_out marked; CVO-approved Apple exception state); not re-wiped"
+ }
+}

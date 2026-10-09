@@ -6207,3 +6207,108 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "For NFRA_OPALAI's orders (no <to_id> tag) the id falls back to the filename stem with its slug, e.g. NFRA_OPALAI.TO-OA-e-1.asker-scoping-repair, while every proof carries the bare id NFRA_OPALAI.TO-OA-e-1 that proof-of-spec-check treats as canonical: one signature, 11 of 11. OA-r-1 J1 was graded PASS by a non-doer CVO @c180d84b36 in a deliverable the checker does not read. Both refusals are instrument-shape, not round defects. Not blocking today: 3 orders of the round are still open on the item-0 close run. A fix in the checker (compare via _canonical_to_id; accept a CVO-authored judgment commit or a citing adjudication row) is the instrument owner's; the COO edits neither the checker nor the 11 terminal proofs."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-09T09:30:00Z",
+  "one_line": "Test cases 92 and 93 (safe-apply.sh diff against the pre-block pin) failed at HEAD 61ffb11846 before AMENDMENT 3's edit, because other cells (LGIC_BLANKFIX 95d53e2068, MCPMSP 35941fb592, EN-t-2-r2 0af3c52597, CT-d-3 bd60f13148) legitimately edited safe-apply.sh outside the seat-gates block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_apply_who_and_crossbox.py at HEAD 61ffb11846 plus the AMENDMENT 3 edit: cases=93/95; FAIL case 92 'hunks=5 removed=2', FAIL case 93 'hunks=17 removed=23'",
+      "git log -- .tools/safe-apply.sh shows 95d53e2068, 35941fb592, 0af3c52597, bd60f13148 after the block"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1/2 item 4: the wrappers' edits stay inside the seat-gates block; the pinned-diff cases pass as 'one hunk, no removed line'.",
+  "world_is": "A pinned whole-file diff cannot tell this cell's edits from another cell's later edits to the same wrapper. Done in-order: the two cases now count only hunks outside the block whose lines blame to this cell's commits (5f6eaecb34, b5e448d54a); a foreign hunk is not counted. Result 95/95. The wrappers themselves are untouched by this amendment.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_CTLPLN-D1-S1 -- dell1 is NOT stopped from downloading from the public internet: pip download of six==1.16.0 from pypi.org succeeded (rc=0, wheel saved), so FWD-18's 'a box that tries an internet download is stopped and told the route' is not met on dell1.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T09:20Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S1",
+  "one_line": "dell1 is NOT stopped from downloading from the public internet: pip download of six==1.16.0 from pypi.org succeeded (rc=0, wheel saved), so FWD-18's 'a box that tries an internet download is stopped and told the route' is not met on dell1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pip download --no-deps -d <temp> six==1.16.0 --index-url https://pypi.org/simple on dell1, 2026-10-09T09:19:54Z: rc=0; stdout 'Collecting six==1.16.0 / Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB) / Downloading six-1.16.0-py2.py3-none-any.whl (11 kB) / Saved <temp>\\six-1.16.0-py2.py3-none-any.whl / Successfully downloaded six'",
+      "temp-folder listing after the run: denominator 3 entries (./, ../, six-1.16.0-py2.py3-none-any.whl) -- one real wheel landed on the box",
+      "artifact removed same turn: rm of the wheel + rmdir of the temp folder, then a test -e control printed CONFIRMED ABSENT",
+      "deliverable: org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables/NFRA_CTLPLN.TO-CT-x-2.blocked-download.txt (line: NOT-BLOCKED)"
+    ]
+  },
+  "spec_asserts": "TO-CT-x-2 step 4 / FWD-18: a Dell that tries a direct internet download is STOPPED, and the message that stops it names the laptop route. Criterion CTx2-AC3 expects the string 'BLOCKED ' in the deliverable.",
+  "world_is": "dell1 downloaded it. Nothing stopped the request: no proxy refusal, no DNS failure, no firewall reset, no pip index restriction -- pip reached pypi.org directly and saved an 11 kB wheel, and therefore nothing named the laptop route either. The download was download-only (--no-deps, -d <temp>), nothing was installed, and the wheel plus its folder were deleted the same turn with an absence control printed. CTx2-AC3 FAILS, and per the order's own text that failure IS the finding, not an execution defect. Scope of this read: ONE host (dell1), ONE protocol path (pip/https to pypi.org), ONE package, at one time. It does NOT establish that every egress channel on dell1 is open, nor that the other boxes are open -- each would need its own call. It also does not distinguish 'the fence was never applied on dell1' from 'the fence is applied and does not cover pip/https', which is the next read and belongs to the control-plane owner, not to this seat. Remediation is NOT this row's author's: the CVO owns REMEDIATION rows, and the egress control is the laptop control plane's surface."
+}
+```
+
+## NFRA_CTLPLN-D1-S2 -- dell1 already carries click 8.5.0 installed by pip from an index as a transitive dependency, with no intake record and no direct_url.json -- so the checked-route premise of FWD-15/FWD-19 is already bypassed on this box for this very package.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T09:26Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S2",
+  "one_line": "dell1 already carries click 8.5.0 installed by pip from an index as a transitive dependency, with no intake record and no direct_url.json -- so the checked-route premise of FWD-15/FWD-19 is already bypassed on this box for this very package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c \"import click; print('CLICK', click.__version__)\" on dell1 2026-10-09: CLICK 8.5.0",
+      "pip show click: Version 8.5.0, Location C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages, Required-by: black, great-expectations, huggingface_hub, pyiceberg, uvicorn",
+      "click-8.5.0.dist-info/INSTALLER = 'pip'; direct_url.json ABSENT; REQUESTED ABSENT. A local-file install records direct_url.json, so its ABSENCE plus INSTALLER=pip means an INDEX install; REQUESTED absent means it arrived as a dependency, not a direct ask.",
+      "intake records present on this box name click-8.3.1 only (org/devices/intake/records/intake-20261008-a/: click-8.3.1-py3-none-any.whl.check.json and .fetch.json) -- denominator 5 files in that record folder, none for 8.5.0"
+    ]
+  },
+  "spec_asserts": "FWD-15 (one real package laptop -> Dell, checked) and FWD-19 (what a box downloaded today, from a record): a Dell's packages arrive through the checked intake route and are recorded.",
+  "world_is": "For click specifically, dell1 is already past that gate: an unchecked click 8.5.0 is installed from a public index, pulled in transitively by other packages, and no record on this box accounts for it. This is the same control gap as NFRA_CTLPLN-D1-S1 (pip reaches pypi.org from dell1 unimpeded) observed from the other end: S1 shows the route is open, S2 shows something already came through it. SCOPE: one package on one host, read from pip metadata at one time. It does NOT establish how many other site-packages entries lack a record -- that census is a separate read and is not this cell's. It also does not say the 8.5.0 bytes are malicious or wrong, only UNVOUCHED by the route the project is building. Nothing was uninstalled or changed; this row is an observation, and the remedy is the control-plane owner's and the CVO's, not this seat's."
+}
+```
+
+## NFRA_CTLPLN-D1-S3 -- TO-CT-x-2 step 1's index-free install of the checked click 8.3.1 would DOWNGRADE dell1 from 8.5.0 and leave huggingface_hub's core requirement (click>=8.4.2,<9.0.0) unsatisfied; the issuer should weigh that before the pack lands.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T09:26Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S3",
+  "one_line": "TO-CT-x-2 step 1's index-free install of the checked click 8.3.1 would DOWNGRADE dell1 from 8.5.0 and leave huggingface_hub's core requirement (click>=8.4.2,<9.0.0) unsatisfied; the issuer should weigh that before the pack lands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "installed click on dell1 2026-10-09 = 8.5.0; the checked pack is click-8.3.1-py3-none-any.whl (sha256 981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6), so step 1 is a DOWNGRADE",
+      "DENOMINATOR: 11 click requirements declared across installed distributions; 5 are core (no environment marker) and 6 are EXTRA-GATED (httpx cli, httpx2 cli, jupyter-events cli, jupyter-events test, python-dotenv cli, scipy dev)",
+      "core requirements unsatisfied by click 8.3.1: 1 of 5 -- huggingface_hub requires click<9.0.0,>=8.4.2",
+      "core requirements unsatisfied by the currently installed click 8.5.0: 0 of 5",
+      "core requirements SATISFIED by 8.3.1: black>=8.0.0, great-expectations!=8.1.4,>=7.1.2, pyiceberg>=7.1.1, uvicorn>=7.0"
+    ]
+  },
+  "spec_asserts": "TO-CT-x-2 <bounds>: 'One package installed: click 8.3.1, the checked file. No other install.' -- i.e. installing the checked file is a clean, bounded act.",
+  "world_is": "On dell1 it is not clean: it moves click DOWN from 8.5.0 to 8.3.1 and breaks one core dependency requirement (huggingface_hub needs >=8.4.2). The cell is still executable exactly as written -- this row does not refuse it and does not widen the bounds -- but the issuer owns the call on whether a downgrade that unsatisfies huggingface_hub is wanted on this box, and the order was cut on the laptop where the installed version may differ. CORRECTION WORTH RECORDING: a first pass over the requirement set counted 3 breaking dists (adding httpx2>=8.4.2 and scipy<8.3.0); both are gated behind extras (cli, dev) and are NOT core constraints, so the honest number is ONE. The instrument that fixes this is reading each Requirement's marker, not just its specifier. SCOPE: declared metadata only -- it does not exercise huggingface_hub against 8.3.1, so 'unsatisfied requirement' is a declared conflict, not an observed runtime failure."
+}
+```

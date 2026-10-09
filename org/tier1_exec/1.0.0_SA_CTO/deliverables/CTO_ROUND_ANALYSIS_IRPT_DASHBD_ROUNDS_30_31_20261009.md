@@ -242,3 +242,82 @@ first fire.
 - FWD-8's tolerance, at Andrew's word.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-09 ~08:4xZ) -- round 38 (CVO slug msg 2923, `ADJUDICATION_v23.md` @ab9ad6b27a)
+
+**Read:**
+- MAY-CLOSE, ARMED 0.
+- **R37 is LIVE** by the CVO's read:
+  - code `ciTGx5UV`;
+  - the role writes exactly the five 49F gold prefixes;
+  - the Lambda `dry_run` peak is 1,632 MB of 2,048. That is under this seat's 1,740.8 MB line, so the R37 half's condition 2 is met.
+- **The 11:41Z scheduled fire is the organic acceptance.** `~D2` reads A1-A7 on it.
+
+**W49-S3 is CLOSED.**
+- It was ruled in ADDENDUM 6, decision 1 (the additive `account_boundary` keys, adopted).
+- The keys are now in the ratified file and read by the adapter: 418 gross and 421 net of 562, which equals the proposal's measured effect.
+- The CVO's "still yours" is answered by that ruling. The disposition is RESOLVED by @fb5579ddfc plus the round-38 landing.
+
+### Enrichment list (round 39)
+
+1. **Read the 11:41Z fire's A1-A7.** A `LOTS_SKIPPED` or `CLASS_SKIPPED` line is a BLOCKING row the same day.
+2. **Explain the +290 s.** The lots stage grew 290 s over R35 on the kit. Measure the Lambda REPORT duration on the fire against 765 s. This is a
+   read, not a cell, unless the duration crosses the line.
+3. **A readable billing flag** for the Inflection fee slices (W53-S2's PARTIAL), where a source exists.
+
+**Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (measure when a sample carries them).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~09:0xZ) -- round 39 (CVO slug msg 2951; DB-b-82 `INF_BILLING_FLAG.json`, drained @6428276d96)
+
+**Read:**
+- Inflection's billing state covers 562 of 562.
+- The file carries its claim as basis `inferred`, derived from the fee amount and schedule. It is not Orion's `IncludedInBilling`.
+- COMPLETE means coverage, not certainty. MAY-CLOSE with no rows.
+
+**RULING (W53-S2): the inferred flag is ACCEPTED.** A consumer must show its basis.
+- The supervised and billed slices print as `inferred: from fee amount and schedule`, never as an Orion-reported fact.
+- Wherever Orion's `IncludedInBilling` is readable for an account, it wins, and the basis for that account reads `measured`.
+- This is the value-carries-its-claim law: the consuming half must be able to reject on the `inferred` basis.
+
+**Round 40:**
+- the 11:41Z fire's A1-A7 (`~D2`) and the REPORT duration against 765 s;
+- the display of the billing basis wherever the slices are shown.
+
+Nothing else is cut.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~09:1xZ) -- round 40 (CVO slug msg 2977, `ADJUDICATION_v24.md` @c2be1fc306)
+
+**Read:**
+- DB-b-83 is complete. The fee slices carry their basis per slice: 36 `measured`, 526 `inferred`. That meets ADDENDUM 8's ruling.
+- W60-S1 is dismissed: `orion_overrides` is a held lower bound (0..36), with its claim field.
+- ARMED 0, MAY-CLOSE.
+
+**No build cell is cut for round 41.** The next owned act is a READ:
+- **`~D2` reads the 11:41Z R37 fire** (A1-A7, and the REPORT duration against 765 s).
+- **Any SKIPPED line, or a duration over the line,** is a BLOCKING row and opens round 41 on it.
+- **A clean read is answered** by this seat's grade of the R37 tables in the next addendum.
+
+**Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (when a sample carries them).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9.1 (~09:4xZ, `~D2` msg 3007): round 41 also carries the svc-custody-statement mint and CU-g-2a
+
+**Measured by this seat:** `irpt-ycharts-generate` is live at `tdpterTM...` (09:32:22Z), so release 6b is live. IB-pr-385 is live inside IB-pr-390 (07:49Z). Both
+preconditions of the mint pair's AMENDMENT 2 before-read hold. The pair has both halves: COO @a319fc74b8 and CTO msg 2440, the svc-custody-statement mint
+half @53fa699974.
+
+**RULING: placed in round 41, beside the 11:41Z fire read.**
+1. **The mint landing** is executed by `0.7.0_AE_CloudOps~DB2` (seated for IRPT_DASHBD) under the existing pair, and its before-read re-runs at apply.
+   - The reader-ARN add is a laptop act routed through `0.0.0_AB_MSTR~DELL2`. It is named in the order and waited for.
+2. **CU-g-2a**, the first real retained Performance client statement:
+   - It carries E-P9's persist reads.
+   - It is graded on the real artifact by the CVO.
+   - It stays Opal-internal until a PROD push of a client-facing page, which is Andrew's word.
+3. **Ledger:** pinned, and committed after each leg (relay msg 2973).
+
+-- 1.0.0_SA_CTO~DELL2

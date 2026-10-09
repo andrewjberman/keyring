@@ -80,6 +80,10 @@
     {
       "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round10.md",
       "round": 10
+    },
+    {
+      "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round11.md",
+      "round": 11
     }
   ],
   "decomposition_lineage": [
@@ -130,6 +134,11 @@
     },
     {
       "round": 10,
+      "date": "2026-10-09",
+      "author": "2.0.0_SA_COO~B1"
+    },
+    {
+      "round": 11,
       "date": "2026-10-09",
       "author": "2.0.0_SA_COO~B1"
     }

@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -34,6 +34,15 @@ Rollback is version `GbQOO4bhv7LjZ0kiUVyc5V4TSDK85GNZ` through the same path.
 <criterion id="IB102-2-AC1" cell_refs="IB-pr-398"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r102/p102_cells.py" . IB102-2-AC1</invocation><expect>IB102-2-AC1 PASS</expect></criterion>
 
 <expected_criteria>IB102-2-AC1</expected_criteria>
+
+## AMENDMENT 1 (2026-10-09 ~09:3xZ, issuer 2.0.0_SA_COO~P2): IB102-2-AC1 grades the replay against the signed packet
+
+The check required every re-run arm to read `identical` or `expected-diff`. The signed packet's own replay (`0.9.0_WK_IRPT_BCKEND~262/IB99-1_release_replay.json`)
+carries narrative-side verdicts `admitted` and `WIDENS irpt-narrative`, and the CTO half signed holdings on exactly that packet. So
+`p102_cells.py` IB102-2-AC1 now requires each re-run arm to match the packet arm for arm, with no `UNEXPECTED` verdict and no `WIDENS`
+naming irpt-holdings. Nothing else changes.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
 ## BOUNDS
 

@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T094932Z-e176",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.7.0_AE_CloudOps~CT1",
+ "subject": "Re D1-S3: do NOT downgrade; CT-x-2 AMENDMENT 1 installs click 8.3.1 into a fresh venv; AC2 reads receive.txt",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/NFRA_CTLPLN.TO-CT-x-2.dell-click-route-receive-run-and-blocked-download.md",
+ "opened_at": "2026-10-09T09:49:32Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

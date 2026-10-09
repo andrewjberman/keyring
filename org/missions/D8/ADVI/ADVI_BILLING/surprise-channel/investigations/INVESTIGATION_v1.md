@@ -337,3 +337,261 @@
   "world_is": "Met; notes in the grade file."
 }
 ```
+
+## ADVI_BILLING-D2-W4-S1 -- The 5 advisorKeys hold no account in any role in the source, so adding them to the map gives them present-but-EMPTY entries: the 'not in ownership map
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W4-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~4",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The 5 advisorKeys hold no account in any role in the source, so adding them to the map gives them present-but-EMPTY entries: the 'not in ownership map' refusal is cured, a per-household grant is not (and 2 of the 5 are firmRole admin, already bypassing the check)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OWNERSHIP_GAP_R2.json (this worker's folder): relationships_per_added_advisor 0 x5; accounts 0 x5",
+      "jd2 dim_advisor_fee_role: none of the 5 slugs appears in any role column of any of 53 partitions sampled (first, middle, 2026-09-28)",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:469-470 (isAdmin = role admin or firmRole admin) so luke_winskowski and test_regression_49f bypass the check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO face: the 5 advisors 'are refused their own books'; the fix makes the 5 keys appear and counts their relationships.",
+  "world_is": "The advisors own no household in the source (account-team assignment), so 'their own books' is empty. After the fix, dan_wohlgemuth, lizah_okoniewski, test_regression_49f_adv are present with empty lists (still 403 on any relationship, now 'not authorized' rather than 'not in map'). Granting them households needs an account-team assignment in the source, not a producer change. Key format matches (advisorName slug == advisorKey) except the two test_regression keys, which have no name-derived form."
+}
+```
+
+## ADVI_BILLING-D2-W4-S2 -- The served map is produced by the legacy D_00.portal_aggregates (z-id grammar, 191 advisors, generated today), not by d08; the d08 fix reaches the ser
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W4-S2",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~4",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The served map is produced by the legacy D_00.portal_aggregates (z-id grammar, 191 advisors, generated today), not by d08; the d08 fix reaches the served map only at the cutover, and D_00 has the same universe law",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live map generated_at 2026-10-09T05:27Z, 191 advisors, relationship ids z-form; d08 produces rel_ hash ids and 149 advisors on the same day's inputs",
+      "data/black_diamond/scripts/gold/D_00.portal_aggregates.py:550-607 _build_advisor_ownership_map (melts the 5 role columns, drops advisors with no account/relationship)",
+      "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py module docstring: identity-spine divergence declared by design"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO face: 'the map is produced by d08_firm_ownership_map.py' and the issuer regenerates the served map after the fix.",
+  "world_is": "d08's output cannot replace the served map as-is: it is on a different id grammar (canonical spine) than the z-ids the edge compares, and every relationship list differs by design. The served map is written by the legacy D_00 builder, which drops a no-account advisor in the same way. The issuer's regeneration must either run D_00 with the same union or apply the 5 empty entries to the served bytes under the never-widen pair; the producer I was granted does not change the served bytes by itself."
+}
+```
+
+## ADVI_BILLING-D2-W4-S3 -- The shape differ in d_publisher_base has no empty-list tolerance (an empty id list reads as type 'empty' != census 'string'), so an advisor served wit
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W4-S3",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~4",
+  "surfaced_at": "2026-10-09T08:40:00Z",
+  "one_line": "The shape differ in d_publisher_base has no empty-list tolerance (an empty id list reads as type 'empty' != census 'string'), so an advisor served with empty lists is REFUSED by the shape check; d08 grades the populated advisors and asserts the empty shape itself",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "d_publisher_base.py _schema_of/_diff_schema: empty list -> {'__array__':'empty'} compared to census 'string' -> diff",
+      "before the workaround: SHAPE CHECK REFUSED with diffs on /advisors/<key>/accounts and /relationships for the 5 keys",
+      "after: d08 _shape_view leaves only the exact {accounts:[],relationships:[]} entries out of the census grade; SHAPE CHECK PASS diffs=0, TAMPER GUARD PASS 149 advisors"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Wanted: the fix passes the census shape check without editing the base or the census (both outside the grant).",
+  "world_is": "d08 asserts the empty entry's exact keys itself and withholds only those entries from the census grade. A durable fix is empty-list tolerance in the base differ (an empty list satisfies any element contract, as an empty map already does)."
+}
+```
+
+## ADVI_BILLING-D2-W5-S1 -- The order says write to the builder's address, but the naming gate refuses the scope literal in a gateway file
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W5-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~5",
+  "surfaced_at": "2026-10-09T08:50Z",
+  "one_line": "The order says write to the builder's address, but the naming gate REFUSES a hand-kept copy of the scope segment in any committed gateway file, so the module takes the destination ROOT from the environment (ADVI_FEE_STATEMENT_S3_ROOT) and the deploy must set it from address() output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh naming limb output 2026-10-09: NAMING REFUSE site_to_s3.py (and a generated fee_statement_location.json) -- a NEW hand-kept carrier of the firm scope key outside every permitted context: read it through lookup(); .tools/naming-gate.py judge() at line 1720",
+      "app/gen_rivalfunds_location.py precedent does not transfer: its scope is not a carrier, and a generated file must be a lib/opal_naming.py generate target (naming-gate.py ~1851), which is outside this grant",
+      "the gateway host carries no lib/ (app/gen_rivalfunds_location.py docstring), so the module cannot call address() at run time"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-3 item 1: the module writes to EXACTLY lib/opal_naming.py address(<smartx>,<scope>,'bronze','fee_statement','quarter=<q>','<name>.xlsx'); 'read how the gateway imports the builder (or vendors it) and follow that'.",
+  "world_is": "The module holds no bucket or prefix literal. destination_root() reads ADVI_FEE_STATEMENT_S3_ROOT = the builder's address for the table without the partition, refuses (fail closed, before any Graph read) when it is unset or not shaped s3://<bucket>/<prefix>/bronze/fee_statement/, and appends only quarter=<q>/<sanitized name>.xlsx. The tests set the variable from address() and assert the written key equals the builder's full address. The issuer must set the variable at deploy from builder output (Terraform opal_name/address), the same step that adds the s3:PutObject grant; a configured value that is wrong is the one way the destination can differ from the builder, so the deploy proof should print the variable beside address()."
+}
+```
+
+## ADVI_BILLING-D2-W3-S1 -- The commit-time naming gate refuses the column names the AB-e-5 order itself mandates (bd_account_id, bd_relationship_id) as string literals in the builder
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:38Z",
+  "one_line": "safe-commit's naming limb REFUSED household_crosswalk.py 5 times on the literals bd_account_id, bd_relationship_id and an internal bd_rel (hand-kept carrier of 'bd'), though AB-e-5 and r2_checks CROSSWALK_COLS require those exact column names; the builder now reads its column list from the contract JSON under org/, which the gate excludes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output: NAMING REFUSE data/assets/scripts/gold/advi_billing/household_crosswalk.py:39, :110, :118, :129 -> lookup('49financial'); NAMING-GATE: REFUSE 5 graded",
+      "data/assets/scripts/gold/advi_billing/household_crosswalk.py @d690b478cb: COLUMNS = list(CONTRACT['columns']); committed clean"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-5 item 1 names the output columns bd_account_id and bd_relationship_id; the order's bounds say addresses come from lib/opal_naming.py and legacy input URIs are passed as arguments.",
+  "world_is": "The gate treats the token 'bd' inside a column-name literal as a hand-kept carrier of the firm. A later builder or reader that types these column names (AB-e-6 reads them) meets the same refusal and should take the names from the contract, as this builder does."
+}
+```
+
+## ADVI_BILLING-D2-W3-S2 -- AB-e-6 says .scratch/ is gitignored in the worktree; it is not, and the dry-run object carries client figures
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S2",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:56Z",
+  "one_line": "AB-e-6 item 3 saves the dry-run object (client figures) to .scratch/advi_billing/AB_E6_DRYRUN.json 'in the worktree root (gitignored)', but git check-ignore on that path prints nothing and git status lists .scratch/ as untracked, so only the explicit-path commits keep it out of history.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git check-ignore -v .scratch/advi_billing/AB_E6_DRYRUN.json -> no output (rc 1) in C:/dev/wk-advi-billing-3",
+      "git status --short -> '?? .scratch/'; every commit by this worker named its paths, none staged .scratch/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-6 item 3: the dry-run object is saved under .scratch/ (gitignored; it carries client figures and is never committed).",
+  "world_is": "The path is untracked, not ignored. Nothing was committed from it. A later 'git add -A' or 'git add .scratch' in this worktree would stage client figures; the drain merges commits, not the working tree, so the merged branch is clean."
+}
+```
+
+## ADVI_BILLING-D2-W3-S3 -- The platform rate's composition (UMA + APM + Model) and the value-weighting of rates over allocations are this worker's reading; no real SMArtX statement exists to test either
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S3",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:57Z",
+  "one_line": "AB-e-6 says each account's ADVISOR and PLATFORM rates come from the silver statement 'summed over the account's allocations'; rates are fractions that do not add across sleeves, so fee_quarter.smartx_by_account value-weights rates by Current Period Estimate Valuation and sums only the true-ups, and it defines the PLATFORM rate as UMA + APM + Model rate (Client Fee Rate unused) -- neither is tested against a real statement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/assets/scripts/gold/advi_billing/fee_quarter.py @9492f23e7d smartx_by_account(); org/standards/ADVI_BILLING_FEE_QUARTER_CONTRACT.json 0.2.0 scope_note says the composition is an assumption",
+      "the dry run for the thread household found no silver partition (smartx_statement.used false), so the SMArtX path ran on synthetic fixtures only (test_fee_quarter_v2.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-6 item 1: each account's ADVISOR and PLATFORM rates and the SmartX/Advisor true-up come from the silver partition, summed over the account's allocations.",
+  "world_is": "When the first real statement lands, a PLATFORM component built from UMA + APM + Model may not equal Net SmartX Fee / (valuation x days / year) and would show as DIFFERS with a reason that blames the valuation or the true-up. Nothing serves a v2 object today (no --write ran), so this is INERT; before any write that serves a v2 object that used a statement, compare each allocation's Net SmartX Fee less its true-up with valuation x (UMA + APM + Model) x days / year on the real file and amend smartx_by_account if they differ."
+}
+```
+
+## ADVI_BILLING-D2-S2 -- TO-AB-e-1 item 2 names opal_auth SECRET_ID as the human-token SIGNING secret, but that constant is the PUBLIC verification key and cannot sign
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S2",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AB2",
+  "surfaced_at": "2026-10-09T09:11:38Z",
+  "one_line": "The order says mint with 'the shared human-token signing secret (infra/aws/lambda/shared/opal_auth/__init__.py SECRET_ID)'; that constant is SECRET_ID = 'opal/auth/jwt-public-key', the VERIFIER's secret, which cannot produce a signature. The five tokens were minted with 'opal/auth/jwt-private-key' (auth-handler jwt.ts:8), the only secret whose RS256 signature the edge's verifyWithSlots accepts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/shared/opal_auth/__init__.py:33 SECRET_ID = 'opal/auth/jwt-public-key'; its only consumer is get_public_key() at :131-144 on the VALIDATE path",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:8 JWT_PRIVATE_KEY_SECRET_ID = 'opal/auth/jwt-private-key'; generateAccessToken (:165-192) signs with getJwtPrivateKey()",
+      "the five probes returned 200/403/200/403/403, so the minted signatures verified at the edge -- the private id is the one that works (AB_E1_PROBES.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AB-e-1 item 2: mint the five tokens with the shared human-token signing secret, infra/aws/lambda/shared/opal_auth/__init__.py SECRET_ID.",
+  "world_is": "That SECRET_ID is the public key id. Minting read opal/auth/jwt-private-key once (one GetSecretValue, 2026-10-09T09:00:50Z, actor 0.7.0_AE_CloudOps~AB2); no key byte was stored, logged or committed. Both ids are named in AB_E1_PROBES.json (signing_secret_id, verifier_secret_id) so the order's text and the act that satisfied it are both readable. A future order that cites SECRET_ID for a MINT is unexecutable as written."
+}
+```
+
+## ADVI_BILLING-D2-S3 -- The other_firm probe was refused at the missing-identity-claims arm, which fires before any firm or bucket resolution -- the CROSS-FIRM arm is ABSENT, not EXERCISED-AGAINST
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S3",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AB2",
+  "surfaced_at": "2026-10-09T09:11:38Z",
+  "one_line": "other_firm (firmId mockadv, role user, firmRole user, and no advisorId, exactly as the order specifies the class) returned 403 'Advisor scoping: missing identity claims' -- index.mjs:478-492, failure mode 1, which runs BEFORE getOwnershipMap resolves a firm to a bucket. The status met the stated expectation (401 or 403) while exercising the identity-gap arm, not cross-firm containment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AB_E1_PROBES.json probes[3]: status 403, error_head {\"error\":\"Advisor scoping: missing identity claims\"}",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:478-492 -- the !payload.advisorId || !payload.firmId branch returns forbidden() before the getOwnershipMap call at :490",
+      "index.mjs:45-46 and :173-174: FIRM_BUCKET_MAP maps mockadv to opal-data-bd and the key is platinum/<firmId>/ownership_map.json, so a mockadv token WITH an advisorId would read platinum/mockadv/ownership_map.json -- a path this probe never reached"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AB-e-1 item 2: other_firm = firmId mockadv, role user, firmRole user; expectation 401 or 403, read in the cell as the live edge refusing a caller from another firm.",
+  "world_is": "The refusal is the identity-gap arm. Nothing in this round establishes what the edge does with a mockadv token that CARRIES an advisorId -- advisor_not_in_ownership_map (403), ownership_map_fetch_failed (503, if platinum/mockadv/ownership_map.json does not exist) and a map hit are all still open. Reaching it needs a sixth probe, which this order's refusal clause forbids, so it belongs to a later cell: one GET with firmId mockadv plus an advisorId, and a head-object on platinum/mockadv/ownership_map.json to predict which of the three arms should fire."
+}
+```
+
+## ADVI_BILLING-D2-S4 -- FWD-3 NOT REALIZED on real data (flows and exclusions unexercised)
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S4",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:29:06Z",
+  "one_line": "FWD-3 graded NOT REALIZED on the real render (E4): of its ACCEPT, the value charged on, the schedule (flat, so no tiers), days, per-account and household steps, and the 'why' are shown on real data; but 'any adjustment for money moved in or out during the quarter' and 'anything left out' are shown only on the invented-data render. For household z08219260 the panel neither shows a flow or exclusion nor states there was none, and the one flow-like mechanism -- SMArtX's prior-quarter true-up under advance billing -- is printed as 'method not known to this round'. ABSENT is not EXERCISED-AGAINST.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/r1_close/REAL_RUN_FWD1_R1.md @b44766f7ef",
+      "C:/dev/advi_billing_private/r1_close/realrun_fee_panel.png (dell2, private; re-read by this seat, the fee panel section)",
+      "org/missions/D8/ADVI/ADVI_BILLING/prd/ADVI_BILLING_PRD.md:45-50 (FWD-3)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_BILLING_ROUND_2_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 ACCEPT: the value charged on, the schedule and tiers, any adjustment for money moved in or out during the quarter, and anything left out; they can answer 'why is my fee this number?'.",
+  "world_is": "Four of the six clauses shown on real data; the flow-adjustment and left-out clauses unexercised on real data. FWD-3 realizes when one real household's panel shows a flow adjustment (or states 'no money moved in or out this quarter') and an exclusion (or 'nothing left out'), with the true-up read from a SMArtX statement (E2)."
+}
+```

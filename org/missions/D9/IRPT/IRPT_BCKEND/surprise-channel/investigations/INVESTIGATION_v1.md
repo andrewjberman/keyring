@@ -23675,3 +23675,223 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W265-S1 -- the scheduled holdings producer runs the per-firm standalone bundles, not investor-reporting.tar.gz: FWD-14's release is the three standalone bundles
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W265-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~265",
+  "surfaced_at": "2026-10-09T07:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "The scheduled holdings producer does not run holdings_snapshot.py from investor-reporting.tar.gz: it fetches three per-firm standalone bundles (irpt_holdings_<short>), so a release of the named key alone does not put FWD-14's gate on any scheduled fire.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live Lambda irpt-holdings-refresh-lambda (CodeSha256 SGwrvwLH..., LastModified 2026-09-26) IRPT_HOLDINGS_BUNDLE_MAP = s3://opal-data-{49financial,cottonwood,inflection}/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz; schedule irpt-holdings-snapshot ENABLED cron(15 10 ? * MON-FRI *) targets it (aws scheduler get-schedule, read 2026-10-09T07:5xZ)",
+      "infra/aws/lambda/investor-reporting/holdings_refresh/refresh_dispatch.py:65-75: aws s3 cp <that firm's bundle_uri>, tar -xzf, sha256sum -c SHA256SUMS, then python3 $R/holdings_snapshot.py --firms <firm> --upload; .tools/safe_deploy_core.py:468-568 STANDALONE_BUNDLES (explicit --mint-bundle only, never commit-routed) holds 44 members per firm including holdings_snapshot.py",
+      "the named bundle investor-reporting.tar.gz (12 members) carries holdings_snapshot.py but NOT its imports (holdings_49f, holdings_inf, source_inputs, publication, opal_naming, ...), so nothing runs holdings_snapshot.py from it",
+      "BUILD_ONLY twice at 6cbf2707cf: named bundle built sha256 0d595983..., 1 of 12 members changed vs live W2Wragr (holdings_snapshot.py, owners 9af6811b61 + ce6e2a218e); standalone built sha256 230d59e7... (identical for all 3 firms) vs live 7a400c14 (49f, cot) / 2b94e928 (inf) ETag: 18 of 44 members changed, 17 of them not FWD-14 (ids.py, lib/trading_calendar.py, lib/opal_naming.py, the registry, CurrencyAuthorities, HoldingsSnapshot.schema.json, build_cottonwood_mdpf_slice.py, dim_mdpf_aum_metrics.py, mdpf_category_registry.py, schwab_account_codes.json, firm_registry.json, NAMING_SCHEMA.json)"
+    ]
+  },
+  "spec_asserts": "The order (TO-IB-pr-400 WORKER FACE): FWD-14's gate ships in the runner bundle s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz, live W2Wragr, and the packet is modelled on IB-pr-389's for that key.",
+  "world_is": "That key's holdings_snapshot.py copy is not what the scheduled fire executes. The three per-firm standalone bundles are, they were last minted 2026-10-04/05 (49f 3Q_W49U7..., inf SuRm8tIY..., cot NZIQjid2...), and minting them is an explicit --mint-bundle act carrying 17 non-FWD-14 member changes owned by other projects. The packet states both artifacts and the replay runs the standalone trees (the consumers); a Branch A on the named key alone would read as released while the first scheduled fire still ran the ungated producer, and S392 would retire on a fire that cannot REFUSE. Disarm: the issuer rules which artifact the pair covers (or recuts the pair on the three standalone bundles) before either half signs.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S36 -- IB-pr-397 AMENDMENT 1 and the IB-pr-391 packet are unsatisfiable together: the signed sha256 is reachable ONLY through the parity skip the amendment forbids
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S36",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T08:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Three arms measured: no-skip REFUSES the build outright, the packet's skip reproduces ZZmWOFSA exactly, and the parity-clean 23-member set builds a different sha -- so every path AMENDMENT 1 permits is a STOP.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ARM 1, what AMENDMENT 1 orders (REAL map, the drafted 16-member entry, no BAU_PARITY_SKIP, no BAU_SOURCE_MAP_OVERRIDE): ADHC_DRIFTD.002 parity check FAILED, 'PARTIAL -- 0 built, 1 failed'. It names 7 files present in source_dir but not in files[]: build_resident_package.py, currency_authority.py, custody_write.py, generate_installed.py, request_composition.py, resident_installed.py, status_installed.py. No artifact is produced, so there is no built sha256 to compare at all.",
+      "ARM 2, the packet's own procedure (same entry, BAU_PARITY_SKIP=1): builds sha256 ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, EXACTLY the value both halves signed.",
+      "ARM 3, the remedy the gate itself proposes (register those 7 in files[], no skip): builds, import-closure OK at 15 packaged .py files instead of 8, sha256 pTdVgXqpSZq1f3aQM7pUzmJi+GQir1+Q2ffLyGUY82M= -- NOT the signed value.",
+      "the drafted entry was registered into the REAL map byte-identically (blob 024b3bea at box/dell2 HEAD; 102 lines added, 0 removed, 230 functions, nothing else in the map touched)",
+      "all three arms were BUILD_ONLY with TMPDIR outside every worktree: nothing uploaded, nothing applied. live_before still ABSENT (get-function-configuration ResourceNotFound) and the S3 key still 404 after all three.",
+      "the packet states the same thing in prose and the measurement now confirms it: 'The pair must register exactly that entry and build with the parity skip, or any other member set builds a different sha256' (and Branch A step 1: 'or list the seven other reports/*.py modules, which would change the zip')"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1 (rows W202-S1/S2): register the reader, then BUILD FROM THE REAL MAP -- no override, no BAU_PARITY_SKIP, no parity skip of any kind; the built sha256 must equal ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0= and a different sha is a STOP and a row.",
+  "world_is": "Those two requirements cannot both hold. The function's source_dir is the SHARED reports/ package, so the parity gate compares the whole directory against files[]; the signed 16-member artifact is by construction a SUBSET of that directory, which is exactly what the gate exists to refuse. Under the amendment the only two reachable outcomes are a refused build (no artifact) or a different artifact (pTdVgXqp), and the amendment names the second a STOP. So the applier stopped: the entry is registered (step 1, a pure addition, uncontested and reversible) and NOTHING was built for upload, uploaded, or applied -- live_before stays ABSENT. ONE RULING UNBLOCKS IT, and it is the issuer's or the CTO's, not the applier's: either (a) restore the packet's BAU_PARITY_SKIP=1 for this one function with the justification in the commit message, which reproduces the signed sha exactly and keeps both halves valid as signed, or (b) accept the 23-member parity-clean artifact pTdVgXqpSZq1f3aQM7pUzmJi+GQir1+Q2ffLyGUY82M=, which is a different blast radius (15 packaged modules, 7 of them other cells' code) and so needs both halves re-signed against a new packet. Until then IB-pr-397 is BLOCKED and IB-pr-398 (irpt-holdings only) is untouched and independent of this ruling.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S37 -- Resolves D2-W265-S1: FWD-14's release is the three per-firm holdings bundles, narrow to holdings_snapshot.py
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S37",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T08:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W265-S1 by issuer ruling inside the decomposition (section 96). The FWD-14 release target is re-pointed from the ordered key code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (no scheduled fire executes its holdings_snapshot.py) to the three per-firm keys s3://opal-data-<firm>/irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz that irpt-holdings-refresh-lambda fetches. A fresh build moves 17 non-FWD-14 members (87 nodes reclassified at 49financial, 236 at cottonwood), so the release is NARROW: each live bundle with only holdings_snapshot.py moved by 9af6811b61 + ce6e2a218e, never 01e843ce2e. Cell IB-pr-402 (worker ~266) builds and replays it; the pair is signed on that packet. S392 is not retired on any fire before the narrow bundles land.",
+  "one_line": "Release target re-pointed to the three per-firm bundles, narrow to the FWD-14 member; IB-pr-402 builds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB102-4_release_census.json @dda85dc8f4: per-firm artifact changed_member_count 18, 17 non_fwd14_flag",
+      "p102_cells.py IB102-4-AC1 PASS (issuer re-grade, 21 arms)",
+      "TO-IB-pr-402 cut in round 103"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-400 named investor-reporting.tar.gz as the bundle carrying the FWD-14 gate to the scheduled fire.",
+  "world_is": "The scheduled holdings fire runs three per-firm bundles; the release is re-pointed there, narrowed to the FWD-14 member."
+}
+```
+
+## IRPT_BCKEND-D2-S38 -- Resolves and disarms D2-S36: the CTO chose (a), the parity skip scoped to the reader build; IB-pr-397 AMENDMENT 2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S38",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:02:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and DISARMS IRPT_BCKEND-D2-S36. CTO ruling msg 2952 (ADDENDUM 14.1 @13645d01d6) chose (a): BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only, scoped to that build invocation, with the built zip's symbol closure at missing=0 and the build equal to ZZmWOFSA, else STOP. The issuer amended TO-IB-pr-397 (AMENDMENT 2) the same tick. Option (b), the 23-member pTdVgXqp artifact, is not released; both halves stay valid as signed.",
+  "one_line": "CTO ruled (a); IB-pr-397 AMENDMENT 2 permits the scoped parity skip with a symbol-closure check; D2-S36 disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 2952: '(1) D2-S36: BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only'",
+      "TO-IB-pr-397 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1: no parity skip of any kind, and the build equals ZZmWOFSA.",
+  "world_is": "The two cannot both hold (D2-S36); the CTO narrowed the skip ban for this one function and the order now carries that."
+}
+```
+
+## IRPT_BCKEND-D2-S39 -- IB102-2-AC1's arms_ok admits two verdicts while the IB-pr-394 harness emits four, so the criterion REFUSES the replay record both halves signed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S39",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T09:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The world is right and the instrument is narrow: holdings is live at the built sha, narrative is unmoved, the replay re-run is byte-identical to the signed packet record -- and the criterion still reads FAIL because two of that record's own verdict values are outside its allowlist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p102_cells.py:62 arms_ok(arms, n=1) returns len(arms) >= n and all(x['verdict'] in ('identical','expected-diff')) -- a TWO-value allowlist",
+      "the IB-pr-394 harness emits FOUR verdict values, measured over the packet's own IB99-1_release_replay.json: ['WIDENS irpt-narrative', 'admitted', 'expected-diff', 'identical']",
+      "DECISIVE CONTROL: arms_ok applied to the PACKET'S OWN SIGNED record returns False, exactly as it does for my re-run. The criterion therefore refuses the artifact the COO and CTO halves signed, so the FAIL is the instrument and not the world.",
+      "the two rejected values are 'admitted' (arm 4: internal caller with row [cottonwood] selecting cottonwood, admitted through both zips) and 'WIDENS irpt-narrative' (arm 6), which the packet EXPRESSLY admits: 'A WIDENS verdict is expected for irpt-narrative only'",
+      "the world, measured: irpt-holdings live CodeSha256 CKpZUMD5RVWyY/2oyo8zZwN7Ss8J2FbkeNFr2XYbXD8= EQUALS the packet built value (LastModified 2026-10-09T09:11:24Z); irpt-narrative live es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc= UNCHANGED to the same LastModified second; AC1's first two limbs both pass and only the arms limb fails",
+      "the re-run is byte-identical to the signed record: sha256 es6YSTEXcnQeGvyv3wy64HshoAiZBC+tR0Ph4iCctmw= on both files; 9 arms, 5 negative controls, 9 of 9 verdicts matching the packet arm for arm, ZERO arms whose verdict is UNEXPECTED, no HARNESS_* code on the built error path, and the negative control did raise HARNESS_TypeError on 2 of 2 routes",
+      "the deploy itself is complete and not half-landed: ledger 20261009T0906Z_irpt-holdings-release-394-20261009 CLOSED with 5 of 5 legs proven, sentinel removed; the plan was 0 add / 1 change / 0 destroy with zero lines outside the signed radius; re-plan reads No changes"
+    ]
+  },
+  "spec_asserts": "IB102-2-AC1 -- live irpt-holdings == CKpZUMD5...; live irpt-narrative unchanged; after-reads A2: ledger CLOSED stating pin + sha256; replay arms re-run. Base: FAIL.",
+  "world_is": "Every clause of that sentence is satisfied and the criterion still prints FAIL, because its arms_ok helper carries the IB-pr-390-era two-value vocabulary while the IB-pr-394 harness that the pair signed emits four. The applier did NOT make the criterion pass: dropping or relabelling the 'admitted' and 'WIDENS irpt-narrative' arms would have bought a PASS by deleting the single most safety-relevant line in the record -- the one saying the live narrative boundary does not honour firm selection -- so the arms are recorded VERBATIM and the criterion is reported FAIL with its cause. <status> is left pending for that reason; nothing is half-landed, because the release is applied, read back and its ledger closed. ONE EDIT by the issuer clears it: widen arms_ok for the r102 holdings limb to the vocabulary its own harness emits (admit 'admitted', and admit a 'WIDENS <host>' verdict only for a host the order does NOT release), or re-cut IB102-2-AC1 against the four-value vocabulary. A one-line narrowing is NOT equivalent: an arms_ok that silently admits any WIDENS would stop discriminating the case it exists for.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W267-S1 -- BLOCKING: SmartX fact_allocation_positions carries no CUSIP column; IB-pr-403 cannot be built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W267-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~267",
+  "surfaced_at": "2026-10-09T09:24:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Live smartx/platform/silver/fact_allocation_positions has no CUSIP column and no CUSIP-shaped value; the order stops per its own clause.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-assets/smartx/platform/silver/fact_allocation_positions/date=2026-10-08/data.parquet: 122164 rows, columns allocation_id, owner_id, as_of, run_date, ticker, symbol_id, symbol_alias_id, company, asset_type, industry, quantity, price, multiplier, market_value, value, last_seen_date, _ingested_at",
+      "symbol_id and symbol_alias_id: 160 distinct values each, all 36 characters long (UUID shape), 0 of 122164 match a 9-character CUSIP pattern; ticker 160 distinct, 2-5 characters",
+      "No code written; no census file written; order left open"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 cell: the fact_allocation_positions row holds a CUSIP in some column; 'If no column carries a CUSIP, STOP and file a row.'",
+  "world_is": "No column in the live fact_allocation_positions carries a CUSIP. AC1 and AC3 (with_cusip >= 1) cannot be met from this table; a CUSIP would need a join to another source (e.g. fact_model_holdings or a security master), which the order does not name."
+}
+```
+
+## IRPT_BCKEND-D2-S40 -- Resolves D2-W267-S1: IB-pr-403 joins the CUSIP from 49F's dim_asset by ticker (exactly one; basis carried)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S40",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W267-S1. CTO ruling AMENDMENT 1 @bdf378d09c (msg 3001) chose (a): the CUSIP is joined from 49F's own dim_asset by ticker, carried only where the ticker maps to exactly one CUSIP, with cusip_basis joined_via_ticker(dim_asset@as_of); zero or several matches are listed. TO-IB-pr-403 AMENDMENT 1 and p104_cells.py carry it; worker ~267 is re-seated on the amended order.",
+  "one_line": "CTO ruled the ticker -> 49F dim_asset join (exactly-one, basis carried); IB-pr-403 amended and re-seated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO_RULING_D1_S8_49F_CUSIP_PLACEMENT_20261009.md AMENDMENT 1",
+      "p104_cells.py dry-run at base: AC1 FAIL, AC2 PASS, AC3 FAIL"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-403: the SmartX row's own CUSIP becomes the node's security_id.",
+  "world_is": "The SmartX table holds no CUSIP; the order now joins 49F's own master by ticker, exactly-one, with the basis carried."
+}
+```
+
+## IRPT_BCKEND-D2-W266-S1 -- Rebuilding a live bundle: CRLF from the box git, and gzip bytes that depend on the interpreter
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W266-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~266",
+  "surfaced_at": "2026-10-09T09:31:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Two byte traps in rebuilding a live bundle: the box git turns a patched LF member into CRLF, and python 3.14 (zlib-ng) packs different gzip bytes than the live producer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git config --show-origin core.autocrlf -> file:C:/Program Files/Git/etc/gitconfig true; git apply of 9af6811b61+ce6e2a218e onto the live member gave 3180 CRLF / 0 LF lines (sha256 ccab30f3...); with -c core.autocrlf=false -c core.eol=lf it gave LF, blob e39636c5a8 after adding the 01e843ce2e diff back",
+      "python 3.14.7 (zlib-ng 1.3.1) repack of the live 49financial members = 464,953 bytes sha256 f05805c2...; python 3.12.10 (zlib 1.3.1) repack = 465,247 bytes sha256 fff044da... = the live object byte for byte (3 of 3 firms, cmp identical); decompressed tars equal",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~266/IB103-2_narrow_bundle_census.json build_only.method"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-402 steps 2-3: patch the live member with the two commits' diffs and repack with the mint's packer; the built bytes are then the release.",
+  "world_is": "Both steps are environment-sensitive without an error. A bare git apply on this box rewrites the member with CRLF line endings (a different file from the one ce6e2a218e committed); the default python (3.14, zlib-ng) writes a valid but different gzip stream than the live producer, so a sha256 built there would not be the one an applier on another interpreter gets. The packet pins both: the patch is applied with autocrlf/eol overridden and checked against blob e39636c5a8, the packer is python 3.12 and its control reproduces the live bytes, and the applier's step 3 is a digest gate whose miss is a STOP. Nothing is blocked; filed so a later applier who rebuilds with another interpreter reads the cause of a digest miss here."
+}
+```

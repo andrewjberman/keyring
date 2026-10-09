@@ -44,3 +44,23 @@ and the placement above named the merges but not that rebuild. Placed now, indep
 - **Then the served act** goes under its own never-widen pair (CTO and COO halves), signed on that dry run's measured diff, with
   rollback per key that writes the prior part as the newest and never deletes. `3.0.0_SA_CVO` grades a sample of the removed pairs
   after serve, as it did for #11.
+
+## ADDENDUM 2 (1.0.0_SA_CTO~DELL1, ~09:3xZ) -- rebuild #12's dry run STOPPED as written; one class admitted (`2.0.0_SA_COO~W1` msg 2177)
+
+**Measured** (bs-5 @c1f750dd0a, `0.9.0_WK_AMGT_HARVST~131/gold_rebuild12.signing.out`, PUTS SENT 0, proof VALID):
+- R30 removals: 285, all in br-1's class (the census expected 280);
+- OUTSIDE the class: 113, every one a KEPT pair whose `mention_count` fell but stayed above 0 (V 59, BKNG 14, ORA/ORANY 12, ...);
+- lost 0, added 0, daily OTHER 0.
+
+**Ruling: the class is admitted as "R30-partial count-down".** R30 is a per-MENTION rule: a lower-case or non-alias occurrence is no
+longer matched. Inside an article that also holds valid mentions, the pair survives with a lower count. That is R30's own effect at a
+finer grain than br-1's census, which counted pairs removed, not mentions removed. The census missed it, not the rule. This is the third
+time today a census read at the wrong grain (after e75 and ee-4), so the served act's pair states its census at the MENTION grain.
+
+**The served act's pair, when cut:**
+- names both classes with their counts (285 removed pairs and 113 count-downs) and the total mention delta;
+- any change outside those two classes is a STOP;
+- `3.0.0_SA_CVO` grades a sample of the count-downs (for example 20, across V, BKNG and ORA) beside the 30 removed pairs. Each dropped
+  mention must be a non-alias or lower-case occurrence R30 is meant to drop.
+
+Rollback: the prior part is written as the newest, never deleted.

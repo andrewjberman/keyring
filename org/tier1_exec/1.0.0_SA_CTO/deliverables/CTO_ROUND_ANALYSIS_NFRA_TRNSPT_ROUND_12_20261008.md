@@ -164,3 +164,134 @@ when a FWD needs precedent, and it needs a privacy review approved by the CVO (t
    - FWD-1 and FWD-3's new-landing arm are re-read on the same landing.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~08:5xZ) -- grades on the round-18 coverage (`~T2` msg 2936, `R18_COVERAGE.md` @ed84ea7977, 8 of 8 rows)
+
+### Grades
+
+| FWD | grade | the hop that is missing (from the coverage row) | where it is cut |
+|---|---|---|---|
+| FWD-1 | NOT REALIZED | the Teams pull (no scheduled landing) | TO-APPLY-p18, GO under half @b972f130c9 |
+| FWD-2 | NOT REALIZED | the Teams pull, and the Research Graph 403 | p18, plus round 19: the 403's permission read by name |
+| FWD-3 | NOT REALIZED | the new-landing arm rides the Teams pull | p18 |
+| FWD-4 | NOT REALIZED | the "expired" cause is not reachable by any act | round 19 cell |
+| FWD-5 | NOT REALIZED | no analyst route: the scoped wiped-silver reader role does not exist | round 19 cell, after W1-S7 is fixed (below) |
+| FWD-6 | NOT REALIZED | no act exists (PowerPoint intake) | round 19 cell |
+| FWD-7 | REALIZED | -- | ADDENDUM 2 |
+| FWD-8 | NOT REALIZED | TO-APPLY-a18 is at the laptop (half @f2ec32dea4) | the laptop through MSTR |
+| FWD-9 | NOT REALIZED | no act (one question across meetings, updates and commentary) | round 19 cell |
+| FWD-10, FWD-11 | MOVED | -- | IRPT_ANLREQ |
+
+### The two privacy rows
+
+1. **W1-S8 is ARMED (disarm owner `~T2`).** `read_meeting.py` prints held-out Research rows that `research_read.py` withholds. That is a reader-side leak:
+   a seat could copy withheld content into a log, which FWD-8 forbids.
+   - **Ruling:** both readers call ONE shared holdout filter (the one `research_read.py` uses). `read_meeting.py` is fixed in round 19 before its next use,
+     with a test that a held-out row is never printed.
+   - **Until the fix lands, `read_meeting.py` is not run** against Research silver.
+2. **W1-S7: Teams silver is UNWIPED while PRD C-TIERS says silver is wiped.**
+   - **The exposure today is bounded.** The narrower wiped-silver reader does not exist (coverage row FWD-8 (b)), so only the named original readers can
+     read Teams silver. This is a spec breach, not a live leak.
+   - **Ruling:**
+     - Round 19 re-runs the wipe over the existing Teams silver objects. That is a rewrite of served objects, so it needs a pair whose blast radius names
+       every key.
+     - From the p18 apply on, new silver lands through the wipe (COO half: "the same wipe for silver").
+     - **No narrower reader role (FWD-5) is created until every Teams silver object reads wiped.**
+
+### Enrichment list (round 19)
+
+1. W1-S8: the shared holdout filter in `read_meeting.py`, plus its test.
+2. W1-S7: the re-wipe of existing Teams silver, under a pair.
+3. FWD-2: the Research Graph 403, read by name for the permission it lacks.
+4. FWD-4: an on-demand act that reaches the "expired" cause.
+5. FWD-6: PowerPoint intake, one file kept byte-exact.
+6. FWD-9: one question answered across meetings, updates and commentary. Read-only, by a named reader.
+
+FWD-5's reader role follows item 2. At most three mechanical criteria per build order.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8.1 (~08:5xZ, `~T2` msg 2941): correction -- new Teams silver does NOT land wiped
+
+ADDENDUM 8's line "From the p18 apply on, new silver lands through the wipe" rested on a false COO line. `parse_silver.py:5-6` reads "No PII wipe on transcripts
+this round".
+
+**RULING: (a), apply p18 now, with three conditions.**
+- **Why (a):** Teams silver holds the same content as bronze, which is the raw tier. Both are readable only by the named original readers through the key
+  policy, so unwiped new silver adds no reader and no reach. FWD-1, FWD-2 and FWD-3 need the pull.
+
+**Conditions:**
+1. **The narrower-reader gate is unchanged and is now explicit.** No principal outside the named original readers is granted on `teams/transcripts/*` until both
+   of these hold:
+   - every existing Teams silver object reads wiped (the W1-S7 re-wipe);
+   - the pull wipes on landing.
+2. **Round 19 adds the wipe-on-landing to the pull as item 2b,** with a planted-token test (the C-WIPE-GATE pattern), before FWD-5's reader role.
+3. **PRD C-TIERS is breached until item 2b ships.** The breach is named in the NFRA_TRNSPT record and is not silent: row W1-S7 stays OPEN.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~09:1xZ) -- row D2-S10: the Teams pull's transport is a STUB and its secret is absent (`~T2` msg 2981, @353bf58b5b)
+
+**Measured by `~T2` at TO-APPLY-p18 step 1** (stopped there; the KMS limb passed):
+- `teams/global/gateway-token` does NOT exist.
+- `gateway_client.py:5,:81` `GatewayTransport` is a STUB ("each method raises GatewayToolsAbsent ... no network call").
+- Applied as written, the function would run hourly and land nothing. **p18 stays HELD.**
+
+**RULING (REC adopted): a round-19 amendment cell, LOCAL build, before p18 re-runs from step 1.**
+1. **A real Teams gateway transport** on the mail pull's proven pattern (`outlook/gateway_mail.py`).
+   - Tests run against a recorded fixture of one allowlisted meeting.
+   - It makes no live call in the cell. The first live call is p18's step-1 S04 read.
+2. **`pull.tf` reads the bearer by data source,** as `mail_pull.tf:28-30` does.
+   - **The secret's NAME is the gateway owner's to give** (NFRA_OPLGTW). It is NOT chosen between `gateway/teams/bearer` and `gateway/transcripts/bearer` by guess.
+   - `~T2` asks the owner through `0.0.0_AB_MSTR~DELL2`. The cell carries the name as a variable until the answer lands.
+   - **If no Teams bearer exists, the owner's minting of it is the precondition.** It is named on the row with its owner. It is never worked around by
+     reusing the mail bearer.
+3. **p18 re-runs from step 1 on the new build:** S04 is a live tool call, S05 is the bearer's expiry, and the KMS limb was already passed. The CTO half
+   (@b972f130c9, AMENDMENT 1) binds the rebuilt zip by its sha256 in the ledger. No new half is needed, because the blast radius is unchanged.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-09 ~09:4xZ) -- round 19 drain end (`~T2` msg 3009, `R19_CLOSE.md` @a32646d928)
+
+Written on the COO packet; it is revised if the CVO's slug differs.
+
+**Read:**
+- 5 cells drained (406 passed).
+- **W1-S8 is DISARMED:** both readers use the shared holdout filter.
+- The re-wipe tool and wipe-on-landing are built. The served re-wipe needs its pair.
+- The FWD-4, FWD-6 and FWD-9 acts are built.
+- **TR-r-19: the Research Graph 403 is meeting MEMBERSHIP, not a scope.**
+
+**Rulings:**
+1. **The Research 403 is an act only Andrew can do.** The reading account must be added to the Research Meeting series, an entitlement in his tenant that
+   no seat holds. It is listed for him with that citation: CLAUDE.md, spend, contracts or entitlements beyond his grants. FWD-2's Research arm waits on it,
+   and the other series do not.
+2. **The served re-wipe of existing Teams silver (W1-S7) is cut in round 20 under a never-widen pair.**
+   - The blast radius names every key and its prior version id.
+   - Rollback is a `copy-object` of each prior version.
+   - The planted-token test is run on the rewritten bytes.
+3. **The FWD-4, FWD-6 and FWD-9 acts are EXERCISED in round 20,** each once on demand, with the read recorded. This seat grades each from the read. Built is
+   not REALIZED.
+4. **The transport cell (ADDENDUM 9) waits on NFRA_OPLGTW's bearer name and route contract,** through MSTR. That is a named owner and condition, not a silent
+   wait.
+
+### Round 20
+
+1. The W1-S7 re-wipe pair and its apply.
+2. The FWD-4, FWD-6 and FWD-9 exercise reads.
+3. The transport cell, when the owner's answer lands.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10.1 (~09:4xZ) -- the CVO's slug for rounds 17-19 (msg 3023, `ADJUDICATION_v10.md` @67046ae880): ADDENDUM 10 stands
+
+The slug matches the COO packet ADDENDUM 10 was written on (3 dismissed, ARMED 0). Its three items are already ruled:
+- **W1-S7, the Teams silver writer applies no wipe:**
+  - no reader is granted beyond the named original readers until every Teams silver object reads wiped and the pull wipes on landing (ADDENDUM 8.1);
+  - the served re-wipe pair is in round 20 (ADDENDUM 10).
+  This is exactly the CVO's "grant no reader until one holds".
+- **D2-S10, the transport is a stub and the bearer is missing:** ADDENDUM 9. A round-19 transport cell is built; the bearer name comes from NFRA_OPLGTW, never
+  guessed.
+- **D2-S9, the backfill precedent is empty:** ADDENDUM 5. It is kept empty, and the residual check is the privacy guard.
+
+-- 1.0.0_SA_CTO~DELL2

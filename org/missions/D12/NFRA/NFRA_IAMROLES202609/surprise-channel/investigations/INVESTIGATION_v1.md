@@ -1240,3 +1240,116 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   "world_is": "The order's write surface and the owned-paths convention disagree about one path, and the convention is the one with a gate behind it. TWO CHEAP DISPOSITIONS, both the issuer's call: (a) a seat the lane permits lands the prepared row edit while deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_8_10.md stands as the acceptance of record -- but note this FAILS AC2 as written, so AC2 would need amending to grade the acceptance document's author instead of the disposition file's; or (b) the acceptance token moves to a path this seat owns and the disposition file carries a pointer, which keeps AC2's intent ('the lane authored it') satisfiable by this seat. I did NOT take the audited author override: it would fail AC2 by construction and forge the very acceptance the cell forbids forging. The prepared edit is left UNCOMMITTED in the shared working tree so no work is lost -- flagged here because a shared-tree dirty file is visible to every seat and should not be swept by anyone's `git checkout --` or clean. SECOND, SMALLER FINDING IN THE SAME ORDER, recorded so the next row in this project does not trip on it: the order declares the row-id form NFRA_IAMROLES202609-Z-AEC-S<k>, and that form is REFUSED by surprise-row-gate.py's own ID_RE, whose optional segment is a single letter plus digits and admits only one such segment. Tested: '-Z-AEC-S1' REFUSED, '-AEC-S1' REFUSED, '-Z-S1' MATCH. This row therefore uses the admitted Tier-2 form -Z-S19, which is the same class the MX-s-19 A3 amendment ruled when it retired the 'Z-AEMI-' form in NFRA_MCPINDEX."
 }
 ```
+
+## Z-W13-S1 -- the v-3 candidate role's consumer already raises DirtyRunError on 30 of 30 daily runs
+
+```json
+[
+{
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~13",
+  "surfaced_at": "2026-10-09T09:34:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_IAMROLES202609-Z-W13-S1",
+  "one_line": "smartx-assets-daily-pull (the consumer of the TO-IAM-v-3 candidate role) raises DirtyRunError (feed9 reconciliation, PARTIAL identity table) on every one of the last 30 daily runs, so the bronze delta never reaches its OnSuccess silver converter; the cause is data reconciliation, not IAM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZI to route to the owner of the smartx-assets-daily-pull pipeline; this worker does not touch it.",
+  "spec_asserts": "A daily-scheduled production Lambda whose role is a v-3 candidate runs clean, so the post-narrowing run can be read as clean-versus-broken.",
+  "world_is": "30 of 30 log streams 2026/09/09..2026/10/08 of /aws/lambda/smartx-assets-daily-pull carry exactly one '[ERROR] DirtyRunError: feed9 reconciliation on <group>: resolver=N != feed5 living=M -- PARTIAL identity table' raised at lambda_function.py line 265, after the Secrets Manager auth path ran. PREDICTION.json therefore reads the outcome as 'same standing signature, zero AccessDenied', not as 'clean run'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events --log-group-name /aws/lambda/smartx-assets-daily-pull --region us-east-1, 30-day window, patterns AccessDenied/ERROR/Traceback/'Task timed out'/DirtyRunError: 30 events, one per stream per day, 0 AccessDenied",
+      "CloudTrail Username=smartx-assets-daily-pull 2026-07-14..2026-10-08: 541 GetSecretValue and 89 PutSecretValue events, so auth ran on those days"
+    ]
+  }
+}
+]
+```
+
+## Z-W13-S2 -- the etfs-canon-fanin target table was deleted 2026-08-07 and the daily Lambda fails on it
+
+```json
+[
+{
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~13",
+  "surfaced_at": "2026-10-09T09:34:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_IAMROLES202609-Z-W13-S2",
+  "one_line": "The DynamoDB table opal-etfs-ownership-daily was deleted on 2026-08-07 and its only writer, the ENABLED daily Lambda etfs-canon-fanin (cron 15:45Z), fails every run with ResourceNotFoundException on BatchWriteItem while infra/aws/terraform/etfs-canon/fanin-lambda.tf still declares the table, the role grant and the schedule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZI to route to the owner of the ETFS_CANON pipeline; this worker does not touch it.",
+  "spec_asserts": "fanin-lambda.tf line 4 states the Lambda is APPLIED + LIVE and its DynamoDB target is written daily (comment and role policy ddb-write-ownership-daily).",
+  "world_is": "aws dynamodb describe-table opal-etfs-ownership-daily returns ResourceNotFoundException; CloudTrail DeleteTable on that table by user/Andrew_Berman_Console at 2026-08-07T13:58:10-04:00; filter-log-events on /aws/lambda/etfs-canon-fanin for the last 3 days returns 7 '[ERROR] ResourceNotFoundException ... BatchWriteItem' events. Candidate etfs-canon-fanin-role / dynamodb:DescribeTable was rejected for v-3 on this ground (a consumer that already fails earlier cannot show an outcome).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb describe-table --table-name opal-etfs-ownership-daily --region us-east-1: rc=254 ResourceNotFoundException",
+      "aws cloudtrail lookup-events ResourceName=opal-etfs-ownership-daily, 89d: 345 events, DeleteTable x1 (user/Andrew_Berman_Console, 2026-08-07T13:58:10-04:00)",
+      "aws logs filter-log-events /aws/lambda/etfs-canon-fanin 3d: 7 ResourceNotFoundException BatchWriteItem events"
+    ]
+  }
+}
+]
+```
+
+## Z-W13-S3 -- the s-8 instrument's negative control reads UNKNOWN on a conditioned role and its WOULD-BREAK counts grants, not callers
+
+```json
+[
+{
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~13",
+  "surfaced_at": "2026-10-09T09:34:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_IAMROLES202609-Z-W13-S3",
+  "one_line": "preflight-blast-radius.py section [2a] NEGATIVE control reads verdict=UNKNOWN on any role carrying a conditioned statement (eval_decision is implicitDeny but missing context s3:prefix turns it UNKNOWN), and its PREDICTION block counts every currently-allowed resource as a 'WOULD BREAK caller path' without joining the usage plane of section [3].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The s-8 instrument's controls discriminate (positive allowed, negative denied) and its PREDICTION line says what would break.",
+  "world_is": "Run for smartx-assets-pull-role: NEGATIVE control (iam:CreateUser) prints verdict=UNKNOWN; the same call by hand returns eval_decision=implicitDeny, verdict=UNKNOWN, missing_context_values=['s3:prefix'] (the role's ListBucket statement carries an s3:prefix condition). The PREDICTION block printed 'WOULD BREAK 5 live-verified caller path(s)' for an action that Access Advisor reads never-used with 0 DescribeSecret events in 1446 CloudTrail events: it counts grants revoked, not callers. PREDICTION.json carries both numbers and states which one predicted_breaks is.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python preflight-blast-radius.py --role smartx-assets-pull-role --remove secretsmanager:DescribeSecret (blob bd7620790c) output sections [2a] and PREDICTION",
+      "bash .tools/comp-iam-usage reach-check smartx-assets-pull-role iam:CreateUser arn:aws:iam::313476888478:user/preflight-negative-control-nonexistent: eval_decision implicitDeny, verdict UNKNOWN, missing_context_values s3:prefix"
+    ]
+  },
+  "notes": "The instrument is run, not edited (order BOUNDS); the reading is carried in PREDICTION.json under predicted_post_state.grants_revoked_meaning."
+}
+]
+```
+
+## Z-S20 -- the issuer routes Z-W13-S1 / Z-W13-S2 (two other pipelines' failures found in passing) and carries S1 into v-4 as its baseline
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-S20",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZI",
+    "surfaced_at": "2026-10-09T09:50:37Z",
+    "one_line": "Issuer's disposition of Z-W13-S1 and Z-W13-S2 (both ARMED, disarm_owner this seat): both are defects OUTSIDE this project, found while v-3 searched for a candidate; this project fixes neither, and neither holds the round. S1 is carried into v-4 as the failing baseline its outcome is read against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W13-S1 and Z-W13-S2 name 2.0.0_SA_COO~ZI as disarm_owner.",
+    "world_is": "S1 (smartx-assets-daily-pull raised DirtyRunError on 30 of 30 daily runs, 2026-09-09..2026-10-08) belongs to the smartx pipeline's owner; this seat's only exposure is v-4's outcome read, and NEVER_WIDEN_ROUND5_FWD5_NARROWING_COO_HALF.md names that baseline so a failed run is not misread as a break (the F1-F3 discriminators decide). S2 (DynamoDB table opal-etfs-ownership-daily deleted 2026-08-07, etfs-canon-fanin failing every run) belongs to the ETFs pipeline's owner; v-3 rejected that candidate for it. Both are routed to 1.0.0_SA_CTO~Z, the site-Z fabric CTO, with the never-widen pair request for v-4.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-W13-S1 and Z-W13-S2 as drained @76c5f426ca",
+        "ledger/NEVER_WIDEN_ROUND5_FWD5_NARROWING_COO_HALF.md section 'Both branches', the baseline paragraph"
+      ]
+    },
+    "notes": "Cites Z-W13-S1, Z-W13-S2. The channel's dispositions stay the CVO's at L9."
+  }
+]
+```

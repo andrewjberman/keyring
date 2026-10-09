@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-v21</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~21</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~22</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>complete</status>
@@ -113,6 +113,37 @@ in the issuance base). `test_package_i5p_i7.py` reads that file at test time, ro
 and uses `canonical` for `pdf_ref` and `commentary_ref`, including in the updated package-route fixtures. The portal tests may carry the same
 canonical string as a literal. Delivered to the running worker the same tick. Gate limb: none graded this modification.
 
+**AMENDMENT 2 (issuer, 2026-10-09 ~09:1xZ; DECOMP_R2 AMENDMENT 2 @a30b01837a on CTO round-1 ADDENDUM 1 @64e9e6157d, row D2-S6).** The
+portal cell now wires the ORIGINAL FILE reader too. Part A and the PDF reader are done and stay as they are (portal DEV d06ae384, drain
+@53cbcad426).
+- **Server route** (source at HEAD; it ships in `~Y2`'s release 1): `GET ${IR_ROUTE_BASE}/analysis/requests/{requestId}/original`,
+  operation `analysis-request-original` (`infra/aws/lambda/investor-reporting/ops/entry.py:207-240`; handler `ops/owned_report.py:186`
+  `original()`), returning the same `{"download_route": {"url", "expires_at"}, "sha256", ...}` shape as the PDF. It refuses a custody-lane
+  request by name (`ANALYSIS_ORIGINAL_NOT_APPLICABLE`) and an unretained one (`ANALYSIS_ORIGINAL_NOT_RETAINED`).
+- **Client.** Add `analysis-request-original` to the operation union and `IR_ROUTE_TABLE`, and `getAnalysisRequestOriginal(requestId,
+  selectedTenant?)` beside `getAnalysisRequestPdf`, built the same way, returning `{ signedUrl }`. The URL is never stored or logged.
+- **Page.** `PackageReaders` gains `getAnalysisRequestOriginal`. The Original file row opens through it (a new tab) when `original_ref` is
+  a non-null string and the reader exists. A `null` `original_ref` keeps the custody sentence and makes NO call. A refusal shows the
+  server's reason text in the existing alert line. The Commentary row keeps "(no reader yet)"; its reader is FWD-3.
+- **One more test** in `package-r2.test.tsx`, named exactly `the real client opens the original file through analysis-request-original`
+  (the real client, a stubbed transport; assert the path and that the signed URL reaches `openUrl`). Update `package-open.test.tsx` only
+  where it asserted Original file as "(no reader yet)", and say so.
+- **Worktrees:** workspace `C:/tmp/anlreq-v21b` (branch `wk-irpt_anlreq-v21b`, from this amendment's commit); portal
+  `C:/tmp/anlreq-v21b-portal` (branch `wk-irpt_anlreq-v21b`, from portal `origin/DEV`). Criteria unchanged: AR21-v-AC1..3, with
+  `v21-page` now requiring five names. Re-validate the proof instance and flip back to complete.
+- Gate limb: to-pipeline-gate GATE (viii) grades this modified order (it declares `<placeholders>`).
+
+**AMENDMENT 3 (issuer, 2026-10-09 ~09:3xZ; rows D2-W22-S1, D2-W22-S2).** Re-issued to `0.9.0_WK_IRPT_ANLREQ~22`, which holds the
+amendment-2 build (portal bd3b6559, workspace 60affc1faf). The grant gains ONE portal file,
+`src/pages/InvestorReporting/contracts/envelope.ts`: add the `analysis-request-original` entry to `IR_DATA_ADAPTER` (:181), reusing the
+PDF adapter, since the envelope is the same. Nothing else in that file changes. Then re-run the three criteria, commit the proof instance
+and flip to complete. Gate limb: to-pipeline-gate GATE (viii) grades this modified order.
+
+**AMENDMENT 4 (issuer, 2026-10-09 ~09:5xZ; row D2-W22-S3).** The proof instance for AMENDMENTS 2-3 is
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~22/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json`
+(@d78b868a49), because the lane gate admits a worker only to its own serial's folder. The `~21` instance stays as the round-2 base proof.
+Gate limb: to-pipeline-gate GATE (viii) grades this modified order.
+
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_package_i5p_i7.py
@@ -124,6 +155,7 @@ portal/src/api/endpoints/tickets.ts
 portal/src/pages/TicketCenter/__tests__/package-r2.test.tsx
 portal/src/pages/TicketCenter/__tests__/package-open.test.tsx
 portal/src/pages/InvestorReporting/__tests__/fe-s-1/adapter.test.ts
+portal/src/pages/InvestorReporting/contracts/envelope.ts
 </paths>
 
 <decomp_ref>
@@ -133,7 +165,7 @@ portal/src/pages/InvestorReporting/__tests__/fe-s-1/adapter.test.ts
 
 <proof_of_spec>
 Criterion ids: AR21-v-AC1 AR21-v-AC2 AR21-v-AC3. The instance is at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~21/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json`.
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~22/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.proof_of_spec.json` (AMENDMENT 4).
 Validate it with `python .tools/proof-of-spec-check.py <instance> AR21-v-AC1 AR21-v-AC2 AR21-v-AC3` before the flip.
 </proof_of_spec>
 
