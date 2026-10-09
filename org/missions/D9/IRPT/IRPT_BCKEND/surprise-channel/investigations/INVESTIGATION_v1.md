@@ -24558,3 +24558,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 - **blocked on it:** `IRPT_BCKEND.TO-APPLY-Y77`'s flip. Its three criteria are graded PASS by the
   issuer's own check (`y77_cells.py`, re-run by this seat) and its instance is written; only the
   validation step is unavailable. The same is true for any other seat holding a finished order.
+
+## IRPT_BCKEND-D2-W273-S1 -- The ADDENDUM 18 red list is 9 tests at ~272's pin and 4 at IB-pr-410's base: the list the packets cite has moved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W273-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~273",
+  "surfaced_at": "2026-10-09T14:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "pytest _contracts at box/dell2 54cb72ee19 reads 4 failed, 194 passed; ADDENDUM 18's list (IB110-1_red_list.json, ~272) is 9 failed, 176 passed, 13 skipped.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run from infra/aws/lambda/investor-reporting/ in wk-IRPT_BCKEND-273 at 54cb72ee19 + 9b7256a99f: FAILED test_seam_paired.py::test_every_declared_route_has_a_response_contract_whose_refs_resolve and ::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original|custody-report-persist|custody-report-read]; 4 failed, 194 passed in 8.82s",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/IB110-1_red_list.json: 9 failed, 176 passed, 13 skipped in 9.69s"
+    ]
+  },
+  "spec_asserts": "The order asks the packet to print the ADDENDUM 18 red list (nine tests) and show the members touch none of its targets.",
+  "world_is": "The suite is a different size today (198 collected, 0 skipped, against 198 with 13 skipped), and the red set is a subset of the nine (the upload-contract, status-handler, fixture-source and the export-receipt / submit-export controls now pass). The packet prints both lists; this cell's paths touch no target of either. Not investigated why the set moved (not this order's cell)."
+}
+```
