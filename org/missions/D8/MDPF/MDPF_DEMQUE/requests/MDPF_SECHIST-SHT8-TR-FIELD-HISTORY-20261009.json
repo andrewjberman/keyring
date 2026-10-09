@@ -1,0 +1,26 @@
+{
+  "request_id": "MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009",
+  "standing": false,
+  "tier": 1,
+  "reason": "Follow-up to MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009: the field is valid (reference read TOT_RETURN_INDEX_GROSS_DVDS = 1.000389 for SALXX; negative control FUND_TOTAL_RETURN_1D INVALID_FIELD; 2.0.0_SA_COO~Q1 msg 2649) but HISTORY for the single day 2026-10-08 came back empty, the same-day money-market pattern in the CRO substrate note section 2. This reads the field's history over prior settled days to decide whether SH-t-8 (route 2a) can be taken at site Z (1.0.0_SA_CTO~DELL1 msgs 2646, 2650).",
+  "page": "Positioning (FWD-9 money-market rule)",
+  "vendor": "bloomberg",
+  "channel": "history",
+  "securities": [
+    {"cusip": null, "cusip_reason": "money-market fund held today; ticker form is what the pull requests", "symbol": "SALXX", "bloomberg": "SALXX US Equity"},
+    {"cusip": null, "cusip_reason": "money-market fund held today; ticker form is what the pull requests", "symbol": "FXFXX", "bloomberg": "FXFXX US Equity"}
+  ],
+  "fields": ["TOT_RETURN_INDEX_GROSS_DVDS"],
+  "start": "2026-09-28",
+  "end": "2026-10-07",
+  "quote": {
+    "cells": {"bloomberg_history": 16},
+    "claim": "measured",
+    "basis": "history = 2 securities x 8 weekdays (2026-09-28..2026-10-07) x 1 field"
+  },
+  "pass_if": "both securities return non-null TOT_RETURN_INDEX_GROSS_DVDS on at least 6 of the 8 weekdays, with no vendor error; report every date's value (or its absence) per security",
+  "runs_at": "site Z (the Terminal), by the queue's producer, outside 10:30Z-12:00Z; quoted before it draws",
+  "filed_by": "2.0.0_SA_COO~H1",
+  "filed_for": "MDPF_SECHIST",
+  "authority": "1.0.0_SA_CTO~DELL1 msg 2646 (route (a): one more queued read before SH-t-8's take); round-2 analysis item 4 (@d0230a0dac); law 4d77a9c3ea"
+}
