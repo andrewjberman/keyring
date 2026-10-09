@@ -23219,3 +23219,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Owners of served.py per function are in IB97-3_release_census.json (owner_commits). The replay covers the narrowing and svc arms, not IB-pr-366's on-behalf create guard nor IB-pr-357's envelope field; the signer should read them as part of the release."
 }
 ```
+
+## IRPT_BCKEND-D2-W201-S8 -- AMENDMENT 1 asks the packet to name the follow-up cell for irpt-holdings and irpt-narrative, and no such cell exists at this pin
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W201-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~201",
+  "surfaced_at": "2026-10-09T06:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The packet's held-out section cannot cite a follow-up cell id: the decomposition carries IB-pr-390 and IB-pr-391 for section 90 and no cell for releasing served.py to irpt-holdings (row S5) or irpt-narrative (row S6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md lines 2381-2382 (IB-pr-390, IB-pr-391 are the last IB-pr rows); task-orders listing has no IB-pr-39x beyond 390 and 391"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1 item 3: the packet lists every route each held-out host serves as NOT YET NARROWED, and names the follow-up cell.",
+  "world_is": "The packet lists the two held-out routes (GET .../holdings/{accountSetId}, GET .../narrative/{reportId}) as NOT YET NARROWED and states that the follow-up cell is UNCUT, to be cut by 2.0.0_SA_COO~P2 with the scope of rows S5 and S6. The worker did not invent a cell id."
+}
+```
