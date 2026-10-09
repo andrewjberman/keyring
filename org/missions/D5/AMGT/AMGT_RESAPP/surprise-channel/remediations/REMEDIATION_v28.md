@@ -21,7 +21,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T08:49:00Z. Graduated at ADJUDICATION_v1
     "owner": "2.0.0_SA_COO~R1",
     "round": "v83",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~R1",
       "round": "v83"
     },
@@ -30,7 +30,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T08:49:00Z. Graduated at ADJUDICATION_v1
       "owner": "2.0.0_SA_COO~R1",
       "at": "2026-10-09T08:49:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-D1-W323-S1",

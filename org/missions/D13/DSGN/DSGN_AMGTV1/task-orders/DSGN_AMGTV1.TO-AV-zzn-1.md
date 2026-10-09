@@ -87,7 +87,7 @@ are repairs batched into this one cell. Item 2 is the issuer's close walk (NVDA 
 (served case lines are not drawn since FWD-12 amended), and Z-W97-S1 is re-measured at the close (ChatterBubbles MIN_FS = 11 at
 9b06f6ed). Base portal 9b06f6ed (= origin DEV). The order is LF only (ruling R2, row D1-S1).
 
-<status>pending</status>
+<status>complete</status>
 <round>62</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzn-1</to_id>
 <slot>~134</slot>
