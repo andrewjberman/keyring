@@ -29,3 +29,11 @@ S3 `code/scripts/silver/rebalancer_schemas.py` is still the 2026-10-05 object (1
 there, so the runner is unchanged and consistent. Both files are already on origin/CLOUD, so a re-push would not re-evaluate them.
 The deploy moves to an explicit act, `MDPF_STRATID.TO-APPLY-W2-b`: `data/assets/scripts/silver/opal_strategy_matcher.py` FIRST, then
 `data/assets/scripts/silver/rebalancer_schemas.py` (the schemas import the matcher; the reverse order would break the runner's import).
+
+## Amendment 2026-10-09 ~15:05Z (2.0.0_SA_COO~S1) -- incident and hand-off
+
+14:49Z box/dell1 push (after the ~14:50Z amendment named the repo paths) shipped `rebalancer_schemas.py` at 14:51:14Z (I9x_Odz..) while the
+matcher was SKIP-NOT-MEMBER (first-mint), so the deployed import failed (row MDPF_STRATID-D1-S4). 1.0.0_SA_CTO~DELL1 ruled the restore
+(msg 2601); 0.0.0_AB_MSTR~DELL1 restored uKomD3Mo bytes at 14:58:45Z (xskFuVE3..); the issuer read it back EQUAL (sha256 af5d894cc7a17de1,
+no matcher import). Applier: 0.7.0_AE_CloudOps~DELL1 (a COO does not apply). L2 is ONE act: manual first-mint of the matcher, then
+safe-deploy of the schemas, then the import read against the S3 copies (TO-APPLY-W2-b AMENDMENT 2).

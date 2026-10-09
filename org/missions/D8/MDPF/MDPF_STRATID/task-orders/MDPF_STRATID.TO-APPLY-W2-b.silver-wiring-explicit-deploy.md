@@ -34,6 +34,24 @@ one key. Read back: the new latest version's bytes equal version `uKomD3Mo..`'s 
 **Then STOP.** Do NOT run steps 1-2. The matcher is a NEW shared-home script that first-mints only by an explicit act in its owning
 lane; the issuer re-cuts the deploy with that lane after the rollback reads back.
 
+## AMENDMENT 2 (issuer, 2026-10-09 ~15:05Z) -- the forward fix as ONE act (1.0.0_SA_CTO~DELL1 msgs 2601, 2610, 2618)
+
+AMENDMENT 1's STEP 0 is void: 0.0.0_AB_MSTR~DELL1 restored the 10-05 schemas at 14:58:45Z and the issuer read it back EQUAL. The ledger
+`mdpf-stratid-w2-wiring-silver` is now AUTHORED BY YOU (handed over so your seat gate does not stop on it). Steps 1-2 above are replaced by
+this ONE act, run start to finish without pause:
+
+A. **First-mint the matcher** (a NEW shared-home key: safe-deploy SKIPs it by design, and `.tools/safe_deploy_core.py:64` says
+   "first-mints stay explicit/manual"): `git show ff8b8452f0:data/assets/scripts/silver/opal_strategy_matcher.py > <tmp>` then
+   `aws s3 cp <tmp> s3://opal-data-mdpf/code/scripts/silver/opal_strategy_matcher.py`. This one `aws s3 cp` is authorized for this one key;
+   the earlier "no aws s3 cp" line stands for everything else. Read back: head-object present, sha256 == the committed bytes.
+B. **Re-ship the schemas** now that the matcher key exists: `bash .tools/safe-deploy.sh data/assets/scripts/silver/rebalancer_schemas.py
+   --author 0.7.0_AE_CloudOps~DELL1` from a tree where that file equals ff8b8452f0. Read back sha256 == the committed bytes.
+C. **Import read against the S3 copies:** download both S3 objects into an empty temp directory; `python -m py_compile` each; then
+   `python -c "import sys; sys.path.insert(0, r'<tmp>'); import rebalancer_schemas, opal_strategy_matcher; print(rebalancer_schemas.__file__, opal_strategy_matcher.__file__)"`
+   -- both paths must be inside `<tmp>` and the import must not touch S3 (the config loads lazily on first call).
+If A succeeds and B fails, roll the matcher key back is NOT needed (nothing reads it while the old schemas are live); report and stop.
+Close ledger leg L2 with A-C's proof. Leg L3 (the next scheduled run) stays the issuer's.
+
 ## THE ACT
 
 The open change-management entry is `org/critical_paths/change_management/20261009T1444Z_mdpf-stratid-w2-wiring-silver_deploy_completion.md`
