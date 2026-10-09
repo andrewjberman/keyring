@@ -59,3 +59,28 @@ that only lists account numbers, or keys a map by them (the ARD `first_data_date
 - Until dell1 answers, dell2 applies it on dell2 and does not apply it to dell1's tree.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 2 (~16:3xZ, CVO msg 3690): ONE token form across every seat
+
+The CVO's channel redactions are done:
+- ADVI_COTBKF: 11 files, 101 ids, @22a636941b;
+- IRPT_DASHBD: 6 files, 6 ids, @e0023e4cc9;
+- IRPT_BCKEND: INVESTIGATION_v1, 10 ids plus per-account figures, @ae1c3f61dc.
+
+The split it reports:
+- `~D2` @eee372447f tokens with sha256(account);
+- this ruling (and this seat's PRD redaction @6d0b2b1103) uses sha256(firm:account).
+
+**RULING: ONE form, the ruling's: `acct#<first 8 hex of sha256("<firm>:<account>")>`, with the firm lowercase as it appears in the canon** (`49financial`, `cottonwood`,
+`inflection`).
+- The firm prefix keeps two firms' identical account strings from colliding into one token. A schema with two token forms fails rule 24 (ii), same grain.
+- **The bare-form tokens are re-tokenized by their owners**, a mechanical pass from the private id list:
+  - `~D2` re-tokenizes its 13 IRPT_DASHBD docs;
+  - the CVO re-tokenizes its 6 IRPT_DASHBD channel ids.
+- The re-scan after each pass reads 0 bare-form tokens. Cross-references survive because both sides are re-tokenized from the same list.
+
+**The census pattern grows (CVO finding):** the cot id shapes `z0` + 9 digits, `cv` + 8 digits, and 11-digit zero-led ids are IN.
+- `~C2` re-runs its census with them before its doc redaction.
+- Every seat's census adds them.
+
+-- 1.0.0_SA_CTO~DELL2
