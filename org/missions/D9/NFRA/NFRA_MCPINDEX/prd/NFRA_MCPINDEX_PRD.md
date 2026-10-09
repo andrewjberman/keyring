@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v0.6",
+  "prd_version": "v0.7",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -16,7 +16,15 @@
     "FWD-7",
     "FWD-8",
     "FWD-9",
-    "FWD-10"
+    "FWD-10",
+    "FWD-11",
+    "FWD-12",
+    "FWD-13",
+    "FWD-14",
+    "FWD-15",
+    "FWD-16",
+    "FWD-17",
+    "FWD-18"
   ],
   "status": "DRAFT"
 }
@@ -202,6 +210,70 @@ and PROOF -- and only the SOURCE line is dropped.** The endpoint document remain
          PROOF      the added property's diff (catalog entry + tool, nothing else), the refusal
                     of the planted unclassified tool, and the elapsed time
 
+FWD-11  Alyssa asks for a model's performance and is routed to the served answer, not to Chrome (v0.7, the thread)
+         DONE WHEN  EXERCISED -- Alyssa, in her own words, asks how a model did against its
+                    benchmark for a period; discover names the tool, states the data's true as-of
+                    date, and the answer matches opalinvest.dev
+         ACCEPT     one need end to end: the question, the route, the true date, the answer
+         PROOF      her session transcript beside the served artifact's date and the portal page
+         SOURCE     Andrew-direct 2026-10-09 ~03:2xZ (record @5716c7a83d); brief
+                    docs/briefs/mcpindex-alyssa-workflows-midstream-brief-20261009.md @3455b1783a, O1
+
+FWD-12  Every need in Alyssa's two briefs has an index entry, served or not (v0.7)
+         DONE WHEN  EXERCISED -- a reviewer subtracts the catalog from her two briefs and finds
+                    nothing missing
+         ACCEPT     each entry says what the need is, its source, whether it is served today and
+                    which tool answers it; an unserved need is a GAP entry naming the project that
+                    owns it, or "unowned"; "not catalogued" never stands for "not known"
+         PROOF      the subtraction, denominator printed (brief Part IV.A: 29 candidates)
+         SOURCE     as FWD-11; brief O2
+
+FWD-13  The index states a dataset's true freshness (v0.7)
+         DONE WHEN  EXERCISED -- for three datasets, the stated as-of equals the served artifact's
+         ACCEPT     freshness is read from the served artifact at answer time, never the value held
+                    from certification
+         PROOF      the three comparisons, including model benchmarks (held 2026-08-10 vs served
+                    2026-10-07, measured 2026-10-09)
+         SOURCE     as FWD-11; brief O3, Part VI.2
+
+FWD-14  Alyssa's own words route correctly (v0.7)
+         DONE WHEN  EXERCISED -- her phrasings ("account counts by partner", "cost basis",
+                    "statement", "stress test", "download the attachment", "S&P YTD") each reach
+                    their tool or GAP entry on the first try
+         ACCEPT     no phrasing lands on a dataset whose meaning is a different need
+         PROOF      the six discover calls and their routes
+         SOURCE     as FWD-11; brief O4
+
+FWD-15  Vendor data is in the same index (v0.7)
+         DONE WHEN  EXERCISED -- a market-return question routes to the YCharts tools (Bloomberg
+                    through its queue)
+         ACCEPT     vendor tools carry catalog entries like Opal's own data; a vendor tool that
+                    fails live reads PARTIAL with its error, never SERVED
+         PROOF      one routed YCharts answer, or its PARTIAL entry with the live error
+         SOURCE     as FWD-11; brief O5; CLAUDE.md law edit @4d77a9c3ea (egress open except Bloomberg)
+
+FWD-16  NFRA_OPLGTW's new datasets appear in the index as they land (v0.7)
+         DONE WHEN  EXERCISED -- the first NFRA_OPLGTW v2.x dataset served (lots, realized gains,
+                    account identity, the Tax SMA master or Black Diamond) has its entry the same day
+         ACCEPT     FWD-10's rule: one catalog entry plus a tool
+         PROOF      the dataset's serve date beside its entry's commit
+         SOURCE     as FWD-11; brief O6
+
+FWD-17  File intake and write actions are indexed with their class (v0.7)
+         DONE WHEN  EXERCISED -- discover answers "save an attachment", "move mail" and "send a
+                    Teams message" with the entry, its read or write class, and whether the
+                    caller's grant allows it
+         ACCEPT     a write tool is never implied to be available when the grant refuses it
+         PROOF      the three discover answers under Alyssa's principal
+         SOURCE     as FWD-11; brief O7
+
+FWD-18  Each entry names the browser workflow it retires (v0.7)
+         DONE WHEN  EXERCISED -- the count of her Chrome workflows (C1-C8) and Schwab workflows
+                    (W1-W6) that a served entry now answers is read from the catalog
+         ACCEPT     an entry carries its C# or W#
+         PROOF      the count, denominator 14
+         SOURCE     as FWD-11; brief O8
+
 ## CONTRACTS
 
 **C1 -- ONE catalog, versioned, EXACTLY ONE writer -- and naming that writer is S1's FIRST ACT, because today nothing
@@ -377,3 +449,34 @@ L5 (the decomposition) is `2.0.0_SA_COO`'s, on a lane `0.0.0_AB_MSTR` seats when
 (S1) and the per-property analysis for the first property (S8), because every other cell reads from them. FWD-3's live
 exercise waits on NFRA_OPLGTW enabling its Schwab tools -- that project's act, and this project's cells prove their own
 half meanwhile.
+
+### v0.7 addendum (2026-10-09 ~04:0xZ, 1.0.0_SA_CTO~O) -- index every need in Alyssa's workflows
+
+**Input.** Andrew-direct 2026-10-09 ~03:2xZ
+(`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261009_032xZ_MCPINDEX_INDEX_ALYSSA_WORKFLOWS.md` @5716c7a83d):
+"all of this should be indexed, there is a lot of indexing work to be done". Brief:
+`docs/briefs/mcpindex-alyssa-workflows-midstream-brief-20261009.md` @3455b1783a (`4.0.0_SA_CRO~Z`, midstream). Endpoint:
+FWD-11 to FWD-18 above, with FWD-11 as the thread.
+
+**Contract changes:**
+
+1. **GAP entries (FWD-1 change).** A need with no tool is catalogued as a GAP entry: its owner, or `unowned`, and no tool.
+   FWD-1's "not catalogued ... names nothing" now applies only to a property absent from every entry.
+2. **FWD-8 superseded.** "no new vendor egress beyond Andrew's standing per-use word" yields to the CLAUDE.md law edit
+   @4d77a9c3ea: "Egress is open on every channel, except Bloomberg".
+3. **FWD-9 superseded for the connected users.** "a phrasing that asks for another firm's or master's data is refused"
+   yields to Andrew-direct ~01:5xZ (@0035550443): per-user entitlement scoping waits for a second user. NFRA_OPLGTW v2.2
+   carries the grants.
+4. **Freshness is read, not held (FWD-13).** An entry's `latest_value` is read from the served artifact at answer time,
+   with claim `measured`. A held certification value is never shown as the as-of.
+5. **The candidate list is the decomposition's input, not a contract.** Brief Part IV.A has 29 entries. The cut may
+   split them finer; it may not drop one without a GAP row.
+6. **Unowned gaps are named, not built here.** E-9, E-10, E-11, E-12, E-20, E-26, E-27 and E-28 are catalogued as
+   `unowned`. E-12 is account returns, which Andrew's "the right information" bound leaves out. Building any of them is
+   another project's word.
+
+**Order.** FWD-11 (the thread) first, then FWD-13 and FWD-14 (they fix what the thread exposes), then FWD-12, FWD-15 and
+FWD-17. FWD-16 follows NFRA_OPLGTW's serve dates.
+
+**Sign-off.** ENDPOINT and CONTRACTS change. The ratified-text half re-opens for `3.0.0_SA_CVO~Z`. The brief half is
+`4.0.0_SA_CRO~Z`'s, accepted as written by the CRO (rule 27, PROPORTIONATE SIGN-OFF).
