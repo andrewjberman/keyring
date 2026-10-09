@@ -445,6 +445,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
         "python .scratch/t24-interface-probe.py: rc0; lost field exception, positive responseError control, DRAWN zero, unsupported outcome keyword"
       ]
     }
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S6",
+    "one_line": "The live DQ-t-14 uploader writes ETF-history ledger rows with cells null / claim absent since SECHIST's SH-t-4: it reads etf_daily_pull.py's RET by ast.literal_eval, and RET is now list(HISTORY_FIELDS), not a literal.",
+    "spec_asserts": "TO-DQ-t14 / FWD-2: the demand ledger carries each producer's drawn cells with a claim; the ETF history backfill converts rows x RET fields (2) to cells.",
+    "world_is": "bbg_ledger_upload.py line 33 maps etf_history_backfill to (etf_daily_pull.py, 'RET') and line 50 evaluates the assignment with ast.literal_eval; etf_daily_pull.py now declares HISTORY_FIELDS = ['PX_LAST', 'DAY_TO_DAY_TOT_RETURN_GROSS_DVDS'] (line 67) and RET = list(HISTORY_FIELDS), so the read returns no literal and the row is written cells null, claim absent (reported by 1.0.0_SA_CTO~Z msg 32871, relayed in 0.0.0_AB_MSTR~DELL1 msg 2857). Honest (absent, never invented) but the ledger under-measures ETF history daily, and ceiling_from_ledger skips null rows. Remedy for the next round: resolve a Name-to-literal assignment (RET -> HISTORY_FIELDS) before literal_eval, with a test on the current producer source.",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-09T16:55:51Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/bbg_ledger_upload.py:33,50",
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:67 (HISTORY_FIELDS)",
+        "1.0.0_SA_CTO~Z msg 32871 via 0.0.0_AB_MSTR~DELL1 msg 2857"
+      ]
+    }
   }
 ]
 ```

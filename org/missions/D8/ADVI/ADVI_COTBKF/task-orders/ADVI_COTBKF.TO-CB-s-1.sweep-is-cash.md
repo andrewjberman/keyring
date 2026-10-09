@@ -35,7 +35,7 @@ read-only on a cold cache, about two minutes). Round 18's real run: `MONTHLY-GRA
 
 **Your item (the CTO's ruling on row D2-W39-S1).** A withdrawal is delivered as an `lo` of CFNCASH plus an `sl` of the FDIC sweep
 for the same amount on the same day, so the account value falls by TWICE the withdrawal while the return takes the flow out once
-(74 of 106 single-`lo` months; e.g. 0QF879352 on 2023-07-14). The ruling, verbatim in substance: "sweep vehicles are cash. Their
+(74 of 106 single-`lo` months; e.g. acct#05dd4a9d on 2023-07-14). The ruling, verbatim in substance: "sweep vehicles are cash. Their
 buys and sells are INTERNAL: neither a flow nor a trade. Their balance counts as cash in the daily value. Which securities are
 sweeps is a declared, versioned list: each listed CUSIP is named with its source (vendor description, or the CUSIP's issuer), never
 inferred per row. A security not on the list is never treated as cash."
