@@ -8366,6 +8366,25 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       ]
      },
      "disposition": "UNDER_INVESTIGATION"
-    }
+    },
+{
+  "id": "AMGT_HARVST-Z-S108",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+  "surfaced_at": "2026-10-09T14:46:22Z",
+  "one_line": "Read-only bu-1 snapshot: live cycle runner, zero completed cycles for bbg/wsj/barrons; r47 driver absent and detached markers zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "HVST-bu-1 reads the actual pinned cycle records and r47 process, detached-job listing and tail; zero counts are results, not repairs. bs-3 acceptance still requires completed unattended records.",
+  "world_is": "At 14:46:22Z task Running/PID10928; each publisher files=1, completed=0, after activation=0. bbg stopped error (failed 3), wsj and barrons sign_in_refused (failed 1 each), all new=0. R47 DRIVER NONE; detached markers=0; tail ends JOB-EXIT rc=0 and CLEARED. No restart or completion inference.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round77/bu1_cycles.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
