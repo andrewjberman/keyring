@@ -192,3 +192,10 @@
 2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_custody/tests/test_e2a_real_statement.py  reason=no-open-ledger-names-it
 2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/account_activity_lots.py  reason=no-open-ledger-names-it
 2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/tests/test_account_activity_lots.py  reason=no-open-ledger-names-it
+2026-10-09T14:15:05Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/opal_strategy_matcher.py  reason=no-open-ledger-names-it
+2026-10-09T14:15:05Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/opal_unidentified.py  reason=no-open-ledger-names-it
+2026-10-09T14:15:05Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/rebalancer_schemas.py  reason=no-open-ledger-names-it
+2026-10-09T14:15:05Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_opal_strategy_matcher.py  reason=no-open-ledger-names-it
+2026-10-09T14:15:05Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_opal_unidentified.py  reason=no-open-ledger-names-it
+2026-10-09T17:23:07Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/schwab_conversion.py  reason=no-open-ledger-names-it
+2026-10-09T17:23:07Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_ogpn1_rps_pin.py  reason=no-open-ledger-names-it
