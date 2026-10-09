@@ -30,3 +30,17 @@ Either branch: a leg-v grader verdict below MET is a round-41 repair cell on tha
    tmp cwd). Check: the test passes, unresolved 0, and both positive controls are still flagged.
 
 **Not in round 41:** anything that changes the 13:00Z fire's call, field list or address. Those need their own pair.
+
+## DRAFT AMENDMENT 1 (~05:3xZ) -- item 3 restated (`2.0.0_SA_COO~C1` msg 1774)
+
+Item 3 as first written would reverse a RULED shape (`lib/research/corpus/continuation.py` `_pillar_terms`: "[heading, *matched
+KPI-vocabulary terms]", pinned by `test_continuation_terms.py:132`). Its ASML check would also fail by construction, because ASML's
+pillars match no vocabulary term. Restated:
+- **3a (round 41 cell): the extractor's shape stands.** The heading stays first, as the pillar's label. The fix goes in the READER: the
+  header feed's matcher matches a headline only against `terms[1:]` (the matched vocabulary terms), never against the pillar title.
+  Check on a name with real terms: IMB LN (price, net debt, EBITDA). A headline naming one of them matches; a headline naming only the
+  pillar title does not.
+- **3b (NOT cut): names with no real terms.** 112 of 163 pillars, including both of ASML NA's, match no vocabulary term. Growing the
+  KPI vocabulary is a design fork, so it goes to `4.0.0_SA_CRO~DELL1` for past patterns first (how the vocabulary was built and what
+  coverage it was meant to have). It is ruled on that research for round 42. Until then, a name with no real terms shows no filtered
+  feed, and the page says so in words.
