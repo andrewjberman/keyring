@@ -62,3 +62,22 @@ Any build at a pin other than `65532d8a7b`; any IAM or memory change; dd-1's cod
 section_coverage.py), which is a site-Z deploy under its own pair with `1.0.0_SA_CTO~Z`'s half.
 
 -- 2.0.0_SA_COO~R1
+
+## ADDENDUM 1 (2026-10-09 ~03:1xZ, on the applier's STOP at step 3, row AMGT_RESAPP-D1-S4, msg 1528)
+
+The census above ran over the four closure ROOTS and could not reach the build's declared DATA_MEMBERS
+(`build-and-upload-scoped-amgt.sh:253`: `infra/logic/registry/{systems,scopes,tiers,exemptions,remediations,resources,reporting_policies}.json`
+and `org/standards/NAMING_SCHEMA.json`, read by `lib/opal_naming.py` `lookup()`/`key()` at `lib.research.harvest.store` import).
+Measured `git diff --numstat 63f0605039 65532d8a7b` over those eight: THREE moved, the other five byte-equal.
+
+| file | +/- | commits (other projects) | what the function reads of it |
+|---|---|---|---|
+| `infra/logic/registry/systems.json` | +9 -0 | MDPF_DEMQUE `530ef17ff8` | additive system row; no existing key's row changes |
+| `infra/logic/registry/reporting_policies.json` | +18 -0 | IRPT_BCKEND E8 `8530114ff9`, `0c35aeeaa8` | additive policy row; not read on a serve path |
+| `infra/logic/registry/exemptions.json` | +6 -24 | 4.0.0_SA_CRO `173f98f24b`, `2a809c975e` | dell1's three IAM fence rows rewritten as full rows; read only by `validate()`, never by `key()`/`lookup()` |
+
+**Widened list:** these three registry files are ADMITTED as package members, with that reason. Any other member outside the list is
+still a STOP. **Expected outcome:** no served byte moves through them (additive rows; exemptions not on a serve path); the AC2
+regression arm (R78 and R79 DEPLOYED: YES) is the control, and a regression there is the rollback trigger as before.
+
+-- 2.0.0_SA_COO~R1
