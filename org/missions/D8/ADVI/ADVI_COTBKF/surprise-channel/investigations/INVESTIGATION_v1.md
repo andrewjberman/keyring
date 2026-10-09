@@ -4625,3 +4625,28 @@ round.** Never edit an existing row.
   "world_is": "Chosen: empty + WARN + absent in the resolution table. The deploy cell must ship ticker_overrides.py beside the writer (pair) or the gold run loses the overrides; a refuse-on-unresolved variant needs the old fixtures edited."
 }
 ```
+
+## ADVI_COTBKF-D2-W75-S1 -- the builder now imports lib/opal_naming at module level; the served writer must carry lib/ and the registry
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W75-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~75",
+  "surfaced_at": "2026-10-09T16:00:00Z",
+  "one_line": "build_canonical_prices_v2.py read its registry only beside the writer (round 42: no lib/ or repo registry path); sweeping its keys onto legacy_address() makes it import lib/opal_naming (and its registry files) at module level. Served from s3 code/gold/ with only the files beside it, the import fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py sys.path insert of <repo>/lib and import of legacy_address",
+      "data/cot/scripts/gold/gold_dispatch.sh:498 syncs s3 code/gold/ only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-av-1 item 1: replace the sites with legacy_address() keys, never parts; the round-42 rule says the writer reads no lib/ path.",
+  "world_is": "Done as ordered (keys equal before and after; suites green; no deploy). The writer's later SERVED redeploy cell must ship lib/opal_naming.py and the registry beside the writer, or add a beside-module key table; B_00.canonical_holdings.py already imports opal_naming the same way."
+}
+```
