@@ -400,3 +400,31 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "On dell1 that step is unreachable: the agent user holds no iam:SimulatePrincipalPolicy. The instrument the skill leans on for the EXERCISED rung is absent on this box, so an AE seat here can reach DESIRED and APPLIED and no further, and ABSENT is not EXERCISED-AGAINST. For THIS grant the EXERCISED rung arrives with L3, the first scheduled gold run, which writes the gap record as the role -- a real exercise rather than a simulation, and it is the issuer 2.0.0_SA_COO~H1's read. The open question is whose it is to decide whether the dell1 and dell2 agent users should carry iam:SimulatePrincipalPolicy (read-only, no mutation) so the skill's step is takeable, or whether the skill should state that on an agent box the live PutObject at L3 is the only exercise available. Not adjudicated here and it blocked nothing."
 }
 ```
+
+## MDPF_SECHIST-D1-S4 -- proof-of-spec-check cannot see <proof_genre>DEPLOY</proof_genre> in a CRLF-committed order, so a correct order's complete flip is blocked.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S4",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SH1",
+  "surfaced_at": "2026-10-09T20:45:55Z",
+  "one_line": "proof-of-spec-check refuses the TO-DEPLOY-GOLD instance for lacking <proof_genre>DEPLOY</proof_genre> on its own line, but the marker IS on line 14 of the order: the order's blob is CRLF and PROOF_GENRE_ELEMENT_RE ends in [ \t]*$, which cannot cross the \r -- so the complete flip is blocked by an instrument that cannot read a correct order.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE .tools/proof-of-spec-check.py:2106 PROOF_GENRE_ELEMENT_RE = re.compile(r\"^[ \t]*<proof_genre>\\s*([A-Za-z]+)\\s*</proof_genre>[ \t]*$\", re.M); :2110 _committed_order_text reads the order with `git show HEAD:<rel>` capture_output (bytes), so CRLF survives into the match",
+      "CONTROL INSIDE THE SAME FILE: :2107 RISK_ELEMENT_RE = ^\\s*<risk>\\s*([A-Za-z]+)\\s*</risk> has NO trailing anchor and reads WORLD from the SAME bytes in the SAME run. One regex reads the order and the other does not; the only difference is the trailing [ \t]*$",
+      "MEASURED on the order's blob at HEAD: 7264 bytes, 98 CRLF, 0 bare LF; genre regex -> None, risk regex -> WORLD. The SAME text with \r\n replaced by \n: genre regex -> DEPLOY. The marker is present at line 14, between <risk>WORLD</risk> and <placeholders>NONE</placeholders>",
+      "SCOPE FALSIFIED rather than assumed -- this is NOT 'the gate is broken for everyone': the orders behind two working DEPLOY-genre instances read 0 CRLF / 116 LF (AMGT_RESAPP.TO-AMGT-ay-5) and 0 CRLF / 133 LF (AMGT_RESAPP.TO-AMGT-ax-5), both with the marker present. The defect bites an order COMMITTED WITH CRLF, which is what a Windows-box writer produces",
+      "The instance is otherwise clean at commit e8fb4ce260: proof-of-spec-check reports structural=jsonschema valid, 6 of 6 named controls DISCRIMINATE with 0 DID-NOT-DISCRIMINATE, rollback named, alignment 5/5 criteria carrying a cell_ref and 1/1 declared cell reachable, surprises 1 of 1 resolving to a channel row, invocation-alignment 1/1 matching. violations=1, and it is this one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json and 3.0.0_SA_CVO verdict 29306 condition 1: genre DEPLOY is admitted when the governing order carries the issuer's line-anchored <proof_genre>DEPLOY</proof_genre> beside <risk>SERVED|WORLD</risk>. MDPF_SECHIST.TO-DEPLOY-GOLD carries both, so a DEPLOY instance for it should be admitted and the assignee should be able to flip <status> to complete once its work is proven.",
+  "world_is": "It is refused. The admission test is a line-anchored regex over bytes read straight from `git show`, and this order was committed CRLF, so the trailing [ \t]*$ never reaches the line end and the marker reads as absent. The work is unaffected -- L1 and L2 are closed with proof and the live state is verified -- but <status> stays `pending` and the order cannot be marked complete. NEITHER REMEDY IS THE ASSIGNEE'S: (a) normalise the order's line endings to LF, which is the ISSUER's file and the spec is frozen mid-round, or (b) widen the regex to tolerate a trailing \r (or normalise newlines in _committed_order_text), which is the GATE OWNER's instrument and fixes the whole class rather than this one order. (b) is recommended: (a) leaves the next CRLF-committed order to rediscover it. The audited `# pipeline-override:` escape was deliberately NOT taken -- its stated condition is that the TO stands outside the pipeline, which is false here, and a false reason in an audit log is worse than a blocked flip. Routed to 2.0.0_SA_COO~H1 with 1.0.0_SA_CTO~DELL1 copied as the decision."
+}
+```
