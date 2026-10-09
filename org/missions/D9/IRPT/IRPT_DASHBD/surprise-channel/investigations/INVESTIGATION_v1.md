@@ -4285,3 +4285,109 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W61-S1 -- The service subject svc-custody-statement is admitted on three operations only, so the selection and snapshot a submission needs have no producer for it; run takes them as a selection file
+
+```json
+{
+  "id": "IRPT_DASHBD-W61-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~61",
+  "surfaced_at": "2026-10-09T10:05:00Z",
+  "one_line": "run cannot create the account_set_id (sel_...) or learn the snapshot_id itself: the runner reads them from --selection (account_set_id, snapshot_id, client_id, account_ids), supplied by the AE seat in DB-b-86.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Face: run retains ONE submission for ONE household using the service subject's token.",
+  "world_is": "_authz/tests/test_svc_custody_statement.py test_svc_custody_statement_reaches_only_its_three_operations: the subject reaches custody-report-persist, POST /analysis and POST /export, not selection-create or directory resolve. The submission needs ?account_set_id=sel_<64 hex> (an Opal operator's retained selection, _scope/custody.py _selection_ref) and a snapshot_id that CustodyAccess checks against the accepted custody snapshot; the household document carries neither (accounts are masked). The runner therefore refuses to invent them and the opaque client_id / account_ids must equal the directory entry's (_scope/custody.py resolve_owner). The AE seat must produce the selection file from an operator selection-create answer and the accepted custody publication before DB-b-86.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_svc_custody_statement.py:128",
+      "infra/aws/lambda/investor-reporting/_scope/custody.py:98",
+      "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py (load_selection)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W61-S2 -- The client-report contract's exact top-level keys exclude composition_sha256, which the live writer requires of the document; the runner validates first, then binds
+
+```json
+{
+  "id": "IRPT_DASHBD-W61-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~61",
+  "surfaced_at": "2026-10-09T10:05:00Z",
+  "one_line": "validate_document refuses a document that already carries composition_sha256 (TOP_KEYS is exact); custody_write refuses a document that does not. The runner validates the unbound document and adds the key afterwards. The submit answer also names request_id only, so artifact_id and the composition hash are read from the acceptance record in irpt-requests (a DynamoDB read grant for the AE seat).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell text: persist the household document produced by hop3_real_run / client_report_figures and validated by validate_document.",
+  "world_is": "client_report_figures.py:135 TOP_KEYS and :1060 keys(doc, TOP_KEYS); reports/custody_write.py BINDING_KEY/_check_binding (IB-pr-375) refuses a document with no composition_sha256 or another's. submission_service.submit returns {identity{request_id,...}, stage, dispatch_pending}; the REQUEST_COMPOSITION artifact_id is in the acceptance record (acceptance.py record composition_ref) and ART-... is a digest of owner/family/logical_id, not derivable by a client. Whether the live persist validator accepts the extra top-level key is untested here (offline build); DB-b-86's first persist answers it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py:1060",
+      "infra/aws/lambda/investor-reporting/reports/custody_write.py:54",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py:166"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W61-S3 -- verify-submission prints the policy revision it MEASURES on the retained submission; the expected irpt-custody-x10-v1 may read irpt-x10-v1 for the REQUEST_COMPOSITION family
+
+```json
+{
+  "id": "IRPT_DASHBD-W61-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~61",
+  "surfaced_at": "2026-10-09T10:05:00Z",
+  "one_line": "DB41-3-AC1 expects 'SUBMISSION RETAINED policy=irpt-custody-x10-v1'. The runner prints retention_ref.policy_revision read from the artifact's index row, never a typed constant; if the live row carries irpt-x10-v1 the criterion fails honestly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell: the submission is retained under irpt-custody-x10-v1 (after release 5).",
+  "world_is": "reports/composition.py build_retained_repositories maps a revision only for families in the additional policy that are NOT in the default policy (revisions.setdefault), and ArtifactRepository.put reserves with policy_revision=None (the default irpt-x10-v1, retention.py:19) for a family absent from that map; REQUEST_COMPOSITION is not named in retention.py. Only CUSTODY_REPORT is evidenced as custody-policy retained. Measured by reading code, not the live row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/composition.py:42",
+      "infra/aws/lambda/investor-reporting/reports/repository.py:397",
+      "infra/aws/lambda/investor-reporting/reports/retention.py:19"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S38 -- the LGIC naming builder refuses the pair-signed svc-* secret name, and rule 30's remedy (a registry row) is outside this order's grant
+
+```json
+{
+  "id": "IRPT_DASHBD-S38",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T10:02:00Z",
+  "one_line": "The LGIC naming builder REFUSES the pair-signed secret name opal/investor-reporting/svc-custody-statement -- scope 'investor-reporting' resolves to no scopes.json row -- and rule 30 says a refusal is a registry row to add, but TO-DB-b-84's BOUNDS forbid this seat from editing infra/, so the registry gap has no owner inside this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-84 WORKER FACE step 3: 'Run the secret name through lib/opal_naming.py first; a refusal is a registry row (rule 30).' CLAUDE.md rule 30: 'a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround'.",
+  "world_is": "Run at box/dell2 in /c/dev/wk-db2-r41-mint: lib.opal_naming.name('opal','investor-reporting','custody-statement','SECRET') raises ValueError \"scope 'investor-reporting' resolves to no scopes.json row\". The builder's grammar is {system}-{scope}-{function}[-{qualifier}]-{kind} with scope classes (FIRM, GLOBAL, MASTER); it cannot express a slash-delimited svc-* Secrets Manager path at all, so no scopes.json row would make this name a builder output. The COO half anticipated exactly this: section 2 states 'The secret NAME is from the svc-* family and is not a builder output', and the family has live members predating LGIC (opal/ticketing/svc-analyst-intake read back this session at arn:...secret:opal/ticketing/svc-analyst-intake-HGzn67, plus svc-commentary). TWO THINGS COLLIDE AND NEITHER IS THIS SEAT'S TO RESOLVE: (a) rule 30's remedy is a row under infra/logic/registry/, which this order's BOUNDS put out of grant ('Served output does not move. No edit under data/, infra/ or portal/') -- writing it would be the seat adjudicating wider than its order; (b) the name itself is NOT hand-typed by this seat -- both signed halves and the order name it verbatim (the before-read's describe-secret target, and the CTO half's 'GIVEN, for exactly this one secret'), so the signed pair is the naming authority for this one secret and rule 30's R19 non-application (existing pipelines reach conformance through their own migration project, never as a rider) covers the pre-LGIC svc-* family. PROCEEDING on the pair-signed name with the refusal recorded verbatim in the ledger; the commit-time LGIC_ENFORCE gate is not reached because no name is committed into code or TF by this act. WHAT IS OWED BY SOMEONE ELSE: either a scopes.json/registry representation for the svc-* secret family, or an explicit R20-style register entry recording the family as a deliberate departure. Owner candidate: the LGIC canon owner for infra/logic/registry/, routed by 2.0.0_SA_COO~D2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py (name() signature and grammar docstring; NAME_SCOPE_CLASSES = FIRM, GLOBAL, MASTER)",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md section 2 ('is not a builder output')",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_SVC_CUSTODY_STATEMENT_MINT_CTO_HALF.md (verdict GIVEN for exactly this one secret)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-84.svc-custody-mint.md (WORKER FACE step 3; BOUNDS 'no edit under data/, infra/ or portal/')",
+      "org/critical_paths/change_management/20261009T0952Z_svc-custody-statement-mint-20261009_deploy_completion.md (leg M proof carries the refusal verbatim)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
