@@ -4,7 +4,7 @@
 {
   "project": "AMGT_CORPUS",
   "directive": "D5",
-  "fabric": "site-z",
+  "fabric": "dell1",
   "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",

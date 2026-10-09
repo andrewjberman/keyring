@@ -2442,6 +2442,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Row NFRA_OPALAI-Z-S61: 'Not checked: whether the deployed gateway release carries a different destructive_ops.py.'",
     "world_is": "Checked: it does not. The most privileged tier is refused, so no tier can call the Analyst's one data tool. ARMED: Alyssa's sitting and the item-0 close run call it.",
     "notes": "Cites Z-S61; Z-S61 not edited. Disarm: the fix ships in the next gateway release (opal_asker_query into SAFE_TOOLS if it is a pure read, with a test through _run), cut at the NFRA_OPLGTW round-31 analysis that 1.0.0_SA_CTO~O writes."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W26-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~26",
+    "surfaced_at": "2026-10-09T01:46Z",
+    "one_line": "The worker-light sparse cone omits org/projects, so safe-commit's missions-tree-check refused the first commit with INDEX-MISSING for a file that is tracked at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit output, 2026-10-09 ~01:44Z: '[INDEX-MISSING] org/missions/D6/NFRA/NFRA_OPALAI: no org/projects/NFRA_OPALAI.json (remedy: derive --write)'; git ls-tree HEAD org/projects/NFRA_OPALAI.json lists blob da8eb984c9; git sparse-checkout list had no org/projects entry and ls org/projects failed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 2 respawn note: worker-light, sparse cone plus integrations/bloomberg, no nested checkout; commit via safe-commit with the three named paths.",
+    "world_is": "The cone as cut cannot commit under safe-commit because the validator reads org/projects/<CODE>.json from the working tree. I ran git sparse-checkout add org/projects org/devices in this worktree (config only, nothing written to a repo path) and the commit proceeded.",
+    "notes": "Fix shape for the issuer: add org/projects, org/devices and org/missions (the other projects' channels) to the worker-light cone. Nothing else touched."
   }
 ]
 ```

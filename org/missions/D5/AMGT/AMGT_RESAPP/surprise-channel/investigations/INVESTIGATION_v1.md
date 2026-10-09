@@ -22306,6 +22306,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A citing row, not an edit of Z-S369: its standing is the CVO's to move. The sentence the row should carry until the word: 'ICT_US_Equity is named INTL CONTAINER TERM SVCS INC from the stored Bloomberg row; the IDVZ holding is the same security by its stored identifier; whether it stays a key apart from ICT_PM_Equity is not decided.' Carried to the next round's owner with the project's move to DELL1."
+},
+{
+  "id": "AMGT_RESAPP-D1-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T02:01:21Z",
+  "one_line": "The served /freshness words carry ISO days ('Seeking Alpha last read 2026-09-22.', 'reviewed 2026-09-10, next review due 2026-12-09'), so the page, which prints served words verbatim, keeps two date forms after DSGN_AMGTV1 round 56 moves its own days to the house long form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DSGN_AMGTV1 round-55 analysis ruling R1: one page, one date form, the house long form (formatPanelTimestamp; PageEnd). PRD C-PRESENTATION-ONLY: the page derives nothing, so a served sentence is printed as served.",
+  "world_is": "In round53/served/freshness_page.json (live body 2026-10-08T18:08Z), rows[].seeking_alpha.sentence and lists.out_of_date hold YYYY-MM-DD days. Round 56 (AV-zzh-1) moves only the page-drawn days (cells, stale words) to the long form; these served words still print ISO. The fix, if the producer takes it, is the served sentence in the long form, or the day as a separate field the page formats.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round53/served/freshness_page.json",
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round56/checks/r56.cjs (arm 2 removes served words before grading)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```

@@ -9177,3 +9177,80 @@ fanout:
   egress: none in any order; issuer act 2 is the one Bloomberg call of the round, under its own pair and Andrew's word
   portal_ref: d1b21c97   # origin/DEV at the cut
 ```
+
+## 88. ROUND 80 (FIRST ROUND ON DELL1) -- THE 20-F BUSINESS SECTION AND ITS CENSUS, THE CITATION-HEADING PARSE, THE WALK OF FWD-1 AND FWD-7 ON DEV, THE REDEPLOY. Four orders
+
+**Input:** the CTO~Z round-79 analysis `ledger/ROUND_ANALYSIS.round79.md` @c249be336b (R1-R5, enrichment list items 1-4); the CTO~Z
+hand-over `deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md` @c249be336b; site Z COO's handoff
+`org/tier1_exec/2.0.0_SA_COO~Z/handoffs/AMGT_RESAPP_TO_DELL1_20261009.md` @a784000437; CTO~DELL1 msg 1267 (the site-Z producer
+rule); MSTR~DELL1 msgs 1378 (one issuer: this seat), 1381 (the ABNB pull and ICT read go through the MDPF_DEMQUE queue on site Z),
+1384/1386 (the walker's GetParameter grant is live on dell1). Issuer `2.0.0_SA_COO~R1`, seated on dell1 ~01:2xZ 2026-10-09.
+Drafted in `deliverables/2.0.0_SA_COO~R1/round80/GROUP_R1_NOTES.md` and `GROUP_R2_NOTES.md`.
+
+### 88a. MEASURED AT THE CUT
+
+- **Order reconcile (hand-over item):** 424 of 424 AMGT_RESAPP orders are terminal by their LAST line-anchored `<status>`
+  (413 complete, 8 superseded, 3 withdrawn). `to-check --all` reads 175 active because it reads a first tag: an instrument
+  reading, not open work.
+- **R1:** ASML NA's stored 20-F (silver `filing_source`, accession 000162828026011378, parser 1.0.0) holds one item, `risk`,
+  cut from a bare "risk factors" fallback that matched the cybersecurity line and ran unbounded (1,091,017 chars, kept 70,000:
+  cybersecurity, share capital, board holdings). The cutter has no `business` key. Census over 5 stored 20-F names: 4 of 5 risk
+  items from the removed fallback; 0 of 5 hold a business section. No copy of ASML's document is in S3 or on this box.
+- **R2:** `passages.build_passage_map` makes any line under 60 chars a heading. 4 of 272 served citations carry a letterless
+  heading (ASML NA "5.09%", "0.01%"; SAP GY a zero-width space); 41 of 1122 stored drafting records; 74 of 3675 stored analysis
+  locations. Stored at analysis time, served unchanged at three points of `scoped_amgt.py`.
+- **R3:** origin/DEV `8d2a08a9`, one commit on `84e13d0f`. Walker reads `armed=no armedBy=none` (py -3.12; the default Python
+  here lacks bcrypt). GetParameter grant live (msg 1384).
+- **dell1 environment:** PyMuPDF does not import (filings tests error at collection); `pypdf` absent (api suite 2 failed,
+  866 passed at the base).
+- **Live function:** `opal-amgt-scoped-api` CodeSha256 `ltXvElw...QI0=`, bytes recoverable from `get-function` (handoff @a784000437).
+
+### 88b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-dd-1` | R1 code half: a 20-F `business` key (Item 4.B), the 20-F excerpt carries it, and a read-only section census | `~315` | worker | LOCAL | `filings/document.py`, `filings/fetch.py` (one line), new `filings/section_census.py`, two tests | FWD-18, once the store half runs |
+| `AMGT-dd-2` | R2: no letterless citation heading, at the parse and at the three serve points | `~316` | worker | LOCAL | `filings/passages.py`, `api/scoped_amgt.py`, two new tests | FWD-18's citations, served through dd-4 |
+| `AMGT-dd-3` | R3: the walk of FWD-1 (AMD) and FWD-7 on portal DEV | `~317` | worker | LOCAL (a read) | own deliverables | FWD-1, FWD-7 (graded by the CVO, AC3) |
+| `AMGT-dd-4` | the redeploy: dd-2 on the live function, and R5's source-map record | `0.7.0_AE_CloudOps~DELL1` | seat order | WORLD | Lambda artifact, source map, ledger | dd-2 on the live function; R5 |
+
+**Not cut, and why:**
+- **R1's store half** (re-fetch ASML NA's 20-F from SEC, its silver row, the re-analysis, the draft rebuild): SEC and model
+  egress. Held for Andrew's per-use word (CLAUDE.md Agent Autonomy); carried to 0.0.0_AB_MSTR~DELL1 as one card. Until it runs,
+  FWD-18 on ASML NA stays NOT REALIZED whatever dd-1 lands. No stored 20-F name carries a business section, so no 20-F walk of
+  FWD-18 is cut this round (R1: a later FWD-18 walk names a company whose stored text is first read to be the business section).
+- **FWD-16:** waits on Andrew's 2026-09-15 hold (item 4, unchanged).
+- **The ABNB model-block pull and the ICT identity read:** no longer this project's calls; they arrive through the MDPF_DEMQUE
+  queue on site Z (msg 1381).
+- **R4:** no mechanism (ruled); its rule is on dd-3's face.
+
+### 88c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: the round-79 enrichment list (4 items) plus R4, R5 and what the cut measured. By subtraction: item 1 ->
+  dd-1 (code) + the held store half; item 2 -> dd-2, served by dd-4; item 3 -> dd-3; item 4 -> not cut (Andrew's hold); R4 -> dd-3's
+  face; R5 -> dd-4 step 6. Uncovered, stated above: R1's store half, FWD-16.
+- **(ii) Same grain:** one module or one act per cell; dd-1 carries one reader beside its cutter change because the census reads
+  the cutter's own patterns.
+- **(iii) Intent:** one axis per cell. dd-2 is the round's only writer of `scoped_amgt.py`.
+- **(iv) What a cell does NOT move:** dd-1 changes no stored object and no served byte; dd-2 changes only `location`, only where it
+  held a letterless heading, and rewrites no store; dd-3 is read-only; dd-4 moves one resource (the function's code) and the
+  source-map entry, no IAM, no route, no memory, no schedule.
+- **Write sets:** dd-1 and dd-2 share the folder `lib/research/filings/` but no file. 0 overlaps.
+
+### 88d. EDGES AND FAN-OUT
+```
+dd-2 --> dd-4 (redeploy)
+dd-1                       # independent; its merge is a site-Z deploy (1.0.0_SA_CTO~Z's half first, msg 1394)
+dd-3                       # independent (a read)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 3
+  wave_0: [dd-1 ~315, dd-2 ~316, dd-3 ~317]   # 3 of 3 chains, cap 8
+  wave_1: [dd-4 0.7.0_AE_CloudOps~DELL1]       # staged: after dd-2 drains, the pair, and the applier confirmed
+  merge_hold: dd-1 only -- RULED by 1.0.0_SA_CTO~DELL1 msg 1394: a module an ACTIVE site-Z producer imports IS a producer path; document.py/fetch.py (imported by filings/battery.py) YES, so dd-1's merge is a site-Z deploy waiting for 1.0.0_SA_CTO~Z's half; passages.py NO while -FilingsAnalyzer stays disabled (it becomes one the moment that task is re-enabled)
+  applier: dd-4 0.7.0_AE_CloudOps~DELL1 (msg 1394); the bb18 wheels are copied to dell1 and each sha256 verified against site Z's before the build
+  no_s3_deletes: true
+  egress: none in any order
+  portal_ref: 8d2a08a9   # origin/DEV at the cut
+```

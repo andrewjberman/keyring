@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.1",
+  "prd_version": "v2.2",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -216,7 +216,7 @@ FWD-18  — The same answers for a Black Diamond Tax account (v2.1)
 
 DONE WHEN: EXERCISED — one Tax account held through Black Diamond answers FWD-14 to FWD-17 in the same field shape as a Schwab account.
 
-ACCEPT: Alyssa asks without naming the source; the answer names it. Only the Tax SMA roster's Black Diamond accounts are granted; no other Black Diamond account or firm data is served.
+ACCEPT: Alyssa asks without naming the source; the answer names it. Her grant reaches any Black Diamond account (v2.2: Andrew-direct 2026-10-09 ~01:5xZ, "any account"); a Black Diamond answer is never joined with another firm's data in one response.
 
 PROOF: One Black Diamond Tax account's quarter beside one Schwab Tax account's, same fields.
 
@@ -828,10 +828,47 @@ stays data; no grant mutation from MCP; FWD-1 to FWD-13 are unchanged.
 - A27 (FWD-15): a unique key, a colliding key and a wrong-client key, each answered as item 4 says; last four alone refused.
 - A28 (FWD-16): two accounts' since-inception records recomputed from silver; the floor is the roster date.
 - A29 (FWD-17): one account-quarter's four buckets tied to Schwab's totals line; a missing-basis lot reads missing.
-- A30 (FWD-18): one Black Diamond Tax account beside one Schwab Tax account, same fields; a non-roster Black Diamond account
-  refused.
+- A30 (FWD-18): one Black Diamond Tax account beside one Schwab Tax account, same fields (v2.2: the non-roster refusal arm is
+  struck; see the v2.2 addendum).
 - A31 (FWD-19): the backfill enumerate record; one pre-collection date answered.
 
 **Sign-off.** ENDPOINT (FWD-14 to FWD-19) and CONTRACTS (C2, C3, C4) change. The ratified-text half re-opens for
 `3.0.0_SA_CVO~Z`. The brief half: the brief is `4.0.0_SA_CRO~Z`'s, accepted as written by the CRO (rule 27, PROPORTIONATE
 SIGN-OFF).
+
+### v2.2 addendum (2026-10-09 ~02:0xZ, 1.0.0_SA_CTO~O) -- any account, any source, for the connected users; per-user scoping deferred
+
+**Input.** Andrew-direct 2026-10-09 ~01:5xZ at the `4.0.0_SA_CRO~Z` terminal. His words are verbatim in
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261009_015xZ_OPAL_STAFF_MAY_READ_BLACK_DIAMOND_THROUGH_GATEWAY.md`
+@0035550443:
+- "yes they can do so (the opal staff reading BD data through opalgateway)";
+- "any account";
+- "any account at black diamond, orion, eclipse, bloomberg, ycharts, schwab, smartx, eclipse, any vendor any everything";
+- "we can always work on per user entitlements later, nobody uses mcp right now aside from alyssa and she's fine";
+- "do not hold up progress or work about theoretical users that arent even connected and we'd apply entitlement scoping at
+  that time, not now".
+
+**What this changes:**
+
+1. **Item 3 of v2.1 widens.** Black Diamond is a source for ANY Black Diamond account, not only the Tax roster's. FWD-18's
+   ACCEPT and A30 are amended above. The roster still names which accounts are Tax accounts (FWD-14 to FWD-17). It no longer
+   bounds the grant.
+2. **The grants of the connected principals reach every account in every source the gateway serves.** The connected
+   principals are Andrew, Alyssa and the Bloomberg concierge account `opalbloomberg`. Today the sources are Schwab masters
+   08242234, 08335338 and 08403355, and Black Diamond. A source the gateway adds later joins these grants without a new word.
+3. **Per-user scoping is DEFERRED, not removed.** The C2 machinery stays: per-principal grants, the revision check, the audit
+   record and the hidden field classes. Each grant is still an operator act. The scoping is applied when a further user
+   connects, on that user's own word.
+4. **Unchanged, because his words do not reach them:**
+   - the hidden classes (tax identifiers, mailing address, email, phone);
+   - Alyssa's no-download (his ~19:2xZ "no downloads needed yet"; downloads were not mentioned at ~01:5xZ);
+   - one master or source per call, never summed, and never joined across firms in one response;
+   - no grant mutation from MCP.
+5. **The identity tool allowlist** (`infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt`) gains five read tools for
+   `opalbloomberg`: opal_discover, opal_describe, blackdiamond_list_fees, find_sharepoint_site and search_files. Each row
+   cites the record above, and they ride release r29.
+6. **Egress.** "infinite egress on all channels now (aside from BBG which goes through its queue logic)" is a CLAUDE.md law
+   edit, asked of `0.0.0_AB_MSTR~Z`. This PRD does not restate it and builds no vendor call on it.
+
+**Sign-off.** ENDPOINT changes: FWD-18's ACCEPT. CONTRACTS change: C2 grant width and A30. The ratified-text half re-opens
+for `3.0.0_SA_CVO~Z`. The brief half carries no new brief: the input is Andrew's word, recorded by the CRO.
