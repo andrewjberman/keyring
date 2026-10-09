@@ -441,3 +441,78 @@
   "world_is": "The module holds no bucket or prefix literal. destination_root() reads ADVI_FEE_STATEMENT_S3_ROOT = the builder's address for the table without the partition, refuses (fail closed, before any Graph read) when it is unset or not shaped s3://<bucket>/<prefix>/bronze/fee_statement/, and appends only quarter=<q>/<sanitized name>.xlsx. The tests set the variable from address() and assert the written key equals the builder's full address. The issuer must set the variable at deploy from builder output (Terraform opal_name/address), the same step that adds the s3:PutObject grant; a configured value that is wrong is the one way the destination can differ from the builder, so the deploy proof should print the variable beside address()."
 }
 ```
+
+## ADVI_BILLING-D2-W3-S1 -- The commit-time naming gate refuses the column names the AB-e-5 order itself mandates (bd_account_id, bd_relationship_id) as string literals in the builder
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S1",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:38Z",
+  "one_line": "safe-commit's naming limb REFUSED household_crosswalk.py 5 times on the literals bd_account_id, bd_relationship_id and an internal bd_rel (hand-kept carrier of 'bd'), though AB-e-5 and r2_checks CROSSWALK_COLS require those exact column names; the builder now reads its column list from the contract JSON under org/, which the gate excludes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output: NAMING REFUSE data/assets/scripts/gold/advi_billing/household_crosswalk.py:39, :110, :118, :129 -> lookup('49financial'); NAMING-GATE: REFUSE 5 graded",
+      "data/assets/scripts/gold/advi_billing/household_crosswalk.py @d690b478cb: COLUMNS = list(CONTRACT['columns']); committed clean"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-5 item 1 names the output columns bd_account_id and bd_relationship_id; the order's bounds say addresses come from lib/opal_naming.py and legacy input URIs are passed as arguments.",
+  "world_is": "The gate treats the token 'bd' inside a column-name literal as a hand-kept carrier of the firm. A later builder or reader that types these column names (AB-e-6 reads them) meets the same refusal and should take the names from the contract, as this builder does."
+}
+```
+
+## ADVI_BILLING-D2-W3-S2 -- AB-e-6 says .scratch/ is gitignored in the worktree; it is not, and the dry-run object carries client figures
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S2",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:56Z",
+  "one_line": "AB-e-6 item 3 saves the dry-run object (client figures) to .scratch/advi_billing/AB_E6_DRYRUN.json 'in the worktree root (gitignored)', but git check-ignore on that path prints nothing and git status lists .scratch/ as untracked, so only the explicit-path commits keep it out of history.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git check-ignore -v .scratch/advi_billing/AB_E6_DRYRUN.json -> no output (rc 1) in C:/dev/wk-advi-billing-3",
+      "git status --short -> '?? .scratch/'; every commit by this worker named its paths, none staged .scratch/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-6 item 3: the dry-run object is saved under .scratch/ (gitignored; it carries client figures and is never committed).",
+  "world_is": "The path is untracked, not ignored. Nothing was committed from it. A later 'git add -A' or 'git add .scratch' in this worktree would stage client figures; the drain merges commits, not the working tree, so the merged branch is clean."
+}
+```
+
+## ADVI_BILLING-D2-W3-S3 -- The platform rate's composition (UMA + APM + Model) and the value-weighting of rates over allocations are this worker's reading; no real SMArtX statement exists to test either
+
+```json
+{
+  "id": "ADVI_BILLING-D2-W3-S3",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_BILLING~3",
+  "surfaced_at": "2026-10-09T08:57Z",
+  "one_line": "AB-e-6 says each account's ADVISOR and PLATFORM rates come from the silver statement 'summed over the account's allocations'; rates are fractions that do not add across sleeves, so fee_quarter.smartx_by_account value-weights rates by Current Period Estimate Valuation and sums only the true-ups, and it defines the PLATFORM rate as UMA + APM + Model rate (Client Fee Rate unused) -- neither is tested against a real statement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "data/assets/scripts/gold/advi_billing/fee_quarter.py @9492f23e7d smartx_by_account(); org/standards/ADVI_BILLING_FEE_QUARTER_CONTRACT.json 0.2.0 scope_note says the composition is an assumption",
+      "the dry run for the thread household found no silver partition (smartx_statement.used false), so the SMArtX path ran on synthetic fixtures only (test_fee_quarter_v2.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AB-e-6 item 1: each account's ADVISOR and PLATFORM rates and the SmartX/Advisor true-up come from the silver partition, summed over the account's allocations.",
+  "world_is": "When the first real statement lands, a PLATFORM component built from UMA + APM + Model may not equal Net SmartX Fee / (valuation x days / year) and would show as DIFFERS with a reason that blames the valuation or the true-up. Nothing serves a v2 object today (no --write ran), so this is INERT; before any write that serves a v2 object that used a statement, compare each allocation's Net SmartX Fee less its true-up with valuation x (UMA + APM + Model) x days / year on the real file and amend smartx_by_account if they differ."
+}
+```

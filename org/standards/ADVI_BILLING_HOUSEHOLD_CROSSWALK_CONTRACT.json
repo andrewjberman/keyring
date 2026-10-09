@@ -1,0 +1,53 @@
+{
+  "contract_version": "0.1.0",
+  "contract": "ADVI_BILLING household crosswalk (gold household_crosswalk)",
+  "owner": "ADVI_BILLING (AB-e-5 writes it; AB-e-6 fee_quarter v2 reads it)",
+  "writer": "data/assets/scripts/gold/advi_billing/household_crosswalk.py",
+  "address": "lib/opal_naming.address('advi','49financial','gold','household_crosswalk','date=<run date>','household_crosswalk.parquet')",
+  "grain": "one row per Schwab master-0833 account in the latest fact_acc partition (schwab_account_number is unique)",
+  "read_rule": "a reader takes the newest date= partition",
+  "columns": {
+    "schwab_account_number": {
+      "type": "string(10)",
+      "meaning": "Schwab custodian account number, 10 digits zero padded; every value exists in fact_acc"
+    },
+    "bd_account_id": {
+      "type": "string|null",
+      "meaning": "Black Diamond account id (z + 10 digits) whose allocations row carries this custodian number; null when unmatched"
+    },
+    "bd_relationship_id": {
+      "type": "string|null",
+      "meaning": "Black Diamond relationship id (z-form) = the portal's client key = the name of the served platinum client summary; from the allocations row, else the BD accounts dimension; null when unmatched"
+    },
+    "opal_relationship_id": {
+      "type": "string|null",
+      "meaning": "Opal dim_relationship relationship_id (rel_<hex>) of the newest partition for this account where mapped is true; null when none. Independent of the BD match"
+    },
+    "match_method": {
+      "type": "string",
+      "enum": [
+        "allocations_number",
+        "allocations_original_number",
+        "unmatched"
+      ],
+      "meaning": "how the BD side was reached. allocations_number = the allocations account_number, zero padded to 10, equals the Schwab account; allocations_original_number = only the original_account_number does (tried when the first did not reach fact_acc); unmatched = neither does"
+    },
+    "claim": {
+      "type": "string",
+      "enum": [
+        "measured",
+        "absent"
+      ],
+      "meaning": "measured = the BD side was read from a named allocations row; absent = no BD value could be had (match_method unmatched). A consumer rejects on this field"
+    }
+  },
+  "inputs": {
+    "allocations": "BD silver allocations, newest <date> partition (account_id, account_number, original_account_number, relationship_id)",
+    "spine": "BD accounts_dimension_latest (account_id -> relationship_id; no custodian number); fills a relationship the allocations row lacks",
+    "schwab_universe": "Schwab master 0833 silver fact_acc, newest date= partition",
+    "opal": "gold dim_relationship, newest date= partition",
+    "client_keys": "the z-form sub-prefixes of the served platinum clients prefix"
+  },
+  "digits_rule": "a custodian cell is used only when it is a plain run of at most 10 digits (strip, zero pad to 10); masked or text cells ('****1234', names) are never parsed",
+  "scope_note": "the object lists Schwab accounts only: a BD account with no custodian number at Schwab 0833 has no row"
+}
