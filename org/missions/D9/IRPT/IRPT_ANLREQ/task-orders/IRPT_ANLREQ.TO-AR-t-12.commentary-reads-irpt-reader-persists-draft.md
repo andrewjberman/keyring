@@ -102,12 +102,28 @@ refuses a new order file, so the cell rides here). Read `org/tier1_exec/1.0.0_SA
    each: `test_other_service_subject_refused`, `test_other_family_refused`, `test_second_put_same_request_refused`, `test_body_tenant_ignored`; plus
    a happy path. Keep every `test_commentary_*.py` and `infra/aws/lambda/investor-reporting/reports/tests` green.
 
+### AMENDMENT 5 (issuer, 2026-10-09 ~06:3xZ) -- disposes rows IRPT_ANLREQ-D2-W41-S11, -S6, -S7
+
+- **S11 (cell id):** the decomposition holds no `AR-t-13` row; the store is the decomposition's own `AR-t-12` text ("persists ONE DRAFT
+  commentary") realized, so criterion `AR13-t-AC1` now cites `cell_refs="AR-t-12"`. The draft-store work keeps its AMENDMENT 4 steps 5-10.
+11. **S6 (live write path):** `infra/aws/lambda/investor-reporting/reports/retention.py` `_allow` (:90-99) admits a service subject only to a
+   liveness read, so `reserve()` (:208-210) denies the one named writer on the live path through the retained repositories. Admit it there
+   EXACTLY as `repository.py`'s `SERVICE_WRITERS` does: `svc-commentary`, family `ANALYSIS_COMMENTARY`, on `reserve` only, tenant-bound
+   (`firm == owner.firm_id`, never `global`/`opal-capital`); every other act and subject is refused as today. Test, in
+   `test_commentary_draft_store.py`: `test_live_retained_put_admits_the_named_writer` (build the repositories the store Lambda builds, with
+   the retained RetentionPolicy, and assert one put succeeds and a second is refused), and keep the four refusals green.
+12. **S7 (package reader):** add the AMENDMENT 5 (driver) `SERVICE_READERS` entry for the `package_principal` AR-v-12 named (the worker
+   measured `svc-irpt-packager`; cite the line where AR-v-12 names it), family `ANALYSIS_COMMENTARY` only, and update the pin at
+   `reports/tests/test_svc_commentary.py:199` to the new two-entry map (that edit only).
+13. **S8:** `test_commentary_ready_queue.py` may be updated where it pins stage `ticket` for a queue run, so a store-backed queue run ends
+   `draft_stored` (driver AMENDMENT 6); a run with no store ports keeps today's behavior.
+
 ### ACCEPTANCE
 
 <criterion id="AR12-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t12</invocation><expect>AR1-T12-OK</expect></criterion>
 `AR12-t-AC1` -- the three named tests pass, the file is green, and `DecryptWithTheIrptKey` is gone from commentary.tf.
 
-<criterion id="AR13-t-AC1" cell_refs="AR-t-13"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13</invocation><expect>AR1-T13-OK</expect></criterion>
+<criterion id="AR13-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13</invocation><expect>AR1-T13-OK</expect></criterion>
 `AR13-t-AC1` -- the four named refusal tests pass and the store test file is green (dry-run at box/dell2 29125b907d: `AR1-T13-FAIL absent`).
 
 <expected_criteria>AR12-t-AC1 AR13-t-AC1</expected_criteria>
@@ -141,6 +157,9 @@ infra/logic/registry/reporting_policies.json
 infra/aws/terraform/investor-reporting/export/commentary_draft_store.tf
 infra/aws/lambda/ci/lambda-source-map.json
 data/transcripts/scripts/commentary/ticket_client.py
+infra/aws/lambda/investor-reporting/reports/retention.py
+infra/aws/lambda/investor-reporting/reports/tests/test_svc_commentary.py
+data/transcripts/scripts/tests/test_commentary_ready_queue.py
 </paths>
 
 The block is your WRITE grant (your deliverables folder is granted by the tree convention). Everything else named here you READ.
