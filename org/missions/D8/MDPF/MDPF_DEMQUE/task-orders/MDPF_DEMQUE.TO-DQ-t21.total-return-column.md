@@ -10,6 +10,7 @@
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>6</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~13:0xZ (row MDPF_DEMQUE-D1-W18-S1; issuer defects):** (1) GRANTED `data/mdpf/scripts/demque/test_demque_store.py`: its exact three-column assertion becomes the three original columns FIRST and unchanged, followed by `cash, total_return, tr_source, flags`; no other assertion changes; the full demque suite must pass. (2) GRANTED `data/mdpf/scripts/demque/daily_draw.py`: the scheduled draw passes each security's Bloomberg stored TR (via `tr_compare.py`'s loader; none when the name has none) and its money-market membership (`money_market.csv`) into `price_store.write`, so both guards fire in the draw, not only in the CLI. No criterion changes; the order stays open until both are done and AC1/AC2 re-pass.
 **Directive:** D8 | **Fabric:** dell1 (placement dell1) | **Decomp cell:** `DQ-t-21` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 6 -- CUT) |
 **outcome_ref:** FWD-1 | **depends_on:** none
 
@@ -76,6 +77,8 @@ data/mdpf/scripts/demque/tr_column.py
 data/mdpf/scripts/demque/test_demque_tr_column.py
 data/mdpf/scripts/demque/money_market.csv
 data/mdpf/scripts/demque/price_store.py
+data/mdpf/scripts/demque/test_demque_store.py
+data/mdpf/scripts/demque/daily_draw.py
 org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/0.9.0_WK_MDPF_DEMQUE~5/PRICE_STORE_CONTRACT.md
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
