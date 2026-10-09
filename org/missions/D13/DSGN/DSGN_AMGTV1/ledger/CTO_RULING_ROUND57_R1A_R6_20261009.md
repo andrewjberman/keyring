@@ -16,3 +16,13 @@ found for <text>" (AV-zzi-1), is the whole page-side fix, and Enter keeps sendin
 AV-zi-1 replaced the Chatter month cursor on purpose with 30D / 90D / 365D windows, each ending at the served as-of date. The 365D window
 is how a reader reaches earlier months. R6 as written in round 56 asked for a control that had been removed on purpose, and is withdrawn.
 No cell is owed.
+
+## ADDENDUM 1 (~04:2xZ) -- the route's resolution rule (`2.0.0_SA_COO~R1` msg 1672)
+
+Recommendation adopted as written. The route calls `name_search.resolve_query` ONLY where it would otherwise 404:
+- an exact key, or ONE candidate, serves that key's page (one candidate is what a typed ticker means);
+- two or more candidates return the not-found status with "several companies match" and the candidate list;
+- none keeps today's 404.
+
+There is no coverage gate: a resolved key outside coverage gets whatever page the route already serves for it. AMGT_RESAPP cuts it in
+round 81. The page's honest not-found message (R1(b)) reads the route's answer and adds no lookup of its own.
