@@ -838,3 +838,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W3-S1 -- AR-y-22: the served signer (ops/pdf_link.py PdfSigner) refuses every ORIGINAL_HOLDINGS / ORIGINAL_CSV key, so the new route answers a refusal once released
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:10:00Z",
+  "one_line": "The order has `original` sign through the same `signer` the pdf route uses, but PdfSigner.sign admits only keys matching irpt/<firm>/state/vendor_documents/ART-<64>/<sha>.pdf and asks the builder for family ORIGINAL_VENDOR_PDF, so with the real signer every original key (state/original_holdings/... .csv|.xlsx, state/prospect_inputs/... .csv) raises PDF_LINK_KEY_BINDING; my reader surfaces it as RequestReadRefused (INVALID_INPUT) and the route serves no link.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (cut a cell that lets ops/pdf_link.py sign the ORIGINAL_HOLDINGS and ORIGINAL_CSV families through opal_naming.reporting_destination, then release the irpt-status pair)",
+  "spec_asserts": "AR-y-22 item 1: 'release one Opal-signed link to the request's original upload', 'on the same pattern' as pdf, signing through `signer`; item 4 treats the read as needing only IAM, and pdf_link.py is not in the order's <paths>.",
+  "world_is": "Offline probe: PdfSigner(client_factory=..., destination=...).sign('cottonwood', 'irpt/cottonwood/state/original_holdings/ART-<a*64>/<b*64>.csv', 'b'*64) raises PdfLinkRefused PDF_LINK_KEY_BINDING. The reader, the operation and the route are complete and tested with a signer double (ops/tests/test_original_reader.py, 14 passed); the one served step that will not work is the real signer, outside this worker's write grant. Nothing leaks: the failure is a refusal, not a link to the wrong object.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/pdf_link.py:19-21 STORED_KEY and FAMILY = ORIGINAL_VENDOR_PDF; :59-64 the key and destination bindings",
+      "infra/logic/registry/reporting_policies.json: ORIGINAL_HOLDINGS (state/original_holdings, csv) and ORIGINAL_CSV (state/prospect_inputs, csv) rows",
+      "infra/aws/terraform/investor-reporting/ops/iam.tf:85 already lists both families for GetObject and GetObjectVersion, so the IAM side needs no change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W3-S2 -- AR-y-22: the new routes.json entry carries no response schema and no consumer operation, because the order's grant names neither path
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W3-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~3",
+  "surfaced_at": "2026-10-09T08:12:00Z",
+  "one_line": "'Copy the pdf route's entry shape exactly' cannot reach response_schema: the pdf entry points at responses/analysis-request-pdf.response.schema.json, whose operation is a const naming analysis-request-pdf and whose data is AnalysisRequestPdf.schema.json, and the order's <paths> allows no new contract file; the original route's entry therefore sets consumer_operation and response_schema to null, each with its absent_reason (the form routes.json already uses for the comparison catalogue and reporting-read).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-22 item 3: add the same route to routes.json, 'Copy the pdf route's entry shape exactly'.",
+  "world_is": "The entry is key-for-key the pdf entry's (route_key, handler irpt-status, cell, status DECLARED, note, operation, consumer_operation, response_schema) plus the two *_absent_reason keys. The wire data is the pdf data shape (download_route {url, expires_at}, sha256, byte_length). A response schema for the original, and the portal's consumer operation, are the next cell's files.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json: the analysis-request-pdf entry and the analysis/comparisons entry (consumer_operation null with consumer_operation_absent_reason)",
+      "docs/contracts/investor-reporting/v1/responses/analysis-request-pdf.response.schema.json: operation const analysis-request-pdf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
