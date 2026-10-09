@@ -5,6 +5,7 @@
     <issued_to>0.7.0_AE_CloudOps~RV1</issued_to>
     <date>2026-10-09</date>
     <status>pending</status>
+<!-- graded 2026-10-09 ~15:3xZ by 2.0.0_SA_COO~V1 on report @909e43668c: AC1 PASS on the issuer's own run (wi1_deploy_check.py C:/tmp/rv-wi1-dell1, tree at b86feccfeb): 5 of 5 live packages = built zips, Active/Successful/3008; daily env keys exactly BD_SERP_ZONE, RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET, RIVALFUNDS_SERP_SECRET; other four none; daily role: 2 secretsmanager statements, one on exactly the -7ojPkd ARN. Live 15:22:10Z-15:22:34Z. Status stays open: AC2 and L2 are the issuer's read of the 2026-10-10 13:00Z sweep (Tokio Marine adjusted; 0 calls for a flat name). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>
