@@ -123,12 +123,17 @@ cleanly." Every cycle, before Step 3b:
 7. **BRANCH SYNC AND OPEN CALLS, every cycle** (Andrew-direct 2026-10-08 ~20:1xZ, VERBATIM: "we need the fabric managers at each
    box to manage that"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_FABRIC_MANAGERS_KEEP_THEIR_BOX_SYNCED.md`).
    On this box's own minutes (the slot table quoted in the `Each box fires` bullet above):
-   (a) **box-sync runs from the box's Windows scheduled task "Opal box-sync"**, never from this loop (Andrew ~20:1xZ to
-   4.0.0_SA_CRO~A, "I think B is the stable long-term solution"; record
-   `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_201xZ_BOX_SYNC_SCHEDULED_TASK_B.md`). This loop VERIFIES:
-   `powershell -NoProfile -File .tools/box-sync-schedule.ps1 -Status`; if the task is absent, install it (`-Install`) the same
-   cycle. A box branch more than one cycle behind `origin/CLOUD`, or a box the integrator HELD, is a finding on the SYNC line,
-   never a quiet pass; a held box's conflict is resolved by its own manager the same cycle.
+   (a) **box-sync runs from the box's Windows scheduled task "Opal box-sync"** (Andrew ~20:1xZ to 4.0.0_SA_CRO~A, "I think B
+   is the stable long-term solution"; record `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261008_201xZ_BOX_SYNC_SCHEDULED_TASK_B.md`)
+   **AND from this tick** (Andrew-direct 2026-10-09 ~03:0xZ, VERBATIM: "I think their govern ticks should include a box-sync
+   action where they pull in all the stuff the rest of the cluster has been working on"; record
+   `org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_030xZ_GOVERN_TICK_RUNS_BOX_SYNC.md`). Every tick:
+   verify the task (`powershell -NoProfile -File .tools/box-sync-schedule.ps1 -Status`; absent -> `-Install` the same cycle),
+   then `git fetch origin` and PULL IN THE CLUSTER: on the integrator box, `bash .tools/box-sync.sh integrate` when any
+   `origin/box/*` is ahead of `origin/CLOUD`; then on every box, `bash .tools/box-sync.sh box` when `origin/CLOUD` is ahead of
+   `box/<this box>` (`git rev-list --count box/<box>..origin/CLOUD` > 0). Exit 3 (the task holds the pass lock) is a skip, not
+   a finding; exit 1 or 4 (refused, HELD) is. A box branch more than one cycle behind `origin/CLOUD`, or a box the integrator
+   HELD, is a finding on the SYNC line, never a quiet pass; a held box's conflict is resolved by its own manager the same cycle.
    (b) **the integrator** (the box the integrate task runs on; another box's manager on a recorded handover) reads its task's last integrate result, and
    MEASURES EVERY BOX'S PULL (Andrew-direct ~20:2xZ, VERBATIM: "I want to make sure that every box in the organization does a
    pull from CLOUD as needed to get all the newest information onto their device"; record
