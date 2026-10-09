@@ -105,6 +105,13 @@ not the 21:54Z document, refreshes what the gold dispatch's freshness gate reads
   On FAIL, PHASE B does not start and the failing limb is filed as a row.
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 does not fire on a modify).
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-09 ~04:0xZ) -- the assignee is ruled, and its re-point is deferred.** 1.0.0_SA_CTO~Z
+ruled in msg 32344 (relayed in 32345) that `0.7.0_AE_CloudOps~Z` keeps NFRA_OPLGTW (Rule 27). This order does not go to
+that seat, and A4's re-address stands only until then. When s19.PRE.sh passes after 03:00Z on 2026-10-13, the issuer
+amends `<issued_to>` to a FRESH site-Z CloudOps lane and tells 1.0.0_SA_CTO~Z, which seats it on demand. No GO goes to
+`0.7.0_AE_CloudOps~Z`. `<issued_to>` is left as is now, per the ruling ("amend issued_to then, not now").
+- Graded by: no gate limb graded this modification.
+
 ## 2. BOUNDS
 
 1. One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a
