@@ -23072,35 +23072,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-D2-S29 -- the runner bundle moved at 04:16:44Z and the ONE changed member is directory_runner.py, so IB-pr-383's cleared replay no longer describes what the host would pull
-
-```json
-{
-  "id": "IRPT_BCKEND-D2-S29",
-  "project": "IRPT_BCKEND",
-  "fabric": "dell2",
-  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
-  "surfaced_at": "2026-10-09T05:48Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "0.7.0_AE_CloudOps~DELL2",
-  "one_line": "The grants for IB-pr-383's seeding landed at 05:39:17Z and S1/S2/V1 were released to resume, but the runner bundle was overwritten at 04:16:44Z (version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, sha256 f6d48603) after this seat landed OxaIJns0 (sha256 2e3e6648) at 03:42:25Z; the ONE changed member of 12 is directory_runner.py, the only writer of the seeded keys, so the replay arm that cleared the apply graded a script the host would no longer run.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "list-object-versions on code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz: W2WragrP52i8M7MfL22oXVPuHsTjyVLO IsLatest=true 112861 bytes 2026-10-09T04:16:44Z; OxaIJns0x1vkrd924gLPTyOMGzL_KQxK IsLatest=false 112575 bytes 2026-10-09T03:42:25Z",
-      "both versions downloaded BY VERSION ID and hashed: mine sha256 2e3e6648312f5daa (the value TO-IB-pr-383 and the packet declare), latest sha256 f6d48603a6496f78",
-      "member-by-member diff over the UNION of 12 member names: 0 added, 0 removed, exactly 1 CHANGED -- data/assets/scripts/gold/investor_reporting/directory_runner.py, 08e5e1abc92ad38b (replay-graded) vs 23b7eaf6f2788c61 (host would pull)",
-      "unified diff of that member: 1239 -> 1254 lines, 27 diff lines, adding a refusal attributed in its own comment to TO IB-pr-384 (row D2-W189-S4): 'BUILD_DROPS_SOURCE_ENTRY: %d previous client(s) are still in the source snapshot but missing from this build; nothing is landed', which on an upload or local-mirror call RAISES RuntimeError before any put, and on a dry run records carried_forward.refused and fails main()",
-      "this seat's replay measured held_in_source 0 on BOTH seeded arms (inflection and cottonwood) and 1 on both negative arms, i.e. the new refusal would not have fired on the path the replay exercised"
-    ]
-  },
-  "spec_asserts": "TO-IB-pr-383 step 4 declares the bundle sha256 2e3e6648312f5daad1da91f0c3aaeb4736a81b16cc9bb0dd4f43e5e93886b968, its refusal clause lists 'a built sha other than the packet's' and 'a failed replay' as STOP conditions, and its step 2 requires the replay to run against 'the artifacts actually in play'.",
-  "world_is": "The artifact actually in play is no longer the one the replay graded. The seeding run executes directory_runner.py from whatever version of this bundle the host pulls at run time, and that is now f6d48603 carrying a runner this seat has never replayed. The behavioural delta is not cosmetic: it is a NEW TERMINAL STATE on exactly the call the seeding makes, --upload. On the state the replay measured it would be inert, because held_in_source was 0 on both seeded arms, but that measurement is 2.5 hours old and the refusal fires on LIVE source state, not on replayed state, so its inertness cannot be asserted for the run that matters. The asymmetry decides it: if the refusal fires at inflection the run lands nothing and is recoverable, but if it fires at COTTONWOOD after inflection has already landed, the result is a half-landed seeding across two firms, which is the one state NEVER-2 forbids and which this order's own Branch B is written to undo key by key. So the resume is refused on the order's own terms rather than on preference. Two consequences for the record: ledger leg B1 remains TRUE as history (this seat did land 2e3e6648 and proved it on the object) but it no longer describes the newest version of that key, and the row is ARMED rather than INERT because a resume message is already outstanding and a seat acting on it without reading this row would run the ungraded script. Disarm is this seat's: either re-run the replay arm against f6d48603 and have the issuer re-clear it, or have the issuer rule that IB-pr-384's refusal is in scope for 383 and re-declare the bundle sha."
-}
-```
-
 ## IRPT_BCKEND-D2-S28 -- IB-pr-384's runner change reached the LIVE bundle at 04:16:44Z without its own pair: the push deploy hook let it ride IB-pr-383's open ledger
 
 ```json
@@ -23156,6 +23127,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-D2-S29 -- the runner bundle moved at 04:16:44Z and the ONE changed member is directory_runner.py, so IB-pr-383's cleared replay no longer describes what the host would pull
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S29",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T05:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~DELL2",
+  "one_line": "The grants for IB-pr-383's seeding landed at 05:39:17Z and S1/S2/V1 were released to resume, but the runner bundle was overwritten at 04:16:44Z (version W2WragrP52i8M7MfL22oXVPuHsTjyVLO, sha256 f6d48603) after this seat landed OxaIJns0 (sha256 2e3e6648) at 03:42:25Z; the ONE changed member of 12 is directory_runner.py, the only writer of the seeded keys, so the replay arm that cleared the apply graded a script the host would no longer run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "list-object-versions on code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz: W2WragrP52i8M7MfL22oXVPuHsTjyVLO IsLatest=true 112861 bytes 2026-10-09T04:16:44Z; OxaIJns0x1vkrd924gLPTyOMGzL_KQxK IsLatest=false 112575 bytes 2026-10-09T03:42:25Z",
+      "both versions downloaded BY VERSION ID and hashed: mine sha256 2e3e6648312f5daa (the value TO-IB-pr-383 and the packet declare), latest sha256 f6d48603a6496f78",
+      "member-by-member diff over the UNION of 12 member names: 0 added, 0 removed, exactly 1 CHANGED -- data/assets/scripts/gold/investor_reporting/directory_runner.py, 08e5e1abc92ad38b (replay-graded) vs 23b7eaf6f2788c61 (host would pull)",
+      "unified diff of that member: 1239 -> 1254 lines, 27 diff lines, adding a refusal attributed in its own comment to TO IB-pr-384 (row D2-W189-S4): 'BUILD_DROPS_SOURCE_ENTRY: %d previous client(s) are still in the source snapshot but missing from this build; nothing is landed', which on an upload or local-mirror call RAISES RuntimeError before any put, and on a dry run records carried_forward.refused and fails main()",
+      "this seat's replay measured held_in_source 0 on BOTH seeded arms (inflection and cottonwood) and 1 on both negative arms, i.e. the new refusal would not have fired on the path the replay exercised"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 step 4 declares the bundle sha256 2e3e6648312f5daad1da91f0c3aaeb4736a81b16cc9bb0dd4f43e5e93886b968, its refusal clause lists 'a built sha other than the packet's' and 'a failed replay' as STOP conditions, and its step 2 requires the replay to run against 'the artifacts actually in play'.",
+  "world_is": "The artifact actually in play is no longer the one the replay graded. The seeding run executes directory_runner.py from whatever version of this bundle the host pulls at run time, and that is now f6d48603 carrying a runner this seat has never replayed. The behavioural delta is not cosmetic: it is a NEW TERMINAL STATE on exactly the call the seeding makes, --upload. On the state the replay measured it would be inert, because held_in_source was 0 on both seeded arms, but that measurement is 2.5 hours old and the refusal fires on LIVE source state, not on replayed state, so its inertness cannot be asserted for the run that matters. The asymmetry decides it: if the refusal fires at inflection the run lands nothing and is recoverable, but if it fires at COTTONWOOD after inflection has already landed, the result is a half-landed seeding across two firms, which is the one state NEVER-2 forbids and which this order's own Branch B is written to undo key by key. So the resume is refused on the order's own terms rather than on preference. Two consequences for the record: ledger leg B1 remains TRUE as history (this seat did land 2e3e6648 and proved it on the object) but it no longer describes the newest version of that key, and the row is ARMED rather than INERT because a resume message is already outstanding and a seat acting on it without reading this row would run the ungraded script. Disarm is this seat's: either re-run the replay arm against f6d48603 and have the issuer re-clear it, or have the issuer rule that IB-pr-384's refusal is in scope for 383 and re-declare the bundle sha."
+}
+```
+
 ## IRPT_BCKEND-D2-W202-S1 -- The new function has no entry in lambda-source-map.json at the pin, so release-census.py exits 2 for it and BUILD_ONLY needs a scratch-map override pl
 
 ```json
@@ -23205,5 +23205,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "TO IB-pr-391: census every existing function whose packaged reports/repository.py changed.",
   "world_is": "None changed: the staged rows pin the blob, so the new rule in repository.py/retention.py ships only in the new function until a cell re-pins one of the four rows. The other changed members the census prints belong to other cells (not this release) and are not listed as this release's changed members. A later re-pin of any of the four is a separate release with its own pair."
+}
+```
+
+### IRPT_BCKEND-D2-W260-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W260-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~260",
+  "surfaced_at": "2026-10-09T07:00:00Z",
+  "one_line": "The CTO ruling file the worker face names is not in the worktree; read from commit 19c5067e12 instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_IB_pr_388_H1_WITHDRAWN_20261009.md in the worktree: No such file",
+      "git ls-tree -r 19c5067e12 lists the file; git show 19c5067e12:<path> read in full: no instruction to remove the stream or the requests_stream_arn output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling file is at org/tier1_exec/1.0.0_SA_CTO/deliverables/ in the worktree.",
+  "world_is": "The worktree branch does not carry the file; it exists at 19c5067e12. The stream and requests_stream_arn output were therefore kept."
 }
 ```
