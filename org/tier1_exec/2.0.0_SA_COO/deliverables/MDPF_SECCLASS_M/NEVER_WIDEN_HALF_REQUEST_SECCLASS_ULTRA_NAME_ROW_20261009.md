@@ -40,6 +40,16 @@ The writer takes a snapshot of the pre-state item first, at the `--snapshot` pat
 `python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py --rollback org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ULTRA_ROW_SNAPSHOT_R16_20261009.json --write`
 This puts `fixed_income` / `Ultra Short Duration` back on the key.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
+
+`2.0.0_SA_COO~M1`, 2026-10-09 ~09:3xZ, after the round-16 drain (@6087246b44).
+- **The limit above is answered by SC-e-79's trace run** (`R16_CHECKS/sc_r16_ticker_no_row.py`, issuer re-run at the drain: `resolved=23`): TWCUX
+  carries a ticker with no row, so under the SERVED lib (SC-e-76) its 2 BD positions stop at hop `ticker-no-row` and serve `unclassified`.
+  This write alone moves NO served position. Under the SC-e-79 lib they resolve through this `NAME::` key (the e79 candidate diff lists
+  TWCUX $88,937 as fixed_income, which is this row's current, wrong class).
+- **Both branches of the writer's own rule** were read: no `--write` writes nothing (dry run `puts=0`); `--write` refuses a stale or
+  present row (`refused_stale=0 refused_present=0` at the dry run), else puts the one REMAP after the snapshot.
+- **Blast radius: one key, two class attributes plus the writer's audit attributes.** No S3 object, no Lambda.
+- **Condition (sequencing): this write lands BEFORE the SC-e-79 lib deploy**, so no fire ever serves TWCUX as fixed_income.
 
 ## CTO half -- UNSIGNED
