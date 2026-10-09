@@ -88,7 +88,7 @@ Report once: the diff (per file, one line each), the output line of every criter
 issuer's close walk, made possible by AV-zzp-2 (the walker's press flags). Base portal f043b827 (= origin DEV). LF only (ruling R2,
 row D1-S1).
 
-<status>pending</status>
+<status>complete</status>
 <round>64</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzp-1</to_id>
 <slot>~138</slot>
