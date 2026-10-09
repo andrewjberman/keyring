@@ -21,6 +21,18 @@
 # Mechanism (claude-code-guide confirmed): stdout JSON
 #   {"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":"..."}} + exit 0.
 # FAIL-SAFE: any jq/parse issue -> silent exit 0 (NEVER break a search). No -e (grep no-match ok).
+#
+# DIRECTED GATE (Andrew-direct 2026-10-09 ~01:3xZ, "approved" REC (a); design
+# org/tier1_exec/4.0.0_SA_CRO/deliverables/COMP_RAIL_DIRECTED_GATE_DESIGN_20261008.md; record
+# org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261009_013xZ_DIRECTED_RAIL_GATE_APPROVED_REC_A_REWRITE_RULE_21.md).
+# The rail stays MANDATORY on four failure modes (F1 blind recursive repo search, F2 an absence from a search that
+# cannot see, F3 a raw AWS read the graph or a comp-tool answers, F4 a census denominator cut). Every denial now
+# starts "NOTHING IN THIS CALL RAN.", names WHY, prints the exact RUN NEXT command pre-filled from the agent's own
+# pattern and path, and a REMAINDER (the rest of the call, without the denied segment). The text is built by
+# .tools/hooks/comp_rail_direct.py, called ONLY on a would-deny path. PASS LIST (never denied): a single-file grep
+# anywhere, infra and .tf included; a pipe receiver; any path outside a git checkout of this repo; a live AWS
+# get-*/simulate/describe on one named resource; `comp-* --help`. Every DENY / ALLOW-SEARCH / RUN-OVERRIDE row now
+# carries serial=, and a DENY carries the deny_id its message prints.
 set -uo pipefail
 
 INPUT=$(cat 2>/dev/null || true)
@@ -62,6 +74,30 @@ _orig_query="$query"   # the T1 rail may narrow $query to one SEGMENT for classi
 WS="$(cd "$SCRIPT_DIR/../.." 2>/dev/null && pwd)" || WS="."
 RAIL_LOG="$WS/org/mcp/comp-which-rail.log"
 _q80() { printf '%s' "$_orig_query" | tr '\n\r' '  ' | head -c 100; }
+# WHO (design section 5): the asking seat on every row the rail writes.
+_serial() {
+  if [ -n "${OPAL_AGENT_SERIAL:-}" ]; then printf '%s' "$OPAL_AGENT_SERIAL"
+  elif [ -n "$sid" ] && [ -f "$WS/org/mcp/sessions/${sid}.serial" ]; then head -1 "$WS/org/mcp/sessions/${sid}.serial" 2>/dev/null | tr -d '\r\n '
+  else printf '-'; fi
+}
+_directed=0; _dshape=""
+# _direct <kind> <piece> [hint] -- ask comp_rail_direct.py for the verdict and the directed text. Sets $msg,
+# $_directed=1, $_dverdict, $_dshape. A helper failure leaves _dverdict=ERROR (the caller keeps its own verdict).
+_direct() {
+  local _req _out
+  _dcwd=$(printf '%s' "$INPUT" | "$JQ" -r '.cwd // ""' 2>/dev/null || true)
+  _req=$("$JQ" -n --arg cmd "$_orig_query" --arg kind "$1" --argjson piece "$2" --arg ws "$WS" --arg cwd "$_dcwd" \
+           --arg hint "${3:-}" --argjson marker "$([ -f "$WS/org/mcp/comprail-gate1.enforce" ] && echo true || echo false)" \
+           '{cmd:$cmd,kind:$kind,piece:$piece,ws:$ws,cwd:$cwd,hint:$hint,marker:$marker}' 2>/dev/null) || { _dverdict=ERROR; return 0; }
+  _out=$(printf '%s' "$_req" | timeout 15 python "$SCRIPT_DIR/comp_rail_direct.py" 2>/dev/null) || { _dverdict=ERROR; return 0; }
+  _dverdict=$(printf '%s' "$_out" | "$JQ" -r '.verdict // "ERROR"' 2>/dev/null || echo ERROR)
+  _dshape=$(printf '%s' "$_out" | "$JQ" -r '.shape // ""' 2>/dev/null || true)
+  if [ "$_dverdict" = DENY ]; then
+    msg=$(printf '%s' "$_out" | "$JQ" -r '.message // ""' 2>/dev/null || true)
+    [ -n "$msg" ] && _directed=1
+  fi
+  return 0
+}
 
 # emit_deny -- the ONE deny path (shared by the T1 search rail and the aws/infra tiers). Honors the
 # `# rail-checked: <why>` override (allow + audit) and writes the DENY row. Uses $class/$msg/$query.
@@ -69,12 +105,19 @@ emit_deny() {
   local _ts; _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')"
   if printf '%s' "$_orig_query" | grep -qE '#[[:space:]]*rail-checked:'; then
     local _why; _why="$(printf '%s' "$_orig_query" | sed -E 's/.*#[[:space:]]*rail-checked:[[:space:]]*//' | tr '\n' ' ' | head -c 200)"
-    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  reason=$_why  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+    echo "$_ts  RUN-OVERRIDE  tool=$tool  class=$class  serial=$(_serial)  reason=$_why  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
     exit 0
   fi
-  echo "$_ts  DENY  tool=$tool  class=$class  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
-  local _reason; _reason="$(printf '%s' "$msg" | sed -E 's/[[:space:]]*\(advisory -- your [a-z]+ still runs\.\)//')"
-  _reason="${_reason} -- GATED per CLAUDE.md Rule 21 (comp-which-first). Run the comp-tool above instead. If NO comp-tool truly fits this exact search, re-run the command with a trailing '# rail-checked: <why no comp-tool fits>' marker (auditable, logged). For a time-boxed speed push, /freeform stands the whole rail down."
+  local _did; _did="$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo x)-$(printf '%s|%s' "$$" "$_orig_query" | md5sum 2>/dev/null | cut -c1-8)"
+  echo "$_ts  DENY  tool=$tool  class=$class  rule=${_dshape:--}  serial=$(_serial)  deny_id=$_did  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+  local _reason
+  if [ "$_directed" = 1 ]; then
+    _reason="${msg}
+deny_id=${_did}. If no comp-tool truly fits this exact search, re-run with a trailing '# rail-checked: <why>' (audited). /freeform stands the rail down for a time-boxed speed push. (CLAUDE.md rule 21.)"
+  else
+    _reason="$(printf '%s' "$msg" | sed -E 's/[[:space:]]*\(advisory -- your [a-z]+ still runs\.\)//')"
+    _reason="NOTHING IN THIS CALL RAN. ${_reason} -- deny_id=${_did}. GATED per CLAUDE.md rule 21. If NO comp-tool truly fits this exact search, re-run the command with a trailing '# rail-checked: <why no comp-tool fits>' marker (auditable, logged). For a time-boxed speed push, /freeform stands the whole rail down."
+  fi
   local _enc; _enc=$(printf '%s' "$_reason" | "$JQ" -Rs . 2>/dev/null) || exit 0
   printf '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":%s}}' "$_enc"
   exit 0
@@ -88,7 +131,9 @@ emit_deny() {
 if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'comp-(read|find|surprise|schedule)'; then
   _census_masked="$(printf '%s' "$query" | tr '\n\r' ';;' | sed -E "s/'[^']*'/'Q'/g; s/\"[^\"]*\"/\"Q\"/g")"
   _census_segs="$(printf '%s' "$_census_masked" | sed -E 's/&&|\|\||;/\n/g')"
+  _cpi=-1
   while IFS= read -r _cs; do
+    _cpi=$((_cpi + 1))
     _cs="$(printf '%s' "$_cs" | sed -E 's/^[[:space:]]*//; s/^(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|env|sudo|time|nice)[[:space:]]+)*//; s/#.*$//')"
     [ -z "$_cs" ] && continue
     _cfirst="$(printf '%s' "$_cs" | sed -E 's/\|.*$//')"
@@ -103,6 +148,11 @@ if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'comp-(read|find|surpri
       *) continue ;;
     esac
     printf '%s' "$_cs" | grep -q '|' || continue
+    # PASS LIST: a tool's own help text is not a census (comp-find --help | grep was denied before 2026-10-09).
+    if printf '%s' "$_cfirst" | grep -qE '(^|[[:space:]])(--help|-h)([[:space:]]|$)'; then
+      echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=help  serial=$(_serial)  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+      continue
+    fi
     _cstatus=ALLOW
     if printf '%s' "$_cs" | grep -qE '\|[[:space:]]*(grep|egrep|fgrep|rg|head|tail|cut|awk|sed|wc)([[:space:]]|$)' \
        && ! printf '%s' "$_orig_query" | grep -qE 'ENUMERATE|DENOMINATOR' \
@@ -113,6 +163,7 @@ if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'comp-(read|find|surpri
     if [ "$_cstatus" = DENY ]; then
       class=CENSUS-FILTERED
       msg="comp-tool on the HUD: a census command ($_clead_base) pipes into a receiver that can erase its denominator. Use the tool's own flags (comp-find: --limit, --page, --band, --all; comp-read: --width; other tools: see --help). Summary-aware filters containing ENUMERATE or DENOMINATOR are allowed. If no native flag fits, use '# rail-checked: <why>'."
+      _direct census "$_cpi"
       emit_deny
     elif printf '%s' "$_orig_query" | grep -qE '#[[:space:]]*rail-checked:' \
          && printf '%s' "$_cs" | grep -qE '\|[[:space:]]*(grep|egrep|fgrep|rg|head|tail|cut|awk|sed|wc)([[:space:]]|$)'; then
@@ -168,7 +219,9 @@ if [ "$tool" = Bash ] && [ "$_search_shape" != none ]; then
   # grep as "directory" -- a false deny the FP test now carries.
   _masked="$(printf '%s' "$query" | tr '\n\r' ';;' | sed -E "s/'[^']*'/'Q'/g; s/\"[^\"]*\"/\"Q\"/g")"
   _segs="$(printf '%s' "$_masked" | sed -E 's/&&|\|\||;/\n/g')"
+  _pi=-1; _search_pi=-1; _aws_pi=-1
   while IFS= read -r _s; do
+    _pi=$((_pi + 1))
     _s="$(printf '%s' "$_s" | sed -E 's/^[[:space:]]*//; s/^(([A-Za-z_][A-Za-z0-9_]*=[^[:space:]]*|env|sudo|time|nice)[[:space:]]+)*//; s/#.*$//')"
     [ -z "$_s" ] && continue
     _first="$(printf '%s' "$_s" | sed -E 's/\|.*$//')"
@@ -176,16 +229,20 @@ if [ "$tool" = Bash ] && [ "$_search_shape" != none ]; then
     _lead_base="${_lead##*/}"
     case "$_lead_base" in
       grep|egrep|fgrep)
-        if printf '%s' "$_first" | grep -qE '(^|[[:space:]])-[A-Za-z]*[rR][A-Za-z]*([[:space:]]|$)|--(dereference-)?recursive'; then _search_seg="$_s"; _search_shape=recursive; break; fi
         _last="$(printf '%s' "$_first" | awk '{for(i=NF;i>2;i--) if ($i !~ /^-/) {print $i; exit}}' | tr -d "'\"")"
+        if printf '%s' "$_first" | grep -qE '(^|[[:space:]])-[A-Za-z]*[rR][A-Za-z]*([[:space:]]|$)|--(dereference-)?recursive'; then
+          # PASS LIST: -r over ONE existing file is a single-file read, not a repo search.
+          if [ -n "$_last" ] && { [ -f "$WS/$_last" ] || [ -f "$_last" ]; }; then _search_shape=single-file; continue; fi
+          _search_seg="$_s"; _search_shape=recursive; _search_pi=$_pi; break
+        fi
         if [ -z "$_last" ]; then _search_shape=stdin; continue; fi                  # `grep pat` reads stdin: not a repo search
-        if [ -d "$WS/$_last" ] || [ -d "$_last" ] || [ "$_last" = "." ] || printf '%s' "$_last" | grep -qE '[*?]|/$'; then _search_seg="$_s"; _search_shape=directory; break; fi
+        if [ -d "$WS/$_last" ] || [ -d "$_last" ] || [ "$_last" = "." ] || printf '%s' "$_last" | grep -qE '[*?]|/$'; then _search_seg="$_s"; _search_shape=directory; _search_pi=$_pi; break; fi
         _search_shape=single-file ;;
       rg|ack|ag|findstr)
         _last="$(printf '%s' "$_first" | awk '{for(i=NF;i>2;i--) if ($i !~ /^-/) {print $i; exit}}' | tr -d "'\"")"
-        if [ -n "$_last" ] && { [ -f "$WS/$_last" ] || [ -f "$_last" ]; } && ! printf '%s' "$_first" | grep -qE '(^|[[:space:]])(-r|/s)([[:space:]]|$)'; then _search_shape=single-file; else _search_seg="$_s"; _search_shape=recursive; break; fi ;;
-      find) _search_seg="$_s"; _search_shape=find; break ;;
-      aws) [ -z "$_aws_seg" ] && _aws_seg="$_first" ;;
+        if [ -n "$_last" ] && { [ -f "$WS/$_last" ] || [ -f "$_last" ]; } && ! printf '%s' "$_first" | grep -qE '(^|[[:space:]])(-r|/s)([[:space:]]|$)'; then _search_shape=single-file; else _search_seg="$_s"; _search_shape=recursive; _search_pi=$_pi; break; fi ;;
+      find) _search_seg="$_s"; _search_shape=find; _search_pi=$_pi; break ;;
+      aws) [ -z "$_aws_seg" ] && { _aws_seg="$_first"; _aws_pi=$_pi; } ;;
     esac
   done <<EOF
 $_segs
@@ -196,21 +253,30 @@ EOF
   if [ -n "$_search_seg" ] && [ -n "$sid" ] && [ -f "$WS/org/mcp/sessions/${sid}.nofit" ]; then
     _nf=$(tr -dc '0-9' < "$WS/org/mcp/sessions/${sid}.nofit" 2>/dev/null); _nn=$(date +%s 2>/dev/null | tr -dc '0-9')
     if [ -n "$_nf" ] && [ -n "$_nn" ] && [ "$_nn" -lt "$_nf" ] 2>/dev/null; then
-      echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_search_shape}-nofit  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+      echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_search_shape}-nofit  serial=$(_serial)  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
       exit 0
     fi
   fi
-  if [ -n "$_search_seg" ] && [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then
+  # The deny decision: marker ON (the fabric kill switch), or a recursive search over infra/aws or .tf (the old
+  # tier-2a deny, never marker-gated). comp_rail_direct.py resolves the targets: a path outside any checkout of this
+  # repo ALLOWS (shape outside-checkout / other-checkout); a linked worktree gets R3; infra gets R4.
+  if [ -n "$_search_seg" ] && { [ -f "$WS/org/mcp/comprail-gate1.enforce" ] || printf '%s' "$_search_seg" | grep -qE 'infra/aws/|\.tf([^A-Za-z0-9]|$)'; }; then
     class=repo_search
     msg="comp-tool on the HUD: a raw repo search in Bash (${_search_shape}: $(printf '%s' "$_search_seg" | head -c 80)). The rail is comp-find: \`comp-find '<pattern>' [pathspec]\` = content (graded bands, PRINTED denominator, gitignored content included by default); \`comp-find --name '<glob>' [pathspec]\` = files; \`comp-which \"<question>\"\` = the router. A \`cmd | grep\` pipe RECEIVER stays free."
-    emit_deny
+    _direct search "$_search_pi"
+    if [ "$_dverdict" = ALLOW ]; then
+      echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_dshape:-allowed}  serial=$(_serial)  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+      exit 0
+    fi
+    if [ "$_dverdict" = DENY ] || [ -f "$WS/org/mcp/comprail-gate1.enforce" ]; then emit_deny; fi
   fi
   if [ -n "$_search_seg" ]; then
-    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_search_shape}-marker-off  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=${_search_shape}-marker-off  serial=$(_serial)  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+    exit 0
   elif [ "$_search_shape" = single-file ]; then
-    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=single-file  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=single-file  serial=$(_serial)  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
   elif [ "$_pipe_receiver" = 1 ]; then
-    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=pipe-receiver  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo '?')  ALLOW-SEARCH  tool=Bash  shape=pipe-receiver  serial=$(_serial)  q=$(_q80)" >> "$RAIL_LOG" 2>/dev/null || true
   fi
   # An aws INSPECTION segment is classified on its own text (closes `cd X && aws iam ...`).
   if [ -n "$_aws_seg" ]; then
@@ -226,6 +292,15 @@ EOF
       cargo|go|mvn|gradle|ruby|perl|java|dotnet|safe-*|comp-to|echo|ls|cd|mkdir|rm|cp|mv|touch|chmod|export) exit 0 ;;
     esac
   fi
+fi
+
+# === R5 (DIRECTED GATE 2026-10-09): an AWS ENUMERATION the served graph holds -> DENY, before any advisory class or
+# negative filter can let it through. A live get-*/simulate/describe on ONE named resource is APPLIED evidence and passes.
+if [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE 'aws[[:space:]]+(iam[[:space:]]+list-(roles|policies|users)|lambda[[:space:]]+list-functions|s3api[[:space:]]+list-buckets)([[:space:]]|$)'; then
+  class=aws_enumeration
+  msg="comp-tool on the HUD: an AWS enumeration the served graph holds. \`comp-find --corpus aws '<pattern>' <NODE_TYPE>\` or \`comp-kuzu\` answers it."
+  _direct aws "${_aws_pi:-0}" R5
+  emit_deny
 fi
 
 # --- NEGATIVE FILTER (CVO #3: the non-noise guarantee). Suppress when: ---
@@ -373,10 +448,19 @@ fi
 # rails is correct there, not a wall. A gate class exists IFF a graph backs it.
 _gate=0
 if [ "$tool" = Bash ]; then
-  case "$class" in
-    aws_iam_inspect|aws_route|aws_deploy_verify|aws_freshness) _gate=1 ;;  # tier 1: raw-aws-INSPECTION (DDB data-plane reads = operational/no-graph, exempted above; describe/list = nudge-not-deny -- operational-vs-structural split, CVO TO-5 2026-06-23)
-    infra_grep) _gate=1 ;;                                                              # tier 2a: infra/.tf grep
-  esac
+  # DIRECTED (2026-10-09): R5 = an AWS ENUMERATION the served graph holds -> DENY with the comp-find --corpus aws line.
+  # A live get-*/simulate/describe on ONE named resource is APPLIED evidence and passes (aws_iam_inspect is now an
+  # advisory nudge, never a deny). infra_grep no longer gates here: a single-file infra/.tf read passes, and a
+  # recursive infra search is denied in the T1 rail above as R4.
+  if :; then
+    case "$class" in
+      aws_route)
+        if ! printf '%s' "$query" | grep -qE '(get|describe)-[a-z-]+[[:space:]].*--(id|distribution-id|rest-api-id|api-id|name)[[:space:]=]'; then
+          _gate=1; _direct aws "${_aws_pi:-0}" aws_route
+        fi ;;
+      aws_deploy_verify|aws_freshness) _gate=1; _direct aws "${_aws_pi:-0}" "$class" ;;
+    esac
+  fi
 fi
 # GATE-1 (LD-0207 LEG-A, option-a conservative scope, CTO 2026-06-25) -- estate-scoped broad-repo-grep
 # DENY, enforced ONLY when the marker org/mcp/comprail-gate1.enforce is present (announce-then-enforce:

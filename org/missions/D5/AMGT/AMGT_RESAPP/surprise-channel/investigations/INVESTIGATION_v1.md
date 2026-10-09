@@ -22487,3 +22487,34 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
 }
 ]
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T03:11Z",
+  "one_line": "dd-4 STOPPED at step 3: the built package changes three infra/logic/registry/*.json DATA MEMBERS that neither never-widen half names, because the pair's content-diff census was scoped to the four closure ROOTS and the package's population is wider than that.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Build ran clean at the pin (BUILD_RC=0, --build-only, nothing uploaded). Its own CONTENT-DIFF SUMMARY: files 393, IDENTICAL 387, CHANGED 5, ADDED 1, REMOVED 0, against ltXvElwZ4iyRx6bJLDQRWksbDoiTesc8xvu1h+p3QI0=.",
+      "Independent member-by-member sha256 comparison of the built zip against the downloaded live package (live=392 members, built=393) reproduces it: CHANGED 5, ADDED 1, REMOVED 0.",
+      "ADMITTED by the pair: lib/research/api/scoped_amgt.py (CHANGED) and lib/research/filings/passages.py (ADDED) -- dd-2, the purpose of the act; lib/opal_naming.py (CHANGED) -- LGIC_BLANKFIX, admitted if the closure carries it.",
+      "OFF-LIST, three: infra/logic/registry/exemptions.json, infra/logic/registry/reporting_policies.json, infra/logic/registry/systems.json. All three are CHANGED, not ADDED -- they were already packaged in the live artifact.",
+      "They are packaged by construction, not by accident: build-and-upload-scoped-amgt.sh:253 reads `DATA_MEMBERS += [(\"infra/logic/registry/\" + _n, ... ) for _n in NAMING_REGISTRY_FILES]`, so the naming registry JSONs are declared data members read by lib.opal_naming at runtime.",
+      "What moved them between the live pin 63f0605039 and the build pin 65532d8a7b: 530ef17ff8 (MDPF_DEMQUE DQ-t-3, yahoo VENDOR registry row), 0c35aeeaa8 and 8530114ff9 (IRPT_BCKEND E8 custody-x10-v1 rows), 2a809c975e and 173f98f24b (4.0.0_SA_CRO, dell1 exemption rows) -- all other projects' landed commits, the same class the pair already admits for lib/opal_naming.py and the harvest config.",
+      "EGRESS was NONE and is not part of this row: PIP_NO_INDEX=1 + PIP_FIND_LINKS held, the pip log shows 0 network fetches and 5 of 5 wheels resolved as 'Local files found: C:\tmp\r80-wheels\\...'; its two pypi.org lines are pip DECLINING the index ('Ignoring indexes:').",
+      "NOTHING WAS WRITTEN. The STOP fired before step 4, so no upload and no apply happened; live CodeSha256 is still ltXvElwZ.. and the artifact object is untouched."
+    ]
+  },
+  "spec_asserts": "Order step 3: 'the CONTENT-DIFF the build prints against the live package lists exactly the files the pair names (lib/research/filings/passages.py and lib/research/api/scoped_amgt.py, plus any the pair adds with its reason). A file not on the list is a STOP.' CTO half condition 1: 'A package file outside the COO half's list ... is a STOP.' The COO half's CONTENT-DIFF section derives its list from `git diff --stat 63f0605039 65532d8a7b` over the closure roots lib.research, lib.opal_data_harvest, lib.opal_naming, lib.trading_calendar.",
+  "world_is": "The package's population is wider than that census's domain: it also carries infra/logic/registry/*.json as declared DATA_MEMBERS (build script :253). Three of them changed between the two pins, so they appear in the CONTENT-DIFF while sitting outside the four roots the pair measured -- the census domain was narrower in PATH than the claim beside it, so the subtraction could not surface them. The three are the same KIND the pair already admits (other projects' landed commits riding the closure), which is why this reads as an enumeration gap in the pair rather than a hazard in the build; but the order makes an off-list file a STOP, and widening the pair is not this seat's act.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Act HELD at step 3, before step 4's upload/apply. Ledger amgt-resapp-r80-dd4-scoped-api-dell1 (opened 23a6ece42d) stays OPEN with L1 and L2 closed and L3 recording this STOP. Rollback is unneeded because nothing landed; the captured live package (42015430 bytes, sha256 ltXvElwZ..) is kept regardless. For the issuer: the decision is either to widen the pair with these three named and their reason, or to confirm the STOP and re-cut at a pin that does not carry them."
+}
+```

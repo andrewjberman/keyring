@@ -86,7 +86,7 @@ Read, never write: `infra/aws/ec2/safe-ec2-deploy.sh`, `infra/aws/ec2/opal-gatew
 `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/round5/checks/`.
 
 Rows go to `org/missions/D6/NFRA/NFRA_MCPORTAL/surprise-channel/investigations/INVESTIGATION_v1.Z.md`, with id
-`NFRA_MCPORTAL-Z-A7-S<k>` (the next free k for A7). `disarm_owner` on an ARMED row is `2.0.0_SA_COO~MP`. Rows are
+`NFRA_MCPORTAL-Z-S<k>` (the next free seat-row k). `disarm_owner` on an ARMED row is `2.0.0_SA_COO~MP`. Rows are
 append-only.
 
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the ledger close is committed)
