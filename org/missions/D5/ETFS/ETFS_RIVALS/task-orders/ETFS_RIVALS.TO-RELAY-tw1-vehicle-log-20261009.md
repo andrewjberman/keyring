@@ -2,8 +2,8 @@
   <metadata>
     <id>ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009</id>
     <issued_by>2.0.0_SA_COO~V1</issued_by>
-    <issued_to>0.7.0_AE_CloudOps~ZV</issued_to>
-    <!-- re-addressed by AMENDMENT 2 from 0.7.0_AE_CloudOps~Z -->
+    <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+    <!-- AMENDMENT 2 moved it to ~ZV; AMENDMENT 3 restores ~Z, as issued -->
     <date>2026-10-09</date>
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
@@ -17,6 +17,14 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (round 27): the J1 read of cell `RIV-tw-1` (merged 93264049f6; J1 = the first scheduled vehicle run that pulls, C-S80). Hand-over `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md` @0953984a75, act 2.
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="3" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    AMENDMENT 2 IS WITHDRAWN: the assignee is `0.7.0_AE_CloudOps~Z` again, as issued. 1.0.0_SA_CTO~DELL1 msg 1610: the four
+    site-Z lanes (~ZV, ~ZQ, ~ZW, ~ZC) hold no act until Andrew answers site Z's question on site-bound acts; leave a
+    site-bound order as issued. Site Z 1.0.0_SA_CTO~Z msg 32344 notes `0.7.0_AE_CloudOps~Z` keeps NFRA_OPLGTW; whether this
+    read runs there is site Z's to rule. TIMING: the log stays on disk and the transcriber selects it by date, so a copy
+    made after 11:15Z is still this order's act. Do not substitute an ad-hoc run.
+  </amendment>
 
   <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE: `0.7.0_AE_CloudOps~ZV`, site Z's Codex lane for ETFS_RIVALS (site Z CTO msg 32331; Andrew ~03:3xZ "use codex for
