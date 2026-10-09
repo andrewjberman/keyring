@@ -361,3 +361,28 @@ write: **1 row** (`S1`).
   "notes": "Out of this project's three-bucket domain as the PRD draws it, so it is placed with the CTO: either a PRD addendum widens F2's domain to the residue in the firm buckets, or the producing pipeline's own migration (R19) carries it. Its writer is not traced here. Round 1 does not touch it."
 }
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-D1-W1-S1",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_ADVI_FIRMBKTS~1",
+  "surfaced_at": "2026-10-09T20:45:56Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "FB-t-1: THE CLASS GRAMMAR (A LITERAL PREFIX ENDING IN / OR ONE KEY, DISJOINT DIRECTORIES) CANNOT SEPARATE A NAMED KIND FROM ITS ENTITY-ID OR PARTITION SIBLINGS, SO 6 FAMILIES OF CLASSES ARE MIXED BY CONSTRUCTION; FB-t-2 MUST PLACE THEM AS MIXED",
+  "spec_asserts": "Task order FB-t-1 section 1.2: a class is homogeneous (one kind of thing); split deeper if a prefix holds served JSON next to parquet or state next to data; directory classes are disjoint; collapse partition and entity-id segments.",
+  "world_is": "With r1_census.py S3 (a directory class that is a prefix of another directory class is OVERLAP), a directory that holds entity-id or dated children AND a differently-kinded named child can only be one class. Measured on the 20:36:32Z listing: (1) 8 zero-byte directory-marker keys in opal-data-bd (gold/_deprecated/, gold/clients/, gold/cohorts/, gold/filters/, gold/nna/, gold/snapshots/, gold/summary/, gold/timeseries/): a marker key ends in / so it is a directory class that overlaps every sub-class of its directory, forcing the whole directory to one class -- gold/timeseries/ (2,640 objects) therefore mixes positions_cube/ (2,472), holdings_lots/ (101), holdings_lots_shadow/ (51, the R18 retire candidate) and 16 json/parquet files; (2) bd forwardfill_v2/{allocations,realized,transactions,unrealized}/ and cot forwardfill_v2/* mix dated data files with _complete/ markers (state); (3) inf platinum/clients/ (4,199) mixes entity-id client json with _quarantine_scope_bug_20260424/ (995); (4) bd bronze/ (212) mixes dated _BRONZE_COMPLETE markers (69) with fees/ (140) and bi/ (3); (5) cot silver/ (803) mixes table dirs with dated {date}/_meta/ dirs (106) -- left as one class because splitting made 106 date classes; (6) code/, logs/, diagnostics/ are collapsed to one kind each (code, logs, diagnostic output) though their children are many dirs and flat dated files. Entity-id/date dirs are not enumerable as classes without leaking the partition the cell forbids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 list_objects_v2 paginated over opal-data-bd, opal-data-inf, opal-data-cot at listed_at 2026-10-09T20:36:32Z: 131,391 / 99,668 / 7,802 objects; keys ending in '/' counted client-side: bd 8, inf 0, cot 0",
+      "org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/2.0.0_SA_COO~F1/round1/checks/r1_census.py static_arms S3: `if dirs[i + 1].startswith(dirs[i]): ... OVERLAP`, read at worktree HEAD fcaaa21b6e",
+      "worker scratch classifier (.scratch, uncommitted) per-class child-kind tally; the mixed families above are the classes with >=2 children groups of >=10 objects each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Does not fail AC1 or AC2. Each mixed class is named in CENSUS.md section 'Mixed classes'. FB-t-2 should either place a mixed class by its dominant kind with the named exception, or the grammar should admit a class-exclusion list; that is a PRD/grammar call, not made here."
+}
+```
