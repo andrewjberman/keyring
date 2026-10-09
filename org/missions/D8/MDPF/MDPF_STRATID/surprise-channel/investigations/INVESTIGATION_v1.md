@@ -427,6 +427,46 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:40:04Z",
+    "spec_asserts": "TO-ST-u2 build step 2: 'A carve-out-only member (49financial) states False, and its by_firm basis says why'; TO-ST-u1 R1: by_firm firm_id is 49financial for an entry with no firms at Global. TO-ST-u2's <paths> grant the consolidator and its own test file only.",
+    "world_is": "ST-u-1 as committed (fab599bcea) emitted by_firm only for a member with a firm-listed entry, so a carve-out-only row (49financial divz/pfoe) had none, and ST-u-1's own test test_fully_overlapped_member_held_out_by_name_not_added asserted its absence. ST-u-2 needs it, so the consolidator now emits by_firm at Global for every carve-out no-firms entry (firm_id 49financial) and the one ST-u-1 test assertion became the stronger by_firm == [{49financial, carve_out, 30.0}]. That edits data/mdpf/tests/stratid/test_stratid_round2_firm_basis.py, an ST-u-1 file outside TO-ST-u2's <paths>, in the same commit. The Tax leaf (a no-firms ADDITIVE entry summing 49financial and Cottonwood) is deliberately given no by_firm: no single firm owns the amount.",
+    "one_line": "ST-u-2 needs by_firm on carve-out-only Global rows; that reverses ST-u-1's absence assertion in its own test file, which TO-ST-u2's <paths> do not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: with the consolidator change and the ST-u-1 test unchanged, test_fully_overlapped_member_held_out_by_name_not_added fails on `'by_firm' not in {...}` (1 failed, 19 passed across the three stratid test files)",
+        "the ST-u-1 criteria still pass after the change: st_u1_tests U1-OK, st_u1_seam SEAM-OK, st_u1_regress U1-REGRESS-OK (st_u2_regress re-runs all three)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "MDPF_STRATID-D1-W7-S4",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~7",
+    "surfaced_at": "2026-10-09T16:40:04Z",
+    "spec_asserts": "TO-ST-u2 build step 2: tree row `inside_model_figure` is 'a bool on the frontier date. It is True if any part of the member's dollars is held out as inside a Model, and False otherwise.'",
+    "world_is": "A held-out entry has two reasons. OVERLAP is a measured overlap > 0 (inside a Model). OVERLAP_UNMEASURED is a sleeve held out whole because nobody measured whether it is inside a Model. A bool cannot carry 'unknown', so the order's text leaves the unmeasured case undecided. Implemented: inside_model_figure is True only for a held-out entry with reason OVERLAP; an OVERLAP_UNMEASURED entry is named in `held_out` with its own reason and leaves the bool False (pinned by test_tree_member_names_held_out_amounts). A reader who reads the bool alone sees False for a sleeve that may be inside a Model; the `held_out` entry beside it carries the reason. The alternative reading (any held-out entry makes it True) is a one-line change in _state_inside_model; the issuer decides. The by_model entry's own inside_model_figure is tri-state (None when unmeasured), as the order says.",
+    "one_line": "The tree row's bool inside_model_figure cannot express an unmeasured overlap; implemented as True only for a measured overlap, with the unmeasured case named in held_out under its own reason.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "apply_sma_sleeve_overlay already emits two reasons into sma_additive_withheld: SMA_WITHHELD_OVERLAP and SMA_WITHHELD_UNMEASURED (mdpf_gold_consolidator.py), so both can reach a tree row's frontier-date held_out",
+        "the order's by_model rule for the same field is explicitly tri-state (True / False / None when unmeasured); the tree row's rule is bool-only, so the two fields differ in what they can say"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
