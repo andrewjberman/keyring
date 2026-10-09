@@ -558,7 +558,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "status": "GROUNDED",
   "evidence": [
    "safe-commit output of the issuance @97eaff05ff, 2026-10-02 ~04:58Z: '[gate2] SEATING: this NEW task order for IRPT_DASHBD is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_BCKEND (3 open: IRPT_BCKEND.TO-IB-rth-3..., IRPT_BCKEND.TO-IB-yr-242..., IRPT_BCKEND.TO-IB-yr-261...)' then '[gate2] ANNOUNCE mode -- NOT blocking this commit.'",
-   "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-6.flow-residual-0027265115.md:5 <issued_to>0.9.0_WK_IRPT_DASHBD~1</issued_to>; the three IRPT_BCKEND orders are issued to 0.9.0_WK_IRPT_BCKEND~<n> slots (to-check census at session start).",
+   "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-6.flow-residual-acct#89d0916a.md:5 <issued_to>0.9.0_WK_IRPT_DASHBD~1</issued_to>; the three IRPT_BCKEND orders are issued to 0.9.0_WK_IRPT_BCKEND~<n> slots (to-check census at session start).",
    "CLAUDE.md rule 27: the seating rule is ONE PROJECT PER TIER-2 SEAT INSTANCE; a worker is a subagent slot, 0.9.0_WK_<CODE>~<n>, whose CODE is the project."
   ]
  },
@@ -877,7 +877,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     "status": "GROUNDED",
     "evidence": [
       "this seat's re-derivation (2026-10-02 18:3xZ): served gold opal-data-49financial/irpt/49financial/gold/account_return_daily, 7 of 7 trading days 06-25..07-06 for acct#89d0916a, total_return_daily linked = +3.4935% (equal to the record); income_return 06-25 = 0.004627, other days 0.000001-0.000153; return_basis TWR on 7 of 7",
-      "RAW_BD_PERIOD_0027265115.sanitised.json.gz (deliverables/0.9.0_WK_IRPT_DASHBD~1), dateRangePoints[3] 2026-06-25..07-06: timeWeightedReturns.return 0.022805706 (equal to the record), daysHeld 7, income -2,470.31, netAdditions 4,402.22, fees 0.0; the as-of point (2026-10-01) shortAllocation 0.4729",
+      "RAW_BD_PERIOD_acct#89d0916a.sanitised.json.gz (deliverables/0.9.0_WK_IRPT_DASHBD~1), dateRangePoints[3] 2026-06-25..07-06: timeWeightedReturns.return 0.022805706 (equal to the record), daysHeld 7, income -2,470.31, netAdditions 4,402.22, fees 0.0; the as-of point (2026-10-01) shortAllocation 0.4729",
       "TIEOUT_49F_BLACKDIAMOND_R4.json: 14 pairs, keys account..abs_diff; no reason field on any pair"
     ]
   },
@@ -1121,7 +1121,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     "evidence": [
       "Schwab silver fact_trn date=2026-06-25 and date=2026-06-29, account acct#89d0916a",
       "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (INTRA, INTR on FC/IN)",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0027265115.sanitised.json.gz dateRangePoints[3]"
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_acct#89d0916a.sanitised.json.gz dateRangePoints[3]"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -1148,7 +1148,7 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
     "evidence": [
       "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/TIEOUT_49F_BLACKDIAMOND_R8.json",
       "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/OPAL_REMEASURE_FOURTEEN_R8.json",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0076459710.sanitised.json.gz dateRangePoints[1],[2]"
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_acct#6b914f88.sanitised.json.gz dateRangePoints[1],[2]"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
