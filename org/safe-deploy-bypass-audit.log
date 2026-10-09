@@ -192,6 +192,14 @@
 2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_custody/tests/test_e2a_real_statement.py  reason=no-open-ledger-names-it
 2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/account_activity_lots.py  reason=no-open-ledger-names-it
 2026-10-09T12:52:24Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/tests/test_account_activity_lots.py  reason=no-open-ledger-names-it
+2026-10-09T13:57:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/opal_strategy_matcher.py  reason=no-open-ledger-names-it
+2026-10-09T13:57:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/opal_unidentified.py  reason=no-open-ledger-names-it
+2026-10-09T13:57:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/rebalancer_schemas.py  reason=no-open-ledger-names-it
+2026-10-09T13:57:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/tests/test_opal_strategy_matcher.py  reason=no-open-ledger-names-it
+2026-10-09T13:57:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/tests/test_opal_unidentified.py  reason=no-open-ledger-names-it
+2026-10-09T14:46:17Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/rebalancer_schemas.py  reason=no-open-ledger-names-it
+2026-10-09T14:46:17Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/tests/test_opal_strategy_wiring.py  reason=no-open-ledger-names-it
+2026-10-09T14:51:05Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/assets/scripts/silver/tests/test_opal_strategy_wiring.py  reason=no-open-ledger-names-it
 2026-10-09T12:57:38Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_custody/e2a_real_statement.py  reason=no-open-ledger-names-it
 2026-10-09T12:57:38Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_custody/tests/test_e2a_real_statement.py  reason=no-open-ledger-names-it
 2026-10-09T12:57:38Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL2  ref=refs/heads/box/dell2  path=data/assets/scripts/gold/irpt_reporting/account_activity_lots.py  reason=no-open-ledger-names-it

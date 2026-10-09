@@ -3975,6 +3975,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Four of the five were never requested: their landed raw is older than the mnemonics and they are outside the 96 the daily fire refreshes. The builder's reason text does not separate not-requested from requested-and-empty. Units are unaffected (all five stay UNRESOLVED either way).",
   "notes": "No disarm needed: inert for the (u) act. Carried into the leg-v record as C2's reading and offered to the round-40 analysis as a reason-text cell candidate.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S1",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-09T17:14:00Z",
+  "one_line": "The control arms of aq12_check.py aq1 and aq2 cannot both read 1/1 with aq1's build and aq2's build both 1/1: four management values are claimed unchanged by one arm and changed by the other.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round41/aq12_check.py aq1(): control = every value that ended at a sentence end in aq12_base_values.json is unchanged; BABA_US_Equity|management and ST_SP_Equity|management ended at a sentence end at the base WITH the 'Management/Board 80' prefix, so dropping the prefix (aq-2 build) moves them",
+      "aq12_check.py aq2(): control = every management value with no prefix at the base is unchanged; 8766_JP_Equity|management (base ends 'corporate culture,') and SHOP_CN_Equity|management (base ends 'libraries like') carry no prefix but are CUT at the base, so repairing them (aq-1 build) moves them",
+      "run at b1efbc4e4b plus the aq-2 edit (uncommitted at filing): 'aq1 counts cut 0 of 95 values; control 70 values ended at a sentence end at the base, 2 moved' / 'aq1 build 1/1 control 0/1'; 'aq2 counts prefix 0; control 16 management values without a prefix at the base, 2 moved' / 'aq2 build 1/1 control 0/1'. At b1efbc4e4b alone (no aq-2 edit): aq1 build 1/1 control 1/1; aq2 build 0/1 control 0/1 (2 moved: 8766 JP, SHOP CN)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CRPS-aq-2 AC1 expects '^aq2 build 1/1 control 1/1$' and AC2 expects '^aq1 build 1/1 control 1/1$' on the same tree.",
+  "world_is": "With both builds satisfied the check prints 'aq1 build 1/1 control 0/1' (BABA US, ST SP management moved) and 'aq2 build 1/1 control 0/1' (8766 JP, SHOP CN management moved). The snapshot aq12_base_values.json is the pre-fix compose, so a control that holds 'unchanged' over it forbids the other cell's repair. The code is correct to both cells' prose build text; the criteria as written are not jointly satisfiable.",
+  "notes": "Worker did not edit the check or snapshot (bound 1). The fix is the issuer's: exclude the BABA/ST (prefix) names from aq1's control and the 8766/SHOP (cut) names from aq2's control, or snapshot the controls from the post-fix compose. AC1 and AC2 are recorded FAIL in the proof instance and the order's status is left pending.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```
