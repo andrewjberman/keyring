@@ -63,6 +63,16 @@ Base: FAIL.
 
 <expected_criteria>IB100-1-AC1, IB100-1-AC2</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~07:4xZ, issuer 2.0.0_SA_COO~P2, on CTO round analysis ADDENDUM 14 (msg 2804, @02f8c49182; `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_75_76_P_64_Y_20261008.md`))
+
+1. **Row W201-S4 disarm.** For each of the 6 hosts, the after-read diffs the DEPLOYED `served.py` against the BUILD INPUT: unzip the live
+   artifact and compare its `served.py` bytes with `git show 74a62fb46c:infra/aws/lambda/investor-reporting/_authz/served.py`. Never compare
+   by filename (CLAUDE.md 22a). Record `served_py_build_input_diff: {<fn>: "identical" | "<diff>"}` in the after-reads file.
+2. **Row W201-S7.** The census in the after-reads file names each function's `served.py` blob BEFORE and AFTER, including the four on blob
+   `a8eb91e7d4c5`.
+
+The issuer amends its own order on the CTO analysis (CLAUDE.md 27 L5-L6). Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE). If you work in a worktree, merge box/dell2 before flipping `<status>`.
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

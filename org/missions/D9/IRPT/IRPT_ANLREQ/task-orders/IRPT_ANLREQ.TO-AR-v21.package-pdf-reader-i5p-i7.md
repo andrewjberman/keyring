@@ -107,6 +107,12 @@ The issuer runs `ar_v_checks.py regress` (the whole ticket_center suite) at the 
 - LOCAL: never push, never deploy, never call a live API. Dev servers run on port 5174 only. No non-ASCII.
 - If the server's PDF response shape differs from the one above, keep the client to what the server returns, file a row, and keep working.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~07:3xZ; DECOMP_R2 AMENDMENT 1 @77d85c7fd7, `~Y2` msg 2802).** The typed sample in Part A item 4 is
+replaced by the ONE I7 sample for every lane: `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json` (@beb1d1466d,
+in the issuance base). `test_package_i5p_i7.py` reads that file at test time, round-trips its `sample` against its `canonical` both ways,
+and uses `canonical` for `pdf_ref` and `commentary_ref`, including in the updated package-route fixtures. The portal tests may carry the same
+canonical string as a literal. Delivered to the running worker the same tick. Gate limb: none graded this modification.
+
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_package_i5p_i7.py
