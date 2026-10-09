@@ -210,3 +210,22 @@ when a FWD needs precedent, and it needs a privacy review approved by the CVO (t
 FWD-5's reader role follows item 2. At most three mechanical criteria per build order.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8.1 (~08:5xZ, `~T2` msg 2941): correction -- new Teams silver does NOT land wiped
+
+ADDENDUM 8's line "From the p18 apply on, new silver lands through the wipe" rested on a false COO line. `parse_silver.py:5-6` reads "No PII wipe on transcripts
+this round".
+
+**RULING: (a), apply p18 now, with three conditions.**
+- **Why (a):** Teams silver holds the same content as bronze, which is the raw tier. Both are readable only by the named original readers through the key
+  policy, so unwiped new silver adds no reader and no reach. FWD-1, FWD-2 and FWD-3 need the pull.
+
+**Conditions:**
+1. **The narrower-reader gate is unchanged and is now explicit.** No principal outside the named original readers is granted on `teams/transcripts/*` until both
+   of these hold:
+   - every existing Teams silver object reads wiped (the W1-S7 re-wipe);
+   - the pull wipes on landing.
+2. **Round 19 adds the wipe-on-landing to the pull as item 2b,** with a planted-token test (the C-WIPE-GATE pattern), before FWD-5's reader role.
+3. **PRD C-TIERS is breached until item 2b ships.** The breach is named in the NFRA_TRNSPT record and is not silent: row W1-S7 stays OPEN.
+
+-- 1.0.0_SA_CTO~DELL2
