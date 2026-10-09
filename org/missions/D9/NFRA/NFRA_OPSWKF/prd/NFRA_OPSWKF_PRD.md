@@ -5,7 +5,7 @@
  "project": "NFRA_OPSWKF",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md@c41e705220",
  "endpoint_outcomes": [
@@ -14,7 +14,8 @@
   "FWD-3",
   "FWD-4",
   "FWD-5",
-  "FWD-6"
+  "FWD-6",
+  "FWD-7"
  ],
  "status": "RATIFIED"
 }
@@ -74,6 +75,13 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
                     custodian he calls will accept, where Opal fits, and what stays manual; the operations
                     lead reads it and says it is right
          SOURCE     brief O6; Andrew, "at least have an inkling ... come january 1st"
+  FWD-7  The operations lead has his own Opal-branded dashboard on his machine, which he shapes with his own Claude
+         DONE WHEN  EXERCISED -- the starter kit runs on a machine with one command, shows its first panels with live data through its one
+                    adapter, and one panel is changed by a Claude session editing the kit's code, with nothing changed on Opal's side
+         ACCEPT     the operations lead starts the dashboard himself, sees his first panels with real data in Opal's branding, and has his own
+                    Claude change its layout; asking for more data is a request to Opal, never a new pipeline he builds; no alert ships
+         SOURCE     Andrew-direct 2026-10-09 ~05:xxZ ("a really easy dashboard that he can control the design of on localhost ... tell him he
+                    can have his claude just edit it however he wants")
 ```
 
 ## CONTRACTS
@@ -88,6 +96,7 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
 | C-NO-SEND: no ticket-originated trade reaches a brokerage | this project | The engine's Execute step emails a brokerage (`trade-workflow-handler/src/workflow_handler.py:357-410`, send at `:409`). Its `BROKERAGE_EMAILS` are internal today (`config.py:24-29`), with the real broker addresses held in comments pending SES production access. A submission created from a ticket carries a marker the Execute path refuses, and the refusal is tested. Lifting the fence is Andrew's word only, never a config change. |
 | C-INITIATOR: identity from the token, never the body | this project | The bridge passes the filer's verified identity. The engine's `submission_handler.py:117` takes the initiator from the BODY today; the bridge cell changes the engine to read it from the verified token, with a test proving a body-supplied initiator is ignored. |
 | C-SHARED-SURFACE: TCKT_VNEXT owns the ticket files | this project with TCKT_VNEXT (`~V2`) | This project edits ONE `TYPE_DEFINITIONS` entry (`trade_request`) in `infra/aws/lambda/ticket_center/lambda_function.py`. All other new code goes in new files (`TradeRequestParts.tsx`, a bridge module). Any other change to the shared files goes through `~V2`'s round. |
+| C-OPS-KIT: his dashboard, his design | this project | A small local web app in a new folder (no ticket, engine or portal file). It carries the portal's colour law and logo, and runs with one command. Data enters through ONE adapter that reads what NFRA_MCPINDEX (site Z) serves; no AWS credentials ever sit on his machine. It ships with NO alert, notification or monitor (the moratorium); a named alert is added later only on his ask for that alert and Andrew's word. Firm scope is C-FIRM's. First panels: trade rec and billing (the two non-alert items of his list). Delivery: a zip in his SharePoint, so he needs no repository access. |
 
 ## SURFACE MANIFEST (step 4 -> step 5)
 
@@ -100,6 +109,7 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
 | S5 | FWD-1 | engine status write-back into the ticket's `events[]` and status | this project | SERVED at deploy |
 | S6 | FWD-1 | the Execute fence for ticket-originated submissions, `workflow_handler.py:357-410` (C-NO-SEND) | this project | SERVED at deploy |
 | S7 | enrichment | the operations lead's SharePoint workbook leg (moved off FWD-1) | this project, later round | later |
+| S8 | FWD-7 | the ops starter kit, a new folder (local web app, one adapter to NFRA_MCPINDEX) | this project, disjoint surface | product file (local) |
 
 ## THREAD -- FWD-1, round 1
 
@@ -121,5 +131,19 @@ backlog in their numbered order.
   (site Z), on Andrew's word. **The three FA alerts are NOT ordered** here (the alert moratorium; his word is not given).
 - **A SURFACE MANIFEST is added** (the v0.1 PRD predates the gate).
 - **ENDPOINT and CONTRACTS changed.** The CVO re-signs the ratified-text half. The brief half is accepted, since Andrew's word is the source.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM (2026-10-09 ~05:1xZ, `1.0.0_SA_CTO~DELL2`): FWD-7, the operations lead's localhost dashboard
+
+- **Source:** Andrew-direct ~05:xxZ at `2.0.0_SA_COO~O2`, record
+  `org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/ANDREW_DIRECT_20261009_05xxZ_OPS_LEAD_LOCALHOST_DASHBOARD.md` @1740ba55ec.
+- **Admitted as FWD-7, on a disjoint surface (S8):** it touches no ticket or engine file, so it runs in parallel with FWD-1.
+- **Rulings on the two open questions** (this seat's discretion; Andrew may override):
+  - delivery is a zip in his SharePoint;
+  - the first panels are trade rec and billing.
+- **NFRA_MCPINDEX (site Z) is a pre-arranged input,** not a wait. Until its serving lands, the adapter reads a fixture of the same shape, and the
+  panel says so.
+- **ENDPOINT changed.** The CVO re-signs the ratified-text half.
 
 -- 1.0.0_SA_CTO~DELL2
