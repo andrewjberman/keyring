@@ -22517,3 +22517,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "If pyarrow is absent from the built zip and the layer, the reader installs but every create/read refuses fail-closed (CUSTODY_SOURCE_SHAPE), so the after-read would move from CUSTODY_FACTORY_REQUIRED to a different refusal. Release 6 must stage pyarrow or the installer must pass read_rows; the read-set file lists it under runtime_prerequisites."
 }
 ```
+
+## IRPT_BCKEND-D2-S19 -- disarm of D2-W190-S3: release 6 carries the AWSSDKPandas-Python312:16 layer for the custody decoder
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S19",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T02:30:00Z",
+  "disposition": "GRADUATED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Disarm of IRPT_BCKEND-D2-W190-S3 (disarm owner 2.0.0_SA_COO~Y2): the custody interpreter's default decoder imports pyarrow, which irpt-ycharts-generate lacks; release 6 attaches the estate's AWS-managed AWSSDKPandas-Python312:16 layer and its after-read reads one custody row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live irpt-ycharts-generate layers = [irpt-common:5] only (get-function-configuration, ~02:3xZ); irpt-common:5 description: jsonschema + IRPT schemas + BD helpers, 644526 bytes, no pyarrow",
+      "the built function zip at 328b73d536 carries 0 pyarrow members",
+      "intake/custody_interpreter.py:108-109 default decoder imports pyarrow.parquet lazily; build_custody_ports(read_rows=...) is the injection point (line 411-420)",
+      "estate precedent: arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python312:16 in 49f-value-parity, cot-value-parity, inf-value-parity"
+    ]
+  },
+  "spec_asserts": "A custody (Performance client statement) read through the installed AcceptedCustodyReader decodes the custody parquet.",
+  "world_is": "INERT today: no live importer reaches the custody path (generate_installed.py:172 raises CUSTODY_FACTORY_REQUIRED before any decode). Disarmed by ruling: release 6 cannot land without the layer (its census + an after-read that decodes one custody row); if the layer exceeds the 250 MB unzipped limit, release 6 passes read_rows instead and this row re-opens."
+}
+```
