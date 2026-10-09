@@ -3684,3 +3684,30 @@ round.** Never edit an existing row.
   "world_is": "The writer is BD-tree code with BD-derived inputs; a run with the env bucket pointed at the cot bucket (a runtime act the repo does not show) is the only way the writer reaches the cot store; the repo cannot say which run did."
 }
 ```
+
+## ADVI_COTBKF-D2-W63-S1 -- CB-ai-1 detector corrections and builder-in-force reading (class shared_builder_run)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W63-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~63",
+  "surfaced_at": "2026-10-09T11:50:00Z",
+  "one_line": "CB-ai-1: the run-1 detector of the committed class rule over-matched (docstring lines read as live cot paths; same-run daily files read as a prior carrier) and no cot-path builder commit exists before the store write, so the rule's 'revision in force' was read from the seed commit 6b0be4337e plus the shared builder path; class=shared_builder_run after the detector was corrected (rule text unchanged).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "rule commit 5c79b91853 (script docstring, no output)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~63/bd_txn_provenance.md sections 2-4",
+      "run 1 (first output) printed class=live_cot_path:data/cot/scripts/gold/B_01.holdings_lots.py:2263, a module docstring line, and build_canonical_prices_v2.py:24, also a docstring; run 2 uses ast to skip docstrings/comments and treats only an earlier-than-60s hit as a prior carrier",
+      "git log: data/cot/scripts/gold/build_canonical_prices_v2.py first commit 6b0be4337e 2026-06-10, after the store write 2026-06-09T20:42:16Z; that seed revision auto-chains inject_scoped_overrides (lines 22,481,669) and was removed 319a716cb4 2026-06-12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The class rule reads the cot builder revision in force at the store LastModified from git log; a cot builder revision exists at that time.",
+  "world_is": "The cot-path builder entered git (as a faithful S3 seed) the day after the store write; the writer-in-force is the seed's content, which still auto-chained the 49F inject; the grader should confirm the seed-as-in-force reading and the 60 s same-run reading."
+}
+```
