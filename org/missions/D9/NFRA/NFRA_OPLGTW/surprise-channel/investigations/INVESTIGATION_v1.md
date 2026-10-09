@@ -10190,3 +10190,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here: any change to the producer. The halves' 'deployed code' sentence is true of the write path they signed, not of the CodeSha256 they quote."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T07:36:11Z",
+  "one_line": "AC2 as written (bf1.sh AC2, inner timeout 115s) exits 124 with no output once both masters are backfilled: the check now HEADs 2048 objects over 512 dates and needs ~151s.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/bf1.sh AC2; echo exit=$? twice from the worktree root (2026-10-09T07:1xZ): both printed only exit=124 (real 1m56s); bf1.sh line AC2 wraps bf1.AC2.py in timeout 115.",
+      "RUN python bf1.AC2.py backfill_record.json <root> unbounded: 'backfilled dates 512; served objects checked 2048' then 'RESULT: PASS', real 2m31s. Same reader, no bound: every served object LastModified earlier than started_utc.",
+      "bf1.sh AC1 completes in 45s: PASS, 08242234 and 08335338 each open 0, backfilled-but-not-qualified 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's AC2 invocation is a mechanical criterion that completes inside its 115s bound and prints 'backfilled dates N; served objects checked M ... RESULT: PASS ... exit=0'. It was cut when only 08242234 (256 dates, 1024 objects) was backfilled and ran in about 76s.",
+  "world_is": "With 08335338 backfilled as well the same check doubles its HEAD count and exceeds the bound in bf1.sh, so the written invocation returns rc 124 and cannot match the expect. The work it grades is intact (unbounded run PASS). The worker cannot edit the check (it sits in 2.0.0_SA_COO~O deliverables, outside <paths>), so AC2 is recorded FAIL as written and the order stays open.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer's options: raise the bound in bf1.sh (timeout 115 to about 300) or parallelise the HEADs, then re-run AC2 and flip the order. Not done here: any edit to the check."
+}
+```
