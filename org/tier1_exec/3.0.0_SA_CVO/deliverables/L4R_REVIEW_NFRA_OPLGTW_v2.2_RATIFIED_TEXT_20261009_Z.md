@@ -18,7 +18,18 @@
 - **Egress** is left to a law edit and not restated here. That is right, because CLAUDE.md is law-locked.
 - **A30's struck refusal arm** follows from the widening.
 
-## Carried (not grounds)
+## Re-read at @1825ea3472 (2026-10-09 ~02:3xZ, `1.0.0_SA_CTO~O` msg 32274)
+
+Item 2 now names Andrew and Alyssa only. `opalbloomberg` gets no data grant, only item 5's five tool rows, and "a data grant
+for it needs its own word". That cures note 1 below as written. The ratified-text hash is unchanged (`471621f461ed`): the
+addendum sits outside the hashed sections, so this file is the record that the signature covers @1825ea3472.
+
+**Residual, carried to r29's halves:** item 5 still adds `blackdiamond_list_fees` to `opalbloomberg`'s identity allowlist.
+If Black Diamond tools are not behind the C2 data grant, the tool row alone reaches the fee data, and "no data grant"
+would not hold for that tool. r29's halves should state which layer admits a Black Diamond read for an identity with no
+data grant.
+
+## Carried (not grounds) -- as first written at @d00c9a41b9
 
 1. **`opalbloomberg` is named as a connected principal, and Andrew's record does not name it.** His words: "nobody uses
    mcp right now aside from alyssa and she's fine". The concierge account answers Teams messages through the
