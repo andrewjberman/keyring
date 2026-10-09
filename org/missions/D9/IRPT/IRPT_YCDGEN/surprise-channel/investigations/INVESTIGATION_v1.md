@@ -2416,3 +2416,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "No action needed for the Opal page. If a byte-identical-to-laptop spec is wanted, regenerate brand.json on the laptop and replace the file under a cell that names that."
 }
 ```
+
+## IRPT_YCDGEN-D2-W8-S1 -- the accepted ANALYSIS request record carries no server-recorded actor, so producer_for cannot read one; YCD-x-6 code arm stopped
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W8-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~8",
+  "surfaced_at": "2026-10-09T01:39:00Z",
+  "one_line": "The accepted ANALYSIS request record carries no server-recorded actor (only the UPLOAD row does), so YCD-x-6's code arm is stopped and test case 1 (owner=advisor, actor=listed -> OPAL) cannot pass.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-x-6: the accepted ANALYSIS request the resident reads carries a server-recorded actor, so producer_for can read it when present; test case 1 (owner = an invented advisor, actor = a listed principal -> OPAL) passes.",
+  "world_is": "x6_checks.py census (21 fields scanned): the only server-recorded acting principal in investor-reporting non-test code is intake/uploads.py:267 (original['acting_principal_id'], on-behalf UPLOAD# index row). The accepted analysis record built in ycharts/generate/acceptance.py DynamoAcceptance.accept has 5 top-level fields (identity, owner, browser_sha256, composition_ref, accepted_at), 6 identity fields, the queue message 4 (tenant, request_id, revision, composition_sha256), the job row 6: none is an actor. Path that would have to record it: SubmissionService.submit (submission_service.py:109 holds `principal`, the verified submitter) calls self.acceptance.accept(owner, browser, ref, ...) at :145 without passing it; accept() would take an `acting_principal_id` argument and write it into `record` (acceptance.py:107-112), and resident_worker.producer_for would then read record.get('acting_principal_id'). Premise to check before that cell is cut: on the analysis path the owner is already the submitter -- submission_service.py:115 refuses owner.principal_id != principal.principal_id (ACTUAL_SUBMITTER_REQUIRED) and prospect_submission.py:72-73,111 builds request_owner from the VIEWER (access.prospect_owner) -- so a listed filer's analysis is owned by the filer and producer_for already returns OPAL for it; the advisor-owned shape of E5 (served.py _create_owner, :1000-1051) is the UPLOAD/CREATE_INPUT owner, and the analysis only reaches an advisor owner when the advisor files it, who is not listed. Read in code, not run. The test file ycharts/generate/tests/test_producer_actor.py carries the proposed field as ACTOR_KEY and marks case 1 xfail(strict); x6_checks.py cases therefore prints FAIL (3 of 4).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "x6_checks.py census output: 'server-recorded actor on UPLOAD=1 (uploads.py:267); on ANALYSIS SUBMIT/accepted record/queue message/job row=0 of 21 fields (5+6+4+6)'",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py:107-112 (record), :166-168 (queue body), :114-116 (job row) at 0dc9addc92",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py:109,115,145 and prospect_submission.py:72-73,111 at 0dc9addc92",
+      "x6_checks.py cases output: 'RESULT: cases FAIL (3 of 4 producer cases pass)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "resident_worker.py was not edited (code arm stopped per the cell). If the issuer still wants the field, the cell needs paths acceptance.py and submission_service.py (and a decision on the premise above); then case 1 flips and strict xfail turns the suite red until the marker is removed."
+}
+```

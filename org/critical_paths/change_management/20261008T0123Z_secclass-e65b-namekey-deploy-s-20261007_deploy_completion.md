@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-08T01:23:56.782490+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261009T013928Z
 **Deploy:** MDPF_SECCLASS SC-e-65 amendment 3 (row S63): release the cash-token NAME::-skip _shared module to its TWO firm copies, so the ticker leg stops placing a NAME:: key as cash when any word of the name is CASH. Issuer GO 2.0.0_SA_COO~M1 msg 699, gate MET msg 720. COO half @86843a40fd, CTO half @7f68da7051. GATE, both limbs measured first-hand before opening: (1) ledger secclass-e65-cash-token-deploy-s-20261007 reads CLOSED at origin/CLOUD (closed 20261008T004506Z, closing commit 3b6f5c9a45 an ancestor of origin/CLOUD, its sentinel ABSENT there); (2) NO BD or COT gold run in progress -- a BD incremental run WAS live during the first reads (a 00:17:35Z price PUT to silver/prices/2026-10-08.parquet wrote gold/trigger-pending.json while the EC2 was up, mode=incremental; telemetry under logs/gold-layer/telemetry/bd-gold-layer-runner/ ran 00:25:42Z-01:12:48Z; the run log gold_incremental_2026-10-08_20261008_011623.log landed 01:16:24Z), and that run has ENDED -- gold/trigger-pending.json now returns HeadObject 404 (consumed), verified beside a present-key control (code/gold/lib/_shared/etf_classification_scheduled.py, 200) and an absent-key control (gold/NO_SUCH_KEY_zzz_control.json, 404), with nothing written under logs/gold-layer/ since 01:16:24Z; COT's newest gold run log is 2026-10-07T11:40:13Z and its schedule is cron(30 10 * * ? *). STEP 2: git show HEAD:infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py | md5sum reads 40ffa3fac380551704637adc8a3b6ff3, equal to the order's expectation, at dell1 CLOUD; all five files this deploy ships are byte-identical between dell1 CLOUD, origin/CLOUD and a clean worktree, so the 4-commit local divergence touches none of them and no scratch worktree is needed. STEP 3, all 8 keys RE-READ at act time with ZERO STOPs. BLAST RADIUS: exactly these two keys by content; the other six keys are byte-identical re-uploads that must come back at their pre-act ETags. ROLLBACK per key: aws s3api copy-object back over the key from its named pre-act VersionId, and for any cash_token row an E_18 run writes in between, delete that row by its key from the run log (input=cash_token).
 **Authored by:** 0.7.0_AE_CloudOps~SD
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,140 +12,16 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | s3-prefix | opal-data-bd code/gold/lib/_shared/etf_classification_scheduled.py -- MOVES ETag 3f1e6be8910952f33c88bf100c610ab6 (35100 B) to 40ffa3fac380551704637adc8a3b6ff3; ROLLBACK VersionId 0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu | comp-pipescript deployed MATCH row for the bd carrier plus head-object ETag 40ffa3fac380551704637adc8a3b6ff3 |  | OPEN |
-| L2 | s3-prefix | opal-data-cot code/gold/lib/_shared/etf_classification_scheduled.py -- MOVES ETag 3f1e6be8910952f33c88bf100c610ab6 (35100 B) to 40ffa3fac380551704637adc8a3b6ff3; ROLLBACK VersionId 0e4OsubYyRdw4RnmCvfMYM0SZtLLM9z9 | comp-pipescript deployed MATCH row for the cot carrier plus head-object ETag 40ffa3fac380551704637adc8a3b6ff3 |  | OPEN |
-| L3 | verify | the SIX byte-identical re-uploads the one safe-deploy run also makes must each come back at the SAME ETag they carried before, so the act moves exactly two keys BY CONTENT: opal-data-bd code/gold/E_18.detect_new_securities.py a7820a205692444dadb59e526200bff6 (pre-act VersionId wb5QYkh7QEfrvMEscg.EgAui0MeBaNwB); opal-data-cot code/gold/A_00.accounts_dimension.py cb10e3cd255db2c58363b6b911aef6cc (xsdLG12jt3jBPpWqziwijB9EoKeATW97); etf_classification.py 3a033c04678f1c96d116b641545b17bb in BOTH buckets (bd VBAyhhC5AQPAUTXXPwL3D.H2YQEI6m29, cot DR2_GLcXEPI2wCIr.U3zG1uctEnfofpW); etf_classifications_dynamodb.py 4cc11d3e74486730febb7e6b4a0ba916 in BOTH buckets (bd 2UxuZVruEvP_Vurtwy8SYPvPAe5_tLsf, cot ZFUpv1B8F7NByIpCScoitWaHhfJZmPBi). A byte-identical PUT to a versioned bucket still mints a NEW VersionId; the CONTENT is what must be unmoved | head-object ETag per key equal to the pre-act value listed here, 8 of 8 keys read with the denominator printed |  | OPEN |
-| L4 | verify | the FIRST BD E_18 run after this upload, read for its cash_token plan lines (the order's step 6): no NAME:: key that is not a whole cash phrase is planned cash/Cash. Any such row triggers rollback of the key AND the row | the run id, its cash_token plan lines, and the per-row class check |  | OPEN |
+| L1 | s3-prefix | opal-data-bd code/gold/lib/_shared/etf_classification_scheduled.py -- MOVES ETag 3f1e6be8910952f33c88bf100c610ab6 (35100 B) to 40ffa3fac380551704637adc8a3b6ff3; ROLLBACK VersionId 0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu | comp-pipescript deployed MATCH row for the bd carrier plus head-object ETag 40ffa3fac380551704637adc8a3b6ff3 | WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), on MSTR msg 1376: the act waits on Andrew limit item 5 (row MDPF_SECCLASS-D1-S14) and is re-issued under a fresh ledger when it releases. opal-data-bd code/gold/lib/_shared/etf_classification_scheduled.py head-object: ETag 3f1e6be8910952f33c88bf100c610ab6 (35100 B) = the PRE-act ETag, VersionId 5BZygWLx... (19:42:06Z 10-08, the e76 leg-B restore of the same bytes); target ETag 40ffa3fa NOT served; negative control (absent key) 404. | CLOSED 20261009T013927Z |
+| L2 | s3-prefix | opal-data-cot code/gold/lib/_shared/etf_classification_scheduled.py -- MOVES ETag 3f1e6be8910952f33c88bf100c610ab6 (35100 B) to 40ffa3fac380551704637adc8a3b6ff3; ROLLBACK VersionId 0e4OsubYyRdw4RnmCvfMYM0SZtLLM9z9 | comp-pipescript deployed MATCH row for the cot carrier plus head-object ETag 40ffa3fac380551704637adc8a3b6ff3 | WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), on MSTR msg 1376: the act waits on Andrew limit item 5 (row MDPF_SECCLASS-D1-S14) and is re-issued under a fresh ledger when it releases. opal-data-cot code/gold/lib/_shared/etf_classification_scheduled.py head-object: ETag 3f1e6be8910952f33c88bf100c610ab6 (35100 B), VersionId 0e4OsubYyRdw4RnmCvfMYM0SZtLLM9z9 = this leg's own named rollback VersionId (16:54:13Z 10-07); target ETag 40ffa3fa NOT served. | CLOSED 20261009T013927Z |
+| L3 | verify | the SIX byte-identical re-uploads the one safe-deploy run also makes must each come back at the SAME ETag they carried before, so the act moves exactly two keys BY CONTENT: opal-data-bd code/gold/E_18.detect_new_securities.py a7820a205692444dadb59e526200bff6 (pre-act VersionId wb5QYkh7QEfrvMEscg.EgAui0MeBaNwB); opal-data-cot code/gold/A_00.accounts_dimension.py cb10e3cd255db2c58363b6b911aef6cc (xsdLG12jt3jBPpWqziwijB9EoKeATW97); etf_classification.py 3a033c04678f1c96d116b641545b17bb in BOTH buckets (bd VBAyhhC5AQPAUTXXPwL3D.H2YQEI6m29, cot DR2_GLcXEPI2wCIr.U3zG1uctEnfofpW); etf_classifications_dynamodb.py 4cc11d3e74486730febb7e6b4a0ba916 in BOTH buckets (bd 2UxuZVruEvP_Vurtwy8SYPvPAe5_tLsf, cot ZFUpv1B8F7NByIpCScoitWaHhfJZmPBi). A byte-identical PUT to a versioned bucket still mints a NEW VersionId; the CONTENT is what must be unmoved | head-object ETag per key equal to the pre-act value listed here, 8 of 8 keys read with the denominator printed | WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), on MSTR msg 1376: the act waits on Andrew limit item 5 (row MDPF_SECCLASS-D1-S14) and is re-issued under a fresh ledger when it releases. No safe-deploy run for this act occurred (L1/L2 keys at pre-act bytes), so no byte-identical re-uploads attributable to it; nothing to compare. | CLOSED 20261009T013927Z |
+| L4 | verify | the FIRST BD E_18 run after this upload, read for its cash_token plan lines (the order's step 6): no NAME:: key that is not a whole cash phrase is planned cash/Cash. Any such row triggers rollback of the key AND the row | the run id, its cash_token plan lines, and the per-row class check | WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), on MSTR msg 1376: the act waits on Andrew limit item 5 (row MDPF_SECCLASS-D1-S14) and is re-issued under a fresh ledger when it releases. No upload, so no first-E_18-after-upload run exists to read; the 2026-10-08 23:00Z BD fire's E_18 ran on the pre-act module (done rc=0, log gold_incremental_2026-10-09_20261009_011552.log). | CLOSED 20261009T013928Z |
 
 ## Log
 
 - 20261008T012356Z OPENED by 0.7.0_AE_CloudOps~SD with 4 leg(s)
-
-- 20261008T013112Z DEPLOY ATTEMPT FAILED CLOSED by 0.7.0_AE_CloudOps~SD -- tooling, not state. ZERO keys moved; nothing to roll back. See the section below.
-
-## ATTEMPT 1 FAILED CLOSED -- .tools/aws.cmd resolves no AWS CLI on dell1 (0.7.0_AE_CloudOps~SD, 20261008T013112Z)
-
-The ONE safe-deploy run of step 5 was invoked as the order names it:
-
-    .tools/safe-deploy.sh --author "0.7.0_AE_CloudOps~SD"       data/black_diamond/scripts/gold/E_18.detect_new_securities.py       data/cot/scripts/gold/A_00.accounts_dimension.py
-
-It enumerated the expected 8 destinations (2 script carriers + 6 declared shipped
-artifacts across opal-data-bd and opal-data-cot), then failed on the FIRST upload:
-
-    ERROR  UPLOAD_FAIL  [shipped] .../etf_classifications_dynamodb.py -> s3://opal-data-bd/...
-      aws.cmd: FATAL -- no AWS CLI found. Checked
-      %LOCALAPPDATA%\Programs\Python\Python312\Scriptsws.cmd,
-      %LOCALAPPDATA%\Programs\AWSCLIV2\Amazon\AWSCLIV2ws.exe,
-      %ProgramFiles%\Amazon\AWSCLIV2ws.exe
-
-STATE AFTER THE FAILURE -- MEASURED, not inferred from the tool's own
-"files listed above as DEPLOYED may already be on S3" warning. All 8 keys re-read:
-every one carries BOTH the same ETag AND the same VersionId it carried before the
-attempt. A byte-identical PUT to a versioned bucket still mints a NEW VersionId, so
-UNCHANGED VersionIds are positive proof that ZERO PUTs occurred -- not merely that
-content is unchanged. Nothing landed; nothing is half-landed; there is nothing to roll
-back. Both movers still read 3f1e6be8910952f33c88bf100c610ab6 at VersionIds
-0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu (bd) and 0e4OsubYyRdw4RnmCvfMYM0SZtLLM9z9 (cot).
-
-CAUSE: `.tools/aws.cmd` -- the Windows-shell companion that NATIVE-PYTHON callers reach
-through `shutil.which` -> `~/bin/aws.cmd` -> the tracked `.tools/aws.cmd` -- hardcodes
-three absolute CLI paths and none exists on dell1. The real CLI here is
-`%LOCALAPPDATA%\Programs\Amazon\AWSCLIV2ws.exe`
-(/c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws.exe, 9,448,160 B, 2026-10-02),
-which is NOT candidate 2 (`Programs\AWSCLIV2\Amazon\AWSCLIV2`) -- a different nesting.
-Verified directly: `cmd //c ".toolsws.cmd --version"` prints the same FATAL.
-
-The bash shim `.tools/aws` is UNAFFECTED and resolved correctly all session
-(AWS_SHIM_DEBUG=1 prints real-entry /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws),
-which is why every hand-run read in this entry succeeded while the deploy failed. That is
-the exact asymmetry `.tools/aws.cmd`'s own header documents for site Z.
-
-REMEDY, named and NOT executed: add a fourth candidate
-`%LOCALAPPDATA%\Programs\Amazon\AWSCLIV2ws.exe` to `.tools/aws.cmd`. That is a write
-to `.tools/aws.cmd`, which this order's <paths> block does not name -- OUT OF LANE for this
-seat. Reported to 2.0.0_SA_COO~M1 the same hour.
-
-CARRIES BEYOND THIS ORDER: `.tools/aws.cmd`'s own header records that under `--quiet` this
-same failure is a SILENT NO-OP -- `infra/aws/lambda/ci/build-and-upload.sh` "reported a
-successful upload while S3 kept the OLD zip". build-and-upload.sh is step 4 of
-TO-DEPLOY-e57e61, the next order in this seat's queue, so that order must not be run on
-this device until the shim resolves. Filed as a surprise row.
-
-The entry stays OPEN with all four legs OPEN and the world untouched.
-
-- 20261008T015258Z ATTEMPT 2 HALF-LANDED then ROLLED BACK IN-SESSION by 0.7.0_AE_CloudOps~SD. Parity restored; escalated loud. See the section below.
-
-## ATTEMPT 2 -- HALF-LANDED, ROLLED BACK, PARITY RESTORED (0.7.0_AE_CloudOps~SD, 20261008T015258Z)
-
-The hold of ruling msg 733 was lifted by msg 735 after 0.0.0_AB_MSTR~DELL1's fix
-62d57c9f73 to .tools/aws.cmd. PROVEN FIRST, as that ruling directed, on all three caller
-paths: `.tools\aws.cmd --version` -> aws-cli/2.37.9; `.tools\aws.cmd sts
-get-caller-identity` -> arn:aws:iam::313476888478:user/cloudops-dell1-agent-user; and
-python shutil.which('aws.cmd') -> C:\Users\Test\bin\aws.cmd -> 2.37.9, which is the
-exact native-Python path that failed in attempt 1.
-
-GATE RE-CHECKED before the retry: gold/trigger-pending.json 404, zero objects under
-logs/gold-layer/ newer than the 01:16:24Z run log, so no gold run in progress. All 8 keys
-RE-READ: both movers at 3f1e6be8 with the order's exact rollback VersionIds, the six others
-equal to repo HEAD. Mover md5 at HEAD 40ffa3fac380551704637adc8a3b6ff3.
-
-WHAT LANDED. The one safe-deploy run uploaded THREE keys to opal-data-bd, then failed on
-the first opal-data-cot key:
-
-  DEPLOYED-SHIPPED etf_classifications_dynamodb.py -> s3://opal-data-bd/...
-  DEPLOYED-SHIPPED etf_classification_scheduled.py -> s3://opal-data-bd/...
-  DEPLOYED-SHIPPED etf_classification.py           -> s3://opal-data-bd/...
-  ERROR UPLOAD_FAIL  etf_classifications_dynamodb.py -> s3://opal-data-cot/...
-    AccessDenied on s3:PutObject, resource
-    arn:aws:s3:::opal-data-cot/code/gold/lib/_shared/etf_classifications_dynamodb.py,
-    principal arn:aws:iam::313476888478:user/cloudops-dell1-agent-user,
-    "with an explicit deny in an identity-based policy:
-     arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy"
-
-MEASURED, per key: exactly ONE key moved BY CONTENT -- the bd mover, ETag
-3f1e6be8910952f33c88bf100c610ab6 -> 40ffa3fac380551704637adc8a3b6ff3 at new VersionId
-zSt33nq7_Eh78Y9hR_KR31D18BTa5v6b (01:47:59Z). The other two bd uploads were byte-identical:
-etf_classifications_dynamodb.py stayed 4cc11d3e (new Ver VJUrFMm.HC7SGZt0YSoeKqNugn7R51ZC)
-and etf_classification.py stayed 3a033c04 (new Ver U0SHTQGhpKPE6t0vVS2G1QpaZctq.UV4). All
-five remaining keys were UNTOUCHED at their pre-act VersionIds: the cot mover, both cot
-members, and both gold carriers (which never uploaded).
-
-WHY FINISHING WAS IMPOSSIBLE: an EXPLICIT DENY in an identity-based policy, not a missing
-grant. No ordering, retry or re-scoping of this act can satisfy it from this device, and
-working around it is refused by the order and by CLAUDE.md. So NEVER-2's other branch
-applied: roll back in-session and escalate loud.
-
-ROLLBACK EXECUTED, the entry's own named command:
-  aws s3api copy-object --bucket opal-data-bd
-    --key code/gold/lib/_shared/etf_classification_scheduled.py
-    --copy-source '...?versionId=0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu' --metadata-directive COPY
-It returned ETag 3f1e6be8910952f33c88bf100c610ab6 at new VersionId
-keWIVX74Byn38wT7eBADpt1ElR7U1E3t (01:49:54Z). VERIFIED by an INDEPENDENT head-object, not
-from the copy's own response: bd mover ETag 3f1e6be8910952f33c88bf100c610ab6, 35,100 B;
-cot mover ETag 3f1e6be8910952f33c88bf100c610ab6, 35,100 B. PARITY RESTORED -- both firm
-copies carry identical pre-act content, which is the state the act began from.
-
-The two byte-identical bd keys were NOT rolled back and need no rollback: their CONTENT
-never moved (4cc11d3e and 3a033c04, unchanged before and after). A copy-back would only
-mint a third VersionId with identical bytes. L3's standard is content unmoved, and it is.
-
-EXPOSURE WINDOW: 01:47:59Z to 01:49:54Z, 115 seconds, during which opal-data-bd carried
-40ffa3fa while opal-data-cot carried 3f1e6be8. NOTHING CONSUMED IT: gold/trigger-pending.json
-reads 404 and zero objects exist under logs/gold-layer/ newer than the 01:16:24Z run log, so
-no BD gold run started, and E_18 wrote no cash_token row against the new module. The
-asymmetry was never observed by a producer.
-
-THE GATE SAW IT COMING. safe-deploy's own seat-gates printed, before any upload:
-  [seat-gates] CROSSBOX-DEPLOY device=dell1 root=black_diamond ... verdict=STOP
-  [seat-gates] CROSSBOX-DEPLOY device=dell1 root=cot ... verdict=STOP
-  [seat-gates] WARN would stop under ENFORCE (crossbox-deploy:data/black_diamond
-               crossbox-deploy:data/cot); WARN mode proceeds.
-The IAM explicit deny and that gate are two expressions of one rule: dell1 is not the device
-that deploys these firm roots. In WARN mode the gate advised and proceeded; the IAM policy
-refused. Had the gate been in ENFORCE, nothing would have landed and no rollback would have
-been needed. Filed as a surprise row.
-
-STATE AT THIS WRITING: all four legs OPEN, the entry stays OPEN per ruling msg 733, and the
-world is back to its pre-act content on all 8 keys. Nothing is stranded. e65b CANNOT be
-completed from dell1; escalated to 2.0.0_SA_COO~M1 the same hour, asking for a seat that can
-write opal-data-cot or a lift of the deny. This seat attempted no workaround.
+- 20261009T013927Z LEG L1 closed: WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), 
+- 20261009T013927Z LEG L2 closed: WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), 
+- 20261009T013927Z LEG L3 closed: WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), 
+- 20261009T013928Z LEG L4 closed: WITHDRAWN, NEVER APPLIED -- measured 2026-10-09 ~01:4xZ by 2.0.0_SA_COO~M1 (issuer; author 0.7.0_AE_CloudOps~SD ended), 
+- 20261009T013928Z CLOSED -- all 4 legs proven
