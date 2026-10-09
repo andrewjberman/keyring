@@ -8125,6 +8125,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-W129-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~129",
+      "surfaced_at": "2026-10-09T03:25:30Z",
+      "one_line": "Rebuild #11 dry run: the AIG/OMAB list move gone 0 and added 0 pairs on all three securities, so REBUILD11_TITLES.md holds no titles; the move shows as 22 own-field changes (AIG 12, OMAB_MM 5, OMAB_US 5), which the cell does not ask to list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO-HVST-bs-1 s.1 item 4: for each list-moved security the FIRST TEN gone and FIRST TEN added pairs with titles, graded by the CVO as AC4 (R28: the dry run prints the pairs moved per security).",
+      "world_is": "gold_rebuild11.signing.out: AIG_US_Equity pairs served 16, built 16, gone 0, added 0; OMAB_MM_Equity 5, 5, 0, 0; OMAB_US_Equity 5, 5, 0, 0. Mention served 52282 -> built 52709, gone 0, added 427 (418 on unchanged securities from silver grown since the served build, 9 on fallback GSK_LN_Equity, none on a list-moved security), changed 22, all class (g): AIG 12, OMAB_MM 5, OMAB_US 5. OMAB_US_Equity lost a served alias with no count going down. All three REBUILD11_TITLES.md sections read '(none)'. Not done: listing the 22 changed pairs' titles, which the order does not ask for.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/gold_rebuild11.signing.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/REBUILD11_TITLES.md",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~129/gold_rebuild11.signing.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
