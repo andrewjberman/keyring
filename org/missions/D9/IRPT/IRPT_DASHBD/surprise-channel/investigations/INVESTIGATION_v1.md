@@ -3512,3 +3512,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S37 -- Row W23-S1's open read: the silver bucket admits the role on the three lot-table prefixes (no read Deny, SSE-S3, same account).
+
+```json
+{
+  "id": "IRPT_DASHBD-S37",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T03:24:00Z",
+  "one_line": "Row W23-S1's open read: the silver bucket opal-data-assets admits the reporting-gold role on the three added lot-table prefixes; its policy carries no read Deny and its encryption is SSE-S3, so the role's own grant governs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The R35 packet's Unmeasured (row W23-S1) and the CTO half's condition (1.0.0_SA_CTO~DELL2 msg 2286): whether the silver bucket's own policy admits the role on fact_rld, fact_uln and fact_ult is read before the apply.",
+  "world_is": "MEASURED 2026-10-09 ~03:23Z, s3api get-bucket-policy opal-data-assets: 2 statements. DenyParquetUnderBronze17a denies s3:PutObject of */bronze/*.parquet only. AllowMdpfPortalCloudFrontOACRead allows the CloudFront service GetObject on one json key. Neither denies GetObject or ListBucket to a principal of this account. get-bucket-encryption: AES256 (no KMS key policy in the path). The caller account is 313476888478, the account the role lives in, so the role's identity grant alone decides the read. A Branch-B AccessDenied on a lot read can therefore only come from the role policy, which after-read A5 prints.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api get-bucket-policy --bucket opal-data-assets (2 statements, read 2026-10-09 ~03:23Z)",
+      "aws s3api get-bucket-encryption --bucket opal-data-assets (AES256)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_DASHBD-W23-S1"
+    ]
+  },
+  "notes": "Resolves the open read of IRPT_DASHBD-W23-S1. The bucket policy is live state at the read time; a later policy edit is not covered.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
