@@ -426,3 +426,12 @@ CB40an1-AC2 is MET:
 - No rows; ARMED 0.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~14:5xZ) -- round 43 (CVO slug msg 3513, `ADJUDICATION_v32.md` @181b868266): MET
+
+- CB43aq1-AC2 is MET. The `_commonwealth_delivery` entry cannot become a source (`declared_sources()`, `account_return_daily.py`:291).
+- **W70-S1 was already ruled at IRPT_DASHBD ADDENDUM 13.2 (@304cb81ef6): the method is stamped from the source entry.** The mismatch is not accepted.
+  - A positions-based entry gets its own method row; a firm with no method declared writes `absent`; nothing ever defaults to 2.
+- **The CB-al-2 mint waits on that producer cell's drain** (`~D2`'s next issuance), then runs under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
