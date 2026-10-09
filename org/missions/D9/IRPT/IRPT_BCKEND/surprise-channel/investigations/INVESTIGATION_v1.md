@@ -24441,3 +24441,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Content-addressed rows are SHARED by every upload of the same bytes; a list derived from one upload deleted a row later requests still reference. Rule for this lane's future cleanups: walk the retention dependency tree (RETENTION#<id> rows, as the laptop's principal-free walk did) and exclude any row another live request references, before naming a key. Ruling 2026-10-09 ~13:3xZ: no PITR restore (test requests only); Y1 reads 3a/4_route/5 re-run on a fresh synthetic request; the three broken test requests join the next cleanup list under Andrew's word."
 }
 ```
+
+## IRPT_BCKEND-D2-S52 -- the decomposition was truncated from 142 cells to 3 by the round-109 and 110 issuances, so 300 of 301 task orders now cite a cell that is not there and proof-of-spec refuses the alignment limb
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S52",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T13:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "IRPT_BCKEND_DECOMP.md went 2562 lines to 15 to 29 across two issuances; it now holds 3 distinct cells where it held 142, and every order whose cell was dropped cannot have its proof of spec validated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "line counts and cell counts across the commits that touched the file, newest first: 38a80bb2fe (round 110 issuance) 29 lines; ef1f7f8409 (round 109 issuance) 15 lines; f4ecd2ab52 (round 108 issuance) 2562 lines; 074cfafc99 (round 107) 2547 lines",
+      "distinct cells, denominator printed: at f4ecd2ab52 the file carried 274 IB-pr-* mentions over 142 DISTINCT cells; at HEAD it carries 4 mentions over 3 distinct cells",
+      "IB-pr-397 specifically: 2 hits at f4ecd2ab52, 0 hits at ef1f7f8409 and at HEAD",
+      "project-wide blast radius, measured over every task order in the project: 301 task-order files scanned; 300 (order, cell) pairs cite a cell_refs value that is ABSENT from the decomposition at HEAD; 300 distinct cells dangling",
+      "the consequence this seat hit: proof-of-spec-check.py on IRPT_BCKEND.TO-IB-pr-397's instance, run from its own worktree, returns rc=1 INVALID with 'VIOLATION: alignment: cell_ref IB-pr-397 (cited by [IB102-1-AC1]) does NOT exist in ... IRPT_BCKEND_DECOMP.md -- a citation to a cell that is not there is worse than no citation'. The instance does not cite the cell itself (0 cell_refs keys in it); the checker reads it from the ORDER's <criterion cell_refs=\"IB-pr-397\">",
+      "SEPARATE AND NOT CONFLATED: the already-validated IB-pr-395 and IB-pr-398 instances now return rc=2 from the shared tree -- 'NOT-A-VERDICT: this is a tool failure (rc=2), not an INVALID instance (rc=1)', on '74a62fb46c'. That is a different failure mode from the alignment violation and its cause is NOT established here; it is recorded so nobody reads it as the same finding. Both instances were VALID (rc=0) when they were landed earlier today"
+    ]
+  },
+  "spec_asserts": "Every task order carries <decomp_ref> naming a section and cell of org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md, and the proof-of-spec instance must validate with .tools/proof-of-spec-check.py BEFORE the <status> flip to complete. CLAUDE.md 27: mid-round the spec AND the decomposition are FROZEN.",
+  "world_is": "The decomposition is not frozen and is no longer a superset of what the orders cite: two consecutive issuances replaced it with a round-109/110-only document, dropping 139 of its 142 cells. So a seat that completes an order correctly still cannot validate its deliverable, because the alignment limb refuses a citation whose cell the carrier no longer holds -- and the limb is right to refuse. This is live for 300 of 301 orders in the project, not just this one. It is the issuer's carrier: L5 decomp is 2.0.0_SA_COO only, and this seat neither edits nor reconstructs it. WHAT IT DOES AND DOES NOT BLOCK for IB-pr-397: the ACT is complete and verified -- the reader is live at ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, the apply was exactly the 5 signed resources, the post-apply full plan reads exactly the 6 foreign AR-t-13 adds, IB102-1-AC1 PASSES and the deploy ledger is CLOSED with all 5 legs proven, so NOTHING is half-landed. Only the bookkeeping flip of <status> to complete is withheld, because the order requires a validated instance before it and this seat will not flip on an instance that does not validate. The fix is the issuer restoring the dropped cells (or re-pointing the orders' decomp_ref), after which the instance validates unchanged.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
