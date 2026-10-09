@@ -74,6 +74,19 @@ and `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r41_
 2. Only if AC1-AC3 pass, append a new status tag reading complete at the END of this file, in the SAME commit as your instance.
 3. Report ONCE: the change, AC1's and AC2's output lines, AC3's last line, your commit hashes, and any row.
 
+## 6. AMENDMENT 1 (2026-10-09 ~17:3xZ, the issuer's own; your row AMGT_CORPUS-D1-W1-S1)
+
+Your row is right: each control arm compared the WHOLE value, so aq-1's ending repair moved aq-2's control and aq-2's opening repair
+moved aq-1's. Ruling: each arm's control grades only its own edge. The issuer's check `aq12_check.py` is amended (AMENDMENT 1 in its
+docstring): the aq1 control asks that a value which ended at a sentence end at the base keeps its last 60 characters; the aq2 control
+asks that a management value with no prefix at the base keeps its first 60 characters. Base re-run: aq1 build 0/1 control 1/1, aq2
+build 0/1 control 1/1. Your criteria and their invocations are unchanged; the check they call changed.
+
+**Do, and only this:** take the amended check by merging `box/dell1` into your branch (`git merge --no-edit box/dell1`); change no
+code. Re-run AC1, AC2 and AC3 by their invocations, update your instance (both rows PASS by output, drop the `status_reason`s, note
+row D1-W1-S1 resolved by this amendment in `surprises`), run the checker after your final commit, and append the status tag reading
+complete at the END of this file only if all three pass. Report once.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-40 analysis @`05739a6e4e` s.2 item 2. Base: aq2 counts prefix 2, build 0/1 control 1/1. Queued behind aq-1 on slot ~1 (same file). Then the issuer's aq-5 served re-write.
