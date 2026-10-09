@@ -3,11 +3,11 @@
  "home": "org/missions/D8/MDPF/MDPF_SECCLASS",
  "directive": "D8",
  "macro_code": "MDPF",
- "fabric": "laptop",
+ "fabric": "dell1",
  "dep_stage": "EXECUTING",
  "status": "active",
  "name": "One canonical per-security classification table for every holdings surface",
  "generated_from": "org/missions/D8/MDPF/MDPF_SECCLASS/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-08T18:22:57Z"
+ "generated_at": "2026-10-09T04:51:49Z"
 }

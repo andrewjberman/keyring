@@ -92,7 +92,7 @@ projects:
     waits_on: []
     why: 'The four-box control plane itself: stays on the laptop for good. Its second round brings up the Dells, which every later stage depends on.'
   MDPF_SECHIST:
-    fabric: laptop
+    fabric: dell1
     stage: 1
     waits_on:
     - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
@@ -106,7 +106,7 @@ projects:
       confirmed: '1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, ''dell1 and dell2 are live, i have put them both on loops governing''. His word is the evidence for dell2: no bus message from dell2''s fabric manager had reached this seat at the confirmation'
     why: 'BOX: dell2, its FIRST lane. Custodian-level investor reporting replacing Black Diamond, the January 1 date. New, nothing to migrate.'
   MDPF_SECCLASS:
-    fabric: laptop
+    fabric: dell1
     stage: 2
     waits_on: []
     why: 'TARGET BOX: dell1 (dell1''s SECOND lane, after the grading of MDPF_SECHIST''s first round). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It shares the classification table with MDPF_SECHIST, which is why the two sit on one box.'
