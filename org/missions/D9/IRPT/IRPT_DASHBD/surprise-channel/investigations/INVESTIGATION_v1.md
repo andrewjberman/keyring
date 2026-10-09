@@ -3285,3 +3285,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W42-S1 -- Round 32's large_flow_e3.py calls a name (uc.mean_daily_value) that the reader promotion removed; it cannot be re-run as committed.
+
+```json
+{
+  "id": "IRPT_DASHBD-W42-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~42",
+  "surfaced_at": "2026-10-09T01:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Round 32's record module large_flow_e3.py no longer runs as committed: its classify calls uc.mean_daily_value, a name round 32's reader promotion removed from the round 31 module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~39/large_flow_e3.py classify (uc.mean_daily_value, landed_gain_return)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~42/NEAR_ZERO_E3.json overlap_round32.shim"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-65 names round 32's records as read-only sources; DB-b-62's module is the record of how LARGE_FLOW_E3.json was produced and is expected to be re-runnable.",
+  "world_is": "MEASURED: calling large_flow_e3.classify raises AttributeError: module 'unexplained_classes_r31' has no attribute 'mean_daily_value' (W38-S1's reader promotion rebound the round 31 module's names to functools.partial(reader.daily_mean_value, positive_only=False) as daily_mean_value and dropped mean_daily_value). The committed LARGE_FLOW_E3.json predates that. Worker ~42 imports the module read-only and sets uc.mean_daily_value = uc.daily_mean_value in its own process (stated in NEAR_ZERO_E3.json overlap_round32.shim); control: classify re-run on round 32's own 170 rows reproduces its recorded counts exactly (10 classes, 170 of 170). No file of round 32 was edited; the same one-line alias in large_flow_e3.py would restore its re-runnability and is the CTO's or the issuer's to order."
+}
+```
