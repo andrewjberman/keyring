@@ -24471,3 +24471,37 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+### IRPT_BCKEND-D2-S52 -- ARMED: PROOF_OF_SPEC.schema.json has prose in a `type` keyword; proof-of-spec-check now fails rc=2 for EVERY instance, fabric-wide
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
+- **disarm_owner:** `1.0.0_SA_CTO~DELL2` -- it authored the commit and owns `org/standards/`; this
+  seat does not, so it reports rather than edits.
+- **state:** ARMED. This is not a latent hazard: it is blocking `complete` flips right now, for any
+  seat, because `.tools/to-pipeline-gate.py` requires a VALID instance and the checker cannot return
+  a verdict at all.
+- **spec_asserts:** `python .tools/proof-of-spec-check.py <instance>` returns rc=0 VALID or rc=1
+  INVALID, and the gate admits a `complete` flip on rc=0.
+- **world_is:** it returns **rc=2 TOOL-ERROR** for every instance.
+  `jsonschema.exceptions.UnknownType: Unknown type "string aws_resource ADDED 2026-10-09 ..."`.
+  The cause is one keyword: `$.properties.artifacts_produced.items.properties.commit_or_etag.type`
+  holds a **466-character prose string** beginning `string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO,
+  row IRPT_DASHBD-S41): a live AWS resource that is neither an S3 object nor DynamoDB rows ...`.
+  A JSON Schema `type` must be one of the seven primitives, so the validator cannot resolve it and
+  dies before grading anything.
+- **when, measured:** introduced by `e7c10e5b4b` (`1.0.0_SA_CTO`), authored 2026-10-09T09:00:45-04:00
+  = **13:00:45Z**. At the previous commit `72a2636203` the same keyword read exactly `'string'`
+  (length 6). The prose plainly belongs in the `kind` enum's **description**, where the sibling
+  `s3_object` and `ddb_rows` notes live; it landed in `commit_or_etag.type` instead.
+- **THE CONTROL THAT MAKES THIS GENERAL, not a quirk of my file:** three instances that this seat
+  validated **rc=0 VALID earlier today** -- `IRPT_YCDGEN.TO-APPLY-r7`, `TCKT_VNEXT.TO-APPLY-SA1` and
+  `IRPT_YCDGEN.TO-APPLY-st29` -- were re-run unchanged after 13:00:45Z and all three now return
+  rc=2. Nothing about those files changed; only the schema did.
+- **why it was not caught at once:** the break fails CLOSED and LOUD, but only for whoever validates
+  next. Every validation this seat ran today before 13:00Z passed, so the window between the commit
+  and the first failure was invisible. A schema edit has no gate of its own.
+- **the fix, stated so it needs no diagnosis:** set that keyword back to `"type": "string"` and move
+  the `aws_resource` prose into the `kind` enum's `description`. One token.
+- **blocked on it:** `IRPT_BCKEND.TO-APPLY-Y77`'s flip. Its three criteria are graded PASS by the
+  issuer's own check (`y77_cells.py`, re-run by this seat) and its instance is written; only the
+  validation step is unavailable. The same is true for any other seat holding a finished order.
