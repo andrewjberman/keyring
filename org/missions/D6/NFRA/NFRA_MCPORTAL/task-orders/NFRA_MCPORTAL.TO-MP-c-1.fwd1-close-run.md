@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md</decomp_doc>
 <owned_cells>MP-c-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPORTAL.TO-MP-c-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPORTAL~1</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
@@ -101,7 +102,7 @@ SPAWN ONLY when ALL hold:
 - **G-CLOSE:** Andrew's sitting is done (he names the colleague; narrow, ask, widen, ask), the exchanges have been
   handed to the issuer, and the issuer has written `c1_run.json`.
 
-<status>staged</status>
+<status>superseded -- CLOSED for round 3 by the issuer 2.0.0_SA_COO~MP, 2026-10-09 ~01:0xZ, on the round-2 precedent (MP-a-1). HELD, never spawned. G-CLOSE has not landed: Andrew holds Alyssa's close run until gateway r29 is live (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_200xZ_OPLGTW_THREE_CALLS_RECS_APPROVED_ROUND32_FWD10_13_ALYSSA_HOLD.md). His hold is untouched by this close. Holding it open deadlocks the project-grain L10 (3.0.0_SA_CVO~Z @110c291f33: 'L10 precondition NOT MET at the project grain -- MP-c-1 and MP-v-1 are staged'). NOTHING IS RE-GRADED BY THIS CLOSE. Superseded by its re-cut, UNCHANGED and STAGED on the same gate, in round 5's one issuance. Was: staged.</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

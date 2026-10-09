@@ -22,15 +22,15 @@ Three rows graduated this round, all OPEN for the round-3 recut.
     "owner": "2.0.0_SA_COO~O",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~O",
-      "at": null
+      "at": "2026-09-28T21:18Z"
     }
   },
   {

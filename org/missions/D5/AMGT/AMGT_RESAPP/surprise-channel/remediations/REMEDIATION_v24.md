@@ -110,11 +110,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v96. Fabric: site-z. Recorded: 2026-10-08T09:26:3
   "owner": "2.0.0_SA_COO~Z",
   "round": "v96",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~Z",
    "round": "v96"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-S373",
