@@ -9483,3 +9483,61 @@ fanout:
   no_s3_deletes: true
   egress: ii-3 only (SEC EDGAR + one model run per name); no Bloomberg call in any order
 ```
+
+## 93. ROUND 85 -- MACHINE SENTENCES SERVED ONCE, NU RE-SERVED, ONE ISSUER'S LISTINGS COLLAPSE TO THE COVERED ONE, REDEPLOY + RECORDER. Five orders
+
+**Input:** the CTO~DELL1 round-84 analysis `ledger/ROUND_ANALYSIS.round84.md` @f928f73e6e (items 1-4; FWD-18 holds on five 20-F names).
+Grounded in `deliverables/2.0.0_SA_COO~R1/round85_prep/` (GROUP_SENTENCE_NOTES, GROUP_LISTING_BUILD_NOTES) and
+`round84_prep/GROUP_LISTING_NOTES.md`. Item 2 (W337-S1, the business pattern anchored to the item, never 3.D) was a DIRECT ACT
+@c25a72bb7d: r84_store's T2 matches only a location that STARTS with the business item -- on the five names NU reads 3 (was 4: the 3.D
+heading), the others unchanged, all YES; no served business location comes from 3.D.
+
+### 93a. MEASURED AT THE CUT
+
+- **Doubled sentences:** `analyze.py:643` (and :427, :502) joins the model's text blocks with "": a paraphrase fuses onto the filing's
+  verbatim sentence restating it. Live: NU 25 of 38 served texts glued, 14 restated; ASML, BABA, PBR, SAP 0 (r85_sentences NO). A
+  producer defect stored in NU's analysis and draft: NU needs one re-analysis; no other name and no redeploy for this item.
+- **Listings:** the live function reads the LATEST `crosswalk/v1/` key at request time (2026-10-07.json, 243 records); 0 carry `issuer`;
+  ASML_NA's CIK 937966 is measured from its own stored 20-F, ASML_US's from the SEC ticker table on its own US ticker (r85_crosswalk NO;
+  r84_listing R1 NO, R2/R3 PASS on both arms).
+- **Recorder (row D1-S7):** three source-map writes of `_last_deploy_recorded` in two recorders; the key is present; 183 of 235
+  function entries carry `last_deployed_at` (r85_sourcemap NO; M3 PASS).
+
+### 93b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-jj-1` | blocks joined by a space, the filing's sentence kept; offline NU proof | `~338` | worker | LOCAL (one model run) | `filings/analyze.py`, one test | item 1 (through jj-2) |
+| `AMGT-jj-2` | NU's store half under a NEW pair | `~339` | worker | WORLD | NU's four keys; ledger | item 1 |
+| `AMGT-jj-3` | measured `issuer.cik` + the collapse, list built locally | `~340` | worker | LOCAL | `identity/crosswalk.py`, `api/name_search.py`, `api/scoped_amgt.py` (other_listings), tests | item 3 (through jj-4, jj-5) |
+| `AMGT-jj-4` | publish the new name list under a NEW pair | `~341` | worker | WORLD | one `crosswalk/v1/` key; ledger | item 3 |
+| `AMGT-jj-5` | redeploy + the recorder (D1-S7) under a NEW pair | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | Lambda artifact, two recorders, the source map; ledger | item 3; row D1-S7 |
+
+**Not cut:** FWD-16 (Andrew's hold); DSGN's label (DSGN round 64); the key rotation (Andrew's act).
+
+### 93c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: enrichment items 1-4 + carried row D1-S7. Item 1 -> jj-1, jj-2; item 2 -> direct act @c25a72bb7d; item 3 -> jj-3,
+  jj-4, jj-5; item 4 -> not cut (Andrew's hold); D1-S7 -> jj-5. Uncovered: FWD-16 only.
+- **(ii) Same grain:** one module set or one act per cell; jj-3 joins the crosswalk field and its only consumer (the resolver), as the
+  CTO's item 3 asks ("the collapse follows in the same cell").
+- **(iii) Intent:** jj-1 is the only writer of `analyze.py`; jj-3 the only writer of `crosswalk.py`, `name_search.py`, `scoped_amgt.py`.
+- **(iv) What a cell does NOT move:** jj-1 writes no store; jj-2 writes NU's four keys only; jj-3 writes no store and leaves every
+  non-collapsing answer byte-equal; jj-4 writes one key and the deployed code ignores `issuer` until jj-5; jj-5 moves the function's code
+  and three recorder lines (not the shared-infra map).
+- **Write sets:** jj-1 and jj-3 are disjoint files. 0 overlaps.
+
+### 93d. EDGES AND FAN-OUT
+```
+jj-1 --> jj-2
+jj-3 --> jj-4 --> jj-5
+fanout:
+  cap: 8
+  orders_total: 5
+  chains_total: 2
+  wave_0: [jj-1 ~338, jj-3 ~340]   # 2 roots, cap 8
+  wave_1: [jj-2 ~339 (staged: jj-1 merged + NEW pair), jj-4 ~341 (staged: jj-3 merged + NEW pair)]
+  wave_2: [jj-5 0.7.0_AE_CloudOps~RA1 (staged: jj-4 published + NEW pair + the build commit)]
+  no_s3_deletes: true
+  egress: jj-1 (one model run), jj-2 (SEC + one model run, NU); no Bloomberg call in any order
+```
