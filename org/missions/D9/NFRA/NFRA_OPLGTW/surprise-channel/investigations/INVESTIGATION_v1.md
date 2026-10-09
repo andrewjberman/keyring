@@ -10517,3 +10517,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Z-W42-S2 (13-month I/O cost) is untouched by this worker: Phase C's 13-month availability read should record its elapsed time."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W43-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~43",
+  "surfaced_at": "2026-10-09T03:55:27Z",
+  "one_line": "Amendment A6 (457b60e966) withdrew A2-A5, so row Z-W43-S2 narrows: E1 (app/graph_scope_map.py) and E4 (tests/test_scoped_consent_r253.py) and the allowlist rows are gone from the candidate; only E2 (test_ogmd1_ac06's empty-table pin) and E3 (two header comment lines of the domain table) remain, forced by shipping the four domain entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~43/r29_hunk_equality.out (rebuilt after A6): identity_tool_allowlist.txt, app/identity_scope.py, app/graph_scope_map.py and tests/test_scoped_consent_r253.py each 'changed lines 0 => UNTOUCHED'; deploy/mail_sender_domain_table.txt CELL+ENTRIES+E3 and tests/test_mail_route_domain.py CELL+E2; RESULT: PASS; 19 files touched.",
+      "r29_reaches_host.out: 11 files reach the host (10 modified, 1 new), was 13; r29_staged_equal.out: staged 11 = shipped 11, same md5; host rehearsal (SSM 8f64769e): consent 9, tools 66, identity_tool_allowlist.txt md5 fbe94252 equal to the installed file's (BEFORE, SSM 9b0ab2f4).",
+      "For the r30 cell the issuer holds (recorded so the Phase A reads are not redone): rows for opal_discover, opal_describe, find_sharepoint_site and search_files fail tests/test_scoped_consent_r253.py unless app/graph_scope_map.py maps them (measured: opal_discover and opal_describe make no Graph call; find_sharepoint_site Sites.Read.All; search_files Files.ReadWrite.All, already in the concierge's consent through the taxsma caller on the host); and the C2 data grant does not gate blackdiamond_list_fees for a principal with no profile (data_entitlement.py INDEX_TOOLS class legacy, decide() lines 426-441). Both are in commit d757fc5c0b (ANNOUNCE section 11, rows Z-W43-S2 and Z-W43-S5)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A6: A2, A3, A4 and A5 are withdrawn; r29 carries no Bloomberg-account change; any Bloomberg edit already made is reverted before the release commit.",
+  "world_is": "No release commit existed, so the revert is of the uncommitted candidate in C:/tmp/og-rel29: rebuilt from the hand-off blobs by r29_build_candidate.py (which now restores the four Bloomberg-touched files to the live bytes) and r29_release_time_edits.py (E2, E3 only). Z-W43-S2's text stays as filed; its E1 and E4 and its allowlist part no longer apply. Z-W43-S5's third evidence line (rl15_attest.py lacking the bloomberg rule) no longer applies: the attest rules are back to the four-cell body and the stand-in exercise passes against them.",
+  "notes": "The Phase A deliverables committed at d757fc5c0b describe the pre-A6 candidate; they are superseded by the files committed after this row."
+}
+```
