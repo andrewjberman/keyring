@@ -89,7 +89,7 @@ close_gate() {
     while IFS= read -r p; do
         [ -n "$p" ] || continue
         new="$(MSYS_NO_PATHCONV=1 git -C "$ROOT" show ":$p" | tr -d '\r' | sed -n 's/.*"dep_stage"[[:space:]]*:[[:space:]]*"\([A-Z_]*\)".*/\1/p' | head -1)" || new=""
-        [ -n "$new" ] || new="$(tr -d '\r' < "$ROOT/$p" | sed -n 's/.*"dep_stage"[[:space:]]*:[[:space:]]*"\([A-Z_]*\)".*/\1/p' | head -1)"
+        [ -n "$new" ] || { echo "WARN: missions-tree-check close-gate -- the staged $p carries no readable dep_stage; not read as a ROUND_CLOSE move." >&2; continue; }
         case "$new" in ROUND_CLOSE|CLOSED) ;; *) continue ;; esac
         old=""
         if git -C "$ROOT" cat-file -e "HEAD:$p" 2>/dev/null; then
@@ -98,7 +98,7 @@ close_gate() {
         [ "$old" != "$new" ] || continue
         code="$(basename "$(dirname "$p")")"
         rc=0
-        out="$(cd "$ROOT" && python .tools/round-close-check.py --project "$code" 2>&1)" || rc=$?
+        out="$(cd "$ROOT" && python .tools/round-close-check.py --project "$code" --staged 2>&1)" || rc=$?
         last="$(printf '%s\n' "$out" | tr -d '\r' | tail -1)"
         case "$last" in
             ROUND-CLOSE\ *"verdict=MAY-CLOSE")

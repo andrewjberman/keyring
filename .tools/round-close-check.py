@@ -9,6 +9,7 @@ the box where it was done.
 
     python .tools/round-close-check.py --project <CODE> [--round <n>] [--workstream <WS>] [--device <d>] [--deep]
     python .tools/round-close-check.py --reviewer-only [--device <d>]       (a remote job: no project, no round)
+    python .tools/round-close-check.py --project <CODE> --staged            (read the project's files from the git index)
     python .tools/round-close-check.py --selftest
 
 THREE LIMBS, each printed with its evidence:
@@ -31,6 +32,10 @@ order is the issuer's to close, not this tool's to read).
 
 LAST line (always):
   ROUND-CLOSE project=<CODE> device=<d> reviewer=<present|ABSENT|UNREAD> orders=<n> judgment=<j> graded=<g> ungraded=<u> self_graded=<s> verdict=<MAY-CLOSE|REFUSED>
+--staged: every repository file the check reads for the project (task orders, proof instances, adjudication and
+investigation files, project.json) comes from the index git resolves (GIT_INDEX_FILE, GIT_DIR), enumerated with
+`git ls-files` and read with `git cat-file --batch`; a file absent from the index is absent even if the working tree has
+it. The liveness/reviewer read is runtime state and is unchanged. Without --staged the working tree is read, as before.
 It READS and flips nothing. Exit 0 when a verdict was printed (the verdict is the LAST line, as the commit hook reads it),
 2 on a usage or read error. Selftest LAST line: ROUND-CLOSE-SELFTEST cases=<k>/<n> ok=<True|False>.
 """
@@ -74,6 +79,127 @@ def base_of(serial: str) -> str:
 def lane_of(serial: str) -> str:
     m = LANE.search(str(serial).strip())
     return m.group(1) if m else ""
+
+
+# ---------------------------------------------------------------- where repository files are read from
+
+def pj(*parts: str) -> str:
+    """Join with '/', which both a Windows glob and a git pathspec accept."""
+    segs = [str(x).replace("\\", "/") for x in parts]
+    return "/".join([segs[0].rstrip("/")] + [x.strip("/") for x in segs[1:]])
+
+
+class WorkTree:
+    """Reads the working tree (the default, unchanged)."""
+
+    def __init__(self, root: str):
+        self.root = root
+
+    def project_dir(self, code: str) -> str:
+        hits = glob.glob(os.path.join(self.root, "org", "missions", "D*", "*", code, "project.json"))
+        if len(hits) != 1:
+            raise Usage("project %s: %d project.json found under org/missions/D*/*/ (want exactly 1)" % (code, len(hits)))
+        return os.path.dirname(hits[0])
+
+    def glob(self, pattern: str) -> list:
+        return sorted(glob.glob(pattern))
+
+    def read(self, path: str) -> str:
+        with open(path, encoding="utf-8", errors="replace") as fh:
+            return fh.read()
+
+    def local(self, path: str) -> str:
+        return path
+
+    def close(self) -> None:
+        pass
+
+
+class Staged:
+    """Reads the index git resolves (GIT_INDEX_FILE / GIT_DIR from the environment): `git ls-files -s` to enumerate,
+    `git cat-file --batch` to read. A path the index lacks is absent; the working tree is never opened."""
+
+    def __init__(self, root: str, env=None):
+        self.root = root
+        self.env = env if env is not None else os.environ.copy()
+        self._blobs = {}   # path -> sha
+        self._text = {}
+        self._tmp = None
+
+    def _git(self, args: list, data=None) -> bytes:
+        r = subprocess.run(["git", "-C", self.root] + args, input=data, capture_output=True, env=self.env)
+        if r.returncode != 0:
+            raise Usage("git %s failed rc=%d: %s" % (" ".join(args[:2]), r.returncode, r.stderr.decode("utf-8", "replace").strip()))
+        return r.stdout
+
+    def _entries(self, pathspec: str) -> list:
+        out = self._git(["ls-files", "-s", "-z", "--", pathspec]).decode("utf-8", "replace")
+        rows = []
+        for rec in out.split("\0"):
+            if not rec:
+                continue
+            meta, _tab, path = rec.partition("\t")
+            parts = meta.split()
+            if len(parts) == 3 and parts[2] == "0":
+                rows.append((path, parts[1]))
+        return rows
+
+    def _load(self, paths: list) -> None:
+        want = [p for p in paths if p in self._blobs and p not in self._text]
+        if not want:
+            return
+        raw = self._git(["cat-file", "--batch"], "".join("%s\n" % self._blobs[p] for p in want).encode("ascii"))
+        pos = 0
+        for p in want:
+            nl = raw.index(b"\n", pos)
+            head = raw[pos:nl].split()
+            if len(head) != 3 or head[1] != b"blob":
+                raise Usage("index entry %s is not a readable blob (%s)" % (p, raw[pos:nl].decode("ascii", "replace")))
+            size = int(head[2])
+            self._text[p] = raw[nl + 1:nl + 1 + size].decode("utf-8", "replace")
+            pos = nl + 1 + size + 1
+
+    def project_dir(self, code: str) -> str:
+        hits = self.glob("org/missions/D*/*/%s/project.json" % code)
+        hits = [p for p in hits if re.match(r"^org/missions/D(?:0|[1-9][0-9]?)/", p)]
+        if len(hits) != 1:
+            raise Usage("project %s: %d project.json in the index under org/missions/D*/*/ (want exactly 1)" % (code, len(hits)))
+        return hits[0].rsplit("/", 1)[0]
+
+    def glob(self, pattern: str) -> list:
+        """git's pathspec `*` crosses '/', so the hits are filtered back to one-segment wildcards."""
+        rx = re.compile("^" + "/".join(re.escape(sg).replace(r"\*", "[^/]*") for sg in pattern.split("/")) + "$")
+        ent = [(p, s) for p, s in self._entries(pattern) if rx.match(p)]
+        for p, s in ent:
+            self._blobs[p] = s
+        self._load([p for p, _s in ent])
+        return sorted(p for p, _s in ent)
+
+    def read(self, path: str) -> str:
+        if path not in self._text:
+            if path not in self._blobs:
+                ent = dict(self._entries(path))
+                if path not in ent:
+                    raise OSError("%s is not in the index" % path)
+                self._blobs[path] = ent[path]
+            self._load([path])
+        return self._text[path]
+
+    def local(self, path: str) -> str:
+        """A real file holding the staged bytes (for a tool that opens a path, e.g. --deep)."""
+        if self._tmp is None:
+            # proof-of-spec-check refuses an instance outside the tree it lives in, so the copy goes under the root.
+            scratch = os.path.join(self.root, ".scratch")
+            os.makedirs(scratch, exist_ok=True)
+            self._tmp = tempfile.mkdtemp(prefix="rcc_staged_", dir=scratch)
+        dest = os.path.join(self._tmp, path.replace("/", "__"))
+        with open(dest, "w", encoding="utf-8", newline="") as fh:
+            fh.write(self.read(path))
+        return dest
+
+    def close(self) -> None:
+        if self._tmp:
+            shutil.rmtree(self._tmp, ignore_errors=True)
 
 
 # ---------------------------------------------------------------- the reviewer limb
@@ -151,11 +277,11 @@ def last_status(text: str, words: set) -> str:
     return got
 
 
-def read_orders(proj_dir: str, rnd, ws) -> list:
+def read_orders(src, proj_dir: str, rnd, ws) -> list:
     out = []
     words = status_words()
-    for path in sorted(glob.glob(os.path.join(proj_dir, "task-orders", "*.md"))):
-        text = open(path, encoding="utf-8", errors="replace").read()
+    for path in src.glob(pj(proj_dir, "task-orders", "*.md")):
+        text = src.read(path)
         o = {"path": path, "stem": os.path.basename(path)[:-3], "id": tag(text, "to_id") or os.path.basename(path)[:-3],
              "status": last_status(text, words), "round": tag(text, "round"),
              "workstream": tag(text, "workstream"), "issued_by": tag(text, "issued_by") or "",
@@ -172,16 +298,16 @@ def read_orders(proj_dir: str, rnd, ws) -> list:
     return out
 
 
-def proof_state(order: dict, proj_dir: str, root: str, deep: bool) -> tuple:
+def proof_state(src, order: dict, proj_dir: str, root: str, deep: bool) -> tuple:
     """(ok, reason). Structural by default; --deep adds proof-of-spec-check.py (rc 0 = VALID)."""
-    paths = sorted(glob.glob(os.path.join(proj_dir, "deliverables", "*", order["stem"] + ".proof_of_spec.json")))
+    paths = src.glob(pj(proj_dir, "deliverables", "*", order["stem"] + ".proof_of_spec.json"))
     if not paths:
         return False, "no proof instance named %s.proof_of_spec.json under deliverables/" % order["stem"]
     reasons = []
     want = [c["id"] for c in order["criteria"]]
     for path in paths:
         try:
-            inst = json.load(open(path, encoding="utf-8"))
+            inst = json.loads(src.read(path))
             rows = inst["acceptance"]
             have = {r.get("criterion_id") for r in rows}
         except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
@@ -201,7 +327,7 @@ def proof_state(order: dict, proj_dir: str, root: str, deep: bool) -> tuple:
         if deep:
             checker = os.path.join(root, ".tools", "proof-of-spec-check.py")
             try:
-                rc = subprocess.run([sys.executable, checker, path, ",".join(want)], capture_output=True, text=True,
+                rc = subprocess.run([sys.executable, checker, src.local(path), ",".join(want)], capture_output=True, text=True,
                                     timeout=100, cwd=root).returncode
             except (OSError, subprocess.TimeoutExpired) as exc:
                 reasons.append("proof-of-spec-check did not finish (%s)" % exc)
@@ -215,11 +341,11 @@ def proof_state(order: dict, proj_dir: str, root: str, deep: bool) -> tuple:
 
 # ---------------------------------------------------------------- the grading rows
 
-def load_rows(files: list) -> tuple:
+def load_rows(src, files: list) -> tuple:
     """[(file, row dict)], count of fenced blocks that did not parse (printed, never silent)."""
     rows, bad = [], 0
     for path in files:
-        text = open(path, encoding="utf-8", errors="replace").read()
+        text = src.read(path)
         for m in FENCE.finditer(text):
             try:
                 doc = json.loads(m.group(1))
@@ -275,23 +401,24 @@ def grade_criterion(crit_id: str, order: dict, adj_rows: list, inv_rows: list, k
 
 # ---------------------------------------------------------------- the whole check
 
-def find_project(root: str, code: str) -> str:
-    hits = glob.glob(os.path.join(root, "org", "missions", "D*", "*", code, "project.json"))
-    if len(hits) != 1:
-        raise Usage("project %s: %d project.json found under org/missions/D*/*/ (want exactly 1)" % (code, len(hits)))
-    return os.path.dirname(hits[0])
-
-
 def check(root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep=False, max_age=DEFAULT_MAX_AGE_MIN,
-          reviewer_only=False) -> tuple:
-    """(lines, last_line)."""
+          reviewer_only=False, staged=False, env=None) -> tuple:
+    """(lines, last_line). staged=True reads the project's repository files from the git index (see Staged)."""
+    src = Staged(root, env) if staged else WorkTree(root)
+    try:
+        return _check(src, root, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only)
+    finally:
+        src.close()
+
+
+def _check(src, root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep, max_age, reviewer_only) -> tuple:
     lines = []
     macro = ""
     proj_dir = None
     if not reviewer_only:
-        proj_dir = find_project(root, code)
+        proj_dir = src.project_dir(code)
         try:
-            macro = json.load(open(os.path.join(proj_dir, "project.json"), encoding="utf-8")).get("macro_code", "")
+            macro = json.loads(src.read(pj(proj_dir, "project.json"))).get("macro_code", "")
         except (OSError, ValueError):
             macro = ""
     rv = reviewer_limb(sl, ctx, device, this_box, kind_of, macro, max_age)
@@ -303,7 +430,7 @@ def check(root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep=Fal
         verdict = "MAY-CLOSE" if rv["state"] == "present" else "REFUSED"
         return lines, "ROUND-CLOSE project=- device=%s reviewer=%s orders=0 judgment=0 graded=0 ungraded=0 self_graded=0 verdict=%s" % (
             device, rv["state"], verdict)
-    orders = read_orders(proj_dir, rnd, ws)
+    orders = read_orders(src, proj_dir, rnd, ws)
     n_orders = len(orders)
     done = [o for o in orders if o["status"] == "complete"]
     open_ = [o for o in orders if o["status"] not in ("complete", "superseded", "cancelled", "canceled", "withdrawn", "retired")]
@@ -312,16 +439,16 @@ def check(root: str, sl, ctx, code, rnd, ws, device, this_box, kind_of, deep=Fal
         (" (" + ", ".join(o["id"].split(".")[-1] for o in open_) + ")") if open_ else ""))
     bad_proofs = 0
     for o in done:
-        ok, why = proof_state(o, proj_dir, root, deep)
+        ok, why = proof_state(src, o, proj_dir, root, deep)
         if not ok:
             bad_proofs += 1
             lines.append("  PROOF-BAD %s: %s" % (o["id"], why))
     lines.append("PROOFS mode=%s complete=%d proof_ok=%d proof_bad=%d" % ("deep" if deep else "structural", len(done),
                                                                          len(done) - bad_proofs, bad_proofs))
-    adj_files = sorted(glob.glob(os.path.join(proj_dir, "surprise-channel", "adjudications", "ADJUDICATION_v*.md")))
-    inv_files = sorted(glob.glob(os.path.join(proj_dir, "surprise-channel", "investigations", "INVESTIGATION_v*.md")))
-    adj_rows, bad_a = load_rows(adj_files)
-    inv_rows, bad_i = load_rows(inv_files)
+    adj_files = src.glob(pj(proj_dir, "surprise-channel", "adjudications", "ADJUDICATION_v*.md"))
+    inv_files = src.glob(pj(proj_dir, "surprise-channel", "investigations", "INVESTIGATION_v*.md"))
+    adj_rows, bad_a = load_rows(src, adj_files)
+    inv_rows, bad_i = load_rows(src, inv_files)
     lines.append("GRADING-ROWS adjudication=%d row(s) in %d file(s), investigation=%d row(s) in %d file(s), %d json block(s) did not parse" % (
         len(adj_rows), len(adj_files), len(inv_rows), len(inv_files), bad_a + bad_i))
     for o in done:
@@ -459,6 +586,26 @@ def selftest() -> int:
         reset()
         _lines, last = check(tmp, sl, sl.Ctx(tmp), None, None, None, this_box, this_box, kind_of, reviewer_only=True)
         case("--reviewer-only reads the first limb alone", last, "project=-", "reviewer=present", "verdict=MAY-CLOSE")
+        # --staged reads the index, not the working tree: a proof the index lacks is absent though the file is on disk.
+        reset()
+        genv = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
+        inst_rel = base + "/deliverables/0.9.0_WK_TEST_PROJ~1/TEST_PROJ.TO-1.one.proof_of_spec.json"
+
+        def g(*args):
+            return subprocess.run(["git", "-C", tmp] + list(args), capture_output=True, env=genv).returncode
+
+        def run_staged(**kw):
+            return check(tmp, sl, sl.Ctx(tmp), "TEST_PROJ", None, None, this_box, this_box, kind_of, staged=True, env=genv, **kw)[1]
+
+        git_ok = g("init", "-q") == 0 and g("add", "-A") == 0
+        results.append(git_ok)
+        print("%s  --staged selftest repo built" % ("PASS" if git_ok else "FAIL"))
+        if git_ok:
+            case("--staged with everything in the index is MAY-CLOSE", run_staged(), "orders=2", "graded=1", "verdict=MAY-CLOSE")
+            rm_ok = g("rm", "--cached", "-q", "--", inst_rel) == 0
+            case("--staged: a proof the index lacks is not graded as present", run_staged() if rm_ok else "git rm failed",
+                 "verdict=REFUSED")
+            case("without --staged the same working tree still reads the proof", run(), "verdict=MAY-CLOSE")
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     ok = all(results)
@@ -475,6 +622,7 @@ def main(argv: list) -> int:
     ap.add_argument("--deep", action="store_true")
     ap.add_argument("--max-age-minutes", type=int, default=DEFAULT_MAX_AGE_MIN)
     ap.add_argument("--reviewer-only", action="store_true")
+    ap.add_argument("--staged", action="store_true", help="read the project's files from the git index, not the working tree")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args(argv)
     if args.selftest:
@@ -486,7 +634,7 @@ def main(argv: list) -> int:
         this_box = resolve_this_box(ROOT)
         lines, last = check(ROOT, sl, sl.Ctx(None), args.project, args.round, args.workstream, args.device or this_box,
                             this_box, sl.kind_resolver(), deep=args.deep, max_age=args.max_age_minutes,
-                            reviewer_only=args.reviewer_only)
+                            reviewer_only=args.reviewer_only, staged=args.staged)
     except Usage as exc:
         print("ERROR: %s" % exc, file=sys.stderr)
         return 2
