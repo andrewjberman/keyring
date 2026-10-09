@@ -28,6 +28,11 @@ echo "$changed" | grep -qE '^org/critical_paths/change_management/.*_deploy_comp
 # Collect the ledger file(s) closed in this commit, and the SCRIPT paths they name.
 scripts=""
 for led in $(echo "$changed" | grep -E '^org/critical_paths/change_management/.*_deploy_completion\.md$'); do
+    # Fire on CLOSURE only (XB-20261009T143530Z-4849, 1.0.0_SA_CTO): since deploy_ledger.py open self-commits (@00d3393ff3), an
+    # OPEN ledger commit reached this loop before the deploy ran and wrote a false STALE finding. The FIRST Status line, as committed,
+    # must read CLOSED; the three forms deploy_ledger.py reads (`**Status:** X`, `**Status: X`, `## Status: X`) all match.
+    git -C "$WS" show "HEAD:$led" 2>/dev/null | grep -m1 -iE '^[#*[:space:]]*Status[*:[:space:]]' \
+        | grep -qE '^[#*[:space:]]*[Ss][Tt][Aa][Tt][Uu][Ss][*:[:space:]]+CLOSED' || continue
     got="$(git -C "$WS" show "HEAD:$led" 2>/dev/null \
         | grep -oE 'data/[a-z_]+/scripts/(gold|silver|bronze)/[A-Za-z0-9_.-]+\.py' | sort -u)"
     scripts="$scripts $got"
