@@ -31,6 +31,11 @@ re-queue carry over.
 **Start condition:** your tree carries b5a7a3a4b6 (`git cat-file -t b5a7a3a4b6` reads `commit`), and both halves of this act's
 pair are signed (the issuer tells you; see the record face).
 
+**RELEASED (AMENDMENT 1):** both halves are signed (COO @30b49ff843; `1.0.0_SA_CTO~Z` @50473b948e). Under its condition
+**C-f**, do NOT run step 2 (the stop) while a bbg cycle is running. Wait until the running cycle `20261009T170903Z` has written
+`cycles\bbg\20261009T170903Z.cycle.json`, then do steps 1 to 6. Record that cycle's record path and its `ended_at` in
+`bw1_stopped.out`, before the census.
+
 ## 1. THE ACT (site Z box)
 
 `<old>` is `C:\Users\Opal Bloomberg\Desktop\wk-harvest-runner-pin-c1be67f53c`; `<new>` is
@@ -89,6 +94,10 @@ This order touches none of them beyond the runner's own job.
   are signed.
 - The issuer rules the state dir: CARRY the old pin's (option (b) of the half). Re-queue reads the state dir's own cycle records,
   so a fresh one would lose bbg's 3 failed keys and reset the floor to yesterday.
+- **AMENDMENT 1 (2026-10-09 ~18:3xZ, issuer):** released on `1.0.0_SA_CTO~Z`'s half @50473b948e (msg 2984), with its C-f: the stop
+  waits for the running cycle 20261009T170903Z to write its record. `1.0.0_SA_CTO~Z`'s correction is accepted: the old records
+  carry no `failures`, so the carried state dir keeps the floor but re-queues nothing from before the pin (the 3 keys of
+  085753Z included). No criterion changes.
 - Precondition outside this order: `1.0.0_SA_CTO~Z`'s C-e for the bv-1 merge (site Z's census before its box-sync, `0.0.0_AB_MSTR~Z`).
 - Checks at the base: AC1 and AC2 are site-Z reads and cannot run from dell1; by bu-1's read today, AC1 would FAIL as expected
   (WORKDIR is the c1be67f53c pin) and AC2 would already match (the old pin's state dir is in use), so AC1 is the discriminator.
