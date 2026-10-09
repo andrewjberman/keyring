@@ -1360,3 +1360,81 @@
   confirmed by reading the diff (it removes the root log group and moves it into the module with
   `log_retention_days = 14`) rather than by trusting the commit subject; and step 0's IB-pr-391 read
   passes -- `irpt-commentary-composition-read-lambda` live at `ZZmWOFSA`, the invoke policy EXISTS.
+
+## IRPT_ANLREQ-D2-W7-S1 -- AMENDMENT 6 cannot pass AC3: the staged resident_installed.py lacks OPAL_RESEARCH_REVISION
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W7-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~7",
+  "surfaced_at": "2026-10-09T15:10:00Z",
+  "one_line": "With status_installed.py importing OPAL_RESEARCH_REVISION from resident_installed, the BUILD_ONLY irpt-status zip fails symbol closure (missing=1), because irpt-status's staged resident_installed.py row is pinned at 80a79a7462, which predates the constant (added 2c721e21f2); AC3 cannot pass while 'touch no other row' holds.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AMENDMENT 6: import OPAL_RESEARCH_REVISION from resident_installed, re-pin ONLY the status_installed.py row, touch no other row; AC3 (symbol closure of both built zips) passes.",
+  "world_is": "BUILD_ONLY irpt-status (sha256 955ddea3d7baba1386fb95e2cd518dd46e1bd3bbce147122a2ff3de306282c9c): `symbol_closure modules=37 pairs=116 missing=1` -- `MISSING status_installed.py:107 imports OPAL_RESEARCH_REVISION from resident_installed`. git diff 80a79a7462 HEAD on reports/resident_installed.py is 147 insertions, 7 deletions (OPTIONAL_QUEUES, v2 report validator, OPAL_RESEARCH_REVISION, opal_map, and AR-g-13 resident polling), so re-pinning that row ships all of it and changes the census beyond status_installed.py. Deploying the status_installed.py pin alone would also fail at import in the Lambda. AC1 7 of 7 OK and AC5 3 passed at pin 2a69da80ec.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/checks/r71/symbol_closure.py <irpt-status zip> at 2a69da80ec",
+      "git log -S OPAL_RESEARCH_REVISION -- infra/aws/lambda/investor-reporting/reports/resident_installed.py -> 2c721e21f2",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-status staged_from resident_installed.py pin 80a79a746284"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W7-S2 -- the fix breaks three tests in reports/tests/test_status_installed.py (outside paths)
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W7-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~7",
+  "surfaced_at": "2026-10-09T15:10:00Z",
+  "one_line": "reports/tests/test_status_installed.py's fake policy accessor asserts policy_id == si.REPORTING_POLICY_ID, so composing with the research revision (reporting_policy is now also called with irpt-ycdgen-research-v1) fails 3 of 7 tests there; that file is not in this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "spec_asserts": "AMENDMENT 6 names only status_installed.py, the new test and the source map; no existing test is expected to change.",
+  "world_is": "pytest test_status_installed.py + new test at 2a69da80ec: 3 failed (compose_ports..., the_boundary_installs..., unsigned_events...), 4 passed; each `AssertionError: 'irpt-ycdgen-research-v1' == 'irpt-x10-v1'` at active_policy line 53. Fix is in that file: let active_policy/pending_policy return the real row for any other revision and flip state only for REPORTING_POLICY_ID. Not done here (outside the write grant).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py:50-55 at 2a69da80ec",
+      "python -m pytest -q infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W7-S3 -- AMENDMENT 7 dispositions for D2-W7-S1 and D2-W7-S2, and a stale expectation in test_status_installed.py
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W7-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~7",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "D2-W7-S1 disposed: status_installed.py now derives the revision from the packaged registry and no longer imports the constant, so resident_installed.py stays at 80a79a7462. D2-W7-S2 disposed: the fake active_policy flips only the X10 id. Also, test_status_installed.py asserted 6 operations/routes though the AR-y-22 original route makes 7; I updated those expectations to pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 7: test_status_installed.py's 7 tests pass after the fake is changed; no other expectation changes.",
+  "world_is": "The file holds 4 tests (7 was the count with the 3 revisions-file tests); test_the_boundary_installs asserted 6 operations and 6 routes and a 5-entry owner_read_modes, stale against the analysis-request-original route (AR-y-22). Adding that route to the three expectations makes the 4 pass; the revisions file now has 6 tests (3 new arms).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py -> 4 passed",
+      "3e59dc5d6e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
