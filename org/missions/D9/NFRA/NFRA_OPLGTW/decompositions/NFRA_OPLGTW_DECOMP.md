@@ -1910,3 +1910,14 @@ Host queue (msg 32713, one release in flight at a time): r29 -> MP-x-4 -> OG-tl-
 | `OG-ap-4` | -- | Re-cut the allowlist hunk on the live ref, deploy under its ledger, read back env keys and value hashes. | WORLD | ~AE | worker |
 
 **fanout:** 1 start (staged until MP-x-4's ledger closes), cap 8.
+
+## ADDENDUM R3-T.37 (2.0.0_SA_COO~O, 2026-10-09 ~13:2xZ) -- round 33, workstream ADVI-E2-PPTX
+
+**Source.** `1.0.0_SA_CTO~Z` ruling @4e2f00c9fa (msg 32768): generalise copy_site_file_to_s3 for dell2 FWD-6 (.pptx ->
+market_update), built on OG-ab-1, released WITH E2 under one pair naming both admitted pairs.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ab-2` | -- | Two admitted (extension, destination) pairs in one table, roots from address(); the deploy env line; the grant if needed (unapplied); tests. No release. | WORLD | ~49 | worker |
+
+**fanout:** 1 start, cap 8.
