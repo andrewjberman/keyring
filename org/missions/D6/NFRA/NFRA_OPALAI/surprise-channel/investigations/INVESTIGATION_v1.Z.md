@@ -2486,6 +2486,25 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CLOSE_RUN_CARD_20261002.md step 1: on GATE: PASS 'a window titled Opal_Agent Analyst opens' and the run proceeds to colleague messages; prompt.md 'On launch' arms the Teams engine every session.",
     "world_is": "The window opens but serves nothing until someone types into it. Interim disarm: the operator types one first turn ('Run your On launch steps') in the Analyst window. Durable fix candidate (issuer's to cut): the launcher passes an initial prompt to claude.exe so the On-launch steps run unattended.",
     "notes": "Separate from row Z-S62 (ARMED, 1.0.0_SA_CTO~O): opal_asker_query is refused write_class_denied for every tier on the live gateway, so neither close-run arm can grade as written until the next gateway release; a portal question now reads write_class_denied, not asker_no_profile."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W24-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~24",
+    "surfaced_at": "2026-10-09T09:47:59Z",
+    "one_line": "OA-f-9 AMENDMENT 3 / AC5 is not in the order file in the worker worktree: the checker reads 4 criteria and the last <status> is pending.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "proof-of-spec-check on the A3 instance: 'invocation-alignment: 4/4 comparable row(s) match ...; NOT COMPARABLE: 1 row(s) name no criterion in the TO'; the order file is outside my <paths>, so I did not add AC5 or flip <status> (last <status> line 226 = pending). AC5 f9.AC5.sh PASS exit=0 at nested c9983bd."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker face carries AC5 and the order flips to complete after rc 0.",
+    "world_is": "The order file at the worktree HEAD carries AC1-AC4 only and is outside the worker write grant, so the complete flip and the AC5 criterion text are the issuer's to land."
   }
 ]
 ```
