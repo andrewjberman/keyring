@@ -99,6 +99,14 @@ PASS. Report once per phase: literal outputs, commits, rows.
 - Pre-cut: tl1.AC1 base FAIL as expected (record absent); tl1.AC2 base FAIL as expected (record absent); the json reader
   reads 4 ids (sha256 prefix bd206c964417adfb). rl15_attest.py gains the TL1_DIGEST rule in the issuance commit.
 
+- A1 (issuer, 2026-10-09 ~12:1xZ, on BLOCKING row Z-W48-S1): the one-file release commit on `rel-nfra-oplgtw-tl1` is
+  refused by the owned-paths lane gate because the release tree (cut at the host's base) carries no copy of this
+  order. RULED: that ONE commit (`infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` only) is made with the AUDITED escape
+  `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL`, reason naming this amendment; no other commit, path or branch uses it,
+  and no other gate is overridden. `tl1_release.json` records `base_sha` = the stage commit `4514246d65` (r29 +
+  meeting_allowlist.json, row Z-W48-S2) so AC1 measures the one script change; the applier's `DEPLOY_BASE_REF` stays
+  the host's live ref. Graded by no gate limb as a modification (placeholders NONE).
+
 <status>pending</status>
 <round>33</round>
 <workstream>TRNSPT-ALLOWLIST</workstream>
