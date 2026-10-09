@@ -32,8 +32,10 @@ only after `/canonical-flow`'s LIVE-PRODUCTION PROBE (run from its file at HEAD)
 look at the screen (`/unstick <serial> --peek`) that names which surface has the keyboard. Nothing moving is not proof of
 stalled and never licenses a kill. **None applies -> EMPTY TICK: if `python .tools/open-calls.py mode get --part empty_tick` reads `state=on` (the
 `/keep-driving` switch), run `/next-calls <CODE> --drive` and execute its SEQUENCE
-(NOW + WHILE WAITING), queueing each call with `open-calls.py add`; repeat until it returns no FREE option, then the row
-reads `NOTHING-LEFT: <blocks + queued call ids>`** (Andrew-direct 2026-10-09 ~00:0xZ, CTO deliverables `ANDREW_DIRECT_20261009_000xZ_*`).
+(NOW + WHILE WAITING), queueing each call with `open-calls.py add`, until it returns no FREE option; then `python .tools/unblock.py
+tick --serial <you> --project <CODE> --result nothing|work`. `THIRD-EMPTY-TICK` (two empty ticks, nothing opened on the third)
+-> write your position to the CRO with `/unblock`; `WAITING` -> keep running `/next-calls`; `RESUME` -> drive on the signed fold**
+(Andrew-direct 2026-10-09 ~00:0xZ and ~02:3xZ; records `ANDREW_DIRECT_20261009_000xZ_*`, `..._023xZ_*`).
 
 ## 2. The obligations, in this order, every tick
 
