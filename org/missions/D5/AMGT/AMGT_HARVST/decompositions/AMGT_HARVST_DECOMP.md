@@ -3739,3 +3739,25 @@ the merged commit (a WORLD act under its own pair); the live read of bbg's next 
 **Checks dry-run at the base before the cut:**
 - `bv-1` AC1 base: FAIL as expected (no test file). AC2 base: PASS (53 passed). Full `lib/opal_data_harvest` suite at the base:
   5 failed, 770 passed, 3 skipped (pre-existing; named in the order).
+
+## 92. ROUND 79 -- the bbg live cycle under round 78's code (`1.0.0_SA_CTO~DELL1` msg 2937, `ledger/ROUND_ANALYSIS.round78.md`), 2026-10-09 ~18:0xZ
+
+Rounds 77 and 78 MAY-CLOSE. bv-1 is merged at b5a7a3a4b6 (on CLOUD). No live completed cycle has been read, so FWD-18's acceptance
+is unmet. The analysis's enrichment list: (1) read bbg's next cycle to its end under the new code; (2) wsj and barrons wait on
+Andrew's hand sign-in (site-Z call 9f24), and no cell is cut for them; (3) the hop-3 page, cut once (1)'s completed record
+exists; (4) the issuer dispositions the 18 stale remediation rows in round 79's packet (an issuer act, not a cell).
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bw`**.
+- **Fan-out:** 1 of 1 chain (bw-1 -> bw-2), cap 8.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bw-1` | `bw-1` | **Re-pin site Z's runner to b5a7a3a4b6**, keeping the old pin's state dir and runtime root (cycle history and re-queue carry over). The installer is run with `-Plan` first, then once; the reaper dry run lists the runner EXEMPT; the old pin is the rollback. Under its own never-widen pair. | WORLD | `0.7.0_AE_CloudOps~ZW` |
+| `HVST-bw-2` | `bw-2` | **bbg's first post-re-pin cycle, read to its end.** The BBG CYCLE line, `requeued`, every failure with its detail verbatim, the runner log, the record copied. AC3 (judgment, CVO): 242 of 242 attempted, failures with detail, a stop only on the cap. | LOCAL | `0.7.0_AE_CloudOps~ZW` |
+
+**Then (not orders):** the hop-3 page on bw-2's record; the wsj and barrons reads on Andrew's sign-in.
+
+**Checks dry-run at the base before the cut:**
+- `bw-1` AC1 and AC2 are site-Z reads and cannot run from dell1 (by bu-1, AC1 would FAIL: WORKDIR is the old pin). AC3 base: FAIL
+  as expected (no such file).
+- `bw-2` AC1 and AC2 base: FAIL as expected (no such file).
