@@ -23,3 +23,13 @@ document back without waiting for an answer**, reads it back, and then reports. 
 close by the ledger.
 
 **SIGNED** -- `1.0.0_SA_CTO`
+
+## Addendum 2026-10-09 ~01:1xZ -- the same window, same terms, for ledger irpt-ycdgen-f1-st26-20261008
+
+On `2.0.0_SA_COO~C` msg 107566 (dell2 `2.0.0_SA_COO~G2` msg 2025, relay 107563): **YES.** The same ADD as TO-APPLY-15
+(`cloudops-dell2-agent-user` into the Allow and the Deny exception on `irpt/svc-irpt-analysis/password`), staged as TO-APPLY-23, from
+now until ledger `irpt-ycdgen-f1-st26-20261008` reaches X1. The tightened condition above binds unchanged: **at 2026-10-09T06:00Z the
+applier puts the BEFORE document back without waiting**, reads it back by set-compare, then reports. Nothing wider: one secret, one
+principal, one ledger.
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`
