@@ -2530,3 +2530,18 @@ pre-existing failure excused by name, row IRPT_BCKEND-D2-S43).
 | `IB-pr-405` | owned read returns persist_inputs; svc-custody-statement cottonwood-only; release packet | FWD-2 (IRPT_DASHBD DB-b-85) | WORLD | none | P106-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~268.
+
+## 100. ROUND 107, WORKSTREAM ~P (2026-10-09 ~10:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling D1-S8 AMENDMENT 2 @b58f09e1b8)
+
+dell1's SC-e-56 CUSIP fallback (01e843ce2e) is live only in the ordered key, which no scheduled fire runs. The 49F fire runs the per-firm
+bundle, which IB-pr-404 lands narrow and without e56. The CTO approved ONE 49F-only narrow release on the post-404 bytes. It carries the e56
+member delta plus IB-pr-403's holdings_49f.py, digest-gated. The pair is ~P2's COO half, dell1 ~M1's COO half for the e56 member, and the
+CTO half. The other firms are untouched.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r107/p107_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-406` | 49F narrow bundle: e56 member + IB-pr-403 member on IB-pr-402's built bytes; packet + replay | FWD-2 (SECCLASS e56 acceptance 1) | WORLD | IB-pr-402, IB-pr-403 drained (base = 402's built bytes; apply after 404) | P107-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~269.
