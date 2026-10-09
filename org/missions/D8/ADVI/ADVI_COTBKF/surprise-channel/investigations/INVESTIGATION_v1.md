@@ -4388,3 +4388,29 @@ round.** Never edit an existing row.
   "world_is": "Met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-W70-S1 -- producer manifest writes method_version 2 for a source whose entry declares a different method
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W70-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~70",
+  "surfaced_at": "2026-10-09T14:50Z",
+  "one_line": "The producer's build_manifest() writes method_version = METHOD_VERSION (2, the custodian-equity method row) into every returns manifest regardless of the source entry, so Cottonwood's built manifests state method_version 2 beside valuation_source=positions_x_as_traded_close while the rows carry method_version NULL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py build_manifest(): \"method_version\": METHOD_VERSION (line ~1756), no src read",
+      ".scratch/advi_cotbkf/ard_cottonwood_r43/date=2026-06-22/manifest.json: method_version 2, valuation_source positions_x_as_traded_close, fee_treatment net_of_fees; rows written with method_version NULL (adapter, rule commit d41d82a633)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~70/ard_cottonwood_manifest.json (3325 day_files, each with a manifest_sha256)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-aq-1: the manifest carries the entry's three method fields so a consumer can reject on the method; the producer was not to be edited.",
+  "world_is": "The three fields are present and correct on all 3,325 built manifests, but the manifest's method_version field still names the producer's version 2 (whose dim_return_method row names the custodian's whole-account value as V), a second claim a consumer reading method_version rather than the fields would take as the custodian method. Local build only; nothing served. Producer is IRPT_DASHBD's file and was not edited."
+}
+```
