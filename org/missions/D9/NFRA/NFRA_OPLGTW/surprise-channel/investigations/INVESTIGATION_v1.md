@@ -11440,3 +11440,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Disarm: cherry-pick 6b65ca5a52 (or take it at the drain) and run python .tools/proof-of-spec-check.py on the committed instance with ids AC1,AC2; flip <status> on rc=0."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W49-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~49",
+  "surfaced_at": "2026-10-09T14:55:41Z",
+  "one_line": "RESOLUTION of NFRA_OPLGTW-Z-W49-S5 by issuer ruling: the in-process checker run against the box/sitez schema (@6b65ca5a52) is the validation of record; the <status> flip is NOT committed because the TO issuance gate re-runs the checker at the branch schema (rc=2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ message from 2.0.0_SA_COO~O, ruling \"OG-ab-2 S5 by issuer\": accept the in-process run against org/standards/PROOF_OF_SPEC.schema.json @6b65ca5a52 (box/sitez); record it in the instance; append a resolution row; flip the status",
+      "RUN python .scratch/vcheck.py <instance> AC1,AC2 -> VALID (rc=0), surprises-frame: 5 entries resolved before this row; recorded in the instance compiler_tools"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Worker rule: only the real checker command at rc 0 flips <status>.",
+  "world_is": "The issuer ruled the in-process run against the box/sitez schema as the validation of record. Branch copy of the schema stays corrupt at e7c10e5b4b; box/sitez was not merged and nothing under org/standards/ was edited. The worker's flip commit was REFUSED by .tools/to-pipeline-gate.py (flips to complete but its instance is NOT VALID rc=2, the branch schema); its offered escape is a pipeline-override line, which the worker did not use (no gate override). <status> stays pending on this branch; the issuer flips it after the drain or authorises the override. Row S5 is not edited; this row is its resolution.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Resolves NFRA_OPLGTW-Z-W49-S5. S1 and S4 go to the E2 release cell."
+}
+```
