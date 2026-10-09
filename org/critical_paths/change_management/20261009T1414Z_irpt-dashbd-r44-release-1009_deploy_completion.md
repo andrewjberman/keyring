@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| P1 | verify | source-map re-pin + built-zip member census vs live zip + targeted plan | upload_member_diff exactly the two member paths, reporting_policies.json equal live, Plan: 0 to add, 1 to change, 0 to destroy |  | OPEN |
+| P1 | verify | source-map re-pin + built-zip member census vs live zip + targeted plan | upload_member_diff exactly the two member paths, reporting_policies.json equal live, Plan: 0 to add, 1 to change, 0 to destroy | source-map re-pin 072d27a4a1; built oNgy4rnr...; member census vs live zip (S3 version a.YllA9SmwwfY34NlajqOaNsex2bBZAy): differ exactly account_activity_lots.py + handler.py, reporting_policies.json equal live, 19 of 19 members; upload version qh361rTWYO2VtgsirsJXq6kiqJEVBDpZ (f0d129281f); targeted plan 'Plan: 0 to add, 1 to change, 0 to destroy.' | CLOSED 20261009T143249Z |
 | D1 | activation | one safe-apply of the saved plan, infra/aws/terraform/investor-reporting/reporting-gold | Apply complete, 1 changed |  | OPEN |
 | V1 | verify | readback CodeSha256 equals built, post-apply plan No changes | get-function-configuration CodeSha256 = built sha256; No changes |  | OPEN |
 | S1 | verify | first scheduled fire sizing read (85% of 900 s = 765 s, 85% of 2048 MB = 1740.8 MB); issuer reads REPORT line and closes this leg | REPORT line Duration and Max Memory Used against the 85% lines |  | OPEN |
@@ -20,3 +20,4 @@
 ## Log
 
 - 20261009T141409Z OPENED by 0.9.0_WK_IRPT_DASHBD~70 with 4 leg(s)
+- 20261009T143249Z LEG P1 closed: source-map re-pin 072d27a4a1; built oNgy4rnr...; member census vs live zip (S3 version a.YllA9SmwwfY34NlajqOaNsex2bBZAy)
