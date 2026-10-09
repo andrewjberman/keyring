@@ -3,7 +3,7 @@
 **Status: DRAFT -> ISSUED in one issuance.**
 
 **Cut on:** `1.0.0_SA_CTO~DELL2`'s ADDENDUM 5 @abbf204c7e (msg 2921).
-- FWD-3 is graded PARTIAL: REALIZED except the `account_day_value` levels of B3S728504 and B3S728506.
+- FWD-3 is graded PARTIAL: REALIZED except the `account_day_value` levels of acct#79d02c2c and acct#4a890dd1.
 - Cell 1 is a read-only trace of D2-S45's ~2.45x factor.
 - The repair or the blanking under a pair is cut on the trace's result.
 
@@ -26,7 +26,7 @@
 
 | cell | item | serves | risk | depends_on | slot |
 |---|---|---|---|---|---|
-| `CB-ad-1` | read-only trace of the r28/r26 day-value factor on B3S728504 and B3S728506 to the input that moved | FWD-3 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~57` |
+| `CB-ad-1` | read-only trace of the r28/r26 day-value factor on acct#79d02c2c and acct#4a890dd1 to the input that moved | FWD-3 | LOCAL | none | `0.9.0_WK_ADVI_COTBKF~57` |
 
 **Fan-out:** `1 of 1 chains, cap 8`.
 - `CB-ad-2` (the repair, or the ABSENT blanking under a pair) is cut on `CB-ad-1`'s class. It is a dependent cell, not cut now.

@@ -71,6 +71,11 @@ Separately, the adapter `data/assets/scripts/silver/commonwealth_account_return_
    `data/assets/scripts/silver/tests/test_commonwealth*.py`, the cot gold files this project changed, AND the regenerated tracked
    manifest. It expects 0 hits and prints the denominator. Commit the test ALONE first; it must fail at the base.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~17:0xZ; row W79-S1).** The grant adds `data/assets/scripts/silver/commonwealth_signs.py`.
+- One client account id sits in a message string (around line 71). The HEAD census missed it because its scope did not include this
+  file. Replace it with a synthetic, pattern-safe id. Nothing else in the file changes.
+- Row W79-S2 is ACCEPTED: the shapes are bounded (no hit inside a longer capital/digit run), as stated in the test's docstring.
+
 ### ACCEPTANCE
 
 <criterion id="CB52az1-AC1" cell_refs="CB-az-1"><invocation>python -m pytest data/assets/scripts/silver/tests/test_cotbkf_code_no_account_ids.py -q</invocation><expect>passed</expect></criterion>
@@ -94,6 +99,7 @@ base.
   row (id `ADVI_COTBKF-D2-W79-S<k>`, `"fabric": "dell2"`, carrying no account id). Do not weaken the test.
 
 <paths>
+data/assets/scripts/silver/commonwealth_signs.py
 data/assets/scripts/silver/commonwealth_asf_source.py
 data/assets/scripts/silver/commonwealth_div_dating_trace.py
 data/assets/scripts/silver/commonwealth_scale_trace.py

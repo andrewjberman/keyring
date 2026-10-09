@@ -79,7 +79,7 @@ OUT="$(cd "$ROOT" && MTC_ACT_PATHS="$ACT_LIST" python "$TOOL" check --staged --a
 # Audited override: SEAT_GATES_OVERRIDE="reason" (org/git-author-override-audit.log). Any other dep_stage change, and any
 # commit that stages no project.json, never reaches it. Returns 1 only to refuse the commit.
 close_gate() {
-    local p old new code out rc last mode enf worst=0 pj sgd
+    local p old new code out rc last mode enf worst=0 pj sgd n rargs
     sgd="${OPAL_SEAT_GATES_ENFORCE_DIR:-$ROOT/org/mcp}"
     enf="$sgd/seat-gates.round-close.missions-tree-check.enforce"
     mode=WARN; [ -e "$enf" ] && mode=ENFORCE
@@ -98,7 +98,10 @@ close_gate() {
         [ "$old" != "$new" ] || continue
         code="$(basename "$(dirname "$p")")"
         rc=0
-        out="$(cd "$ROOT" && python .tools/round-close-check.py --project "$code" --staged 2>&1)" || rc=$?
+        n="$(git -C "$ROOT" grep --cached -h -o -E '<round>[0-9]+</round>' -- "$(dirname "$p")/task-orders/" 2>/dev/null | tr -d '' | sed 's/[^0-9]//g' | sort -n | tail -1)" || n=""
+        rargs=()
+        if [ -n "$n" ]; then rargs=(--round "$n"); else echo "WARN: missions-tree-check close-gate -- $code: no <round> in the staged task orders; grading all rounds." >&2; fi
+        out="$(cd "$ROOT" && python .tools/round-close-check.py --project "$code" "${rargs[@]}" --staged 2>&1)" || rc=$?
         last="$(printf '%s\n' "$out" | tr -d '\r' | tail -1)"
         case "$last" in
             ROUND-CLOSE\ *"verdict=MAY-CLOSE")
