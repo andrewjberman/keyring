@@ -23389,3 +23389,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W343-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~343",
+  "surfaced_at": "2026-10-09T15:09:03Z",
+  "one_line": "Two premises of AMGT-kk-3 read differently on the world: NU's served dossier description was ABSENT before the act (so 'still present' is vacuous for NU), and NU sentence 6 (to be restored whole) sits in company_description and was removed by the same act as an Item 5 line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "GO term 5 / CTO condition 4: after each write the served dossier description field (the 'What started as ...' text) must still be present. GO term 2: NU sentences 6, 11, 19 restored to the whole filing sentence.",
+  "world_is": "Read-only /thesis before any write (served_before.txt): dossier_sections.company_description status served for ASML (1535 chars), BABA (1945), PBR (721), SAP (2408); for NU it was status absent, len 0 (reason: 'The research update of 2026-Q2 has no Company description section'). After the writes the same four are served at the same lengths and NU is still absent: no description disappeared. NU sentence 6 is description sentence 6 of 10 (cites ITEM 5), so its whole-sentence restore (200 -> 414 chars) was built and then the sentence was removed with the nine other non-business description lines; 11 and 19 (investment_thesis) are whole in the written draft and 28 of 28 outside-section sentences are verbatim substrings of the filing (AC1 K3). Only the Item 4.B sentence (description 9) remains in NU's company_description.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~343/served_before.txt",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~343/served_after_NU_US_Equity.txt",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~343/AC1.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
