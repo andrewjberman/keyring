@@ -725,3 +725,64 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S4 -- disposition of W11-S1 (ARMED): the portal reader admits ticket_id beside input_id on DEV
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S4",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W11-S1"
+  ],
+  "one_line": "W11-S1 is disarmed: readSubmissionRequest admits ticket_id (^TCK-\\d{8}-[0-9a-f]{8}$) only beside input_id, and the wire type is regenerated from the schema, on portal DEV since 9988b426 (AR-v-11 AMENDMENT 2); the I1 step-3 body now passes the closed reader on the DEV build.",
+  "spec_asserts": "CTO round-1 analysis (msg 2770): 'W11-S1 (~V2): a disposition row names the portal reader fix, which landed on DEV as 9988b426. A ticket_id body passes the closed reader on the DEV build.'",
+  "world_is": "Portal origin/DEV 536d51da (which carries 9988b426) passes the issuer's re-run of ar_v_checks.py v11-form at ~06:5xZ: V11-FORM-OK pass=7, including 'the client admits ticket_id only beside input_id'. The test drives the real readSubmissionRequest: a body with input_id and a well-formed ticket_id is accepted; ticket_id without input_id, or malformed, is refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row(s) IRPT_ANLREQ-D2-W11-S1",
+      "portal 9988b426: src/pages/InvestorReporting/contracts/submission-request.ts (+3/-1), contracts/wire/AnalysisSubmissionRequest.ts (regenerated, source sha256 a6f224cd = docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json), __tests__/analysis-form-i1.test.tsx (+21)",
+      "issuer re-run on a detached worktree of portal origin/DEV 536d51da: V11-FORM-OK pass=7; V13-OPEN-OK pass=4"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in the portal client by AR-v-11 AMENDMENT 2 (DEV 9988b426), and the fixed reader is proven on the DEV build by the named test."
+}
+```
+
+## IRPT_ANLREQ-D2-S5 -- disposition of W11-S2: the I1 filing is marked on the ticket (source ticketcenter:i1); the date gate is gone
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S5",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:30:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-W11-S2"
+  ],
+  "one_line": "W11-S2 is answered: the I1 ticket CREATE sends source 'ticketcenter:i1', which the ticket service already stores; 'Request report' hides only on that marker; I1_FILING_SINCE is removed; a failed step 3 shows 'Retry analysis request' (portal DEV 7ce44f94, AR-v-11 AMENDMENT 1).",
+  "spec_asserts": "CTO round-1 analysis (msg 2770) ruling 5: 'W11-S2, record the filing path on the ticket: DONE by AR-v-11 AMENDMENT 1 (source marker ticketcenter:i1, DEV 9988b426). ~V2 files the disposition.'",
+  "world_is": "Portal DEV carries 7ce44f94 (marker, button gate, retry) under 9988b426. The ticket service accepts any source except the reserved dashboard_form: prefix, so no backend change was needed. The issuer re-run on DEV 536d51da passes 'never shows a Request report button on a new filing' and 'retries the analysis step without refiling' (V11-FORM-OK pass=7).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row(s) IRPT_ANLREQ-D2-W11-S2",
+      "portal 7ce44f94 (AR-v-11 AMENDMENT 1): source ticketcenter:i1; the date constant removed",
+      "infra/aws/lambda/ticket_center/lambda_function.py: SUBMIT_SOURCE_PREFIX = 'dashboard_form:' (:137) is the only reserved source; any other source is accepted",
+      "issuer re-run on portal origin/DEV 536d51da: V11-FORM-OK pass=7"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Answered by a durable marker the ticket already stores, replacing the date gate the worker flagged; the CTO ruled it DONE."
+}
+```
