@@ -2472,3 +2472,342 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "CTO~DELL2 ruling msg 2148: the seat-driven F1 moves to 49financial (svc's allowedFirmIds swapped cottonwood -> 49financial under a pair after st27). Whether any firm should carry an operations owner is a data question for the partner-onboarding owner, not this project."
 }
 ```
+
+## IRPT_YCDGEN-D2-S5 -- RESOLVES IRPT_YCDGEN-S16
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-S16: the analysis POST's success reply leaked internal_correlation_id (ENVELOPE_STATUS)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-ycharts-generate release 1 (live 2026-10-08 10:06Z) projects the success status like the refusal path; after-read 4 PASS: the deployed status envelope carr"
+    ]
+  },
+  "dismissal_reason": "irpt-ycharts-generate release 1 (live 2026-10-08 10:06Z) projects the success status like the refusal path; after-read 4 PASS: the deployed status envelope carries no internal_correlation_id (2.0.0_SA_COO~Y2 msg 1254, release1_ycg/RELEASE1_AFTER_READS.md).",
+  "spec_asserts": "IRPT_YCDGEN-S16 as filed.",
+  "world_is": "MEASURED: irpt-ycharts-generate release 1 (live 2026-10-08 10:06Z) projects the success status like the refusal path; after-read 4 PASS: the deployed status envelope carries no internal_correlation_id (2.0.0_SA_COO~Y2 msg 1254, release1_ycg/RELEASE1_AFTER_READS.md)."
+}
+```
+
+## IRPT_YCDGEN-D2-S6 -- RESOLVES IRPT_YCDGEN-D2-S1
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-S1: the dell2 F1 retry was blocked by construction (only Andrew on the Opal list)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Superseded: Andrew approved svc on the list (ANDREW_DIRECT_20261008_175xZ...); the svc runs then measured E5 (rows D2-S4, D2-W8-S1) and the seat arm moved to 49"
+    ]
+  },
+  "dismissal_reason": "Superseded: Andrew approved svc on the list (ANDREW_DIRECT_20261008_175xZ...); the svc runs then measured E5 (rows D2-S4, D2-W8-S1) and the seat arm moved to 49financial (CTO~DELL2 msg 2148; st28 @698651c9a9). Andrew's own run is unaffected (no allowedFirmIds).",
+  "spec_asserts": "IRPT_YCDGEN-D2-S1 as filed.",
+  "world_is": "MEASURED: Superseded: Andrew approved svc on the list (ANDREW_DIRECT_20261008_175xZ...); the svc runs then measured E5 (rows D2-S4, D2-W8-S1) and the seat arm moved to 49financial (CTO~DELL2 msg 2148; st28 @698651c9a9). Andrew's own run is unaffected (no allowedFirmIds)."
+}
+```
+
+## IRPT_YCDGEN-D2-S7 -- RESOLVES IRPT_YCDGEN-D2-S3
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-S3: the resident host had no Opal brand asset, so every Opal-path Overview ended LayoutRefused",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "st27 LIVE (TO-APPLY-st27 complete @936c0db0b4): V1 @5632e869f3 read load_brand resolving /opt/irpt-resident/e606008994-st27/ycharts/research/brand/ from the run"
+    ]
+  },
+  "dismissal_reason": "st27 LIVE (TO-APPLY-st27 complete @936c0db0b4): V1 @5632e869f3 read load_brand resolving /opt/irpt-resident/e606008994-st27/ycharts/research/brand/ from the running root, env brand vars [], logo 3853 bytes.",
+  "spec_asserts": "IRPT_YCDGEN-D2-S3 as filed.",
+  "world_is": "MEASURED: st27 LIVE (TO-APPLY-st27 complete @936c0db0b4): V1 @5632e869f3 read load_brand resolving /opt/irpt-resident/e606008994-st27/ycharts/research/brand/ from the running root, env brand vars [], logo 3853 bytes."
+}
+```
+
+## IRPT_YCDGEN-D2-S8 -- RESOLVES IRPT_YCDGEN-D2-W6-S1
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W6-S1: the generated AnalysisReport body could not equal the hand-edited committed type",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "YCD-v-6 regenerated the committed type from v2 and migrated its consumers; u6_checks regen PASS 134/134 (@e02ad46806); on portal DEV 38cc0ecf and CLOUD/box via "
+    ]
+  },
+  "dismissal_reason": "YCD-v-6 regenerated the committed type from v2 and migrated its consumers; u6_checks regen PASS 134/134 (@e02ad46806); on portal DEV 38cc0ecf and CLOUD/box via drain @94d866956b.",
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S1 as filed.",
+  "world_is": "MEASURED: YCD-v-6 regenerated the committed type from v2 and migrated its consumers; u6_checks regen PASS 134/134 (@e02ad46806); on portal DEV 38cc0ecf and CLOUD/box via drain @94d866956b."
+}
+```
+
+## IRPT_YCDGEN-D2-S9 -- RESOLVES IRPT_YCDGEN-D2-W6-S2
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W6-S2: three reader tests red, unrelated to either AnalysisReport schema",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u-6 AC3 amended to 'no reader newly red against CLOUD' (@39e5b55275); census PASS: 0 of 20 newly red; the reds are red on CLOUD too and belong to other cells (r"
+    ]
+  },
+  "dismissal_reason": "u-6 AC3 amended to 'no reader newly red against CLOUD' (@39e5b55275); census PASS: 0 of 20 newly red; the reds are red on CLOUD too and belong to other cells (route counts, an absent gitignored brand asset).",
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S2 as filed.",
+  "world_is": "MEASURED: u-6 AC3 amended to 'no reader newly red against CLOUD' (@39e5b55275); census PASS: 0 of 20 newly red; the reds are red on CLOUD too and belong to other cells (route counts, an absent gitignored brand asset)."
+}
+```
+
+## IRPT_YCDGEN-D2-S10 -- RESOLVES IRPT_YCDGEN-D2-W6-S3
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W6-S3: the generator rendered a union body as 'export interface', so the portal did not typecheck",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gen-wire.ts renders a top-level union as 'export type' (portal 1c306eb3; render diff 1 of 27 files); typecheck rc 0 on merged DEV 38cc0ecf (CTO~DELL2 msg 1366);"
+    ]
+  },
+  "dismissal_reason": "gen-wire.ts renders a top-level union as 'export type' (portal 1c306eb3; render diff 1 of 27 files); typecheck rc 0 on merged DEV 38cc0ecf (CTO~DELL2 msg 1366); landed on DEV on Andrew's word.",
+  "spec_asserts": "IRPT_YCDGEN-D2-W6-S3 as filed.",
+  "world_is": "MEASURED: gen-wire.ts renders a top-level union as 'export type' (portal 1c306eb3; render diff 1 of 27 files); typecheck rc 0 on merged DEV 38cc0ecf (CTO~DELL2 msg 1366); landed on DEV on Andrew's word."
+}
+```
+
+## IRPT_YCDGEN-D2-S11 -- RESOLVES IRPT_YCDGEN-D2-W7-S1
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W7-S1: the builder's --research filter omits .svg, so the logo would not ship",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Ruled at the release: st26/st27 builds pass the logo (and brand.json) via --member; st27 gate 'added members 3 of 3'; V1 read the logo (3853 bytes) from the run"
+    ]
+  },
+  "dismissal_reason": "Ruled at the release: st26/st27 builds pass the logo (and brand.json) via --member; st27 gate 'added members 3 of 3'; V1 read the logo (3853 bytes) from the running root.",
+  "spec_asserts": "IRPT_YCDGEN-D2-W7-S1 as filed.",
+  "world_is": "MEASURED: Ruled at the release: st26/st27 builds pass the logo (and brand.json) via --member; st27 gate 'added members 3 of 3'; V1 read the logo (3853 bytes) from the running root."
+}
+```
+
+## IRPT_YCDGEN-D2-S12 -- RESOLVES IRPT_YCDGEN-D2-W8-S1
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-W8-S1: the accepted analysis record carries no actor field",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Closed on its census (CTO~DELL2 msg 2111): the analysis owner is forced to the submitter (submission_service.py:115), so producer selection by owner is correct "
+    ]
+  },
+  "dismissal_reason": "Closed on its census (CTO~DELL2 msg 2111): the analysis owner is forced to the submitter (submission_service.py:115), so producer selection by owner is correct on that path; no code arm is owed. The census stays as the record.",
+  "spec_asserts": "IRPT_YCDGEN-D2-W8-S1 as filed.",
+  "world_is": "MEASURED: Closed on its census (CTO~DELL2 msg 2111): the analysis owner is forced to the submitter (submission_service.py:115), so producer selection by owner is correct on that path; no code arm is owed. The census stays as the record."
+}
+```
+
+## IRPT_YCDGEN-D2-S13 -- RESOLVES IRPT_YCDGEN-W6-S1
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-W6-S1: a finding of the superseded v1-additive u-6 attempt (df5280bce5)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+    ]
+  },
+  "dismissal_reason": "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3).",
+  "spec_asserts": "IRPT_YCDGEN-W6-S1 as filed.",
+  "world_is": "MEASURED: Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+}
+```
+
+## IRPT_YCDGEN-D2-S14 -- RESOLVES IRPT_YCDGEN-W6-S2
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-W6-S2: a finding of the superseded v1-additive u-6 attempt (df5280bce5)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+    ]
+  },
+  "dismissal_reason": "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3).",
+  "spec_asserts": "IRPT_YCDGEN-W6-S2 as filed.",
+  "world_is": "MEASURED: Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+}
+```
+
+## IRPT_YCDGEN-D2-S15 -- RESOLVES IRPT_YCDGEN-W6-S3
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-W6-S3: a finding of the superseded v1-additive u-6 attempt (df5280bce5)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+    ]
+  },
+  "dismissal_reason": "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3).",
+  "spec_asserts": "IRPT_YCDGEN-W6-S3 as filed.",
+  "world_is": "MEASURED: Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+}
+```
+
+## IRPT_YCDGEN-D2-S16 -- RESOLVES IRPT_YCDGEN-W6-S4
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RESOLVES IRPT_YCDGEN-W6-S4: a finding of the superseded v1-additive u-6 attempt (df5280bce5)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+    ]
+  },
+  "dismissal_reason": "Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3).",
+  "spec_asserts": "IRPT_YCDGEN-W6-S4 as filed.",
+  "world_is": "MEASURED: Superseded by the recut on v2 (CTO~DELL2 msg 1250): v1 stays byte-frozen and the generator reads v2; u-6 and v-6 complete (@eabd287eb3)."
+}
+```
+
+## IRPT_YCDGEN-D2-S17 -- cause of D2-S2: round-close-check reads the order id only from a <to_id> tag tree orders lack
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S17",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T04:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "CAUSE of IRPT_YCDGEN-D2-S2: round-close-check.py read_orders takes an order's id only from a <to_id> tag, which tree task orders do not carry, so every tree proof is compared to ''",
+  "spec_asserts": "round-close-check.py grades each complete order's proof instance against that order's own id.",
+  "world_is": "MEASURED in code at box/dell2: .tools/round-close-check.py:134 builds o['id'] = tag(text, 'to_id') or ''; IRPT_YCDGEN task-orders/*.md carry no <to_id> element (their id is the file stem, which proof instances name as to_id); :165 then refuses every instance ('names to_id <stem>, not '''). Proposed one-line fix: tag(text, 'to_id') or os.path.basename(path)[:-3].",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/round-close-check.py:130-166 at box/dell2 a58150512c",
+      "row IRPT_YCDGEN-D2-S2 (19 of 19 round-6 proofs PROOF-BAD)"
+    ]
+  },
+  "notes": "The tool is outside this seat's lane; routed to 1.0.0_SA_CTO~DELL2 as the gate's owner. Until it lands, round 6 cannot read ROUND_CLOSE on this check."
+}
+```

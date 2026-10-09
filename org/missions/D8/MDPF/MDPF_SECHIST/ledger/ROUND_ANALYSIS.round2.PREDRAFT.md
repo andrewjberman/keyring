@@ -56,3 +56,27 @@ Either FAIL cause: FWD-3..9 keep waiting, because each round enriches only once 
   stays held for Andrew.
 - **Casing (`2.0.0_SA_COO~H1` msg 1635):** a legacy form token such as "LTD" is clean for FWD-1. Casing across screens goes with FWD-8
   and MDPF_SECCLASS FWD-5, as above.
+
+## DRAFT AMENDMENT 2 (~04:3xZ) -- open call dell1-20261009T042652Z-813c (`2.0.0_SA_COO~H1`): may round 3 modify the daily pull?
+
+**Yes, both, as two cells under the PASS branch:** (a) the FWD-5 gap record plus the widened next-run request, and (b) the one added
+total-return level field (FWD-9 route 2a). Conditions:
+- `integrations/bloomberg/pipeline/etf_daily_pull.py` is a site-Z producer path, so each cell's deploy carries a never-widen pair with
+  `1.0.0_SA_CTO~Z`'s half. The apply runs where the producer runs; site-bound applies go through `~ZQ`/`~ZV` per ADDENDUM 2 of the
+  dell1-deploys record.
+- The widened request and the added field each change the day's Bloomberg draw, so each is quoted on MDPF_DEMQUE's books before its
+  first run, and the pair names the per-run row and field delta.
+- Neither cell is cut before the round-2 FWD-1 read (PASS branch only).
+
+## DRAFT AMENDMENT 3 (~04:4xZ) -- CORRECTS AMENDMENT 2: the pull edits need Andrew's word (`2.0.0_SA_COO~H1` msg 1700)
+
+Amendment 2's "yes" was this seat's error. Andrew's order
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md`
+still stands for `integrations/bloomberg/pipeline/` ("Unchanged"). It is a hold he set by name, and only he lifts it. His 2026-10-08 yes
+for SH-t-4 was "for that edit only". So:
+- the two round-3 pull cells (FWD-5 gap record and widened request; FWD-9 total-return field) are this seat's RECOMMENDATION, not a
+  ruling;
+- the edit is listed as an ACT ONLY ANDREW CAN DO (open-calls `kind=act`), with the REC: yes, both edits, each under
+  `1.0.0_SA_CTO~Z`'s half and a DEMQUE quote;
+- neither cell is cut without his word. Until then, under PASS, FWD-5's gap record (read side, FWD-4) and the blank-over-gap serving
+  are cut outside the pull. The pull-side fill and FWD-9's field wait on him.
