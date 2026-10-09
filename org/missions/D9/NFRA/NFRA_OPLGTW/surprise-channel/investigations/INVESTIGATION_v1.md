@@ -10111,3 +10111,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here (outside the cell and the paths): any change to app/server.py or app/oauth_as.py. A read that would decide the route: the gateway audit lake's token-endpoint records around 21:49Z (status and latency per refresh, no identifiers) for a 503 or a response over 30 s; remedy 2 (a short grace for the previous generation, with 4.0.0_SA_CRO~Z) covers every route."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:15:56Z",
+  "one_line": "The 49F dispatcher ignores the marker's date: each qualified record on schwab/08335338/meta/complete/ runs the gold chain for today's T-1, so 256 historical records would not start 256 runs for past dates but up to 256 dispatches of the same T-1 run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "FILE infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/lambda_function.py:229-265 (this worktree, equal to the deployed zip, CodeSha256 TjIWGFWkbUswLkA+mUac9NS+LRZ1q7o6lR1iQLb0kI4=, evidence_dispatcher_function.json): the accelerator branch grades only closure.status of the exact marker version; send_command passes only StartedByDispatcher, no Date.",
+      "FILE infra/aws/terraform/opal-assets/advi_49f_floor.tf:244-310: with Date empty the document runs 'chain_49f_entrypoint.py --production', which derives D from the trading calendar at run time; the same file's Date-parameter comment says --production 'would run the SAME date for every iteration of the backfill'.",
+      "RUN OG-c-2 precedent, deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 3: one record for 2026-09-15 produced one chain run for date=2026-09-15 (the T-1 of the write day), 30 of 31 keys re-PUT.",
+      "FILE advi_49f_floor.tf document tail: 'if StartedByDispatcher = true ... sudo shutdown -h +2' follows the entrypoint whatever its rc, so a REFUSED sibling that found the host stopped also schedules a halt; whether that can land inside a live 145 s run has never been exercised (INFERRED)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-bf-1 'The hazard you must plan around': hundreds of historical records could start hundreds of gold runs for past dates.",
+  "world_is": "The dispatcher reads no date from the record. A qualified historical record on 08335338 dispatches the production chain for T-1 (a date that is already served), once per record; the chain's mutex refuses concurrent runs, so the count of completed runs is bounded by time, not by records. Nothing writes a historical record on that prefix today, so the hazard is standing but unfired; Phase B would fire it. NEVER_WIDEN_ASK_OG-bf-1.md section 3 and 5 state the branches and four ways to sign.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
+}
+```
