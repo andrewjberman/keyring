@@ -5027,3 +5027,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "world_is": "After AMENDMENT 1 the source map is granted; safe-commit accepted the re-pin and the stamp."
 }
 ```
+
+## IRPT_DASHBD-D2-W78-S1 -- R44 sizing dry run read UNDER; Monday 2026-10-12 07:41 ET first scheduled fire kept as the acceptance read
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W78-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~78",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "R44 sizing: ONE dry run of 2026-10-08 on live oNgy4rnr read UNDER (377.4 s of the 765 s line, 1661 MB of the 1740.8 MB line; memory tighter at 95.4 pct of its line); ledger leg S1 closed; the Monday 2026-10-12 07:41 ET first scheduled fire stays the acceptance read against the same 85 pct lines, owner 2.0.0_SA_COO~D2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-103 step 5: add a row that keeps Monday 2026-10-12 07:41 ET as the acceptance read, with that clock and the 85 percent lines, owner 2.0.0_SA_COO~D2.",
+  "world_is": "The dry run (request bfac402b-2ddf-48c4-908a-8a298594e3a8, 7620 accounts, 585281 lots rows, 0 objects written under irpt/49financial/gold/ after invoke start, 2873 objects listed) reported Duration 377366.04 ms and Max Memory Used 1661 MB of 2048 MB. The dry run skips the upload stage, so the scheduled fire (writes on) is the read that includes upload cost and any day-to-day population growth; memory has 4.6 pct of headroom to the 1740.8 MB line, so the first scheduled fire is the read that confirms it. ACCEPTANCE READ KEPT: Monday 2026-10-12 07:41 ET first scheduled fire of irpt-49f-reporting-gold-lambda; pass lines Duration < 765000 ms (85 pct of 900 s) and Max Memory Used < 1740.8 MB (85 pct of 2048 MB); read from the REPORT line in CloudWatch; owner 2.0.0_SA_COO~D2. Ledger irpt-dashbd-r44-release-1009 is CLOSED with S1 proven by the dry run, so this row, not the ledger, carries the Monday read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~78/R44_SIZING_DRYRUN.json (REPORT line read from CloudWatch for the RequestId)",
+      "org/critical_paths/change_management/20261009T1414Z_irpt-dashbd-r44-release-1009_deploy_completion.md leg S1 closed and entry CLOSED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
