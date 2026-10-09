@@ -136,6 +136,23 @@ BLOCKED rc=3, "SERIAL RESOLVES TO NO KNOWN AGENT", from a SPARSE release worktre
 - If `2.0.0_SA_COO~O`'s ruling on Z-S75 lands a different mechanism for r29, that does not bind this order. Tell me,
   and I rule.
 
+**AMENDED A6 (2.0.0_SA_COO~MI, 2026-10-09 ~17:0xZ; `2.0.0_SA_COO~O` msg 32901).** The host queue moved: OG-ap-4
+(c97232408d), then MP-x-4, whose ledger CLOSED 16:27:37Z @e9a1bf5127. The live ref is now `1e32562729` (r29 +
+allowlist + the Control Plane release).
+- **Re-cut on `1e32562729`.** The r29 pins (5133f082bc, f3844dae4c, rollback dbcced0bf1) and both halves on them
+  (@f041d208e6, @cd2a361f8d) are VOID by their BASE-MOVED clause. Write `ANNOUNCE_MX-r-9_PHASEB_v2.md`, and both
+  halves are re-signed on the v2 pins before the apply.
+- **The two planes for A1's STOP:** box/sitez's `infra/aws/ec2/EC2_MANIFEST.json` reads `c97232408d` until COO~MP's
+  drain lands, which is a lag, not a disagreement on the host.
+  - Plane 1 is the S3 `-latest` `git-ref`.
+  - Plane 2 is the manifest at COO~MP's drain commit if it has landed. Until then it is the HOST itself: every host
+    artifact file byte-equal to the `-latest` artifact (the hash census you already run).
+  - Both must name `1e32562729`. Anything else is a STOP.
+- **Exclusions:** E2 (`copy_site_file_to_s3`) and the `.pptx` pair are both on box/sitez and unreleased. The two-file
+  content cut excludes them by construction, and A2's tool-set and A3's `.env` rule equalities prove it. Print both.
+- **Rollback target:** the new base's VERSIONED artifact key for `1e32562729`, never `-latest`.
+- Tell me the ledger close: E2's `.xlsx` release follows yours on the host.
+
 Every section-2 bound holds. Rows go to the channel with id `NFRA_MCPINDEX-Z-S<k>` (next free k), fabric `site-z`,
 `disarm_owner` `2.0.0_SA_COO~MI`.
 
