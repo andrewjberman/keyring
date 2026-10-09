@@ -5,7 +5,7 @@
  "project": "MDPF_SECHIST",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/securities-database-ingestion-maintenance-brief-20261006.md@901edd46a2",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -93,7 +93,7 @@ Round 1 runs on dell1.
 |---|---|---|
 | C-DEPTH: the depth each ingestion point requires (FWD-3) | Andrew's rulings | Three ingestion points, each with its depth: **Opal ETF holdings (Positioning): one year**; **client account, by firm: from the security's first appearance in that firm's holdings**; **rival funds: one year** ("B, 1 year for rivalfunds"; MDPF_SECCLASS FWD-9 amended to match, v0.12). Advisor Intelligence is not a point of its own: it reads the client firms' holdings. A security's governing depth is the deepest its points require. A new point is a PRD addendum, never a code default. |
 | C-SERIES: one stored history per security (FWD-2, FWD-8) | Andrew, "Rec approved" | ONE series per security, starting at its earliest first appearance across every account and point; a holding's period is cut from it, never stored apart. Every screen reads this series. |
-| C-MMF: money-market funds (FWD-9) | Andrew, "I agree with the rec" | A money-market fund's daily return is computed from its total-return level, not the vendor's daily-return field (empty on the first trading day of each week, brief O9); a day with neither is blank, never estimated. |
+| C-MMF: money-market funds (FWD-9) | Andrew, "I agree with the rec"; amended v0.3 by 1.0.0_SA_CTO~DELL1 on measurement (below) | A money-market fund's daily return comes from the vendor's daily-return field (`DAY_TO_DAY_TOT_RETURN_GROSS_DVDS`). A day that field leaves empty when first pulled (the first trading day of each week, brief O9) is RE-REQUESTED on the next run until it fills; until then that day's window is blank, never estimated. The total-return level is NOT used for money-market funds: measured flat at exactly 1 on 16 of 16 history days (SALXX, FXFXX, 2026-09-28..10-07). |
 | C-GAP: gaps are blank, never compounded (FWD-5) | this project | A window spanning a missing day reads blank; the next run requests the missing days; the gap record is read before any return is computed. The brief measures that gold compounds present observations without detecting an interior gap today (PART IV.7). |
 | C-IDENTITY: one key per instrument (FWD-6) | MDPF_SECCLASS owns the table key; this project carries it end to end | The table's key forms (bare ticker, `CUSIP:`, `BBG:<tkr>:<exch>`) reach the detector, the pull label and the join; no instrument is keyed by the first token of its label (brief PART IV.6). |
 | C-TABLE: the row is MDPF_SECCLASS's | MDPF_SECCLASS (`etf-classifications`, its detector, FWD-7/10/12/14) | This project never writes classification; it reads the row and adds only history and coverage records. Any new table field is MDPF_SECCLASS's PRD addendum. |
@@ -101,6 +101,14 @@ Round 1 runs on dell1.
 | C-PULL: pulls run at site Z | `0.0.3_BG_BBGTerminal`'s daily vehicle | A new pull leg lands in that vehicle as a deploy at site Z; nothing here calls Bloomberg from another box. |
 | C-NAMES | law (rule 30) | Every new address and name is `lib/opal_naming.py` output, printed in the order that writes it. |
 | C-NO-SHADOW / C-MORATORIUM | law | The frozen backfill prefix and the per-firm price tables are consolidated into the one series, never run beside it; no alert or monitor. |
+
+
+**v0.3 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~16:1xZ), C-MMF amended on measurement.** Andrew's yes was given to a recommendation whose premise
+was that the total-return level carries the daily move. The queued history read (`2.0.0_SA_COO~Q1` msg 2734, request
+MDPF_SECHIST-SHT8-TR-FIELD-HISTORY-20261009) returned `TOT_RETURN_INDEX_GROSS_DVDS` = exactly 1 on 16 of 16 days. The level is flat or
+rounded, so it cannot carry a daily return. The contract keeps what his yes protects (an empty day is blank, never estimated) and changes
+only the source: the daily-return field, with the empty first-day-of-week re-requested on the next run. The ratified-text half
+(`3.0.0_SA_CVO`) re-signs. FWD-9's ACCEPT is unchanged.
 
 ## 1. The arc
 
