@@ -10137,3 +10137,152 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done: no edit to the check script or the order's expect (outside my paths). A remedy for the issuer: print the pytest summary before `passed N`, or drop the parenthetical, in rf1.AC2.sh."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W42-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~42",
+  "surfaced_at": "2026-10-08T23:25:32Z",
+  "one_line": "The grant-writer Lambda ships its own copy of data_entitlement.py and the contract, pinned at the manifest's deployed_commit; until it is rebuilt from a commit carrying this cell it refuses every calendar_months grant, and test_grant_writer_stages_the_contract_only_from_the_standard already fails on the new contract bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (this worktree, after the cell) python -m pytest tests/test_schwab_host_inputs.py: test_grant_writer_stages_the_contract_only_from_the_standard FAILED 'At index 27 diff: b'3' != b'4'' (the package staged from the pinned commit carries contract_version 1.3; org/standards now carries 1.4). The same file's other two failures (an env-input count 19 vs 18, 52 vs 51) read unrelated to this cell; not run at the cut.",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_schwab_host_inputs.py:150-171 reads the package through infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py from the manifest's deployed_commit; the writer's validation is app/data_entitlement.py parse_scope, which this cell changed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Order OG-cm-1 bounds: built and held on the branch; the release sets Alyssa's and Andrew's grants to 13 months.",
+  "world_is": "The operator writer (ops/schwab_entitlement_admin.py) and the admin door are in the gateway tree and carry the new rule. The Lambda that actually writes grants through app/admin_grants.py narrow/widen runs its own packaged parse_scope, so a 13-month grant written through it is refused as 'carries only its mode' until that package is rebuilt and the manifest's deployed_commit moved to a commit carrying this cell; the contract-staging test fails until then. Both are release-time acts outside this order's paths.",
+  "notes": "Release checklist item: rebuild and redeploy the grant-writer package after merge (an AE lane act; never-widen applies to the grant itself, not to the code), then re-run test_schwab_host_inputs.py."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W42-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~42",
+  "surfaced_at": "2026-10-08T23:25:32Z",
+  "one_line": "The measured 280-date availability() figure (0.0014 s over 283 faked qualified dates) excludes all I/O, so it does not bound the real 13-month cost: each date costs one state-store read (or a full S3 validation the first time it is seen) and the loop is sequential.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN tests/test_grant_calendar_months.py::test_ogcm1_ac01 under -s: 'OGCM1-AC1: ... 280-date availability() 0.0014 s over 283 faked qualified dates (283 snapshots); deadline 30 s' (Catalog.snapshot faked, so it times the window loop and the dict work only).",
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py availability(): evaluates every listed date in [first, latest] through _cached -> snapshot() one at a time, and the per-request cache dies with the request (source_cache_seconds is a separate TTL cache in integration.py)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Order OG-cm-1 item 4: time availability() over 280 faked qualified dates; file a row with the number if it threatens the 30-second deadline.",
+  "world_is": "The compute figure does not threaten the deadline; the I/O does not appear in it. At an assumed 10 ms per stored-snapshot read the 283 dates are about 3 s per master and dataset, and a date never seen before costs a full S3 validation, which was not measured. A query that touches several master/dataset pairs repeats the loop per pair. No cache was added and no cap moved, as ordered. A measured run against the real store over 13 months is the PRD's own decider for any cap.",
+  "notes": "Not done here: any caching or parallel evaluation (ordered off). The 10 ms is an assumption, not a measurement."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W42-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~42",
+  "surfaced_at": "2026-10-08T23:25:32Z",
+  "one_line": "Today's rolling grant record carries no calendar_days at all (only its mode), so 'in place of calendar_days' had no stored form to mirror; this cell admits calendar_days only as the contract window (30) and refuses any other value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/data_entitlement.py at the cut: parse_scope refused any rolling dates map beyond {mode}; the 30-day window is the module constant ROLLING_WINDOW_DAYS, and calendar_days: 30 appears only in the contract's proposed_initial_profile.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:674 item 4 and the order's AC wording 'a grant with calendar_days (or neither) answers exactly as before'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "PRD v2.0 item 4: a grant may set calendar_months in place of calendar_days; exactly one is set.",
+  "world_is": "The cell lets a rolling grant carry calendar_days only when it equals 30 (the unchanged contract window), carries calendar_months 1 to 13, refuses both together and refuses calendar_days of any other value rather than coercing it. A grant needing another day count would be a new ask. The record, the diff and the read-back show either field only when carried, so a plain grant stores, diffs and reads back exactly as before.",
+  "notes": "Judgment of form only: the narrower reading was chosen because an unbounded calendar_days would widen a window the contract fixes."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-08T23:32:57Z",
+  "one_line": "A -Mode enumerate run exits 0 without releasing the box-wide SDD session lock, so a stale lock file (dead pid) is left on SI2 after every enumerate run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 5ca67e2b-e63e-43b5-9eb9-e3849b58c963 output (saved in this worker's scratch, quoted in org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/g5_enumerate_record.json source invocation): the STALE reclaim line at 23:27:45Z.",
+      "FILE infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:361-368 (enumerate exit 0) against :106-110 Release-SessionLock, read at this worktree HEAD."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-en-1 bound 2: the list-only run changes nothing that lands or runs; the puller holds the box-wide session lock and releases it (sdd-daily-pull.ps1 Die and Release-SessionLock).",
+  "world_is": "The enumerate branch ends with a bare `exit 0` (sdd-daily-pull.ps1 lines 361-368) which does not call Release-SessionLock; the control run's own log read: 'SDD session lock is STALE (holder master=08403355 pid=4720 alive=False age=3min) -- reclaiming'. After the control run the lock file C:\\schwab-sdd\\.sdd-session.lock (holder pid 5100, acquired 2026-10-08T23:27:45Z) is presumably still on the box, and the puller also created C:\\schwab-sdd\\daily\u00008403355\\ with a daily-pull.log (the puller's own New-Item). The lock is reclaimed as stale when its pid is dead or its age exceeds 120 minutes; the next scheduled pull is 09:45Z, about 10 hours later. A reused pid inside the first 2 hours could make a real pull Die 7.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to the puller, and any read or removal of the lock file (outside the order). The tail of the lock is not measured after the control run; the second claim above (still present) is INFERRED from the code path."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-08T23:32:57Z",
+  "one_line": "The enumerate summary prints the date range as '2..0' for a type with exactly one file (rly, rty), so the single file's date is not shown in the enumerate log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM 22e138b8-907f-4694-87d4-a43ea7610b20 and 5ca67e2b-e63e-43b5-9eb9-e3849b58c963 output: the two '2..0' lines per run.",
+      "FILE infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:361-368 (`$ds = ($_.Group | ForEach-Object { $_.date } | Sort-Object)`; `$ds[0]`, `$ds[-1]`)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "sdd-daily-pull.ps1 enumerate block prints '{first}..{last}' dates per type (lines 361-368).",
+  "world_is": "Both runs print `/rly    n=1    2..0` and `/rty    n=1    2..0`: with one row `$ds` is a string, so `$ds[0]` and `$ds[-1]` index characters ('2' and '0'). Types with two or more files print correct ranges (e.g. `/acc n=22 20260908..20261007`). The count is correct; only the date text is wrong. The per-file FILE lines in the box log carry the physical names.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to the puller. Affects only a human read of enumerate output; download mode is a different branch."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-08T23:32:57Z",
+  "one_line": "The first SSM send for OG-en-1 (command ed9ff8c7-db03-4457-bc65-9a7840ab2542) ran an unpatched parameter file and failed before any vendor request; it left an empty C:\\schwab-sdd\\og-g5 on the box until the second run's cleanup.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN SSM ed9ff8c7-db03-4457-bc65-9a7840ab2542 get-command-invocation: 'The term C:\\Program Files\\Amazon\\AWSCLIV2ws.exe is not recognized', 'FATAL: could not pull sdd-daily-pull.ps1 from S3'; START_UTC=2026-10-08T23:21:06Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-en-1 bound 'a run that fails before the search may be retried once'; two vendor list requests in all.",
+  "world_is": "A Python escape (`\u0007` = BEL) turned `AWSCLIV2\u0007ws.exe` into `AWSCLIV2<BEL>ws.exe` in my generated parameter file; a chained shell line ran the send after my patch step failed. The command failed at `& $aws s3 cp` (Status Failed, ResponseCode 1) before the S3 pull, the edit, the task and the vendor call. The box now carries no og-g5 directory (the control run's cleanup reported COPY_DELETED=True). Vendor list requests actually made: 2 (08403355, 08335338).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "This is the one pre-search retry the order allows; the retried commands (22e138b8, 5ca67e2b) succeeded."
+}
+```

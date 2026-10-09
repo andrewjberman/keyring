@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.3",
+  "contract_version": "1.4",
   "project": "NFRA_OPLGTW",
   "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#contracts",
   "activation": "DESIGN_ONLY_NOT_A_GRANT",
@@ -55,6 +55,27 @@
     "rolling_complete_window",
     "fixed_dates"
   ],
+  "rolling_window": {
+    "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v2.0 item 4 (C3, FWD-12); task order OG-cm-1",
+    "applies_to": "rolling_complete_window grants only; a fixed_dates grant carries neither field",
+    "fields": [
+      "calendar_days",
+      "calendar_months"
+    ],
+    "rule": "exactly one of calendar_days or calendar_months; a grant with neither keeps the contract window of calendar_days 30",
+    "calendar_days": {
+      "allowed_value": 30,
+      "meaning": "the latest qualified complete business date and the previous 29 calendar days; any other value is refused, never coerced"
+    },
+    "calendar_months": {
+      "min": 1,
+      "max": 13,
+      "meaning": "the latest qualified complete business date and every business date on or after the same calendar day calendar_months months earlier, clamped to that month's last day (2026-03-31 with 13 months is 2025-02-28)",
+      "unqualified_date": "a date in the window with no qualified completion record is reported in not_available, never filled from another date, dataset or master",
+      "caps": "the limits block is unchanged by this field; a measured run over 13 months decides whether any cap moves, as its own ruling"
+    },
+    "validated": "at the grant write (ops/schwab_entitlement_admin.py validate_candidate, app/admin_grants.py) and again at every read (app/data_entitlement.py parse_scope); a stored grant that violates it is refused"
+  },
   "portal_grant": {
     "authority": "org/missions/D6/NFRA/NFRA_OPALAI decomposition addendum A2 (cell OA-g-1); CTO ruling (B), msg 25996, row NFRA_OPALAI-Z-S23",
     "scope_dimension": "portal_channels",
