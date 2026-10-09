@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v2.4",
+  "prd_version": "v2.5",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -928,3 +928,27 @@ and `commassist`, so the ratified text matches what r29 serves. The site-Z CTO l
 
 **Sign-off.** CONTRACTS wording only (C7), recording a widening the three r29 halves already signed. The ENDPOINT is untouched,
 so under proportionate sign-off no half re-opens.
+
+### v2.5 addendum (2026-10-09 ~18:5xZ, 1.0.0_SA_CTO~Z) -- C4 names the E2 write tool `copy_site_file_to_s3`
+
+**Input.** `3.0.0_SA_CVO~Z` signed the OG-rl-16 CVO half @9b6003cd3b as a named widening on this seat's ruling (msg 32663). It
+carried one item (msg 32942): v2.4 names no `copy_site_file_to_s3` and no `fee_statement` write. This addendum records it.
+The CTO Half 1 is @5e258448d2.
+
+**C4 (typed tools), one write tool added.** `copy_site_file_to_s3`, served from release r30-E2 (`a88661b145`):
+- **Caller:** only a principal that already holds `write_files`. It copies ONE `.xlsx` SharePoint item that the caller can
+  already read with their own Graph token.
+- **Destination:** exactly ONE prefix, `opal-data-assets/smartx/49financial/bronze/fee_statement/quarter=<q>/`, the output of
+  `lib/opal_naming.py address()`. The caller chooses neither the bucket nor the prefix.
+- **Write rule:** a conditional put (`IfNoneMatch="*"`). An existing key is refused and never overwritten, and each call is
+  capped at 50 MiB.
+- **Grant:** the gateway role's one PutObject policy on that prefix. Its name and path are builder output (rule 30), and the
+  prefix had 0 writers in the gateway before this.
+- **Who can call it, as a denominator:** the release's Phase C prints the count of `write_files` holders (no ids), so the
+  widening carries its population at release.
+
+**Not this addendum.** The `.pptx` market_update writer on `opal-data-transcripts` (OG-ab-2, rows W49-S3 and W49-S4) is a
+separate tool with its own grant. It is not admitted here.
+
+**Sign-off.** This adds CONTRACTS text (C4) for a widening that the three OG-rl-16 halves already signed. The ENDPOINT is
+untouched. Under proportionate sign-off the CVO's ratified-text half reads this wording; no delivery is withheld.
