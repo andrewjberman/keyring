@@ -117,6 +117,7 @@ MODE="${OWNED_PATHS_MODE:-block}"  # ADHC_OWNPTH.005 phase-2 flip 2026-04-30: wa
 OVERRIDE="${GIT_COMMIT_AUTHOR_OVERRIDE:-}"
 
 ISO_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+ACT_SUFFIX=" act=none paths=0:"  # GS-h-2: replaced by the real act key + full path list once the staged list is known
 
 # ---------------------------------------------------------------------------
 # Extract agent serial from GIT_AUTHOR_NAME (strip <email@...> suffix)
@@ -158,7 +159,7 @@ AGENT="${RAW_AUTHOR%% <*}"
 # window-3, who HELD the stuck merge rather than --no-verify-ing it. (The STAGED= logic below still
 # honours both sources for the non-merge path; that is where the env var belongs.)
 if git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
-    echo "${ISO_TS} PASS  ${AGENT:-UNKNOWN}  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)" >> "$AUDIT_LOG" 2>/dev/null || true
+    echo "${ISO_TS} PASS  ${AGENT:-UNKNOWN}  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)${ACT_SUFFIX}" >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
 
@@ -181,7 +182,7 @@ fi
 
 # Edge case: no staged files
 if [ -z "$STAGED" ]; then
-    echo "${ISO_TS} PASS  ${AGENT:-UNKNOWN}  0  (no staged files)" >> "$AUDIT_LOG" 2>/dev/null || true
+    echo "${ISO_TS} PASS  ${AGENT:-UNKNOWN}  0  (no staged files)${ACT_SUFFIX}" >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
 
@@ -195,11 +196,21 @@ N_FILES=$#
 IFS="$_OLDIFS"
 unset _OLDIFS
 
+# GS-h-2: one act key (12 hex of sha256 over agent, newline, sorted staged paths) and the full sorted path list on every line logged.
+_SORTED="$(printf '%s
+' "$STAGED" | LC_ALL=C sort -u)"
+ACT_KEY="$(printf '%s
+%s' "${AGENT:-}" "$_SORTED" | sha256sum | cut -c1-12)"
+ACT_PATHS="$(printf '%s' "$_SORTED" | tr '
+' '|')"
+ACT_SUFFIX=" act=${ACT_KEY} paths=$(printf '%s
+' "$_SORTED" | grep -c .):${ACT_PATHS}"
+
 # ---------------------------------------------------------------------------
 # Override escape hatch
 # ---------------------------------------------------------------------------
 if [ -n "$OVERRIDE" ]; then
-    echo "${ISO_TS} OVERRIDE  ${AGENT:-UNKNOWN}  ${N_FILES}  (--author-override ${OVERRIDE} applied)" \
+    echo "${ISO_TS} OVERRIDE  ${AGENT:-UNKNOWN}  ${N_FILES}  (--author-override ${OVERRIDE} applied)${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
@@ -210,7 +221,7 @@ fi
 # ---------------------------------------------------------------------------
 if [ -n "${_IS_SUBMODULE}${SUPERPROJECT}" ] && [ -z "$NESTED_PREFIX" ]; then
     echo "ERROR: owned-paths: this repo is a submodule (common gitdir ${_GCD_ABS:-unknown}) but its superproject could not be resolved -- refusing the commit (fail closed; the lane check is never skipped). Check core.worktree in the submodule's gitdir config." >&2
-    echo "${ISO_TS} BLOCK  ${AGENT:-UNKNOWN}  ${N_FILES}  (submodule superproject unresolved -- fail closed)" \
+    echo "${ISO_TS} BLOCK  ${AGENT:-UNKNOWN}  ${N_FILES}  (submodule superproject unresolved -- fail closed)${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 1
 fi
@@ -220,7 +231,7 @@ fi
 # ---------------------------------------------------------------------------
 if [ -z "$AGENT" ]; then
     echo "WARN: GIT_AUTHOR_NAME not set -- skipping lane check" >&2
-    echo "${ISO_TS} WARN  UNKNOWN  ${N_FILES}  (GIT_AUTHOR_NAME unset)" \
+    echo "${ISO_TS} WARN  UNKNOWN  ${N_FILES}  (GIT_AUTHOR_NAME unset)${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
@@ -231,11 +242,11 @@ fi
 if [ ! -f "$YAML" ]; then
     echo "WARN: .owned-paths.yaml not found at $YAML -- skipping lane check" >&2
     if [ "$MODE" = "block" ]; then
-        echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (YAML missing -- block mode EXIT 1)" \
+        echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (YAML missing -- block mode EXIT 1)${ACT_SUFFIX}" \
             >> "$AUDIT_LOG" 2>/dev/null || true
         exit 1
     fi
-    echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (YAML missing -- warn mode exit 0)" \
+    echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (YAML missing -- warn mode exit 0)${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
@@ -248,7 +259,7 @@ VIOLATIONS="$(printf '%s\n' "$STAGED" \
 N_VIOLATIONS="$(printf '%s\n' "$VIOLATIONS" | grep -ac '^VIOLATION:' || true)"
 
 if [ "$N_VIOLATIONS" -eq 0 ]; then
-    echo "${ISO_TS} PASS  ${AGENT}  ${N_FILES}  (all paths in-lane)" \
+    echo "${ISO_TS} PASS  ${AGENT}  ${N_FILES}  (all paths in-lane)${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
@@ -263,14 +274,14 @@ if [ "$MODE" = "block" ]; then
     echo "ERROR: owned-paths lane violation(s) detected (block mode):" >&2
     printf '%s\n' "$VIOLATIONS" | grep -a '^VIOLATION:' >&2
     echo "  hint: use .tools/safe-commit.sh -- <paths> to scope commit to declared pathspec" >&2
-    echo "${ISO_TS} BLOCK  ${AGENT}  ${N_FILES}  (${DETAIL})" \
+    echo "${ISO_TS} BLOCK  ${AGENT}  ${N_FILES}  (${DETAIL})${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 1
 else
     echo "WARN: owned-paths lane violation(s) detected (warn mode -- commit proceeds):" >&2
     printf '%s\n' "$VIOLATIONS" | grep -a '^VIOLATION:' >&2
     echo "  hint: use .tools/safe-commit.sh -- <paths> to scope commit to declared pathspec" >&2
-    echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (${DETAIL})" \
+    echo "${ISO_TS} WARN  ${AGENT}  ${N_FILES}  (${DETAIL})${ACT_SUFFIX}" \
         >> "$AUDIT_LOG" 2>/dev/null || true
     exit 0
 fi
