@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~3</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -55,6 +55,14 @@ and the holding evidence `org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T
 Dry-run at the base (box/dell2 1440a9d3d1): `R14-X14-FAIL absent` -- FAIL as expected. The CVO reviews the entry; the re-fold and re-write of the
 29 stored objects are a later served act. Keep `test_securities_allowlist.py`, `test_wipe_planted.py` and the research tests green.
 
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~T2, 2026-10-09) -- reopened for two stale assertions (row NFRA_TRNSPT-D2-W3-S3)
+
+Your exception correctly re-adds "Apple", so two round-11 assertions in `data/transcripts/scripts/tests/test_securities_allowlist.py` that expect
+Apple EXCLUDED now fail (`test_builder_strips_suffixes_and_includes_tickers` near :78, `test_committed_allowlist_matches_the_source` near :92).
+That file is now in your grant. Update ONLY those assertions so they expect Apple present via `exceptions_applied` (and still expect the other
+person-collision words excluded); change nothing else. Then run `test_securities_allowlist.py`, `test_securities_exceptions.py`,
+`test_wipe_planted.py` and the research tests -- 0 failed -- re-run AC1, update the instance, and flip to complete only then.
+
 ## BOUNDS
 
 - **Grant.** The four paths below, this order's file, your deliverables folder. `wipe.py` and the evidence file are READ only.
@@ -67,6 +75,7 @@ data/transcripts/scripts/teams/securities_exceptions.json
 data/transcripts/scripts/teams/securities_allowlist.py
 data/transcripts/scripts/teams/securities_allowlist.json
 data/transcripts/scripts/tests/test_securities_exceptions.py
+data/transcripts/scripts/tests/test_securities_allowlist.py
 org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
