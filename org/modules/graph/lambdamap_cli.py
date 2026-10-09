@@ -558,7 +558,7 @@ def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
         time.sleep(settle_retry_seconds)
         verdicts, live = classify()
 
-    reconciled, held = [], []
+    reconciled, held, first, unrecorded = [], [], [], []
     for n, (vd, detail) in sorted(verdicts.items()):
         if vd == "STALE-RECORD":
             old = funcs[n].get("artifact_sha256")
@@ -566,22 +566,38 @@ def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
             reconciled.append((n, old, live[n]))
         elif vd in ("POSSIBLE-HALF-LANDED", "UNVERIFIABLE", "SETTLING"):
             held.append((n, vd, detail))
-        # MATCH/DISPOSITIONED/NO-RECORD/CORRUPT: not this hook's job -> leave.
+        elif vd == "NO-RECORD":
+            # FIRST RECORD (AMGT_RESAPP-D1-S6): a just-deployed fn with no sha yet takes the live
+            # CodeSha256 under the STALE-RECORD proof (live == S3 artifact). live != S3 is the
+            # half-landed shape -> HOLD. No S3 key or no content-sha256 metadata (a local-zip
+            # deploy) cannot be proven -> left unrecorded and said so, never alerted.
+            s3 = s3_artifact_sha(funcs[n].get("artifact_s3_key")) if n in live else None
+            if n not in live:
+                unrecorded.append((n, "not live"))
+            elif not s3:
+                unrecorded.append((n, "no S3 artifact content-sha256 to prove live against"))
+            elif s3 == live[n]:
+                funcs[n]["artifact_sha256"] = live[n]
+                first.append((n, None, live[n]))
+            else:
+                held.append((n, "POSSIBLE-HALF-LANDED", "no record, and live != S3 artifact"))
+        # MATCH/DISPOSITIONED/CORRUPT: not this hook's job -> leave.
 
-    if reconciled:
+    if reconciled or first:
         with open(os.path.join(root, SRCMAP_REL), "w", encoding="utf-8", newline="\n") as fh:
             json.dump(sm, fh, indent=2, ensure_ascii=False)
             fh.write("\n")
     # C3 audit -- durable, append-only. ONLY on an actual reconcile/HOLD (a
     # no-op run must not touch the file -- keeps the tracked audit clean).
-    if reconciled or held:
+    if reconciled or first or held:
         try:
             ts = datetime.datetime.now(datetime.timezone.utc).isoformat()
             with open(os.path.join(root, audit_rel), "a", encoding="utf-8") as fh:
-                for n, old, new in reconciled:
-                    fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
-                                         "action": "reconcile", "old_sha": old, "new_sha": new,
-                                         "deployed_commit": deployed_commit}) + "\n")
+                for action, rows in (("reconcile", reconciled), ("first-record", first)):
+                    for n, old, new in rows:
+                        fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
+                                             "action": action, "old_sha": old, "new_sha": new,
+                                             "deployed_commit": deployed_commit}) + "\n")
                 for n, vd, _ in held:
                     fh.write(json.dumps({"ts": ts, "trigger": "automated-post-apply", "fn": n,
                                          "action": "HOLD", "verdict": vd,
@@ -589,10 +605,15 @@ def reconcile_deployed(root, only, settle_retry_seconds=0, deployed_commit="",
         except Exception as e:
             print(f"  WARN: audit append failed ({e}) -- reconcile still applied")
 
-    print(f"  reconcile-deployed: {len(reconciled)} reconciled, {len(held)} HELD, "
-          f"{len(funcs) - len(reconciled) - len(held)} already-in-parity")
+    parity_n = len(funcs) - len(reconciled) - len(first) - len(held) - len(unrecorded)
+    print(f"  reconcile-deployed: {len(reconciled)} reconciled, {len(first)} first-recorded, {len(held)} HELD, "
+          f"{len(unrecorded)} left unrecorded, {parity_n} already-in-parity")
     for n, old, new in reconciled:
         print(f"    [RECONCILED] {n}: {(old or '')[:16]}.. -> {new[:16]}..")
+    for n, _old, new in first:
+        print(f"    [FIRST-RECORD] {n}: none -> {new[:16]}.. (live == S3 artifact)")
+    for n, why in unrecorded:
+        print(f"    [NO-RECORD] {n}: left unrecorded -- {why}")
     if held:
         print("  !!! ALERT (C1): post-apply HALF-LANDED -- the deploy did NOT fully land for "
               "(record HELD, NOT reconciled -- investigate):")
