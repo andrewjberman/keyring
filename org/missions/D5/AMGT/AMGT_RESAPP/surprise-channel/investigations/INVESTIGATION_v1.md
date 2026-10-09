@@ -23026,3 +23026,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Row W333-S1 stays as filed (rows are never edited); this row is its sequel."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W337-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~337",
+  "surfaced_at": "2026-10-09T10:50:36Z",
+  "one_line": "The cut's '4 cited to NU's business item' counts one Item 3.D risk-factor heading that merely contains 'our business'; NU has 3 Item 4.B locations among its 39 served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The GO (and r84_store.py BUSINESS_RE) states NU_US_Equity's /thesis serves 39 locations, 4 cited to its business item (Item 4.B / Business overview / Item 4 Information on the Company / Our Business).",
+  "world_is": "Served body read inside the walk (746,991 bytes, 200): 39 locations, all under drafted_sections: ITEM 5 x23, ITEM 3.D x13, ITEM 4.B BUSINESS OVERVIEW x3 (paragraphs 153, 107, 109). The 4th regex match is 'ITEM 3.D. RISK FACTORS / Our business requires the ongoing / paragraph 62', matched by the 'our business' alternative, not by Item 4.B. Also: the walk module's description selector [data-top-band-description] returned empty on NU (the description text is drawn in the top band; quoted from the page body text instead).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~337/data/api/thesis_NU_locations.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round84_prep/checks/r84_store.py:26 BUSINESS_RE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "T2 of the store check still passes on the 3 Item 4.B locations; the count of 4 is only a regex overcount. Recorded, no verdict."
+}
+```

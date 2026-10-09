@@ -12,9 +12,10 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | activation | gold_rebuild12.act.py as a declared detached job: two new parts under date=2026-10-08 | act record + classes and delta read back |  | OPEN |
+| L1 | activation | gold_rebuild12.act.py as a declared detached job: two new parts under date=2026-10-08 | act record + classes and delta read back | act record round75/gold_rebuild12.act_20261009T093743Z.json: DONE; classes 285 removals / 113 R30-partial / mention delta 762 = dry run; lost 0 added 0 daily OTHER 0; written + LIVE newest (read 10:5xZ) mention part-20261009T093755Z (52,424), daily part-20261009T103423Z (68,002) | CLOSED 20261009T105116Z |
 | L2 | verify | 3.0.0_SA_CVO grade: 30 removed + ~20 count-downs | grade pointer |  | OPEN |
 
 ## Log
 
 - 20261009T093703Z OPENED by 2.0.0_SA_COO~W1 with 2 leg(s)
+- 20261009T105116Z LEG L1 closed: act record round75/gold_rebuild12.act_20261009T093743Z.json: DONE; classes 285 removals / 113 R30-partial / mention delt

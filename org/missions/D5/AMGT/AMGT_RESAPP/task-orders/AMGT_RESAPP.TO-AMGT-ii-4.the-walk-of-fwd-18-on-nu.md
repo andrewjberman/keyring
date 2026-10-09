@@ -78,3 +78,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-09T11:0xZ: merged @ab5d2a1a6c (wk-AMGT_RESAPP-337 @1806621f4d, proof VALID). AC1 YES (8 captures, PORTAL_REF 9b06f6edcb), AC2 YES (armed=no; post-disarm login refused), AC3 RECORDED for the CVO's L9: NU's 39 served locations (Item 5 x23, 3.D x13, 4.B x3) are all drawn (20 + 9 + 10 passage blocks); share-capital refusal 0; driver chart place a sentence (ABSENT, 0 points); the page's 'No company description is on file yet.' matches the server here (company_description absent); the one press on a figure opened nothing (no pressable figure). Row D1-W337-S1 (r84_store's business regex also matches a 3.D heading containing 'our business'; T2 holds on the 3 true 4.B locations) is INERT and carried: tighten the regex.</status>
