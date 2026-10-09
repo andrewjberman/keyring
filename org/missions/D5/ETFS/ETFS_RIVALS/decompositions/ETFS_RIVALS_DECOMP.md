@@ -1168,3 +1168,21 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
 - Out of bounds: `gold_trade_schedule.py`, `gold_holdings_coverage.py`, `render.py`, `publish_page.py`,
   `enrichment_bloomberg.py`; no S3, no deploy. The proof that CGIC's windows move a trading day earlier (and a control fund
   stays byte-equal) is the issuer's real run at the drain; the deploy follows the round-28 J1 reads under its own pair.
+
+### `RIV-we-2` -- a trade window is dated by its reports' AS-OF dates; the delivery days ride along (completes CTO ADDENDUM 2 with RIV-we-1; ADDENDUM 3 @9f0a957c00) -- APPENDED 2026-10-09, revision 1.22
+- Measured (2.0.0_SA_COO~V1's real run, ~08:2xZ): with RIV-we-1 merged and canonical_shape rebuilt fresh, every fund's
+  trade windows were UNCHANGED (0 dates changed of 164 across 13 funds), because `gold_trade_schedule.infer_windows`
+  labels each window with the canonical `report_date` (the delivery day) and reads `source_report_date` only for RIV-wd-1's
+  repeat test. The ruling says CGIC's windows move a trading day earlier; that needs the window dates themselves.
+- Interface (`gold_trade_schedule.py`, plus tests):
+  1. Every trade row's `window_start` / `window_end` are the as-of dates of its two reports: the modal
+     `extra_attributes.bloomberg.source_report_date` of each report's rows (`_actual_dates`), falling back to the
+     canonical `report_date` where no as-of is carried (issuer and home rows).
+  2. Two new columns, `window_start_delivered` / `window_end_delivered`, carry the canonical `report_date`s (the delivery
+     days); the G5 schema gains them; recon rows carry the same pair.
+  3. A fund whose as-of equals its delivery day is unchanged in every column but the two new ones.
+  4. Readers that key on window dates (publish_page's audit windows, trade markers, the buying trend) keep working on the
+     as-of dates; the existing tests stay green except those pinning a delivery-day window (each named in the report).
+- Out of bounds: `gold_canonical_shape.py`, `render.py`, `publish_page.py`, `price_series.py`, `enrichment_bloomberg.py`;
+  no S3, no deploy. The served rebuild of the affected (fund, capture) pairs is the issuer's act under its own pair, after
+  the round-28 J1 reads (ADDENDUM 3).
