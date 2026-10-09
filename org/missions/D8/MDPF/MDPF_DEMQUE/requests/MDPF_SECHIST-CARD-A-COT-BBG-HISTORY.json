@@ -1,0 +1,24 @@
+{
+  "request_id": "MDPF_SECHIST-CARD-A-COT-BBG-HISTORY",
+  "standing": false,
+  "tier": 2,
+  "reason": "MDPF_SECHIST FWD-2 card A: the Bloomberg share of Cottonwood client price history, from each security's first date needed (first appearance in the client's account) to its last. Andrew ~05:3xZ 2026-10-09: 'This can go into the BBG queue system that MDPF_DEMQUE is for'.",
+  "page": "client performance (Cottonwood), via MDPF_SECHIST's one series per security (C-SERIES)",
+  "vendor": "bloomberg",
+  "channel": "history",
+  "securities": "the 1,319 rows of org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27/PRICE_NEED_FOR_SECHIST.csv with source == BLOOMBERG_SITE_Z (file @8d3c0fe34f); key security_id = Commonwealth 9-character CUSIP; per-row range first_date_needed..last_date_needed. Asset classes: Fixed Income 778, Cash Equivalent 487, Annuity 29, Alternative Investment 22, Cash 3.",
+  "fields": ["PX_LAST"],
+  "start": "2013-04-03",
+  "end": "2026-06-23",
+  "quote": {
+    "cells": {"bloomberg_history": 2317534},
+    "claim": "inferred",
+    "basis": "sum of days_needed over the 1,319 rows (calendar days in each row's range, read 2026-10-09 05:3xZ) x 1 field; an upper bound -- trading days and Bloomberg coverage for fixed income and cash equivalents will return fewer. bbg_quote should re-price before the first draw."
+  },
+  "pacing": "the queue's: a multi-day draw under the production reserve and the bbg_budget ledger (bbg_budget.py ceiling 150,000, reserve 30,000 rows/day); never in the 10:30Z-12:00Z production window. The 2026-10-05 measurement (about 175k BQL rows of backfill exhausted the Terminal's daily capacity) is why it is paced.",
+  "runs_at": "site Z (the Terminal), by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws",
+  "writes_to": "the returned rows are handed to MDPF_SECHIST's series writer (one writer of security history; CTO ruling CTO_RULING_YAHOO_BACKFILL_OWNER_DEMQUE_VS_SECHIST_20261009.md); the queue writes no price rows",
+  "filed_by": "2.0.0_SA_COO~H1",
+  "filed_for": "MDPF_SECHIST",
+  "authority": "Andrew-direct ~05:3xZ 2026-10-09 at the 2.0.0_SA_COO~H1 terminal, record org/tier1_exec/2.0.0_SA_COO/deliverables/cooH1_ANDREW_DIRECT_20261009_053xZ_SECHIST_CARD_A_GOES_TO_DEMQUE_BBG_QUEUE.md; answers open call dell1-20261009T032427Z-deae; tier per 1.0.0_SA_CTO~DELL1 msg 1566 REC; law 4d77a9c3ea (every Bloomberg draw through the queue)"
+}

@@ -92,7 +92,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-2.dispatcher-date-gate-apply
 - Pre-cut: ap2.AC1 base FAIL as expected (live CodeSha256 = the rollback hash; the live zip has no trading_calendar.py,
   its lambda_function.py differs from HEAD's); ap2.AC2 base FAIL as expected (record absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>APPLY-Y</workstream>
 <slot>~AE</slot>

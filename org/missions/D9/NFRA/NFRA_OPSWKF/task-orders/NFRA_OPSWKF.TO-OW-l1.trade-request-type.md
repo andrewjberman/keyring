@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPSWKF~1</issued_to>
 <issued_by>2.0.0_SA_COO~O2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -39,6 +39,11 @@ around line 643):
 Keep `"label": "Trade Request"` and `"attachment": None`. **Change NOTHING else in `lambda_function.py`.** Another project
 (TCKT_VNEXT) owns the rest of that file; this entry is the one line its owner granted. The securities list is deliberately NOT a
 ticket answer: it travels in the trade engine's submission, not here.
+
+**AMENDMENT 1 (issuer, 2026-10-09 ~06:0xZ, ruling on row NFRA_OPSWKF-D2-W1-S1):** a typed ticket's firm IS `answers.firm`, server-checked
+against the principal's allowed firms (`lambda_function.py:1105-1126`, by design). So `trade_request` carries a FIFTH question, FIRST in
+the list: `firm`, kind `firm`, required True. The valid-create test answers it with a firm the test principal is allowed; the
+required-answers test also refuses a missing `firm`. Still nothing outside the `trade_request` entry changes.
 
 **Test file:** `infra/aws/lambda/ticket_center/tests/test_trade_request_type.py` (new), with these exact test names:
 - `test_trade_request_valid_create`: an internal human creates a `trade_request` with all four answers; 201 (or the service's

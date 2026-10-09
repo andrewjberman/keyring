@@ -3904,3 +3904,131 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W54-S1 -- The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.
+
+```json
+{
+  "id": "IRPT_DASHBD-W54-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml header and title: 43 distinct type_desc, 'Stage 0b'; the order text and the file's own comments treat 43 as the domain.",
+  "world_is": "MEASURED 2026-10-09 by parsing the file at HEAD: len(types) = 48 (Internal 19, Return 17, NNA 9, CorporateAction 3). The five entries added by the 2026-08-11 five-code amendment are in the list but the title, the '43 distinct type_desc' comment and total_type_desc_entries_v2 still read 43. The MECE section of the amendment proposal subtracts from 48. NEEDED: the CTO's word on whether the header is corrected in the same edit as the amendment; this cell edits nothing in the file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (types: list, title, schema_collapse_audit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/ORION_TAXONOMY_AMENDMENT_PROPOSAL.md (MECE section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W54-S2 -- Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the 
+
+```json
+{
+  "id": "IRPT_DASHBD-W54-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the headline 24 of 562 round 36 published is the lower of the two gross figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72 / round 36: the contract tie-out is the gross figure, 24 of 562 within 0.35 pp, with the net recomputation 421 beside it; the amendment is proposed because the net count improves.",
+  "world_is": "MEASURED 2026-10-09 by rerunning round 36's adapter unchanged plus one read-only block over four flow sets (same 562 denominator, 483 computable): net within 293 ratified, 348 with the journals, 350 with the tax pair, 421 with both; gross within 43, 41, 27, 24. The gross figure adds the advisory fee back and the vendor figure is Net of Fees, so the gross count is not like-for-like and moves the opposite way. Which basis grades the adapter is an open issuer/CTO call already named in W49-S2; this row only records that the two bases disagree on the direction of the amendment's effect. The proposal grades on the net basis and prints both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/MEASURED_EFFECT.json (by_flow_set)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/measure_flow_sets.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W50-S1 -- The 2026-10-07 repeat is ONE pair (2 rows of 3,245, one account), not several: the two halves of a wash-sale split lot, separated by proceeds.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W50-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~50",
+  "surfaced_at": "2026-10-09T06:07:00Z",
+  "one_line": "The 2026-10-07 repeat is ONE pair (2 rows of 3,245, one account), not several: the two halves of a wash-sale split lot, separated by proceeds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-73 step 1: 'list each pair of rows that shares the whole key' over every population account for 2026-10-07 (the face's wording expects pairs, plural).",
+  "world_is": "MEASURED over the custodian realized-lot partition of 2026-10-07 (3,245 rows read through the producer's own read_day): exactly 1 group of 2 rows shares (account, closing date, lot id, quantity); 0 groups identical in every column. They share close_event_id, open event id, order_number and acquired_date and differ in 12 source columns (proceeds, proceeds_per_share, original_purchase_price, cost_basis_unamortized, cost_per_share, gain_loss_dollars, gain_loss_percentage, w_s T/F, disallowed_loss_amount, transaction_cost, transaction_cost_per_share, transaction_gain_loss_pct). Every one of the 12 separates the pair alone; `proceeds` is the one that is also a column of account_lot_realized, first in table order, and joins the key. 2026-10-06 has 0 such groups under the round-28 key. The DB-b-47 reading that `quantity` separates lots that share an id was true for 2026-10-06 and is not a law of the source.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/LOTS_KEY_E1.json repeat_census",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/repeat_census.py",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py realized_rows()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W50-S2 -- Round 30's runner has the day hard-coded (2026-10-06) and takes no day argument, so the 2026-10-07 kit run needed a wrapper in this worker's folder.
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W50-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~50",
+  "surfaced_at": "2026-10-09T06:07:00Z",
+  "one_line": "Round 30's runner has the day hard-coded (2026-10-06) and takes no day argument, so the 2026-10-07 kit run needed a wrapper in this worker's folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-73 step 3: 'the runner is round 30's lots_750_run.py (default batch)... Run the extended handler --local over the population for 2026-10-06 and 2026-10-07.'",
+  "world_is": "MEASURED: lots_750_run.py (~31) carries `DAY = \"2026-10-06\"` and main(size, outdir, record) with no day parameter, so it can run only that day. Added org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/kit_run_day.py, which imports lots_750_run.py unchanged, sets its DAY and calls main('default', ...); ~31 and ~27 were not edited. Both days ran on the kit (Python 3.12.10, pandas 2.2.3, numpy 1.26.4, pyarrow 14.0.2; the kit process prints 'runtime: pandas 2.2.3, future.infer_string = False (served behaviour in force: True)'), 7604 accounts each, 0 REFUSED / LOTS_SKIPPED / CLASS_SKIPPED lines, one sequential process per day. The side-load of boto3, psutil and pytest from dell2's Roaming site-packages (rows W44-S1, W46-S2) was repeated; their resident size is in the peaks as in every earlier kit run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~31/lots_750_run.py:14",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/kit_run_day.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/LOTS_KEY_E1.json kit_runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W50-S3 -- 'The producer tests' is recorded as the lots producer's own test file (45 passed, 0 failed on the kit); the sibling folder's test_account_return_daily_none.py still fails
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W50-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~50",
+  "surfaced_at": "2026-10-09T06:07:00Z",
+  "one_line": "'The producer tests' is recorded as the lots producer's own test file (45 passed, 0 failed on the kit); the sibling folder's test_account_return_daily_none.py still fails 4 of 4 on the kit (row W46-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-73 step 2 / DB37-1-AC3: tests {passed > 0, failed == 0} 'the producer tests pass, with a new test for the repeat pair'.",
+  "world_is": "MEASURED on the pandas 2.2.3 kit: tests/test_account_activity_lots.py (the file for account_activity_lots.py, which holds the new test) = 45 passed, 1 skipped, 0 failed; the whole irpt_reporting/tests folder = 92 passed, 4 failed, 1 skipped, the 4 being test_account_return_daily_none.py (known, row IRPT_DASHBD-W46-S1: it forces future.infer_string ON, which the served runtime never enters), and on Python 3.14.7 / pandas 3.0.6 the whole folder = 97 passed, 0 failed. The record carries the lots file's counts and the folder's both ways. One existing test in the lots file was changed, because it differed the pair in proceeds (now a key column): test_the_same_lot_id_date_and_quantity_with_other_columns_differing_still_refuses_true_duplicate_key -> ..._date_quantity_and_proceeds_..., differing in gain, still refusing by name. The issuer decides whether DB37-1-AC3 means the file or the folder.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/LOTS_KEY_E1.json tests",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_activity_lots.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_DASHBD-W46-S1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

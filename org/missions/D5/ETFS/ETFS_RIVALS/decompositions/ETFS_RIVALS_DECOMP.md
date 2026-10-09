@@ -1013,3 +1013,138 @@ only after RIV-tw-1's J1 is graded on the 2026-10-09 run. Risk SERVED.
   `_stored_currencies` over the window is accepted in `ask` and in `print`.
 - **Organic trigger:** none while the switch is OFF. THE VEHICLE RUNS THIS FILE FROM THE WORKING TREE: the merge is a
   deploy to the 11:00Z job, lands only after RIV-tw-1's J1 is graded on the 2026-10-09 run, and carries a pair.
+
+## WORKSTREAM 2 (split-adjusted history; the dramatic-move lookup; the trade list scoped to the toggle) -- APPENDED 2026-10-09, revision 1.19 of this file
+
+Issuer `2.0.0_SA_COO~V1` (dell1). Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md`
+(1.0.0_SA_CTO~DELL1, msg 1762, @f26ff8fbbc), on Andrew-direct ~05:1xZ
+(`deliverables/2.0.0_SA_COO~V1/ANDREW_DIRECT_20261009_051xZ_UI_COMMENTS_TKOMY_CLOSE_AND_TRADE_LIST_SCOPE.md` @9d08dd64d4).
+A workstream, not a round: round 28 stays frozen on its three acts. Three cells, three chains, no edge: each cell owns a
+disjoint write set and they meet only through two stated contracts (the corporate-action row shape; the chart object's
+`adjustment` field). GUARDS on every cell: (1) no deploy and no served write before both round-28 J1 reads (tw-1 at the
+2026-10-09 11:00Z vehicle run, aw-1 at the 13:00Z sweep); (2) no edit to `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py`
+(a cell that finds it must, files a row and stops); (3) every deploy or served write goes under its own never-widen pair.
+
+### `RIV-wa-1` -- every price series the page draws is adjusted for stored splits, so a split leaves a continuous curve; a big move with no action on file is a gap (WS2-a)
+- Measured: on the 2026-10-08 page, IDVZ's chart object holds `TKOMY_US_Equity` points `[2026-10-05, 49.59, m]`,
+  `[2026-10-06, 50.5, m]`, `[2026-10-07, 3.33, m]`: Tokio Marine's 15-for-1 split took effect 2026-10-07 (Andrew), and the
+  pre-split closes are drawn unadjusted. Gold corporate_actions stores splits as `event_type` `split`, `ratio` = new shares
+  per old share (ANET 4.0, PANW 2.0), `ex_date`, `claim` `MEASURED`; `security_id` there is the Bloomberg form with spaces
+  (`TKOMY US Equity`), while gold security_market's is underscored (`TKOMY_US_Equity`).
+- Interface:
+  1. `price_series.series(g4, g1, keys, start, end, actions=None)`: `actions` is a frame in the corporate_actions shape
+     (at least `security_id`, `event_type`, `ratio`, `ex_date`, `claim`; `source_url` optional). For a key, every row
+     with `event_type` `split` (a reverse split is a ratio below 1) and an `ex_date` inside `(start, end]` divides every
+     price dated before the ex-date by its ratio (cumulative over several rows; market and holding-implied points alike).
+     Keys match after mapping spaces to underscores. `cash_div` and other event types adjust nothing.
+  2. Each key's result gains `"adjustment"`: a list of `{"event_type", "ratio", "ex_date", "claim", "source_url"}`, one per
+     applied row, oldest first; `[]` when none. With `actions=None` the points equal today's output, except item 3.
+  3. A drawn price more than 3x, or below one third of, the key's previous drawn price (after adjustment), with no applied
+     row between them, is not drawn: point `(d, None, None)` and a gap with reason
+     `"the price moved more than threefold in one day and no corporate action is on file"`.
+  4. `price_series.load(s, keys, start, end)` also reads every object under gold `corporate_actions/date=<D>/` for the
+     window's dates (ALL objects there, including WS2-b's `actions-inferred-*` objects) and passes them as `actions`.
+  5. `publish_page._build_charts` copies each series' `adjustment` into the chart object's security entry (`"adjustment"`).
+     WS2-c renders it; this cell writes no render code.
+- Out of bounds: no S3 write, no deploy; `enrichment_bloomberg.py`, `render.py` and `dramatic_move.py` untouched.
+
+### `RIV-wb-1` -- a dramatic move with no action on file is looked up on the web and, when found, stored as an INFERRED corporate-action row (WS2-b)
+- Measured: gold corporate_actions date=2026-10-06 and date=2026-10-07 (160 rows each) carry no TKOMY or 8766 row, and no
+  date=2026-10-08 object exists. Egress is open except Bloomberg (law 4d77a9c3ea). A SERP client exists:
+  `lib/research/management/ceo_search.py` (Bright Data, `BRIGHT_DATA_API_KEY`, `BD_SERP_ZONE`).
+- Interface, a new module `data/etfs/scripts/rivalfunds/dramatic_move.py`:
+  1. `detect(g4, actions) -> list[dict]`: per security, consecutive stored closes (ascending dates) where the close is
+     more than 3x or below one third of the previous one and no `split` or `merger` row of that security has an ex-date in
+     `(prior_date, date]`. Each candidate: `security_id`, `date`, `prior_date`, `prior_close`, `close`, `security_name`
+     when the frame has one. Keys match across the two forms by mapping spaces to underscores.
+  2. `lookup(candidate, search=None) -> dict | None`: builds a query from the security name (or id) and the date (e.g.
+     "Tokio Marine Holdings stock split October 2026"), calls `search(query)` -> list of `{title, url, snippet}`, and parses
+     an explicit ratio ("15-for-1", "15:1", "1-for-10 reverse", a merger exchange ratio). Found: ONE row in the stored
+     corporate_actions shape: `security_id` in the Bloomberg form, `event_type` `split` (or `merger`), `ratio` new-per-old as
+     a float, `ex_date` the candidate's date unless the result names another, `claim` `INFERRED`, `source` `web_search`,
+     `source_url` the result's URL, `status` `OK`, `row_kind` `event`. Nothing parseable: `None`, never a guessed ratio.
+     `search=None` uses the Bright Data SERP the way `ceo_search.py` does (read it; do not edit it).
+  3. `write_rows(s, rows, day)` writes one object `address("rivalfunds","etfs","gold","corporate_actions",f"date={day}",
+     f"actions-inferred-{revision}.parquet")` through a sink. It is BUILT and tested on a memory sink only: running it
+     against live S3 is a served write under guards 1 and 3, not this cell's act.
+- Out of bounds: no live search in tests (inject `search`), no S3 write, no deploy, no hookup into the sweep (the issuer adds
+  the hookup at the merge); `enrichment_bloomberg.py`, `price_series.py`, `render.py` untouched.
+
+### `RIV-wc-1` -- the security dialog's trade list follows the selected window, behind a closed disclosure; an adjusted series says so (WS2-c)
+- Measured: `render.py` writes a fixed heading `HEADP = "<p data-chart-trades-head>Trades in the last 365 days</p>"` and
+  `_trade_list`; the page script's `putTrades` fills the list from every marker of the chart object and ignores the range
+  toggle (`draw(f,o,rg)`, the `[data-chart-range]` click handler). Andrew: the 365-day list "was not ... asked for if
+  you're looking at the 30d Toggle. That should at the very least be behind a dropdown, and it should be scoped for the
+  toggle value".
+- Interface (`render.py` only, plus its tests):
+  1. The list sits inside `<details data-chart-trades-box>` with NO `open` attribute; its `<summary>` is the heading.
+     No static text names 365 days.
+  2. The page script exposes `window.rfChart.tradehead(rg)` -> `"Trades in the last 30 days"` / `"... 90 days"` /
+     `"... 365 days"` for `R30` / `R90` / `R365`, and `window.rfChart.tradelines(markers, from)` -> the trade lines of the
+     markers whose `end` is on or after `from` (the window's first day), oldest first, worded as today's `tradelines`.
+  3. On every `draw` (first load and every toggle click) the heading and the list are rewritten for the selected window;
+     an empty window says `"No trades in the last <n> days."`.
+  4. When the chart object's security entry carries a non-empty `adjustment` (WS2-a's field), the dialog shows one muted
+     line under the chart: `"Prices before <ex_date> are adjusted for a <ratio>-for-1 split"` (a reverse split as
+     `"1-for-<1/ratio> reverse split"`), plus `" (found by web search)"` and the link when `claim` is `INFERRED`.
+  5. Existing tests that pin the old heading (`test_r21pl1_strip_and_caption.py`, `test_r18tl1_trade_list_from_markers.py`)
+     are updated to the new shape; every other test stays green.
+- Out of bounds: no S3, no deploy, no other module.
+
+## WORKSTREAM 3 (the audit's exclusion line; no trade below tolerance or on a repeat day; the header Period bar) -- APPENDED 2026-10-09, revision 1.20 of this file
+
+Issuer `2.0.0_SA_COO~V1`. Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 1
+(1.0.0_SA_CTO~DELL1 msg 1852, @a50caca634), on Andrew-direct comments 4-7 (record
+`deliverables/2.0.0_SA_COO~V1/ANDREW_DIRECT_20261009_051xZ_UI_COMMENTS_TKOMY_CLOSE_AND_TRADE_LIST_SCOPE.md` @588865eef8).
+Item 8 (the Direction Verdict prompt) is WS3's SECOND issuance, cut only after aw-1's J1 read at the 13:00Z sweep. WS3 carries
+the three WS2 guards and takes no file a live WS2 order owns: `render.py` belongs to RIV-wc-1, so items 4 and 7 are
+`RIV-wc-2`, the next order on wc-1's chain (same worker, after wc-1 is terminal). Two chains: `RIV-wd-1` alone; `RIV-wc-1 -> RIV-wc-2`.
+
+### `RIV-wd-1` -- a share change is a trade only when the share count moved and the trade clears Andrew's 20 bps tolerance; no trade is read across a repeated report (WS3 items 5 and 6)
+- Measured: `gold_trade_schedule._pair_rows` infers a holding's trade as `q1 - f * q0`, with `f` the median ratio over the
+  window's untouched holdings (`FLOW_WINDOW_EPS` 0.001; `flow_adjusted` true past it). In a window with fund flows an
+  UNCHANGED holding therefore reads as a trade. The CGIC audit (latest report 2026-10-06, revision 20261008T122342Z-6ea2fb54eece)
+  shows 12 such rows, all "flow adjusted": MediaTek 2454_TT 428,000 -> 428,000 (-1,442; window 09-30 -> 10-02), Renault
+  RNO_FP 277,771 -> 277,771 (-936; -2,361 in 09-29 -> 09-30), SMC 6273_JP 10,700 -> 10,700 (-36), Jentech 3653_TT 23,000 ->
+  23,000 (-77), Taisei 1801_JP 56,900 -> 56,900 (-192), Aura AUGO_US 46,976 -> 46,976 (-158; -399), Grifols GRFS_US
+  120,713 -> 120,713 (-407; -1,026), Tokyo Electron 8035_JP 205,000 -> 205,000 (-1,743). Andrew's tolerance (PRD v0.21
+  FWD-10 SOURCE): "at a 20bps tolerance it's immediately clear who is discretionary and who is systematic"; today no code
+  applies it. The holdings calendar (`gold_holdings_coverage`) marks 10-01, 10-02, 10-05 and 10-06 `repeat` ("report dated
+  <d> re-published") while the 10-02 -> 10-05 and 10-05 -> 10-06 windows carry trades.
+- Interface (`gold_trade_schedule.py`, and `gold_holdings_coverage.py` only if item 3 needs it; plus tests):
+  1. **Unchanged count, no trade.** A holding whose share count is the same in both reports (`q1 == q0`, both > 0) is NEVER
+     a trade, whatever the flow factor; it is not emitted as an add or trim.
+  2. **The tolerance.** `TRADE_TOLERANCE_BPS = 20`: a candidate trade whose absolute estimated notional is below 20 bps of the
+     fund's total (the later report's) market value is not a trade on the page or in the rankings. It is kept as a row with
+     `action` `below_tolerance` (or an equivalent flag the readers skip), counted, so the audit can say how many and the
+     numbers stay reconstructible. Entries and full exits are trades whatever their size.
+  3. **No trade across a repeated report.** Where the later report of a window is a re-publication of the earlier one (the
+     same actual report date, the coverage table's `repeat`), the window yields no trade; and the windows and the calendar
+     read the same object, so a day the calendar marks `repeat` never carries a trade. Find which of the two is wrong today
+     (state it in the report with the two objects read), and make them agree.
+     This item is graded by J1 on the issuer's real run over CGIC's actual windows (no trade on a day the calendar marks
+     `repeat`); the check's arm (c) is a control (a re-published report with identical counts yields no trade, at the
+     base and after).
+  4. Readers that count trades (rankings, buying trend, trade markers) skip the rows items 1-3 exclude; existing tests stay
+     green except where they asserted an unchanged-count or sub-tolerance trade (each such change named in the report).
+- Out of bounds: no S3 write, no deploy; `render.py`, `price_series.py`, `publish_page.py`, `dramatic_move.py`,
+  `enrichment_bloomberg.py` untouched (a reader in one of them that needs changing is a row and the issuer's hookup).
+
+### `RIV-wc-2` -- the audit's exclusion line reads as its own line, naming what it excludes; the header Period bar is gone (WS3 items 4 and 7)
+- Measured: `render.py` writes, inside each audit window above the trade table, "<n> money-market line(s) traded: cash
+  management, not a holding decision, so not shown as trades (as in the rankings and the trend)." (about lines 392 and 431).
+  Andrew read it as naming the trade beneath it ("Tokyo Electron being "excluded" becuse its a cash management operation?").
+  The page header carries a PERIOD row (30d / 90d / 365d with their dates) beside the peer-group rows; the ranking panels
+  have their own period controls. Andrew: "we do not need this "Period" component in the top of the page anymore".
+- Interface (`render.py` and its tests; the next order on wc-1's chain, so it starts from wc-1's merged `render.py`):
+  1. The exclusion line names the excluded line(s): the security name (or identifier) and the amount traded, e.g.
+     "Left out: 1 money-market line traded (JPMorgan US Government Money Market, $2.1m): cash management, not a holding
+     decision." It sits in its own block, visually apart from the trade table (not immediately above the first row), so it
+     cannot be read as describing the row beneath it.
+     The carrier: the audit window dict gains `cash_equiv_lines`, a list of `{security_key, name, est_notional}`, one per
+     excluded money-market line; render from it when present, and from the count alone (as today) when absent. The
+     window dict is built in `publish_page.py`, which RIV-wa-1 owns: populating `cash_equiv_lines` there is the issuer's
+     hookup at the merge, not this cell's.
+  2. The header's PERIOD row is removed from the main page. The ranking panels' period controls and the 30/90/365 data stay.
+     No other header row changes; the page keeps exactly ONE inline script.
+- Out of bounds: no S3, no deploy, no other module.

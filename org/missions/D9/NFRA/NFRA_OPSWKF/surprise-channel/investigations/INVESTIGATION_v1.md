@@ -33,3 +33,29 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Not this round's to fix: no round-1 cell owns test_actor_identity.py."
 }
 ```
+
+## NFRA_OPSWKF-D2-W1-S1 -- trade_request create hits answers['firm'] KeyError
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-W1-S1",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_NFRA_OPSWKF~1",
+  "surfaced_at": "2026-10-09T06:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A create of a trade_request with the four ruled answers raises KeyError 'firm' (500) in create_ticket: the typed-type branch reads answers['firm'] unconditionally, so OW-l-1's cell cannot satisfy test_trade_request_valid_create without a second edit the order forbids.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ticket_center/lambda_function.py:1120-1125 (wk-NFRA_OPSWKF-1 @17633ea3e5 + the four questions): `if body.get(\"requester_firm\") and ... != answers[\"firm\"]` then `req_firm = answers[\"firm\"]` run for every type with questions or an attachment",
+      "python -m pytest -q infra/aws/lambda/ticket_center/tests/test_trade_request_type.py: 1 failed, 3 passed; KeyError: 'firm' at lambda_function.py:1125 in test_trade_request_valid_create"
+    ]
+  },
+  "spec_asserts": "Giving TYPE_DEFINITIONS['trade_request'] the four questions is the whole change, and an internal human's create with all four answers returns 201 with the answers stored.",
+  "world_is": "The create path assumes every typed ticket carries answers.firm (the analysis_request shape); a typed trade_request without a firm answer reaches answers['firm'] and raises KeyError. Needs a TCKT_VNEXT-owned edit to fall back to the principal's firm (the untyped branch's req_firm rule) when the type has no firm question; the order grants no such edit, so the valid-create test is left failing.",
+  "notes": "Not worked around: lambda_function.py is changed in exactly the one entry."
+}
+```

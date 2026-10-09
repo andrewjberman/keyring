@@ -688,6 +688,29 @@
     "spec_asserts": "Order step 3 / the signed halves: a targeted safe-apply reading exactly 1 add, 0 change, 0 destroy on aws_iam_role_policy.gw_firm_deny.",
     "world_is": "The apply consumed a saved plan (stricter than -target at apply time: it cannot apply anything the read plan did not show). Private TF data dir at a /tmp mktemp path, writer variables read from the live function environment into TF_VAR_ shell variables and never printed or written.",
     "notes": "No action needed unless the issuer wants the order text to say 'apply the saved targeted plan'."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-10-09T05:45Z",
+    "surfaced_by": "2.0.0_SA_COO~MS",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "id": "NFRA_MCPMSP-Z-S4",
+    "one_line": ".tools/round-close-check.py matches a proof instance's to_id EXACTLY against the order's <to_id> tag or, absent the tag, its full filename stem; .tools/proof-of-spec-check.py matches slug-tolerantly. An order with no <to_id> tag and a proof naming the bare id reads PROOF-BAD at round close while the proof reads VALID.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round-close-check.py --project NFRA_MCPMSP --round 2 at 2026-10-09 ~05:3xZ: PROOFS proof_ok=0 proof_bad=11, each 'names to_id NFRA_MCPMSP.TO-MS-<x>, not NFRA_MCPMSP.TO-MS-<x>.<slug>' (lines 190-191 compare str(inst['to_id']) != order['id']).",
+        "proof-of-spec-check.py header lines 722-725: of 337 estate instances, an EXACT to_id match would refuse 119 (slug on one side, or no <to_id> tag), so it accepts the tag, the filename stem, or an id= declaration.",
+        "Local repair: <to_id> declared on the 14 round-2 orders of NFRA_MCPMSP; the same check then reads proof_ok=11 proof_bad=0."
+      ]
+    },
+    "spec_asserts": "A round is counted finished when its complete orders carry proofs (round-close-check.py, /canonical-drive obligation 3); the proof-identity rule is the one proof-of-spec-check.py measured on the estate.",
+    "world_is": "Two instruments disagree on the same field; the stricter one refuses about a third of the estate's proofs that the other accepts. Any project whose orders lack <to_id> reads REFUSED at round close for a reason unrelated to the work.",
+    "notes": "Disarm owner is the CTO as owner of the round-close gate (written under NFRA_CTLPLN TO-CT-s-8, whose project.json names no coo_lane). Remedy proposed, not taken: have round-close-check reuse proof-of-spec-check's id forms."
   }
 ]
 ```

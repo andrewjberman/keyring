@@ -1,0 +1,66 @@
+{
+  "request_id": "DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS",
+  "standing": false,
+  "tier": 4,
+  "reason": "Andrew-direct ~05:4xZ 2026-10-09 (record org/tier1_exec/2.0.0_SA_COO~Q1/deliverables/ANDREW_DIRECT_20261009_054xZ_PRICES_ARE_TOTAL_RETURN_STORE_PRICE_DIVIDEND_TR_PER_DAY.md): compare Bloomberg to Yahoo on a few clear dividend payers with several years of history, under the total-return method, to see how Yahoo handles corporate actions, dividends and interest. CTO rulings batch section C (@6c538a0bfd): the comparison runs first in round 5 and its Bloomberg read is a queued draw. Stored Bloomberg TR history (opal-data-etfs bbg/<date>/history_topup.parquet, 34 partitions 2026-08-20..2026-10-07) holds only 30-34 days for these names, so a few years must be drawn.",
+  "page": "research (DEMQUE round-5 total-return method)",
+  "vendor": "bloomberg",
+  "channel": "history",
+  "securities": [
+    {
+      "cusip": "191216100",
+      "symbol": "KO",
+      "bloomberg": "KO US Equity"
+    },
+    {
+      "cusip": "478160104",
+      "symbol": "JNJ",
+      "bloomberg": "JNJ US Equity"
+    },
+    {
+      "cusip": "00206R102",
+      "symbol": "T",
+      "bloomberg": "T US Equity"
+    },
+    {
+      "cusip": "92343V104",
+      "symbol": "VZ",
+      "bloomberg": "VZ US Equity"
+    },
+    {
+      "cusip": "02209S103",
+      "symbol": "MO",
+      "bloomberg": "MO US Equity"
+    },
+    {
+      "cusip": "30231G102",
+      "symbol": "XOM",
+      "bloomberg": "XOM US Equity"
+    }
+  ],
+  "fields": [
+    "PX_LAST",
+    "DAY_TO_DAY_TOT_RETURN_GROSS_DVDS"
+  ],
+  "start": "2021-10-01",
+  "end": "2026-10-08",
+  "quote": {
+    "cells": {
+      "bloomberg_history": 15720
+    },
+    "basis": "bbg_quote.py history rule: weekdays 2021-10-01..2026-10-08 x 2 fields x 6 securities",
+    "claims": {
+      "ceiling": "absent",
+      "reserve": "absent"
+    },
+    "finish_date": null,
+    "allowance_gap": "history.ceiling absent; history.reserve absent"
+  },
+  "runs_at": "site Z, by the queue's producer, under integrations/bloomberg/READ_HERE.md budget rules; quoted before it draws; the same two fields etf_daily_pull.py already pulls (RET, :472)",
+  "writes_to": "the round-5 comparison cell's deliverables (research), not a served series",
+  "filed_by": "2.0.0_SA_COO~Q1",
+  "filed_for": "MDPF_DEMQUE",
+  "authority": "Andrew-direct ~05:4xZ 2026-10-09 (record above); 1.0.0_SA_CTO~DELL1 CTO_RULINGS_BATCH_20261009T0550Z.md section C",
+  "cusip_claim": "held: from the filer's knowledge except XOM 30231G102 (measured in Commonwealth data, @5a392db104); the draw keys on the Bloomberg ticker",
+  "also_compare_without_a_draw": "stored ~1 year of Bloomberg TR history (2025-09-30..2026-10-07, 257 days) exists for ED, BX, CSCO, BBY, DG and others in opal-data-etfs bbg/<date>/history_topup.parquet"
+}

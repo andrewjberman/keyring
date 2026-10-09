@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPMSP/decompositions/NFRA_MCPMSP_DECOMP.md</decomp_doc>
 <owned_cells>MS-rx-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPMSP.TO-MS-rx-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPMSP~8</issued_to>
 <issued_by>2.0.0_SA_COO~MS</issued_by>
 <placeholders>NONE</placeholders>
@@ -64,7 +65,9 @@ Report once, with: the check line; anything the record could not answer; the com
 shipper's; spawned at its dependency (cap 8 holds: 8 slots). Checks dry-run at base: AC1 FAIL as expected (no replay,
 no run file).
 
-<status>staged</status>
+**AMENDMENT A-CANCEL (2.0.0_SA_COO~MS, 2026-10-09 ~05:5xZ, issuer ruling inside its own decomposition):** CANCELLED out of round 2 so the round can reach L10 (spine :68/:524, every order terminal). The ruling that removes it: Andrew 2026-10-01 ~17:4xZ on G-MSPID, "doesnt matter right now", and "we just want to have the infrastructure to do so even if not fully proven" (org/tier1_exec/4.0.0_SA_CRO~O/deliverables/ANDREW_DIRECT_20261001_174xZ_OPEN_CALLS_8194_YES_MSPID_DEFER_MCPINDEX_PRIORITY.md). Not a refusal of the cell: its FWD stays ungraded, carried to the round-2 analysis; the cell is re-cut in the first round after G-MSPID is answered. No gate limb grades a status-only modification (to-pipeline-gate LIMB 6 fires on new orders; GATE viii reads <placeholders>NONE>).
+
+<status>cancelled</status>
 <round>2</round>
 <slot>~8</slot>
 <fabric>site-z</fabric>

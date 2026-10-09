@@ -60,7 +60,11 @@ T0="${EPOCHREALTIME:-0}"
 NOW_TS() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 secs() { local a="${1/[.,]/}" b="${EPOCHREALTIME:-0}"; b="${b/[.,]/}"; local d=$(( (10#$b - 10#$a) / 10000 )); printf '%d.%02d' $((d / 100)) $((d % 100)); }
 ROWNOTE=""
-row() { [ -d "$(dirname "$AUDIT")" ] || return 0; echo "$(NOW_TS) BOX-SYNC  ${SERIAL:-unknown}  mode=${MODE}  rc=$1  secs=$(secs "$T0")  ${ROWNOTE}" >> "$AUDIT" 2>/dev/null || true; }
+row() {
+  # the GITSTATE record (NFRA_MCPORTAL FWD-16, owner 4.0.0_SA_CRO): every non-dry pass, in the background so it costs the pass nothing
+  [ "$DRY" -eq 0 ] && [ -f "$ROOT/.tools/fabric-gitstate.py" ] && \
+    ( python "$ROOT/.tools/fabric-gitstate.py" --mode "$MODE" --rc "$1" --serial "${SERIAL:-unknown}" --note "${ROWNOTE}" >> "${GITDIR}/fabric-gitstate.log" 2>&1 & )
+  [ -d "$(dirname "$AUDIT")" ] || return 0; echo "$(NOW_TS) BOX-SYNC  ${SERIAL:-unknown}  mode=${MODE}  rc=$1  secs=$(secs "$T0")  ${ROWNOTE}" >> "$AUDIT" 2>/dev/null || true; }
 
 # --- who: an MSTR serial only (box and CLOUD are shared branches; GATE 5 of never-rules-gate.sh, LD-0367/0368)
 SERIAL="${OPAL_AGENT_SERIAL:-}"

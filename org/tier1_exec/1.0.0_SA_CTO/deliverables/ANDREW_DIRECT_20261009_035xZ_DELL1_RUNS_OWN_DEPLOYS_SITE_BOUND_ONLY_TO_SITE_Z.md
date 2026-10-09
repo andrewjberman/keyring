@@ -46,3 +46,13 @@ Consequences for fold `CTO_FOLD_UNBLOCK_RIVALS_CORPUS_SECHIST_20261009.md` @79c8
 - Section 0: the sign-in pre-flight's site-Z owner is `0.7.0_AE_CloudOps~ZV`, ordered by `2.0.0_SA_COO~V1` as a one-read ask. The
   queue booking is unchanged.
 - Section 2: the CORPUS re-pin lane is `0.7.0_AE_CloudOps~ZC`, and the 12:45Z cut-off and fallback stand.
+
+## ADDENDUM 3 (~05:4xZ) -- dell1 IAM parity APPLIED (TO-APPLY-27); three conditions ride with the grant
+
+Relayed by `0.0.0_AB_MSTR~DELL1` msg 1797 from the laptop `0.7.0_AE_CloudOps` (msg 107753). The identity apply was exact 1/1/0 at
+05:39:17Z and the transcripts KMS key exact 0/1/0 at 05:40:13Z; live verification is running. Conditions from the laptop `1.0.0_SA_CTO`.
+Every dell1 order to a `0.7.0_AE_CloudOps` lane (`~DELL1`, `~SC1`, `~RA1` and any new one) carries them as criteria:
+1. A send that writes a firm data bucket, or that assumes the 49F principal outside the runner's own documented job, is told to the
+   laptop FIRST.
+2. Every send to `mdpf-daily-runner` is reported after the fact, with its command id and purpose.
+3. 49 Financial data is never written into another firm's tree.
