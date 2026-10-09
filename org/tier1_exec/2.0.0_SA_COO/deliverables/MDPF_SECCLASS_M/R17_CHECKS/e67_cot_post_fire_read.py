@@ -74,8 +74,18 @@ def main(argv) -> int:
     compared = sum(r["compared"] for r in good)
     moved = [dict(m, key=r["key"]) for r in good for m in r["moved"]]
     ok = not unread and ma == 0 and not moved  # rebuilt is printed: a relationship no fire rewrites is counted, not graded
-    print(f"E67-G ok={ok} files={len(keys)} rebuilt={rebuilt} multi_asset={ma} compared={compared} "
-          f"moved_other={len(moved)} unread={len(unread)}")
+    # The half's arm 1 (NEVER_WIDEN_HALF_REQUEST_SECCLASS_COT_D04_MULTI_ASSET_20261008.md:53): SGIIX reads equity in both relationships,
+    # and branch (B): a fire with no new date moves nothing, which reads as NOT-YET, never as a pass.
+    sgiix = {}
+    for rid in ("z09305621", "z09305679"):
+        doc = json.loads(s3.get_object(Bucket=BUCKET, Key=f"platinum/clients/{rid}/concentration.json")["Body"].read())
+        last = (doc.get("concentration") or [{}])[-1]
+        sgiix[rid] = (last.get("date"), sorted({h.get("asset_class") for h in last.get("holdings") or [] if h.get("ticker") == "SGIIX"}))
+    sg_ok = all(cls == ["equity"] for _, cls in sgiix.values())
+    ok = ok and sg_ok
+    verdict = "PASS" if ok else ("NOT-YET" if rebuilt == 0 else "FAIL")
+    print(f"E67-G ok={ok} verdict={verdict} files={len(keys)} rebuilt={rebuilt} multi_asset={ma} compared={compared} "
+          f"moved_other={len(moved)} unread={len(unread)} sgiix={sgiix}")
     if len(argv) > 2:
         with open(argv[2], "w", encoding="utf-8") as fh:
             json.dump({"fire_start": argv[1], "files": len(keys), "rebuilt": rebuilt, "multi_asset": ma,
