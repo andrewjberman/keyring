@@ -80,7 +80,9 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     stand-down.
   - `4.0.0_SA_CRO` `/ui-walk` runs plus Andrew's transcripts, ad hoc, NO cron; findings to 1.0.0_SA_CTO and
     2.0.0_SA_COO~D.
-- `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
+- ~~`1.0.0_SA_CTO~O` `/self-drive 30m`~~ STRUCK 2026-10-09 ~07:4xZ by `1.0.0_SA_CTO~Z`: Andrew-direct "we don't need CTO~O
+  anymore, you just lead the fabric here" (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_CTO_O_RETIRED_CTO_Z_LEADS_SITEZ_FABRIC.md`).
+  The COO half below is not touched by that word. Original row: `1.0.0_SA_CTO~O` `/self-drive 30m` over NFRA_OPLGTW, NFRA_OPALAI, NFRA_MCPORTAL, NFRA_MCPINDEX, paired with
   `2.0.0_SA_COO~O` / `~MI` / `~MP` / `~AI` `/canonical-drive <own project> 30m` (+15m). Class DIRECTED, chooser Andrew
   (his `/self-drive` invocation, 2026-09-28 ~22:2xZ); landed by 1.0.0_SA_CTO~O. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md`. Stop:
