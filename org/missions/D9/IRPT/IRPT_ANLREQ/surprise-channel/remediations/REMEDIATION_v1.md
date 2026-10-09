@@ -47,11 +47,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~V2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~V2",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
       "state": "ARMED",
       "owner": "2.0.0_SA_COO~V2",
@@ -136,11 +136,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~Y2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_ANLREQ-D2-S1",
@@ -157,11 +157,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~V2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~V2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_ANLREQ-D2-W11-S2",
@@ -178,11 +178,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~V2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~V2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_ANLREQ-D2-W61-S1",
@@ -199,11 +199,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~G2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~G2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_ANLREQ-D2-W62-S1",
@@ -262,11 +262,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~Y2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_ANLREQ-D2-W62-S4",
@@ -283,11 +283,11 @@ Graduated at round 1's L8 (ADJUDICATION_v1.md), round label v2: 13 rows, OPEN. T
     "owner": "2.0.0_SA_COO~Y2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
