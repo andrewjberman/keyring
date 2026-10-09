@@ -1285,6 +1285,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-q-10 / R10_CLOSE: a held-out row is never returned by the analyst read over Research silver.",
     "world_is": "That holds for research_read.py only. The meeting reader (TR-t-4) predates the held_out column and reads the same address, so a reader using it on a Research Meeting date sees the held-out rows. Inert today: only the named readers can run either tool.",
     "notes": "Not run: found by reading the code while writing the FWD-5 coverage row. Becomes live if an analyst-facing reader is ever given the meeting reader."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W3-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~3",
+    "surfaced_at": "2026-10-09T09:30:00Z",
+    "one_line": "Storing the listing snapshot on apply makes two existing assertions in test_teams_pull.py (7 puts; one /state/ key) fail; the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (amend a later order's paths to admit test_teams_pull.py, or direct the two assertions to 8 puts and two /state/ keys; this worker may not edit the file)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_pull.py:44 asserts len(s3.puts) == 7 (2 transcripts x 3 objects + the run record) and :77 unpacks exactly one key containing /state/; pytest test_teams_pull.py: 24 passed at the base, 2 failed after pull.run writes the listing snapshot (8 puts; 2 /state/ keys: pull_runs and listing_snapshots)",
+        "data/transcripts/scripts/teams/pull.py run(): the snapshot is written beside the run record behind the same apply flag, as TR-e-19 build step 1 directs; r19_checks.py e4 prints R19-E4-OK and test_listing_snapshot_expired.py + test_completeness.py pass (17 passed)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-e-19 build step 1: each pull stores its listing as one snapshot behind the existing apply flag, with no other change named.",
+    "world_is": "The write adds an eighth put and a second /state/ key on an applied pull, so two older assertions in test_teams_pull.py that count puts and state keys are now stale; a drain-time run of that file goes red until they are updated.",
+    "notes": "Not worked around: the snapshot write was not made opt-in and the older test file was not edited."
   }
 ]
 ```
