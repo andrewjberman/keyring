@@ -575,3 +575,38 @@ method row, into every manifest whatever the source entry says. The rows carry N
    - **Until that cell drains, FWD-8 stays NOT REALIZED on these reasons,** on top of the 197 DEFECTs.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (2026-10-09 ~15:5xZ) -- round 50 (CVO slug msg 3593, `ADJUDICATION_v31.md` @e6298fbcf4): MAY-CLOSE, ARMED 0
+
+1. **R44's dry-run sizing reads UNDER both lines:** 377 s of 765, and 1,661 MB of 1,740.8 MB. Memory sits at 95.4% of its line. The ledger closes, per the R44
+   half's AMENDMENT 1.
+   - **One sample is not a margin. That gets measured now, not waited for:** ONE more ad-hoc dry run (no writes) on the HEAVIEST lots day in the last 90 days,
+     chosen by the largest lot-row count, printed with its denominator. Month-end 2026-09-30 is a candidate.
+   - Over the 85% line on that day: a pair for EITHER a producer fix (preferred) or a memory-configuration change, the latter with its own measured before/after.
+     Monday 07:41 ET's fire stays the acceptance row.
+2. **W73-S2 (123 segments):**
+   - **98 are BD-side by a two-sided read: `confirmed`.**
+   - **25 are BD-side only by exclusion: `inferred`, and they do NOT count toward FWD-8** (ADDENDUM 15 item 3, ADDENDUM 17).
+   - The ADDENDUM 17 two-sided date cell reads them too. Any that stay exclusion-only are graded UNEXPLAINED.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~16:0xZ) -- round 49 (CVO slug msg 3625, `REMEDIATION_v25.md` @3fdfddae0c): MAY-CLOSE
+
+1. **D2-S5 (client data in git) is contained.** W73_S1 and W73_S2 were removed from the tree @20e0b6408b, pushed, and box-sync was re-enabled (MSTR msg 3618).
+   - The history purge on origin box/dell2 and CLOUD is Andrew's act.
+   - The same class was found in ADVI_COTBKF's ARD manifest and removed @cb16f8b2f9.
+   - **Fabric rule (msg 3628-3632):** no account ids or client figures in any tracked file. Each COO runs a census.
+   - The disarm owner stays MSTR~DELL2, and the row disarms on its push read.
+2. **RULING on W75-S1, the FWD-8 comparator: compare on ONE COMMON convention, never across two.**
+   - 73 of 74 segments turn on our own declared conventions: fees inside the return, and income on receipt.
+   - The comparator RESTATES Black Diamond's return to Opal's declared conventions, then grades against 0.35pp. The restatement rule is pre-registered:
+     committed before the run that uses it (ADDENDUM 15 item 2).
+   - **A segment within 0.35pp AFTER restatement carries reason `CONVENTION` (`confirmed`: it is arithmetic on both sides' own figures).**
+   - **A segment still outside after restatement is NOT explained by convention.** Per W75-S2 that is 60 of 74, since only 14 fall within. They stay
+     UNEXPLAINED, or DEFECT where a cause is found.
+   - The tolerance is not widened to absorb them.
+3. **`ZERO_GAIN_VENDOR_TWR` failed the robustness band** (ADDENDUM 15 item 1). Its 45 segments are re-graded UNEXPLAINED, as the CVO did.
+4. **FWD-8 stays NOT REALIZED.** The next tie-out re-grades on the restated comparator.
+
+-- 1.0.0_SA_CTO~DELL2

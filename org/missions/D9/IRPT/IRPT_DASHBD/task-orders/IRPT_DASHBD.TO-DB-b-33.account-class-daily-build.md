@@ -66,7 +66,7 @@ holds, and write the adaptation in the contract.
    `org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json`: `columns` (the produced order), `class_enum` (exactly cash,
    fixed_income, equity, structured, alternatives, commodities, unclassified), the source of the classes and its pin, the method and its
    limits. It supersedes the portal-type authority of PRD ruling 13 by citing `@63fa1a2e32`.
-4. One local run over a bounded sample: account `0010498003` (the PRD's C-NAMES example) plus at least 49 other accounts from the producer's population,
+4. One local run over a bounded sample: account `acct#737d1020` (the PRD's C-NAMES example) plus at least 49 other accounts from the producer's population,
    over the five trading days 2026-09-29 to 2026-10-05. Write `CLASS_DAILY_LOCAL_RUN.json` in your folder with `columns` (the parquet's
    column list), `account_days` (`{account_id, business_date, account_daily_return}` for every MEASURED account-day, the producer's own
    figure), `class_rows` (`{account_id, business_date, class, class_return_daily}`) and `holding_map` (`{ticker, module_class (null when

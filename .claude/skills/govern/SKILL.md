@@ -160,7 +160,11 @@ cleanly." Every cycle, before Step 3b:
    manager the same cycle; every box's state goes on the SYNC line.
    (c) **open calls:** `python .tools/open-calls.py publish`, then `python .tools/open-calls.py list --all --cloud`; a box read
    ABSENT is asked over the bus to publish.
-   Record on the SYNC line: box branch ahead/behind `origin/CLOUD` (ls-remote read), integrate result, open calls per box.
+   (d) **crossbox sends:** `python .tools/crossbox-call.py send-pending` after the box pass. It sends every committed ORDER or
+   CALL whose commit is on origin and prints HELD for one that is not; commit any HELD file the tree holds untracked, push,
+   and run it again (NFRA_GATSCP row D1-S10, ROUND_ANALYSIS.round3.md ADDENDUM 1 item 5).
+   Record on the SYNC line: box branch ahead/behind `origin/CLOUD` (ls-remote read), integrate result, open calls per box,
+   crossbox sent/held.
 
 This step acts on this box only. Another box's seat is that box's manager's; the register `org/devices/DEVICES.json` is the list
 of boxes and Step 3b is how the managers keep in touch.

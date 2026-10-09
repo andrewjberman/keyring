@@ -1438,3 +1438,55 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W41-S17 -- step 16 build refused at the parity check, not a missing module
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W41-S17",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+  "surfaced_at": "2026-10-09T16:00:00Z",
+  "one_line": "AMENDMENT 7 step 16: BUILD_ONLY of irpt-commentary-draft-store-lambda stages all 12 members OK (3 old + 9 new, sha verified) but REFUSES at the ADHC_DRIFTD.002 parity check: seven source_dir files are not in files[].",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 7 step 16: after the nine root members are staged, BUILD_ONLY prints a BUILD_ONLY: line and 0 not-found lines.",
+  "world_is": "Zero 'not found' lines, but no BUILD_ONLY: line: the build ends 'PARTIAL - 0 built, 1 failed'. Parity check lists build_resident_package.py, currency_authority.py, custody_write.py, generate_installed.py, request_composition.py, resident_installed.py, status_installed.py as present in infra/aws/lambda/investor-reporting/reports but absent from files[]. Not a missing module; the files[] list (kept unchanged by the order) needs these seven or BAU_PARITY_SKIP=1 with justification. Stopped per order; t13b check prints AR1-T13B-FAIL rc=1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-commentary-draft-store-lambda -> ADHC_DRIFTD.002 parity check failed",
+      "1dbd639660"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-S15 -- BLOCKING: the resident worker refuses every ticket-bound request; its packaged AnalysisSubmissionRequest schema predates `ticket_id`
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S15",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T16:02:00Z",
+  "one_line": "Release 1 read 5 (REQ-4b5155ac, ticket-bound) never left RECEIVED: the resident worker refuses it SubmissionRefused CLOSED_COMPOSITION_REQUIRED every 15 min since 14:59Z. The worker is alive, not stuck. Acceptance (irpt-ycharts-generate tdpterTM) admits ticket_id; the resident's closed RequestComposition resolves browser -> its packaged AnalysisSubmissionRequest, which has no ticket_id.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AR-y-11 (ticket_id optional on AnalysisSubmissionRequest v1, @5be2acd7cc) makes a ticket-bound request generate end to end; release 1 read 5 expects READY.",
+  "world_is": "Host i-0167fd745ad906a66 runs irpt-analysis-resident from /opt/irpt-resident/e606008994-st27; its AnalysisSubmissionRequest.schema.json sha256 ed84ac362c90 carries ticket_id 0 times, as do st28 and st29 and every other staged copy (41 of 41). Disarm owner 2.0.0_SA_COO~G2. Ruled in decomposition R2 AMENDMENT 3: release 4 stages the schema at or after 5be2acd7cc and release 1 read 5 is re-run after it. HEAD's copy is a6f224cd834e. composition_admission.py:54 maps the jsonschema ValidationError to CLOSED_COMPOSITION_REQUIRED. irpt-generation: 0 visible, 1 in flight, DLQ 7. Fails closed: no wrong output, no generation for any ticket-bound request until the resident carries the schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SSM read-only commands f03a0b83-58e3-4ed0-a39b-1bb8777f1e31 and the two after it: journalctl -u irpt-analysis-resident, find + sha256sum of the packaged schema copies",
+      "aws sqs get-queue-attributes irpt-generation / irpt-generation-dlq at ~15:55Z",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/composition_admission.py:54",
+      "laptop result commit 60cfbecb26 (relay msg 3601): 3a TRUE, 4_record TRUE, 4_route TRUE, 5 ANALYSIS_REPORT_NOT_READY"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

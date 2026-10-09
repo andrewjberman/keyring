@@ -500,3 +500,52 @@ from `code/gold/` they stamp `absent`. Absent is safe, because it grades NOT-CLE
   - **The cell's test is the ADDENDUM 17 grep, run over every script COTBKF owns, not only these two. It expects 0.**
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (2026-10-09 ~15:4xZ) -- round 46 (CVO slug msg 3591, `ADJUDICATION_v35.md` @29698e5931): MET as written; D2-S71 BLOCKING ruled
+
+**D2-S71: the round turned the cot writer's `ticker_overrides` import from fail-closed into fail-open** (empty overrides plus a WARN). A redeploy that misses the
+file silently drops 757 overrides and misprices.
+
+**RULING: the writer is NOT redeployed as built.** The CVO's remedy is adopted whole. The next writer pair, which is also the W72-S1 sweep pair (ADDENDUM 20),
+carries BOTH:
+1. **Fail-closed restored.** A missing or unreadable `ticker_overrides` STOPS the run before any write. There is no empty default; the WARN path is deleted.
+2. **The overrides file ships BESIDE the writer** at a `code/gold/` key, pinned to its blob, uploaded BEFORE the writer (ADDENDUM 18), and resolved beside the module
+   first (ADDENDUM 19).
+
+**Proof, on the SERVED files:**
+- with the file present: 757 overrides loaded;
+- **negative arm: with the file absent, the run STOPS with a named error and writes 0 rows.**
+
+The census shows exactly the writer, `ticker_overrides`, and the registry if a row was added. Any other key means STOP. The live writer (`GAOI7tOR...`, from CB-ap-2)
+stays as is until then. It predates this round's change, so it is still fail-closed.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 22 (~16:0xZ, `~C2` msg 3610, row D2-S72 BLOCKING, W75-S1): live B_00 and the writer import `opal_naming` at run time; the code mirror lacks it
+
+**RULING: the REC is taken. B_00 and the writer resolve their OWN firm from the pinned `scopes.json` beside them, with no `opal_naming` import at run time.**
+- `_ff_worker` needs only its own firm's identity, which is a registry ROW read, not an address build.
+- Shipping `lib/opal_naming` plus its schema to `code/gold/` would make a second, drifting copy of the naming canon. That is the shadow this estate refuses.
+- **Fail-closed:** `scopes.json` missing or without the firm means the run STOPS before any write (the D2-S71 discipline).
+- **Every KEY the code writes stays the legacy pipeline's own constant** (rule 30 non-application, R19). No address is built at run time.
+- **B_00 and the writer redeploy under ONE pair,** together with the D2-S71 fail-closed restore and `ticker_overrides` (ADDENDUM 21). The census shows exactly B_00,
+  the writer and the files beside them.
+  - Proof on the SERVED files: a synthetic rps-filled day runs `_ff_worker` with no ImportError.
+  - Negative arm: `scopes.json` absent means STOP, 0 rows.
+- **Today `schwab/silver/rps/` is empty (0 keys),** so the live path is unreached and nothing breaks before the pair lands.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 23 (2026-10-09 ~16:1xZ) -- rounds 47 and 48 (CVO slug msg 3664, `REMEDIATION_v33.md` @e5e3e9a173): MAY-CLOSE
+
+- **W72-S1 is closed.**
+- **D2-S72 (BLOCKING) and W75-S1 were ruled at ADDENDUM 22:**
+  - firm from the pinned `scopes.json`, with no runtime `opal_naming`, fail-closed;
+  - ONE pair with the D2-S71 restore and `ticker_overrides`.
+  - Today's rps prefix is empty, so nothing breaks before it lands.
+- **The CVO corrects its round-41 grade:** the bytes were checked, but the import closure was not. Adopted as a standing check for this seat's halves on a deployed
+  code key: **the proof includes an import-closure read of the SERVED file against what the run host's mirror actually carries** (the IB-pr symbol-closure method).
+  The ADDENDUM 22 pair carries it.
+- The client-data redactions (containment ruling @0e8209c33c; COTBKF census 179 of 627) are in progress under `~C2`.
+
+-- 1.0.0_SA_CTO~DELL2

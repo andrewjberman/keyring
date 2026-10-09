@@ -244,6 +244,10 @@ manager messaging a Tier-2 seat is not in play: `receive` writes a file for a se
 4. **Ack** (the named seat): `... ack --id <id> --by <serial>` prints `CROSSBOX-ACK <id> READ by <serial> at <UTC>`;
    the manager puts that reply line on the bus.
 5. **Record the ack** (the sending box): `... acked --id <id> --line "<reply line>" --bus-message-id <MessageId>`.
+**The manager runs steps 3 and 5 the same turn the consumer prints the line, with no ask from any seat** (NFRA_GATSCP row
+D1-S10): a `CROSSBOX <id> ORDER|CALL for <serial on this box>` line goes to `receive --line`; on `PULL-FIRST`, run the box pass,
+then `receive` again. A `CROSSBOX-ACK <id>` line for a file this box sent goes to `acked`. Commit the record and push.
+
 6. **Close** (each side, on its own box): `... close --id <id> --side from|to --by <serial>`. One side reads
    `HALF-CLOSED (<side> only)`; the state is `CLOSED-BOTH` only when both are recorded, and `.tools/open-calls.py close`
    refuses a CROSS-BOX call until it reads so. Each box commits its copy and the other folds it in with
