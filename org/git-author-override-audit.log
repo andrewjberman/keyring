@@ -45394,3 +45394,60 @@ REFUSED_20261008)
 2026-10-09T12:47:11Z LANDED-2P  0.7.0_AE_CloudOps~MX  c867cecfc0  paths=1  validate=25.81s  wait=7.09s  hold=3.12s  build=1.92s  ref=0.96s  post-commit=7.18s  attempt=1
 2026-10-09T12:52:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.69  graded=n/a  args=(--verify-merge 23717c6ccacd8ad25c4d6afc0b99cb36423ada09)  first=(none)
 2026-10-09T12:52:29Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=25.02  held=dirty-overlap graded=0/160
+2026-10-09T12:52:56Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.09  graded=n/a  args=(--verify-merge HEAD)  first=(none)
+2026-10-09T12:54:56Z PASS  2.0.0_SA_COO~ZZ  2  (all paths in-lane)
+2026-10-09T12:55:18Z PASS  2.0.0_SA_COO~ZZ  2  (all paths in-lane)
+2026-10-09T12:55:37Z LANDED-2P  2.0.0_SA_COO~ZZ  7b35ae056b  paths=2  validate=59.47s  wait=1.09s  hold=3.19s  build=2.15s  ref=0.93s  post-commit=8.47s  attempt=1
+2026-10-09T12:57:27Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=12.53  took=already-current pushed=7b35ae056b
+2026-10-09T12:58:32Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane)
+2026-10-09T12:58:42Z PASS  2.0.0_SA_COO~MP  1  (all paths in-lane)
+2026-10-09T12:59:43Z MERGE-ATTEMPT  2.0.0_SA_COO~MP  rc=0  secs=16.42  graded=0/1 fast-lane  args=(coo-mp-cp2-issue -m drain(NFRA_MCPORTAL.TO-MP-x-4 GO, 2.0.0_SA_COO~MP): staged -> pending into box/sitez)  first=(none)
+2026-10-09T13:00:12Z PASS  0.7.0_AE_CloudOps~Z  2  (all paths in-lane)
+2026-10-09T13:00:24Z PASS  2.0.0_SA_COO~O  2  (all paths in-lane)
+2026-10-09T13:00:33Z PASS  0.7.0_AE_CloudOps~Z  2  (all paths in-lane)
+2026-10-09T13:00:36Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=13.78  took=already-current pushed=4f3a0a375d
+2026-10-09T13:00:36Z PASS  2.0.0_SA_COO~O  2  (all paths in-lane)
+2026-10-09T13:00:50Z LANDED-2P  0.7.0_AE_CloudOps~Z  fab015fa54  paths=2  validate=69.82s  wait=0.62s  hold=2.83s  build=1.95s  ref=0.76s  post-commit=6.44s  attempt=1
+2026-10-09T13:00:52Z LANDED-2P  2.0.0_SA_COO~O  cdb55361ae  paths=2  validate=43.43s  wait=0.83s  hold=2.65s  build=1.84s  ref=0.64s  post-commit=5.61s  attempt=1
+2026-10-09T13:02:29Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=23.25  took=already-current pushed=cdb55361ae
+2026-10-09T13:04:21Z PASS  0.0.3_BG_BBGTerminal  1  (all paths in-lane)
+2026-10-09T13:04:35Z PASS  0.0.3_BG_BBGTerminal  1  (all paths in-lane)
+2026-10-09T13:04:56Z LANDED-2P  0.0.3_BG_BBGTerminal  1dc36cb220  paths=1  validate=47.76s  wait=0.54s  hold=3.12s  build=2.02s  ref=0.76s  post-commit=7.44s  attempt=1
+2026-10-09T13:08:18Z PASS  2.0.0_SA_COO~O  3  (all paths in-lane)
+2026-10-09T13:08:56Z PASS  2.0.0_SA_COO~O  3  (all paths in-lane)
+2026-10-09T13:09:21Z LANDED-2P  2.0.0_SA_COO~O  5a32ef8970  paths=3  validate=98.70s  wait=0.50s  hold=3.70s  build=2.21s  ref=1.21s  post-commit=8.98s  attempt=1
+2026-10-09T13:12:22Z PASS  2.0.0_SA_COO~AI  2  (all paths in-lane)
+2026-10-09T13:12:50Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T13:12:54Z PASS  2.0.0_SA_COO~AI  2  (all paths in-lane)
+2026-10-09T13:13:04Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T13:13:19Z LANDED-2P  2.0.0_SA_COO~AI  2dc1f5d5f0  paths=2  validate=86.58s  wait=0.67s  hold=3.44s  build=1.99s  ref=1.17s  post-commit=9.05s  attempt=1
+2026-10-09T13:13:31Z LANDED-2P  0.0.0_AB_MSTR~Z  9e171a1854  paths=1  validate=49.52s  wait=1.26s  hold=5.50s  build=3.21s  ref=1.98s  post-commit=8.97s  attempt=1
+2026-10-09T13:14:17Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=11.48  graded=n/a  args=(--verify-merge 97e21781c9e821185fb320ef9a3c9d04d6f295d7)  first=(none)
+2026-10-09T13:14:20Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=134.39  held=dirty-overlap graded=1/112
+2026-10-09T13:14:34Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane)
+2026-10-09T13:14:48Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane)
+2026-10-09T13:15:09Z LANDED-2P  1.0.0_SA_CTO~Z  7cca94207d  paths=1  validate=49.29s  wait=0.75s  hold=2.99s  build=1.36s  ref=1.17s  post-commit=8.11s  attempt=1
+2026-10-09T13:17:19Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.96  graded=n/a  args=(--verify-merge a356336912c284db79ab3e036096815d45ddf1e0)  first=(none)
+2026-10-09T13:17:21Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=35.16  held=dirty-overlap graded=1/112
+2026-10-09T13:18:43Z PASS  1.0.0_SA_CTO~Z  2  (all paths in-lane)
+2026-10-09T13:18:57Z PASS  1.0.0_SA_CTO~Z  2  (all paths in-lane)
+2026-10-09T13:19:12Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T13:19:17Z LANDED-2P  1.0.0_SA_CTO~Z  4e2f00c9fa  paths=2  validate=43.43s  wait=1.18s  hold=3.29s  build=2.03s  ref=0.79s  post-commit=8.07s  attempt=1
+2026-10-09T13:19:19Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T13:19:23Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T13:19:31Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T13:19:45Z LANDED-2P  2.0.0_SA_COO~AI  93053dd518  paths=1  validate=34.57s  wait=0.87s  hold=3.77s  build=1.93s  ref=1.76s  post-commit=9.67s  attempt=1
+2026-10-09T13:19:55Z LANDED-2P  2.0.0_SA_COO~ZZ  57b66ed3cb  paths=1  validate=40.34s  wait=0.84s  hold=4.33s  build=2.07s  ref=2.07s  post-commit=8.56s  attempt=1
+2026-10-09T13:22:04Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T13:22:19Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
+2026-10-09T13:22:42Z LANDED-2P  2.0.0_SA_COO~AI  a090fc9ca9  paths=1  validate=47.24s  wait=0.48s  hold=3.57s  build=2.37s  ref=1.10s  post-commit=10.83s  attempt=1
+2026-10-09T13:22:48Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T13:22:59Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T13:23:22Z LANDED-2P  0.0.0_AB_MSTR~Z  4013e8b993  paths=1  validate=43.11s  wait=0.56s  hold=4.14s  build=2.92s  ref=1.08s  post-commit=9.78s  attempt=1
+2026-10-09T13:24:02Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=12.47  graded=n/a  args=(--verify-merge d9273b59fd97f79a59b7e5bc491f6ba635e8c2a2)  first=(none)
+2026-10-09T13:24:04Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=119.35  held=dirty-overlap graded=1/166
+2026-10-09T13:27:03Z PASS  0.7.0_AE_CloudOps~CA  3  (all paths in-lane)
+2026-10-09T13:27:03Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
+2026-10-09T13:27:13Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
+2026-10-09T13:27:16Z PASS  0.7.0_AE_CloudOps~CA  3  (all paths in-lane)
+2026-10-09T13:27:32Z LANDED-2P  0.7.0_AE_CloudOps~CA  55f73abff5  paths=3  validate=40.82s  wait=0.21s  hold=3.33s  build=2.13s  ref=1.13s  post-commit=5.56s  attempt=1
