@@ -3395,3 +3395,28 @@ round.** Never edit an existing row.
   "world_is": "(1) No contradiction: different series. (2) Open: the level of two accounts' served day values differs between methods by a constant ~2.45; the packet's lead (a split applied to closes already as traded) fits it. To be traced before the served values are relied on for these accounts."
 }
 ```
+
+## ADVI_COTBKF-D2-W57-S1 -- the delivery holds no outside price for the two scaled CUSIPs; both accounts class untraced
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W57-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~57",
+  "surfaced_at": "2026-10-09T09:10:00Z",
+  "one_line": "CB-ad-1: the factor on B3S728504 and B3S728506 is wholly the two equity CUSIPs 808524102 (close28/close26 = 3.0000) and 808524839 (2.0000), each equal to the product of the APPLIED plan splits dated 2024-10-11 (rows source) on all 5 scaled sample days per account; implied cash is identical under r26 and r28 (not the cash leg). The pre-written rule needs an outside price to choose a level, and the delivery has none: the two CUSIPs enter only as li/trfi/QA/dv/lo rows (Amount 0 on the position rows), no by/sl, so 0 of 10 carrier-days per account have a trade price within 5 days. Both accounts class untraced:0 carrier-days with an outside price. Not a class: the plan applied the split because the chain close was continuous across 2024-10-11, and S45 (1) records the store close as split-adjusted by construction, which would put r26 short by the factor (r28 right) -- an inference from the series' construction, not an outside value. The first run raised a pandas TypeError in outside_price (date vs Timestamp); fixed in the same file, rule untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~57/scale_trace.md (per-CUSIP rows, both Class lines)",
+      "data/assets/scripts/silver/commonwealth_scale_trace.py @3d3ddbceb5 (rule committed before the run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-ad-1: where the delivery holds an outside level (reported market value or position value) it is printed beside both and says which level is right.",
+  "world_is": "The delivery holds no market or position value (silver positions: quantity only) and no trade price for 808524102 or 808524839 (no by/sl rows in 2020-08-21..2026-05-27); the level question needs a source outside the delivery (a vendor close as traded on a pre-split day)."
+}
+```
