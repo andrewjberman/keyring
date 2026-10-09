@@ -4450,6 +4450,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-W62-S1 -- realized_gain, now in the realized primary key, is rewritten after realized_rows() checks the key, so uniqueness is held by two guards on two values of one column.
+
+```json
+{
+  "id": "IRPT_DASHBD-W62-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~62",
+  "surfaced_at": "2026-10-09T12:40:00Z",
+  "one_line": "realized_gain, now a member of the realized primary key, is rewritten after realized_rows() checks the key (in-kind and wash-sale re-measurement), so key uniqueness is held by two guards on two values of the same column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-87 step 2: extend PRIMARY_KEYS and the contract primary_key by the minimal real lot attribute so a true duplicate still refuses by name.",
+  "world_is": "MEASURED in data/assets/scripts/gold/irpt_reporting/account_activity_lots.py: realized_rows() checks the key on the custodian's gain_loss_dollars; a later re-measure (the in-kind and wash-sale branches) rewrites r['realized_gain'] and r['cost_basis'] on the output rows; emit_day()'s duplicate_keys then checks the key again on the rewritten values. On the kit, 2026-10-08 held 8 pairs sharing the 6-column key in the output (35,834 rows), all separated by realized_gain only, and 0 repeats under the new key; 2026-10-07 held 0. A future pair whose two halves re-measure to the same gain would pass the first guard and refuse at emit_day by name, never write a collapsed row. INERT: no day measured so far reaches that state.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py realized_rows() (key check on source gain) and the re-measure branches that assign r[\"realized_gain\"]",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~62/LOTS_KEY_R41.json (output duplicates under old and new key, both days)"
+    ]
+  },
+  "notes": "No action taken; the refusal stays and is by name. Owner to look at it if a LOTS_SKIPPED line ever names the emit_day repeat rather than the realized_rows one.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-S41 -- PROOF_OF_SPEC artifacts_produced has no git-exempt kind for a live AWS resource, so an order whose deliverable IS a secret cannot register it
 
 ```json
