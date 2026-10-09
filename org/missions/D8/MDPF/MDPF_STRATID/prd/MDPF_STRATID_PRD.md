@@ -4,7 +4,7 @@
 {
  "project": "MDPF_STRATID",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md@68aa9dbe9e",
