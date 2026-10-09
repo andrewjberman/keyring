@@ -5957,3 +5957,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "No Deny names the host (read at nfra-ctlpln-identity: no instance ARN in any Deny of any policy file or in routes.tf/modules/routes_policy), so the grant was written as ruled. Two facts a signer may want beside it: (1) the census verdict reads the role's own attached policies, and a shell on the host also holds whatever the host can assume (principal_49f.tf), which the census does not follow; (2) the new statement names the instance and the shell document, and IAM authorises instance and document separately, so irpt-ycharts-run and irpt-ycharts-deploy (fixed-text resident documents) can now be sent to this host as well; a shell makes that moot in power, not in record. Nothing is applied: INERT until the apply."
 }
 ```
+
+## NFRA_CTLPLN-S9106 -- round-close-check prints MAY-CLOSE while a round order is pending, and never counts a round's orders that live under a tier2 home
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9106",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-09T07:28:00Z",
+  "one_line": ".tools/round-close-check.py --project NFRA_CTLPLN --round 6 prints verdict=MAY-CLOSE with TO-CT-t-3 still pending, and its orders=9 omits TO-CT-x-1 and TO-CT-x-2, which live under org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 2026-10-09 ~07:2xZ at box/laptop by 2.0.0_SA_COO~C: `python .tools/round-close-check.py --project NFRA_CTLPLN --round 6` LAST line `ROUND-CLOSE project=NFRA_CTLPLN device=laptop reviewer=present orders=9 judgment=2 graded=2 ungraded=0 self_graded=0 verdict=MAY-CLOSE` while TO-CT-t-3 reads pending.",
+      "read_orders() globs only `<project dir>/task-orders/*.md` (CT-s-8 build, AMENDMENT 2 @ee22806754), so an order issued to a Tier-2 seat's own home is never read.",
+      "Reported by 1.0.0_SA_CTO msg (20261009T072659Z) as the round-6 L10 wait; not measured by this row: whether any other project's round closed MAY-CLOSE over a pending order."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 27 L10: one slug only after every task order of the round is terminal; round-close-check is the tool that says whether a round may close (CT-s-8).",
+  "world_is": "The verdict reads only grades and proofs, so a pending order sits outside it, and a round's orders under org/tier2_senior/*/task_orders/ are invisible, so the tool can say MAY-CLOSE on a round that is not terminal.",
+  "notes": "The CTO puts the fix on the next round's list: a TERMINAL limb (every order of the round, wherever it lives, read by <project> and <round> tags, at its LAST status tag) that REFUSES while any is non-terminal."
+}
+```
