@@ -84,3 +84,5 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
+<status>pending -- GO 2026-10-09T19:0xZ by the issuer: AMGT-ll-1 reported and merged @fa79702892 (its local negative case graded before this write). Pair: kk-3 COO @1380a0f2cd + ADDENDUM 1 @433e2b510d; CTO half signed (conditions 4-5). Worktree ~347 cut from box/dell1 after this line. Graded by no gate limb (a modification).</status>
+<status>complete -- issuer close 2026-10-09T19:1xZ: merged @5939733791 (wk-AMGT_RESAPP-347 @30d98609be, proof VALID); NEVER-2 entry amgt-resapp-r87-ll2-nu-description-empty-dell1 CLOSED. drafting/v1/NU_US_Equity.json prior ms8LxPe84kA9x8qb4L4f74vtKnlO2HRQ kept, new WniVHKccgvjIKq3XPQuGMeegnr2BDacJ (19:02:34Z); the local diff is one path, /sections/0/sentences (1 -> []). AC1 YES (issuer re-read on the live function: NU 0 description sentences, NO_SENTENCES); AC2 YES (0 of 98 restated or glued, every name at its r86 base). Owed at L9: the CVO's read of NU's page (CTO condition 4).</status>

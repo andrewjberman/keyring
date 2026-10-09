@@ -80,3 +80,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- issuer close 2026-10-09T19:0xZ: merged @fa79702892 (wk-AMGT_RESAPP-346 @e277b7a791, proof VALID). AC1 3 passed (mutant: the base scoped_amgt.py fails the FAILED arm); AC2 local YES (NU FAILED -> 0 served). Issuer re-run on the merged tree: test_failed_description_withheld + test_thesis_description_verdict + test_print_format_rich 15 passed; r87_withheld local YES. ACCEPTED beyond the face: the FAILED entry also carries `description_verdict_test` so the /overlay header keeps its failed_on/rule detail (the first cut broke test_overlay_header_and_thesis_route_agree_on_a_failing_sentence; fixed in scoped_amgt.py). api folder: 3 failed test_az4_cold_cut (box tz database; FAIL at the base too, issuer-measured), 3 errors test_print_format_rich in the worktree only (pass on the merged base tree). Deploys under AMGT-ll-3.</status>

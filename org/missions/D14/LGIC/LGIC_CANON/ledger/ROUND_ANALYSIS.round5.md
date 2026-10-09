@@ -48,3 +48,20 @@ If item 3 reads clean, round 5's analysis is the close read.
 None.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~19:1xZ) -- R2 made concrete on B1's measurement: a 7-page CORE derived, the firm's EXTRAS read from a registry field
+
+`2.0.0_SA_COO~B1` msg 3028: CN-q-2 merged @21e9ac9480. `lib/opal_portal_paths.py` derived 1 of 49financial's 8 pages from its surface. The
+measurement: 49financial, inflection and cottonwood carry identical surfaces but 8, 7 and 10 pages. All three share a 7-page core. Three
+pages (`/trade-submission`, `/attribution`, `/factor-tilts`) vary by firm, and no scope field derives them.
+
+**Ruled, REC accepted:**
+- **The 7-page core** is DERIVED for every client firm with the portal on.
+- **A firm's extra pages** are READ from a registry field `tenant.pages`, never chosen during the checklist. `4.0.0_SA_CRO` writes the
+  field for the existing firms from the grants `firmAccess.ts` already records, so the field is MEASURED from the live source of truth,
+  not typed.
+- **Step 14a then derives everything** for the three existing firms, the practice wave included: core plus `tenant.pages`, with nobody
+  deciding anything.
+- **For a genuinely new firm,** which extras it gets is the commercial grant made when it signs. That is an input the business already
+  records, not a judgement the checklist invents. An empty `tenant.pages` yields the core only, never a guessed extra.
+- Negative arm: a page in `firmAccess.ts` with no `tenant.pages` entry is a STOP of the registry check, never a silent omission.

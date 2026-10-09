@@ -1,6 +1,6 @@
 # Active projects by box -- status, blockers, and the last six hours
 
-**For:** Andrew. **By:** 1.0.0_SA_CTO (laptop), 2026-10-09 ~15:20Z. **Window:** commits on `CLOUD` from 09:00Z to ~15:05Z, all times UTC.
+**For:** Andrew. **By:** 1.0.0_SA_CTO (laptop), 2026-10-09 ~15:20Z, **updated ~19:00Z** (see the UPDATE section). **Window:** commits on `CLOUD` from 09:00Z to ~15:05Z, all times UTC; the update covers 15:15Z-18:55Z.
 
 **Sources:**
 - Every project's `project.json`, latest round analysis, task-order statuses and issue rows (the per-project issue logs the seats call surprise channels).
@@ -12,6 +12,104 @@
 **Words used:**
 - **Round:** one build cycle. The CTO lists the work, a COO issues task orders, workers build, the CVO (the verifier seat) grades, and the CTO analyses.
 - **FWD-n:** one of the project's promised outcomes. **MET** or **REALIZED** means it was graded done.
+
+---
+
+## UPDATE ~19:00Z -- new state since this report was written (~15:20Z)
+
+**Window:** 15:15Z-18:55Z, 856 more commits across the four boxes. The sections further down still describe the 09:00Z-15:20Z window. Where they disagree, this update is the current state.
+
+### Headlines
+
+1. **Client account data reached the repository (16:00Z) and was contained within about an hour.**
+   - A dell2 worker committed a file holding data for 121 client accounts; it reached `CLOUD`. A census then found about 130 tracked files under Investor Reporting carrying account numbers.
+   - All were moved out of the repo or redacted to hashed `acct#<8hex>` tokens: ADVI_COTBKF orders, IRPT_DASHBD and IRPT_BCKEND files, and 11 issue-log files (by the CVO).
+   - A content-reading commit check now exists on all four boxes (details in the process report).
+   - **The files remain in git history: purging them is your decision.**
+2. **Three projects CLOSED with every outcome met:**
+   - DSGN_AMGTV1, 26 of 26 (78294bf9ee, 17:22Z);
+   - LGIC_ENFORCE, 7 of 7 (65cfdb8978, 18:00Z);
+   - NFRA_GATSCP, 8 of 8 (45f5fc4fd9, 18:03Z).
+3. **Two idle laptop projects moved to dell1 and now have COOs:**
+   - MDPF_CANON (`~D1`; 60f7b56293, seated 7b0f032171);
+   - LGIC_CANON (`~B1`; 198b235f94, seated da56779806).
+
+   The laptop now runs only NFRA_CTLPLN.
+4. **Two journeys now work end to end:**
+   - **TCKT_VNEXT:** the Ticket Center's first journey ran end to end (66bfdf5c2e).
+   - **NFRA_OPALAI:** the Opal Analyst's closing test passed on a fresh message (349edef03b).
+5. **site Z's Control Plane page is live** at https://mcp.opalinvest.dev/control-plane (e9a1bf5127).
+
+### Your list now (acts only you can do; cluster list read 18:57Z)
+
+| Box | id | Act | Note |
+|---|---|---|---|
+| site Z | `-9f24` | Barron's sign-in | unchanged |
+| site Z | G-MSPID | MSP calling identity and its MFA sign-in | unchanged ("Not yet") |
+| site Z | `-21c5` | **NEW:** open https://mcp.opalinvest.dev/control-plane once and name one box's projects (~1 minute) | closes NFRA_MCPORTAL FWD-14 |
+| site Z | `-f0d2` | **NEW:** sign in once as the Opal Bloomberg account in a browser window site Z opens (~2 minutes) | NFRA_MCPORTAL FWD-2 |
+| site Z | `-a519` | Send one Teams message to the Opal Bloomberg account | **probably no longer needed**: that test's arm (b) passed on a fresh message at ~18Z (349edef03b); site Z should close it |
+| dell1 | `-86a2` | Rotate the Anthropic API key | unchanged |
+| dell1 | `-203a` | Is Opal_Muni_Sleeve Opal's Muni SMA? | MDPF_STRATID's planted-sleeve test passed (8125d09ffe); the organic check is due 2026-10-10 13:30Z |
+| dell1 | `-f23d`, `-838c`, `-5f4b`, `-69ef` | Cleanup deletes (1 stray S3 file, 2 empty Terraform states, 1 log group) | unchanged; `-bf6d` and `-c20b` are duplicates still listed |
+| dell2 | `-62ea` | Delete `C:/dev/_scratch265` | unchanged |
+| dell2 | `-3082` | Research Team Meeting transcripts: invite, or an M365 transcript policy | unchanged; 29 of 34 meetings landed |
+| dell2 | `-3cb1` | Alyssa files one Analysis request on portal DEV | unchanged |
+| dell2 | `-fbb1` | Close test ticket TCK-20261009-a1052909 | unchanged |
+| all | -- | **Purge the client-data files from git history (yes/no)** | **NEW; my recommendation is yes** |
+
+**Closed since 15:20Z:**
+- `-2f53` (the FWD-8 return tolerance, ruled at 0.35 percentage points; closed on both sides);
+- `-886a` (the transcript reader holders, closed on both sides).
+
+### What changed since ~15:20Z, by box
+
+**dell1** -- three projects closed, and two moved here from the laptop and now have COOs.
+- **DSGN_AMGTV1** -- CLOSED at round 68, 26 of 26 outcomes (78294bf9ee). Portal PROD moved to portal-v2.1.211, a change to the staff-only Security Analysis page.
+- **LGIC_ENFORCE** -- CLOSED, 7 of 7 (65cfdb8978). A one-cell follow-up round was re-closed at 18:21Z (c38826976d).
+- **NFRA_GATSCP** -- CLOSED at round 4, 8 of 8 (45f5fc4fd9).
+- **AMGT_RESAPP** -- round 86 closed (64c5f8d6fe), and kk-1's name list was republished from the laptop. The NU description graded not met (2eba7c172b), so round 87 was issued with four orders (433e2b510d).
+- **AMGT_CORPUS** -- round 41 graded MET (73eebd934a). Round 42 was issued, and its rewrite has both sign-off halves signed (cc7aeaa601).
+- **AMGT_HARVST** -- the collector fix merged (e086d0b429), and the round-79 re-pin was released to site Z. No live collection cycle has run yet.
+- **MDPF_SECHIST** -- a dry run of the gold job matched the served page 1,520 of 1,520 cells (9842e9a0d5). Both halves are signed, and the deploy went to a new deploy lane `~SC1` (57d6e1eab3).
+- **MDPF_STRATID** -- round-2 deploys D1 and D2 landed (6259c6efbf). The planted-sleeve test graded MET (8125d09ffe). The organic check is a dated wait until 2026-10-10 13:30Z.
+- **ETFS_RIVALS** -- the lookup is live (5e3d4f0a97). The tc-1 merge waits for site Z's manager window at 2026-10-10 06:00Z.
+- **MDPF_DEMQUE** -- 16 history cells booked (da5f4eddee). New finding D1-S6: the uploader writes ETF history cells as empty (81eea42ed9). Next: the 02:30Z draw.
+- **MDPF_HEALGAP** -- a dated wait was confirmed; the next checks are at 20:00Z and 2026-10-10 07:15Z.
+- **MDPF_SECCLASS** -- removed three records that paired a client relationship id with its holdings (9b96ca20cd). It waits on the 23:00Z run.
+- **MDPF_CANON** -- moved here with `~D1` seated, and PRD v2.9 is signed (d8ef27e783). New finding D1-S1: three tests already fail on dell1's branch before any change (0d5563e370).
+- **LGIC_CANON** -- moved here with `~B1` seated. Round 5 was issued with three cells (dcea6794eb).
+
+**dell2** -- the redaction sweep dominated, with real progress on the 49 Financial bundle, Teams transcripts and tickets.
+- **ADVI_COTBKF** -- all 7 parked orders were redacted (5cda488073, 10f554dde2). Rounds 50-53 ran, and COT gold was redeployed and read back equal to the repo (a1d34b066e).
+- **IRPT_DASHBD** -- the gold Lambda's memory went from 2,048 to 3,008 MB under a signed pair (7033c30a1c). The 990 out-of-tolerance segments were re-graded (c351fa8186).
+- **IRPT_BCKEND** -- the 49 Financial bundle (IB-pr-417) was rebuilt with the memory fix, and both halves are signed (c7b3f175b7). The performance adapter is failing (row D2-S60, 7364c85e16).
+- **IRPT_ANLREQ** -- release 1 revision 5 is live, using password window 5 (e4a57bee63). Its R3 check then found a code mismatch (d086ccf09f).
+- **IRPT_YCDGEN** -- irpt-status revision 4 crashed and was rolled back to revision 3 (f551980c99). Under revision 5, R3 passes but R4 is still refused.
+- **NFRA_TRNSPT** -- the first scheduled Teams landing ran at 16:00Z. Round 21 closed (bbaa367ce5). A census found 29 of 34 meetings landed; round 22 hunts the 4 missing Monday meetings (0f551cca1f).
+- **TCKT_VNEXT** -- the main journey ran end to end on run 4 (66bfdf5c2e). The sign-off pair's rollback clause was corrected (3edb75d80a).
+- **No commits:** NFRA_OPSWKF. ADVI_BILLING moved only through site Z's release order.
+
+**site Z** -- the Control Plane page is live, and gateway releases queue on the one host.
+- **NFRA_MCPORTAL** -- Control Plane LIVE (e9a1bf5127). MP-r-2 stopped at a 31.6-second read against a 30-second limit (row Z-S30).
+- **NFRA_OPLGTW** -- the release carrying ADVI_BILLING's Excel tool is cut, with all three halves signed (5e258448d2). It deploys after MX-r-9 and MP-r-2.
+- **NFRA_MCPINDEX** -- MX-r-9 phase B was re-cut on the live gateway, and the COO half is signed. The apply is held behind the queue.
+- **COMM_ASSIST** -- the real deploy applied nothing, because the package carried unreviewed lines. The build was pinned, all halves re-signed, and GO was re-issued at 17:48Z (f453cdd6bd).
+- **NFRA_OPALAI** -- closing test arm (b) PASSED (349edef03b). Arm (a) still waits on site Z's own call `-4d5a`.
+- **NFRA_IAMROLES202609** -- round 6 was issued to a new deploy lane, `~IR`, and phase A is in flight.
+- **NFRA_MCPMSP** -- no change; held on your act G-MSPID.
+
+**laptop**
+- **NFRA_CTLPLN** -- password windows 3 (24 minutes) and 5 (7 minutes 54 seconds) opened and closed inside their limits. New issue rows: S9108; S9109 (the cross-box send fails on Windows); D1-S6; D1-S7.
+- **My acts as control plane since 15:20Z:**
+  - client-data check (8c1d8a1966);
+  - task-order gate redaction and rename support (9caacb0f35, 24bdcd2690, b2d3d8e749, 8fff05ca26);
+  - safe-deploy summary now counts bundles (dd78f5dd5e);
+  - deploy-check hook fires only on closed ledgers (d29f2f61de);
+  - MDPF_STRATID round-2 sign-off (07ee308141);
+  - password windows 5 and TO-APPLY-30 (91d0d7982c, 075fab8835);
+  - site Z rulings (441f2f547d, ca14ebabec);
+  - MDPF_CANON and LGIC_CANON moved to dell1.
 
 ---
 
