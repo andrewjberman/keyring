@@ -59,7 +59,9 @@ not grade, and some are not ours to name at all. "This is a rule, not a grammar:
 4. Write `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_h8_rule.py`: it runs the `all` command once, reads each `OWNED` line of `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/HOLES_OWNED_round8.md` (root, type, name), and
    prints one line per name (the kind the live run gives it), then last:
    `H8-RULE ok=True owned=N not_asked=N hole_before=N hole_after=N mapped=N`; `hole_before` is read from the ALL-ROOTS line of
-   `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/ALL_ROOTS_round8.txt`; `ok=True` when every owned name reads NOT-ASKED, `owned` equals `not_asked`, and `hole_after < hole_before`.
+   `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9_base.txt`; `ok=True` when every owned name reads NOT-ASKED, `owned` equals `not_asked`, and `hole_after < hole_before`.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-09 ~06:3xZ; row LGIC_BLANKFIX-D1-W1-S1):** the baseline this order's checker reads is the issuance base's own run, `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9_base.txt` (78 mapped roots, hole=51, uncounted=17 at 9d55470156), not the round-8 close (63 mapped roots). The cut named the wrong file; every other word of the order stands.
 
 ### ACCEPTANCE
 

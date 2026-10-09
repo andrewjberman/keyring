@@ -56,10 +56,12 @@ nothing is lost." At the base the 17 residual UNCOUNTED lines all carry reason `
    `counted_at_caller=N` after `uncounted=N`; no other field moves.
 2. A case in `lib/tests/test_opal_naming_rootcheck.py` with the DIFFERENCE CONTROL: a `module-input` residual prints
    COUNTED-AT-CALLER and does not count; an `apply-time` residual still prints UNCOUNTED and counts.
-3. Write `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_counted_at_caller.py`: it reads the base `uncounted` from the ALL-ROOTS line of `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/ALL_ROOTS_round8.txt`, runs the `all` command
+3. Write `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_counted_at_caller.py`: it reads the base `uncounted` from the ALL-ROOTS line of `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9_base.txt`, runs the `all` command
    once, and prints last: `CALLER-COUNT ok=True uncounted_before=N uncounted_after=N counted_at_caller=N other_reasons=N`; `ok=True`
    when `uncounted_after == other_reasons`, `counted_at_caller + uncounted_after == uncounted_before` on a base with no new roots,
    or else the checker names the roots whose names moved and still requires `uncounted_after == other_reasons`.
+
+**AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-09 ~06:3xZ; row LGIC_BLANKFIX-D1-W1-S1):** the baseline this order's checker reads is the issuance base's own run, `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9_base.txt` (78 mapped roots, hole=51, uncounted=17 at 9d55470156), not the round-8 close (63 mapped roots). The cut named the wrong file; every other word of the order stands.
 
 ### ACCEPTANCE
 

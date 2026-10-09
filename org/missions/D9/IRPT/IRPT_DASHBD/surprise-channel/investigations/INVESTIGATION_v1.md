@@ -3905,56 +3905,6 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
-## IRPT_DASHBD-W54-S1 -- The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.
-
-```json
-{
-  "id": "IRPT_DASHBD-W54-S1",
-  "project": "IRPT_DASHBD",
-  "fabric": "laptop",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
-  "surfaced_at": "2026-10-09T06:20:00Z",
-  "one_line": "The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "spec_asserts": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml header and title: 43 distinct type_desc, 'Stage 0b'; the order text and the file's own comments treat 43 as the domain.",
-  "world_is": "MEASURED 2026-10-09 by parsing the file at HEAD: len(types) = 48 (Internal 19, Return 17, NNA 9, CorporateAction 3). The five entries added by the 2026-08-11 five-code amendment are in the list but the title, the '43 distinct type_desc' comment and total_type_desc_entries_v2 still read 43. The MECE section of the amendment proposal subtracts from 48. NEEDED: the CTO's word on whether the header is corrected in the same edit as the amendment; this cell edits nothing in the file.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (types: list, title, schema_collapse_audit)",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/ORION_TAXONOMY_AMENDMENT_PROPOSAL.md (MECE section)"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_DASHBD-W54-S2 -- Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the 
-
-```json
-{
-  "id": "IRPT_DASHBD-W54-S2",
-  "project": "IRPT_DASHBD",
-  "fabric": "laptop",
-  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
-  "surfaced_at": "2026-10-09T06:20:00Z",
-  "one_line": "Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the headline 24 of 562 round 36 published is the lower of the two gross figures.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "spec_asserts": "TO-DB-b-72 / round 36: the contract tie-out is the gross figure, 24 of 562 within 0.35 pp, with the net recomputation 421 beside it; the amendment is proposed because the net count improves.",
-  "world_is": "MEASURED 2026-10-09 by rerunning round 36's adapter unchanged plus one read-only block over four flow sets (same 562 denominator, 483 computable): net within 293 ratified, 348 with the journals, 350 with the tax pair, 421 with both; gross within 43, 41, 27, 24. The gross figure adds the advisory fee back and the vendor figure is Net of Fees, so the gross count is not like-for-like and moves the opposite way. Which basis grades the adapter is an open issuer/CTO call already named in W49-S2; this row only records that the two bases disagree on the direction of the amendment's effect. The proposal grades on the net basis and prints both.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/MEASURED_EFFECT.json (by_flow_set)",
-      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/measure_flow_sets.py"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
 ## IRPT_DASHBD-D2-W50-S1 -- The 2026-10-07 repeat is ONE pair (2 rows of 3,245, one account), not several: the two halves of a wash-sale split lot, separated by proceeds.
 
 ```json
@@ -4032,3 +3982,156 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W51-S1 -- The R35 packet's 'Terraform root has 0 changed files' no longer holds: the round-36 rollback restored the root and the source map to pre-release bytes
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W51-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~51",
+  "surfaced_at": "2026-10-09T06:45:00Z",
+  "one_line": "The R35 packet's 'Terraform root has 0 changed files' and its source-map facts no longer hold at HEAD: the round-36 rollback restored iam.tf, locals.tf, lambda.tf and the source-map entry to pre-release bytes, so the R37 apply also needs the three Terraform files restored to efeb21df71.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-74 step 2: 'Re-cut the packet ... from the R35 packet. Keep its structure and reasoning where it holds. Re-derive what changed: the realized key, the file list, the pins, and the sizing.' The R35 packet says the Terraform root has 0 changed files since the round-26 packet, so its expected plan (0 to add, 3 to change, 0 to destroy) stands, and that the source-map entry names last_deployed_commit 829e46ed7f.",
+  "world_is": "MEASURED by git at HEAD 3026d29bbb: commits 0709c0a960 (rollback step 2) restored infra/aws/terraform/investor-reporting/reporting-gold/{iam.tf,locals.tf,lambda.tf} to their 4c34d86104 bytes (sha256 at HEAD equals 4c34d86104's; differs from efeb21df71's), bfd71e73c9 restored the source-map entry irpt-49f-reporting-gold-lambda staged_from and files to 01661cf0da (10 of 15 staged_from rows carry a sha256 that differs from HEAD's bytes), and 310380d8cd recorded last_deployed_commit 440f89bb56 and the live CodeSha256 Mex71Y5g... as the rollback anchor. So the R37 apply needs the three Terraform files back at the efeb21df71 bytes (unchanged through ec9c251de8) in addition to the pins, or the plan shows only the function change. The packet states this as precondition 2 with the three sha256 pairs and a STOP rule; this cell did not edit the root or the source map (outside its grant). Also: account_activity_lots.py's HEAD bytes (c0afa6f55e, DB-b-73) are on box/dell2 and not on origin/CLOUD (local ref 3195077755, no fetch), so its pin is the box/dell2 commit as the face directs; 17 of 18 pins are on origin/CLOUD.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf @0709c0a960",
+      "infra/aws/lambda/ci/lambda-source-map.json @bfd71e73c9",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~51/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R37.md precondition 2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W53-S1 -- Orion's gross return is landed nowhere in S3 and is not a contextChange path of the saved query; it is read by overriding the performance option object in the G
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W53-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~53",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Orion's gross return is landed nowhere in S3 and is not a contextChange path of the saved query; it is read by overriding the performance option object in the Generate body (feeMethod Gross Of Fees).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-76 face: gross vs net is a query-level performanceOptionId in contextChange (PATH_DISCOVERY.md:124); read the gross figure from S3 if landed, otherwise pull it read-only from Orion's query API.",
+  "world_is": "Not landed: silver/api_dims/performance/ carries twr_fee_method 'Net of Fees' only, and silver/performance_dim/ carries gross_or_net 'net' on all 95,364 rows (listed 2026-10-09). The saved query 'Performance Dim' defines performance options 1 (TWR, feeMethod Net Of Fees), 2 (Simple) and 3 (IRR) and no gross option, so contextChange.performanceOptionId has no gross id to select. A Generate body that appends the performance 1 option object with feeMethod 'Gross Of Fees' and prompt 'Always' to requiredOptions returned FeeMethod 'Gross of Fees' on 3129 of 3129 rows, window 2023-10-09 to 2026-10-08. The unchanged read of the same query agrees with the landed net twr_value within 0.35 pp on 558 of 562 sample accounts (median gap 0.06 pp: a live read after the landed snapshot). One Generate for 'Unified Account Dim' answered 400 'CloudActivityAssetInformationProvider was not primed before use' and succeeded on the immediate retry. No write call was made to Orion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/orion_gross_fee_pull.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json net_control",
+      "data/inf/manual_api/PATH_DISCOVERY.md:124"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W53-S2 -- Orion has no field named supervised, and Asset.IncludedInBilling is unreadable for 526 of the 562 sample accounts, so the supervised and billed slices rest on a
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W53-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~53",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Orion has no field named supervised, and Asset.IncludedInBilling is unreadable for 526 of the 562 sample accounts, so the supervised and billed slices rest on a flag and a partial read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-76 face: Orion slices fees advised/supervised vs non-advised/unsupervised and billed/unbilled/total as Black Diamond does (Andrew @669ab7d677); Asset.IncludedInBilling is flagged broken for some accounts (PATH_DISCOVERY.md:158).",
+  "world_is": "No path or column named supervised was found in PATH_DISCOVERY.md, PATH_DISCOVERY_MSTAR.md or the landed silver dims (searched data/inf for supervised/unsupervised: no file). The nearest vendor flag is the account-level managed flag, silver/api_dims/accounts_v2 is_managed (850 True, 12 False of 862): supervised 483 accounts, unsupervised 11, and 68 sample accounts absent from that snapshot (their fees are reported apart, not guessed). Asset.IncludedInBilling reads 'Error:Not supported' for 526 of 562 sample accounts (2882 of 3129 database-wide); the 36 readable ones are all 'Included in Billing', so billed is partial and unbilled is 0 over the readable subset. Billing.FeeAmount exists for 509 accounts and is printed as an alternative cut. Orion's Advisory Fees Paid sum 4,246,172.01 against the ledger Management Fee plus Fee Credit sum 4,126,954.76 for the same accounts and window.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json fee_detail",
+      "data/inf/manual_api/PATH_DISCOVERY.md:158"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W53-S3 -- On the ratified taxonomy Opal's gross matches Orion's gross on 291 of 562; treating the two departing classes as flows lifts it to 418, the same size as round 3
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W53-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~53",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "On the ratified taxonomy Opal's gross matches Orion's gross on 291 of 562; treating the two departing classes as flows lifts it to 418, the same size as round 36's net result.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-76 face: map flows by the ratified taxonomy (CTO ADDENDUM 5, W49-S3) and flag the two departing classes with counts.",
+  "world_is": "Measured by orion_account_return_daily.py on 562 account-windows, 0.35 pp, trading days / 252: ratified flow set (NNA plus the advisory fee added back) 291 within; plus the Internal Account Journal pair and Federal/State Tax Withheld as flows 418 within (127 of the 271 misses are exactly that class); adding the Return-bucket trading and administrative fees back lowers the count (282 on the ratified set, 405 with the departing classes), so Orion's gross does not add them back. Flagged counts over the sample accounts, window and status Complete: Internal Account Journal 764 rows on 144 accounts; Federal/State Tax Withheld 1855 rows on 105 accounts. Round 36's net comparison with the departing classes read 421 within. This is the measured input to DB-b-77, not a ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~53/INF_GROSS_FEE_TIEOUT.json flow_variant_within, flagged_classes",
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W54-S1 -- The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.
+
+```json
+{
+  "id": "IRPT_DASHBD-W54-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "The taxonomy file's title and header say 43 type_desc entries; the file holds 48 under types:, so the stated denominator is stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml header and title: 43 distinct type_desc, 'Stage 0b'; the order text and the file's own comments treat 43 as the domain.",
+  "world_is": "MEASURED 2026-10-09 by parsing the file at HEAD: len(types) = 48 (Internal 19, Return 17, NNA 9, CorporateAction 3). The five entries added by the 2026-08-11 five-code amendment are in the list but the title, the '43 distinct type_desc' comment and total_type_desc_entries_v2 still read 43. The MECE section of the amendment proposal subtracts from 48. NEEDED: the CTO's word on whether the header is corrected in the same edit as the amendment; this cell edits nothing in the file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/inf/scripts/silver/orion_cashflow_taxonomy.yaml (types: list, title, schema_collapse_audit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/ORION_TAXONOMY_AMENDMENT_PROPOSAL.md (MECE section)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W54-S2 -- Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the 
+
+```json
+{
+  "id": "IRPT_DASHBD-W54-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~54",
+  "surfaced_at": "2026-10-09T06:20:00Z",
+  "one_line": "Under the proposed flow set the GROSS-basis within count falls from 43 to 24 of 562 while the net-basis count rises from 293 to 421, so the headline 24 of 562 round 36 published is the lower of the two gross figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-72 / round 36: the contract tie-out is the gross figure, 24 of 562 within 0.35 pp, with the net recomputation 421 beside it; the amendment is proposed because the net count improves.",
+  "world_is": "MEASURED 2026-10-09 by rerunning round 36's adapter unchanged plus one read-only block over four flow sets (same 562 denominator, 483 computable): net within 293 ratified, 348 with the journals, 350 with the tax pair, 421 with both; gross within 43, 41, 27, 24. The gross figure adds the advisory fee back and the vendor figure is Net of Fees, so the gross count is not like-for-like and moves the opposite way. Which basis grades the adapter is an open issuer/CTO call already named in W49-S2; this row only records that the two bases disagree on the direction of the amendment's effect. The proposal grades on the net basis and prints both.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/MEASURED_EFFECT.json (by_flow_set)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~54/measure_flow_sets.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
