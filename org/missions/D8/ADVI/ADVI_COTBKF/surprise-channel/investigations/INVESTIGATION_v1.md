@@ -2838,3 +2838,109 @@ round.** Never edit an existing row.
   "world_is": "1,540 listed securities have no `by` row (they enter by in-kind transfer or contribution); weight 0 would zero their score and tie them, so the script takes the largest inbound line amount (commonwealth_signs share-in types), else 1.0, and prints weight_basis BUY/INBOUND/NONE on every row. The list counts every non-cash security held on an unpriced account-day in the default run (4,372, the unpriced holding days equal holding_days - priced = 15,986,926), a wider population than the CRO's 3,226; the CRO's population definition was not available to this worker, so the difference is recorded, not reconciled. The weight rule is the CTO's or CRO's to change; the script reads one function (purchase_weights)."
 }
 ```
+
+## ADVI_COTBKF-D2-W50-S1 -- CB-aa-1: the price store's closes are split-ADJUSTED back through history while the rebuilt quantity is as traded: 59 of the 512 untraced DIFF months (6 securities, 8 accounts) are months before a split
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W50-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
+  "surfaced_at": "2026-10-09T04:01Z",
+  "one_line": "The closes the chain reads are split-adjusted over their whole history while the quantity rebuilt from the rows is as traded, so a month before a split values the position at 1/k and a split day shows a ghost return (B3S605610 2025-11-17 +274.9% against a reported -2.67)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md section 'One traced month per cause': B3S605610 2025-11, NFLX 64110L106: 68 shares and a stored close of 111.22 on 2025-11-14 (10 times that, 1,112, as traded, if the 10-for-1 ratio holds), a QA row of +612 shares on 2025-11-17 (10-for-1), the stored close continuous across the day (115.42 -> 111.22 -> 110.29); the account value goes 24,498 -> 91,844; with the closes before the split scaled x10 the month is -2.5150 against reported -2.67 (D was +279.4650)",
+      "diff_trace.parquet: 59 months with sub_kind split over 6 securities (02079K107, 02079K305, 023135106, 64110L106, 808524102, 88160R101) and 8 accounts; the split ratios come from the QA rows of every account (same ratio in every account that shows the day), 14 confirmed events",
+      "python data/assets/scripts/silver/commonwealth_diff_trace.py (the AC2 invocation): DIFF-TRACE months=512 traced=73 untraced=439 classes=3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "data/assets/scripts/silver/commonwealth_daily_valuation.py docstring (CB-p-1): each holding is valued at that day's close, quantity x price, and the CTO's cell reads holdings x as-traded close.",
+  "world_is": "For a security with a split, the stored close before the split day is the split-adjusted one (as traded divided by the cumulative ratio) and the rebuilt quantity before the day is the pre-split quantity, so the position is valued at 1/k of its worth until the QA row steps the quantity. Every month before the split since the quantity last changed is mis-weighted, not just the split month; a repair that scales the pre-split closes by the split ratio (written from the QA rows, not from the reported return) carries at least 90% of D in 59 of the 512 months. Nothing in the chain is changed here. The remedy (an as-traded close or a split-aware quantity for every graded month) is a round-28 cell for the issuer and the CTO."
+}
+```
+
+## ADVI_COTBKF-D2-W50-S2 -- CB-aa-1: an in-kind contribution (li) can carry the cost as its Amount, so the flow is valued at cost and the return takes the difference (B3S793726 2025-11: Amount 5,302 against shares worth 14,453)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W50-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
+  "surfaced_at": "2026-10-09T04:01Z",
+  "one_line": "An li row that delivers shares can carry the cost basis as its Amount, so the flow the chain subtracts is below the value the shares add to the account and the day returns the difference (B3S793726 2025-11-20 +8.30%)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "transactions cache (silver with Amount): B3S793726 2025-11-20 li GOOGL 02079K305 Quantity 50 Amount 5302.475; the day's close x 50 = 14,452.87; the day's value steps 99,206 -> 112,741 with flow 5,302.48 recorded, return +8.2991%",
+      "diff_trace.md: with the flow set to the shares' value the month is 2.9946 against reported 2.22 (D was +10.3632, remainder +0.7746); the second li month, 2026-02 (two rows, Amounts 5,282.60 and 14,436.70 against 16,729.65 and 25,301.95) stays untraced: the repair leaves +1.04 of D +20.05"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "commonwealth_flows.py EXTERNAL: li is a contribution whose flow is direction x |Amount|; the CB-q-1 rule values a ZERO Amount from quantity x price, which assumes a non-zero Amount is the value.",
+  "world_is": "A non-zero Amount on an in-kind li is taken as the value of what entered. In two B3S793726 months it is well below the shares' value (a cost basis is the reading; the rows do not say). The trace names this as flow_value in one month and measures it in a second; it does not change the flow rule (the order's bounds forbid it) and it does not know how many other in-kind rows across the 82,593 months carry a cost."
+}
+```
+
+## ADVI_COTBKF-D2-W50-S3 -- CB-aa-1: on a reinvested-distribution day (dvr) the stored close steps UP by about the distribution per share while the shares also step up: 13 months, 8 accounts
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W50-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~50",
+  "surfaced_at": "2026-10-09T04:01Z",
+  "one_line": "On a dvr day the position's value steps twice, once by the reinvested shares and once by a close that rises by about the distribution per share instead of falling by it (RGY004120 2025-12-05 FCNTX +5.04% close, +42.5 shares)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "transactions cache: RGY004120 2025-12-05 dvlt 1019.65 and dvr Quantity 42.539 of 316071109; the stored close 22.7407 (2025-12-04) -> 23.8867 (2025-12-05), 1.1460 a share against a distribution of about 1.09 a share; the day returns +9.74% (price +5.00, shares +4.74) and the month is 11.2855 against reported 1.65",
+      "diff_trace.parquet: 13 months with sub_kind distribution (4 are the RGY accounts of 316071109 in 2025-12); with the day's whole position step taken out of the value from that day on the month is within 0.11 of reported",
+      "INFERRED: the store is not shown to be total-return adjusted; the sign and size of the close step are measured, the cause of it is not"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The close on a distribution day is an as-traded close, which falls by the distribution per share on the ex-date, so reinvested shares at that close leave the position's value unchanged.",
+  "world_is": "The stored close does not fall on these days; it rises by about the distribution per share. Together with the reinvested shares the account value steps up by the distribution twice. The trace repairs this per day (the position's step taken out) and names it price:<cusip>; it does not say whether the store is dividend-adjusted, whether Commonwealth books the distribution as income, or how many other months carry the same step."
+}
+```
+
+## ADVI_COTBKF-D2-S39 -- disarm of W50-S1..S3 at CB-aa-4's pair
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S39",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-09T04:08Z",
+  "one_line": "Disarm of D2-W50-S1, S2, S3 (disarm_owner 2.0.0_SA_COO~C2): the only path by which their wrong day values could reach a reader is CB-aa-4's SERVED mint of the FWD-3 tables; the COO half of its never-widen pair is now conditioned on those days being repaired or blanked with reason, so nothing wrong can be served",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R27_FWD3_SERVE_COO_HALF.md: COO half DRAFT, condition added (not given while split / in-kind li / dvr days carry known-wrong values)",
+      "CB-aa-4 (0.7.0_AE_CloudOps~CB2) BOUNDS: no write before both halves of the pair exist",
+      "the three target prefixes hold 0 objects (measured 03:2xZ, control 14): nothing is served today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner (CLAUDE.md section 2).",
+  "world_is": "W50-S1..S3 describe valuation defects on specific days (59 split months, 13 distribution months, 1 in-kind flow). They stay OPEN as defects for the round-28 analysis; their hazard (publication of wrong day values) is blocked at the pair."
+}
+```

@@ -22755,3 +22755,85 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The header predates the owning cells; the root is applied, and the pair governs."
 }
 ```
+
+## IRPT_BCKEND-D2-S24 -- safe-deploy prints "0 file(s) deployed. NOTHING WAS DEPLOYED." in the same run that mints and uploads the bundle
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S24",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T03:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "On a BUNDLE-ROUTED path, safe-deploy.sh mints and uploads the bundle and then prints its summary as 'OK: safe-deploy gate PASS -- 0 file(s) deployed. NOTHING WAS DEPLOYED.' -- the count covers only the LOOSE script leg, so the one sentence a reader is most likely to quote asserts the opposite of what the run did to S3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-deploy.sh --author 0.7.0_AE_CloudOps~DELL2 data/assets/scripts/gold/investor_reporting/directory_runner.py at 7f31bbfa4e printed both 'BUNDLE MINTED [mdpf] investor_reporting -> s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (md5=b0356a757b1ae92e3a4b46a847378315)' and 'OK: safe-deploy gate PASS -- 0 file(s) deployed. NOTHING WAS DEPLOYED.'",
+      "head-object BEFORE the run: VersionId JITP9ecNeQyAnAmKo90oxqWyFemEqVaI, ETag 7de9bbd51be6919a1ee2beb9f69a8860, 108774 bytes, 2026-10-07T18:33:12Z",
+      "head-object AFTER the run: VersionId OxaIJns0x1vkrd924gLPTyOMGzL_KQxK, ETag b0356a757b1ae92e3a4b46a847378315, 112575 bytes, 2026-10-09T03:42:25Z",
+      "the object downloaded BY THAT VERSION ID hashes to sha256 2e3e6648312f5daad1da91f0c3aaeb4736a81b16cc9bb0dd4f43e5e93886b968, the value TO-IB-pr-383 declares"
+    ]
+  },
+  "spec_asserts": "The run's own summary line asserts 0 files deployed and that NOTHING WAS DEPLOYED.",
+  "world_is": "A new bundle version landed in the same run, at the exact md5 and sha256 the order required. The count is not wrong about its own subject -- zero LOOSE files were deployed, because a bundle-routed path deploys through the bundle instead -- but the sentence generalises past that subject in the two words 'NOTHING WAS DEPLOYED', which is a claim about the whole run. The tool is honest in the line immediately after ('This line is NOT evidence of a deploy ... Measure the artifact, not this sentence'), and that warning is what saved this leg: measuring the object is how the deploy was confirmed. It is INERT because the safe reading is already printed beside it. The hazard is asymmetric and worth naming: a reader who quotes the summary concludes NO deploy happened, and on a NEVER-2 ledger that is the reading that causes a needless re-run or a rollback of a release that in fact landed correctly. A deploy leg must therefore close on a head-object or a hash, never on this line.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S25 -- the dell2 applier identity cannot ssm:SendCommand to the mdpf-daily-runner host, so IB-pr-383's seeding legs cannot run from this seat
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S25",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T03:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "TO-IB-pr-383 steps 5-6 run on the mdpf-daily-runner host i-02448edb624a7a7cf, but this seat's identity arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is refused ssm:SendCommand on that instance (no identity-based policy allows it) while it IS allowed on the ycharts resident host i-0167fd745ad906a66 -- so legs A1 and B1 landed and legs S1, S2 and V1 cannot be executed by the seat the order is addressed to.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 ssm.send_command(InstanceIds=['i-02448edb624a7a7cf'], DocumentName='AWS-RunShellScript') -> AccessDeniedException: User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: ssm:SendCommand on resource: arn:aws:ec2:us-east-1:313476888478:instance/i-02448edb624a7a7cf because no identity-based policy allows the ssm:SendCommand action",
+      "the SAME identity sent five AWS-RunShellScript commands to i-0167fd745ad906a66 tonight (ssm ca8da4c1, 7f6d5a0a, 856b6197, 8abece29, 0af804a1), so the refusal is per-instance and not a blanket absence of ssm:SendCommand",
+      "ec2:StartInstances on i-02448edb624a7a7cf SUCCEEDED from this identity (pending <- stopped), and ssm describe-instance-information reads it Online with agent 3.3.4108.0 -- so the seat can start and observe the host it cannot command",
+      "TO-IB-pr-383 step 5 and the packet's Branch A step 2 both place the seeding run ON that host; the packet names it at line 44 as the only role with the grants (mdpf-daily-runner-ec2-role)"
+    ]
+  },
+  "spec_asserts": "The order is addressed to 0.7.0_AE_CloudOps~DELL2 under the standing Andrew-direct that dell2 deploys go to its own CloudOps seat (msg 1756), and its steps 5-6 require a command on the mdpf-daily-runner host.",
+  "world_is": "The seat's identity reaches exactly one host, the ycharts resident. The error is from the live SendCommand API, not from simulate-principal-policy, so none of the four simulate false-deny modes applies and there is nothing to re-derive: this is the primitive itself refusing. The release's first half is unaffected and is NOT half-landed in the NEVER-2 sense -- the packet states that step 1 alone 'is safe and changes the served bytes of nobody', so A1 and B1 form a coherent, safe, fully proven state that needs no rollback. What is blocked is the ruled seeding act. Two dispositions exist and both are above an applier: grant this identity ssm:SendCommand on i-02448edb624a7a7cf, or route legs S1/S2/V1 to a seat that already holds it. A third fact belongs in the same row: this seat STARTED that host to do the work and cannot stop it again, because stopping EC2 is reserved for human confirmation under CLAUDE.md Agent Autonomy -- the host is therefore running and will be used by its own 13:30Z scheduled fire regardless.",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2"
+}
+```
+
+## IRPT_BCKEND-D2-W195-S1 -- the refuse-drop is scoped to calls that write, because two IB-pr-381 tests pin run_firm returning on a dropped source entry
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W195-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~195",
+  "surfaced_at": "2026-10-09T04:00:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two tests in tests/test_directory_runner_terminated.py call run_firm(upload=False, local_out=None) on a build that drops a source entry and assert it RETURNS with held_in_source==1; a refusal that raises there contradicts them, and that file is outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/test_directory_runner_terminated.py::test_terminated_carry_forward_in_source_but_missing_from_build_is_not_carried (:136) and ::test_terminated_carry_forward_runner_carry_equals_the_refreshs_own_decision (:366) both failed with RuntimeError REFUSED: BUILD_DROPS_SOURCE_ENTRY when run_firm raised unconditionally (run at the worktree, 3 failed 362 passed incl. the known S71 red)",
+      "built as: run_firm raises the named refusal only for a call that would WRITE (upload or local_out); a call that writes nothing records carried_forward.refused and main() prints ERROR and returns 1. Both old tests pass unchanged; suite then 1 failed (S71 only)."
+    ]
+  },
+  "spec_asserts": "The order says the runner refuses the landing and makes 0 S3 puts, and that the whole runner suite still passes excusing only the S71 guard.",
+  "world_is": "The pre-IB-pr-384 tests pin a run_firm that returns on a dropped source entry. The refusal is therefore scoped to calls that write; a dry run reports the same verdict through carried_forward.refused and main()'s rc. If the owner wants run_firm itself to raise on every call, those two tests (outside this order's paths) must be updated in the same cell.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

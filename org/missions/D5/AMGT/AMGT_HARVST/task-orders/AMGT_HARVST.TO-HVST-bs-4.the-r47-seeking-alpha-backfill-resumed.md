@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-bs-4</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~ZW</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -39,19 +39,19 @@ not been relaunched. Andrew's order still stands. Resume the leg, do not restart
 6. On COMPLETION (the driver's own PAIRS completion line, every pair of the leg done or recorded with a stop status):
    write `bs4_completed.out` with that line and the done count, and tell `0.0.0_AB_MSTR~DELL1`, naming this order. That
    report is what lets the cycle runner add sa.
-7. Write everything in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/r47/`. Anything odd: append
+7. Write everything in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/`. Anything odd: append
    one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z number>`.
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/r47/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
 ## PROOF OF SPEC (each invocation LITERAL, on the site Z box, from the workspace root)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="HVST-bs-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/r47/bs4_declared.out</invocation><expect>harvst-r47-sa</expect></criterion>
-  <criterion id="AC2" cell_refs="HVST-bs-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/r47/bs4_completed.out</invocation><expect>PAIRS</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-bs-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/bs4_declared.out</invocation><expect>harvst-r47-sa</expect></criterion>
+  <criterion id="AC2" cell_refs="HVST-bs-4"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/bs4_completed.out</invocation><expect>PAIRS</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-bs-4" judgment="true"/>
 </proof_of_spec>
 
@@ -59,7 +59,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   completion, not a stop.
 - The checker reads `<expect>` as a regular expression.
 - INSTANCE NAMED EXACTLY
-  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/r47/AMGT_HARVST.TO-HVST-bs-4.the-r47-seeking-alpha-backfill-resumed.proof_of_spec.json`
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/AMGT_HARVST.TO-HVST-bs-4.the-r47-seeking-alpha-backfill-resumed.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-bs-4.the-r47-seeking-alpha-backfill-resumed`.
 - Do not edit this order file: the issuer flips its status.
 
@@ -70,13 +70,19 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   133"; `0.7.0_AE_CloudOps~Z` resumes it as a DECLARED detached job and reports completion; the runner adds sa on that
   report). Site Z `1.0.0_SA_CTO~Z` msg 32271 via `0.0.0_AB_MSTR~DELL1` msg 1436: no new seat on site Z, so the project's
   issuer orders `0.7.0_AE_CloudOps~Z` for its site-Z producer acts, and the r47 restart is ordered by `2.0.0_SA_COO~W1`.
-- Issued as its own WORKSTREAM `R47` (write surface `deliverables/0.7.0_AE_CloudOps~Z/r47/`, disjoint from round 75's
+- Issued as its own WORKSTREAM `R47` (write surface `deliverables/0.7.0_AE_CloudOps~ZW/r47/`, disjoint from round 75's
   `bs-1` to `bs-3`), because the ruling arrived 2 minutes after round 75's issuance @c7909af157 and the L6 gate admits
   one issuance per round per workstream. It is not an enrichment cell: it resumes Andrew's own 2026-10-06 order.
 - This is NOT a re-collection (R22): it resumes Andrew's own 2026-10-06 order from its checkpoint.
 - Dependency: the `bo-1`/`bp-1` merge pair's C-a reads "no backfill_driver process", so that merge waits on step 6.
   `bs-3` does not wait on it (it registers bbg, wsj and barrons only).
-- `<risk>` WORLD: the collector asks Seeking Alpha from the site Z box.
+- `- **AMENDMENT (2026-10-09 ~03:5xZ, issuer): re-addressed from `0.7.0_AE_CloudOps~Z` to site Z's AMGT_HARVST lane
+  `0.7.0_AE_CloudOps~ZW`** (Codex seat), on Andrew-direct ~03:5xZ via `0.0.0_AB_MSTR~DELL1` msg 1590 ("dell1 runs its own deploys; only
+  site-bound acts go to site Z, on the new per-project lanes"). The act is site-bound (that box's Windows user's sessions and
+  tasks), so it stays at site Z. The deliverables path moves with the lane. This also clears row AMGT_HARVST-D1-S2's seating
+  conflict: the lane holds AMGT_HARVST only.
+
+<risk>` WORLD: the collector asks Seeking Alpha from the site Z box.
 
 
 <risk>WORLD</risk>

@@ -1,0 +1,110 @@
+LIVE node_modules BEFORE: {'entries': 312, 'files': 41855, 'bytes': 448768516}
+KEEP (never touched): ['wk-tsc'] -> exists=True
+wk-advi-cotbkf-1               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-2               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-3               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-4               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-5               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-6               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-7               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-8               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-9               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-10              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-11              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-12              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-13              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-14              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-15              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-advi-cotbkf-16              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-comm-1                      folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-comm-2                      folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-comm-3                      folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-comm-4                      folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-comm-5                      folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ctlpln-37                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ctlpln-38                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ctlpln-39                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ctlpln-40                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ctlpln-41                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-irpt-p-61                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-irpt-p-85                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-irpt-p-86                   folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-nfra-ctlpln-1               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-nfra-ctlpln-2               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-nfra-ctlpln-3               folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ycdgen-1                    folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ycdgen-2                    folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk-ycdgen-3                    folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk_irpt_bckend_93              folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wk_mdpf_secclass_8             folder links=1 portal\node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+portal-coo-d-p3                portal-worktree links=1 node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+portal-coo-d-r43               portal-worktree links=1 node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+portal-coo-d-regime            portal-worktree links=1 node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+portal-coo-d-holdings          portal-worktree links=1 node_modules -> C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+wt-cto-benchmark-si            portal-worktree links=0 
+Traceback (most recent call last):
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO~B\deliverables\desk_cleanup_20261009.py", line 147, in <module>
+    sys.exit(main(sys.argv[1:]))
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\4.0.0_SA_CRO~B\deliverables\desk_cleanup_20261009.py", line 130, in main
+    shutil.rmtree(p)
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 635, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 633, in _rmtree_unsafe
+    os.unlink(fullname)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\AndrewBerman\\Desktop\\wt-cto-benchmark-si\\node_modules\\@typescript-eslint\\eslint-plugin\\node_modules\\@typescript-eslint\\utils\\node_modules\\@typescript-eslint\\typescript-estree\\node_modules\\@typescript-eslint\\project-service\\dist\\createProjectService.d.ts'
+=== RUN 2 (long-path fix) 03:48:15Z
+LIVE node_modules BEFORE: {'entries': 312, 'files': 41855, 'bytes': 448768516}
+KEEP (never touched): ['wk-tsc'] -> exists=True
+wt-cto-benchmark-si            folder links=0 
+portal-f1-cd3924d5             portal-worktree links=0 
+irpt-smoke-p-portal-20260923   portal-worktree links=1 node_modules -> \\?\C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\node_modules
+portal-trade-vident            folder links=0 
+LIVE node_modules AFTER:  {'entries': 312, 'files': 41855, 'bytes': 448768516}  UNCHANGED
+KEEP after: ['wk-tsc'] exists=True
+SKIP wk-advi-cotbkf-1: absent
+SKIP wk-advi-cotbkf-2: absent
+SKIP wk-advi-cotbkf-3: absent
+SKIP wk-advi-cotbkf-4: absent
+SKIP wk-advi-cotbkf-5: absent
+SKIP wk-advi-cotbkf-6: absent
+SKIP wk-advi-cotbkf-7: absent
+SKIP wk-advi-cotbkf-8: absent
+SKIP wk-advi-cotbkf-9: absent
+SKIP wk-advi-cotbkf-10: absent
+SKIP wk-advi-cotbkf-11: absent
+SKIP wk-advi-cotbkf-12: absent
+SKIP wk-advi-cotbkf-13: absent
+SKIP wk-advi-cotbkf-14: absent
+SKIP wk-advi-cotbkf-15: absent
+SKIP wk-advi-cotbkf-16: absent
+SKIP wk-comm-1: absent
+SKIP wk-comm-2: absent
+SKIP wk-comm-3: absent
+SKIP wk-comm-4: absent
+SKIP wk-comm-5: absent
+SKIP wk-ctlpln-37: absent
+SKIP wk-ctlpln-38: absent
+SKIP wk-ctlpln-39: absent
+SKIP wk-ctlpln-40: absent
+SKIP wk-ctlpln-41: absent
+SKIP wk-irpt-p-61: absent
+SKIP wk-irpt-p-85: absent
+SKIP wk-irpt-p-86: absent
+SKIP wk-nfra-ctlpln-1: absent
+SKIP wk-nfra-ctlpln-2: absent
+SKIP wk-nfra-ctlpln-3: absent
+SKIP wk-ycdgen-1: absent
+SKIP wk-ycdgen-2: absent
+SKIP wk-ycdgen-3: absent
+SKIP wk_irpt_bckend_93: absent
+SKIP wk_mdpf_secclass_8: absent
+SKIP portal-coo-d-p3: absent
+SKIP portal-coo-d-r43: absent
+SKIP portal-coo-d-regime: absent
+SKIP portal-coo-d-holdings: absent
+DESK-CLEANUP mode=EXECUTE targets=45 removed=4 skipped=41 node_modules=UNCHANGED
+rc=0
