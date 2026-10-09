@@ -54,6 +54,18 @@ The commit that adds the test and the change must be preceded by a commit of the
 
 Do NOT deploy. Shipping the gold script to the cot code mirror is a later SERVED cell under its own pair.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~13:4xZ, before spawn) -- CTO ADDENDUM 12 @7d33a8581d (msg 3390): the cross-firm test keys on a
+`source_firm` FIELD, never a token.** Item 2 above is REPLACED. Item 1 stands. Do not derive a label set, and do not match on `bd_`.
+
+2'. **Carry the claim, not just the price.**
+    - A carried row also carries the prior row's `source_firm`. If the prior row has no `source_firm` (today's case; the field arrives
+      with round 40 at the price writer), the carried row reads `source_firm = "absent"`.
+    - A prior price whose `source_firm` is PRESENT and is not `cottonwood` is never carried. Its price is null, with
+      `price_basis = "not_carried_foreign_source"`.
+    - Test (c) becomes: a prior row with `source_firm="bd"` is not carried, and a prior row without the field is carried with
+      `source_firm="absent"`.
+    - Test (d) is unchanged: no other existing column moves.
+
 ### ACCEPTANCE
 
 <criterion id="CB39am1-AC1" cell_refs="CB-am-1"><invocation>python -m pytest data/cot/scripts/gold/tests/test_b00_ff_carry_claim.py -q</invocation><expect>passed</expect></criterion>
