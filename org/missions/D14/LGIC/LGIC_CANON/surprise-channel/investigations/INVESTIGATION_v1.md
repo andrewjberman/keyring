@@ -1405,6 +1405,26 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "REMEDY, stated and NOT performed: move the 2026-09-20 correction into its SOURCE -- the legacy-served-paths claim text in org/standards/NAMING_SCHEMA.json -- then run --write, and confirm the re-render leaves the corrected line and changes only the stamps. Not done on the R4 commit because (a) whether grade() reads that schema field was not measured, and (b) it is a schema edit outside the R4 text Andrew approved. DISARM condition: render --check rc=0 at a commit where the legacy-served-paths line still reads PRESENT. KEEPABLE: A CORRECTION WRITTEN INTO A RENDERED BLOCK IS A CORRECTION WITH A TIMER -- it lives exactly until the next render, and the render's own instruction is what fires it. The tell was a --check that had been failing for days: a generated block whose check fails is a block someone edited by hand, and the hand edit is the thing a re-render will eat. COST: one --write into a scratch copy and a diff before any real --write. NON-APPLICATION: a generated block whose --check passes."
+  },
+  {
+   "id": "LGIC_CANON-D1-W3-S30",
+   "project": "LGIC_CANON",
+   "fabric": "dell1",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~3",
+   "surfaced_at": "2026-10-09T19:05:04Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "one_line": "After TO-CN-q-2 the checklist still states the portal paths as a SOVEREIGN input in three places the order's edit grant ('only that row and that sub-bullet') excludes.",
+   "spec_asserts": "Edit only the INPUTS row 'the portal paths the firm may open' and Step 14's portal-paths sub-bullet; the checklist then reads the portal paths as DERIVED.",
+   "world_is": "infra/logic/10_ONBOARDING_CHECKLIST.md at 81860521f7 still carries (a) the post-table count 'Nine rows: five SOVEREIGN, four GIVEN' (the table now has four SOVEREIGN rows and one more DERIVED row, so the count is wrong), (b) the step 14 trailer 'None of these three acts has a CONTRACTS builder or a generated view ... Row LGIC_CANON-W6-S2 records that gap' and (c) the WHAT THIS CHECKLIST DOES NOT DO line 'the portal paths (Step 14) -- Andrew, a sovereign input with no registry carrier yet (row LGIC_CANON-W6-S2)', which tells a reader the run STOPs there. Left unedited per the grant.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "git show 81860521f7:infra/logic/10_ONBOARDING_CHECKLIST.md, lines containing 'Nine rows', 'LGIC_CANON-W6-S2' (two hits remain after the edit)"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "REMEDY, not performed (outside the grant): re-count the table sentence and delete the portal-paths bullet from the DOES-NOT-DO STOP list in a later cell that holds the checklist."
   }
 ]
 ```
