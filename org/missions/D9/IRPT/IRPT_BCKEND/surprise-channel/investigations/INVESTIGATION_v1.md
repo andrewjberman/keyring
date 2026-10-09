@@ -24471,3 +24471,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S53 -- Resolves D2-W269-S1: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S53",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W269-S1 (BLOCKING). Root cause, measured by ~269: IB-pr-403's CUSIP security_id on 115,412 SmartX nodes removes the TICKER id that holdings_snapshot.fill_display_from_facts reads (:803), so display.symbol drops and 13,892 nodes lose their class; the FWD-14 gate then refuses 49F. The defect is IB-pr-403's, inside ~P's decomposition. Issuer ruling: cell IB-pr-410 (round 111) adds a ticker= fact on every SmartX SECURITY node with a ticker (as custody rows already carry), rebuilds the 49F narrow bundle on IB-pr-404's live bytes with the e56 member, and replays it with fwd14_gate_unchanged and smartx_class_parity identical. IB-pr-406's artifact is superseded; nothing was uploaded.",
+  "one_line": "W269-S1 resolved: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle; IB-pr-406's artifact is superseded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB107-1_49f_bundle_replay.json @5bfc1788af: fwd14_gate_unchanged FAIL (base PUBLISHED, built REFUSED classified_security_lost 53)",
+      "holdings_snapshot.py:803 symbol = fact('ticker=') or TICKER security_id",
+      "TO-IB-pr-410 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 changes only the security_id namespace of SmartX nodes.",
+  "world_is": "It also removed the ticker that display and classification read; IB-pr-410 restores it as a fact."
+}
+```
+
+## IRPT_BCKEND-D2-S54 -- Resolves and disarms D2-W272-S1: the CTO signs the row-listed caller's class as built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S54",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:32:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-W272-S1. A row-listed Opal internal caller classes OPAL_GLOBAL on IB-pr-409's build (live: UNKNOWN), bound to its listed firm; the six hosts released under IB-pr-390's shared served.py (pair @567612e686 / @b97ebb6b98) give that caller the same class. The CTO half on IB-pr-409 (@28563e702c, msg 3370) rules: sign as built. IB-pr-401 is re-pointed to IB-pr-409's artifact (AMENDMENT 3).",
+  "one_line": "W272-S1 resolved: the CTO signs the row-listed caller's class as built (matches the six IB-pr-390 hosts).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half NEVER_WIDEN_IB_pr_409_NARRATIVE_NO_ROW_UNKNOWN_CTO_HALF.md @28563e702c",
+      "COO half @e4227621a6"
+    ]
+  },
+  "spec_asserts": "No served move widens a caller's reach beyond what its pair signs.",
+  "world_is": "The row-listed caller's class is now signed by both halves."
+}
+```
