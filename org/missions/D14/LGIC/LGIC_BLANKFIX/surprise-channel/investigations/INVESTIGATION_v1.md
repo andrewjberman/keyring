@@ -1932,3 +1932,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "An order whose status is 'complete -- <note>' counts as neither complete nor terminal, so its proof is never read and the verdict passes on zero graded orders. Round 8 is genuinely complete (handoff 85ba7c79b2, each proof re-run by the issuer); the defect is in the instrument, whose owner is not this seat."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S1 -- BX1-AC2 cannot read ok=True: hole_before is read from the round-8 ALL-ROOTS line (hole=10, mapped=63) but the live run is mapped=78
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T06:20:50Z",
+  "one_line": "BX1-AC2 cannot read ok=True: hole_before is read from the round-8 ALL-ROOTS line (hole=10, mapped=63) but the live run is mapped=78",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ALL_ROOTS_round8.txt last line: 'ALL-ROOTS ok=True roots_total=87 mapped=63 unmapped=24 ... hole=10 ... other_holes=10'",
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_h8_rule.py -> ten names NOT-ASKED; 'H8-RULE ok=False owned=10 not_asked=10 hole_before=10 hole_after=41 mapped=78'",
+      "the order's CONTEXT gives the base reading hole=51 mapped=78; 51 minus the ten H8 holes is 41 = hole_after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BX1-AC2: hole_before is read from ALL_ROOTS_round8.txt and hole_after < hole_before holds once the ten H8 names read NOT-ASKED.",
+  "world_is": "The round-8 file was taken with 63 roots mapped; the live run maps 78, so hole_before=10 is not comparable with hole_after=41. The build holds (10 of 10 names NOT-ASKED, hole fell 51 to 41 on the same 78 roots) but the order's own comparison reads false. Not weakened; the order stays open for the issuer to name the right baseline (the CONTEXT's hole=51)."
+}
+```

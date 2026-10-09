@@ -379,6 +379,9 @@ def policy_system(ans):
     return None, "unresolved", pol.get("basis")
 
 
+NOT_GRADED_LINE = "this type is outside the canon, no name is owed"
+
+
 def decide(item, ans, fourth=None):
     """(kind, detail) for one item. `ans` is plain data from the five modules:
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
@@ -410,6 +413,8 @@ def decide(item, ans, fourth=None):
     if ans.get("raised") is not None:
         return "HOLE", str(ans["raised"]) + ("; " + ans["ruling_unread"] if ans.get("ruling_unread") else "")
     verdict, canon = ans["graded"]
+    if verdict == "NOT-GRADED":
+        return "NOT-ASKED", NOT_GRADED_LINE
     cad = ans.get("cadence") if typ in _CADENCE_TYPES else None
     rebuilt = False
     if cad is not None:
