@@ -75,14 +75,14 @@ IAM-w-3  <- IAM-w-2        then E; PHASE B <- its two pairs
 IAM-w-4  <- (none)        LOCAL; the lane prepares the two rows, the issuer lands them as carrier (A1, row Z-S19)
 ```
 
-**WRITE SURFACE** (all orders add `deliverables/0.7.0_AE_CloudOps~Z/round6/`, the channel and the order itself):
+**WRITE SURFACE** (all orders add `deliverables/0.7.0_AE_CloudOps~IR/round6/`, the channel and the order itself):
 
 ```
 IAM-w-1   infra/aws/terraform/smartx-pipeline/zz_adopt_family_b.tf.proposed (-> .tf at PHASE B), ledger dirs
 IAM-w-2   infra/aws/terraform/bd-pipeline/zz_adopt_family_a.tf.proposed (-> .tf), ledger dirs
 IAM-w-3   infra/aws/terraform/portfolio-management/zz_adopt_family_e.tf.proposed and
           infra/aws/terraform/news-pipeline/zz_adopt_row3.tf.proposed (-> .tf), ledger dirs
-IAM-w-4   deliverables/0.7.0_AE_CloudOps~Z/round6/ only (the two disposition rows are prepared uncommitted; the issuer lands them)
+IAM-w-4   deliverables/0.7.0_AE_CloudOps~IR/round6/ only (the two disposition rows are prepared uncommitted; the issuer lands them)
 ```
 
 One assignee holds all four, so the w-1 -> w-2 -> w-3 chain is the plan's own order. w-4 is independent.
