@@ -3157,3 +3157,28 @@ round.** Never edit an existing row.
   "world_is": "The unconfirmed splits' earlier days are still valued at the stored close x the as-traded quantity, which is wrong if the stored series is adjusted for them and unchanged if it is as traded; the plan cannot tell. The dvr signature was fixed from the rows and closes before the run; whether the store is dividend-shifted is not shown. The COO half's condition on CB-ab-2 (D2-S39: no known-wrong day served) should read the plan table, not assume the 14."
 }
 ```
+
+## ADVI_COTBKF-D2-W53-S5 -- CB-ab-1: S1's red test is fixed under the issuer ruling (@e8bdbd5c38): test_commonwealth_unlisted_types.py:134 now asserts method_r28
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W53-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~53",
+  "surfaced_at": "2026-10-09T06:18Z",
+  "one_line": "the equality at test_commonwealth_unlisted_types.py:134 moved from CASH_LEG_METHOD_R26 to CASH_LEG_METHOD_R28, so D2-W53-S1's failing test passes; silver suite 718 passed, 11 skipped, 0 failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests on wk-ADVI_COTBKF-53: 718 passed, 11 skipped, 0 failed",
+      "the order's <paths> gained data/assets/scripts/silver/tests/test_commonwealth_unlisted_types.py, identical to the trunk amendment e8bdbd5c38"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D2-W53-S1: a fourth test pins the round-26 default and is outside the order's paths, so the silver suite ends with one failure.",
+  "world_is": "The ruling widened the grant by that one path; the equality and its trailing comment were changed and nothing else in the file. S1 is unedited; its armed hazard no longer has a red test behind it."
+}
+```
