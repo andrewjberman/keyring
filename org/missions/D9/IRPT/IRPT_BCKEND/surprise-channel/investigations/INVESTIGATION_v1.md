@@ -23895,3 +23895,300 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both steps are environment-sensitive without an error. A bare git apply on this box rewrites the member with CRLF line endings (a different file from the one ce6e2a218e committed); the default python (3.14, zlib-ng) writes a valid but different gzip stream than the live producer, so a sha256 built there would not be the one an applier on another interpreter gets. The packet pins both: the patch is applied with autocrlf/eol overridden and checked against blob e39636c5a8, the packer is python 3.12 and its control reproduces the live bytes, and the applier's step 3 is a digest gate whose miss is a STOP. Nothing is blocked; filed so a later applier who rebuilds with another interpreter reads the cause of a digest miss here."
 }
 ```
+
+## IRPT_BCKEND-D2-S41 -- IB-pr-397's signed export-root plan declares the SAME CloudWatch log group twice, so the apply cannot succeed; STOPPED at the plan with nothing applied
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S41",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T10:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Two of the six signed adds declare /aws/lambda/irpt-commentary-composition-read-lambda, the group does not exist yet, and no other investor-reporting root declares its own -- so the apply would create one and fail the other half-landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "plan of infra/aws/terraform/investor-reporting/export at the release pin 9c995243f7: 'Plan: 6 to add, 0 to change, 0 to destroy' -- no change and no destroy, so nothing of another release rides along",
+      "TWO of the six adds declare the same log group: aws_cloudwatch_log_group.commentary_composition_read (export/commentary_composition.tf:87, local.ccr_log_group) and module.irpt_commentary_composition_read.aws_cloudwatch_log_group.lambda (modules/yang-lambda/main.tf:76-77, /aws/lambda/${var.function_name})",
+      "both '+ name = \"/aws/lambda/irpt-commentary-composition-read-lambda\"' lines are character-identical, at plan lines 49 and 267; a sort -u over the plan collapses them and the plan then reads as a clean six-add set -- that dedupe is how this hides",
+      "the group does NOT exist live: logs describe-log-groups --log-group-name-prefix /aws/lambda/irpt-commentary-composition-read-lambda returns nothing, so neither resource can adopt an existing group and the second create must fail ResourceAlreadyExistsException",
+      "PATTERN CONTROL, denominator printed: all 8 existing investor-reporting Lambda roots (reporting-read, directory, export, performance, ops, ycharts, holdings, narrative) declare ZERO own log-group resources and let the module own the group; commentary_composition.tf is the only file that adds a second",
+      "yang-lambda exposes no switch to suppress its own group: log_retention_days is the only related variable and there is no create_log_group",
+      "NOT the build: the artifact is sound. Built sha256 equals the signed ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0= on two independent builds under AMENDMENT 2's scoped BAU_PARITY_SKIP=1; symbol_closure on the built zip reads modules=7 pairs=28 missing=0 PASS with a discriminating control; the 8 replay arms match the packet arm for arm with 3 negative controls",
+      "state: NOTHING APPLIED. The function reads ResourceNotFoundException live and no terraform apply was invoked. The only world change is leg L2's first-mint S3 object version WJUEl6GlBO0afWMbQ_73o85gemQfiAqs, inert while no function references it. The ledger 20261009T0959Z_irpt-commentary-composition-reader-391-20261009 has L1 and L2 closed with proof and L3/L4/tf-lambda OPEN, so it stays RED by design; `hold` was attempted and correctly REFUSED because a half-landed deploy cannot be HELD"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 step 4 and CTO half condition 1: apply commentary_composition.tf through safe-apply; the plan reads ONLY the listed adds (the function, its role and read-only policy, the invoke policy); names are name() output; anything else is a STOP. Refusal clause: STOP and apply nothing more on a plan touching anything else or a failed read-back.",
+  "world_is": "The plan touches nothing outside the signed set -- the defect is INSIDE it. Two of its own adds claim one log-group name, so the set is not applicable as signed: whichever resource Terraform creates first, the other fails and the signed set lands in part. The applier therefore stopped at the plan, before anything irreversible, rather than discovering it mid-apply with resources stranded. ONE EDIT by the owner clears it and it is not the applier's to make: drop aws_cloudwatch_log_group.commentary_composition_read from commentary_composition.tf and let the yang-lambda module own the group as the other eight roots do -- the role policy already grants on ${local.ccr_log_group}:* and the module's group satisfies that string unchanged, so no IAM edit rides along -- or re-sign the export-root plan against whatever shape the CTO prefers. Until then IB-pr-397 cannot complete; IB-pr-404 is sequenced after it and carries a 14:15Z fire bound, so this ruling also gates that order's start.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S42 -- disposition of D2-S17: X-1 actor proven on release 5b; cleanup complete
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S42",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T10:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Row IRPT_BCKEND-D2-S17 (X-1 actor read-back owed) is closed: the laptop read-back under keys v3 returned body_sha256_match, owner firm, owner class FIRM_ADVISOR, owner label and acting_principal_is_filer all TRUE, then deleted 7 rows and 2 S3 versions under Andrew @35fabf20c8; dell2 re-read both S3 versions absent; Y75-1-AC1/AC2/AC3 PASS (checks AMENDMENT 3).",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S17: X-1 proven (the on-behalf UPLOAD owner is the named advisor, FIRM_ADVISOR at 49financial; the acting principal is the filer); cleanup complete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_laptop_cleanup_result.json (sha256 26fbc10f0f87)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_admit_keys_v3.json @4bcebfcb09",
+      "laptop 2.0.0_SA_COO~C msg 107926 via MSTR msg 3119; laptop ledger @1299ad2367"
+    ]
+  },
+  "spec_asserts": "X-1: an on-behalf template-lane upload is owned by the advisor named in advisor_email, and acted by the filer.",
+  "world_is": "Measured true on release 5b's live bytes; the first read-back's false was a comparison without the label rule (owner holds principal_id = the email, no email field)."
+}
+```
+
+## IRPT_BCKEND-D2-S43 -- the published /original route is declared by no entry at HEAD (test_unguarded_census fails)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S43",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T10:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "_authz test_unguarded_census fails at box/dell2 HEAD: GET .../analysis/requests/{requestId}/original is published but declared by no entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean worktree wk-P-r106 at box/dell2 HEAD: pytest _authz/tests -> 1 failed, 303 passed",
+      "AssertionError: 1 of 22 in-lane published route(s) are declared by NO entry ... ['GET /api/scoped/investor-reporting/analysis/requests/{requestId}/original']"
+    ]
+  },
+  "spec_asserts": "Every in-lane published route is declared by the entry that serves it (test_unguarded_census).",
+  "world_is": "The /original route is published but no entry's route table declares it at HEAD; the deployed function could not name that operation. Found while baselining IB-pr-405's check; excused by name in p106_cells.py AC2 only.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S44 -- the packet's `python -I` cannot run its own replay gate on this device: boto3, pandas and pyarrow live only in USER site-packages, which isolated mode hides
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S44",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T11:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "python -I dies ModuleNotFoundError before any arm runs, so the invocation the packet specifies cannot produce the evidence it asks for; the only interpreter that satisfies -I here carries a pandas MAJOR version the packet never measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first attempt, exactly as the packet writes it (python -I replay_publish_gate.py run ...) on Python 3.12: all six runs failed rc=1 with 'ModuleNotFoundError: No module named boto3', and compose then failed FileNotFoundError on the absent gate_*.json -- no arm was graded",
+      "cause measured: python3.12 -c 'import boto3' resolves C:\\Users\\Test\\AppData\\Roaming\\Python\\Python312\\site-packages\\boto3, i.e. USER site-packages; python3.12 -I -c 'import boto3' raises ModuleNotFoundError. Same for pandas and pyarrow under -I. site.getusersitepackages() confirms the directory and ENABLE_USER_SITE is True",
+      "3.14 is NOT the fix: python3.14 -I -c 'import boto3' succeeds, but 3.14 carries pandas 3.0.6 against 3.12's 2.3.3 -- a MAJOR version the packet never measured, on a replay whose whole output is data-shaped gate behaviour. Refused on that ground, not attempted",
+      "what ran instead: Python 3.12.10 with boto3 1.42.54, pandas 2.3.3, pyarrow 18.1.0 -- the worker's stack, every version unchanged -- with only the -I flag dropped",
+      "the result is sound against the signed record: 18 arms, 18 of 18 matching IB103-2_narrow_bundle_replay.json verdict for verdict, 9 negative controls, all three real_<firm>_live_vs_built identical, all three worse arms REFUSED with index_moved=False, none outside identical/expected-diff",
+      "CTO condition 2 is untouched: it binds the digest-bearing REBUILD, which ran under 3.12 with no compromise and whose sha256/md5/bytes are exact at 3 of 3 firms"
+    ]
+  },
+  "spec_asserts": "The packet's applier replay arm: 'from a scratch directory outside the worktree python -I replay_publish_gate.py run <tree> <scratch> narrow_<short> <firm>', and CTO condition 4: the replay is re-run against the UPLOADED bytes before the fire, all arms matching.",
+  "world_is": "Those two cannot both be honoured literally on this device: -I is what prevents the evidence from existing at all. The applier kept the thing the conditions are about -- the interpreter and library versions the packet measured, and the uploaded bytes as the subject -- and dropped the isolation flag, which is import hygiene rather than a signed value, then said so here and in the ledger rather than letting a green run imply the specified invocation had been used. What -I additionally buys (no PYTHONPATH, no user site, script directory off sys.path) is not free to lose in principle: it is what stops a stray module shadowing a bundle member. Mitigation taken: each run was given the bundle tree by absolute path from a scratch directory outside every worktree, and the arms were graded against the packet's own record rather than only for self-consistency, so a shadowing import would have shown up as a differing verdict and none did. The durable fix is the packet's to make, not the applier's: either install boto3/pandas/pyarrow into the 3.12 interpreter's own site-packages (or a venv, which -I does honour) on every box that may apply, or state the invocation without -I and name the version floor instead. NON-APPLICATION: the rebuild step, which has no third-party import and runs under -I unaffected.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W268-S1 -- a build at the real source map does not carry IB-pr-405: irpt-status pins served.py, entry.py and owned_report.py, and the map is outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W268-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~268",
+  "surfaced_at": "2026-10-09T11:16:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's release packet needs a built zip that carries the change, but lambda-source-map.json pins irpt-status's three changed members to older commits; the map is not in <paths>, so the census is built at a scratch candidate map (BAU_SOURCE_MAP_OVERRIDE) and the packet hands the applier the rows to commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.staged_from: served.py @74a62fb46c, entry.py @eb70303e8f, owned_report.py @62880e9bfc (its _staged_from_note: 'These pins are the owning cells' to release: drop a row to ship that member's pending change')",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~268/replay/candidate_map_rows.json (the seven rows, pin 9489a0fed0)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~268/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-405.md Branch A step 1"
+    ]
+  },
+  "spec_asserts": "Release packet: BUILD_ONLY twice, byte-identical, from a clean tree, listing every function that packages a changed member from lambda-source-map.json (the order's <paths> do not include the map).",
+  "world_is": "A build at the real map packages the OLD blobs of the three members (and old retention stack), so the built zip would not contain the change. The builds here use BAU_SOURCE_MAP_OVERRIDE with a scratch copy that re-pins only irpt-status's rows; the applier commits those rows and rebuilds at the real map (the sha256 must match)."
+}
+```
+
+## IRPT_BCKEND-D2-W268-S2 -- irpt-status carries other cells' pending changes, and report_index needs a retention stack the packaged zip lacks
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W268-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~268",
+  "surfaced_at": "2026-10-09T11:16:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The irpt-status candidate zip changes 10 of its members versus live, 3 of them this cell's: live is already behind the real map (AR-y-22 /original, TO-AR-y-11 ticket_id), and a persisted-report read needs retention.py/repository.py/composition.py/reporting_policies.json restaged, which carry IB-pr-386, AR-t-12 and YCD-a-7 work.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~268/IB106-1_release_census.json artifacts[irpt-status].changed_members (owners per member)",
+      "live irpt-status zip (CodeSha256 E7VKvhg3E9D5euWO+S649/iyAJ05xUmFPqHEAKDTFxA=, 2026-10-09T07:43:46Z): retention.py reference(owner, family, logical_id) takes no policy revision; repository.py KINDS = (PERFORMANCE, ANALYSIS); packaged reporting_policies.json has no irpt-custody-x10-v1 row (replay static arms)",
+      "replay/raw/replay_built.json vs replay_live.json static block"
+    ]
+  },
+  "spec_asserts": "The cell: extend one owned read to return persist_inputs, report_index null when nothing is persisted; the packet names the blast radius.",
+  "world_is": "With only the three own members re-pinned (minimal candidate, built sha256 FMkzsPFsg55VKLtg3tjicq1M5M6sh5CmIlQlYG6BNxI=) a persisted custody report would make the read refuse (reasoned from the packaged retention.py, not replayed). The full candidate (gff0DKwarcDa/GJHNpPN0UVV+57Bxg4VPnqxglN/EPY=) also moves the retention stack and the registry file, and with them other cells' work. If the applier chose the minimal rows the runner's read after its own persist refuses; if the full rows, the signer is releasing those cells' pending changes in irpt-status. Either is the signers' choice, named in the packet."
+}
+```
+
+## IRPT_BCKEND-D2-W268-S3 -- the published contract does not name include=persist_inputs or the persist_inputs member; gateway admission of the svc token on the GET route is outside the zip
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W268-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~268",
+  "surfaced_at": "2026-10-09T11:16:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "docs/contracts/investor-reporting/v1 (routes.json query note, OwnedAnalysisRequest.schema.json additionalProperties false) is outside this order's paths, so the new opt-in include and member are not published; and the edge's admission of svc-custody-statement on GET .../analysis/requests/{requestId} is not replayable from the zip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (additionalProperties false, no persist_inputs)",
+      "docs/contracts/investor-reporting/v1/routes.json operation analysis-request-read query note lists comparisons and composition only",
+      "infra/aws/lambda/investor-reporting/ops/entry.py read(): include accepts persist_inputs at HEAD 9489a0fed0"
+    ]
+  },
+  "spec_asserts": "The order extends an existing owned read and adds no route; its <paths> are the Lambda tree, tests, _contracts/ and the deliverables.",
+  "world_is": "The opt-in keeps every existing caller key for key, so no published parser sees the member unless it asks (svc only). A contract-validating consumer that asks for it would fail the schema until the contract rows are edited by the contracts' owner. The edge/authorizer admission of the svc token on this GET route (as on the other three svc routes) is read first in the after-read."
+}
+```
+
+## IRPT_BCKEND-D2-S45 -- Disarms D2-W268-S2: no IB-pr-405 apply until its pair rules on irpt-status's 7 foreign members
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-D2-W268-S2 by issuer ruling. The irpt-status zip built for IB-pr-405 moves 10 members versus live, 7 of them other cells' unreleased work (IB-pr-386, AR-t-12, YCD-a-7 per the packet's owner table). The hazard is a release that ships those 7 under IB-pr-405's pair. It cannot fire: no apply order for IB-pr-405 exists, and none is cut until the pair is built over a census that either (a) narrows irpt-status to IB-pr-405's 3 members plus only the re-pins report_index strictly needs, each re-pin owned and named, or (b) carries the CTO's ruling on the 7 foreign members. W268-S1 (map re-pin rows) and W268-S3 (routes.json / schema publication) ride the same packet decision.",
+  "one_line": "W268-S2 disarmed: no IB-pr-405 apply is cut until its pair rules on the 7 foreign irpt-status members.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB106-1_release_census.json @d222824692: irpt-status 10 changed members, 3 owned by IB-pr-405",
+      "no TO-IB-pr-4xx apply order for irpt-status exists at box/dell2 HEAD"
+    ]
+  },
+  "spec_asserts": "A release ships only its own cell's members (never-widen).",
+  "world_is": "The built irpt-status zip carries 7 other cells' members; no apply is cut, so nothing ships until the pair rules."
+}
+```
+
+## IRPT_BCKEND-D2-S46 -- 9 _contracts tests fail at HEAD from other cells' in-flight work
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S46",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "9 investor-reporting _contracts tests fail at box/dell2 HEAD: the public-route count (21 vs 22, the AR-y-22 /original route), the paired-seam response contracts, and export-receipt fixtures missing covered_account_ids.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean worktree at box/dell2 HEAD ~11:5xZ: pytest _contracts -> 9 failed, 171 passed, 13 skipped",
+      "test_owned_request_contracts.py::test_public_routes_are_declared_against_the_installed_status_handler: assert 21 == 22",
+      "test_seam_paired.py control: covered_account_ids is a required property (export-receipt, submit-export)"
+    ]
+  },
+  "spec_asserts": "The contract suite passes at the trunk.",
+  "world_is": "Nine contract tests fail at HEAD from other cells' in-flight work (AR-y-22's /original route; the export receipt's covered_account_ids). Found while baselining IB-pr-407; that cell's control is scoped to its own surfaces.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S47 -- Resolves D2-S43: the unguarded census passes at HEAD
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S47",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S43. _authz/tests/test_unguarded_census.py passes at box/dell2 HEAD (9 passed, ~11:5xZ): the /original route is now declared by its entry (IRPT_ANLREQ AR-y-22, eb70303e8f). p106_cells.py's excuse by name is moot.",
+  "one_line": "D2-S43 resolved: the unguarded census passes at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest _authz/tests/test_unguarded_census.py at HEAD: 9 passed"
+    ]
+  },
+  "spec_asserts": "Every in-lane published route is declared by the entry that serves it.",
+  "world_is": "True again at HEAD."
+}
+```
+
+## IRPT_BCKEND-D2-W270-S1 -- AC3 does not follow $ref to the persist_inputs definition
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W270-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~270",
+  "surfaced_at": "2026-10-09T12:05:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB108-1-AC3 reads the response schema file's own properties and does not follow $ref, but persist_inputs lives in data (OwnedAnalysisRequest); the response schema also carries a data-level properties sibling pointing at it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p108_cells.py props(): 'local refs are not followed'; with only OwnedAnalysisRequest.schema.json edited, IB108-1-AC3 printed 'FAIL: response schema declares no persist_inputs property'",
+      "fix: analysis-request-read.response.schema.json data gains properties.persist_inputs $ref OwnedAnalysisRequest#/properties/persist_inputs; AC3 then PASS"
+    ]
+  },
+  "spec_asserts": "Declaring persist_inputs in the response schema or the schema it $refs satisfies AC3.",
+  "world_is": "The check reads only the response schema file; the declaration was added there as a $ref to the one definition (no duplicate constraint)."
+}
+```

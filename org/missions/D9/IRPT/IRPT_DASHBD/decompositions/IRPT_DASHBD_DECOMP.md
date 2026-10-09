@@ -899,3 +899,36 @@ surfaces. Workers `0.9.0_WK_IRPT_DASHBD~55`, ~57 and ~58 are cut from box/dell2;
 
 **fanout:** 2 of 2 chains, cap 8. Reason: the AE seat's mint then apply, and the worker's offline build. Worker `0.9.0_WK_IRPT_DASHBD~61` is cut
 from box/dell2; `0.7.0_AE_CloudOps~DB2` takes DB-b-84 now and DB-b-86 after both drains.
+
+
+## 44. ROUND 42, LOT-KEY CHAIN (2026-10-09 ~12:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 10, msg 3225)
+
+**Where things stand.**
+- The 11:41Z R37 fire logged LOTS_SKIPPED 2026-10-08 (row S40, BLOCKING).
+- Returns and class landed. R37 stays live (Branch B, not rolled back).
+- The CTO placed the lot-key cell FIRST in round 41.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-87` | E5, FWD-4: the 10-08 repeat pairs read, decided by the producer's rule, both kit days re-sized with the full lots stage | WORLD (served-producer path floor) | none | B41-3 |
+| `DB-b-88` | E6, FWD-4: the R37 packet delta, the producer re-pinned and released, ONE 2026-10-08 lots backfill | WORLD | DB-b-87 (EXTEND_KEY) | B41-3 |
+
+**Why round 42, not 41.** The issuance gate keys ONE issuance per round (round 41 already holds DB-b-84 to DB-b-86), and a second workstream needs its own lane. So the issuer re-points this chain to round 42 as its first and only cell set, which keeps the CTO's "first". Round 41's held items (the mint at leg R on the laptop ARN; DB-b-86 on ~P2's IB-pr-405) continue unchanged.
+
+**fanout:** 1 of 1 chains (DB-b-87 then DB-b-88), cap 8. Workers `0.9.0_WK_IRPT_DASHBD~62` now, and ~63 on DB-b-87's drain.
+
+
+## 45. ROUND 43, WORKSTREAM B (2026-10-09 ~12:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 10.1, msg 3257)
+
+**Where things stand.**
+- IRPT_BCKEND's owned read IB-pr-405 (`persist_inputs`) is drained @2f6fe31ad8.
+- The CTO placed the runner re-cut in its own round, since round 42 is already issued.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-89` | E1, FWD-12: the statement runner re-cut onto IB-pr-405; a fixture run with table access removed; 0 direct table clients | LOCAL | IB-pr-405 (drained) | B43-1 |
+
+**DB-b-86 (round 41) is HELD** by its AMENDMENT 1 until three reads: IB-pr-405 LIVE (CodeSha256), the mint's leg R closed, and DB-b-89
+drained.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~64`, cut from box/dell2.

@@ -282,3 +282,85 @@ Written on the COO packet; it is revised if the CVO's slug differs.
 3. The transport cell, when the owner's answer lands.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10.1 (~09:4xZ) -- the CVO's slug for rounds 17-19 (msg 3023, `ADJUDICATION_v10.md` @67046ae880): ADDENDUM 10 stands
+
+The slug matches the COO packet ADDENDUM 10 was written on (3 dismissed, ARMED 0). Its three items are already ruled:
+- **W1-S7, the Teams silver writer applies no wipe:**
+  - no reader is granted beyond the named original readers until every Teams silver object reads wiped and the pull wipes on landing (ADDENDUM 8.1);
+  - the served re-wipe pair is in round 20 (ADDENDUM 10).
+  This is exactly the CVO's "grant no reader until one holds".
+- **D2-S10, the transport is a stub and the bearer is missing:** ADDENDUM 9. A round-19 transport cell is built; the bearer name comes from NFRA_OPLGTW, never
+  guessed.
+- **D2-S9, the backfill precedent is empty:** ADDENDUM 5. It is kept empty, and the residual check is the privacy guard.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11 (~10:2xZ, `~T2` msg 3117, row D2-W2-S6, BLOCKING): the gateway contract serves no metadata VTT
+
+**Read:**
+- TR-t-20 merged @488c840f48 and @7e2a14edee (412 passed). The real transport is built to the owner's contract, and `pull.tf` reads `gateway/transcripts/bearer`.
+- `pull.py:98` reads `fmt="metadata"` for the observed wall-clock times.
+- `/hx/transcripts` serves content VTT only, so a live pull raises `GatewayFormatUnsupported` on its first row.
+
+**RULING: (a) as the permanent path, and an interim landing that keeps the three-clock rule. Not (b).**
+1. **`~T2` asks NFRA_OPLGTW, through `0.0.0_AB_MSTR~DELL2`, to add a metadata VTT path to `/hx/transcripts`.** The observed wall-clock comes only from the
+   source.
+2. **Interim, so the pull is not blocked:**
+   - the transport fetches content VTT only;
+   - silver lands each row's wall-clock start and end as NULL, with `wallclock_basis: absent (metadata path not served)`;
+   - the cue offsets are kept as served.
+   - Wall-clock is NEVER derived from `createdDateTime` plus offsets. That is the derived clock the three-clock rule forbids, and a consumer could not tell it
+     from an observed one.
+   - FWD-1's "who said what" needs speakers and text, not wall-clock, so it is served by the interim.
+3. **When the metadata path ships,** a backfill fills wall-clock for the interim rows from the source, under its own pair, and flips the basis to `observed`.
+4. **p18 re-runs from step 1 on the rebuilt zip** under the existing half (@b972f130c9). The ledger binds the new sha256.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~11:4xZ) -- round 20 close (`~T2` msg 3208, `R20_CLOSE.md` @159471cd01)
+
+**Read:**
+- MAY-CLOSE, 415 passed.
+- **The Teams pull is LIVE:** 9 added; the outlook pull's CodeSha256 is unmoved; the rule is ENABLED.
+- **W1-S7 is CLOSED:** 30 of 30 keys re-wiped, residual 0.
+- D2-S11 (the host allowlist) is TAKEN by site Z (ruling @261e2c42a0).
+
+### Grades
+
+| FWD | grade | basis |
+|---|---|---|
+| FWD-4 | **REALIZED** | the on-demand exercise reaches the `never_recorded` cause and names it (`R20_EXERCISES_FWD4_FWD9.json`, @e18849b58c) |
+| FWD-9 | **NOT REALIZED** | one question answered across meetings (1,462) and mail (17), but commentary is 0. The FWD names all three. It realizes when one commentary is served (IRPT_ANLREQ's commentary Lambda, step B), re-read then |
+| FWD-1, FWD-2, FWD-3 | NOT REALIZED | the pull is live but lands 0 until site Z widens the host allowlist (D2-S11). The Research arm also needs Andrew's meeting membership |
+| FWD-5 | NOT REALIZED | the narrower wiped reader follows wipe-on-landing being live (ADDENDUM 8.1) |
+| FWD-6 | NOT REALIZED | intake is built (r19). It needs one real market-update deck |
+| FWD-8 | NOT REALIZED | TO-APPLY-a18 is at the laptop |
+
+**FWD-6's real deck is an act for Andrew,** listed with its citation: it is a document only he or his team produces. A synthetic deck would grade nothing.
+
+### Round 21
+
+1. **D2-S12 repair:** a `lambda-source-map.json` entry and a `transcripts-v*` tag for the transcripts root's Lambdas (deployment rules 4 and 6). It is a build input record,
+   not a served move.
+2. **Re-probe D2-S11 when site Z lands its env release:** one read, named in the row. Then the first scheduled landing grades FWD-1, FWD-2 and FWD-3.
+
+**Carried:**
+- the metadata-VTT route (site Z, @7f58eb8f77);
+- the FWD-8 laptop apply;
+- the Research meeting membership and the real deck, both Andrew's.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12.1 (~11:4xZ) -- the CVO's round-20 slug (msg 3212, `ADJUDICATION_v11.md` @37ad2cddeb): ADDENDUM 12 stands, plus one unlock
+
+The slug matches ADDENDUM 12: ARMED 0; W1-S7 and D2-S10 closed; D2-S11, W2-S6 and D2-S12 open. **It also records that the live pull WIPES ON LANDING.** With W1-S7's re-wipe
+closed, **both conditions of ADDENDUM 8.1's reader gate now hold.**
+
+**Round 21 adds item 3: FWD-5's narrower reader role.**
+- It reads Teams and outlook SILVER only, never bronze, through `name()`, under a never-widen pair.
+- Its proof is FWD-8's pattern: the role reads one wiped silver object, and is REFUSED on one bronze object.
+- **It is a NEW reader of client meeting content,** so its holder is named in the pair: an analyst principal on Andrew's C-READERS list, or a new name on his word. It
+  is never inferred. If no analyst principal is named today, the role is built with no trust and graded once Andrew names one.
+
+-- 1.0.0_SA_CTO~DELL2

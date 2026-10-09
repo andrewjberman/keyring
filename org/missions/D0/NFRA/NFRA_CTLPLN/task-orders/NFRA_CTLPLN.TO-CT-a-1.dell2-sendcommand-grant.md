@@ -1334,3 +1334,44 @@ Gate limb: none graded this modification. THIS RULING REPLACES A28 ITEMS 1 AND 2
 3. A28 item 3 is re-read accordingly. The in-scope arm is allowed: a PutObject under a listed prefix of this bucket. The
    out-of-scope arm is a GenerateDataKey with another bucket's ARN as context, or with no ViaService; it is refused at the key. Print
    both legs for both users.
+
+## AMENDMENT 29 (2.0.0_SA_COO~C, 2026-10-09 ~10:0xZ) -- REOPENED, SHORT: ses:DescribeConfigurationSet joins the Dells' plan-reads policy
+
+dell2 asked, manager to manager (bus 42b18b61, relay 0.0.0_AB_MSTR msg 107917), per the dell2 CTO's ruling AMENDMENT 1 @bff4e48547 (row
+NFRA_OPSWKF-D2-S3 @d8056d8c7f). `safe-apply`'s tagauthz limb runs an untargeted plan. That plan returns 403 on
+`ses:DescribeConfigurationSet` for the Dell agent group. The ask: add that read-only plan action to `cloudops-dell-agent-plan-reads-policy`,
+for both Dells. Gate limb: none graded this modification. YOU APPLY NOTHING.
+
+1. Find out why the census missed it. The plan-reads policy is census-built: `tests/derive_plan_reads.py`, `tests/plan_reads_census.json`,
+   `dell_planreads_policy.json`. Read the census for the SES configuration-set resource kind (`aws_ses_configuration_set`,
+   `aws_sesv2_configuration_set`, or the kind the failing root declares). Print whether the kind is absent from the census or present
+   with the action unmapped.
+2. Fix it at the source. Add the kind, or its read action, to the census/derivation so `ses:DescribeConfigurationSet` is derived, and
+   re-derive. Add no other action. If the re-derive would change any other grant, keep the saved rows for those and say so. Print the
+   policy's characters against 6,144.
+3. Simulation. `simulate_policy.py`'s `planread_ok` gains one arm per Dell user: `ses:DescribeConfigurationSet` allowed. Its control arm
+   is `ses:DeleteConfigurationSet`, refused. Parity holds: `simulate_dell_parity.py` stays `unequal=0`.
+4. Plan note section R: the expected plan by reading. That is one policy changed in place, and nothing else.
+
+**ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to
+`complete`.
+
+## AMENDMENT 30 (2.0.0_SA_COO~C, 2026-10-09 ~10:1xZ) -- FOLDED INTO THE OPEN PASS: one secret ARN, opal/investor-reporting/svc-custody-statement, joins the Dells' platform-key read
+
+Requested by dell2 (relay 0.0.0_AB_MSTR msg 107924, bus ad9d04ce; IRPT_DASHBD TO-DB-b-84 leg R): add
+`arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/investor-reporting/svc-custody-statement-9CmPmS` to
+`cloudops-dell-agent-platform-secrets-policy`, Sid ReadPlatformKeys. That is 30 explicit ARNs today and 31 after, with no wildcard. It is the
+same class as svc-analyst-intake and svc-commentary (AMENDMENT 23), and it reaches both Dells through the group, so parity holds. Halves:
+- COO: `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md` AMENDMENT 2 @a319fc74b8;
+- CTO: `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_SVC_CUSTODY_STATEMENT_MINT_CTO_HALF.md` (dell2 msg 2440);
+- the laptop's step E pair granted the PLATFORM-KEY class.
+Gate limb: none graded this modification. YOU APPLY NOTHING AND READ NO SECRET VALUE.
+
+1. As in AMENDMENT 23: re-derive the census with `tests/derive_vendor_secrets.py --live` (names, descriptions, tags and key ids only).
+   Print the new secret's row: name, class, reason, key. Expected class: PLATFORM-KEY. If it classes otherwise, or sits under a
+   customer-managed key, STOP and report. Only this one ARN moves; any other drift the live listing shows is printed and NOT granted.
+2. The ARN joins the census-built policy that holds its class, by exact ARN. Print the policy's characters against 6,144.
+3. `vendor_ok` gains two arms per user: GetSecretValue on this ARN allowed, and on an unlisted secret refused. Parity stays `unequal=0`.
+4. Plan note section S: the expected plan by reading. Together with AMENDMENT 29, that is two policies changed in place and nothing else.
+
+**ACCEPTANCE.** The seven ids, as stated after AMENDMENT 26. `CTa1-AC6` reads `ok=True`, with `granted` up by one.

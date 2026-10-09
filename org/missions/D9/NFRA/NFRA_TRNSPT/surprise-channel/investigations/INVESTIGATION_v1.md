@@ -1352,6 +1352,228 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "CTO ADDENDUM 7: the Teams pull apply proves FWD-2 on its first scheduled research_meeting landing.",
     "world_is": "Applied as written, the function would run hourly and land nothing (stub transport), and its bearer secret is absent. The apply is the wrong next act; the transport and the secret name come first.",
     "notes": "The applier did not read a neighbouring secret (a valid expiry from the wrong secret is a false pass). KMS CreateGrant limb PASSED."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:15:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Implementing GatewayTransport turns two stub-asserting tests in test_teams_pull.py red (test_gateway_stub_names_routes_and_makes_no_call, test_cli_dry_run_line_and_gateway_exit); the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_pull.py:120-124 asserts GatewayToolsAbsent 'S04 not landed: ...' from GatewayTransport('https://example.invalid','tok'); :143-144 asserts pull.main(['--transport','gateway']) prints 'GATEWAY-TOOLS ABSENT tool list_meeting_transcripts -> GET /me/onlineMeetings/'",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at wk-NFRA_TRNSPT-2: 410 passed, 2 failed (those two); test_teams_gateway_transport.py 3 of 3 pass",
+        "data/transcripts/scripts/teams/pull.py:233-240 main() --transport gateway constructs GatewayTransport() with no bearer, so it now prints 'GATEWAY-TOOLS ABSENT pass one, or a secrets_reader for gateway/transcripts/bearer' and exits 3 (no network, no AWS call is made)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20: 'Keep test_teams_pull.py and every other test green' while GatewayTransport stops being a stub.",
+    "world_is": "Both assertions test the stub that this order replaces, so they cannot stay green; test_teams_pull.py is not in <paths>. Also pull.py main() has no live wiring for the gateway arm (it never passes a bearer or secrets reader); only the lambda handler wires it. The base URL is the contract's literal, so a non-contract base_url (the old test's example.invalid) raises ValueError rather than opening a socket.",
+    "notes": "Not worked around: the two tests were not edited and the stub message was not kept to satisfy them. The issuer may admit test_teams_pull.py in a later order's paths (replace the two with the typed-transport assertions) and decide whether pull.py main() should read the bearer through read_bearer."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:15:00Z",
+    "one_line": "The /hx/transcripts contract returns the transcript body only; the pull's fmt 'metadata' read (pull.py:98) has no route, so GatewayTransport raises GatewayFormatUnsupported for it and a live pull cannot yet land a meeting.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the cell: derive the metadata object from the list row's createdDateTime/endDateTime, or ask the gateway owner for a metadata path)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/HX_TRANSCRIPTS_ROUTE_CONTRACT_COPY_f67fbc2390.md: two GET paths only; the single-transcript answer is {meeting_id, transcript_id, createdDateTime, endDateTime, content, byte_count, sha256}",
+        "data/transcripts/scripts/teams/pull.py:97-98 reads read_meeting_transcript(meeting_id, row['id'], 'vtt') and then (..., 'metadata') for every row; the fixture holds <stem>.<tid>.metadata.vtt files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20: read_meeting_transcript(meeting_id, transcript_id, fmt) -> the content bytes of GET .../transcripts/{tid}.",
+    "world_is": "The route has one body and no second format. fmt 'vtt' returns the verified content bytes; fmt 'metadata' raises GatewayFormatUnsupported (a ValueError) rather than return the vtt bytes under a metadata name. pull.run would raise at the metadata read on its first live row. Inert until the Teams pull is applied against the live route.",
+    "notes": "Not worked around: no metadata object was synthesised and pull.py was not edited (outside paths). The contract names no metadata surface, so the choice is the CTO's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:45:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (admit data/transcripts/scripts/teams/research_fold.py to a path grant; the fix is to stamp wallclock_basis on its rows, a decision about what basis the research fold's null clock carries)",
+    "one_line": "Adding wallclock_basis to parse_silver.COLUMNS (AMENDMENT 1 step 5) makes research_fold._fold_one raise 'row does not carry exactly the silver COLUMNS + held_out' on every file; 10 tests in test_research_fold.py, test_research_store.py and test_securities_allowlist.py go red. research_fold.py is outside <paths>.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/research_fold.py:34,37,95-96 imports parse_silver.COLUMNS, sets STORE_COLUMNS = COLUMNS + ['held_out'] and raises when a built row's keys differ; its row dict (:88-93) has no wallclock_basis",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at wk-NFRA_TRNSPT-2 after the change: 405 passed, 10 failed (test_research_fold x5, test_research_store x3, test_securities_allowlist x2), every one 'row does not carry exactly the silver COLUMNS + held_out'; the 3 TR20-t20-AC2 tests and the 3 TR20-t20-AC1 tests pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 1 step 5: add wallclock_basis to COLUMNS and the schema; and 'Keep the whole tests directory green'.",
+    "world_is": "The two clauses cannot both hold inside <paths>: research_fold shares the COLUMNS list and asserts its rows equal it exactly. COLUMNS was changed as the amendment states; research_fold.py was not edited. The research fold's clock is null and operator-derived (its docstring), so which basis string it carries is the issuer's call. rewipe_silver and the existing silver objects are unaffected (a missing column reads null through from_pylist).",
+    "notes": "Armed until research_fold.py is fixed or the amendment's COLUMNS clause is narrowed: any research_fold run (build / write_all) raises. No served output moves in this order."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:45:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "land_bronze.land cannot land a transcript with no metadata object, so pull.py carries its own content-only lander (_land_content_only); thread_trace.hop_land_probe will KeyError on such a sidecar (it reads sidecar['metadata_content']['object']).",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/land_bronze.py:101,126 hashes metadata_bytes and always puts the .metadata.vtt key; land_bronze.py is outside <paths>",
+        "data/transcripts/scripts/teams/thread_trace.py:60-62 loops ('content','metadata_content') and indexes sidecar[field]['object']; the content-only sidecar records 'metadata': 'absent' and has no metadata_content"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 1 step 4: land the content VTT and its sidecar (metadata: absent) without editing land_bronze.py.",
+    "world_is": "To honour step 4 inside <paths>, pull._land_content_only repeats land_bronze.land's refusals, keys, never-overwrite and KMS puts using land_bronze's own helpers (~50 lines of duplicated policy). thread_trace is a read-only diagnostic and is not exercised by any test with a content-only sidecar.",
+    "notes": "The issuer may fold the content-only branch into land_bronze.land (metadata_bytes=None) in a later order and delete the pull.py copy; thread_trace needs the same absent-aware branch."
+  }
+  ,{
+    "id": "NFRA_TRNSPT-D2-W2-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:34:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of ARMED row NFRA_TRNSPT-D2-W2-S7: disarmed at d2d7a59ae2 (research_fold rows carry wallclock_basis read from the row).",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show d2d7a59ae2: research_fold._fold_one sets wallclock_basis to WALLCLOCK_OBSERVED when the row's start_utc is non-null, else WALLCLOCK_ABSENT; never derived",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at d2d7a59ae2: 415 passed, 0 failed; test_research_fold, test_research_store and test_securities_allowlist assert through COLUMNS and needed no edit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 2 steps 7-8: research_fold stamps wallclock_basis from the row; the tests pinning the old column set are updated; the tests directory passes.",
+    "world_is": "Step 7 landed as stated. Step 8 required no edit: the three test files compare against parse_silver.COLUMNS rather than a literal column list, so they went green with the fold fix alone.",
+    "notes": "Resolves D2-W2-S7 (existing row not edited)."
+  }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S11",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-09T11:05:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "The headless /hx/transcripts route refuses ALL 4 allowlisted meetings with 403 meeting_not_allowed for the stored bearer, so the pull TO-APPLY-p18 creates will see 4 and land 0 on its invoke and on every scheduled fire until the gateway HOST's own allowlist carries those 4 meeting ids.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GatewayTransport(secrets_reader=gateway_client.read_bearer).list_meeting_transcripts over all 4 rows of meeting_allowlist.load() (denominator printed, 4 of 4 probed): allowed=0 refused_403=4 other=0; every one status=403 error=meeting_not_allowed, for monday_meeting, ocio_ic, asset_management_ic and research_meeting",
+        "NEGATIVE CONTROL, the same call with a wrong 64-char bearer: status=401 error=unauthorized. The route discriminates on the bearer, so the 403 is the HOST allowlist and not the token -- ABSENT vs EXERCISED-AGAINST, CLAUDE.md 22a",
+        "the MCP gateway tool path (list_meeting_transcripts under the signed-in user's delegated identity) returns status 200 count=20 for the SAME monday_meeting id; the two surfaces disagree, and the pull uses the headless one (data/transcripts/scripts/teams/gateway_client.py:22 BEARER_SECRET, :198 GatewayTransport)",
+        "gateway/transcripts/bearer: describe-secret carries 7 metadata keys (ARN, CreatedDate, Description, LastAccessedDate, LastChangedDate, Name, VersionIdsToStages) and NO RotationEnabled or NextRotationDate; the payload is a 64-byte opaque string with no JWT exp claim, so its expiry is ABSENT, not near"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-p18 COO half: step 1 S04 'the gateway's transcript tools are live'; and the first branch, 'A scheduled fire finds a new allowlisted meeting: it lands bronze, then silver, for that meeting only. The first research_meeting landing is FWD-2's acceptance.'",
+    "world_is": "S04 as the order words it is MET on the gateway's tool surface (one call by name, status 200, count 20). The surface the pull Lambda actually calls is the headless /hx/transcripts route, and it admits none of the 4 allowlisted meetings for the stored bearer. The bearer itself is live (403, not the control's 401). So the p18 apply lands its 9 resources and the Lambda runs, but the FIRST-LANDING branch -- FWD-2's acceptance -- is unreachable until the gateway host's allowlist is widened. Nothing served moves either way; the fire logs and lands nothing, which the COO half's second branch already admits.",
+    "notes": "Owner: the gateway host's allowlist is NFRA_OPLGTW's surface, not this project's and not this seat's -- routed to 2.0.0_SA_COO~T2 in the p18 report, which carries it to the CTO. This seat did NOT widen anything and did not work around the refusal. The apply proceeded: the order's STOP conditions are S04, S05 and KMS, and all three read MET. Re-probe is one read: the 4-meeting probe above."
+  }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-09T11:20:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "NONE of the transcripts root's Lambdas carries a lambda-source-map.json entry (0 of 232 entries name one), and the root has never been tagged (0 transcripts-v* tags), so deployment rules 4 and 6 are unmet for the function TO-APPLY-p18 just created and for the three that predate it.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json: functions enumerated, DENOMINATOR 232 entries, transcripts-bearing entries = 0 -- teams-global-transcripts-pull-lambda (created at this apply), outlook-global-transcripts-pull-lambda, the commentary Lambda and the chat-assist Lambda are all absent",
+        "git tag -l 'transcripts-v*' and git tag -l '*transcripts*' both return empty, against a 0-diff targeted apply of infra/aws/terraform/transcripts completed at 2026-10-09T11:12Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cloud-ops DEPLOYMENT RULES 4 ('Every Lambda has an entry in infra/aws/lambda/ci/lambda-source-map.json') and 6 ('git tag -a {pipeline}-v{X.Y.Z} + git push --follow-tags after every 0-diff apply').",
+    "world_is": "Both are unmet for this root, and three of the four functions predate TO-APPLY-p18. Neither file is inside the order's <paths> (deliverables, logs, change_management), so the applier cannot land either fix: the owned-paths hook refuses the source-map edit, and rule 6 would need a version number minted for a pipeline whose version space nobody has established -- the root has been applied before, untagged, so v1.0.0 is a judgment the issuer owns, not a mechanical next step. Rule 4's own text warns that the map PAIRS a function with a dir and never compares deployed bytes, so its absence hid nothing here: this apply resolved the deployed bytes by CONTENT instead (live CodeSha256 taFbGTCU... equals the built zip's base64 sha256).",
+    "notes": "Owner: 2.0.0_SA_COO~T2 to cut a cell that adds the four source-map entries and decides the tag, or the CTO to rule the root exempt. Routed in the p18 report. One entry per function is the whole fix; the tag is one decision."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T12:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-m21: the commit-time naming gate refuses the 'pipeline' field the sibling entries carry when its value is 'transcripts' (3 REFUSE, lambda-source-map.json), so the three new entries omit that optional field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at the first attempt of TO-TR-m21: [naming-gate] NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6727, :6741, :6755 transcripts -> lookup('transcripts') -- hand-kept carrier of 'transcripts' outside every permitted context; NAMING-GATE: REFUSE 3 graded",
+        "r21_checks.py m21 keys only on tf_file, tf_resource, artifact_sha256, last_deployed_commit and _artifact_note; it does not read 'pipeline'; after removing the field it prints R21-M21-OK 3 of 3 resources mapped"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-m21 step 1: copy the shape of an existing entry (mdpf-gold-lambda), whose optional 'pipeline' field names the owning pipeline.",
+    "world_is": "The gate treats the literal 'transcripts' in a new source-map value as a hand-kept carrier and refuses the commit, so the shape cannot be copied whole for this system. Nothing in the three entries is lost for CI: source_dir, files, tf_file, tf_resource and iam_role are present. Pin note: outlook-global-transcripts-pull-lambda's last_deployed_commit is 8f82af62816ee2280ac820cb78168a07fc743fe7, the apply-1 code pin in ledger nfra-trnspt-c3-driven-positive-arm-20261007 (apply 2 at 2026-10-07T23:59:05Z changed WINDOW_DAYS only; live CodeSha256 VGIq85Xx... unchanged and equals the ledger's); the earlier mail-pull-schedule ledger names e3707e911f, which is the superseded code.",
+    "notes": "Owner: the issuer or the naming-gate owner, to say whether a registry row should let 'pipeline' carry this system. This seat added nothing typed to get past the gate; it dropped the field."
+  }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T11:55:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (before the never-widen pair that applies aws_iam_role.silver_reader names a holder: decide whether the role's grant may include silver/research_meeting, or whether held-out text is wiped/blanked at the writer)",
+    "one_line": "A Research silver object carries held-out rows (>=1 residual wipe flag) with their text unwiped-to-clean; the only filter is reader-side (holdout.visible_rows), so a silver-only role reading S3 directly reads those rows' bytes.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/research_fold.py:_fold_one builds every row with 'text': b['text'] (the wipe_blocks output) and 'held_out': per_block[i] > 0; a held-out row's text is stored as-is, not blanked",
+        "data/transcripts/scripts/teams/holdout.py:visible_rows is the one filter: it drops held_out rows at read time and returns only a count; nothing at the writer or in the bucket enforces it",
+        "research_fold.write_all puts parquet under teams/transcripts/silver/research_meeting/..., a prefix the new silver_reader policy (readers.tf) grants s3:GetObject on (read of source files only; no S3 read made)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-r21: the silver-only role is the narrower reader; privacy for held-out rows is assumed to be held by silver content being wiped.",
+    "world_is": "The silver tier's wipe is not complete for held-out rows by design (TR-w-9: held out is the residual-flag case, filtered at the reader). The role built here, with its trust admitting nobody, is inert; once a holder is named it can read those rows' stored text through plain S3 GetObject, bypassing visible_rows.",
+    "notes": "Armed only in the sense that applying the role with a named holder widens who can read held-out text. This order applies nothing and the default trust admits nobody. The apply order's COO/CTO halves should read this row; the fix options are the issuer's (blank text where held_out at write, or exclude the research_meeting prefix from the grant)."
+  }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S13",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T12:05:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of ARMED row NFRA_TRNSPT-D2-W2-S10 by the issuer's ruling: the silver reader's grant EXCLUDES teams/transcripts/silver/research_meeting/ until held-out text is blanked at the writer; the apply (TR-a-21) carries an explicit Deny on that prefix as its first step.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "decompositions/NFRA_TRNSPT_DECOMP_R21.md AMENDMENT 1: TR-a-21 (the apply) is not cut; nothing of aws_iam_role.silver_reader is applied",
+        "readers.tf at 7a834056a8: var.silver_reader_trust_principal_arns defaults to [] and the trust is a single Deny on sts:AssumeRole, so no principal can hold the role today",
+        "row D2-W2-S10's grounding: research_fold stores held-out rows' text; holdout.visible_rows filters at read time only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-r21: the silver-only role is the narrower reader; held-out rows are not readable through it.",
+    "world_is": "The role as built would grant silver/research_meeting/*, whose held-out rows keep their text. Ruled: TR-a-21's build adds a Deny on silver/research_meeting/* to aws_iam_policy.silver_reader with a test, and its plan is refused without it; blanking held-out text at research_fold is a separate later cell that would let the Deny be lifted.",
+    "notes": "Resolves D2-W2-S10 (existing row not edited). Issuer ruling inside the round-21 decomposition (2.0.0_SA_COO~T2)."
   }
 ]
 ```

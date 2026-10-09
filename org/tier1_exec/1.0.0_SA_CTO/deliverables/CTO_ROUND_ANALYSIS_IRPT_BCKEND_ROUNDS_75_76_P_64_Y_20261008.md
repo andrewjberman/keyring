@@ -350,3 +350,70 @@ Measured by `0.7.0_AE_CloudOps~IB2`, three BUILD_ONLY arms at the REAL map:
 3. **The real map, no override.** The built sha256 must equal `ZZmWOFSA...`, or STOP.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~10:0xZ) -- `~P` rounds 103-104 (CVO slug msg 3077, `ADJUDICATION_v47.md` @8f0ee881cd)
+
+**Read:**
+- 8 rows were dismissed: the completed orders 398, 402 and 403.
+- IB-pr-403's census invents 0 CUSIPs.
+- IB-pr-397's rows wait for its apply.
+
+**W264-S1 (ARMED) before IB-pr-401, the narrative release, is already a STOP condition of this seat's IB-pr-399 half** (@1428af7198, condition 1).
+- The built boundary classifies a no-row internal caller as OPAL_GLOBAL in opal-capital, where live hands no roster.
+- The applier runs a `no_row_internal_enforcer_scope` arm, live against built, and it must read IDENTICAL on the nameable-report scope, or STOP.
+- **Ruling:** IB-pr-401's apply order cites that condition. The arm's output is in the ledger BEFORE the upload. A non-identical scope stops the release and comes
+  back here as a ruling on whether the OPAL_GLOBAL roster for no-row callers is a widening. It is never shipped as a side effect of a TypeError fix.
+
+No new cell.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~11:0xZ) -- `~Y` rounds 72-75 (CVO slug msg 3186, `ADJUDICATION_v48.md` @419ddac89d)
+
+**Read:**
+- MAY-CLOSE and ARMED 0 in this lane. 9 rows are dismissed, including the long-held D2-S18, D2-S19 and W190-S3. D2-S17 is closed.
+- **X-1 is proven.**
+- `irpt-ycharts-generate` runs release 6b with AWSSDKPandas:16, which matches this seat's 6b half (@0e6626694e) and the 390 half's AMENDMENT 1 layer ruling.
+
+**One act is owed Andrew's word,** on his list with its citation (CLAUDE.md Agent Autonomy: S3 deletes): the deletes of 6b's read-4 and read-5 prospect objects, once
+`~Y2` has named them by key and version. The discretion grant @35fabf20c8 covers 6b's read-3 list only, not these.
+
+No new `~Y` cell. The lane's remaining work rides IRPT_ANLREQ release 1 (TO-APPLY-Y1, re-signed @ebc9b941cc).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~11:5xZ, `~P2` msg 3218, rows W268-S2 and W268-S3): IB-pr-405's `irpt-status` release -- (a) narrow, and AFTER release 1
+
+**Read:**
+- IB-pr-405 is graded 3/3 and drained @6f51e09a79. `include=persist_inputs` is opt-in, and svc-custody-statement gains only that operation, bound to cottonwood.
+- Built from the tree, its `irpt-status` zip moves 10 members against live. 3 are 405's own; 7 belong to IB-pr-386, AR-t-12 and YCD-a-7.
+- `routes.json` and the schema are unpublished.
+
+**This seat's added finding:** `irpt-status` is ALSO the target of IRPT_ANLREQ release 1 (`~Y2`, `BjUZjt2o`, re-signed @ebc9b941cc). Two releases built from different
+pins on one function would each revert the other. That is the D2-S31 class.
+
+**RULING: (a), sequenced.**
+1. **IRPT_ANLREQ release 1 applies FIRST.** Its pin, half and census are all ready.
+2. **IB-pr-405 then builds NARROW on release 1's LIVE bytes,** the IB-pr-402 pattern: live, plus 405's 3 members, plus only the re-pins `report_index` strictly needs.
+   - Each re-pin is named with its owner, and each owner's COO half is on the pair.
+   - The digest gate is absolute. The census against live must show exactly those members.
+3. **A routes and schema cell (W268-S3) publishes `routes.json` and the schema for the new opt-in.** It must pass `test_unguarded_census` at the pin (the D2-S43 rule).
+4. **No pair is written until 1 to 3 are in hand.** No apply exists until then (D2-S45 stands).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (2026-10-09 ~12:2xZ) -- `~P` rounds 106 and 108 (CVO slug msg 3264, `ADJUDICATION_v49.md` @f99141d333)
+
+**Read:**
+- IB-pr-405 and IB-pr-407 are complete, and neither is released. `irpt-status` waits on IRPT_ANLREQ release 1 (ADDENDUM 17); release 1 REVISION 3 is re-signed @5a1107862e.
+- ARMED 0.
+
+**D2-S46, 9 investor-reporting `_contracts` tests red at HEAD: ONE owner, `2.0.0_SA_COO~P2`. A cell in the next round.**
+- Attribute each red test to the in-flight cell that broke it (bisect by commit), then fix it, or name it in a red list with that cell's owner and its expected green
+  commit.
+- **Until the list is empty or named, no investor-reporting release packet may cite "suite green".** Each packet prints the red list and shows its own members touch none
+  of the red tests' targets. **A packet whose members touch a red target means STOP.** That is how a red test is kept from masking a regression.
+
+**W268-S1, the narrow `irpt-status` build:** ADDENDUM 17 stands (after release 1 REVISION 3, on its live bytes).
+
+-- 1.0.0_SA_CTO~DELL2

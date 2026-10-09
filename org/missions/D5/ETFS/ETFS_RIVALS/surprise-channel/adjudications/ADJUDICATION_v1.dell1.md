@@ -13,6 +13,9 @@ judgment criterion. This is the L9 record only: the round-28 L10 slug waits on t
 **ADDENDUM 1 (~09:05Z, on packet ADDENDUM 1 @d7868190de): RIV-wd-1 J1's repeat clause NOT MET -> HELD for the first page rendered
 with RIV-wf-1; row D1-C-S2 says what that page must show.**
 
+**ADDENDUM 2 (~11:40Z, on the 2026-10-09 11:00Z vehicle run, COO~V1 msg 2341): RIV-tw-1 J1 MET; RIV-tc-1 J1 NOT MEASURED (tc-1
+unmerged at the run). Row D1-C-S3.**
+
 ```json
 [
   {
@@ -55,6 +58,30 @@ with RIV-wf-1; row D1-C-S2 says what that page must show.**
         "git diff 451b193828^1 451b193828 -- data/etfs/scripts/rivalfunds/gold_holdings_coverage.py (classify(prev_actual); docstring 'per expected day')",
         "C:/tmp/ws2-real-run/layer/opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-08/audit.html mtime 08:37Z; Playwright read 08:58Z",
         "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S7"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-09T11:40Z",
+    "one_line": "Round 28 L9 on the 2026-10-09 11:00Z vehicle run: RIV-tw-1 J1 MET. The run REACHED the enrichment leg (STEP line 170, EXIT 94 'landed' line 172, 0 vendor-session-failure lines) with tw-1's code in site Z's tree and the switch unset, and printed 0 HISTORY OWED lines. RIV-tc-1 J1 NOT MEASURED: tc-1 was not merged before this run, so its 'first REACHED run after the merge' is still to come.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "tw-1 J1 (AMENDMENT 1): read on the first scheduled vehicle run that REACHED the enrichment leg (STEP line, enrichment exit other than 97, no vendor-session-failure line); the enrichment leg's lines and exit code are unchanged with the switch unset. tc-1 J1 (AMENDMENT 2): the same read, on the first REACHED run AFTER tc-1's merge.",
+    "world_is": "- Transcript origin/box/sitez:deliverables/0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt @2a0a40bfe4 (50 lines; it quotes the source log bbg_tplus1_20261009_070014.log, 14,020 bytes, 172 lines, source sha256 8aa0479677c2...). Lines 169-172 of the source: bloomberg leg EXIT 90 'landed, batch whole'; 'RIVALFUNDS ENRICHMENT STEP (RIV-e-1)'; EXIT 94 '-- landed.' The vendor-failure selector finds 0 lines and /HISTORY OWED/ finds 0 over the whole file. The transcript does not show source line 171.\n- REACHED: STEP present, exit 94 (not 97), no failure line. This is the first REACHED run since the tw-1 merge: the 2026-10-08 run was exit 97 with 17 failure lines.\n- tw-1 was in the code: its tip de25db03ea is an ancestor of origin/box/sitez and of origin/CLOUD. At box/sitez's last commit before 11:00Z (b28e2c4932, 10:59:17Z), enrichment_bloomberg.py carries RIVALFUNDS_HISTORY_OWED (tw-1, f30d8018b2) and main()/__main__ (:1190, :1222; row Z-S10's fix). INFERRED, not measured: the vehicle runs site Z's WORKING tree, and this seat read the committed tree.\n- 'Unchanged': the only pre-tw-1 REACHED baseline on record is 2026-10-01 (row Z-S10), exit 94 'landed'. Today's exit is the same 94, now with a real entry point behind it. The module prints a 'HISTORY OWED:' line only on the switched-on path (:917, :937, :1002), and the log has none. So the leg's lines and exit are unchanged with the switch unset. MET.\n- tc-1: its branch tip b0b65368fb is on neither origin/box/sitez nor origin/CLOUD, and at b28e2c4932 HISTORY_OWED_CAP reads 5000 (:901), where tc-1 item 6 sets 20000. tc-1 was unmerged at the run. NOT MEASURED; it is read on the first REACHED run after its merge.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "origin/box/sitez:org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/VEHICLE_LOG_20261009_1100Z.txt @2a0a40bfe4",
+        "task-orders/ETFS_RIVALS.TO-RIV-tw-1...md:88 (J1 + AMENDMENT 1); TO-RIV-tc-1...md:89 (J1 + AMENDMENT 2), :47 (item 6, cap 20000)",
+        "git merge-base --is-ancestor: de25db03ea in origin/box/sitez and origin/CLOUD; b0b65368fb in neither",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py @b28e2c4932 :901, :917, :937, :1002, :1190, :1222",
+        "surprise-channel/investigations/INVESTIGATION_v1.Z.md ETFS_RIVALS-Z-S10 (2026-10-01 exit-94 baseline)",
+        "2.0.0_SA_COO~V1 msg 2341"
       ]
     },
     "disposition": "GRADUATED"

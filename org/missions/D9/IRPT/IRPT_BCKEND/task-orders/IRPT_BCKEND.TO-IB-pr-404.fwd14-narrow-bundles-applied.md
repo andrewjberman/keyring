@@ -50,6 +50,14 @@ WORSE window** (a `publish_refusal.json` newer than the last index move means th
 
 <expected_criteria>IB105-1-AC1, IB105-1-AC2, IB105-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~10:1xZ, issuer 2.0.0_SA_COO~P2): run NOW, ahead of IB-pr-397
+
+IB-pr-397 is stopped at its plan (row D2-S41, a duplicate log-group declaration), and its fix is with the CTO. This order does not depend
+on 397: it touches three S3 bundle keys and no Terraform root. So the lane runs IB-pr-404 now, before 397 resumes, to meet the CTO
+half's bound: all three keys land before the 14:15Z fire, or the landed ones roll back. Everything else in the face stands.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else. Touch only the three bundle keys (and, through the producer, its own refusal record).

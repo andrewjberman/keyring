@@ -203,3 +203,108 @@ tickers, against the Yahoo as-traded series already landed. **Nothing served mov
 - If the 4.6% and 12.2% are distribution adjustments (an adjusted-close base), the trace says so and the methodology is ruled on, not patched.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~09:5xZ) -- round 32 (CVO slug msg 3055, `ADJUDICATION_v25.md` @261fab3ccc): the price-basis ruling (W59-S1)
+
+**Read:**
+- CB32af1-AC2 is MET. SCHB sits just over the tolerance, which changes no reading.
+- **W59-S1:** the chain's one price store is a DIVIDEND-ADJUSTED Yahoo vintage, while dividends also book as cash. If that holds store-wide:
+  - a payer is valued LOW before its ex-dates;
+  - each distribution is counted twice, once in the adjusted price path and once as cash.
+  This bears on FWD-3's served tables.
+
+**RULING: the valuation basis is the AS-TRADED close (unadjusted for dividends, adjusted for splits only). Dividends and distributions enter ONLY as cash
+flows.**
+- **Why:** a position's market value on a day is quantity times that day's traded price. Total return then comes from price change plus the cash the account
+  actually received. A dividend-adjusted close already folds the dividend into the price history, so adding the cash too double-counts.
+- This is the same basis the D2-S45 settlement used (Yahoo as-traded closes) and the one the custodian statement reports.
+
+**Round 33:**
+1. **A read-only census of the price store:** which tickers and dates are held adjusted versus as-traded. It prints the denominator and the vintage per
+   ticker. Yahoo is the source of record (yfinance first), and its raw `Close` (as-traded) is separable from `Adj Close`.
+2. **If any served table was built on adjusted prices,** the repair is a REBUILD on the as-traded basis under a never-widen pair. The pair names every table and
+   date that moves and its rollback version. Until it lands, FWD-3's affected rows are marked with `price_basis: dividend_adjusted (known wrong; rebuild
+   owed)`, a claim a consumer can reject on. They are not silently served as correct.
+3. **SCHB just over tolerance** is re-read after the rebuild. Nothing is tuned to fit it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~10:5xZ) -- round 33 (CVO slug msg 3179, `ADJUDICATION_v26.md` @273d6e934d)
+
+**Read:**
+- CB33ag1-AC2 is MET.
+- **D2-S50 (BLOCKING):** served `account_day_value` rests on dividend-adjusted or mixed prices for 638,948 of 1,669,040 account-days (688 accounts), and nothing marks
+  them.
+
+**FWD-3 is re-graded NOT REALIZED.** The served tables are on the wrong basis for 38% of account-days (ADDENDUM 8's ruling).
+
+**RULING on D2-S50: rebuild, with a reader gate in place of the interim marking.**
+- The FWD-3 tables have 0 readers, measured at the mint, so no consumer can be misled today.
+- Writing a `price_basis` column into 1.67M served rows only to overwrite it at the rebuild is a served move with no reader benefit.
+- So ADDENDUM 8's interim marking is REPLACED by an explicit gate: **no reader, role, route or export is granted on the four FWD-3 tables until the as-traded rebuild
+  lands and is graded.** A grant request before that is refused, citing this addendum.
+- **Round 34 cuts the rebuild on the as-traded basis** under a never-widen pair: every table and date that moves, with its prior version.
+
+**W60-S1, `bd_txn_price` in `opal-data-cot` written only under `data/black_diamond/`: MEASURE FIRST, then rule.** The cross-firm NEVER turns on the INPUT, not the folder name.
+**Round 34 cell 1 is a read-only trace** that names, by file and line:
+- the writer;
+- every input it reads (bucket and key prefix);
+- the account ids it covers.
+
+**The rule, stated before the read:**
+- **If it reads only Cottonwood's own Black Diamond account data and writes only `opal-data-cot`,** it is a shared BD platform serving each firm into its own bucket. That is
+  allowed, and the folder name is a naming matter.
+- **If it reads any other firm's data (49F's BD feed included) to write `opal-data-cot`,** it is the cross-firm NEVER. That is a BLOCKING row, and
+  `.tools/ds-precommit-check.py`'s foreign-prefix list gains the path. The served `bd_txn_price` objects are then held from FWD-3's rebuild until re-sourced.
+- Cottonwood and BD/49F are separate firms and are never mirrored (CLAUDE.md 13).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9.1 (~11:1xZ, `~C2` msg 3187, row W61-S1 BLOCKING): `bd_txn_price` is CROSS-FIRM -- who edits the guard
+
+**Measured by worker `~61`** (`deliverables/0.9.0_WK_ADVI_COTBKF~61/bd_txn_writer_trace.md`, @248cb44fa0):
+- The label's only writer is 49 Financial's `data/black_diamond/scripts/silver/inject_scoped_overrides.py:136`.
+- It reads 49F's `scoped_price_exceptions.json` and `s3://opal-data-bd/silver/prices/canonical_prices.parquet`.
+- **The cot store's three bonds carry 49F's constants**, and cot's pipeline does not run that inject.
+
+**The guard already forbids the code path.** `.tools/ds-precommit-check.py`'s `_CROSS_FIRM_FOREIGN_BUCKETS` already lists:
+- `data/cot/` -> `opal-data-bd`, `opal-data-49financial`;
+- `data/black_diamond/` -> `opal-data-cot`.
+That block is GENERATED from `infra/logic/registry/scopes.json` and is never hand-edited. So no current cot code path reads 49F's prices without the gate refusing it.
+**The contamination is DATA that reached the cot store by some other route** (an earlier copy or seed). Another gate line is not the remedy.
+
+**RULING (round 34 or 35, `~C2`):**
+1. **A read-only provenance trace of the three cot objects:** each key's version history, writer metadata and first-write time, against the commit history of every
+   cot writer. The trace names HOW 49F's constants entered `opal-data-cot`.
+   - If a live code path is found that the generated guard misses, the fix is a `scopes.json` row, regenerated by `python lib/opal_naming.py generate`. Its owner is
+     the registry lane (LGIC). `~C2` may carry it as an in-grant cell on the IB-rtf-4 precedent, under the naming gate.
+2. **The three bonds stay held from the as-traded rebuild** (COO half @0071b97a83). Their prices are re-sourced from Cottonwood's own source of record (Yahoo
+   as-traded, ADDENDUM 8). They are never taken from 49F's overrides.
+3. **The contaminated objects are NOT deleted by a seat.** Their removal is an S3 delete, Andrew's act, listed with keys and versions once the trace names them.
+   Until then they are excluded from every read by the rebuild.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-09 ~12:2xZ) -- round 35 (CVO slug msg 3260, `ADJUDICATION_v27.md` @1ba319c437)
+
+**Read:**
+- CB35ai1-AC2 is MET. The detector changed after run 1; 319a716cb4 corroborates the class.
+- **W60-S1 is ANSWERED:** a since-removed shared-builder chain wrote 49F bond overrides into cot. The live code path is gone, which matches ADDENDUM 9.1 (the guard
+  already bars it).
+- **D2-S52 (BLOCKING):** those 49F rows remain in 38 full Cottonwood price keys.
+
+**RULING: a REWRITE under a never-widen pair, not a delete. This is the CVO's recommendation.**
+- The cot bucket is versioned, so a rewrite writes a new version of each of the 38 keys and keeps every prior version. That is reversible, and it is not the S3 delete
+  reserved to Andrew.
+- **The rewrite:**
+  - removes the 49F-sourced rows;
+  - re-prices the three bonds from **Cottonwood's source of record: Yahoo as-traded closes** (ADDENDUM 8, yfinance first);
+  - leaves every other row byte-identical. The pair proves it with a per-key diff of the row counts (only the 49F rows and the three bonds' prices move).
+- **The pair names all 38 keys with their prior version ids, and rollback is a copy-object of each.**
+- **Deleting the old versions that carry the 49F rows is a separate act, reserved to Andrew** (CLAUDE.md Agent Autonomy). It is listed for him, and it is not needed for
+  correctness, since every reader reads the latest version.
+- **The as-traded FWD-3 rebuild (ADDENDUM 9) reads the REWRITTEN keys.** It is sequenced after this rewrite.
+
+Round 34 stays open (`~C2`). The rewrite cell and its pair go into the next issuance.
+
+-- 1.0.0_SA_CTO~DELL2

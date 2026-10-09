@@ -11090,3 +11090,83 @@ name the one known failure instead of silently inheriting it.
   "notes": "S4 is resolved by A2. Not done here: any edit to the AMGT_HARVST channel (outside this order's paths). The owner of that channel (see the gate's text: 1.0.0_SA_CTO) removes the duplicate."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S73",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T09:31:34Z",
+  "one_line": "round-close-check graded a generic judgment id (AC3) on ANY CVO row whose text contains it: round 32 read OG-bf-1 AC3 and OG-da-1 AC3 GRADED by Z-C-S43, a round-23 row (2026-10-07) whose only AC3 is the script name rl9.AC3.sh -- verdict MAY-CLOSE with 2 judgment criteria never graded.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .tools/round-close-check.py --project NFRA_OPLGTW --round 32 (before the fix): 'JUDGMENT TO-OG-bf-1 AC3 -> GRADED (adjudication row NFRA_OPLGTW-Z-C-S43 by 3.0.0_SA_CVO~O)', same for TO-OG-da-1, verdict=MAY-CLOSE",
+      "FILE surprise-channel/adjudications/ADJUDICATION_v15.Z.md: Z-C-S43 surfaced_at 2026-10-07T02:00:00Z, Round 23 L8, evidence 'rl9.AC2.sh and rl9.AC3.sh re-run' -- names neither order",
+      "FILE .tools/round-close-check.py grade_criterion: matched the bare criterion id with word boundaries over json.dumps(row); '.' and '.sh' are boundaries, so rl9.AC3.sh matched AC3",
+      "RUN after the fix: both read UNGRADED, verdict=REFUSED; --selftest 16/16 incl. the two new generic-id cases"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed in the same commit (round-close-check generic-id matcher); nothing left to investigate.",
+  "spec_asserts": "round-close-check REFUSES a round whose judgment criteria no CVO-kind row grades (canonical-drive obligation 3).",
+  "world_is": "A generic id graded off any CVO row mentioning it in any object. Fixed in this commit: a generic AC id needs the row to also name the order (its to_id, TO-<short> or the short id). Earlier MAY-CLOSE verdicts on rounds whose judgment ids are generic were read with the old matcher and are not re-graded here.",
+  "notes": "Disarmed same-turn by the fix. NFRA_OPLGTW round 32's two AC3s go to 3.0.0_SA_CVO~Z in the L8 packet."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W47-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~47",
+  "surfaced_at": "2026-10-09T10:55:00Z",
+  "one_line": "OG-ab-1 step 1 premise fails: registration commit e8290dd5fe (and 931774fb11) are already ancestors of box/sitez, so `git cherry-pick -n e8290dd5fe` took nothing; AB_R3_PLAN.txt and the ADVI_BILLING surprise-channel edit are already on this branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git merge-base --is-ancestor e8290dd5fe HEAD -> ANCESTOR (HEAD 038d5f3b97); same for 931774fb11 -> 931-ANC",
+      "RUN git cherry-pick -n e8290dd5fe: only conflict was org/missions/D8/ADVI/ADVI_BILLING/surprise-channel/investigations/INVESTIGATION_v1.md (content already present); restored to HEAD with git restore --staged --worktree --source=HEAD; git status then clean, tools.py already holds 3 mentions of copy_site_file_to_s3 and test_advi_site_to_s3_registration.py + advi_billing_gateway_iam.tf were in HEAD (git log -- both: e8290dd5fe)",
+      "RUN git ls-files: org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.9.0_WK_ADVI_BILLING~7/ holds AB_R3_PLAN.txt, RELEASE_PACKET_E2.md, the proof json at HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order (section 1 step 1, and the issue commit's premise) says the registration commit is NOT yet on box/sitez and that AB_R3_PLAN.txt and the ADVI_BILLING surprise edit 'stay dell2's'.",
+  "world_is": "e8290dd5fe arrived whole on box/sitez with an earlier CLOUD take (box-sync 89cf22bc98 or before), including AB_R3_PLAN.txt and the ADVI_BILLING channel edit. Step 1 was a no-op; no commit was made for it. Steps 2-5 were done on the registered tool as found. The release cell should not assume the registration commit still needs a cherry-pick.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done: removing the already-landed dell2 files (outside <paths> and not mine to remove)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W47-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~47",
+  "surfaced_at": "2026-10-09T10:55:00Z",
+  "one_line": "Four gateway tests (three suites) fail on box/sitez for causes unrelated to the copy_site_file_to_s3 carry and were failing before it: test_data_entitlement_guard::test_ogz1_ac08, test_portal_grant (2), acceptance/test_local_acceptance::test_ogv2_a12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN before (HEAD 038d5f3b97, each suite in its own process): test_data_entitlement_guard 4 failed 8 passed; test_data_entitlement_family 1 failed 3 passed; test_portal_grant 2 failed 5 passed; acceptance/test_local_acceptance 1 failed 13 passed; test_entitlement_admin 9 passed",
+      "RUN after the carry + two count updates: guard 1 failed 11 passed (3 guard failures cleared by classifying the registered tool); family 4 passed; entitlement_admin 9 passed; portal_grant and acceptance unchanged",
+      "RUN test_data_entitlement_guard::test_ogz1_ac08: right-hand route set has extra '/hx/teams/teams', '/hx/teams/channels/{team_id}/{channel_id}/messages', '/hx/teams/teams/{team_id}/channels' (56 == 56 counts, sets differ); test_portal_grant: test_asker_portal_scope_admits_granted_channel and test_asker_portal_scope_refuses_other_channel; acceptance: test_ogv2_a12"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 5: every gateway suite importing destructive_ops or data_entitlement is reported before and after; a test failing only on the tool count is updated, an assertion is never weakened.",
+  "world_is": "Tool-count tests updated for 42->43 registered (named): tests/test_data_entitlement_family.py::test_ogpf1_ac01 (52->53 non-data tools; it was already failing at 53 once e8290dd5fe registered the tool) and tests/test_entitlement_admin.py::test_ogz2_ac08 (61->62; it moved only when the name entered NATIVE_TOOLS). The three remaining failures are not count failures and were left alone: guard ogz1_ac08 (route set differs by three /hx/teams routes), portal_grant x2, acceptance ogv2_a12.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "No fix attempted outside the order's scope; owner of those suites to triage."
+}
+```

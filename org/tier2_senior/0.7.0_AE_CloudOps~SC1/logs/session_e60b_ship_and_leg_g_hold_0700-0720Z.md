@@ -73,3 +73,34 @@ uploads (e67 class); and the BD gold suite's one pre-existing failure is row `MD
 - `f76f942542` ship(e60b) -- **LOCAL** at the time of writing; origin `box/dell1` @`3e4a3244d0` by `ls-remote`
   at 07:18:07Z. This lane does not push a shared branch; `box-sync` carries it.
 - `21607cc707` (e71b close) and `6c31e1d248` (e71b log) -- **ON ORIGIN**, same read.
+
+## AMENDMENT (2026-10-09 ~11:3xZ) -- step 2's arm 2 above is SUPERSEDED; read this before grading leg G
+
+The guidance in "WHAT A SUCCESSOR DOES" step 2 said arm 2 requires `composition` **byte-equal** to
+`lp8kKqX7`'s. That is no longer the condition, and acting on it would roll back a correct change.
+
+After this seat shipped SC-e-79 at 09:54:21Z (@270a5b9796) and reported that e60b leg G and e79b leg G grade
+off the SAME fire, `2.0.0_SA_COO~M1` took it to the CTO (msg 2236) and `1.0.0_SA_CTO~DELL1` amended the half:
+**ADDENDUM 1 @6cf7e1a36b**, in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E60_D04_UNCLASSIFIED_20261009.md`. Read it at
+HEAD, not from this summary.
+
+- **Arm 2 now reads:** `composition` differs from `lp8kKqX7` ONLY in the `unclassified`, `equity` and
+  `fixed_income` moves that e79's leg G accounts for (the 23 securities and their dollars, as e79's G prints
+  them). Every other class equal. **Any other difference still rolls back both e60 keys.**
+- **Arms 1 and 3 are unchanged**: the top-level mix is the six plus at most one `Unclassified` line summing to
+  1.0, and no lower-case `unclassified` or `other` key.
+- **ORDER OF READING IS NOW FIXED: e79's leg G is read FIRST**, because arm 2 depends on what it accounts for.
+  Both are read from the same fire.
+- The addendum also records that the e83-first sequence held: e79 shipped after e83 was written and read back
+  (@bfabe0002d).
+
+Two numbers in the segment above also move, and they were predictions rather than acceptance arms: the
+`Unclassified` line will read about **$32,349.78**, not the about $998.6K e60's branch A predicted, because
+e79's 23 securities ($966,285) leave `unclassified` in the same fire; and `composition.unclassified` (today
+count 57, market_value 1,367,818.78) necessarily moves. Arms 1 and 3 are indifferent to both.
+
+**Still true, and still the trap:** e60's AC1 returns `ok=True` regardless, because
+`ok = newer and not extra and abs(pct_sum-1.0) <= 1e-9` and `composition_same` is printed but **excluded**
+from it (`e60_mix_verify.py:36`). So AC1's rc cannot grade arm 2 in either its original or its amended form.
+Grade arm 2 by reading the served `composition` against `lp8kKqX7`'s and against e79's leg-G accounting.

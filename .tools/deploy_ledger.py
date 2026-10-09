@@ -151,6 +151,24 @@ REREAD_KINDS = {"date", "event"}   # (d) WHEN to look again: a real date, or a N
 # age cadence instead, with its named event printed. Encoded so the two are not silently conflated.
 DRIFT_WARN_SUPPRESS_HOURS = 24.0                # re-warn an entry-vs-sentinel DRIFT at most once/day
 
+# HELD-PRE-APPLY -- a hold for an act that has NOT STARTED (MDPF_SECCLASS-D1-S14, dell1; assigned by 1.0.0_SA_CTO msg 107868,
+# relayed 0.0.0_AB_MSTR 107867; owner of this edit 4.0.0_SA_CRO~A). A sovereign gate that lands BEFORE the first apply fit
+# none of OPEN / HELD / terminal: `hold` refused it (open apply legs), so the entry stayed OPEN and its RED carried the
+# half-landed meaning, which is the one thing it is not. RULE 24 RECORD:
+#   AXIS + INTENT -- the same ONE lifecycle axis; HELD-PRE-APPLY is a second ENTRY into the HELD family, not a new axis.
+#   DOMAIN        -- every sentinel ledger in STATE_DIR.
+#   VALUES (MECE) -- HELD-SOVEREIGN-GATED requires every apply leg proven and only verify legs open; HELD-PRE-APPLY
+#                    requires NO leg proven at all. A ledger with SOME apply leg proven and another apply leg open is
+#                    neither -- a genuine half-land -- and stays OPEN/RED. The two holds partition "gated" by leg state.
+#   SAME GRAIN    -- ledger-level, like its siblings. HELD-PAST-REREAD / HELD-STALE re-surface it exactly as they do HELD.
+#   STATE COHERENCE -- it clears when the named gate moves (then `hold --release` and apply), never by the RED reflex.
+#   CLAIM         -- "nothing was applied" is the AUTHOR'S claim (no leg proof can show an absence); the check line says
+#                    claim=author-held, and NEVER-2 still binds: measure the artifact before acting on it.
+#   TOKEN CENSUS  -- `comp-find 'HELD-PRE-APPLY|HELD-NOT-STARTED'` 2026-10-09 09:2xZ: 3 hits across 242,717 files, all in
+#                    the rail's own logs of that query. Bare PRE-APPLY / NOT-STARTED occur as prose in 27 ledger files
+#                    (46 hits), so the compound token is the safe one.
+HELD_PRE_APPLY_STATUS = "HELD-PRE-APPLY"
+
 # Gate-bypass scan (false-clean hardening 2026-06-17, CTO-author / AE-review /
 # COO-track). The sentinel-only `check --red` enumerates ONLY .open_deploys/*.json,
 # so a HAND-AUTHORED markdown deploy-completion ledger (no sentinel) is structurally
@@ -194,6 +212,64 @@ def _save(state: dict) -> None:
         json.dumps(state, indent=2), encoding="utf-8")
 
 
+def _this_device() -> str | None:
+    """This box's register name (lib/devices.py, from AGENTBUS_DEVICE), or None when unset/unknown."""
+    try:
+        sys.path.insert(0, str(WORKSPACE / "lib"))
+        import devices  # noqa: PLC0415
+        return devices.this_device()[0]
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _author_device(state: dict) -> tuple:
+    """(device, claim) for the box an entry was opened on. measured = recorded at `open` (since 2026-10-09);
+    inferred = the author serial ends in a box's exact lane suffix (~Z, ~DELL1, ~DELL2), or carries no lane at all (the
+    default box's base seat); absent = neither, because a lane like ~X or ~SD does not name its box."""
+    if state.get("device"):
+        return state["device"], "measured"
+    try:
+        sys.path.insert(0, str(WORKSPACE / "lib"))
+        import devices  # noqa: PLC0415
+        author = str(state.get("author") or "")
+        for name in devices.names():
+            suf = devices.lane_suffix(name)
+            if (suf and author.endswith(suf)) or (suf == "" and author and "~" not in author):
+                return name, "inferred"
+    except Exception:  # noqa: BLE001
+        pass
+    return None, "absent"
+
+
+def _foreign_note(state: dict, sentinel: Path) -> str:
+    """MDPF_SECCLASS-D1-S4: age, window and PAST-WINDOW are computed from THIS box's checkout, so on an entry another box
+    opened they inherit this box's fetch vintage. For an entry not provably this box's, name the author device and the two
+    clocks the verdict rests on: this box's last fetch (FETCH_HEAD mtime, UTC) and the commit time of the sentinel as this
+    checkout holds it. Empty for an entry measured as this box's own."""
+    import os
+    import subprocess
+    here = _this_device()
+    dev, claim = _author_device(state)
+    if dev and claim == "measured" and dev == here:
+        return ""
+    try:
+        fh = Path(subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], cwd=str(WORKSPACE),
+                                 capture_output=True, text=True, timeout=15).stdout.strip()) / "FETCH_HEAD"
+        fetched = datetime.fromtimestamp(os.path.getmtime(fh), timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
+    except Exception:  # noqa: BLE001
+        fetched = "UNREAD"
+    try:
+        ct = subprocess.run(["git", "log", "-1", "--format=%ct", "--", str(sentinel)],
+                            cwd=str(WORKSPACE), capture_output=True, text=True, timeout=15).stdout.strip()
+        vintage = (datetime.fromtimestamp(int(ct), timezone.utc).strftime("%Y-%m-%dT%H:%MZ") if ct else "uncommitted")
+    except Exception:  # noqa: BLE001
+        vintage = "UNREAD"
+    if dev and dev == here:
+        return f" device={dev}({claim})"
+    return (f" device={dev or 'UNRECORDED'}({claim}) FOREIGN-VIEW[this box={here or 'UNKNOWN'}; last fetch={fetched}; "
+            f"sentinel as of {vintage}] -- age and window are this box's view; measure the artifact (NEVER-2)")
+
+
 def _stage_open_artifacts(state: dict) -> list:
     """NFRA_CLDGRPH-S34 (2026-09-04; 2.0.0_SA_COO~A 94170, disarm owner 1.0.0_SA_CTO). THE SENTINEL DIED WITH THE
     WORKTREE. Under spine v3 a WORKER opens its deploy inside its own worktree; `open` writes the sentinel as a
@@ -219,21 +295,66 @@ def _stage_open_artifacts(state: dict) -> list:
     gitignored override-audit log). The sentinel is a TRACKED path, so that would have a worker dirtying the shared
     tree -- the one thing v3's worktree isolation exists to prevent.
 
-    Best-effort and LOUD: git failing here never fails the open (the ledger's own state is already on disk), but the
-    WARN says so, because a silent staging failure would restore the class this closes. Returns the staged rel paths."""
+    SUPERSEDED 2026-10-09 BY COMMITTING (below): staging left both files in the box's SHARED index between open and
+    close, and every seat's safe-merge on that box was refused meanwhile -- three drain-wide blocks on dell2
+    (0.7.0_AE_CloudOps~CB2 msg 2906, CloudOps~DELL2 SA1/V12, ~CB2 CB-ac-1). See _commit_open_artifacts."""
+    return _commit_open_artifacts(state)[1]
+
+
+def _commit_open_artifacts(state: dict) -> tuple:
+    """`open` COMMITS its own two files through safe-commit, under the committing seat's serial (OPAL_AGENT_SERIAL, else
+    --author), so the lane gates run as for any commit (assigned by 1.0.0_SA_CTO msg 107868; dell2's lean: NEVER-2 wants
+    the OPEN entry on record). A committed sentinel survives a forced worktree removal (S34 above) and leaves nothing
+    staged in a shared index. On a refusal NOTHING is staged -- staging was the defect -- and the open says so with the
+    exact command to run; the caller exits non-zero. Returns (committed: bool, rel paths)."""
+    import os
     import subprocess
+    import tempfile
     rels = [str(_state_path(state["slug"]).relative_to(WORKSPACE)).replace("\\", "/"), state["entry_path"]]
+    serial = (os.environ.get("OPAL_AGENT_SERIAL") or state.get("author") or "").strip()
+    fd, msg = tempfile.mkstemp(prefix="deploy-ledger-open-", suffix=".txt")
+    with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(f"deploy-ledger(open, {serial}): {state['slug']} -- OPEN at deploy start, {len(state['legs'])} leg(s)\n\n"
+                 f"{state['title']}\n\nSentinel and entry committed by deploy_ledger.py open (NEVER-2: the ledger entry is "
+                 f"opened at start and on record).\n")
     try:
-        r = subprocess.run(["git", "add", "--"] + rels, cwd=str(WORKSPACE), capture_output=True,
-                           text=True, encoding="utf-8", errors="replace", timeout=30)
+        sys.path.insert(0, str(WORKSPACE / ".tools"))
+        from git_bash_resolver import bash_argv  # noqa: PLC0415
+        argv = bash_argv(str(WORKSPACE / ".tools" / "safe-commit.sh"), "--author", f"{serial} <{serial}@opal.agent>",
+                         "-F", msg, "--", *rels)
+        r = subprocess.run(argv, cwd=str(WORKSPACE), capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=600)
+        ok, tail = r.returncode == 0, "\n".join((r.stdout + r.stderr).strip().splitlines()[-3:])
     except Exception as exc:  # noqa: BLE001
-        print(f"WARN: could not stage the ledger artifacts ({type(exc).__name__}: {exc}) -- commit them by hand: "
-              f"{' '.join(rels)}", file=sys.stderr)
-        return rels
-    if r.returncode != 0:
-        print(f"WARN: git add returned {r.returncode} for the ledger artifacts ({r.stderr.strip()[:160]}) -- "
-              f"commit them by hand: {' '.join(rels)}", file=sys.stderr)
-    return rels
+        ok, tail = False, f"{type(exc).__name__}: {exc}"
+    finally:
+        try:
+            os.unlink(msg)
+        except OSError:
+            pass
+    if not ok:
+        print(f"ERROR: the ledger is OPEN on disk but NOT COMMITTED (safe-commit refused or failed):\n  {tail}\n"
+              f"  Nothing was staged. Commit both files now, in one commit:\n"
+              f"    bash .tools/safe-commit.sh --author \"{serial} <{serial}@opal.agent>\" -F <msgfile> -- {' '.join(rels)}",
+              file=sys.stderr)
+    return ok, rels
+
+
+def _unstage_added(rel: str) -> bool:
+    """`close` on a ledger whose open was never committed: the sentinel is unlinked, but a staged ADD of it stays in the
+    index (status `AD`) and keeps the box's shared index dirty (CloudOps~DELL2 msg 2900). Drop that staged ADD -- and only
+    an ADD: a sentinel HEAD already tracks is a real deletion the seat commits. Returns True when one was removed."""
+    import subprocess
+    try:
+        st = subprocess.run(["git", "diff", "--cached", "--name-status", "--", rel], cwd=str(WORKSPACE),
+                            capture_output=True, text=True, timeout=30).stdout.split()
+        if st[:1] != ["A"]:
+            return False
+        r = subprocess.run(["git", "rm", "--cached", "--quiet", "--", rel], cwd=str(WORKSPACE),
+                           capture_output=True, text=True, timeout=30)
+        return r.returncode == 0
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def _render_entry(state: dict) -> str:
@@ -418,21 +539,19 @@ def cmd_open(args) -> int:
         "legs": legs,
         "log": [f"{_ts(opened)} OPENED by {args.author} with {len(legs)} leg(s)"],
         "last_red_at": None,
+        "device": _this_device(),          # MDPF_SECCLASS-D1-S4: the box this entry's clocks belong to
     }
     _save(state)
     _write_entry(state)
-    staged = _stage_open_artifacts(state)
+    committed, rels = _commit_open_artifacts(state)
     print(f"OK: OPENED deploy ledger '{args.slug}' ({len(legs)} legs) -> {entry_rel}")
     for leg in legs:
         print(f"  OPEN {leg['id']} [{leg['kind']}] {leg['target']}")
-    # S34: the sentinel is the gate's ONLY input and dies with a worktree that never commits it.
-    print("  REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and\n"
-          "  a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger):")
-    for s in staged:
-        print(f"    {s}")
-    print("  (both are STAGED, so an UNFORCED `git worktree remove` refuses; a FORCED one still deletes them --\n"
-          "   committing them is what survives the drain)")
-    return 0
+    if committed:
+        print(f"  COMMITTED: {' '.join(rels)} -- the OPEN entry is on record and survives a worktree removal; "
+              "nothing is left staged")
+        return 0
+    return 3                           # opened on disk, not committed: the ERROR above names the command
 
 
 def cmd_close_leg(args) -> int:
@@ -464,8 +583,12 @@ def cmd_close(args) -> int:
     state.setdefault("log", []).append(f"{_ts()} CLOSED -- all {len(state['legs'])} legs proven")
     _write_entry(state)
     _state_path(args.slug).unlink()
+    sentinel_rel = str(_state_path(args.slug).relative_to(WORKSPACE)).replace("\\", "/")
+    dropped = _unstage_added(sentinel_rel)
     print(f"OK: CLOSED deploy ledger '{args.slug}' -- all {len(state['legs'])} "
           f"legs proven; sentinel removed; entry: {state['entry_path']}")
+    if dropped:
+        print(f"  its staged ADD (the open was never committed) was dropped from the index: {sentinel_rel}")
     return 0
 
 
@@ -514,19 +637,24 @@ def cmd_hold(args) -> int:
     # (the anti-escape-hatch, enforced at set-time as well as at check-time).
     trial = dict(state)
     trial["gate"] = {"type": args.gate_type, "ref": args.gate_ref.strip(), "reread": reread}
+    if getattr(args, "pre_apply", False):
+        trial["gate"]["phase"] = "pre-apply"
     ok, reason = _qualifies_as_held(trial)
     if not ok:
+        if trial["gate"].get("phase") == "pre-apply":
+            sys.exit(f"REFUSED: cannot HELD-PRE-APPLY '{args.slug}' -- {reason}.")
         sys.exit(f"REFUSED: cannot HELD '{args.slug}' -- {reason}.\n"
                  "A HELD/SOVEREIGN-GATED state requires ALL apply/deploy legs closed-with-proof and "
                  "ONLY verify legs open. A half-landed deploy stays RED -- close or roll back the open "
-                 "apply leg first.")
+                 "apply leg first. An act that has NOT STARTED (no leg proven) takes `hold --pre-apply`.")
+    status = HELD_PRE_APPLY_STATUS if trial["gate"].get("phase") == "pre-apply" else HELD_STATUS
     state["gate"] = trial["gate"]
     state.setdefault("held_at", _now().isoformat())    # preserve the original hold-start on a re-hold
-    state["status"] = HELD_STATUS
-    state.setdefault("log", []).append(f"{_ts()} HELD-SOVEREIGN-GATED gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
+    state["status"] = status
+    state.setdefault("log", []).append(f"{_ts()} {status} gate={args.gate_type}/{args.gate_ref.strip()[:80]}")
     _save(state)
     _write_entry(state)
-    print(f"OK: '{args.slug}' -> {HELD_STATUS} (gate={args.gate_type}/{args.gate_ref.strip()}).\n"
+    print(f"OK: '{args.slug}' -> {status} (gate={args.gate_type}/{args.gate_ref.strip()}).\n"
           "Reads KNOWN-HELD (no half-landed RED) but stays VISIBLE + tracked in `check`; escalates to "
           f"HELD-STALE after {DEFAULT_HELD_STALE_DAYS}d (tunable via `check --held-stale-days`).\n"
           f"Release with `deploy_ledger.py hold --slug {args.slug} --release`.")
@@ -859,11 +987,19 @@ def _qualifies_as_held(state: dict) -> tuple:
     open_legs = [lg for lg in legs if not lg.get("proof")]
     if not open_legs:
         return False, "no open legs -- close() the ledger, do not HELD it"
-    open_apply = [lg["id"] for lg in open_legs if lg.get("kind") != "verify"]
-    if open_apply:                                    # (a) + (b): the load-bearing anti-escape-hatch
-        return False, ("open APPLY/DEPLOY leg(s) %s -- a half-landed deploy cannot be HELD (stays RED)"
-                       % open_apply)
-    gate = state.get("gate")                          # (c) structured gate
+    gate = state.get("gate")
+    pre_apply = isinstance(gate, dict) and gate.get("phase") == "pre-apply"
+    if pre_apply:                                     # HELD-PRE-APPLY: NO leg proven (see HELD_PRE_APPLY_STATUS)
+        proven = [lg["id"] for lg in legs if lg.get("proof")]
+        if proven:
+            return False, ("leg(s) %s already carry proof -- the act has started, so it is not PRE-APPLY; it stays "
+                           "OPEN until every apply leg is proven, then takes a normal hold" % proven)
+    else:
+        open_apply = [lg["id"] for lg in open_legs if lg.get("kind") != "verify"]
+        if open_apply:                                # (a) + (b): the load-bearing anti-escape-hatch
+            return False, ("open APPLY/DEPLOY leg(s) %s -- a half-landed deploy cannot be HELD (stays RED)"
+                           % open_apply)
+    # (c) structured gate
     if not isinstance(gate, dict):
         return False, "no structured gate (need gate.type + gate.ref -- not prose)"
     if gate.get("type") not in GATE_TYPES:
@@ -885,6 +1021,9 @@ def _qualifies_as_held(state: dict) -> tuple:
         return False, "gate.reread.value is empty -- give a real date or NAME the awaited event"
     if rr["kind"] == "date" and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", rv):
         return False, "gate.reread.value must be YYYY-MM-DD for kind=date (got %r)" % rv
+    if pre_apply:
+        return True, ("no leg proven (act not started, the author's claim); structured %s gate (%s); re-read %s=%s"
+                      % (gate["type"], gate["ref"], rr["kind"], rv))
     return True, ("all apply legs proven; only verify open; structured %s gate (%s); re-read %s=%s"
                   % (gate["type"], gate["ref"], rr["kind"], rv))
 
@@ -1217,9 +1356,12 @@ def cmd_check(args) -> int:
         # verify open + a named structured gate). A KNOWN-HELD ledger is NOT a half-landed RED -- it
         # stays visible + tracked and only escalates to HELD-STALE past the staleness threshold. The
         # guardrails read the LEGS, so a half-landed strand (an open APPLY leg) can never reach here.
+        fnote = _foreign_note(state, sp)
         held_ok, held_reason = _qualifies_as_held(state)
         if held_ok:
             gate = state["gate"]
+            pre = gate.get("phase") == "pre-apply"
+            ptag = " [PRE-APPLY: no leg proven, claim=author-held]" if pre else ""
             held_days = _held_age_days(state, now)
             rr = gate.get("reread") or {}
             # HS-2: a hold past ITS OWN stated re-read date is its own finding class with its own
@@ -1242,7 +1384,7 @@ def cmd_check(args) -> int:
                 hd = f"{held_days:.1f}d" if held_days is not None else "?"
                 print(f"HELD-PAST-REREAD: {state['slug']} re-read-due={rr['value']} (stated by the "
                       f"hold itself) held={hd} gate={gate['type']}/{gate['ref']} "
-                      f"open-verify={open_legs} author={state['author']} "
+                      f"open-verify={open_legs} author={state['author']}{ptag}{fnote} "
                       "-- the hold's OWN re-read date has passed: re-read it, do not treat it as "
                       "neglect and do not treat it as closed")
                 continue
@@ -1251,7 +1393,7 @@ def cmd_check(args) -> int:
                 print(f"HELD-STALE: {state['slug']} held={held_days:.1f}d (>{stale_days}d) "
                       f"gate={gate['type']}/{gate['ref']} "
                       f"re-read={rr.get('kind')}={rr.get('value')} open-verify={open_legs} "
-                      f"author={state['author']} -- nudge the gate or reconsider")
+                      f"author={state['author']}{ptag}{fnote} -- nudge the gate or reconsider")
                 if args.red:
                     last = state.get("last_held_nudge_at")
                     if last and (now - datetime.fromisoformat(last)).total_seconds() < HELD_NUDGE_SUPPRESS_HOURS * 3600:
@@ -1263,10 +1405,16 @@ def cmd_check(args) -> int:
             else:
                 held_count += 1
                 hd = f"{held_days:.1f}d" if held_days is not None else "?"
-                print(f"HELD: {state['slug']} [{HELD_STATUS}] held={hd} gate={gate['type']}/{gate['ref']} "
-                      f"re-read={rr.get('kind')}={rr.get('value')} "
-                      f"open-verify={open_legs} author={state['author']} "
-                      "-- apply legs proven, only verify open; tracked-not-stranded")
+                if pre:
+                    print(f"HELD: {state['slug']} [{HELD_PRE_APPLY_STATUS}] held={hd} gate={gate['type']}/{gate['ref']} "
+                          f"re-read={rr.get('kind')}={rr.get('value')} not-started={open_legs} "
+                          f"author={state['author']}{fnote} -- no leg proven, the act has not begun (claim=author-held; "
+                          "NEVER-2: measure the artifact before acting); tracked-not-stranded")
+                else:
+                    print(f"HELD: {state['slug']} [{HELD_STATUS}] held={hd} gate={gate['type']}/{gate['ref']} "
+                          f"re-read={rr.get('kind')}={rr.get('value')} "
+                          f"open-verify={open_legs} author={state['author']}{fnote} "
+                          "-- apply legs proven, only verify open; tracked-not-stranded")
             continue
 
         # NOT held -> the original OPEN / stranded logic (preserves the exit-1-on-any-open contract).
@@ -1276,7 +1424,7 @@ def cmd_check(args) -> int:
         gate_note = f" [HELD-CLAIM REJECTED: {held_reason}]" if state.get("gate") else ""
         flag = "PAST-WINDOW" if age_h > window else "in-window"
         print(f"OPEN: {state['slug']} age={age_h:.1f}h window={window}h [{flag}] "
-              f"stranded={open_legs} author={state['author']}{gate_note}")
+              f"stranded={open_legs} author={state['author']}{gate_note}{fnote}")
         if args.red and age_h > window:
             last_red = state.get("last_red_at")
             if last_red and (now - datetime.fromisoformat(last_red)).total_seconds() < window * 3600:
@@ -1404,6 +1552,10 @@ def main() -> int:
                    help="REQUIRED (or --reread-date): the NAMED event that ends the hold. An "
                         "event-gated hold cannot go past a date, so it re-surfaces on the age cadence "
                         "with its event printed -- never silently conflated with a date-gated one")
+    p.add_argument("--pre-apply", action="store_true",
+                   help="HELD-PRE-APPLY: the act has NOT STARTED (no leg carries proof) and waits on the named "
+                        "gate. Refused once any leg is proven. 'Nothing applied' is the author's claim; NEVER-2 "
+                        "still binds (MDPF_SECCLASS-D1-S14)")
     p.add_argument("--release", action="store_true", help="clear the hold -> back to OPEN")
     p.set_defaults(fn=cmd_hold)
 

@@ -18,6 +18,22 @@
 <owned_cells>RIV-tw-1</owned_cells>
 </decomp_ref>
 
+  <amendment id="6" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    The full log is NOT owed. `*.log` is gitignored (.gitignore:68), so AMENDMENT 5's `.full.log` path cannot be committed
+    (0.0.0_AB_MSTR~DELL1 msg 2347, option (a)). The transcription VEHICLE_LOG_20261009_1100Z.txt @2a0a40bfe4
+    (0.0.3_BG_BBGTerminal folder) is the whole deliverable. Its sha256 line (8aa04796...4fa5) ties it to the source.
+    The untracked copy stays at site Z. The issuer's reader tw1_j1_read.py reads REACHED on it (@4d688f78a7).
+    Gate limb: no gate grades this modification.
+  </amendment>
+
+  <amendment id="5" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    PATH: the ruled folder `deliverables/0.0.3_BG_BBGTerminal/` is owned by that seat and refuses your commit (msg 2336). Commit the
+    two files under YOUR OWN deliverables folder instead, same names:
+    `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~ZV/VEHICLE_LOG_20261009_1100Z.txt` and
+    `.../VEHICLE_LOG_20261009_1100Z.full.log`, unedited (sha256 of the full log as you measured it). Either location satisfies AC1;
+    the issuer reads both. Do not wait for 0.0.3_BG_BBGTerminal.
+  </amendment>
+
   <amendment id="4" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ASSIGNEE: `0.7.0_AE_CloudOps~ZV`, LIVE, the site-Z Codex lane for ETFS_RIVALS. Site Z lifted its hold on the ~Z* lanes
     (0.0.0_AB_MSTR~DELL1 msg 1643, site Z bus 91f67522): site-bound acts go there, per 1.0.0_SA_CTO~DELL1's table
@@ -91,6 +107,20 @@ lane: CloudOps~Z, the site-Z executor for this dell1 project (msg 1440).
 </proof_of_spec>
 
   <report>
+    2026-10-09 07:10 Eastern: 0.7.0_AE_CloudOps~ZV executed the canonical transcriber and copied the full source bytes.
+    Source: C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261009_070014.log; 14020 bytes;
+    last-write 2026-10-09T11:08:47.312871Z; copied 2026-10-09T11:10:26.655412Z.
+    Source and full-copy SHA256: 8aa0479677c2d96382f64133d608b3ae8c77b227a16343b783094dad3afe4fa5.
+    One file modified today in the source directory; listing, UTC metadata and copy hash appended to the canonical transcription.
+    Scheduled task observed Ready; last run 07:00:13 Eastern, LastTaskResult 0. No ad-hoc run, Bloomberg request or grading performed.
+    Evidence prepared at the two exact ordered paths: VEHICLE_LOG_20261009_1100Z.txt and VEHICLE_LOG_20261009_1100Z.full.log
+    under org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.0.3_BG_BBGTerminal/.
+    BLOCKED-PUBLICATION: safe-commit refused both files because TREE_DELIVERABLES permits only the serial named in their folder;
+    agent 0.7.0_AE_CloudOps~ZV is not permitted for 0.0.3_BG_BBGTerminal. No override or alternate author attempted.
+    Evidence commit hash: NONE (commit rejected); files remain prepared in the working tree for the authorized owner to commit.
+    Push state LOCAL/UNCOMMITTED for evidence. git ls-remote origin refs/heads/box/sitez failed with connection reset;
+    current remote hash unverified. Routing exact files and hashes to the owner and issuer; status remains pending for issuer.
+
     Report once, in this section, in the same commit as the file or the commit after it: the source path and size, the
     commit hash and its measured push state. The J1 grade is the issuer's. Leave the status flip to the issuer.
   </report>

@@ -6230,3 +6230,220 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_CTLPLN-D1-S1 -- dell1 is NOT stopped from downloading from the public internet: pip download of six==1.16.0 from pypi.org succeeded (rc=0, wheel saved), so FWD-18's 'a box that tries an internet download is stopped and told the route' is not met on dell1.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T09:20Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S1",
+  "one_line": "dell1 is NOT stopped from downloading from the public internet: pip download of six==1.16.0 from pypi.org succeeded (rc=0, wheel saved), so FWD-18's 'a box that tries an internet download is stopped and told the route' is not met on dell1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pip download --no-deps -d <temp> six==1.16.0 --index-url https://pypi.org/simple on dell1, 2026-10-09T09:19:54Z: rc=0; stdout 'Collecting six==1.16.0 / Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB) / Downloading six-1.16.0-py2.py3-none-any.whl (11 kB) / Saved <temp>\\six-1.16.0-py2.py3-none-any.whl / Successfully downloaded six'",
+      "temp-folder listing after the run: denominator 3 entries (./, ../, six-1.16.0-py2.py3-none-any.whl) -- one real wheel landed on the box",
+      "artifact removed same turn: rm of the wheel + rmdir of the temp folder, then a test -e control printed CONFIRMED ABSENT",
+      "deliverable: org/tier2_senior/0.7.0_AE_CloudOps~CT1/deliverables/NFRA_CTLPLN.TO-CT-x-2.blocked-download.txt (line: NOT-BLOCKED)"
+    ]
+  },
+  "spec_asserts": "TO-CT-x-2 step 4 / FWD-18: a Dell that tries a direct internet download is STOPPED, and the message that stops it names the laptop route. Criterion CTx2-AC3 expects the string 'BLOCKED ' in the deliverable.",
+  "world_is": "dell1 downloaded it. Nothing stopped the request: no proxy refusal, no DNS failure, no firewall reset, no pip index restriction -- pip reached pypi.org directly and saved an 11 kB wheel, and therefore nothing named the laptop route either. The download was download-only (--no-deps, -d <temp>), nothing was installed, and the wheel plus its folder were deleted the same turn with an absence control printed. CTx2-AC3 FAILS, and per the order's own text that failure IS the finding, not an execution defect. Scope of this read: ONE host (dell1), ONE protocol path (pip/https to pypi.org), ONE package, at one time. It does NOT establish that every egress channel on dell1 is open, nor that the other boxes are open -- each would need its own call. It also does not distinguish 'the fence was never applied on dell1' from 'the fence is applied and does not cover pip/https', which is the next read and belongs to the control-plane owner, not to this seat. Remediation is NOT this row's author's: the CVO owns REMEDIATION rows, and the egress control is the laptop control plane's surface."
+}
+```
+
+## NFRA_CTLPLN-D1-S2 -- dell1 already carries click 8.5.0 installed by pip from an index as a transitive dependency, with no intake record and no direct_url.json -- so the checked-route premise of FWD-15/FWD-19 is already bypassed on this box for this very package.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T09:26Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S2",
+  "one_line": "dell1 already carries click 8.5.0 installed by pip from an index as a transitive dependency, with no intake record and no direct_url.json -- so the checked-route premise of FWD-15/FWD-19 is already bypassed on this box for this very package.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c \"import click; print('CLICK', click.__version__)\" on dell1 2026-10-09: CLICK 8.5.0",
+      "pip show click: Version 8.5.0, Location C:\\Users\\Test\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages, Required-by: black, great-expectations, huggingface_hub, pyiceberg, uvicorn",
+      "click-8.5.0.dist-info/INSTALLER = 'pip'; direct_url.json ABSENT; REQUESTED ABSENT. A local-file install records direct_url.json, so its ABSENCE plus INSTALLER=pip means an INDEX install; REQUESTED absent means it arrived as a dependency, not a direct ask.",
+      "intake records present on this box name click-8.3.1 only (org/devices/intake/records/intake-20261008-a/: click-8.3.1-py3-none-any.whl.check.json and .fetch.json) -- denominator 5 files in that record folder, none for 8.5.0"
+    ]
+  },
+  "spec_asserts": "FWD-15 (one real package laptop -> Dell, checked) and FWD-19 (what a box downloaded today, from a record): a Dell's packages arrive through the checked intake route and are recorded.",
+  "world_is": "For click specifically, dell1 is already past that gate: an unchecked click 8.5.0 is installed from a public index, pulled in transitively by other packages, and no record on this box accounts for it. This is the same control gap as NFRA_CTLPLN-D1-S1 (pip reaches pypi.org from dell1 unimpeded) observed from the other end: S1 shows the route is open, S2 shows something already came through it. SCOPE: one package on one host, read from pip metadata at one time. It does NOT establish how many other site-packages entries lack a record -- that census is a separate read and is not this cell's. It also does not say the 8.5.0 bytes are malicious or wrong, only UNVOUCHED by the route the project is building. Nothing was uninstalled or changed; this row is an observation, and the remedy is the control-plane owner's and the CVO's, not this seat's."
+}
+```
+
+## NFRA_CTLPLN-D1-S3 -- TO-CT-x-2 step 1's index-free install of the checked click 8.3.1 would DOWNGRADE dell1 from 8.5.0 and leave huggingface_hub's core requirement (click>=8.4.2,<9.0.0) unsatisfied; the issuer should weigh that before the pack lands.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T09:26Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S3",
+  "one_line": "TO-CT-x-2 step 1's index-free install of the checked click 8.3.1 would DOWNGRADE dell1 from 8.5.0 and leave huggingface_hub's core requirement (click>=8.4.2,<9.0.0) unsatisfied; the issuer should weigh that before the pack lands.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "installed click on dell1 2026-10-09 = 8.5.0; the checked pack is click-8.3.1-py3-none-any.whl (sha256 981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6), so step 1 is a DOWNGRADE",
+      "DENOMINATOR: 11 click requirements declared across installed distributions; 5 are core (no environment marker) and 6 are EXTRA-GATED (httpx cli, httpx2 cli, jupyter-events cli, jupyter-events test, python-dotenv cli, scipy dev)",
+      "core requirements unsatisfied by click 8.3.1: 1 of 5 -- huggingface_hub requires click<9.0.0,>=8.4.2",
+      "core requirements unsatisfied by the currently installed click 8.5.0: 0 of 5",
+      "core requirements SATISFIED by 8.3.1: black>=8.0.0, great-expectations!=8.1.4,>=7.1.2, pyiceberg>=7.1.1, uvicorn>=7.0"
+    ]
+  },
+  "spec_asserts": "TO-CT-x-2 <bounds>: 'One package installed: click 8.3.1, the checked file. No other install.' -- i.e. installing the checked file is a clean, bounded act.",
+  "world_is": "On dell1 it is not clean: it moves click DOWN from 8.5.0 to 8.3.1 and breaks one core dependency requirement (huggingface_hub needs >=8.4.2). The cell is still executable exactly as written -- this row does not refuse it and does not widen the bounds -- but the issuer owns the call on whether a downgrade that unsatisfies huggingface_hub is wanted on this box, and the order was cut on the laptop where the installed version may differ. CORRECTION WORTH RECORDING: a first pass over the requirement set counted 3 breaking dists (adding httpx2>=8.4.2 and scipy<8.3.0); both are gated behind extras (cli, dev) and are NOT core constraints, so the honest number is ONE. The instrument that fixes this is reading each Requirement's marker, not just its specifier. SCOPE: declared metadata only -- it does not exercise huggingface_hub against 8.3.1, so 'unsatisfied requirement' is a declared conflict, not an observed runtime failure."
+}
+```
+
+## NFRA_CTLPLN-D1-S4 -- the intake check record pins the check-8 signature file by a sha256 computed on LF bytes, so any receiver on a CRLF checkout that hashes that file as-is reads a FALSE MISMATCH on an intact signature -- measured here: f8155b87 vs the pinned b41ea9db, reconciled only after CRLF->LF normalization.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T10:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S4",
+  "one_line": "the intake check record pins the check-8 signature file by a sha256 computed on LF bytes, so any receiver on a CRLF checkout that hashes that file as-is reads a FALSE MISMATCH on an intact signature -- measured here: f8155b87 vs the pinned b41ea9db, reconciled only after CRLF->LF normalization.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "click-8.3.1-py3-none-any.whl.check.json check 8 evidence pins signature_file_sha256=b41ea9dbfe8d85c53a5c0a572eebce668a891cdf8829e737c7381bf05b626389 for org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_CLICK_ONLY.md",
+      "sha256 of that file AS CHECKED OUT on dell1 2026-10-09: f8155b87e3e261ba40cee526012a1385ec8771989be481de7db8f7af735ac8f7 -- MISMATCH against the pin",
+      "worktree 2381 bytes with 39 CRLF pairs; git blob 2342 bytes with 0 CRLF; 2381-2342=39",
+      "sha256 of the worktree bytes with CRLF->LF = b41ea9db... = the pin, and sha256 of the git blob = b41ea9db... = the pin; both reconcile",
+      "git log for that path: ONE commit, e058ba4c12 by 1.0.0_SA_CTO 2026-10-08T07:02:54Z, BEFORE the check record's at=2026-10-08T07:06:50Z -- the file has not changed since signing"
+    ]
+  },
+  "spec_asserts": "C-INTAKE check 8: a person reads checks 1-7 and signs, and the check record pins the signature file by hash so a receiver can confirm the attestation it is relying on is the one that was signed.",
+  "world_is": "The pin is only reproducible against LF bytes. On a Windows checkout (every Dell) the file on disk carries CRLF, so the straightforward receiver check -- hash the signature file, compare to the pin -- FAILS on a perfectly intact signature. The signature here IS intact; this row is about the instrument, not the attestation. It fails in the ALARMING direction, which has two bad outcomes: a receiver may refuse a good install, or, worse, learn that this particular mismatch is normal and stop checking. The fix is for the check to be specified on normalized bytes (or on the git blob), and it belongs to the instrument's owner, not to this seat. SCOPE: one signature file, one receiver, one day; it does not survey how many other pinned hashes in the intake records have the same shape."
+}
+```
+
+## NFRA_CTLPLN-D1-S5 -- the click wheel was delivered LOOSE to dell1, so intake_receive.py verify and prove both REFUSE it (MANIFEST.json absent, ok=False, refused=1) and the route's receiving half could not be exercised; the install was authorized by the signed check record and an independent hash instead.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~CT1",
+  "surfaced_at": "2026-10-09T10:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-D1-S5",
+  "one_line": "the click wheel was delivered LOOSE to dell1, so intake_receive.py verify and prove both REFUSE it (MANIFEST.json absent, ok=False, refused=1) and the route's receiving half could not be exercised; the install was authorized by the signed check record and an independent hash instead.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "delivery named a bare file: C:/Users/Test/Downloads/click-8.3.1-py3-none-any.whl (crossbox XB-20261009T100730Z-a3db), 108274 bytes; no pack folder, no MANIFEST.json",
+      "AGENTBUS_DEVICE=dell1 python org/devices/intake/intake_receive.py verify --from <pack> rc=1: 'PACK-DEFECT: MANIFEST.json absent', 2 STRAY, 'REFUSED: wheel not listed in manifest; check record not listed in manifest', 'INTAKE-VERIFY wheels=1 verified=0 checked=0 stray=2 ok=False'",
+      "prove --from <pack> --scratch <new dir> rc=1: 'INTAKE-PROVE device=dell1 python=3.14.7 wheels=1 installed=0 imported=0 failed=0 refused=1 ok=False'",
+      "intake_receive.py docstring: a PACK is a folder holding, per wheel, <name>, <name>.check.json and <name>.delivery.txt, plus one MANIFEST.json",
+      "precedent for the other file of this same batch: org/devices/intake/records/intake-20261008-a/LOOSE_DELIVERY_rpds_py_SITEZ_BY_CTO_RULING_106777.md -- 'there is NO pack and NO manifest for this file, so intake_receive.py verify cannot be run'",
+      "authorization used instead, all measured on dell1: independent sha256 of the delivered file = 981153a6...45b2a6 = the record's held_sha256; record verdict='checked' (8 checks, 6 passed, 2 not_applicable); check 8 signed by 1.0.0_SA_CTO, signature intact (see NFRA_CTLPLN-D1-S4); installed dist's direct_url.json names a file:/// source carrying that same digest"
+    ]
+  },
+  "spec_asserts": "FWD-15 / the order's step 1: the checked file is RECEIVED, VERIFIED and PROVED by the receiving tool on the Dell, which returns receipts; the order's comp-adversary line names 'an unchecked file installed' as the hazard that verify-and-prove prevents.",
+  "world_is": "Neither verify nor prove could run, because a pack never arrived -- twice now in this one batch, for both of its files. No MANIFEST was authored on the receiver to make the tool pass: the MANIFEST is the SENDING machine's attestation (intake_check.py pack writes it), so a receiver-written one would have the tool verify the receiver's own copy against the receiver's own hashes -- a circular pass indistinguishable in the record from a real receipt. The bytes installed ARE the signed, checked bytes, and three independent readings say so; what is missing is the receiving tool's RECEIPT, which is the artifact the pack mechanism exists to produce. What would close it: the laptop runs intake_check.py pack (now possible -- the c6=failed hold that blocked it is cleared, the record reads verdict=checked with c6=not_applicable) and Taildrops the PACK, not the wheel. That is the sender's act, not this seat's."
+}
+```
+
+## NFRA_CTLPLN-W14-S49 -- the transcripts key-policy renderer cannot load local.named_reader_arns from readers.tf, so CTa1-AC5 and the closing line of CTa1-AC7 cannot print
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T10:29:38Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S49",
+  "one_line": "check_transcripts_dell_decrypt.py cannot render the transcripts key policy since commit 0693227a69: main.tf now reads local.named_reader_arns, declared in readers.tf, which the checker's one-file render does not load; CTa1-AC5 and the final line of CTa1-AC7 (simulate_dell_parity imports the same renderer) cannot print.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/main.tf:103 'Principal = { AWS = local.named_reader_arns }'; infra/aws/terraform/transcripts/readers.tf:25 declares it (concat(var.reader_principal_arns, [aws_iam_role.second_reader.arn])). 0693227a69 (2026-10-09 04:32 -0400, NFRA_TRNSPT TO-TR-p18) added readers.tf.",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> rc=1, JSONDecodeError; terraform console stderr: 'Reference to undeclared local value ... named_reader_arns' (render_expression, check_transcripts_dell_decrypt.py:173-189, writes only main.tf's expression into a scratch root).",
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_dell_parity.py -> prints 'ARMS policy-documents: simulated=1500 equal=1500 unequal=0 ... unread=0', then raises the same JSONDecodeError at simulate_dell_parity.py:392 (ctd.render_expression) before the DELL-PARITY line. Neither file was edited by this amendment on that path.",
+      "Not fixed here: the render needs readers.tf's role ARN (a builder-minted name) resolved, which changes what the checker asserts about the reader statement; that is the transcripts workstream's call, not a rider on AMENDMENT 29."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 29 ACCEPTANCE: the seven ids CTa1-AC1..AC7 as stated after AMENDMENT 26, CTa1-AC5 reading the check's final line 'ok=True' and CTa1-AC7 reading 'DELL-PARITY arms=.. equal=.. unequal=0 ok=True'.",
+  "world_is": "Both lines are unobtainable at HEAD b681bbcd5a regardless of the SES change: the checker dies before its last line. The AMENDMENT 29 arms themselves read: planread_ok=428/428 all_ok=True; parity arms equal=1500 unequal=0 (printed before the crash)."
+}
+```
+
+## NFRA_CTLPLN-W14-S50 -- S49 fixed in the renderer, by a reading the issuer's ruling left open: the reader statement is measured against the render at the a18 commit (0693227a69), and the live key policy is accepted when it equals either the before25-with-post-edit-reader render or the render after this edit.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T11:05:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S50",
+  "one_line": "S49 fixed in the renderer, by a reading the issuer's ruling left open: the reader statement is measured against the render at the a18 commit (0693227a69), and the live key policy is accepted when it equals either the before25-with-post-edit-reader render or the render after this edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py: render_expression now reads every .tf file of the root (locals_blocks, local_expression, root_texts) and stubs aws_iam_role.second_reader.arn from NAMES.json second_reader.role.name (git show HEAD: when data/ is absent from the sparse worktree); the stub equals a principal of the live NamedReadersUseTheKey statement (printed, True).",
+      "live key policy (kms get-key-policy 44a2284f-1e14-4ea1-b6cb-f6121bfde35a) holds 4 statements and NamedReadersUseTheKey has 2 principals; the check prints 'equals the before25 render with the post-edit reader: False ; equals the render after this edit: True'.",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> rc=0, last line 'dell_decrypt=2/2 dell_write_refused=6/10 dell2_generate_ok=True dell1_generate_ok=True reader_unchanged=True unlisted_refused=True statements_added=1 ok=True'; simulate_dell_parity.py -> 'DELL-PARITY arms=1533 equal=1533/1533 unequal=0 ok=True'."
+    ]
+  },
+  "spec_asserts": "The issuer's ruling (S49 task): 'reader_unchanged compares against the POST-EDIT render, per the CTO's ruling on row W14-S40'; the Dell statements' assertions unchanged.",
+  "world_is": "'POST-EDIT render' was read as the render of main.tf and readers.tf at the a18 commit 0693227a69 (the last edit that changed the reader statement), not as the current file (which would make the comparison compare a file with itself). The before25 baseline used for the added/removed/in-place diff takes its reader statement from that render. dell_write_refused moved 8/10 -> 6/10 in the line (kms:GenerateDataKey allowed to both Dells, by design since amendments 25 and 26; the AC5 expectation is the regex [0-9]+/[0-9]+). If the issuer meant another baseline, only A18_COMMIT and the live_post clause change."
+}
+```
+
+## NFRA_CTLPLN-W14-S51 -- terraform fmt -check on infra/aws/terraform/transcripts reports commentary.tf as not canonically formatted; the file belongs to another cell and is outside this order's paths.
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T11:05:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S51",
+  "one_line": "terraform fmt -check on infra/aws/terraform/transcripts reports commentary.tf as not canonically formatted; the file belongs to another cell and is outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform fmt -check -recursive infra/aws/terraform/nfra-ctlpln-identity infra/aws/terraform/transcripts -> prints infra/aws/terraform/transcripts/commentary.tf, rc=3; nfra-ctlpln-identity prints nothing.",
+      "git status of the worktree: commentary.tf is not modified by this branch (last touched by the cell row W14-S46 names)."
+    ]
+  },
+  "spec_asserts": "The order says keep Terraform fmt/validate clean for the files this order changes.",
+  "world_is": "The files this order changes (transcripts/tests/*.py and the nfra-ctlpln-identity census, tests and plan note) are fmt-clean; the one unformatted file is another cell's undeployed commentary.tf. Not edited. INERT: formatting does not change a plan."
+}
+```

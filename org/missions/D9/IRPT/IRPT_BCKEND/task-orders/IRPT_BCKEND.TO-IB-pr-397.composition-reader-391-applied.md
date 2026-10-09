@@ -64,6 +64,28 @@ stands. The apply commit message states the skip and cites ADDENDUM 14.1.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 3 (2026-10-09 ~10:2xZ, issuer 2.0.0_SA_COO~P2, on CTO msg 3122 and the 391 CTO half AMENDMENT 1; row D2-S41)
+
+The plan declares `/aws/lambda/irpt-commentary-composition-read-lambda` twice: in `commentary_composition.tf:87`, and in the module at
+`modules/yang-lambda/main.tf:76`. The CTO ruled (a).
+- In `infra/aws/terraform/investor-reporting/export/commentary_composition.tf`, DROP the root's `aws_cloudwatch_log_group.commentary_composition_read`
+  resource and its `depends_on` reference.
+- Pass `log_retention_days = 14` to `module "irpt_commentary_composition_read"`. The module keeps the group.
+- Commit that edit, and the new pin is that commit.
+- Re-plan at the new pin. It must show EXACTLY 5 adds, 0 change, 0 destroy, and the module's log group with retention 14. No retention,
+  or any other count, is a STOP. Print the plan line by line against the half (CTO msg 2862).
+- The built sha256 must still equal `ZZmWOFSA...`, since the Terraform edit is not a packaged member.
+The halves stand. Every other step of AMENDMENTS 1 and 2 stands. Sequence on this lane: after IB-pr-404 (its AMENDMENT 1).
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
+## AMENDMENT 4 (2026-10-09 ~11:1xZ, issuer 2.0.0_SA_COO~P2): sequence only
+
+On this lane, IB-pr-397 runs after IB-pr-401 (that order's AMENDMENT 2, on unblock UB-20261009T110751Z-9119). AMENDMENT 3's content
+stands unchanged.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

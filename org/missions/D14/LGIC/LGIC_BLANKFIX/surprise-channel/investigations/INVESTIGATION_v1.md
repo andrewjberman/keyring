@@ -2161,3 +2161,190 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "They read ok=True on dell1 and ok=False on the laptop for an environment reason, not a gate one. The production gates spawn no bare bash (naming-gate.py, naming-apply-gate.py, opal_naming_rootcheck.py, opal_naming.py searched)."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S3 -- the base has 88 Terraform roots and 10 unmapped, not 87 and 9: advi/billing-read (4 names) is a root the round-9 close does not hold, so the cell's census reads roots_total=86, not 85, after the two retirements
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T09:23:30Z",
+  "one_line": "the base has 88 Terraform roots and 10 unmapped, not 87 and 9: advi/billing-read (4 names) is a root the round-9 close does not hold, so the cell's census reads roots_total=86, not 85, after the two retirements",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming.py census --all-roots on this worktree at 0f652707c8 (before any edit): 'ALL-ROOTS ok=True roots_total=88 mapped=78 unmapped=10 ... hole=0'; UNMAPPED infra/aws/terraform/advi/billing-read names=4 uncounted=0",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9.txt: roots_total=87 unmapped=9 with no advi/billing-read; investor-reporting/export reads items=29 there and items=35 on this base",
+      "check_held_entries_round10.py (0.9.0_WK_LGIC_BLANKFIX~2): after the seven entries and the two retirements the merged run prints roots_total=86 mapped=85 unmapped=1 (advi/billing-read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's CONTEXT: at this cut the census reads roots_total=87 mapped=78 unmapped=9; after the two retirements roots_total reads 85 (the CRO's ruling R10-4).",
+  "world_is": "The base is later than the round-9 close: advi/billing-read exists, is tracked, and no map entry or cell names it. The cell maps the seven it was given and retires the two; it does not map the tenth. The check compares the merged denominator with the live count before the retirements (88 - 2 = 86) and lists the unmapped root by name, so it neither hides it nor claims 85. Whoever owns advi/billing-read owes it an entry; roots_total=85 holds only once it is mapped or retired."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S4 -- lib/opal_naming_keyfill.bucket_of reads the file's only opal-data literal as the bucket of every key in the file, so a correct key-ruling row for a key in another bucket (a globgrph or lambda-artifacts bucket, or an s3:// URI constant) is dropped and the hole stays
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T09:24:00Z",
+  "one_line": "lib/opal_naming_keyfill.bucket_of reads the file's only opal-data literal as the bucket of every key in the file, so a correct key-ruling row for a key in another bucket (a globgrph or lambda-artifacts bucket, or an s3:// URI constant) is dropped and the hole stays",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py _ruling_of: 'a candidate must also agree on the bucket wherever the item's bucket is known' -- known, _why = bucket_of(item); cands = [r for r in cands if r.get('bucket') in (None, known)]",
+      "lib/opal_naming_keyfill.bucket_of on the shared-infra items of infra/aws/lambda/infrastructure_monitor/lambda_function.py: warehouse/_branch_head.main.json -> ('opal-data-portal-v2', \"the file's only bucket literal 'opal-data-portal-v2' (line 96)\") while the code reads GLOBGRPH_BUCKET = 'opal-313476888478-globgrph' at line 123; contract_integrity/latest.json the same",
+      "bucket_of on ec2/astn-wsjft/deploy.sh -> 'opal-data-astn' (line 58) and on ec2/etfs-reports -> 'opal-data-etfs' (line 49), while both keys are in s3://opal-313476888478-lambda-artifacts/... URI constants (astn-wsjft-orchestrator/lambda_function.py:61, etfs-reports-orchestrator/lambda_function.py:53)",
+      "check_held_entries_round10.py: the rows for those keys (REGISTRY_ROWS_round10.json) merge with no refusal and the four HOLE lines stay; each has an OWNED line to 1.0.0_SA_CTO in HOLES_OWNED_round10.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A registry row (bucket, key[, declared_in]) answers a stored-file path wherever the code writes that bucket and key.",
+  "world_is": "A row whose bucket is the true bucket does not match when the reader names a different one, so four paths on two newly mapped roots stay HOLE although their rows are drafted. The registry's existing row for warehouse/_branch_head.main.json has the same problem on this root. I did not edit lib/ (outside the grant) and did not write a row with the wrong bucket to force a match."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S5 -- the ruling keeps harvest at '11 amgt names' and 0 on the others; grade() measures 13 on harvest (two LAMBDA names) and 1 on mdpf-pipeline (an IAM policy led by gateway), so the entries list what is measured
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T09:24:30Z",
+  "one_line": "the ruling keeps harvest at '11 amgt names' and 0 on the others; grade() measures 13 on harvest (two LAMBDA names) and 1 on mdpf-pipeline (an IAM policy led by gateway), so the entries list what is measured",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROOT_MAP_ROUND10_RULINGS_20261009.md:50 'Exceptions stay as measured in round 8 (harvest's 11 amgt names; 0 on the others).'",
+      "check_held_entries_round10.py prints EXCEPTIONS harvest listed=13 measured=13 and EXCEPTIONS mdpf-pipeline listed=1 measured=1; the round-8 draft lists 11 for harvest (MAP_ENTRIES_round8.json) and 0 for mdpf-pipeline",
+      "the 13 are the 11 plus the LAMBDAs amgt-resapp-chatter-axis (chatter-axis-schedule.tf:178) and opal-amgt-scoped-api (scoped-amgt-api.tf:455); the 1 is the IAM policy gateway-taxsma-workbook-bearer-read-policy (mdpf-pipeline/iam.tf:1274); mdpf-pipeline read 64 items at round 8 and reads 78 now"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ruling's measured counts (R10-3, :50): harvest 11, the other four roots 0.",
+  "world_is": "The root map's own rule is 'measured by the cell'; the entries carry the 13 and the 1, each cited to its line, and the check fails on an unlisted or a wrongly listed exception. None of them changes a verdict (the names already lead with their own system), so the registry owner can strike the three extra rows without effect if the ruling's counts are meant literally."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S6 -- the order says test_opal_naming_rootcheck.py reads ROOTCHECK-TEST ok=False at the base on case 5 only; on this worktree it reads ok=True cases=324 with the base-pin keyfill and with the BF-z-1 keyfill
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T10:02:49Z",
+  "one_line": "the order says test_opal_naming_rootcheck.py reads ROOTCHECK-TEST ok=False at the base on case 5 only; on this worktree it reads ok=True cases=324 with the base-pin keyfill and with the BF-z-1 keyfill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_rootcheck.py in C:/tmp/wk-blankfix-1 with lib/opal_naming_keyfill.py temporarily set to git show 32c925520c:lib/opal_naming_keyfill.py (restored after): last line ROOTCHECK-TEST ok=True cases=324",
+      "same test with the BF-z-1 keyfill: ROOTCHECK-TEST ok=True cases=324; the other nine lib/tests/test_opal_naming_*.py scripts also print ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's CONTEXT: every lib/tests/test_opal_naming_*.py prints ok=True at the base except test_opal_naming_rootcheck.py, which reads ok=False there on case 5 only (row S12; cell BF-x-2 repairs it).",
+  "world_is": "At base 32c925520c the rootcheck test already prints ok=True (324 cases, no FAIL line), so case 5 does not fail in this worktree; whether BF-x-2 already landed in the base or the failure depends on the device or the day is not read here. The BF-z-1 keyfill build does not change the result either way."
+}
+```
+
+## LGIC_BLANKFIX-D1-S3 -- retiring opal-assets-absence removes the last repo trace of an ORPHANED log group: the function it names, opal-assets-absence-check, does not exist, but /aws/lambda/opal-assets-absence-check is live with 6 streams, ~4.8 KB and NO retention policy, declared by nothing (drift=LIVE-no-DECLARED)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T10:31:19Z",
+  "one_line": "retiring opal-assets-absence removes the last repo trace of an ORPHANED log group: the function it names, opal-assets-absence-check, does not exist, but /aws/lambda/opal-assets-absence-check is live with 6 streams, ~4.8 KB and NO retention policy, declared by nothing (drift=LIVE-no-DECLARED)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'opal-assets-absence': DENOMINATOR 1 hit across 2844 aws nodes scanned, the single hit [LOG_GROUP] /aws/lambda/opal-assets-absence-check drift=LIVE-no-DECLARED src=full-derive (graph vintage 2026-10-09 06:17:57Z, stitch manifest 1089b9991c93).",
+      "lambda get-function-configuration --function-name opal-assets-absence-check: ResourceNotFoundException 'Function not found: arn:aws:lambda:us-east-1:313476888478:function:opal-assets-absence-check'. The function is gone.",
+      "logs describe-log-groups --log-group-name-prefix /aws/lambda/opal-assets-absence-check: storedBytes 4811, retentionInDays None -- no retention policy, so it never expires.",
+      "logs describe-log-streams --query length(logStreams): 6. Not a husk -- the function ran before it was removed.",
+      "The root's own state is EMPTY (terraform state list prints nothing, rc=0, against a positive control of 238 addresses on infra/aws/terraform/opal-assets), so the log group is NOT owned by this root and the order's refusal clause does not fire: that clause turns on a non-empty state or a resource OWNED by the root, and neither holds. The retirement proceeded."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-aa-1 step 2: 'Prove nothing in AWS is owned by it ... record AWS-OWNED <root> count=0'. The cell's adversary preflight names the arm this row came from: 'a resource outside state but in AWS (the AWS-OWNED read)'.",
+  "world_is": "AWS-OWNED is genuinely 0 for this root, and the orphan is reported rather than rounded away. After this commit the folder is gone from git, so nothing in the repo mentions opal-assets-absence-check at all and the log group's only trace is this row plus the evidence file. It costs ~4.8 KB and nothing operationally; it is a cleanup item with no owner, not a hazard. Owner of the choice: whoever owns the estate's LIVE-no-DECLARED set -- a log-group delete is out of this cell's grant and is listed for Andrew in the report alongside the two remote-state objects.",
+  "notes": "ID DEVIATION, REPORTED NOT ADJUDICATED: the order prescribes the scheme LGIC_BLANKFIX-D1-CO1-S<k>, and the live surprise-row gate refuses it. Only the CO1 segment is wrong -- the D1 coordinate is REQUIRED, not optional: the gate states 'A row filed on dell1 is written <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>); a bare id is the laptop's', with laptop/cloud-local = <CODE>-S<n>, sitez = <CODE>-Z-S<n>, dell1 = <CODE>-D1-S<n>, dell2 = <CODE>-D2-S<n>. This seat first over-corrected to a bare LGIC_BLANKFIX-S14 after reading the gate's abbreviated grammar string, and the fabric limb refused that too -- correctly, since a bare id would have claimed the laptop fabric for a dell1 row. The id here is the next free dell1 bare index. 2.0.0_SA_COO~B1 may re-label; the only thing the order got wrong is CO1. Distinct from the W1/W2 rows, which concern the naming keyfill and the root map rather than AWS orphans."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S7 -- the list's new name for a 49f schedule (bd-49f-keepalive-sched -> blackdiamond-49f-keepalive-sched-15min) is refused by the real naming gate as a NEW hand-kept carrier of the firm token 49f, so that list line alone cannot be landed; the BF-ab-1 exercise renamed estate-report-0900et instead
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T11:33:32Z",
+  "one_line": "the list's new name for a 49f schedule (bd-49f-keepalive-sched -> blackdiamond-49f-keepalive-sched-15min) is refused by the real naming gate as a NEW hand-kept carrier of the firm token 49f, so that list line alone cannot be landed; the BF-ab-1 exercise renamed estate-report-0900et instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py --diff <diff of a temporary copy of infra/aws/terraform/bd-pipeline/bd-49f-interim.tf with name = blackdiamond-49f-keepalive-sched-15min> --enforce: NAMING REFUSE bd-49f-interim.tf:149 blackdiamond-49f-keepalive-sched-15min -> blackdiamond-49f-keepalive-sched-15min; why: CONFORMANT as EVENT_RULE, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial'); rc=1 (run in C:/tmp/wk-blankfix-1, repository file not written)",
+      "21 of the 120 FIX EVENT_RULE/SCHEDULE list lines (every mapped root, root check with report_only) carry 49f in the new name; 10 carry cot. Only the 49f arm was run against the gate; the cot arm is not read.",
+      "estate-report-0900et -> estate-report-0900et-daily (SCHEDULE, cron(0 9 * * ? *)) through the same gate: NAMING CONFORMANT, NAMING-GATE: PASS, rc=0; control: the same schedule renamed to estate-report-0900et-hourly is refused by the placement step (NAMING-PLACE: REFUSE 1, Owed: use estate-report-0900et-daily)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4 (PRD): a schedule's new name with the cadence filled in is read from the list and the schedule is renamed from the list alone; the order expects a listed schedule to be renamed from its line and graded CONFORMANT by the real gate.",
+  "world_is": "For a schedule whose name carries a firm token the list line names the target form, but the gate's context rule also requires the token to be written through lookup() or the opal_name module, so the literal the list shows is refused when typed. grade() calls the same name CONFORMANT. This is the context rule working as designed on a name the list printed as a plain literal; whether the list should print the lookup form for those 21 lines, or the group-C acceptance should name only token-free schedules, is not decided here.",
+  "notes": "Not a defect in this cell's build: the exercise default is a token-free schedule, and exercise_fwd4_rename.py takes any list line as its argument, so the 49f line can be run to reproduce the refusal."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S8 -- of 180 schedule list lines, 10 give a cadence word the reader leaves undecided although the schedule states an expression (8 of them fire 2-3 times a day under daily or 45min); the checker lists them, none is a mismatch, and a person may well disagree with finbert-scoring-post-ingestion-45min
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T11:33:32Z",
+  "one_line": "of 180 schedule list lines, 10 give a cadence word the reader leaves undecided although the schedule states an expression (8 of them fire 2-3 times a day under daily or 45min); the checker lists them, none is a mismatch, and a person may well disagree with finbert-scoring-post-ingestion-45min",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence.py: FWD4-CADENCE ok=True schedules=180 agree=144 undecided=36 mismatch=0; 10 of the 36 undecided lines carry expr= (the other 26 are 21 event-pattern rules with no schedule expression and 5 NOT-ASKED lines that carry no new name).",
+      "the 10: canonical-schwab-si2-08335338-daily-pull cron(45 9,21 * * ? *), canonical-schwab-si2-08242234-daily-pull cron(15 10,22 * * ? *), schwab-canonical-si2-08403355-pull-daily cron(45 10,22 * * ? *), fear-greed-daily-update cron(30 14,21 * * ? *), trending-topics-portal-publisher-daily cron(10 14,21 * * ? *), keyword-intelligence-generator-daily cron(0 8,20 * * ? *), keyword-drilldown-generator-daily cron(25 12,21 * * ? *) -- all twice a day, name carries daily; finbert-scoring-post-ingestion-45min cron(55 0,13,20 * * ? *) -- three times a day, name carries 45min; fred-ingestion-monthly-early cron(0 15 ? * 6#1 *) -- first Friday, name carries monthly; teams-global-transcripts-pull-hourly cron(0 13-22 ? * MON-FRI *) -- hourly in a weekday window, name carries hourly.",
+      "cadences estate count control: python lib/opal_naming_cadence.py estate prints CADENCE-ESTATE ok=True rows=180, the checker's denominator."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-CADENCE: a row the expression cannot decide is listed, not guessed.",
+  "world_is": "The reader returns no word for a multi-fire cron, so by C-CADENCE these rows are listed, and the checker lists them as UNDECIDED and does not count them as agreeing. The list nevertheless keeps the word the current name already carries on them (daily for a twice-a-day fire, 45min for a three-times-a-day fire); a person reading finbert's cron(55 0,13,20 * * ? *) would not call it 45min. These are the rows for BAB1-AC3's reader, not an adjudication here.",
+  "notes": "No lib change was needed: no mismatch arose from the cadence reader."
+}
+```

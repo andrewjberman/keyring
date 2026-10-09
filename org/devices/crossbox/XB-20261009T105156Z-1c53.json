@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T105156Z-1c53",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~N1",
+ "to_serial": "0.7.0_AE_CloudOps~ZG",
+ "subject": "NFRA_GATSCP.TO-GS-e-2 -- round 2 GS-e-2: a site-Z Codex lane runs this order straight from the mission tree, with no sea",
+ "body_path": "org/missions/D0/NFRA/NFRA_GATSCP/task-orders/NFRA_GATSCP.TO-GS-e-2.sitez-live-read-no-copy.md",
+ "opened_at": "2026-10-09T10:51:56Z",
+ "state": "ACKED",
+ "sent": {
+  "at": "2026-10-09T10:53:35Z",
+  "bus_message_id": "77379c81-7a2a-4df3-8b96-a2347902c9b2"
+ },
+ "ack": {
+  "at": "2026-10-09T11:11:38Z",
+  "by": "0.7.0_AE_CloudOps~ZG",
+  "bus_message_id": "9267a044-e214-4ee2-a59b-284c3e548a78"
+ },
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

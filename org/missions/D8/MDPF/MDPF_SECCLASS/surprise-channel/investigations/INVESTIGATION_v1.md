@@ -6039,3 +6039,59 @@ by dell1 or by this seat.
   "notes": "Filed by the worker; no change beyond the grant."
 }
 ```
+
+## MDPF_SECCLASS-D1-S23 -- crossbox-deploy-check's OPEN-CALL and OVERLAP limbs match at root/token granularity, so an unrelated call's prose citation and another box's bronze script both flag a one-key gold deploy
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S23",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T09:59Z",
+  "one_line": "safe-deploy's seat-gates printed 'STOP: 4 hit(s) in OPEN-CALL, OPEN-DEPLOY' against a deploy whose write surface is ONE S3 key. All four were enumerated and none contends for that key. The limbs match on the ROOT token 'data/black_diamond' rather than on the key or file the deploy moves: OPEN-CALL scans a referenced BODY DOCUMENT for the token, so one sentence of unrelated prose in another project's channel flags the root; OVERLAP matches a project whose write set names any file under the root, so a BRONZE script on another box flags a GOLD lib ship.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09T09:54:21Z on box/dell1 shipping TO-SC-e79b's one key code/gold/lib/etf_classifier.py. safe-deploy printed '[seat-gates] STOP: 4 hit(s) in OPEN-CALL, OPEN-DEPLOY -- first: OPEN-CALL: org/devices/crossbox/XB-20261009T093642Z-9ec5.json (state OPEN, laptop -> dell1) names the root (token data/black_diamond)' and 'open_call=hit overlap=clear upset=clear open_deploy=hit verdict=STOP', then 'WARN ... would stop under ENFORCE ( crossbox-deploy:data/black_diamond ); WARN mode proceeds.'",
+      "HIT (i) resolved by reading the call: XB-20261009T093642Z-9ec5 is kind=ORDER from 2.0.0_SA_COO~C to 0.7.0_AE_CloudOps~CT1, subject 'Commit your rows NFRA_CTLPLN-CT1-S1 and -S2 now (safe-commit, shared tree): dell1 box-sync is HELD on them', body_path the NFRA_CTLPLN channel. The token 'data/black_diamond' appears NOWHERE in the call JSON and exactly ONCE in that body document -- line 2839, inside a quoted vendor-secrets census about 'data/black_diamond/scripts/classification/classify_bd_securities.py:159'. A substring in unrelated prose, asserting no claim on any key.",
+      "HITS (ii) and (iii) resolved by running the gate directly: `python .tools/crossbox-deploy-check.py --root data/black_diamond` prints 'OPEN-CALL: hit (3)' over 26 crossbox files plus 4 device open_calls.json files, and the other two hits are dell2 rows dell2-20261008T211016Z-cf09 and dell2-20261008T214732Z-3dc0 naming project NFRA_MCPINDEX 'whose write set covers the root'. Its OVERLAP limb names the actual file: NFRA_MCPINDEX is placed on sitez and its write set names data/black_diamond/scripts/bronze/_transaction_rest_pin.py -- a BRONZE script, which does not ship to code/gold/lib/.",
+      "The gate CAN discriminate when it compares placement, which is what shows the limbs' granularity is the defect and not the data: its own line for this project reads 'project MDPF_SECCLASS placed on dell1 (DELL1) names data/black_diamond/scripts/gold/E_18.detect_new_securities.py -- this box or unplaced, not another box's' and correctly did NOT hit.",
+      "The ship itself was clean on a wider set than the order required, so nothing about this row excuses a real conflict: 188 keys under code/gold/ read pre and post, MOVED=1 and that one key IS the target, ADDED=0, GONE=0; both named watch keys identical on ETag AND VersionId; AC1 'E79-SHIPPED ok=True ... control=MATCH'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A deploy gate's contention limbs flag work that actually contends for the write surface the deploy moves, so a hit is a reason to stop and a clear read is a reason to proceed.",
+  "world_is": "The limbs answer a coarser question than the deploy asks: 'does anything mention this ROOT' instead of 'does anything claim these KEYS'. On a root as busy as data/black_diamond that yields hits for any one-key ship, and today 4 of 4 were unrelated. Two amplifiers: the token is matched inside a referenced body document, so any project channel quoting a path string arms it; and 'write set covers the root' ignores the medallion tier, so bronze work flags a gold ship. TODAY THIS IS INERT -- WARN mode proceeds and the operator can enumerate. IT ARMS UNDER ENFORCE, and it arms in the worst direction: a limb that cries wolf on every ship trains the operator to override, which is the same override they would reach for on the day a hit is real. The fix belongs to the tool: match the deploy's actual shipped keys (safe_deploy_core already computes them) against a claim's named paths, and keep the root token only as a tiebreak.",
+  "notes": "SURFACED, NOT CHASED, and not absorbed as a passing WARN: all four hits were enumerated and resolved before leg D closed, and leg D's proof records each one's resolution. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. SIBLING, SAME TOOL, DIFFERENT AXIS: [[MDPF_SECCLASS-D1-S22]] is the OPEN-DEPLOY limb going unresolvable when a concurrent drain removes a worktree between the gate's list and its ls-tree -- that one is a race, this one is granularity, and they want different fixes. Also related: [[MDPF_SECCLASS-D1-S12]] is the _shared drift the named-file rule retired, which CTO condition 2 made this order re-measure."
+}
+```
+
+## MDPF_SECCLASS-D1-S24 -- the COT twin of D1-S19: a Cottonwood gold test pins the retired ship-every-_shared-module deploy rule and fails at HEAD
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S24",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T11:47Z",
+  "one_line": "data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py::test_deploy_tool_ships_the_shared_modules_beside_cottonwoods_gold_files FAILS at box/dell1 HEAD: like D1-S19 in the BD tree, it pins the old rule that any COT gold deploy carries the _shared modules, which the named-file rule (CTO msg 107147, safe_deploy_core.shipped_artifacts_for) retired on 2026-10-08. The COT gold suite reads 1 failed / 27 passed for every candidate until the test follows the rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "box/dell1 HEAD after the SC-e-84 drain (6ac1a94afe), ~11:47Z: `python -m pytest -q data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py` -> 1 failed, 7 passed; AssertionError: assert ('opal-data-cot', 'code/gold/lib/_shared/etf_classif...",
+      "worktree wk-secclass-r17-74 (SC-e-84 candidate): the whole COT gold test directory reads 1 failed, 27 passed -- this one test; the candidate's own test_cot_position_rule.py reads 6 passed. SC-e-84 touches neither this test nor .tools/safe_deploy_core.py.",
+      "Sibling row MDPF_SECCLASS-D1-S19 records the same retired-rule pin in data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The COT gold test suite passes at HEAD, so a candidate's suite run is a clean signal.",
+  "world_is": "One test pins the retired ship-everything rule and fails at HEAD for every candidate, so 'suite green' cannot be read as a pass without naming this test. It moves no data and blocks no deploy.",
+  "notes": "SURFACED, NOT CHASED: found at the SC-e-84 drain. The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route alongside D1-S19. SC-e-84's pair names this test as the one pre-existing failure."
+}
+```

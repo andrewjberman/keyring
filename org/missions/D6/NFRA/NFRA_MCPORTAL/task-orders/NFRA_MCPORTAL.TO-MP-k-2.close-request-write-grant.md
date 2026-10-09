@@ -33,7 +33,7 @@ paragraph records the carve-out. The bucket is SSE-S3 with no bucket policy, so 
 
 **The ruling** (`1.0.0_SA_CTO~O` msg 32404, on Q3): "NFRA_MCPORTAL builds ONLY the gateway side ... writing close-request
 objects, on one PutObject grant scoped to `requests/` (never-widen, C10, this project's pair)". The pair is
-`1.0.0_SA_CTO~O` (CTO half) and `2.0.0_SA_COO~MP` (COO half). Both sign against YOUR ASK before you apply.
+`1.0.0_SA_CTO~Z` (CTO half; AMENDMENT 3: `~O` is retired) and `2.0.0_SA_COO~MP` (COO half). Both sign against YOUR ASK before you apply.
 
 Build and apply, in order:
 1. **`infra/aws/terraform/opal-gateway/mcportal_close_request_write.tf` (new).** It holds ONE `aws_iam_role_policy`,
@@ -65,10 +65,10 @@ Build and apply, in order:
      - the rollback per resource: a targeted destroy, or `aws iam delete-role-policy --role-name opal-gateway-role
        --policy-name gateway-mcportal-close-request-write-policy`;
      - the read-back you will run (AC1, AC2).
-   - Commit the `.tf`, the `graph-read.tf` comment and the ASK. Then send ONE message, to BOTH `1.0.0_SA_CTO~O` and
+   - Commit the `.tf`, the `graph-read.tf` comment and the ASK. Then send ONE message, to BOTH `1.0.0_SA_CTO~Z` and
      `2.0.0_SA_COO~MP`, naming the ASK path and its commit, and asking each for its half.
 3. **WAIT for both halves, at HEAD of `box/sitez`:**
-   - `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/1.0.0_SA_CTO~O/NEVER_WIDEN_HALF_CTO_MP-k-2_<date>.md`;
+   - `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_MP-k-2_<date>.md`;
    - `.../deliverables/2.0.0_SA_COO~MP/NEVER_WIDEN_HALF_COO_MP-k-2_<date>.md`.
 
    Each cites your ASK by path. A refused half STOPS the act; report it.
@@ -135,7 +135,17 @@ Checks dry-run at base 2851a9190d: AC1 FAIL (get-role-policy rc=254, NoSuchEntit
 implicitDeny before the grant; the other five match, the control arm included), AC3 FAIL (no ASK, 0 halves, no entry). The
 applier seat gets its GO by message (a seat, not a worker). Starts at the issuance; the apply waits on the pair.
 
-<status>pending</status>
+**AMENDMENT 3 (issuer, 2026-10-09 ~09:3xZ, on the applier's msg 32611):** the CTO half is re-pointed from `1.0.0_SA_CTO~O`
+to `1.0.0_SA_CTO~Z`. Andrew-direct ~07:4xZ retired `~O`: "we don't need CTO~O anymore, you just lead the fabric here"
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_074xZ_CTO_O_RETIRED_CTO_Z_LEADS_SITEZ_FABRIC.md`; every
+never-widen half `~O` held on site Z passes to `~Z`). `~Z`'s own self-drive row in `org/ref/LIVE_ARMS.md` already names
+NFRA_MCPORTAL. Ruling msg 32404 stands as `~O` wrote it. `k2.AC3.sh` now reads the `1.0.0_SA_CTO~Z/` half.
+
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-09 ~10:1xZ. The issuer re-ran all three checks from the applier's branch against live
+IAM: AC1 `actions=s3:PutObject resources=1 problems=0`, AC2 6 of 6, AC3 2 of 2 halves with the ledger closed. Instance VALID.
+The applier left the flip to the issuer, since the order file is outside its paths. Was: pending
+
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <fabric>site-z</fabric>

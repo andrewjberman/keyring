@@ -321,3 +321,78 @@ half @53fa699974.
 3. **Ledger:** pinned, and committed after each leg (relay msg 2973).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9.2 (~10:0xZ, `~D2` msg 3081): DB-b-86's two inputs for the first real statement
+
+1. **W61-S1: where the selection comes from. RULING: a seat-authored selection FILE built from served reads only. No selection is created through the
+   API.**
+   - `svc-custody-statement` cannot create selections, by design, and no seat may mint a human token for a write.
+   - So `~D2` (or `~DB2`) assembles the `--selection` file from two served reads:
+     - the one Cottonwood client's account set, from the served custody directory;
+     - the snapshot id, from the served holdings `current/manifest.json`.
+   - The file stays OUTSIDE the repo, because account ids are client identifiers. The ledger records its sha256, the two source reads (key and version id), and
+     the authoring seat.
+   - If the runner's `run` needs an API-created selection object rather than the file, that is a cell to make the file path sufficient. It is never a
+     widening of svc's routes.
+2. **W61-S2: no DynamoDB read grant on `irpt-requests`.** The grant would give an executor lane direct table reach that the IRPT authorize gate otherwise
+   mediates.
+   - **RULING:** the runner takes `artifact_id` and the composition hash from the served routes svc already reaches: the persist response, or the
+     `/analysis` read through IRPT's owned reader.
+   - If neither returns them, the cell is to add them to that owned read's response, a code change under IRPT_BCKEND's pair. It is never a table grant.
+3. **W61-S3 is noted, as the issuer stated:** a composition retained under `irpt-x10-v1` rather than `irpt-custody-x10-v1` fails AC1 honestly and is filed as a
+   row. AC1 is not loosened.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9.3 (~10:1xZ, `~D2` msg 3086, row S38): the svc-custody-statement secret name is CONFORMANT under the canon. Neither R19 nor R20 is needed.
+
+**Measured by this seat:**
+- `lib/opal_naming.py grade('opal/investor-reporting/svc-custody-statement', 'SECRET')` returns `('CONFORMANT', 'opal/investor-reporting/svc-custody-statement')`.
+- The control, `grade('opal/ticketing/svc-analyst-intake', 'SECRET')`, returns `CONFORMANT`.
+
+**RULING:**
+- `name()` has no kind for a slash-delimited Secrets Manager path, so a secret is GRADED by `grade()`, not built. This is the estate's precedent: NFRA_TRNSPT
+  row W1-S4, `pull.tf` header.
+- `~DB2` names the secret exactly as the pair signed it. The ledger records the `grade()` verdict as the naming evidence.
+- **This is not a departure**, so there is no R20 entry and no R19 non-application claim. If the naming gate refuses it, that is a gate defect against its own
+  `grade()`, routed to the gate's owner through MSTR. It is never a hand-typed override.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-09 ~11:5xZ) -- the 11:41Z R37 fire: A1 FAILS on lots, Branch B (`~D2` msg 3219, row S40 BLOCKING @a1ca17786a)
+
+**Read:**
+- The fire ran at 11:41:45Z, RequestId 356ac8d2.
+- For 2026-10-08, returns (6,901) and class (25,057) LANDED. **`LOTS_SKIPPED`:** a realized lot id repeats with the same closing date, quantity and proceeds.
+- The REPORT shows 96.4 s and 1,126 MB. The lots stage stopped early, so this does not size it.
+- **Branch B, as the R37 half foresaw:** returns and class are unaffected, and every fire re-refuses 10-08 until it is fixed.
+
+**R37 is NOT rolled back.** Branch B is the signed safe path: no returns or class day is lost, and the lots day is retried by name.
+
+**RULING: the lot-key cell is placed in round 41, before anything else in that round.**
+1. **Read the 10-08 repeat pairs** and print, per pair, every column that differs.
+2. **Decide by the producer's own rule. Never dedupe silently.**
+   - **The pairs differ on a real lot attribute** (for example the open date, cost basis or a tax-lot id): extend the key with the MINIMAL such column, under the
+     same rule-24 record the proceeds extension carried.
+   - **The pairs are identical in every column:** that is a true duplicate in the source. The refusal-by-name stays, the duplicate is filed to the source's owner as a
+     row, and the day is backfilled once the source is corrected. Nothing is collapsed by Opal.
+3. **Re-size both kit days with the full lots stage,** against the 85% line (765 s and 1,740.8 MB), because today's REPORT does not size it.
+4. **Backfill 10-08's lots** with a backfill event under the R37 half, as a packet DELTA that names the new key and the day. **No second fire is forced off-schedule.**
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10.1 (~12:1xZ, `~D2` msg 3256): the runner re-cut onto IB-pr-405, and DB-b-86's un-hold
+
+IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-status` release follows IRPT_ANLREQ release 1 (BCKEND ADDENDUM 17).
+
+**Placed in the next round (one issuance with ADDENDUM 10's lot-key chain if it is still open, otherwise its own round):**
+1. **Re-cut DB-b-85's runner,** offline, against IB-pr-405's response shape: `run`, `verify-submission` and `verify-persisted` read through the owned route, never
+   `irpt-requests`.
+   - **Test:** a runner run with `irpt-requests` access removed from its environment still completes against a recorded response fixture.
+   - Then grep the built runner for any direct table client, which must be 0.
+2. **DB-b-86 un-holds when BOTH hold:**
+   - IB-pr-405 is LIVE in its narrow `irpt-status` release, read back by CodeSha256;
+   - the mint's leg R closes (laptop `~CTL`'s A29/30).
+   **Neither is assumed. Each is read** before DB-b-86's first real statement runs.
+
+-- 1.0.0_SA_CTO~DELL2

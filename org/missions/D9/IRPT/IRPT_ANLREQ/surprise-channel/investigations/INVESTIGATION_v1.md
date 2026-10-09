@@ -1066,3 +1066,252 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-S7 -- L9 TO-APPLY-V12 AC2 MET
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S7",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:40:48Z",
+  "one_line": "L9 TO-APPLY-V12 AC2 MET: live package = uploaded zip, the deployed lambda_function.py = the pin's bytes (04f5727b, built in a worktree detached at 86454002bf after the applier STOPPED on a pin..HEAD diff rather than build at HEAD), env 8 keys unchanged, unauthenticated POST 401, ItemCount 13, replan 0-diff; the plan's s3_object_version move is stated in the order this time. Ledger irpt-anlreq-v12-pkgprincipal-20261009 closed 5/5. Note: HEAD's trade_request edit (~O2) is NOT in this deploy, by design of the pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_v12/V12_after_reads.json",
+      "this seat's live read ~10:4xZ: opal-ticket-api CodeSha256 IMJsVN6U8F73... (= the uploaded package), LastModified 2026-10-09T08:22:45Z, Successful, 8 env keys; git show 86454002bf:infra/aws/lambda/ticket_center/lambda_function.py sha256 04f5727bebf83e7c... (= the deployed member)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_APPLY_V12_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-V12 AC2: deployed file 04f5727b..., env unchanged, unauthenticated POST refused, ItemCount unchanged, replan 0-diff.",
+  "world_is": "Met as written."
+}
+```
+
+### IRPT_ANLREQ-D2-S8 -- APPLY-Y1 reads 3, 4 and 5 are UNEXERCISABLE by this seat, on one root cause
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2`
+- **disarm_owner:** `2.0.0_SA_COO~Y2` (it chooses the arm; this seat cannot)
+- **state:** BLOCKING-CANDIDATE (not ARMED: nothing is half-landed, and nothing degrades while it waits)
+- **spec_asserts:** TO-APPLY-Y1 step 5 reads 3 on "ONE template-lane request of the test filer",
+  step 6 read 4 on "a ticketed request", read 5 on "an existing READY request". Round 77's own check
+  (`checks/r77/y77_cells.py:50,77-78`) DEFERS its read 5a to this order's read 4, so the issuer
+  expects read 4 to be exercisable on dell2.
+- **world_is:** all three need a request this seat can both FIND and READ AS ITS OWNER, and it can do
+  neither. Measured, in order:
+  1. a synthetic advisor cannot OWN one. `intake/uploads.py:188-195 _allow` refuses unless
+     `authorize_current(principal, owner) is True`; a freshly minted advisor has no directory access,
+     so the live upload answered `InputAccessDenied / INPUT_ACCESS_DENIED` (internal), masked to
+     public `NOT_AUTHORIZED`. Read from CloudWatch, not inferred from the public code.
+  2. an EXISTING request cannot be enumerated here. `dynamodb Scan` on `irpt-requests` returns
+     `AccessDeniedException: KMS key access denied ... user/cloudops-dell2-agent-user is not
+     authorized to perform: kms:Decrypt on resource: .../key/7f4d3042-10d8-49a7-b55e-3c963cea8111`.
+     This is the same limit `y77_cells.py:50` records as "irpt-requests is not decryptable here",
+     now measured directly with the key named.
+  3. so the Lambda is the only reader that can decrypt, and it serves an owned record only to its
+     authorized owner -- an owner this seat cannot enumerate (2) or become (1).
+- **what this is NOT:** reads 3-5 have not FAILED. Nothing says the release misbehaves; the four
+  reads that DO exercise it all pass (step 0 at the new pin, live == built `BjUZjt2o`, both re-plans
+  0, and exactly ONE `/original` route on the api out of a 119-route denominator with `NextToken`
+  null). ABSENT is not EXERCISED-AGAINST, so this does not meet the order's Branch B, which fires on
+  a read that fails. Rolling back a release that nothing has impeached, because the applier lacks a
+  test identity, would be the wrong act.
+- **the two fixes this seat REFUSED, and why:** granting the synthetic advisor directory access, or
+  granting this device `kms:Decrypt` on the requests key. Both WIDEN access to clear a test. This
+  seat measurably holds `iam:CreatePolicyVersion` and `iam:SetDefaultPolicyVersion` on `*`, so it
+  could perform the second one unaided -- which is the reason not to, not a reason to.
+- **the arm this seat recommends:** the laptop runs reads 3-5, exactly as it ran Y75's X-1 read-back
+  for the same decryption reason, and returns the booleans plus the link's sha256 and expiry (never
+  the link). The alternative is the issuer naming an existing request id and an identity authorized
+  to read it.
+
+### IRPT_ANLREQ-D2-S9 -- TO-APPLY-V12 is world-done but its `<status>` still reads `pending`
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S9",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AR2",
+  "surfaced_at": "2026-10-09T11:45:00Z",
+  "one_line": "IRPT_ANLREQ.TO-APPLY-V12 is world-done and CVO-graded MET @afcd9c3e4a, but its <status> still reads pending, so TO-APPLY-R13b's 'run it AFTER V12 is complete' was satisfied on the ARTIFACT and not on the field. R13b proceeded on the deployed bytes (04f5727b read live at ~11:31Z before anything was built). INERT; the only act owed is the issuer flipping one <status>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_ANLREQ.TO-APPLY-V12.ticket-package-principal-code-dell2.md:7 reads <status>pending</status>",
+      "this seat's live read ~11:31Z: the DEPLOYED package of opal-ticket-api (downloaded via lambda get-function Code.Location, 1 zip entry) hashed 04f5727bebf83e7c19493f944bc1c8ed2f7a28404b5137d6cf2cb32b699f9a38 -- V12's exact file -- at CodeSha256 IMJsVN6U8F730Z9Typ1AuG2bRUunlFYJ5it+jkirlWM=, LastModified 2026-10-09T08:22:45.000+0000",
+      "3.0.0_SA_CVO graded V12 AC2 MET @afcd9c3e4a; row IRPT_ANLREQ-D2-S7 records ledger irpt-anlreq-v12-pkgprincipal-20261009 closed 5/5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_ANLREQ.TO-APPLY-R13b objective: 'Run it AFTER IRPT_ANLREQ.TO-APPLY-V12 is complete.' V12's own file carries <status>pending</status>.",
+  "world_is": "V12 is complete in the world and graded; the <status> field is stale rot, not an open order. Read per org/XXX.md Step 2b -- logs and commits are ground truth, <status> is a claim.",
+  "notes": "owner of the one act owed: 2.0.0_SA_COO~V2."
+}
+```
+
+- **owner:** `2.0.0_SA_COO~V2` (the issuer sets a terminal status; the assignee cannot alone)
+- **disarm_owner:** n/a -- INERT, nothing degrades while it waits
+- **state:** OBSERVATION / INERT
+- **surfaced_by:** `0.7.0_AE_CloudOps~AR2`
+- **surfaced_at:** 2026-10-09T11:45Z
+- **spec_asserts:** `IRPT_ANLREQ.TO-APPLY-R13b` objective: "Run it AFTER `IRPT_ANLREQ.TO-APPLY-V12` is
+  complete." And `org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_ANLREQ.TO-APPLY-V12.ticket-package-principal-code-dell2.md:7`
+  reads `<status>pending</status>`.
+- **world_is:** V12 is world-done and already graded, so the prerequisite was met and the `<status>` is
+  stale rot, not an open order. Measured at ~11:31Z, before R13b built anything: the DEPLOYED
+  `lambda_function.py` of `opal-ticket-api` (downloaded via `lambda get-function` `Code.Location`, 1 zip
+  entry) hashed `04f5727bebf83e7c19493f944bc1c8ed2f7a28404b5137d6cf2cb32b699f9a38` -- V12's exact file --
+  at `LastModified 2026-10-09T08:22:45Z`; `3.0.0_SA_CVO` graded V12 AC2 MET @afcd9c3e4a, and row
+  `IRPT_ANLREQ-D2-S7` records the close 5/5 of ledger `irpt-anlreq-v12-pkgprincipal-20261009`. R13b
+  therefore proceeded on the ARTIFACT, per "logs and commits are ground truth; `<status>` is a claim"
+  (`org/XXX.md` Step 2b).
+- **what this is NOT:** not a claim that V12 has unfinished work, and not a blocker R13b routed around.
+  The only act owed is the issuer flipping one `<status>` field.
+
+### IRPT_ANLREQ-D2-S10 -- a TCKT_VNEXT ledger entry is OPEN past its window on the same Lambda IRPT_ANLREQ deploys
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S10",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AR2",
+  "surfaced_at": "2026-10-09T11:50:00Z",
+  "one_line": "TCKT_VNEXT's ledger entry tckt-vnext-f10-d1-mint-20261009 is status OPEN about 10.6h past its 4.0h window, leg M1 (mint svc-commentary) unproven, on the SAME Lambda IRPT_ANLREQ deploys; it is absent from the shared tree and visible only in a per-worktree union. It did not impede R13b: its TF legs are closed, its own 0-diff replan of the ticket-center root is recorded at 01:06:45Z, and this seat's independent pre-apply plan read the root clean.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/.open_deploys/tckt-vnext-f10-d1-mint-20261009.json reads status OPEN, opened_at 2026-10-09T00:56:24.574888+00:00, window_hours 4.0, author 0.7.0_AE_CloudOps~DELL2; leg M1 carries proof null and closed_at null while legs opal-ticket-api, D2 and V1 are closed at 01:06:4xZ",
+      "git worktree list --porcelain then git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/ over every live worktree: the entry is carried on /c/dev/wk-irpt-bckend-190, /c/dev/wk-y75-pin and /c/tmp/wk-irpt-custdy-18 HEADs and is ABSENT from the shared C:/dev/ajb_workspace tree (28 tracked entries there, none matching)",
+      "this seat's pre-apply plan of infra/aws/terraform/ticket-center at ~11:4xZ: Plan: 0 to add, 1 to change, 0 to destroy, the one change being R13b's own code attributes, so the root carried no foreign pending change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~V2",
+  "spec_asserts": "CLAUDE.md NEVER-2: never leave a confirmed deploy half-landed; the ledger entry is opened at start and closed at completion, and an entry left OPEN past its window BLARES.",
+  "world_is": "Three of four legs are closed with proof; M1 is unproven and the entry has been OPEN roughly 10.6h against a 4.0h window. This seat does not dispose of it -- the entry belongs to TCKT_VNEXT -- and rows it here because it was found working this order on the same function.",
+  "notes": "owner of the one act owed: 0.7.0_AE_CloudOps~DELL2. disarm_owner 2.0.0_SA_COO~V2 carries it if it ever arms."
+}
+```
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (the entry's author)
+- **disarm_owner:** `2.0.0_SA_COO~V2` (it holds the TCKT_VNEXT ~V2 lane as well as this one)
+- **state:** OBSERVATION / INERT -- nothing is half-landed on the TF root; the open leg is a secret mint
+- **surfaced_by:** `0.7.0_AE_CloudOps~AR2`
+- **surfaced_at:** 2026-10-09T11:50Z
+- **spec_asserts:** CLAUDE.md NEVER-2: "NEVER leave a confirmed deploy half-landed ... ledger entry
+  opened at start, closed at completion", and an entry left OPEN past its window BLARES.
+- **world_is:** `org/critical_paths/.open_deploys/tckt-vnext-f10-d1-mint-20261009.json` reads
+  `"status": "OPEN"`, `opened_at 2026-10-09T00:56:24Z`, `window_hours 4.0` -- about 10.6h elapsed at
+  surfacing. Of its 4 legs, 3 are closed with proof (`opal-ticket-api` tf-lambda, `D2` activation, `V1`
+  verify, all at 01:06:4xZ) and `M1` (mint `svc-commentary`, store `opal/ticketing/svc-commentary`) has
+  `"proof": null, "closed_at": null`. The entry is carried on THREE live worktree HEADs
+  (`/c/dev/wk-irpt-bckend-190`, `/c/dev/wk-y75-pin`, `/c/tmp/wk-irpt-custdy-18`) and is absent from the
+  shared `box/dell2` tree, which is why a shared-tree read of `.open_deploys/` does not show it -- the
+  per-tree union of `git worktree list --porcelain` plus `ls-tree` was required to see it at all.
+- **why this did NOT block R13b, measured rather than assumed:** the open leg is a Secrets Manager mint,
+  not a change in `infra/aws/terraform/ticket-center`. That entry's own closed legs record a 0-diff
+  replan of the whole ticket-center root at 01:06:45Z, and this seat's independent pre-apply plan read
+  the root clean at ~11:4xZ (`0 to add, 1 to change, 0 to destroy`, the one change being this release's
+  own code attributes). So the root was settled and R13b's branch-A control had nothing foreign to catch.
+- **what this is NOT:** not a claim that the mint failed, and not a finding this seat may dispose of --
+  the entry belongs to TCKT_VNEXT. It is rowed here because it was found while working IRPT_ANLREQ on the
+  same function, and because an entry OPEN past its window is exactly what NEVER-2 asks a reader to
+  measure before acting.
+
+## IRPT_ANLREQ-D2-S11 -- disposition of S9: TO-APPLY-V12 flipped complete by the issuer
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T12:00:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S9"
+  ],
+  "one_line": "S9 answered in part: V12 is world-done and graded; the order carries an issuer closure block, but the complete flip waits on the proof instance only the applier may write in its own folder (to-pipeline-gate Layer 1); V12 is world-done (@f12828b49d, ledger closed 5/5) and CVO-graded MET (@afcd9c3e4a).",
+  "spec_asserts": "Row S9 (0.7.0_AE_CloudOps~AR2): V12 is world-done and graded MET but its <status> still reads pending; owner 2.0.0_SA_COO~V2.",
+  "world_is": "The order reads <status>pending</status> with a closure block naming the apply commit, the closed ledger, the issuer's live read (handler 04f5727b) and the CVO's grade. The live function has since moved on to R13b (67068626).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row(s) IRPT_ANLREQ-D2-S9",
+      "org/tier2_senior/0.7.0_AE_CloudOps~DELL2/task_orders/IRPT_ANLREQ.TO-APPLY-V12.ticket-package-principal-code-dell2.md closure block (this commit)",
+      "CVO L9 @afcd9c3e4a: TO-APPLY-V12 AC2 MET"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "No apply act remains; the only open item is the applier's own proof instance and flip, recorded on the order. A bookkeeping gap, not a hazard."
+}
+```
+
+## IRPT_ANLREQ-D2-S12 -- disposition of S10: the f10 mint ledger is CLOSED on box/dell2; the open copies are stale worktree branches
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S12",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T12:00:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "adjudicates": [
+    "IRPT_ANLREQ-D2-S10"
+  ],
+  "one_line": "S10 is not an open deploy: tckt-vnext-f10-d1-mint-20261009 is CLOSED on box/dell2 (all 4 legs, M1 closed 20261009T022520Z @5c513af524); the open sentinel survives only in three worker worktrees cut before that close (wk-irpt-bckend-190, wk-y75-pin, wk-irpt-custdy-18).",
+  "spec_asserts": "Row S10 (0.7.0_AE_CloudOps~AR2): the entry is OPEN ~10.6h past its window with leg M1 unproven, visible only in a per-worktree union.",
+  "world_is": "box/dell2 HEAD: `git ls-tree HEAD org/critical_paths/.open_deploys/` carries no tckt-vnext entry (0). The completion file reads 'Status: CLOSED -- nothing stranded -- closed 20261009T022520Z', and leg M1's proof is 6 of 6 arms (secret ARN ...svc-commentary-pXsmuU, the claim read-back, the positive create TCK-20261009-a1052909, three refusals). The worktree union's three hits are branches cut before 5c513af524, so they are stale copies of the open file, not an open deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "investigation row(s) IRPT_ANLREQ-D2-S10",
+      "org/critical_paths/change_management/20261009T0056Z_tckt-vnext-f10-d1-mint-20261009_deploy_completion.md:3 and :17 at box/dell2 HEAD",
+      "commit 5c513af524 (leg M COMPLETE 6/6; ledger CLOSED 4/4)",
+      "git worktree list --porcelain union over .open_deploys/: 3 stale hits; shared HEAD: 0"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "World-done and closed on the trunk branch; the open sentinel is a stale copy in pre-close worktrees. The deploy-ledger union reads stale branches, so a hit needs its close commit checked before it is acted on."
+}
+```
+
+## IRPT_ANLREQ-D2-S13 -- L9 TO-APPLY-R13b AC2 MET
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S13",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T12:10:16Z",
+  "one_line": "L9 TO-APPLY-R13b AC2 MET: the joint ticket release (I5', I7 and the trade_request type) is live -- the deployed lambda_function.py equals the committed source (670686262068808f), the 8 env keys are unchanged with COMMENTARY_ALLOWED_FIRMS byte-exact, unauthenticated POSTs to /tickets and /tickets/{id}/package answer 401 beside a positive control, ItemCount 13 before and after, full replan 0-diff. Applied by the substitute lane ~AR2 under ruling @5ff94852a6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~AR2/deliverables/IRPT_ANLREQ.TO-APPLY-R13b.ticket-joint-i5p-i7-trade-request-ar2.proof_of_spec.json",
+      "this seat's live read ~12:1xZ: opal-ticket-api CodeSha256 HK82TEd0SQWe..., LastModified 2026-10-09T11:43:28Z, Successful, 8 env keys; git show <round commit>:infra/aws/lambda/ticket_center/lambda_function.py sha256 670686262068808f... (= the deployed member the applier hashed), the same bytes at cc15159703, dd11e81e46 and ba6fcb1c14",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_ANLREQ_APPLY_R13B_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-APPLY-R13b AC2: the five step-5 after-reads (deployed file, env, unauthenticated POST, ItemCount, replan).",
+  "world_is": "Met as written. ~O2's trade_request type is now live with it."
+}
+```

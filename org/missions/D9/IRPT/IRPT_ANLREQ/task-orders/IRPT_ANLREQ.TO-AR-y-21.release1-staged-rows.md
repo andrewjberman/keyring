@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~4</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~6</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>complete</status>
@@ -115,15 +115,50 @@ Commit as `0.9.0_WK_IRPT_ANLREQ~4`.
 
 Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
 
+### AMENDMENT 4 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~10:4xZ, on row `IRPT_BCKEND-D2-S43` and CTO msg 3140): the installed route table must declare `/original`
+
+`_authz/tests/test_unguarded_census.py` FAILS at HEAD: `GET .../analysis/requests/{requestId}/original` is published and declared by `ops/entry.py`, but
+irpt-status runs as an INSTALLED entry whose route table is `reports/status_installed.py` `HISTORY_ROUTES` (`:53-58`), and that table does not name it.
+This is now a condition of the release-1 CTO half.
+
+**The cell now:**
+1. Add ONE line to `HISTORY_ROUTES`: `"GET /api/scoped/investor-reporting/analysis/requests/{requestId}/original": "analysis-request-original"`, beside
+   the `/pdf` line, with a one-line comment naming AR-y-22.
+2. Re-pin `irpt-status`'s staged row for `infra/aws/lambda/investor-reporting/reports/status_installed.py` (today `80a79a7462`) to your commit, with the
+   blob sha256 (pin and sha256 only, byte-preserving). Key the edit on function AND repo_path, and touch no other row.
+
+`checks/r2/ar21_cells.py` lists 6 rows (its AMENDMENT 4). AC2 (co-change) is replaced by AC4, the census test: base FAIL, 1 of 22. Report the
+`irpt-status` census and the new built sha (`BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-status`).
+Proof instance: `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~5/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`,
+criteria AR21-y-AC1, AR21-y-AC4, AR21-y-AC3. Rows are `IRPT_ANLREQ-D2-W5-S<k>`. Commit as `0.9.0_WK_IRPT_ANLREQ~5`.
+
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
+### AMENDMENT 5 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~12:1xZ, on CTO msg 3245 and ~G2 msg 3241, row IRPT_YCDGEN-D2-S20): the research registry row in irpt-status
+
+irpt-status refuses the Opal 49financial report (`RetentionRefused 'invalid retention reference'`, 12:02:18Z), because its packaged
+`infra/logic/registry/reporting_policies.json` (pin `80a79a7462`) carries `irpt-ycdgen-research-v1` with firms `[cottonwood]` only. HEAD carries
+`[cottonwood, 49financial, inflection]` (YCD-a-7, `23e39f11d7`).
+
+**The cell now:** re-pin EXACTLY ONE row, irpt-status's `infra/logic/registry/reporting_policies.json`, to the last commit touching that path
+(`git log -1 --format=%H -- infra/logic/registry/reporting_policies.json`), with that blob's sha256 (pin and sha256 only, byte-preserving; key on function
+AND repo_path). Do NOT re-pin `ops/entry.py` or `ops/owned_report.py`: ~P2's worker ~268 changed both after this lane's pins, and that change ships in
+IB-pr-405, not here. The check now grades both at this lane's own commits (`HELD`). Base: AC1 FAIL, 1 of 7 lag.
+Report the irpt-status census and the BUILD_ONLY sha. Proof instance at
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~6/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`. Rows are
+`IRPT_ANLREQ-D2-W6-S<k>`. Commit as `0.9.0_WK_IRPT_ANLREQ~6`.
+
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
 <criterion id="AR21-y-AC1" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC1</invocation><expect>AR21-y-AC1 PASS</expect></criterion>
 
-<criterion id="AR21-y-AC2" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC2</invocation><expect>AR21-y-AC2 PASS</expect></criterion>
+<criterion id="AR21-y-AC4" cell_refs="AR-y-21"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/_authz/tests/test_unguarded_census.py</invocation><expect>0 failed</expect></criterion>
 
 <criterion id="AR21-y-AC3" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC3</invocation><expect>AR21-y-AC3 PASS</expect></criterion>
 
-<expected_criteria>AR21-y-AC1,AR21-y-AC2,AR21-y-AC3</expected_criteria>
+<expected_criteria>AR21-y-AC1,AR21-y-AC4,AR21-y-AC3</expected_criteria>
 
 - AC1: at least 4 passed and 0 failed.
 - AC2: base `261 passed, 22 skipped`; no `failed` after the cell.
@@ -139,7 +174,7 @@ Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a mod
   header plus a ```json block per row (the file's existing format). Gate: `python .tools/surprise-row-gate.py --check <path>`.
 - **Before the issuer drains,** run `bash .tools/safe-merge.sh box/dell2` INSIDE your worktree and resolve any channel conflict there
   (box/dell2's file plus your own row blocks appended whole).
-- **Commit with** `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~4" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~4@opal.agent" bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~4 <0.9.0_WK_IRPT_ANLREQ~4@opal.agent>" -F <msgfile> -- <paths>`.
+- **Commit with** `GIT_COMMITTER_NAME="0.9.0_WK_IRPT_ANLREQ~6" GIT_COMMITTER_EMAIL="0.9.0_WK_IRPT_ANLREQ~6@opal.agent" bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_ANLREQ~6 <0.9.0_WK_IRPT_ANLREQ~6@opal.agent>" -F <msgfile> -- <paths>`.
   Write the message file with the Write tool (a Windows path); no pre-`git add`; ASCII only; use the native Grep/Glob/Read tools.
 
 <paths>
@@ -153,6 +188,9 @@ infra/aws/lambda/investor-reporting/ops/tests/test_original_reader.py
 infra/aws/lambda/investor-reporting/ops/pdf_link.py
 docs/contracts/investor-reporting/v1/routes.json
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/
+infra/aws/lambda/investor-reporting/reports/status_installed.py
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~5/
+org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~6/
 </paths>
 
 <decomp_ref>
@@ -161,9 +199,9 @@ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~3/
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: AR21-y-AC1, AR21-y-AC2, AR21-y-AC3 (AMENDMENT 3). Instance at
-`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~4/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`, `to_id` the FULL id
-`IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows`, validated with `python .tools/proof-of-spec-check.py <instance> AR21-y-AC1,AR21-y-AC2,AR21-y-AC3` BEFORE the flip to complete.
+Criterion ids: AR21-y-AC1, AR21-y-AC4, AR21-y-AC3 (AMENDMENT 4). Instance at
+`org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~6/IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows.proof_of_spec.json`, `to_id` the FULL id
+`IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows`, validated with `python .tools/proof-of-spec-check.py <instance> AR21-y-AC1,AR21-y-AC4,AR21-y-AC3` BEFORE the flip to complete.
 </proof_of_spec>
 
 **REPORT (final message):**
