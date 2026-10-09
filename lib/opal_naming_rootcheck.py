@@ -382,7 +382,63 @@ def policy_system(ans):
 NOT_GRADED_LINE = "this type is outside the canon, no name is owed"
 
 
+def firm_schedule_parts(form):
+    """(system, firm LONG scope, function, kind) of a schedule's new name that carries a FIRM scope token in the scope slot
+    ({system}-{scope}-{function}-{kind}), else None. The kind is the trailing cadence word (a values entry or an {N}min or
+    {N}h token) or the on-{event} tail; the function is what lies between. Plain data; nothing is composed here."""
+    segs = str(form).split("-")
+    if len(segs) < 4:
+        return None
+    try:
+        row = opal_naming.lookup(segs[1])
+    except KeyError:
+        return None
+    if row.get("class") != "FIRM" or segs[1] != row.get("short"):
+        return None
+    cad = opal_naming._schema()["cadence"]
+    tail = segs[2:]
+    if tail[-1] in cad["values"] or re.match(cad["interval_form"]["token_regex"], tail[-1]):
+        kind, fn = tail[-1], tail[:-1]
+    else:
+        at = [i for i, t in enumerate(tail) if t == "on" and i >= 1]
+        if not at:
+            return None
+        kind, fn = "-".join(tail[at[0]:]), tail[:at[0]]
+    if not fn:
+        return None
+    return segs[0], row["long"], "-".join(fn), kind
+
+
+BUILDER_REFUSED = "the name builder refused this firm schedule's name"
+
+
+def firm_schedule_detail(typ, detail):
+    """For a FIX line's detail on a schedule or an event rule whose new name carries a firm scope: ("FIX", name() output with
+    the firm passed as its scope) or ("HOLE", the refusal's text and what is owed). Any other line: (None, detail)."""
+    if typ not in _CADENCE_TYPES or "{" in str(detail):
+        return None, detail
+    parts = firm_schedule_parts(detail)
+    if parts is None:
+        return None, detail
+    try:
+        built = opal_naming.name(parts[0], parts[1], parts[2], parts[3])
+    except ValueError as exc:
+        return "HOLE", BUILDER_REFUSED + " (%s): %s" % (detail, exc)
+    return "FIX", built
+
+
 def decide(item, ans, fourth=None):
+    """_decide_raw(), then a firm-bearing schedule's new name is rewritten as name() output with the firm as scope (BF-ac-2):
+    the firm token is never carried over from a string; a builder refusal is a HOLE that says what is owed."""
+    kind, detail = _decide_raw(item, ans, fourth)
+    if kind == "FIX":
+        k2, d2 = firm_schedule_detail(item["type"], detail)
+        if k2 is not None:
+            return k2, d2
+    return kind, detail
+
+
+def _decide_raw(item, ans, fourth=None):
     """(kind, detail) for one item. `ans` is plain data from the five modules:
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
     resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, plus verdict_for()'s carried,
@@ -971,6 +1027,8 @@ HOLE_OWED = (
      "declare the inline policy under a role the policy reader finds in the root, so the role's system answers"),
     ("{system}: this root serves more than one firm; its map entry", CRO,
      "the map entry's fills for the system, for the root %s (infra/logic/registry/root_map.json)"),
+    (BUILDER_REFUSED, CRO,
+     "the registry row the refusal names, drafted in the deliverables folder of the task order that found it (infra/logic/registry/)"),
     ("{cadence}: no cadence row for this name", CREATOR,
      "declare the name as a literal schedule or event-rule resource the cadence reader can see"),
     ("{cadence}", CREATOR,

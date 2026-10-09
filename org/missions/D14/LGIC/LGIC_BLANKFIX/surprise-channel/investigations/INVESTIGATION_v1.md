@@ -2399,3 +2399,54 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Two meanings of 'owner' live in the repository: the ruling row's mover and the address's scope (whose file it is). The line prints the second, as FWD-4 says 'whose it is'. The ruling's mover text is long prose and stays on the ruling."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S8 -- name() refused the kind 15min (the two keepalive schedules, 49f and cot) because its cadence test ignored the schema's interval_form.token_regex; the refusal was the builder's code, not a missing registry row, and was fixed in lib/opal_naming.py _is_cadence
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T12:57:30Z",
+  "one_line": "name() refused the kind 15min (the two keepalive schedules, 49f and cot) because its cadence test ignored the schema's interval_form.token_regex; the refusal was the builder's code, not a missing registry row, and was fixed in lib/opal_naming.py _is_cadence",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "base lib/opal_naming.py:2024-2026 _is_cadence accepted only cadence.values and on-{event}; python -c name('blackdiamond','49financial','keepalive-sched','15min') raised ValueError: kind '15min' is neither a NAMING_SCHEMA.json kind nor a cadence (2 of 31 firm schedule lines: bd-49f-keepalive-sched, bd-cot-keepalive-sched)",
+      "org/standards/NAMING_SCHEMA.json cadence.interval_form: 'a reader of cadences accepts `values` OR a token matching `token_regex`'; lib/opal_naming.py:1246 _Vocab already compiles that regex for grade()",
+      "after the one-line change name() returns blackdiamond-49f-keepalive-sched-15min and blackdiamond-cot-keepalive-sched-15min; kinds such as 15minutes are still refused; the 10 test_opal_naming_*.py scripts read ok=True; the ALL-ROOTS line is unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-2 Build 2: a name() refusal is a missing registry row to draft in REGISTRY_ROWS_round14.json, never a hand-typed workaround.",
+  "world_is": "The only refusals were two {N}min kinds, and the missing piece was in the builder's code (the schema already rules {N}min and {N}h), not in any registry file; so no row is drafted (REGISTRY_ROWS_round14.json holds none) and the code was brought to the ratified schema inside the order's lib/opal_naming.py grant. The {N}h kinds (2h to 23h) take the same path and were not exercised by a firm line at this cut."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S9 -- a firm schedule passes the real naming gate only in the opal_name module form, where the gate grades 0 strings; so gate_pass=31 means 'no refusal', and the listed literal (the line the list prints) is refused 31 of 31 as a hand-kept carrier
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T12:57:45Z",
+  "one_line": "a firm schedule passes the real naming gate only in the opal_name module form, where the gate grades 0 strings; so gate_pass=31 means 'no refusal', and the listed literal (the line the list prints) is refused 31 of 31 as a hand-kept carrier",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_firm_schedules_r14.py on bd-pipeline/cot-pipeline/mdpf-pipeline/opal-assets: builder arm (name = module.opal_name_fs_N.name, a module block with system/scope/function/kind) NAMING-GATE: PASS 0 graded, rc=0; literal arm (the listed string typed as name) 31 NAMING REFUSE 'NEW hand-kept carrier of the firm token', rc=1",
+      ".tools/naming-gate.py docstring THE CONTEXT RULE: a firm token is permitted only inside key()/address()/name()/lookup() arguments or the arguments of an opal_name module block; D1-W1-S7 already measured the literal refusal for one line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ac-2 Build 3: each firm schedule line 'is fed through the real naming-gate --diff on a temporary copy of its .tf with the listed name' and passes.",
+  "world_is": "The listed name cannot be typed into the .tf and pass; it passes as the builder's module output, which is also what R2 asks for (the firm as scope, never hand-composed). The checker therefore feeds the module form as the pass arm and the typed literal as the difference control. The gate verifies the form of the declaration (no hand-kept firm token), not the string the module will print; that string is name() output by the checker's own call."
+}
+```
