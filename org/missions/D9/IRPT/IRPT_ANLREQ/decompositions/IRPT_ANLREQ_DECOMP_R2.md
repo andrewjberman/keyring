@@ -53,6 +53,17 @@ The dispositions of `W11-S1` (ARMED) and `W11-S2` are ~V2's rows, filed this rou
 FWD-1 is then graded on ONE live journey: a ticket filed through the form, and the package's four files opened from the ticket,
 read by the CVO.
 
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~07:4xZ, on CTO round-1 ADDENDUM 1 @64e9e6157d, msg 2813, and row `D2-S6`): cell
+`AR-y-22`.**
+
+| cell | lane | item | what EXISTS at the end |
+|---|---|---|---|
+| `AR-y-22` | ~Y2 | hop 9, original file | `irpt-status` serves `GET /api/scoped/investor-reporting/analysis/requests/{requestId}/original` (operation `analysis-request-original`): `OwnedAnalysisReader` returns the request's original upload as an Opal-signed link, re-authorized per request like `analysis-request-pdf` (`ops/entry.py:198-204`). The original is resolved the way `ops/prospect_dates.py:295-299` resolves it (`ORIGINAL_HOLDINGS` for the template lane, `ORIGINAL_CSV` for the CSV lane, owner-bound). A custody-lane request refuses by name (I5'), and a viewer from another firm is refused. The release rides the `irpt-status` pair |
+
+- The commentary keeps "(no reader yet)", and its reader moves to FWD-3 (ADDENDUM 1). ~V2's portal cell wires only the PDF and original
+  readers.
+- The cell is re-cut INTO `TO-AR-y-21` as its AMENDMENT 1 (one ~Y issuance per round; a re-cut adds no file); criteria are that amendment's AR22-y-AC1..3; the base readings are: the test file absent; ops suite 261 passed, 22 skipped; irpt-status missing=0.
+
 ## Criteria (this issuance cuts `AR-y-21`)
 
 | criterion | invocation | base reading |
