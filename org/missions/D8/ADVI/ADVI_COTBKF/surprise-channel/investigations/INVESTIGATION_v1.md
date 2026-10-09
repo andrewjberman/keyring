@@ -3473,3 +3473,29 @@ round.** Never edit an existing row.
   "world_is": "Neither level matches the outside as-traded close; r28 is closer than r26 on both CUSIPs but off by 4.9% and 13.9%. The store's 2022-10-12 closes for these CUSIPs carry a further difference (source, date alignment or price basis) that a split-level test cannot settle. Symbols: SCHB from the delivery transactions Symbol column (66 rows, one distinct value), SCHZ likewise and per PRICE_NEED csv."
 }
 ```
+
+## ADVI_COTBKF-D2-W59-S1 -- chain base close for SCHB/SCHZ is a Yahoo-labelled stored series at a constant ratio to Adj Close; class other_source by the written rule
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W59-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~59",
+  "surfaced_at": "2026-10-09T10:00:00Z",
+  "one_line": "CB-af-1: the chain's SCHB and SCHZ close is the cottonwood silver canonical_prices row (field price, ticker key, source label yahoo_finance, same-day row); it sits at a CONSTANT ratio to today's Yahoo Adj Close (SCHB 1.0054, SCHZ 1.0216 on every sampled day) but 0.9214..1.0000 / 0.8777..1.0000 to Close. By the pre-written rule the class is other_source:yahoo_finance for both (adj_close_base needs 0.5%: SCHB misses by 0.04 pt, SCHZ by 1.7 pt).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~59/base_close_trace.md",
+      "data/assets/scripts/silver/commonwealth_base_close_trace.py (rule in header, written before the first run, unchanged)",
+      "s3://opal-data-cot/silver/prices/canonical_prices.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-af-1: the chain's base close for SCHB and SCHZ traces to a named source and class (adj_close_base / stale_carry / other_source / untraced).",
+  "world_is": "The chain reads a Yahoo-sourced stored price series that is a dividend-adjusted level from an earlier fetch vintage, not today's Close. The constant ratio to Adj Close says one adjustment vintage; a 0.5% test cannot call it adj_close_base because the vintages differ (SCHB 0.54%, SCHZ 2.16%). Also: 10 of 25 SCHB and 7 of 15 SCHZ candidate sample days (first calendar-quarter day, e.g. 2022-01-01) are non-trading stored days (linear_interpolation rows) with no Yahoo bar; the rule skipped them (listed in the md), so the sample is 15 and 8 days, not one per quarter."
+}
+```
