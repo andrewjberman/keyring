@@ -11170,3 +11170,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "No fix attempted outside the order's scope; owner of those suites to triage."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S74",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T11:46:27Z",
+  "one_line": "OG-ap-3's r29 deploy is BLOCKED fail-closed at safe-ec2-deploy's halt gate, rc=3, 'SERIAL RESOLVES TO NO KNOWN AGENT'. The cause is not a corrupted serial, which is what the gate's own message guesses: the release worktree C:/tmp/og-rel29 is a SPARSE checkout, so org/tier2_senior/0.7.0_AE_CloudOps~Z is absent from its DISK while being present in its HEAD COMMIT TREE, and the gate stats the disk. Nothing was deployed; the host still reads 97 of 97 identical to r28.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN the deploy exactly as Half 2 step (5) words it, from C:/tmp/og-rel29 with OPAL_AGENT_SERIAL unset, DEPLOY_BASE_REF=aa75078e1b, HALT_ACK=1, AGENT_NAME=0.7.0_AE_CloudOps~Z -> rc=3, blocked inside 'Step 1/3: Pre-Deployment Check' AFTER 'OK: Pre-deployment checks passed', with 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)' and 'Resolved serial: 0.7.0_AE_CloudOps~Z'.",
+      "RUN NOTHING REACHED THE HOST, measured after the block by the order's own instrument rather than assumed from the step it stopped at: python r29_ssm_prog.py r29_md5_host.py <out> md5 -> 'MD5 listed 97 identical 97 mismatch 0 []' and 'HOST_ONLY_FILES_UNDER_app_deploy 0 []', identical to the pre-deploy read. The service was never restarted and no file was shipped.",
+      "RUN THE DISCRIMINATOR, and it is a sparse checkout rather than a missing folder: `git -C /c/tmp/og-rel29 ls-tree -d --name-only HEAD org/tier2_senior/` CONTAINS org/tier2_senior/0.7.0_AE_CloudOps~Z (20 CloudOps folders in that tree), while `ls -d /c/tmp/og-rel29/org/tier2_senior/0.7.0_AE_CloudOps~Z` returns 'No such file or directory' and `git -C /c/tmp/og-rel29 config core.sparseCheckout` reads true. So the folder exists at the release sha and is simply not materialised on disk, and the gate's identity limb reads the disk.",
+      "RUN the serial file is NOT corrupted, which the gate's message offers as the usual cause: `od -c org/mcp/sessions/e4c836f6-ef52-4b7b-9538-dfd1a52fc50d.serial` reads exactly '0.7.0_AE_CloudOps~Z\\n' -- 20 characters and a newline, no stray byte, and the ~lane suffix IS a single uppercase letter. The gate resolved the serial correctly and then failed to find its home.",
+      "RUN MY OWN DRY RUN OF THE SAME TWO LIMBS PASSED, and that is the second half of this finding: sourcing .tools/halt-gate-check.sh from the MAIN checkout and calling halt_gate_resolve_serial then halt_gate_validate_serial returned rc=0 and rc=0 with serial 0.7.0_AE_CloudOps~Z. The deploy sources the WORKTREE's own copy, so HALT_GATE_REPO_ROOT (line 38: dirname of BASH_SOURCE/..) resolved to /c/tmp/og-rel29 instead of the shared checkout. A gate dry-run that does not reproduce the real invocation's ROOTS tests a different gate.",
+      "FILE .tools/halt-gate-check.sh lines 39-45 already name this exact class and its remedy, authored by 1.0.0_SA_CTO 2026-09-15 and citing this project's own rows: 'THE SHARED CHECKOUT (NFRA_OPLGTW-S19, S18 and W1-S6; LGIC_ENFORCE-W3-S6) ... a spine-v3 worker runs this gate from its OWN linked worktree, where org/mcp/inbox and org/mcp/sessions (both gitignored) do not exist: they live only in the main checkout. Rooted at this script's checkout, the gate read an ABSENT inbox as \"no messages\" and passed rc=0 ... and identity failed closed rc=3.' It records the measured discriminating pair: default root rc=0 silent, HALT_GATE_INBOX_ROOT at the shared inbox rc=1 with 14 pending.",
+      "RUN org/mcp/sessions/ does not exist in the release worktree at all (both it and org/mcp/inbox are gitignored), so with the default root the gate's INBOX limb would scan an absent directory and read it as 'no messages' -- the vacuous pass the comment above describes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ap-3 Half 2 step (5): run safe-ec2-deploy.sh from C:/tmp/og-rel29 with OPAL_AGENT_SERIAL unset and AGENT_NAME=0.7.0_AE_CloudOps~Z, after a dry-run of halt_gate_resolve_serial and halt_gate_validate_serial reads rc 0. The order's BOUNDS also say: never override a gate.",
+  "world_is": "The gate is RIGHT to fail closed and its premise is nevertheless wrong: it is deciding my identity from a sparse working tree that does not materialise my agent home, while the commit it is checked out at does contain it. NOTHING IS HALF-LANDED -- the block came before any change and the host is byte-identical to r28 on all 97 files, re-measured after the block. WHAT I HAVE NOT DONE AND WILL NOT DO WITHOUT A RULING: the order's BOUNDS forbid overriding a gate, so I have not used HALT_OVERRIDE, and I am not treating the documented env roots as my own call either, because this is a WORLD deploy under three signed halves. THE REMEDY I BELIEVE IS CORRECT, for the issuer to rule on: re-run step (5) with HALT_GATE_REPO_ROOT (and HALT_GATE_INBOX_ROOT) pointed at the SHARED checkout C:/Users/Opal Bloomberg/Desktop/ajb_workspace. That is the configuration the gate's own comment prescribes for this shape, and it makes the gate STRICTER rather than weaker: with the default root its inbox limb scans a directory that does not exist and passes vacuously, whereas rooted at the shared checkout it reads my real inbox and could actually halt me. It is the opposite of a bypass, which is why I think it is not the 'override a gate' the BOUNDS forbid -- but the distinction is the issuer's to draw, not mine, on an act of this class. A SECOND, SMALLER FINDING worth carrying into the order: step (5)'s dry-run instruction cannot catch this, because a dry run sourced from the main checkout resolves different roots than the deploy sourced from the worktree. If the dry run is meant to de-risk the deploy, it must be run with the deploy's own roots -- mine returned rc=0 on both limbs minutes before the deploy returned rc=3 on the same two limbs."
+}
+```
