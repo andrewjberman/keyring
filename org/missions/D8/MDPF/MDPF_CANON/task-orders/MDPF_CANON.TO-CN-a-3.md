@@ -47,6 +47,18 @@ per-scope and dated, file a row naming it for round 2.
 3. **Package it:** add `("mdpf_gold_backfill.py", "data/mdpf/scripts/gold/mdpf_gold_backfill.py")` to `build_package.py`.
 4. Unit tests go in `data/mdpf/scripts/gold/tests/test_mdpf_gold_backfill.py` (synthetic keys only).
 
+5. **AMENDMENT 1 (the issuer at CN-a-2's drain): a 403 on the read of a missing key is "absent".**
+   - `mdpf_gold_parquet._read` (merged @c45bce257c) treats only NoSuchKey/404 as absent and re-raises everything else.
+   - The firm gold-writer roles (CN-a-1) and the gold Lambda's composite grant hold Get/Put on their prefix, but only a
+     prefix-CONDITIONED `s3:ListBucket`. A GetObject on a missing key carries no `s3:prefix`, so S3 answers 403 AccessDenied,
+     not 404. As merged, the first write of every partition would raise, and so would your backfill's.
+   - Fix it in `_read`: an `AccessDenied` / `403` on the GET is "absent" (Get is granted on the prefix, so a 403 can only mean the
+     key is not there). `write_partition` then takes its existing create-only put (`IfNoneMatch="*"`), so nothing can be
+     overwritten.
+   - A 403 on the PUT must still RAISE: a real permission fault stays loud.
+   - Add a test for both to `data/mdpf/scripts/gold/tests/test_mdpf_gold_parquet.py`.
+   - AC4 below is the issuer's `r1_emit.py`, whose new arm 8 (DENIED-ABSENT) fails at the merged code (7 of 8).
+
 ## 2. BOUNDS
 
 1. **No AWS write of any kind**: no apply, no deploy, no invoke, no `s3 cp`/`put`, no IAM call. A read-only `get`/`describe`/`head` is
@@ -72,6 +84,8 @@ per-scope and dated, file a row naming it for round 2.
 ## 3. SURFACES
 
 <paths>
+data/mdpf/scripts/gold/mdpf_gold_parquet.py
+data/mdpf/scripts/gold/tests/test_mdpf_gold_parquet.py
 data/mdpf/scripts/gold/mdpf_gold_backfill.py
 data/mdpf/scripts/gold/mdpf_gold_consolidator.py
 data/mdpf/scripts/gold/tests/test_mdpf_gold_backfill.py
@@ -87,6 +101,7 @@ Read-only: the whole repository; in particular `data/mdpf/scripts/gold/mdpf_gold
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CN-a-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round1/checks/r1_backfill.py"; echo "exit=$?"</invocation><expect>ROUND 1 BACKFILL: 7 of 7 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="CN-a-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python -m pytest data/mdpf/scripts/gold/tests -q --deselect data/mdpf/scripts/gold/tests/test_global_fold_flag2.py::test_carry_within_window_carries_and_labels --deselect data/mdpf/scripts/gold/tests/test_global_fold_flag2.py::test_carry_beyond_window_absent_for_real --deselect data/mdpf/scripts/gold/tests/test_global_fold_flag2.py::test_carry_source_is_measured_never_interpolated; echo "exit=$?"</invocation><expect>passed, with 0 failed -- and exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="CN-a-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; python "org/missions/D8/MDPF/MDPF_CANON/deliverables/2.0.0_SA_COO~D1/round1/checks/r1_emit.py"; echo "exit=$?"</invocation><expect>ROUND 1 PARQUET WRITER: 8 of 8 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="CN-a-3" judgment="true"/>
 </proof_of_spec>
 
@@ -96,11 +111,13 @@ AC3 is JUDGMENT, graded on the issuer's real run at the round-1 close (never sel
 
 Instance at `org/missions/D8/MDPF/MDPF_CANON/deliverables/0.9.0_WK_MDPF_CANON~3/MDPF_CANON.TO-CN-a-3.proof_of_spec.json` (AC3 UNVERIFIABLE-BY-INSTRUMENT,
 status_reason "graded at the round-1 close run"). **Flip this order's `<status>` to `complete` in the SAME commit as your proof
-instance**, only when AC1 and AC2 pass. A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W3-S<k>`, with
+instance**, only when AC1, AC2 and AC4 pass. A row id on this project carries the dell1 infix: `MDPF_CANON-D1-W3-S<k>`, with
 `surfaced_at` from `date -u +%FT%TZ` at filing. Report once: the diff (per file, one line each), the output line of every
 criterion, the commit hash, and any row.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~19:2xZ, before spawn):** item 5 and AC4 added. CN-a-2 merged (@c45bce257c, 7 of 7) but its `_read` re-raises the 403 a prefix-conditioned ListBucket returns for a missing key; the fix is folded here, since this cell already writes through that writer. `mdpf_gold_parquet.py` and its test join the paths. r1_emit.py gains arm 8 (7 of 8 at HEAD; 8 of 8 against the reference tree). Graded by no gate limb at cut (a modification of a pending order).
 
 **ISSUER NOTES:** round 1 = THE THREAD (FWD-1) over PRD v2.9 @12adb87963 (ADMITTED; the CVO's L6 condition, msg 3000, is arm 1 and arm
 5 of `r1_iam.py`). Base box/dell1. LF only. Checks positive-controlled against a reference tree before the cut.
