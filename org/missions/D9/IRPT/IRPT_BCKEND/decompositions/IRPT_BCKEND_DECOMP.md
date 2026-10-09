@@ -2450,3 +2450,22 @@ withdrawn) is complete @f8b570d0f4. Check `deliverables/2.0.0_SA_COO~P2/checks/r
 | `IB-pr-394` | irpt-narrative TypeError + irpt-holdings parity gate fixed, restaged, release packet | FWD-2 | WORLD | IB-pr-390 code pin @74a62fb46c | P99-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell, two hosts on the same served.py. Assignee: 0.9.0_WK_IRPT_BCKEND~262.
+
+## 95. ROUND 102, WORKSTREAM ~P (2026-10-09 ~07:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 2748 and 2765)
+
+The CTO's halves are given for IB-pr-391 (the composition reader, standalone after 395, @a946f8b829) and for IB-pr-394's irpt-holdings
+(@7f294053f0). irpt-narrative is HELD: its rebuild widens a no-row internal caller (row W262-S1). ~V2 has amended svc-commentary's pair,
+which meets 391's precondition. IB-pr-396 (FWD-14 v0.33) is graded 2/2 PASS and drained @5eeef73870. FWD-14's release packet is now
+cuttable (msg 2748). IB-pr-395 (the 390 release) is applying on ~IB2.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r102/p102_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-397` | apply the composition reader (391) on ~IB2 | NFRA_TRNSPT FWD-10 H2 | WORLD | IB-pr-395 closed | P102-a |
+| `IB-pr-398` | apply irpt-holdings only (394) on ~IB2; narrative untouched | FWD-2 | WORLD | IB-pr-395 closed | P102-a |
+| `IB-pr-399` | narrative TypeError fix keeping the opal-capital binding (no widening) + release packet | FWD-2 | WORLD | IB-pr-394 drained | P102-b |
+| `IB-pr-400` | FWD-14 release packet (runner bundle carrying the publish gate) | FWD-14 | WORLD | IB-pr-393, IB-pr-396 drained | P102-c |
+
+fanout: 3 of 3 chains, cap 8, reason: lane ~IB2 runs 397 then 398 in order; two independent worker cells. Assignees:
+0.7.0_AE_CloudOps~IB2 (397, 398), 0.9.0_WK_IRPT_BCKEND~264 (399), ~265 (400).
