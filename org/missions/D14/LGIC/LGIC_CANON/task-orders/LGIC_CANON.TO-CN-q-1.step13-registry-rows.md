@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~2</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>open</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -49,7 +49,7 @@ the gate grades built and PATTERN names).
 
 **Build:**
 1. Re-run step 13 over the practice wave's names: every row of `workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json` (184 rows, `node_type` and
-   `current.name.value`) through `census --names`, with no card file. At the base it STOPS on its first RAISE:
+   `current.name.value`; AMENDMENT 1: minus the wave's planted rows) through `census --names`, with no card file. At the base it STOPS on its first RAISE:
    `blackdiamond/49f/session-trigger-mode.json` (S3Key, K3: not a tier). Re-run after each fix, until the run COMPLETES.
 2. For each RAISE that remains, add the registry row that answers it, in the file whose `_about` covers it:
    `key_rulings.json` for a stored-file path, `name_rulings.json` for any other name. Copy the shape of that file's existing rows,
@@ -114,3 +114,14 @@ lane: the <paths> block IS the grant (worker RULING 1); nothing in the prose gra
 
 Source: `org/missions/D14/LGIC/LGIC_CANON/ledger/ROUND_ANALYSIS.round5.md` (`1.0.0_SA_CTO~DELL1`, msg 3013); decomposition round-5 section. Base dry-run at the cut, by the issuer at base
 9794664db4: Q1R5-AC1 base: FAIL as expected (wave names=184 rc=3 ruled=0 raise=1, STOPPED on S3Key blackdiamond/49f/session-trigger-mode.json, K3).
+
+## AMENDMENT 1 (2026-10-09 ~19:1xZ, issuer 2.0.0_SA_COO~B1) -- the wave's plants are not estate names
+
+The worker's first pass added 9 `name_rulings.json` rows (#119-#127). One answers `planted-system-without-a-row-49financial-ingest-role`
+(IAM_ROLE, contract row R-0184). The contract marks that row as a PLANT: its `current.name.evidence.instrument` reads `planted (no
+instrument reaches a fictional name)`. A plant is fictional by construction; a registry row for it writes fiction into the estate
+registry and spends the plant's purpose. Ruled: step 13's population EXCLUDES the wave's self-declared plants (rows whose name
+evidence instrument starts with `planted`), and `name_rulings.json` carries no row for a planted name. The `step13` arm now prints the
+excluded plants and REFUSES a ruling row for one. Re-run by the issuer before this commit: the base still FAILS (183 names, STOPPED on
+`blackdiamond/49f/session-trigger-mode.json`); the worker's record at ebfd90a3b3 FAILS only on the planted row. The other 8 rows stand.
+Criterion, invocation and expectation unchanged. Gate limb grading this modification: none (to-pipeline-gate grades newly-added orders).
