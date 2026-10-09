@@ -9571,7 +9571,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "evidence": [
       "irpt-requests PERFORMANCE_USE#01209afb.. claimed_at 1790392831 (03:20:31Z); adapter log corr-3ba5b1a74cf0 OrionRequestFailed 'provider request failed: HTTPError' -> DEPENDENCY_UNAVAILABLE",
       "ONE diagnostic replay under CTO 101098 egress, ledger irpt-orion-scope-diagnostic-20260926 CLOSED: requests digest e2f06ebf.. EQUAL to the plan's; POST https://api.cloud.orionadvisor.com/api/v1/Reporting/Scope -> HTTP 404 ApiExceptionDto 'Object does not exist' (correlation da05459d-af9f-45c9-be39-72de3a1a6c3f); receipt IRPT_MVP_P/ORION_SCOPE_DIAGNOSTIC_20260926.json",
-      "accounts_v2 snapshot 2026-09-23: account_id 1098 exists (account_number 636-414944, household 381, active); performance/orion_selected.py:33-34 ACCOUNT_ENTITY = 4 citing a probe comment, ACCOUNT_GROUPING marked '[to confirm on the first worded use]'; the only HAR capture pins entity 5 (Household)"
+      "accounts_v2 snapshot 2026-09-23: account_id 1098 exists (account_number acct#05f570ef, household 381, active); performance/orion_selected.py:33-34 ACCOUNT_ENTITY = 4 citing a probe comment, ACCOUNT_GROUPING marked '[to confirm on the first worded use]'; the only HAR capture pins entity 5 (Household)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION",
@@ -24931,5 +24931,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "TO-IB-pr-419: one real GET per route that reaches a split, with a verified internal subject's headers where the split needs one, using a synthetic or Opal-internal principal.",
   "world_is": "A verified internal subject is a signed token the edge validator checks, which a synthetic principal cannot carry, and the profile_reader split sits on CREATE_INPUT, a write. No GET reached any split. FAILING for irpt-performance-adapter rests on live log events, not on the GET. The irpt-status events are a different kwarg (build_retained_repositories) than the one the order names and have stopped. Fails closed in every case. Disarm owner not needed: INERT."
+}
+```
+
+## IRPT_BCKEND-D2-S62 -- IB-pr-418 graded on the 49F-only set; the all-firm hash list finds 5 code files still carrying served ids
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S62",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T17:34:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-418's AC1 graded against the 49F-only V2 set; against the all-firm served account-id hash list (AMENDMENT 3), 3 of its synthetic ids and 2 more check scripts carry real served account ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "account_id_hash_builder.py @1fc60d1ac2; hash-list census of 2,070 tracked ~P2 files, 13 hits, list of paths kept outside the repo",
+      "p117_cells.py IB117-3-AC1 reads --set, the 49F tie-out V2 set only (5,252 accounts)",
+      "hits in p19_1_ac1, p19_1_ac2, p19_4_ac1 (the BAD literal), e19_ac1 (NEW01), battery_ib_rt_3.py"
+    ]
+  },
+  "spec_asserts": "IB-pr-418 removes every client account id from its 12 named code files.",
+  "world_is": "Its detector was the shape-blind 49F set. The served hash list finds a real id from another firm in 3 of its files, plus 2 code files outside its list. The next issuance cuts one code cell for all 5, graded against the hash list. The ids sit in tracked check scripts, so this row is INERT: nothing is served."
 }
 ```
