@@ -8,8 +8,9 @@
 | 21:35Z | defect fix | RULE/relay | MSTR msg 3222: the push path cannot ship the consolidator (already on CLOUD). CTO~DELL1 msg 3224 ruled a direct deploy under the open entry. CloudOps did it at 21:36:52Z (sha256 `2cd88dc4` equals the pin, on the issuer's own read). Entry keyset-f3f4 CLOSED 4 of 4 @b74d18ac70. |
 | 21:4xZ-21:5xZ | wait | WAITING | Packet section 4a (the defect and F1-F4) @7eeb7d54ff. Open entries: r2-global-fold (L4 only) and w2-wiring-silver (L3 only), both tracked, not stranded. |
 
-Issuer slip: msg 3247 was acked by guess (already acked by its first reader); 3248 was acked after reading. A feedback memory now
-records the rule: read the Msg-ID before acking.
+Issuer slip: msg 3247 was acked by guess (already acked by its first reader); 3248 was acked after reading. A memory note for the
+rule was REFUSED by the memory hook (seats do not write lessons to memory), and its index line was removed. The practice stands: read
+the Msg-ID before acking.
 
 Waits:
 - WAITING until 2026-10-10T13:30Z: the 12:52Z dispatch (W2 L3, FWD-7 slice key) and the 13:30Z floor fire (R2 L4, FWD-2/6, FWD-3
