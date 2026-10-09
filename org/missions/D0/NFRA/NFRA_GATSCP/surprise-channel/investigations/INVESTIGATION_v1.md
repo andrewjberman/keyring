@@ -30,3 +30,30 @@
   "notes": "Worker 2 of NFRA_GATSCP. The order names the id form NFRA_GATSCP-W2-S<k>; the row gate refuses a bare id with fabric dell1 (a bare id is the laptop's), so the dell1 coordinate D1- is carried. The disposition is the CVO's."
 }
 ```
+
+## NFRA_GATSCP-D1-W2-S2 -- GS3-AC1 arm 1 cannot pass: its merge has an EMPTY graded path set, which the order says to SKIP
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W2-S2",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~2",
+  "surfaced_at": "2026-10-09T08:15:37Z",
+  "one_line": "TO-GS-t-3 says keep grade_merge's early SKIP on an empty graded path set, and r1_boxsync_grade.py arm 1 (bystander-lands) requires a STANDING line from a merge whose graded path set is empty, so the order and its check contradict.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r1_boxsync_grade.py arm 1 builds X = B0 + probe_x and Y = B0 + probe_y (B0 = HEAD + bystander drift); box-sync's graded set = (diff X..T) AND (diff Y..T) = {probe_y} AND {probe_x} = empty, plus (diff B0..X) AND (diff B0..Y) = {probe_x} AND {probe_y} = empty; box-sync.sh grade prints 'grade SKIP -- the merge introduces nothing and no path changed on both sides' and 'graded=0/1', rc 0, no STANDING line",
+      "arm 2 (X1,Y1 both carry the drift from HEAD): rc=1, 'ACT SCOPE: in-act=1 STANDING=0 (act projects: LGIC_BLANKFIX)', 'REFUSED BY THE TREE CHECK' -- passes",
+      "positive control with a NON-empty graded set (both sides write probe_s identically, plus probe_x / probe_y): grade rc 0, 'ACT SCOPE: in-act=0 STANDING=1 (act projects: NFRA_GATSCP)' and 'STANDING LGIC_BLANKFIX INDEX-DRIFT org/projects/LGIC_BLANKFIX.json ...', 'graded=1/1' -- the wiring works; only the empty-set case is out of reach"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-GS-t-3 build 1: 'keep the existing early SKIP when the path set is empty'; GS3-AC1: a merge whose parents both carry the drift from the merge base is graded and passes with STANDING LGIC_BLANKFIX.",
+  "world_is": "For arm 1's merge the path set is empty, so the SKIP returns before any tree check runs and no STANDING line can print; the tree check itself refuses an empty act (rc 2). Both statements cannot hold. Not weakened: the SKIP stays as ordered and the check is unedited, so GS3-AC1 reads FAIL (arm 1) and the order stays open. A resolution is the issuer's: either the check builds a merge with a non-empty graded set (e.g. both sides write the same probe file), or the order lets grade_merge run the tree check informationally (every violation STANDING) on an empty set.",
+  "notes": "Worker 2 of NFRA_GATSCP. The rest of the order is built: grade mode, grade_merge tree check, fast-lane tree check, self-test arm (GS3-AC2 passes)."
+}
+```
