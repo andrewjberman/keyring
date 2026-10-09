@@ -374,3 +374,29 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "There is nothing left to take: the replacement happened by integration. The site-Z half (1.0.0_SA_CTO~Z) is signed on that basis, and the executor's order becomes a VERIFY. Disarm: before the 2026-10-10 07:00 local run, a NEVER-2 ledger entry is opened that names the box-sync as the landing, records the blob read and the 13-pass test, and closes on the first scheduled run's acceptance (run_class scheduled, exit 0, both new manifest fields, exhausted list printed). Fixing the integration-path gap belongs to 0.0.0_AB_MSTR~Z and is a separate question from this disarm."
 }
 ```
+
+## MDPF_SECHIST-D1-S3 -- The dell1 cloudops agent user cannot call iam:SimulatePrincipalPolicy, so an AE seat on this box cannot run the cloud-ops live-primitive check on any role it grants.
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-S3",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SH1",
+  "surfaced_at": "2026-10-09T20:12:35Z",
+  "one_line": "After the TO-DEPLOY-GOLD apply landed R1's one statement, the cloud-ops verification step for a new ARN (iam simulate-principal-policy on the live primitive) returned AccessDenied for cloudops-dell1-agent-user on iam:SimulatePrincipalPolicy, so this seat could prove the grant DESIRED and APPLIED but could not exercise it; the same gap applies to every role an AE seat on dell1 grants, not just this one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::313476888478:role/etf-positioning-producer-role --action-names s3:PutObject --resource-arns arn:aws:s3:::opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=2026-10-12/gap_record.json -> AccessDenied: User arn:aws:iam::313476888478:user/cloudops-dell1-agent-user is not authorized to perform iam:SimulatePrincipalPolicy (2026-10-09, 3 invocations, target plus 2 negative controls, all 3 identical)",
+      "POSITIVE CONTROL that the credentials and the role both exist and are readable: aws iam get-role-policy --role-name etf-positioning-producer-role --policy-name s3-rw-etfs-gold-platinum rc=0 returning 9 statements, and aws s3api head-bucket --bucket opal-data-etfs rc=0 -- so the denial is the SimulatePrincipalPolicy permission, not a bad ARN, a bad role or absent credentials",
+      "The act did not depend on it: the statement is proven APPLIED by the live get-role-policy read (8 prior statements carried byte-identical, 1 added) and by terraform plan -detailed-exitcode = 0 after the apply"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": ".claude/skills/cloud-ops/SKILL.md names aws iam simulate-principal-policy as the live-primitive verification an AE seat runs for a NEW bucket/table/ARN -- one --resource-arns per call, the positive control as a separate invocation, the ARN at the grain the action is authorized on, and the simulation run AFTER the resource exists. It reads as a step every AE seat can take on demand.",
+  "world_is": "On dell1 that step is unreachable: the agent user holds no iam:SimulatePrincipalPolicy. The instrument the skill leans on for the EXERCISED rung is absent on this box, so an AE seat here can reach DESIRED and APPLIED and no further, and ABSENT is not EXERCISED-AGAINST. For THIS grant the EXERCISED rung arrives with L3, the first scheduled gold run, which writes the gap record as the role -- a real exercise rather than a simulation, and it is the issuer 2.0.0_SA_COO~H1's read. The open question is whose it is to decide whether the dell1 and dell2 agent users should carry iam:SimulatePrincipalPolicy (read-only, no mutation) so the skill's step is takeable, or whether the skill should state that on an agent box the live PutObject at L3 is the only exercise available. Not adjudicated here and it blocked nothing."
+}
+```

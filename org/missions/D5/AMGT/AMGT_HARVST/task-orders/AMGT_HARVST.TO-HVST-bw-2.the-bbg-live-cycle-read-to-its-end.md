@@ -37,6 +37,11 @@ Write `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round7
 4. Every entry of the record's `failures`, one line each: `FAILURE <key>: <status> -- <detail verbatim>`.
 5. `RUNNER LOG: <path>`, then its lines for that cycle's first and last 20 minutes, verbatim.
 6. A copy of that cycle record beside it, unchanged, as `bw2_bbg_<cycle_id>.cycle.json`.
+7. (AMENDMENT 1, row AMGT_HARVST-D1-S5) `PROCESS TREE:` read now, and again at the read: every python process whose command line
+   holds `cycle_runner`, `backfill_driver` or `opal_data_harvest`, one line each in the form
+   `PID <pid> PARENT <parent pid> STARTED <creation time> CMD <command line>`, from Win32_Process. Then one line:
+   `RUNNERS: <n>`, counting only `cycle_runner` processes. bw-1's reaper dry run listed PID 29192 (new pin) AND PID 37816
+   (old pin) as exempt, so this read says whether 37816 is the runner's own collector job or a second runner.
 A failed read is a FINDING printed whole. Restart nothing.
 
 <paths>
@@ -79,6 +84,8 @@ This order touches none of them.
   242-pair cycle may take most of a day. The read waits for the cycle to end, not for a clock.
 - Not cut this round (analysis items 2 and 3): wsj and barrons wait on Andrew's sign-in (site-Z call 9f24). The hop-3 page is cut
   once this cell's completed record exists.
+- **AMENDMENT 1 (2026-10-09 ~20:2xZ, issuer):** step 7 (process tree), on row D1-S5. No criterion changes. A second
+  `cycle_runner` (RUNNERS: 2) is a finding for the issuer the same tick, not something to stop.
 - Checks at the base: AC1 and AC2 FAIL as expected (no such file).
 
 <risk>LOCAL</risk>

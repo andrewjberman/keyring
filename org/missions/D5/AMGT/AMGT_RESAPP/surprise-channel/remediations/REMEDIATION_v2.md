@@ -27,11 +27,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "round": "v2"
+      "round": "v2",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~348/DISPOSITION_LEDGER.json@4c3f3fcb2e: its object is a criterion or instruction in a terminal order (a round-2 order, status complete: order text naming FISCAL_YEAR_END as the mapped carrier); no open order carries it (the task-orders folder holds only ll-1..ll-4 and two cancelled/staged orders non-terminal) and the lesson is a cut-time "
+      }
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-C-S9",
@@ -48,11 +52,15 @@ Runtime limitation: the canonical surprise watcher was exercised in `once` mode;
     "owner": "2.0.0_SA_COO~ZZZ",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "2.0.0_SA_COO~ZZZ",
-      "round": "v2"
+      "round": "v2",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~348/DISPOSITION_LEDGER.json@4c3f3fcb2e: its object is a criterion or instruction in a terminal order (a round-2 order, status complete: BABA/RTX/+1 exercise population); no open order carries it (the task-orders folder holds only ll-1..ll-4 and two cancelled/staged orders non-terminal) and the lesson is a cut-time habit now carried by the"
+      }
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-C-S10",
