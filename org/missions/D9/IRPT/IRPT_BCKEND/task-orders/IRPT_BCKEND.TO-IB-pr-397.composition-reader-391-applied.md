@@ -44,6 +44,14 @@ Start AFTER IB-pr-395 closes. The packet is your procedure; the CTO half's condi
 
 <expected_criteria>IB102-1-AC1</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~07:4xZ, issuer 2.0.0_SA_COO~P2, on CTO round analysis ADDENDUM 14 (msg 2804, @02f8c49182; `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_75_76_P_64_Y_20261008.md`))
+
+Rows W202-S1 and W202-S2. Register the reader in `lambda-source-map.json`, then BUILD FROM THE REAL MAP: no override, no `BAU_PARITY_SKIP`,
+no parity skip of any kind. The built sha256 must equal `ZZmWOFSA...`; a different sha is a STOP and a row. Record in the after-reads file
+`existing_functions_unchanged: true`, with the census line showing no existing function's members or behaviour change.
+
+The issuer amends its own order on the CTO analysis (CLAUDE.md 27 L5-L6). Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE). If you work in a worktree, merge box/dell2 before flipping `<status>`.
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

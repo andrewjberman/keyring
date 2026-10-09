@@ -3237,3 +3237,28 @@ round.** Never edit an existing row.
   "world_is": "CB28ab1-AC3: fix, not fit -- the condition for CB-ab-2's mint (CTO msg 2671) reads FIX. The literal clause fails for one disclosed rule. CB28ab3-AC3 met."
 }
 ```
+
+## ADVI_COTBKF-D2-W56-S1 -- CB-ac-3: 3 of 28 unconfirmed splits are confirmable on the store's own close; 25 CUSIPs are not in the store (32 rows, newest as_of 2026-06-23); the 3 were unconfirmed because the chain's close, not the store's, failed continuity
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W56-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~56",
+  "surfaced_at": "2026-10-09T07:40Z",
+  "one_line": "SPLIT-RECOUNT unconfirmed=28 now_confirmable=3 store_rows=32 store_as_of=2026-06-23: 00162Q866 (2020-05-18 x0.2), 464287614 (2026-04-29 x4), 464288646 (2018-08-08 x2) are in the store, its splits.parquet names the split, and the store's close_served is continuous across the day; the other 25 splits' CUSIPs are not in the store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~56/split_recount.md, from python data/assets/scripts/silver/commonwealth_split_recount.py (rc 0)",
+      "the same 3 were already store-sourced in the round-28 plan and failed continuity there on the chain's own nine-store close series (commonwealth_daily_valuation.split_plan), which the price fill does not change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-ac-3: print for each of the 28 whether the continuity condition would now hold, i.e. whether the split is now confirmable.",
+  "world_is": "The recount tests continuity on the store's close_served, the only series the fill adds. The apply-time condition in split_plan tests the chain's series (the nine stores), so now_confirmable=3 is an upper bound: those 3 become applicable only if the chain reads the store's close for them. Nothing was applied."
+}
+```
