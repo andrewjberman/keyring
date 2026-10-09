@@ -609,3 +609,94 @@
   "world_is": "poll_once raises on an oversize body or a duplicate field and leaves the message, so 'the same' refusal cannot also delete. poll_package_once applies the same two checks and then DELETES (an oversize, non-JSON, non-object or duplicate-field body can never become valid, and keeping it only walks it to the DLQ); the packager's own message-level names (WRONG_KIND, EXTRA_FIELD, MISSING_FIELD, MESSAGE_NOT_JSON, MESSAGE_NOT_AN_OBJECT, CLOSED_QUEUE_MESSAGE_REQUIRED) delete when raised as PackagerRefused. Every other refusal the packager raises about the RECORDS (ACCEPTANCE_RECORD_ABSENT, TICKET_ID_ABSENT, COMMENTARY_REF_ABSENT, JOB_NOT_READY, ORIGINAL_REF_ABSENT, COMMENTARY_MALFORMED) is not in the order's terminal list and is KEPT: those depend on records that can still arrive (commentary written, job READY), so redelivery and the DLQ own them. The package poll also sets the process variable IRPT_ANALYSIS_READY_QUEUE_URL from the I3 binding (the order's first option), so the factory mutates os.environ once at build."
 }
 ```
+
+## IRPT_ANLREQ-D2-W41-S12..S15 -- dispositions of this worker's rows S6, S7, S8, S11 (AMENDMENT 5 steps 11-13, 0.9.0_WK_IRPT_ANLREQ~41)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S12",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved at 3fc99be70f: RetentionPolicy._allow admits svc-commentary on reserve only, family ANALYSIS_COMMENTARY, tenant-bound; the live retained put succeeds once and the second is refused; nothing is owed on S6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S6 (live retained write path): resolved by AMENDMENT 5 step 11, landed at 3fc99be70f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/retention.py _allow(write_family) @3fc99be70f",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store.py::test_live_retained_put_admits_the_named_writer @3fc99be70f (negative control: with the prior retention.py it fails ReportDenied at retention.py:97)"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5 step 11: admit the one named writer in retention.py exactly as SERVICE_WRITERS does, reserve only, tenant-bound.",
+    "world_is": "The retained repositories built as compose_ports builds them admit one put by svc-commentary and refuse the second; svc-irpt-packager, another family, another tenant, global and opal-capital are refused on reserve; promote still refuses the writer."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S13",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved at 3fc99be70f: SERVICE_READERS carries svc-irpt-packager -> ANALYSIS_COMMENTARY and the pin at test_svc_commentary.py:199 is the two-entry map; nothing is owed on S7.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S7 (package reader entry): resolved by AMENDMENT 5 step 12, landed at 3fc99be70f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/repository.py SERVICE_READERS @3fc99be70f",
+        "infra/aws/lambda/ticket_center/lambda_function.py:110 @3fc99be70f -- \"package_principal\": \"svc-irpt-packager\" (AR-v-12)",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_svc_commentary.py (the pin) and test_commentary_draft_store.py::test_package_reader_reads_only_the_draft_family @3fc99be70f"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5 step 12: ONE SERVICE_READERS entry for the package_principal, family ANALYSIS_COMMENTARY only; update the pin.",
+    "world_is": "The packager reads the DRAFT through ArtifactRepository.get in its own tenant; it cannot put and cannot read another tenant. Side effect to note: retention.require_live admits any SERVICE_READERS subject (family-agnostic, liveness read only, no bytes), so the packager now passes that liveness read as svc-commentary already did."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S14",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved at 3fc99be70f: the no-store-port queue test keeps stage ticket unchanged, and test_store_backed_queue_run_ends_draft_stored pins draft_stored with no ticket post; nothing is owed on S8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S8 (queue-run stage pin): resolved by AMENDMENT 5 step 13, landed at 3fc99be70f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_commentary_ready_queue.py::test_store_backed_queue_run_ends_draft_stored @3fc99be70f",
+        "data/transcripts/scripts/commentary/lambda_handler.py STAGE_DRAFT_STORED path (driver AMENDMENT 6)"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5 step 13: a store-backed queue run ends draft_stored; a run with no store ports keeps today's behavior.",
+    "world_is": "The existing queue test passes no store ports, so it needed no edit; the added test carries fake store ports and asserts one persist, one send, stage draft_stored, zero ticket posts."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S15",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by the issuer's AMENDMENT 5 @5af44a2b9b: AR13-t-AC1 cites cell_refs=AR-t-12, an id the decomposition holds; the proof instance validates (proof-of-spec-check rc 0); nothing is owed on S11.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S11 (no cell AR-t-13 in the decomposition): resolved by AMENDMENT 5 @5af44a2b9b, criterion AR13-t-AC1 now cites cell AR-t-12.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.md AMENDMENT 5 first bullet @5af44a2b9b"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5: the draft store is the decomposition's own AR-t-12 text realized, so AR13-t-AC1 cites cell AR-t-12.",
+    "world_is": "The checker's alignment limb finds AR-t-12 in IRPT_ANLREQ_DECOMP_R1.md; the proof is rewritten against it in this worker's closing commit."
+  }
+]
+```
