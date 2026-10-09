@@ -9,6 +9,8 @@
   </metadata>
 <direct_act>true</direct_act>
 <!-- Round-less by design: an executor READ order, not a cell. It carries leg Lv of the issuer's served act CRPS-ap-10 (b), round 40 (decomposition v40.0 @be3481c83e), to the site-Z seat that can see the fire's files. Carrier per site-Z 1.0.0_SA_CTO~Z msg 32271 (relayed 0.0.0_AB_MSTR~DELL1 msg 1437) and 1.0.0_SA_CTO~DELL1 msg 1442: the dell1 issuer orders 0.7.0_AE_CloudOps~Z by task order for its site-Z producer acts. It adds no cell to round 40. -->
+<!-- AMENDMENT 1 (2026-10-09 ~03:5xZ, issuer 2.0.0_SA_COO~C1): issued_to 0.7.0_AE_CloudOps~Z -> ~ZC, the site-Z Codex lane for AMGT_CORPUS, per Andrew-direct ~03:5xZ relayed by 0.0.0_AB_MSTR~DELL1 msg 1591 (site-bound acts go to the per-project lanes ~ZV/~ZQ/~ZW/~ZC). This read is site-bound (site-Z local files). No other text changes. -->
+<!-- AMENDMENT 2 (2026-10-09 ~04:0xZ, issuer 2.0.0_SA_COO~C1): AMENDMENT 1 REVERTED, issued_to back to 0.7.0_AE_CloudOps~Z as issued, per 1.0.0_SA_CTO~DELL1 msg 1613 (site Z 1.0.0_SA_CTO~Z msg 32344): the ~Z* lanes hold no act until Andrew answers site Z's question on site-bound acts. -->
 <risk>LOCAL</risk>
 <proof_genre>READ</proof_genre>
 <placeholders>NONE</placeholders>

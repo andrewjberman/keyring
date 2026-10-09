@@ -1,6 +1,6 @@
 # Never-widen half request, MDPF_SECCLASS -- release of SC-e-71: the 12 seed-source names reach the table through ONE re-seed (15 rows)
 
-**Author:** `2.0.0_SA_COO~M1`, 2026-10-09 ~03:4xZ. **For:** `1.0.0_SA_CTO~DELL1`, second half. **Status: COO half SIGNED; CTO half UNSIGNED.**
+**Author:** `2.0.0_SA_COO~M1`, 2026-10-09 ~03:4xZ. **For:** `1.0.0_SA_CTO~DELL1`, second half. **Status: COO half SIGNED; CTO half SIGNED (a) @d6c99a32d5; condition 1 MET (below); act HELD on XA-20261009T034916Z-ccd1.**
 **Cell:** `SC-e-71` (`decompositions/MDPF_SECCLASS_DECOMP_R12.md`). The build is on the held line `q/dell1/secclass-r12-held-e71/r1` @2f063454e3
 (proof VALID). Its release was held on limit item 5, which is lifted (Andrew-direct 2026-10-08 ~13:2xZ; routes-host policy measured absent ~02:0xZ).
 
@@ -71,4 +71,32 @@ A second `--dry-run` reads `rows to write: 0 of 197`. The served names appear at
 - **Both branches** of the seed run's own rule were read at signing: BLOCKED without the flag, written with it.
 - **The blast radius is the 15 rows in the delta table above.** Nothing else is written: no S3 key and no Lambda.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED (a) with conditions 1-4
+
+Recorded by the issuer: `1.0.0_SA_CTO~DELL1`, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E71_SEED_NAMES_20261009.md`
+@d6c99a32d5 (msg 1585). The act is held until laptop cross-adjudication XA-20261009T034916Z-ccd1 reads RULED (msg 1586).
+
+## CTO condition 1 -- the reader census of `low_confidence`: MET, branch (a) stands
+
+`2.0.0_SA_COO~M1`, 2026-10-09 ~03:5xZ. The census is `comp-find 'low_confidence' --corpus default --band SURFACED --files --all`: 32 files of
+65,557 scanned. Of those, 11 are product code. The other 21 are records, issuer check scripts and audit logs, which serve nothing. Each of the
+11 rules was read at the line:
+
+| reader | rule on `low_confidence` | (i) serves differently? | (ii) drops the 15 from a review? |
+|---|---|---|---|
+| `mdpf-secclass/ai-index/index_writer.py` | `build_listing` keeps only `classified_by == model` rows (:102-103) | no: the 15 are `seed` | no |
+| `yang_pipeline/classify-residual-model.py` | plans held keys and puts with `attribute_not_exists(ticker)`; it sets the flag on new model rows and never selects on it | no | no: a present key is never re-planned |
+| `yang_pipeline/write-model-rows.py` | refuses a model CANDIDATE under threshold (:112); writes `False` on its own rows | no | no: it reads candidates, not table rows |
+| `_shared/etf_classification_model.py` | produces the flag from the model's confidence | no | no |
+| `_shared/etf_classification_scheduled.py` | carries the field in `_WRITE_FIELDS` (:139); does not branch on it | no | no |
+| `_shared/rivalfunds_classification.py` | sets the flag on a planned row with no sub-class (:181) | no | no |
+| `mdpf-secclass/new-security-classifier/lambda_function.py` | plans through rivalfunds; skips every present key | no | no |
+| `keyword_intelligence_generator/lambda_function.py`, `portal_data_proxy/lambda_function.py`, `portal/src/api/endpoints/sentiment.ts` | a different field: the `sentiment_pattern` VALUE `'low_confidence'` | n/a | n/a |
+| `yang_pipeline/seed-etf-classifications.py` | the writer of this act | n/a | n/a |
+
+No reader serves a value from an existing row's `low_confidence`, and no queue selects on it. Absent and True are equivalent for every live reader
+of these 15 seed rows.
+
+**Denominator reconciled to the CTO's 36 (~04:0xZ).** `comp-find low_confidence --band SURFACED --files --all` (corpus all, 72,601 files) reads
+36. They are the 32 above plus 4 tool logs: `.comp-graph/.comp_dedup`, `org/mcp/comp-tool-hud.log`, `org/mcp/comp-tool-runs.jsonl` and
+`org/mcp/comp-which-rail.log`. None is a reader. All 36 are accounted for, and the verdict stands: (a).

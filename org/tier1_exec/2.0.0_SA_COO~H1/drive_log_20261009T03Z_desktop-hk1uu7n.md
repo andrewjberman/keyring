@@ -47,3 +47,32 @@ Nothing else in the frozen round-2 rectangle is uncut.
   SH-t-5 stays uncut until his release or his yes to "file it as a MDPF_DEMQUE tier-2 request, quoted first".
 - Option 3's carrier was wrong: site Z ruling 32271 (msg 1561) requires a task order, not a manager relay. READ order
   `MDPF_SECHIST.TO-READ-R2-L3.pull-exit-and-budget-line-sitez` to 0.7.0_AE_CloudOps~Z committed @3033ceac2a (gate OK).
+
+## Ticks 03:34Z, 03:44Z, 03:54Z
+
+Empty x3 (no change; gated on the 11:00Z pull and Andrew's card-A word). 03:54Z read THIRD-EMPTY-TICK: unblock case
+UB-20261009T035455Z-cbf8 opened to 4.0.0_SA_CRO~DELL1.
+
+### Site-Z read: lane collision and the S3 fallback (03:5xZ)
+
+Site Z CTO msg 32344 (relayed 0.0.0_AB_MSTR~DELL1 msg 1608): 0.7.0_AE_CloudOps~Z keeps NFRA_OPLGTW, so this seat's READ order
+@3033ceac2a collides with rule 27 (one project per Tier-2 lane); a re-ruling is open with 1.0.0_SA_CTO~Z and Andrew is asked
+whether "Do not seat site-Z CloudOps agents for dell1's deploys" covers site-bound acts. The order stays as written until then.
+
+Fallback if no site-Z read lands: ledger L3's budget clause ("a backfill line in the day's bbg_budget ledger file") is
+readable from S3 as an INFERRED value. `etf_daily_pull.py:606-609` sets `history_backfill_budget.recorded` to the row count
+only when `bbg_budget.record("backfill", ...)` returned true (the ledger line was written), else None; a refused backfill
+records nothing. So in `s3://opal-data-etfs/bbg/<asof>/run_manifest.json`, `run_class=scheduled`, `history_backfill_error`
+null, `objects_failed` empty and `history_backfill_budget.recorded` non-null together read L3, with the ledger line marked
+`inferred` (the producer's own record() return), never `measured`. Shape confirmed on the 2026-10-07 ad-hoc manifest:
+recorded 2929, estimate 3448, limit 120000, spent_before 0, 15 planned securities. A direct site-Z ledger read, when one
+lands, upgrades it to `measured`.
+
+## Tick 04:04Z -- issuer ruling on the CRO's clean-name point (UB-20261009T035455Z-cbf8, PROPOSED)
+
+RULING (issuer, inside the round-2 decomposition): for TO-SH-t3 / SH2-t3-AC1 a "clean name" is a name with no `/<state>`
+suffix, exactly as cut -- the CTO's round-1 analysis 2.2 and the check's own test (`R2_CHECKS/sh_fwd1_acceptance.py:85`,
+`"/" not in name`). An upper-case legal-form token ("Lenovo Group LTD") is clean for FWD-1; no amendment, no surprise row.
+Form-token casing across screens is FWD-8 ("a security reads the same on every screen"), a round-3 enrichment item, not a
+FWD-1 condition. Settled before 13:01Z as the CRO asked. The sign-in pre-flight and the two-branch analysis wait on the
+CTO fold; the drive resumes on them when the case reads RESUME.

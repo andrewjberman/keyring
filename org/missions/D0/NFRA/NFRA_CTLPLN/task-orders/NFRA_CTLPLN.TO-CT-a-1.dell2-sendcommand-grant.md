@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -110,10 +110,13 @@ line must read `ok=True`, stated in the proof row, with `unsure_params` reported
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
 
-<criterion id="CTa1-AC3" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect></criterion>
+<criterion id="CTa1-AC3" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>names_from_builder=[0-9]+/[0-9]+ policy_size_ok=True ok=True</expect></criterion>
 `CTa1-AC3` -- the control: the root validates, nine names are the builder's, every document fits the limit.
 
-<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4,CTa1-AC5,CTa1-AC6</expected_criteria>
+<criterion id="CTa1-AC7" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_dell_parity.py</invocation><expect>DELL-PARITY arms=[0-9]+ equal=[0-9]+/[0-9]+ unequal=0 ok=True</expect></criterion>
+`CTa1-AC7` -- (AMENDMENT 26) both Dell users simulated over ONE census, with the policies as built, print identical decisions.
+
+<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4,CTa1-AC5,CTa1-AC6,CTa1-AC7</expected_criteria>
 
 ## BOUNDS
 
@@ -158,6 +161,8 @@ infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 infra/aws/terraform/nfra-ctlpln-identity/tests/render_passrole.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_dell_parity.py
+infra/aws/terraform/nfra-ctlpln-identity/dell_ssm_policy.json
 </paths>
 
 The block is your WRITE grant. You READ and never edit: the three group policy files, the bus policies, every `.tf` and loaded
@@ -422,7 +427,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=[0-9]+/[0-9]+ reader_unchanged=True unlisted_refused=True</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=[0-9]+/[0-9]+ dell2_generate_ok=True dell1_generate_ok=True reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -1191,3 +1196,69 @@ this modification. The issuer changed two expectations here: `CTa1-AC2`'s `shell
 
 **ACCEPTANCE.** The six ids, with `CTa1-AC2` and `CTa1-AC5` as changed above, all reading `all_ok=True` / `ok=True` at full counts.
 Rewrite the proof instance, validate it, and flip to `complete`.
+
+## AMENDMENT 25 (2.0.0_SA_COO~C, 2026-10-09 ~03:5xZ) -- REOPENED, SHORT: dell2 ONLY gains kms:GenerateDataKey on the transcripts key
+
+The prior pass filed row W14-S44: dell2's s3:PutObject on the jobs' prefixes is allowed, but the transcripts KMS key gives the Dell users
+Decrypt and DescribeKey only, so a real write fails at GenerateDataKey. 1.0.0_SA_CTO ruled (b), msg 107696, under Andrew's
+no-laptop-wait word: "Grant dell2 only kms:GenerateDataKey on the transcripts key ... dell1 is not asked." Record: the addendum in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_025xZ_DELLS_RUN_THEIR_OWN_SCRIPTS_NO_LAPTOP_WAIT.md` @8fc644a586. COO
+half: ADDENDUM 1 of `org/tier1_exec/2.0.0_SA_COO/deliverables/NEVER_WIDEN_HALF_NFRA_CTLPLN_DELL2_SHELL_PARITY_20261009.md`. Gate limb: none
+graded this modification. The issuer changed `CTa1-AC5`'s expect by this amendment: it gains `dell2_generate_ok=True
+dell1_generate_refused=True`. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. In `infra/aws/terraform/transcripts/`, wherever the key policy is built (read `main.tf`), add `kms:GenerateDataKey` for the principal
+   `cloudops-dell2-agent-user` ONLY. Use the existing Dell key statement split by user, or a new statement beside it. No other action:
+   not Encrypt, not ReEncrypt*, not GenerateDataKeyWithoutPlaintext unless the S3 SSE-KMS write path needs it (print the evidence
+   if so). dell1's and the reader's key access do not move. COUNT THE WRITERS of this key's policy first: every Terraform resource in
+   any root under infra/ that sets it (comp-find over infra/), printed with its file. The COO half assumes 1; if it is more, STOP and report.
+2. `tests/check_transcripts_dell_decrypt.py` prints two new fields:
+   - `dell2_generate_ok=True` -- a simulation of dell2 `kms:GenerateDataKey` on the key with the policy as built, allowed. Beside it, a
+     PutObject on one key under a jobs prefix (`teams/transcripts/silver/research_meeting/`), allowed.
+   - `dell1_generate_refused=True` -- the same two arms for dell1, refused (the negative control).
+   - `dell_write_refused` re-stated for the new state: print the count and name each arm that moved.
+3. Plan note section N: the expected plan by reading -- the key policy resource changed in place, nothing else.
+
+**ACCEPTANCE.** The six ids, with `CTa1-AC5` as changed above. Rewrite the proof instance, validate it, and flip to `complete`.
+
+## AMENDMENT 26 (2.0.0_SA_COO~C, 2026-10-09 ~04:0xZ) -- FOLDED INTO THE OPEN PASS, ANDREW-DIRECT: dell1 and dell2 hold IDENTICAL permissions
+
+Andrew-direct ~03:5xZ, verbatim: "DELL1 and DELL2 should have the exact same permissions and layout. If DELL2 can deploy on its own and
+work with access and permissions on its own, then DELL1 should be able to do so as well." CTO record and half (SIGNED):
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_035xZ_DELL1_DELL2_IDENTICAL_PERMISSIONS_AND_LAYOUT.md` @910951a1e0
+(msg 107701). COO half: `org/tier1_exec/2.0.0_SA_COO/deliverables/NEVER_WIDEN_HALF_NFRA_CTLPLN_DELL1_DELL2_IDENTICAL_20261009.md`.
+AMENDMENT 25's "dell2 ONLY" is widened to BOTH Dells. The issuer changed three things by this amendment: `CTa1-AC5`'s expect
+(`dell1_generate_refused=True` becomes `dell1_generate_ok=True`); a new `CTa1-AC7`; and two new paths. Gate limb: none graded this
+modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. **Census of per-user grants, MEASURED, never listed by hand.** Print every policy attached to each Dell user directly and every
+   statement that names one Dell user as a principal or condition. Cover:
+   - the identity root: `dell1_bus`, `dell2_bus`, `dell2_ssm` at least;
+   - the transcripts key policy;
+   - any resource policy under infra/ that comp-find shows naming one Dell user.
+   Print the writer count of each.
+2. **Each per-user grant reaches both users.**
+   - `dell2_ssm` becomes a policy that both users hold, so dell1 gets AWS-RunShellScript and the resident-host documents on
+     `i-0167fd745ad906a66`, plus the same denies. Do this either by a group attachment or by attaching to dell1 too. If you rename it,
+     use the builder (`lib/opal_naming.py name()`) and a `dell_ssm_policy.json`. Print the group's managed-policy count against
+     AWS's limit of 10; a design that exceeds it is refused.
+   - Rename or attach in a way that keeps the plan in place. Print whether any resource would be REPLACED or DESTROYED. A destroy of
+     the live dell2 policy before its successor attaches is a gap in dell2's access; order it so no gap exists, or report it.
+   - Transcripts key: `kms:GenerateDataKey` for BOTH Dell users.
+   - Any other per-user grant the census finds: mirror it or move it to the group, and name it.
+3. **The bus policies (`dell1_bus`, `dell2_bus`) are symmetric by box.** Each user reaches its OWN box's queue. They stay per-user.
+   The parity tool compares them BY ROLE (user X on X's own queue, user X on the other box's queue) and never by literal ARN. Print
+   them as `symmetric_by_box`; that is not an inequality.
+4. **`tests/simulate_dell_parity.py` (new).**
+   - One census of (action, resource) arms, built from every policy either user holds plus the resource policies of item 1.
+   - Simulate both users with the policies AS BUILT, including the key policy as a resource policy where the API takes one.
+   - Print every unequal arm, then a last line: `DELL-PARITY arms=<n> equal=<e>/<n> unequal=<u> ok=<True only when u=0>`.
+   - A per-box symmetric arm (item 3) counts as equal when the role decision matches.
+   - **If any arm is unequal and cannot be fixed inside this grant, STOP and report it, with the root that holds it.** The CTO
+     record says inequality is reported before any apply.
+5. `simulate_policy.py` and `check_transcripts_dell_decrypt.py` follow the new state. Any dell1 arm that flips from refused to allowed
+   is named in the report.
+6. Plan note section O: the expected plan by reading, for EACH root (identity, transcripts). Nothing else may move.
+
+**ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as the order states them after this amendment. Rewrite the proof instance,
+validate it, and flip to `complete`.

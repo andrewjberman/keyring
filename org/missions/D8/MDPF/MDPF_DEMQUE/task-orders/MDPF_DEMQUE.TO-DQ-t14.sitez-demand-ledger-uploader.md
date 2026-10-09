@@ -10,6 +10,8 @@
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>4</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~03:5xZ:** issued_to `0.7.0_AE_CloudOps~Z` -> `0.7.0_AE_CloudOps~ZQ`, the per-project site-Z lane (site Z CTO msg 32331; Andrew-direct ~03:5xZ relayed msg 1589: only site-bound acts go to site Z, on per-project lanes). The uploader is site-bound: it reads site Z's `bbg_budget` files. Clears gate2's one-project-per-seat finding on `~Z`.
+**REVERTED by the issuer, 2026-10-09 ~04:0xZ (CTO msg 1611, site Z CTO msg 32344):** the four `~Z*` lanes hold no act until Andrew answers site Z's question on site-bound acts; site-bound orders stay as issued. issued_to is back to `0.7.0_AE_CloudOps~Z`; the gate2 seating finding on `~Z` stands open with that question.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-14` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 4) |
 **outcome_ref:** FWD-2, FWD-3 | **depends_on:** none
 

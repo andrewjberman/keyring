@@ -4,7 +4,8 @@
     <issued_by>2.0.0_SA_COO~V1</issued_by>
     <!-- issued 2026-10-08 by 2.0.0_SA_COO~RV; re-issued by AMENDMENT 1 below to 2.0.0_SA_COO~V1 (dell1) -->
 
-    <issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+    <issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+    <!-- re-addressed by AMENDMENT 2 from 0.7.0_AE_CloudOps~Z (site Z) -->
     <date>2026-10-08</date>
     <status>pending</status>
     <project_code>ETFS_RIVALS</project_code>
@@ -18,6 +19,24 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc> (round 28): the apply leg of cell `RIV-aw-1` (built and merged, tip a2283fc349; CTO ruling R31, ROUND_ANALYSIS.round22 ADDENDUM 7 @0820f6b0b7). Executor seat per R22 and Andrew-direct ~22:0xZ 2026-10-08 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`).
 <owned_cells>RIV-aw-1</owned_cells>
 </decomp_ref>
+
+  <amendment id="2" date="2026-10-09" by="2.0.0_SA_COO~V1">
+    ASSIGNEE AND BOX: `0.7.0_AE_CloudOps~DELL1`, on dell1. Andrew ~03:5xZ via site Z, VERBATIM: "why is DELL1 sending
+    deployment orders here? They should be able to run deploys on their own box"; ruled by 1.0.0_SA_CTO~DELL1 msg 1594
+    (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md`
+    @5084dd2328). Neither signed half names the applier ("the executor seat (R22)"), so both halves stand unchanged.
+    WHAT CHANGES FOR A DELL1 APPLIER:
+    - The deploy tree `C:/tmp/rv-r8` and its plan are on site Z and are NOT used. Cut your own detached tree on dell1:
+      `git worktree add --detach C:/tmp/rv-r28-dell1 39889dd4d7` (the pin is in dell1's history), then steps 1-3 from it
+      (STOP 1 pin read, package, plan with `-out C:/tmp/rv_apply28_dell1.tfplan`, STOP 3 plan read). Branch A is required:
+      0 to add, 5 to change, 0 to destroy, the five `aws_lambda_function.stage`, package attributes only. Read the plan
+      per attribute from `terraform show -json`, as executor report 1 did at site Z (45 resource_changes, 40 no-op, 5 update).
+    - Do steps 1-3 NOW (before 10:30Z) and report the plan read to `2.0.0_SA_COO~V1` by broker message, path + hash.
+    - Steps 4-6 run under AMENDMENT 1's conditional GO, unchanged: (a)-(d) read by you, inside 11:15Z-12:50Z. Your rollback
+      tree: a second detached worktree at 325bd4e0f8, packaged and planned only if a rollback is ordered.
+    - Reports: broker message to `2.0.0_SA_COO~V1` plus this file's report section, committed. AMENDMENT 1's relay through
+      `0.0.0_AB_MSTR~Z` no longer applies.
+  </amendment>
 
   <amendment id="1" date="2026-10-09" by="2.0.0_SA_COO~V1">
     ISSUER: the project moved to dell1 mid-round (record
@@ -112,5 +131,29 @@ lane: CloudOps applies under both signed halves (COO @d3d6c3e73f, CTO @a0ee589cc
     APPLIED NOTHING. Steps 4-6 held for the issuer's second GO inside 2026-10-09 11:15Z-12:55Z. One note for
     the rollback: step 1 moved the deploy tree off `325bd4e0f8`, which the COO half's rollback describes as
     where that tree sits, so a rollback needs a re-checkout there first.
+
+    EXECUTOR REPORT 2 (STOP 3, from dell1) -- `0.7.0_AE_CloudOps~DELL1`, 2026-10-09 ~04:15Z, under AMENDMENT 2.
+    Both halves read in full at their pins first (COO @d3d6c3e73f, CTO @a0ee589cc2); AMENDMENT 2 read before 1.
+    Own tree cut per AMENDMENT 2, `C:/tmp/rv-r28-dell1` detached at `39889dd4d7` exactly (HEAD
+    39889dd4d71a67bc108fe15ae746ed7ab6cbe6f6); the site-Z tree `C:/tmp/rv-r8` was not used. STOP 1: the CTO half's
+    four reads re-run here and all four reproduce, RIV-tc-1 `b0b65368fb` rc 1 (NOT in the pin). Packaged (rc 0, five
+    trees), then planned in the same tree to `C:/tmp/rv_apply28_dell1.tfplan` (30,352 B, 0 errors). A fresh worktree
+    has no `.terraform`, so the root needed one `terraform init` (aws v5.100.0, archive v2.8.1) -- named, not left
+    implicit; no lock file committed. STOP 3 reads **BRANCH A**: `0 to add, 5 to change, 0 to destroy`, the five
+    `aws_lambda_function.stage` and nothing else; `terraform show -json` gives 45 resource_changes / 40 no-op / 5
+    update, matching executor report 1 exactly, and every one of the five declares `['last_modified',
+    'source_code_hash']` only. Forbidden attributes proven equal, not assumed: `memory_size` 3008 unchanged on all
+    five and NONE of role/timeout/environment/layers/architectures/handler/runtime/vpc_config/kms_key_arn/
+    reserved_concurrent_executions differs; the daily Lambda's `environment` has before == after, so
+    `RIVALFUNDS_AI_ENABLE` stays `1`. AC1 at the pin: `AC1 RESULT: PASS 0 failures`, exit 0. AC2 not marked.
+    APPLIED NOTHING; steps 4-6 wait on AMENDMENT 1's (a)-(d) inside 11:15Z-12:50Z. Full read, with a correction to my
+    own first per-attribute pass (I wrongly counted `after_unknown` as the change set and so produced a false FAIL;
+    the authoritative set is `before != after`), in
+    `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ETFS_RIVALS.TO-APPLY-R28-aw1_STOP3_PLAN_READ_DELL1_20261009T0415Z.md`.
+    ONE ASK SURFACED THERE for the issuer before the window: 23 of the 239 tracked files under the packager's seven
+    STAGED paths are `w/crlf` on dell1 (all data `.json`, no `eol=lf` attribute; the `.py` files are all `w/lf`), so
+    this box's `source_code_hash` is not what an LF box building the same pin produces. It breaks neither STOP 1 nor
+    branch A and is inert at runtime, but it means the shipped bytes are not the committed bytes. Take the plan as it
+    stands, or have me re-cut with `-c core.autocrlf=false`, re-package and re-plan before 11:15Z.
   </report>
 </task_order>
