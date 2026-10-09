@@ -44118,3 +44118,11 @@ REFUSED_20261008)
 2026-10-09T12:50:07Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=6.58  graded=n/a  args=(--verify-merge 5a0409b40c4043cf93e90730fbb22e756017fceb)  first=(none)
 2026-10-09T12:50:18Z PASS  4.0.0_SA_CRO~A  2  (all paths in-lane)
 2026-10-09T12:50:20Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=42.22  pushed=5a0409b40c merged=(box/sitez(graded=2/18)) held=(none)
+2026-10-09T12:50:44Z LANDED-2P  4.0.0_SA_CRO~A  6f91f8fafb  paths=2  validate=34.08s  wait=0.27s  hold=2.32s  build=1.54s  ref=0.70s  post-commit=12.05s  attempt=1
+2026-10-09T12:52:14Z PASS  0.0.0_AB_MSTR  1  (all paths in-lane)
+2026-10-09T12:52:50Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=3  secs=0.67  skipped=overlap holder=4157580
+2026-10-09T12:55:01Z LANDED-2P  0.0.0_AB_MSTR  bb05672892  paths=1  validate=166.72s  wait=1.67s  hold=16.90s  build=8.24s  ref=8.37s  post-commit=78.05s  attempt=1
+2026-10-09T12:55:25Z PASS  1.0.0_SA_CTO  1  (all paths in-lane)
+2026-10-09T12:55:49Z LANDED-2P  1.0.0_SA_CTO  e422fa5dc5  paths=1  validate=24.78s  wait=0.26s  hold=2.35s  build=1.34s  ref=0.89s  post-commit=10.55s  attempt=1
+2026-10-09T12:56:00Z PASS  0.0.0_AB_MSTR  1  (all paths in-lane)
+2026-10-09T12:56:23Z LANDED-2P  0.0.0_AB_MSTR  cbf01d3164  paths=1  validate=18.09s  wait=0.20s  hold=2.66s  build=1.44s  ref=1.14s  post-commit=11.71s  attempt=1
