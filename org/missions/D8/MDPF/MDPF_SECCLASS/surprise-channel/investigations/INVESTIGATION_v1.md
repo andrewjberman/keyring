@@ -5820,3 +5820,33 @@ by dell1 or by this seat.
   "world_is": "The validation sums every class present in the data, then the published mix keeps only MIX_ASSET_CLASSES, so a date holding a class outside that list (multi_asset, for SGIIX on two relationships) is published with a mix summing below 1.0 and no skip. The word's holding is now reclassified in the concentration list by SC-e-67, but those dates' stored mix is not recomputed."
 }
 ```
+
+## MDPF_SECCLASS-D1-S17 -- the e65 ledger's table-side corroboration is a wrong-domain census: no row carries an `input` attribute, so the filter reads 0 for every value
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S17",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T02:56Z",
+  "one_line": "The e65 ledger's L4 cites a DynamoDB scan filtered on input=cash_token, 0 of 9,155, as 'THE TABLE AGREES'. No row in etf-classifications carries an `input` attribute at all, so that filter returns 0 for every value including bd-securities, gics and schwab -- the zero measures the absent attribute, not the absent rows. L4's primary evidence is sound and its conclusion is undisturbed; only the corroborating limb is void.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE VOID FILTER WITH ITS POSITIVE CONTROL, read 2026-10-09T02:5xZ: `aws dynamodb scan --table-name etf-classifications --filter-expression '#i = :v' --expression-attribute-names '{\"#i\":\"input\"}' --select COUNT` returns Count=0 ScannedCount=11361 for EVERY value tried -- cash_token, and also bd-securities, gics and schwab, which must return non-zero if the attribute existed, and a nonsense control NO_SUCH_INPUT_zzz. Five values, one answer: the filter does not discriminate.",
+      "THE DIRECT READ: the same scan with `--filter-expression 'attribute_exists(#i)'` returns Count=0, ScannedCount=11361. Zero of 11,361 rows carry an `input` attribute.",
+      "WHAT A ROW ACTUALLY CARRIES: a 2-item scan prints attribute names ['asset_class','classified_by','identifier_namespace','last_updated','name','sub_asset_class','ticker','updated_by']. There is no `input` key.",
+      "classified_by IS THE WRITER, NOT THE INPUT SOURCE -- full-table distribution, denominator 11361: scheduled 8623, model 2303, legacy 238, seed 197. None of the four is an input-source label, so no persisted attribute distinguishes a cash_token-sourced row.",
+      "THE MECHANISM, from the served module's own text (opal-data-bd code/gold/lib/_shared/etf_classification_scheduled.py at ETag 40ffa3fa, pulled back out of S3 and read): the input label '(cash_token|bd-securities|gics|schwab)' is kept 'for the census/audit trail' and `write()` strips it before the write. The table was never intended to carry it.",
+      "THE CITATION, read at HEAD: org/critical_paths/change_management/20261007T1649Z_secclass-e65-cash-token-deploy-s-20261007_deploy_completion.md leg L4 -- 'THE TABLE AGREES, WITH ITS DENOMINATOR PRINTED: a paginated scan of etf-classifications filtered on input=cash_token returns 0 rows across 9,155 items scanned, read twice -- at 23:14:18Z before E_18 and at 00:15:01Z after it, both 0 of 9,155.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The e65 deploy ledger's leg L4 presents a table-side read as independent corroboration of CTO condition 3, under the heading 'THE TABLE AGREES, WITH ITS DENOMINATOR PRINTED', and states the scan twice with its denominator (0 of 9,155, before and after E_18). A denominator printed beside a filtered zero asserts that the filter was capable of returning non-zero.",
+  "world_is": "The filter cannot return non-zero against this table. No row carries an `input` attribute (attribute_exists -> 0 of 11,361), because the module's `write()` strips the input label before writing; the persisted provenance field is `classified_by`, which names the WRITER (scheduled / model / legacy / seed), not the input source. The cited scan therefore returns 0 for cash_token exactly as it returns 0 for bd-securities, gics, schwab and a nonsense control, and its zero is a wrong-domain census rather than a measurement -- CLAUDE.md Rule 24's 'a wrong-domain census returning EMPTY gets acted on', with the printed denominator supplying the false assurance. The scope narrowing is not in PATH or TIME but in FIELD, which the denominator cannot show. L4's PRIMARY evidence is untouched and independently sound -- the run's own stdout plan lines ('Scheduled rows written / refused: 0 / 0') and the on-instance md5 of the module that actually ran -- so e65's close is not disturbed and nothing is owed back on it. What is void is one corroborating limb, and the risk carried forward is that the same read gets reused as a check.",
+  "notes": "SURFACED, NOT CHASED, per CLAUDE.md section 2: found while building leg G's method for MDPF_SECCLASS.TO-SC-e65b by reading how the predecessor leg did the same read. It is NOT a finding against TO-SC-e65b's own act, which moved exactly its two signed keys with 10 of 10 watch keys unmoved and AC1 ok=True. REMEDIATION is the CVO's, not proposed here. WHAT I DO NOT CLAIM: that e65 placed a bad row, that any row is misclassified, or that e65's conclusion is wrong. Its primary evidence stands on its own and I did not re-run it. THE SOUND SUBSTITUTE, used for e65b's leg G instead of the void filter, in case it is useful to the gate's owner: the table CAN be asked the condition-3 question directly, keyed on what it does persist -- rows whose `ticker` begins NAME:: and whose asset_class is cash. That census reads 331 of 11,361, of which 330 have names that are not whole cash phrases, written by scheduled (313) and model (18). Those are pre-existing rows and the module is put-on-absence (it 'never replaces or edits an existing row'), so they are NOT condition-3 violations -- condition 3 governs what the next run PLANS. I state that explicitly because the naive reading of that same census says '330 violations' and would be wrong. A STRONGER CONTROL THAN THE DIFF, also run and also offered: both module versions were loaded as pure functions -- the OLD bytes from git at 03f7f8fb5c, md5 verified 3f1e6be8, equal to the measured pre-act ETag, and the NEW bytes pulled back out of opal-data-bd, md5 40ffa3fa -- and cash_token_match() was evaluated with each over all 331 real keys. OLD-yes/NEW-no = 8; OLD-no/NEW-yes = 0. So the change is narrowing-only ON LIVE DATA, not merely by reading the diff, which is what both halves assert; and the 8 rows it would now decline are the historical footprint the CTO half's 'does not land' branch already names, left in place by put-on-absence."
+}
+```
