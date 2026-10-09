@@ -2652,3 +2652,30 @@ round.** Never edit an existing row.
   "world_is": "The 22 months grade both ways, but the ex-date moves only 2 of them (the 2 XOM months of RGY003587, DIFF to MATCH); the other 20 hold a dividend whose ex-date and pay date share a calendar month, so the chained monthly return cannot change. The ex arm on the whole grade is not better: it turns 6 MATCH months DIFF (the same XOM dividend in three other accounts) against the 2 it turns MATCH, so on this evidence the pay date is not worse than the ex-date for the one cross-month security measured. The source holds 39 (CUSIP, pay date) keys on 16 CUSIPs and only XOM has a cross-month key, so the dividends of every other security in the delivery carry no ex-date and are graded at the pay date only. Neither date is adopted; the default stays pay."
 }
 ```
+
+## ADVI_COTBKF-D2-S37 -- L9 CB25y1-AC3 MET and CB25y2-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S37",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T01:43:44Z",
+  "one_line": "L9 CB25y1-AC3 MET and CB25y2-AC3 MET. y1: every unlisted-type treatment cites a stated source (DESCRIPTION, PAIRING or the CRO's table) committed @679c3c22b5 (20:41 ET) before the run's output @499405a2fe (20:52 ET); 35 of 35 months MATCH; ASF is the one sourceless type, named as such, and touches 0 of the 35. y2: 39 of 39 carried-level months each traced to their first differing month, step and posting; no fix applied (method_r25b = method_r25), so nothing was fitted to the grade.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/unlisted/sweep_regrade.md lines 1176-1235 (source table; the 35, 0 ASF)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/levels/sweep_regrade.md lines 1231-1313 (39 traced rows, 0 blank trace cells)",
+      "git log of the table commit vs the run output (this seat's read)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_25_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB25y1-AC3: every treatment cites a source decided before the run; each of the 35 is MATCH or carries a traced cause; no treatment chosen by its effect. CB25y2-AC3: each of the 39 traced to a first wrong month with its posting and cause, or named untraced; any fix one general rule.",
+  "world_is": "Both met as written."
+}
+```
