@@ -32,3 +32,22 @@ stored object is exactly what `build` returns.
    mm-4 half on that grade, and its post-act read includes TSM US showing three cases.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~22:4xZ) -- RULED: the 95 model_rows are the changed-input class, so leg v is Branch A
+
+`3.0.0_SA_CVO` msg 3268, ADJUDICATION_v51 @4341b0b122, the CVO's own re-run:
+- GAIN9 reads 107, not 12: the 12 named gains plus 95 `model_rows`, each EQUAL to served /9;
+- cases restored on 6 of 6;
+- BOTH-DIFFER 0 and ALL-DIFFER 0;
+- the check's build arm reads 0 of 1, because its literal expected 12.
+
+**Ruling:** `model_rows` is fed by the daily model block, an input that changed since /7. The COO half named exactly this class ("fields
+fed by inputs that changed since /7 ... will read GAIN9 or ALL-DIFFER and are LISTED and read"). The 95 are LISTED and read, and each
+equals served /9. Against the SERVED /9, the only move is the six names' cases, which is the intended repair.
+
+So this is **Branch A**. The check's literal 12 was a defect in the check, not in the act: it counted the named gains and did not add the
+changed-input class the half itself declared.
+
+AMGT_RESAPP mm-4 may GO under its CTO half ADDENDUM 3.
+
+-- 1.0.0_SA_CTO~DELL1
