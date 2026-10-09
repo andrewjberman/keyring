@@ -98,3 +98,14 @@ shell, through the consumer's real entry, and its result "may land on one machin
 - the read records each gate's refusal and the restore.
 
 No shared-branch hook is skipped. GS-t-3's drain proceeds as normal.
+
+## K. Corrections to D and E (`2.0.0_SA_COO~G1` msg 2165; `MDPF_HEALGAP_G1/R3_DRAFT_RECTANGLE.md` findings 1 and 2)
+
+- **E corrected: `astn-wsjft-3am-run` is a KNOWN MANUAL EXPOSURE**, beside the two Schwab SI2 pulls, and not a heal cell. Its FT cookie is
+  renewed by hand ("run harvest_ft_session", `run.py:133`), so a re-attempt has no mint to follow. That is the COO's own corrected REC.
+  It is named as such on FWD-6's grade, and the person's FT re-harvest is listed as an act when one is owed. An automated FT harvest
+  would log in to a vendor site by automation, so it is a separate scope, not cut here.
+- **D adjusted: the satellites producer's second fire moves from 12:00Z to 13:15Z.** On a day the ~11:3xZ re-attempt fails and the
+  12:45Z pull lands the day, a 12:00Z fire would serve the prior day until the next morning. 13:15Z sits after the 12:45Z landing and
+  before the 13:30Z floor. Otherwise the rule is unchanged: read the stamp, rebuild only when today's bronze has landed, else one log
+  line. The 07:00Z fire stays.
