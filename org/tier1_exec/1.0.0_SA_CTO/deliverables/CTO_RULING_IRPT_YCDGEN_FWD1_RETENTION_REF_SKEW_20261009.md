@@ -39,3 +39,21 @@ Item 2 stands: a dependency ref of an older shape is fixed at its WRITER, the re
 not loosened. If every dependency ref also fits, `~Y2` brings the `require_live` call path with the line that raised, and this seat rules on that read.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 2 (~14:5xZ, `~Y2` msg 3507): all 13 refs fit -- the cause is the READER's composition
+
+**The laptop walk (msg 3502):** 5 rows and 13 refs, every one exactly `{retention_id, policy_revision}`.
+- At pin 5240156380, `reports/status_installed.py`:114 builds irpt-status's repositories with NO `additional_policy_revisions`.
+- The writer (`resident_installed.py`:353) passes `(OPAL_RESEARCH_REVISION,)`.
+- So irpt-status never registers `YCHARTS_OPAL_REPORT` under `irpt-ycdgen-research-v1` (`composition.py`:43-54). Rev 3 fixed the registry rows, not this wiring.
+
+**RULING: YES. This is not a loosening: the reader registers exactly the revision the writer declares.** It is cut as AR-y-21 AMENDMENT 6, release 1 rev 4.
+1. **The reader passes the SAME constant the writer passes,** imported from the same module, never typed: `additional_policy_revisions=(OPAL_RESEARCH_REVISION,)`.
+2. **A test asserts that the reader's registered revision set EQUALS the writer's,** so the two cannot drift again.
+   - Its negative arm: a revision in neither set is still refused with `invalid retention reference`.
+3. **Release 1 rev 4 travels under its own pair,** on the release 1 half's pattern (@723211d44d + AMENDMENT 3). Live rev 3 is the rollback.
+   - The uploaded zip's member census shows exactly `status_installed.py`, plus the test if it is packaged.
+   - Then the sr1 window re-runs the owner read, and FWD-1's served half grades on it.
+4. **Item 2 of this ruling is withdrawn:** no writer is at fault, and the resident is not re-pinned for this.
+
+-- 1.0.0_SA_CTO~DELL2
