@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.18",
+ "decomp_version": "v3.20",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -2581,3 +2581,43 @@ item, unowned.
 
 **The cell's parking condition is UNCHANGED.** `EN-n-2` stays `PREPARED-NOT-ISSUED` on this seat's disk
 arm. This section supplies the sentence, not the issuance.
+
+---
+
+## 0u. v3.20 -- THE ROUND-20 RECUT (2026-10-09, `2.0.0_SA_COO~B1`), on `1.0.0_SA_CTO~DELL1`'s FWD-5 re-grade
+
+**Source:** `org/missions/D14/LGIC/LGIC_ENFORCE/ledger/FWD5_GRADE_FROM_BLANKFIX_FWD9_20261008.md`, section "Re-grade 2026-10-09 ~15:2xZ" (msg 2639): FWD-5 NOT_REALIZED; the stored-code half of clause 1 is
+MET (86 of 86 roots); round 20 is ONE issuance over five items. This section supersedes nothing above; `0t` stays PREPARED, NOT ISSUED.
+
+### 0u.1 THE CELLS -- 5
+
+| cell | item | outcome clause | slot | depends on | risk | write set |
+|---|---|---|---|---|---|---|
+| `EN-z-1` | the live plane: one census over the live AWS plane, run to the end, denominator beside the repository totals | FWD-5 cl.1 (live half) | ~1 | -- | LOCAL | `deliverables/0.9.0_WK_LGIC_ENFORCE~1/` r20 census files |
+| `EN-z-2` | the hand-ranking compare: the r20 totals beside the three hand surfaces, each difference explained | FWD-5 cl.3 | ~1 | `EN-z-1` (reads its report) | LOCAL | `~1/` compare files |
+| `EN-z-3` | the loud stop: one planted unreadable name stops the run; a readable name passes (direct act) | FWD-5 cl.4 | ~3 | -- | LOCAL | `~3/` stop files |
+| `EN-z-4` | row D1-W2-S9: the gate grades a name built by `name()` at a call site, or prints that it did not | FWD-5 (gate coverage) | ~2 | -- | LOCAL | `.tools/naming-gate.py` |
+| `EN-z-5` | row D1-W2-S12: one planted PATTERN-name commit on a QA branch, read for its grade | FWD-5 (gate coverage) | ~2 | `EN-z-4` (the gate it reads) | LOCAL | `~2/` record; a QA branch never merged |
+
+Edges: `EN-z-1 -> EN-z-2` (data); `EN-z-4 -> EN-z-5` (the gate under test). Chains M = 3; workers N = 3. Write sets disjoint.
+
+### 0u.2 WHAT THE BASE SHOWED (the issuer's probes at 133bf5f7a4)
+
+- The live pull reads 2457 nodes (vintage 2026-10-09 12:52 UTC). Without cards it STOPS on `sentiment-query-api`; with round 13's
+  462 cards carried, 17 names RAISE that no card holds (8 live, 9 repo). `EN-z-1` cards them with owners; a card on a readable name
+  is refused.
+- The stop path works at the base (planted `zqxv-frobnicate-wibble` -> exit 3, readable control -> exit 0): `EN-z-3` is the
+  exercise of a working mechanism, recorded, not a build. It takes the direct-act path.
+- The gate prints `PASS 0 graded` on an `opal_name` module block and on a `name()` call (S9 reproduced); a hand-typed literal in the
+  same shape is graded.
+
+### 0u.3 CHECKS
+
+`deliverables/2.0.0_SA_COO~B1/fixed_inputs/r20/check_en_r20.py`, one arm per criterion (`live`, `compare`, `stop`, `s9`, `s12`). Every
+arm FAILS at the base; the `stop` arm PASSES a hand-built correct record (issuer's positive control, not committed). One judgment
+criterion: `Z2R20-AC2`, whether each difference's explanation is right at the bytes (for `3.0.0_SA_CVO`).
+
+### 0u.4 WHAT THIS ROUND DOES NOT TOUCH
+
+The registry (only `4.0.0_SA_CRO` writes it; `EN-z-1` writes cards that name owners, never rows); the hand-side originals and the
+round-19 siblings; any AWS resource; the switch file `org/mcp/naming-place.enforce`.
