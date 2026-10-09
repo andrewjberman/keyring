@@ -1169,6 +1169,30 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "The order: keep test_securities_allowlist.py green while Apple becomes an allowlist token.",
     "world_is": "The two assertions encode the pre-exception exclusion of Apple and cannot both hold with the exception; they need updating (line 78: pass exceptions_path=None; line 92: assert Apple present via the exception).",
     "notes": "Left unedited (outside <paths>). Owner: issuer 2.0.0_SA_COO~T2 to amend the order's paths or cut the test update."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T03:10:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "commentary.tf as written cannot carry FWD-10 live: the Lambda's env omits five names lambda_handler._live_ports() reads (TICKET_API_BASE, TICKET_TOKEN_SECRET_ID, KIMI_API_URL, COMPOSITION_BUCKET, COMPOSITION_KEY_PREFIX) and its policy has no read on the svc-commentary ticket secret, so an apply now would stop every record at NO_COMPOSITION_SOURCE or fail the ticket write.",
+    "disarm_owner": "2.0.0_SA_COO~T2 (cut the commentary.tf completion cell in round 17, before the apply pair is drafted); the composition source stays the laptop fabric's irpt-key decision",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/commentary/lambda_handler.py:56-85: env.get of COMPOSITION_BUCKET, COMPOSITION_KEY_PREFIX, TICKET_API_BASE, KIMI_API_URL, TICKET_TOKEN_SECRET_ID",
+        "infra/aws/terraform/transcripts/commentary.tf:113-118: env holds only KIMI_STANDING_WORD_REF and WIPE_GATE_RECORD",
+        "infra/aws/terraform/transcripts/commentary.tf:51-82: secretsmanager:GetSecretValue on astn/kimi/api-key-* only; no statement on opal/ticketing/svc-commentary (contract v0.2 @20784c5462)",
+        "1.0.0_SA_CTO~DELL2 msg 2252 asks a never-widen packet covering 'the svc-commentary secret read'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-KIMI/C-TICKET (PRD v0.3 @1a298a7f6c): with the vendor hold ended, the Lambda's apply is held only by its never-widen pair.",
+    "world_is": "The Terraform the pair would bind to is incomplete; a pair signed on these bytes would sign a function that cannot write a ticket.",
+    "notes": "Round 16 is mid-round (frozen); the completion is a round-17 cell. gold_rows returns [] (no precedent) by design until C-WIPE-GATE gold exists."
   }
 ]
 ```
