@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md</decomp_doc>
 <owned_cells>MP-x-1</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPORTAL.TO-MP-x-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPORTAL~5</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
@@ -129,7 +130,9 @@ Positive control for AC2: the five existing admin suites pass at base (23 passed
 Until MP-x-3's grant is applied, the live handler returns the 503 arm. No gate. Slot `~5` continues to MP-x-4 and MP-x-5
 when they are cut.
 
-<status>complete -- drained by 2.0.0_SA_COO~MP 2026-10-08 ~23:0xZ @1cf3a1dce5: AC1 5 of 5 (7 passed), AC2 30 passed, AC3 routes=1, re-run by the issuer in a fresh worktree at eb9c655e68. The worker set the bare flip itself (outside its paths); this line supersedes it. Was: pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-08 ~23:0xZ @1cf3a1dce5: AC1 5 of 5 (7 passed), AC2 30 passed, AC3 routes=1, re-run by the issuer in a fresh worktree at eb9c655e68. The worker set the bare flip itself (outside its paths); this line supersedes it. Was: pending
+
+<status>complete</status>
 <round>4</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

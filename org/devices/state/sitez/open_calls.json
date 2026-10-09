@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-08T21:16:10Z",
+ "written_at": "2026-10-08T23:17:59Z",
  "written_by": "1.0.0_SA_CTO~O",
  "rows": [
   {
@@ -12,7 +12,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_164xZ_DAILY_NEWS_PULL_NONSTOP_ON_THIS_BOX.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T16:59:18Z",
    "scope": {
     "measured_at": "2026-10-08T16:59:18Z",
@@ -46,7 +46,13 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T23:13:06Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "sitez-20261008T165919Z-5a53",
@@ -56,7 +62,7 @@
    "source": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T16:59:19Z",
    "scope": {
     "measured_at": "2026-10-08T16:59:19Z",
@@ -81,7 +87,13 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T23:13:07Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "sitez-20261008T165920Z-ce4b",
@@ -91,7 +103,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_OPEN_CALLS_ITEM_5_HIS_ITEMS_4_AND_6_EXPLAINED.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T16:59:20Z",
    "scope": {
     "measured_at": "2026-10-08T16:59:20Z",
@@ -122,7 +134,13 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T23:13:09Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "sitez-20261008T165921Z-35ce",
@@ -132,7 +150,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECHIST_SH_T4_SITEZ_DEPLOY_20261008.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T16:59:21Z",
    "scope": {
     "measured_at": "2026-10-08T16:59:21Z",
@@ -152,7 +170,13 @@
      "shared": []
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T23:13:08Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "sitez-20261008T165922Z-faf8",
@@ -162,7 +186,7 @@
    "source": "org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T16:59:22Z",
    "scope": {
     "measured_at": "2026-10-08T16:59:22Z",
@@ -196,7 +220,13 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T23:17:59Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "sitez-20261008T165923Z-d299",
@@ -206,7 +236,7 @@
    "source": "org/missions/D5/AMGT/AMGT_CORPUS/ledger/CTO_REVIEW_PORTAL_636ce634_ROUND40.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T16:59:23Z",
    "scope": {
     "measured_at": "2026-10-08T16:59:23Z",
@@ -238,7 +268,13 @@
      ]
     }
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T23:13:04Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "sitez-20261008T174158Z-bb06",
@@ -570,6 +606,51 @@
     "crossbox": null,
     "ruled_by": "andrew"
    }
+  },
+  {
+   "id": "sitez-20261008T231757Z-9f24",
+   "project": "AMGT_HARVST",
+   "subject": "Barron's sign-in (the 2026-09-30 saved session is refused, 0 of 8 collected); his words: 'We can handle Barron's sign in any time'",
+   "asked_by": "1.0.0_SA_CTO~Z",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_OPEN_CALLS_ANSWERED_RELAY.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T23:17:57Z",
+   "kind": "act",
+   "scope": {
+    "measured_at": "2026-10-08T23:17:57Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/harvest"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/logic/registry overlaps the write set of LGIC_ENFORCE placed on laptop (infra/logic/registry)",
+      "infra/logic/registry overlaps the write set of IRPT_BCKEND placed on dell2 (infra/logic/registry)",
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      "lib/opal_data_harvest/worker.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_ab3_account_402_fresh_session.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/tab_transport.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/test_aw1_origin_load_wait.py is on the shared branch (lib)",
+      "lib/opal_data_harvest/publishers.py is on the shared branch (lib)"
+     ]
+    }
+   },
+   "closed": null
   }
  ]
 }

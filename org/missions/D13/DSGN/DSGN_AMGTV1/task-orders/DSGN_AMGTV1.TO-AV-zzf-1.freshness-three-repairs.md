@@ -85,7 +85,8 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   `<risk>LOCAL</risk>`, so it takes the direct-act path.
 - **Three criteria:** AC2 (r53a) is the round-53 outcome's control, because this cell edits the same cell markup.
 
-<status>pending</status>
+<status>cancelled</status>
+<status_reason>Cancelled by the issuer before any spawn. Andrew-direct ~22:5xZ/~23:0xZ 2026-10-08 moves DSGN_AMGTV1 to DELL1 after the CURRENT round closes (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md @b7361ceb2a; relay 1.0.0_SA_CTO~Z msg 32100: "finish the round in flight, start no new round"). Round 53 was the round in flight and is closed; this round-54 cell was issued @a07147a87c at 23:01:02Z, after his first message, and no worker took it. Its three repairs (the CTO finding of msg 32088, rows Z-S25 and Z-S26) and the check round54/checks/r54.cjs carry forward as the next DSGN_AMGTV1 round's list on DELL1.</status_reason>
 <round>54</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzf-1</to_id>
 <slot>~118</slot>

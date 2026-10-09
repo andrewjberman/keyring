@@ -301,6 +301,51 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "spec_asserts": "A build-only read of the package hash writes nothing to the artifact bucket; the artifact key holds what is deployed until the applier's upload.",
     "world_is": "The script always uploads; any later terraform plan on ticket-center would have seen a code change nobody applied.",
     "notes": "Window ~1 min; the Lambda never moved (CodeSha256 y0UF... read before and after). The F10 apply order builds and uploads in its own leg."
+  },
+  {
+      "project": "TCKT_VNEXT",
+      "fabric": "dell2",
+      "surfaced_by": "0.9.0_WK_TCKT_VNEXT~3",
+      "surfaced_at": "2026-10-08T23:25:00Z",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "TCKT_VNEXT-D2-W3-S2",
+      "one_line": "Adding the PACKAGE action to MATRIX, as the order says, fails the pre-existing test_authz_matrix.py layer-coverage test (9 != 8 actions); that file is outside the order's <paths>, so F10-l3-AC3 cannot pass.",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py:289-292 @c3721347e2: authorized = set(re.findall(r'authorize[(]\"([A-Z-]+)\"', src)); assertEqual(authorized, set(mod.MATRIX)); assertEqual(len(authorized), 8, 'a new one must land in MATRIX AND here')",
+              "pytest -q infra/aws/lambda/ticket_center/tests with PACKAGE in MATRIX and authorize(\"PACKAGE\", ...) in package_ticket: 1 failed (test_layer_coverage_every_route_behind_the_matrix_and_actions_match: 9 != 8), 117 passed, 43 subtests passed; baseline before the change 108 passed 0 failed",
+              "no spelling satisfies both the order and that test: the set-equality needs the authorize literal, the len==8 needs it absent from a 9-key MATRIX"
+          ]
+      },
+      "spec_asserts": "WORKER FACE item 1: add a PACKAGE action to MATRIX; F10-l3-AC3: the whole ticket_center/tests directory passes at no fewer than the pre-cut count and 0 failed; <paths> excludes test_authz_matrix.py.",
+      "world_is": "test_authz_matrix.py pins the route table at exactly 8 actions (and ROUTES at 8 routes) and fails at 9. The worker kept the order's design (PACKAGE in MATRIX as an empty row, authorize call in the route) and did not edit or weaken that test. The fix is a one-line count change plus the package route in ROUTES, in a file the issuer or a later order must grant.",
+      "notes": "Every other test passes: 117 passed, the 10 new ones included."
+  }
+,
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_TCKT_VNEXT~3",
+    "surfaced_at": "2026-10-08T23:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-W3-S3",
+    "one_line": "Resolves TCKT_VNEXT-D2-W3-S2: AMENDMENT 1 (commit 6751522799) granted test_authz_matrix.py; the package route is in ROUTES, the pinned action count is 9, and f10-regress now passes. Also: the order file in this worktree was found holding a truncated uncommitted copy and was restored byte-for-byte from 6751522799 before the status flip.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/F10_CHECKS/f10_checks.py f10-regress: F10-REGRESS-OK passed=118 failed=0",
+        "infra/aws/lambda/ticket_center/tests/test_authz_matrix.py: ROUTES gains POST /api/scoped/tickets/TCK-20260820-aaaa1111/package; assertEqual(len(authorized), 9, ...); no other line changed",
+        "git diff of the order file in the worktree before restore: 71 lines vs 131 at 6751522799 (cell text and acceptance block missing, uncommitted)"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 1: two changes only to test_authz_matrix.py (ROUTES entry, count 8 to 9); F10-l3-AC3 passes at no fewer than the pre-cut count with 0 failed.",
+    "world_is": "Both changes landed as specified; 118 passed 0 failed (pre-cut 108 plus the 10 new tests). The worktree copy of the order file was a damaged uncommitted version; it was rewritten from the issuer's commit, not edited by hand.",
+    "notes": "Resolves D2-W3-S2; that row is not rewritten."
   }
 ]
 ```

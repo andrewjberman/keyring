@@ -120,7 +120,7 @@ Rows: id `NFRA_OPLGTW-Z-W41-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   question no single instrument here can settle.
 - Pre-cut: see the issuance commit.
 
-<status>staged</status>
+<status>pending</status>
 <round>32</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>
