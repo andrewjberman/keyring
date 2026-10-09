@@ -23,6 +23,10 @@ to synthesize that into the workflow, and it needs a sign off by the CVO." Owner
         --owed-call: the tick's only block is ONE open call (e.g. a card held for Andrew). It reads `WAITING CALL <id> <state>`
         only while that call's row on org/devices/state/<box>/open_calls.json reads OPEN or HELD; a CLOSED or absent call
         counts as before (CVO @f59dbc4f71 via 1.0.0_SA_CTO~Z msg 32856 -- never tick --result work to dodge the counter).
+        --wait-until <UTC ISO> --owner <serial | schedule:<name>>: the tick's only block is a DATED event, before any case is
+        opened (e.g. the 11:00Z scheduled pull). It reads `WAITING DATED <owner> UNTIL <time>` with the count at 0 while the
+        time is ahead (at most 7 days) and the owner is a LIVE seat or a schedule; an owner not live counts as before, and the
+        chase applies (brief gpt-feedback-autonomy-solutions item 4, 1.0.0_SA_CTO @ba20ac668b). Pass it on each such tick.
     python .tools/unblock.py open --project <CODE> --by <COO serial> --body <position.md>     (COO, on THIRD-EMPTY-TICK)
     python .tools/unblock.py propose --id <UB> --by <CRO serial> --body <approach.md>         (CRO)
     python .tools/unblock.py fold --id <UB> --by <CTO serial> --ref <PRD addendum | round-N analysis | ruling path>   (CTO)
@@ -339,7 +343,18 @@ def open_call_row(call_id: str):
     return next((r for r in (rows or []) if isinstance(r, dict) and r.get("id") == call_id), None)
 
 
-def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None, call=None) -> tuple:
+def dated_wait(owner: str, owner_live: bool, until: str) -> tuple:
+    """PURE. (True, until) when a dated wait counts the tick as WAITING; (False, reason) otherwise. The owner is a seat that
+    must be LIVE, or `schedule:<name>` for a scheduled fire, which a clock owns (brief gpt-feedback-autonomy-solutions item 4,
+    ruled YES by 1.0.0_SA_CTO @ba20ac668b: 'a dependency with a live owner and a time is a wait')."""
+    if not owner:
+        return False, "no-owner"
+    if not owner.startswith("schedule:") and not owner_live:
+        return False, "owner-not-live"
+    return True, until
+
+
+def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None, call=None, dated=None) -> tuple:
     """PURE. (new empty count, verdict). A tick that found work resets the count; a SIGNED file means resume on it. With no
     file in flight, a resumed file's named event time still ahead (`waiting` = (id, until)) holds the count at 0 and reads
     WAITING, so a dated wait already folded never re-fires; the count restarts once the time has passed. An owed act in
@@ -357,6 +372,8 @@ def tick_verdict(empty_before: int, result: str, active, waiting=None, owed=None
         return 0, "WAITING OWED %s %s UNTIL %s" % owed
     if call is not None:
         return 0, "WAITING CALL %s %s" % call
+    if dated is not None:
+        return 0, "WAITING DATED %s UNTIL %s" % dated
     return n, ("THIRD-EMPTY-TICK" if n > EMPTY_TICKS_BEFORE else "KEEP-DRIVING")
 
 
@@ -393,7 +410,21 @@ def cmd_tick(args) -> int:
                                                  ("state=" + why) if ok else ("reason=" + why)))
         if ok:
             call = (args.owed_call, why)
-    n, verdict = tick_verdict(before, args.result, active, waiting, owed, call)
+    dated = None
+    if getattr(args, "wait_until", None) and args.result == "nothing" and active is None and waiting is None \
+            and owed is None and call is None:
+        until = parse_wait(args.wait_until, now_dt())          # refuses garbage, a past time, or more than 7 days out
+        owner = (args.owner or "").strip()
+        live = False
+        if owner and not owner.startswith("schedule:"):
+            scan = load_mod("opal_scan_for_unblock", ".tools/open-calls-scan.py")
+            live = scan.is_live(scan.liveness().get(owner), now_dt().timestamp())
+        ok, why = dated_wait(owner, live, until)
+        print("DATED: owner=%s live=%s counts=%s %s" % (owner or "(none)", live if not owner.startswith("schedule:") else "clock",
+                                                        "WAITING" if ok else "EMPTY", ("until=" + why) if ok else ("reason=" + why)))
+        if ok:
+            dated = (owner, why)
+    n, verdict = tick_verdict(before, args.result, active, waiting, owed, call, dated)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         json.dump({"empty": n, "at": stamp(now_dt()), "verdict": verdict}, fh)
@@ -609,6 +640,15 @@ def selftest() -> int:
                 pass
         rec("wait-until-refuses-garbage-past-and-beyond-seven-days", bad == []
             and parse_wait(ahead.replace(":00Z", "Z") if ahead.endswith(":00Z") else ahead, now) <= ahead)
+        # the pre-case dated wait (item 4, @ba20ac668b): a live seat or a schedule holds the count; a dead owner does not
+        rec("dated-wait-live-owner-or-schedule-holds-the-count",
+            dated_wait("1.0.0_SA_CTO~DELL1", True, ahead) == (True, ahead)
+            and dated_wait("schedule:mdpf-sechist-pull-1100z", False, ahead) == (True, ahead)
+            and tick_verdict(2, "nothing", None, dated=("schedule:x", ahead)) == (0, "WAITING DATED schedule:x UNTIL %s" % ahead))
+        rec("dated-wait-dead-or-no-owner-counts-as-before",
+            dated_wait("2.0.0_SA_COO~Q1", False, ahead) == (False, "owner-not-live") and dated_wait("", True, ahead)[0] is False
+            and tick_verdict(2, "nothing", None) == (3, "THIRD-EMPTY-TICK"))
+        rec("work-still-resets-with-a-dated-wait", tick_verdict(2, "work", None, dated=("schedule:x", ahead)) == (0, "KEEP-DRIVING"))
         XA._put(key_of(d["id"]), d)
         rec("store-round-trip-and-active-lookup", active_for("2.0.0_SA_COO~M1", "P")["id"] == d["id"]
             and active_for("2.0.0_SA_COO~M1", "Q") is None)
@@ -684,6 +724,10 @@ def main(argv: list) -> int:
     t.add_argument("--owed-ledger", default="", help="slug of the owed act's org/critical_paths/.open_deploys/ entry")
     t.add_argument("--owed-owner", default="", help="serial of the seat that owes the act")
     t.add_argument("--owed-call", default="", help="open-call id the project waits on (WAITING while OPEN or HELD)")
+    t.add_argument("--wait-until", default="", help="UTC ISO time of the dated event the project waits on, before any case "
+                                                    "(WAITING DATED while ahead and the owner is live; at most 7 days)")
+    t.add_argument("--owner", default="", help="with --wait-until: the LIVE seat that owns the wait, or schedule:<name> for "
+                                               "a scheduled fire")
     o = sub.add_parser("open")
     o.add_argument("--project", required=True)
     o.add_argument("--by", required=True)
