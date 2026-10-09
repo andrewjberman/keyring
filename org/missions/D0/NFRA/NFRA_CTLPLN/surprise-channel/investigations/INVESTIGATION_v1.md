@@ -5711,3 +5711,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Fix for the first: the issuer 2.0.0_SA_COO~Z deletes the stale '<status>pending</status>' line. For the second: the APPLY issuers (2.0.0_SA_COO~C, 2.0.0_SA_COO~R) draw ordinals from one counter, or cite the full id."
 }
 ```
+
+## NFRA_CTLPLN-W13-S31 -- AMENDMENT 9 criterion CTk2-AC13 names a pack path, C:/tmp/kit-providers-20261008-k9/pack, that no longer exists, so AC13 cannot be run as written.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S31",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-09T01:53:45Z",
+  "one_line": "AMENDMENT 9 criterion CTk2-AC13 names a pack path, C:/tmp/kit-providers-20261008-k9/pack, that no longer exists, so AC13 cannot be run as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer instruction for this pass: the pack was deleted after delivery; AC13 recorded UNVERIFIABLE-BY-INSTRUMENT, pack not rebuilt.",
+      "AMENDMENT 10 pass: AC13 not run (path absent), no rebuild attempted."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTk2-AC13 reads the readback of investor-reporting/core from C:/tmp/kit-providers-20261008-k9/pack and expects TF-READBACK version=1.15.8 init=ok.",
+  "world_is": "The pack was deleted after delivery to the issuer's intake path; the criterion has no instrument to run against. Recorded UNVERIFIABLE-BY-INSTRUMENT with that reason; the earlier pass's readback evidence is the substitute oracle."
+}
+```
