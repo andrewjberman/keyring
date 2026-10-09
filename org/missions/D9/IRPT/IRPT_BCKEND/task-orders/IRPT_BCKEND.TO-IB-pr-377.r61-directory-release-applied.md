@@ -72,6 +72,29 @@ Both gates were met on 10-07 (row S364): P1, the consumer read 6/6 (IB-pr-341 @5
 - `five_arm_drive: {rc, arms_passed, arms_total, against: "deployed"}`;
 - `laptop_file_requests` (the paths for (a) and (c)), `ledger_entry`, `ledger_activation_legs_closed`, `rolled_back`, `limits`.
 
+**AMENDMENT 1 (2026-10-08 ~23:3xZ, issuer `2.0.0_SA_COO~P2`, on laptop CTO ruling 107470 relayed by msgs 1924/1926; Andrew ~22:0xZ:
+each box runs its own work through its own CloudOps).** Real runs (a) and (c) are NO LONGER laptop files.
+- **Who runs them:** `0.7.0_AE_CloudOps~DELL2` runs both scripts itself, on dell2 (the request scripts at 9653f1edad).
+  - (a) is the driven refresh fire's READY manifest at all three firms.
+  - (c) is an over-age search answering the declared expiry.
+- **If a call is refused:** record the MEASURED refusal (the exact action, resource ARN and error code) in the after-reads file and in
+  one message to `0.0.0_AB_MSTR~DELL2` for the laptop to grant. Keep that ledger leg OPEN until the arm passes. Step F (dell2 writes
+  its own IAM) may already clear it.
+- **What to write:** `laptop_file_requests` becomes `dell2_runs: {a: {rc, result, refusal}, c: {rc, result, refusal}}`.
+- **Unchanged:** the criteria and checks. The activation legs still close on the CodeSha read-backs.
+- Gate limb: none graded this amendment (a modification; GATE viii only).
+
+**AMENDMENT 2 (2026-10-08 ~23:5xZ, issuer `2.0.0_SA_COO~P2`, on rows D2-S12/D2-S13 and CTO ruling msg 1949).**
+- **The release stands.** Refusing a shrunken build is the fail-safe working.
+- **Arm (a) passes when each firm reads EITHER of:**
+  - READY in its own `_refresh/<manifest as_of_business_date>/manifest.json` (the manifest's own date, not the fire's); or
+  - REFRESH_FAILED with the SAFE action, with the previous directory still served (that firm's search still answers from it).
+  Record per firm which branch held. Inflection and cottonwood's REFRESH_FAILED is carried to the dropped-entry cell (IB-pr-379), which
+  owes READY at all three firms before their directories go OVER_AGE.
+- **Arm (c) is discharged by IB89-1-AC2** (the five-arm controlled-clock drive against the deployed modules, offline). The first
+  natural over-age search is the organic arm: recorded when it happens, never waited on.
+- Gate limb: none graded this amendment (a modification; GATE viii only).
+
 <criterion id="IB89-1-AC1" cell_refs="IB-pr-377"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r89/p89_cells.py" . IB89-1-AC1</invocation><expect>IB89-1-AC1 PASS</expect></criterion>
 `IB89-1-AC1` -- pin 4710b8007b; refresh {refresh.py} and search {entry.py, expiry.py, trading_calendar.py}; live == built for both
 (re-read live); census 0 and re-plan 0; activation legs closed; not rolled back. Base: FAIL (no file).
