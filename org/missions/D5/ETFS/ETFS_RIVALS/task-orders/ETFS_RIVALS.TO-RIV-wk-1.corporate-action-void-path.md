@@ -124,7 +124,8 @@ void path ships before that apply, the pair re-pins on its merge and the COO re-
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 ~15:1xZ by 2.0.0_SA_COO~V1 @f76aa7aa54: AC1 FAIL 2 on box/dell1 just before the merge (the control) and PASS 0 after; proof VALID; full suite on the merged tree 1000 passed, 6 skipped, 0 failed (AMENDMENT 1 fixed the stale test_r6ap1 assertion that RIV-wj-1 left; row W34-S1). -->
 <round>28</round>
 <workstream>3i</workstream>
 <slot>~34</slot>
