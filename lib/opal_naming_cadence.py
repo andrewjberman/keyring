@@ -223,9 +223,93 @@ def _read(path):
         return fh.read().replace("\r\n", "\n")
 
 
+def _walk(sc, scope, label, exprs, extra, call_anchor=None):
+    """Read every EVENT_RULE / SCHEDULE resource of one scope (then its module instances) with the scope's own evaluator
+    (opal_naming_scope: locals, variables and tfvars). exprs gets {resource block where: schedule_expression text} for the
+    block whose expression the evaluator resolves; extra gets one tuple per name the census cannot read as a literal and
+    the evaluator resolves: (type, name, where, expression or None, has event_pattern, states an expression). `where` is
+    the line the scope gives the name (the same line root_names() puts on the item), so the root check finds the row."""
+    for res in scope.f.resources:
+        if res["type"] not in scope.attr_map:
+            continue
+        typ, attr = scope.attr_map[res["type"]]
+        if typ not in TYPES:
+            continue
+        row = sc._name_expr(res, scope, attr, None)  # None when the name is one literal (the census counts it)
+        anchor = call_anchor or "%s:%d" % (res["path"], res["line"])
+        b = scope.bindings(res)
+        if isinstance(b, sc.Unk):
+            continue
+        erow = res["attrs"].get("schedule_expression")
+        for bk, bv in b[1]:
+            env = sc._Env(scope, each=({"key": bk, "value": bv} if b[0] == "for_each" else None),
+                          count=(bk if b[0] == "count" else None))
+            expr = None
+            if erow is not None:
+                v = sc._run(erow[0], res["path"], erow[1], env)
+                expr = str(v) if isinstance(v, str) else None
+            if row is None:
+                if call_anchor is None and expr is not None:
+                    exprs.setdefault(anchor, expr)
+                continue
+            val = sc._run(row[0], res["path"], row[1], env)
+            if isinstance(val, str) and val:
+                item = (typ, str(val), sc._where_of(val, label, anchor), expr, "event_pattern" in res["attrs"], erow is not None)
+                if item not in extra:
+                    extra.append(item)
+    for name in sorted(scope.f.modules, key=lambda n: scope.f.modules[n]["line"]):
+        call = scope.module_call(name)
+        if call.folder is None:
+            continue
+        pairs = call.pairs()
+        if isinstance(pairs, sc.Unk):
+            continue
+        anchor = call_anchor or "%s:%d" % (call.block["path"], call.block["line"])
+        for bk, bv in pairs[1]:
+            _walk(sc, call.make((pairs[0], bk, bv)).scope, label, exprs, extra, anchor)
+
+
+def _scoped(root):
+    """(exprs, extra) of _walk over the root's folder: the names and schedule expressions that are built in locals,
+    variables or modules (row W4-S3). ({}, []) when the folder cannot be read by the scope."""
+    exprs, extra = {}, []
+    try:
+        import opal_naming_scope as sc
+        folder = sc._Folder(os.path.abspath(root), _repo_rel(root))
+        sc._FOLDERS.clear()
+        _walk(sc, sc._Scope(folder), _repo_rel(root), exprs, extra)
+    except (OSError, ValueError, KeyError, AttributeError):
+        return {}, []
+    return exprs, extra
+
+
+def _decide_row(typ, name, where, expression, has_pat, stated, ruled):
+    """One cadences row from what is known of a resource: the expression text (None when it is not a literal or
+    not stated), whether an event pattern is declared, whether a schedule_expression is stated."""
+    if stated:
+        if expression is None:
+            word, basis = None, "expression is not a literal"
+        else:
+            word, basis = word_for(expression)
+    elif has_pat:
+        row = ruled.get((name, typ))
+        tok = _event_token(row["canonical"]) if row else None
+        if tok is not None:
+            word, basis = tok, "event rule: ruled %s (%s)" % (row["canonical"], row["evidence"])
+        else:
+            word, basis = None, "event rule: its on-{event} token is not ruled"
+    else:
+        word, basis = word_for(None)
+    return {"type": typ, "current": name, "where": where, "expression": expression, "word": word,
+            "basis": basis, "has_event_pattern": has_pat}
+
+
 def cadences(root):
-    """One dict per EVENT_RULE or SCHEDULE name census_tf_names() finds in the root's .tf files."""
+    """One dict per EVENT_RULE or SCHEDULE name census_tf_names() finds in the root's .tf files, then one per such name
+    built in a local, a variable or a module that the scope's evaluator resolves to a literal (row W4-S3); an expression
+    that is a variable or local the evaluator resolves is read like a literal."""
     ruled = _ruled_event_rules()
+    exprs, extra = _scoped(root)
     rows = []
     for fp in _tf_files(root):
         path = _repo_rel(fp)
@@ -248,28 +332,24 @@ def cadences(root):
             if it is not None:
                 attrs = {a[1]: a for a in opal_naming._tf_items(text, it[4], it[5]) if a[0] == "attr"}
             expression, has_pat = None, "event_pattern" in attrs
-            if "schedule_expression" in attrs:
+            stated = "schedule_expression" in attrs
+            if stated:
                 expression = opal_naming._tf_literal(attrs["schedule_expression"][3])
                 if expression is None:
-                    word, basis = None, "expression is not a literal"
-                else:
-                    word, basis = word_for(expression)
-            elif has_pat:
-                row = ruled.get((name, typ))
-                tok = _event_token(row["canonical"]) if row else None
-                if tok is not None:
-                    word, basis = tok, "event rule: ruled %s (%s)" % (row["canonical"], row["evidence"])
-                else:
-                    word, basis = None, "event rule: its on-{event} token is not ruled"
-            else:
-                word, basis = word_for(None)
-            rows.append({"type": typ, "current": name, "where": where, "expression": expression, "word": word,
-                         "basis": basis, "has_event_pattern": has_pat})
+                    expression = exprs.get(where)  # a variable or local the scope resolves
+            rows.append(_decide_row(typ, name, where, expression, has_pat, stated, ruled))
+    seen = set((r["type"], r["current"], r["where"]) for r in rows)
+    for typ, name, where, expression, has_pat, stated in extra:
+        if (typ, name, where) not in seen:
+            seen.add((typ, name, where))
+            rows.append(_decide_row(typ, name, where, expression, has_pat, stated, ruled))
     return rows
 
 
 def _independent_count(root):
-    n = 0
+    """The literal EVENT_RULE and SCHEDULE names of the root's .tf files, counted without cadences(), plus the names the
+    scope resolves from locals, variables and modules (counted by _scoped, the scope's own evaluator)."""
+    n = len(set((t, nm, w) for t, nm, w, _e, _p, _s in _scoped(root)[1]))
     for f in os.listdir(root):
         if f.endswith(".tf"):
             names, _ = opal_naming.census_tf_names("x/" + f, _read(os.path.join(root, f)))
