@@ -2,7 +2,7 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-v21</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~21</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~22</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>pending</status>
@@ -133,6 +133,12 @@ portal cell now wires the ORIGINAL FILE reader too. Part A and the PDF reader ar
   `v21-page` now requiring five names. Re-validate the proof instance and flip back to complete.
 - Gate limb: to-pipeline-gate GATE (viii) grades this modified order (it declares `<placeholders>`).
 
+**AMENDMENT 3 (issuer, 2026-10-09 ~09:3xZ; rows D2-W22-S1, D2-W22-S2).** Re-issued to `0.9.0_WK_IRPT_ANLREQ~22`, which holds the
+amendment-2 build (portal bd3b6559, workspace 60affc1faf). The grant gains ONE portal file,
+`src/pages/InvestorReporting/contracts/envelope.ts`: add the `analysis-request-original` entry to `IR_DATA_ADAPTER` (:181), reusing the
+PDF adapter, since the envelope is the same. Nothing else in that file changes. Then re-run the three criteria, commit the proof instance
+and flip to complete. Gate limb: to-pipeline-gate GATE (viii) grades this modified order.
+
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_package_i5p_i7.py
@@ -144,6 +150,7 @@ portal/src/api/endpoints/tickets.ts
 portal/src/pages/TicketCenter/__tests__/package-r2.test.tsx
 portal/src/pages/TicketCenter/__tests__/package-open.test.tsx
 portal/src/pages/InvestorReporting/__tests__/fe-s-1/adapter.test.ts
+portal/src/pages/InvestorReporting/contracts/envelope.ts
 </paths>
 
 <decomp_ref>
