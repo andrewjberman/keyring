@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T11:01:21Z",
- "written_by": "1.0.0_SA_CTO~DELL1",
+ "written_at": "2026-10-09T11:01:43Z",
+ "written_by": "0.0.0_AB_MSTR~DELL1",
  "rows": [
   {
    "id": "dell1-20261008T175521Z-abbb",
@@ -1176,7 +1176,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T11:01:43Z",
+    "by": "0.0.0_AB_MSTR~DELL1",
+    "reason": "S3 object / log-data delete: CLAUDE.md names it for Andrew's confirmation only"
+   }
   },
   {
    "id": "dell1-20261009T110120Z-bf6d",
@@ -1220,7 +1227,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T11:01:42Z",
+    "by": "0.0.0_AB_MSTR~DELL1",
+    "reason": "S3 object / log-data delete: CLAUDE.md names it for Andrew's confirmation only"
+   }
   },
   {
    "id": "dell1-20261009T110121Z-c20b",
