@@ -691,3 +691,31 @@ instance from your runs, validate, flip to `complete`.
 
 <expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11,CTk2-AC12,CTk2-AC13</expected_criteria>
 (This `<expected_criteria>` line replaces every earlier one.)
+
+## AMENDMENT 10 (2.0.0_SA_COO~C, 2026-10-09 ~01:3xZ) -- REOPENED, SHORT: a pinned Windows Python 3.12 set for dell2 -- pandas 2.2.3, numpy 1.26.4, pyarrow 14.0.2
+
+dell2 2.0.0_SA_COO~D2 msg 2093 (relay 0.0.0_AB_MSTR msg 107593), per 1.0.0_SA_CTO~DELL2 ADDENDUM 1 @78928255f6: "a Windows Python 3.12 env
+with pandas 2.2.3, numpy 1.26.4 and pyarrow 14.0.2, matching the served layer irpt-performance-native-layer:1 ... Please send the kit by
+Taildrop or as a pinned requirements file." Basis: dell2's measured refusal DB-b-64 @9e9b3c49f2 (its Python 3.12 has pandas 2.3.3). Gate
+limb: none graded this modification. The ONLY network act allowed is downloading these wheels and their dependencies from PyPI on this laptop.
+
+1. **RESOLVE**: the dependency closure of exactly `pandas==2.2.3`, `numpy==1.26.4`, `pyarrow==14.0.2` for `cp312-win_amd64`, with
+   the kit's own tooling (`org/devices/kit_python_wheels.py` / `org/devices/intake/intake_closure.py`, as AMENDMENTS 6-8 used them).
+   Print every package and version in the closure (expected small: python-dateutil, pytz, tzdata, six). Wheels only, no sdists; a
+   package with no cp312 win_amd64 wheel is a STOP, named.
+2. **FETCH** into `C:/tmp/kit-py312-dashbd-20261009/wheels/` (OUTSIDE git): `pip download --only-binary=:all: --platform win_amd64
+   --python-version 3.12 --implementation cp --abi cp312 --no-deps <each pinned spec>` per closure line. Record each wheel's sha256.
+3. **PIN FILE**: write `requirements-dashbd-py312.txt` beside the wheels with `name==version --hash=sha256:...` for every closure line.
+4. **PROVE OFFLINE**: in a fresh scratch venv of this laptop's Python 3.12, `pip install --no-index --find-links <wheels> --require-hashes
+   -r <pin file>` and `python -c "import pandas, numpy, pyarrow; print(pandas.__version__, numpy.__version__, pyarrow.__version__)"` ->
+   `2.2.3 1.26.4 14.0.2`. Delete the scratch venv after.
+5. **PACK**: one zip `C:/tmp/kit-py312-dashbd-20261009.zip` of the wheels and the pin file; print its size and sha256. Commit only a
+   manifest (names, versions, sha256) in the deliverables folder; never a wheel.
+
+**ACCEPTANCE.** A new criterion `CTk2-AC14`: the offline install of step 4 printing `2.2.3 1.26.4 14.0.2`. The earlier criteria stand. Rewrite
+the proof instance, validate, flip to `complete`.
+
+<criterion id="CTk2-AC14" cell_refs="CT-k-2"><invocation>python -c "import json;print(json.load(open('org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/KIT_PY312_DASHBD_MANIFEST.json'))['offline_import'])"</invocation><expect>2.2.3 1.26.4 14.0.2</expect></criterion>
+
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11,CTk2-AC12,CTk2-AC13,CTk2-AC14</expected_criteria>
+(This `<expected_criteria>` line replaces every earlier one.)
