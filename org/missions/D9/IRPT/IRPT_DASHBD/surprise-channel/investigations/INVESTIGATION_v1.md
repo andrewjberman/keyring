@@ -4718,6 +4718,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-D2-S3 -- The S41 fix @e7c10e5b4b broke PROOF_OF_SPEC.schema.json: commit_or_etag's "type" now holds the aws_resource description text, so every proof check fails with a tool error (rc=2)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:45:00Z",
+  "one_line": "e7c10e5b4b replaced artifacts_produced[].commit_or_etag's \"type\": \"string\" with the aws_resource description text, so jsonschema raises UnknownType on every instance that reaches it: proof-of-spec-check exits rc=2 (NOT-A-VERDICT), and to-pipeline-gate refuses any commit that touches a complete order.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "e7c10e5b4b: 'the schema enum gains aws_resource ... content and coverage rungs unchanged'.",
+  "world_is": "MEASURED at box/dell2 HEAD after the fix arrived (is-ancestor read): proof-of-spec-check on IRPT_DASHBD.TO-DB-b-91's proof, which was VALID at 13:1xZ before the fix arrived, now prints TOOL-ERROR: UnknownType: Unknown type \"string aws_resource ADDED 2026-10-09 ...\" and NOT-A-VERDICT rc=2. The schema diff shows org/standards/PROOF_OF_SPEC.schema.json commit_or_etag \"type\" changed from \"string\" to that text; the text was evidently meant for the kind field's description. The safe-commit of IRPT_DASHBD.TO-DB-b-91 AMENDMENT 1 (criterion text only) was REFUSED by to-pipeline-gate for this reason. Remedy (owner's): restore \"type\": \"string\" on commit_or_etag and move the text into kind's description.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show e7c10e5b4b -- org/standards/PROOF_OF_SPEC.schema.json (commit_or_etag type line)",
+      "python .tools/proof-of-spec-check.py <~66 DB-b-91 proof> -> TOOL-ERROR UnknownType, rc=2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W69-S1 -- the census finds a third member (reporting_policies.json) differing from its pin at HEAD; the artifact is built from the pin, so the release is still the two owned members
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W69-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~69",
+  "surfaced_at": "2026-10-09T13:58:00Z",
+  "one_line": "The census over live yIAQjspL finds a THIRD member differing from HEAD, infra/logic/registry/reporting_policies.json (pin 0c35aeeaa8), though the face expects exactly two; the artifact is built from the PIN so the release is still exactly two changed members, and the packet was written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-94 item 1: comparing the source map's members as pinned for yIAQjspL against HEAD, the changed members must be exactly account_activity_lots.py and reporting-gold/handler.py; any other differing member is a row and a STOP before the packet.",
+  "world_is": "MEASURED over the 18 staged_from pins plus handler.py: 16 pins equal their HEAD bytes; account_activity_lots.py and handler.py differ (the two owned members); reporting_policies.json HEAD sha256 1479826b5764... differs from its pin sha256 dc0eccfde861... (other seats' registry commits eab13e88d3, 589aee38f0 landed after pin 0c35aeeaa8). The R37 delta packet (~63) recorded the same difference and built from the pin. Because the builder materializes the member at its PIN, the released artifact's bytes for it do not change, so I read the STOP as not firing for a pinned member and wrote the packet, naming the difference in it; the apply cell must keep that pin. If the issuer reads the face's STOP as covering a HEAD-versus-pin difference, the packet is the only thing written and nothing was built or applied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda staged_from (sha256 per pin; python read of HEAD bytes vs pin blobs)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~69/R44_RELEASE_CENSUS.json members_compared",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R37_DELTA_PACKET_1008.md section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W69-S2 -- the lots status record is dropped by a scheduled fire only; a backfill that lands a stated day leaves its statement
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W69-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~69",
+  "surfaced_at": "2026-10-09T13:59:00Z",
+  "one_line": "The DB-b-91 status record is dropped only by a scheduled fire that lands the day; an explicit backfill that lands a refused lots day leaves its statement in the object, so Branch A's 'the status record drops that day' holds on the scheduled path only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-94 Branch A: a lots day lands, the final-rows check passes, and the status record drops that day (stated from the producer's own rules).",
+  "world_is": "READ at HEAD: record_lots_status (handler.py:455-487) is called only from catch_up_lots (:513), the scheduled path; run_backfill calls emit_lots (:582) and not record_lots_status. kept = prior minus the fire's landed set (:477), and catch_up_lots owes only days after the activity table's newest landed day (class_owed_days :322-338), so a refused day that a backfill later lands is never in a later fire's landed set and its statement stays until the object is rewritten some other way. Not measured live (no fire run). The packet states Branch A for the scheduled path and records this limit; a fix is the issuer's or the CTO's to order, not this cell's.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:455-487, :490-514, :544-586 @3697923e02",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py:322-338"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-D2-W68-S1 -- sel_<64 hex> is not derivable from the selection file; the id resolves to a stored record
 
 ```json
@@ -4765,32 +4842,6 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
       "org/standards/PROOF_OF_SPEC.schema.json:157 @e7c10e5b4b",
       "git log 1f256cfc64 on C:/dev/ajb_workspace (restore commit_or_etag type)",
       "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/IRPT_DASHBD.TO-DB-b-93.runner-selection-file.proof_of_spec.json"
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION"
-}
-```
-
-## IRPT_DASHBD-D2-S3 -- The S41 fix @e7c10e5b4b broke PROOF_OF_SPEC.schema.json: commit_or_etag's "type" now holds the aws_resource description text, so every proof check fails with a tool error (rc=2)
-
-```json
-{
-  "id": "IRPT_DASHBD-D2-S3",
-  "project": "IRPT_DASHBD",
-  "fabric": "dell2",
-  "surfaced_by": "2.0.0_SA_COO~D2",
-  "surfaced_at": "2026-10-09T13:45:00Z",
-  "one_line": "e7c10e5b4b replaced artifacts_produced[].commit_or_etag's \"type\": \"string\" with the aws_resource description text, so jsonschema raises UnknownType on every instance that reaches it: proof-of-spec-check exits rc=2 (NOT-A-VERDICT), and to-pipeline-gate refuses any commit that touches a complete order.",
-  "class": "BLOCKING",
-  "hazard_standing": "ARMED",
-  "disarm_owner": "1.0.0_SA_CTO",
-  "spec_asserts": "e7c10e5b4b: 'the schema enum gains aws_resource ... content and coverage rungs unchanged'.",
-  "world_is": "MEASURED at box/dell2 HEAD after the fix arrived (is-ancestor read): proof-of-spec-check on IRPT_DASHBD.TO-DB-b-91's proof, which was VALID at 13:1xZ before the fix arrived, now prints TOOL-ERROR: UnknownType: Unknown type \"string aws_resource ADDED 2026-10-09 ...\" and NOT-A-VERDICT rc=2. The schema diff shows org/standards/PROOF_OF_SPEC.schema.json commit_or_etag \"type\" changed from \"string\" to that text; the text was evidently meant for the kind field's description. The safe-commit of IRPT_DASHBD.TO-DB-b-91 AMENDMENT 1 (criterion text only) was REFUSED by to-pipeline-gate for this reason. Remedy (owner's): restore \"type\": \"string\" on commit_or_etag and move the text into kind's description.",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "git show e7c10e5b4b -- org/standards/PROOF_OF_SPEC.schema.json (commit_or_etag type line)",
-      "python .tools/proof-of-spec-check.py <~66 DB-b-91 proof> -> TOOL-ERROR UnknownType, rc=2"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
