@@ -2294,3 +2294,57 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "notes": "ID DEVIATION, REPORTED NOT ADJUDICATED: the order prescribes the scheme LGIC_BLANKFIX-D1-CO1-S<k>, and the live surprise-row gate refuses it. Only the CO1 segment is wrong -- the D1 coordinate is REQUIRED, not optional: the gate states 'A row filed on dell1 is written <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>); a bare id is the laptop's', with laptop/cloud-local = <CODE>-S<n>, sitez = <CODE>-Z-S<n>, dell1 = <CODE>-D1-S<n>, dell2 = <CODE>-D2-S<n>. This seat first over-corrected to a bare LGIC_BLANKFIX-S14 after reading the gate's abbreviated grammar string, and the fabric limb refused that too -- correctly, since a bare id would have claimed the laptop fabric for a dell1 row. The id here is the next free dell1 bare index. 2.0.0_SA_COO~B1 may re-label; the only thing the order got wrong is CO1. Distinct from the W1/W2 rows, which concern the naming keyfill and the root map rather than AWS orphans."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S7 -- the list's new name for a 49f schedule (bd-49f-keepalive-sched -> blackdiamond-49f-keepalive-sched-15min) is refused by the real naming gate as a NEW hand-kept carrier of the firm token 49f, so that list line alone cannot be landed; the BF-ab-1 exercise renamed estate-report-0900et instead
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T11:33:32Z",
+  "one_line": "the list's new name for a 49f schedule (bd-49f-keepalive-sched -> blackdiamond-49f-keepalive-sched-15min) is refused by the real naming gate as a NEW hand-kept carrier of the firm token 49f, so that list line alone cannot be landed; the BF-ab-1 exercise renamed estate-report-0900et instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py --diff <diff of a temporary copy of infra/aws/terraform/bd-pipeline/bd-49f-interim.tf with name = blackdiamond-49f-keepalive-sched-15min> --enforce: NAMING REFUSE bd-49f-interim.tf:149 blackdiamond-49f-keepalive-sched-15min -> blackdiamond-49f-keepalive-sched-15min; why: CONFORMANT as EVENT_RULE, but a NEW hand-kept carrier of '49f' outside every permitted context: read it through lookup('49financial'); rc=1 (run in C:/tmp/wk-blankfix-1, repository file not written)",
+      "21 of the 120 FIX EVENT_RULE/SCHEDULE list lines (every mapped root, root check with report_only) carry 49f in the new name; 10 carry cot. Only the 49f arm was run against the gate; the cot arm is not read.",
+      "estate-report-0900et -> estate-report-0900et-daily (SCHEDULE, cron(0 9 * * ? *)) through the same gate: NAMING CONFORMANT, NAMING-GATE: PASS, rc=0; control: the same schedule renamed to estate-report-0900et-hourly is refused by the placement step (NAMING-PLACE: REFUSE 1, Owed: use estate-report-0900et-daily)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-4 (PRD): a schedule's new name with the cadence filled in is read from the list and the schedule is renamed from the list alone; the order expects a listed schedule to be renamed from its line and graded CONFORMANT by the real gate.",
+  "world_is": "For a schedule whose name carries a firm token the list line names the target form, but the gate's context rule also requires the token to be written through lookup() or the opal_name module, so the literal the list shows is refused when typed. grade() calls the same name CONFORMANT. This is the context rule working as designed on a name the list printed as a plain literal; whether the list should print the lookup form for those 21 lines, or the group-C acceptance should name only token-free schedules, is not decided here.",
+  "notes": "Not a defect in this cell's build: the exercise default is a token-free schedule, and exercise_fwd4_rename.py takes any list line as its argument, so the 49f line can be run to reproduce the refusal."
+}
+```
+
+## LGIC_BLANKFIX-D1-W1-S8 -- of 180 schedule list lines, 10 give a cadence word the reader leaves undecided although the schedule states an expression (8 of them fire 2-3 times a day under daily or 45min); the checker lists them, none is a mismatch, and a person may well disagree with finbert-scoring-post-ingestion-45min
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T11:33:32Z",
+  "one_line": "of 180 schedule list lines, 10 give a cadence word the reader leaves undecided although the schedule states an expression (8 of them fire 2-3 times a day under daily or 45min); the checker lists them, none is a mismatch, and a person may well disagree with finbert-scoring-post-ingestion-45min",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/check_fwd4_cadence.py: FWD4-CADENCE ok=True schedules=180 agree=144 undecided=36 mismatch=0; 10 of the 36 undecided lines carry expr= (the other 26 are 21 event-pattern rules with no schedule expression and 5 NOT-ASKED lines that carry no new name).",
+      "the 10: canonical-schwab-si2-08335338-daily-pull cron(45 9,21 * * ? *), canonical-schwab-si2-08242234-daily-pull cron(15 10,22 * * ? *), schwab-canonical-si2-08403355-pull-daily cron(45 10,22 * * ? *), fear-greed-daily-update cron(30 14,21 * * ? *), trending-topics-portal-publisher-daily cron(10 14,21 * * ? *), keyword-intelligence-generator-daily cron(0 8,20 * * ? *), keyword-drilldown-generator-daily cron(25 12,21 * * ? *) -- all twice a day, name carries daily; finbert-scoring-post-ingestion-45min cron(55 0,13,20 * * ? *) -- three times a day, name carries 45min; fred-ingestion-monthly-early cron(0 15 ? * 6#1 *) -- first Friday, name carries monthly; teams-global-transcripts-pull-hourly cron(0 13-22 ? * MON-FRI *) -- hourly in a weekday window, name carries hourly.",
+      "cadences estate count control: python lib/opal_naming_cadence.py estate prints CADENCE-ESTATE ok=True rows=180, the checker's denominator."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-CADENCE: a row the expression cannot decide is listed, not guessed.",
+  "world_is": "The reader returns no word for a multi-fire cron, so by C-CADENCE these rows are listed, and the checker lists them as UNDECIDED and does not count them as agreeing. The list nevertheless keeps the word the current name already carries on them (daily for a twice-a-day fire, 45min for a three-times-a-day fire); a person reading finbert's cron(55 0,13,20 * * ? *) would not call it 45min. These are the rows for BAB1-AC3's reader, not an adjudication here.",
+  "notes": "No lib change was needed: no mismatch arose from the cadence reader."
+}
+```
