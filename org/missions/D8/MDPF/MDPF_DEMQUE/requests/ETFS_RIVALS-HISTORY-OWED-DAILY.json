@@ -7,13 +7,24 @@
   "vendor": "bloomberg",
   "channel": "history",
   "securities": "the day's history_owed.owed set (changes daily; 742 securities / 184,600 units on 2026-10-08)",
-  "fields": ["close"],
+  "fields": [
+    "close"
+  ],
   "start": null,
   "end": null,
   "cap_cells_per_run": 20000,
-  "quote": {"cells": {"bloomberg_history": 20000}, "claim": "held", "basis": "the run cap HISTORY_OWED_CAP = 20,000 points (R24); an upper bound per run, not a per-security quote -- bbg_quote cannot price a standing request whose set changes daily (round-5 candidate)"},
+  "quote": {
+    "cells": {
+      "bloomberg_history": 20000
+    },
+    "claim": "held",
+    "basis": "the run cap HISTORY_OWED_CAP = 20,000 points (R24); an upper bound per run, not a per-security quote -- bbg_quote cannot price a standing request whose set changes daily (round-5 candidate)"
+  },
   "runs_at": "site Z, the 11:00Z vehicle, in-process under bbg_budget (R24); actuals reach the queue's ledger through the site-Z demand-ledger uploader (DQ-t-14) and are recorded beside this quote",
   "filed_by": "2.0.0_SA_COO~Q1",
   "filed_for": "ETFS_RIVALS",
-  "authority": "laptop cross-adjudication XA-20261009T033809Z-8c1a ruled (a), relayed by 1.0.0_SA_CTO~DELL1 msg 1611; open call dell1-20261009T032844Z-8276 (2.0.0_SA_COO~V1, org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/CALL_SWITCH_ON_ROUTE_UNDER_EGRESS_LAW_20261009.md option A); law edit 4d77a9c3ea"
+  "authority": "laptop cross-adjudication XA-20261009T033809Z-8c1a ruled (a), relayed by 1.0.0_SA_CTO~DELL1 msg 1611; open call dell1-20261009T032844Z-8276 (2.0.0_SA_COO~V1, org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/CALL_SWITCH_ON_ROUTE_UNDER_EGRESS_LAW_20261009.md option A); law edit 4d77a9c3ea",
+  "state_address": "s3://opal-data-assets/bloomberg/global/silver/request_state/request=ETFS_RIVALS-HISTORY-OWED-DAILY/state.json",
+  "state_address_basis": "MDPF_DEMQUE PRD ADDENDUM v0.4 (@02df620d05, CTO msg 1752): lib.opal_naming.address(\"bloomberg\",\"global\",\"silver\",\"request_state\",\"request=ETFS_RIVALS-HISTORY-OWED-DAILY\") + /state.json",
+  "state_initial": "NOT YET WRITTEN -- the state writer is a next-round DEMQUE cell (msg 1752); an absent state reads as zero draws (the reader fails closed), the same effect as paused while act 3 is held (msg 1640)"
 }

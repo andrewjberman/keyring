@@ -93,3 +93,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @21f7c2bee9 (build 67e51346c2, proof b9fd63cbba VALID rc=0; mutant control with resolve_query forced to none fails C1, C2, C4). Re-run by the issuer on the branch: R81 ROUTE AC1 SERVED: YES (AMD and "Advanced Micro Devices" serve AMD_US_Equity; "Micro" 404 "3 companies match ..."; "zzqx" keeps the 404), AC2 YES 4 of 4. Merged-tree suites (api, freshness, lists): 941 passed, 2 failed (pypdf absent on dell1). ISSUER RULING on the worker's finding: an UNREADABLE name list answers 500 with /resolve's own sentence (not a 404): it is not a "none" answer, and the route mirrors /resolve. Served only through AMGT-ee-6.</status>
