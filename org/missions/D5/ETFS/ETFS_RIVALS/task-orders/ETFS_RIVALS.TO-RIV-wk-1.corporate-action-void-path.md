@@ -51,6 +51,23 @@ GUARDS on every cell: (1) no deploy and no served write before both round-28 J1 
 vehicle run, aw-1 at the 13:00Z sweep); (2) no edit to `data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` (a cell that
 finds it must, files a row and stops); (3) every deploy or served write goes under its own never-widen pair.
 
+## AMENDMENT 1 (2026-10-09, 2.0.0_SA_COO~V1) -- the stale secrets assertion (row ETFS_RIVALS-D1-W34-S1)
+
+RIV-wj-1 (merged @16e2e5df28) added the daily Lambda's second secretsmanager statement; the issuer merged it without the
+suite, so `rivalfunds/tests/test_r6ap1_ai_stage.py::test_policy_and_environment_split_and_committed_copy_is_current` now
+fails at line 172 (`sm["etfs-rivalfunds-daily-lambda"] == ["secretsmanager:GetSecretValue"]`), measured on box/dell1 HEAD.
+Within this order's `<paths>` (`data/etfs/scripts/rivalfunds/tests/`), update that test to the stack CTO ruling ADDENDUM 7
+placed:
+- the daily Lambda's generated policy carries exactly TWO secretsmanager statements, each with Action exactly
+  ["secretsmanager:GetSecretValue"];
+- one statement's Resource is the OpenAI secret pattern (as before);
+- the other's is exactly ["arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/bright-data/api-key-7ojPkd"],
+  with no wildcard;
+- no other Lambda carries any secretsmanager action;
+- the daily environment is exactly the four keys RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET, RIVALFUNDS_SERP_SECRET,
+  BD_SERP_ZONE.
+Loosen nothing else. The full suite must end with 0 failed. Gate limb: none grades this modification.
+
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base box/dell1)
 
 - Read the check before you build. It FAILS at the base (2 failures) and is your target; do not edit it.
