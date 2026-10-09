@@ -993,6 +993,27 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
     "notes": "⛔ NOTHING IS ASKED OF ANY LANE BEYOND THE ROUTING, and no order was edited. This is the SECOND gate defect this seat has routed today (Z-S12 was the first) and both are the same family the estate met all day: AN INSTRUMENT ANSWERING CONFIDENTLY ABOUT THE WRONG OBJECT -- there the wrong PLANE, here the wrong OCCURRENCE. ⭐ AND THE GENERAL FORM IS WORTH MORE THAN THE REGEX: A FIRST-MATCH READ OF A STRUCTURED FIELD IS A GUESS THAT THE FIELD APPEARS BEFORE ANY DISCUSSION OF IT. That holds for most documents and fails for exactly the documents that are ABOUT the field -- which are the ones a governance estate writes when it starts auditing its own markup."
   },
   {
+    "id": "NFRA_IAMROLES202609-Z-W10-S1",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~10",
+    "surfaced_at": "2026-10-09T06:42:47Z",
+    "one_line": "missions-tree-index check reports INDEX-DRIFT on org/projects/NFRA_OPSWKF.json (dep_stage index='PRD' tree='EXECUTING') and the commit-time missions-tree-check refuses every commit in this worktree, including this order's completion commit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~ZI -- regenerate the flat index row via missions-tree-index derive (0.0.0_AB_MSTR lane for the index); not touched by this worker (outside <paths>).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/missions-tree-index.py check in /c/tmp/wk-iamroles-10 at 44eb421ef6: '[INDEX-DRIFT] org/projects/NFRA_OPSWKF.json: dep_stage: index=PRD tree=EXECUTING', RESULT: 1 violation(s); tree=49 projects valid."
+      ]
+    },
+    "spec_asserts": "A worker commit inside its <paths> lands through safe-commit.",
+    "world_is": "safe-commit's missions-tree-check refuses the staged set on an unrelated project's index drift, so the order's proof, deliverables and complete flip could not be committed.",
+    "notes": "Work product is complete and in the worktree; only the commit is blocked."
+  },
+  {
     "id": "NFRA_IAMROLES202609-Z-W11-S1",
     "project": "NFRA_IAMROLES202609",
     "fabric": "site-z",
