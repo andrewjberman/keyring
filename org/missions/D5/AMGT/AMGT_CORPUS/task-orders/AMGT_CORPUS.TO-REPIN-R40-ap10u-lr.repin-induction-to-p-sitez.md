@@ -9,6 +9,7 @@
   </metadata>
 <direct_act>true</direct_act>
 <!-- Round-less by design: an executor order carrying leg Lr of the issuer's served act CRPS-ap-10 (u), round 40 (decomposition v40.0 @be3481c83e). Site-bound (the site-Z Windows user's Scheduled Task), so it goes to the per-project site-Z lane ~ZC: 1.0.0_SA_CTO~DELL1 msg 1667 (ANDREW_DIRECT_20261009_035xZ_DELL1_RUNS_OWN_DEPLOYS_SITE_BOUND_ONLY_TO_SITE_Z.md ADDENDUM 2, "the CORPUS re-pin lane is 0.7.0_AE_CloudOps~ZC"). The window and the fallback are the CTO fold @79c8d84e65 section 2. It adds no cell to round 40. -->
+<!-- AMENDMENT 2 (2026-10-09 ~06:0xZ, issuer 2.0.0_SA_COO~C1): STOP 0 reads the two re-sign FILES by path and author. AMENDMENT 1's `--since=2026-10-09T04:00` is read in LOCAL time (ET = 08:00Z) and missed the site-Z re-sign committed 05:05Z (@9810de87e8): measured on dell1, the old form printed 0 lines, the path form prints it. Both re-signs are now on origin/CLOUD. -->
 <!-- AMENDMENT 1 (2026-10-09 ~04:4xZ, issuer 2.0.0_SA_COO~C1): STOP 0 now requires BOTH re-signs -- 1.0.0_SA_CTO~DELL1's @02e7d11683 and 1.0.0_SA_CTO~Z's (CTO~DELL1 condition 1, msg 1693); the earlier text would have passed on the DELL1 commit alone. -->
 <risk>SERVED</risk>
 <proof_genre>DEPLOY</proof_genre>
@@ -42,13 +43,12 @@
   </context>
 
   <steps>
-    0. STOP 0 (BOTH re-signs; AMENDMENT 1): `git fetch origin`, then on origin/CLOUD
-       (a) `org/missions/D5/AMGT/AMGT_CORPUS/ledger/NEVER_WIDEN_ROUND40_AP10U_CTO_HALF_AMENDMENT1_DELL1.md` exists (signed
-           @02e7d11683 by 1.0.0_SA_CTO~DELL1), AND
-       (b) `git log origin/CLOUD --since=2026-10-09T04:00 --author="1.0.0_SA_CTO~Z" --format="%h %an %s" --
-           org/missions/D5/AMGT/AMGT_CORPUS/ledger/` shows 1.0.0_SA_CTO~Z's re-sign of the (u) AMENDMENT 1, which also states its
-           reading of the (b) half's C2. A 1.0.0_SA_CTO~DELL1 commit does NOT satisfy (b).
-       Either missing at 12:30Z: register nothing, report (the fallback is the default: CTO condition 2).
+    0. STOP 0 (BOTH re-signs; AMENDMENT 2 -- by path and author, no date filter): `git fetch origin`, then
+       (a) `git log -1 --format=%an origin/CLOUD -- org/missions/D5/AMGT/AMGT_CORPUS/ledger/NEVER_WIDEN_ROUND40_AP10U_CTO_HALF_AMENDMENT1_DELL1.md`
+           prints `1.0.0_SA_CTO~DELL1` (signed @02e7d11683), AND
+       (b) `git log -1 --format=%an origin/CLOUD -- org/missions/D5/AMGT/AMGT_CORPUS/ledger/NEVER_WIDEN_ROUND40_AP10U_CTO_HALF_AMENDMENT1_SITEZ.md`
+           prints `1.0.0_SA_CTO~Z` (signed @9810de87e8).
+       Either line empty or another name: register nothing, report (the fallback is the default).
     1. STOP 1 (the commit): `git cat-file -e 7580fe909c^{commit}` succeeds, and `git diff --stat 6402de5137 7580fe909c` prints
        exactly one line for `integrations/bloomberg/research/field_map.json`. Anything else: register nothing, report.
     2. STOP 2 (the window): the 11:00Z vehicle run has ended (its process is not running). Not before 11:15Z. Not after 12:45Z.
