@@ -21,7 +21,7 @@ Four product files and three test files, exactly (`git diff --stat a0db38c8ae ae
 - tests: `test_document.py`, `test_section_census.py`, `test_section_coverage.py`.
 NO store write, NO schedule, NO Lambda (the function moves only at its own redeploy under its own pair), NO vendor call.
 
-## WRITER CENSUS -- who RUNS the moved code on site Z (N = 3 readers of these modules, rules read for each)
+## WRITER CENSUS -- who RUNS the moved code on site Z (CORRECTED in place on 1.0.0_SA_CTO~Z's condition C3, @f1a7df146f: N = 6 importers under lib -- `battery.py`, `analyze.py`, `batch.py`, `drafting_build.py`, `fetch.py` itself and `lib/research/api/scoped_amgt.py`, plus tests. `analyze.py`, `batch.py` and `drafting_build.py` are libraries that run on site Z only inside a hand-run or a disabled task; no scheduled site-Z task runs any of them, so DELTA = 0 holds. The three entry points the act can reach are read below)
 
 1. `lib/research/filings/battery.py` (census row 28, a HAND-RUN, `:507-519` its Terminal leg): imports `document` and `fetch`.
    Its next hand-run 20-F cut adds a `business` item to the excerpt; `_winning_edgar_extra` (`battery.py:832`) and the 20-F
