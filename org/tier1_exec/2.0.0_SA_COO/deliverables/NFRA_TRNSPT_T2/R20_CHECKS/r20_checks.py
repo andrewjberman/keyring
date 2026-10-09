@@ -1,6 +1,7 @@
 """NFRA_TRNSPT round 20 -- the issuer's mechanical checks (2.0.0_SA_COO~T2).
 
   t20   TR20-t20-AC1  the Teams gateway transport to the /hx/transcripts contract (fixtures only) + pull.tf reads gateway/transcripts/bearer
+  t20b  TR20-t20-AC2  ADDENDUM 11 interim: content-only landing; silver wall-clock NULL, wallclock_basis 'absent (metadata path not served)', never derived
   x20   TR20-x20-AC1  live read-only wiring: S3 readers for the securities question and a completeness CLI for one meeting; reads only
 
 Prints <TOKEN>-OK or <TOKEN>-FAIL <reason> and exits 0 / 1. Run from the repo root (or the worker's worktree root).
@@ -14,6 +15,8 @@ T = "data/transcripts/scripts/tests/"
 SPEC = {
     "t20": (T + "test_teams_gateway_transport.py",
             ["test_transport_follows_route_contract", "test_refusals_raise_typed_errors", "test_pull_tf_reads_transcripts_bearer_by_data_source"]),
+    "t20b": (T + "test_wallclock_absent.py",
+             ["test_pull_lands_content_without_metadata", "test_silver_wallclock_null_with_absent_basis", "test_no_wallclock_derived_from_created"]),
     "x20": (T + "test_live_readers_exercise.py",
             ["test_s3_readers_read_only", "test_completeness_cli_one_meeting_cause", "test_securities_cli_counts_only"]),
 }
