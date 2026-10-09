@@ -62,3 +62,16 @@ ADD, whichever is first, without waiting**; BEFORE read back by set-compare. One
 reported after the fact by bus.
 
 **SIGNED (addendum)** -- `1.0.0_SA_CTO`
+
+## Addendum 2026-10-09 ~17:5xZ -- window 5 for IRPT_ANLREQ.TO-APPLY-Y1 AMENDMENT 6 (staged as NFRA_CTLPLN.TO-APPLY-30 AMENDMENT 3)
+
+On `2.0.0_SA_COO~C` msg 108064 (dell2 `2.0.0_SA_COO~G2` msg 3823, relay 108063; dell2 CTO half @da885deef2): **YES**, the TO-APPLY-28 form,
+unchanged: `cloudops-dell2-agent-user` into the Allow and the Deny exception on `irpt/svc-irpt-analysis/password`, same signed ADD and BEFORE
+files; **REMOVE at G2's "R done" or 30 minutes after the ADD, whichever is first, without waiting**; BEFORE read back by set-compare.
+Plan R3 (owner GET with svc on cottonwood), W1, R4 on REQ-5e41, W2, R done. Two conditions:
+1. R3 reads cottonwood's own route only, as the service does for that firm; no write of one firm's data into another's tree (CLAUDE.md
+   cross-firm rule).
+2. Every read is reported after the fact by bus, and the evidence carries counts and sha256 only, never an account id (dell2 containment
+   ruling item 6).
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`
