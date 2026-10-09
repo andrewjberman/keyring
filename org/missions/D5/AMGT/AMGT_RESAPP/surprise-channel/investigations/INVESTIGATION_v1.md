@@ -22306,29 +22306,6 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A citing row, not an edit of Z-S369: its standing is the CVO's to move. The sentence the row should carry until the word: 'ICT_US_Equity is named INTL CONTAINER TERM SVCS INC from the stored Bloomberg row; the IDVZ holding is the same security by its stored identifier; whether it stays a key apart from ICT_PM_Equity is not decided.' Carried to the next round's owner with the project's move to DELL1."
-},
-{
-  "id": "AMGT_RESAPP-R1-W316-S1",
-  "project": "AMGT_RESAPP",
-  "fabric": "dell1",
-  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~316",
-  "surfaced_at": "2026-10-09T02:06:00Z",
-  "disposition": "UNDER_INVESTIGATION",
-  "hazard_standing": "INERT",
-  "disarm_owner": "2.0.0_SA_COO~R1",
-  "class": "OBSERVATION",
-  "one_line": "AMGT-dd-2 AC1 check P6 expects clean_location(None) == '' while the order text says a non-string is returned unchanged: both cannot hold, so AC1 reads FAIL on P6 alone.",
-  "spec_asserts": "Order AMGT-dd-2 step 2: 'Non-string input is returned unchanged.' Criterion AC1 expects 'P1-P7 PASS' from r80_dd2.py --crit AC1.",
-  "world_is": "r80_dd2.py ac1() builds a cases dict whose key None maps to '' and asserts {k: clean_location(k)} == cases. Built as ordered, clean_location(None) returns None, so P6 prints FAIL and AC1 exits 1; P1-P5 and P7 PASS, AC2 and AC3 PASS (exit 0, drift 0). The worker kept the order text (no edit of the check, which is outside <paths>; no served-byte change for an absent location: the driver cite would turn None into '' under the check's reading).",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round80/checks/r80_dd2.py lines 64-74 (the None: '' case and the got == cases comparison).",
-      "lib/research/filings/passages.py clean_location: 'if not isinstance(location, str): return location'; tests in lib/research/filings/tests/test_passage_headings.py pin non-string returned unchanged (30 new tests pass).",
-      "AC1 run output: 'FAIL P6 clean_location drops only a letterless heading' with clean_location map showing None: None; 'R80 R2 AC1 SERVED: NO', exit=1."
-    ]
-  },
-  "notes": "Resolution is the issuer's: amend P6's expectation (None -> None), or amend the order to say None becomes '' (a one-line change in clean_location; call sites would then guard on str to leave an absent driver location absent). Surfaced, not chased."
 }
 ]
 ```
