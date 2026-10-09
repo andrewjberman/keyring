@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~47</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -41,6 +41,8 @@ Run `--before-list v1 --after-list v1 --before-cash-leg method_r25 --after-cash-
 org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/levels`. If no general fix exists, `method_r25b` equals
 `method_r25` and the run reports `regressions=0` trivially; say so.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~00:3xZ): the ex-dates landed -- grade the 22 dividend months both ways (round 24 AC4's parked clause; CTO msg 1957 E3).** dell1's MDPF_DEMQUE served them @5a392db104: `org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/EXDATES_ADVI_COTBKF_20261009.csv` (columns cusip, ticker, pay_date, ex_date, yahoo_dividend_per_share, claim, source; 39 rows, 16 CUSIPs, all `measured`). It is on origin box/dell1 and reaches box/dell2 after the 01:00Z integrate; until then materialize it at that same repo path in your worktree with `MSYS_NO_PATHCONV=1 git show origin/box/dell1:<path> > <path>` (run `git fetch origin box/dell1` first), as an UNTRACKED read-only input -- never stage or commit it. Measured by the issuer: only 2 of the 39 have the ex-date in a different month from the pay date (XOM 30231G102: pay 2025-06-10 / ex 2025-05-15; pay 2025-09-10 / ex 2025-08-15). Do: add per-arm options `--before-dividend-date` / `--after-dividend-date` (pay|ex) to the runner; run the 22 dividend_row months of round 24 (listed in `deliverables/2.0.0_SA_COO~C2/EXDATE_REQUEST_DELL1_DATA_QUEUE_20261009.md`) at pay and at ex on the `method_r25b` cash leg; print each month's verdict both ways and its swing, the total, and the LAST line extended with `dividend_both=<graded>/22`. Neither date is adopted as the default by this amendment. AC4 below.
+
 Tests in `data/assets/scripts/silver/tests/test_commonwealth_carried_levels.py` (stubs): each fix shipped, on a stub of its cause; a
 month unaffected by the fix grades the same.
 
@@ -52,10 +54,13 @@ month unaffected by the fix grades the same.
 <criterion id="CB25y2-AC2" cell_refs="CB-y-2"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg method_r25 --after-cash-leg method_r25b --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/levels</invocation><expect>regressions=0</expect></criterion>
 `CB25y2-AC2` -- any carried-level fix regresses no month that matched under `method_r25`.
 
+<criterion id="CB25y2-AC4" cell_refs="CB-y-2"><invocation>python data/assets/scripts/silver/commonwealth_sweep_regrade.py --before-list v1 --after-list v1 --before-cash-leg method_r25b --after-cash-leg method_r25b --before-dividend-date pay --after-dividend-date ex --ex-dates org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/EXDATES_ADVI_COTBKF_20261009.csv --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/dividends</invocation><expect>dividend_both=22/22</expect></criterion>
+`CB25y2-AC4` -- (AMENDMENT 1) the 22 pay-dated dividend months graded at pay and at ex date, each swing printed.
+
 <criterion id="CB25y2-AC3" cell_refs="CB-y-2" judgment="true"/>
 `CB25y2-AC3` -- JUDGMENT, graded by 3.0.0_SA_CVO at L9 and never self-graded: each of the 39 is traced to a first wrong month with its posting and cause, or named untraced with what was checked; any fix is one general rule, not fitted to the grade.
 
-<expected_criteria>CB25y2-AC1,CB25y2-AC2,CB25y2-AC3</expected_criteria>
+<expected_criteria>CB25y2-AC1,CB25y2-AC2,CB25y2-AC3,CB25y2-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -87,10 +92,10 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CB25y2-AC1, CB25y2-AC2, CB25y2-AC3. Instance at
+Criterion ids: CB25y2-AC1, CB25y2-AC2, CB25y2-AC3, CB25y2-AC4. Instance at
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/ADVI_COTBKF.TO-CB-y-2.carried-levels.proof_of_spec.json`, validated
-with `python .tools/proof-of-spec-check.py <instance> CB25y2-AC1,CB25y2-AC2,CB25y2-AC3` BEFORE the flip. Mechanical: CB25y2-AC1,
-CB25y2-AC2; a judgment criterion is recorded as PENDING-ADJUDICATION, never PASS.
+with `python .tools/proof-of-spec-check.py <instance> CB25y2-AC1,CB25y2-AC2,CB25y2-AC3,CB25y2-AC4` BEFORE the flip. Mechanical: CB25y2-AC1,
+CB25y2-AC2, CB25y2-AC4; a judgment criterion is recorded as PENDING-ADJUDICATION, never PASS.
 </proof_of_spec>
 
 **REPORT:** the SWEEP-REGRADE line, the 39 by first wrong month and cause, any fix (file and line), commits.
