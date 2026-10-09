@@ -22888,3 +22888,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The code admits the named class (alternative b), in served.py rather than in the writer, so no roster row is applied. Not exercised live: the persist read-back is the E2a apply."
 }
 ```
+
+## IRPT_BCKEND-D2-S26 -- Resolves D2-W196-S1: both release zips already package lib/opal_naming.py and the registry; the release census proves the lookup
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S26",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T04:15:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W196-S1 (IB-pr-385 reads cottonwood through lib/opal_naming.py lookup(), so a zip without lib/ and the registry refuses svc-custody-statement on all three routes). Measured at box/dell2 HEAD dd02e66933: infra/aws/lambda/ci/lambda-source-map.json's irpt-export-render (:4637) and irpt-ycharts-generate (:3980) entries each already package opal_naming.py, reporting_policies.json and scopes.json. Nothing is missing from today's source maps. The release of IB-pr-385 (its own pair, after IB-pr-383) carries one more replay arm: the built zip, imported offline, resolves cottonwood through lookup() and admits svc-custody-statement on custody-report-persist, with a negative control (the subject refused once the registry is removed from the extracted tree). The failure mode is fail-closed (refusal, never widening).",
+  "one_line": "The packaging is already there; the release replay proves the lookup from the built zip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda-source-map.json at dd02e66933: irpt-ycharts-generate and irpt-export-render segments each contain opal_naming.py, reporting_policies.json, scopes.json",
+      "p95_svc.py at the drained branch: IB95-2-AC1 PASS (23), IB95-2-AC2 PASS (291)"
+    ]
+  },
+  "spec_asserts": "A release zip without lib/opal_naming.py and the registry refuses the new subject.",
+  "world_is": "Both host functions already package them; the release replay arm proves it from the built bytes."
+}
+```
