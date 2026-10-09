@@ -46249,6 +46249,228 @@ REFUSED_20261008)
 2026-10-09T14:01:26Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
 2026-10-09T14:01:35Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=0  secs=9.48  graded=0/3 fast-lane  args=(wk-MDPF_STRATID-w2-4 -m drain(MDPF_STRATID.TO-W2-1 A2): merge worker 0.9.0_WK_MDPF_STRATID~4 -- IDVZ current name (custodian 2026-10-08) + former name as an idvz rule row)  first=(none)
 2026-10-09T14:01:59Z RETRY-2P  0.0.0_AB_MSTR~DELL1  attempt=1  same-path=(org/git-author-override-audit.log)
+2026-10-09T13:20:13Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T13:20:21Z LANDED-2P  0.0.0_AB_MSTR~DELL2  176b0b93ea  paths=1  validate=9.04s  wait=0.08s  hold=1.27s  build=0.71s  ref=0.54s  post-commit=3.14s  attempt=1
+2026-10-09T13:20:37Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=1.69  graded=n/a  args=(--verify-merge d7a4a181faa916f27dbc61f8befd32316b678024)  first=(none)
+2026-10-09T13:20:45Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=42.76  took=1520ae07ca hold=2.92s graded=10/51 pushed=d7a4a181fa
+2026-10-09T13:20:53Z PASS  0.9.0_WK_IRPT_ANLREQ~41  2  (all paths in-lane)
+2026-10-09T13:20:56Z PASS  0.7.0_AE_CloudOps~CB2  2  (all paths in-lane)
+2026-10-09T13:21:05Z LANDED-2P  0.7.0_AE_CloudOps~CB2  35eea98c3c  paths=2  validate=8.37s  wait=0.09s  hold=1.05s  build=0.63s  ref=0.40s  post-commit=3.87s  attempt=1
+2026-10-09T13:22:00Z PASS  0.9.0_WK_IRPT_ANLREQ~41  2  (all paths in-lane)
+2026-10-09T13:22:11Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T13:22:16Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=3  secs=142.17  graded=1/15 fast-lane  args=(wk-IRPT_BCKEND-272)  first=(none)
+2026-10-09T13:22:18Z LANDED-2P  0.0.0_AB_MSTR~DELL2  eff36413e1  paths=1  validate=7.57s  wait=0.08s  hold=0.96s  build=0.60s  ref=0.33s  post-commit=2.69s  attempt=1
+2026-10-09T13:22:27Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane)
+2026-10-09T13:22:33Z PASS  0.7.0_AE_CloudOps~DELL2  1  (all paths in-lane)
+2026-10-09T13:22:42Z LANDED-2P  0.7.0_AE_CloudOps~DELL2  a6795e3dbb  paths=1  validate=8.27s  wait=0.08s  hold=1.17s  build=0.69s  ref=0.43s  post-commit=3.30s  attempt=1
+2026-10-09T13:22:51Z LANDED-2P  2.0.0_SA_COO~D2  37679baac5  paths=1  validate=36.20s  wait=0.11s  hold=1.57s  build=1.06s  ref=0.47s  post-commit=4.33s  attempt=1
+2026-10-09T13:22:53Z PASS  0.9.0_WK_ADVI_COTBKF~65  1  (all paths in-lane)
+2026-10-09T13:23:18Z MERGE-ATTEMPT  2.0.0_SA_COO~T2  rc=2  secs=0.85  graded=n/a  args=(wk-IRPT_ANLREQ-t12-a6)  first=(REFUSED -- ANOTHER safe-merge RUN HOLDS THIS WORKTREE (serial 2)
+2026-10-09T13:23:34Z MERGE-ATTEMPT  2.0.0_SA_COO~T2  rc=2  secs=0.50  graded=n/a  args=(wk-IRPT_ANLREQ-t12-a6)  first=(REFUSED -- ANOTHER safe-merge RUN HOLDS THIS WORKTREE (serial 2)
+2026-10-09T13:23:50Z MERGE-ATTEMPT  2.0.0_SA_COO~T2  rc=2  secs=0.69  graded=n/a  args=(wk-IRPT_ANLREQ-t12-a6)  first=(REFUSED -- ANOTHER safe-merge RUN HOLDS THIS WORKTREE (serial 2)
+2026-10-09T13:24:06Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=94.04  graded=1/15 fast-lane  args=(wk-IRPT_BCKEND-272)  first=(none)
+2026-10-09T13:24:11Z MERGE-ATTEMPT  2.0.0_SA_COO~T2  rc=0  secs=5.54  graded=0/4 fast-lane  args=(wk-IRPT_ANLREQ-t12-a6)  first=(none)
+2026-10-09T13:24:24Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=1  secs=2.02  graded=n/a  args=(wk-IRPT_BCKEND-272)  first=(REFUSED -- the merge staged NO files)
+2026-10-09T13:24:28Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane)
+2026-10-09T13:24:37Z LANDED-2P  2.0.0_SA_COO~D2  d4661c3360  paths=1  validate=8.20s  wait=0.15s  hold=1.30s  build=0.80s  ref=0.45s  post-commit=3.57s  attempt=1
+2026-10-09T13:24:40Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane)
+2026-10-09T13:24:52Z LANDED-2P  2.0.0_SA_COO~P2  dfe7b3c085  paths=1  validate=11.01s  wait=0.14s  hold=1.61s  build=1.00s  ref=0.54s  post-commit=4.61s  attempt=1
+2026-10-09T13:25:24Z PASS  1.0.0_SA_CTO~DELL2  2  (all paths in-lane)
+2026-10-09T13:25:28Z PASS  0.7.0_AE_CloudOps~DB2  1  (all paths in-lane)
+2026-10-09T13:25:34Z LANDED-2P  1.0.0_SA_CTO~DELL2  43bbe32935  paths=2  validate=11.91s  wait=0.11s  hold=1.29s  build=0.85s  ref=0.41s  post-commit=3.80s  attempt=1
+2026-10-09T13:25:37Z LANDED-2P  0.7.0_AE_CloudOps~DB2  4e42b99489  paths=1  validate=11.46s  wait=0.10s  hold=1.52s  build=1.00s  ref=0.48s  post-commit=3.24s  attempt=1
+2026-10-09T13:25:59Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane)
+2026-10-09T13:25:59Z PASS  2.0.0_SA_COO~T2  1  (all paths in-lane)
+2026-10-09T13:26:03Z LOCK-WAIT  2.0.0_SA_COO~T2  1s
+2026-10-09T13:26:07Z LANDED-2P  2.0.0_SA_COO~D2  1f5bcec094  paths=1  validate=6.63s  wait=0.08s  hold=1.25s  build=0.78s  ref=0.43s  post-commit=3.68s  attempt=1
+2026-10-09T13:26:09Z LANDED-2P  2.0.0_SA_COO~T2  080a66522c  paths=1  validate=6.81s  wait=1.25s  hold=1.49s  build=0.93s  ref=0.52s  post-commit=3.66s  attempt=1
+2026-10-09T13:26:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=17.62  took=already-current pushed=080a66522c
+2026-10-09T13:26:25Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane)
+2026-10-09T13:26:35Z LANDED-2P  2.0.0_SA_COO~P2  e4227621a6  paths=1  validate=8.53s  wait=0.09s  hold=1.42s  build=0.86s  ref=0.51s  post-commit=4.44s  attempt=1
+2026-10-09T13:27:03Z PASS  3.0.0_SA_CVO  3  (all paths in-lane)
+2026-10-09T13:27:25Z PASS  2.0.0_SA_COO~Y2  3  (all paths in-lane)
+2026-10-09T13:27:30Z LANDED-2P  3.0.0_SA_CVO  fbc76ab42d  paths=3  validate=51.13s  wait=0.07s  hold=1.00s  build=0.62s  ref=0.35s  post-commit=3.06s  attempt=1
+2026-10-09T13:27:59Z LANDED-2P  2.0.0_SA_COO~Y2  7283b73787  paths=3  validate=75.47s  wait=0.24s  hold=1.14s  build=0.68s  ref=0.41s  post-commit=3.48s  attempt=1
+2026-10-09T13:28:28Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:28:38Z LANDED-2P  1.0.0_SA_CTO~DELL2  28563e702c  paths=1  validate=10.89s  wait=0.14s  hold=1.41s  build=0.87s  ref=0.50s  post-commit=4.06s  attempt=1
+2026-10-09T13:28:41Z PASS  2.0.0_SA_COO~Y2  1  (all paths in-lane)
+2026-10-09T13:28:41Z PASS  0.7.0_AE_CloudOps~DELL2  1  (all paths in-lane)
+2026-10-09T13:28:46Z LOCK-WAIT  0.7.0_AE_CloudOps~DELL2  1s
+2026-10-09T13:28:49Z LANDED-2P  2.0.0_SA_COO~Y2  326e903cd9  paths=1  validate=10.09s  wait=0.10s  hold=1.18s  build=0.76s  ref=0.38s  post-commit=3.28s  attempt=1
+2026-10-09T13:28:51Z LANDED-2P  0.7.0_AE_CloudOps~DELL2  540da00fcc  paths=1  validate=9.78s  wait=1.29s  hold=1.41s  build=0.96s  ref=0.42s  post-commit=3.00s  attempt=1
+2026-10-09T13:28:59Z PASS  2.0.0_SA_COO~C2  3  (all paths in-lane)
+2026-10-09T13:29:15Z LANDED-2P  2.0.0_SA_COO~C2  c78115fb9e  paths=3  validate=25.22s  wait=0.10s  hold=1.51s  build=0.98s  ref=0.49s  post-commit=3.90s  attempt=1
+2026-10-09T13:29:16Z PASS  2.0.0_SA_COO~D2  5  (all paths in-lane)
+2026-10-09T13:29:26Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:29:36Z LANDED-2P  1.0.0_SA_CTO~DELL2  77e60c3d2b  paths=1  validate=8.95s  wait=0.13s  hold=1.61s  build=0.99s  ref=0.55s  post-commit=3.63s  attempt=1
+2026-10-09T13:29:43Z PASS  2.0.0_SA_COO~P2  4  (all paths in-lane)
+2026-10-09T13:29:50Z LANDED-2P  2.0.0_SA_COO~D2  e7316aa723  paths=5  validate=61.24s  wait=0.12s  hold=2.52s  build=1.99s  ref=0.49s  post-commit=3.57s  attempt=1
+2026-10-09T13:29:54Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=9.64  took=already-current pushed=e7316aa723
+2026-10-09T13:30:33Z PASS  0.9.0_WK_ADVI_COTBKF~65  5  (all paths in-lane)
+2026-10-09T13:30:52Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane)
+2026-10-09T13:31:50Z MERGE-ATTEMPT  2.0.0_SA_COO~C2  rc=0  secs=4.41  graded=0/5 fast-lane  args=(wk-ADVI_COTBKF-65)  first=(none)
+2026-10-09T13:31:59Z PASS  0.7.0_AE_CloudOps~IB2  1  (all paths in-lane)
+2026-10-09T13:32:34Z PASS  2.0.0_SA_COO~P2  2  (all paths in-lane)
+2026-10-09T13:32:37Z LANDED-2P  0.7.0_AE_CloudOps~IB2  15eec69731  paths=1  validate=71.24s  wait=0.13s  hold=2.02s  build=1.50s  ref=0.47s  post-commit=3.61s  attempt=1
+2026-10-09T13:33:48Z PASS  2.0.0_SA_COO~C2  1  (all paths in-lane)
+2026-10-09T13:33:55Z LANDED-2P  2.0.0_SA_COO~C2  7bc7b1fc1e  paths=1  validate=7.38s  wait=0.06s  hold=0.91s  build=0.54s  ref=0.34s  post-commit=2.75s  attempt=1
+2026-10-09T13:34:30Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane)
+2026-10-09T13:35:12Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=4.40  graded=0/1 fast-lane  args=(wk-P-fix)  first=(none)
+2026-10-09T13:35:27Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T13:35:35Z LANDED-2P  0.0.0_AB_MSTR~DELL2  e21381b10d  paths=1  validate=7.70s  wait=0.09s  hold=1.18s  build=0.70s  ref=0.42s  post-commit=3.16s  attempt=1
+2026-10-09T13:35:37Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane)
+2026-10-09T13:36:03Z LANDED-2P  2.0.0_SA_COO~D2  df04ee7617  paths=1  validate=40.36s  wait=0.14s  hold=1.72s  build=1.09s  ref=0.58s  post-commit=4.03s  attempt=1
+2026-10-09T13:36:07Z PASS  0.7.0_AE_CloudOps~CB2  3  (all paths in-lane)
+2026-10-09T13:36:21Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T13:36:29Z LOCK-WAIT  0.7.0_AE_CloudOps~CB2  2s
+2026-10-09T13:36:38Z LANDED-2P  0.7.0_AE_CloudOps~CB2  f550170df0  paths=3  validate=46.18s  wait=2.36s  hold=2.09s  build=1.26s  ref=0.76s  post-commit=6.24s  attempt=1
+2026-10-09T13:36:39Z LANDED-2P  0.0.0_AB_MSTR~DELL2  6c1de0b1d0  paths=1  validate=11.01s  wait=0.21s  hold=2.44s  build=1.29s  ref=1.10s  post-commit=10.32s  attempt=1
+2026-10-09T13:37:05Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=2.99  graded=n/a  args=(--verify-merge 7fc967b8818a77b8153b99d8ae750b747eb7c011)  first=(none)
+2026-10-09T13:37:05Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:37:07Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=3  secs=0.16  skipped=overlap holder=2104284
+2026-10-09T13:37:10Z LOCK-WAIT  1.0.0_SA_CTO~DELL2  1s
+2026-10-09T13:37:15Z LANDED-2P  1.0.0_SA_CTO~DELL2  1f256cfc64  paths=1  validate=9.98s  wait=1.22s  hold=1.39s  build=0.88s  ref=0.47s  post-commit=3.39s  attempt=1
+2026-10-09T13:37:17Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=73.80  took=5345da7a9d hold=4.80s graded=1/49 pushed=1f256cfc64
+2026-10-09T13:37:18Z PASS  0.7.0_AE_CloudOps~DELL2  2  (all paths in-lane)
+2026-10-09T13:37:40Z PASS  2.0.0_SA_COO~P2  5  (all paths in-lane)
+2026-10-09T13:38:05Z LANDED-2P  0.7.0_AE_CloudOps~DELL2  150950a373  paths=2  validate=84.25s  wait=0.13s  hold=1.55s  build=0.90s  ref=0.62s  post-commit=4.13s  attempt=1
+2026-10-09T13:38:04Z PASS  0.9.0_WK_ADVI_COTBKF~66  1  (all paths in-lane)
+2026-10-09T13:38:07Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:36:55Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of round 37 only (CB-ak-1 complete); round 36 is open with its own ungraded criterion and is not compiled here
+2026-10-09T13:38:15Z PASS  3.0.0_SA_CVO  4  (all paths in-lane)
+2026-10-09T13:38:16Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=0  secs=7.73  took=already-current pushed=1484931840
+2026-10-09T13:38:16Z LANDED-2P  1.0.0_SA_CTO~DELL2  1484931840  paths=1  validate=11.80s  wait=0.10s  hold=1.46s  build=0.95s  ref=0.47s  post-commit=3.44s  attempt=1
+2026-10-09T13:38:23Z PASS  2.0.0_SA_COO~D2  3  (all paths in-lane)
+2026-10-09T13:38:31Z PASS  2.0.0_SA_COO~V2  1  (all paths in-lane)
+2026-10-09T13:38:38Z LOCK-WAIT  2.0.0_SA_COO~V2  1s
+2026-10-09T13:38:42Z LANDED-2P  2.0.0_SA_COO~D2  3737ea0e82  paths=3  validate=33.31s  wait=0.26s  hold=1.59s  build=1.04s  ref=0.52s  post-commit=4.33s  attempt=1
+2026-10-09T13:38:44Z LANDED-2P  2.0.0_SA_COO~V2  535de840cd  paths=1  validate=15.60s  wait=1.37s  hold=1.80s  build=1.14s  ref=0.59s  post-commit=3.98s  attempt=1
+2026-10-09T13:39:04Z PASS  0.9.0_WK_IRPT_DASHBD~68  4  (all paths in-lane)
+2026-10-09T13:39:21Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:39:25Z SURPRISE-ROW-OVERRIDE-HONOURED  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of round 37 only (CB-ak-1 complete); round 36 is open with its own ungraded criterion and is not compiled here  provenance=UNVERIFIED-BY-GATE
+2026-10-09T13:39:28Z LOCK-WAIT  3.0.0_SA_CVO  1s
+2026-10-09T13:39:31Z LANDED-2P  1.0.0_SA_CTO~DELL2  fa3cabc1ea  paths=1  validate=9.39s  wait=0.10s  hold=2.02s  build=1.43s  ref=0.53s  post-commit=3.63s  attempt=1
+2026-10-09T13:39:33Z LANDED-2P  3.0.0_SA_CVO  b040240378  paths=4  validate=150.63s  wait=1.28s  hold=1.75s  build=1.21s  ref=0.51s  post-commit=3.34s  attempt=1
+2026-10-09T13:40:18Z PASS  2.0.0_SA_COO~C2  1  (all paths in-lane)
+2026-10-09T13:40:24Z PASS  4.0.0_SA_CRO~DELL2  1  (all paths in-lane)
+2026-10-09T13:40:28Z LANDED-2P  2.0.0_SA_COO~C2  11870bd837  paths=1  validate=9.57s  wait=0.10s  hold=1.62s  build=0.99s  ref=0.58s  post-commit=4.09s  attempt=1
+2026-10-09T13:40:34Z LANDED-2P  4.0.0_SA_CRO~DELL2  0e3bcee3fc  paths=1  validate=9.89s  wait=0.11s  hold=1.72s  build=0.99s  ref=0.67s  post-commit=3.43s  attempt=1
+2026-10-09T13:40:44Z PASS  0.7.0_AE_CloudOps~DELL2  3  (all paths in-lane)
+2026-10-09T13:40:54Z LANDED-2P  0.7.0_AE_CloudOps~DELL2  e41b69b34c  paths=3  validate=9.81s  wait=0.15s  hold=1.72s  build=1.05s  ref=0.60s  post-commit=4.56s  attempt=1
+2026-10-09T13:40:54Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:41:02Z LANDED-2P  1.0.0_SA_CTO~DELL2  7d33a8581d  paths=1  validate=9.70s  wait=0.08s  hold=1.13s  build=0.69s  ref=0.41s  post-commit=3.34s  attempt=1
+2026-10-09T13:41:50Z PASS  0.9.0_WK_IRPT_DASHBD~68  2  (all paths in-lane)
+2026-10-09T13:41:54Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=150.92  graded=1/5 fast-lane  args=(wk-P-fix)  first=(none)
+2026-10-09T13:42:01Z PASS  2.0.0_SA_COO~D2  2  (all paths in-lane)
+2026-10-09T13:42:11Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=1  secs=1.54  graded=n/a  args=(wk-P-fix)  first=(REFUSED -- the merge staged NO files)
+2026-10-09T13:42:19Z PASS  2.0.0_SA_COO~C2  2  (all paths in-lane)
+2026-10-09T13:42:25Z LANDED-2P  2.0.0_SA_COO~D2  7dbf9f6a74  paths=2  validate=63.35s  wait=0.20s  hold=1.47s  build=0.95s  ref=0.47s  post-commit=2.80s  attempt=1
+2026-10-09T13:42:31Z LANDED-2P  2.0.0_SA_COO~C2  5c63914d0c  paths=2  validate=21.60s  wait=0.10s  hold=1.17s  build=0.75s  ref=0.39s  post-commit=2.64s  attempt=1
+2026-10-09T13:43:10Z MERGE-ATTEMPT  2.0.0_SA_COO~D2  rc=0  secs=24.81  graded=1/83 fast-lane  args=(box/dell2)  first=(none)
+2026-10-09T13:43:18Z PASS  2.0.0_SA_COO~C2  1  (all paths in-lane)
+2026-10-09T13:43:20Z PASS  0.7.0_AE_CloudOps~IB2  5  (all paths in-lane)
+2026-10-09T13:43:25Z LANDED-2P  2.0.0_SA_COO~C2  f12d8d0507  paths=1  validate=6.51s  wait=0.08s  hold=1.10s  build=0.65s  ref=0.42s  post-commit=2.63s  attempt=1
+2026-10-09T13:44:01Z MERGE-ATTEMPT  0.7.0_AE_CloudOps~IB2  rc=0  secs=5.10  graded=0/5 fast-lane  args=(ib-pr-397-replan -m drain(IRPT_BCKEND IB-pr-397, 0.7.0_AE_CloudOps~IB2): merge ib-pr-397-replan -- the composition reader is LIVE at ZZmWOFSA under AMENDMENT 6's targeted apply; IB102-1-AC1 PASS, proof VALID, ledger CLOSED, status complete)  first=(none)
+2026-10-09T13:45:11Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=5.48  held=conflict cloud=e2ee75172d
+2026-10-09T13:45:31Z PASS  0.9.0_WK_IRPT_DASHBD~68  3  (all paths in-lane)
+2026-10-09T13:46:11Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=8.44  held=conflict cloud=e2ee75172d
+2026-10-09T13:46:23Z PASS  2.0.0_SA_COO~C2  2  (all paths in-lane)
+2026-10-09T13:46:42Z LANDED-2P  2.0.0_SA_COO~C2  8a50861034  paths=2  validate=29.30s  wait=0.19s  hold=2.44s  build=1.71s  ref=0.69s  post-commit=5.55s  attempt=1
+2026-10-09T13:46:47Z PASS  0.9.0_WK_ADVI_COTBKF~67  1  (all paths in-lane)
+2026-10-09T13:46:48Z PASS  0.9.0_WK_ADVI_COTBKF~66  4  (all paths in-lane)
+2026-10-09T13:46:54Z PASS  0.9.0_WK_IRPT_BCKEND~273  2  (all paths in-lane)
+2026-10-09T13:47:01Z MERGE-ATTEMPT  2.0.0_SA_COO~D2  rc=0  secs=6.72  graded=0/8 fast-lane  args=(box/dell2)  first=(none)
+2026-10-09T13:47:07Z MERGE-ATTEMPT  2.0.0_SA_COO~D2  rc=0  secs=5.06  graded=0/6 fast-lane  args=(wk-irpt-dashbd-45-68)  first=(none)
+2026-10-09T13:47:35Z PASS  0.7.0_AE_CloudOps~CB2  5  (all paths in-lane)
+2026-10-09T13:47:44Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane)
+2026-10-09T13:47:54Z LANDED-2P  0.7.0_AE_CloudOps~CB2  e5eb80c75f  paths=5  validate=42.06s  wait=0.15s  hold=4.06s  build=3.27s  ref=0.65s  post-commit=5.81s  attempt=1
+2026-10-09T13:47:55Z LANDED-2P  2.0.0_SA_COO~D2  748b3cd3dc  paths=1  validate=10.72s  wait=0.12s  hold=3.40s  build=1.66s  ref=1.64s  post-commit=3.46s  attempt=1
+2026-10-09T13:48:44Z PASS  2.0.0_SA_COO~P2  3  (all paths in-lane)
+2026-10-09T13:49:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=4  secs=11.26  graded=n/a  args=(origin/CLOUD -m drain(0.0.0_AB_MSTR~DELL2): box/dell2 takes CLOUD; schema same-defect collision PICK CLOUD (6b65ca5a52 over 1f256cfc64, identical prose); audit-log union)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T13:49:33Z PASS  0.0.0_AB_MSTR~DELL2  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T13:49:40Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:49:52Z LANDED-2P  1.0.0_SA_CTO~DELL2  0e0b6684dd  paths=1  validate=10.44s  wait=0.13s  hold=2.57s  build=1.67s  ref=0.84s  post-commit=4.49s  attempt=1
+2026-10-09T13:49:54Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=10.77  graded=0/3 fast-lane  args=(wk-P-fix)  first=(none)
+2026-10-09T13:50:24Z PASS  2.0.0_SA_COO~V2  1  (all paths in-lane)
+2026-10-09T13:50:34Z LANDED-2P  2.0.0_SA_COO~V2  939de14465  paths=1  validate=10.81s  wait=0.11s  hold=1.66s  build=1.01s  ref=0.61s  post-commit=3.96s  attempt=1
+2026-10-09T13:50:53Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL2  rc=0  secs=87.23  graded=2/66  args=(--continue -m drain(0.0.0_AB_MSTR~DELL2): box/dell2 takes CLOUD; schema same-defect collision PICK CLOUD (6b65ca5a52 over 1f256cfc64, identical prose); audit-log union)  first=(none)
+2026-10-09T13:51:00Z PASS  0.9.0_WK_ADVI_COTBKF~67  2  (all paths in-lane)
+2026-10-09T13:51:19Z PASS  0.9.0_WK_IRPT_DASHBD~69  3  (all paths in-lane)
+2026-10-09T13:51:23Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:51:37Z LANDED-2P  1.0.0_SA_CTO~DELL2  88141ce237  paths=1  validate=11.76s  wait=0.17s  hold=2.25s  build=1.06s  ref=1.11s  post-commit=6.44s  attempt=1
+2026-10-09T13:52:21Z MERGE-ATTEMPT  2.0.0_SA_COO~C2  rc=0  secs=35.48  graded=1/5 fast-lane  args=(wk-ADVI_COTBKF-66)  first=(none)
+2026-10-09T13:52:57Z PASS  2.0.0_SA_COO~T2  1  (all paths in-lane)
+2026-10-09T13:53:04Z PASS  0.9.0_WK_IRPT_DASHBD~69  2  (all paths in-lane)
+2026-10-09T13:53:07Z LANDED-2P  2.0.0_SA_COO~T2  0d84246a81  paths=1  validate=10.27s  wait=0.12s  hold=2.66s  build=1.84s  ref=0.78s  post-commit=3.79s  attempt=1
+2026-10-09T13:53:09Z PASS  0.9.0_WK_ADVI_COTBKF~67  2  (all paths in-lane)
+2026-10-09T13:54:57Z MERGE-ATTEMPT  2.0.0_SA_COO~D2  rc=0  secs=38.31  graded=1/47 fast-lane  args=(box/dell2)  first=(none)
+2026-10-09T13:55:00Z PASS  2.0.0_SA_COO~G2  1  (all paths in-lane)
+2026-10-09T13:55:03Z MERGE-ATTEMPT  2.0.0_SA_COO~D2  rc=0  secs=5.94  graded=0/5 fast-lane  args=(wk-irpt-dashbd-46-69)  first=(none)
+2026-10-09T13:55:10Z LANDED-2P  2.0.0_SA_COO~G2  104f34d41a  paths=1  validate=10.79s  wait=0.14s  hold=1.59s  build=1.01s  ref=0.53s  post-commit=3.58s  attempt=1
+2026-10-09T13:53:43Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of round 45 only (DB-b-93 complete, MAY-CLOSE); the open DB-b-94 (r44 release packet, issued) belongs to a later round and is not compiled here
+2026-10-09T13:55:23Z PASS  3.0.0_SA_CVO  3  (all paths in-lane)
+2026-10-09T13:55:44Z PASS  0.7.0_AE_CloudOps~DELL2  1  (all paths in-lane)
+2026-10-09T13:56:02Z PASS  0.9.0_WK_ADVI_COTBKF~68  1  (all paths in-lane)
+2026-10-09T13:56:09Z PASS  2.0.0_SA_COO~P2  3  (all paths in-lane)
+2026-10-09T13:56:16Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=13.48  held=conflict cloud=0cccc48825
+2026-10-09T13:56:20Z LANDED-2P  2.0.0_SA_COO~P2  64d8a82765  paths=3  validate=10.87s  wait=0.11s  hold=2.65s  build=2.08s  ref=0.54s  post-commit=3.09s  attempt=1
+2026-10-09T13:56:51Z SURPRISE-ROW-OVERRIDE-HONOURED  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of round 45 only (DB-b-93 complete, MAY-CLOSE); the open DB-b-94 (r44 release packet, issued) belongs to a later round and is not compiled here  provenance=UNVERIFIED-BY-GATE
+2026-10-09T13:57:01Z LANDED-2P  3.0.0_SA_CVO  11b79674b2  paths=3  validate=189.18s  wait=0.15s  hold=2.08s  build=1.32s  ref=0.69s  post-commit=4.89s  attempt=1
+2026-10-09T13:57:12Z PASS  2.0.0_SA_COO~D2  1  (all paths in-lane)
+2026-10-09T13:57:18Z PASS  0.7.0_AE_CloudOps~DELL2  1  (all paths in-lane)
+2026-10-09T13:57:23Z LANDED-2P  2.0.0_SA_COO~D2  723a5e7d62  paths=1  validate=9.70s  wait=0.12s  hold=1.69s  build=0.95s  ref=0.62s  post-commit=4.87s  attempt=1
+2026-10-09T13:57:30Z LANDED-2P  0.7.0_AE_CloudOps~DELL2  5e96b81a17  paths=1  validate=11.35s  wait=0.21s  hold=1.86s  build=1.23s  ref=0.59s  post-commit=4.22s  attempt=1
+2026-10-09T13:57:21Z PASS  0.9.0_WK_IRPT_BCKEND~274  10  (all paths in-lane)
+2026-10-09T13:58:15Z PASS  2.0.0_SA_COO~C2  2  (all paths in-lane)
+2026-10-09T13:58:20Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:58:31Z LANDED-2P  1.0.0_SA_CTO~DELL2  5c0cc4080c  paths=1  validate=10.47s  wait=0.17s  hold=1.75s  build=1.10s  ref=0.60s  post-commit=3.94s  attempt=1
+2026-10-09T13:58:43Z LANDED-2P  2.0.0_SA_COO~C2  5eaa4b6191  paths=2  validate=51.68s  wait=0.11s  hold=1.29s  build=0.79s  ref=0.47s  post-commit=4.36s  attempt=1
+2026-10-09T14:00:04Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T13:59:20Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of round 102 only (4 orders complete, MAY-CLOSE) plus the narrative rows its IB-pr-401 hold dispositions; round 94, ~Y and the later rounds are not compiled here
+2026-10-09T14:00:11Z PASS  3.0.0_SA_CVO  1  (all paths in-lane)
+2026-10-09T14:00:13Z LANDED-2P  1.0.0_SA_CTO~DELL2  fa8d2c2961  paths=1  validate=9.77s  wait=0.08s  hold=1.35s  build=0.80s  ref=0.52s  post-commit=4.13s  attempt=1
+2026-10-09T14:00:15Z MERGE-ATTEMPT  2.0.0_SA_COO~C2  rc=0  secs=5.26  graded=0/4 fast-lane  args=(wk-ADVI_COTBKF-67)  first=(none)
+2026-10-09T14:00:25Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of round 46 only (DB-b-94 complete, MAY-CLOSE); other IRPT_DASHBD orders are outside it
+2026-10-09T14:00:54Z LANDED-2P  3.0.0_SA_CVO  d3b4f1a769  paths=1  validate=86.74s  wait=0.12s  hold=1.91s  build=1.01s  ref=0.77s  post-commit=3.87s  attempt=1
+2026-10-09T14:00:53Z PASS  3.0.0_SA_CVO  2  (all paths in-lane)
+2026-10-09T14:01:21Z LANDED-2P  3.0.0_SA_CVO  eae4b4d6e3  paths=2  validate=49.29s  wait=0.07s  hold=1.75s  build=1.24s  ref=0.48s  post-commit=3.49s  attempt=1
+2026-10-09T14:01:22Z PASS  2.0.0_SA_COO~P2  1  (all paths in-lane)
+2026-10-09T14:01:33Z LANDED-2P  2.0.0_SA_COO~P2  13cee15f72  paths=1  validate=9.56s  wait=0.08s  hold=3.64s  build=2.83s  ref=0.74s  post-commit=3.80s  attempt=1
+2026-10-09T14:01:38Z PASS  2.0.0_SA_COO~C2  1  (all paths in-lane)
+2026-10-09T14:01:46Z LANDED-2P  2.0.0_SA_COO~C2  3d68a5ab23  paths=1  validate=7.32s  wait=0.09s  hold=1.08s  build=0.69s  ref=0.36s  post-commit=3.42s  attempt=1
+2026-10-09T14:02:15Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T14:02:55Z PASS  0.7.0_AE_CloudOps~DB2  1  (all paths in-lane)
+2026-10-09T14:03:05Z LANDED-2P  0.7.0_AE_CloudOps~DB2  dd30563a89  paths=1  validate=9.11s  wait=0.10s  hold=1.49s  build=0.88s  ref=0.56s  post-commit=3.99s  attempt=1
+2026-10-09T14:03:13Z PASS  2.0.0_SA_COO~C2  1  (all paths in-lane)
+2026-10-09T14:03:23Z LANDED-2P  2.0.0_SA_COO~C2  98b33494be  paths=1  validate=9.09s  wait=0.09s  hold=1.98s  build=1.13s  ref=0.79s  post-commit=3.73s  attempt=1
+2026-10-09T14:03:33Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=5.27  graded=0/10 fast-lane  args=(wk-IRPT_BCKEND-274)  first=(none)
+2026-10-09T14:03:42Z BLOCK  0.0.0_AB_MSTR~DELL2  1  (1 violation(s): VIOLATION: org/standards/PROOF_OF_SPEC.schema.json -- lane=ANY_EXEC (Any exec agent — base or project-scoped CTO/COO/CVO/CRO. 3.0.0_SA_CVO + 3.1.0_SA_CVO added 2026-05-23 by COO: CVO is now Tier-1 Claude exec per Andrew 2026-05-22 ruling; same gap as BASE_EXEC + ANY_EXEC_OR_AE. 4.0.0_SA_CRO added 2026-07-22 by 0.0.0_AB_MSTR (grantor; CRO is grantee — SoD): new Tier-1 Chief Research Officer per Andrew-direct 2026-07-22, enabling cross-exec task_order authoring. NOTE: ANY_EXEC_OR_AE membership was DELIBERATELY WITHHELD pending Andrew's ruling on whether the CRO registers research projects in org/projects/ directly or routes through CTO/COO — the CRO itself declined to lobby for it. LD-0331.); agent=0.0.0_AB_MSTR~DELL2 not in permitted_agents;)
+2026-10-09T14:03:56Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T14:03:57Z PASS  1.0.0_SA_CTO~DELL2  2  (all paths in-lane)
+2026-10-09T14:04:01Z LOCK-WAIT  1.0.0_SA_CTO~DELL2  1s
+2026-10-09T14:04:03Z LANDED-2P  0.0.0_AB_MSTR~DELL2  d3f04d9a70  paths=1  validate=6.44s  wait=0.07s  hold=1.14s  build=0.67s  ref=0.44s  post-commit=2.87s  attempt=1
+2026-10-09T14:04:06Z LANDED-2P  1.0.0_SA_CTO~DELL2  881f444c0e  paths=2  validate=6.74s  wait=1.27s  hold=1.59s  build=0.93s  ref=0.60s  post-commit=3.28s  attempt=1
+2026-10-09T14:04:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=22.68  held=conflict cloud=f1b3385398
+2026-10-09T14:04:25Z SURPRISE-ROW-OVERRIDE  3.0.0_SA_CVO  reason=CTO msg 2224 -- rows of rounds 36 and 39 only (orders complete); round 38 (CB-al-2 held) and round 40 (running) are not compiled here
+2026-10-09T14:04:46Z PASS  3.0.0_SA_CVO  4  (all paths in-lane)
+2026-10-09T14:04:48Z PASS  0.9.0_WK_IRPT_BCKEND~273  8  (all paths in-lane)
+2026-10-09T14:05:05Z LANDED-2P  3.0.0_SA_CVO  5c363d0c76  paths=4  validate=34.36s  wait=0.08s  hold=1.15s  build=0.67s  ref=0.45s  post-commit=2.70s  attempt=1
+2026-10-09T14:05:30Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T14:05:38Z LANDED-2P  1.0.0_SA_CTO~DELL2  023be3c879  paths=1  validate=7.69s  wait=0.09s  hold=1.23s  build=0.79s  ref=0.41s  post-commit=3.13s  attempt=1
+2026-10-09T14:05:57Z PASS  2.0.0_SA_COO~D2  5  (all paths in-lane)
+2026-10-09T14:05:58Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T14:06:02Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=3  secs=0.17  skipped=overlap holder=2382084
+2026-10-09T14:06:05Z LANDED-2P  0.0.0_AB_MSTR~DELL2  7ddb05ad36  paths=1  validate=6.69s  wait=0.07s  hold=1.13s  build=0.63s  ref=0.47s  post-commit=3.32s  attempt=1
+2026-10-09T14:06:08Z BOX-SYNC  0.0.0_AB_MSTR~DELL2  mode=box  rc=4  secs=18.50  held=conflict cloud=f1b3385398
+2026-10-09T14:06:12Z LANDED-2P  2.0.0_SA_COO~D2  f68c21ea8c  paths=5  validate=25.97s  wait=0.08s  hold=1.31s  build=0.83s  ref=0.44s  post-commit=2.61s  attempt=1
+2026-10-09T14:06:13Z PASS  0.9.0_WK_ADVI_COTBKF~68  3  (all paths in-lane)
+2026-10-09T14:06:25Z PASS  1.0.0_SA_CTO~DELL2  1  (all paths in-lane)
+2026-10-09T14:06:31Z LANDED-2P  1.0.0_SA_CTO~DELL2  9326a48990  paths=1  validate=6.22s  wait=0.07s  hold=0.98s  build=0.60s  ref=0.36s  post-commit=2.30s  attempt=1
+2026-10-09T14:07:18Z PASS  2.0.0_SA_COO~V2  1  (all paths in-lane)
+2026-10-09T14:07:40Z LANDED-2P  2.0.0_SA_COO~V2  eff411394f  paths=1  validate=9.01s  wait=0.10s  hold=16.41s  build=1.52s  ref=14.76s  post-commit=3.38s  attempt=1
+2026-10-09T14:08:03Z MERGE-ATTEMPT  2.0.0_SA_COO~P2  rc=0  secs=7.65  graded=0/10 fast-lane  args=(wk-IRPT_BCKEND-273)  first=(none)
+2026-10-09T14:08:05Z PASS  0.0.0_AB_MSTR~DELL2  1  (all paths in-lane)
+2026-10-09T14:08:12Z LANDED-2P  0.0.0_AB_MSTR~DELL2  1e381fae41  paths=1  validate=6.39s  wait=0.06s  hold=1.85s  build=0.94s  ref=0.88s  post-commit=2.63s  attempt=1
 2026-10-09T14:08:30Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=11.75  graded=1/111 fast-lane  args=(origin/CLOUD)  first=(none)
 2026-10-09T14:09:06Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
 2026-10-09T14:09:09Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane)

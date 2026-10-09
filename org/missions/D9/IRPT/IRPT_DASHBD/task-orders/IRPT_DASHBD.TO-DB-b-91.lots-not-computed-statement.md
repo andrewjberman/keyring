@@ -27,7 +27,7 @@ lots stage skips is STATED on the page that serves lots, as "lots not computed f
 lots tables yet, so the statement must live in the data that page will read.
 
 1. In `C:/dev/wk-irpt-dashbd-66/infra/aws/lambda/investor-reporting/reporting-gold/handler.py`, on a refused lots day, write the statement
-   "lots not computed for <date>: <reason>" into a status record under the lots tables' own prefixes, inside the role's existing PutObject write
+   "lots not computed for <date>: <reason>" into a status record under the `account_activity_daily` table prefix (`<prefix>_status/lots_not_computed.json`, as built and accepted at CTO ADDENDUM 12 item 1), inside the role's existing PutObject write
    set: no new prefix, no new grant.
    - It is overwritten on a later successful day and cleared when that day lands.
    - Choose the key so the handler's newest-landed-day listing (`catch_up_lots`) never reads the status record as a landed `date=` partition.
@@ -45,6 +45,14 @@ No deploy: the change reaches the Lambda in a later release.
 `DB44-2-AC1` -- a refused lots day is stated as 'lots not computed for <date>: <reason>' in a status record the newest-landed listing ignores. Base: FAIL.
 
 <expected_criteria>DB44-2-AC1</expected_criteria>
+
+## AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~13:4xZ): criterion text set to the status key as built (CTO ADDENDUM 12 item 1)
+
+Step 1 previously read "under the lots tables' own prefixes". The worker wrote the key under the `account_activity_daily` prefix as
+`<prefix>_status/lots_not_computed.json`, inside the role's existing write set. `partition_days` lists only `date=`. The CTO accepted it as
+meeting the intent (ADDENDUM 12 item 1, @77e60c3d2b). DB44-2-AC1's check is unchanged.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
 
 ## BOUNDS
 
