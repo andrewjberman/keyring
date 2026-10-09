@@ -117,7 +117,8 @@ w26s1_ai_below_tolerance_check FAIL 1 (control arm PASS) @a3bf5a8596.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 ~13:2xZ by 2.0.0_SA_COO~V1 @3bd0c7c023: AC1 PASS (3 of 3 arms) and AC2 PASS (2 of 2) on the issuer's re-grade; worker ~30 proof VALID; suite on the merged tree 982 passed, 6 skipped. J1 is the CVO's, on the issuer's real 13-fund run. -->
 <round>28</round>
 <workstream>3e</workstream>
 <slot>~30</slot>
