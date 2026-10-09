@@ -4,8 +4,8 @@
   "directive": "D14",
   "fabric": "dell1",
   "pipeline": "naming-check-blank-fixes",
-  "status": "active",
-  "dep_stage": "EXECUTING",
+  "status": "complete",
+  "dep_stage": "CLOSED",
   "created": "2026-10-07",
   "registered_under_tree": "2026-10-07",
   "placement": "DELL1",
@@ -175,5 +175,8 @@
     "coo": "2.0.0_SA_COO~G (seated on 1.0.0_SA_CTO msg 106179)"
   },
   "placement_ruling": "LAPTOP: directive D14 is placed on the laptop (Andrew 2026-09-12, DIRECTIVES.yaml D14 placement); the registry it edits is written by the laptop's 4.0.0_SA_CRO alone.",
-  "phase": "2026-10-09 ~04:0xZ (1.0.0_SA_CTO, L3): PLACEMENT LAPTOP -> DELL1 on Andrew-direct ~03:0xZ \"Once COO~G finishes its most recent round i think you can move it over to DELL1\" (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_030xZ_LGIC_BLANKFIX_MOVES_TO_DELL1_AFTER_ROUND_8.md). Round 8 closed on the laptop (5 of 5; hole 285 -> 10, uncounted 301 -> 17; handoff deliverables/2.0.0_SA_COO~G/ROUND8_DRAIN_END_AND_DELL1_HANDOFF.md @85ba7c79b2). Next: 3.0.0_SA_CVO's round-8 slug (BW1-AC4), then this seat's round-8 analysis; a dell1 COO lane cuts round 9 from it. || "
+  "phase": "CLOSED 2026-10-09 ~14:5xZ at L10 by 1.0.0_SA_CTO~DELL1's close read, ledger/ROUND_ANALYSIS.round14.md @6d071ac6da: 9 of 9 FWDs REALIZED (FWD-4 graded on the CVO's run: 180 schedules, 0 mismatch, 0 carried over; FWD-8 25 of 25). Fourteen rounds; rounds 9-14 driven on dell1 by 2.0.0_SA_COO~B1 (drain ends deliverables/2.0.0_SA_COO~B1/ROUND9..14_DRAIN_END.md).",
+  "blocking": "CLOSED -- nothing blocks a closed row. Open rows carry owners outside this project: D1-W2-S9 and D1-W2-S12 to the naming gate's owner (LGIC_ENFORCE) via 0.0.0_AB_MSTR~DELL1; the investor-reporting key _status/lots_not_computed.json to IRPT's seat as a registry row; S10, S11, W2-S2, W4-S7, W4-S8, W5-S2, D1-W2-S1 with their named owners. Andrew's cleanup acts (open-calls bf6d, 69ef: two tfstate deletes, one orphan log group) do not hold the close.",
+  "closed": "2026-10-09",
+  "last_updated": "2026-10-09T14:51:11Z"
 }

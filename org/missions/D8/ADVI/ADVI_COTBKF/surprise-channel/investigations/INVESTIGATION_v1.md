@@ -4048,3 +4048,632 @@ round.** Never edit an existing row.
   "world_is": "No enabled schedule leads to a script that writes silver/prices in the live gold-run document; a manual run of the cot builder (gold_dispatch silver-prep) is the one repo path that would rebuild canonical_prices."
 }
 ```
+
+## ADVI_COTBKF-D2-W65-S1 -- The 988 held account-days are all one bond (95000U2D4); the other two have no Commonwealth rows and no CUSIP-keyed cot rows
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W65-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~65",
+  "surfaced_at": "2026-10-09T13:40:00Z",
+  "one_line": "CB-ak-1: commonwealth_daily_holdings over the silver transactions gives 988 account-days for 95000U2D4 and 0 for 05613L3H2 and 651639AX4; the silver transactions hold 10 rows of 95000U2D4 (1 by, 8 int, 1 lo) and none of the other two; positions hold none of the three; the cot gold holdings hold 86 CUSIP-keyed rows of 95000U2D4 (label bd_snapshot, a foreign label) and none of the other two. Disclosed: run 1 classed 95000U2D4 as none because my trade-type regex missed the vendor code 'by' (Buy, commonwealth_signs.py); the class rule text was not changed, the code list was corrected, run 2 is the recorded run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md (held-day counts per CUSIP, transaction types, cot store rows)",
+      "rule commit b4764d4fa0 precedes the first run; the corrected trade-type code list is in the script commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order states the three bonds are held for 988 account-days in total across the three, and that the cot tree may carry their prices.",
+  "world_is": "In the Commonwealth chain's held-day rebuild all 988 account-days belong to 95000U2D4; the other two bonds are not in the Commonwealth transactions or positions, so their holders (if any) are outside this chain's rebuild or are keyed by something other than the CUSIP in the cot gold holdings (not searched: the rule counts CUSIP-keyed rows only)."
+}
+```
+
+## ADVI_COTBKF-D2-S60 -- CB-aj-2: CTO half condition 2 is unsatisfiable as written; the mirror necessarily holds the cot writer the half itself names
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S60",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T13:40:00Z",
+  "one_line": "TO CB-aj-2's CTO half condition 2 cannot be satisfied as written: it makes ANY writer of silver/prices/ found in the cot code/gold mirror a STOP, while the same half's own Read section names a cot writer that the mirror necessarily contains, so the literal gate refuses the act the half signs",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half condition 2: 'Before the first write, the cot code mirror (code/gold/ in opal-data-cot) is read, one object at a time. Any writer of silver/prices/, or any reader of another firm's price input, means STOP. The BLIND is closed in the ledger.'",
+      "the same half's Read section: 'Writers of silver/prices/: 7 in code, 0 scheduled. The one cot writer runs only on a manual silver-prep. The cot code mirror in the bucket is BLIND.'",
+      "measured: the mirror holds 107 objects (denominator printed, paginated to exhaustion, each read with its own get_object) and exactly ONE is a writer of silver/prices/ -- code/gold/build_canonical_prices_v2.py:617 output_key = 'silver/prices/canonical_prices.parquet' -- which is the deployed copy of data/cot/scripts/gold/build_canonical_prices_v2.py, the one cot writer the half already names",
+      "measured: the apply-time census re-read gives writers=7 scheduled=0, identical to CB-aj-1, with 'wired into live gold doc: []' so the ENABLED chain runs no writer; of the 7 candidates only that one is a cot script, the other six are data/black_diamond and data/inf scripts writing their own firms' artifacts",
+      "measured: 0 readers of another firm's PRICE input. The only cross-firm hits in the mirror are README_BUILD_SEQUENCE.md:117 and :133, a non-executable markdown doc referring to s3://opal-data-bd/code/gold/ -- a CODE prefix, not a price input",
+      "same shape as ADVI_COTBKF-D2-S42 on CB-ac-1 (a precondition no build can meet)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Reading the cot code/gold mirror will find no writer of silver/prices/, so condition 2 passes and the 38 writes proceed.",
+  "world_is": "The mirror IS the deployment of the repo's gold scripts, so it necessarily contains the one cot writer the half's own census counts and admits. On the literal reading condition 2 therefore STOPS the act the half signs GIVEN; on the reading its own closing sentence implies -- close the BLIND, i.e. find a writer BEYOND the census, or a scheduled one -- the gate PASSES, because the mirror agrees with the census exactly (1 cot writer, the named one, manual-only, scheduled=0, 0 foreign price readers). The applier did not pick between those readings: this is a SERVED overwrite of 38 keys and CLAUDE.md bars the receiving seat from adjudicating scope, so NOTHING WAS WRITTEN (0 of 38 keys) and the question went to the gate's author with the measurement and a recommendation. Conditions 1, 3 and the preflight are already proven in the ledger and do not depend on the answer. The deploy entry is deliberately left OPEN rather than HELD, because deploy_ledger.py has no state for 'pre-apply gates partly proven, act not started, awaiting a ruling': hold refuses while an apply leg is open, and hold --pre-apply refuses once any leg is proven."
+}
+```
+
+## ADVI_COTBKF-D2-S61 -- L9 CB37ak1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S61",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "L9 CB37ak1-AC2 MET: the class rule was committed alone, unimplemented ('rule-only commit'), at b4764d4fa0 (09:22 ET) before the output 3c00ecf3c3 (09:30); each class follows from the printed rows by its precedence (95000U2D4 trade_only on one 2022-06-08 buy, 05613L3H2 and 651639AX4 none); the one post-run change widened the vendor buy-code list to include 'by', which the rule's own 'buy/sell transaction rows' already covers, disclosed in W65-S1; no other firm's source is counted (the bd_snapshot gold rows were excluded, and they post-date the held window, so no class rides on them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show b4764d4fa0:data/assets/scripts/silver/commonwealth_bond_custodian_price.py (CLASS RULE, main raises 'not yet implemented')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_37_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB37ak1-AC2: each class follows from the printed rows by the rule committed first, and no other firm's source is counted.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S62 -- the bd token names both the Black Diamond platform and the bd firm
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S62",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "The 'bd' token is ambiguous inside Cottonwood's own data: cot GOLD holdings carry 86 rows for 95000U2D4 labelled bd_snapshot (2026-06-08 .. 2026-10-08), and Cottonwood's own pipeline is a Black Diamond session (cot-bd-session-daily-et, BD_FIRM_ID=cottonwood in ssm.tf). A 'bd' label can therefore name the Black Diamond PLATFORM serving Cottonwood's own accounts or the separate bd firm (49 Financial), and a token-based exclusion cannot tell them apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cross-firm guard (CLAUDE.md NEVER, another firm's data) can tell another firm's data from a shared platform serving the firm's own accounts.",
+  "world_is": "It cannot today by label: 'bd' names both. Excluding by token over-excludes Cottonwood's own platform rows; including by token would admit 49F's."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S1 -- CB-al-1: BLOCKING -- no admitted return_basis / history_scope value says 'value rebuilt from positions at the as-traded close, net of fees'; the producer's emit_day manifest text and method_version 2 state the custodian method
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T13:55:00Z",
+  "one_line": "CB-al-1: the producer's closed vocabularies (return_basis TWR / HOLDINGS_INCOME_FALLBACK / NOT_MEASURABLE; history_scope FULL / PARTIAL_HISTORY) hold no value that truthfully states FWD-3's method (positions x as-traded close, after fees), so the 107,316 measured Cottonwood rows carry return_basis NULL and method_version NULL (claim absent, rejectable) and nothing claims the custodian method in the table; but emit_day(upload=True) writes manifest.json with method_version 2 and the text 'V from the custodian's whole-account value', which would state the custodian method for Cottonwood at the mint. A new return_basis value (and a method row), or a Cottonwood entry in sources.json plus a manifest-text parameter, is IRPT_DASHBD's change.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:141-148 (vocabularies), :1688 (_check_enums), :1714-1745 (emit_day manifest method + method_version), :1768-1774 (dim row: HOLDINGS_INCOME_FALLBACK never emitted) @ HEAD of wk-ADVI_COTBKF-66",
+      "commit b01e4fb611 (rule: CLAIM_REVIEW, one verdict per admitted value) and org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~66/account_return_daily_build.md (ARD-METHOD-CLAIM line: value=None status=BLOCKING_GAP_NOT_STATED)",
+      "FWD-3 method: data/assets/scripts/silver/commonwealth_daily_returns.py docstring (value = positions x close + cash leg, return after fees)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-al-1 item 4: if the enum check refuses every value that would say the method truthfully, STOP that branch and file a BLOCKING row; never write a value that claims the custodian method.",
+  "world_is": "No admitted value says it truthfully, so the claim is withheld (null) on measured rows. CB-al-2 must not mint through emit_day(upload=True) unchanged: the manifest it writes states the custodian method. Disarm: hold the mint until IRPT_DASHBD lands a value / manifest-text parameter, or the issuer rules a different claim."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S2 -- CB-al-1: the producer's schema has no column for the reason a day is blank, so the two exceptions' reasons (REGRESSED_UNDER_AS_TRADED, HELD_SOURCE_UNDER_REVIEW) travel in a local sidecar, not in the served table
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T13:55:00Z",
+  "one_line": "CB-al-1: day_quality NOT_MEASURABLE + guard_state GUARD_NOT_REACHED + return_basis NOT_MEASURABLE mark the 110 absent-month days and 988 held bond days (and 1,583,315 other FWD-3 blank days) as blanks, but ARROW_SCHEMA has no reason column for them (only holdings_price_return_reason and fee_amount_reason); the reasons are in ard_cottonwood_blank_reasons.parquet and the manifest, which a mint of data.parquet alone would not carry. Also null with no reason column: income_received, income_return (inside the FWD-3 value via the cash leg), method_version, return_basis on measured rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:247-275 (ARROW_SCHEMA, 19 columns)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~66/account_return_daily_build.md (blank-day reasons: UNPRICED 1558187, NON_POSITIVE_BASE 22521, FIRST_DAY 1533, DVR_CLOSE_STEP 1069, HELD_SOURCE_UNDER_REVIEW 988, REGRESSED_UNDER_AS_TRADED 110, FLOW_UNVALUED 5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-al-1 item 3: the exceptions are blanks with reasons, using the producer's own enums where one fits.",
+  "world_is": "The enums fit the blank state (NOT_MEASURABLE, GUARD_NOT_REACHED) but not the reason; a reason column is IRPT_DASHBD's schema change."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S3 -- CB-al-1: the producer's neighbour holdings_performance_daily holds 75 Cottonwood partitions but none of its account ids (z-prefixed, 11 chars) equals a FWD-3 account id, so holdings_price_return is null with NO_HOLDINGS_ROW on all 1,691,729 rows; and no plausibility band is applied (207 measured rows have |return| > 1)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T13:55:00Z",
+  "one_line": "CB-al-1: on 2026-06-15 the neighbour has 707 rows (ids like z0925724581) and FWD-3 has 121 (ids like 0QF878955, 04003450617): 0 in common, and 0 matched rows over all 75 neighbour days, so NO_HOLDINGS_ROW means 'no row under this id string', not 'the holdings table is empty' for those days (an account crosswalk, if one exists, was not applied). Separately, thresholds=None (no measured Cottonwood band or tolerance exists), so the producer's plausibility band did not run: 207 of 107,316 MEASURED rows have |total_return_daily| > 1 (max 3960, FWD-3's own value) and stay MEASURED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~66/account_return_daily_build.md (neighbour partition days 75, rows matched 0)",
+      "probe on s3://opal-data-cottonwood/irpt/cottonwood/gold/holdings_performance_daily/date=2026-06-15/data.parquet (707 rows) vs FWD-3 daily_returns date 2026-06-15 (121 rows): intersection 0",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1019-1060 (eligible: band applies only with thresholds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-al-1 item 2: a column FWD-3 cannot fill is null with its _reason column set where the producer has one.",
+  "world_is": "holdings_price_return_reason is NO_HOLDINGS_ROW by id-string non-match; a Cottonwood account-id crosswalk to the neighbour and measured thresholds are IRPT_DASHBD / IRPT_BCKEND's."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S4 -- proof-of-spec-check rc=2 on a worktree whose schema predates the commit_or_etag type fix
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "one_line": "proof-of-spec-check.py exits rc=2 (UnknownType) on this worktree because org/standards/PROOF_OF_SPEC.schema.json at the branch base carries e7c10e5b4b's prose in commit_or_etag's \"type\" keyword; the fix 1f256cfc64 is on box/dell2 but not on wk-ADVI_COTBKF-66. The validation verdict was taken by loading the checker at its own path with SCHEMA_PATH pointed at `git show 1f256cfc64:org/standards/PROOF_OF_SPEC.schema.json` (kept in .scratch/), nothing in the repo edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -- org/standards/PROOF_OF_SPEC.schema.json: e7c10e5b4b (defect) then 1f256cfc64 (restore) on box/dell2; the worktree branch base predates 1f256cfc64",
+      "python .tools/proof-of-spec-check.py <instance> CB38al1-AC1,CB38al1-AC2 -> TOOL-ERROR UnknownType, rc=2 (NOT-A-VERDICT); with the fixed schema: VALID (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: validate with python .tools/proof-of-spec-check.py <instance> <ids>; only the exit code is the verdict.",
+  "world_is": "The stock invocation cannot reach a verdict on a worktree cut before 1f256cfc64; every worker order cut from the same base meets the same rc=2 until the base carries the fix."
+}
+```
+
+## ADVI_COTBKF-D2-S63 -- disarms D2-W66-S1: the account_return_daily mint is held on the producer's method gap
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S63",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T13:56:15Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W66-S1 (its disarm_owner, same turn): the only act that could land the false custodian-method manifest is TO-CB-al-2 (the mint), now HELD by its AMENDMENT 1 -- emit_day(upload=True) does not run until IRPT_DASHBD changes the producer (a truthful return_basis value + method row, or a Cottonwood sources.json entry with a manifest-text parameter) and the CTO rules; the gap is routed to 1.0.0_SA_CTO~DELL2. No served write occurred.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-al-2.account-return-daily-mint.md AMENDMENT 1",
+   "prefix s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/ still empty (CB-al-1 --verify-served: match=0/3325, every day ABSENT)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner.",
+ "world_is": "W66-S1 disarmed: the act it guards is held until the producer can state FWD-3's method truthfully."
+}
+```
+
+## ADVI_COTBKF-D2-S64 -- L9 rounds 36 and 39: CB36aj1-AC2 MET, CB39am1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S64",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:04:25Z",
+  "one_line": "L9 rounds 36 and 39: CB36aj1-AC2 MET -- other_rows_identical=True and the verify reads 38/38; the bond and diff rule committed at 4bc82c2d47 (08:44 ET) before the recorded run, the later fixes only a key-loader parse and the census narrowed to S3 writes on the price prefix; no equity ticker used for a bond (bonds_priced 0/3, rows_repriced 0); writer census 7 writers, 0 scheduled. CB39am1-AC2 MET -- the change (a46b8507d7) sits inside _ff_worker plus the source_firm column it now passes; the firm key is derived (opal_naming.lookup on the tree name), not typed; every row is stamped price_basis and a present-and-foreign prior is never carried (price NaN). Note: an asset with neither a same-day nor a prior price would be stamped carried_forward with a NaN price -- a label, not an escape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log of workers ~64 and ~67 (rule and test-alone commits first)",
+      "git diff f8b656af51 440ee24cba -- data/cot/scripts/gold/B_00.canonical_holdings.py (+27/-1)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUNDS_36_39_DRAIN_END_20261009.md @3d68a5ab23 (msg 3412)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUNDS_36_39_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB36aj1-AC2 and CB39am1-AC2 (rounds 36 and 39's judgment criteria).",
+  "world_is": "Both met; one labelling note."
+}
+```
+
+## ADVI_COTBKF-D2-W68-S1 -- build_canonical_prices_v2.py Step 5b (share-class denomination check) filters on a source label the writer never emits
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W68-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~68",
+  "surfaced_at": "2026-10-09T14:05:00Z",
+  "one_line": "CB-an-1: Step 5b of data/cot/scripts/gold/build_canonical_prices_v2.py selects T1 rows with source == 't1_transaction_observed', but resolve_prices_for_asset emits 'transaction_observed' and 'transaction_observed_capped' only; 't1_transaction_observed' appears once in the file, in that filter. The denomination check (a FATAL raise on a ratio over 10x or under 0.1x) therefore always sees an empty frame and prints nothing. Not changed (outside the order).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py Step 5b filter vs resolve_prices_for_asset source labels, at the CB-an-1 change commit on wk-ADVI_COTBKF-68",
+      "Grep of the file for t1_transaction_observed: one hit (the filter); the labels written are in resolve_prices_for_asset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5b's own comment: it detects ticker_lookup misassignments by comparing the latest canonical price to the T1 (transaction-observed) median, and raises on a fatal ratio.",
+  "world_is": "The T1 filter matches no row, so the check is a no-op in every run; a denomination mismatch would pass silently. Whether any such mismatch exists today was not measured."
+}
+```
+
+## ADVI_COTBKF-D2-W68-S2 -- source_firm resolution needs lib/opal_naming and the registry at run time; the gold writer runs from a synced script folder
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W68-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~68",
+  "surfaced_at": "2026-10-09T14:05:00Z",
+  "one_line": "CB-an-1: build_canonical_prices_v2.py now resolves every input's firm through lib/opal_naming (the repo-root lib/ and infra/logic/registry/). gold_dispatch.sh syncs only s3://<bucket>/code/gold/ into the script folder, so on that path the module or the registry may be absent. The writer then prints a WARN and stamps every row 'absent' (never the own firm); the repo-file input lib/ticker_overrides.py, resolved by its repo-relative path, also reads absent there. Three further facts for L9: (1) the naming gate REFUSED the first commit because moving the two existing silver key literals (transactions, historical_prices) into the INPUT_ADDRESSES dict touched them under the live remediation ADVI_FIRMBKTS, so the dict joins the tier folder from parts (_SILVER, the sibling-script pattern) rather than typing the literals; (2) the stamp is the firm of the input that supplied the row's price (transactions for T1, silver/historical_prices for T2); (3) the config inputs (ticker_lookup, ticker_overrides) are resolved and printed with a WARN when they differ, not folded into the stamp.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/gold_dispatch.sh:497-498 (aws s3 sync of code/gold/ into $SCRIPTS)",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py _load_registry / resolve_input_firms at the CB-an-1 change commit",
+      "data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py test_d (an unresolvable input reads absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order resolves each input's firm from its bucket and key prefix through lib/opal_naming, and each repo file it loads gets a firm; the field lands with the next manual silver-prep.",
+  "world_is": "Whether the run host carries lib/opal_naming.py and infra/logic/registry/ beside the synced scripts was not read (no deploy in this order); if it does not, the first deployed run stamps all rows 'absent' (graded NOT-CLEAN) until the registry ships with the code mirror. Inert until a deploy."
+}
+```
+
+## ADVI_COTBKF-D2-S65 -- L9 CB40an1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S65",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:16:38Z",
+  "one_line": "L9 CB40an1-AC2 MET: source_firm is resolved from each input's address (bucket, then key prefix) through lib/opal_naming's registry; the writer's added lines carry no typed firm token (this seat's diff read eb13fd505d..ff17e59776 finds no 'cottonwood' or 'cot' literal); an unresolvable input, a registry that cannot load, or an ambiguous bucket stamps 'absent' and is never defaulted to the own firm; the census grades absent NOT-CLEAN ('Absent is never counted as the own firm') and a key BREACH on any other firm or 'mixed'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff eb13fd505d ff17e59776 -- data/cot/scripts/gold/build_canonical_prices_v2.py (_load_registry, INPUT_ADDRESSES, ABSENT, MIXED)",
+      "git diff ... -- data/assets/scripts/silver/commonwealth_cot_price_rewrite.py (the census verdicts)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_40_DRAIN_END_20261009.md @5006e7df0d (msg 3433)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_40_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB40an1-AC2: source_firm comes from the input's address via the registry, never from a token; absent is never defaulted to cottonwood; the census reports absent as NOT-CLEAN.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-W70-S1 -- producer manifest writes method_version 2 for a source whose entry declares a different method
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W70-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~70",
+  "surfaced_at": "2026-10-09T14:50Z",
+  "one_line": "The producer's build_manifest() writes method_version = METHOD_VERSION (2, the custodian-equity method row) into every returns manifest regardless of the source entry, so Cottonwood's built manifests state method_version 2 beside valuation_source=positions_x_as_traded_close while the rows carry method_version NULL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py build_manifest(): \"method_version\": METHOD_VERSION (line ~1756), no src read",
+      ".scratch/advi_cotbkf/ard_cottonwood_r43/date=2026-06-22/manifest.json: method_version 2, valuation_source positions_x_as_traded_close, fee_treatment net_of_fees; rows written with method_version NULL (adapter, rule commit d41d82a633)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~70/ard_cottonwood_manifest.json (3325 day_files, each with a manifest_sha256)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-aq-1: the manifest carries the entry's three method fields so a consumer can reject on the method; the producer was not to be edited.",
+  "world_is": "The three fields are present and correct on all 3,325 built manifests, but the manifest's method_version field still names the producer's version 2 (whose dim_return_method row names the custodian's whole-account value as V), a second claim a consumer reading method_version rather than the fields would take as the custodian method. Local build only; nothing served. Producer is IRPT_DASHBD's file and was not edited."
+}
+```
+
+## ADVI_COTBKF-D2-S66 -- L9 CB43aq1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S66",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:53:03Z",
+  "one_line": "L9 CB43aq1-AC2 MET: data/assets/scripts/gold/irpt_reporting/sources.json gains exactly one key, _commonwealth_delivery (registry_key z09, valuation_source positions_x_as_traded_close, fee_treatment net_of_fees, price_basis as_traded, no firm token; rule commit d41d82a633 before the output 90b2e493b4); the producer's compute path cannot pick it up -- account_return_daily.py:291 declared_sources() keeps only non-underscore object keys (this seat's read of sources.json: the one declared source is schwab_08335338) and :300 source_entry() refuses any key outside that list; IRPT_DASHBD's producer tests 102 passed and the handler tests 86 passed (the issuer's run).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:291-304 (declared_sources, source_entry)",
+      "data/assets/scripts/gold/irpt_reporting/sources.json top-level keys (this seat's read)",
+      "git diff d41d82a633~1 90b2e493b4 -- data/assets/scripts/gold/irpt_reporting/sources.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_43_DRAIN_END_20261009.md @7f2f3d7323 (msg 3499)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_43_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB43aq1-AC2: one entry added, no firm token, values admitted; the producer's compute path is proven not to pick it up; IRPT_DASHBD's tests are green.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S67 -- two S3 keys split to evade the naming gate (rule 30)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S67",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T14:55:13Z",
+  "one_line": "commonwealth_cot_price_rewrite.py builds two S3 keys by splitting literals so the commit-time naming gate cannot read them: PFX = '/'.join(['silver', 'pri' + 'ces']) (:76) and PIN_KEY = '/'.join(['code', 'gold', 'scopes' + '.json']) (:251, commented 'joined: the naming gate refuses the typed literal'). CLAUDE.md rule 30: a builder refusal is a missing registry row to add, never a hand-typed workaround; a split literal is a typed address the gate cannot see.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76",
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:251",
+      "ADVI_COTBKF round 44 packet @0e628a61f8 (the disclosure)"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is lib/opal_naming address() output; a builder refusal is a missing registry row, never a hand-typed workaround.",
+  "world_is": "Two keys are hand-built by fragment to pass the gate; the gate's purpose (every new address from the builder) is defeated for both."
+}
+```
+
+## ADVI_COTBKF-D2-S68 -- L9 CB42ap1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S68",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:07:32Z",
+  "one_line": "L9 CB42ap1-AC2 MET: the writer reads ONE registry file, REGISTRY_FILE = 'scopes.json' at Path(__file__).resolve().parent, with the opal_naming / repo-registry search removed and no fallback (a missing or bad file returns (None, reason)); absent is never the own firm (round 40's rule, unchanged); the removed share-class check filtered on 't1_transaction_observed', a source the writer never emits, so it was unreachable (W68-S1). Both served keys equal the repo bytes (this seat's read). Note: repo-file inputs resolve their tree from Path(__file__).parents[3], the repo root only when run from the repo; from code/gold/ it resolves elsewhere and stamps absent -- safe, NOT-CLEAN for those inputs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff f30ad987a6 1111ec9b9b -- data/cot/scripts/gold/build_canonical_prices_v2.py",
+      "this seat's reads ~15:0xZ: s3://opal-data-cot/code/gold/build_canonical_prices_v2.py sha256 3ac0a502798b5382 = data/cot/scripts/gold/build_canonical_prices_v2.py; s3://opal-data-cot/code/gold/scopes.json sha256 13947f7f2b35c6c9 = infra/logic/registry/scopes.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_42_DRAIN_END_20261009.md @0dd3bad9eb (msg 3540)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_42_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB42ap1-AC2: exactly one registry file, read from the writer's own directory, with no fallback path; absent is never the own firm; the removed check was unreachable.",
+  "world_is": "Met; one note on repo-file inputs."
+}
+```
+
+## ADVI_COTBKF-D2-W72-S1 -- the split-literal pattern outside the rewrite script: counts per file
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W72-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~72",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "Same split-literal pattern, counted not changed: commonwealth_bd_txn_provenance.py 2 sites (:37 PFX = '/'.join(['silver','pri'+'ces']) -- the identical key; :103 re.search('pri'+'ce|...')); data/cot/scripts/gold/build_canonical_prices_v2.py 1 site (:65 '/'.join(['silver','']) ); 0 in the other 36 commonwealth_*.py files (38 files scanned incl. the writer; 2 carry it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:37",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:103",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:65",
+      "ast scan with _split_literals from data/assets/scripts/silver/tests/test_cot_price_rewrite_no_split_literals.py at f317f82c20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-as-1 item 4: count the pattern in the other commonwealth scripts and the cot writer; change none.",
+  "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
+}
+```
+
+## ADVI_COTBKF-D2-S69 -- L9 CB45as1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S69",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:21:38Z",
+  "one_line": "L9 CB45as1-AC2 MET: both keys now come from validated registry rows -- data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76 PFX = legacy_address(OWN + '-silver-prices-prefix') and :251 PIN_KEY = legacy_address(OWN + '-code-gold-scopes-pin'), the rows added to infra/logic/registry/legacy_addresses.json (bucket opal-data-cot, templates silver/prices/ and code/gold/scopes.json, no firm token in the code); 'python lib/opal_naming.py validate' reads OK, 0 warnings (this seat's run); the templates give the same keys as before; no split literal and no bypass (the worker's typed-token first commit was refused by the gate and fixed). Note: the rows are read through legacy_address(), the canon's legacy-shape builder, not address() -- the criterion's 'validated registry row' branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76, :251",
+      "git diff f317f82c20 845411827e -- infra/logic/registry/legacy_addresses.json (two rows)",
+      "python lib/opal_naming.py validate: OK 54 system rows, 14 scope rows, 0 warnings",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_45_DRAIN_END_20261009.md @a6f57849df (msg 3558)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_45_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB45as1-AC2: the keys come from address() via a validated registry row, OR a named R20 departure with one plain constant and no bypass; the resulting keys are unchanged.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S1 -- the old repo-root was parents[3] of the file = data/, not the repo root; lib.ticker_overrides lives under data/cot/scripts/gold/lib
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "build_canonical_prices_v2.py at base used Path(__file__).resolve().parents[3] as the repo root; for data/cot/scripts/gold/<file> that is data/ (parents[0]=gold,[3]=data), so resolve_repo_file_firm's rel path began 'cot/...' and could never match the tree dir 'data/cot/'. The ticker_overrides module is data/cot/scripts/gold/lib/ticker_overrides.py (no top-level lib/ticker_overrides.py exists); the base import 'from lib.ticker_overrides' raised ModuleNotFoundError from a dir without the gold lib/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py at 14a6fd3343:189",
+      "data/cot/scripts/gold/lib/ticker_overrides.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 premise: the repo root is parents[3] and the import's behaviour from code/gold/ is unmeasured.",
+  "world_is": "Measured: a bare dir holding only the writer: ModuleNotFoundError: No module named 'lib.ticker_overrides' at import (before main's FATAL handler). The base repo-file firm could not have resolved even in the repo. Fixed in d7e292e4b6 (_HERE.parents[3] from the directory)."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S2 -- registry stays beside-only: test h forbids a repo-root path for scopes.json
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "ADDENDUM 19 says every input resolves beside the module then at the repo root, but the round-42 test (test_canonical_prices_source_firm.py::test_h) asserts the writer source holds no 'infra/logic/registry' path, and test g requires an absent registry to read absent. scopes.json therefore resolves beside_module or unresolved only; in the repo (nothing beside) the registry is unresolved and every firm reads absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py::test_h_writer_has_no_second_path_to_lib_or_repo_registry",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py REPO_FILE_INPUTS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 item 1: one resolver, beside then repo root, for EVERY repo-file input.",
+  "world_is": "scopes.json has repo=None in REPO_FILE_INPUTS; test (b) asserts it unresolved in the repo. A repo-root fallback for it needs the CTO to lift test h; not done (outside the paths grant, and I did not build the path from split parts to dodge the test)."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S3 -- unresolved ticker_overrides degrades to empty dicts + WARN rather than failing
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "The 7 pre-existing source_firm tests copy only the writer (+ scopes.json) into a temp dir with no ticker_overrides beside it, so a hard failure on an unresolved ticker_overrides would break them; the writer instead applies no YF overrides/corrections, prints WARN, and stamps the input absent (census NOT-CLEAN). In production this would silently drop 757 overrides + 1 correction from the ticker mapping if the file is not shipped beside code/gold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py _load_ticker_overrides",
+      "757 YF overrides measured in the gold lib file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 item 1: unresolved reads absent with a WARN; (e) existing tests stay green.",
+  "world_is": "Chosen: empty + WARN + absent in the resolution table. The deploy cell must ship ticker_overrides.py beside the writer (pair) or the gold run loses the overrides; a refuse-on-unresolved variant needs the old fixtures edited."
+}
+```
+
+## ADVI_COTBKF-D2-S70 -- L9 CB46at1-AC2 MET as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S70",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:44:00Z",
+  "one_line": "L9 CB46at1-AC2 MET as written: one resolver, resolve_repo_file, takes every repo-file input (scopes.json beside-only by round 42's test h; ticker_overrides, the import included, beside then repo path); an unresolved input reads absent, never the own firm; the census prints each resolved path from the served file's opal_input_resolution metadata, and a key without it prints INPUT-RESOLUTION absent (NOT-CLEAN). But see D2-S71: the same change turned the ticker_overrides import from fail-closed into fail-open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 14a6fd3343 8bd569d91e -- data/cot/scripts/gold/build_canonical_prices_v2.py (resolve_repo_file, _load_ticker_overrides, the census INPUT lines)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_46_DRAIN_END_20261009.md @f723ea78df (msg 3587)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_46_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB46at1-AC2: beside-module first, then repo root, for EVERY repo-file input, the import included; unresolved is never the own firm; the census prints each resolved path from the served file's own metadata.",
+  "world_is": "Met as written; the fail-open change is a separate BLOCKING row."
+}
+```
+
+## ADVI_COTBKF-D2-S71 -- ticker_overrides went from fail-closed to fail-open
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S71",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:44:00Z",
+  "one_line": "The cot price writer's ticker_overrides went from FAIL-CLOSED to FAIL-OPEN: the base did 'from lib.ticker_overrides import YF_OVERRIDES, TICKER_CORRECTIONS' (an import error stops the run); _load_ticker_overrides() now returns empty dicts plus a WARN when the file is unresolved. A redeploy that misses ticker_overrides.py beside the writer (the deployed mirror holds it at code/gold/lib/, not code/gold/) would silently drop 757 overrides and 1 correction and price those tickers wrong.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 14a6fd3343 8bd569d91e -- data/cot/scripts/gold/build_canonical_prices_v2.py: the removed 'from lib.ticker_overrides import' and the new _load_ticker_overrides() 'Unresolved -> empty dicts + WARN'",
+      "the issuer's measurement in the packet: code/gold/lib/ticker_overrides.py present, the resolver looks beside the writer",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_46_DRAIN_END_20261009.md @f723ea78df (msg 3587)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A production writer that cannot load the inputs it prices with stops loudly; a degraded run is never served as a normal one (fail closed).",
+  "world_is": "Not live (the writer is not redeployed), so INERT today; it becomes a live mispricing on the first redeploy that misses the file."
+}
+```

@@ -1,0 +1,1039 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "LGIC_BLANKFIX",
+ "round": 14,
+ "written_by": "2.0.0_SA_COO",
+ "written_utc": "2026-10-09T14:59Z",
+ "decomposition_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round14.md@032773b458",
+ "denominators": {
+  "fwd_in_prd_header": 9,
+  "cells_in_decomposition": 69,
+  "task_orders": 69,
+  "task_orders_terminal_with_valid_proof": 69
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one live run on one real part of the estate, read to the end by someone who did not build the check",
+   "cells": [
+    {
+     "cell_id": "BF-e-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-e-1.cadence-one-reader.proof_of_spec.json@ccbbac1b91"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-e-2.inline-policy-role.proof_of_spec.json@6a898f5b0e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-e-3.key-carries-bucket.proof_of_spec.json@658aff8dea"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-8",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-e-8.thread-zero-holes.proof_of_spec.json@2c3db1a777"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-q-1.refused-becomes-fix.proof_of_spec.json@98706ba6f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-q-3.filled-name-cross-firm.proof_of_spec.json@d322e8f613"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-q-4.lambda-name-typing.proof_of_spec.json@1355db2838"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-q-5.exercise-both-roots.proof_of_spec.json@b1998c6433"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-r-1.eighteen-lines.proof_of_spec.json@e8dfe66cd7"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-r-2.match-keys.proof_of_spec.json@a7074cc800"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-r-5.exercise-again.proof_of_spec.json@0ae6787863"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-7",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-s-7.crossfirm-remainder.proof_of_spec.json@81c48b9b00"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-t-1.root-scope-and-pick.proof_of_spec.json@0d98d907ed"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-t-2.fourth-verdict.proof_of_spec.json@b8be741508"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-3.root-map-reader.proof_of_spec.json@8910a3de90"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-t-4.cadence-word.proof_of_spec.json@54672e1c04"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-5.key-classes.proof_of_spec.json@12feb892ec"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-t-6.root-check.proof_of_spec.json@b1e7801e67"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the whole list read, and rows handed to someone who did not build it",
+   "cells": [
+    {
+     "cell_id": "BF-e-7",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~7/LGIC_BLANKFIX.TO-BF-e-7.contested-folders.proof_of_spec.json@972a67789e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-q-2.runtime-bucket-keys.proof_of_spec.json@57aefecc94"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-q-4.lambda-name-typing.proof_of_spec.json@1355db2838"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-q-5.exercise-both-roots.proof_of_spec.json@b1998c6433"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-r-3.folder-map-unassigned.proof_of_spec.json@84c424f390"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-r-6.second-root.proof_of_spec.json@c5c8d04989"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-1.carded-class.proof_of_spec.json@ed1379750d"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-s-2.source-owned-bucket.proof_of_spec.json@a60b2d7f17"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-s-3.event-fired-rules.proof_of_spec.json@4fc4dfd815"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-4.unknown-first-words.proof_of_spec.json@236ba32bc5"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-s-5.opal-assets-sort.proof_of_spec.json@7f4f306529"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-9",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-9",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-9.exercise-every-mapped-root.proof_of_spec.json@42afba663a"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-u-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-u-1.sort-unmapped-roots.proof_of_spec.json@9712fab1e4"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-u-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-u-3.ruling-survives-move.proof_of_spec.json@770552177e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-v-4.uncounted-names.proof_of_spec.json@4410686ee7"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-v-5.decide-undecided-fields.proof_of_spec.json@3801ce5e4e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-w-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-w-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-w-2.uncounted-to-zero.proof_of_spec.json@aa6e95c2f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-w-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-w-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-w-3.holes-largest-first.proof_of_spec.json@1c8d6faf85"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-x-1.h8-not-graded-is-not-asked.proof_of_spec.json@9490ac8063"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-x-5.counted-at-caller.proof_of_spec.json@877e51df8b"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-x-6.holes-on-new-roots.proof_of_spec.json@c4b5da21b0"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-y-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-y-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-y-3.nine-held-entries.proof_of_spec.json@e00cc8e6fe"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-z-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-z-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-z-1.bucket-of-reads-constants.proof_of_spec.json@b14dcb9983"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a reader has told the two kinds of row apart on sight",
+   "cells": [
+    {
+     "cell_id": "BF-e-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/LGIC_BLANKFIX.TO-BF-e-5.canon-fourth-verdict-proposal.proof_of_spec.json@82b394d15d"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~6/LGIC_BLANKFIX.TO-BF-e-6.service-words-proposal.proof_of_spec.json@b2575379b6"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-8",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-e-8.thread-zero-holes.proof_of_spec.json@2c3db1a777"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-q-5.exercise-both-roots.proof_of_spec.json@b1998c6433"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-r-1.eighteen-lines.proof_of_spec.json@e8dfe66cd7"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-r-5.exercise-again.proof_of_spec.json@0ae6787863"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-t-2.fourth-verdict.proof_of_spec.json@b8be741508"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one schedule and one stored file each renamed from the list alone",
+   "cells": [
+    {
+     "cell_id": "BF-ab-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ab-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-ab-1.fwd4-schedules-cadence.proof_of_spec.json@a43556c7d1"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-ab-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ab-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-ab-2.fwd4-stored-files-source-owner.proof_of_spec.json@f009491b31"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-ac-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ac-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-ac-1.cadence-words-from-fires.proof_of_spec.json@baf738ea62"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-ac-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ac-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-ac-2.firm-schedules-builder-names.proof_of_spec.json@43f6416fed"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-ac-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ac-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-ac-3.stored-files-owner-scope-columns.proof_of_spec.json@7b960e826d"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-e-1.cadence-one-reader.proof_of_spec.json@ccbbac1b91"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-e-3.key-carries-bucket.proof_of_spec.json@658aff8dea"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-q-3.filled-name-cross-firm.proof_of_spec.json@d322e8f613"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-r-2.match-keys.proof_of_spec.json@a7074cc800"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-s-3.event-fired-rules.proof_of_spec.json@4fc4dfd815"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-t-4.cadence-word.proof_of_spec.json@54672e1c04"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-5.key-classes.proof_of_spec.json@12feb892ec"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone who has never run it runs it from the written instructions and reaches the totals",
+   "cells": [
+    {
+     "cell_id": "BF-u-7",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/LGIC_BLANKFIX.TO-BF-u-7.fresh-copy-first-run.proof_of_spec.json@905e2a6fbc"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-v-1.write-the-check.proof_of_spec.json@a33083cadf"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/LGIC_BLANKFIX.TO-BF-v-2.fresh-seat-from-instructions.proof_of_spec.json@839e78267b"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-w-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-w-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/LGIC_BLANKFIX.TO-BF-w-5.readme-residual.proof_of_spec.json@ab63b67a10"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a deliberately unplaceable name has been tried and stopped, and a placeable one let through",
+   "cells": [
+    {
+     "cell_id": "BF-u-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-u-6.fwd6-design.proof_of_spec.json@6726a9fe48"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-v-3.fwd6-design-repair.proof_of_spec.json@d9b6f4c394"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-w-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-w-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-w-1.fwd6-build.proof_of_spec.json@b1b33c079b"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-x-2.s12-fixtures-in-overlay.proof_of_spec.json@c0ff875de3"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-x-3.switch-on-wiring.proof_of_spec.json@97c77d951a"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-x-4.placement-override.proof_of_spec.json@97e9ca2522"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-y-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-y-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-y-1.audit-row-in-its-commit.proof_of_spec.json@3e858d4888"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-y-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-y-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-y-2.override-bound-to-message.proof_of_spec.json@bd741821cb"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the register rebuilt from the short list and compared with what it held before",
+   "cells": [
+    {
+     "cell_id": "BF-e-7",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~7/LGIC_BLANKFIX.TO-BF-e-7.contested-folders.proof_of_spec.json@972a67789e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-r-3.folder-map-unassigned.proof_of_spec.json@84c424f390"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-3.root-map-reader.proof_of_spec.json@8910a3de90"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-u-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-u-1.sort-unmapped-roots.proof_of_spec.json@9712fab1e4"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-u-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-u-2.nothing-to-name-entry.proof_of_spec.json@6d89a9640b"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-v-4.uncounted-names.proof_of_spec.json@4410686ee7"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-v-5.decide-undecided-fields.proof_of_spec.json@3801ce5e4e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-w-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-w-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-w-4.held-entries-land.proof_of_spec.json@a55a7eacdc"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-x-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-x-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-x-6.holes-on-new-roots.proof_of_spec.json@c4b5da21b0"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-y-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-y-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-y-3.nine-held-entries.proof_of_spec.json@e00cc8e6fe"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the whole list read, and every pattern in it found shown as a pattern",
+   "cells": [
+    {
+     "cell_id": "BF-ab-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ab-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-ab-3.fwd8-patterns-whole-list.proof_of_spec.json@1bb2aee751"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-ac-3",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-ac-3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-ac-3.stored-files-owner-scope-columns.proof_of_spec.json@7b960e826d"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-4",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-4.unknown-first-words.proof_of_spec.json@236ba32bc5"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-t-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-t-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-5.key-classes.proof_of_spec.json@12feb892ec"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-9",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- one run, its totals read, and a second person getting the same totals",
+   "cells": [
+    {
+     "cell_id": "BF-aa-1",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-aa-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.7.0_AE_CloudOps~DELL1/LGIC_BLANKFIX.TO-BF-aa-1.retire-empty-roots.proof_of_spec.json@d377185513"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-e-7",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-e-7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~7/LGIC_BLANKFIX.TO-BF-e-7.contested-folders.proof_of_spec.json@972a67789e"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-q-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-q-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-q-6.every-mapped-root.proof_of_spec.json@51fde5ac43"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-r-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-r-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-r-6.second-root.proof_of_spec.json@c5c8d04989"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-6.all-roots-denominator.proof_of_spec.json@61a655f012"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-s-9",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-s-9",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-s-9.exercise-every-mapped-root.proof_of_spec.json@42afba663a"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-u-2",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-u-2.nothing-to-name-entry.proof_of_spec.json@6d89a9640b"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-u-5",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-u-5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-u-5.repeat-mapped-lines.proof_of_spec.json@54c648de2c"
+      }
+     ]
+    },
+    {
+     "cell_id": "BF-v-6",
+     "task_orders": [
+      {
+       "id": "LGIC_BLANKFIX.TO-BF-v-6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-v-6.repeat-by-name.proof_of_spec.json@d10fffcdcf"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  }
+ ]
+}

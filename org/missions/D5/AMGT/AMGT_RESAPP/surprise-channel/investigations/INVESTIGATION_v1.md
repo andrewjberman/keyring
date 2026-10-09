@@ -23305,3 +23305,260 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S13",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T13:32Z",
+  "one_line": "AMGT-jj-5 STOPPED before the apply: the build at pin 4c929a2ffe prints NINE non-identical members where the pair admits five, and the four extra are this project's own lib/research/identity modules pulled into the closure BY the admitted crosswalk.py change -- function-scope only, nothing executed at import.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Nothing was applied. The STOP is at CTO condition 1 / COO half BLAST RADIUS ('Any other member printed is a STOP'), taken BEFORE the upload and apply. Live function untouched at CodeSha256 66MDfT5iFHYD9EHhmiiDc2hyzx1tIDqF2OT9/jGIjHU=; the artifact object in S3 is NOT re-uploaded; no Terraform state written.",
+      "BUILD_RC=0 and the build's own verify arms passed. CONTENT-DIFF SUMMARY: files 399, IDENTICAL 390, CHANGED 5, ADDED 4, REMOVED 0, against 66MDfT5i.",
+      "GRADED AGAINST THE HALF, with both counts printed: 9 non-identical members printed; the COO half admits 10 distinct paths (this round's four, hh-1's passages.py, and five registry members); ON-LIST 5, OFF-LIST 4. The five on-list: infra/logic/registry/reporting_policies.json, lib/research/api/name_search.py, lib/research/api/scoped_amgt.py, lib/research/filings/passages.py, lib/research/identity/crosswalk.py. The four OFF-LIST, all ADDED: lib/research/identity/build_universe.py, one_pager_precedence.py, positioning_chain.py, resolver.py.",
+      "Named by the half but NOT printed, which is fine because the half says 'may print': crosswalk.schema.json and four of the five registry members (event_rules, key_rulings, name_rulings, root_map).",
+      "analyze.py (AMGT-jj-1), whose appearance the pair makes an explicit STOP, does NOT appear: 0 mentions anywhere in the build log. That arm passed.",
+      "WHY THE CLOSURE CARRIES THEM -- a chain, not a coincidence: jj-3's admitted +128 to crosswalk.py adds load_issuer_sources(), which imports build_universe; build_universe imports the other three. Measured on the BUILT package: build_universe is imported by exactly one packaged module (crosswalk.py), and one_pager_precedence, positioning_chain and resolver are each imported by exactly one packaged module (build_universe). So the admitted change is what reached them -- the build's closure walk follows function-scope imports by design, and its own header says an enumeration lapses silently where a closure cannot.",
+      "RISK SHAPE, measured rather than argued. (i) The import is FUNCTION-SCOPE ONLY: 0 module-scope imports of build_universe in crosswalk.py, 1 function-scope import at crosswalk.py:1155 inside load_issuer_sources(). So this is a request-time path, not a cold-start path. (ii) build_universe executes NOTHING at import: its top-level nodes are 22 FunctionDef, 8 Import, 4 ImportFrom, 22 Assign, 1 If guard and 1 docstring Expr -- no call at import. (iii) All four are reachable from a request entrypoint (155 reachable modules in the package), so they are not dead weight; they are code the serve path can now enter through load_issuer_sources().",
+      "PROVENANCE: none of the four is another project's code. All four are AMGT_RESAPP's own, added by this project's earlier cells -- build_universe.py and resolver.py @074d0d1ebe (2026-09-10, TO-AMGT-s-12), positioning_chain.py @0a5064ded5 (2026-09-16, TO-AMGT-rk-4), one_pager_precedence.py @a318c9472f (2026-10-06, AMGT-ba-1).",
+      "WHAT THIS ROW DOES NOT ESTABLISH: whether the four SHOULD ship. That is the pair's call, not the applier's. Specifically not measured here: what load_issuer_sources() does when the serve path enters it, and whether any of the four reads a store or an external surface at request time -- the questions a widening decision turns on."
+    ]
+  },
+  "spec_asserts": "COO half NEVER_WIDEN_ROUND85_JJ5_COO_HALF.md @621f07b79a BLAST RADIUS: 'Any other member printed is a STOP.' CTO half @a3440434f5: 'The code leg's closure: this round's four files, hh-1's passages.py, and the five registry members, each admitted only with its closure reason printed. Any other member is a STOP.'",
+  "world_is": "The pair's admitted list was cut from a diff over the closure ROOTS (`git diff --stat 7b84cfc5a9 acf01642a3`), which sees files that CHANGED between the pins. It cannot see a file that did not change but newly ENTERS the package because an admitted change added an import to it. That is exactly what happened: four unchanged, pre-existing AMGT_RESAPP modules became packaged members for the first time because jj-3's admitted crosswalk.py edit imports build_universe at function scope. So the list and the build are both behaving correctly and they disagree -- a diff-derived list under-counts a closure-derived package whenever the admitted change adds an import. The failure direction is safe here (the build STOPPED rather than shipping quietly), and the four carry no cold-start exposure and no import-time work, but they ARE newly reachable serve-path code that has never shipped on this function.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Ledger amgt-resapp-r85-jj5-scoped-api-dell1: L1-L5 closed with proof (act 1 the recorder, conditions 8 and 9, the rollback capture, the wheels); L6 is where the STOP lands and is NOT closed; L7-L11 unattempted. ACT 1 IS COMPLETE AND INDEPENDENT of this STOP -- the recorders no longer write the source map's top-level key, the key is gone, AC2 reads R85 SOURCEMAP AC1: YES, and condition 9 holds -- so the round-85 recorder work can be kept whichever way this is ruled. The built file (42,0xx,xxx B) and the kept live package are both retained, so whoever applies does not need to rebuild. For the issuer, the two routes dd-4's row D1-S4 used in the same situation: an ADDENDUM admitting the four with their closure reason printed (the cheap route, and the reason is already measured above), or a re-cut at a pin whose crosswalk.py does not reach build_universe (which would mean dropping jj-3's issuer build, i.e. the round's point). A third route exists and is worth naming because it is the only one that changes the generator rather than the list: cut the pair's admitted list from the BUILD's closure instead of from a diff over the roots, so the two instruments stop disagreeing."
+}
+```
+
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W344-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~344",
+  "surfaced_at": "2026-10-09T14:45:23Z",
+  "one_line": "Two existing test files (test_add_security_batch.py, test_crosswalk_write_validates.py) drive add_security._build_document without stubbing load_issuer_sources, so a fail-closed load made 11 identity tests fail; I made the add_security load fail-open with a WARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order s.1: add_security passes crosswalk.load_issuer_sources() into its build; order AC2: the identity folder passes with 0 failed; bounds s.4: edit the two writers and the new test file only.",
+  "world_is": "Unstubbed, load_issuer_sources raises (boto3.client patched to AssertionError in 9 tests; 'no stored SEC ticker-to-CIK object' RuntimeError in 2). Those test files are outside my write grant, so add_security._build_document catches the load error, prints 'WARN: issuer sources unreadable' to stderr and builds with issuer_sources=None (document unchanged, no issuer field). Consequence: on a live --write-pool with the store unreadable, the pool would be put without issuer on new records instead of refusing. The alternative (fail closed, stub the two test files) needs a path grant on them. build_universe.union_main stays fail-closed (its tests did not need it).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/add_security.py _build_document (try/except around crosswalk.load_issuer_sources)",
+      "lib/research/identity/tests/test_writers_carry_issuer.py test_unreadable_sources_build_without_issuer_and_warn",
+      "pytest lib/research/identity before the catch: 11 failed, 244 passed; after: 256 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W344-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~344",
+  "surfaced_at": "2026-10-09T14:45:23Z",
+  "one_line": "build_universe.py builds no crosswalk document (no build_crosswalk call; it reads the served list via load_crosswalk), so there was no 'build they call' to pass issuer_sources into; I added an optional issuer_sources argument to build_union that stamps issuer on each union name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order s.1 and preflight: build_universe passes crosswalk.load_issuer_sources() into the build it calls, so a record it adds carries issuer.cik.",
+  "world_is": "build_universe.build_union assembles universe/v1 names from crosswalk.load_crosswalk + the SEC cache and carries only a top-level filing cik, never issuer. I added build_union(issuer_sources=None) (None leaves names unchanged) that sets name['issuer'] via crosswalk._issuer_for on security_key, and union_main reads crosswalk.load_issuer_sources(sec_cache_path=...) at call time (function scope, CLI only, no request path). This adds an optional `issuer` key to universe/v1 names on the next --write-pool; no consumer of that key exists and no write was made here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/build_universe.py build_union and union_main",
+      "lib/research/identity/tests/test_writers_carry_issuer.py BuildUniverseCarriesIssuer"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W343-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~343",
+  "surfaced_at": "2026-10-09T15:09:03Z",
+  "one_line": "Two premises of AMGT-kk-3 read differently on the world: NU's served dossier description was ABSENT before the act (so 'still present' is vacuous for NU), and NU sentence 6 (to be restored whole) sits in company_description and was removed by the same act as an Item 5 line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "GO term 5 / CTO condition 4: after each write the served dossier description field (the 'What started as ...' text) must still be present. GO term 2: NU sentences 6, 11, 19 restored to the whole filing sentence.",
+  "world_is": "Read-only /thesis before any write (served_before.txt): dossier_sections.company_description status served for ASML (1535 chars), BABA (1945), PBR (721), SAP (2408); for NU it was status absent, len 0 (reason: 'The research update of 2026-Q2 has no Company description section'). After the writes the same four are served at the same lengths and NU is still absent: no description disappeared. NU sentence 6 is description sentence 6 of 10 (cites ITEM 5), so its whole-sentence restore (200 -> 414 chars) was built and then the sentence was removed with the nine other non-business description lines; 11 and 19 (investment_thesis) are whole in the written draft and 28 of 28 outside-section sentences are verbatim substrings of the filing (AC1 K3). Only the Item 4.B sentence (description 9) remains in NU's company_description.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~343/served_before.txt",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~343/served_after_NU_US_Equity.txt",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~343/AC1.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W345-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~345",
+  "surfaced_at": "2026-10-09T15:10:16Z",
+  "one_line": "AMGT-kk-5 AC1 Y1 (served >= 38) cannot be met on this draw by any drafting rule: the drafting document can hold at most 35 sentences (company_description is capped at 5 eligible items by kk-2's business-only rule, the other three limbs at SECTION_LIMIT 10 each).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The order's AC1 expects NU's fresh offline draft to serve at least 38 sentences once drafting serves the filing's own sentence; GROUP_YIELD_NOTES.md measured 37 of 40 would serve on round 85's draw.",
+  "world_is": "On the one fresh NU run (accession 000129281426002166, 82 items, 86 citations all resolved), company_description has 30 source items of which 5 cite only business-item passages, so the limb drafts 5; investment_thesis, risks and recommendation draft 10 each: 35 drafted, of which 31 serve and 4 are held (no cited sentence holds the item's figures or enough of its words). Even if all 4 held items served, 35 < 38. Y2 reads 31 of 31 and Y3 0 restated / 0 glued.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round86_prep/checks/r86_yield.py --crit AC1 --draft org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~345/offline/draft.json (Y1 FAIL 31 vs 38, Y2 PASS 31 of 31, Y3 PASS, R86 YIELD AC1: NO, exit=1)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~345/run/analysis.json: per-limb items / eligible under drafting_build.item_is_business_cited: company_description 30 / 5, investment_thesis 27 / 27, risks 33 / 33, recommendation 10 / 10; SECTION_LIMIT 10"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict. ONE model run spent (pass 1 + pass 2, USD 0.6771); no further call made per the order. The saved analysis.json and pass1_reply.json let any re-grade, or a different SECTION_LIMIT or eligibility rule, run with no new call."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W345-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~345",
+  "surfaced_at": "2026-10-09T15:10:16Z",
+  "one_line": "The face says serve the filing's sentence 'generated: false', but lib/research/drafting/schema.json pins sentence.generated to const true (and the document's generated likewise), so a false would be schema-invalid.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Notes option B (GROUP_YIELD_NOTES.md): serve the cited passage's sentence as the text, 'generated: false', with the paraphrase kept as a note.",
+  "world_is": "drafting/schema.json definitions.sentence.generated is {const: true}. drafting_build keeps generated true on a substituted sentence and marks it instead with quote_method 'filing-sentence', served_from {passage_id, method} and paraphrase (the model's text). The schema is outside this order's paths; the existing schema-validation test passes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/drafting/schema.json definitions.sentence.generated; lib/research/filings/drafting_build.py FilingsProducer.draft"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed. Whether FWD-9's 'generated' marking should read false for a verbatim filing sentence is a schema call for the issuer/CTO."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W345-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~345",
+  "surfaced_at": "2026-10-09T15:10:16Z",
+  "one_line": "Two literal-face conflicts resolved toward the criterion: (a) the bound 'edit one test file only' vs two existing tests that assert the old paraphrase text; (b) 'narrative items keep today's rule' vs AC1 Y2 (every served sentence wholly verbatim).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Bounds 4: 'You edit drafting_build.py and one test file only'. Section 1: 'narrative items keep today's rule'. AC1 Y2: every served sentence wholly verbatim in a cited passage.",
+  "world_is": "(a) The paths grant lib/research/filings/tests/. test_description_business_only.py (kk-2) asserted 'Commercial airplanes revenue' / 'Defense revenue' in the produced texts and test_filings.py's HOLD-split test needs a held fixture sentence; both texts are now the cited passage's sentences, so I changed 4 string asserts in the first and passed filing_sentences=False in the second (the gate's own split stays pinned), and added test_filing_sentence_served.py (16 tests). 3 test files touched. (b) All 22 sentences served by round 85's draw were narrative items on a partial 8-token run, so leaving them as served would fail Y2 by construction; narrative items whose text is not wholly verbatim are therefore substituted too, under a stricter test than figures: the cited sentence holding the model's quoted span, else the longest verbatim run (>= 8 tokens), else >= 60% of the item's content words (>= 4) with a strictly clear winner; otherwise the item keeps today's rule untouched. Items with a translation or an unspaced script are never substituted. A third deviation: draft.json is the final code's deterministic re-draft of the saved analysis.json (no model call); draft.as_run.json is the file the single run wrote before the marked-quote anchor was added (Y2 30 of 31 there).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/tests/ (307 passed with lib/research/drafting)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~345/offline/draft.as_run.json vs offline/draft.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S14",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T15:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Peer-set prices (and 992 HK's subject EV) are served with no price currency, so the Security Analysis peer table prints \"currency not stated\" on most rows.",
+  "class": "OBSERVATION",
+  "spec_asserts": "DSGN_AMGTV1 round-66 analysis item 1 (FWD-8): every price and money cell carries its own currency; a wrong or missing served field is AMGT_RESAPP's, and the page shows what is served (C-PRESENTATION-ONLY).",
+  "world_is": "Round-67 close walk on portal candidate 32835ce5 (2026-10-09 15:33Z): peer price cells with no served price_currency -- 10 of 12 on ASML_NA_Equity, 11 of 12 on 992_HK_Equity, 12 of 12 on AMD_US_Equity (the page reads price_currency, else prints \"currency not stated\"). 992 HK's subject EV reads \"60.91B currency not stated\" from the peer set while the header serves no CURR_ENTP_VAL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round67/ROUND67_CLOSE.md (the real-run table, shots 014/042/070)"
+    ]
+  },
+  "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S15",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T15:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The peer set's subject market cap (market_cap_musd 541,932, as of 2026-09-19) is stale against the header's CUR_MKT_CAP (EUR 631B, as of 2026-10-09) for ASML_NA_Equity.",
+  "class": "OBSERVATION",
+  "spec_asserts": "DSGN_AMGTV1 round-66 analysis item 2 (FWD-27): the cap's two values must be reconciled; same measure must agree, and a disagreement is a producer row to RESAPP.",
+  "world_is": "The page now prints the header's CUR_MKT_CAP in the subject row (EUR 631B, as of October 9th, 2026, tile and table alike), so the stale figure is off the face. The peer set still serves market_cap_musd 541,932 for the subject (different currency basis and a date three weeks older).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round67/ROUND67_CLOSE.md (FWD-27 market cap row)",
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round66.md section 1"
+    ]
+  },
+  "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S16",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T15:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Most served peers are identity UNRESOLVED, and non-US listings carry a SEDOL or an exchange number in ticker where an exchange ticker exists (Tencent, SK hynix, Foxconn, Zhongji, Cambricon, Hygon, ASML as a peer).",
+  "class": "OBSERVATION",
+  "spec_asserts": "DSGN_AMGTV1 round-66 analysis item 1 (FWD-8): a ticker cell shows the listing's exchange ticker, or the company name if there is none; a wrong served ticker is AMGT_RESAPP's.",
+  "world_is": "The page (AV-zzr-1, portal 45a957a9) prints the served ticker unless it is empty, all digits or SEDOL-shaped, and the name then. On the three walked names 7 distinct peers print their name for that reason (e.g. Tencent served \"BMMV2K\" where its exchange ticker is 700 HK; SK hynix served a number where it is 000660 KS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round67/ROUND67_CLOSE.md (FWD-8 tickers row)"
+    ]
+  },
+  "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
+}
+```

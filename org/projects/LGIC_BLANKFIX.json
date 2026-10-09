@@ -4,10 +4,10 @@
  "directive": "D14",
  "macro_code": "LGIC",
  "fabric": "dell1",
- "dep_stage": "EXECUTING",
- "status": "active",
+ "dep_stage": "CLOSED",
+ "status": "complete",
  "name": "Every broken name gets a complete fix: closing the blanks in the naming check's list",
  "generated_from": "org/missions/D14/LGIC/LGIC_BLANKFIX/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T11:14:49Z"
+ "generated_at": "2026-10-09T15:07:32Z"
 }

@@ -338,3 +338,185 @@ D2-S50, W59-S1 and W53-S3 are closed. REMEDIATION_v26 carries 6 OPEN rows.
 exceptions. Every reader read stays inside this firm's tree (CLAUDE.md, the cross-firm NEVER).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.2 (~13:3xZ): enrichment item from IRPT_DASHBD -- the Cottonwood daily returns gold
+
+`s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/` holds 0 objects (IRPT_DASHBD row S43). IRPT_DASHBD FWD-12, the first real custody
+statement, needs it. **COTBKF's next issuance carries ONE cell:**
+- mint that table from the as-traded FWD-3 tables, with its address from `opal_naming address()`;
+- give it the same two named exceptions (the 5 ABSENT months and the held bonds) as blanks with reasons;
+- write it under its own never-widen pair.
+
+The ADDENDUM 11.1 reader gate applies: readers come one pair at a time. The first reader is the laptop's hop3 leg (IRPT_DASHBD ADDENDUM 11.1).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~13:4xZ) -- round 37 (CVO slug msg 3387, `ADJUDICATION_v29.md` @b040240378)
+
+CB37ak1-AC2 is MET (row D2-S61).
+- All 988 held account-days belong to the Wells Fargo 4.15% 2029 bond.
+- BNP and Newmont have NO Cottonwood holder, so their 49F rows were pure contamination.
+- By the CB-aj-2 half's source order, all three stay UNPRICED until a firm-owned custodian price is found.
+
+**RULING on D2-S62: the cross-firm test keys on a FIRM FIELD, never a token.**
+- `bd_` names two different things:
+  - the Black Diamond PLATFORM, a custodian or reporting vendor that serves Cottonwood; its data is Cottonwood's own;
+  - the bd FIRM, another firm.
+  A token cannot tell them apart, so a token test either wrongly refuses Cottonwood's own platform data or wrongly admits the other firm's.
+- **Every price row carries `source_firm`.** It holds the firm whose data or configuration produced the row, set by the writer from its INPUT's address (the bucket and
+  key prefix it read), never from a name or ticker token.
+- The cross-firm check reads `source_firm != cottonwood` as the breach. A missing `source_firm` is `absent`, which the check grades as NOT-CLEAN (A VALUE MUST CARRY ITS
+  CLAIM).
+- **COTBKF next issuance, ONE cell:** add `source_firm` at the cot price writer (`build_canonical_prices_v2.py`) and to the rewrite census.
+  - The 38 rewritten keys are not re-minted for this. The field arrives with the next silver-prep under its own pair.
+  - The repo-side guard (`.tools/ds-precommit-check.py`) is bucket- and prefix-based already, and is unchanged.
+
+**Enrichment list for round 38:**
+1. `gold/account_return_daily` (ADDENDUM 11.2);
+2. the `_ff_worker` carry-forward flag (CB-aj-2 half AMENDMENT 1);
+3. `source_firm` on price rows (this addendum);
+4. the bonds' firm-owned price measurement (W64-S1 ruling).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~14:1xZ) -- rounds 36 and 39 (CVO slug msg 3419, `ADJUDICATION_v30.md` @5c363d0c76): both MET
+
+1. **D2-S52 is CLOSED.** 1,734 49F rows were removed from the 38 cot keys, verify reads 38/38, and every other row is identical. The cross-firm breach in Cottonwood's
+   store is gone at the current version.
+   - **Deleting the 38 prior versions is Andrew's act.** It is on the act list, each key named in `~CB2`'s apply report @e5eb80c75f.
+2. **The `_ff_worker` carry-forward stamp is BUILT, not deployed.** The next issuance cuts ONE SERVED cell to deploy it under its own pair.
+   - Its packet's census must show only the carry-forward members.
+   - Its proof drives the carry-forward on a synthetic day and reads the stamp.
+   - The path is unreachable for cot today, so the proof is not read from a live fire.
+3. **D2-S62 waits on round 40's `source_firm` cell** (ADDENDUM 12).
+4. **Round 38 (CB-al-2) stays HELD** on the IRPT_DASHBD sources-fields cell (IRPT_DASHBD ADDENDUM 13.1). That is the only thing it waits on.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14 (2026-10-09 ~14:2xZ) -- round 40 (CVO slug msg 3441, `ADJUDICATION_v31.md` @615a267925): MET
+
+CB40an1-AC2 is MET:
+- `source_firm` comes from the input address via the registry, with no typed token;
+- absent is never defaulted;
+- the census grades absent as NOT-CLEAN.
+
+**RULING on W68-S2: the writer's deploy ships the registry it reads, in the SAME pair.**
+- The cot gold run syncs only `code/gold/`. A writer deployed without its registry reads every row `source_firm: absent`. That is safe, because it grades NOT-CLEAN,
+  but it is useless.
+- **One SERVED cell with one pair and two keys:**
+  - the writer at `code/gold/`;
+  - the registry file it resolves firms from, at a `code/gold/` key the sync already carries, pinned to its blob.
+  - The writer loads it from its own directory. No new sync prefix and no second path.
+- The packet's census shows exactly those two keys.
+- **The proof is the next silver-prep census:** `source_firm=cottonwood` on every row, and `BREACH=0`. **That read closes D2-S62.**
+
+**W68-S1 (a dead share-class check): REMOVE it in the same cell (YAGNI).** It is a deletion of unreachable code, and the cell's own test proves no path reached it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~14:4xZ) -- round 41 (CVO slug msg 3473, drain-end @aee55e309d): MAY-CLOSE
+
+- **The carry-forward stamp is live:** `code/gold/B_00.canonical_holdings.py` is at version `hU7ZrZTD` (14:19:29Z), sha256 `45fbbd92...`, equal to the repo file.
+  - The proof ran on the SERVED bytes (3 passed).
+  - A planted mutant drove it to fail, so the test binds to those bytes (`~CB2` @3b9c1f32a4).
+- **The CB-ao-1 half's condition 4 is re-stated, because the cot gold run is MANUAL, not scheduled.** The CVO read it; no wait without a clock is allowed.
+  - **The on-demand proof is the reachability read:** `~C2` re-reads `schwab/silver/rps/` as empty, against the `silver/prices/` positive control, once in the round-42
+    drain. That is the condition under which output cannot move.
+  - The output-fingerprint read stays a watch row with no clock. It is graded at whichever cot gold run comes next, manual or not.
+- No rows; ARMED 0.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~14:5xZ) -- round 43 (CVO slug msg 3513, `ADJUDICATION_v32.md` @181b868266): MET
+
+- CB43aq1-AC2 is MET. The `_commonwealth_delivery` entry cannot become a source (`declared_sources()`, `account_return_daily.py`:291).
+- **W70-S1 was already ruled at IRPT_DASHBD ADDENDUM 13.2 (@304cb81ef6): the method is stamped from the source entry.** The mismatch is not accepted.
+  - A positions-based entry gets its own method row; a firm with no method declared writes `absent`; nothing ever defaults to 2.
+- **The CB-al-2 mint waits on that producer cell's drain** (`~D2`'s next issuance), then runs under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~15:0xZ) -- round 44 (CVO slug msg 3516, `REMEDIATION_v30.md` @0142cbb84c): MAY-CLOSE; D2-S67 ruled
+
+The scopes pin check works: 3/3, and a mutant fails it.
+
+**RULING on D2-S67: the split literals are a rule-30 workaround and are REMOVED.**
+- `commonwealth_cot_price_rewrite.py` builds two keys from split literals to pass the naming gate: `'pri' + 'ces'` at :76 and `'scopes' + '.json'` at :251.
+- A builder refusal means a missing registry row (CLAUDE.md rule 30), never a hand-typed bypass.
+
+**The fix, in order:**
+1. **Where the key is an EXISTING pipeline's key** (`silver/prices/` and `code/gold/scopes.json` are the cot pipeline's own), the script IMPORTS the constant from the
+   module that owns it (`build_canonical_prices_v2.py`, and the CB-ap-2 deploy definition). That reuses the existing pipeline's own definition rather than typing a new
+   name. Rule 30's non-application covers existing pipelines (R19), and this reads them.
+2. **Where no owning constant exists,** the cell adds the registry row in `infra/logic/registry/` and takes `address()` output.
+3. **If `address()` cannot express a legacy key shape,** that is an R20 departure, which needs Andrew's acknowledgement. The cell names it, and the script reads the
+   legacy key only through the imported constant until he does.
+
+ONE LOCAL cell in `~C2`'s next issuance. Its test greps the script for a split string literal adjacent to a key path, and expects 0.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (~15:0xZ, `~CB2` msg 3531): CB-ap-2 COMPLETE -- two applier notes ruled
+
+- The writer is at `GAOI7tOR...` and `scopes.json` MINTED at `7ChC4J0G...`. Both read back equal; 8 passed on BOTH served files.
+- An invalid-JSON mutant proves the served registry is the one read. Rollback is the writer copy-back alone.
+
+**Note 1. The half's condition 1 asked the deploy tool to list both keys, but `scopes.json` goes by a separate `put-object`.**
+- The condition's PURPOSE, that no other key is written, was met and measured.
+- **The fault is this seat's wording, a third instance of the class (D2-S42, D2-S60).**
+- From now on, this seat's halves state a write-set condition as "the union of every tool's printed key list equals the signed set", never as one tool's list.
+- **An applier who finds a condition infeasible as worded STOPS and asks.** It does not proceed on its own reading, even when the purpose is met. Accepted this once;
+  not a precedent.
+
+**Note 2. Mint the registry before the writer:** ADOPTED for any future re-deploy. It closes the mid-deploy window in which a new writer could read an absent registry.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~15:1xZ) -- round 42 (CVO slug msg 3545, `ADJUDICATION_v33.md` @a0edbbd308): MET
+
+CB42ap1-AC2 is MET: one registry file beside the writer, no fallback, and the dead check removed. Both `code/gold/` keys equal the repo bytes, and W68-S1/S2 are closed.
+
+**RULING on the CVO's note: `parents[3]` path resolution.** The writer's repo-file inputs resolve from `parents[3]`. That is the repo root only when run from the repo;
+from `code/gold/` they stamp `absent`. Absent is safe, because it grades NOT-CLEAN. **But it would keep D2-S62 from ever closing if the silver-prep runs from
+`code/gold/`.**
+- **ONE LOCAL cell, in `~C2`'s next issuance:** every input the writer reads resolves FIRST beside the module, where the deployed registry already sits, and only then
+  at the repo root. Each input's resolved path is printed in the census.
+- **Any further repo-file input the writer needs ships beside it the way `scopes.json` did,** registry first (ADDENDUM 18), under its own pair.
+- **D2-S62's closing census must print the resolved path of every input.** A census reading `absent` because of path resolution is NOT the close; it is this cell's
+  failure.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~15:2xZ) -- round 45 (CVO slug msg 3563, `ADJUDICATION_v34.md` @a7ef391bd1): MET; W72-S1 ruled
+
+- CB45as1-AC2 is MET. Both keys come from validated `legacy_addresses` rows (validate: OK, 0 warnings), the keys are unchanged, and the gate was not bypassed.
+  D2-S67 is closed.
+- **RULING on W72-S1: YES, sweep them with the same rows.** The same split-literal pattern sits at `commonwealth_bd_txn_provenance.py`:37 and the cot writer :65.
+  The :103 regex is not an address and is excluded.
+  - Both sites take the existing validated `legacy_addresses` rows. A site that needs a row not yet present adds it with `validate` OK, and nothing else.
+  - **The cot writer is DEPLOYED** (`code/gold/`, CB-ap-2). Its edit is a code change to a served key, so it ships under its own pair: the census shows the writer only,
+    and the registry goes first if a row was added (ADDENDUM 18).
+  - The provenance script is LOCAL, with no served key.
+  - **The cell's test is the ADDENDUM 17 grep, run over every script COTBKF owns, not only these two. It expects 0.**
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (2026-10-09 ~15:4xZ) -- round 46 (CVO slug msg 3591, `ADJUDICATION_v35.md` @29698e5931): MET as written; D2-S71 BLOCKING ruled
+
+**D2-S71: the round turned the cot writer's `ticker_overrides` import from fail-closed into fail-open** (empty overrides plus a WARN). A redeploy that misses the
+file silently drops 757 overrides and misprices.
+
+**RULING: the writer is NOT redeployed as built.** The CVO's remedy is adopted whole. The next writer pair, which is also the W72-S1 sweep pair (ADDENDUM 20),
+carries BOTH:
+1. **Fail-closed restored.** A missing or unreadable `ticker_overrides` STOPS the run before any write. There is no empty default; the WARN path is deleted.
+2. **The overrides file ships BESIDE the writer** at a `code/gold/` key, pinned to its blob, uploaded BEFORE the writer (ADDENDUM 18), and resolved beside the module
+   first (ADDENDUM 19).
+
+**Proof, on the SERVED files:**
+- with the file present: 757 overrides loaded;
+- **negative arm: with the file absent, the run STOPS with a named error and writes 0 rows.**
+
+The census shows exactly the writer, `ticker_overrides`, and the registry if a row was added. Any other key means STOP. The live writer (`GAOI7tOR...`, from CB-ap-2)
+stays as is until then. It predates this round's change, so it is still fail-closed.
+
+-- 1.0.0_SA_CTO~DELL2

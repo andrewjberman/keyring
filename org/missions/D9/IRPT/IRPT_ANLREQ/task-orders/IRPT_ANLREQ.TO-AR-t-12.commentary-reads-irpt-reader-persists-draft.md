@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~41</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -136,13 +136,41 @@ Base: box/dell2 at this amendment, where `ar1_t2_checks.py t13lg` reads `AR1-T13
 
 <criterion id="AR13-t-AC2" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13lg</invocation><expect>AR1-T13LG-OK</expect></criterion>
 
+### AMENDMENT 7 (issuer, 2026-10-09 ~15:3xZ) -- RE-OPENED: the draft store's zip does not build (0.7.0_AE_CloudOps~DELL2 msg 3562, TO-APPLY-t1 STOPPED before its ledger)
+
+`infra/aws/lambda/ci/lambda-source-map.json` entry `irpt-commentary-draft-store-lambda` lists 17 `files`. `build-and-upload.sh` resolves each
+under `source_dir` (`infra/aws/lambda/investor-reporting/reports`). Nine are repo-ROOT paths (`lib/opal_naming.py`,
+`org/standards/NAMING_SCHEMA.json`, and the seven `infra/logic/registry/*.json`), so the build dies "File not found" on each. ISSUER RULING:
+the fix is in THIS entry, not in the estate-wide build script. Restate the nine as `staged_from`, the mechanism the entry already uses for
+acceptance.py / submission.py / keys.py.
+15. In that entry, add one `staged_from` member per root path: `repo_path` = the root path, `pin` = the full 40-hex hash of the commit you
+    stage from (read with `git rev-parse`), `packaged_as` = the SAME relative path (so `lib/opal_naming.py` lands at `lib/opal_naming.py` in
+    the zip, the import layout keys.py expects), `sha256` = the blob's sha256 at that pin (`git show <pin>:<path>` bytes). Keep `files` as
+    is. Update `_staged_from_note` to say the closure is now staged. Change no other entry.
+16. Prove it with the real build, nothing uploaded: `BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting
+    irpt-commentary-draft-store-lambda` prints a `BUILD_ONLY:` line with 0 "not found". If the zip then fails to IMPORT a module those nine
+    did not cover, file a surprise row and stop.
+Base: box/dell2 at this amendment, where `ar1_t2_checks.py t13b` reads `AR1-T13B-FAIL rc=1 file-not-found=9`.
+
+<criterion id="AR13-t-AC3" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13b</invocation><expect>AR1-T13B-OK</expect></criterion>
+
+### AMENDMENT 8 (issuer, 2026-10-09 ~15:5xZ) -- ruling on row IRPT_ANLREQ-D2-W41-S17 (the ADHC_DRIFTD.002 parity stop)
+
+The staged closure now resolves (12 staged_from members verified, 0 "not found"); the build stops at the parity gate on seven top-level .py
+files in the SHARED `reports` source_dir that no function's files[] declares (build_resident_package, currency_authority, custody_write,
+generate_installed, request_composition, resident_installed, status_installed). MEASURED (issuer, AST over the source_dir): the draft store's
+local import closure is {commentary_draft_store, composition, repository, retention}, all declared; none of the seven is in it. RULING: build
+with `BAU_PARITY_SKIP=1`, the script's own sanctioned override, justified by that closure; the check `t13b` sets it. The seven's
+registration belongs to whichever functions own them, not to this entry, and stays on row W41-S17.
+17. Re-run step 16 with `BAU_PARITY_SKIP=1` and record the closure line above in the proof's notes.
+
 <criterion id="AR12-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t12</invocation><expect>AR1-T12-OK</expect></criterion>
 `AR12-t-AC1` -- the three named tests pass, the file is green, and `DecryptWithTheIrptKey` is gone from commentary.tf.
 
 <criterion id="AR13-t-AC1" cell_refs="AR-t-12"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_ANLREQ_T2/R1_CHECKS/ar1_t2_checks.py t13</invocation><expect>AR1-T13-OK</expect></criterion>
 `AR13-t-AC1` -- the four named refusal tests pass and the store test file is green (dry-run at box/dell2 29125b907d: `AR1-T13-FAIL absent`).
 
-<expected_criteria>AR12-t-AC1 AR13-t-AC1 AR13-t-AC2</expected_criteria>
+<expected_criteria>AR12-t-AC1 AR13-t-AC1 AR13-t-AC2 AR13-t-AC3</expected_criteria>
 
 Dry-run at the base (box/dell2 c5d73485ca): `AR1-T12-FAIL absent: data/transcripts/scripts/tests/test_commentary_composition_port.py` -- FAIL
 as expected.

@@ -19,6 +19,12 @@ unmerged at the run). Row D1-C-S3.**
 **ADDENDUM 3 (~13:30Z, on the 2026-10-09 13:00Z sweep, COO~V1 msg 2460): RIV-aw-1 J1 NOT MET on the plain-English clause
 (the counted clauses MET; 4 of 26 items carry '$0.0 million' or a CUSIP). Row D1-C-S4.**
 
+**ADDENDUM 4 (~13:45Z, on COO~V1 msg 2488): RIV-wg-1 J1 MET on the issuer's real 13-fund run (a1-chain/8); the name-abstracted
+frame still repeats (6 of 13) -- a round-29 item. Row D1-C-S5.**
+
+**ADDENDUM 5 (~14:20Z, on COO~V1 msg 2526): RIV-wh-1 J1 MET (0 '$0.0 million', 0 bare identifiers over 26 items, real run
+a1-chain/8). Row D1-C-S6.**
+
 ```json
 [
   {
@@ -107,6 +113,50 @@ unmerged at the run). Row D1-C-S3.**
         "task-orders/ETFS_RIVALS.TO-RIV-aw-1.ai-accounts-name-periods-in-words-and-cite-every-figure.md:100 (J1)",
         "deliverables/2.0.0_SA_COO~V1/round28/sweep_read.py (the issuer's counts); COO~V1 msg 2460",
         "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S8"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-09T13:45Z",
+    "one_line": "RIV-wg-1 J1 MET on the issuer's real 13-fund run (a1-chain/8, local writes). By the face's instrument, no raw opening leads more than once, and every verdict leads with and argues from its own fund's securities and trades. Observation for round 29: with the name abstracted, the frame '<name> is the clearest ... tell/signal' leads 6 of 13 (over a quarter); the template moved one slot, it did not go.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wg-1 J1 (task order :50-52): on the issuer's real run over the 13 funds, no opening leads more than a quarter of the verdicts (verdict_openers_check.py), and the verdicts read as fund-specific.",
+    "world_is": "- Artifact: deliverables/2.0.0_SA_COO~V1/round28/WG1_J1_REAL_RUN_20261009.md @597396eea6. It holds the 13 Direction Verdicts verbatim from run 20261009T132214Z-ai, prompt a1-chain/8, merged code @3bd0c7c023, local writes only, grounding PASS 26 of 26 with 0 corrections. Not served; this seat read the record, not a page.\n- Opening clause: this seat's census of the 13 texts (first four tokens, dates as one token) gives the most shared opening x1 of 13. That is within the quarter (3.25), matching the issuer. The served a1-chain/7 run read 'from <date> to <date>,' x13 (row D1-S8). MET.\n- Fund-specific clause: every verdict opens on a security from its own fund (Petrobras for IDVZ, Orange for TXUE, SK hynix for BIDD, Vinci for SCHY, Hermes for PFOE, SpaceX's new entry for GQGU, Amazon's trim for BASG, AppLovin for ETFT, Meta for PCLG). The body argues from that fund's own ranks and trades, and no verdict could be swapped onto another fund. MET.\n- Observation (not a fail; the face binds the opening measure to its instrument): abstracting the security name, 'is the clearest ...' leads 6 of 13, 'is the most particular ...' 4 and 'stands out ...' 4. Two frames exceed a quarter, and six verdicts (IDVZ, TXUE, INEQ, SCHY, PFOE, WCMG) literally say 'fund-specific', echoing the prompt. A portfolio manager reading the 13 together meets one sentence pattern. For round 29: vary the frame, or grade it with the name abstracted.\n- Carried, not re-graded here: '$0.0 million' appears again in WCMG ('leaned away by $0.0 million', 'leaned into by $0.0 million over 2 windows', 'a trim of $0.0 million') and in ETFT (3x). That is row D1-S9, the same defect as aw-1's NOT MET (row D1-C-S4). The 'last 365 days' wording beside a later stated start persists for IDVZ, PFOE, WCMG, ETFT and PCLG (D1-C-S4 (b)).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WG1_J1_REAL_RUN_20261009.md @597396eea6",
+        "task-orders/ETFS_RIVALS.TO-RIV-wg-1.direction-verdict-fund-specific-lead.md:50-52 (J1)",
+        "2.0.0_SA_COO~V1 msg 2488",
+        "surprise-channel/investigations/INVESTIGATION_v1.dell1.md ETFS_RIVALS-D1-S8, ETFS_RIVALS-D1-S9"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "ETFS_RIVALS-D1-C-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "3.0.0_SA_CVO~RV1",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "RIV-wh-1 J1 MET on the issuer's real 13-fund run (a1-chain/8, local writes): 0 '$0.0 million' and 0 bare identifiers across the 26 items. Small notionals now read in thousands, and one cross-checks against the page: WCMG's Valero trim '$37 thousand' equals the $37,136 sale in this seat's 07:2xZ dialog read. This repairs the plain-English defect behind aw-1's NOT MET (D1-C-S4) in the code; the served page carries it only after the WS2/WS3 deploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "wh-1 J1 (task order :43): on the issuer's real 13-fund run, 0 '$0.0 million' and 0 bare identifiers in any item.",
+    "world_is": "- Artifact: deliverables/2.0.0_SA_COO~V1/round28/WH1_J1_REAL_RUN_20261009.md @8da1582b50, 26 items verbatim from run 20261009T140542Z-ai, prompt a1-chain/8, box/dell1 @b48273e3d0 (wh-1 merged @eeba3cad15), local writes only. Not served.\n- This seat's census over the item section only (the record's header table quotes the served run's '$0.0 million' and '037833100', and a whole-file count reads 1 and 1 from that table): '$0.0 million' 0; tokens shaped like a CUSIP, an ISIN or '<ticker>_<cc>_Equity' 0; '$0 thousand' 0; ' thousand' 15 in the item texts. The issuer's 35 may count fields beyond `text`; the record holds text only. GQGU now names 'Apple Inc' where the CUSIP stood. MET.\n- Cross-check of a converted figure: WCMG activity_30d and direction_verdict read 'trimmed Valero Energy Corp by $37 thousand'. The page dialog this seat read at 07:2xZ (D1-C-S1) showed 'Sold between 2026-09-03 and 2026-09-08: $37,136'. Consistent.\n- Still open, not in this J1: aw-1's served NOT MET stands until a 13:00Z sweep runs this code. The name-abstracted Direction Verdict frame (D1-C-S5) and the 'last 365 days' wording beside a later start (D1-C-S4 (b)) are unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~V1/round28/WH1_J1_REAL_RUN_20261009.md @8da1582b50",
+        "task-orders/ETFS_RIVALS.TO-RIV-wh-1.small-notional-and-unnamed-facts.md:43 (J1)",
+        "2.0.0_SA_COO~V1 msg 2526",
+        "this file, ETFS_RIVALS-D1-C-S1 (Valero dialog read) and ETFS_RIVALS-D1-C-S4"
       ]
     },
     "disposition": "GRADUATED"

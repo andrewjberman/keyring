@@ -412,3 +412,181 @@ IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-sta
    DASHBD cell.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11.1 (~13:3xZ, `~D2` msg 3356, row S43 BLOCKING): DB-b-86's three gaps -- the REC is taken in part
+
+1. **The selection (`account_set_id`): an operator seat creating it is REFUSED.** ADDENDUM 9.2 stands: no seat mints a human token for a write, and svc's routes are
+   not widened.
+   - The cell 9.2 named is now owed: the runner accepts the seat-authored selection FILE.
+   - If the API's `sel_<64 hex>` is a deterministic hash of the selection, the runner computes it the same way, and the ledger prints both inputs.
+   - If it is not deterministic, the runner's statement path takes the file without an id, and the statement records `selection_source: file` with its sha256.
+   - This cell is IRPT_DASHBD's, in the next issuance.
+2. **The Cottonwood returns gold holds 0 objects. This is the real blocker, and it comes first.** ADVI_COTBKF owns it, as the REC says. This seat places it on
+   COTBKF's enrichment list (COTBKF ADDENDUM 11.2). FWD-12 waits on it, and on nothing else.
+3. **hop3: the laptop runs it, as the REC says,** through a cross-box ORDER via `0.0.0_AB_MSTR~DELL2`.
+   - It runs only after (2) has landed rows.
+   - dell2's denial on the returns gold is the reach design and is NOT widened.
+   - The hop3 output comes back as a file with its sha256. DB-b-86 runs where its other inputs are.
+
+DB-b-86 stays issued and blocked on (2); S43 is resolved by this addendum's routing.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~13:3xZ) -- rounds 42 and 44 (CVO slug msg 3367, `ADJUDICATION_v26.md` @fbc76ab42d): MAY-CLOSE
+
+The CVO read the live gold Lambda as `yIAQjspL`. 10-08 is backfilled with 0 skipped. **S40 is CLOSED**, and 0 rows are ARMED.
+
+1. **The status key under the activity prefix meets the intent, not the letter: ACCEPTED.** `~D2` amends the order's criterion text to the key as built, in its own
+   amendment commit (the issuer amends its own criteria, Andrew-direct 2026-09-24). The commit names which gate limb, if any, graded it.
+2. **The double check (uniqueness on the final rows) is sound.** No act.
+3. **The verify-persisted sha256 limb is DORMANT** until IRPT_BCKEND serves `report_index.sha256` (W64-S1 OPEN). It stays in the runner, dormant, with no stub value.
+   **IRPT_BCKEND carries it as an enrichment item:** the persist and read responses return the stored object's sha256. That is a code change under IRPT_BCKEND's own
+   pair; `~P2` places it.
+4. **S43 is ruled at ADDENDUM 11.1** (@43bbe32935). The selection stays file-based; the Cottonwood returns gold comes first, owned by COTBKF; hop3 runs on the laptop.
+5. **DB-b-90 and DB-b-91 are released TOGETHER as ONE gold Lambda release** after `yIAQjspL`, under one never-widen pair.
+   - Both are gold-builder changes: the uniqueness check on final rows, and the lots-not-computed statement.
+   - The packet's member census against live `yIAQjspL` must show exactly the members those two orders own. Anything else means STOP.
+   - Branch B is the `yIAQjspL` version.
+   - DB-b-92 (the runner's sha256 check) rides the runner, not this release.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~14:0xZ) -- round 45 (CVO slug msg 3402, `ADJUDICATION_v27.md` @11b79674b2): MAY-CLOSE
+
+1. **D2-S3 is disarmed.** The schema break (e7c10e5b4b) was fixed by this seat @1f256cfc64. The CVO read the fix on HEAD, and `check_schema` passes.
+2. **The CVO's suggestion: a `check_schema` step on schema edits.** It is a mechanical validity check, not an approval gate, and it is ROUTED to its owner.
+   - The owner is laptop `1.0.0_SA_CTO`, who owns proof-of-spec tooling (the S41 route, ADDENDUM 11 item 4). It travels via `0.0.0_AB_MSTR~DELL2`.
+   - The proposed shape: `.tools/commit-gate.sh` runs `jsonschema.Draft202012Validator.check_schema` on any staged `org/standards/*.schema.json`.
+   - Cost: one call per schema commit. Non-application: every other file.
+   - This seat does not edit the commit gate.
+3. **W68-S1 (does live POST /analysis admit a file-only selection?) stays OPEN, and DB-b-86's first run proves it,** as the CVO says.
+   - Both branches are pre-ruled at ADDENDUM 11.1 item 1: the file path is accepted, or the runner takes the file without an id and records `selection_source: file`.
+   - A refusal on the first run is recorded with its code, and that branch is cut. No widening of svc.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.1 (~14:0xZ, `~C2` msg 3408, W66-S1 / S63): the Cottonwood returns method -- the sources entry, as STRUCTURED fields, never a new return_basis value
+
+**The call:** CB-al-1 built 3,325 Cottonwood days through `account_return_daily.py`. Its `return_basis` has no value for "positions x as-traded close, after fees",
+so the field reads NULL. `emit_day(upload=True)` then writes a manifest claiming the custodian method.
+
+**RULING: (b), a Cottonwood sources entry, but as STRUCTURED fields, not manifest text.**
+- **`return_basis` is "which arithmetic produced total_return_daily"** (`account_return_daily.py`:132). Positions times the as-traded close, chained daily with flows,
+  is TWR arithmetic.
+  - If CB-al-1's arithmetic is TWR, the row says `TWR`.
+  - If it is not, the row says `NOT_MEASURABLE` with its reason.
+  - **A new enum value would put the valuation source on the arithmetic axis.** That breaks rule 24 (iii), one axis per intent, so no enum edit is made.
+- **What differs for Cottonwood is the VALUATION SOURCE and the FEE TREATMENT.** Those are per-firm source facts, so the firm's sources entry carries them as fields:
+  - `valuation_source: positions_x_as_traded_close`;
+  - `fee_treatment: net_of_fees`;
+  - `price_basis: as_traded` (COTBKF ADDENDUM 8).
+- **The manifest writer reads those fields, and never defaults to the custodian method.** A firm with no entry writes `valuation_source: absent`. A consumer
+  can reject on the field (A VALUE MUST CARRY ITS CLAIM). The existing custodian firms' entries carry `custodian_reported` explicitly.
+
+**Placement:** ONE IRPT_DASHBD cell in `~D2`'s next issuance:
+- the sources entry fields;
+- the manifest writer reading them;
+- no default;
+- a negative arm: a firm with no entry writes `absent`.
+
+**The CB-al-2 mint stays HELD until that cell drains.** It then re-runs through the producer as built, under its own pair (COTBKF ADDENDUM 11.2).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14 (2026-10-09 ~14:0xZ) -- round 46 (CVO slug msg 3410, `ADJUDICATION_v28.md` @eae4b4d6e3) and FWD-8 (`~D2` msg 3411)
+
+1. **Round 46 MAY-CLOSE, ARMED 0.** The CVO's W69-S2 point (drop a stale lots-not-computed record on any successful landing) is already placed as a next-round cell.
+   That is in the R44 CTO half @fa8d2c2961.
+2. **FWD-8: YES to the cell.** `~D2`'s next issuance carries ONE LOCAL cell:
+   - it classifies each of the 510 UNEXPLAINED outside segments in `TIEOUT_COMPOUND_V2.json` (990 outside) by a named reason from a declared set, or files it as a
+     defect row;
+   - the reason set arrives with its rule-24 record;
+   - it reads the existing tie-out inputs only, with no vendor call;
+   - the result prints the denominator (990) and the per-reason counts, which sum to it.
+3. **The tolerance itself is NOT this seat's to rule.** PRD FWD-8 reads "a tolerance Andrew accepts" (`IRPT_DASHBD_PRD.md`:236, :587), an L2 line he confirmed.
+   - His word is the act, and open call 2f53 carries it with REC 0.35pp.
+   - The cell above runs regardless of the number he picks.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~14:4xZ) -- round 48 (CVO slug msg 3490, `ADJUDICATION_v29.md` @9e4cefbb3a): MAY-CLOSE; FWD-8 NOT REALIZED
+
+Of 990 outside segments, 793 are reasoned and **197 are DEFECT** (W73-S1: 74; W73-S2: 123). FWD-8 stays NOT REALIZED while any DEFECT stands. The tolerance is
+0.35pp (laptop CTO ruling @ea01eb1e34; Andrew's word supersedes it) and is never widened.
+
+**Round 49 enrichment (`~D2`):**
+1. **Sensitivity on the classifier's thresholds, LOCAL.** Counts per reason at 0.5% and 2% of peak, beside the 1% cut, and at the $1/0.1% tie's neighbours.
+   - The 156 segments resting on the 1% cut are printed at each setting.
+   - If a reason's count moves by more than half across the band, the reason is NOT robust. Those segments are re-graded UNEXPLAINED, not reasoned.
+2. **Pre-registration from now on.** Any changed threshold is committed BEFORE the run that grades it: rule commit, then output commit, checked by order. A threshold
+   tuned after seeing results is refused.
+3. **Every reason carries its claim** in a field: `inferred` (from our data) or `confirmed` (Black Diamond's own record). All 793 read `inferred` today. FWD-8 may be
+   REALIZED on `inferred` reasons only where the reason is mechanical: flow timing or an income date read from both sides' transaction dates. A reason without a
+   two-sided read stays NOT-REALIZED until confirmed.
+4. **The 197 DEFECTs: ONE cell per class.** W73-S1 (74) and W73-S2 (123) each get a fix of our producer's defect, or a two-sided read showing it is Black Diamond's.
+   - Fixes ride their own pairs.
+   - FWD-8 re-grades on the next tie-out after both land.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13.2 (~14:4xZ, `~C2` msg 3495, row W70-S1): `method_version` is a default claim -- the producer change comes FIRST
+
+CB-aq-1 drained @9a7eaa849a: 3,325 days, with all three method fields present (0 of 9,975 absent). But `build_manifest()` writes `method_version: 2`, the custodian-equity
+method row, into every manifest whatever the source entry says. The rows carry NULL.
+
+**RULING: NOT minted as is.**
+- A manifest that names the custodian method beside positions-based fields is the exact default claim ADDENDUM 13.1 forbids. A consumer reading `method_version` would
+  be told something false.
+- **IRPT_DASHBD owes ONE LOCAL producer cell first:** `build_manifest()` takes `method_version` from the firm's sources entry.
+  - A positions-based entry names its own method row (a new row in the method table, with its rule-24 record). It never reuses row 2.
+  - A firm with no method declared writes `method_version: absent`.
+  - Negative arm: a positions-based firm's manifest never reads 2.
+  - The existing custodian firms keep 2 explicitly from their entries.
+- **CB-al-2's mint waits on that cell's drain.** Then it re-runs through the producer as built, under its own pair.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~15:0xZ) -- round 47 (CVO slug msg 3538, `ADJUDICATION_v30.md` @84387e2a60): MAY-CLOSE
+
+1. **R44 is LIVE** at `oNgy4rnr` (14:34Z) by the CVO's read. W62-S1 is closed.
+2. **DB-b-97 (a backfill clears the lots-not-computed record) is NOT in R44,** so W69-S2 stays open on live code.
+   - It ships in the NEXT gold Lambda release, under its own pair, as the R44 half placed it.
+   - The census against live `oNgy4rnr` shows only DB-b-97's members.
+   - Until then, a backfilled day can still read "not computed" on the page. That is a stale statement, never a wrong figure.
+3. **Ledger S1 (first-fire sizing at 85%) is the R44 half's condition 4,** and it is read at the first scheduled fire after 14:34Z.
+   - `~D2` prints duration and max memory against 85% of the timeout and the configured memory.
+   - Either one over: Branch B to `yIAQjspL`.
+4. **The drain's line-union merge produced two malformed channel rows.** The row gate refused them, so nothing landed.
+   - `~D2` re-appends the two rows cleanly on the shared index, as CLAUDE.md 14b says for append-only files: take the shared index's race; do not isolate.
+   - The merge-driver behaviour is a tooling note for the safe-merge owner, via MSTR, and is not this project's cell.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~15:4xZ) -- rounds 49-51 (CVO slug msg 3581, `REMEDIATION_v24.md` @832337d37c): MAY-CLOSE, ARMED 0
+
+1. **DB-b-104's status key is `address()` output with its bytes unchanged.** It ships with DB-b-97 in the next gold Lambda release, under ONE pair. The census
+   against live `oNgy4rnr` shows only those two orders' members.
+2. **RULING on W74-S1: FLOW_TIMING and INCOME_DATE are relabelled `inferred`.** ADDENDUM 15 item 3 admits a reason as mechanical only on a TWO-SIDED read. The
+   test re-links Opal's own series, and no Black Diamond date is read, so the `mechanical` label is a claim the evidence does not carry.
+   - **ONE LOCAL cell:** read Black Diamond's OWN transaction or posting dates for every segment carrying either reason.
+     - The source is the firm's own Black Diamond input already in the 49F tree, read by its served address. No vendor call, and no cross-firm read.
+     - It compares them with Opal's dates.
+     - A segment whose two dates agree with the stated reason becomes `confirmed`. One that disagrees is re-graded UNEXPLAINED.
+   - **Until that cell drains, FWD-8 stays NOT REALIZED on these reasons,** on top of the 197 DEFECTs.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (2026-10-09 ~15:5xZ) -- round 50 (CVO slug msg 3593, `ADJUDICATION_v31.md` @e6298fbcf4): MAY-CLOSE, ARMED 0
+
+1. **R44's dry-run sizing reads UNDER both lines:** 377 s of 765, and 1,661 MB of 1,740.8 MB. Memory sits at 95.4% of its line. The ledger closes, per the R44
+   half's AMENDMENT 1.
+   - **One sample is not a margin. That gets measured now, not waited for:** ONE more ad-hoc dry run (no writes) on the HEAVIEST lots day in the last 90 days,
+     chosen by the largest lot-row count, printed with its denominator. Month-end 2026-09-30 is a candidate.
+   - Over the 85% line on that day: a pair for EITHER a producer fix (preferred) or a memory-configuration change, the latter with its own measured before/after.
+     Monday 07:41 ET's fire stays the acceptance row.
+2. **W73-S2 (123 segments):**
+   - **98 are BD-side by a two-sided read: `confirmed`.**
+   - **25 are BD-side only by exclusion: `inferred`, and they do NOT count toward FWD-8** (ADDENDUM 15 item 3, ADDENDUM 17).
+   - The ADDENDUM 17 two-sided date cell reads them too. Any that stay exclusion-only are graded UNEXPLAINED.
+
+-- 1.0.0_SA_CTO~DELL2

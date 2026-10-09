@@ -18,6 +18,7 @@ CLI modes:
 from __future__ import annotations
 
 import fnmatch
+import json
 import os
 import re
 import subprocess
@@ -286,6 +287,37 @@ def resolve_lane(path: str, paths_config: dict[str, Any]) -> str | None:
     return None
 
 
+_XBOX_RE = re.compile(r"^org/devices/crossbox/XB-[^/]+\.json$")
+
+
+def _xbox_to_serial(path: str, root: str | None) -> str | None:
+    """NFRA_GATSCP GS-f-4 (ruling R5): the `to_serial` of a crossbox record, read from the index git resolves
+    (`git show :<path>`), else HEAD (a deletion has left the index). None when the path is not a record, no checkout
+    answers, or the record does not parse -- every one of which admits nothing."""
+    p = path.replace("\\", "/").lstrip("/")
+    if not _XBOX_RE.match(p):
+        return None
+    cwd = root or os.getcwd()
+    for ref in (":" + p, "HEAD:" + p):
+        try:
+            r = subprocess.run(["git", "show", ref], cwd=cwd, capture_output=True, timeout=30)
+        except (OSError, subprocess.SubprocessError):
+            return None
+        if r.returncode == 0:
+            try:
+                doc = json.loads(r.stdout.decode("utf-8"))
+            except ValueError:
+                return None
+            ts = doc.get("to_serial") if isinstance(doc, dict) else None
+            return ts if isinstance(ts, str) and ts else None
+    return None
+
+
+def _xbox_permits(agent: str, path: str, to_serial: str | None) -> bool:
+    """The receiving lane commits ITS OWN record: the agent's full serial equals the record's to_serial, exactly."""
+    return bool(to_serial) and _XBOX_RE.match(path.replace("\\", "/").lstrip("/")) is not None and agent.strip() == to_serial
+
+
 def check_agent(agent: str, path: str, lanes: dict[str, Any],
                 paths_config: dict[str, Any], grant=None, root: str | None = None,
                 cache: dict | None = None) -> bool:
@@ -345,6 +377,10 @@ def check_agent(agent: str, path: str, lanes: dict[str, Any],
         # ADHC_OWNPTH.005 (2026-09-04, Andrew-direct "recs approved" @9ef9a40aae): the task order is the worker's
         # grant -- 5th clause, same additive-after posture. See _owns_task_order_paths.
         if _owns_task_order_paths(agent, path, grant, root, cache):
+            return True
+        # GS-f-4 (ruling R5, 2026-10-09): a crossbox record's receiving lane commits ITS OWN record -- 6th clause, same
+        # additive-after posture. Admits the record whose to_serial is exactly this agent's full serial; never another's.
+        if _XBOX_RE.match(path.replace("\\", "/").lstrip("/")) and _xbox_permits(agent, path, _xbox_to_serial(path, root)):
             return True
         return False
 
@@ -452,6 +488,57 @@ def _cmd_check_agent(agent: str, yaml_path: str) -> int:
     return 1 if violations else 0
 
 
+def _cmd_check_path(agent: str, path: str, yaml_path: str) -> int:
+    """`--check-path <agent> <path>`: PERMIT (rc 0) or REFUSE <reason> (rc 1) for ONE path, reading the staged record
+    for a crossbox path (GS-f-4)."""
+    errors = validate_yaml(yaml_path)
+    if errors:
+        for e in errors:
+            print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+    data = load_yaml(yaml_path)
+    lanes = data.get("lanes") or {}
+    paths_config = data.get("paths") or {}
+    root = os.getcwd()
+    lane_name = resolve_lane(path, paths_config)
+    if check_agent(agent, path, lanes, paths_config, data.get("worker_grant"), root, {}):
+        print(f"PERMIT {path} lane={lane_name} agent={agent}")
+        return 0
+    if lane_name is None:
+        print(f"REFUSE {path} -- UNDEFINED (no matching path rule; agent={agent})")
+    elif _XBOX_RE.match(path.replace("\\", "/").lstrip("/")):
+        print(f"REFUSE {path} -- lane={lane_name}; agent={agent} is not in permitted_agents and is not the record's "
+              f"to_serial ({_xbox_to_serial(path, root)!r}): the receiving lane commits its own record only")
+    else:
+        print(f"REFUSE {path} -- lane={lane_name}; agent={agent} not in permitted_agents")
+    return 1
+
+
+def _xbox_scratch_arm(xbp: str) -> bool:
+    """check_agent end to end over a scratch git repo holding two staged crossbox records (no network, no shared tree)."""
+    import shutil
+    import tempfile
+    d = tempfile.mkdtemp(prefix="opv-xbox-")
+    try:
+        def g(*a):
+            return subprocess.run(["git", *a], cwd=d, capture_output=True, timeout=60)
+        g("init", "-q")
+        os.makedirs(os.path.join(d, "org", "devices", "crossbox"))
+        other = "org/devices/crossbox/XB-20990101T000000Z-bbbb.json"
+        for rel, to in ((xbp, "0.7.0_AE_CloudOps~ZG"), (other, "0.7.0_AE_CloudOps~ZQ")):
+            with open(os.path.join(d, rel), "w", encoding="utf-8") as fh:
+                json.dump({"id": os.path.basename(rel)[:-5], "to_serial": to}, fh)
+            g("add", rel)
+        lanes = {"L": {"permitted_agents": ["0.0.0_AB_MSTR"]}}
+        cfg = {"org/devices/crossbox/**": {"lane": "L"}}
+        ck = lambda a, p: check_agent(a, p, lanes, cfg, None, d, {})  # noqa: E731
+        return (ck("0.7.0_AE_CloudOps~ZG", xbp) and not ck("0.7.0_AE_CloudOps~ZQ", xbp)
+                and not ck("2.0.0_SA_COO~W1", xbp) and not ck("0.7.0_AE_CloudOps~ZG", other)
+                and ck("0.0.0_AB_MSTR", other))
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+
+
 def _self_test(yaml_path: str) -> int:
     """ADHC_OWNPTH.005 battery: pure arms on the grant resolution, red and green, plus a live parse of a real project's
     orders at HEAD. The registry's stanza is INJECTED for the arms (the real one is 0.0.0_AB_MSTR's to land), so the
@@ -459,6 +546,7 @@ def _self_test(yaml_path: str) -> int:
     grant = {"serial_glob": "0.9.0_WK_*", "source": "task-order-paths"}
     root = os.path.dirname(os.path.abspath(yaml_path))
     WK = "0.9.0_WK_X_PRJ~2"
+    XBP = "org/devices/crossbox/XB-20990101T000000Z-aaaa.json"
     orders = [("org/missions/D9/X/X_PRJ/task-orders/X_PRJ.TO-1.md", "0.9.0_WK_X_PRJ~2",
                ["org/modules/graph/cli.py", ".tools/tests/test_x_*.py", "docs/x/", "newtop/"])]
     cache = {"X_PRJ": orders}
@@ -487,6 +575,19 @@ def _self_test(yaml_path: str) -> int:
         ("UNMAPPED path MUTANT: worker ~3 with no such order, and a seat serial -> both refused",
          lambda: not check_agent("0.9.0_WK_X_PRJ~3", "newtop/a.txt", {}, {}, grant, root, cache)
          and not check_agent("2.0.0_SA_COO", "newtop/a.txt", {}, {}, grant, root, cache)),
+        ("crossbox GS-f-4: the record's to_serial (exact full serial) is admitted on its own record",
+         lambda: _xbox_permits("0.7.0_AE_CloudOps~ZG", XBP, "0.7.0_AE_CloudOps~ZG")),
+        ("crossbox GS-f-4 MUTANT: another lane of the same base, a base serial, and an unnamed COO lane are refused",
+         lambda: not _xbox_permits("0.7.0_AE_CloudOps~ZQ", XBP, "0.7.0_AE_CloudOps~ZG")
+         and not _xbox_permits("0.7.0_AE_CloudOps", XBP, "0.7.0_AE_CloudOps~ZG")
+         and not _xbox_permits("2.0.0_SA_COO~W1", XBP, "0.7.0_AE_CloudOps~ZG")),
+        ("crossbox GS-f-4 MUTANT: a record with no readable to_serial, and a path that is not a record, admit nothing",
+         lambda: not _xbox_permits("0.7.0_AE_CloudOps~ZG", XBP, None)
+         and not _xbox_permits("0.7.0_AE_CloudOps~ZG", "org/devices/DEVICES.json", "0.7.0_AE_CloudOps~ZG")
+         and not _xbox_permits("0.7.0_AE_CloudOps~ZG", "org/devices/crossbox/sub/XB-x.json", "0.7.0_AE_CloudOps~ZG")),
+        ("crossbox GS-f-4 end to end: check_agent on a scratch repo's staged record -- receiver permitted, other lane refused, "
+         "the same lane on ANOTHER record refused",
+         lambda: _xbox_scratch_arm(XBP)),
         ("terminal orders grant nothing (live parse of NFRA_COMPEFFICACY at HEAD returns a list; every order in it is non-terminal)",
          lambda: isinstance(_worker_orders(root, "NFRA_COMPEFFICACY"), list)),
     ]
@@ -522,10 +623,18 @@ def main() -> None:
     if not args:
         print(
             f"Usage: {sys.argv[0]} <yaml>  |  "
-            f"{sys.argv[0]} --check-agent <agent> <yaml>",
+            f"{sys.argv[0]} --check-agent <agent> <yaml>  |  "
+            f"{sys.argv[0]} --check-path <agent> <path>",
             file=sys.stderr,
         )
         sys.exit(1)
+
+    if args[0] == "--check-path":
+        if len(args) < 3:
+            print(f"Usage: {sys.argv[0]} --check-path <agent> <path> [<yaml>]", file=sys.stderr)
+            sys.exit(1)
+        default_yaml = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".owned-paths.yaml")
+        sys.exit(_cmd_check_path(args[1], args[2], args[3] if len(args) > 3 else default_yaml))
 
     if args[0] == "--check-agent":
         if len(args) < 3:

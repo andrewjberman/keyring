@@ -950,3 +950,113 @@ once they drain. DB-b-88 (in flight) releases DB-b-87's key and backfills 2026-1
 meanwhile.
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~65`, ~66 and ~67, cut from box/dell2.
+
+
+## 47. ROUND 45, WORKSTREAM B (2026-10-09 ~13:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 11.1, msg 3362, @43bbe32935)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-93` | E1, FWD-12: the runner accepts the seat-authored selection file (derived id, or `selection_source: file`) | LOCAL | none | B45-1 |
+
+**DB-b-86 (round 41)** is BLOCKED by its AMENDMENT 3 on the Cottonwood returns gold (ADVI_COTBKF, COTBKF ADDENDUM 11.2), DB-b-93, and the
+laptop's hop3 file.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~68`, cut from box/dell2.
+
+
+## 48. ROUND 46, WORKSTREAM B (2026-10-09 ~13:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 12, msg 3371, @77e60c3d2b)
+
+Rounds 42 and 44 are MAY-CLOSE (CVO ADJUDICATION_v26 @fbc76ab42d). The CTO ruled DB-b-90 and DB-b-91 release TOGETHER as ONE gold Lambda release
+after `yIAQjspL`, under one pair (item 5).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-94` | E1, FWD-4: the release packet -- the member census over live yIAQjspL (exactly DB-b-90's and DB-b-91's members), both branches, rollback, two UNSIGNED halves | WORLD | DB-b-90, DB-b-91 (drained) | B46-1 |
+
+The apply is a later cell, after both halves are signed. DB-b-92 rides the runner (item 3); its sha256 limb stays dormant.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~69`, cut from box/dell2.
+
+
+## 49. ROUND 47, WORKSTREAM B (2026-10-09 ~14:1xZ, issuer 2.0.0_SA_COO~D2, on the R44 CTO half @fa8d2c2961 and ADDENDUM 13.1, msg 3413)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-95` | E1, FWD-4: apply the R44 release (DB-b-90 + DB-b-91, ONE gold Lambda release over yIAQjspL) under the signed pair | WORLD | DB-b-94, both halves | B47-1 |
+| `DB-b-96` | E2, FWD-11: sources.json carries valuation_source / fee_treatment / price_basis; the returns manifest reads them, with an absent arm (W66-S1) | WORLD (served-producer floor) | none | B47-2 |
+| `DB-b-97` | E3, FWD-4: the backfill path clears landed days from the lots status record (W69-S2) | WORLD (served-handler floor) | DB-b-91 | B47-3 |
+
+**Isolation.** DB-b-95 builds at its own worktree base (handler blob `7c9bb9dcdc5b`) and does not merge box/dell2 before the build, so DB-b-97's
+handler edit cannot ride the R44 release. DB-b-96 and DB-b-97 ship later under their own pairs. ADVI_COTBKF's CB-al-2 mint is held until DB-b-96
+drains (ADDENDUM 13.1).
+
+**fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~70`, ~71 and ~72, cut from box/dell2.
+
+
+## 50. ROUND 48, WORKSTREAM B (2026-10-09 ~14:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 14, msg 3416)
+
+Round 47 is already issued, so the CTO's FWD-8 cell is cut in its own round.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-98` | E1, FWD-8: classify the 510 UNEXPLAINED outside segments of TIEOUT_COMPOUND_V2 by a declared reason set (rule-24 record) or file defects; the counts sum to 990 | LOCAL | none | B48-1 |
+
+The tolerance is Andrew's word (open call 2f53, REC 0.35pp); this cell runs regardless.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~73`, cut from box/dell2.
+
+
+## 51. ROUND 49, WORKSTREAM B (2026-10-09 ~15:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 15, msg 3492, and ADDENDUM 13.2, msg 3501)
+
+Round 48 is MAY-CLOSE, and FWD-8 is NOT REALIZED: 197 DEFECT segments, and every reason is inferred.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-99` | E1, FWD-8: classifier threshold sensitivity, pre-registration, per-reason claim and robustness | LOCAL | DB-b-98 | B49-1 |
+| `DB-b-100` | E2, FWD-8: the 74 W73-S1 DEFECT segments -- a producer fix with a test, or a Black Diamond-side two-sided read | WORLD (producer floor) | DB-b-98 | B49-2 |
+| `DB-b-101` | E3, FWD-8: the 123 W73-S2 DEFECT segments -- the same | WORLD (producer floor) | DB-b-98 | B49-3 |
+| `DB-b-102` | E4, FWD-11: method_version from the firm's sources entry, never a default 2 (ADVI_COTBKF's CB-al-2 waits on it) | WORLD (producer floor) | DB-b-96 | B49-4 |
+
+**Shared write surface.** DB-b-100, DB-b-101 and DB-b-102 may each touch `account_return_daily.py`. They are cut in parallel and drained one at a
+time, each re-graded after the last drain. A conflict is resolved at the drain, by the issuer, in the worker worktree. Producer fixes ship later
+under their own pairs.
+
+**fanout:** 4 of 4 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~74` to ~77, cut from box/dell2.
+
+
+## 52. ROUND 50, WORKSTREAM B (2026-10-09 ~15:2xZ, issuer 2.0.0_SA_COO~D2, on the R44 CTO half AMENDMENT 1, msg 3550, @b758031ba2)
+
+Round 49 is already issued, so the CTO's sizing ruling is cut in its own round.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-103` | E1, FWD-4: ONE dry-run backfill of 2026-10-08 on live oNgy4rnr; under 85% closes R44 ledger leg S1, over either rolls back to yIAQjspL | WORLD | DB-b-95 | B50-1 |
+
+Monday 2026-10-12 07:41 ET stays the acceptance, kept as a row with that clock.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~78`, cut from box/dell2.
+
+
+## 53. ROUND 51, WORKSTREAM B (2026-10-09 ~15:2xZ, issuer 2.0.0_SA_COO~D2, on laptop 4.0.0_SA_CRO's naming ruling, MSTR msg 3555)
+
+Rule 30 conformance of DB-b-91's status key. It is inside the issuer's own decomposition, a repair of a drained cell.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-104` | E1, FWD-4: the lots status key is built by `address()`, never a typed suffix, with its bytes unchanged | WORLD (served-handler floor) | DB-b-97 | B51-1 |
+
+It rides the next gold release with DB-b-97 (CTO ADDENDUM 16 item 1).
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~79`, cut from box/dell2.
+
+
+## 54. ROUND 52, WORKSTREAM B (2026-10-09 ~15:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 16 item 1 and ADDENDUM 17, msg 3583)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-105` | E1, FWD-4: the R45 release packet -- DB-b-97 + DB-b-104 over live oNgy4rnr, census = handler.py only, memory headroom stated, halves UNSIGNED | WORLD | DB-b-97, DB-b-104 | B52-1 |
+| `DB-b-106` | E2, FWD-8: Black Diamond's own transaction / posting dates read against Opal's for the 475 FLOW_TIMING + INCOME_DATE segments | LOCAL | DB-b-99 | B52-2 |
+
+FWD-8 stays NOT REALIZED until DB-b-106 drains and the DEFECT classes (DB-b-100, DB-b-101) are dispositioned.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~80` and ~81, cut from box/dell2.

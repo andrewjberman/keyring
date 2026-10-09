@@ -1231,3 +1231,101 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
   `ws3_item8_prep/w26s1_ai_below_tolerance_check.py` (AC2; base FAIL 1, control arm PASS). J1 (CVO): on the issuer's real
   run over the 13 funds, no opening leads more than a quarter of the verdicts (`verdict_openers_check.py`), and the
   verdicts read as fund-specific.
+
+### `RIV-wh-1` -- no AI fact prints '$0.0 million' or a bare security identifier; a zero notional is never a fact (repair of RIV-aw-1's J1 NOT MET; rows D1-C-S4, D1-S9) -- APPENDED 2026-10-09, revision 1.25
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 5 @ceab50de56
+  (1.0.0_SA_CTO~DELL1 msg 2497).
+- Measured: the served 13:00Z sweep of 2026-10-09 (research_hypotheses-20261009T130227Z-ai, a1-chain/7) carries '$0.0
+  million' 7 times (WCMG, ETFT) and the bare CUSIP 037833100 for Apple Inc in GQGU's 30-day account ("The fund added
+  037833100 for $8.1 million"; cited row `GQGU|037833100|2026-09-10`). The issuer's a1-chain/8 real run repeats the '$0.0
+  million' (WCMG, ETFT, three each). Causes: `_mn` shows millions at one decimal, so any |v| < 50,000 is '$0.0 million';
+  `fact_pack` names a trade `names.get(key) or _name(...)`, which falls back to the raw key when no name resolves.
+- Interface (all in `ai_accounts.py`):
+  1. `_mn(v)`: |v| < 50,000 -> thousands, e.g. '$42 thousand' (whole thousands); |v| >= 50,000 -> millions at one
+     decimal, as today. The facts' `display:` form follows, so the model copies it (SYSTEM rule 1 allows the display form).
+  2. `fact_pack` leaves out a trade whose notional is exactly 0 (never '$0 thousand').
+  3. `fact_pack` never puts a bare identifier (the raw `security_key` or `security_id`) in a fact's text: the name comes
+     from `names`, then the row's own name field(s) if the trade row carries one, then any name the function can already
+     reach for that security; a trade with no name left is left out of the facts.
+  4. SYSTEM rule 1 names the thousands form beside the millions form.
+- Out of bounds: every other file; no vendor call, no S3, no deploy. The real-model read is the issuer's, at the drain.
+- Check: `ws3_item8_prep/wh1_small_notional_and_unnamed_check.py` (AC1; base FAIL 4; the EDGE negative arm and the NAMED
+  control PASS). J1 (CVO): on the issuer's real 13-fund run, 0 '$0.0 million' and 0 bare identifiers in any item.
+
+### `RIV-wi-1` -- the 13:00Z sweep runs the dramatic-move lookup before publish, so a split found on the web adjusts the served history (row D1-S10; CTO ruling ADDENDUM 6) -- APPENDED 2026-10-09, revision 1.26
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 6 @04214e638c
+  (1.0.0_SA_CTO~DELL1 msg 2508). Its own cell and its own deploy pair; WS2/WS3 ship first.
+- Measured (row D1-S10 @0d4f7cc409): no Lambda calls `dramatic_move`; no Lambda carries `BRIGHT_DATA_API_KEY`;
+  `rivalfunds_package.STAGED` (7 paths) does not stage `data/find/dualbiz/scripts/serp.py`, and `serp_search` finds it
+  only at the repository layout (`pathlib.Path(__file__).resolve().parents[4]`). `price_series._actions` READS gold
+  `corporate_actions`; `dramatic_move.write_rows` is its only writer. Andrew-direct comment 1: "there should be a google
+  search for corporate action and an automatic refactoring of historical prices by the split multiple".
+- Interface:
+  1. `dramatic_move.run_for_day(day, sink, *, g4=None, actions=None, search=None, cap=MAX_LOOKUPS_PER_RUN, names=None)
+     -> dict`. With `g4`/`actions` None it reads the stored closes (G4) and the stored corporate actions from `sink` for
+     the 30 days before `day`; it runs `detect`, searches at most `cap` candidates (`lookup`), writes every find with
+     `write_rows` (one object, source_url per row), and returns a report `{candidates, searched, calls, written, failed,
+     capped, uri}`. It PRINTS one line naming the cap and the counts. A search that raises is counted in `failed` and the
+     run goes on; `run_for_day` itself never raises for a search or write failure. A name with no discontinuity draws 0
+     searches. `MAX_LOOKUPS_PER_RUN` is a module constant (8).
+  2. `sweep.run_sweep` calls `dramatic_move.run_for_day(date, sink)` after the canonical / trade-schedule stages and
+     before the day's publish, inside a `try` that records the failure and does not re-raise (a failed lookup never
+     blocks publish; the price stays unadjusted and the chart's gap flag stays).
+  3. The key: `serp_search` takes `BRIGHT_DATA_API_KEY` from the environment, else reads the Secrets Manager secret named
+     by `RIVALFUNDS_SERP_SECRET` (one `GetSecretValue`, cached per process). With neither, the search raises (counted as
+     failed by item 1).
+  4. `infra/aws/lambda/etfs-pipeline/rivalfunds_package.py` `STAGED` stages `data/find/dualbiz/scripts/serp.py`, and
+     `serp_search` finds it in a Lambda tree (a `_serp_dir()` that tries the staged destination first, then the
+     repository layout).
+- Out of bounds: Terraform, IAM, the Lambda environment and any deploy (the deploy pair's applier sets
+  `RIVALFUNDS_SERP_SECRET` and the one-ARN read); `price_series.py`, `publish_page.py`, `render.py`,
+  `enrichment_bloomberg.py`; no live search, no S3.
+- Checks: `ws3_item8_prep/wi1_lookup_run_check.py` (AC1; base FAIL: run_for_day absent) and
+  `ws3_item8_prep/wi1_wiring_check.py` (AC2; base FAIL 3). Acceptance (the pair's read, CTO ADDENDUM 6): Tokio Marine
+  adjusted on the served page; a name with no discontinuity makes 0 calls.
+
+### `RIV-wj-1` -- the generated stack grants the daily Lambda ONE read of the existing Bright Data key secret and names it in that Lambda's environment (CTO ruling ADDENDUM 7; RIV-wi-1's grant) -- APPENDED 2026-10-09, revision 1.27
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 7 @aa290d707e
+  (1.0.0_SA_CTO~DELL1 msg 2555): option (a) -- GetSecretValue on exactly
+  `arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/bright-data/api-key-7ojPkd`, no wildcard, no other
+  action, no copy of the secret; `BD_SERP_ZONE` stays plain environment; the generated policy diff shows ONE new
+  statement. Row D1-S11 tells FIND_INSURE's owner of the second consumer.
+- Measured (14:2xZ, key names only): the SERP key is `find-insure/bright-data/api-key` (a raw string);
+  `find-dualbiz/bright-data/serp` names it as `api_key_secret` and gives `zone` = `serp_opal`. RIV-wi-1 (merged
+  @e17ab4e69d) reads the key from `BRIGHT_DATA_API_KEY`, else from the secret named by `RIVALFUNDS_SERP_SECRET`, and the
+  zone from `BD_SERP_ZONE`. The stack's one existing secrets grant is the OpenAI secret (`gen_policies._ai_secret`,
+  statement `GetOpenAISecret`, the daily Lambda's environment `RIVALFUNDS_AI_ENABLE`, `RIVALFUNDS_OPENAI_SECRET`).
+- Interface (`infra/aws/terraform/etfs-rivalfunds/gen_policies.py` and its committed outputs):
+  1. A constant for the ONE ARN with a comment citing ADDENDUM 7 (a foreign secret has no builder home; R19: this existing
+     pipeline is not migrated by this cell).
+  2. For the sweep stage (the daily Lambda) only: one more statement, `Sid` `GetSerpSecret`, `Effect` `Allow`, `Action`
+     `["secretsmanager:GetSecretValue"]`, `Resource` `[<the ARN>]`; and the environment gains `RIVALFUNDS_SERP_SECRET` =
+     the ARN and `BD_SERP_ZONE` = `serp_opal`, keeping its two keys.
+  3. The committed `generated.auto.tfvars.json` and `policies/*.json` are regenerated with `--out
+     infra/aws/terraform/etfs-rivalfunds` and equal a fresh regeneration (line endings aside).
+- Out of bounds: every `.tf` file, every other Lambda, any `terraform plan` or `apply`, any AWS call; the rivalfunds code.
+- Check: `ws3_item8_prep/wj1_serp_grant_check.py` (AC1; base FAIL 2: limbs (1) and (3); limbs (2) and (4) PASS at the
+  base and must keep passing).
+
+### `RIV-wk-1` -- a stored corporate-action row can be VOIDED without a delete: an append-only void object, written by a CLI, that `price_series` honours (CTO half condition 11 of the lookup deploy) -- APPENDED 2026-10-09, revision 1.28
+- Placement: `1.0.0_SA_CTO~DELL1`'s half of the lookup deploy pair,
+  `deliverables/1.0.0_SA_CTO~DELL1/round28/NEVER_WIDEN_HALF_CTO_WI1_LOOKUP_DEPLOY.md` @63bdddfbb9 (msg 2581), condition
+  11: the COO half's rollback of a wrong `corporate_actions` row rested on an S3 delete, which no seat may do; "No void
+  path, no apply."
+- Measured: `price_series._actions(s, lo, hi)` (~line 216) concatenates EVERY `.parquet` under
+  `gold/corporate_actions/date=<D>/` for D in [lo, hi]; `_adjustments` (~128) applies each `split` row. The inferred rows
+  (`dramatic_move._row` ~249, `write_rows` ~330) carry `security_id`, `event_type`, `ratio`, `ex_date`, `source_url` and the
+  object's `revision` (stamped by `write_rows`). There is no void path: a wrong row adjusts forever.
+- Interface:
+  1. `dramatic_move.void_rows(s, revision, security_id, reason, day=None) -> uri`: writes ONE new object
+     `actions-void-<rev>.parquet` under `gold/corporate_actions/date=<day or today UTC>/` with one row per voided action:
+     `void_revision`, `security_id`, `reason`, `voided_at`, `producer_version`. Append-only; it never rewrites or deletes.
+  2. A CLI: `python -m rivalfunds.dramatic_move void --sink <s3 | local:<dir>> --revision <rev> --security-id <sid>
+     --reason <text> [--day <D>]`, exit 0 on a written void, non-zero with a message when no stored action row matches
+     (`revision`, `security_id`).
+  3. `price_series._actions` reads `actions-void-*` objects separately (never as action rows) and drops every action row
+     whose (`revision`, `security_id`) a void names, over all dates. A void for an unknown row changes nothing.
+- Out of bounds: `sweep.py`, `publish_page.py`, `render.py`, `gen_policies.py`, every infra path; no S3, no search, no
+  deploy. The void CLI is never run against S3 by this cell.
+- Check: `ws3_item8_prep/wk1_void_check.py` (AC1; base FAIL 2 -- arms B and C; arm A, both rows adjusting before any void,
+  PASSES at the base and must keep passing).

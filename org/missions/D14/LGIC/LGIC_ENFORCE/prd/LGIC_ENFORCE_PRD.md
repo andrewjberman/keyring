@@ -4,7 +4,7 @@
 {
  "project": "LGIC_ENFORCE",
  "directive": "D14",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/d14-executable-layer-brief-20260913.md@fc2a1ba75f",

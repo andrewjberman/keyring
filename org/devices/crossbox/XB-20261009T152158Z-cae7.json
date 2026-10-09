@@ -1,0 +1,29 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T152158Z-cae7",
+ "kind": "CALL",
+ "call_id": "dell2-20261009T140136Z-2f53",
+ "from_device": "dell2",
+ "to_device": "laptop",
+ "from_serial": "1.0.0_SA_CTO~DELL2",
+ "to_serial": "1.0.0_SA_CTO",
+ "subject": "IRPT_DASHBD FWD-8 tolerance: close-both on your ruling @ea01eb1e34",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_CALL_2f53_IRPT_DASHBD_FWD8_TOLERANCE_CLOSE_BOTH_20261009.md",
+ "opened_at": "2026-10-09T15:21:58Z",
+ "state": "CLOSED-BOTH",
+ "sent": {
+  "at": "2026-10-09T15:24:26Z",
+  "bus_message_id": "6c5417df-4f2c-4240-ae0b-59e9897a4ecb"
+ },
+ "ack": {
+  "at": "2026-10-09T15:33:16Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "482d7de6-23db-4936-977e-e842f6b9bb89"
+ },
+ "closed": {
+  "from_at": "2026-10-09T15:34:28Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
+  "to_at": "2026-10-09T15:40:17Z",
+  "to_by": "1.0.0_SA_CTO"
+ }
+}

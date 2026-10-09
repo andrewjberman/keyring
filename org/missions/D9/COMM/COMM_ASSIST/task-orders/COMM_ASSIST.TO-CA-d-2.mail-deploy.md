@@ -41,16 +41,32 @@ any other `-var`. Our own `chat_assist_mail_bearer_secret_arn` is NEVER a `-var`
 **PHASE A RE-RUN (A3):** re-take the scratch preview with that one `-var`, save as `PHASE_A_PLAN_2.txt`, append the readings to
 `PHASE_A_READ.md`, report, and STOP.
 
+**PHASE A2 -- cell `CA-d-3`, the KMS decoupling (A5; CTO fold UB-e9bc @cfef5928ad). RUN IT NOW; it applies nothing.**
+`module.ldo_001` takes the shared transcripts key by RESOURCE (`chat_assist.tf` `kms_key_id = aws_kms_key.transcripts.key_id`,
+`kms_key_arn = aws_kms_key.transcripts.arn`), so a targeted plan pulls in every project's pending change to that key.
+1. In `chat_assist.tf` ONLY, add `data "aws_kms_key" "ldo_001_transcripts" { key_id = "alias/${local.bucket}" }`, and point those two
+   module arguments at `data.aws_kms_key.ldo_001_transcripts.id` / `.arn`. BINDING: the alias is that STRING (`local.bucket` is defined
+   in `main.tf`), NEVER `aws_kms_alias.transcripts.*` or any `aws_kms_alias.*` reference, because the alias resource targets the key and
+   re-couples it. Add one comment line saying why. Commit that one file through `safe-commit.sh`.
+2. The falsifier: re-take the scratch preview exactly as Phase A (the variable at `""`, plus the one A3 foreign `-var` read live). Save
+   it to your deliverables folder as `PLAN_D3.txt` and commit it. Expected: `0 to add, 2 to change, 0 to destroy`; the two functions'
+   `source_code_hash`/`last_modified` only; NO `aws_kms_key.transcripts`, NO `silver_reader`, NO `second_reader` address, NO
+   `LDO_KMS_KEY_ARN` diff. Run criterion `CAd2-AC3` (below). It must read PASS; otherwise file a BLOCKING row and STOP.
+3. Report and STOP. The halves are re-signed for this edit before the PHASE B GO.
+
 **PHASE B runs only when the issuer writes `PHASE B GO` on the line below.** It is written once NFRA_OPLGTW `TO-OG-ap-3` is
-complete with AC1 PASS (the secret exists and the gateway serves r29) AND (A4) NFRA_TRNSPT `TO-APPLY-s21` (the silver-only
-reader role and its key-policy line) is complete, so a `-target=module.ldo_001` plan's dependencies read NO change. Phase B is
-steps 1-9 below, re-reading step 4 at the act.
+complete with AC1 PASS (the secret exists and the gateway serves r29) AND (A5) EITHER `TO-CA-d-3` (the KMS decoupling) is merged
+with its falsifier PASS and the halves re-signed for it, OR NFRA_TRNSPT `TO-APPLY-s21` is complete; either way a
+`-target=module.ldo_001` plan's dependencies read NO change. Phase B is steps 1-9 below, re-reading step 4 at the act.
 The three halves are committed and BIND: COO `org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`,
 CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`, CVO
 `deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md` (all under `org/missions/D9/COMM/COMM_ASSIST/`).
 Read all three. The COO half's Branch A / Branch B, rollback and conditions are the procedure.
 
-PHASE B: NOT YET
+PHASE B GO -- written by 2.0.0_SA_COO~ZZ 2026-10-09 ~15:4xZ. Conditions read: TO-OG-ap-3 complete (fab015fa54; ap3.AC1/AC2 PASS,
+re-run by the issuer); CA-d-3 merged (2c84d9521a) with its falsifier PLAN_D3 0/2/0 (65d75da6e8; CAd2-AC3 PASS, re-run by the issuer);
+the halves re-signed for it: COO re-cut 1 cbe69f905d, CVO 09bed0829a, CTO 6e61646e81. Expected final plan: 0 to add, 3 to change,
+0 to destroy, the module only, NO key line (CTO msg 32844). Outside 20:00Z-21:45Z.
 
 ### THE CELL
 
@@ -103,19 +119,23 @@ FAILs at the base.
 <criterion id="CAd2-AC2" cell_refs="CA-d-2"><invocation>bash "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/r12/checks/d2_ledger.sh"</invocation><expect>RESULT: PASS</expect></criterion>
 `CAd2-AC2` -- NEVER-2: the ledger `comm-assist-r12-mail-deploy` is committed CLOSED at HEAD and its sentinel is gone. It FAILs at
 the base.
+
+<criterion id="CAd2-AC3" cell_refs="CA-d-3"><invocation>python "org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/r12/checks/d3_decouple.py"</invocation><expect>RESULT: PASS</expect></criterion>
+`CAd2-AC3` -- Phase A2's falsifier (the issuer's check; read it, do not edit it): the data source on the alias STRING, no key-resource or
+alias reference left in `chat_assist.tf`, and `PLAN_D3.txt` at 0/2/0 with no key, reader or `LDO_KMS_KEY_ARN` line. It FAILs at the base.
 </proof_of_spec>
 
-<expected_criteria>CAd2-AC1,CAd2-AC2</expected_criteria>
+<expected_criteria>CAd2-AC1,CAd2-AC2,CAd2-AC3</expected_criteria>
 
 Each invocation runs under `timeout 120`. Write the proof instance to
 `org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~CA/COMM_ASSIST.TO-CA-d-2.mail-deploy.proof_of_spec.json`. Validate
-it with `python .tools/proof-of-spec-check.py <instance> CAd2-AC1,CAd2-AC2`. Flip `<status>` to `complete` only when both PASS and
+it with `python .tools/proof-of-spec-check.py <instance> CAd2-AC1,CAd2-AC2,CAd2-AC3`. Flip `<status>` to `complete` only when all three PASS and
 the instance is VALID. Surprise rows are `COMM_ASSIST-Z-S<k>` (the gate grammar; A3), fabric `site-z`, disarm_owner `2.0.0_SA_COO~ZZ`, `surfaced_at` =
 `date -u +%FT%TZ` at filing. Append lines only to the investigation file.
 
 <decomp_ref>
 <decomp_doc>org/missions/D9/COMM/COMM_ASSIST/decompositions/COMM_ASSIST_DECOMP.round12.md</decomp_doc>
-<owned_cells>CA-d-2</owned_cells>
+<owned_cells>CA-d-2,CA-d-3</owned_cells>
 </decomp_ref>
 
 <paths>
@@ -159,6 +179,10 @@ lane: the <paths> block IS the grant (worker RULING 1).
   correctly not met. OG-ap-3 is complete (fab015fa54). PHASE B GO now also waits on NFRA_TRNSPT TO-APPLY-s21 (pending, laptop
   0.7.0_AE_CloudOps~TRL). Carried to round 13: decouple module.ldo_001 from the key RESOURCE (read it by data source), so that no
   other project's pending key change blocks a COMM deploy again. Graded by no gate limb (placeholders NONE).
+- A5 (issuer, 2026-10-09 ~14:3xZ, on the CTO fold of UB-20261009T140343Z-e9bc @cfef5928ad, msg 32799): cell `CA-d-3` (decompose
+  A1) reads the key by data source. The PHASE B GO is EITHER CA-d-3 merged with its falsifier PASS and the three halves re-signed
+  (Branch A and the rollback re-cut; the CVO half names the accepted key-replacement risk), OR s21 complete. With CA-d-3 merged,
+  Branch A's expected plan is unchanged (0/3/0, the module only). Graded by no gate limb (placeholders NONE).
 - The analysis's done-when also names the real mail run. That run is the issuer's at close, not this order's (an applier sends no
   test mail).
 

@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_STRATID~4</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -63,6 +63,18 @@ In `infra/aws/etfs/config/etf_universe.json`, change the Muni row of `sma_name_r
 NOT match `Opal_Muni_Income` (member stays `null`: the sleeve is still unverified under C-MUNI-VERIFY). Add the record path to its
 `source`. `W2-1-AC1` now probes `Opal_Muni_Sleeve` -> {null} and `Opal_Muni_Income` -> no rule; re-run both criteria and re-flip
 `<status>` to `complete` only when both pass.
+
+### AMENDMENT A2 (issuer, 2026-10-09 ~13:5xZ, drain step 2) -- IDVZ carries its current name
+
+The custodian's own holdings (`s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_holdings/date=2026-10-08/data.parquet`,
+column `Asset Name` per `Ticker`) name the four funds: DIVZ "POLEN DIVIDEND INCOME ETF", PFDE "PATHFINDER DISCIPLINED US EQUITY ETF",
+PFOE "PATHFINDER FOCUSED OPPORTUNITIES ETF" (all three match the list) and **IDVZ "OPAL INTERNATIONAL DIVIDEND INCOME ETF"** (the list
+says "Polen International Dividend Income ETF"). In `infra/aws/etfs/config/etf_universe.json`: set `full_names.IDVZ.name` to
+`Opal International Dividend Income ETF` with that object and column as its `source`; append one `sma_name_rules` row
+`{"member": "idvz", "pattern": "Polen\s+International\s+Dividend\s+Income", "source": "former name of IDVZ; <the previous source>"}`;
+set `last_updated` to 2026-10-09. Nothing else changes. Re-run both criteria (from the worktree root; the checks by absolute path in
+the shared tree), then also `python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_2_seam.py`
+(expect `W22-SEAM-OK`, 0 changed) and report it. Re-flip `<status>` to `complete` when both criteria pass.
 
 ## BOUNDS
 

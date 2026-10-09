@@ -1,0 +1,25 @@
+{
+  "request_id": "MDPF_SECHIST-SHT8-TR-FIELD-CONFIRM-20261009",
+  "standing": false,
+  "tier": 1,
+  "reason": "Confirm the field mnemonic SH-t-8 added to the daily pull's history request (TOT_RETURN_INDEX_GROSS_DVDS, constant TOTAL_RETURN_LEVEL_FIELD in integrations/bloomberg/pipeline/etf_daily_pull.py @89fe7615bf) before its site-Z take: the worker could make no Bloomberg call, so the name is unverified (row MDPF_SECHIST-D1-W7-S1). If the Terminal rejects it the pull drops the column silently and FWD-9's money-market windows stay blank.",
+  "page": "Positioning (FWD-9 money-market rule)",
+  "vendor": "bloomberg",
+  "channel": "history",
+  "securities": [
+    {"cusip": null, "cusip_reason": "money-market fund held today; ticker form is what the pull requests", "symbol": "SALXX", "bloomberg": "SALXX US Equity"}
+  ],
+  "fields": ["TOT_RETURN_INDEX_GROSS_DVDS"],
+  "start": "2026-10-08",
+  "end": "2026-10-08",
+  "quote": {
+    "cells": {"bloomberg_history": 1},
+    "claim": "measured",
+    "basis": "history = 1 security x 1 weekday x 1 field"
+  },
+  "pass_if": "the response carries a non-null TOT_RETURN_INDEX_GROSS_DVDS value for 2026-10-08 (a field error or an empty column is a FAIL: report the vendor's error text)",
+  "runs_at": "site Z (the Terminal), by the queue's producer, outside 10:30Z-12:00Z; quoted before it draws",
+  "filed_by": "2.0.0_SA_COO~H1",
+  "filed_for": "MDPF_SECHIST",
+  "authority": "round-2 analysis item 4 (@d0230a0dac): FWD-9 route 2a, the pull gains the total-return level field under a DEMQUE quote; law 4d77a9c3ea (every Bloomberg draw through the queue)"
+}

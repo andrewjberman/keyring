@@ -990,6 +990,80 @@
     "spec_asserts": "The standard post-apply control (/cloud-ops pre-flight step 5, and the 0-diff habit the sibling MCPORTAL orders rely on) is that a module plans clean after an apply: no changes, no errors. MP-k-2's own bounds also assert that 'no other Terraform resource moves'.",
     "world_is": "This cell's resource does plan clean, targeted. The MODULE does not: untargeted it wants to update aws_lambda_function.mcportal_grant_writer in place and it errors on a data source for the absent secret gateway/mail/commassist-bearer. Both conditions pre-date MP-k-2 (0 files changed in the module between the saved plan's commit and HEAD) and both were left exactly as found. So MP-k-2's bound held -- no other resource moved -- but the module's whole-module 0-diff control is unavailable to the next actor until these two are dispositioned.",
     "notes": "Issuer's call, and nothing in MP-k-2 waits on it: (a) route the Lambda drift to whoever owns mcportal_grant_writer (the MCPORTAL grant-writer cell) to re-plan and either apply or pin it, and the absent secret to whoever owns the gateway mail/commassist path -- most likely a half-landed or not-yet-created secret from another lane's in-flight work; (b) if either is known and accepted, record it so the next actor reads a known-drift note instead of rediscovering it mid-act. Either way the standing advice for this module is the one this cell followed: plan and apply TARGETED, from a saved plan, never a bare apply. Measured from worktree C:/tmp/mp-k2, branch wk-mcportal-cp2-k2, at 542de4b7e8."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S24",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~MP",
+    "surfaced_at": "2026-10-09T14:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "`deploy_ledger.py hold` REGENERATES the change_management entry from its structured state and SILENTLY DISCARDS any prose appended to the file -- rc=0 and a cheerful 'OK: ... -> HELD-PRE-APPLY'. Measured: it removed 115 lines of MP-x-4's required pre-act record (census, four cold-read samples, the content-verified rollback, the halt-gate pre-flight, the tool-surface BEFORE count), leaving a 23-line entry. The task order REQUIRES those records 'in the ledger entry', so the tool destroys the evidence the order asks the entry to carry.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MP",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, not inferred. Appended the pre-act record at ca9b6c05f0 ('1 file changed, 114 insertions(+)'). Ran `deploy_ledger.py hold --slug nfra-mcportal-r5-control-plane-release --gate-type external --gate-ref ... --reread-event ... --pre-apply`, which printed 'OK: ... -> HELD-PRE-APPLY ... Reads KNOWN-HELD (no half-landed RED)' and exited 0. The commit of that result read '2 files changed, 16 insertions(+), 118 deletions(-)'; the entry-only diff ca9b6c05f0..b8fc617e2e is '1 file changed, 2 insertions(+), 115 deletions(-)'. Entry line count 137 -> 23.",
+        "WHAT WAS LOST, read back by token count in the post-hold entry: '16.767' (the first cold sample) 0; the rollback artifact's ETag '3157ad0796dae6f9ad26dea7a1e46469' 0; 'tool_count = 66' 0; '1.79x' (the bar headroom) 0. The ONLY survivor was '77 of 77', and only because it sits inside a LEG's declared proof string, which the tool regenerates from its own state -- which is the tell: structured leg fields survive, free prose does not.",
+        "THE LOSS IS SILENT IN BOTH DIRECTIONS. The tool's stdout announces success and names no removal; its own follow-up `check` then reports the entry as 'KNOWN-HELD ... tracked-not-stranded', which is TRUE about the hold and says nothing about the deleted record. Nothing in the rc, the stdout or the check output distinguishes a hold that preserved the entry from one that gutted it. It was caught only by reading the commit's own insertion/deletion counts, which disconfirmed the assumption that a hold flips a status.",
+        "NOT RECOVERABLE FROM THE ENTRY, but not lost: the content is in git at ca9b6c05f0 and restated in that commit's message. It has been re-homed to org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/MP-x-4_PRE_ACT_RECORD.md (a path the tool never writes), with a short POINTER left in the entry. That is a workaround, not a fix: the next `close-leg`/`close` on this slug is expected to drop the pointer too, by the same regeneration.",
+        "SCOPE IS WIDER THAN THIS CELL, and that is why this is ARMED rather than an observation. Every NEVER-2 deploy in the fabric opens an entry and many task orders instruct the actor to RECORD evidence in it (MP-x-4 step 4: 'Record the census, the cold-read time, the rollback and this order's path'; MP-k-2 step 4 likewise). Any such seat that appends prose and then holds, closes a leg, or closes the entry loses that prose with no signal. MP-k-2 escaped only because this seat happened to put its evidence in commit messages and a separate ASK file rather than in the entry.",
+        "WHY IT WAS NOT CAUGHT ON MP-k-2 EARLIER TODAY: that cell appended nothing to its entry, so the regeneration had nothing to discard. ABSENT is not EXERCISED-AGAINST -- MP-k-2's clean close is not evidence the tool preserves prose; it is evidence the question was never asked."
+      ]
+    },
+    "spec_asserts": "TO MP-x-4 step 4 directs: 'Run `python .tools/deploy_ledger.py open ...` ... Record the census, the cold-read time, the rollback and this order's path.' That instruction presumes the entry is a durable place to record evidence across the entry's own lifecycle verbs.",
+    "world_is": "The entry is a GENERATED artifact, not an append-only log. `hold` rewrites it from the tool's structured state: declared leg descriptions and proof strings survive, the Log lines survive, and everything else a human or agent wrote into the file is dropped. rc=0, stdout says OK, and a following `check` still reports the entry healthy. So the order's 'record it in the entry' and the tool's regeneration are in direct conflict, and the conflict surfaces only as a line-count delta in the commit that carries the hold.",
+    "notes": "Issuer's call; MP-x-4 is NOT blocked by it (the record is re-homed and the act is separately held on OG-ap-4). Options: (a) make the entry append-safe -- have `hold`/`close-leg`/`close` preserve any content below a marker line, which is the minimal fix and keeps every existing order's wording valid; (b) route the tool's lifecycle verbs through an explicit `--note` field so prose becomes structured state the regeneration keeps; (c) change the ORDER TEMPLATES instead, so cells are told to record evidence in a deliverable and leave only a pointer in the entry -- cheapest today, but it leaves a tool that silently eats what is written to it. This cell used (c) as a workaround by necessity. Whichever is chosen, the SILENCE is the defect: a destructive regeneration that returns rc=0 and reports KNOWN-HELD afterwards cannot be distinguished from a safe one by any output the tool produces. Measured from worktree C:/tmp/mp-x4, branch wk-mcportal-r5-x4, entry 20261009T1414Z_nfra-mcportal-r5-control-plane-release, at b8fc617e2e."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S25",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T14:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S24"
+    ],
+    "one_line": "DISARMS Z-S24 for this project. Evidence a cell must keep is no longer written into a change_management entry that `deploy_ledger.py hold` / `close-leg` regenerate. MP-x-4's record is re-homed and accepted, and MP-r-2 (AMENDMENT 4) writes its pre-act record to a deliverables file and leaves only a pointer in the entry. The tool's silent regeneration is routed to 0.0.0_AB_MSTR~Z, the infrastructure owner; it is not this project's write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S24 measured the loss: the entry went from 137 to 23 lines across `hold` (ca9b6c05f0..b8fc617e2e: 2 insertions, 115 deletions). The record survives in git at ca9b6c05f0 and is re-homed at deliverables/0.7.0_AE_CloudOps~MP/MP-x-4_PRE_ACT_RECORD.md @0b4deae4f4, a path the tool never writes.",
+        "This project's open cells that write a ledger entry are MP-x-4 (in flight, HELD-PRE-APPLY) and MP-r-2 (staged). MP-k-2 is complete; its entry closed, and the evidence its ACs read lives in the deliverables and the proof instance, not in prose. MP-q-1 writes no ledger. So the remaining exposure is the two release cells, and both are covered by this disarm."
+      ]
+    },
+    "spec_asserts": "Z-S24 ARMED: the task orders require pre-act records 'in the ledger entry', and the tool deletes that prose on hold/close-leg.",
+    "world_is": "For NFRA_MCPORTAL the requirement is re-pointed: the record lives in a deliverables file, the entry carries a pointer, and the drain reads the deliverables file. The tool still regenerates silently. That defect, a destructive rewrite returning rc=0 with KNOWN-HELD, is routed to 0.0.0_AB_MSTR~Z and stays open there.",
+    "notes": "Disarm owner per Z-S24: 2.0.0_SA_COO~MP (issuer). The pointer may itself be dropped by a later close-leg; at the drain the issuer reads the deliverables record, never the entry's prose."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S26",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T15:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S24",
+      "NFRA_MCPORTAL-Z-S25"
+    ],
+    "one_line": "The tool defect behind Z-S24 is FIXED at its source by 0.0.0_AB_MSTR~Z @a9d1b38f12 (CTO~Z msg 32830 ruled the tool MSTR's). deploy_ledger.py _write_entry now carries every hand-written section and hand line under '## Carried notes'. A replay of MP-x-4's entry at ca9b6c05f0 through hold keeps 136 of 136 lines, where the defect gave 23. Z-S25's discipline (record in a deliverables file, pointer in the entry) stays for MP-x-4 and MP-r-2 as cheap redundancy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 32853 (2026-10-09T15:43Z): fix @a9d1b38f12 on box/sitez; the held and malformed batteries still pass; the prose already lost at b8fc617e2e is not restored, and is in git at ca9b6c05f0 and re-homed at MP-x-4_PRE_ACT_RECORD.md @0b4deae4f4."
+      ]
+    },
+    "spec_asserts": "Z-S24: deploy_ledger.py hold/close-leg silently drop appended entry prose.",
+    "world_is": "The tool is fixed at source @a9d1b38f12. This project's record discipline (Z-S25) is kept, and the issuer does not re-test the fix.",
+    "notes": "Measured by the fixer's replay, cited not re-run. A worktree based before @a9d1b38f12 still runs the old tool; the applier's MP-x-4 release tree is cut from box/sitez, so its base decides which version it runs."
   }
 ]
 ```

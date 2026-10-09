@@ -24363,3 +24363,442 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Measured from the laptop (network latency to DynamoDB), the uncached fallback multiplies the 49F producer's wall time about 9x on the real run. The production factor is NOT measured here: the host the scheduled fire runs on, its latency to the table and the SSM command timeout were not read. Memoising canonical misses (one dict in the canonical client or the classifier wrapper) would remove it; that edit is not in this order's grant and not made."
 }
 ```
+
+## IRPT_BCKEND-D2-W272-S1 -- After IB-pr-409 a row-listed Opal internal caller still classes OPAL_GLOBAL through the built narrative zip where live classes it UNKNOWN: the order k
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W272-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~272",
+  "surfaced_at": "2026-10-09T13:01:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "one_line": "After IB-pr-409 a row-listed Opal internal caller still classes OPAL_GLOBAL through the built narrative zip where live classes it UNKNOWN: the order kept that caller unchanged from IB-pr-399, so the class widening for callers WITH a profile row is not closed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "enforcer-scope arm, case row_listed_no_selection (profile row allowedFirmIds [cottonwood], x-firm-id opal-capital, no selection), each tree's own _scope.resolve against a SYNTHETIC directory: live roster None / UNKNOWN / permitted 0; built roster ['ops@opalinvest.com'] / OPAL_GLOBAL / permitted 2; stopped QiNRKpaC the same as built (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/IB110-1_release_replay.json, arm 'a row-listed internal caller's roster and class ... unchanged from the stopped IB-pr-399 build', and enforcer_scope.*.cases.row_listed_no_selection)",
+      "the cause is narrative/entry.py NarrativeEntry._live_roster@b8a49eee0e: it replaces the roster only for a caller with NO profile row (_internal_allowed_firms -> None), as the order states ('a row-listed caller is unchanged'); a row-listed caller keeps the shared boundary's email roster, which classes OPAL_GLOBAL (enforce.py:790: any advisor in its own firm), bound first to the selected listed firm",
+      "tests: narrative/tests/test_no_row_unknown.py::test_no_row_unknown_row_listed_caller_is_unchanged_from_the_shared_boundary pins the unchanged behaviour"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-409 / CTO ADDENDUM 18.1: no widening is accepted; hand enforcer_for the roster live hands for a no-row Opal caller; a row-listed caller is unchanged.",
+  "world_is": "The no-row arm is now identical to live (UNKNOWN, nothing granted). A row-listed caller is unchanged from IB-pr-399 as ordered, so it is OPAL_GLOBAL on built and UNKNOWN on live: the same class difference the CTO refused for the no-row caller, left standing for the narrower population with a maintained row. Whether that is accepted or fixed (hand it the live roster too, a one-line change in _live_roster) is the signer's call; it is stated in the packet (read-this-first item 4) and was not widened or narrowed here.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-W272-S2 -- IB-pr-399's replay driver derived its pre-binding negative control from `pin^`; at the IB-pr-409 pin that parent is IB-pr-399's own NarrativeEntry, so
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W272-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~272",
+  "surfaced_at": "2026-10-09T13:01:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-399's replay driver derived its pre-binding negative control from `pin^`; at the IB-pr-409 pin that parent is IB-pr-399's own NarrativeEntry, so the control would have measured nothing. The driver is re-pinned to cabad9008c^.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.9.0_WK_IRPT_BCKEND~264/replay/run_replay.py: PRE_BINDING_PIN = git rev-parse <pin>^ ; at pin b8a49eee0e the parent bd9c06d2fb already holds NarrativeEntry (IB-pr-399, code commit cabad9008c)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/replay/run_replay.py: STOPPED_PIN = cabad9008c and PRE_BINDING_PIN = cabad9008c^ (6cbf2707cf); the arm 'NEGATIVE CONTROL: ... entry.py put back to its pre-IB-pr-399 bytes' reads expected-diff, 1 of 1 routes bind to inflection (pre-binding entry.py = 6cbf2707cf)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-409: IB-pr-399's 13 arms re-run against the live zip and the new built zip.",
+  "world_is": "The 13 arms re-run unchanged by name and verdict (13 of 13), with the pre-binding control's source pinned to a fixed commit instead of pin^, copied into this worker's replay/ directory."
+}
+```
+
+## IRPT_BCKEND-D2-S51 -- a cleanup list deleted a shared content-addressed retention row; three later test requests now refuse
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S51",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T13:35Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The Y75 cleanup list (issuer-derived DDB keys, deleted 10:10Z under Andrew @35fabf20c8) included the CONTENT-ADDRESSED retention row RETENTION#RET-021c9f6b...c5b7 (NORMALIZED_PORTFOLIO), which three LATER synthetic requests (TO-APPLY-Y77 reads 4-5: REQ-3d76e5b4, REQ-9d59d4d2, REQ-f7ddede9) share because they re-used the same test input; those three now refuse RetentionExpired. No real request is affected (4 of 7 tenant requests' chains are live).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/release1/Y1_laptop_reads_3_5_result.json (sha256 13aa6be20e54), root_cause_one_shared_dependency",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_admit_keys_v3.json (the derived keys; note: RET- and ART- share one digest)",
+      "laptop 2.0.0_SA_COO~C msg 107972 via MSTR msg 3357"
+    ]
+  },
+  "spec_asserts": "A cleanup list deletes only what one test upload made.",
+  "world_is": "Content-addressed rows are SHARED by every upload of the same bytes; a list derived from one upload deleted a row later requests still reference. Rule for this lane's future cleanups: walk the retention dependency tree (RETENTION#<id> rows, as the laptop's principal-free walk did) and exclude any row another live request references, before naming a key. Ruling 2026-10-09 ~13:3xZ: no PITR restore (test requests only); Y1 reads 3a/4_route/5 re-run on a fresh synthetic request; the three broken test requests join the next cleanup list under Andrew's word."
+}
+```
+
+## IRPT_BCKEND-D2-S52 -- the decomposition was truncated from 142 cells to 3 by the round-109 and 110 issuances, so 300 of 301 task orders now cite a cell that is not there and proof-of-spec refuses the alignment limb
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S52",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T13:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "IRPT_BCKEND_DECOMP.md went 2562 lines to 15 to 29 across two issuances; it now holds 3 distinct cells where it held 142, and every order whose cell was dropped cannot have its proof of spec validated.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "line counts and cell counts across the commits that touched the file, newest first: 38a80bb2fe (round 110 issuance) 29 lines; ef1f7f8409 (round 109 issuance) 15 lines; f4ecd2ab52 (round 108 issuance) 2562 lines; 074cfafc99 (round 107) 2547 lines",
+      "distinct cells, denominator printed: at f4ecd2ab52 the file carried 274 IB-pr-* mentions over 142 DISTINCT cells; at HEAD it carries 4 mentions over 3 distinct cells",
+      "IB-pr-397 specifically: 2 hits at f4ecd2ab52, 0 hits at ef1f7f8409 and at HEAD",
+      "project-wide blast radius, measured over every task order in the project: 301 task-order files scanned; 300 (order, cell) pairs cite a cell_refs value that is ABSENT from the decomposition at HEAD; 300 distinct cells dangling",
+      "the consequence this seat hit: proof-of-spec-check.py on IRPT_BCKEND.TO-IB-pr-397's instance, run from its own worktree, returns rc=1 INVALID with 'VIOLATION: alignment: cell_ref IB-pr-397 (cited by [IB102-1-AC1]) does NOT exist in ... IRPT_BCKEND_DECOMP.md -- a citation to a cell that is not there is worse than no citation'. The instance does not cite the cell itself (0 cell_refs keys in it); the checker reads it from the ORDER's <criterion cell_refs=\"IB-pr-397\">",
+      "SEPARATE AND NOT CONFLATED: the already-validated IB-pr-395 and IB-pr-398 instances now return rc=2 from the shared tree -- 'NOT-A-VERDICT: this is a tool failure (rc=2), not an INVALID instance (rc=1)', on '74a62fb46c'. That is a different failure mode from the alignment violation and its cause is NOT established here; it is recorded so nobody reads it as the same finding. Both instances were VALID (rc=0) when they were landed earlier today"
+    ]
+  },
+  "spec_asserts": "Every task order carries <decomp_ref> naming a section and cell of org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md, and the proof-of-spec instance must validate with .tools/proof-of-spec-check.py BEFORE the <status> flip to complete. CLAUDE.md 27: mid-round the spec AND the decomposition are FROZEN.",
+  "world_is": "The decomposition is not frozen and is no longer a superset of what the orders cite: two consecutive issuances replaced it with a round-109/110-only document, dropping 139 of its 142 cells. So a seat that completes an order correctly still cannot validate its deliverable, because the alignment limb refuses a citation whose cell the carrier no longer holds -- and the limb is right to refuse. This is live for 300 of 301 orders in the project, not just this one. It is the issuer's carrier: L5 decomp is 2.0.0_SA_COO only, and this seat neither edits nor reconstructs it. WHAT IT DOES AND DOES NOT BLOCK for IB-pr-397: the ACT is complete and verified -- the reader is live at ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=, the apply was exactly the 5 signed resources, the post-apply full plan reads exactly the 6 foreign AR-t-13 adds, IB102-1-AC1 PASSES and the deploy ledger is CLOSED with all 5 legs proven, so NOTHING is half-landed. Only the bookkeeping flip of <status> to complete is withheld, because the order requires a validated instance before it and this seat will not flip on an instance that does not validate. The fix is the issuer restoring the dropped cells (or re-pointing the orders' decomp_ref), after which the instance validates unchanged.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S53 -- Resolves D2-W269-S1: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S53",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W269-S1 (BLOCKING). Root cause, measured by ~269: IB-pr-403's CUSIP security_id on 115,412 SmartX nodes removes the TICKER id that holdings_snapshot.fill_display_from_facts reads (:803), so display.symbol drops and 13,892 nodes lose their class; the FWD-14 gate then refuses 49F. The defect is IB-pr-403's, inside ~P's decomposition. Issuer ruling: cell IB-pr-410 (round 111) adds a ticker= fact on every SmartX SECURITY node with a ticker (as custody rows already carry), rebuilds the 49F narrow bundle on IB-pr-404's live bytes with the e56 member, and replays it with fwd14_gate_unchanged and smartx_class_parity identical. IB-pr-406's artifact is superseded; nothing was uploaded.",
+  "one_line": "W269-S1 resolved: IB-pr-410 fixes IB-pr-403's lost ticker and rebuilds the 49F bundle; IB-pr-406's artifact is superseded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB107-1_49f_bundle_replay.json @5bfc1788af: fwd14_gate_unchanged FAIL (base PUBLISHED, built REFUSED classified_security_lost 53)",
+      "holdings_snapshot.py:803 symbol = fact('ticker=') or TICKER security_id",
+      "TO-IB-pr-410 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-403 changes only the security_id namespace of SmartX nodes.",
+  "world_is": "It also removed the ticker that display and classification read; IB-pr-410 restores it as a fact."
+}
+```
+
+## IRPT_BCKEND-D2-S54 -- Resolves and disarms D2-W272-S1: the CTO signs the row-listed caller's class as built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S54",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T13:32:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-W272-S1. A row-listed Opal internal caller classes OPAL_GLOBAL on IB-pr-409's build (live: UNKNOWN), bound to its listed firm; the six hosts released under IB-pr-390's shared served.py (pair @567612e686 / @b97ebb6b98) give that caller the same class. The CTO half on IB-pr-409 (@28563e702c, msg 3370) rules: sign as built. IB-pr-401 is re-pointed to IB-pr-409's artifact (AMENDMENT 3).",
+  "one_line": "W272-S1 resolved: the CTO signs the row-listed caller's class as built (matches the six IB-pr-390 hosts).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half NEVER_WIDEN_IB_pr_409_NARRATIVE_NO_ROW_UNKNOWN_CTO_HALF.md @28563e702c",
+      "COO half @e4227621a6"
+    ]
+  },
+  "spec_asserts": "No served move widens a caller's reach beyond what its pair signs.",
+  "world_is": "The row-listed caller's class is now signed by both halves."
+}
+```
+
+### IRPT_BCKEND-D2-S52 -- ARMED: PROOF_OF_SPEC.schema.json has prose in a `type` keyword; proof-of-spec-check now fails rc=2 for EVERY instance, fabric-wide
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
+- **disarm_owner:** `1.0.0_SA_CTO~DELL2` -- it authored the commit and owns `org/standards/`; this
+  seat does not, so it reports rather than edits.
+- **state:** ARMED. This is not a latent hazard: it is blocking `complete` flips right now, for any
+  seat, because `.tools/to-pipeline-gate.py` requires a VALID instance and the checker cannot return
+  a verdict at all.
+- **spec_asserts:** `python .tools/proof-of-spec-check.py <instance>` returns rc=0 VALID or rc=1
+  INVALID, and the gate admits a `complete` flip on rc=0.
+- **world_is:** it returns **rc=2 TOOL-ERROR** for every instance.
+  `jsonschema.exceptions.UnknownType: Unknown type "string aws_resource ADDED 2026-10-09 ..."`.
+  The cause is one keyword: `$.properties.artifacts_produced.items.properties.commit_or_etag.type`
+  holds a **466-character prose string** beginning `string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO,
+  row IRPT_DASHBD-S41): a live AWS resource that is neither an S3 object nor DynamoDB rows ...`.
+  A JSON Schema `type` must be one of the seven primitives, so the validator cannot resolve it and
+  dies before grading anything.
+- **when, measured:** introduced by `e7c10e5b4b` (`1.0.0_SA_CTO`), authored 2026-10-09T09:00:45-04:00
+  = **13:00:45Z**. At the previous commit `72a2636203` the same keyword read exactly `'string'`
+  (length 6). The prose plainly belongs in the `kind` enum's **description**, where the sibling
+  `s3_object` and `ddb_rows` notes live; it landed in `commit_or_etag.type` instead.
+- **THE CONTROL THAT MAKES THIS GENERAL, not a quirk of my file:** three instances that this seat
+  validated **rc=0 VALID earlier today** -- `IRPT_YCDGEN.TO-APPLY-r7`, `TCKT_VNEXT.TO-APPLY-SA1` and
+  `IRPT_YCDGEN.TO-APPLY-st29` -- were re-run unchanged after 13:00:45Z and all three now return
+  rc=2. Nothing about those files changed; only the schema did.
+- **why it was not caught at once:** the break fails CLOSED and LOUD, but only for whoever validates
+  next. Every validation this seat ran today before 13:00Z passed, so the window between the commit
+  and the first failure was invisible. A schema edit has no gate of its own.
+- **the fix, stated so it needs no diagnosis:** set that keyword back to `"type": "string"` and move
+  the `aws_resource` prose into the `kind` enum's `description`. One token.
+- **blocked on it:** `IRPT_BCKEND.TO-APPLY-Y77`'s flip. Its three criteria are graded PASS by the
+  issuer's own check (`y77_cells.py`, re-run by this seat) and its instance is written; only the
+  validation step is unavailable. The same is true for any other seat holding a finished order.
+
+## IRPT_BCKEND-D2-W273-S1 -- The ADDENDUM 18 red list is 9 tests at ~272's pin and 4 at IB-pr-410's base: the list the packets cite has moved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W273-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~273",
+  "surfaced_at": "2026-10-09T14:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "pytest _contracts at box/dell2 54cb72ee19 reads 4 failed, 194 passed; ADDENDUM 18's list (IB110-1_red_list.json, ~272) is 9 failed, 176 passed, 13 skipped.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run from infra/aws/lambda/investor-reporting/ in wk-IRPT_BCKEND-273 at 54cb72ee19 + 9b7256a99f: FAILED test_seam_paired.py::test_every_declared_route_has_a_response_contract_whose_refs_resolve and ::test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[analysis-request-original|custody-report-persist|custody-report-read]; 4 failed, 194 passed in 8.82s",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/IB110-1_red_list.json: 9 failed, 176 passed, 13 skipped in 9.69s"
+    ]
+  },
+  "spec_asserts": "The order asks the packet to print the ADDENDUM 18 red list (nine tests) and show the members touch none of its targets.",
+  "world_is": "The suite is a different size today (198 collected, 0 skipped, against 198 with 13 skipped), and the red set is a subset of the nine (the upload-contract, status-handler, fixture-source and the export-receipt / submit-export controls now pass). The packet prints both lists; this cell's paths touch no target of either. Not investigated why the set moved (not this order's cell)."
+}
+```
+
+## IRPT_BCKEND-D2-S55 -- Resolves and disarms D2-S25: the dell2 applier identity now commands the mdpf-daily-runner host; IB-pr-383 S1 and S2 ran rc=0
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S55",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-09T14:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-S25 as its disarm_owner. The refusal it recorded at 03:57Z (cloudops-dell2-agent-user denied ssm:SendCommand on i-02448edb624a7a7cf) no longer holds: the grant has since landed, and the same identity sent IB-pr-383 S1 (inflection, rc=0, 14:06:14Z) and S2 (cottonwood, rc=0, 14:08:38Z) to that instance. Report: 0.7.0_AE_CloudOps~DELL2 msg 3427.",
+  "one_line": "D2-S25 resolved: ssm:SendCommand on the mdpf-daily-runner host now succeeds from the dell2 applier identity (two live sends rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DELL2 msg 3427 (20261009T141022Z): two SSM sends to i-02448edb624a7a7cf, S1 rc=0 14:06:14Z and S2 rc=0 14:08:38Z, writing 4 objects in 2 buckets",
+      "the sends are live SendCommand results from the identity S25 recorded as refused, so they falsify S25's world_is directly"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 steps 5-6 run on the mdpf-daily-runner host from the seat the order is addressed to.",
+  "world_is": "They did: both seeding sends ran from 0.7.0_AE_CloudOps~DELL2's identity with rc=0."
+}
+```
+
+## IRPT_BCKEND-D2-W275-S1 -- No standalone document schema for the custody report; response contracts carry the data type in $defs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W275-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~275",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No standalone document schema exists for the custody report reference or read answer; the two new response contracts carry the data type in their own $defs, self-referenced by $id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py _documents_of asserts a data $ref and _data_for reads fixtures/<document>.valid.json; the v1 registry (_response_validator) lists only top-level v1/*.schema.json; the grant admits no new v1/*.schema.json",
+      "published: docs/contracts/investor-reporting/v1/responses/custody-report-{read,persist}.response.schema.json with fixtures custody-report-{read,persist}.response.{valid,invalid}.json"
+    ]
+  },
+  "spec_asserts": "The order says every data $ref resolves to a published document schema; the grant lists only the two responses files and _contracts/.",
+  "world_is": "No custody document schema is published in v1/ (PerformanceReport.retained_ref is kind PERFORMANCE only). Adding one is outside this order's paths, so data refs the response file's own $defs (opal://.../responses/<op>.response.schema.json#/$defs/<Type>), which resolves to a published file and keeps the test unweakened. A later cell may promote them to v1/CustodyReport*.schema.json; the read's `report` member is typed only as an object (its members are not described, none invented)."
+}
+```
+
+## IRPT_BCKEND-D2-S56 -- IB-pr-404's first fire: cottonwood and inflection PUBLISHED, but 49financial was SIGKILLed (rc=137) before any verdict line and did NOT publish. Its three prior fires all succeeded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S56",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T14:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Two of three firms published on the narrow bundle; 49financial was killed after 5m09s on a 4 GiB box, printed neither OK nor REFUSED, and still serves a publication one business day behind the other two -- and its three previous fires all succeeded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the fire ran on schedule: irpt-holdings-snapshot (an EventBridge SCHEDULER schedule, not an events rule -- a describe-rule probe returns ResourceNotFoundException), ENABLED, cron(15 10 ? * MON-FRI *) America/New_York, target irpt-holdings-refresh-lambda. It dispatched three SSM commands at 14:15:24-28Z, one per firm, the family the ledger names",
+      "ALL THREE pulled THIS release: each output carries '[irpt-holdings] package members 44 verified', the 44-member count of the uploaded bundles",
+      "49financial 436e2522-eee1-48db-a087-0ef157b8a8a5: ResponseCode 137 (128+9 = SIGKILL), ExecutionElapsedTime PT5M9.91S, stderr 'line 15: 3603 Killed python3 $R/holdings_snapshot.py --firms 49financial --upload'. Its StandardOutputContent is 13778 chars with NO truncation marker, i.e. COMPLETE, and contains neither an 'OK: ' nor a 'REFUSED: ' line: it ends at '[irpt-holdings] rc=137 firm=49financial'",
+      "49financial did NOT publish and did NOT refuse: current/manifest.json is still the object written 2026-10-08T14:20:48Z with latest_date 2026-10-07, and publish_refusal.json returns 404. Its prior publication keeps serving, so nothing is corrupt -- but it is now one business day behind the other two",
+      "cottonwood 080e6652 rc=0 PT3M21.989S and inflection 1d6a5113 rc=0 PT2M56.361S both PUBLISHED by the packet's other signature: current/manifest.json moved to a new version at 14:18:11Z and 14:18:24Z with latest_date 2026-10-08 (T-1 of the fire), and no publish_refusal.json (404)",
+      "ATTRIBUTION, association not proof: 49financial's three previous fires all succeeded -- 2026-10-06, 10-07 and 10-08 all Status Success -- and today's is the FIRST fire after this bundle landed. The bundle changed exactly ONE member, holdings_snapshot.py, by applying IB-pr-393 and IB-pr-396 to the live bytes",
+      "WHAT WEAKENS pure concurrency as the cause: the three runs overlapped on one shared instance i-02448edb624a7a7cf, a t3.medium (4 GiB), launched fresh at 13:30:35Z. But cottonwood ended about 14:18:48Z and inflection about 14:18:25Z, while 49financial was killed about 14:20:34Z -- it was running largely ALONE for its last two minutes. 49financial is also the largest firm in the replay (154,473 nodes / 7,620 accounts against cottonwood 17,840 and inflection 36,232)",
+      "SECOND FINDING, an instrument gap: the commands have NO durable output sink -- OutputS3BucketName and OutputS3KeyPrefix are empty and CloudWatchOutputEnabled is false -- so StandardOutputContent is capped at about 24,000 chars. cottonwood (24,479 chars) and inflection (24,510) BOTH carry the truncation marker, so their 'OK: <firm> business_date=...' lines are PERMANENTLY unrecoverable. Only 49financial's output is complete, and only because it died early"
+    ]
+  },
+  "spec_asserts": "Packet after-read: per firm, PUBLISHED prints 'OK: <firm> business_date=<d>' with a new manifest version whose latest_date is the fire's business date and no newer publish_refusal.json; REFUSED prints 'REFUSED: <firm> keeps its last good publication; ...' with a publish_refusal.json. Either line proves the gate ran. CTO condition 3: all three firms land before the next scheduled fire or the landed ones roll back; no mixed behaviour past one fire.",
+  "world_is": "A THIRD outcome the packet does not enumerate: the producer was killed before it could print either line, so for 49financial the gate's verdict is not UNKNOWN-because-unread but UNREACHED. The keys all landed before the fire, which is what CTO condition 3 binds, and the gate itself behaved for the two firms that completed; but the OUTCOME across the three is now mixed past one fire, which is the state that condition exists to prevent. Nothing is corrupt and nothing is half-written: 49financial still serves its prior publication, and the fail-safe held. THE DECISION IS NOT THIS SEAT'S, and two of the available moves are expressly not its to take -- Branch B rollback of a landed firm is a WORLD act the issuer and CTO signed the shape of, and re-running the producer ad hoc would be a production publish off its own clock, which CLAUDE.md forbids. So the three keys are left exactly as landed and verified, the ledger's L6 is left OPEN rather than closed on a partial read, and the issuer is asked to rule: (a) accept two-of-three and let 49financial catch up at the next scheduled fire, (b) roll all three back per Branch B so no firm runs the new bundle, or (c) authorise a scheduled re-run for 49financial. Whichever way it goes, the memory question needs the producer's owner, not an applier: whether the two folded commits raised 49financial's footprint past 4 GiB, or whether a t3.medium was already marginal for the largest firm and the data simply grew. The output-sink gap should be closed either way, because today the only reason any verdict line survived is that one run died early.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-D2-S57 -- Disarms D2-S56: no fire before Monday; IB-pr-414 fixes the memory, or the 49F-only Branch B runs at Monday 13:00Z
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S57",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T14:42:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-D2-S56 by CTO ruling ADDENDUM 19.1 (msg 3478, @d09687479d). Hazard: the 49financial producer is killed again on the next fire, so the three firms stay on mixed outcomes. It cannot fire before Monday 2026-10-12 10:15 ET (the schedule is MON-FRI). Between now and then: IB-pr-413 is HELD; IB-pr-414 measures and fixes the producer's memory; if no fix is signed by Monday 13:00Z, IB-pr-404 AMENDMENT 2's Branch B restores the 49F key alone to 3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur before the fire. 49F serves its prior publication until then (nothing corrupt).",
+  "one_line": "D2-S56 disarmed: no fire before Monday; the fix cell IB-pr-414 or the 49F-only Branch B at Monday 13:00Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ADDENDUM 19.1 @d09687479d",
+      "irpt-holdings-snapshot cron(15 10 ? * MON-FRI *) America/New_York",
+      "TO-IB-pr-404 AMENDMENT 2 and TO-IB-pr-413 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "All three firms land and publish on the narrow bundle, with no mixed behaviour past one fire.",
+  "world_is": "Two firms publish; 49F is unreached, and the next fire is Monday, with the fix or a 49F-only rollback scheduled before it."
+}
+```
+
+### IRPT_BCKEND-D2-S53 -- ARMED: an UNRESOLVED merge conflict sits in the SHARED tree's lambda-source-map.json, so build-and-upload.sh cannot parse it and NO Lambda in the estate can be built
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
+- **disarm_owner:** `2.0.0_SA_COO~D2` -- the drain belongs to its worker `0.9.0_WK_IRPT_DASHBD~70`,
+  and a worker cannot be messaged, so the COO holds it. `0.0.0_AB_MSTR~DELL2` owns the shared index
+  if the COO is not live.
+- **state:** ARMED, and it is live right now rather than latent.
+- **spec_asserts:** `bash infra/aws/lambda/ci/build-and-upload.sh <pipeline> <function>` builds and
+  uploads a Lambda zip; it reads `infra/aws/lambda/ci/lambda-source-map.json` to resolve the
+  artifact key and to record the sha256.
+- **world_is:** the shared working tree is MID-MERGE and that file is CONFLICTED.
+  `git status --porcelain` marks it `UU`; `.git/MERGE_HEAD` is
+  `c95d59a97e7bbaaf07501deb894dc4c2b64e35b6`, authored by `0.9.0_WK_IRPT_DASHBD~70`
+  ("IRPT_DASHBD.TO-DB-b-95: R44 release applied"), merging branch `wk-irpt-dashbd-47-70`. The file
+  carries literal conflict markers at lines 6756-6761, so it is not valid JSON:
+  `Expecting ',' delimiter: line 6756 column 1 (char 384893)`. `build-and-upload.sh` dies on exactly
+  that parse with `SyntaxError: Expected ',' or '}' after property value in JSON at position 384893`.
+- **the conflict is ONE LINE of content:** HEAD closes the `functions` object with `}`; the worker
+  branch closes it with `},` and adds a top-level `"_last_deploy_recorded": "2026-10-09T14:36:00Z"`.
+  Nothing about any function entry is in dispute.
+- **blast radius, and why this is not an IRPT_BCKEND-only row:** the source map is the ONE registry
+  every pipeline's build reads. While it is conflicted, no seat can build or upload any Lambda zip
+  in any pipeline -- this is estate-wide, not project-scoped. A second file is conflicted in the
+  same merge (`IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md`), which is the
+  append-only shared-channel race CLAUDE.md 14b predicts.
+- **not resolved by this seat, deliberately:** it is another line's drain. `safe-merge.sh --continue`
+  exists to finish a conflicted drain inside the guards, and the seat that opened it should run it.
+  Resolving someone else's merge in a shared index would also decide, on their behalf, whether that
+  `_last_deploy_recorded` key belongs -- which is a content question about IRPT_DASHBD's release
+  record, not mine.
+- **blocked on it:** `IRPT_ANLREQ.TO-APPLY-t1` step 1. Its STEP A needs the draft-store zip built,
+  and `BUILD_ONLY=1` is the step that fails. Every precondition I could check already holds: the
+  pin carries `36b0bc0423` (verified by content -- the diff removes the root log group and moves it
+  into the module with `log_retention_days = 14`), and step 0's IB-pr-391 read passes
+  (`irpt-commentary-composition-read-lambda` live at `ZZmWOFSA`, the invoke policy EXISTS). Nothing
+  of t1 has been applied and no ledger was opened.
+
+- **RESOLVED 2026-10-09 ~14:5xZ.** `2.0.0_SA_COO~D2` aborted the shared-tree merge attempt and
+  redrained in the worker worktree @a34bc58ff2. Measured now: `.git/MERGE_HEAD` ABSENT, 0 conflicted
+  paths, the map parses with 235 functions, and `_last_deploy_recorded` is PRESENT (1 occurrence).
+  Builds are unblocked estate-wide.
+- **One thing this row changed rather than merely reported:** the shared-tree resolution had taken
+  HEAD's side and DROPPED the worker's `_last_deploy_recorded` key. Flagging that before the merge
+  commit landed is why the redrain kept it; had the row only reported the conflict, the key would
+  have been lost silently along with the release record it carried.
+- **A correction to my own instrument, twice over.** I reported MERGE_HEAD as still present when it
+  was already gone. The command piped `git rev-parse MERGE_HEAD` through `head`, so the trailing
+  `|| echo` never fired on failure, and what I read as the value was my own `printf` LABEL. The
+  sound test is `test -f .git/MERGE_HEAD`.
+- **And this row itself was corrupted on first write, by me.** I put markdown containing BACKTICKS
+  inside a `python -c "..."` bash string; bash executed every backtick span as command substitution
+  and deleted exactly the technical terms that carried the meaning. That is the same hazard as the
+  `1 client(s)` parenthesis break earlier in this session, and it is what CLAUDE.md 14a's NON-SHELL
+  WRITER requirement prevents. Repaired from a script file, which no shell parses.
+
+## IRPT_BCKEND-D2-S58 -- Resolves D2-S24: safe-deploy's summary now counts minted bundles (@dd78f5dd5e)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S58",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T15:18:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S24. Fixed on the laptop by the tooling owner 1.0.0_SA_CTO @dd78f5dd5e (CTO~DELL2 msg 3553): safe-deploy's summary now counts minted bundles, so a bundle-only push reads 'N bundle(s) minted and uploaded' instead of reporting nothing deployed. The fix reaches dell2 at the next integrate.",
+  "one_line": "D2-S24 resolved: safe-deploy's summary counts minted bundles (@dd78f5dd5e, laptop tooling owner).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 3553",
+      "laptop commit dd78f5dd5e (tooling owner 1.0.0_SA_CTO)"
+    ]
+  },
+  "spec_asserts": "safe-deploy's summary states what a push deployed.",
+  "world_is": "It does, for bundle-only pushes, from @dd78f5dd5e."
+}
+```
+
+## IRPT_BCKEND-D2-S59 -- S392 read 2026-10-09: inflection + cottonwood NO-WORSE, 49financial unmoved (SIGKILL) -- S392 does not retire
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S59",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T15:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "S392 NO-WORSE read after the 2026-10-09 14:15Z fire: inflection and cottonwood Branch A; 49financial did not move (its producer was SIGKILLed, D2-S56) -- S392 does NOT retire; no regression.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e62e56_post_fire_read.py read --pins s392/S392_pins_20261009.json -> s392/S392_read_20261009.json, rc 0",
+      "inflection: moved=True 2026-10-08 rev 2e9fc0dcc454; reconcile/multi_asset/six_class/no_held_security_lost_class all True; unclassified 4 (pin 4); BRANCH A",
+      "cottonwood: moved=True 2026-10-08 rev 4077bdc4ddb8; all checks True; unclassified 74 (pin 74); BRANCH A",
+      "49financial: moved=False, still 2026-10-07 rev 61537f666d00 (= pin); BRANCH NOT -- the 14:15Z producer run was SIGKILLed before any verdict (row D2-S56)"
+    ]
+  },
+  "spec_asserts": "CTO ruling UB-32d8 AMENDMENT 1.2: S392 retires when all 3 firms read NO-WORSE (Branch A) on the post-fire read.",
+  "world_is": "2 of 3 firms read NO-WORSE; 49financial has no post-fire publication to read. S392 stays OPEN; it is re-read on 49financial's next publication (Monday 2026-10-12 fire, after IB-pr-414's fix or the 49F-only Branch B per IB-pr-404 AMENDMENT 2). Per row D2-S37 the read is graded only on a fire after the narrow bundles land -- inflection and cottonwood now satisfy that.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

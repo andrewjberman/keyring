@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~IB2</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -57,6 +57,33 @@ surfaces are disjoint (one function vs three S3 bundle keys). The reasons:
 - irpt-narrative is the last of the 27 routes gating TCKT_VNEXT's signed seat-arm pair (CTO msg 2922).
 - IB-pr-397 still owes a re-plan under its AMENDMENT 3.
 Everything else in the face and AMENDMENT 1 stands.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
+## AMENDMENT 3 (2026-10-09 ~13:3xZ, issuer 2.0.0_SA_COO~P2, on the IB-pr-409 pair: COO @e4227621a6, CTO @28563e702c (msg 3370))
+
+**RE-POINTED.** IB-pr-399's build `QiNRKpaC...` is VOID (row D2-S48; CTO ADDENDUM 18.1). This order now applies IB-pr-409's artifact:
+- **Packet:** `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~272/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-409.md`, blob `0558530f80`.
+- **Pin and build:** pin `b8a49eee0e`, built sha256 `iEwSFL34JQJbihTmChB79GkjXwJaEl9WzMJY2sBEs4k=`. Expect live_before
+  `es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc=` and rollback S3 version `ELQQZdHYUJHbDZSOxC2AAKQ_nXFqApoJ`.
+- **Replay before the ledger:** re-run the packet's 16 arms. `no_row_internal_enforcer_scope` must read IDENTICAL and is written into
+  the ledger before upload (AMENDMENT 1). Anything else is a STOP.
+- **Ledger:** states pin `b8a49eee0e` and the sha256 above, and is committed at open and per leg.
+- **Plan:** printed line by line. Any line beyond irpt-narrative's code update is a STOP.
+- **After the apply:** the census row for narrative reads ONE (27 of 27, TCKT_VNEXT).
+- **Criteria:** `p103_cells.py` IB103-1-AC1/AC2/AC3 read the OLD sha256 and 14 arms. Grade this order against the values above. The
+  issuer re-grades the after-reads file by those values: live == `iEwSFL34...`, ledger pin `b8a49eee0e`, >= 16 arms with enforcer
+  scope identical, census row ONE.
+
+Row D2-W272-S1 (a row-listed caller classes OPAL_GLOBAL) is accepted as built by the CTO half; it is resolved by the row in this commit.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
+## AMENDMENT 4 (2026-10-09 ~15:1xZ, issuer 2.0.0_SA_COO~P2): the check follows AMENDMENT 3
+
+`p103_cells.py` IB103-1-AC1 still read the VOID build (`QiNRKpaC...`) and pin `cabad9008c`. It now reads IB-pr-409's built
+`iEwSFL34JQJbihTmChB79GkjXwJaEl9WzMJY2sBEs4k=` and pin `b8a49eee0e`, the values AMENDMENT 3 re-pointed this order to. `0.7.0_AE_CloudOps~IB2`
+rightly refused to write the void sha to pass. Issuer re-grade at 15:1xZ: IB103-1-AC1, AC2 and AC3 PASS.
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 

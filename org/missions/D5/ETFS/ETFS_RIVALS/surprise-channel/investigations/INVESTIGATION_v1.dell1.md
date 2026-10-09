@@ -379,6 +379,161 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "spec_asserts": "A figure in an AI account is the fact's display form and reads as the trade it names.",
       "world_is": "A sub-$50,000 notional displays as $0.0 million, which reads as no trade.",
       "notes": "Remedy candidates: _mn falls back to thousands ($42 thousand) under $0.05 million, or such trades are left out of the facts. A round-29 enrichment item; owner 2.0.0_SA_COO~V1."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S10",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T13:50Z",
+      "one_line": "RIV-wb-1's dramatic-move lookup has NO production caller: no Lambda runs dramatic_move, no Lambda carries BRIGHT_DATA_API_KEY, and serp.py is not a staged package path -- so a deploy of HEAD serves wa-1's split adjustment only where a corporate-action row already exists, and none is written in production (Tokio Marine's 15-for-1 stays unadjusted)",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "Grep 'dramatic_move' under data/etfs/scripts/rivalfunds (non-test) and infra/aws: only the module itself; the two other importers are issuer scripts (ws2/real_run_local.py, ws2/checks/ws2-b.AC1.py)",
+              "boto3 get_function_configuration, 2026-10-09 ~13:4xZ: env names -- daily: RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET; the other four: none. No BRIGHT_DATA_API_KEY or BD_SERP_ZONE on any of 5",
+              "infra/aws/lambda/etfs-pipeline/rivalfunds_package.py STAGED (7 paths) does not include data/find/dualbiz/scripts/serp.py, which dramatic_move.serp_search imports",
+              "price_series._actions only READS gold corporate_actions; dramatic_move.write_rows is its only writer"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Andrew-direct comment 1 (@9d08dd64d4): a dramatic move triggers a web search for a corporate action and an automatic refactoring of historical prices by the split multiple.",
+      "world_is": "The lookup and the adjustment exist in code and were exercised only by the issuer's local real run; production has no caller, no key and no staged search client.",
+      "notes": "Placement asked of 1.0.0_SA_CTO~DELL1: which Lambda runs the lookup (the sweep after canonical, or publish-page before price_series), the key as a Secrets Manager read (IAM limb) and serp.py staged. Owner: 2.0.0_SA_COO~V1."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W32-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~32",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "The daily Lambda walks run_dag, not run_sweep: RIV-wi-1 item 2 names only run_sweep, and a call there alone would never run in production",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep run_sweep|run_dag under data/etfs/scripts: run_dag at sweep.py handler_entry; run_sweep only in tests/test_d1_sweep.py",
+        "wi1_wiring_check.py reads run_sweep only (AC2 PASS), so it cannot see the run_dag wiring; tests/test_riv_wi1_sweep_lookup.py::test_run_dag_runs_the_lookup_once_before_the_first_publish does"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 2: sweep.run_sweep calls dramatic_move.run_for_day after the canonical / trade-schedule stages and before the day's publish.",
+    "world_is": "sweep.handler_entry calls run_dag (data/etfs/scripts/rivalfunds/sweep.py handler_entry); run_sweep has callers only in tests. The lookup was wired into BOTH: run_sweep before its publish-page stage (AC2's literal read), and run_dag inside run_one(\"publish-page\"), once per walk, recorded in the outcome and in handler_entry detail.dramatic_move.",
+    "notes": "Issuer: confirm the J1 read is on a run that goes through handler_entry/run_dag."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W32-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~32",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "serp.py cannot be staged alone: it imports _util.py and harvest.py from its own directory at module load, so STAGED stages the directory data/find/dualbiz/scripts",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py:30-32",
+        "tests/test_riv_wi1_sweep_lookup.py::test_a_staged_lambda_tree_finds_and_imports_the_search_client copies STAGED into a temp tree and imports serp from _serp_dir() in a subprocess: PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 4: STAGED stages data/find/dualbiz/scripts/serp.py.",
+    "world_is": "data/find/dualbiz/scripts/serp.py lines 30-32 insert its own directory in sys.path then `from _util import fetch` and `from harvest import ...` (both stdlib-only files in that directory). A lone serp.py in a Lambda tree raises ImportError. rivalfunds_package.STAGED now carries the directory (13 files, 156K, stdlib-only) to the same relative path; wi1_wiring_check (b) accepts the file or its directory.",
+    "notes": "The package zip grows by the directory's 156K (tests excluded by _IGNORE only for a directory named tests; test_registry.py rides along)."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-W32-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~32",
+    "surfaced_at": "2026-10-09T14:20Z",
+    "one_line": "serp.py reads the SERP ZONE from a second Secrets Manager secret unless BD_SERP_ZONE is set, so the deploy pair needs that variable (or a second ARN) as well as RIVALFUNDS_SERP_SECRET",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/find/dualbiz/scripts/serp.py:213-242 and 413-414",
+        "data/etfs/scripts/rivalfunds/dramatic_move.py serp_search"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 3: the key comes from BRIGHT_DATA_API_KEY or the secret named by RIVALFUNDS_SERP_SECRET (one GetSecretValue).",
+    "world_is": "serp._bd_serp_zone() (serp.py:230-242) calls GetSecretValue on find-dualbiz/bright-data/serp when neither the cache nor BD_SERP_ZONE is set; dramatic_move.serp_search passes BD_SERP_ZONE through when present. Without it the Lambda role needs a read on that second secret too, else every search raises and counts as failed (no crash, no write).",
+    "notes": "Applier contract: set RIVALFUNDS_SERP_SECRET (name or ARN of the key secret; raw string or JSON with api_key / bright_data_api_key / BRIGHT_DATA_API_KEY), grant the one-ARN secretsmanager:GetSecretValue, and set BD_SERP_ZONE (serp.py's own default zone is serp_opal) on the Lambda that runs the sweep (the daily one). Not set by this cell (out of bounds)."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S11",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T14:35Z",
+      "one_line": "FOR FIND_INSURE's OWNER: the Bright Data key secret find-insure/bright-data/api-key (ARN suffix -7ojPkd) gains a SECOND consumer -- the etfs-rivalfunds daily Lambda (RIV-wi-1, its own deploy pair) reads it by exact ARN; a rotation or delete of that secret must reach ETFS_RIVALS",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "CTO ruling ADDENDUM 7 @aa290d707e (msg 2555): option (a), GetSecretValue on exactly the -7ojPkd ARN, no copy; 'File a row in this project's channel telling FIND_INSURE's owner it now has a second consumer, so a rotation reaches both'",
+              "find-dualbiz/bright-data/serp names api_key_secret = find-insure/bright-data/api-key (read 14:2xZ, key names only); data/find/dualbiz/scripts/serp.py _BD_API_KEY_SECRET defaults to the same secret",
+              "Grant lands with RIV-wj-1 (gen_policies.py) under the RIV-wi-1 deploy pair; until that apply, the rivalfunds daily Lambda holds no grant on it"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A secret's owner knows every consumer before a rotation.",
+      "world_is": "find-insure/bright-data/api-key will have a consumer outside FIND_INSURE (and already serves find-dualbiz's serp.py by default).",
+      "notes": "Owner to inform: FIND_INSURE's COO/CTO. Consumer of record: ETFS_RIVALS, 2.0.0_SA_COO~V1; env RIVALFUNDS_SERP_SECRET on etfs-rivalfunds-daily-lambda; policy statement GetSerpSecret in infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json."
+  }
+,
+  {
+      "id": "ETFS_RIVALS-D1-S12",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "0.7.0_AE_CloudOps~RV1",
+      "surfaced_at": "2026-10-09T14:42Z",
+      "one_line": "COO condition 5's snapshot asks for 20 trading days of holdings_coverage; the world holds 19 -- date=2026-10-09 does not exist, so CTO condition 8's per-key read has one key with no pre-image and no rollback bytes",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "coverage_snapshot.py take C:/tmp/rv-ws23-covsnap 2026-10-09 20, run 14:40Z: 'SNAPSHOT: 19 of 20 keys saved', '2026-10-09: ABSENT'",
+              "WS23_COVERAGE_SNAPSHOT_MANIFEST.json: 20 entries, 19 saved, 1 absent, absent day ['2026-10-09'] (sha256 6bbc0347ecc7abfe1fc9cf2b3a6dfe1173c858fdf6a2f94237150f6d69c1b3eb)",
+              "the 2026-10-08 key reads {'gap': 11, 'new': 2}, so the two most recent partitions are the thin ones",
+              "coverage_snapshot.py docstring: 'A missing key is recorded as absent', and compare prints 'was absent, now PRESENT' without counting it as a stop line"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "COO half condition 5: 'the applier copies every rivalfunds/etfs/gold/holdings_coverage/date=<D>/holdings_coverage.parquet for the 20 trading days ending 2026-10-09'. CTO half condition 8: 'each of the 20 snapshot keys is printed as unchanged or changed'.",
+      "world_is": "19 of the 20 keys exist. date=2026-10-09 is absent at 14:40Z, after today's 13:00Z sweep. For that one key the condition 8 read cannot be unchanged-or-changed, and the condition 5 rollback has no bytes to restore: if the 2026-10-10 run creates it, the rollback for that key is 'delete or leave', never 'restore'. The other 19 keys carry full pre-images (bytes + sha256 + status counts), so the in-place writer's rollback is intact everywhere it has a prior state.",
+      "notes": "Not a blocker and the apply proceeded: the snapshot instrument records absence by design, 2026-10-09 is inside the last-10-trading-day window G2 is allowed to write, and a first-ever write of an absent key is not a widening of served state. For L2 (the issuer's): grade 19 keys unchanged-or-changed, and grade 2026-10-09 separately as created-or-still-absent. Surfaced by the applier, 0.7.0_AE_CloudOps~RV1; disposition is the CVO's/issuer's."
+  }
+,
+  {
+      "id": "ETFS_RIVALS-D1-W34-S1",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_ETFS_RIVALS~34",
+      "surfaced_at": "2026-10-09T14:58Z",
+      "one_line": "rivalfunds suite at the base has 1 failing test, test_r6ap1_ai_stage::test_policy_and_environment_split_and_committed_copy_is_current: it expects ONE secretsmanager action in the daily Lambda's generated policy, RIV-wj-1 (86c14e4b3a) added a second statement (GetSerpSecret)",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "python -m pytest -q rivalfunds/tests from data/etfs/scripts, RIV-wk-1 branch: '1 failed, 999 passed, 6 skipped'; the failure is rivalfunds/tests/test_r6ap1_ai_stage.py:172 'sm[etfs-rivalfunds-daily-lambda] == [secretsmanager:GetSecretValue]' with 'Left contains one more item: secretsmanager:GetSecretValue'",
+              "the test loads infra/aws/terraform/etfs-rivalfunds/gen_policies.py, which this cell neither reads nor edits (RIV-wk-1 touched price_series.py, dramatic_move.py and a new test only); git log of gen_policies.py: 86c14e4b3a RIV-wj-1 adds the GetSerpSecret statement",
+              "not re-run at a clean base: the failure's path does not import either file RIV-wk-1 changed"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "RIV-wk-1 task order section 2: tests in rivalfunds/tests must keep passing.",
+      "world_is": "One test, outside RIV-wk-1's paths, already fails at the base because RIV-wj-1 changed the generated policy without updating its assertion; the suite's final line is therefore 1 failed, 999 passed, 6 skipped with or without RIV-wk-1.",
+      "notes": "Not fixed here: the test file belongs to no path of this order and the assertion change is RIV-wj-1's follow-through (the issuer decides)."
   }
 ]
 ```

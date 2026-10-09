@@ -27,6 +27,19 @@ mid-round. Values E2 does not move: FWD-4.
 
 `fanout: 1 of 1 chains, cap 8, reason: one deploy cell; E2 is conditional and uncut.`
 
+**A1 (2026-10-09 ~14:3xZ) -- a mid-round cell FOLDED BY THE CTO, not an issuer edit.** UB-20261009T140343Z-e9bc, ruling
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_UNBLOCK_COMM_ASSIST_UBE9BC_KMS_DECOUPLE_20261009.md` @cfef5928ad. It adds:
+
+| cell | what | serves | risk | chain, slot |
+|---|---|---|---|---|
+| `CA-d-3` | `chat_assist.tf` reads the transcripts key by `data "aws_kms_key"` on the STRING `"alias/${local.bucket}"` and passes its id/ARN to `module.ldo_001`, so a targeted plan stops pulling `aws_kms_key.transcripts` (and other projects' pending changes to it). Falsifier: the `""` preview reads 0/2/0 with no key, reader or `LDO_KMS_KEY_ARN` line | FWD-4 (unblocks CA-d-2) | applies nothing; carried on the WORLD order | chain 1, ahead of CA-d-2's Phase B: owned by `TO-CA-d-2` as its PHASE A2, `0.7.0_AE_CloudOps~CA` |
+
+`fanout: 1 of 1 chains, cap 8, reason: CA-d-3 -> CA-d-2 is one chain (CA-d-2's GO needs CA-d-3's falsifier and the re-signed halves).`
+
+Why one order, not two: to-pipeline-gate's one-issuer-per-round limb refuses a second issuance into round 12, and both cells
+write `chat_assist.tf`, so a separate workstream would not have a disjoint write surface. The re-cut therefore MODIFIES the first
+issuance's order (owned_cells `CA-d-2,CA-d-3`) and adds no file.
+
 Battery: `comp-schedule` RUN (the act creates no schedule; the ingress keeps its 1-minute clock, and the End of Day window
 20:00Z-21:45Z is a Branch B stop). `comp-iam` RUN (1 policy, 1 statement, +1 ARN, read live at v3). `comp-adversary` RUN on the half:
 the passed-as-`-var` unwiring, a stale package (Branch B import test), and the secret's value (never read here).

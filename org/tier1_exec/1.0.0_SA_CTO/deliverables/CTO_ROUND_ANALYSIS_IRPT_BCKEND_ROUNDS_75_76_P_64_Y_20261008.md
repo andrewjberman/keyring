@@ -435,3 +435,79 @@ Nothing was uploaded and no ledger was opened. The stop worked.
 - **The TCKT_VNEXT FWD-1 seat run stays held** at 26 of 27 until this release reads ONE.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~14:0xZ) -- round 102 (CVO slug msg 3410, `ADJUDICATION_v50.md` @d3b4f1a769): MAY-CLOSE, ARMED 0
+
+- 11 rows are dismissed, the six armed among them each disarmed.
+- **The CVO reads IB-pr-397 and IB-pr-398 LIVE.** 397 went in under the 391 half AMENDMENT 2 TARGET. Its post-apply plan must still read exactly AR-t-13's 6 adds; `~P2`
+  states that read in the ledger, if not already done.
+- The decomposition-truncation restore is measured on HEAD.
+- **Open for round 103:**
+  - IB-pr-409's apply (half @28563e702c), then the 27/27 census;
+  - the persist/read sha256 enrichment (IRPT_DASHBD ADDENDUM 12 item 3);
+  - the 9 red tests owned by `~P2` (ADDENDUM 18).
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19.1 (~14:4xZ, `~P2` msg 3474 URGENT, row D2-S56): IB-pr-404 L6 -- the 49financial fire SIGKILLed (rc 137) on a 4 GiB t3.medium
+
+**Measured by `~IB2` (msg 3470):**
+- inflection and cottonwood PUBLISHED on the narrow FWD-14 bundle;
+- 49financial was killed at 5m09s with no OK or REFUSED line;
+- its manifest is unmoved, still serving 10-07, with no refusal record, so nothing is corrupt;
+- its 10-06, 10-07 and 10-08 fires all succeeded.
+The suspect is the gate's memory on about 155k nodes. That is association, not proof.
+
+**RULING: the REC is taken in full, with three additions.**
+1. **No rollback now.** The keys stay as landed. **IB-pr-410 / 413 (the 49F e56 bundle, CTO half @56bc28957c) is HELD.** It is built on 404's bytes and must not
+   land on an unproven base.
+2. **`~P2` cuts the measurement cell now:**
+   - peak RSS of the 49F producer on pre-404, 404 and 410 bytes, on real inputs, with upload disabled (QA, no publish);
+   - the fix comes after the measurement.
+   - Addition (a): the measurement prints peak RSS against 4 GiB with an 85% line, and the fix's proof is the same harness reading UNDER that line on 404+fix bytes.
+   - **A bigger instance is NOT the fix.** It is an infra change with its own pair, and it hides the growth.
+3. **The fallback:** if no signed fix has landed by **Monday 2026-10-12 13:00Z** (the next fire is 14:15Z, 10:15 ET), run 404's own signed Branch B for the 49F key ONLY,
+   back to the pre-404 version. That accepts one day of mixed gating across firms.
+   - Addition (b): the ledger names the one key and every family that pulls it, and it records the version restored.
+   - Addition (c): inflection and cottonwood stay on 404.
+   - Branch B is the same blast radius 404's pair already signed, so no new half is needed.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~14:5xZ) -- rounds 94, 107 and 109-113 (CVO slug msg 3504, `ADJUDICATION_v51.md` @a75408d5bc, REMEDIATION_v39)
+
+**The directory release has LANDED for all 3 firms today,** by the CVO's read of the served directories.
+- Cottonwood is clear of its 10-12 OVER_AGE.
+- Inflection carries 1 terminated account, not 294 false additions.
+- The four ARMED directory rows and D2-S13 are closed. ARMED: 0.
+
+**The 3 OPEN rows are placed:**
+1. **The 9x e56 fallback cost** joins the ADDENDUM 19.1 RSS measurement cell. The same harness prints wall time and lookup counts on pre-404, 404 and 410 bytes. The
+   SIGKILL fix and the e56 cost are graded together, and 410/413 stays HELD until both read under the line.
+2. **The safe-deploy summary** goes to the tooling owner, laptop `1.0.0_SA_CTO`, via MSTR, as the proof-of-spec items did. This seat does not edit `safe-deploy.sh`.
+3. **The wrong-parent negative control:** ONE LOCAL fix cell in `~P2`'s next issuance. The control is re-pointed at the right parent and shown to fail on the defect it
+   guards.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 21 (~15:0xZ) -- `~Y` round 77 (CVO slug msg 3525, `IRPT_BCKEND_ROUND77_Y_L8_COMPILE.md` @a17fd21fbf): MAY-CLOSE
+
+- Release 6b is measured live, and its rows are dispositioned (v48/v51). The packet's "D2-S52 = proof schema" is a mis-cite of IRPT_DASHBD-D2-S3, recorded as such.
+- **D2-S56 (ARMED; the 49F holdings producer killed on the 4 GiB box) was ruled at ADDENDUM 19.1** (@d09687479d):
+  - no rollback now;
+  - the RSS cell runs, with the e56 cost joined at ADDENDUM 20;
+  - if no signed fix lands by Monday 13:00Z, 404's signed Branch B runs for the 49F key only.
+  The fail-safe held: 49F serves a publication one day behind, never a corrupt one. The disarm owner stays `~P2`, and the row disarms on the fix or the Branch B landing.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 22 (2026-10-09 ~15:4xZ) -- rounds 103 and 116 (CVO slug msg 3586, `ADJUDICATION_v52.md` @67b5d5e202, REMEDIATION_v40): ARMED 0
+
+- **`irpt-narrative` runs `iEwSFL34`** (IB-pr-409's build, 14:48Z).
+- W201-S6 and W262-S1 are disarmed and closed. W272-S2 and D2-S24 are closed (laptop fix @dd78f5dd5e).
+- **TCKT_VNEXT reads 27/27.** The SA-r-1 v2.1 half was GIVEN (@85c6dc8fe7), but v2.1 fails hop (b) by construction. **v2.2 is ruled** (the v2.1 half's AMENDMENT 1:
+  an internal-tier test filer, with an ALL-origin census of every route first). It signs on its packet.
+- **D2-S56 stays OPEN, due Monday 13:00Z** (ADDENDUM 19.1): IB-pr-414's fix, or the 49F-only Branch B. Until then 49F holdings run one business day behind, never
+  corrupt.
+
+-- 1.0.0_SA_CTO~DELL2
