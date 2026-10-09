@@ -2439,3 +2439,17 @@ control passes arm 1); r63b.cjs base 1 of 5; r63c.cjs base 1 of 4. battery29 ALL
 - r62.cjs and r63*.cjs stay green.
 
 **Fan-out:** 2 of 2 chains (disjoint write surfaces), cap 8.
+
+## v65 -- ROUND 65 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~12:3xZ) -- THE REPEATED LABEL
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round64.md` @3f30e42354 section 2. Item 1 is `AV-zzq-1`. Item 2 (the missing spaces between
+sentences) is AMGT_RESAPP round-85 jj-1, and DSGN does not patch it.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzq-1` repeated label (LOCAL) | FWD-18 page half | `SA/components/ThesisCards.tsx` | ~140 (worker-light) |
+
+**Base:** portal 686ced10, the round-64 DEV candidate (CTO APPROVED @3e6b1caa21). **Check:** `deliverables/2.0.0_SA_COO~D1/round65/checks/r65.cjs`,
+base 3 of 4, on a real render.
+
+**Fan-out:** 1 of 1.

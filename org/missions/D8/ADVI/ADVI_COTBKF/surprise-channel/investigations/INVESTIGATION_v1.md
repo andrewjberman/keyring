@@ -3762,3 +3762,181 @@ round.** Never edit an existing row.
   "world_is": "Days with a replaced point on one side only cannot be derived from replaced points; they are blank, never filled. The rule was not changed after the run; widening the neighbours to include the store's transaction_observed points would restore up to 36 holding-days and is the COO's/CTO's call."
 }
 ```
+
+## ADVI_COTBKF-D2-S51 -- L9 CB35ai1-AC2 MET (detector note)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S51",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T12:17:11Z",
+  "one_line": "L9 CB35ai1-AC2 MET, with a note: the class shared_builder_run follows from the printed keys (38 with rows, earliest written 2026-06-09T20:42:15Z), their metadata (one version each) and the code history by the class rule committed at 5c79b91853 before the first run; the 38-key list is complete for the scanned read set, which the output states was narrowed after a 550 s timeout. Note: the DETECTOR (not the rule) changed after run 1 (+57/-14 lines: ast-parse that skips docstrings and comments, a 60 s prior-carrier window), and that change moved the class from live_cot_path. It is a principled fix (a docstring is not a live code path), disclosed in W63-S1, and the class is corroborated independently: commit 319a716cb4 (2026-06-12) removed the 49F-only scoped-inject auto-chain from cot's price builder, and no live cot path remains at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~63/bd_txn_provenance.md (section 5: the 38 keys, versions, sizes)",
+      "git log 5c79b91853 (rule, 07:19 ET) and d322d04fcd (output, 07:36); git diff 5c79b91853 d322d04fcd on the provenance script (detector only)",
+      "git show --stat 319a716cb4 (data/cot/scripts/gold/build_canonical_prices_v2.py, -74 lines: 'remove 49F-only scoped-inject auto-chain from cot')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_35_DRAIN_END_20261009.md @cd42e26d8a (msg 3252)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_35_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB35ai1-AC2: the class follows from the printed keys, metadata and history by the pre-written rule, and the delete list is complete for what was scanned.",
+  "world_is": "Met; the detector note stands."
+}
+```
+
+## ADVI_COTBKF-D2-S52 -- 49F bond overrides remain in 38 Cottonwood price keys
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S52",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T12:17:11Z",
+  "one_line": "49 Financial's three bond price overrides (05613L3H2, WFC 4.15% 2029, NEM 2.8% 2029) still sit in 38 Cottonwood price keys in opal-data-cot (37 daily files x 3 rows, plus 1,623 rows in canonical_prices.parquet), written once on 2026-06-09 by a since-removed shared-builder chain. Each key is a FULL Cottonwood price file, so deletion would take Cottonwood's own prices with it; the clean removal is a rewrite without those rows, a served move under a never-widen pair.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~63/bd_txn_provenance.md (section 5: the 38 keys, versions, sizes)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_35_DRAIN_END_20261009.md @cd42e26d8a (msg 3252)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "No pipeline tree holds another firm's data (CLAUDE.md NEVER, cross-firm); Cottonwood's prices come from its own source of record.",
+  "world_is": "The writing path is gone; the rows remain. The as-traded rebuild already holds the three bonds out (--hold-cusips); they have no Yahoo bond series to re-source from."
+}
+```
+
+## ADVI_COTBKF-D2-S53 -- ABSENT under the as-traded re-mint: 0QF878956 2022-03
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S53",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T12:27:20Z",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): 0QF878956 2022-03 was MATCH on the store basis (computed 4.7777%, diff -0.0423 pp) and is DIFF on the as-traded basis (computed 4.6451%, diff -0.1749 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md section 3"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
+ "world_is": "0QF878956 2022-03 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+}
+```
+
+## ADVI_COTBKF-D2-S54 -- ABSENT under the as-traded re-mint: 0QF878956 2022-08
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S54",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T12:27:20Z",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): 0QF878956 2022-08 was MATCH on the store basis (computed -1.0270%, diff 0.0330 pp) and is DIFF on the as-traded basis (computed -1.1561%, diff -0.0961 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md section 3"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
+ "world_is": "0QF878956 2022-08 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+}
+```
+
+## ADVI_COTBKF-D2-S55 -- ABSENT under the as-traded re-mint: B3S793726 2026-03
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S55",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T12:27:20Z",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): B3S793726 2026-03 was MATCH on the store basis (computed -5.3477%, diff -0.0477 pp) and is DIFF on the as-traded basis (computed -5.4343%, diff -0.1343 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md section 3"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
+ "world_is": "B3S793726 2026-03 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+}
+```
+
+## ADVI_COTBKF-D2-S56 -- ABSENT under the as-traded re-mint: D49151054 2021-07
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S56",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T12:27:20Z",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): D49151054 2021-07 was MATCH on the store basis (computed -1.8551%, diff -0.0151 pp) and is DIFF on the as-traded basis (computed -2.4174%, diff -0.5774 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md section 3"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
+ "world_is": "D49151054 2021-07 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+}
+```
+
+## ADVI_COTBKF-D2-S57 -- ABSENT under the as-traded re-mint: D49151054 2021-10
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S57",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T12:27:20Z",
+ "one_line": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): D49151054 2021-10 was MATCH on the store basis (computed 4.4117%, diff 0.0117 pp) and is DIFF on the as-traded basis (computed 3.7866%, diff -0.6134 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)",
+   "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md section 3"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The as-traded basis (CTO ADDENDUM 8) values every account-month at least as well as the store basis.",
+ "world_is": "D49151054 2021-10 regresses MATCH -> DIFF under as-traded; served ABSENT until traced."
+}
+```

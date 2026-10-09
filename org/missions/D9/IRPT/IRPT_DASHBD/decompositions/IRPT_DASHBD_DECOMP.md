@@ -916,3 +916,19 @@ from box/dell2; `0.7.0_AE_CloudOps~DB2` takes DB-b-84 now and DB-b-86 after both
 **Why round 42, not 41.** The issuance gate keys ONE issuance per round (round 41 already holds DB-b-84 to DB-b-86), and a second workstream needs its own lane. So the issuer re-points this chain to round 42 as its first and only cell set, which keeps the CTO's "first". Round 41's held items (the mint at leg R on the laptop ARN; DB-b-86 on ~P2's IB-pr-405) continue unchanged.
 
 **fanout:** 1 of 1 chains (DB-b-87 then DB-b-88), cap 8. Workers `0.9.0_WK_IRPT_DASHBD~62` now, and ~63 on DB-b-87's drain.
+
+
+## 45. ROUND 43, WORKSTREAM B (2026-10-09 ~12:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 10.1, msg 3257)
+
+**Where things stand.**
+- IRPT_BCKEND's owned read IB-pr-405 (`persist_inputs`) is drained @2f6fe31ad8.
+- The CTO placed the runner re-cut in its own round, since round 42 is already issued.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-89` | E1, FWD-12: the statement runner re-cut onto IB-pr-405; a fixture run with table access removed; 0 direct table clients | LOCAL | IB-pr-405 (drained) | B43-1 |
+
+**DB-b-86 (round 41) is HELD** by its AMENDMENT 1 until three reads: IB-pr-405 LIVE (CodeSha256), the mint's leg R closed, and DB-b-89
+drained.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~64`, cut from box/dell2.
