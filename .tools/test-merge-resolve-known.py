@@ -19,7 +19,20 @@ def ids(text):
     return [k[0] for k, _, _ in m.fenced_list(text)[2]]
 
 
+def blk(items, pre="# T\n\nprose\n\n"):
+    """One ```json block per row; each item is (heading or None, row or list of rows)."""
+    out = pre
+    for head, row in items:
+        out += ("## %s -- a row\n\n" % head if head else "") + "```json\n" + json.dumps(row, indent=2) + "\n```\n\n"
+    return out
+
+
+def bids(text):
+    return [k[0] for k, _ in m.fence_chunks(text)[1]]
+
+
 A, B, C = {"id": "P-S1", "v": 1}, {"id": "P-S2", "v": 2}, {"id": "P-S3", "v": 3}
+D = {"id": "P-S4", "v": 4}
 fails = 0
 arms = [
     ("identical sides -> unchanged bytes",
@@ -45,6 +58,21 @@ arms = [
      lambda: m.fenced_list(doc([{"x": 1}])) is None),
     ("the file is new on both sides (no base), same content -> resolved",
      lambda: m.union_rows(None, doc([A]), doc([A]))[0] == doc([A])),
+    # ONE JSON BLOCK PER ROW, keyed by the id inside the block (IRPT_BCKEND reuses headings; NFRA_OPLGTW has none).
+    ("BLOCKS: two rows under the SAME heading, each side appends a row -> both kept",
+     lambda: bids(m.union_fences(blk([("H", A), ("H", B)]), blk([("H", A), ("H", B), ("X", C)]),
+                                 blk([("H", A), ("H", B), ("Y", D)]))[0]) == ["P-S1", "P-S2", "P-S3", "P-S4"]),
+    ("BLOCKS: no headings at all, each side appends -> both kept",
+     lambda: bids(m.union_fences(blk([(None, A)]), blk([(None, A), (None, B)]), blk([(None, A), (None, C)]))[0])
+     == ["P-S1", "P-S2", "P-S3"]),
+    ("BLOCKS: a batch block (a list of rows) moves as one unit",
+     lambda: bids(m.union_fences(blk([(None, [A, B])]), blk([(None, [A, B]), (None, C)]), blk([(None, [A, B])]))[0])
+     == ["P-S1+P-S2", "P-S3"]),
+    ("BLOCKS: the same new id with different content on each side -> DUAL-MINT, both kept",
+     lambda: (lambda r: bids(r[0]) == ["P-S1", "P-S2", "P-S2"] and "dual-mint=P-S2" in r[1])(
+         m.union_fences(blk([(None, A)]), blk([(None, A), (None, B)]), blk([(None, A), (None, dict(B, v=7))])))),
+    ("BLOCKS: one row changed differently on both sides -> UNRESOLVED",
+     lambda: m.union_fences(blk([(None, A)]), blk([(None, dict(A, v=8))]), blk([(None, dict(A, v=9))]))[0] is None),
 ]
 for name, fn in arms:
     try:
