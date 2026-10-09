@@ -127,7 +127,7 @@ Report once: the diff (per file, one line each), the output line of every criter
 **ISSUER NOTES:** round 67 = `ledger/ROUND_ANALYSIS.round66.md` @f16252a512 section 2, items 1-2, as one cell (both touch PeersTab).
 Base portal 2726bbe7 (= origin DEV). LF only. The producer rows go to AMGT_RESAPP at the close walk, as decomposition v67 says.
 
-<status>pending</status>
+<status>complete</status>
 <round>67</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzr-1</to_id>
 <slot>~141</slot>

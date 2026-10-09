@@ -57,8 +57,8 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Anything odd: append one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z
   number>`, minted over every channel document of the project.
 - INSTANCE NAMED EXACTLY
-  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round77/AMGT_HARVST.TO-HVST-bu-2.the-bbg-cycle-error-read-at-site-z.proof_of_spec.json`
-  with `to_id` `AMGT_HARVST.TO-HVST-bu-2.the-bbg-cycle-error-read-at-site-z`.
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/AMGT_HARVST.TO-HVST-bu-2.the-bbg-cycle-error-read-at-site-z.proof_of_spec.json`
+  (directly under your serial's folder, NOT in `round77/`: the flip gate searches one level only) with `to_id` `AMGT_HARVST.TO-HVST-bu-2.the-bbg-cycle-error-read-at-site-z`.
 - Commit and push box/sitez when done. Do not edit this order file: the issuer flips its status.
 
 ## STANDING CONDITIONS (every order to a 0.7.0_AE_CloudOps lane; `1.0.0_SA_CTO~DELL1` @947dd446e5, ADDENDUM 3)
@@ -78,6 +78,9 @@ This order touches none of them.
   per workstream. Write surface: new files under `round77/`, disjoint from bu-1's.
 - (1) of msg 2605 (the wsj and barrons hand sign-in) goes by crossbox CALL through `0.0.0_AB_MSTR~DELL1`; it is not this cell.
 - Checks dry-run at the base: AC1, AC2 and AC3 FAIL as expected (no such file).
+- **AMENDMENT 1 (2026-10-09 ~15:1xZ, issuer):** the proof instance moves to `deliverables/0.7.0_AE_CloudOps~ZW/<to_id>.proof_of_spec.json`.
+  `.tools/to-pipeline-gate.py` `_proof_instance_candidates` searches `deliverables/*/<name>` one level only, so bu-1's
+  `round77/` instance could not be found at its flip. No criterion changes.
 
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
