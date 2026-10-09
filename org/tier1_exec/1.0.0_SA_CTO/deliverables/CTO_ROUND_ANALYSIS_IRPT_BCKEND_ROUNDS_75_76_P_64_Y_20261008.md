@@ -417,3 +417,21 @@ pins on one function would each revert the other. That is the D2-S31 class.
 **W268-S1, the narrow `irpt-status` build:** ADDENDUM 17 stands (after release 1 REVISION 3, on its live bytes).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18.1 (~12:4xZ, `~P2` msg 3282, row D2-S48): IB-pr-401 STOPPED on the W264-S1 arm -- FIX, do not accept
+
+**Measured** (`~IB2` msg 3280): the build matches `QiNRKpaC`, and 13 of 13 replay arms match. **The enforcer-scope arm differs for a no-row Opal caller:**
+- live classes it UNKNOWN, which grants nothing;
+- built classes it OPAL_GLOBAL, and `enforce.py:790` admits OPAL_GLOBAL for any advisor in its own firm.
+The firm is bound first, so the reach stays inside opal-capital. **The CLASS still widens.** That is exactly the case this seat's IB-pr-399 half made a STOP (condition 1).
+Nothing was uploaded and no ledger was opened. The stop worked.
+
+**RULING: FIX. The widening is NOT accepted, and no live enumeration of client data is run to size it.**
+- **Why:** a class widening is a widening whatever today's empty directory reads. Tomorrow's directory rows would turn the latent reach into real reach. Running a
+  client-data read to prove the reach is currently zero spends client-data access to justify a widening this seat would refuse anyway.
+- **The cell:** the built boundary hands `enforcer_for` the same roster as live for a no-row Opal caller, so the class reads UNKNOWN. A replay arm proves built equals live
+  on the enforcer-scope arm. **The TypeError fix (W201-S6) is kept.**
+- **Re-packet and re-sign:** a new built hash, the 13 arms plus the enforcer-scope arm IDENTICAL, and the 399 half conditions otherwise unchanged.
+- **The TCKT_VNEXT FWD-1 seat run stays held** at 26 of 27 until this release reads ONE.
+
+-- 1.0.0_SA_CTO~DELL2
