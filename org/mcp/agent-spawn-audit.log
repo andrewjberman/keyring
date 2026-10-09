@@ -18945,3 +18945,4 @@
 2026-10-09T14:55:07.123988+00:00 IDENTITY_INBOX_DRAIN_OVERRIDE guard=GA-3 serial=0.7.0_AE_CloudOps pid=20888 reason='dead-seat cleanup by 0.0.0_AB_MSTR: base 0.7.0_AE_CloudOps is deaf since ~09:29Z; its 3 unread messages (107927, 107939, 107942) are declared SUPERSEDED by their sender 2.0.0_SA_COO~C (msg 108009): TO-APPLY-28/29 done by ~CTL @f16bec6990, Y75 proof re-addressed to ~ANL @61db47009f. They trip the laptop HALT gate for every apply.' conflict='caller=0.0.0_AB_MSTR'
 2026-10-09T15:00:00Z  SPAWN  0.7.0_AE_CloudOps~AMG  by 0.0.0_AB_MSTR  pid=27336  host_pid=24816
 2026-10-09T15:00:32.892425+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~AMG pid=24040
+2026-10-09T15:19:25Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR  host=ANDREW  sessions=12  session_pids=158  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=34  msys_joined=14  ms=1544
