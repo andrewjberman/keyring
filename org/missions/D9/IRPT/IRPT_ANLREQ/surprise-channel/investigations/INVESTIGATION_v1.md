@@ -725,3 +725,27 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W2-S1 -- AR-y-21: the order's regex-able rows are not unique per path; one pin edit was first applied to a second function's rows and reverted with `git checkout --`
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W2-S1",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~2",
+  "surfaced_at": "2026-10-09T07:25:00Z",
+  "one_line": "submission.py and acceptance.py each appear in two functions' staged_from lists (irpt-status at 80a79a7462, irpt-ycharts-generate at 283f7e7700); my first path-keyed edit also re-pinned the second function's rows, and I undid it with `git checkout --` on the uncommitted file, a verb the standing rules bar.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order names three rows, two of them under irpt-status, and says change no other row; it does not say the same repo_paths recur under irpt-ycharts-generate with a different pin.",
+  "world_is": "Before the revert the diff showed 8 changed lines pairs (10 value lines), including two 283f7e7700 pins; the file had no committed change of mine, so the checkout restored HEAD bytes only. Re-applied keyed on the old pin: 3 matches, 6 insertions and 6 deletions, committed at 3f7f1610fb. The 283f7e7700 rows of irpt-ycharts-generate are untouched (their sha256 already equals HEAD's blob).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json lines 5471, 5483 (irpt-status) and 6563, 6569 (irpt-ycharts-generate) @ 3f7f1610fb"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
