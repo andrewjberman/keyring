@@ -2588,3 +2588,18 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r110/p110_cells.py`: every criterion 
 | `IB-pr-409` | narrative: no-row Opal caller stays UNKNOWN as live; TypeError fix kept; new packet | FWD-2 (and TCKT_VNEXT FWD-1's 27th route) | WORLD | none | P110-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~272.
+
+## 104. ROUND 111, WORKSTREAM ~P (2026-10-09 ~13:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on row D2-W269-S1)
+
+IB-pr-406 (worker ~269) built the 49F bundle (e56 + IB-pr-403) and replayed it on real inputs. The FWD-14 gate REFUSES: IB-pr-403's CUSIP
+security_id hides the ticker from fill_display, and 13,892 SmartX nodes lose their class. dell1's e56 itself is sound (0 custody nodes
+lost). One cell fixes IB-pr-403 inside ~P's decomposition (a ticker= fact, as custody rows already carry) and rebuilds and replays the
+bundle. It supersedes IB-pr-406's artifact; IB-pr-406 closes on it.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r111/p111_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-410` | 403 ticker fix + 49F narrow bundle (e56 + fixed 49f) + replay with class parity + packet | FWD-2 (SECCLASS e56 acceptance 1) | WORLD | IB-pr-404 landed | P111-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~273.
