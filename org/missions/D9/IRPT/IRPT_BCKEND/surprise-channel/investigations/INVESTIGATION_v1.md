@@ -23980,3 +23980,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S44 -- the packet's `python -I` cannot run its own replay gate on this device: boto3, pandas and pyarrow live only in USER site-packages, which isolated mode hides
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S44",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T11:02Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "python -I dies ModuleNotFoundError before any arm runs, so the invocation the packet specifies cannot produce the evidence it asks for; the only interpreter that satisfies -I here carries a pandas MAJOR version the packet never measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first attempt, exactly as the packet writes it (python -I replay_publish_gate.py run ...) on Python 3.12: all six runs failed rc=1 with 'ModuleNotFoundError: No module named boto3', and compose then failed FileNotFoundError on the absent gate_*.json -- no arm was graded",
+      "cause measured: python3.12 -c 'import boto3' resolves C:\\Users\\Test\\AppData\\Roaming\\Python\\Python312\\site-packages\\boto3, i.e. USER site-packages; python3.12 -I -c 'import boto3' raises ModuleNotFoundError. Same for pandas and pyarrow under -I. site.getusersitepackages() confirms the directory and ENABLE_USER_SITE is True",
+      "3.14 is NOT the fix: python3.14 -I -c 'import boto3' succeeds, but 3.14 carries pandas 3.0.6 against 3.12's 2.3.3 -- a MAJOR version the packet never measured, on a replay whose whole output is data-shaped gate behaviour. Refused on that ground, not attempted",
+      "what ran instead: Python 3.12.10 with boto3 1.42.54, pandas 2.3.3, pyarrow 18.1.0 -- the worker's stack, every version unchanged -- with only the -I flag dropped",
+      "the result is sound against the signed record: 18 arms, 18 of 18 matching IB103-2_narrow_bundle_replay.json verdict for verdict, 9 negative controls, all three real_<firm>_live_vs_built identical, all three worse arms REFUSED with index_moved=False, none outside identical/expected-diff",
+      "CTO condition 2 is untouched: it binds the digest-bearing REBUILD, which ran under 3.12 with no compromise and whose sha256/md5/bytes are exact at 3 of 3 firms"
+    ]
+  },
+  "spec_asserts": "The packet's applier replay arm: 'from a scratch directory outside the worktree python -I replay_publish_gate.py run <tree> <scratch> narrow_<short> <firm>', and CTO condition 4: the replay is re-run against the UPLOADED bytes before the fire, all arms matching.",
+  "world_is": "Those two cannot both be honoured literally on this device: -I is what prevents the evidence from existing at all. The applier kept the thing the conditions are about -- the interpreter and library versions the packet measured, and the uploaded bytes as the subject -- and dropped the isolation flag, which is import hygiene rather than a signed value, then said so here and in the ledger rather than letting a green run imply the specified invocation had been used. What -I additionally buys (no PYTHONPATH, no user site, script directory off sys.path) is not free to lose in principle: it is what stops a stray module shadowing a bundle member. Mitigation taken: each run was given the bundle tree by absolute path from a scratch directory outside every worktree, and the arms were graded against the packet's own record rather than only for self-consistency, so a shadowing import would have shown up as a differing verdict and none did. The durable fix is the packet's to make, not the applier's: either install boto3/pandas/pyarrow into the 3.12 interpreter's own site-packages (or a venv, which -I does honour) on every box that may apply, or state the invocation without -I and name the version floor instead. NON-APPLICATION: the rebuild step, which has no third-party import and runs under -I unaffected.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```

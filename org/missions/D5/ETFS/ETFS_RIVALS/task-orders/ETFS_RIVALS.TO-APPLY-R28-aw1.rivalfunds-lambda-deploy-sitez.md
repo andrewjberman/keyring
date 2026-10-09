@@ -236,5 +236,42 @@ lane: CloudOps applies under both signed halves (COO @d3d6c3e73f, CTO @a0ee589cc
     Steps 4-6 still wait on AMENDMENT 1 (a)-(d) inside 11:15Z-12:50Z. Noted from `2.0.0_SA_COO~V1` msg 2089:
     naming-place enforcement is live on dell1 @4d2bfc6dfd; this apply mints no new name, and if the gate fires
     at apply time I STOP and report as at any STOP.
+
+    EXECUTOR REPORT 4 (L1 CLOSED -- THE DEPLOY IS LIVE) -- `0.7.0_AE_CloudOps~DELL1`, 2026-10-09.
+    **THE HOUR THE DEPLOY WENT LIVE: 11:20:54Z-11:21:19Z**, inside 11:15Z-12:50Z and clear of both forbidden
+    brackets. Clock read at 11:16:21Z with 93 minutes left.
+    CONDITIONS (a)-(d) ALL MET, read BEFORE the apply. (a) the FOUR functions the 11:00Z fire invokes each
+    logged a REPORT, per AMENDMENT 5 @d81c9c631e: fetch-holdings 1, build-silver 2, build-canonical-shape 2,
+    publish-page 2. Read with the issuer's own `report_lines.py` AND this seat's `aw1_window_conditions_ab.py`;
+    the two agree RequestId for RequestId. (b) 0 Duration breaches against the 720,000 ms cap -- the maximum
+    was 176,972.85 ms on publish-page -- and 0 failure markers, by both readers. (c) as above. (d) PACKAGED
+    FIRST, then re-planned in the same tree, because `archive_file` zips at plan time and a plan made before
+    packaging is stale. **BRANCH A HOLDS**, graded per attribute from `terraform show -json` and never from the
+    summary line: 45 resource_changes / 40 no-op / 5 update, every mover an `aws_lambda_function.stage`, each
+    declaring ONLY `['last_modified','source_code_hash']`, `memory_size` 3008 before == after on all five, ZERO
+    forbidden attributes differing, and the daily Lambda's `environment` before == after so
+    `RIVALFUNDS_AI_ENABLE` stays `1`. The re-packaged after-hashes reproduce report 3's exactly, so the tree is
+    byte-stable across the ~7h wait.
+    APPLIED through `.tools/safe-apply.sh -chdir=<tree> apply <the graded planfile>` -- the graded plan, so the
+    applied bytes are the bytes read. `Apply complete! Resources: 0 added, 5 changed, 0 destroyed`, rc=0. Both
+    naming limbs PASSED (apply side: 8 resource-name expressions deferred to plan, 0 graded, NAMING-GATE PASS;
+    plan side: CONFORMANT on existing names), which matters because naming-place enforcement went live on dell1
+    @4d2bfc6dfd mid-session (your msg 2089).
+    AFTER, all five read live, 5 of 5: CodeSha256 moved and EQUAL to the plan's declared after-hash in every
+    case -- daily `50EIl4Xb..`->`6Z77vxU0..`, fetch-holdings `8sq83jGS..`->`cXi5kINK..`, canonical-shape
+    `PTcMhs7W..`->`5ZTAg5Km..`, silver `XcZnD/CP..`->`DLqulrgw..`, publish-page `/JVm0SXw..`->`/ZD6nH7g..`;
+    LastModified strictly newer; MemorySize 3008; State Active; LastUpdateStatus Successful. A re-plan at the
+    same pin reads `No changes. Your infrastructure matches the configuration.`, `-detailed-exitcode` rc=0.
+    AC1 at the pin after the apply: `AC1 RESULT: PASS 0 failures`. **AC2 NOT MARKED** -- it is yours and the
+    CVO's. No function invoked, no test event, no S3 object written, no environment variable set.
+    LEDGER `org/critical_paths/change_management/20261009T1119Z_etfs-rivalfunds-r28-aw1-dell1-20261009_deploy_completion.md`:
+    L1 CLOSED with proof; L2 HELD-SOVEREIGN-GATED on the 13:00Z sweep, **yours to read and close** per step 4,
+    so it reads KNOWN-HELD rather than as a stranded half-landed leg.
+    ONE PRE-WINDOW ITEM worth keeping: the deploy tree's `core.autocrlf` still read `true`, because `-c` applies
+    to one command and does not persist. Set `false` per AMENDMENT 3's own wording -- config only, no checkout --
+    and the byte invariant re-proven at 81 of 81 shipped files identical to their committed blobs, compared raw
+    against `git cat-file blob`. Also a CORRECTION to report 3, filed separately as report 3a @6d33307898: its
+    "1 of 239" undercounted -- `git ls-files --eol` reads `w/crlf=1` AND `w/mixed=1`, two not-pure-LF files, both
+    non-LF in the committed blob.
   </report>
 </task_order>

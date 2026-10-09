@@ -91,3 +91,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-09T11:2xZ by the issuer: condition 9 met -- AMGT-ii-1 merged @acb31d3592 (CTO~Z @344af2c348) and AMGT-ii-2 merged @b9ce1ef7cb (CTO~Z @4d6a429d98); on the merged tree r84_language YES (5 of 5 en), r84_header YES, r82_cut 15/15. Pair COO @c59a18f623 + CTO @a7ea763339 (round-83 conditions 1-7; 8 the per-name in-process language-and-cut check -- a failing name is skipped and reported, the others proceed; 9 met; 10 PBR last and only on a clean offline cut). Order: BABA_US_Equity (first; its AC1/AC2 YES before SAP), SAP_GY_Equity, PBR_US_Equity. Worktree ~336 cut from box/dell1 after this line. Graded by no gate limb (a modification).</status>
