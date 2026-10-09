@@ -1887,3 +1887,15 @@ COO~O @40b39ad88d, CVO~Z @c348b51df9). Site Z's applier deploys (msg 32057).
 | `OG-ab-1` | -- | Cherry-pick E2's registration code (e8290dd5fe, code paths only); build the required carry (destructive_ops + data_entitlement entries, the deploy printf env line from address()); tests. No release. | WORLD | ~47 | worker |
 
 **fanout:** 1 start, cap 8. The E2 release cell is cut after MX-r-9 lands.
+
+## ADDENDUM R3-T.35 (2.0.0_SA_COO~O, 2026-10-09 ~11:3xZ) -- round 33, workstream TRNSPT-ALLOWLIST
+
+**Source.** `1.0.0_SA_CTO~Z` ruling @261e2c42a0 (msg 32708): the 4 NFRA_TRNSPT meetings onto the gateway's
+TRANSCRIPT_MEETING_ALLOWLIST, read from dell2's meeting_allowlist.json, an env-only release under its own three halves.
+Host queue (msg 32713, one release in flight at a time): r29 -> MP-x-4 -> OG-tl-1 -> MX-r-9 -> E2 -> metadata route.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-tl-1` | -- | Phase A: release candidate on the live ref, deploy-to-ec2.sh reads the 4 ids from the json; the never-widen ask naming them. Phase C: the served read after the applier's deploy. | WORLD | ~48 | worker |
+
+**fanout:** 1 start, cap 8.
