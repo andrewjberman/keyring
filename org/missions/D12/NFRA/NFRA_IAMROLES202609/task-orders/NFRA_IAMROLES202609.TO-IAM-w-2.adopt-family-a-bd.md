@@ -6,14 +6,14 @@
 <decomp_doc>org/missions/D12/NFRA/NFRA_IAMROLES202609/decompositions/NFRA_IAMROLES202609_DECOMP_R6.md</decomp_doc>
 <owned_cells>IAM-w-2</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~IR</issued_to>
 <placeholders>NONE</placeholders>
 
 ## THE CELL, INLINED IN FULL (outcome FWD-4; the round-5 analysis calls this E2)
 
 ```
 IAM-w-2. ACT: adopt rows 1 `bd-merge-daily-lambda-role` and 2 `bd-pipeline-task-role` (Family A, Black Diamond) into Terraform under the CTO's ruling (ROUND_ANALYSIS.round5.md @f77e32d7c3 E2) and
-ADOPTION_PLAN_TEN.md @59112aafed (your own plan, Family A). You are owner of record (ruling @fa8ec0e726).
+ADOPTION_PLAN_TEN.md @59112aafed (your own plan, Family A). The owner of record is 0.7.0_AE_CloudOps~Z (ruling @fa8ec0e726); you, 0.7.0_AE_CloudOps~IR, execute (amendment A1-r6, one project per Tier-2 seat).
 
 FWD-4, verbatim: "Every role is either in code or has a named owner and a reason". This order moves 2 role(s)
 from "named owner" to "in code".
@@ -98,7 +98,7 @@ Every invocation runs under `timeout 120`.
 
 <status>staged</status>
 <round>6</round>
-<slot>0.7.0_AE_CloudOps~Z</slot>
+<slot>0.7.0_AE_CloudOps~IR</slot>
 <fabric>site-z</fabric>
 <dep_stage>EXECUTING</dep_stage>
 <issued_by>2.0.0_SA_COO~ZI</issued_by>
