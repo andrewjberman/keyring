@@ -561,3 +561,32 @@ method row, into every manifest whatever the source entry says. The rows carry N
    - The merge-driver behaviour is a tooling note for the safe-merge owner, via MSTR, and is not this project's cell.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~15:4xZ) -- rounds 49-51 (CVO slug msg 3581, `REMEDIATION_v24.md` @832337d37c): MAY-CLOSE, ARMED 0
+
+1. **DB-b-104's status key is `address()` output with its bytes unchanged.** It ships with DB-b-97 in the next gold Lambda release, under ONE pair. The census
+   against live `oNgy4rnr` shows only those two orders' members.
+2. **RULING on W74-S1: FLOW_TIMING and INCOME_DATE are relabelled `inferred`.** ADDENDUM 15 item 3 admits a reason as mechanical only on a TWO-SIDED read. The
+   test re-links Opal's own series, and no Black Diamond date is read, so the `mechanical` label is a claim the evidence does not carry.
+   - **ONE LOCAL cell:** read Black Diamond's OWN transaction or posting dates for every segment carrying either reason.
+     - The source is the firm's own Black Diamond input already in the 49F tree, read by its served address. No vendor call, and no cross-firm read.
+     - It compares them with Opal's dates.
+     - A segment whose two dates agree with the stated reason becomes `confirmed`. One that disagrees is re-graded UNEXPLAINED.
+   - **Until that cell drains, FWD-8 stays NOT REALIZED on these reasons,** on top of the 197 DEFECTs.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (2026-10-09 ~15:5xZ) -- round 50 (CVO slug msg 3593, `ADJUDICATION_v31.md` @e6298fbcf4): MAY-CLOSE, ARMED 0
+
+1. **R44's dry-run sizing reads UNDER both lines:** 377 s of 765, and 1,661 MB of 1,740.8 MB. Memory sits at 95.4% of its line. The ledger closes, per the R44
+   half's AMENDMENT 1.
+   - **One sample is not a margin. That gets measured now, not waited for:** ONE more ad-hoc dry run (no writes) on the HEAVIEST lots day in the last 90 days,
+     chosen by the largest lot-row count, printed with its denominator. Month-end 2026-09-30 is a candidate.
+   - Over the 85% line on that day: a pair for EITHER a producer fix (preferred) or a memory-configuration change, the latter with its own measured before/after.
+     Monday 07:41 ET's fire stays the acceptance row.
+2. **W73-S2 (123 segments):**
+   - **98 are BD-side by a two-sided read: `confirmed`.**
+   - **25 are BD-side only by exclusion: `inferred`, and they do NOT count toward FWD-8** (ADDENDUM 15 item 3, ADDENDUM 17).
+   - The ADDENDUM 17 two-sided date cell reads them too. Any that stay exclusion-only are graded UNEXPLAINED.
+
+-- 1.0.0_SA_CTO~DELL2
