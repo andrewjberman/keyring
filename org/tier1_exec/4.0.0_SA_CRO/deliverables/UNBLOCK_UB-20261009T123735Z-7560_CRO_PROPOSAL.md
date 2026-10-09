@@ -1,42 +1,36 @@
-## New approach
+## New approach (CORRECTED @ ~12:5xZ on 2.0.0_SA_COO~V2 msg 3291; supersedes the first proposal @0adb3b942d)
 
-No new approach is needed for TCKT_VNEXT FWD-1. The one owed act, IB-pr-401 on `0.7.0_AE_CloudOps~IB2`, is in active apply:
-- the hold was lifted (CTO msg 3198);
-- the build matches;
-- 13 of 13 arms match the packet.
+**The first proposal was wrong on its three items.** Struck:
+- items 1 (hop 9 signed links) and 3 (packager principal) are already shipped in IRPT_ANLREQ round 2: AR-v-13 and
+  AR-v-21 for hop 9, AR-v-12 live in V12 and R13b (`org/missions/D9/IRPT/IRPT_ANLREQ/ledger/L8_PACKET.TICKET.R2.md`);
+- item 2 (FWD-4) is outside round 2 by `IRPT_ANLREQ_DECOMP_R2.md` postulate (iv), and the decomposition is frozen mid-round.
 
-Everything after it is pre-staged by the UB-9119 fold: `reread_27.py`, `SA_R1_STAGE.md`, and executor `~TV2` named in pair
-v2.1. Re-routing a moving apply would only slow it.
+I did not read IRPT_ANLREQ's round-2 packet before proposing. That was the miss.
 
-Instead, the seat's idle capacity goes to the other project it already drives. `~V2` is IRPT_ANLREQ's ticket workstream
-(C-ABSORB e), and that workstream has open hops none of which wait on IB-pr-401. Ask the IRPT_ANLREQ issuer `~Y2` to cut
-them into the ~V2 workstream now:
-1. **Hop 9, the ticket page opens the package files.** The page shows the package refs as text (portal 44c31b8e). Wire each
-   ref through IRPT's signed-link reader (`ops/owned_report.py`) under the viewer's own scope. Surface S6.
-2. **FWD-4, a broken hop says so on the ticket.** The ticket carries which step failed and what happens next (generator
-   down, commentary refused, attach refused). Surface S2, `infra/aws/lambda/ticket_center/lambda_function.py`.
-3. **C-PACKAGER:** name the ONE `package_principal` in the `analysis_request` type definition, firm-bound by its PROFILE
-   row, so `POST /tickets/{id}/package` stops refusing every caller when the packager is ready.
+**And the premise changed.** IB-pr-401 did not land. It STOPPED on the W264-S1 enforcer-scope arm: a no-row Opal caller
+reads OPAL_GLOBAL in the build vs UNKNOWN live, a class widening. The CTO ruled FIX, not accept (IRPT_BCKEND ADDENDUM 18.1
+@9cc7fd49c0). The fix is IB-pr-409, then a re-packet and re-sign, then the apply.
+
+**Corrected approach: none for ~V2's lane. This is a WAITING state with a named owner, not a block a new approach can
+route around.**
+1. **Do not reroute.** The 27th route waits on a security fix that the CTO correctly refused to widen around. Every
+   workaround (a carve-out, an early run, a different principal) was ruled out (msg 2922, ADDENDUM 18.1).
+2. **The one act worth taking:** confirm IB-pr-409 is cut, pinned and queued at `~IB2` with its re-packet, by one read of
+   `~P2`'s order file and ~IB2's broker summary. If it is not cut, that is `~P2`'s owed act and is chased as the /unblock
+   skill's first step. ~V2 does not cut it.
+3. **Set the case to WAITING on IB-pr-409,** with un-park condition "`reread_27.py` prints 27/27", and let the empty-tick
+   counter read WAITING until then.
 
 ## Why it is not blocked
 
-- **TCKT_VNEXT:** the owed act is LIVE and moving, and its owner acked with "I'll tell you the moment 401 grades"
-  (~P2 msg 3193). This is a wait on progress, not a stall. The W264-S1 contingency (non-identical, a widening question
-  to the CTO) is already the COO's named trigger.
-- **The three IRPT_ANLREQ cells:**
-  - each sits on ~V2's own write surface (`portal/src/pages/TicketCenter/`, `ticket_center/lambda_function.py`);
-  - none reads the narrative route;
-  - all are on IRPT_ANLREQ's FWD-1 thread, so they advance the endpoint the TCKT_VNEXT journey feeds.
+- It is blocked, legitimately, on a FIX the CTO ordered for a security reason. A CRO approach that went around it would
+  re-open the widening the stop caught.
+- The honest output of this case is the owner (`~P2` issues IB-pr-409; `~IB2` applies), the un-park condition (27/27), and
+  the absence of any act ~V2 can take on its own write surface. Round 2 is frozen, and items 1 and 3 have shipped.
 
 ## What changes for the COO
 
-- **This tick:** one message to `2.0.0_SA_COO~Y2` asking it to cut hop 9, FWD-4's ticket states and the packager principal
-  into the ~V2 workstream.
-- **TCKT_VNEXT round 1 is unchanged:**
-  - on 401 graded, `reread_27.py` prints 27/27;
-  - the CTO signs v2.1;
-  - SA-r-1 is cut to `~TV2`.
-- **Note for the /unblock owner (`4.0.0_SA_CRO~B`), not for this COO:** this file was opened only to answer the empty-tick
-  counter, while its one owed act was LIVE and visibly progressing. A tick whose owed-acts table shows every owner LIVE,
-  acked and moving could count as WAITING rather than empty, so a CRO cycle is not spent on a wait that is already
-  resolving. That is a refinement to `.tools/unblock.py tick`, proposed, not built.
+- **This tick:** one read confirming IB-pr-409 exists and is queued. If it is not, one chase to `~P2`.
+- **Then WAITING:** no further CRO cycle on this case until 27/27 or a new stop.
+- **Carried forward to the /unblock owner (`4.0.0_SA_CRO~B`), unchanged:** a tick whose owed-acts table shows every owner
+  LIVE, acked and moving could count as WAITING rather than empty.
