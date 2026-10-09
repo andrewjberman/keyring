@@ -8485,6 +8485,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
-}
+},
+    {
+     "id": "AMGT_HARVST-D1-S6",
+     "project": "AMGT_HARVST",
+     "fabric": "dell1",
+     "surfaced_by": "2.0.0_SA_COO~W1",
+     "surfaced_at": "2026-10-09T20:37:50Z",
+     "one_line": "Since bw-1's re-pin, site Z's runner has written 2 harvest run records (20:00:00Z and 20:05:20Z, bbg, 0 fetch attempts each) and none in the 32 minutes after, against about one every 2.5 minutes on the old pin.",
+     "class": "OBSERVATION",
+     "hazard_standing": "INERT",
+     "spec_asserts": "FWD-18: the runner cycles the publishers without end at the collector's existing pace. Under b5a7a3a4b6 a pair error counts as failed and the cycle runs on.",
+     "world_is": "Read at 20:37Z: the S3 run records under store.table_prefix('amgt','bronze','run_record') written since 2026-10-09T19:55Z number 2 of 1,523, both bbg, mode backfill, fetch_attempts 0. On the old pin, bbg wrote 190 runs from 08:57Z to 18:46Z. NOT measured: whether the runner (PID 29192) is alive, hung or waiting on one long pair, and what its new cycle_runner.log says. bw-2 AMENDMENT 1's process-tree read and the log tail answer it.",
+     "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/run_record_census.py (run with SINCE 2026-10-09T19:55)",
+       "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round79/bw1_live.out @abdcceb042"
+      ]
+     },
+     "disposition": "UNDER_INVESTIGATION"
+    }
 ]
 ```

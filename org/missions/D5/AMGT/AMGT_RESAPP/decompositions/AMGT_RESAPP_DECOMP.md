@@ -9652,3 +9652,52 @@ fanout:
   no_s3_deletes: true
   egress: none; no Bloomberg call in any order
 ```
+
+## 96. ROUND 88 -- THE WITHHOLD DRIVEN, THE EMPTY-STATE CARD, THE SELECTOR CONTRACT, THE LIBRARY ROOT, THE FILING-SENTENCE FLAG. Three orders + one issuer act
+
+**Input:** the CTO~DELL1 round-87 analysis `ledger/ROUND_ANALYSIS.round87.md` @08279f2a4f (items 1-5). Prep in
+`deliverables/2.0.0_SA_COO~R1/round88_prep/` (GROUP_SELECTOR_NOTES, ROW_DISPOSITION_R1, checks r88_planted, r88_package).
+
+### 96a. MEASURED AT THE CUT
+
+- **Item 1:** the withhold is deployed (b7Lj1J; the live member is byte-equal to HEAD, sha256 5b987a17...) but no live FAILED
+  description exists. `AMGT_DRAFTING_ROOT` points the reader at a directory, so the DEPLOYED reader can be driven on a copy.
+- **Item 2:** `ThesisCards.tsx:425-428` prints the served `reason` (an engineering string) on an empty description.
+- **Item 3:** the scoped contract (`investor-reporting/_scope/global.py:161-230`) refuses an OPAL_GLOBAL principal's off-list selection
+  (FIRM_NOT_PERMITTED) and IGNORES a firm principal's; `scoped_amgt` reads no selector and classifies no principal.
+- **Item 4:** `library.py` skips a set-but-missing root silently. **W345-S2:** schema pins generated true.
+
+### 96b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES |
+|---|---|---|---|---|---|---|
+| `AMGT-mm-1` | the withhold DRIVEN on a planted copy (item 1) -- ISSUER ACT | `2.0.0_SA_COO~R1` | direct act | LOCAL (reads) | `round88_prep/MM1_PLANTED_RUN_20261009.txt` | R1 exercised |
+| `AMGT-mm-2` | the plain empty-state card (item 2) | `~349` | worker-light | LOCAL | portal `ThesisCards.tsx`, one harness | item 2 |
+| `AMGT-mm-3` | three repairs: selector contract, library root, generated flag (items 3-4, W345-S2) | `~350` | worker | LOCAL | five modules, three tests | D1-S18, S3, W345-S2 |
+| `AMGT-mm-4` | redeploy carrying mm-3 | `0.7.0_AE_CloudOps~RA1` | seat order | WORLD | the function's code; ledger | D1-S18, W345-S2 |
+
+**Item 5 (the 17 carried rows):** `round88_prep/ROW_DISPOSITION_R1.md` -- CLOSED 3, CUT 3 (into mm-3/mm-4), CARRIED 11 (2 to the
+round-88 packet, 2 to Andrew, 7 issuer reads this round).
+
+### 96c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain: items 1-5. 1 -> mm-1; 2 -> mm-2; 3 -> mm-3(a) + mm-4; 4 -> mm-3(b); 5 -> the disposition file (3 rows cut into
+  mm-3). Uncovered: FWD-16 and the key rotation (Andrew).
+- **(ii) Same grain:** mm-3 batches three small repairs into ONE cell (the analysis's repair batching).
+- **(iii) Intent:** mm-1 reads; mm-2 is the page; mm-3 is code; mm-4 ships mm-3's served half.
+- **(iv) What a cell does NOT move:** mm-1 writes no store; mm-2 never changes a served description's rendering; mm-3 never refuses a
+  firm principal's selection; mm-4 moves only the function's code.
+
+### 96d. EDGES AND FAN-OUT
+```
+mm-3 --> mm-4
+mm-1 done at the cut; mm-2 independent
+fanout:
+  cap: 8
+  orders_total: 3
+  chains_total: 2
+  wave_0: [mm-2 ~349, mm-3 ~350]
+  wave_1 staged: [mm-4 RA1 (mm-3 merged + the CTO half)]
+  no_s3_deletes: true
+  egress: none; no Bloomberg call in any order
+```
