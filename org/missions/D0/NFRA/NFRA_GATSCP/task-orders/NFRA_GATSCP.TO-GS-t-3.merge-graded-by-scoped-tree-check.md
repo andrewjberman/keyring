@@ -73,7 +73,7 @@ Read each check before you build. Each prints its arms and ONE last line. Both F
 - No edit outside the grant. Do not run `box-sync.sh box` or `integrate`, do not push, do not merge into any shared branch.
   `grade` is the only mode you exercise.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
-  `NFRA_GATSCP-W2-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the check or
+  `NFRA_GATSCP-D1-W2-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the check or
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not
   block.
 
@@ -98,6 +98,12 @@ validated with `python .tools/proof-of-spec-check.py <instance> GS3-AC1,GS3-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the `grade` output of AC1's first arm; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~N1, 2026-10-09) -- the row id carries the dell1 coordinate
+
+A row filed on dell1 is `NFRA_GATSCP-D1-W2-S<k>` (the row gate refuses a dell1 row without `-D1-`; measured on the issuer's own
+row `NFRA_GATSCP-D1-S1` @6911a2f5d7). The refusal clause above now reads that form. Graded by: the surprise-row gate's fabric
+coordinate limb; no TO-gate limb grades this modification beyond GATE (viii).
 
 ---
 

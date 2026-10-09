@@ -89,7 +89,7 @@ FAIL at the base. You do not edit the checks.
   `--act`. No override (`# surprise-row-override`, `SURPRISE_ROW_OVERRIDE`) at any commit.
 - `surprise-row-gate.py --self-test` must still pass after your change (run it once; it is long).
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
-  `NFRA_GATSCP-W1-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the check or
+  `NFRA_GATSCP-D1-W1-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the check or
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not
   block.
 
@@ -114,6 +114,12 @@ validated with `python .tools/proof-of-spec-check.py <instance> GS1-AC1,GS1-AC2,
 </proof_of_spec>
 
 **REPORT:** the three last lines whole; the row gate self-test's last line; the STANDING line as printed; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~N1, 2026-10-09) -- the row id carries the dell1 coordinate
+
+A row filed on dell1 is `NFRA_GATSCP-D1-W1-S<k>` (the row gate refuses a dell1 row without `-D1-`; measured on the issuer's own
+row `NFRA_GATSCP-D1-S1` @6911a2f5d7). The refusal clause above now reads that form. Graded by: the surprise-row gate's fabric
+coordinate limb; no TO-gate limb grades this modification beyond GATE (viii).
 
 ---
 
