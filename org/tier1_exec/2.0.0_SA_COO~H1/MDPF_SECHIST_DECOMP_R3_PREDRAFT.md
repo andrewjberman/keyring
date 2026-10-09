@@ -50,3 +50,12 @@ So items 1c (FWD-5 widened next-run request) and 4 (FWD-9 total-return field, ro
 cell, at most three criteria, write set `etf_daily_pull.py` and its test only, landing after a scheduled pull, each with
 `1.0.0_SA_CTO~Z`'s half and an MDPF_DEMQUE quote naming the per-run row and field delta (pre-draft AMENDMENT 2's conditions).
 Chain F depends on 1a (it reads the gap record's listed days). Fan-out (draft): 6 chains, cap 8.
+
+## Update 05:3xZ -- card A released into the queue (Andrew-direct ~05:3xZ)
+
+Andrew: "This can go into the BBG queue system that MDPF_DEMQUE is for" (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/cooH1_ANDREW_DIRECT_20261009_053xZ_SECHIST_CARD_A_GOES_TO_DEMQUE_BBG_QUEUE.md`). Request
+`MDPF_SECHIST-CARD-A-COT-BBG-HISTORY` filed @f3b5715e06. So `SH-t-5` joins round 3 as chain G: the series write of the queue's returned
+Bloomberg rows for the 1,319 Cottonwood CUSIPs (C-SERIES, C-GAP), keyed by the same CUSIP namespace as chain E's Yahoo writer, and
+joined to table keys through chain C's id map. Depends on C (the join) and on the queue's first paced draw; it draws nothing itself.
+Fan-out (draft): 7 chains, cap 8.
