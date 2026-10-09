@@ -77,6 +77,33 @@ A distinctive alias (not a dictionary word) is unchanged.
 6. Change no other file in `lib/research/harvest/` except a test that asserts a match this rule now discards. List each
    such change in your report.
 
+## AMENDMENT 1 -- "common word" is measured from SILVER, not a dictionary (ADDENDUM 4, `1.0.0_SA_CTO~DELL1` msg 2353)
+
+The first build's dictionary list (370,105 words) flagged 33 aliases, including Apple, Amazon, Meta, Roche, Boeing, Nike
+and Intel. It removed 9,958 mentions, and the removed sample was mostly TRUE mentions. That definition is WITHDRAWN.
+Continue on the same branch; its commits stay, and you change them forward.
+
+1. **The common-word set is measured from silver.** For every alias of every security in the r75 list, count across all
+   silver article titles and bodies (the same silver read the census uses):
+   - LOWER: whole-word uses written all lower-case (`visa`, `orange`);
+   - CAP_MID: whole-word uses with a capital first letter that stand MID-SENTENCE, meaning NOT the first word of a title
+     or of a sentence. A sentence opens at the start of a block, or after `. `, `? `, `! ` or a line break.
+
+   An alias is a COMMON WORD when LOWER > CAP_MID. Write `common_word_aliases.json` (security key, alias, LOWER, CAP_MID,
+   articles scanned) into your deliverables folder. The matcher loads ONLY this file, by `_COMMON_WORD_LIST_PATH`. Remove
+   the dictionary word list and its loader from the build: no file, no code path.
+2. **Before the census, print `COMMON-WORD ALIASES (silver): <n> over <s> securities; articles scanned <a>`.** Then print
+   every flagged alias with its LOWER and CAP_MID counts, and then the 10 nearest misses (the highest LOWER / CAP_MID
+   ratio among those NOT flagged).
+3. **The census as before**, at mention grain, plus these lines:
+   - `CVO ROWS: <x> of 14 removed` -- it must read 14 of 14;
+   - `BRAND CHECK:` -- every flagged alias that is also a company's ordinary trading name, printed for the CVO. It is not
+     a verdict, and the CTO STOPs on a plainly-brand name.
+4. Tests: replace the dictionary fixture with a fixture `common_word_aliases.json`; (i) through (iv) stand. Add (vi): an
+   alias with LOWER <= CAP_MID is not common and counts with no anchor. (v) becomes: a missing list path raises.
+5. The eight existing test files that set the switch False: keep that only where the fixture alias is flagged under the
+   NEW definition. Otherwise remove it. List which you kept.
+
 <paths>
 lib/research/harvest/
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/
@@ -114,6 +141,11 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   its hash recorded. Egress off Bloomberg is open (law edit 4d77a9c3ea).
 - <risk> SERVED: the merge changes what gold serves once rebuilt; the cell writes nothing served. Its merge takes its own
   never-widen pair, and gold serves R31 only after rebuild #13.
+- **AMENDMENT 1 (2026-10-09 ~11:4xZ, issuer):** the first build is on origin `wk-AMGT_HARVST-132-r76` @b6fff70840. Its
+  census (9,958 mentions removed over 33 dictionary-flagged aliases, mostly true mentions) was STOPPED by the issuer
+  (msg 2350). `1.0.0_SA_CTO~DELL1` ruled ADDENDUM 4 @9c0f0d882a (msg 2353): common word = LOWER > CAP_MID in silver. The
+  issuer amends this order in place (a re-cut into the first issuance), with the same criteria. Gate limb that graded it:
+  to-pipeline-gate GATE (viii), on a MODIFIED order. Do not merge bt-1 until the CTO reads the new census.
 - Slot ~132. Checks dry-run at the base: AC1 FAIL as expected (the test is absent); AC2 FAIL as expected (no such file);
   AC3 PASS as expected (base suite, read at the cut).
 
