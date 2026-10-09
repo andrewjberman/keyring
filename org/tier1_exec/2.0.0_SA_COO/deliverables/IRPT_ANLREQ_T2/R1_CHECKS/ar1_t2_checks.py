@@ -18,6 +18,8 @@ from pathlib import Path
 
 TF = Path("infra/aws/terraform/transcripts/commentary.tf")
 SPEC = {
+    "t13lg": (Path("infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store_tf.py"),
+              ["test_log_group_declared_once", "test_module_carries_retention"]),
     "t11": (Path("data/transcripts/scripts/tests/test_commentary_ready_queue.py"),
             ["test_ready_message_admitted_once", "test_malformed_or_extra_field_refused", "test_tf_subscribes_lambda_to_ready_queue"]),
     "t13": (Path("infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store.py"),
@@ -46,7 +48,7 @@ def _run(key):
     return (r.returncode == 0 and passed >= len(names)), tail
 
 
-TOKENS = {"t11": "AR1-T11", "t12": "AR1-T12", "t13": "AR1-T13"}
+TOKENS = {"t13lg": "AR1-T13LG", "t11": "AR1-T11", "t12": "AR1-T12", "t13": "AR1-T13"}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or sys.argv[1] not in SPEC:

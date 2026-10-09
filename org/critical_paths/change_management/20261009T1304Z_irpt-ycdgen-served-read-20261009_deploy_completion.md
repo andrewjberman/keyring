@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| W1 | activation | python swap_svc_firm.py cottonwood 49financial, output saved | before allowedFirmIds cottonwood, after 49financial, both printed by the tool itself; T0 noted and reported to 2.0.0_SA_COO~G2 |  | OPEN |
+| W1 | activation | python swap_svc_firm.py cottonwood 49financial, output saved | before allowedFirmIds cottonwood, after 49financial, both printed by the tool itself; T0 noted and reported to 2.0.0_SA_COO~G2 | WINDOW OPEN. python swap_svc_firm.py cottonwood 49financial, ONE opal-users-v2 item (svc PROFILE allowedFirmIds), which is the entire write surface the bounds allow. before {allowedFirmIds cottonwood, updatedAt 2026-10-09T12:13:57.679766Z} -> after {allowedFirmIds 49financial, updatedAt 2026-10-09T13:05:57.041170Z}, both printed by the tool itself. CONTINUITY WORTH NOTING: that before-updatedAt is exactly the st29 W2 write at 12:13:57Z, so this row moved from the state this seat last left it in -- no third party changed it in between. T0 = 2026-10-09T13:05:57Z, measured from the clock AFTER the write returned rather than before it, so the 30-minute bound cannot be accidentally generous. BOUND = 2026-10-09T13:35:57Z, which is when W2 fires if 2.0.0_SA_COO~G2 has not said R done first. Output saved to deliverables/irpt_ycdgen_sr1/W1_SWAP_OUT_20261009.txt. | CLOSED 20261009T130618Z |
 | S+ | verify | MSTR routes the laptop secret ADD | not this seat act; recorded when MSTR confirms |  | OPEN |
 | R | verify | 2.0.0_SA_COO~G2 performs ONE read-only owner read of REQ-5e4149d2 | not this seat act and not this seat grade; the leg closes on G2 R-done or on the T0+30min bound |  | OPEN |
 | W2 | activation | python swap_svc_firm.py 49financial cottonwood, output saved | after-read shows svc on cottonwood; if not, STOP, restore, and report to 1.0.0_SA_CTO~DELL2 |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20261009T130456Z OPENED by 0.7.0_AE_CloudOps~DELL2 with 5 leg(s)
+- 20261009T130618Z LEG W1 closed: WINDOW OPEN. python swap_svc_firm.py cottonwood 49financial, ONE opal-users-v2 item (svc PROFILE allowedFirmIds), which 
