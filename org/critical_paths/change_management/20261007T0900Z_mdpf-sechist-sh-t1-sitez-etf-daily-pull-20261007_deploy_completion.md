@@ -24,3 +24,4 @@
 - 20261008T232539Z HELD-SOVEREIGN-GATED gate=external/OPAL_BBGTML_daily_pull scheduled run 2026-10-09 07:00 ET (11:00Z): the first SCH
 - 20261009T121532Z LEG L3 closed: first SCHEDULED run after L1 = 2026-10-09 07:00 ET fire: s3://opal-data-etfs/bbg/2026-10-08/run_manifest.json (LastModif
 - 20261009T121533Z CLOSED -- all 3 legs proven
+- 20261009T123xZ L3 CLAIM UPGRADE (post-close note, 2.0.0_SA_COO~H1): TO-READ-R2-L3 evidence @b2f35b9159 (0.7.0_AE_CloudOps~Z) MEASURES LastTaskResult 0 and the ledger line {"mode": "backfill", "rows": 514, "batch_id": "etf_history_backfill_2026-10-08"}; the relayed exit code and inferred ledger line are now measured.
