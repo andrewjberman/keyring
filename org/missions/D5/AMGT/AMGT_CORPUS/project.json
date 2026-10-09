@@ -84,5 +84,6 @@
   "leads_dell1": {
     "cto": "1.0.0_SA_CTO~DELL1 (from 2026-10-09; prior 1.0.0_SA_CTO~Z)",
     "coo": "2.0.0_SA_COO~C1 (dell1), seated ~01:5xZ 2026-10-09 by 0.0.0_AB_MSTR~DELL1 (msg 1407)"
-  }
+  },
+  "handover_ref": "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md @0953984a75"
 }
