@@ -18832,3 +18832,4 @@
 2026-10-09T10:17:46Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-crps-r40-4  branch=wk-AMGT_CORPUS-40-4  reason=merged into CLOUD; --force discards 23 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.28 h
 2026-10-09T10:18:46.415318+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=12360 reason='to=2.0.0_SA_COO~ZI' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 157 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
 2026-10-09T10:26:39Z SPAWN 0.7.0_AE_CloudOps~ZG by 0.0.0_AB_MSTR~Z via ajb2 (Codex lane, NFRA_GATSCP TO-GS-e-2, dell1 N1 msg 2259) pid 3848
+2026-10-09T10:49:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL2  host=DESKTOP-N8RJV0A  sessions=40  session_pids=644  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=74  msys_joined=32  ms=1230
