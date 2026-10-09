@@ -46,7 +46,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T03:29:00Z. Graduated at ADJUDICATION_v1
     "owner": "1.0.0_SA_CTO~DELL1",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL1",
       "round": "v2"
     },
@@ -55,7 +55,7 @@ Author: 3.0.0_SA_CVO (dell1), 2026-10-09T03:29:00Z. Graduated at ADJUDICATION_v1
       "owner": "1.0.0_SA_CTO~DELL1",
       "at": null
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_STRATID-D1-W2-S2",
