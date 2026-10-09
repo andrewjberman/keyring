@@ -24583,3 +24583,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The suite is a different size today (198 collected, 0 skipped, against 198 with 13 skipped), and the red set is a subset of the nine (the upload-contract, status-handler, fixture-source and the export-receipt / submit-export controls now pass). The packet prints both lists; this cell's paths touch no target of either. Not investigated why the set moved (not this order's cell)."
 }
 ```
+
+## IRPT_BCKEND-D2-S55 -- Resolves and disarms D2-S25: the dell2 applier identity now commands the mdpf-daily-runner host; IB-pr-383 S1 and S2 ran rc=0
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S55",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL2",
+  "surfaced_at": "2026-10-09T14:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_BCKEND-D2-S25 as its disarm_owner. The refusal it recorded at 03:57Z (cloudops-dell2-agent-user denied ssm:SendCommand on i-02448edb624a7a7cf) no longer holds: the grant has since landed, and the same identity sent IB-pr-383 S1 (inflection, rc=0, 14:06:14Z) and S2 (cottonwood, rc=0, 14:08:38Z) to that instance. Report: 0.7.0_AE_CloudOps~DELL2 msg 3427.",
+  "one_line": "D2-S25 resolved: ssm:SendCommand on the mdpf-daily-runner host now succeeds from the dell2 applier identity (two live sends rc=0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~DELL2 msg 3427 (20261009T141022Z): two SSM sends to i-02448edb624a7a7cf, S1 rc=0 14:06:14Z and S2 rc=0 14:08:38Z, writing 4 objects in 2 buckets",
+      "the sends are live SendCommand results from the identity S25 recorded as refused, so they falsify S25's world_is directly"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-383 steps 5-6 run on the mdpf-daily-runner host from the seat the order is addressed to.",
+  "world_is": "They did: both seeding sends ran from 0.7.0_AE_CloudOps~DELL2's identity with rc=0."
+}
+```
