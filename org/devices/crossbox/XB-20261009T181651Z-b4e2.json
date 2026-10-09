@@ -21,8 +21,8 @@
   "bus_message_id": "1d627d76-b72a-46c1-9e37-9a43c65f449a"
  },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-09T18:39:56Z",
+  "from_by": "0.7.0_AE_CloudOps~AMG",
   "to_at": null,
   "to_by": null
  }
