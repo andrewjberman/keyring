@@ -2779,9 +2779,22 @@ def census_names_file(path):
     return items
 
 
-def census_judge(items, out=print, not_judged=None):
+def _census_rulings():
+    """{(name, type): (row index, row)} from name_rulings.json, read by opal_naming_rootcheck.load_name_rulings (the one
+    reader). The loader keeps file order and refuses a repeated (name, type), so a row's position in its dict is its
+    0-based index in the file's `name_rulings` list. grade() never reads this file (LGIC_ENFORCE-D1-S1)."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    import opal_naming_rootcheck  # imported only on this path (the root check composes this module)
+    return dict((k, (i, r)) for i, (k, r) in enumerate(opal_naming_rootcheck.load_name_rulings().items()))
+
+
+def census_judge(items, out=print, not_judged=None, rulings=None):
     """grade() each item in order: (rows, the RAISE that stopped the run or None, carded_live, carded_repo).
-    A RAISE stops the run. R-29 (AMENDMENT 1, LGIC_ENFORCE.TO-EN-s-6-r3): an item whose (plane, current)
+    A RAISE stops the run, unless the (name, type) has a row in `rulings` (_census_rulings()): then the item reads
+    RULED, citing name_rulings.json#<row index>, is neither carded nor counted as breaking the pattern, and the run
+    continues (LGIC_ENFORCE-D1-S1). With rulings=None no name is ruled. R-29 (AMENDMENT 1, LGIC_ENFORCE.TO-EN-s-6-r3): an item whose (plane, current)
     matches a --not-judged entry is CARDED -- never passed to grade(), never a row, never a stop -- so a
     RAISE it would have thrown is skipped entirely; a RAISE on any OTHER name still stops the run."""
     rows = []
@@ -2798,6 +2811,17 @@ def census_judge(items, out=print, not_judged=None):
         try:
             verdict, canon = grade(it["current"], it["type"])
         except RaiseDefect as exc:
+            hit = (rulings or {}).get((it["current"], it["type"]))
+            if hit:
+                idx, rrow = hit
+                said = rrow.get("canonical") or "none_owed"
+                out("CENSUS RULED %s %s %s -- name_rulings.json#%d %s" % (it["plane"], it["type"], it["current"], idx, said))
+                row = {"current": it["current"], "canonical": rrow.get("canonical"), "verdict": "RULED", "type": it["type"],
+                       "plane": it["plane"], "rule": "name_rulings.json#%d" % idx}
+                if it.get("where"):
+                    row["where"] = it["where"]
+                rows.append(row)
+                continue
             out("CENSUS RAISE %s %s %s%s -- %s" % (it["plane"], it["type"],
                                                    (it["where"] + " ") if it.get("where") else "", it["current"], exc))
             return rows, dict(it, message=str(exc)), carded_live, carded_repo
@@ -2871,30 +2895,49 @@ def census(names_file=None, live=False, repo=False, report=None, budget=600, not
         if not isinstance(not_judged, list):
             out("CENSUS ERROR --not-judged %s is not a JSON list" % not_judged_file)
             return 2
-    rows, stopped, carded_live, carded_repo = census_judge(items, out, not_judged)
+    try:
+        rulings = _census_rulings()
+    except (OSError, ValueError) as exc:
+        out("CENSUS ERROR name_rulings.json unreadable: %s" % exc)
+        return 2
+    rows, stopped, carded_live, carded_repo = census_judge(items, out, not_judged, rulings)
     for r in rows:
+        if r["verdict"] == "RULED":
+            continue  # already printed, with its citation, by census_judge
         out("CENSUS %s %s %s %s -> %s" % (r["verdict"], r["plane"], r["type"], r["current"], r["canonical"]))
     live_nameable = live_n - live_ng - live_fixed
-    judged_live = sum(1 for r in rows if r["plane"] == "live")
+    judged_live = sum(1 for r in rows if r["plane"] == "live" and r["verdict"] != "RULED")
     repo_n = sum(1 for it in items if it["plane"] == "repo")
-    judged_repo = sum(1 for r in rows if r["plane"] == "repo")
+    judged_repo = sum(1 for r in rows if r["plane"] == "repo" and r["verdict"] != "RULED")
+    ruled_live = sum(1 for r in rows if r["plane"] == "live" and r["verdict"] == "RULED")
+    ruled_repo = sum(1 for r in rows if r["plane"] == "repo" and r["verdict"] == "RULED")
+    ruled = sum(1 for r in rows if r["verdict"] == "RULED")  # every plane, a --names item included
+    seen = set((it["current"], it["type"]) for it in items)
+    stale = [] if not (live or repo) else [
+        (i, k) for k, (i, _r) in sorted(rulings.items(), key=lambda kv: kv[1][0]) if k not in seen]
+    for i, (nm, typ) in stale:
+        out("CENSUS STALE name_rulings.json#%d %s %s" % (i, typ, nm))
     if report:
         doc = {"vintage": vintage, "live_command": shown,
                "denominators": {"repo": repo_n, "live": live_n, "live_nameable": live_nameable,
                                 "judged_live": judged_live, "judged_repo": judged_repo,
                                 "live_not_graded_types": live_ng, "live_aws_fixed": live_fixed,
-                                "carded_live": carded_live, "carded_repo": carded_repo},
+                                "carded_live": carded_live, "carded_repo": carded_repo,
+                                "ruled": ruled, "ruled_live": ruled_live, "ruled_repo": ruled_repo,
+                                "ruling_rows": len(rulings), "stale_rulings": len(stale) if (live or repo) else None},
                "registry": registry_hash()[:16], "registry_scope": registry_hash_scope(),
                "stopped": stopped, "not_judged": not_judged or [], "rows": rows}
         census_report(report, doc, _census_prose(doc, stats, ng_counts, fixed_counts))
         out("CENSUS REPORT %s" % report)
+    if live or repo:
+        out("CENSUS STALE: %d of %d name_rulings.json row(s) name no item of this run" % (len(stale), len(rulings)))
     if stopped:
-        out("CENSUS: STOPPED on the first RAISE after %d judged (%d carded): %s %s %r" % (
-            len(rows), carded_live + carded_repo, stopped["plane"], stopped["type"], stopped["current"]))
+        out("CENSUS: STOPPED on the first RAISE after %d judged (%d carded, ruled=%d): %s %s %r" % (
+            len(rows) - ruled, carded_live + carded_repo, ruled, stopped["plane"], stopped["type"], stopped["current"]))
         return 3
-    out("CENSUS: COMPLETE %d judged + %d carded (live %d+%d of %d nameable, repo %d+%d of %d)" % (
-        len(rows), carded_live + carded_repo, judged_live, carded_live, live_nameable,
-        judged_repo, carded_repo, repo_n))
+    out("CENSUS: COMPLETE %d judged + %d carded + %d ruled (live %d+%d+%d of %d nameable, repo %d+%d+%d of %d) ruled=%d"
+        % (len(rows) - ruled, carded_live + carded_repo, ruled, judged_live, carded_live, ruled_live, live_nameable,
+           judged_repo, carded_repo, ruled_repo, repo_n, ruled))
     return 0
 
 
@@ -2927,8 +2970,10 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
             d["live"], d["live_not_graded_types"], ", ".join("%s %d" % kv for kv in sorted(ng_counts.items())) or "none",
             d["live_aws_fixed"], ", ".join("%s %d" % kv for kv in sorted(fixed_counts.items())) or "none",
             d["live_nameable"]),
-        "- judged_live = **%d** + carded_live **%d** (NOT-JUDGED, R-29) = %d of live_nameable %d. Verdicts: %s." % (
-            d["judged_live"], d.get("carded_live", 0), d["judged_live"] + d.get("carded_live", 0),
+        "- judged_live = **%d** + carded_live **%d** (NOT-JUDGED, R-29) + ruled_live **%d** (name_rulings.json) = %d of "
+        "live_nameable %d. Verdicts: %s." % (
+            d["judged_live"], d.get("carded_live", 0), d.get("ruled_live", 0),
+            d["judged_live"] + d.get("carded_live", 0) + d.get("ruled_live", 0),
             d["live_nameable"], _count(live, "verdict")),
         "",
         "## The repo plane",
@@ -2942,9 +2987,10 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         % (stats.get("source_files", 0), CENSUS_LAMBDA_ROOT, ", ".join(CENSUS_SOURCE_EXT),
            stats.get("vendored_excluded", 0), stats.get("source_templates", 0), len(stats.get("unparsed", [])),
            (": " + ", ".join(stats["unparsed"][:10])) if stats.get("unparsed") else ""),
-        "- repo = **%d** names; judged_repo = **%d** + carded_repo **%d** (NOT-JUDGED, R-29) = %d. Verdicts: %s." % (
-            d["repo"], d["judged_repo"], d.get("carded_repo", 0), d["judged_repo"] + d.get("carded_repo", 0),
-            _count(repo, "verdict")),
+        "- repo = **%d** names; judged_repo = **%d** + carded_repo **%d** (NOT-JUDGED, R-29) + ruled_repo **%d** "
+        "(name_rulings.json) = %d. Verdicts: %s." % (
+            d["repo"], d["judged_repo"], d.get("carded_repo", 0), d.get("ruled_repo", 0),
+            d["judged_repo"] + d.get("carded_repo", 0) + d.get("ruled_repo", 0), _count(repo, "verdict")),
         "",
         "## Carded (NOT-JUDGED, R-29 / AMENDMENT 1)",
         "",
@@ -2954,10 +3000,17 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
                         "; ".join("`%s` (%s)" % (e.get("name"), e.get("plane")) for e in (doc.get("not_judged") or []))))
         if doc.get("not_judged") else "None carded this run.",
         "",
+        "## Ruled (name_rulings.json, LGIC_ENFORCE-D1-S1)",
+        "",
+        "ruled=%d name(s) grade() cannot read carry a ruling row and read RULED (live %d, repo %d); neither carded nor "
+        "counted as breaking the pattern. %s ruling row(s) of %d name no item of this run (STALE)." % (
+            d.get("ruled", 0), d.get("ruled_live", 0), d.get("ruled_repo", 0),
+            d["stale_rulings"] if d.get("stale_rulings") is not None else "n/a (a --names run)", d.get("ruling_rows", 0)),
+        "",
         "## Totals by type (judged rows)",
         "",
-        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NO-SYSTEM-ASKED | NOT-GRADED |",
-        "|---|---|---|---|---|---|---|",
+        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NO-SYSTEM-ASKED | NOT-GRADED | RULED |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     by = {}
     for r in rows:
@@ -2965,9 +3018,9 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         by.setdefault(k, {}).setdefault(r["verdict"], 0)
         by[k][r["verdict"]] += 1
     for (t, p), c in sorted(by.items()):
-        lines.append("| %s | %s | %d | %d | %d | %d | %d |" % (
+        lines.append("| %s | %s | %d | %d | %d | %d | %d | %d |" % (
             t, p, c.get("CONFORMANT", 0), c.get("ALIAS", 0), c.get("OUT-OF-PATTERN", 0),
-            c.get("NO-SYSTEM-ASKED", 0), c.get("NOT-GRADED", 0)))
+            c.get("NO-SYSTEM-ASKED", 0), c.get("NOT-GRADED", 0), c.get("RULED", 0)))
     lines += ["", "The comparison against LGIC_NAMING's hand gradings is EN-s-2's and is not made here."]
     return "\n".join(lines)
 
