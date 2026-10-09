@@ -2419,3 +2419,23 @@ cell. Item 5 (TimelinePanel) and item 4 (notFound + SecurityAnalysis) are their 
 control passes arm 1); r63b.cjs base 1 of 5; r63c.cjs base 1 of 4. battery29 ALL PASS at the base (round-62 candidates).
 
 **Fan-out:** 3 of 3 chains (disjoint write surfaces), cap 8.
+
+## v64 -- ROUND 64 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~12:0xZ) -- THE SERVED DESCRIPTION; THE WALKER'S PRESS
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round63.md` @f7d74e6665 section 2.
+- Item 1, the zzo-1 re-cut, is `AV-zzp-1`.
+- Items 2 and 3, the figure press and the ASML listing press, are the issuer's close walk. They need a walker that can press on
+  /security-analysis, which is `AV-zzp-2`.
+- The PROD candidate carrying rounds 63 and 64 follows the CVO's grade of round 64, under a new pair (analysis section 1).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzp-1` served description (LOCAL) | FWD-18 page half | `SA/components/ThesisCards.tsx`, `SA/__harness__/` | ~138 (worker-light) |
+| `AV-zzp-2` walker press flags (LOCAL) | the grading instrument | `.claude/skills/ui-walk/walk.mjs`, `.claude/skills/ui-walk/SKILL.md` | ~139 (worker-light) |
+
+**Base:** portal f043b827 (= origin DEV). **Checks** (`deliverables/2.0.0_SA_COO~D1/round64/checks/`):
+- r64a.cjs, base 1 of 4, on a real render;
+- r64b.cjs, base 2 of 4 (GUARDED holds vacuously at the base);
+- r62.cjs and r63*.cjs stay green.
+
+**Fan-out:** 2 of 2 chains (disjoint write surfaces), cap 8.

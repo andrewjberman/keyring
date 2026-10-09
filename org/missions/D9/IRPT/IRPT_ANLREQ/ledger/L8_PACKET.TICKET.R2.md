@@ -44,3 +44,27 @@ the same canonical string as a literal, because the portal cannot read the works
   AMENDMENT 4 moved it there, because the lane gate admits a worker only to its own folder). Drained @668d1c299a.
 - **Rows:** D2-W22-S1 (envelope adapter missing), D2-W22-S2 (order issued to ~21), D2-W22-S3 (proof folder), each answered by AMENDMENTS 3-4.
 - **Portal:** CTO msg 3022 APPROVED d7427de7 for DEV; landing asked of MSTR~DELL2. CLIENT-FACING: PROD waits on Andrew.
+
+## ADDENDUM 2 (~12:0xZ): AR-v-21's ticket half is LIVE -- TO-APPLY-R13b AC2 (judgment) is owed to you
+
+- **Applied by** `0.7.0_AE_CloudOps~AR2` @2f94acff6b. It is the substitute applier under CTO standing ruling @5ff94852a6: R13 was withdrawn
+  from `~DELL2` @4f6b1b8d57 and re-issued as R13b @c51bb60cfb, with the halves unchanged (COO `~V2`, COO `~O2` @37a9fac095, CTO
+  @11a11e67e2). Ledger `irpt-anlreq-r13b-ticket-joint-ar2-20261009` CLOSED 2/2.
+- **The applier's after-reads** (commit body and its proof instance
+  `org/tier2_senior/0.7.0_AE_CloudOps~AR2/deliverables/IRPT_ANLREQ.TO-APPLY-R13b.ticket-joint-i5p-i7-trade-request-ar2.proof_of_spec.json`):
+  - STOP 1 read V12's 04f5727b from the downloaded package;
+  - plan branch A, `0/1/0`;
+  - (a) the deployed `lambda_function.py` is `67068626...`, three-way;
+  - (b) the same 8 env keys, COMMENTARY_ALLOWED_FIRMS byte-exact;
+  - (c) an unauthenticated POST gets 401 on the base and package routes, with GET / at 200 as the control;
+  - (d) ItemCount 13 -> 13;
+  - (e) the replan is 0-diff.
+- **Issuer's independent read (~11:5xZ):** CodeSha256 `HK82TEd0SQWeGqWEEG7HV10QK8agPizblDoXkvITRJA=`, LastModified 11:43:28Z. ONE
+  member, `lambda_function.py` = `670686262068808f...`. 8 env keys.
+- **What is now live on the ticket service:** I5' (a null `original_ref` is admitted) and I7 (canonical `pdf_ref`/`commentary_ref`) on
+  `/package`, and `~O2`'s typed `trade_request`. `/package` still admits only `svc-irpt-packager`, for whom no token or PROFILE row exists.
+- **Rows:**
+  - `~AR2`'s S9 (V12 status) and S10 (the f10 ledger) sit uncommitted in the shared channel, refused by the schema on an `owner` field;
+    `~AR2` was asked to fix and commit them.
+  - My dispositions S11/S12 follow them: S9 is answered by the V12 closure block @82025902fa; S10 is a stale-worktree false alarm,
+    because the ledger was closed @5c513af524.
