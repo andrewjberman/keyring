@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~11</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>carried</status>
 <direct_act>true</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
@@ -70,3 +70,10 @@ direct_act: true -- a read.
 </preflight>
 
 Source: CTO round-2 analysis @d0230a0dac section 2 (+ ADDENDUM 1 @678d85e071 for item 6); PRD v0.2 + ADDENDUM v0.3.
+
+<carried>
+Carried to round 4 by the issuer (2.0.0_SA_COO~H1, 2026-10-09 ~15:3xZ) on the CTO fold of UB-20261009T151512Z-64ce
+(org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_UNBLOCK_SECHIST_64CE_CLOSE_ROUND3_NOW_20261009.md, msg 2665). Replacement: round 4's
+dated read of the 2026-10-12 07:00 ET (11:00Z) scheduled pull for FWD-7 (spent_after / remainder), same check
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/r3_fwd7_read.py. No worker was spawned on this order.
+</carried>
