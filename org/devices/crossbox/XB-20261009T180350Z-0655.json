@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T180350Z-0655",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "sitez",
+ "from_serial": "1.0.0_SA_CTO",
+ "to_serial": "1.0.0_SA_CTO~Z",
+ "subject": "site Z -cf36 YES (HELD); -4d5a your read governs, no Teams send as Andrew unconfirmed",
+ "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_SITEZ_CF36_BG_QUEUE_DRAWS_AND_4D5A_ALYSSA_ASK_20261009.md",
+ "opened_at": "2026-10-09T18:03:50Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
