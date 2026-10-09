@@ -1634,6 +1634,26 @@
  "spec_asserts": "Two packs, two phrases: 'the research team's pack' for the team's document, 'the analysis built for this name' for the built thing (PRD v0.18 SAUX-40; decomposition v52).",
  "world_is": "One page still calls the built thing 'Research pack'.",
  "notes": "Same class as round 53's AV-zze-3; candidate for the next DSGN round, wording to be ruled with it."
+},
+{
+ "id": "DSGN_AMGTV1-D1-W128-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~128",
+ "surfaced_at": "2026-10-09T06:46Z",
+ "one_line": "The cell AV-zzk-5 text drops only 'Not averaged: currency not stated' from the Peers Average row, but the r59.cjs E grader refuses every 'Not averaged:' string, so the sibling 'Not averaged: currencies differ' is dropped too.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round59/checks/r59.cjs line 64: /Not averaged:/ on PeersTab.tsx."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Only the currency-not-stated Average cell is emptied; a mixed-currency Average cell keeps its served words.",
+ "world_is": "Both not-averaged Average cells (mixed and unstated currency) are now empty in PeersTab.tsx; the mixed-currency case no longer says why it is blank.",
+ "notes": "Issuer to rule whether the mixed-currency reason belongs inside the absence fold."
 }
 ]
 ```

@@ -103,3 +103,21 @@ Rollback per key: the C_06 code VersionId above. The running seat records the 36
 `.tools/safe-deploy.sh` under a change-management ledger, before the next BD gold fire.
 
 ## CTO half -- UNSIGNED
+
+(The CTO half is signed in its own file: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_SC_E75_BD_MULTI_ASSET_20261008.md`
+@0ca2c444c7, conditions 1-3; ADDENDUM 1 @786720019c.)
+
+## COO half -- ADDENDUM 1 (2.0.0_SA_COO~M1, 2026-10-09 ~06:4xZ; matches the CTO's ADDENDUM 1 @786720019c)
+
+**The blast radius widens by ONE relationship, after the fact, KEEP.** On the 2026-10-09 04:00Z fire, C_06 printed
+`C06-RETAINED-RECLASS entries=262 holdings=298`. The signed census counted `multi_asset` only: 141 holdings on 105 entries of 36
+envelopes. `reclassify_retained` moves ANY retained holding whose class is outside `SERVED_HOLDING_CLASSES`. The envelope diff
+(`R13_CHECKS/e75_retained_reclass_diff.py`, 18,176 envelopes against their previous version; `E75_RETAINED_RECLASS_DIFF_20261009.json`)
+splits the 298 into:
+- the signed 36 envelopes: 141 `multi_asset` holdings, 84 to equity and 57 to fixed_income, exactly as predicted;
+- ONE relationship outside the set, `z08296368`: 157 `other` to commodities, PDBC (Invesco Optimum Yield Diversified Commodity Strategy
+  No K-1 ETF), on 157 retained dates. Its three keys moved: `gold/entities/clients/z08296368.json`,
+  `gold/client_timeseries/z08296368.json` and `platinum/clients/z08296368/concentration.json`.
+Commodities is the correct class for PDBC, and a rollback would re-serve the non-six `other`. **KEEP**, per the CTO's addendum.
+Rollback targets stay recorded in the ledger: envelope 8YWPRKyK..., client_timeseries XCWaYCxw..., concentration Ns1L1OCm....
+**Forward rule (the CTO's):** a later pair over this writer censuses EVERY class outside the six, not one retired class.

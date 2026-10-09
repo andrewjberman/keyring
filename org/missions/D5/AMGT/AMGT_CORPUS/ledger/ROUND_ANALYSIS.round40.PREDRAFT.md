@@ -44,3 +44,18 @@ pillars match no vocabulary term. Restated:
   KPI vocabulary is a design fork, so it goes to `4.0.0_SA_CRO~DELL1` for past patterns first (how the vocabulary was built and what
   coverage it was meant to have). It is ruled on that research for round 42. Until then, a name with no real terms shows no filtered
   feed, and the page says so in words.
+
+## DRAFT AMENDMENT 2 (~06:5xZ) -- leg-v and leg-r EVIDENCE gains a dell1 S3-side read (UB-20261009T062804Z-1b28, the CRO's approach (a)/(b))
+
+This is a change of INSTRUMENT, not of act. The two signed halves govern what the fire and the re-pin may WRITE. This read writes
+nothing, so neither half re-opens and `1.0.0_SA_CTO~Z` (wound down for the reboot) owes nothing.
+- **(u) leg v:** graded on the SERVED artifact, read from dell1: BA US's derived model block from the 13:00Z fire carries a measured
+  unit for `BEST_EPS_STDDEV` FY1, read beside `BEST_EPS` FY1 in one currency. A served read outranks a producer log.
+- **Leg r (which pin ran):** identified by CONTENT, using the fields the pin `7580fe909c` adds. **Negative control is mandatory:** a pre-fire
+  BA US block, built on `6402de5137`, must show the old pointer form. Without that control the content read proves nothing. The
+  13xx-stamped `packs/<key>/input_ledger.json` entries corroborate that the scheduled fire ran.
+- **(b)'s budget line:** it lives only in site Z's `%LOCALAPPDATA%/opal_bbg_budget/bbg_budget_2026-10-09.jsonl` and the fire's stdout. The
+  file is kept, so the evidence does not expire. `0.0.0_AB_MSTR~Z` copies exactly those two files, read-only, to one named S3 key after
+  13:20Z; the key is builder output (Rule 30) and is named in the ask. That relay is an MSTR act under /govern (law edit 4597dfacc6).
+  `~ZC`'s read (XB-aff1) stays the primary carrier when it runs; this read is the fallback that keeps the grade from waiting on site Z's
+  reboot.
