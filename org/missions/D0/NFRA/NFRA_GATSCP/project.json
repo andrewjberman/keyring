@@ -9,7 +9,7 @@
   "fabric_ruling": "a NEW project, not a workstream of NFRA_CTLPLN (brief Part II's L3 question): NFRA_CTLPLN already carries 24 live outcomes; this one has its own boundary (the refusal scope of three gates, index regeneration at commit, the cross-box issuance hook) and relies on NFRA_CTLPLN's crossbox-call.py without redesigning it.",
   "pipeline": "gitops-gates-scoped-to-the-act",
   "status": "active",
-  "dep_stage": "EXECUTING",
+  "dep_stage": "ROUND_CLOSE",
   "created": "2026-10-09",
   "registered_under_tree": "2026-10-09",
   "pods": [],
@@ -34,7 +34,7 @@
   },
   "coo_lane": "2.0.0_SA_COO~N1",
   "workstreams": [],
-  "phase": "2026-10-09 ~10:1xZ (2.0.0_SA_COO~N1): round 2 issued in one commit over ROUND_ANALYSIS.round1.md section 3 -- GS-e-1 (FWD-5), GS-e-2 (FWD-7 live read, site Z ~ZQ), GS-e-3 (FWD-7 delivery), GS-e-4 (FWD-2), GS-e-5 (FWD-4), GS-e-6 (FWD-6); FWD-3 met by round 1, exercised at the close.",
+  "phase": "2026-10-09 ~12:3xZ (2.0.0_SA_COO~N1): round 2 ROUND_CLOSE -- six orders complete (five dell1 drained @50a354da0c; GS-e-2 executed on site Z by 0.7.0_AE_CloudOps~ZG, 79e603bf34); close runs in deliverables/2.0.0_SA_COO~N1/TRACE_round2.md.",
   "blocking": null,
   "last_updated": "2026-10-09",
   "leads_dell1": {

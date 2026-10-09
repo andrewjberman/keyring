@@ -114,6 +114,14 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-3.gateway-release-r29-apply.
   worktree's `.tools/halt-gate-check.sh` with the same two roots (rc 0 and rc 0), so it tests the gate the deploy runs.
   The release bytes, the halves and every other step are unchanged. Graded by no gate limb as a modification.
 
+- A3 (issuer, 2026-10-09 ~12:2xZ, on row Z-S75; SUPERSEDES A2): A2 could not work -- `safe-ec2-deploy.sh:57` assigns
+  `HALT_GATE_REPO_ROOT` with no default (R-53), so the exported root is discarded, and `halt_gate_validate_serial` reads
+  that one root only. RULED, the applier's tested fix: `git -C C:/tmp/og-rel29 sparse-checkout add
+  org/tier2_senior/0.7.0_AE_CloudOps~Z`, so the gate's premise (the deploying seat's home exists) is TRUE in the
+  release worktree; the faithful dry run (sourcing the release worktree's gate) reads rc 0 / rc 0; then Half 2 step (5)
+  as signed. The release md5 list carries no `org/` path, so the shipped bytes cannot change; the worktree stays 0
+  porcelain at `91811b648a`. No `HALT_OVERRIDE`. Graded by no gate limb as a modification.
+
 <status>pending</status>
 <round>32</round>
 <workstream>APPLY-R29</workstream>

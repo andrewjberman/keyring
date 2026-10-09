@@ -72,6 +72,19 @@ reads and the authoring seat go in the ledger (ADDENDUM 9.2 item 1).
 
 **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
 
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~13:0xZ): UN-HELD -- the three reads, recorded
+
+1. **IB-pr-405 LIVE.** The issuer read live `irpt-status` CodeSha256 `t6OJTCcm...` (LastModified 12:45:28Z). That is the build of pin
+   5240156380 (IRPT_ANLREQ APPLY-Y1 rev3, ledger CLOSED 5/5 @8bb3f7b1a4). By content, that pin's `ops/entry.py`, the irpt-status entry
+   point, routes `persist_inputs` (lines 181-194), and `ops/owned_report.py` carries it.
+2. **Mint leg R closed.** DB-b-84 is complete and its ledger is closed.
+3. **DB-b-89 drained.** It is complete, so the runner reads through `persist_inputs` with 0 table clients.
+
+Run the WORKER FACE with the runner at box/dell2 HEAD. DB-b-92 (round 44) is adding a sha256 check to `verify-persisted` in parallel. This
+run's `verify-persisted` is the index check, as drained; record which runner commit you ran.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

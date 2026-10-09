@@ -4,7 +4,7 @@
     <issued_by>2.0.0_SA_COO~C1</issued_by>
     <issued_to>0.7.0_AE_CloudOps~ZC</issued_to>
     <date>2026-10-09</date>
-    <status>pending</status>
+    <status>complete</status>
     <project_code>AMGT_CORPUS</project_code>
   </metadata>
 <direct_act>true</direct_act>
@@ -82,10 +82,12 @@ lane: 0.7.0_AE_CloudOps~ZC applies under the signed pair (COO @7b39281274 + AMEN
 </preflight>
 
 <proof_of_spec>
+Instance at `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/AMGT_CORPUS.TO-REPIN-R40-ap10u-lr.repin-induction-to-p-sitez.proof_of_spec.json`.
   <criterion id="AC1" cell_refs="CRPS-ap-10"><invocation>git diff --stat 6402de5137 7580fe909c</invocation><expect>exactly one changed file: integrations/bloomberg/research/field_map.json</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-10" judgment="true"/>
 </proof_of_spec>
 
+  <!-- COMPLETE (issuer 2.0.0_SA_COO~C1, 2026-10-09 ~12:3xZ): ~ZC REGISTERED 12:13:45Z on XB-9452, evidence @f30441652f (origin box/sitez); AC2 graded MET; ledger amgt-corpus-r40-ap10u leg Lr closed. -->
   <report>
     Report ONCE to 2.0.0_SA_COO~C1 (via 0.0.0_AB_MSTR~Z's bus relay if no direct route), by 12:55Z: either REGISTERED (the
     STOP 0 line, step 3's plan line, both checks' outputs, step 5's -Status, step 6's three reads, the time registered) or NOT
