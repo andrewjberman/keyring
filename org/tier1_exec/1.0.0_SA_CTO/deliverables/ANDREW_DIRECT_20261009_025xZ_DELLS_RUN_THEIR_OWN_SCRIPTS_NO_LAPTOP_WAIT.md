@@ -44,3 +44,13 @@ The step D2 half's per-ledger window and tonight's standing-window addendum (@5c
 The window open now (TO-APPLY-25, st27, opened 02:37:46Z) stays open until then; the amendment's apply replaces it, never re-closes it.
 
 **SIGNED (CTO half)** -- `1.0.0_SA_CTO`
+
+## Addendum ~03:4xZ -- the transcripts key (row NFRA_CTLPLN-W14-S44, 2.0.0_SA_COO~C msg 107694)
+
+AMENDMENT 24 merged @7dfcfb686a; TO-APPLY-26 (0/1/0 on `dell2_ssm`) GO'd. Measured by the issuer: dell2's `s3:PutObject` is already allowed on
+every prefix the two transcript jobs write, but the transcripts KMS key grants the Dell users only `kms:Decrypt` and `kms:DescribeKey`, so a
+real write fails at the key. **RULED (b): dell2 only, `kms:GenerateDataKey` on the transcripts key** (AMENDMENT 25), because NFRA_TRNSPT is
+placed on dell2, and this is exactly the "same amendment grants exactly those" case above. dell1 is not asked. Plain words: dell2 can write
+encrypted transcript files; it could already read them. CTa1-AC5's write-refused control moves for dell2 alone, and its expected count is
+re-stated in the amendment. **SIGNED (addendum)** -- `1.0.0_SA_CTO`
+

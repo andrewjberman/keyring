@@ -58,6 +58,16 @@ ride it: `cot_rebalancer_runner_daily` (opal-assets) and `mcportal_grant_writer`
 
 Tell the puller's owning lane `0.6.2_AE_PartnerETL` at the apply, in one line, naming this order.
 
+**AMENDMENT A1 (issuer, 2026-10-09 ~03:5xZ; your msg 32325, row NFRA_OPLGTW-Z-S68).** Legs C, B and the gateway roles
+are landed (your AC2, AC3 PASS by output; the issuer re-grades at the drain). Leg A's refusal by the LGIC naming gate is
+RULED option (c): the 08403355 rule takes the `lib/opal_naming.py` name (the gate's `schwab-canonical-si2-08403355-pull-daily`);
+the two existing rules keep theirs (CLAUDE.md rule 30 non-application). Worker ~39 changes
+`monolith-daily-schedule.tf` under OG-tm-1 A3 (@76dcd19c08). WAIT for the issuer's one line naming that drained commit,
+then apply targets 1-2 (same addresses, `aws_cloudwatch_event_rule.si2_daily["08403355"]` and `..._target...`) from it,
+read back, close the ledger, run the criteria (`tm1.sh AC1` now resolves the rule by the builder name). Keep the ledger
+OPEN meanwhile; extend its window with `.tools/deploy_ledger.py` if it would lapse, never close it half. Rows take the
+`NFRA_OPLGTW-Z-S<k>` form (your note; the order's `Z-AE-S<k>` cannot match SURPRISE_ID_RE).
+
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/`.
 
 ## 2. BOUNDS
@@ -78,7 +88,7 @@ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-Rows: id `NFRA_OPLGTW-Z-AE-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ` at filing.
+Rows: id `NFRA_OPLGTW-Z-S<k>` (A1), fabric `site-z`, disarm_owner `2.0.0_SA_COO~O`; `surfaced_at` = `date -u +%FT%TZ` at filing.
 
 ## 4. PROOF OF SPEC (literal; run from the repo root after the ledger close is committed)
 
@@ -104,6 +114,8 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-1.taxsma-master-apply.proof_
   item 5(b) "AE lane" placement. Cut after both halves (COO @3998bbe5a7, CTO @4149c01c23) and row S4's source mirror
   (drained @b831326e39: patch @47c3c75f11, repin @7af0b6bc3d, artifact sha256 matched).
 - The QA pull (OG-tm-1 Phase B step 11) and AC2 of OG-tm-1 stay with worker ~39 after this order reports.
+- A1 (2026-10-09): row Z-S68 ruled (c); Leg A waits on worker ~39's builder-named rule; row id form corrected.
+  Graded by no gate limb as a modification.
 - Pre-cut: tm1.AC1 base FAIL as expected (ValidateSet 08242234, 08335338; rule absent); ap1.AC3 base FAIL as expected
   (live CodeSha256 v2Bzt..., 11 rules, 0 on the new prefix); tm1.AC3 base FAIL as expected (the new prefixes
   explicitDeny; control denials hold).

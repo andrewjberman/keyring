@@ -1,0 +1,46 @@
+# irpt-smoke-p-portal-20260923 at base e0531491 (branch irpt-opal-scope-p-portal-20260923, on origin, not in DEV)
+# 19 M entries (corrected from 24 by 3.0.0_SA_CVO's review): line-ending only (git diff HEAD --ignore-cr-at-eol is empty); 2 AD entries: staged then deleted from the tree, saved in the .patch (git diff --cached)
+# git status --porcelain:
+AD src/pages/InvestorReporting/__tests__/opal-scope/README.md
+AD src/pages/InvestorReporting/__tests__/opal-scope/mounted.html
+ M src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts
+ M src/pages/InvestorReporting/contracts/wire/AnalysisRequest.ts
+ M src/pages/InvestorReporting/contracts/wire/AnalysisSubmissionRequest.ts
+ M src/pages/InvestorReporting/contracts/wire/AnalysisUploadRequest.ts
+ M src/pages/InvestorReporting/contracts/wire/AnalysisUploadResult.ts
+ M src/pages/InvestorReporting/contracts/wire/BoundaryRefusal.ts
+ M src/pages/InvestorReporting/contracts/wire/DirectoryEntry.ts
+ M src/pages/InvestorReporting/contracts/wire/ExportBundle.ts
+ M src/pages/InvestorReporting/contracts/wire/ExportReceipt.ts
+ M src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts
+ M src/pages/InvestorReporting/contracts/wire/NarrativePacket.ts
+ M src/pages/InvestorReporting/contracts/wire/OwnedAnalysisRequest.ts
+ M src/pages/InvestorReporting/contracts/wire/OwnedAnalysisRequestHistory.ts
+ M src/pages/InvestorReporting/contracts/wire/PerformanceReport.ts
+ M src/pages/InvestorReporting/contracts/wire/PublicStatusEnvelope.ts
+ M src/pages/InvestorReporting/contracts/wire/RenderPackage.ts
+ M src/pages/InvestorReporting/contracts/wire/SelectedAccounts.ts
+ M src/pages/InvestorReporting/contracts/wire/SelectionRequest.ts
+ M src/pages/InvestorReporting/contracts/wire/StatusEnvelope.ts
+?? .runtime-lint-final.json
+?? .runtime-lint.txt
+?? .runtime/
+?? reviewer-parser.test.ts
+?? reviewer-wire.json
+# untracked runtime scratch, not kept:
+.runtime-lint-final.json
+.runtime-lint.txt
+.runtime/dev-5173.pid
+.runtime/diagnose-entry.ts
+.runtime/gate-import-message.txt
+.runtime/gate-message.txt
+.runtime/irpt-preview.png
+.runtime/lint-final.json
+.runtime/lint-message.txt
+.runtime/preview-network.tsv
+.runtime/update-browse-tests.py
+reviewer-parser.test.ts
+reviewer-wire.json
+# CORRECTION (3.0.0_SA_CVO review REVIEW_DESK_CLEANUP_20261009.md): reviewer-parser.test.ts and reviewer-wire.json are an
+# independent reviewer's test and its captured API response, not scratch. Copied outside git (the capture may hold client
+# directory data) to C:\Users\AndrewBerman\desk_cleanup_archive_20261009\irpt-smoke\ before the delete; sha256 matched.

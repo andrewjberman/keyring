@@ -22550,3 +22550,34 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Nothing is half-landed: artifact restored to pre-act bytes and stamp, function untouched, no Terraform state written. Ledger amgt-resapp-r80-dd4-scoped-api-dell1 stays OPEN with L1,L2,L3 closed and L4-L7 unattempted. The decision is the issuer's and is a routing question, not a code one: either authorize a terraform init on dell1 for this root (an egress call that is Andrew's, not this seat's), or commit a lock file so init can run against pinned providers, or re-route the apply to a box where harvest/ is already initialized. The built file (42020671 B, sha256 OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs=) and the kept live package are both retained, so whoever applies does not need to rebuild."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S6",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T03:51Z",
+  "one_line": "dd-4 step 6 half-blocked: record-terraform-deploy.sh's reconcile reported '1 already-in-parity' while writing NO artifact_sha256, so comp-lambdamap's no-record count is unchanged at 41; and the recorder's own commit is refused by the naming limb on its CHANGELOG.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The deploy itself is complete and verified -- this row is about step 6's RECORD only. Live CodeSha256 OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs=, untargeted re-plan 'No changes', AC1 R80 DEPLOYED: YES 1 of 1, AC2 R78 YES 3 of 3 and R79 YES 1 of 1, condition 5 post 12 of 12 /thesis GETs 200.",
+      "record-terraform-deploy.sh harvest --function opal-amgt-scoped-api wrote last_deployed_commit 271e8f8b432f811c548f065d88981583eb0f1f91 and last_deployed_at 2026-10-09T03:46:54Z (both now committed at eafdafc265).",
+      "BLOCKER 1, measured: the entry's artifact_sha256 reads None AFTER the recorder ran. Its reconcile step printed 'reconcile-deployed: 0 reconciled, 0 HELD, 1 already-in-parity' and wrote nothing -- so a function with NO recorded sha at all was classed 'already-in-parity' rather than reconciled to the live CodeSha256 the block at record-terraform-deploy.sh:840 says it sets.",
+      "The consequence is measured against a printed denominator, not inferred: comp-lambdamap sha reads 'functions: 229 | recorded-sha: 188 | no-record: 41 | live-fns-in-acct: 232' BEFORE the record and the IDENTICAL line after it. no-record 41 -> 41. So the NO-RECORD class the order's step 6 exists to clear (preflight: row Z-S374, CTO~Z round-79 R5) is NOT cleared.",
+      "INSTRUMENT LIMIT also measured: `comp-lambdamap sha --help` prints no options at all, and the subcommand emits only the aggregate counts -- no per-function NO-RECORD lines. So step 6's 'quote its line' cannot be satisfied literally for one function; the aggregate is the only figure the instrument offers.",
+      "BLOCKER 2: the recorder's own git commit was refused -- 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' Both REFUSE lines are on infra/aws/terraform/harvest/CHANGELOG.json: ':3 harvest -> lookup(\"harvest\") ... hand-kept carrier of \"harvest\" outside every permitted context' and ':14 opal-amgt-scoped-api -> amgt-scoped-api ... NEW and OUT-OF-PATTERN as API_GW: REFUSE'. naming-gate DENOMINATOR 2 paths, REFUSE 2 graded.",
+      "No name was hand-edited and no override was taken, per CLAUDE.md rule 30 and this order's own condition ('Naming gate REFUSES hand-typed names ... a refusal is a missing registry row to report, never a workaround'). The source map alone was then committed deliberately and the naming gate PASSED 0 graded on it.",
+      "SIDE EFFECT CLEANED: the recorder's aborted commit left lambda-source-map.json and CHANGELOG.json STAGED in the shared index despite printing 'files unstaged'. In a shared worktree that would abort another seat's safe-commit on its contamination guard. Unstaged with `git reset HEAD -- <paths>`, working-tree content kept; git status then read ' M' and '??' rather than 'M ' and 'A '."
+    ]
+  },
+  "spec_asserts": "Order step 6: 'Run record-terraform-deploy.sh and the build's upload record so the function's entry in infra/aws/lambda/ci/lambda-source-map.json carries last_deployed_commit AND artifact_sha256 for THIS deploy. Then comp-lambdamap no longer files opal-amgt-scoped-api under NO-RECORD; quote its line.' record-terraform-deploy.sh:840 states its reconcile sets 'artifact_sha256 to the DEPLOYED CodeSha256 for the functions THIS apply touched'.",
+  "world_is": "Only half the record landed. last_deployed_commit and last_deployed_at are set; artifact_sha256 is still None because the reconcile classed a no-recorded-sha function as 'already-in-parity' and wrote nothing, leaving comp-lambdamap's no-record count at 41 before and after. Separately the recorder cannot commit at all here: the naming limb refuses its CHANGELOG.json on two names that are both EXISTING (the harvest carrier and the function), which is a missing registry row, not a hand-fix. And `comp-lambdamap sha` has no per-function output, so the step's 'quote its line' is not expressible against this instrument.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Ledger amgt-resapp-r80-dd4-scoped-api-dell1: L1,L2,L3,L4,L5,L7 closed with proof; L6 alone open and NOT closed, because the record it names is half absent. The deploy is NOT half-landed -- the function is live, correct and independently verified; L6 is bookkeeping, so the open leg should not be read as a live deploy hazard. infra/aws/terraform/harvest/CHANGELOG.json is deliberately left UNTRACKED in the shared tree so the recorder's entry for this deploy is not lost before someone adds the registry row. For the issuer: the artifact_sha256 gap looks like a defect in reconcile-deployed's parity classification for a NULL recorded sha, which would affect every one of the 41 no-record functions, not just this one."
+}
+```
