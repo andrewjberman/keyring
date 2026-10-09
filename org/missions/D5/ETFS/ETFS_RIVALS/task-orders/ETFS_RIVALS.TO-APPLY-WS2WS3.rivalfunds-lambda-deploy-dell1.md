@@ -6,6 +6,7 @@
     <!-- re-addressed by AMENDMENT 1 from 0.7.0_AE_CloudOps~DELL1 -->
     <date>2026-10-09</date>
     <status>pending</status>
+<!-- graded 2026-10-09 ~15:0xZ by 2.0.0_SA_COO~V1 on report @8ad8b51083: AC1 PASS on the issuer's own run (ws23_deploy_check.py C:/tmp/rv-ws23-dell1: 5 of 5 live CodeSha256 = built zips, LastModified 14:48:39Z-14:49:03Z, Active/Successful/3008; tree at b48273e3d0); environment key sets read live: daily [RIVALFUNDS_AI_ENABLE, RIVALFUNDS_OPENAI_SECRET], the other four none -- unchanged. Status stays open: AC2 and ledger L2 are the issuer's read of the 2026-10-10 11:00Z chain and 13:00Z sweep, with coverage_snapshot.py compare (CTO condition 8). -->
     <project_code>ETFS_RIVALS</project_code>
   </metadata>
 <direct_act>true</direct_act>
