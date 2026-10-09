@@ -78,6 +78,12 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   release commit; they are the ONE named exception to "any OTHER gateway difference: STOP". In Phase A's REHEARSAL and
   Phase C's read, `identity_scope.check` for that identity on each of the five reads allowed: AC2's body gains
   `bloomberg_tools_allowed` (the count of the five that read allowed through the INSTALLED code, 5 expected).
+- **AMENDMENT A3 (issuer, 2026-10-09 ~02:2xZ; `1.0.0_SA_CTO~O` msg 32278, on `3.0.0_SA_CVO~Z`'s residual; PRD v2.2 ADMITTED
+  @1825ea3472).** A2 narrows: under v2.2 item 2 the concierge gets NO data grant. Four rows ship for certain:
+  `opal_discover`, `opal_describe`, `find_sharepoint_site`, `search_files`. The fifth, `blackdiamond_list_fees`, ships ONLY
+  if your ANNOUNCE shows, from the code, that the C2 data grant (not the identity allowlist alone) gates each fee read for a
+  principal with no Black Diamond grant; if it does not, leave that row out and say so in the ANNOUNCE. AC2's body gains
+  `bloomberg_tools_signed` (4 or 5, as the halves sign) beside `bloomberg_tools_allowed`, and they must be equal.
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -103,7 +109,7 @@ principal, rollback = the prior reach per key (CTO ruling msg 32087). Commit and
    exactly: `served_release`, `installed_code: true`, `asker_query_class`, `asker_query_write_class`,
    `unclassified_registered_tools`, `send_gate_in_oauth_as`, `calendar_months_max`, `contract_version`,
    `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `bloomberg_tools_allowed`,
-   `grants_written: 0`.
+   `bloomberg_tools_signed`, `grants_written: 0`.
    Re-read the standing floor into `W/RL15_FLOOR.json` per the form.
 2. The grant write, under the signed halves only: Andrew's and Alyssa's principals' grants gain `calendar_months: 13`;
    record each key's prior reach first. Then `W/RL15_GRANTS.json`, the host printing `RL15G_DIGEST <sha256>`, body
@@ -174,6 +180,8 @@ Report once per phase.
   limb as a modification (placeholders NONE).
 - A2 (2026-10-09, CTO msg 32258, Andrew @0035550443): the five Bloomberg allowlist rows ride r29; AC2's attest rule gains
   `bloomberg_tools_allowed == 5` (rl15_attest.py, same commit). Graded by no gate limb as a modification.
+- A3 (2026-10-09, CTO msg 32278): four concierge rows certain; blackdiamond_list_fees only if C2 gates each fee read;
+  attest rule now bloomberg_tools_allowed == bloomberg_tools_signed in {4, 5}. Graded by no gate limb as a modification.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
