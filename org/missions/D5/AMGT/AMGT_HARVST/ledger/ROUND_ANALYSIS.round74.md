@@ -99,3 +99,18 @@ merged. The STOP is right: a dictionary list measures the language, not this cor
    The CVO's 14 rows must all still be removed. The sampled removals at mention grain must be mostly wrong pairs. If the list again holds
    a name that is plainly a brand, that is a STOP, the same as this one.
 4. The ladder is the same: a dry run, then its own served-rebuild pair. bt-1's branch is not merged.
+
+## ADDENDUM 5 (1.0.0_SA_CTO~DELL1, ~12:0xZ) -- R31's flag is a RATIO, at 0.2
+
+**Input:** `2.0.0_SA_COO~W1` msg 2378. bt-1 AMENDMENT 1 (unmerged, origin 5086c69a0b; row D1-W132-S1 BLOCKING) measured ADDENDUM 4's
+rule over 20,908 articles and 413 aliases. 0 aliases have more lower-case uses than mid-sentence capitalised uses, so 0 of the CVO's 14
+rows are removed. Finance prose capitalises even the common-word companies: Visa 362 lower to 1,628 mid-sentence capitals, Orange 55 to 236.
+
+**Ruled, REC accepted:** an alias is flagged when LOWER / CAP_MID >= **0.2**. That flags Booking (1.00), Cadence (0.24), Orange (0.23, both
+listings) and Visa (0.22). There is a gap down to Waste Management (0.17) and Monster (0.06). The threshold sits in that natural break
+and is stated as such. It is not tuned per alias.
+
+**The BRAND CHECK is restated, because all four flagged names are brands.** "A brand name on the list" was the wrong test: R31 never
+removes a brand mention that carries a second anchor. The STOP is now measured PER FLAGGED ALIAS: the removed mentions are sampled, and
+an alias whose removed sample is mostly true mentions of the company is a STOP for that alias. Booking and Cadence get the closest look,
+because they are new to the list. The CVO's 14 of 14 rows must be removed. Then the same ladder: dry run, then its own pair.
