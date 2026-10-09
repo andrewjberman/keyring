@@ -8385,6 +8385,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "AMGT_HARVST-Z-S109",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+  "surfaced_at": "2026-10-09T15:43:24Z",
+  "one_line": "r47 exited zero after stopping on error at 134/242; bbg failed keys store only error and the scheduled action has no output-log redirection.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "BS4_CLOSE carrier calls the driver finished and requests closure evidence; original bs4 acceptance requires completion, not a stopped leg. bu2 requests verbatim errors and runner log, with missing reads reported.",
+  "world_is": "r47 summary: done134/planned242,retry3,gave_up1,never_started104,stopped error,uploads4/failed4; no completed-backfill claim. bbg cycle has three retry keys with last_status error, empty run-record events and no task output-log redirection; no traceback recovered. Current bbg checkpoint 20261009T130038Z held44 done at read. No restart or runtime write.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/bs4_completed.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round77/bu2_bbg_error.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round77/bu2_task_action.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```

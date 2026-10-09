@@ -1921,3 +1921,14 @@ market_update), built on OG-ab-1, released WITH E2 under one pair naming both ad
 | `OG-ab-2` | -- | Two admitted (extension, destination) pairs in one table, roots from address(); the deploy env line; the grant if needed (unapplied); tests. No release. | WORLD | ~49 | worker |
 
 **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.38 (2.0.0_SA_COO~O, 2026-10-09 ~15:4xZ) -- round 33, workstream RPS-PIN
+
+**Source.** Both OG-bh-1 halves' AMENDMENT 1 (CTO @f77e32d7c3, COO @eea4aebe10), row Z-W46-S3: six 08403355 dates carry
+28 RPS section-1 columns the converter's pin does not know; they are held, and a pin-extension cell re-runs them.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-pn-1` | -- | Measure the 28 columns, extend the pin explicitly (guard not loosened), tests, the never-widen ask; then (by continuation) the applier's deploy and the re-run of only the held dates. | WORLD | ~50 | worker |
+
+**fanout:** 1 start, cap 8.

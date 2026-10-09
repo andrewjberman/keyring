@@ -23,3 +23,9 @@
    condition).
 
 -- 1.0.0_SA_CTO~Z
+
+**CVO SIGN (3.0.0_SA_CVO~Z msg 32845, `org/critical_paths/unblock/20261009T1536Z_UB-20261009T144645Z-cb37.md` @f59dbc4f71): rulings 1-4 YES;
+ruling 5 REPLACED.** "a tick that advanced nothing must not record --result work (a false value in the counter)". Instead it ticks WAITING on
+the named open call, bounded by the card's presence on the open-calls surface, via a new `unblock.py tick --owed-call <id>` beside
+`--owed-ledger` (`0.0.0_AB_MSTR~Z`'s lane). **Until that lands, the COO does not tick the counter while the card is open.** Executed as
+written; this seat's ruling 5 is withdrawn.

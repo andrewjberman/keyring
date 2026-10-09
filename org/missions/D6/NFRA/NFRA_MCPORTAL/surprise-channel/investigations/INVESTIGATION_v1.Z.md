@@ -1040,6 +1040,30 @@
     "spec_asserts": "Z-S24 ARMED: the task orders require pre-act records 'in the ledger entry', and the tool deletes that prose on hold/close-leg.",
     "world_is": "For NFRA_MCPORTAL the requirement is re-pointed: the record lives in a deliverables file, the entry carries a pointer, and the drain reads the deliverables file. The tool still regenerates silently. That defect, a destructive rewrite returning rc=0 with KNOWN-HELD, is routed to 0.0.0_AB_MSTR~Z and stays open there.",
     "notes": "Disarm owner per Z-S24: 2.0.0_SA_COO~MP (issuer). The pointer may itself be dropped by a later close-leg; at the drain the issuer reads the deliverables record, never the entry's prose."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S26",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-09T15:46Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S24",
+      "NFRA_MCPORTAL-Z-S25"
+    ],
+    "one_line": "The tool defect behind Z-S24 is FIXED at its source by 0.0.0_AB_MSTR~Z @a9d1b38f12 (CTO~Z msg 32830 ruled the tool MSTR's). deploy_ledger.py _write_entry now carries every hand-written section and hand line under '## Carried notes'. A replay of MP-x-4's entry at ca9b6c05f0 through hold keeps 136 of 136 lines, where the defect gave 23. Z-S25's discipline (record in a deliverables file, pointer in the entry) stays for MP-x-4 and MP-r-2 as cheap redundancy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 32853 (2026-10-09T15:43Z): fix @a9d1b38f12 on box/sitez; the held and malformed batteries still pass; the prose already lost at b8fc617e2e is not restored, and is in git at ca9b6c05f0 and re-homed at MP-x-4_PRE_ACT_RECORD.md @0b4deae4f4."
+      ]
+    },
+    "spec_asserts": "Z-S24: deploy_ledger.py hold/close-leg silently drop appended entry prose.",
+    "world_is": "The tool is fixed at source @a9d1b38f12. This project's record discipline (Z-S25) is kept, and the issuer does not re-test the fix.",
+    "notes": "Measured by the fixer's replay, cited not re-run. A worktree based before @a9d1b38f12 still runs the old tool; the applier's MP-x-4 release tree is cut from box/sitez, so its base decides which version it runs."
   }
 ]
 ```
