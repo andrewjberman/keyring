@@ -116,6 +116,26 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   and its 11:00Z window. A2, A3, A4 and A5 are WITHDRAWN: no allowlist row added or removed, `_SEED` untouched, no
   Bloomberg grant write, no Bloomberg field in AC2 or AC3. Any Bloomberg edit already made on your branch is reverted
   before the release commit.
+- **AMENDMENT A7 (issuer, 2026-10-09 ~04:3xZ) -- the four rulings of your ANNOUNCE section 0.**
+  - **D1 EXCLUDE** MP-x-1 (`app/admin_api.py`, `app/admin_fabric.py`, `app/refs/fabric_boxes.json`,
+    `tests/test_admin_fabric.py`) and CT-i-11 (`app/teams_route.py`, `tests/test_teams_route.py`, the three `/hx/teams`
+    Route lines in `app/server.py`): only the named cells' hunks ship (form step 2). They are LISTED CLOUD-only for the
+    drain-back, and `rl15.AC1` excludes exactly those seven paths (same commit).
+  - **D2 AUTHORISED**, as the release's own diff: E2 (`tests/test_mail_route_domain.py` ac06's pin becomes "holds exactly
+    the signed entries") and E3 (the two header lines of `deploy/mail_sender_domain_table.txt`). The table ships the four
+    entries of your section 8 (`opalinvest.com`, `49financial.com`, `cottonwoodmail.com`, `inflectionwealth.com`;
+    Alongside left out), subject to the halves.
+  - **D3 ALYSSA ONLY.** Phase C's grant write changes Alyssa's key alone (13 calendar months). Andrew has no profile, and
+    creating one would restrict his other tools; his reach goes to the CTO as a separate Andrew-scope question and does
+    not hold r29. AC3's rule is now one principal at 13 (`rl15_attest.py`, same commit).
+  - **D4 OPTION A.** The new secret `gateway/mail/commassist-bearer` (label `commassist`); the `deploy-to-ec2.sh` hunk of
+    `r29_mail_bearer_leg.patch.txt` ships in the release's own diff (E4); the one-line ARN addition in
+    `infra/aws/terraform/opal-gateway/gateway-read-secrets.tf` is committed by you (now in `<paths>`). Order of acts for
+    the applier: create the secret out-of-band, plan/apply that one policy line under the ledger, then the deploy. The
+    hand-over is the name and version id only.
+  NOW: cut the release commit on the candidate with E2, E3, E4 and the TF line; re-run form steps 2, 3 and 7 on the new
+  sha and re-read 1 and 4 (BEFORE/REHEARSAL stand unless a host file differs, proven by blob); rewrite the ANNOUNCE
+  pinned to the release sha; commit, report, STOP for the three halves.
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -169,6 +189,7 @@ principal, rollback = the prior reach per key (CTO ruling msg 32087). Commit and
 ## 3. SURFACES
 
 <paths>
+infra/aws/terraform/opal-gateway/gateway-read-secrets.tf
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/opal-gateway/
 org/standards/NFRA_OPLGTW_CONTRACT.json
@@ -181,7 +202,7 @@ Rows: id `NFRA_OPLGTW-Z-W43-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 ## 4. PROOF OF SPEC (literal; run from your worktree root, ONE AFTER THE OTHER, after the drain-back and the applier's ledger close are committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC1.sh; echo "exit=$?"</invocation><expect>(?s)descends from aa75078e1b=yes; host shipped files equal the release bytes: (\d+) of \1.*sentinel at HEAD=no; gateway files differing live\.\.CLOUD after drain-back \(CLOUD-only runbook excluded\) 0.*floor: rl4\.AC1 yes; ht\.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC1.sh; echo "exit=$?"</invocation><expect>(?s)descends from aa75078e1b=yes; host shipped files equal the release bytes: (\d+) of \1.*sentinel at HEAD=no; gateway files differing live\.\.CLOUD after drain-back \(listed CLOUD-only paths excluded\) 0.*floor: rl4\.AC1 yes; ht\.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC2.sh; echo "exit=$?"</invocation><expect>(?s)r29 served content: fields=yes ssm=Success digest=yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC3.sh; echo "exit=$?"</invocation><expect>(?s)13-month grants: fields=yes ssm=Success digest=yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
@@ -222,6 +243,8 @@ Report once per phase.
 - A6 (2026-10-09, CTO msg 32327, Andrew ~03:3xZ): the Bloomberg mirror needs an @opalinvest.com gate in the same
   release; held for r30 with its gate; A2-A5 withdrawn; attest rules back to the four-cell body. Graded by no gate limb
   as a modification.
+- A7 (2026-10-09): D1 exclude (seven CLOUD-only paths in AC1), D2 authorise E2/E3, D3 Alyssa only (AC3 one principal),
+  D4 option A (E4 deploy hunk + one TF ARN line). Graded by no gate limb as a modification.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
