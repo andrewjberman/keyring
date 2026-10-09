@@ -21,6 +21,12 @@ per file class"; 0.0.0_AB_MSTR msg 107365: "the integrator should regenerate gen
      from the merged tree with `.tools/missions-tree-index.py derive --write`, over a narrow extract of the merged
      tree (that project's home, the two registers, the contract): about 2 s, against 85 s for a full extract.
 
+  4. A CROSSBOX call record (`org/devices/crossbox/XB-*.json`, one per file, written by the sending box and acked or closed
+     by the receiving box; NFRA_GATSCP GS-f-4, ruling R5): resolved as a FOLD BY RECORD FIELD, never a line union -- the
+     same fold `.tools/crossbox-call.py merge` uses. A top-level field (id, kind, subject, ...) must agree or be changed
+     on one side only; a `sent`, `ack` or `closed` block both ends wrote folds sub-field by sub-field (write-once: a null never
+     overrides a value, a value held differently on both sides REFUSES the path). `state` is derived, not folded.
+
   3. An APPEND-ONLY multi-writer log (APPEND_ONLY below: every manager spawn, /govern reaper run, law edit and deploy
      bypass appends a line; 0.0.0_AB_MSTR msgs 107817, 107847): resolved as a LINE UNION -- CLOUD's file, then the
      box-only lines in the box's order. Not a byte-prefix test: hand unions reorder lines, and a prefix test then HELD.
@@ -49,6 +55,8 @@ import tempfile
 CHANNEL_RE = re.compile(r'(^|/)surprise-channel/(investigations|remediations|adjudications)/[A-Z]+_v\d+\.md$'
                         r'|^org/surprise_channel/(.+/)?[A-Z]+_v\d+\.md$')
 GENERATED_RE = re.compile(r'^org/projects/[^/]+\.json$')
+CROSSBOX_RE = re.compile(r'^org/devices/crossbox/XB-[^/]+\.json$')
+XB_BLOCKS = ('sent', 'ack', 'closed')
 APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log', 'org/safe-deploy-bypass-audit.log',
                'org/git-author-override-audit.log')
 ROOT = subprocess.run(['git', 'rev-parse', '--show-toplevel'], capture_output=True, text=True).stdout.strip() or '.'
@@ -333,6 +341,48 @@ def union_append(base, ours, theirs, cloud='ours'):
     return head + ''.join(extra), 'append-only line union cloud+box-only=%d' % len(extra)
 
 
+def fold_crossbox(base, ours, theirs):
+    """Fold a crossbox record written on both ends (GS-f-4). Same rule as `crossbox-call.py merge` (read, not edited): the
+    identity and body fields, and each of the `sent`, `ack`, `closed` blocks, take the side that moved from the base; a block
+    BOTH ends wrote folds sub-field by sub-field -- a null never overrides a value and two different values REFUSE ('resolve by hand'); `state` is recomputed
+    from the folded fields exactly as `derive_state` does. Returns (text, how) or (None, why)."""
+    try:
+        recs = [json.loads(x) if x is not None else None for x in (base, ours, theirs)]
+    except ValueError:
+        return None, 'a side is not JSON'
+    b, o, t = recs
+    if not (isinstance(o, dict) and isinstance(t, dict)) or (b is not None and not isinstance(b, dict)):
+        return None, 'a side is not a record object'
+    if not o.get('id') or o.get('id') != t.get('id') or (b is not None and b.get('id') != o.get('id')):
+        return None, 'the sides are not the same record id'
+    merged = dict(o)
+    for key in list(o) + [k for k in t if k not in o]:
+        if key == 'state':
+            continue
+        ov, tv = o.get(key), t.get(key)
+        if key in XB_BLOCKS and (ov is None or isinstance(ov, dict)) and (tv is None or isinstance(tv, dict)):
+            ok, v = three(b.get(key) if b else None, ov, tv)
+            if ok:                      # one side moved the block (or both to the same value): it takes that side
+                merged[key] = v
+                continue
+            block = dict(ov or {})      # both ends wrote the block: the sub-field fold `crossbox-call.py merge` uses
+            for sub, val in (tv or {}).items():
+                if val is None:
+                    continue
+                if block.get(sub) not in (None, val):
+                    return None, 'both sides hold a different %s.%s (%r vs %r): resolve by hand' % (key, sub, block[sub], val)
+                block[sub] = val
+            merged[key] = block
+            continue
+        ok, v = three(b.get(key) if b else None, ov, tv)
+        if not ok:
+            return None, 'field %s changed differently on both sides (%r vs %r)' % (key, ov, tv)
+        merged[key] = v
+    closed, ack = merged.get('closed') or {}, merged.get('ack') or {}
+    merged['state'] = 'CLOSED-BOTH' if (closed.get('from_at') and closed.get('to_at')) else ('ACKED' if ack.get('at') else 'OPEN')
+    return json.dumps(merged, indent=1, ensure_ascii=True) + '\n', 'crossbox-fold'
+
+
 def extends(rev, path):
     """True when the working copy of `path`, cleaned as git would store it, extends rev:path byte for byte and is longer."""
     head = show(rev, path)
@@ -454,6 +504,12 @@ def main(argv):
                     text, how = (text2, how2) if text2 is not None else (None, how + '; ' + how2)
         elif GENERATED_RE.match(p):
             text, how = regenerate(p, opts['tree'], opts['ours'], opts['theirs'])
+        elif CROSSBOX_RE.match(p):
+            sides = [show(opts[k], p) for k in ('base', 'ours', 'theirs')]
+            if sides[1] is None or sides[2] is None:
+                text, how = None, 'a crossbox record is absent on one side'
+            else:
+                text, how = fold_crossbox(*sides)
         elif p in APPEND_ONLY:
             sides = [show(opts[k], p) for k in ('base', 'ours', 'theirs')]
             if sides[1] is None or sides[2] is None:

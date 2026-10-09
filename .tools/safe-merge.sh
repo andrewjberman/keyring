@@ -41,6 +41,7 @@
 #             4 CONFLICT, THE MERGE IS OPEN AND YOURS TO RESOLVE (nothing landed)
 #             5 COMMITTED BUT THE BRANCH WAS NOT CARRIED, in whole or in part (tree check, see _verify_merge_tree)
 #             6 COMMITTED AND CARRIED, BUT THE INDEX DISAGREES WITH HEAD on merged path(s) (see _verify_shared_index)
+#             7 COMMITTED BUT THE MERGE COMMIT LACKS PATH(S) THE MERGE STAGED (GS-f-6, row D1-S5; see _verify_staged_carried)
 #
 # Owner 2.0.0_SA_COO (the drain is the COO's limb). Lane .tools/ (ANY).
 set -uo pipefail
@@ -126,6 +127,9 @@ if [ "${1:-}" = "--self-test" ]; then
   # GS-t-3: the fast lane (lands by commit-tree, so no commit hook fires) runs the scoped tree check on the merged bytes.
   chk "the fast lane runs the scoped tree check on its private index and refuses by it" \
       "grep -q 'missions-tree-index.py\" check --staged --act-from-env _SM_ACT' '$0' && grep -q 'REFUSED BY THE TREE CHECK ON THE MERGE' '$0'"
+  # GS-f-6 (row D1-S5): the commit paths are compared with the paths the merge staged; behaviour is covered by
+  # .tools/tests/test_safe_merge_continue.py (a full resolution exits 0; the planted partial exits 7).
+  chk "the commit path refuses a merge commit lacking a path the merge staged (exit 7)"       "grep -q '_verify_staged_carried HEAD' '$0' && grep -q 'the merge commit lacks' '$0'"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
   echo "  STOP: BLIND SPOT, STATED: every arm above is a REFUSAL or a structural check. This"
   echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
@@ -305,6 +309,28 @@ _verify_merge_tree() {
     printf '%s\n' "$dropped" | sed '/^$/d; s/^/              /' >&2
   fi
   return 0
+}
+
+# ---------------------------------------------------------------- post-commit STAGED-PATH check (GS-f-6, row D1-S5)
+# Row D1-S5 (ARMED): a drain's --continue committed 1 of 4 staged files and exited 0. Nothing compared what the commit
+# CHANGED against what the merge STAGED. EXPECTED = the paths the conflicted merge staged ($STATE: staged-and-unmerged at
+# the conflict) plus the paths the commit's private index held. GOT = `git diff --name-only <m>^1 <m>`. LACKS = EXPECTED
+# minus GOT, except a path whose working copy equals the committed blob (a deliberate keep-ours resolution: nothing was
+# lost, the first parent's version IS the resolution). A path whose working copy differs from the committed blob is a
+# resolution that was staged away from the commit. Read-only: it never resets or rewrites the commit. rc 7 when LACKS is
+# non-empty; the recovery is printed for the seat to run.
+_verify_staged_carried() {
+  local m="$1" expect="$2" lacks="" p nl
+  while IFS= read -r p; do
+    [ -n "$p" ] || continue
+    git diff --quiet HEAD -- "$p" 2>/dev/null && continue
+    lacks="${lacks}${p}"$'\n'
+  done < <(LC_ALL=C comm -23 <(printf '%s\n' "$expect" | sed '/^$/d' | LC_ALL=C sort -u) <(git diff --name-only "$m^1" "$m" | LC_ALL=C sort -u))
+  nl="$(printf '%s' "$lacks" | sed '/^$/d' | wc -l | tr -d ' ')"
+  [ "$nl" -gt 0 ] || return 0
+  echo "safe-merge: REFUSED -- the merge commit lacks ${nl} staged path(s): $(printf '%s' "$lacks" | sed '/^$/d' | tr '\n' ' ')" >&2
+  echo "            COMMITTED $(git rev-parse --short "$m") ANYWAY (the commit is not rewritten or reset). Recover: git add -- <the paths above> and commit them under your serial with .tools/safe-commit.sh (their merged content is still in the working tree)." >&2
+  return 7
 }
 
 if [ "${1:-}" = "--verify-merge" ]; then
@@ -833,6 +859,8 @@ _HANG_MARK="$(git rev-parse --git-common-dir)/safe-merge-hook-killed"
 # it recomputes BOTH ids from what it is committing and they match; on any difference it grades as before.
 export SAFE_MERGE_GRADED_TREE="$(GIT_INDEX_FILE="$_PRIV_IDX" git write-tree 2>/dev/null || echo '')"
 export SAFE_MERGE_GRADED_GATE="$(git hash-object "$GATE" 2>/dev/null || echo '')"
+# GS-f-6: what the commit must carry, captured before the state file is removed (see _verify_staged_carried).
+_EXPECT="$( { [ "$_CONTINUING" -eq 1 ] && cat "$STATE" 2>/dev/null; printf '%s\n' "${STAGED_ARR[@]}"; } | sed '/^$/d' | LC_ALL=C sort -u )"
 _try=0
 while :; do
   _try=$((_try + 1))
@@ -868,6 +896,11 @@ _vrc=0; _verify_merge_tree HEAD || _vrc=$?
 if [ "$_vrc" -eq 5 ]; then
   echo "safe-merge: NOT MERGED -- commit $(git rev-parse --short HEAD) landed WITHOUT the branch's content, in whole or in part (exit 5)." >&2
   exit 5
+fi
+_src=0; _verify_staged_carried HEAD "$_EXPECT" || _src=$?
+if [ "$_src" -eq 7 ]; then
+  echo "safe-merge: COMMITTED $(git rev-parse --short HEAD) BUT IT LACKS PATH(S) THE MERGE STAGED (exit 7)." >&2
+  exit 7
 fi
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
 echo "safe-merge: remember the drain's remaining steps -- remove the worktree and its branch explicitly."
