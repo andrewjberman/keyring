@@ -4468,3 +4468,85 @@ round.** Never edit an existing row.
   "world_is": "Two keys are hand-built by fragment to pass the gate; the gate's purpose (every new address from the builder) is defeated for both."
 }
 ```
+
+## ADVI_COTBKF-D2-S68 -- L9 CB42ap1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S68",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:07:32Z",
+  "one_line": "L9 CB42ap1-AC2 MET: the writer reads ONE registry file, REGISTRY_FILE = 'scopes.json' at Path(__file__).resolve().parent, with the opal_naming / repo-registry search removed and no fallback (a missing or bad file returns (None, reason)); absent is never the own firm (round 40's rule, unchanged); the removed share-class check filtered on 't1_transaction_observed', a source the writer never emits, so it was unreachable (W68-S1). Both served keys equal the repo bytes (this seat's read). Note: repo-file inputs resolve their tree from Path(__file__).parents[3], the repo root only when run from the repo; from code/gold/ it resolves elsewhere and stamps absent -- safe, NOT-CLEAN for those inputs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff f30ad987a6 1111ec9b9b -- data/cot/scripts/gold/build_canonical_prices_v2.py",
+      "this seat's reads ~15:0xZ: s3://opal-data-cot/code/gold/build_canonical_prices_v2.py sha256 3ac0a502798b5382 = data/cot/scripts/gold/build_canonical_prices_v2.py; s3://opal-data-cot/code/gold/scopes.json sha256 13947f7f2b35c6c9 = infra/logic/registry/scopes.json",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_42_DRAIN_END_20261009.md @0dd3bad9eb (msg 3540)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_42_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB42ap1-AC2: exactly one registry file, read from the writer's own directory, with no fallback path; absent is never the own firm; the removed check was unreachable.",
+  "world_is": "Met; one note on repo-file inputs."
+}
+```
+
+## ADVI_COTBKF-D2-W72-S1 -- the split-literal pattern outside the rewrite script: counts per file
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W72-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~72",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "Same split-literal pattern, counted not changed: commonwealth_bd_txn_provenance.py 2 sites (:37 PFX = '/'.join(['silver','pri'+'ces']) -- the identical key; :103 re.search('pri'+'ce|...')); data/cot/scripts/gold/build_canonical_prices_v2.py 1 site (:65 '/'.join(['silver','']) ); 0 in the other 36 commonwealth_*.py files (38 files scanned incl. the writer; 2 carry it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:37",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:103",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:65",
+      "ast scan with _split_literals from data/assets/scripts/silver/tests/test_cot_price_rewrite_no_split_literals.py at f317f82c20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-as-1 item 4: count the pattern in the other commonwealth scripts and the cot writer; change none.",
+  "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
+}
+```
+
+## ADVI_COTBKF-D2-S69 -- L9 CB45as1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S69",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:21:38Z",
+  "one_line": "L9 CB45as1-AC2 MET: both keys now come from validated registry rows -- data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76 PFX = legacy_address(OWN + '-silver-prices-prefix') and :251 PIN_KEY = legacy_address(OWN + '-code-gold-scopes-pin'), the rows added to infra/logic/registry/legacy_addresses.json (bucket opal-data-cot, templates silver/prices/ and code/gold/scopes.json, no firm token in the code); 'python lib/opal_naming.py validate' reads OK, 0 warnings (this seat's run); the templates give the same keys as before; no split literal and no bypass (the worker's typed-token first commit was refused by the gate and fixed). Note: the rows are read through legacy_address(), the canon's legacy-shape builder, not address() -- the criterion's 'validated registry row' branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76, :251",
+      "git diff f317f82c20 845411827e -- infra/logic/registry/legacy_addresses.json (two rows)",
+      "python lib/opal_naming.py validate: OK 54 system rows, 14 scope rows, 0 warnings",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_45_DRAIN_END_20261009.md @a6f57849df (msg 3558)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_45_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB45as1-AC2: the keys come from address() via a validated registry row, OR a named R20 departure with one plain constant and no bypass; the resulting keys are unchanged.",
+  "world_is": "Met as written."
+}
+```

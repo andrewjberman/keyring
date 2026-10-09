@@ -1,0 +1,74 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "LGIC_BLANKFIX",
+ "round": 14,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-10-09T15:08Z",
+ "report_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/COMPLETION_REPORT.round14.json@c7ea86db5b",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-t-6.root-check.proof_of_spec.json@b1e7801e67",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED since round 7, re-confirmed at round 12's coverage read. Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-z-1.bucket-of-reads-constants.proof_of_spec.json@b14dcb9983",
+   "state_observed": "EXERCISED",
+   "note": "hole=0 over 86 of 86 mapped roots (round 12, from 285 at round 7). Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-t-2.fourth-verdict.proof_of_spec.json@b8be741508",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED in earlier rounds, carried unchanged in round 12's coverage read. Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-5.key-classes.proof_of_spec.json@12feb892ec",
+   "state_observed": "EXERCISED",
+   "note": "The CVO's own round-14 run: 180 schedules give 148 agreeing and 32 partial with reasons; 0 mismatch and 0 carried over. BAB1-AC3 (a person agreeing with the cadence words) MET at round 13. One rename landed from the list alone through the real gate. Stored files: 254, owner and scope as columns. Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/LGIC_BLANKFIX.TO-BF-w-5.readme-residual.proof_of_spec.json@ab63b67a10",
+   "state_observed": "EXERCISED",
+   "note": "REALIZED at round 7 (BV2-AC2). Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/LGIC_BLANKFIX.TO-BF-y-2.override-bound-to-message.proof_of_spec.json@bd741821cb",
+   "state_observed": "EXERCISED",
+   "note": "Switch ON @4d2bfc6dfd; live read @8bff90628c refuses an unplaceable name with its owed text and passes a placeable one (round 12). Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-y-3.nine-held-entries.proof_of_spec.json@e00cc8e6fe",
+   "state_observed": "EXERCISED",
+   "note": "86 of 86 roots mapped, stale_hints=0 (round 12). Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/LGIC_BLANKFIX.TO-BF-t-5.key-classes.proof_of_spec.json@12feb892ec",
+   "state_observed": "EXERCISED",
+   "note": "25 of 25 patterns shown as patterns (round 13), re-read 25 of 25 in round 14. Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/LGIC_BLANKFIX.TO-BF-v-6.repeat-by-name.proof_of_spec.json@d10fffcdcf",
+   "state_observed": "EXERCISED",
+   "note": "One repeatable run re-run by the CVO, clean: 86/86 mapped, hole=0 (round 12). Grades: ledger/ROUND_ANALYSIS.round12.md, round13.md and round14.md (close read @6d071ac6da); slugs ADJUDICATION_v10 to v12."
+  }
+ ]
+}

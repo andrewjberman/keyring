@@ -208,7 +208,7 @@ projects:
     waits_on: []
     why: The vocabulary every later name and storage key is minted from (org/standards/NAMING_SCHEMA.json).
   LGIC_ENFORCE:
-    fabric: laptop
+    fabric: dell1
     stage: 6
     waits_on:
     - project: LGIC_NAMING
