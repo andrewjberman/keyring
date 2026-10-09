@@ -451,3 +451,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The override log is missing from box-sync's union set, so a manager resolves it by hand each time. Carried by the box manager, who rules nothing on it."
 }
 ```
+
+## NFRA_GATSCP-D1-S13 -- the row gate's self-test reads two LIVE arms red since a proof-of-spec-check change outside this project
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S13",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T13:36Z",
+  "one_line": "surprise-row-gate.py --self-test reads 2 arms failed of 246, both LIVE arms about LGIC_NAMING's proof terminality, after reading 0 failed at ~10:3xZ; the one change to proof-of-spec-check.py in between is 1.0.0_SA_CTO's e7c10e5b4b (13:00Z).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "box/dell1 642c914b19, ~13:5xZ: RESULT: 2 arm(s) failed of 246 -- 'proof terminality LIVE: LGIC_NAMING LN-e-3-r2 ... reads terminal by proof' and 'proof terminality DOCTORED PAIR, real bytes'",
+      "GS-e-4 worker report (round 2, ~10:3xZ): RESULT: 0 arm(s) failed of 246",
+      "git log since 09:00Z on .tools/proof-of-spec-check.py and LGIC_NAMING: e7c10e5b4b 1.0.0_SA_CTO 13:00:45Z 'fix(proof-of-spec): kind aws_resource for a live AWS resource that is not S3'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The row gate's self-test is green; its live arms read LGIC_NAMING's real proof instances as the checker grades them.",
+  "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
+}
+```

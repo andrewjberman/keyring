@@ -88,7 +88,7 @@ Every invocation runs under `timeout 120`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>0.7.0_AE_CloudOps~Z</slot>
 <fabric>site-z</fabric>

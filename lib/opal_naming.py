@@ -2023,7 +2023,8 @@ def _kebab(label, value):
 
 def _is_cadence(kind, schema):
     cad = schema["cadence"]
-    return kind in cad["values"] or (kind.startswith("on-") and bool(re.match(cad["event_token_regex"], kind[3:])))
+    return (kind in cad["values"] or bool(re.match(cad["interval_form"]["token_regex"], kind))
+            or (kind.startswith("on-") and bool(re.match(cad["event_token_regex"], kind[3:]))))
 
 
 # The scope classes name() takes in its scope slot; generated_locals.tf carries them as name_scope_classes.
