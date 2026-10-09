@@ -1,0 +1,2465 @@
+{
+  "kind": "COMPLETION_REPORT",
+  "schema_version": "1.0",
+  "project": "DSGN_AMGTV1",
+  "round": 68,
+  "written_by": "2.0.0_SA_COO~D1",
+  "written_utc": "2026-10-09T17:17Z",
+  "decomposition_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/decompositions/DSGN_AMGTV1_DECOMP.md@41990c51cc",
+  "denominators": {
+    "fwd_in_prd_header": 26,
+    "cells_in_decomposition": 169,
+    "task_orders": 165,
+    "task_orders_terminal_with_valid_proof": 164
+  },
+  "outcomes": [
+    {
+      "fwd_id": "FWD-1",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- one live walk, signed in with a real account, on real data, ending in Valero's Recommendation card open ACCEPT The PM picks Valero out of the list by its company name, reads its header's key figures (v0.15: the SAUX-03 row), opens the Thesis and reads it as three cards under the main chart, then opens the Recommendation and can say whose view it is and which document each citation comes from. Any step fed by sample data instead of the real thing fails the outcome. SOURCE brief O1 (:54-62); memo M6, M7, M9, M14",
+      "cells": [
+        {
+          "cell_id": "AV-e-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~4/DSGN_AMGTV1.TO-AV-e-2.the-recommendation-leads-with-the-teams-case.proof_of_spec.json@4abe03c1b6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~59/DSGN_AMGTV1.TO-AV-g-1.the-walker-account-is-leased.proof_of_spec.json@e41e28e641"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~10/DSGN_AMGTV1.TO-AV-r-2.the-team-case-gap-in-words.proof_of_spec.json@f20d6a70ae"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~1/DSGN_AMGTV1.TO-AV-t-1.the-row-leads-with-the-company-name.proof_of_spec.json@d26a8eaae3"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~2/DSGN_AMGTV1.TO-AV-t-2.the-header-reads-as-four-cards.proof_of_spec.json@4a05e9eb4a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~3/DSGN_AMGTV1.TO-AV-t-3.the-thesis-reads-as-three-cards.proof_of_spec.json@0eff30f96e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~3/DSGN_AMGTV1.TO-AV-t-4.the-tabs-harness-stubs-the-dialog.proof_of_spec.json@4e7abf9715"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-u-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~25/DSGN_AMGTV1.TO-AV-u-4.the-walk-grades-by-name.proof_of_spec.json@4c783f7501"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-x-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-x-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~67/DSGN_AMGTV1.TO-AV-x-1.the-identity-card-shows-the-served-company-name.proof_of_spec.json@463d13e3fd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-y-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-y-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~68/DSGN_AMGTV1.TO-AV-y-1.the-figure-tooltip-stays-in-its-popup-and-shows-no-raw-code.proof_of_spec.json@ca85e04a70"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zv-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zv-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~105/DSGN_AMGTV1.TO-AV-zv-1.driver-passage-and-segments.proof_of_spec.json@874f3e21fa"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-2",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- all four lead-panel lists walked and read ACCEPT In all four lists every row shows the company's name, its ticker, Opal's own asset class, sub-asset class and sector, the period figure and how many places it moved since the last run -- laid out like the Positioning page's holdings breakdown. No row names a company by a code the PM would have to look up. SOURCE brief O2 (:64-69); M2, M4, M6, M14 v0.6 RESTATED (CTO~Z placement ruling R5; Andrew 2026-10-01 03:4xZ \"No other views for chatter, no other views for price\"): the list form is RETIRED. The same identity -- name, ticker, asset class, sub-asset class, sector, the period figure and places moved -- is read on each FWD-21 bubble and each FWD-22 bar (its label, or one hover away). DONE WHEN: the walk reads every identity field on 3 bubbles and 3 bars; no mark names a company by a code alone.",
+      "cells": [
+        {
+          "cell_id": "AV-e-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~7/DSGN_AMGTV1.TO-AV-e-5.lead-panel-captions-and-the-slash-key.proof_of_spec.json@a3c90f26db"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-f-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~56/DSGN_AMGTV1.TO-AV-f-1.price-is-ranked-bars-one-form.proof_of_spec.json@34b7bd3801"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-p-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-p-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~32/DSGN_AMGTV1.TO-AV-p-1.the-column-heading-follows-the-grain.proof_of_spec.json@dc8ea6cba0"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-q-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-q-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~31/DSGN_AMGTV1.TO-AV-q-3.classification-labels-per-positioning.proof_of_spec.json@55295e6044"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~9/DSGN_AMGTV1.TO-AV-r-1.machine-strings-off-the-face.proof_of_spec.json@d14d33adc7"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-s-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-s-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~27/DSGN_AMGTV1.TO-AV-s-4.lead-columns-and-no-pass-badge.proof_of_spec.json@d7ff61a4f9"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~1/DSGN_AMGTV1.TO-AV-t-1.the-row-leads-with-the-company-name.proof_of_spec.json@d26a8eaae3"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-u-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~25/DSGN_AMGTV1.TO-AV-u-4.the-walk-grades-by-name.proof_of_spec.json@4c783f7501"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-w-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-w-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~14/DSGN_AMGTV1.TO-AV-w-2.tickers-as-bloomberg-writes-them.proof_of_spec.json@627e4dca8f"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-ze-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-ze-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~78/DSGN_AMGTV1.TO-AV-ze-1.every-bar-and-bubble-carries-its-served-identity.proof_of_spec.json@a58cadb7a8"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-4",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on names in more than one currency ACCEPT (v0.15, SAUX-03) The header holds ONE key-figures row -- price, market cap, enterprise value, net debt, beta, average volume, short interest -- every figure at rest, none appearing twice, and every money figure is shown in the company's own currency. SOURCE brief O4 (:77-82); M7",
+      "cells": [
+        {
+          "cell_id": "AV-e-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~6/DSGN_AMGTV1.TO-AV-e-3.money-prints-one-way.proof_of_spec.json@a823f119b8"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-e-7",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~6/DSGN_AMGTV1.TO-AV-e-7.the-shell-harness-reads-the-new-money-form.proof_of_spec.json@c264dd0a53"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~10/DSGN_AMGTV1.TO-AV-r-5.the-last-band-money-and-caption.proof_of_spec.json@33e6ee2cd5"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~2/DSGN_AMGTV1.TO-AV-t-2.the-header-reads-as-four-cards.proof_of_spec.json@4a05e9eb4a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zt-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zt-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~103/DSGN_AMGTV1.TO-AV-zt-1.header-reason-full-value-exec-words.proof_of_spec.json@a4e902b9db"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zy-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zy-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~109/DSGN_AMGTV1.TO-AV-zy-2.no-stored-figures-says-so-once.proof_of_spec.json@1e8b0bc84e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zze-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zze-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~116/DSGN_AMGTV1.TO-AV-zze-2.segment-table-and-five-research-note-sections.proof_of_spec.json@c277c02b99"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-5",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on a covered name with harvested coverage ACCEPT For a company we cover, a dated line shows its articles, events and headlines, with a word cloud from its own coverage; the firm's own harvested publications come first. A company that has coverage never reads \"none\". v0.9 DONE WHEN, enriched (Andrew 2026-10-02 ~17:33Z N2-N6): - the timeline is a recharts chart at a readable height, with a labelled y-axis (articles per day) and dated ticks; - bars use one data-family hue, and no status colour paints a bar (search state is a non-status cue or a tooltip line); - hovering a day shows its articles, distinct publishers, mention count and strongest headline in the shared tooltip; - coverage events and earnings releases are markers ON the chart at their dates, each opening that day; - recent news is its own card ABOVE the timeline; - the selected day opens in the page's shared HeroDialog, never inline under the chart; - article rows read headline, publisher and time at rest. Earnings markers render the served marker, or its designed empty state while the producer has none (the fold record). v0.14 The word cloud renders the terms AMGT_RESAPP FWD-39 serves (`word_cloud` on the timeline payload), sized by the served count; an empty served list renders its served reason. The page counts nothing. SOURCE brief O5 (:84-88); M8, M15; UI/UX brief O2, O3 (SAUX-06..15)",
+      "cells": [
+        {
+          "cell_id": "AV-u-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~22/DSGN_AMGTV1.TO-AV-u-1.the-timeline-panel-in-words.proof_of_spec.json@6ec79a1e8d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zg-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~80/DSGN_AMGTV1.TO-AV-zg-1.timeline-chart-and-day-dialog.proof_of_spec.json@5338d596dd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~87/DSGN_AMGTV1.TO-AV-zh-2.repairs-tokens-controls-served-values.proof_of_spec.json@85c63e60bd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zm-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zm-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~96/DSGN_AMGTV1.TO-AV-zm-3.timeline-word-cloud.proof_of_spec.json@a759d8841f"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zn-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zn-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~98/DSGN_AMGTV1.TO-AV-zn-2.repairs-list-type-tooltip-zero-move.proof_of_spec.json@2a479b850a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-6",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on a name whose thesis is drafted ACCEPT Investment thesis, Risks and Recommendation sit as three cards under the main chart; each opens a window with its sentences and their evidence; every citation names its document in words; and the Recommendation says whose view it is -- the team's stated position, never a line lifted from a filing and passed off as one. SOURCE brief O6 (:90-95); M9",
+      "cells": [
+        {
+          "cell_id": "AV-e-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~4/DSGN_AMGTV1.TO-AV-e-2.the-recommendation-leads-with-the-teams-case.proof_of_spec.json@4abe03c1b6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-e-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~4/DSGN_AMGTV1.TO-AV-e-4.model-lines-in-words.proof_of_spec.json@2c4d4fe5ff"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~10/DSGN_AMGTV1.TO-AV-r-2.the-team-case-gap-in-words.proof_of_spec.json@f20d6a70ae"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-t-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-t-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~3/DSGN_AMGTV1.TO-AV-t-3.the-thesis-reads-as-three-cards.proof_of_spec.json@0eff30f96e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-4.the-model-says-whose-base-case.proof_of_spec.json@265ebcd388"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-7",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on a name whose filing lists no officers ACCEPT The management tab shows the company's officers and says where the list came from, even when the company's filing has no officer section. SOURCE brief O7 (:97-100); M10",
+      "cells": [
+        {
+          "cell_id": "AV-r-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~12/DSGN_AMGTV1.TO-AV-r-4.exec-management-absence-in-words.proof_of_spec.json@61f61d8d96"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~21/DSGN_AMGTV1.TO-AV-v-5.exec-detail-without-the-machine-reason.proof_of_spec.json@5411c9553b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-w-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-w-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~16/DSGN_AMGTV1.TO-AV-w-4.exec-management-band-and-detail.proof_of_spec.json@7f14a161a9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-8",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on three names ACCEPT The peers table keeps what Andrew liked, shows readable tickers, explains missing columns once and neatly, and shows no internal system text. SOURCE brief O8 (:102-106); M11",
+      "cells": [
+        {
+          "cell_id": "AV-z-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-z-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~69/DSGN_AMGTV1.TO-AV-z-2.the-peers-subject-row-carries-the-headers-served-price-and-ev.proof_of_spec.json@c6f9a86eef"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zb-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zb-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~71/DSGN_AMGTV1.TO-AV-zb-1.peers-absent-column-reasons-in-reader-words.proof_of_spec.json@a78956005b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zc-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zc-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~75/DSGN_AMGTV1.TO-AV-zc-2.each-absent-column-states-its-reason-in-reader-words.proof_of_spec.json@6871249834"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zo-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zo-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~99/DSGN_AMGTV1.TO-AV-zo-1.repairs-edge-labels-currency-nocall-date.proof_of_spec.json@c40a740ab9"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zu-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zu-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~104/DSGN_AMGTV1.TO-AV-zu-1.peer-ticker-and-plain-names.proof_of_spec.json@8b14110481"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzr-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzr-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~141/DSGN_AMGTV1.TO-AV-zzr-1.proof_of_spec.json@078b1e2f1e"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-9",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on a name with missing lines ACCEPT Every line is named in words, not a data vendor's code, and every missing line says in one sentence whether the data is missing or the page cannot yet show it. SOURCE brief O9 (:108-112); M12",
+      "cells": [
+        {
+          "cell_id": "AV-e-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~4/DSGN_AMGTV1.TO-AV-e-4.model-lines-in-words.proof_of_spec.json@2c4d4fe5ff"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-7",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-7.the-model-reads-the-served-words.proof_of_spec.json@475c583149"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-10",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on one name with a call and one without ACCEPT A call reads as a verdict card with numbered reasons that each open to more; no call reads as a designed empty state with its date -- never a paragraph of machine reasoning. SOURCE brief O10 (:114-117); M13",
+      "cells": [
+        {
+          "cell_id": "AV-e-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~8/DSGN_AMGTV1.TO-AV-e-6.posture-paths-in-words.proof_of_spec.json@3063098bf8"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~9/DSGN_AMGTV1.TO-AV-r-1.machine-strings-off-the-face.proof_of_spec.json@d14d33adc7"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-u-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~23/DSGN_AMGTV1.TO-AV-u-2.posture-s-last-machine-phrasing.proof_of_spec.json@014943010e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~18/DSGN_AMGTV1.TO-AV-v-1.posture-cites-read-as-words.proof_of_spec.json@565ba2b50e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-w-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-w-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~17/DSGN_AMGTV1.TO-AV-w-5.posture-evidence-in-words.proof_of_spec.json@ad011f916d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zo-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zo-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~99/DSGN_AMGTV1.TO-AV-zo-1.repairs-edge-labels-currency-nocall-date.proof_of_spec.json@c40a740ab9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-11",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- a side-by-side read against Market, Positioning and Philosophy ACCEPT Put beside the Market, Positioning and Philosophy pages, the cards, windows, charts, empty states and footers are the same pieces; every footer reads as a time and a source; and no raw code, id or storage path shows on the visible face, in a tooltip, a pop-up or a card window. A closed, provenance-labelled details block the reader must open is not the face (v0.8). SOURCE brief O11 (:119-124); M4, M13, M14",
+      "cells": [
+        {
+          "cell_id": "AV-e-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-e-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~5/DSGN_AMGTV1.TO-AV-e-1.no-raw-code-on-the-thesis-or-header.proof_of_spec.json@f2947610ba"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-f-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~58/DSGN_AMGTV1.TO-AV-f-4.the-header-reads-its-numbers.proof_of_spec.json@ddc8022050"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-f-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~58/DSGN_AMGTV1.TO-AV-f-5.the-pack-sentences-read-their-own-reason.proof_of_spec.json@ff728e4ae4"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~59/DSGN_AMGTV1.TO-AV-g-5.no-internal-name-the-name-header-in-the-card-family.proof_of_spec.json@786b54d293"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~52/DSGN_AMGTV1.TO-AV-k-1.served-reasons-read-as-words.proof_of_spec.json@830b0e4074"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~52/DSGN_AMGTV1.TO-AV-k-2.error-says-what-failed-no-permission-names-this-page.proof_of_spec.json@049a024d08"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~52/DSGN_AMGTV1.TO-AV-k-4.exec-reads-its-reason-posture-footer-settled.proof_of_spec.json@3a2613ea6c"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~49/DSGN_AMGTV1.TO-AV-l-1.the-page-reads-the-served-dossier-reason.proof_of_spec.json@37a69cd704"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~49/DSGN_AMGTV1.TO-AV-l-3.c14-blocks-cut-raw-tokens-gone.proof_of_spec.json@c62510410b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-m-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-m-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~47/DSGN_AMGTV1.TO-AV-m-4.publishers-named-found-never-credited.proof_of_spec.json@6018f93298"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-m-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-m-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~48/DSGN_AMGTV1.TO-AV-m-5.posture-reads-as-sentences-at-zero.proof_of_spec.json@edbb713541"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-n-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-n-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~40/DSGN_AMGTV1.TO-AV-n-1.the-qualifier-leads-an-unresolved-figure.proof_of_spec.json@c3bc8e81b1"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-n-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-n-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~41/DSGN_AMGTV1.TO-AV-n-2.evidence-wording-names-the-filing-evidence.proof_of_spec.json@b686d998ed"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-n-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-n-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~42/DSGN_AMGTV1.TO-AV-n-3.a-not-searched-day-says-how-its-articles-were-found.proof_of_spec.json@a160a4865a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-o-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-o-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~39/DSGN_AMGTV1.TO-AV-o-1.one-house-date-form.proof_of_spec.json@d45800c66e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-p-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-p-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~33/DSGN_AMGTV1.TO-AV-p-2.the-days-rows-show-their-strength.proof_of_spec.json@e3978025cd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-p-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-p-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~34/DSGN_AMGTV1.TO-AV-p-3.the-lead-footer-in-plain-words.proof_of_spec.json@0ad8e1fcd6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-q-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-q-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~30/DSGN_AMGTV1.TO-AV-q-2.the-lead-source-line-in-the-footer-form.proof_of_spec.json@2b8fe14d76"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~9/DSGN_AMGTV1.TO-AV-r-1.machine-strings-off-the-face.proof_of_spec.json@d14d33adc7"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-r-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-r-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~10/DSGN_AMGTV1.TO-AV-r-5.the-last-band-money-and-caption.proof_of_spec.json@33e6ee2cd5"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-s-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-s-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~26/DSGN_AMGTV1.TO-AV-s-1.a-no-call-posture-in-words.proof_of_spec.json@ef084b61cd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-s-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-s-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~27/DSGN_AMGTV1.TO-AV-s-2.footers-in-the-estate-form.proof_of_spec.json@21655af703"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-s-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-s-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~27/DSGN_AMGTV1.TO-AV-s-4.lead-columns-and-no-pass-badge.proof_of_spec.json@d7ff61a4f9"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-u-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~22/DSGN_AMGTV1.TO-AV-u-1.the-timeline-panel-in-words.proof_of_spec.json@6ec79a1e8d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-u-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~25/DSGN_AMGTV1.TO-AV-u-4.the-walk-grades-by-name.proof_of_spec.json@4c783f7501"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-u-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-u-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~23/DSGN_AMGTV1.TO-AV-u-5.the-data-attributes-fwd30-needs.proof_of_spec.json@b9d2d078be"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~18/DSGN_AMGTV1.TO-AV-v-1.posture-cites-read-as-words.proof_of_spec.json@565ba2b50e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~19/DSGN_AMGTV1.TO-AV-v-3.the-generations-line-and-one-band.proof_of_spec.json@6978367ae7"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-4.the-model-says-whose-base-case.proof_of_spec.json@265ebcd388"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~21/DSGN_AMGTV1.TO-AV-v-5.exec-detail-without-the-machine-reason.proof_of_spec.json@5411c9553b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-6.one-date-form-and-a-readable-legend.proof_of_spec.json@a98aced911"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-v-7",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-v-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~20/DSGN_AMGTV1.TO-AV-v-7.the-model-reads-the-served-words.proof_of_spec.json@475c583149"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-w-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-w-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~15/DSGN_AMGTV1.TO-AV-w-3.status-words-off-the-model-face.proof_of_spec.json@515b96b03d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-w-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-w-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~16/DSGN_AMGTV1.TO-AV-w-4.exec-management-band-and-detail.proof_of_spec.json@7f14a161a9"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-z-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-z-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~69/DSGN_AMGTV1.TO-AV-z-1.no-code-shaped-token-on-the-exec-posture-and-peers-faces.proof_of_spec.json@f3b81661f0"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zb-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zb-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~72/DSGN_AMGTV1.TO-AV-zb-2.the-exec-face-names-the-filing-not-its-accession.proof_of_spec.json@6ed6bf5b91"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zc-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zc-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~74/DSGN_AMGTV1.TO-AV-zc-1.the-exec-contact-enrichment-line-says-it-once.proof_of_spec.json@9e5906aa28"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zp-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zp-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~100/DSGN_AMGTV1.TO-AV-zp-1.footers-end-line-whatchanged-states.proof_of_spec.json@65627bac8e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zq-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zq-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~101/DSGN_AMGTV1.TO-AV-zq-1.unknown-source-fixed-phrase.proof_of_spec.json@b2a2ece67d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzi-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzi-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~121/DSGN_AMGTV1.TO-AV-zzi-1.security-not-found.proof_of_spec.json@8450419a83"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-12",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the rendered Security and Universe states read bandContainersTopLevel <= 1 and lightOnDark == 0 (no white panel, strip or card inside a dark container); the Lead Panel and the identity header are white hairline panels with navy ink, the /philosophy GraphicCard face; the header region follows the /advisor-intelligence /book L0 order (a key-figure row, then the main chart, then the detail row) ACCEPT Put beside /philosophy, a reviewer cannot point to a card that belongs to the other family (v0.9). SOURCE AMGT_RESAPP FWD-21; Andrew's F1 word; v0.9: Andrew 2026-10-02 ~17:33Z N1 (\"stick to the light style unilaterally, e.g. the header section in /philosophy, or ... the standard darker style\"). The CTO picked LIGHT: it is the C3 direction, and it is FWD-23's /philosophy family he asked to \"keep going with\".",
+      "cells": [
+        {
+          "cell_id": "AV-l-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-4.a-strip-in-its-band-is-the-band.proof_of_spec.json@b83f6c83c7"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-m-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-m-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~45/DSGN_AMGTV1.TO-AV-m-1.the-render-check-can-fail.proof_of_spec.json@c2bd6f6cbe"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zg-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~81/DSGN_AMGTV1.TO-AV-zg-2.header-one-light-face-in-book-order.proof_of_spec.json@bbfc647b72"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zg-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~82/DSGN_AMGTV1.TO-AV-zg-3.lead-panel-light-and-price-top-movers.proof_of_spec.json@ec847809eb"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~87/DSGN_AMGTV1.TO-AV-zh-2.repairs-tokens-controls-served-values.proof_of_spec.json@85c63e60bd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zi-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zi-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~89/DSGN_AMGTV1.TO-AV-zi-2.one-news-item-at-rest.proof_of_spec.json@9d5668ed4c"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zw-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zw-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~106/DSGN_AMGTV1.TO-AV-zw-1.top-band-input-provenance-no-rerun.proof_of_spec.json@9631507844"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzc-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzc-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~113/DSGN_AMGTV1.TO-AV-zzc-1.one-statement-of-inputs-and-coverage-sentence.proof_of_spec.json@e1ca492bc9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-13",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- every figure in the header's key-figures row (v0.15) carries its units and tabular numerals, its tooltip carries the figure's plain label and the full-precision value verbatim, the mnemonic travels in the DOM as data-mnemonic and never on the face (v0.7), and price, market cap, net debt, enterprise value, beta and short interest each sit in the row once, under its plain label ACCEPT No 161867780096.00003 anywhere; every figure traceable to its field. SOURCE AMGT_RESAPP FWD-22",
+      "cells": [
+        {
+          "cell_id": "AV-l-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~50/DSGN_AMGTV1.TO-AV-l-2.fiscal-figures-carry-unit-and-tooltip.proof_of_spec.json@9ae80a5781"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-m-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-m-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~46/DSGN_AMGTV1.TO-AV-m-3.no-raw-float-every-figure-traceable.proof_of_spec.json@5a038e307d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-y-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-y-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~68/DSGN_AMGTV1.TO-AV-y-1.the-figure-tooltip-stays-in-its-popup-and-shows-no-raw-code.proof_of_spec.json@ca85e04a70"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zt-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zt-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~103/DSGN_AMGTV1.TO-AV-zt-1.header-reason-full-value-exec-words.proof_of_spec.json@a4e902b9db"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-14",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- in the Thesis windows each sentence shows its PASS face and its passage count; opening it reveals the passage and accession line FROM THE DOM; and a census of passages carried in a native title= tooltip reads ZERO in the same capture as its positive control (the application route, the tab's label present, a NON-ZERO count of nodes scanned) ACCEPT The verbatim gate (AMGT-rj-2) is preserved BY CONSTRUCTION. SOURCE AMGT_RESAPP FWD-23 and its addendum",
+      "cells": [
+        {
+          "cell_id": "AV-l-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-15",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the fiscal table renders as a white heatmap panel with tabular numerals; a REFUSED row renders one status icon and one navy sentence spanning the row; ABSENT rows fold into a single footnote naming them ACCEPT A refusal is readable once, not ten times. SOURCE AMGT_RESAPP FWD-24",
+      "cells": [
+        {
+          "cell_id": "AV-k-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~54/DSGN_AMGTV1.TO-AV-k-5.an-absent-model-and-its-history-agree.proof_of_spec.json@a79a005bb6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~50/DSGN_AMGTV1.TO-AV-l-2.fiscal-figures-carry-unit-and-tooltip.proof_of_spec.json@9ae80a5781"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zf-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zf-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~79/DSGN_AMGTV1.TO-AV-zf-1.render-check-reads-the-ruled-designs.proof_of_spec.json@d5aee3a88d"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-16",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the table renders the PRESENT columns only; an \"Absent columns (N)\" disclosure lists each with its registry reason; the basis is a status chip with the test statement one hover away ACCEPT A PM reads the real columns instead of scanning ABSENT ones. SOURCE AMGT_RESAPP FWD-25",
+      "cells": [
+        {
+          "cell_id": "AV-l-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zc-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zc-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~75/DSGN_AMGTV1.TO-AV-zc-2.each-absent-column-states-its-reason-in-reader-words.proof_of_spec.json@6871249834"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zd-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zd-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~77/DSGN_AMGTV1.TO-AV-zd-1.the-live-served-absent-reasons-are-classed.proof_of_spec.json@539e431daf"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zf-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zf-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~79/DSGN_AMGTV1.TO-AV-zf-1.render-check-reads-the-ruled-designs.proof_of_spec.json@d5aee3a88d"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-17",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the verdict card shows the comparable beside the verdict; each numbered reason has its cites folded; an UNRESOLVED cite renders a status.warning ICON beside navy text and NOT amber text ACCEPT C6 holds on a light ground. SOURCE AMGT_RESAPP FWD-26",
+      "cells": [
+        {
+          "cell_id": "AV-k-7",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~53/DSGN_AMGTV1.TO-AV-k-7.fwd17-count-is-person-readable.proof_of_spec.json@2054ebc28f"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-18",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- Movement and Subject render as segmented controls whose active state is WEIGHT AND RULE, the generation and resolution lines sit in a \"Source:\" footer, and the rendered state reads purpleFills <= 1 in every view and == 0 in Security mode (v0.16) ACCEPT One purple action per view (C8). SOURCE AMGT_RESAPP FWD-27 v0.6 Movement (Trending / Breakout) renders Trending only through the Friday demo (CTO~Z ruling R6: Breakout x Chatter served empty 16 days); the Movement control is absent, not disabled, and returns when Breakout x Chatter serves. Subject stays.",
+      "cells": [
+        {
+          "cell_id": "AV-f-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~56/DSGN_AMGTV1.TO-AV-f-1.price-is-ranked-bars-one-form.proof_of_spec.json@34b7bd3801"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zv-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zv-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~105/DSGN_AMGTV1.TO-AV-zv-1.driver-passage-and-segments.proof_of_spec.json@874f3e21fa"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zz-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zz-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~110/DSGN_AMGTV1.TO-AV-zz-1.render-check-purple-fill-clause.proof_of_spec.json@475083ba5a"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-19",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- PanelEmpty, PanelLoading and PanelError from src/ui/components/states each captured at least once across the six states, on every panel; and a viewer who is not an Opal user sees no Security Analysis sidebar item (v0.16) ACCEPT An empty panel looks designed, as /market's already does. SOURCE AMGT_RESAPP FWD-28; C12",
+      "cells": [
+        {
+          "cell_id": "AV-g-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/DSGN_AMGTV1.TO-AV-g-4.the-chatter-face-is-designed-when-unserved.proof_of_spec.json@c08a558653"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~52/DSGN_AMGTV1.TO-AV-k-2.error-says-what-failed-no-permission-names-this-page.proof_of_spec.json@049a024d08"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~53/DSGN_AMGTV1.TO-AV-k-3.peers-has-a-designed-empty-state.proof_of_spec.json@1fd5c7326a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~52/DSGN_AMGTV1.TO-AV-k-4.exec-reads-its-reason-posture-footer-settled.proof_of_spec.json@3a2613ea6c"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~54/DSGN_AMGTV1.TO-AV-k-5.an-absent-model-and-its-history-agree.proof_of_spec.json@a79a005bb6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-5.the-four-designed-states-one-graded-run.proof_of_spec.json@70ccd3e40d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-6.fwd-14-19-graded-never-blind.proof_of_spec.json@223bf3a0cc"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zp-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zp-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~100/DSGN_AMGTV1.TO-AV-zp-1.footers-end-line-whatchanged-states.proof_of_spec.json@65627bac8e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzb-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzb-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~112/DSGN_AMGTV1.TO-AV-zzb-1.render-check-three-designed-states.proof_of_spec.json@15d565fcab"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-20",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- portal/scripts/ui-smoke.mjs writes, for each of the six states, a PNG at 1440 and a DOM JSON reading bandContainersTopLevel <= 1 and lightOnDark == 0 (v0.9), fonts == {Lato}, weights within {400,700}, no size below 11, radii within {2,3,4,pill}, shadows == 0 outside the focus ring, lowContrastChars == 0, purpleFills per FWD-18 and the three states of FWD-19 present (v0.17); the drafting, tabs and posture harnesses green; AND the same instrument FAILS a planted page on each clause (one violation per clause, each beside a clean control), and FAILS the real pre-redesign page (portal 8fa7abde) on the band clause; AND the six PNGs are read by a person, a rejection citing its clause ACCEPT A JSON PASS WITHOUT THE PNG READ BY A PERSON IS CARE, NOT A CONTROL; FWD-11's side-by-side read is the person's arm. SOURCE AMGT_RESAPP FWD-29 (no DSGN owner before v0.4)",
+      "cells": [
+        {
+          "cell_id": "AV-g-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~59/DSGN_AMGTV1.TO-AV-g-1.the-walker-account-is-leased.proof_of_spec.json@e41e28e641"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/DSGN_AMGTV1.TO-AV-g-2.the-header-chrome-meets-c1-and-c3.proof_of_spec.json@eb5128f701"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~61/DSGN_AMGTV1.TO-AV-g-3.the-render-sees-the-demo-faces.proof_of_spec.json@5548e6e677"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-h-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-h-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~62/DSGN_AMGTV1.TO-AV-h-1.the-walker-waits-for-the-price-bars.proof_of_spec.json@a9b64853be"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-h-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-h-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~63/DSGN_AMGTV1.TO-AV-h-2.the-identity-card-meets-c3.proof_of_spec.json@95bb14d593"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~55/DSGN_AMGTV1.TO-AV-k-6.sizes-and-radii-meet-c1-and-c11.proof_of_spec.json@4cf9191d93"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-k-7",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-k-7",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~53/DSGN_AMGTV1.TO-AV-k-7.fwd17-count-is-person-readable.proof_of_spec.json@2054ebc28f"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~49/DSGN_AMGTV1.TO-AV-l-3.c14-blocks-cut-raw-tokens-gone.proof_of_spec.json@c62510410b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-4.a-strip-in-its-band-is-the-band.proof_of_spec.json@b83f6c83c7"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-l-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-l-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~51/DSGN_AMGTV1.TO-AV-l-5.the-four-designed-states-one-graded-run.proof_of_spec.json@70ccd3e40d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-m-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-m-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~45/DSGN_AMGTV1.TO-AV-m-1.the-render-check-can-fail.proof_of_spec.json@c2bd6f6cbe"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zf-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zf-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~79/DSGN_AMGTV1.TO-AV-zf-1.render-check-reads-the-ruled-designs.proof_of_spec.json@d5aee3a88d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zn-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zn-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~97/DSGN_AMGTV1.TO-AV-zn-1.instrument-reanchor-light-family.proof_of_spec.json@e328fa5217"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zn-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zn-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~98/DSGN_AMGTV1.TO-AV-zn-2.repairs-list-type-tooltip-zero-move.proof_of_spec.json@2a479b850a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zy-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zy-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~108/DSGN_AMGTV1.TO-AV-zy-1.model-tab-text-floor-and-plain-foot.proof_of_spec.json@1ec901eafa"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zz-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zz-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~110/DSGN_AMGTV1.TO-AV-zz-1.render-check-purple-fill-clause.proof_of_spec.json@475083ba5a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzb-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzb-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~112/DSGN_AMGTV1.TO-AV-zzb-1.render-check-three-designed-states.proof_of_spec.json@15d565fcab"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-21",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED (v0.9 restatement) -- one live walk on the portal build: - the chatter view renders ONE bubble per security, its area sized by the collected count in the selected ROLLING window (30D, 90D or 365D; FWD-26), read from the served route; - the bubbles form a collage, largest at the centre and smaller outward, by a deterministic spiral placement with no new dependency; - every name of the window is visible in one panel at 1440x900 without scrolling, and no label clips or overlaps; - each bubble's fill is its served coverage tone on the Topic Cloud scale, through ONE shared sentiment-colour module, with a legend; a name whose served tone is null (no voters) is filled apart from the ramp's neutral centre and reads \"no clear tone\" on hover (v0.10); - at least one bubble's size changes between two windows on served data; - the size is labelled \"collected\", never \"market chatter\" ACCEPT The PM says which names were collected most in the window, switches 30D to 90D and says what changed (v0.10). Chatter has this ONE form: no list, line or toggle to another chatter view exists on the page. SOURCE brief O1; CTO~Z rulings R4, R5; v0.9-v0.10: Andrew N7, N8, N10 (2026-10-02 ~17:33Z)",
+      "cells": [
+        {
+          "cell_id": "AV-f-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~56/DSGN_AMGTV1.TO-AV-f-2.chatter-is-bubbles-by-month.proof_of_spec.json@6d757d31c5"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~61/DSGN_AMGTV1.TO-AV-g-3.the-render-sees-the-demo-faces.proof_of_spec.json@5548e6e677"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/DSGN_AMGTV1.TO-AV-g-4.the-chatter-face-is-designed-when-unserved.proof_of_spec.json@c08a558653"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-h-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-h-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~62/DSGN_AMGTV1.TO-AV-h-1.the-walker-waits-for-the-price-bars.proof_of_spec.json@a9b64853be"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-i-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-i-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~65/DSGN_AMGTV1.TO-AV-i-2.the-header-chatter-line-reads-the-monthly-route.proof_of_spec.json@3c697484c6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-j-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-j-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~66/DSGN_AMGTV1.TO-AV-j-1.the-header-chatter-cell-reads-the-monthly-count.proof_of_spec.json@4c001f3e16"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zg-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~83/DSGN_AMGTV1.TO-AV-zg-4.chatter-collage-and-tone.proof_of_spec.json@fad62a8738"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~86/DSGN_AMGTV1.TO-AV-zh-1.one-served-universe-per-face.proof_of_spec.json@0090fba789"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zi-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zi-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~88/DSGN_AMGTV1.TO-AV-zi-1.rolling-windows-presets.proof_of_spec.json@d777905f53"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zl-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zl-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~93/DSGN_AMGTV1.TO-AV-zl-1.repairs-labels-windows-precision-ink-names.proof_of_spec.json@53c018c2b4"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zo-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zo-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~99/DSGN_AMGTV1.TO-AV-zo-1.repairs-edge-labels-currency-nocall-date.proof_of_spec.json@c40a740ab9"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-22",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the price view renders horizontal bars, longest first and descending vertically, one per security, the measure the return over the selected window (FWD-26), signed, in percent, printed as served (the page never rescales a served unit); a DOM census of the price view reads 0 line charts and 0 view toggles; v0.9: at rest it shows the 10 largest gainers and the 10 largest losers, the full list opens on demand in the same panel, the face states its window in words, and no name is clipped without a hover revealing it; v0.15: at 90D/365D the face may print the served \"not produced yet\" reason instead of bars (FWD-26 v0.11's interim branch) until the PX_LAST history serves ACCEPT The PM reads the biggest mover first and the sign of each move. Price has this ONE form. SOURCE brief O2; CTO~Z rulings R3, R5",
+      "cells": [
+        {
+          "cell_id": "AV-f-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~56/DSGN_AMGTV1.TO-AV-f-1.price-is-ranked-bars-one-form.proof_of_spec.json@34b7bd3801"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~61/DSGN_AMGTV1.TO-AV-g-3.the-render-sees-the-demo-faces.proof_of_spec.json@5548e6e677"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-h-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-h-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~62/DSGN_AMGTV1.TO-AV-h-1.the-walker-waits-for-the-price-bars.proof_of_spec.json@a9b64853be"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-i-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-i-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~64/DSGN_AMGTV1.TO-AV-i-1.the-price-bars-print-one-decimal.proof_of_spec.json@eaf5b2d86d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~86/DSGN_AMGTV1.TO-AV-zh-1.one-served-universe-per-face.proof_of_spec.json@0090fba789"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zi-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zi-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~88/DSGN_AMGTV1.TO-AV-zi-1.rolling-windows-presets.proof_of_spec.json@d777905f53"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-23",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- the panel's header and the selected-name header are built from the /philosophy fixture-card face (PhilosophyPillars, extracted per C-ESTATE-FIXTURES with its before/after render), its colours come from lib/chartColors.ts (0 hard-coded hex in the panel's chart files), its controls are the shared Segmented control (0 hand-built controls), and no visible text reads an internal name (\"Lead Panel\") ACCEPT Put beside /philosophy, a reviewer reads the same card family; a person reads the PNGs and cites a clause for any rejection. SOURCE brief O3; Andrew \"It was a big improvement to start bringing in those /philosophy fixture cards, need to keep going with that\"",
+      "cells": [
+        {
+          "cell_id": "AV-f-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~56/DSGN_AMGTV1.TO-AV-f-3.lead-panel-header-looks-like-the-portal.proof_of_spec.json@07bf33d117"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-f-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~57/DSGN_AMGTV1.TO-AV-f-6.header-cards-are-the-philosophy-card-face.proof_of_spec.json@c56a5550d8"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/DSGN_AMGTV1.TO-AV-g-2.the-header-chrome-meets-c1-and-c3.proof_of_spec.json@eb5128f701"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-g-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-g-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~59/DSGN_AMGTV1.TO-AV-g-5.no-internal-name-the-name-header-in-the-card-family.proof_of_spec.json@786b54d293"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-h-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-h-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~63/DSGN_AMGTV1.TO-AV-h-2.the-identity-card-meets-c3.proof_of_spec.json@95bb14d593"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-x-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-x-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~67/DSGN_AMGTV1.TO-AV-x-1.the-identity-card-shows-the-served-company-name.proof_of_spec.json@463d13e3fd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~87/DSGN_AMGTV1.TO-AV-zh-2.repairs-tokens-controls-served-values.proof_of_spec.json@85c63e60bd"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-24",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- on 3 names walked, the selected-name header shows the chatter and price readings of the latest served trading day the payload carries (the page computes no date); the cell labelled \"Breakout (price)\" reads the breakout row; every unit prints as served; \"places moved\" prints wherever served; a DOM census reads 0 \"not served\" for a field the payload carries, beside a positive control (a field the payload truly lacks renders its designed empty state) ACCEPT No cell on the demo thread reads empty because of a date, label or unit convention. SOURCE brief O4, IV.3; CONTRACT sections 2-3",
+      "cells": [
+        {
+          "cell_id": "AV-f-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-f-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~58/DSGN_AMGTV1.TO-AV-f-4.the-header-reads-its-numbers.proof_of_spec.json@ddc8022050"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-i-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-i-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~65/DSGN_AMGTV1.TO-AV-i-2.the-header-chatter-line-reads-the-monthly-route.proof_of_spec.json@3c697484c6"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-j-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-j-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~66/DSGN_AMGTV1.TO-AV-j-1.the-header-chatter-cell-reads-the-monthly-count.proof_of_spec.json@4c001f3e16"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-x-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-x-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~67/DSGN_AMGTV1.TO-AV-x-1.the-identity-card-shows-the-served-company-name.proof_of_spec.json@463d13e3fd"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-25",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- walked on a name with two differing versions: \"What changed\" is a panel with a header at the TOP of the Model tab: count tiles (added, changed), then a table of the changed figures with before, after, signed change and percent change, then per-line detail on demand; it defaults to the latest two versions that differ; the version list collapses into the picker; every version time prints in ET ACCEPT A PM says in one sentence what moved in the model and by how much, without opening a list of timestamps. SOURCE Andrew N9; UI/UX brief O6 (SAUX-23, 24, 26)",
+      "cells": [
+        {
+          "cell_id": "AV-zg-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~84/DSGN_AMGTV1.TO-AV-zg-5.what-changed-leads-the-model-tab.proof_of_spec.json@7d976aa824"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zm-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zm-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~94/DSGN_AMGTV1.TO-AV-zm-1.what-changed-in-words.proof_of_spec.json@e571b65df4"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-26",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- Chatter and Price each offer 30D / 90D / 365D presets in the shared Segmented control (the in-pattern IndexPerformanceModal labels), default 30D, replacing \"Earlier month\" / \"Later month\"; each face's caption names its window ending at the served as-of date; where the store is shorter than the window, the face states the served window start (\"since <date>\") and never extrapolates. v0.11: Price's 90D/365D render the served \"not produced yet\" reason as a designed empty state while RESAPP FWD-36's price windows are a QUALIFIED WAIT on Andrew's vendor word; that render is NOT a read of the 90/365 price face ACCEPT No face shows a period it does not name. SOURCE Andrew N10; UI/UX brief O7 (SAUX-21, 27, 28)",
+      "cells": [
+        {
+          "cell_id": "AV-zi-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zi-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~88/DSGN_AMGTV1.TO-AV-zi-1.rolling-windows-presets.proof_of_spec.json@d777905f53"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zj-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zj-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~90/DSGN_AMGTV1.TO-AV-zj-1.lead-panel-words-every-window.proof_of_spec.json@0556c7fb66"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    },
+    {
+      "fwd_id": "FWD-27",
+      "done_when_state": "EXERCISED",
+      "done_when_text": "DONE WHEN EXERCISED -- a walk of every tab on 3 names reads: - 0 strings from the register's system-wording list; - one display name per security; - one money format and one time zone (ET) across the figures the PAGE formats (tiles, tables, chips, captions); served drafted prose is graded as served and never rewritten (C-PRESENTATION-ONLY, v0.13); - every figure with its as-of date; - no two figures for one thing disagree without a label naming each measure and window; - officers list the chief executive first, then the chief financial officer; - an unconnected field prints no line (a panel with nothing to show renders one C12 empty state); - Escape closes the account menu. ACCEPT No figure on the page needs a second figure to be understood. SOURCE Andrew N6 (\"easy to read text\"); UI/UX brief O8 (SAUX-03, 04, 14, 22, 24, 26, 29-36)",
+      "cells": [
+        {
+          "cell_id": "AV-zg-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~80/DSGN_AMGTV1.TO-AV-zg-1.timeline-chart-and-day-dialog.proof_of_spec.json@5338d596dd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zg-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~84/DSGN_AMGTV1.TO-AV-zg-5.what-changed-leads-the-model-tab.proof_of_spec.json@7d976aa824"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zg-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zg-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~85/DSGN_AMGTV1.TO-AV-zg-6.tabs-plain-words-and-account-menu.proof_of_spec.json@055904c6cc"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~86/DSGN_AMGTV1.TO-AV-zh-1.one-served-universe-per-face.proof_of_spec.json@0090fba789"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zh-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zh-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~87/DSGN_AMGTV1.TO-AV-zh-2.repairs-tokens-controls-served-values.proof_of_spec.json@85c63e60bd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zi-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zi-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~89/DSGN_AMGTV1.TO-AV-zi-2.one-news-item-at-rest.proof_of_spec.json@9d5668ed4c"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zj-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zj-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~90/DSGN_AMGTV1.TO-AV-zj-1.lead-panel-words-every-window.proof_of_spec.json@0556c7fb66"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zl-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zl-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~93/DSGN_AMGTV1.TO-AV-zl-1.repairs-labels-windows-precision-ink-names.proof_of_spec.json@53c018c2b4"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zm-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zm-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~94/DSGN_AMGTV1.TO-AV-zm-1.what-changed-in-words.proof_of_spec.json@e571b65df4"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zm-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zm-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~95/DSGN_AMGTV1.TO-AV-zm-2.no-system-word-on-the-face.proof_of_spec.json@a2434edd5a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zn-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zn-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~98/DSGN_AMGTV1.TO-AV-zn-2.repairs-list-type-tooltip-zero-move.proof_of_spec.json@2a479b850a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zt-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zt-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~103/DSGN_AMGTV1.TO-AV-zt-1.header-reason-full-value-exec-words.proof_of_spec.json@a4e902b9db"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zu-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zu-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~104/DSGN_AMGTV1.TO-AV-zu-1.peer-ticker-and-plain-names.proof_of_spec.json@8b14110481"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zy-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zy-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~108/DSGN_AMGTV1.TO-AV-zy-1.model-tab-text-floor-and-plain-foot.proof_of_spec.json@1ec901eafa"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zy-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zy-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~109/DSGN_AMGTV1.TO-AV-zy-2.no-stored-figures-says-so-once.proof_of_spec.json@1e8b0bc84e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zza-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zza-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~111/DSGN_AMGTV1.TO-AV-zza-1.model-foot-one-money-format.proof_of_spec.json@eb1f1c385a"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzc-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzc-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~113/DSGN_AMGTV1.TO-AV-zzc-1.one-statement-of-inputs-and-coverage-sentence.proof_of_spec.json@e1ca492bc9"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzc-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzc-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~114/DSGN_AMGTV1.TO-AV-zzc-2.officers-in-served-order-and-two-pack-phrases.proof_of_spec.json@dab17ae139"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zze-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zze-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~115/DSGN_AMGTV1.TO-AV-zze-1.seeking-alpha-column-three-served-states.proof_of_spec.json@2a3a151165"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zze-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zze-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~117/DSGN_AMGTV1.TO-AV-zze-3.posture-cites-name-the-built-analysis.proof_of_spec.json@35d29395c8"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzg-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzg-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~119/DSGN_AMGTV1.TO-AV-zzg-1.freshness-three-repairs.proof_of_spec.json@3b59fef1b0"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzh-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzh-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~120/DSGN_AMGTV1.TO-AV-zzh-1.freshness-one-date-form.proof_of_spec.json@9b7c9cc534"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzi-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzi-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~121/DSGN_AMGTV1.TO-AV-zzi-1.security-not-found.proof_of_spec.json@8450419a83"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzi-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzi-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~122/DSGN_AMGTV1.TO-AV-zzi-2.repairs-focus-and-reason-days.proof_of_spec.json@9a8fd7ae0b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzj-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzj-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~123/DSGN_AMGTV1.TO-AV-zzj-1.filing-panel-beside-table.proof_of_spec.json@73fea97823"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzk-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzk-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~124/DSGN_AMGTV1.TO-AV-zzk-1.proof_of_spec.json@fc81f1211f"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzk-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzk-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~125/DSGN_AMGTV1.TO-AV-zzk-2.proof_of_spec.json@24eebd208b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzk-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzk-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~126/DSGN_AMGTV1.TO-AV-zzk-3.proof_of_spec.json@8abc29a174"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzk-4",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzk-4",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~127/DSGN_AMGTV1.TO-AV-zzk-4.proof_of_spec.json@ff88a120bd"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzk-5",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzk-5",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~128/DSGN_AMGTV1.TO-AV-zzk-5.proof_of_spec.json@762475d577"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzk-6",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzk-6",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~129/DSGN_AMGTV1.TO-AV-zzk-6.proof_of_spec.json@733f8a26ff"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzl-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzl-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~130/DSGN_AMGTV1.TO-AV-zzl-1.proof_of_spec.json@62aeb008fc"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzm-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzm-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~131/DSGN_AMGTV1.TO-AV-zzm-1.proof_of_spec.json@82c781568c"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzm-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzm-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~132/DSGN_AMGTV1.TO-AV-zzm-2.proof_of_spec.json@b7e2433d90"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzm-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzm-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~133/DSGN_AMGTV1.TO-AV-zzm-3.proof_of_spec.json@6961c5b869"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzn-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzn-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~134/DSGN_AMGTV1.TO-AV-zzn-1.proof_of_spec.json@6d03fb49a5"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzo-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzo-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~135/DSGN_AMGTV1.TO-AV-zzo-1.proof_of_spec.json@c3d0fb0c2d"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzo-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzo-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~136/DSGN_AMGTV1.TO-AV-zzo-2.proof_of_spec.json@a88b20fb92"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzo-3",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzo-3",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~137/DSGN_AMGTV1.TO-AV-zzo-3.proof_of_spec.json@7d3a93aa60"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzp-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzp-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~138/DSGN_AMGTV1.TO-AV-zzp-1.proof_of_spec.json@a513587a7b"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzp-2",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzp-2",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~139/DSGN_AMGTV1.TO-AV-zzp-2.proof_of_spec.json@ef8e99eada"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzq-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzq-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~140/DSGN_AMGTV1.TO-AV-zzq-1.proof_of_spec.json@a552e0d0ce"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzr-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzr-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~141/DSGN_AMGTV1.TO-AV-zzr-1.proof_of_spec.json@078b1e2f1e"
+            }
+          ]
+        },
+        {
+          "cell_id": "AV-zzs-1",
+          "task_orders": [
+            {
+              "id": "DSGN_AMGTV1.TO-AV-zzs-1",
+              "status": "complete",
+              "proof_of_spec_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~142/DSGN_AMGTV1.TO-AV-zzs-1.proof_of_spec.json@107c89d08b"
+            }
+          ]
+        }
+      ],
+      "claim": "COVERED"
+    }
+  ]
+}

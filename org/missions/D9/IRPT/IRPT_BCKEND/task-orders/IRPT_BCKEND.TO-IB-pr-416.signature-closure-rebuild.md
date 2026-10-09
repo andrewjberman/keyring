@@ -61,6 +61,19 @@ Root: `C:/dev/wk-irpt-bckend-278/`.
 
 <expected_criteria>IB117-1-AC1, IB117-1-AC2</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~17:2xZ, issuer 2.0.0_SA_COO~P2, on IB-pr-419 and CTO msg 3783)
+
+IB-pr-419 reads irpt-performance-adapter as FAILING: 3 `Enforcer(load_report_owner=)` TypeErrors from 15:41Z to 16:49Z, on the
+performance-report op. It fails closed. The CTO confirmed (msg 3783) that there is no rollback: restoring `5nyq8P6v` would undo
+IB-pr-395's narrowing. The packet therefore:
+- orders irpt-performance-adapter FIRST and names it the first apply;
+- adds the count of performance-report requests the adapter refused since 2026-10-09T15:41Z (CloudWatch, auto-paginated, window
+  printed);
+- states the adapter's Branch B as "hold on the live version `o/643qVE`", never a restore of `5nyq8P6v`.
+The worker got this ruling directly mid-cell.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. BUILD_ONLY plus AWS reads; no upload, apply or deploy.

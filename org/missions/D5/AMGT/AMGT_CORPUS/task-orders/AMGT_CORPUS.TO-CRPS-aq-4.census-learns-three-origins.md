@@ -73,7 +73,7 @@ Read-only: the whole repository, in particular `org/missions/D5/AMGT/AMGT_CORPUS
 
 **ISSUER NOTES:** round-40 analysis @`05739a6e4e` s.2 item 4 (row Z-S90, c5). Base: 1 failed; unresolved 6, both controls flagged 1. The round's batch repair cell -> worker-light.
 <risk>LOCAL</risk>
-<status>pending</status>
+<status>complete</status>
 <round>41</round>
 <slot>~3</slot>
 <fabric>dell1</fabric>
