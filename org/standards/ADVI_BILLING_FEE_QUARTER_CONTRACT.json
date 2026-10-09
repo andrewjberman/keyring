@@ -1,0 +1,267 @@
+{
+  "contract_version": "0.1.0",
+  "contract": "ADVI_BILLING fee_quarter object",
+  "owner": "ADVI_BILLING (AB-t-1 writes it; AB-t-2 reads it; AB-t-3 renders it)",
+  "address": "lib/opal_naming.address('advi','49financial','gold','advi_billing','quarter=<YYYYQn>','<client_key>.json')",
+  "writer": "data/assets/scripts/gold/advi_billing/fee_quarter.py",
+  "amounts_unit": "USD",
+  "fields": {
+    "contract_version": {
+      "type": "string",
+      "meaning": "this contract's version; the object carries 0.1.0"
+    },
+    "firm": {
+      "type": "string",
+      "meaning": "firm scope short name: 49financial"
+    },
+    "relationship_id": {
+      "type": "string",
+      "meaning": "dim_relationship relationship_id (rel_<hex>) of the household"
+    },
+    "client_key": {
+      "type": "string",
+      "meaning": "the portal's household key (rel_z...), the EXACT crosswalk row d05_client_detail.py reads; also the object's file name"
+    },
+    "quarter": {
+      "type": "string",
+      "meaning": "calendar quarter, YYYYQn"
+    },
+    "billing_convention": {
+      "type": "string",
+      "meaning": "when the fee is billed relative to the value period",
+      "enum": [
+        "ADVANCE",
+        "ARREARS",
+        "UNRESOLVED"
+      ]
+    },
+    "billing_convention_claim": {
+      "enum": [
+        "measured",
+        "inferred",
+        "held",
+        "absent"
+      ],
+      "meaning": "how the value was come by; a consumer rejects on this field. measured = read from a named source by an instrument; inferred = derived from measured values by a stated rule; held = carried from an earlier record without re-reading; absent = no value could be had.",
+      "type": "string"
+    },
+    "period_start": {
+      "type": "string",
+      "meaning": "ISO date, first day of the billing period"
+    },
+    "period_end": {
+      "type": "string",
+      "meaning": "ISO date, last day of the billing period"
+    },
+    "valuation_date": {
+      "type": "string",
+      "meaning": "ISO date of the fact_rps values used, chosen by testing the candidates against the debits"
+    },
+    "as_of": {
+      "type": "string",
+      "meaning": "UTC timestamp the object was computed"
+    },
+    "accounts": {
+      "type": "array",
+      "meaning": "one row per account of the household",
+      "items": {
+        "account_id": {
+          "type": "string",
+          "meaning": "10-digit Schwab account id, zero padded"
+        },
+        "billable_value": {
+          "type": "number",
+          "meaning": "USD, sum of fact_rps market_value_settled_unsettled for the account on valuation_date"
+        },
+        "value_source": {
+          "type": "string",
+          "meaning": "where billable_value was read"
+        },
+        "schedule": {
+          "type": "object",
+          "meaning": "the fee schedule applied",
+          "fields": {
+            "label": {
+              "type": "string",
+              "meaning": "what the schedule is"
+            },
+            "rate_type": {
+              "type": "string",
+              "meaning": "how the rate is applied"
+            },
+            "basis_points": {
+              "type": "number",
+              "meaning": "combined annual rate in basis points (ADVISOR + PLATFORM)"
+            },
+            "flat_fee": {
+              "type": "number",
+              "meaning": "USD flat fee component; 0.0 when none"
+            },
+            "tiers": {
+              "type": "array",
+              "meaning": "tier rows; [] when the schedule is flat"
+            }
+          }
+        },
+        "schedule_claim": {
+          "enum": [
+            "measured",
+            "inferred",
+            "held",
+            "absent"
+          ],
+          "meaning": "how the value was come by; a consumer rejects on this field. measured = read from a named source by an instrument; inferred = derived from measured values by a stated rule; held = carried from an earlier record without re-reading; absent = no value could be had.",
+          "type": "string"
+        },
+        "schedule_source": {
+          "type": "string",
+          "meaning": "the document the rates were read from"
+        },
+        "flow_adjustment": {
+          "type": "number",
+          "meaning": "USD adjustment to billable_value for flows; 0.0 in 0.1.0 (flows are listed, not applied)"
+        },
+        "flows_in_period": {
+          "type": "array",
+          "meaning": "EXTERNAL flows from the gold flow_ledger between valuation_date (exclusive) and the ADVISOR debit date (inclusive): {date, final_class, signed_amount}"
+        },
+        "excluded_value": {
+          "type": "number",
+          "meaning": "USD of value excluded from billable_value; 0.0 in 0.1.0"
+        },
+        "exclusion_reason": {
+          "type": "string|null",
+          "meaning": "why value was excluded; null when none"
+        },
+        "days_in_period": {
+          "type": "integer",
+          "meaning": "trading days in the billing period (NYSE calendar, lib/trading_calendar)"
+        },
+        "days_in_year": {
+          "type": "integer",
+          "meaning": "SMArtX year basis in trading days (251)"
+        },
+        "components": {
+          "type": "array",
+          "meaning": "exactly two rows, ADVISOR and PLATFORM",
+          "items": {
+            "portion": {
+              "type": "string",
+              "meaning": "which fee: ADVISOR (the advisor's share, debited by Schwab as TPFEE) or PLATFORM (SMArtX, debited as SMFEE)",
+              "enum": [
+                "ADVISOR",
+                "PLATFORM"
+              ]
+            },
+            "rate": {
+              "type": "number",
+              "meaning": "annual rate as a fraction (0.003175 = 31.75 basis points) applied as value x rate x days_in_period / days_in_year"
+            },
+            "debit_code": {
+              "type": "string",
+              "meaning": "Schwab fact_trn tran_srcde that carries this portion's debit",
+              "enum": [
+                "TPFEE",
+                "SMFEE"
+              ]
+            },
+            "computed_fee": {
+              "type": "number",
+              "meaning": "USD, round(billable_value x rate x days_in_period / days_in_year, 2)"
+            },
+            "debited_fee": {
+              "type": "number|null",
+              "meaning": "USD, positive: abs(sum of gross_amount of this debit_code rows for the account on debit_date, Schwab master 0833 fact_trn); null when NO_DEBIT"
+            },
+            "debit_date": {
+              "type": "string|null",
+              "meaning": "ISO date of the Schwab debit this component is compared with; null when NO_DEBIT"
+            },
+            "difference": {
+              "type": "number|null",
+              "meaning": "USD, computed_fee - debited_fee: positive = Opal computed more than Schwab debited; null when NO_DEBIT"
+            },
+            "reconcile_class": {
+              "type": "string",
+              "meaning": "agreement with Schwab for this component",
+              "enum": [
+                "NO_DEBIT",
+                "MATCH",
+                "DIFFERS"
+              ]
+            },
+            "difference_reason": {
+              "type": "string|null",
+              "meaning": "plain-English reason; REQUIRED (non-empty) when DIFFERS, null otherwise"
+            }
+          }
+        }
+      }
+    },
+    "household": {
+      "type": "object",
+      "meaning": "totals over the accounts",
+      "fields": {
+        "billable_value": {
+          "type": "number",
+          "meaning": "USD, sum of the accounts' billable_value"
+        },
+        "computed_fee": {
+          "type": "number",
+          "meaning": "USD, sum of every component's computed_fee"
+        },
+        "debited_fee": {
+          "type": "number",
+          "meaning": "USD, sum of every component's debited_fee (NO_DEBIT counts 0.0)"
+        },
+        "difference": {
+          "type": "number",
+          "meaning": "USD, computed_fee - debited_fee"
+        },
+        "reconcile_class": {
+          "type": "string",
+          "meaning": "NO_DEBIT when no component has a debit; else MATCH when |difference| <= 0.01 else DIFFERS",
+          "enum": [
+            "NO_DEBIT",
+            "MATCH",
+            "DIFFERS"
+          ]
+        },
+        "difference_reason": {
+          "type": "string|null",
+          "meaning": "required when DIFFERS, null otherwise"
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "meaning": "at least 3 plain-English lines an advisor reads to answer 'why is my fee this number?'"
+    }
+  },
+  "claim_enum": {
+    "enum": [
+      "measured",
+      "inferred",
+      "held",
+      "absent"
+    ],
+    "meaning": "how the value was come by; a consumer rejects on this field. measured = read from a named source by an instrument; inferred = derived from measured values by a stated rule; held = carried from an earlier record without re-reading; absent = no value could be had."
+  },
+  "reconcile_class_enum": {
+    "members": {
+      "NO_DEBIT": "no Schwab row for the component's debit_code on its debit date; debit_date, debited_fee, difference are null",
+      "MATCH": "a debit exists and |difference| <= 0.01 USD",
+      "DIFFERS": "a debit exists and |difference| > 0.01 USD; difference_reason is required"
+    },
+    "rule_24_record": {
+      "domain": "one account or household x quarter, after the fee is computed",
+      "i_mece": "members from {debit present?} x {|diff| <= 0.01}: absent -> NO_DEBIT; present and within -> MATCH; present and outside -> DIFFERS; the fourth cell (absent and within) is unreachable because difference is null when absent. 2 x 2 grid, 4 cells, 3 members, 1 empty by construction.",
+      "ii_same_grain": "every member classifies the same unit: one component (account) or one household for the quarter",
+      "iii_intent_coherence": "one axis: agreement with Schwab's debit, not which side is right",
+      "iv_state_coherence": "a schedule fix moves computed_fee and so can move MATCH/DIFFERS; it never moves debited_fee, which is read from fact_trn, and never moves NO_DEBIT, which depends on Schwab alone"
+    }
+  },
+  "tolerance_usd": 0.01,
+  "difference_sign": "computed_fee - debited_fee",
+  "scope_note": "0.1.0 models neither the prior-quarter true-up carried on the 07-07 debit nor flows (flow_adjustment 0.0); both are named as reasons on a DIFFERS, not computed."
+}
