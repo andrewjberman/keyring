@@ -103,6 +103,49 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The sma_additive_aua series is counted at the frontier as its own labelled component beside taxsma, so the Global total equals the fold's opal_aggregate_aua.",
     "world_is": "The total reconciles to the cent; the component's as_of/carried labels are not vintage-exact on a carried date. A per-date source-date channel (round-2 enrichment) would let the label match the Tax component's."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W5-S1",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~5",
+    "surfaced_at": "2026-10-09T05:03:30Z",
+    "one_line": "rebalancer_schemas.py now imports its sibling opal_strategy_matcher.py, so every package or S3 copy that ships rebalancer_schemas.py without the new file raises ImportError at import.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~S1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/assets/scripts/silver/rebalancer_schemas.py: 'from opal_strategy_matcher import StrategyMatcher' (flat sibling import, same pattern as rebalancer_conversion.py:40-43)",
+        "data/assets/scripts/silver/mirror_conversion.py:695-700 names rebalancer_conversion.py AND rebalancer_schemas.py as vendored FLAT into opal-assets-silver-blackdiamond/BUILD_MANIFEST.json; gold scripts import it flat (build_dim_model_portfolio.py:81)",
+        "No deploy was done by this worker (GUARD 1); armed only at the deploy of any consumer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Delegation keeps the signature of opal_sma_member_of and the five callers unchanged.",
+    "world_is": "The callers are unchanged, but the module they import gained a file dependency. At deploy, opal_strategy_matcher.py must be added beside rebalancer_schemas.py in the silver-blackdiamond BUILD_MANIFEST and in whatever copies the gold scripts (and the vendored lambda copy infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/rebalancer_schemas.py, which has no name rules today), or the import fails."
+  },
+{
+    "id": "MDPF_STRATID-D1-W5-S2",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~5",
+    "surfaced_at": "2026-10-09T05:03:40Z",
+    "one_line": "The repo etf_universe.json at the base commit carries only the tickers key; the full_names and sma_name_rules keys the matcher reads are in a sibling worker's uncommitted worktree, so AC2 was run against a local copy of that file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/etfs/config/etf_universe.json at 7575b70c45: keys schema_version, tickers, description, owner, last_updated, deployed_to",
+        "C:/dev/wk-stratid-4 (branch wk-MDPF_STRATID-w2-4) working tree: the same file with full_names and sma_name_rules, uncommitted at the read",
+        "AC2 (w2_2_seam.py) printed: DENOMINATOR 362 distinct names, same 361, gained 1 (POLEN DIVIDEND INCOME ETF -> divz, a full-name hit), changed 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 builds the matcher from infra/aws/etfs/config/etf_universe.json in the worker's worktree, with the contract's keys.",
+    "world_is": "The file was copied into this worktree and left uncommitted (not in the grant). The AC2 result holds for the sibling worker's content as read at 2026-10-09T05:0xZ; on a base without the keys the matcher reads only the tickers and the seam still passes, but the gained full-name hit would not appear."
   }
 ]
 ```
