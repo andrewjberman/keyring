@@ -786,3 +786,31 @@
   "dismissal_reason": "Answered by a durable marker the ticket already stores, replacing the date gate the worker flagged; the CTO ruled it DONE."
 }
 ```
+
+## IRPT_ANLREQ-D2-S6 -- round 2: "the ticket page opens all four package files" has no server reader for Commentary or Original file
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S6",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T07:40:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "DECOMP_R2 AR-v-21 says the ticket page 'opens all four package files', but irpt-status serves owned reads for only two of them (analysis-request-read and analysis-request-pdf, keyed by requestId); no IRPT route reads the Commentary artifact or the Original file, so a portal-only cell can open the Report and the Branded PDF and must leave Commentary and Original labelled '(no reader yet)'. FWD-1's grading run (the four files opened from the ticket) cannot pass until a server reader exists for both, or the CTO narrows hop 9.",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (driver: route the two readers to the IRPT lane that owns irpt-status, or ask the CTO to narrow hop 9)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/entry.py:218-225 at box/dell2 651316fe8d: the irpt-status route map adds exactly three analysis routes -- analysis-request-history, analysis-request-read, analysis-request-pdf; none reads commentary or an original upload",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:107 read() and :153 pdf() are both keyed by request_id; neither takes commentary_ref or original_ref",
+      "row IRPT_ANLREQ-D2-S1 (round 1) already named this split: the PDF is a portal route entry; commentary and original need an IRPT-side reader (disarm owners ~Y2 / ~G2)",
+      "IRPT_ANLREQ_DECOMP_R2.md @cff0872f0f cell AR-v-21 and the closing line 'FWD-1 is then graded on ONE live journey: ... the package's four files opened from the ticket'"
+    ]
+  },
+  "spec_asserts": "DECOMP_R2 AR-v-21: 'Portal: the ticket page opens all four package files, including the branded PDF reader (route analysis-request-pdf)'; FWD-1 grading opens all four.",
+  "world_is": "Two of the four files have a server reader. AR-v-21 is cut to open those two and to name the other two honestly; no cell of round 2 builds a commentary or original-file reader.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
