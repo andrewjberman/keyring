@@ -1041,3 +1041,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_ANLREQ-D2-W22-S3 -- the re-issued order (issued_to ~22) names neither the ~21 deliverables folder nor its own file in <paths>, so the lane gate still refuses the proof commit and the flip
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W22-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~22",
+  "surfaced_at": "2026-10-09T10:20:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "AMENDMENT 3 re-issued the order to ~22 but the proof path (deliverables/0.9.0_WK_IRPT_ANLREQ~21/) is not in <paths> and the gate admits a worker only to deliverables/<own serial>/; safe-commit refuses the instance and the status flip (ADHC_OWNPTH.005).",
+  "spec_asserts": "Order step 3-4: update the proof instance under deliverables/0.9.0_WK_IRPT_ANLREQ~21/ and flip <status>, commit both as ~22.",
+  "world_is": "All three criteria pass on the re-run (V21-PAGE-OK pass=5, PORTAL-TSC-OK, V21-PACKAGE-OK passed=5; portal commit d7427de7) and proof-of-spec-check on the amended instance returns VALID rc 0, but safe-commit.sh refuses ~22 on the ~21 deliverables path and the order file (neither in <paths>). Instance edit left uncommitted in C:/tmp/anlreq-v21b; <status> left pending; no override used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh output: VIOLATION ... lane=TREE_DELIVERABLES ... agent=0.9.0_WK_IRPT_ANLREQ~22 not in permitted_agents",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-v21.package-pdf-reader-i5p-i7.md:142-154 (<paths>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
