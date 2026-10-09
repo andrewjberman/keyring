@@ -81,6 +81,6 @@ comp-iam: DECLARED-NOT-APPLICABLE -- reason: S3 reads only, from this box; no ro
 comp-routes: DECLARED-NOT-APPLICABLE -- reason: no route changes.
 comp-schedule: DECLARED-NOT-APPLICABLE -- reason: no schedule is touched.
 comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is touched.
-comp-adversary: RUN -- DB25-2-AC1 and AC2 base FAIL (no record), dry-run at base 99580aac8c 2026-10-07 ~17:2xZ; the denominator read from round 24's record: the 4 non-ROUNDING accounts acct#470f0c95, acct#d1934437, 0018321241, acct#065caf00.
+comp-adversary: RUN -- DB25-2-AC1 and AC2 base FAIL (no record), dry-run at base 99580aac8c 2026-10-07 ~17:2xZ; the denominator read from round 24's record: the 4 non-ROUNDING accounts acct#eddc8866, acct#e65485c8, 0018321241, acct#0ad4ac76.
 lane: the <paths> block IS the grant.
 </preflight>

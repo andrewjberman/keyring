@@ -36,7 +36,7 @@ this seat from adding an approval gate on its own word. If Andrew wants it mecha
 
 ## 4. Outcome read (PRD v0.19)
 
-- **FWD-3 (holdings basis):** 49F thread hop 1 built (account 0010498003, 184 of 184 YTD days, recompute exact); all
+- **FWD-3 (holdings basis):** 49F thread hop 1 built (account acct#24ccad9d, 184 of 184 YTD days, recompute exact); all
   49F accounts built; the adapter switch is merged and awaits its halves after window 21. NOT YET REALIZED.
 - **FWD-5 (Holdings):** R4 ENABLE signed by both halves; the first scheduled fire (Tue 10:15 ET) is the proof.
 - **FWD-4 (Analysis):** resident st3 served; window 21 open (both halves) carries the first Comparison and the first

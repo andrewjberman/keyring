@@ -54,7 +54,7 @@ never estimated.
    identity holds; a realized lot with no closing transaction is untied with a reason; a pre-2010 lot is listed, not estimated; a firm
    field absent is null with its coverage reason.
 3. The three contract files under `org/standards/`.
-4. One local run: account `acct#737d1020` plus at least 9 other accounts from the served producer's population, over the window
+4. One local run: account `acct#24ccad9d` plus at least 9 other accounts from the served producer's population, over the window
    2026-09-01..2026-10-05. Write `ACTIVITY_LOTS_LOCAL_RUN.json` with:
    - `reconciliation`: `{account_id, window, beginning_value, contributions, withdrawals, realized, unrealized_change, income,
      ending_value}` for ONE account and the window, each term the tables' own figure;

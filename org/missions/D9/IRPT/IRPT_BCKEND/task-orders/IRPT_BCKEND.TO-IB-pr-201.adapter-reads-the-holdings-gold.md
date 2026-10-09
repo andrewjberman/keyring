@@ -15,7 +15,7 @@
 
 **Directive:** D9 | **Fabric:** laptop | **Decomp cells:** `IB-pr-201`, `IB-pr-202` (decomposition section 15) |
 **outcome_ref:** FWD-3 (thread hop 2: gold -> adapter) | **depends_on:** ~E round 1 (TO-IB-er-201, complete: the gold
-for account 0010498003, 184 YTD partitions)
+for account acct#24ccad9d, 184 YTD partitions)
 
 ---
 
