@@ -164,6 +164,13 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
   - **Blindness:** the list covers Cottonwood's Rebalancer names only. SmartX (49financial) and Eclipse (Inflection) names are not
     listed by any run. The ST-t-4 census found no Opal-strategy names there on 2026-10-08, and that is stated, not assumed to hold.
 
+- **A11 (cell `ST-w-8`, cut 2026-10-09 ~20:5xZ; row D1-S7 follow-on).** ST-w-7's slice key reaches only the Cottonwood scope, and the L-1
+  key-set identity (`mdpf_gold_consolidator.py:1065`) aborts every run before any put (CloudOps~DELL1 msg 3151). The fix pads the key to
+  every scope as None in `apply_sma_sleeve_overlay`, the round-1 `sma_additive_aua` pattern. SERVED. Continued under TO-W2-3. Checks
+  `w2_8_tests`, `w2_8_keyset`.
+  - **Fallback** if not live by 2026-10-10 11:00Z: restore the runner slice to VersionId `Xki2TZ7vXhS6btiNeg3Hl5ASuf3Fq89i`
+    (pre-ST-w-7).
+
 ## DRAIN SEQUENCE (staged 2026-10-09 ~07:0xZ on the CRO's approach in UB-20261009T063738Z-0bc9; nothing below starts before step 0)
 
 0. **Gate:** the FWD-1 read of the 13:30Z `mdpf-scheduled-floor` fire is committed (`l4_read.py` verdict + ledger L4 closed or
