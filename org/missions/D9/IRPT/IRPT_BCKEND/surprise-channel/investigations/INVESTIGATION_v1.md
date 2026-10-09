@@ -24278,3 +24278,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S50 -- IB-pr-397's re-plan reads 11 adds, not AMENDMENT 3's 5: a second cell landed in the shared export root. And commentary_draft_store.tf carries the SAME duplicate-log-group defect S41 just fixed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S50",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T13:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The ruled edit is correct and this order's five adds are exactly right, but the shared root now also holds the commentary draft store's six, so the untargeted plan is 11 and the standing rule makes a foreign line a STOP -- and that sibling file repeats the very duplicate-log-group defect this amendment fixed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 3's edit landed as ruled at the new pin d5a48694a3: the root's aws_cloudwatch_log_group.commentary_composition_read is dropped (0 own log-group resources remain in the file), its depends_on keeps only aws_iam_role_policy.commentary_composition_read, and the module receives log_retention_days = 14. 4 insertions / 6 deletions, one file. The commit-time naming gate PASSED (0 graded, no placement refusal), which also answers msg 2879's FYI for this order's four names",
+      "UNTARGETED re-plan at the new pin: 'Plan: 11 to add, 0 to change, 0 to destroy' -- 0 change and 0 destroy, so nothing is being modified or removed",
+      "the 11 partition cleanly, 5 mine and 6 another cell's. MINE (commentary_composition): aws_iam_policy.commentary_composition_invoke, aws_iam_role.commentary_composition_read, aws_iam_role_policy.commentary_composition_read, module.irpt_commentary_composition_read.aws_cloudwatch_log_group.lambda, module.irpt_commentary_composition_read.aws_lambda_function.this. FOREIGN (commentary_draft_store, cell AR-t-13): aws_cloudwatch_log_group.commentary_draft_store, aws_iam_policy.commentary_draft_store_invoke, aws_iam_role.commentary_draft_store, aws_iam_role_policy.commentary_draft_store, module.irpt_commentary_draft_store.aws_cloudwatch_log_group.lambda, module.irpt_commentary_draft_store.aws_lambda_function.this",
+      "TARGETED at this order's four addresses: 'Plan: 5 to add, 0 to change, 0 to destroy' -- EXACTLY the count AMENDMENT 3 requires, exactly the signed half's set, and the module's log group reads name /aws/lambda/irpt-commentary-composition-read-lambda ONCE with retention_in_days = 14",
+      "SECOND FINDING, the same defect class as row D2-S41 in the sibling file: commentary_draft_store.tf:92 declares resource aws_cloudwatch_log_group.commentary_draft_store and :121 references it in depends_on, while its own module.irpt_commentary_draft_store creates /aws/lambda/irpt-commentary-draft-store-lambda too. Both '+ name' lines appear in the untargeted plan, at lines 49 and 555, character-identical. No such log group exists live, so whichever create runs first, the other fails ResourceAlreadyExistsException -- that order will half-land exactly as this one would have",
+      "why the count changed since AMENDMENT 3 was written: the draft store was not in this root when the 5 was specified. It is the IB-pr-397 sibling the COO queued in msg 2790 and it has landed in the tree since, unapplied"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 3: re-plan at the new pin; it must show EXACTLY 5 adds, 0 change, 0 destroy, and the module's log group with retention 14; no retention, or any other count, is a STOP; print the plan line by line against the half. Standing rule (COO msg 2863, CTO msg 2862): on a shared root, STOP with a row and the plan text on any line that belongs to another release.",
+  "world_is": "Both clauses are now in tension and the applier did not resolve it alone. The untargeted count is 11, which AMENDMENT 3 calls a STOP; the targeted count is 5 with retention 14, which is what AMENDMENT 3 describes. Targeting is what this seat did for IB-pr-395, and the CTO's response to that was to make a foreign line a STOP rather than something to target around -- so this time it is surfaced before any apply instead of absorbed. NOTHING WAS APPLIED: the function is still absent live, the ledger for this order is still RED with L3/L4 open, and only the read-only plans were run. The issuer's call is which of two shapes to take: (a) apply the targeted 5 now, recording that the 6 foreign adds were held out and remain pending for the draft store's own order, or (b) land the draft store's S41-class fix first so the root plans cleanly and both cells can apply as whole-root plans. Either way the draft-store defect needs the same one-line fix this amendment just made here -- drop the root resource and its depends_on reference and pass log_retention_days = 14 to the module -- and it is NOT this order's to make: it belongs to the cell that owns commentary_draft_store.tf, which is why it is filed here rather than edited.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
