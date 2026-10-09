@@ -4926,3 +4926,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W70-S2 -- Resolves IRPT_DASHBD-D2-W70-S1: AMENDMENT 1 granted the source map path; R44 applied
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W70-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~70",
+  "surfaced_at": "2026-10-09T14:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-D2-W70-S1. AMENDMENT 1 of IRPT_DASHBD.TO-DB-b-95 (issuer 2.0.0_SA_COO~D2, cherry-picked as a1dac627da) grants infra/aws/lambda/ci/lambda-source-map.json in <paths>. The re-pin then committed (072d27a4a1) and the release ran from step 3: upload f0d129281f, plan 0/1/0, one safe-apply, live CodeSha256 oNgy4rnr... = built, post-apply plan No changes (65eb443109). DB47-1-AC1 prints PASS.",
+  "one_line": "W70-S1 resolved: AMENDMENT 1 granted the source map path; R44 applied and DB47-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-95.r44-release-apply.md AMENDMENT 1 and <paths> @a1dac627da",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_APPLY_RECORD.json @65eb443109"
+    ]
+  },
+  "spec_asserts": "The order's <paths> grants every file the worker must edit, including the source map.",
+  "world_is": "After AMENDMENT 1 the source map is granted; safe-commit accepted the re-pin and the stamp."
+}
+```
