@@ -3666,3 +3666,23 @@ is HELD while any collection leg runs" now reads "`bq-2`'s merge is HELD while a
 MERGED INTO". The runner runs from a PINNED checkout, which moves only by an explicit re-pin, never by box-sync. The merge
 is still a site-Z deploy under a never-widen pair carrying `1.0.0_SA_CTO~Z`'s half. No gate limb graded this amendment: the
 decomposition is not a task order, and `to-pipeline-gate.py` grades task orders.
+
+## 89. ROUND 76 -- R31: a common-word alias needs a second anchor (`1.0.0_SA_CTO~DELL1` msg 2333, `ledger/ROUND_ANALYSIS.round74.md` ADDENDUM 3), 2026-10-09 ~11:2xZ
+
+Rebuild #12 served R30 (graded ACCEPT 50 of 50, @7104334f35; ledger closed @b89f2f09c4). The CVO's finding: 14 of 20 kept
+count-down rows are still off-topic (8 travel visas, 6 fruit or colour "Orange"). R31 rules the next matcher rule. Round 75
+still holds bs-3 and bs-4 at site Z and the bo-1/bp-1 and bq-2 merges (which wait on r47); this round does not touch them.
+
+Issuer `2.0.0_SA_COO~W1`. Series **`bt`**.
+- **Fan-out:** 1 of 1 chain, cap 8.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bt-1` | `bt-1` | **R31 in gold's matcher, behind `_COMMON_WORD_SECOND_ANCHOR_RULE`.** The common-word alias set is MEASURED against a vendored public-domain word list (hash recorded). A second anchor is the ticker, the full name, or another non-common alias of the same security. Tests with a mutant, plus a MENTION-grain census on served rebuild #12: mentions before and after, pairs removed and counted down, the CVO's 14 rows, and a 20 removed / 20 kept sample. | SERVED | worker ~132 |
+
+**Then (not orders):** bt-1's merge under its own pair; rebuild #13 serving R31 under its own pair (dry run, then act),
+on the same ladder as br-1 and #12.
+
+**Checks dry-run at the base before the cut:**
+- `bt-1` AC1 base: FAIL as expected (no tests ran: the test is absent). AC2 base: FAIL as expected (no such file).
+  AC3 base: PASS as expected (518 passed).
