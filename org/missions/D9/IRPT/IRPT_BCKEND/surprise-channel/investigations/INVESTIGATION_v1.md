@@ -24010,3 +24010,108 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-W268-S1 -- a build at the real source map does not carry IB-pr-405: irpt-status pins served.py, entry.py and owned_report.py, and the map is outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W268-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~268",
+  "surfaced_at": "2026-10-09T11:16:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order's release packet needs a built zip that carries the change, but lambda-source-map.json pins irpt-status's three changed members to older commits; the map is not in <paths>, so the census is built at a scratch candidate map (BAU_SOURCE_MAP_OVERRIDE) and the packet hands the applier the rows to commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.staged_from: served.py @74a62fb46c, entry.py @eb70303e8f, owned_report.py @62880e9bfc (its _staged_from_note: 'These pins are the owning cells' to release: drop a row to ship that member's pending change')",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~268/replay/candidate_map_rows.json (the seven rows, pin 9489a0fed0)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~268/NEVER_WIDEN_SIGNOFF_PACKET_IB-pr-405.md Branch A step 1"
+    ]
+  },
+  "spec_asserts": "Release packet: BUILD_ONLY twice, byte-identical, from a clean tree, listing every function that packages a changed member from lambda-source-map.json (the order's <paths> do not include the map).",
+  "world_is": "A build at the real map packages the OLD blobs of the three members (and old retention stack), so the built zip would not contain the change. The builds here use BAU_SOURCE_MAP_OVERRIDE with a scratch copy that re-pins only irpt-status's rows; the applier commits those rows and rebuilds at the real map (the sha256 must match)."
+}
+```
+
+## IRPT_BCKEND-D2-W268-S2 -- irpt-status carries other cells' pending changes, and report_index needs a retention stack the packaged zip lacks
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W268-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~268",
+  "surfaced_at": "2026-10-09T11:16:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "one_line": "The irpt-status candidate zip changes 10 of its members versus live, 3 of them this cell's: live is already behind the real map (AR-y-22 /original, TO-AR-y-11 ticket_id), and a persisted-report read needs retention.py/repository.py/composition.py/reporting_policies.json restaged, which carry IB-pr-386, AR-t-12 and YCD-a-7 work.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~268/IB106-1_release_census.json artifacts[irpt-status].changed_members (owners per member)",
+      "live irpt-status zip (CodeSha256 E7VKvhg3E9D5euWO+S649/iyAJ05xUmFPqHEAKDTFxA=, 2026-10-09T07:43:46Z): retention.py reference(owner, family, logical_id) takes no policy revision; repository.py KINDS = (PERFORMANCE, ANALYSIS); packaged reporting_policies.json has no irpt-custody-x10-v1 row (replay static arms)",
+      "replay/raw/replay_built.json vs replay_live.json static block"
+    ]
+  },
+  "spec_asserts": "The cell: extend one owned read to return persist_inputs, report_index null when nothing is persisted; the packet names the blast radius.",
+  "world_is": "With only the three own members re-pinned (minimal candidate, built sha256 FMkzsPFsg55VKLtg3tjicq1M5M6sh5CmIlQlYG6BNxI=) a persisted custody report would make the read refuse (reasoned from the packaged retention.py, not replayed). The full candidate (gff0DKwarcDa/GJHNpPN0UVV+57Bxg4VPnqxglN/EPY=) also moves the retention stack and the registry file, and with them other cells' work. If the applier chose the minimal rows the runner's read after its own persist refuses; if the full rows, the signer is releasing those cells' pending changes in irpt-status. Either is the signers' choice, named in the packet."
+}
+```
+
+## IRPT_BCKEND-D2-W268-S3 -- the published contract does not name include=persist_inputs or the persist_inputs member; gateway admission of the svc token on the GET route is outside the zip
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W268-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~268",
+  "surfaced_at": "2026-10-09T11:16:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "docs/contracts/investor-reporting/v1 (routes.json query note, OwnedAnalysisRequest.schema.json additionalProperties false) is outside this order's paths, so the new opt-in include and member are not published; and the edge's admission of svc-custody-statement on GET .../analysis/requests/{requestId} is not replayable from the zip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json (additionalProperties false, no persist_inputs)",
+      "docs/contracts/investor-reporting/v1/routes.json operation analysis-request-read query note lists comparisons and composition only",
+      "infra/aws/lambda/investor-reporting/ops/entry.py read(): include accepts persist_inputs at HEAD 9489a0fed0"
+    ]
+  },
+  "spec_asserts": "The order extends an existing owned read and adds no route; its <paths> are the Lambda tree, tests, _contracts/ and the deliverables.",
+  "world_is": "The opt-in keeps every existing caller key for key, so no published parser sees the member unless it asks (svc only). A contract-validating consumer that asks for it would fail the schema until the contract rows are edited by the contracts' owner. The edge/authorizer admission of the svc token on this GET route (as on the other three svc routes) is read first in the after-read."
+}
+```
+
+## IRPT_BCKEND-D2-S45 -- Disarms D2-W268-S2: no IB-pr-405 apply until its pair rules on irpt-status's 7 foreign members
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T11:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-D2-W268-S2 by issuer ruling. The irpt-status zip built for IB-pr-405 moves 10 members versus live, 7 of them other cells' unreleased work (IB-pr-386, AR-t-12, YCD-a-7 per the packet's owner table). The hazard is a release that ships those 7 under IB-pr-405's pair. It cannot fire: no apply order for IB-pr-405 exists, and none is cut until the pair is built over a census that either (a) narrows irpt-status to IB-pr-405's 3 members plus only the re-pins report_index strictly needs, each re-pin owned and named, or (b) carries the CTO's ruling on the 7 foreign members. W268-S1 (map re-pin rows) and W268-S3 (routes.json / schema publication) ride the same packet decision.",
+  "one_line": "W268-S2 disarmed: no IB-pr-405 apply is cut until its pair rules on the 7 foreign irpt-status members.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB106-1_release_census.json @d222824692: irpt-status 10 changed members, 3 owned by IB-pr-405",
+      "no TO-IB-pr-4xx apply order for irpt-status exists at box/dell2 HEAD"
+    ]
+  },
+  "spec_asserts": "A release ships only its own cell's members (never-widen).",
+  "world_is": "The built irpt-status zip carries 7 other cells' members; no apply is cut, so nothing ships until the pair rules."
+}
+```

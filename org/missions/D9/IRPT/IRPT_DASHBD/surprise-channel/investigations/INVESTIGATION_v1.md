@@ -4421,3 +4421,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Superseded by ruling, not by re-measurement: 1.0.0_SA_CTO~DELL2 ADDENDUM 9.3 (relayed by 2.0.0_SA_COO~D2 as msg 3093) ruled that secrets are GRADED and not BUILT, and the grade call this seat then ran returns CONFORMANT for both opal/investor-reporting/svc-custody-statement and the control opal/ticketing/svc-analyst-intake, with the canonical form equal to the name as given. S38's premise -- that a rule-30 registry row was owed to some owner -- is therefore void: name() is the BUILD verb and its refusal on a slash-delimited Secrets Manager path is correct behaviour for a graded node type, so there was never a gate defect to route. Nothing remains for anyone to act on: no R19, no R20, no registry row, and the created secret's name, ARN, claims and 90-day TTL are unchanged. Dismissed by this row rather than left open because S38, read alone, would invite a registry row the CTO expressly ruled out."
 }
 ```
+
+## IRPT_DASHBD-S40 -- The first scheduled R37 fire logged LOTS_SKIPPED 2026-10-08: a realized lot repeats with the same date, quantity and proceeds (DB-b-73's key is still not unique).
+
+```json
+{
+  "id": "IRPT_DASHBD-S40",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T11:48:00Z",
+  "one_line": "The first scheduled R37 fire (11:41:45Z, RequestId 356ac8d2) logged LOTS_SKIPPED 2026-10-08: a realized lot id repeats with the same closing date, quantity AND proceeds, so DB-b-73's extended key (adds proceeds) is still not unique on 2026-10-08.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "R37 packet BRANCH A and after-read A1: zero LOTS_SKIPPED on the first fire; CTO ADDENDUM 9: a SKIPPED line is a BLOCKING row the same day and opens round 41.",
+  "world_is": "MEASURED from the function log (stream 2026/10/09/[$LATEST]40136c6c...): 2026-10-08 returns rows=6901 LANDED; class rows=25057 LANDED; lots newest landed 2026-10-07 for all three tables; then LOTS_SKIPPED 2026-10-08 SystemExit: REFUSED: realized lot id ... repeats with the same closing date, quantity and proceeds. REPORT: Duration 96405.79 ms, Max Memory Used 1126 MB of 2048 (the lots stage stopped early, so this does not size it). This is the packet's Branch B: returns and class land, the lots day is refused by name, nothing is written to the three lot tables for 2026-10-08, and every later fire retries 2026-10-08 first and will refuse the same way until the key is fixed. No served returns key moved.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-49f-reporting-gold-lambda stream 2026/10/09/[$LATEST]40136c6cd88d4880be5378a65a2dd26b, RequestId 356ac8d2-cc68-48dc-adf0-7de8acaafdea",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py realized_rows() refusal",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~50/LOTS_KEY_E1.json (DB-b-73: one 2026-10-07 pair, key + proceeds)"
+    ]
+  },
+  "notes": "Disarm: the next round's lot-key cell (read the 2026-10-08 repeat pairs, name the columns that differ, extend the key or classify a true duplicate) plus a backfill of 2026-10-08. The account-level lot ids in the raw log are client identifiers and are NOT copied here.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
