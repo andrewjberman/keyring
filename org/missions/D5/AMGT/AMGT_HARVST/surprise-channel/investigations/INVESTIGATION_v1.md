@@ -8076,6 +8076,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-D1-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~W1",
+      "surfaced_at": "2026-10-09T00:38:24Z",
+      "one_line": "Supersedes box/dell1's AMGT_HARVST-Z-S106 (id collision with site Z 2.0.0_SA_COO~H's Z-S106, minted 23:52:37Z) under 1.0.0_SA_CTO~DELL1's ruling msg 1310: to-check reads 39 AMGT_HARVST orders ACTIVE at status issued; 36 carry a later terminal <status> tag, so the 39 is a first-tag parse of orders that append their flips.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HANDOVER_TO_DELL1_20261009.md (origin/box/sitez): 'to-check --all --project AMGT_HARVST reads 39 ACTIVE, all with status issued ... likely the first-tag parse of orders that append their flips. DELL1's COO reconciles it ... from each order's LAST <status>'.",
+      "world_is": "Read at box/dell1 HEAD 2026-10-09 ~00:2xZ over all 173 files in task-orders/: first <status> tag issued on 39; LAST tag complete 161, withdrawn 5, cancelled 3, closed 1, issued 3. Open by design: bo-1 (~122) and bp-1 (~123), SERVED orders whose branches are held unmerged on a never-widen pair; bk-3 (~118), held unspawned until a newer gold part was served -- spawned by 2.0.0_SA_COO~W1 after rebuild #10 and flipped complete @5f2ab28b0d. NOT measured: which to-check code line takes the first tag; other projects whose orders append flips. The box/dell1 copy at id Z-S106 (@d1695632ef) carries the same content and stays as written (ids are never renumbered); this row is the one to cite.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/task-orders/ (173 files, last-tag parse)",
+          ".tools/to-check.py",
+          "origin/box/sitez:org/missions/D5/AMGT/AMGT_HARVST/deliverables/1.0.0_SA_CTO~Z/HANDOVER_TO_DELL1_20261009.md",
+          "box/dell1 AMGT_HARVST-Z-S106 @d1695632ef (superseded copy)",
+          "1.0.0_SA_CTO~DELL1 msg 1310"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
