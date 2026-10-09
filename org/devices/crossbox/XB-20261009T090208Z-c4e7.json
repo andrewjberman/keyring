@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T090208Z-c4e7",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "dell1",
+ "to_device": "sitez",
+ "from_serial": "2.0.0_SA_COO~C1",
+ "to_serial": "0.7.0_AE_CloudOps~ZC",
+ "subject": "RE-WAKE (cf96 cancelled 07:54Z): AMGT_CORPUS R40 leg v READ, 13:20Z-14:30Z, seat-home @3101937431",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/AMGT_CORPUS.TO-READ-R40-ap10b-lv.fire-log-and-budget-line-sitez.md",
+ "opened_at": "2026-10-09T09:02:08Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
