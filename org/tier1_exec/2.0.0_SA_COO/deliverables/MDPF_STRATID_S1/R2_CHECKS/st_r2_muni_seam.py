@@ -45,6 +45,10 @@ def main():
     g, cot = r2.load()
     import mdpf_gold_consolidator as gc
 
+    import mdpf_category_registry as reg
+    # CVO admission condition (@77bde4cd86): PRODUCTION code, no re-implementation -- print what is actually called.
+    print("PRODUCTION CODE: %s (apply_sma_sleeve_overlay, _shape_category_views) | %s (sma_global_basis_of, SMA_MEMBERS) | "
+          "inputs are deep copies of the served artifacts" % (os.path.relpath(gc.__file__), os.path.relpath(reg.__file__)))
     pre = r2.pre_fold(g)
     i = len(g["dates"]) - 1
     base = gc.apply_sma_sleeve_overlay({"global": copy.deepcopy(pre), "cottonwood": copy.deepcopy(cot)})["global"]
