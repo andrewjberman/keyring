@@ -86,4 +86,29 @@
 }
 ```
 
-
+```json
+{
+  "id": "IRPT_ANLREQ-D2-S2",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~T2",
+  "surfaced_at": "2026-10-09T05:25:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Two READY triggers now target the commentary Lambda: AR-t-11's I3 analysis_ready queue (merged 30bed477ad) and ~P2's H1 DynamoDB stream mapping (IB-pr-388, drained 4e7d47eb80); H1 also grants the commentary role kms:Decrypt on the irpt key, which CTO ruling msg 2341 forbids.",
+  "disarm_owner": "2.0.0_SA_COO~Y2 (driver: rule ONE trigger for hop 4b), then 2.0.0_SA_COO~P2 or 2.0.0_SA_COO~T2 removes the other before any apply",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_ANLREQ_DECOMP_R1.md interface I3: ONE closed message queue_message('analysis_ready', {tenant, request_id}), hop 4b cell AR-t-11",
+      "~P2 msg 2562: infra/aws/terraform/investor-reporting/core/ready_trigger.tf -- event-source mapping from the irpt-requests NEW_IMAGE stream to the commentary Lambda + inline policy with the 4 stream actions and kms:Decrypt on the irpt key",
+      "CTO msg 2341: the Lambda's role gets no GetItem, kms:Decrypt or GetObjectVersion on request_compositions",
+      "data/transcripts/scripts/commentary/lambda_handler.py at 30bed477ad admits both shapes (stream records; SQS via admit_ready_message)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-1 hop 4b: one READY yields exactly one commentary run, through I3; the commentary role holds no direct IRPT data or key grant.",
+  "world_is": "Both triggers are DESIRED Terraform; applied together they would run the drafter twice per READY and re-open the irpt kms:Decrypt the ruling removed.",
+  "notes": "Nothing applied. Asked of ~Y2 at 05:27Z, REC (a) I3 only."
+}
+```
