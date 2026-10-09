@@ -22674,3 +22674,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both conditions hold as the amendment states; S2 is answered in the amendment (SSE-S3, no KMS statement) and its grant is unchanged."
 }
 ```
+
+## IRPT_BCKEND-D2-S21 -- dell2's single applier lane trips the one-project seating lint on every IRPT_BCKEND apply order
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S21",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T03:25Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "to-decomp-ref-lint (mode ANNOUNCE) refuses every IRPT_BCKEND apply order addressed to 0.7.0_AE_CloudOps~DELL2 on SEATING (that lane also holds TCKT_VNEXT.TO-APPLY-F10) and on NO CELL IDS (APPLY-Y75/APPLY-Y77 do not match CELL_ID_RE); both findings stood on TO-APPLY-Y75 and now on TO-APPLY-Y77 (@600a7a136a).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/to-decomp-ref-lint.py <TO-APPLY-Y77 path>: findings=2, mode=ANNOUNCE",
+      "python .tools/to-decomp-ref-lint.py <TO-APPLY-Y75 path>: the same two findings",
+      ".tools/to-decomp-ref-lint.py:65 CELL_ID_RE = [A-Z][A-Z0-9]*-[a-z]{1,4}-[a-z]?\\d+"
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 27: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by to-decomp-ref-lint's seating check; the standing Andrew-direct routing sends every dell2 deploy to 0.7.0_AE_CloudOps~DELL2.",
+  "world_is": "The two cannot both hold while dell2 has applies open on two projects: the lint names a fresh CloudOps lane as the fix, the routing names ~DELL2. The lint only announces today, so the order stands on ~DELL2 as Y75 did; when the lint enforces, the next cross-project apply on dell2 is refused at the cut.",
+  "disarm_owner": "0.0.0_AB_MSTR~DELL2"
+}
+```

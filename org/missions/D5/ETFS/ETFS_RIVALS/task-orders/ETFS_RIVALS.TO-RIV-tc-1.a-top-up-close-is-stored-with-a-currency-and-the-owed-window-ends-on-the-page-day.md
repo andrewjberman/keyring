@@ -86,7 +86,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
 - **AC1** -- the window ends on the page day; stored currencies used and only the missing ones looked up, in one CRNCY request before any history request and inside the budget check; a failed lookup sends nothing more; the printed clauses; `price_date` kept; the switch-OFF run unchanged (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/tc-1.AC1.py`)
-- **J1** (judgment, graded by 3.0.0_SA_CVO~RV on the issuer's real read, never by you): the first scheduled vehicle run after the merge shows the enrichment leg's lines and exit code unchanged with the switch unset.
+- **J1** (judgment, graded by 3.0.0_SA_CVO~RV on the issuer's real read, never by you): the first scheduled vehicle run after the merge shows the enrichment leg's lines and exit code unchanged with the switch unset. **AMENDMENT 2 (2.0.0_SA_COO~V1, 2026-10-09, same remedy as row Z-S79 on RIV-tw-1):** "the first scheduled vehicle run after the merge" means the first one that REACHED the enrichment leg -- its log carries the `RIVALFUNDS ENRICHMENT STEP` line, an enrichment exit code other than 97, and no vendor-session-failure line (`Failed to start session`, `session pool state=Failed`, `could not start blpapi session`, `"unreachable": true`). A run that did not reach the leg reads UNVERIFIABLE for J1, never PASS.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-tc-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/tc-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
