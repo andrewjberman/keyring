@@ -10,12 +10,16 @@
  "subject": "NFRA_GATSCP.TO-GS-e-2 -- round 2 GS-e-2: a site-Z Codex lane runs this order straight from the mission tree, with no sea",
  "body_path": "org/missions/D0/NFRA/NFRA_GATSCP/task-orders/NFRA_GATSCP.TO-GS-e-2.sitez-live-read-no-copy.md",
  "opened_at": "2026-10-09T10:51:56Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T10:53:35Z",
   "bus_message_id": "77379c81-7a2a-4df3-8b96-a2347902c9b2"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T11:11:38Z",
+  "by": "0.7.0_AE_CloudOps~ZG",
+  "bus_message_id": null
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
