@@ -22941,3 +22941,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The narrowing is implemented (served.py Entry._internal_allowed_firms + the else branch in handle; amendment 1 lookup-error fail-closed included; 12 allowed_firm_ids tests pass), but 4 pre-existing tests encode the old any-firm reach for internal callers (IB-pr-366 and IB-pr-271 vintage). Their files are not in <paths>, and the refusal clause forbids weakening a test. Needs the issuer to grant those two test files (expectations to FIRM_BINDING / refused) or to rule a carve-out for the on-behalf-create operation. Status left open; nothing weakened."
 }
 ```
+
+## IRPT_BCKEND-D2-W198-S2 -- 'ALL' alone is refused INVALID_INPUT, not FIRM_BINDING
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W198-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~198",
+  "surfaced_at": "2026-10-09T05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Ruling item 3 says test_served_refuses_all asserts FIRM_BINDING, but the string 'ALL' alone is unrestricted in served.py so the refusal is uploads.py INVALID_INPUT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served.py _internal_allowed_firms: 'ALL' alone returns None (no narrowing); with the fixture fixed to pass the string 'ALL', pytest test_served_refuses_all got public_reason_code INVALID_INPUT, UPLOAD_CREATOR_MUST_BE_CURRENT_ACTOR",
+      "test_served_refuses_unlisted_firm ([OTHER]) does get FIRM_BINDING"
+    ]
+  },
+  "spec_asserts": "Ruling on D2-W198-S1 item 3: test_served_refuses_unlisted_firm and test_served_refuses_all both assert FIRM_BINDING.",
+  "world_is": "Only the unlisted-firm case is FIRM_BINDING. The 'ALL' case remains a refusal with INVALID_INPUT because ALL alone is unchanged by design; served.py cannot change, so that test asserts INVALID_INPUT (still a refusal, no admission)."
+}
+```
