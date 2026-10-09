@@ -1,0 +1,20 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-09T05:39:10.585745+00:00
+**Status:** OPEN
+**Deploy:** NFRA_OPLGTW OG-bf-1 Phase D: 13-month completion-record backfill, master 08335338 (256 records + 256 manifests), after the Y date gate
+**Authored by:** 0.9.0_WK_NFRA_OPLGTW~41
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 6.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| D1 | verify | schwab/08335338/meta/complete/date=<D>.json x256 + meta/conversions/<run_id>.json x256 | every record read back QUALIFIED, VersionIds in backfill_record.json |  | OPEN |
+| D2 | verify | zero dispatched: doc= lines in advi-49f-gold-dispatch log for the window; silver and bronze untouched | filter_log_events count, AC2 |  | OPEN |
+
+## Log
+
+- 20261009T053910Z OPENED by 0.9.0_WK_NFRA_OPLGTW~41 with 2 leg(s)

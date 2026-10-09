@@ -10164,3 +10164,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T05:39:10Z",
+  "one_line": "The deployed producer opal-assets-silver-schwab is no longer the build the Phase A ask read: CodeSha256 v2Bztqbu... (OPAL_BUILD_COMMIT 1f03a3f209) became AzrzJS+9... (47c3c75f11) at 2026-10-09T02:33:06Z, after Phase B.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN lambda get-function-configuration 2026-10-09T05:3xZ: CodeSha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE=, LastModified 2026-10-09T02:33:06Z, env OPAL_BUILD_COMMIT 47c3c75f11; timeout 600, memory 3008 unchanged.",
+      "DIFF live zip vs the vendored package at this worktree (LF-normalised, 12 members): 10 SAME; silver_registry.py DECLARED_SCHWAB_MASTERS gains '08403355'; conversion_manifest.py gains BASIS_LABEL['08403355'], MASTER_NOT_PUBLISHED = {'08403355': ('slm',)} and a not_published branch in build_closure's non_applicable that is empty for any other master.",
+      "RUN read-only composition of build_closure for 08335338 on 2025-09-08, 2026-03-16 and 2026-09-14 with the vendored package and with the extracted live zip: closure_id identical in 3 of 3 (sha256:0d82af78..., 8b25cf0a..., bd433bf9...), all qualified."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The signed halves for Phase D read the producer as the 1f03a3f209 build (ask section 2: deployed CodeSha256 v2Bztqbu..., writers N = 2 call sites of one function).",
+  "world_is": "The function was rebuilt for the third master (08403355). For masters 08242234 and 08335338 the write path and the closure content are byte-for-byte the same by the diff and by closure_id on 3 dates, so Phase D proceeds on the signed terms; the writers are still the same 2 call sites. The sweep (12:15Z) now also covers 08403355; Phase D does not run near it.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any change to the producer. The halves' 'deployed code' sentence is true of the write path they signed, not of the CodeSha256 they quote."
+}
+```
