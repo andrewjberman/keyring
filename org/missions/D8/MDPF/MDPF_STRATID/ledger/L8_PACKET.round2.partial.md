@@ -55,6 +55,26 @@ No BLOCKING or ARMED row is open from this round.
   - leg kind `s3-code` refused at open (ruled `s3-prefix` @49ab9ca1fa);
   - the entry named a placeholder, not the build, so the first push held D1 (pinned @f89a8c563d).
 
+## 4a. Post-deploy defect and its forward fix (rows D1-S7 ARMED -> D1-S8 DISARMED; the issuer's defect)
+
+- **20:14Z:** CloudOps' qa_local on the deployed lambda failed the cottonwood scope (global skipped). The ST-w-7 slice imports
+  `opal_unidentified`, which was in neither home (lambda package; runner `code/scripts/{silver,assets_gold,gold}` 404 x3).
+  **Cause:** the CTO-condition-3 closure was read for the consolidator and registry, not for the slice.
+- **F1 and F2:**
+  - **F1 (20:30:33Z):** module first-minted to runner silver; sha256 `6b9c1d7f` equals the pin. Isolated import of the runner S3
+    copies: IMPORT-OK.
+  - **F2 (20:36:03Z, @79e30151a6):** package line added.
+- **F2 exposed the L-1 key-set failure.** `unidentified_strategies` sat on Cottonwood only, so a run would put 0 of 16, and on ANY
+  package once the 12:52Z dispatch writes the key.
+  - **Ruled:** pad the key to every scope (ST-w-8, A11 @f1d54b1c0b; stale round-1 assertion updated under A11.1).
+  - **Merged @88e974ca10:** all checks OK, 267 passed.
+- **F4 (lambda at `88e974ca10`, 21:10:34Z):** qa_local green, 16 of 16, errors `[]`, L-1 identity PASS on 4 of 4 types. The issuer's
+  content read of the package: 4 of 4 files equal the pin.
+- **F3 (runner consolidator, 21:36:52Z, direct safe-deploy under CTO~DELL1 msg 3224):** sha256 `2cd88dc4` equals the pin. Entry
+  `mdpf-stratid-r2-keyset-f3f4-dell1-20261009` CLOSED 4 of 4.
+- **No scheduled run used a broken build,** and no served artifact was written by one.
+- **L4 re-pointed** at `55c3cc4642`, then `88e974ca10` (MDPF_CANON's additive consolidator change; round-2 seams re-run OK on it).
+
 ## 5. What the run must show (conditions 1, 2, 5 of the CTO half)
 
 Read by `deliverables/2.0.0_SA_COO~S1/r2_run_read.py` @b5f8c2460b. The negative control on the pre-deploy bytes reads FAIL on exactly
