@@ -24,11 +24,11 @@ older prices prefix) builds S3 keys by splitting literals past the naming gate, 
   "owner": "2.0.0_SA_COO~C2",
   "round": "v45",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v45"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
