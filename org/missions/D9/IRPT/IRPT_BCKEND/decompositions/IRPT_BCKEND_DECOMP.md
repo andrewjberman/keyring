@@ -2360,3 +2360,25 @@ verified identity, because the token carries no allowedFirmIds claim. A non-list
 | `IB-pr-387` | profile-row allowedFirmIds narrowing extends to internal callers; non-list refused; ALL never admits | FWD-8 | WORLD | IB-pr-385 (drained, same file) | P96-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one file, one writer. Assignee: 0.9.0_WK_IRPT_BCKEND~198. Release after 383, under its own pair.
+
+## 90. ROUND 97, WORKSTREAM ~P (2026-10-09 ~05:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msg 2507)
+
+Rounds 95 and 96 are complete: IB-pr-384, 385, 386 and 387 are graded PASS and drained. IB-pr-383's S1/S2/V1 wait only on laptop
+AMENDMENT 27, the runner-host grant (rows D2-S25 and D2-S27). The CTO ruled (msg 2507) that the idle lane builds two things now, with
+nothing applied:
+- (a) H1 as DESIRED Terraform. It belongs to IRPT_ANLREQ, and its apply pair and after-reads go to ~T2 with ~Y2 driving.
+- (b) The release packets for 384, 385+387 and 386. Those pairs are signed after 383 closes.
+
+Checks:
+- `deliverables/2.0.0_SA_COO~P2/checks/r97/p97_h1.py` (IB97-1): AC1 and AC2 FAIL at base. AC3 is terraform fmt on the touched files only
+  and PASSes at base. dell2's provider mirror lacks hashicorp/local, so there is no offline validate.
+- `.../r97/p97_release.py` (IB97-2..4): every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-388` | H1 READY-event trigger as DESIRED Terraform (stream, filtered mapping, exact grant) | NFRA_TRNSPT FWD-10 | WORLD | none | P97-a |
+| `IB-pr-389` | release packet: runner bundle (IB-pr-384) | FWD-7 | WORLD | IB-pr-384 drained | P97-b |
+| `IB-pr-390` | release packet: _authz served.py hosts (IB-pr-385 + 387) | FWD-2 / FWD-8 | WORLD | IB-pr-385, 387 drained | P97-c |
+| `IB-pr-391` | release packet: svc-commentary composition-read Lambda (IB-pr-386) | NFRA_TRNSPT FWD-10 H2 | WORLD | IB-pr-386 drained | P97-d |
+
+fanout: 4 of 4 chains, cap 8, reason: independent artifacts. Assignees: 0.9.0_WK_IRPT_BCKEND~199, ~200, ~201, ~202.

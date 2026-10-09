@@ -58,6 +58,12 @@ composition reader; report-level surfaces are carried to round 2 as enrichment.
    under `dist/pkg/`, so the deployed zip admits a valid `analysis_ready` message. Nothing else in the build changes. Add to the test file a
    `test_build_packages_keys_module` that runs `bash infra/aws/lambda/transcripts-pull/build.sh` (or reads the script's copy lines if bash is
    unavailable) and asserts both files are in the zip.
+3b. AMENDMENT 3 (issuer, on the driver's decomposition AMENDMENT 4 @e124f00985, ~Y2 msg 2543): `commentary.tf` adds the `commentary_ready`
+   queue and its DLQ beside `analysis_ready`, named by `name()` exactly as AR-t-11 named its pair (record both in `NAMES.json`); the commentary
+   role gets `sqs:SendMessage` on it; its queue policy lets the resident role (the same `runner_role_arn` remote-state output AR-t-11 used)
+   ReceiveMessage, DeleteMessage and GetQueueAttributes. The live `send` port sends I4 to that queue (`COMMENTARY_READY_QUEUE_URL` env from the
+   tf). ~G2 wires the resident's poll. Extend `test_draft_persisted_then_one_commentary_ready` or the AR-t-11 tf test to assert the queue, the
+   send grant and the receive policy exist.
 4. `data/transcripts/scripts/tests/test_commentary_composition_port.py` (new, fakes only):
    `test_live_port_invokes_irpt_reader_with_tenant_and_request_ref` (a fake lambda client receives exactly those two keys and the builder name);
    `test_owner_never_read` (a composition carrying `owner` yields no owner value anywhere in the request or ticket context; firm == tenant);

@@ -39,3 +39,14 @@ FWD-8 (goes with MDPF_SECCLASS FWD-5), FWD-2's Bloomberg backfill (Andrew's card
 - 1b: one planted absent interior day, window over it reads blank; same window with the day present reads a value.
 - 2b: `matched=<n>/4545` printed, expect `n>=234` and an unmapped list with its denominator.
 - 3: `NAME:: rows=<n> writers=<k>` printed, expect `n=5673` at the scan's vintage.
+
+## Update 05:2xZ -- the pull edits are not waiting on Andrew
+
+Andrew lifted the no-modify order for `etf_daily_pull.py` at ~23:0xZ 2026-10-08 ("No modify is lifted", site Z call
+sitez-20261008T165921Z-35ce; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_230xZ_SITEZ_AND_DELL2_OPEN_CALLS_ANSWERED.md`,
+quote line and row printed at 05:2xZ). The order still stands for the rest of `integrations/bloomberg/pipeline/`, the vehicle and the
+sign-in. Call b186 was redundant (this seat had not read that record) and is closed by `1.0.0_SA_CTO~DELL1` (0.0.0_AB_MSTR~DELL1 msg 1761).
+So items 1c (FWD-5 widened next-run request) and 4 (FWD-9 total-return field, route 2a) join the PASS issuance as chain F: ONE pull
+cell, at most three criteria, write set `etf_daily_pull.py` and its test only, landing after a scheduled pull, each with
+`1.0.0_SA_CTO~Z`'s half and an MDPF_DEMQUE quote naming the per-run row and field delta (pre-draft AMENDMENT 2's conditions).
+Chain F depends on 1a (it reads the gap record's listed days). Fan-out (draft): 6 chains, cap 8.

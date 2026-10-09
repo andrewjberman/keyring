@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~1</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -58,11 +58,37 @@ submission carry the ticket id from submission to the acceptance record.**
 If a JSON contract for this request body exists that the served path validates against, add `ticket_id` there too, and name the file
 in your report. If it lives outside `<paths>`, stop and file a row.
 
+### AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ, on your row `IRPT_ANLREQ-D2-W1-S1`; decomposition AMENDMENT 2 @1fe8ac3bb6)
+
+Your row is right, and the repair is yours, in this same order. The status is back to `pending`.
+
+1. **Admit the field in the contract.** Add ONE optional property `ticket_id` to
+   `docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json`:
+   - `"type": "string"`;
+   - the pattern `^TCK-[0-9]{8}-[0-9a-f]{8}$`, equal in meaning to `submission.py`'s `TICKET_ID`;
+   - a one-line description.
+   Keep it out of `required`, keep `additionalProperties: false`, keep the schema at v1, and edit byte-preserving. If a packaged
+   hash or pin of this schema exists, report it, and file a row if moving it is outside `<paths>`.
+2. **Test.** Add `infra/aws/lambda/investor-reporting/ops/tests/test_ticket_contract.py`. Build the same registry as
+   `ops/tests/test_owned_requests.py:252-260`. It proves:
+   - (a) an `OwnedAnalysisRequest` whose `composition` carries a valid `ticket_id` validates (the paired fixture plus the field);
+   - (b) a malformed `ticket_id` is refused;
+   - (c) an undeclared field is still refused;
+   - (d) the schema pattern and `TICKET_ID` agree on 2 valid and 2 invalid samples.
+3. **Criteria re-graded** (still three):
+   - AC1 now runs both test files (at least 9 passed, 0 failed);
+   - AC2 adds `ops/tests/test_owned_requests.py` (24 passed at base) to the generate suites (0 failed);
+   - AC3 is unchanged.
+   Re-validate the proof instance with the new outputs, then flip back to `complete`. Note the disposition on row S1.
+4. Report the `irpt-status` census lines (`python infra/aws/lambda/ci/release-census.py irpt-status --pin HEAD`).
+
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
-<criterion id="AR11-y-AC1" cell_refs="AR-y-11"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ticket_binding.py</invocation><expect>passed</expect></criterion>
+<criterion id="AR11-y-AC1" cell_refs="AR-y-11"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ticket_binding.py infra/aws/lambda/investor-reporting/ops/tests/test_ticket_contract.py</invocation><expect>passed</expect></criterion>
 
-<criterion id="AR11-y-AC2" cell_refs="AR-y-11"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/generate/tests</invocation><expect>0 failed</expect></criterion>
+<criterion id="AR11-y-AC2" cell_refs="AR-y-11"><invocation>python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/generate/tests infra/aws/lambda/investor-reporting/ops/tests/test_owned_requests.py</invocation><expect>0 failed</expect></criterion>
 
 <criterion id="AR11-y-AC3" cell_refs="AR-y-11"><invocation>bash org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/checks/r71/y71_ac2.sh</invocation><expect>symbol_closure PASS</expect></criterion>
 
@@ -88,6 +114,8 @@ infra/aws/lambda/investor-reporting/ycharts/generate/submission.py
 infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py
 infra/aws/lambda/investor-reporting/ycharts/generate/entry.py
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ticket_binding.py
+infra/aws/lambda/investor-reporting/ops/tests/test_ticket_contract.py
+docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~1/
 org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-y-11.analysis-carries-ticket-id.md
 org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md
