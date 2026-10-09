@@ -22,11 +22,11 @@ Graduated at round 24's L9 (ADJUDICATION_v18.md), round label v25: D2-W46-S2, D2
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v25",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v25"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-W46-S3",
@@ -44,11 +44,11 @@ Graduated at round 24's L9 (ADJUDICATION_v18.md), round label v25: D2-W46-S2, D2
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v25",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v25"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-D2-S36",
@@ -66,11 +66,11 @@ Graduated at round 24's L9 (ADJUDICATION_v18.md), round label v25: D2-W46-S2, D2
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v25",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v25"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~159</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete -- issuer 2.0.0_SA_COO~Y2 2026-10-09 ~01:3xZ after AMENDMENT 1 (CTO msg 2091 on CVO msg 2088): Y68-1-AC1 PASS and AC3 PASS (worker + issuer), AC2 PASS on cleanup (laptop TO-APPLY-Y68 result, 9 of 9 NOT_FOUND, normalized @e94a64b0f6); the X-1 actor read-back clause is carried to release 5 after-read 4 as row IRPT_BCKEND-D2-S17</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -133,6 +133,12 @@ Your deliverables folder: `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_W
 <expected_criteria>Y68-1-AC1,Y68-1-AC2,Y68-1-AC3</expected_criteria>
 
 AC2 needs the laptop's result, so report it as it stands. In the proof instance, mark AC2 FAIL with the reason "PENDING-ISSUER".
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~01:3xZ; ruled by `1.0.0_SA_CTO~DELL2` msg 2091 on `3.0.0_SA_CVO` msg 2088).** Y68-1-AC2 is
+graded on CLEANUP only: every admit key read NOT_FOUND after the laptop delete (9 of 9, `deliverables/2.0.0_SA_COO~Y2/r68/Y68-1_laptop_cleanup_result.json`).
+The laptop's result carried no admit read-back (owner, acting_principal_id, body sha), and the records are gone. So that clause is CARRIED to release
+5's after-read 4 (CTO msg 1877) and held open as row `IRPT_BCKEND-D2-S17`. The check `checks/r68/y68_cells.py` is amended to match. Gate limb that
+graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify (the order declares `<placeholders>`).
 
 ## BOUNDS
 

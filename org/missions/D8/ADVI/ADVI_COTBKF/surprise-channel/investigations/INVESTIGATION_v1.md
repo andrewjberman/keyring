@@ -2598,3 +2598,84 @@ round.** Never edit an existing row.
   "world_is": "Clause 3's 'graded both ways' is not done and could not be: every dividend row carries the pay date only (row D2-W46-S2); the pay|ex option is built and tested with no ex-date input. A MET would claim a swing nobody measured. Closes when an ex-date source lands (the dell1 data-queue project; Yahoo carries ex-dates) and the 22 dividend-dated regressions are graded both ways, or when the CTO amends the clause by name."
 }
 ```
+
+## ADVI_COTBKF-D2-W47-S1 -- the carried-level regressions are the baseline's departure, not the method's: no method fix, method_r25b = method_r25
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W47-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~47",
+  "surfaced_at": "2026-10-09T01:19Z",
+  "one_line": "CB-y-2's premise does not hold: in all 13 accounts of the 39 carried-level regression months the METHOD's cash level is what the account's own rows support; it is the conditional baseline's level that departs, so there is no method fix and method_r25b equals method_r25",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/levels/sweep_regrade.md, section 'Round 24's 39 carried-level regressions traced': per account the checks on the method's level (ledger closure over the account's life, running level, unmatched sales, positions still held, the 2026-06-23 snapshot) and on the baseline's; per month its first differing level, the step by row type and the result. Printed by the AC2 run: CARRIED-LEVELS months=39 supported=39 accounts=13",
+      "the method's ledger closes to 0.00 on 13 of 13 accounts (each closed: no security still held, absent from the 2026-06-23 positions snapshot, last row 2026-02-10 to 2026-06-18), no sale of an unheld security (0 of 13), and the running level is never below -0.5 in any of the 39 months; the baseline (conditional) cash level closes at -238786.38 to +134287.28 on the same 13",
+      "four runs of days with the method's running level below -0.5 exist (0QF879353 2018-11-19 to 2018-11-21, lowest -9.78; B3S703388 2024-04-05 to 2024-04-24, lowest -138.63, and 2025-04-07 to 2025-04-10; RGY004222 2025-01-23 to 2025-01-24, lowest -909.67): a debit posted before its credit, recovered, and none in a regression month",
+      "the baseline's departure by kind (decided from the first step's row types): postings it never makes (security-line purchases and sales, dividends, fees, taxes) 23 months, a ManAltF payment made for another account 14 (D49141625 2017-10-09: sl 105.20 pays ManAltF -30.84 and -74.36 for two other accounts), a sweep sale that funds a non-sweep purchase 2 (RGY004222 2024-04-08: sl 140000 on the sweep funds by 140000 of 316067107; B3S808045 2023-03-29: sl 995277.78 funds by 995000 + man 277.78)",
+      "the baseline's agreement with Commonwealth is isolated in 11 of the 13 accounts (graded months MATCH under conditional: 0QF878956 6 of 54, 0QF878981 4 of 69, 0QF879143 1 of 70, 0QF879181 5 of 69, 0QF880505 11 of 47, 0QF899639 1 of 21, B3S703388 14 of 69, B3S798436 6 of 22, B3S804888 2 of 34, B3S808045 1 of 31, RGY004222 1 of 12); the other two are 0QF879353 (50 of 68) and D49141625 (35 of 67)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-y-2: the earliest month in which the method's carried cash level departs from what the account's own rows support can be traced for each of the 39 carried-level regressions; where one general rule fixes a traced cause it ships as method_r25b.",
+  "world_is": "No month of these 13 accounts is a wrong month of the METHOD's level: each account's own rows close to zero under the method's ledger and break under the baseline's. What the 39 months have in common is that the baseline's level differs from the method's from a first month (printed per month) and that the baseline's reproduces Commonwealth's reported return in that month; whether Commonwealth's own level equals the ledger is not testable from the rows (only its reported returns exist), and the baseline's agreement is isolated in most of these accounts. So there is nothing general to fix in the method's level: method_r25b is method_r25 and regressions=0 trivially. Whether these months are noise, a small-base artifact (D49141625: a 0.058 pct point difference on a base of 37.95) or a Commonwealth convention is the CTO's call at the round-N analysis."
+}
+```
+
+## ADVI_COTBKF-D2-W47-S2 -- dividend months graded at pay and at ex: 22 of 22 graded, the ex-date helps 2 months and hurts 6, neither adopted
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W47-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~47",
+  "surfaced_at": "2026-10-09T01:19Z",
+  "one_line": "Ex-dating the dividends: the 22 months are graded both ways (22 of 22), 20 do not move, the 2 XOM months turn MATCH, but the same XOM dividend turns 6 other MATCH months (3 accounts, 2025-06 and 2025-09) DIFF; neither date adopted",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/dividends/sweep_regrade.md, section 'The 22 dividend months graded at the pay date and at the ex-date': MATCH under pay 0, under ex 2; DIFF 22 and 20; graded in both arms 22 of 22; total swing -0.2381 pct points; verdict changes 2 (RGY003587 2025-06 swing -0.1233 and 2025-09 swing -0.1149, both DIFF to MATCH); the other 20 swing 0.0 (ex-date and pay date in the same month, no flow between them)",
+      "the same run's 'Months that moved MATCH -> DIFF between the arms': 6 (0QF878981, 0QF879181, RGY005018, each 2025-06 and 2025-09), cause cash_leg_difference on the XOM pay day (2025-06-10, 2025-09-10: the arms' values differ by -3960.54, -108.9, -199.98 on that day); printed by the run: DIVIDEND-MONTHS months=22 graded=22 swing=-0.2381 abs_swing=0.2381 verdict_changes=2, and SWEEP-REGRADE ... regressions=6 dividend_both=22/22",
+      "ex-date input: org/missions/D8/MDPF/MDPF_DEMQUE/deliverables/2.0.0_SA_COO~Q1/EXDATES_ADVI_COTBKF_20261009.csv (39 rows, 16 CUSIPs, all measured; read from origin/box/dell1, untracked, never staged); only XOM 30231G102 has the ex-date in a different month from the pay date (pay 2025-06-10 / ex 2025-05-15, pay 2025-09-10 / ex 2025-08-15); across the whole delivery 548 dividend rows have an ex-date and 50 of those (XOM, in the accounts holding it) are cross-month"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-y-2 AC4 (amendment 1): the 22 dividend_row months are graded at the pay date and at the ex-date on method_r25b with each swing printed; neither date is adopted as the default.",
+  "world_is": "The 22 months grade both ways, but the ex-date moves only 2 of them (the 2 XOM months of RGY003587, DIFF to MATCH); the other 20 hold a dividend whose ex-date and pay date share a calendar month, so the chained monthly return cannot change. The ex arm on the whole grade is not better: it turns 6 MATCH months DIFF (the same XOM dividend in three other accounts) against the 2 it turns MATCH, so on this evidence the pay date is not worse than the ex-date for the one cross-month security measured. The source holds 39 (CUSIP, pay date) keys on 16 CUSIPs and only XOM has a cross-month key, so the dividends of every other security in the delivery carry no ex-date and are graded at the pay date only. Neither date is adopted; the default stays pay."
+}
+```
+
+## ADVI_COTBKF-D2-S37 -- L9 CB25y1-AC3 MET and CB25y2-AC3 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S37",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T01:43:44Z",
+  "one_line": "L9 CB25y1-AC3 MET and CB25y2-AC3 MET. y1: every unlisted-type treatment cites a stated source (DESCRIPTION, PAIRING or the CRO's table) committed @679c3c22b5 (20:41 ET) before the run's output @499405a2fe (20:52 ET); 35 of 35 months MATCH; ASF is the one sourceless type, named as such, and touches 0 of the 35. y2: 39 of 39 carried-level months each traced to their first differing month, step and posting; no fix applied (method_r25b = method_r25), so nothing was fitted to the grade.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/unlisted/sweep_regrade.md lines 1176-1235 (source table; the 35, 0 ASF)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~47/levels/sweep_regrade.md lines 1231-1313 (39 traced rows, 0 blank trace cells)",
+      "git log of the table commit vs the run output (this seat's read)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_25_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB25y1-AC3: every treatment cites a source decided before the run; each of the 35 is MATCH or carries a traced cause; no treatment chosen by its effect. CB25y2-AC3: each of the 39 traced to a first wrong month with its posting and cause, or named untraced; any fix one general rule.",
+  "world_is": "Both met as written."
+}
+```
