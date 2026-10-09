@@ -4468,3 +4468,30 @@ round.** Never edit an existing row.
   "world_is": "Two keys are hand-built by fragment to pass the gate; the gate's purpose (every new address from the builder) is defeated for both."
 }
 ```
+
+## ADVI_COTBKF-D2-W72-S1 -- the split-literal pattern outside the rewrite script: counts per file
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W72-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~72",
+  "surfaced_at": "2026-10-09T15:30:00Z",
+  "one_line": "Same split-literal pattern, counted not changed: commonwealth_bd_txn_provenance.py 2 sites (:37 PFX = '/'.join(['silver','pri'+'ces']) -- the identical key; :103 re.search('pri'+'ce|...')); data/cot/scripts/gold/build_canonical_prices_v2.py 1 site (:65 '/'.join(['silver','']) ); 0 in the other 36 commonwealth_*.py files (38 files scanned incl. the writer; 2 carry it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:37",
+      "data/assets/scripts/silver/commonwealth_bd_txn_provenance.py:103",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:65",
+      "ast scan with _split_literals from data/assets/scripts/silver/tests/test_cot_price_rewrite_no_split_literals.py at f317f82c20"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-as-1 item 4: count the pattern in the other commonwealth scripts and the cot writer; change none.",
+  "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
+}
+```
