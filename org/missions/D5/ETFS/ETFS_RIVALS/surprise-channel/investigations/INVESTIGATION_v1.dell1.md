@@ -270,6 +270,27 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "One report date per capture, the same in the calendar and in the trade windows.",
     "world_is": "Two witnesses one trading day apart for every CGIC capture 10-02..10-06. D1-S4's reading (labels stale, windows right) assumed the canonical rows' date is the truth; it is unproven.",
     "notes": "Not cut: which witness is true is a data ruling (1.0.0_SA_CTO~DELL1). If the sidecar is true, the fix is the canonical rows' date (and every CGIC trade window moves back one trading day); if the rows are true, the fix is the calendar (classify on the rows' date, or treat a consistent one-day lag as new). RIV-wd-1's infer_windows reads the rows' date, so it follows whichever is fixed."
+  },
+  {
+    "id": "ETFS_RIVALS-D1-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~V1",
+    "surfaced_at": "2026-10-09T08:15Z",
+    "one_line": "RIV-we-1 (canonical source_report_date = the claimed as-of) is FORWARD-ONLY as deployed: build-canonical-shape names a revision by a digest of its INPUTS, not its code, and a replay that finds that revision already stored 'adds nothing', so every served canonical object (and the trade windows built on it) keeps the old date until history is deliberately rebuilt",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py:945-956 at ba92996a72: `same` holds holdings-<rev>.parquet with rev from _revision_digest(chosen, g4); `hit` -> 'this revision is already gold: a replay adds nothing'",
+        "real run 2026-10-09 ~08:0xZ (ws2/real_run_local.py --canonical, overlay of live objects): build-canonical-shape PARTIAL, written_new 0 over 16 report dates; build-trade-schedule written_new 0; we1_windows_compare: 0 dates changed for every one of 13 funds"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ADDENDUM 2 @9f0a957c00: the CGIC trade windows move a trading day earlier.",
+    "world_is": "After deploy, only captures with new inputs get the claimed as-of; served history (CGIC 10-02..10-08) keeps delivery-day dates.",
+    "notes": "A history rebuild is a served write (canonical_shape and trade_schedule objects for the affected dates) under its own pair: either a forced replay that ignores the stored revision, or a revision digest that includes the gold code version. The issuer's local proof hides the served canonical objects from the overlay (--fresh-canonical) to show what the rebuild would write."
   }
 ]
 ```
