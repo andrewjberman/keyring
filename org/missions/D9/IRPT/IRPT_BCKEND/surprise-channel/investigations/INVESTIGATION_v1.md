@@ -23843,3 +23843,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No column in the live fact_allocation_positions carries a CUSIP. AC1 and AC3 (with_cusip >= 1) cannot be met from this table; a CUSIP would need a join to another source (e.g. fact_model_holdings or a security master), which the order does not name."
 }
 ```
+
+## IRPT_BCKEND-D2-S40 -- Resolves D2-W267-S1: IB-pr-403 joins the CUSIP from 49F's dim_asset by ticker (exactly one; basis carried)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S40",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W267-S1. CTO ruling AMENDMENT 1 @bdf378d09c (msg 3001) chose (a): the CUSIP is joined from 49F's own dim_asset by ticker, carried only where the ticker maps to exactly one CUSIP, with cusip_basis joined_via_ticker(dim_asset@as_of); zero or several matches are listed. TO-IB-pr-403 AMENDMENT 1 and p104_cells.py carry it; worker ~267 is re-seated on the amended order.",
+  "one_line": "CTO ruled the ticker -> 49F dim_asset join (exactly-one, basis carried); IB-pr-403 amended and re-seated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO_RULING_D1_S8_49F_CUSIP_PLACEMENT_20261009.md AMENDMENT 1",
+      "p104_cells.py dry-run at base: AC1 FAIL, AC2 PASS, AC3 FAIL"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-403: the SmartX row's own CUSIP becomes the node's security_id.",
+  "world_is": "The SmartX table holds no CUSIP; the order now joins 49F's own master by ticker, exactly-one, with the basis carried."
+}
+```

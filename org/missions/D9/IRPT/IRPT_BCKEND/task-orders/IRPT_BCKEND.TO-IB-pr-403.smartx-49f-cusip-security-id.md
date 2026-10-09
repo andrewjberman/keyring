@@ -49,6 +49,24 @@ If the round-6 49F sample fixture exists in the tests, use one of its SmartX nod
 
 <expected_criteria>IB104-1-AC1, IB104-1-AC2, IB104-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~09:3xZ, issuer 2.0.0_SA_COO~P2, on CTO ruling AMENDMENT 1 @bdf378d09c (msg 3001); row D2-W267-S1, disposed by D2-S40)
+
+Live `fact_allocation_positions` carries no CUSIP (row W267-S1), so the **Build** source changes:
+- **Source:** 49F's own Schwab security master, `dim_asset` (the frame the builder already reads), keyed by the SmartX row's `ticker`.
+  Read no other firm's master.
+- **A ticker that maps to exactly ONE CUSIP** in that master gives `security_id {"namespace": "CUSIP", "value": <it>}`, and the node's
+  facts carry `cusip_basis: joined_via_ticker(dim_asset@<as_of>)`. Never present it as SmartX-reported.
+- **Zero matches:** the node keeps its source id and is listed `no CUSIP in source` (census `listed_absent`).
+- **Several matches:** the node keeps its source id and is listed `no unique CUSIP for ticker` (census `listed_ambiguous`). Nothing is
+  picked and nothing is invented.
+- **Tests** (names contain `smartx_cusip`, at least 3): a unique ticker carries CUSIP with its basis; an ambiguous ticker is listed; an
+  absent ticker is listed.
+- **Census** fields become `{source_column: "ticker", cusip_basis, overlay_date, smartx_security_nodes, with_cusip, listed_ambiguous,
+  listed_absent, invented: 0}`.
+
+`p104_cells.py` is amended to match (AC1 needs >= 3 tests; AC3 reads the three buckets and the basis). It was dry-run at base: AC1 and
+AC3 FAIL, AC2 PASS (the control). Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block and nothing else. Code, tests and a read-only census. No upload, apply or deploy; AWS reads only. The
