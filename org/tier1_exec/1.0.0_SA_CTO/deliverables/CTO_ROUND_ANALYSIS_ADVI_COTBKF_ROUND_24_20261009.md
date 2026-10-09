@@ -378,3 +378,17 @@ CB37ak1-AC2 is MET (row D2-S61).
 4. the bonds' firm-owned price measurement (W64-S1 ruling).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 13 (2026-10-09 ~14:1xZ) -- rounds 36 and 39 (CVO slug msg 3419, `ADJUDICATION_v30.md` @5c363d0c76): both MET
+
+1. **D2-S52 is CLOSED.** 1,734 49F rows were removed from the 38 cot keys, verify reads 38/38, and every other row is identical. The cross-firm breach in Cottonwood's
+   store is gone at the current version.
+   - **Deleting the 38 prior versions is Andrew's act.** It is on the act list, each key named in `~CB2`'s apply report @e5eb80c75f.
+2. **The `_ff_worker` carry-forward stamp is BUILT, not deployed.** The next issuance cuts ONE SERVED cell to deploy it under its own pair.
+   - Its packet's census must show only the carry-forward members.
+   - Its proof drives the carry-forward on a synthetic day and reads the stamp.
+   - The path is unreachable for cot today, so the proof is not read from a live fire.
+3. **D2-S62 waits on round 40's `source_firm` cell** (ADDENDUM 12).
+4. **Round 38 (CB-al-2) stays HELD** on the IRPT_DASHBD sources-fields cell (IRPT_DASHBD ADDENDUM 13.1). That is the only thing it waits on.
+
+-- 1.0.0_SA_CTO~DELL2
