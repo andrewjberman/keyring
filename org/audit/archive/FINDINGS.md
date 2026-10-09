@@ -440,3 +440,63 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/law-edit-audit.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_law-edit-audit.log -->
 - log: org/law-edit-audit.log
 - detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_law-edit-audit.log
+
+## 2026-10-07T071430Z -- SELF-TEST -- INSTRUMENT-BROKEN
+<!-- sig: SELF-TEST|INSTRUMENT-BROKEN||CONTROL-A(S#-redaction) BROKEN: ERROR, expected NON_APPEND -- live missing: C:\dev\ajb_workspace\org\git-author-override-audit.log -->
+- detail: CONTROL-A(S1-redaction) BROKEN: ERROR, expected NON_APPEND -- live missing: C:\dev\ajb_workspace\org\git-author-override-audit.log
+
+## 2026-10-07T072604Z -- COVERAGE -- MANIFEST-ENTRY-MISSING-LIVE
+<!-- sig: COVERAGE|MANIFEST-ENTRY-MISSING-LIVE|org/to-pipeline-override-audit.log|listed in manifest but no live file -->
+- log: org/to-pipeline-override-audit.log
+- detail: listed in manifest but no live file
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pos-override-audit.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pos-override-audit.log -->
+- log: org/to-pos-override-audit.log
+- detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pos-override-audit.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/to-pipeline-override-audit.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_to-pipeline-override-audit.log -->
+- log: org/to-pipeline-override-audit.log
+- detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_to-pipeline-override-audit.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/pipescript-suite-gate-audit.log|live missing: C:\dev\ajb_workspace\org\pipescript-suite-gate-audit.log -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: live missing: C:\dev\ajb_workspace\org\pipescript-suite-gate-audit.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/surface-check-ack-audit.log|live missing: C:\dev\ajb_workspace\org\surface-check-ack-audit.log -->
+- log: org/surface-check-ack-audit.log
+- detail: live missing: C:\dev\ajb_workspace\org\surface-check-ack-audit.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/mcp/comp-detect-gate-override.log|live missing: C:\dev\ajb_workspace\org\mcp\comp-detect-gate-override.log -->
+- log: org/mcp/comp-detect-gate-override.log
+- detail: live missing: C:\dev\ajb_workspace\org\mcp\comp-detect-gate-override.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/mcp/log-open-ok-override.log|live missing: C:\dev\ajb_workspace\org\mcp\log-open-ok-override.log -->
+- log: org/mcp/log-open-ok-override.log
+- detail: live missing: C:\dev\ajb_workspace\org\mcp\log-open-ok-override.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/tier#/audit/ledger-hook-audit.log|live missing: C:\dev\ajb_workspace\org\tier#\audit\ledger-hook-audit.log -->
+- log: org/tier0/audit/ledger-hook-audit.log
+- detail: live missing: C:\dev\ajb_workspace\org\tier0\audit\ledger-hook-audit.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/jq-ban-override-audit.log|live missing: C:\dev\ajb_workspace\org\jq-ban-override-audit.log -->
+- log: org/jq-ban-override-audit.log
+- detail: live missing: C:\dev\ajb_workspace\org\jq-ban-override-audit.log
+
+## 2026-10-07T072604Z -- INTEGRITY -- ERROR-FAILCLOSED
+<!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/law-edit-audit.log|baseline missing: C:\dev\ajb_workspace\org\audit\archive\#-#-#T#Z\org_law-edit-audit.log -->
+- log: org/law-edit-audit.log
+- detail: baseline missing: C:\dev\ajb_workspace\org\audit\archive\2026-08-20T042433Z\org_law-edit-audit.log
+
+## 2026-10-09T043045Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/pipescript-suite-gate-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/pipescript-suite-gate-audit.log
+- detail: non-append edit: first divergence at line 1, col 6 (baseline 4760B / live-head 151B)
+- action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).

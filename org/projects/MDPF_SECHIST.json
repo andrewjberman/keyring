@@ -3,11 +3,11 @@
  "home": "org/missions/D8/MDPF/MDPF_SECHIST",
  "directive": "D8",
  "macro_code": "MDPF",
- "fabric": "laptop",
+ "fabric": "dell1",
  "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Opal's securities database, ingestion and maintenance: every security's history filled to the depth its ingestion points require, kept complete day over day, inside one Bloomberg budget",
  "generated_from": "org/missions/D8/MDPF/MDPF_SECHIST/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-07T08:14:40Z"
+ "generated_at": "2026-10-09T04:51:49Z"
 }

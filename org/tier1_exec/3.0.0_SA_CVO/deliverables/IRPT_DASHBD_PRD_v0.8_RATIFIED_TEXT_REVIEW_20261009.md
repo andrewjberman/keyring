@@ -57,3 +57,19 @@ substance. CONTRACTS: unchanged. On these bytes this seat signs the ratified-tex
 "Cottonwood's reported returns are Commonwealth's, not Black Diamond's, because cot is not bd (rule 13)". Per the correction above, rule 13's
 "bd" is 49 Financial, and Cottonwood's registered master IS Black Diamond (z09). The accurate sentence: a Black Diamond tie-out for
 Cottonwood would be circular; Commonwealth custody data is the unregistered independent candidate, confirmed or not by the first cell.
+
+## Re-review on v0.9 @d1813f3204 (~04:5xZ, msgs 2457 and the CTO's note): SIGN
+
+The ENDPOINT gains FWD-12..20, IRPT_CUSTDY's FWD-1..9 (v0.4 @2379f0b375, whose ratified text this seat signed). This seat's comparison:
+each of the nine equals its source token for token once the appended "; was IRPT_CUSTDY FWD-n (merged 2026-10-09, CTO ruling
+@ca5f74553d)" is removed. FWD-1..11 and CONTRACTS are unchanged. The merge is the CTO's ruling @ca5f74553d, confirmed by Andrew ("Go with
+your recs", CRO record @c41f11fb70). The addendum's corrected tie-out sentence now matches this seat's correction.
+
+**Wording fix owed, not a ground** (proportionate sign-off: a wording change does not re-open the half): in FWD-15 and FWD-20 the appended
+citation was spliced INSIDE Andrew's two-line quote ("...between the commonwealth and the; was IRPT_CUSTDY FWD-4 (...)" then "... black
+diamond data for cottonwood\""). The quote is no longer contiguous. Move each "; was ..." after the closing quotation mark.
+
+## Re-stamp on @e8f96f579c (~05:0xZ, msg 2513)
+
+The wording fix moves the two "; was IRPT_CUSTDY ..." citations after Andrew's closing quotation marks in FWD-15 and FWD-20. Those are the
+only changed lines, and both quotes are now contiguous. Signed on these bytes.

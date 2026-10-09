@@ -72,11 +72,11 @@ Committed 2026-10-09T03:26Z once every NFRA_TRNSPT order read terminal (TR-j15 m
     "owner": "2.0.0_SA_COO~T2",
     "round": "v17",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~T2",
       "round": "v17"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

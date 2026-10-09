@@ -1,0 +1,113 @@
+# IRPT_ANLREQ round 1 -- decomposition over FWD-1's nine hops (the thread)
+
+Issuer `2.0.0_SA_COO~Y2` (the ONE driver, C-ABSORB), 2026-10-09 ~04:5xZ.
+
+**Inputs:**
+- PRD `prd/IRPT_ANLREQ_PRD.md` @97ef783e9a, ADMITTED: the ratified text signed by `3.0.0_SA_CVO`, the brief half by `4.0.0_SA_CRO~DELL2`;
+- CTO msg 2433;
+- the CRO nine-hop trace `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANALYSIS_REQUEST_END_TO_END_GAP_BRIEF_20261008.md` @9076346655.
+
+Round 1 builds FWD-1 only. One cell per MISSING or INCOMPLETE hop, each owned by the workstream whose write surface it touches.
+**Workstreams** (C-ABSORB; disjoint write surfaces; each lane issues ONLY the cells named for it below, into its own scope):
+
+| lane | scope (write surface) |
+|---|---|
+| `2.0.0_SA_COO~Y2` | the upload door and resolution `intake/*`; the analysis submission `ycharts/generate/{submission,acceptance,entry}.py` |
+| `2.0.0_SA_COO~V2` | the ticket: `portal/src/pages/TicketCenter/*`, `infra/aws/lambda/ticket_center/lambda_function.py` |
+| `2.0.0_SA_COO~G2` | the Opal engine and brand: `ycharts/generate/{resident_worker,durable_job,comparison_catalogue,publication_worker}.py`, `ycharts/research/*` |
+| `2.0.0_SA_COO~T2` | the commentary: `data/transcripts/scripts/commentary/*`, its Lambda and `commentary.tf` |
+
+## Two findings that shape the cut
+
+**F-A: hop 4 is TWO joins.** The PRD's section 1 lists hop 4 as H1 (the report's READY event reaching the commentary). The trace's
+hop 4 (`:93-107`) is a different join: the ticket's creation starting generation. Today a person must click "Request report"
+(`AnalysisRequestParts.tsx:117-143`). FWD-1 ("with no person in between") needs both, so both are cut:
+- **4a** ticket -> generation;
+- **4b** READY -> commentary.
+
+**F-B: 4a needs no new service caller.** The form already files as the signed-in Opal filer, through the on-behalf upload door (E5,
+X-1; release 3). The filing sequence becomes:
+1. upload -> NORMALIZED (works);
+2. create the ticket (works) -> `ticket_id`;
+3. `POST .../analysis` as the same filer, carrying `ticket_id`.
+
+So no service principal is admitted to `/analysis`, and no hop parks on IRPT_CUSTDY's svc ruling. The one service subject on
+the journey stays the packager (C-PACKAGER, hop 8).
+
+## Interfaces (the joins, fixed here so the four lanes build to one shape)
+
+| id | from -> to | shape |
+|---|---|---|
+| I1 | form -> `POST /api/scoped/investor-reporting/analysis` | the existing prospect body (`submission.py:45` `validate_public_request`: `request_id`, `input_id`, `variant`, `comparison_keys` <= 5, `prepared_for`, `report_title`, the null custody fields) PLUS an optional `ticket_id` matching `^TCK-\d{8}-[0-9a-f]{8}$` (`ticket_center/lambda_function.py:125`). Comparables are `comparison_keys`: the catalogue keys of the checked Opal models plus the resolved ETF keys (`comparison_catalogue.py`). |
+| I2 | acceptance record -> every later hop | the acceptance record carries `ticket_id`. Queue messages are UNCHANGED: `analysis_generate` keeps `{tenant, request_id, revision, composition_sha256}` (`acceptance.py:166-168`, `resident_worker.py:584`), and every later hop reads `ticket_id` from the record by `(tenant, request_id)`. No `_keys` change. |
+| I3 | resident READY -> commentary | ONE closed message `queue_message("analysis_ready", {"tenant", "request_id"})`, sent once on READY. The consumer reads `ticket_id` and the report from the records. |
+| I4 | commentary -> packager | ONE closed message `queue_message("commentary_ready", {"tenant", "request_id"})`, sent once the DRAFT commentary is persisted. |
+| I5 | packager -> ticket | `POST /api/scoped/tickets/{ticket_id}/package` with `{report_ref, pdf_ref, original_ref, commentary_ref, firm}` (`lambda_function.py:1367`, live, pointers only), as the ONE `package_principal`. |
+| I6 | ticket page -> files | each ref opens through IRPT's signed-link reader (`ops/owned_report.py:154`) under the VIEWER's own scope. |
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~04:5xZ, on `2.0.0_SA_COO~T2` msg Re 2489): the commentary STORE (I4 fixed the
+message, not where the DRAFT lives).**
+
+| id | from -> to | shape |
+|---|---|---|
+| I4s | commentary -> store -> packager | The DRAFT is an IRPT artifact. It is written through `reports/repository.py` `ArtifactRepository.put`, the same path as `ANALYSIS` and `REQUEST_COMPOSITION`. Its family is `ANALYSIS_COMMENTARY`, in a NEW additive policy row `irpt-anlreq-x10-v1` in `infra/logic/registry/reporting_policies.json` (source `irpt`, tier `state`, table `analysis_commentaries`; the precedent is ~M2's additive `irpt-custody-x10-v1` row). Every address is the builder's output, never typed (rule 30). The artifact's opaque id is `commentary_ref`. It is set ONCE on the acceptance record of `(tenant, request_id)` by a conditional update (`attribute_not_exists`), so I4's consumer reads it there, as I2 says of every later hop. The packager reads the bytes through the repository's service-reader family grant (`repository.py:43`). |
+
+- **Owner of the registry row and the persist:** `AR-t-12` (~T2). The row is additive, and no existing family moves.
+- **Release note:** `reporting_policies.json` is staged in `irpt-ycharts-generate` (and other functions). The next release census of
+  each lists it as a changed member.
+- **`AR-g-12` (~G2) reads `commentary_ref` from the record and the bytes through the repository.** Its I5 call carries the same id.
+- Gate limb that graded this amendment: none (a decomposition document, not a task order).
+
+## Cells (round 1, FWD-1)
+
+| hop | state | cell | lane | what EXISTS at the end |
+|---|---|---|---|---|
+| 1 Form | MISMATCHED | `AR-v-11` | ~V2 | The form offers Opal-model checkboxes from the comparison catalogue and an other-ETF field, and files the I1 sequence (upload, ticket, `POST /analysis` with `ticket_id`) with no "Request report" click |
+| 2 Check and swap | INCOMPLETE | -- | ~Y2 | NOT CUT in round 1. FWD-1's need (the filed Excel reaches NORMALIZED through the door) works: release 3's read 4 and release 5b's read 4 exercise it. The typo correction and the security swap are FWD-2, enrichment item 1 |
+| 3 Ticket created | WORKS | -- | ~V2 | graded by the thread run |
+| 4a Ticket -> generation | MISSING | `AR-y-11` | ~Y2 | `POST /analysis` admits `ticket_id` on a prospect submission and persists it on the acceptance record (I1, I2) |
+| 5 Generation | INCOMPLETE | `AR-g-11` | ~G2 | The resident's READY record names `ticket_id` (read from the acceptance record), and READY sends I3 once. The Opal engine runs for the filer on 49financial (st28's seat arm finishes where it is) |
+| 4b READY -> commentary (H1) | MISSING | `AR-t-11` | ~T2 | I3's queue and its subscription to the commentary Lambda; one READY yields exactly one commentary run |
+| 6 Commentary | MISSING | `AR-t-12` | ~T2 | The drafter reads the READY report's structured surfaces (`AnalysisReport` v2, tenant-bound `get()`, abstract fields only, C-KIMI), persists ONE DRAFT commentary, then sends I4 |
+| 7 Package PDF | MISSING | `AR-g-12` | ~G2 | On I4: the Opal engine layout gains a commentary section and renders the branded package PDF (one renderer, ruling 1) |
+| 8 Attach | MISSING | `AR-v-12` + `AR-g-12` | ~V2 / ~G2 | ~V2 names the `package_principal` in the type definition (bound to its PROFILE row's firm, C-PACKAGER). ~G2's packager makes the I5 call after the render |
+| 9 Ticket page | MISSING | `AR-v-13` | ~V2 | The ticket page lists the package's files, and each opens through I6 |
+
+**8 cells**: ~Y2 1, ~V2 3, ~G2 2, ~T2 2. Hops 2 and 3 are graded by the thread run, not cut.
+
+**Release note for `AR-y-11`:** `submission.py` and `acceptance.py` are staged in `irpt-status`, and `entry.py` in
+`irpt-ycharts-generate` (`lambda-source-map.json`). The cell's release pair covers both functions.
+
+## Pre-arranged inputs (each with owner and un-park condition; none is a wait the driver stops on)
+
+| input | owner | un-park | serves |
+|---|---|---|---|
+| internal callers narrowed by their PROFILE row's `allowedFirmIds` (IB-pr-387, in flight, worker `~198`) | `2.0.0_SA_COO~P2` | IB-pr-387 drained | `AR-v-12` (the packager is firm-bound) |
+| the commentary Lambda's apply (NFRA_TRNSPT round 17, `commentary.tf`) | `2.0.0_SA_COO~T2` | its apply pair GIVEN and applied | `AR-t-11` / `AR-t-12` deploy |
+| the seat arm F1 on 49financial (IRPT_YCDGEN st28, CTO half asked msg 2303) | `2.0.0_SA_COO~G2` | st28 applied | `AR-g-11`'s run for a non-Andrew principal |
+| every served apply | `0.7.0_AE_CloudOps~DELL2` | per order | all deploys |
+
+In-flight orders and signed pairs of the source projects finish where they are (C-ABSORB).
+
+## Criteria (this issuance cuts `AR-y-11`; each other lane cuts its own cells, with at most three mechanical criteria each)
+
+| criterion | invocation | base reading |
+|---|---|---|
+| AR11-y-AC1 (`ticket_id` admitted, persisted and refused by name) | `python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_ticket_binding.py` | FAIL: the file does not exist |
+| AR11-y-AC2 (no regression in the generate suites) | `python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/ycharts/generate/tests` | `437 passed, 30 skipped, 1 xfailed` (0 failed); must stay at 0 failed |
+| AR11-y-AC3 (every imported name resolves in the built `irpt-ycharts-generate` zip) | `bash org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/checks/r71/y71_ac2.sh` | PASS (missing=0) |
+
+Risk WORLD (the L6 gate floor on infrastructure paths; served code, not deployed by the cell). The thread run at round close is ONE seat-driven filing on DEV for a
+49financial client with an eligible advisor, read hop by hop on its own artifact (PRD section 2).
+
+## Enrichment list carried to round 2 (PRD section 3)
+
+FWD-2 (including hop 2's swap, ~Y2's backend), FWD-3, FWD-4, FWD-5, then FWD-6.
+
+## Four-postulate record
+
+(i) Domain: the nine hops of FWD-1; every MISSING or INCOMPLETE hop has a cell, or a stated reason it is graded by the thread run
+(hops 2 and 3). (ii) One join or one surface per cell. (iii) One intent: one request finishes itself. (iv) FWD-2..6 do not move,
+and neither do the source projects' in-flight orders.
+
+fanout: 1 of 1 chains in this issuance (~Y2), cap 8; 7 further cells issued by ~V2 (3), ~G2 (2) and ~T2 (2) into their own scopes.

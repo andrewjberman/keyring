@@ -129,7 +129,8 @@ def test_classify_reconcile_holds_half_landed_and_unverifiable():
         ("halflanded", _GOOD2, "LIVEbad=="),   # live != S3 artifact -> HOLD
         ("unverif",    _GOOD,  "LIVEunk=="),   # S3 sha unreadable    -> HOLD
     ]
-    key_of = lambda n: f"k/{n}.zip"
+    def key_of(n):
+        return f"k/{n}.zip"
     s3map = {"k/stale.zip": "LIVEsha==", "k/halflanded.zip": "OTHERsha==", "k/unverif.zip": None}
     safe, unsafe = lm.classify_reconcile(drift, key_of, lambda k: s3map.get(k))
     assert [s[0] for s in safe] == ["stale"], "only live==S3 is safe to reconcile"
@@ -175,9 +176,36 @@ def test_reconcile_deployed_holds_half_landed(tmp_path, monkeypatch):
     out = json.loads((smdir / "lambda-source-map.json").read_text())
     assert out["functions"]["stale"]["artifact_sha256"] == LIVE, "stale-record reconciled to live"
     assert out["functions"]["half"]["artifact_sha256"] == _GOOD, "half-landed record UNCHANGED (not laundered)"
-    actions = {json.loads(l)["fn"]: json.loads(l)["action"]
-               for l in (smdir / "source-map-reconcile-audit.jsonl").read_text().splitlines()}
+    actions = {json.loads(ln)["fn"]: json.loads(ln)["action"]
+               for ln in (smdir / "source-map-reconcile-audit.jsonl").read_text().splitlines()}
     assert actions["stale"] == "reconcile" and actions["half"] == "HOLD", "C3 audit records both"
+
+
+def test_reconcile_deployed_first_records_no_record(tmp_path, monkeypatch):
+    # AMGT_RESAPP-D1-S6: a just-deployed fn with NO sha was counted already-in-parity and never recorded.
+    # live==S3 -> first record; live!=S3 -> HOLD (exit 1); no S3 proof -> left unrecorded, no alert.
+    import json
+    smdir = tmp_path / "infra" / "aws" / "lambda" / "ci"
+    smdir.mkdir(parents=True)
+    sm = {"functions": {
+        "fresh": {"artifact_s3_key": "kf"},   # live==S3 -> first record
+        "local": {},                          # no S3 key -> left unrecorded
+    }}
+    (smdir / "lambda-source-map.json").write_text(json.dumps(sm))
+    LIVE = "Z" * 43 + "="
+    monkeypatch.setattr(lm, "live_code_shas", lambda: {"fresh": LIVE, "local": LIVE, "half": LIVE})
+    monkeypatch.setattr(lm, "s3_artifact_sha", lambda k: {"kf": LIVE, "kh": "Q" * 43 + "="}.get(k))
+    monkeypatch.setattr(lm, "live_lambda_modified", lambda: {})
+    assert lm.reconcile_deployed(str(tmp_path), ["fresh", "local"], settle_retry_seconds=0) == 0
+    out = json.loads((smdir / "lambda-source-map.json").read_text())
+    assert out["functions"]["fresh"]["artifact_sha256"] == LIVE, "no-record + live==S3 is first-recorded"
+    assert "artifact_sha256" not in out["functions"]["local"], "no S3 proof -> never recorded from live alone"
+    rows = [json.loads(ln) for ln in (smdir / "source-map-reconcile-audit.jsonl").read_text().splitlines()]
+    assert [(r["fn"], r["action"]) for r in rows] == [("fresh", "first-record")]
+    sm["functions"] = {"half": {"artifact_s3_key": "kh"}}   # no record, live!=S3 -> HOLD
+    (smdir / "lambda-source-map.json").write_text(json.dumps(sm))
+    assert lm.reconcile_deployed(str(tmp_path), ["half"], settle_retry_seconds=0) == 1
+    assert "artifact_sha256" not in json.loads((smdir / "lambda-source-map.json").read_text())["functions"]["half"]
 
 
 def test_reconcile_deployed_fail_safe_empty_set(tmp_path):

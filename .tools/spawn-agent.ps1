@@ -216,7 +216,10 @@ if ($Tab) {
     $title = $Tab
 }
 if (-not $Tab -and $Serial -match '^2\.[0-9]+\.0_SA_COO') {
-    Write-Host "[spawn-agent] WARN: COO spawned without -Tab <PROJECT_CODE>; its tab shows the serial."
+    # Andrew-direct 2026-10-09 ~04:3xZ at dell2: "you should have that as a default ... you should be running launches
+    # the same way they do where it uses project name in the powershell tab". A COO tab names its project.
+    Write-Error "spawn-agent: REFUSED -- a COO spawn needs -Tab <PROJECT_CODE> so its tab names the project (got none for $Serial)."
+    exit 1
 }
 $inner = "[Console]::Write(([char]27).ToString() + ']0;$title' + ([char]7).ToString()); `$Host.UI.RawUI.WindowTitle = '$title'; `$env:OPAL_TAB_TITLE = '$title'; . `"$ajb`"; ajb -Headless$moFlags $Serial$extraStr $marker`: $Serial"
 

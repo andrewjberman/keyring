@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R6A.md</decomp_doc>
 <owned_cells>YCD-h-6</owned_cells>
 </decomp_ref>
+<to_id>IRPT_YCDGEN.TO-YCD-h-6.opal-page-no-vendor-wording</to_id>
 <issued_to>0.9.0_WK_IRPT_YCDGEN~4</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <placeholders>NONE</placeholders>
