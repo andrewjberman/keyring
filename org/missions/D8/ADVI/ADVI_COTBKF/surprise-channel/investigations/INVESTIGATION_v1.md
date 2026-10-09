@@ -4073,3 +4073,33 @@ round.** Never edit an existing row.
   "world_is": "In the Commonwealth chain's held-day rebuild all 988 account-days belong to 95000U2D4; the other two bonds are not in the Commonwealth transactions or positions, so their holders (if any) are outside this chain's rebuild or are keyed by something other than the CUSIP in the cot gold holdings (not searched: the rule counts CUSIP-keyed rows only)."
 }
 ```
+
+## ADVI_COTBKF-D2-S60 -- CB-aj-2: CTO half condition 2 is unsatisfiable as written; the mirror necessarily holds the cot writer the half itself names
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S60",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T13:40:00Z",
+  "one_line": "TO CB-aj-2's CTO half condition 2 cannot be satisfied as written: it makes ANY writer of silver/prices/ found in the cot code/gold mirror a STOP, while the same half's own Read section names a cot writer that the mirror necessarily contains, so the literal gate refuses the act the half signs",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half condition 2: 'Before the first write, the cot code mirror (code/gold/ in opal-data-cot) is read, one object at a time. Any writer of silver/prices/, or any reader of another firm's price input, means STOP. The BLIND is closed in the ledger.'",
+      "the same half's Read section: 'Writers of silver/prices/: 7 in code, 0 scheduled. The one cot writer runs only on a manual silver-prep. The cot code mirror in the bucket is BLIND.'",
+      "measured: the mirror holds 107 objects (denominator printed, paginated to exhaustion, each read with its own get_object) and exactly ONE is a writer of silver/prices/ -- code/gold/build_canonical_prices_v2.py:617 output_key = 'silver/prices/canonical_prices.parquet' -- which is the deployed copy of data/cot/scripts/gold/build_canonical_prices_v2.py, the one cot writer the half already names",
+      "measured: the apply-time census re-read gives writers=7 scheduled=0, identical to CB-aj-1, with 'wired into live gold doc: []' so the ENABLED chain runs no writer; of the 7 candidates only that one is a cot script, the other six are data/black_diamond and data/inf scripts writing their own firms' artifacts",
+      "measured: 0 readers of another firm's PRICE input. The only cross-firm hits in the mirror are README_BUILD_SEQUENCE.md:117 and :133, a non-executable markdown doc referring to s3://opal-data-bd/code/gold/ -- a CODE prefix, not a price input",
+      "same shape as ADVI_COTBKF-D2-S42 on CB-ac-1 (a precondition no build can meet)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Reading the cot code/gold mirror will find no writer of silver/prices/, so condition 2 passes and the 38 writes proceed.",
+  "world_is": "The mirror IS the deployment of the repo's gold scripts, so it necessarily contains the one cot writer the half's own census counts and admits. On the literal reading condition 2 therefore STOPS the act the half signs GIVEN; on the reading its own closing sentence implies -- close the BLIND, i.e. find a writer BEYOND the census, or a scheduled one -- the gate PASSES, because the mirror agrees with the census exactly (1 cot writer, the named one, manual-only, scheduled=0, 0 foreign price readers). The applier did not pick between those readings: this is a SERVED overwrite of 38 keys and CLAUDE.md bars the receiving seat from adjudicating scope, so NOTHING WAS WRITTEN (0 of 38 keys) and the question went to the gate's author with the measurement and a recommendation. Conditions 1, 3 and the preflight are already proven in the ledger and do not depend on the answer. The deploy entry is deliberately left OPEN rather than HELD, because deploy_ledger.py has no state for 'pre-apply gates partly proven, act not started, awaiting a ruling': hold refuses while an apply leg is open, and hold --pre-apply refuses once any leg is proven."
+}
+```
