@@ -349,3 +349,33 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   }
 ]
 ```
+
+## TCKT_VNEXT-D2-S8 -- the mint pair orders a stored-token read-back and grants no reader, so the applier can create the secret but not read it: leg M steps 3-7 are not executable by this seat
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S8",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T01:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The svc-commentary mint pair orders leg M step 3 to read the STORED token back out of opal/ticketing/svc-commentary and decode its claims, and in the same document grants no reader at all ('No reader is granted in this pair') -- so the applier can CreateSecret but is refused GetSecretValue on the secret it just created, and steps 3 through 7 (the claim read-back and all four arms, which need the token) cannot be executed by this seat; the secret IS created and verified by metadata, and NO rollback trigger has fired.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 01:13:37Z: create-secret SUCCEEDED -- ARN arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/ticketing/svc-commentary-pXsmuU, VersionId 2950da39-7bc4-4803-b98e-fba53b7d92cb = AWSCURRENT, description byte-equal to the pair's section 3 text with minted 2026-10-09 and rotate by 2026-12-24 filled in",
+      "MEASURED same minute: get-secret-value on that secret -> AccessDeniedException, 'User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: secretsmanager:GetSecretValue on resource: opal/ticketing/svc-commentary'",
+      "POSITIVE CONTROL, same identity, same minute: get-secret-value on opal/auth/jwt-private-key ANSWERED (that is the read this leg legitimately makes, reported under msg 1233 rule 2). So the identity holds the ACTION on at least one resource and the refusal is RESOURCE-SCOPED, not an absent action -- AWS's 'no identity-based policy allows' wording would otherwise read as the broader claim",
+      "step 1 before-read PASSED first: describe-secret opal/ticketing/svc-commentary -> ResourceNotFoundException, so the secret this seat created is the only one and nothing was overwritten",
+      "the pair's own section 3 Reader clause: 'only ~T2's commentary Lambda role, named at H6's deploy. No reader is granted in this pair.' -- the document that orders the read-back is the document that grants no reader",
+      "steps 4-7 (positive arm plus the three negative arms) all send the TOKEN over HTTPS, and the only copy of the token is inside the secret, so they inherit the same refusal; they were NOT attempted",
+      "NO ROLLBACK TRIGGER FIRED. The pair's triggers are a claim MISMATCH at step 3, a step-5 call returning firm data, a step-6 201, or a CTO/Andrew word. Step 3 did not mismatch -- it was not executable. UNVERIFIABLE is not FAILED, and the secret was therefore left in place rather than deleted"
+    ]
+  },
+  "spec_asserts": "NEVER_WIDEN_PAIR_SVC_COMMENTARY_MINT.md section 4 step 3: 'Read back: decode the stored token WITHOUT verifying; the claim set must equal section 2 exactly (no firmId, no role), and exp - iat <= 90d.'",
+  "world_is": "Step 2 is done and step 3 is not executable by the seat the order names. The claim set WAS built to section 2 exactly in the minting process (sub, userType service, tier service, name, iss opal-portal-auth, aud opal-portal-api, iat, exp = iat + 90 days, with firmId/role/advisorId/allowedPages/allowedTabs/firmRole absent), and exp reads 2027-01-07T01:13:37Z which is iat + 90 days -- but THAT IS THE PRODUCER'S OWN ACCOUNT OF WHAT IT SIGNED, not the independent read of stored bytes the step asks for, and this row does not dress it up as one. The remedy is a laptop act either way, because the Dells cannot write IAM: add one secretsmanager:GetSecretValue statement for cloudops-dell2-agent-user on this exact ARN so this seat can finish steps 3-7, or have a laptop seat run step 3 and the four arms and return the result as a file (the standing rule of msg 215 shape). Re-running the mint is NOT the remedy: the secret exists, and a second create would mint a second token. Current risk is low and stated rather than assumed: no reader is granted to anyone yet, so nothing can consume the token, and the pair's own position is that the real control is leg D's code clamp plus the CREATE-only matrix, both of which are deployed and verified."
+}
+```

@@ -51,11 +51,11 @@ ruling (msg 1661) ran as DB-b-53. W35-S1 graduates OPEN.
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v32",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v32"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

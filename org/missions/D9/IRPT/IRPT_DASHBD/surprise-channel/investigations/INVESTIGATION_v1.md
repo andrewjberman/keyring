@@ -3187,3 +3187,101 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W39-S1 -- 26 of the 170 LARGE_FLOW_DAY misses carry BD fees equal to minus netAdditions; the add-back and the TWR are of a flow
+
+```json
+{
+  "id": "IRPT_DASHBD-W39-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~39",
+  "surfaced_at": "2026-10-09T02:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "26 of the 170 LARGE_FLOW_DAY misses are not a large-flow valuation: BD's fees field equals minus its netAdditions and the money gain is about zero, so the fee add-back and the TWR are both of a flow.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~39/LARGE_FLOW_E3.json rows sub_class BD_FEE_FIELD_IS_FLOW and counts"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-62: the 170 are LARGE_FLOW_DAY, a flow of at least 25% of the prior day's value sets the segment's return and BD's per-flow valuation is not in the landed period point.",
+  "world_is": "MEASURED on the 170: for 26 rows BD fees is negative and equals minus netAdditions to within a dollar or 0.2%, and ending - beginning - netAdditions is about zero (cash-only or sweep accounts: Opal's linked return is 0.0000 to 0.19), while BD's TWR reads -0.34 to 2.15. The fee add-back (fees / mean daily value) is then an add-back of the contribution, not of a fee, which is why round 31's classifier reached these only at the large-flow step. Grading them on BD's own landed gain over the mean daily value lands 23 of the 26 within 0.35 pp (module large_flow_e3.py, landed_gain_return); nothing is adopted into the reader of record, and the other 144 are not a fee-field effect. Whether the 26 also appear among round 31's FEE_ADDBACK_NOT_APPLICABLE or the 9,078 outside the 170 was not measured."
+}
+```
+
+## IRPT_DASHBD-W38-S1 -- Round 31's classifier (~36) and the reader of record (~35's v2) form the daily mean differently: ~36 keeps negative daily values, v2 keeps positives only; 8 segments hold a negative value.
+
+```json
+{
+  "id": "IRPT_DASHBD-W38-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~38",
+  "surfaced_at": "2026-10-09T02:00:00Z",
+  "one_line": "~36's mean_daily_value keeps negative daily values, v2's daily_mean_value keeps positives only; making ~36 import v2's base unchanged moves its record (evidence strings, 8 segments).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-60: ~35's v2 and ~36's classifier agree on the daily-mean fee base; ~36 can import it, defining none of the five names, with its output unchanged.",
+  "world_is": "MEASURED: the two means are not the same function. mean_daily_value (~36) averages every non-zero served market_value_eod; daily_mean_value (v2) averages the positive ones. They differ on the 8 of 9,082 planned segments whose served days hold a negative value. A first run of ~36 importing v2's function unchanged rewrote UNEXPLAINED_CLASSES_E2.json (evidence strings of 6 rows: mean value and the abs_diff figures; cause classes of the rows shown unchanged). The reader of record therefore carries a flag, daily_mean_value(days, positive_only=True) and fee_base_gross(..., positive_only=True); ~36 binds both with positive_only=False (functools.partial), and its JSON and MD re-run byte-identical. The grading of record (v2, positive_only=True) is the 8,088; whether the negative-value segments should average positives only is a question for the CTO, not decided here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_reader.py daily_mean_value",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~36/unexplained_classes.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W38-S2 -- The criteria bind REGRADE_E1.json's reader_sha256 to the reader at HEAD, but DB-b-61 edits the reader after DB-b-60 commits; REGRADE_E1.json was regenerated under the final reader.
+
+```json
+{
+  "id": "IRPT_DASHBD-W38-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~38",
+  "surfaced_at": "2026-10-09T01:08:00Z",
+  "one_line": "DB32-1-AC2 and DB32-2-AC2 both require REGRADE_E1.json's reader_sha256 to equal the reader's bytes at HEAD, while DB-b-61 must edit the reader (FLOW_CONVENTION) after DB-b-60 commits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-60/61: REGRADE_E1.json carries reader_sha256 = sha256 of tieout_reader.py at the DB-b-60 commit; the checks p32_round32.py DB32-1-AC2 and DB32-2-AC2 compare it with the reader at HEAD.",
+  "world_is": "MEASURED: DB-b-61 changes tieout_reader.py (FLOW_CONVENTION = \"start\", the guard), so the sha recorded at the DB-b-60 commit (096c2a2f76) no longer equals HEAD's, and DB32-1-AC2 and DB32-2-AC2 (which reads REGRADE_E1.json through the same sha limb) would FAIL at the DB-b-61 commit. REGRADE_E1.json was therefore regenerated with the final reader (--flow end, the reader's explicit end-of-day option): 9,078 segments, within 8,088, byte-identical grades; only reader_sha256 differs from the DB-b-60 commit's copy. All four criteria print PASS at the DB-b-61 commit. The DB-b-60 proof's recorded outputs are the values at 096c2a2f76.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r32/p32_round32.py regrade()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W38-S3 -- The flow-start near-zero guard threshold (2%) was chosen from the project's existing near-zero boundary after 1% let two 97 and 117 pp artifacts through; within moves 8,310 to 8,319 across 1% to 10%.
+
+```json
+{
+  "id": "IRPT_DASHBD-W38-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~38",
+  "surfaced_at": "2026-10-09T01:08:30Z",
+  "one_line": "A first guard at 1% of the prior value missed two segments (flow -98.9% of the prior value, denominator 1.05% and 1.07%) that read 117 and 97 pp at flow-start; the guard is 2%.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-61: guard the near-zero START divisor with a stated rule, never a silent fill.",
+  "world_is": "MEASURED on the 9,078: the rule is V_(t-1) + F_t >= GUARD_FRAC * |V_(t-1)|, else the day keeps its served return and is counted (guard_days). At 1% the guard covered 491 days and two segments still read 116.5 and 97.4 pp (denominator 1.07% and 1.05% of the prior value, end value about 0.1% of it). GUARD_FRAC = 2% is round 31's NEAR_ZERO_BOUNDARY (unexplained_classes.py); it covers 533 days in 446 segments. Sensitivity of the within count: 1% 8,310; 2% 8,315; 5% 8,315; 10% 8,319. The threshold is a convention of this reader, not a measurement of BD; the CTO may re-set it, the number is a module constant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/tieout/tieout_reader.py guarded_days",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~38/REGRADE_FLOWSTART_E2.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

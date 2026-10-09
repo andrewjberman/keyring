@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md</decomp_doc>
 <owned_cells>MP-b-3</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPORTAL.TO-MP-b-3</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPORTAL~1</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>

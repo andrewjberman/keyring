@@ -9,6 +9,10 @@ per file class"; 0.0.0_AB_MSTR msg 107365: "the integrator should regenerate gen
      row. Resolved by a THREE-WAY UNION BY SECTION: rows either side added are kept (base order, then ours, then
      theirs); a row only one side changed takes that change; a row changed DIFFERENTLY on both sides, or a duplicated
      id, is NOT resolved.
+     A channel file whose rows sit in ONE ```json list (the AMGT_HARVST / NFRA_CTLPLN shape, which held site Z at
+     19:4xZ and dell1 at 00:3xZ on 2026-10-09) takes a THREE-WAY UNION BY ROW instead, with the same rules, each row
+     emitted as its own raw bytes; the same id ADDED on both sides with different content is a DUAL-MINT and both copies
+     are kept, for the row gate to admit (1.0.0_SA_CTO msg 107530). Arms: `.tools/test-merge-resolve-known.py`.
   2. A GENERATED index entry (`org/projects/<CODE>.json` whose both sides carry `home`): resolved by REGENERATING it
      from the merged tree with `.tools/missions-tree-index.py derive --write`, over a narrow extract of the merged
      tree (that project's home, the two registers, the contract): about 2 s, against 85 s for a full extract.
@@ -124,6 +128,97 @@ def union_channel(base, ours, theirs):
     return (text if text.endswith('\n') else text + '\n'), 'section-union'
 
 
+FENCE_RE = re.compile(r'^```json[ \t]*\r?\n(.*?)\r?\n[ \t]*```', re.S | re.M)
+
+
+def fenced_list(text):
+    """(before, head, [(key, data, raw)], sep, tail, after) for a file holding ONE ```json fence whose body is a list of
+    row objects; None otherwise. Each row keeps its RAW bytes; key = (id, k) for the k-th row under that id, so a
+    dual-minted id already in the file keys the same on every side."""
+    ms = list(FENCE_RE.finditer(text or ''))
+    if len(ms) != 1:
+        return None
+    m = ms[0]
+    body, dec = m.group(1), json.JSONDecoder()
+    i = body.find('[')
+    if i < 0 or body[:i].strip():
+        return None
+    pos, rows, spans, seen = i + 1, [], [], {}
+    while True:
+        while pos < len(body) and body[pos] in ' \t\r\n,':
+            pos += 1
+        if pos >= len(body) or body[pos] == ']':
+            break
+        try:
+            obj, end = dec.raw_decode(body, pos)
+        except ValueError:
+            return None
+        if not isinstance(obj, dict) or not str(obj.get('id') or '').strip():
+            return None
+        rid = str(obj['id']).strip()
+        seen[rid] = seen.get(rid, 0) + 1
+        lead = body[spans[-1][1]:pos] if spans else None
+        rows.append(((rid, seen[rid]), json.dumps(obj, sort_keys=True), (lead, body[pos:end])))
+        spans.append((pos, end))
+        pos = end
+    if pos >= len(body) or body[pos:].strip() != ']' or not spans:
+        return None
+    sep = body[spans[0][1]:spans[1][0]] if len(spans) > 1 else ',\n'
+    return (text[:m.start(1)], body[:spans[0][0]], rows, sep, body[spans[-1][1]:], text[m.end(1):])
+
+
+def union_rows(base, ours, theirs):
+    """THREE-WAY UNION BY ROW of a one-fence JSON-list channel file (the AMGT_HARVST / NFRA_CTLPLN shape). Rows either
+    side added are kept; a row only one side changed takes that change; the same id ADDED on both sides with different
+    content is a DUAL-MINT (1.0.0_SA_CTO msg 107530): both copies kept verbatim, ours then theirs, for the row gate to
+    admit when each is on a published ref. A row changed differently on both sides, or text outside the list changed
+    differently, is NOT resolved. Comparison is on the parsed data; each row is emitted as its own raw bytes."""
+    parts = [fenced_list(x) if x is not None else None for x in (base, ours, theirs)]
+    if parts[1] is None or parts[2] is None or (base is not None and parts[0] is None):
+        return None, 'not a one-fence JSON row list on every side'
+    b = parts[0] or ('', '', [], '', '', '')
+    o, t = parts[1], parts[2]
+    frame = []
+    for k in (0, 1, 4, 5):
+        ok, v = three(b[k] if parts[0] else None, o[k], t[k])
+        if not ok:
+            return None, 'the text around the row list changed differently on both sides'
+        frame.append(v if v is not None else o[k])
+    bd = {k: (d, r) for k, d, r in b[2]}
+    od = {k: (d, r) for k, d, r in o[2]}
+    td = {k: (d, r) for k, d, r in t[2]}
+    order = [k for k, _, _ in b[2]]
+    for k, _, _ in o[2]:
+        if k not in bd:
+            order.append(k)
+    for k, _, _ in t[2]:
+        if k not in bd and k not in od:
+            order.append(k)
+    out, dual = [], []
+    for k in order:
+        bb, oo, tt = bd.get(k), od.get(k), td.get(k)
+        if bb is None and oo is not None and tt is not None and oo[0] != tt[0]:
+            out.extend([oo[1], tt[1]])
+            dual.append(k[0])
+            continue
+        ok, v = three(*(x[0] if x else None for x in (bb, oo, tt)))
+        if not ok:
+            return None, 'row %s changed differently on both sides' % k[0]
+        if v is None:
+            continue
+        out.append(next(x[1] for x in (oo, tt, bb) if x and x[0] == v))
+    # each row keeps the separator it had in its own version (the first row's lives in the frame), so a region nobody
+    # touched stays byte-identical; a row that was first in its version takes ours' common separator
+    body = ''.join(r if n == 0 else (lead if lead is not None else o[3]) + r for n, (lead, r) in enumerate(out))
+    text = frame[0] + frame[1] + body + frame[2] + frame[3]
+    try:
+        if fenced_list(text) is None:
+            return None, 'the merged row list does not parse'
+    except ValueError:
+        return None, 'the merged row list does not parse'
+    return text, 'row-union' + (' dual-mint=%s' % ','.join(dual) if dual else '')
+
+
 def regenerate(path, tree, ours, theirs):
     try:
         o, t = json.loads(show(ours, path) or 'null'), json.loads(show(theirs, path) or 'null')
@@ -179,7 +274,11 @@ def main(argv):
     allok = True
     for p in paths:
         if CHANNEL_RE.search(p):
-            text, how = union_channel(show(opts['base'], p), show(opts['ours'], p), show(opts['theirs'], p))
+            sides = [show(opts[k], p) for k in ('base', 'ours', 'theirs')]
+            if all(fenced_list(x) is not None for x in sides if x is not None):
+                text, how = union_rows(*sides)
+            else:
+                text, how = union_channel(*sides)
         elif GENERATED_RE.match(p):
             text, how = regenerate(p, opts['tree'], opts['ours'], opts['theirs'])
         else:
