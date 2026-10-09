@@ -153,6 +153,16 @@ OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
 # DUPLICATED IN .tools/owned-paths-validate.py AS _TO_STATUS_RE -- two carriers of one pattern,
 # fixed identically in the same commit. Naming it because the next edit must move both.
 TO_STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
+# THE LAST TAG GOVERNS (1.0.0_SA_CTO gate-owner ruling, msg 107528, 2026-10-09): an order's status is its LAST
+# line-anchored <status> tag. A stale earlier duplicate (pending above complete) must not read as the status.
+
+
+def _to_status_match(text):
+    """The LAST line-anchored <status> match in `text`, or None (ruling msg 107528)."""
+    found = list(TO_STATUS_RE.finditer(text or ""))
+    return found[-1] if found else None
+
+
 # `parked` (1.0.0_SA_CTO 2026-09-30, on 3.0.0_SA_CVO's MDPF_SECCLASS rounds 4-5 review Q1): a PARKED order sits OUTSIDE
 # the current round's rectangle by the CTO's ruling (the relaunch brief: nothing waits on a dead seat; the order carries its
 # owner and the condition that un-parks it). It is therefore not an open order of the round, and it must not pin every later
@@ -264,7 +274,7 @@ def _seats_with_open_orders(root, code):
         st, text = _blob(root, "HEAD", p)
         if st != "OK":
             continue
-        m = TO_STATUS_RE.search(text)
+        m = _to_status_match(text)
         word = m.group(1).lower() if m else ""
         if word in TERMINAL_TO_WORDS:
             continue
@@ -1303,7 +1313,7 @@ def _open_tos_census(root, code, merging=False, round_n=None):
             rm = TO_ROUND_RE.search(text)
             if rm and int(rm.group(1)) != round_n:
                 continue
-        m = TO_STATUS_RE.search(text)
+        m = _to_status_match(text)
         word = m.group(1).lower() if m else "<no status tag>"
         if word not in TERMINAL_TO_WORDS:
             label = "%s [%s]" % (os.path.basename(p), word)
@@ -3560,6 +3570,11 @@ def _self_test(root):
         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
          lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
          and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),
+        # THE LAST TAG GOVERNS (1.0.0_SA_CTO ruling msg 107528): a stale earlier duplicate is not the status.
+        ("last-tag: 'pending' then 'complete' reads complete; 'complete' then 'pending' reads pending; none reads None",
+         lambda: _to_status_match("<status>pending</status>\n<status>complete</status>\n").group(1) == "complete"
+         and _to_status_match("<status>complete</status>\n<status>pending</status>\n").group(1) == "pending"
+         and _to_status_match("no tag here, only `<status>` in prose\n") is None),
         # PROOF TERMINALITY (1.0.0_SA_CTO 2026-09-15; spine :436, :487-488). RED-FIRST: every arm below FAILS on the
         # pre-change module, which has neither _proof_terminal nor _proof_verdict. The LIVE arms read real bytes.
         ("proof terminality LIVE: LGIC_NAMING LN-e-3-r2 (VALID proof, its FAIL the round's measurement) reads terminal by proof",
