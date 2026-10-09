@@ -602,7 +602,7 @@ release and the close run. The producers are not cells. A box with no record rea
 | Cell | Serves | Builds / runs | Assignee | Write surface | Risk |
 |---|---|---|---|---|---|
 | `MP-o-1` | FWD-15, C13, A15 | `app/refs/overlap_rules.json` (kinds and the deploy rule, versioned) + `GET /fabric/overlap` per CP2.3-O + tests (planted Terraform-with-open-deploy rated above planted shared log; the real capture) | worker `~8` | `app/admin_fabric_overlap.py`, `app/refs/overlap_rules.json`, `tests/test_admin_fabric_overlap.py` (all new) | WORLD (live only through MP-r-2) |
-| `MP-g-1` | FWD-16, C14, A16 | `GET /fabric/gitstate` per CP2.3-G + tests | worker `~9` | `app/admin_fabric_gitstate.py`, `tests/test_admin_fabric_gitstate.py` (new) | WORLD (via MP-r-2) |
+| `MP-s-1` | FWD-16, C14, A16 | `GET /fabric/gitstate` per CP2.3-G + tests | worker `~9` | `app/admin_fabric_gitstate.py`, `tests/test_admin_fabric_gitstate.py` (new) | WORLD (via MP-r-2) |
 | `MP-k-1` | FWD-17, C11, A17 | `GET /fabric/calls` + `POST /fabric/calls/close` (writes ONE request object) per CP2.3-K + tests | worker `~10` | `app/admin_fabric_calls.py`, `tests/test_admin_fabric_calls.py` (new) | WORLD (via MP-r-2) |
 | `MP-p-2` | FWD-15..17 on the page (S14, S15) | mcportal: Overlap and Git state panels on Control Plane; the Open Calls page with the close form; client functions; tests | worker `~11` | mcportal `src/pages/control-plane/*`, `src/pages/open-calls/*` (new), `src/api/admin.ts`, `src/api/admin.test.ts`, `src/App.tsx`, `src/shell/pages.ts`, `src/shell/sidebar.test.ts` | WORLD (via MP-r-2) |
 | `MP-k-2` | FWD-17 hop (the write grant) | `gateway-mcportal-close-request-write-policy`: `s3:PutObject` on `fabric/open-calls/v1/box=*/requests/*` ONLY; never-widen pair (CTO `1.0.0_SA_CTO~O` + COO `2.0.0_SA_COO~MP`) signed against the applier's ASK before the apply; `safe-apply`; NEVER-2; simulation read-back | `0.7.0_AE_CloudOps~MP` | `infra/aws/terraform/opal-gateway/mcportal_close_request_write.tf` (new), ledger paths | WORLD |
@@ -743,20 +743,20 @@ POST, JSON body `{"box": "<roster name>", "call_id": "<id>", "ruling": "<text>"}
 
 ```
 chain O   MP-o-1 --\
-chain G   MP-g-1 ---+--> MP-r-2 --> MP-q-1     the release ships every handler and the bundle; the close run reads the live page
+chain G   MP-s-1 ---+--> MP-r-2 --> MP-q-1     the release ships every handler and the bundle; the close run reads the live page
 chain K   MP-k-1 ---+
 chain P   MP-p-2 --/
 chain W   MP-k-2 --/                           the close's write needs the grant APPLIED before MP-r-2's read-back can POST
 joins     MP-r-2 (o-1, g-1, k-1, p-2 drained + routes hooked up + k-2 applied + G-REL2)    MP-q-1 (r-2 drained + G-SEE2)
 ```
 
-**Fan-out:** `N = 4 of M = 5 chains, cap 8` at the issuance: workers `~8` (MP-o-1), `~9` (MP-g-1), `~10` (MP-k-1) and `~11`
+**Fan-out:** `N = 4 of M = 5 chains, cap 8` at the issuance: workers `~8` (MP-o-1), `~9` (MP-s-1), `~10` (MP-k-1) and `~11`
 (MP-p-2). Chain W is the applier seat `0.7.0_AE_CloudOps~MP`, which gets its GO by message because it is a seat, not a
 worker. MP-r-2 and MP-q-1 are issued STAGED (row Z-S19: a round's cells are cut in its one issuance).
 
 ## CP2.6 GATES
 
-- **MP-o-1, MP-g-1, MP-k-1, MP-p-2:** none. They start at the issuance.
+- **MP-o-1, MP-s-1, MP-k-1, MP-p-2:** none. They start at the issuance.
 - **MP-k-2:** none to start the build and the ASK. The apply waits on the never-widen pair signed against the ASK at its
   commit: CTO half `1.0.0_SA_CTO~O` and COO half `2.0.0_SA_COO~MP`. This is the CTO's ruling on Q3 (msg 32404).
 - **G-REL2 (MP-r-2):**
@@ -797,3 +797,13 @@ worker. MP-r-2 and MP-q-1 are issued STAGED (row Z-S19: a round's cells are cut 
 4. **Out of scope:** push and fetch EVENTS (C14's "no readable home") stay "not recorded" beyond what the gitstate record
    carries. Giving them a home is `4.0.0_SA_CRO~A`'s GitOps work.
 5. **Subtracted:** FWD-18 and FWD-19 go to the next workstream round.
+
+## CP2.9 AMENDMENT 1 (issuer, before any spawn): the git-state cell is `MP-s-1`
+
+The issuance cut the git-state cell as `MP-g-1`. That id is round 2's claims-capture cell (R2.1, order
+`NFRA_MCPORTAL.TO-MP-g-1.claims-capture-and-history.md`, `<to_id>NFRA_MCPORTAL.TO-MP-g-1</to_id>`, complete). Two cells
+under one id is the two-allocators-one-sequence class: a rollup resolves the id to whichever it reads last. The CP2
+cell is renamed `MP-s-1` here and in its order. The ORDER FILE keeps its path
+(`NFRA_MCPORTAL.TO-MP-g-1.fabric-gitstate-handler.md`), because a renamed file is a newly-added order and GATE (x)
+refuses a second issuance into CP2 round 1. The order now answers to `<to_id>NFRA_MCPORTAL.TO-MP-s-1</to_id>` and to
+its filename stem (`proof-of-spec-check.py:758`). The checks keep their file names `g1.AC*.sh`.
