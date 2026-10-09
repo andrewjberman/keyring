@@ -3115,6 +3115,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-W35-S1 -- The daily-mean fee base fixes 134 of the 181 crossovers but itself moves 133 segments from WITHIN to OUTSIDE against round 30 (net +629 within).
+
+```json
+{
+  "id": "IRPT_DASHBD-W35-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~35",
+  "surfaced_at": "2026-10-09T01:00:00Z",
+  "one_line": "The daily-mean fee base fixes 134 of the 181 crossovers but itself moves 133 segments from WITHIN to OUTSIDE against round 30 (net +629 within).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-57 item 3: the fix is a module that re-grades all 9,078 segments with after_within >= 7,459; the order does not ask whether the fix reverses segments.",
+  "world_is": "MEASURED: tieout_compound_v2.py (add-back on the mean served daily market value of the linked days) grades 8,088 within / 990 outside of 9,078; against round 30 it moves 762 OUTSIDE to WITHIN and 133 WITHIN to OUTSIDE, 8,183 unchanged. The 133 reversals are not classed here (not asked). Of the 181 crossovers, 134 return to WITHIN, 47 stay OUTSIDE (23 flow-timing residue, 22 additive-tie coincidence, 2 negative fee total).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/TIEOUT_COMPOUND_V2.json verdict_moves_vs_round30",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~35/CROSSOVER_E1.json fix_regrade"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-W36-S1 -- The fee-base correction (mean daily value) moves 762 segments to WITHIN but 133 round-30 WITHIN segments to OUTSIDE; the average of begin and end value is not the only fee-base reading.
 
 ```json
