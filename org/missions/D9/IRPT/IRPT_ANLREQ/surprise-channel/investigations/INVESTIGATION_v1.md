@@ -397,32 +397,6 @@
 ]
 ```
 
-## IRPT_ANLREQ-D2-W11-S3 -- gen-wire.ts run as main cannot finish from a linked portal worktree; the one file was rendered through its own renderModule
-
-```json
-{
-  "id": "IRPT_ANLREQ-D2-W11-S3",
-  "project": "IRPT_ANLREQ",
-  "fabric": "dell2",
-  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~11",
-  "surfaced_at": "2026-10-09T06:10:00Z",
-  "one_line": "AMENDMENT 2 item 3 says regenerate AnalysisSubmissionRequest.ts with gen-wire.ts from the workspace-root schema, but run as main from a linked portal worktree (C:/tmp/anlreq-v11-portal) the generator resolves the workspace root six levels up (C:/tmp/), so generate() dies on the first document, AnalysisReport, whose served-v2 schema path (infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json) is not there. The v1 schema directory IS reachable through the generator's own IRPT_CONTRACTS_DIR override, so I called the generator's own exported renderModule for AnalysisSubmissionRequest alone, with that override, and wrote only that one file; no other generated file was touched.",
-  "class": "OBSERVATION",
-  "hazard_standing": "INERT",
-  "grounding": {
-    "status": "GROUNDED",
-    "evidence": [
-      "PROBE in C:/tmp/anlreq-v11-portal @69716c81: bun run of generate(<scratch dir>) with IRPT_CONTRACTS_DIR set -> ENOENT open C:\tmp\\infra\u0007ws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json (gen-wire.ts:639, the first document in WIRE_CONTRACTS).",
-      "RESULT: renderModule('AnalysisSubmissionRequest', <schema text read by schemaFilePath>) -> the committed file differs from its old self by exactly two lines: the header sha256 (ed84ac36... -> a6f224cd..., equal to sha256sum of docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json at workspace 5be2acd7cc) and `readonly ticket_id?: string`.",
-      "SAME CAUSE, other tests: in the linked worktree the fe-s-13 tests (routes, content-pins, producer-fixtures), iv-e-26 wire-regen and the component-census tests read the same missing C:/tmp/docs and C:/tmp/infra paths and fail with ENOENT; fe-s-1 source-bounds fails on a pre-existing 'ycharts' token at contracts/index.ts:29. None is in this order's files. The submission-request test and every TicketCenter test pass (23 of 23)."
-    ]
-  },
-  "disposition": "UNDER_INVESTIGATION",
-  "spec_asserts": "AMENDMENT 2 item 3: regenerate the wire type with its own generator from the schema at the workspace root; if the generator cannot reach the schema from the portal worktree, STOP and report.",
-  "world_is": "The generator reaches the v1 schema (via IRPT_CONTRACTS_DIR) but not the served-v2 AnalysisReport schema from a linked worktree outside the workspace layout, so a full run aborts; the one required file was produced by the generator's own renderModule with the override."
-}
-```
-
 ## IRPT_ANLREQ-D2-S3 -- disposition of D2-S2 item 1: H1 withdrawn by the CTO; hop 4b is I3 alone
 
 ```json
@@ -449,6 +423,167 @@
 }
 ```
 
+## IRPT_ANLREQ-D2-W41-S6..S10 (worker 0.9.0_WK_IRPT_ANLREQ~41, AR-t-13)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S6",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "The live draft write cannot complete: RetentionPolicy._allow refuses every service subject on reserve(), and ArtifactRepository.put() reserves before it writes. retention.py is outside AR-t-13's write grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-t-13 step 5/7: ArtifactRepository.put admits svc-commentary through SERVICE_WRITERS and the store writes the DRAFT through the retained repositories built the way composition.py builds them.",
+    "world_is": "With the retained repositories (build_retained_repositories, additional_policy_revisions=('irpt-anlreq-x10-v1',)), put(service_principal('svc-commentary', t), ..., 'ANALYSIS_COMMENTARY', REQ-..., ...) raises ReportDenied('retention owner access denied') at retention.reserve (measured offline with fake clients). retention._allow passes a service subject only on a read=True liveness check. The unit tests therefore use the bare ArtifactRepository (as test_svc_commentary does); the repository's own rules are proved there, the retention layer's admission of the one writer is not built. Needs: retention.py granted to a later cell, reserve() admitting SERVICE_WRITERS for its family only, and the row irpt-anlreq-x10-v1 moved to ACTIVE (it is PENDING_ENFORCEMENT, enforcement_ref null, so RetentionPolicy._registered refuses it too).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/retention.py:90-101 @283f7e7700 -- _allow: a service principal passes only when read=True",
+        "infra/aws/lambda/investor-reporting/reports/retention.py:208-211 @283f7e7700 -- reserve() calls self._allow(principal, owner) with read=False",
+        "infra/aws/lambda/investor-reporting/reports/repository.py ArtifactRepository.put -- retention.reserve before the blob write"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S7",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "AMENDMENT 5's ONE SERVICE_READERS entry (svc-irpt-packager -> ANALYSIS_COMMENTARY) is left out: AR-v-12 has named the principal, but test_svc_commentary.py:199 pins SERVICE_READERS to exactly the svc-commentary entry and that file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Driver AMENDMENT 5: add ONE SERVICE_READERS entry for the package_principal AR-v-12 names, family ANALYSIS_COMMENTARY only; keep every reports/tests file green.",
+    "world_is": "ticket_center names 'svc-irpt-packager' (lambda_function.py:105, TO-AR-v12 complete). Adding the entry fails test_svc_commentary_surface_names_one_subject_and_one_family (assert SERVICE_READERS == {'svc-commentary': ...}); measured. The two instructions cannot both hold inside the granted paths, so the suite stays green and the entry is the follow-up: one line in repository.py plus that assert widened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ticket_center/lambda_function.py:105 @283f7e7700 -- \"package_principal\": \"svc-irpt-packager\"",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_svc_commentary.py:197-200 @283f7e7700 -- assert SERVICE_READERS == {\"svc-commentary\": frozenset({\"REQUEST_COMPOSITION\"})}"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S8",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "AMENDMENT 6 (no separate ticket on an analysis_ready run) is applied only when the store ports are present: test_commentary_ready_queue.py (AR11-t-AC1) pins stage 'ticket' and ok True for a queue run with no store ports, and is outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Driver AMENDMENT 6: for an analysis_ready run the drafter posts NO separate svc-commentary ticket; AR11-t-AC1 stays green.",
+    "world_is": "A queue run that persisted a DRAFT now ends at stage 'draft_stored' with no ticket post (the live ports always carry the store). A queue run with no persist_draft port, which only a test builds, still posts the ticket, so test_ready_message_admitted_once keeps passing. The stream path (H1, withdrawn by the CTO) is unchanged.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_commentary_ready_queue.py:75 @283f7e7700 -- assert out['results'][0]['stage'] == 'ticket' and ok is True",
+        "data/transcripts/scripts/commentary/lambda_handler.py lambda_handler -- from_queue / STAGE_DRAFT_STORED"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S9",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "lambda-source-map.json carries no entry for the svc-commentary composition reader, so the new draft-store entry has no registered precedent; its keys.py dependency closure (firm registry, raw_keys, ids) is not measured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-t-13 step 8: register the zip in lambda-source-map.json as the reader is registered.",
+    "world_is": "At 283f7e7700 the map holds no 'commentary-composition' key (the reader's tf header says the zip is the release pair's). The new entry irpt-commentary-draft-store-lambda lists the reports modules, acceptance/submission/keys staged at the pin, lib/opal_naming.py and the registry files (the reader doc's list), carries no artifact_s3_key hash, and says in _staged_from_note that keys.py's own closure is the release pair's to measure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @283f7e7700 -- no key containing 'commentary-composition' (Grep over the file returned no match)",
+        "infra/aws/terraform/investor-reporting/export/commentary_composition.tf:27-34 @283f7e7700 -- ARTIFACT paragraph"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S10",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T06:20:00Z",
+    "one_line": "The stored DRAFT's bytes are now written: a JSON object {text, request_id, model, generated_at, status:'DRAFT'}; this is the shape row IRPT_ANLREQ-D2-W62-S4 said the packager assumed (a string `text`).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AR-t-13 step 9: the live persist_draft invokes the store with op put; W62-S4: the draft bytes shape is unwritten.",
+    "world_is": "make_draft_store.persist_draft maps the drafter's draft_text to `text` and carries only the request id, model, generated_at and status (not the slicer's candidate ids or statement). The store itself is shape-agnostic: it canonical-JSON-encodes any non-empty dict up to 256 KiB. `title` is not written. The request record is keyed by the tenant partition, so the body `tenant` is used only as the partition HINT for reading analysis#<request_id>#1 and must equal the record's own identity.tenant_firm_id; the principal and owner come from the record alone.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/commentary/lambda_handler.py make_draft_store @this commit",
+        "infra/aws/lambda/investor-reporting/reports/commentary_draft_store.py resolve_request @this commit",
+        "org/missions/D9/IRPT/IRPT_ANLREQ/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_ANLREQ-D2-W62-S4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  }
+]
+```
+
+
+## IRPT_ANLREQ-D2-W41-S11 (worker 0.9.0_WK_IRPT_ANLREQ~41, AR-t-13) -- the decomposition holds no cell AR-t-13
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W41-S11",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+  "surfaced_at": "2026-10-09T06:55:00Z",
+  "one_line": "proof-of-spec-check refuses AR13-t-AC1: cell_ref 'AR-t-13' is not an id in IRPT_ANLREQ_DECOMP_R1.md, so no valid proof instance exists and the order cannot flip to complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 4 re-opens TO-AR-t-12 with cell AR-t-13 (<owned_cells>AR-t-12 AR-t-13</owned_cells>, criterion AR13-t-AC1 cell_refs=\"AR-t-13\"); the order's proof validates with `proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1` rc 0 before the flip.",
+  "world_is": "The checker prints `VIOLATION: alignment: cell_ref 'AR-t-13' (cited by ['AR13-t-AC1']) does NOT exist in org/missions/D9/IRPT/IRPT_ANLREQ/decompositions/IRPT_ANLREQ_DECOMP_R1.md` and exits 1 (decomp id space = 10 ids; AR-t-13 is named only in the order file). Everything else in the instance validates (AR12-t-AC1 resolves, 2/2 invocations match their criteria, 8/8 surprise ids resolve, 13 artifacts resolve at their pins). The decomposition is outside this order's paths and frozen mid-round, so the worker cannot add the cell; the order stays open. Needed from the issuer or the decomposition's owner: an AR-t-13 cell row in the decomposition (or the criterion's cell_refs amended to an id the decomposition holds), then the flip is the instance commit plus the status line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1 -> INVALID (rc=1), one VIOLATION line @ this worktree HEAD",
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.md:110,150 -- the only mentions of AR-t-13 outside the channel"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_ANLREQ-D2-W11-S3 -- gen-wire.ts run as main cannot finish from a linked portal worktree; the one file was rendered through its own renderModule
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W11-S3",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~11",
+  "surfaced_at": "2026-10-09T06:10:00Z",
+  "one_line": "AMENDMENT 2 item 3 says regenerate AnalysisSubmissionRequest.ts with gen-wire.ts from the workspace-root schema, but run as main from a linked portal worktree (C:/tmp/anlreq-v11-portal) the generator resolves the workspace root six levels up (C:/tmp/), so generate() dies on the first document, AnalysisReport, whose served-v2 schema path (infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json) is not there. The v1 schema directory IS reachable through the generator's own IRPT_CONTRACTS_DIR override, so I called the generator's own exported renderModule for AnalysisSubmissionRequest alone, with that override, and wrote only that one file; no other generated file was touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PROBE in C:/tmp/anlreq-v11-portal @69716c81: bun run of generate(<scratch dir>) with IRPT_CONTRACTS_DIR set -> ENOENT open C:\tmp\\infra\u0007ws\\lambda\\investor-reporting\\_contracts\\AnalysisReport.v2.schema.json (gen-wire.ts:639, the first document in WIRE_CONTRACTS).",
+      "RESULT: renderModule('AnalysisSubmissionRequest', <schema text read by schemaFilePath>) -> the committed file differs from its old self by exactly two lines: the header sha256 (ed84ac36... -> a6f224cd..., equal to sha256sum of docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json at workspace 5be2acd7cc) and `readonly ticket_id?: string`.",
+      "SAME CAUSE, other tests: in the linked worktree the fe-s-13 tests (routes, content-pins, producer-fixtures), iv-e-26 wire-regen and the component-census tests read the same missing C:/tmp/docs and C:/tmp/infra paths and fail with ENOENT; fe-s-1 source-bounds fails on a pre-existing 'ycharts' token at contracts/index.ts:29. None is in this order's files. The submission-request test and every TicketCenter test pass (23 of 23)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 3: regenerate the wire type with its own generator from the schema at the workspace root; if the generator cannot reach the schema from the portal worktree, STOP and report.",
+  "world_is": "The generator reaches the v1 schema (via IRPT_CONTRACTS_DIR) but not the served-v2 AnalysisReport schema from a linked worktree outside the workspace layout, so a full run aborts; the one required file was produced by the generator's own renderModule with the override."
+}
+```
+
 ## IRPT_ANLREQ-D2-W63-S1 -- AR-g-13: "the same refusals as poll_once" and "refused and deleted" name opposite outcomes; the order's terminal list also leaves the record-level refusals to a reading
 
 ```json
@@ -472,5 +607,121 @@
   },
   "spec_asserts": "AR-g-13 section 3: the package poll applies the same 4096-byte and duplicate-field refusals as poll_once, and deletes a message only on attached, already attached, or a named refusal of the message itself (wrong kind, extra or missing field, not closed); arm (c): a malformed body is refused and deleted, the packager not called.",
   "world_is": "poll_once raises on an oversize body or a duplicate field and leaves the message, so 'the same' refusal cannot also delete. poll_package_once applies the same two checks and then DELETES (an oversize, non-JSON, non-object or duplicate-field body can never become valid, and keeping it only walks it to the DLQ); the packager's own message-level names (WRONG_KIND, EXTRA_FIELD, MISSING_FIELD, MESSAGE_NOT_JSON, MESSAGE_NOT_AN_OBJECT, CLOSED_QUEUE_MESSAGE_REQUIRED) delete when raised as PackagerRefused. Every other refusal the packager raises about the RECORDS (ACCEPTANCE_RECORD_ABSENT, TICKET_ID_ABSENT, COMMENTARY_REF_ABSENT, JOB_NOT_READY, ORIGINAL_REF_ABSENT, COMMENTARY_MALFORMED) is not in the order's terminal list and is KEPT: those depend on records that can still arrive (commentary written, job READY), so redelivery and the DLQ own them. The package poll also sets the process variable IRPT_ANALYSIS_READY_QUEUE_URL from the I3 binding (the order's first option), so the factory mutates os.environ once at build."
+}
+```
+
+## IRPT_ANLREQ-D2-W41-S12..S15 -- dispositions of this worker's rows S6, S7, S8, S11 (AMENDMENT 5 steps 11-13, 0.9.0_WK_IRPT_ANLREQ~41)
+
+```json
+[
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S12",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved at 3fc99be70f: RetentionPolicy._allow admits svc-commentary on reserve only, family ANALYSIS_COMMENTARY, tenant-bound; the live retained put succeeds once and the second is refused; nothing is owed on S6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S6 (live retained write path): resolved by AMENDMENT 5 step 11, landed at 3fc99be70f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/retention.py _allow(write_family) @3fc99be70f",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_commentary_draft_store.py::test_live_retained_put_admits_the_named_writer @3fc99be70f (negative control: with the prior retention.py it fails ReportDenied at retention.py:97)"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5 step 11: admit the one named writer in retention.py exactly as SERVICE_WRITERS does, reserve only, tenant-bound.",
+    "world_is": "The retained repositories built as compose_ports builds them admit one put by svc-commentary and refuse the second; svc-irpt-packager, another family, another tenant, global and opal-capital are refused on reserve; promote still refuses the writer."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S13",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved at 3fc99be70f: SERVICE_READERS carries svc-irpt-packager -> ANALYSIS_COMMENTARY and the pin at test_svc_commentary.py:199 is the two-entry map; nothing is owed on S7.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S7 (package reader entry): resolved by AMENDMENT 5 step 12, landed at 3fc99be70f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/reports/repository.py SERVICE_READERS @3fc99be70f",
+        "infra/aws/lambda/ticket_center/lambda_function.py:110 @3fc99be70f -- \"package_principal\": \"svc-irpt-packager\" (AR-v-12)",
+        "infra/aws/lambda/investor-reporting/reports/tests/test_svc_commentary.py (the pin) and test_commentary_draft_store.py::test_package_reader_reads_only_the_draft_family @3fc99be70f"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5 step 12: ONE SERVICE_READERS entry for the package_principal, family ANALYSIS_COMMENTARY only; update the pin.",
+    "world_is": "The packager reads the DRAFT through ArtifactRepository.get in its own tenant; it cannot put and cannot read another tenant. Side effect to note: retention.require_live admits any SERVICE_READERS subject (family-agnostic, liveness read only, no bytes), so the packager now passes that liveness read as svc-commentary already did."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S14",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved at 3fc99be70f: the no-store-port queue test keeps stage ticket unchanged, and test_store_backed_queue_run_ends_draft_stored pins draft_stored with no ticket post; nothing is owed on S8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S8 (queue-run stage pin): resolved by AMENDMENT 5 step 13, landed at 3fc99be70f.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_commentary_ready_queue.py::test_store_backed_queue_run_ends_draft_stored @3fc99be70f",
+        "data/transcripts/scripts/commentary/lambda_handler.py STAGE_DRAFT_STORED path (driver AMENDMENT 6)"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5 step 13: a store-backed queue run ends draft_stored; a run with no store ports keeps today's behavior.",
+    "world_is": "The existing queue test passes no store ports, so it needed no edit; the added test carries fake store ports and asserts one persist, one send, stage draft_stored, zero ticket posts."
+  },
+  {
+    "id": "IRPT_ANLREQ-D2-W41-S15",
+    "project": "IRPT_ANLREQ",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+    "surfaced_at": "2026-10-09T07:20:00Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Resolved by the issuer's AMENDMENT 5 @5af44a2b9b: AR13-t-AC1 cites cell_refs=AR-t-12, an id the decomposition holds; the proof instance validates (proof-of-spec-check rc 0); nothing is owed on S11.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of IRPT_ANLREQ-D2-W41-S11 (no cell AR-t-13 in the decomposition): resolved by AMENDMENT 5 @5af44a2b9b, criterion AR13-t-AC1 now cites cell AR-t-12.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.md AMENDMENT 5 first bullet @5af44a2b9b"
+      ]
+    },
+    "spec_asserts": "AMENDMENT 5: the draft store is the decomposition's own AR-t-12 text realized, so AR13-t-AC1 cites cell AR-t-12.",
+    "world_is": "The checker's alignment limb finds AR-t-12 in IRPT_ANLREQ_DECOMP_R1.md; the proof is rewritten against it in this worker's closing commit."
+  }
+]
+```
+
+## IRPT_ANLREQ-D2-W41-S16 (worker 0.9.0_WK_IRPT_ANLREQ~41, AR-t-12) -- <owned_cells> still names AR-t-13 after AMENDMENT 5
+
+```json
+{
+  "id": "IRPT_ANLREQ-D2-W41-S16",
+  "project": "IRPT_ANLREQ",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_ANLREQ~41",
+  "surfaced_at": "2026-10-09T07:40:00Z",
+  "one_line": "proof-of-spec-check still refuses the order after AMENDMENT 5: <owned_cells>AR-t-12 AR-t-13</owned_cells> names AR-t-13, no criterion cites it now that AR13-t-AC1 cites AR-t-12, so the order cannot flip to complete.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "AMENDMENT 5: AR13-t-AC1 cites cell AR-t-12 (the decomposition holds no AR-t-13); the proof instance validates, proof-of-spec-check rc 0, before the flip.",
+  "world_is": "python .tools/proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1 prints `VIOLATION: alignment: declared cell 'AR-t-13' is named in the TO's <owned_cells> but NO criterion references it -- the TO claims a cell it never discharges` and exits 1; it is the only violation (violations=1; 2/2 criteria carry a cell_ref, 1/1 cell_refs resolve in the decomposition's 10 ids). The fix is the issuer's one token (<owned_cells>AR-t-12</owned_cells>) in the order's decomp_ref block, which the worker did not edit because the order's spec is the issuer's to amend. Both criteria pass: AR1-T12-OK 10 passed, AR1-T13-OK 10 passed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_ANLREQ/task-orders/IRPT_ANLREQ.TO-AR-t-12.commentary-reads-irpt-reader-persists-draft.md <owned_cells> line @deeaecc263",
+      "python .tools/proof-of-spec-check.py <instance> AR12-t-AC1,AR13-t-AC1 -> INVALID (rc=1), one VIOLATION line @ deeaecc263 (instance pinned to 3fc99be70f)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ```
