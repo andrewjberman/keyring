@@ -11223,3 +11223,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Host read at Phase A: md5 97 of 97 identical to the r28 aa75078e1b list (SSM 1b5e2c57-3ff5-4ee7-9247-2340aea60adb, Success), EC2_MANIFEST deployed_commit aa75078e1b at box/sitez 6d0e23e25f; r29 not yet live, so the release is built on 91811b648a."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W48-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~48",
+  "surfaced_at": "2026-10-09T12:16:42Z",
+  "one_line": "RESOLUTION of NFRA_OPLGTW-Z-W48-S1 by amendment OG-tl-1 A1 @9ba3e56d87: the one-file release commit 78afad4283 was made under the audited GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL; S1's blocking condition is cleared.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ git show 9ba3e56d87:org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-tl-1.transcript-allowlist-4-meetings.md lines 102-108: A1 rules that ONE commit (deploy-to-ec2.sh only) on rel-nfra-oplgtw-tl1 uses the override, no other commit, path or branch, no other gate",
+      "RUN GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL bash .tools/safe-commit.sh ... -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (cwd C:/tmp/og-reltl1) -> committed 78afad428389a4665aed267ac7f44e76533be59a, msg-verify MATCH; git diff --name-only 4514246d65 HEAD -> infra/aws/ec2/opal-gateway/deploy-to-ec2.sh (1 file); worktree clean after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 2 forbids overriding a gate; S1 held the release commit on that rule.",
+  "world_is": "The issuer ruled amendment A1 @9ba3e56d87 permitting exactly one audited override for exactly this commit. It was used once, for that one file; the stage commit 4514246d65 and every commit on wk-NFRA_OPLGTW-33-48 were made without it. tl1_release.json records base_sha 4514246d658cfbb4de58636c9f6d149f7b9abb36 and release_sha 78afad428389a4665aed267ac7f44e76533be59a. Row S1 is not edited; this row is its resolution.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Resolves NFRA_OPLGTW-Z-W48-S1. Row S2 (json absent from base) stands."
+}
+```
