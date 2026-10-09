@@ -3460,3 +3460,55 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W46-S1 -- DB-b-43's test (test_account_return_daily_none.py) fails 4 of 4 on the pandas 2.2.3 kit because it forces future.infer_string ON, a mode pandas 2.2.3 only half supports; the same four pass on the kit with the option left off and on pandas 3.0.6, so criterion DB35-1-AC1 (db_b_43_test passed > 0, failed == 0) cannot be met as written.
+
+```json
+{
+  "id": "IRPT_DASHBD-W46-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~46",
+  "surfaced_at": "2026-10-09T03:02:00Z",
+  "one_line": "DB-b-43's test fails 4 of 4 on the pandas 2.2.3 kit (it forces future.infer_string ON; pandas 2.2.3's pyarrow-string str.contains rejects the compiled INCOME_CATEGORY_RE), passes 4 of 4 on pandas 3.0.6 and 4 of 4 on the kit with the option left off.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-69 step 1 and DB35-1-AC1: DB-b-43's test data/assets/scripts/gold/irpt_reporting/tests/test_account_return_daily_none.py on the kit is recorded with passed > 0 and failed == 0 (the S32 read the CTO's round-34 ADDENDUM 3 asks the packet to carry).",
+  "world_is": "MEASURED, one process each: on the kit (Python 3.12.10, pandas 2.2.3, numpy 1.26.4, pyarrow 14.0.2) `python -m pytest` on that file gives 4 failed, 0 passed, every failure `TypeError: expected bytes, re.Pattern found` raised at account_return_daily.py:720 (`t[\"_category\"].str.contains(INCOME_CATEGORY_RE, na=False)`) through pandas/core/arrays/string_arrow.py:359 `pc.match_substring_regex(...)`. The test's run() calls pd.set_option('future.infer_string', True) whenever the option exists, which on 2.2.3 turns the column into the experimental pyarrow-backed string dtype; that dtype's str.contains hands the compiled pattern to pyarrow. On the tested version (Python 3.14.7, pandas 3.0.6) the same file gives 4 passed. With the option left at the kit's own default (off, the served setting that account_activity_lots.set_served_runtime() holds) the four test bodies, run through deliverables/0.9.0_WK_IRPT_DASHBD~46/s32_db43_option_off.py, give 4 passed, 0 failed; the full kit run (batch 1000, 7,604 accounts) logs `future.infer_string = False (served behaviour in force: True)` and completes with 0 refusals; and classify_and_sum on three real custodian days is equal between the kit and pandas 3.0.6 (S32_READ_E1.json). So the producer is not shown wrong on the kit; the test, as written, exercises a pandas-3 mode that the served runtime never enters, and cannot pass on 2.2.3. The record carries passed 0 / failed 4 as measured, so DB35-1-AC1 prints FAIL and the order stays open. No file under data/ was edited (outside the grant). The CTO or the issuer decides whether the S32 read accepts the option-off run as the kit evidence or the test is amended to skip the forced-ON arm where pandas < 3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_daily_none.py:66-71 (run() sets future.infer_string to the argument whenever the option exists)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:720",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/S32_READ_E1.json (db_b_43_test, db_b_43_test_option_off, db_b_43_test_tested_version)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/s32_db43_option_off.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W46-S2 -- The kit carries no pytest, so DB-b-43's test cannot run on it without a side-load; pytest and its pure-Python dependencies were copied from dell2's own site-packages, offline.
+
+```json
+{
+  "id": "IRPT_DASHBD-W46-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~46",
+  "surfaced_at": "2026-10-09T03:02:30Z",
+  "one_line": "The kit packages no pytest, which DB-b-43's test imports; pytest, _pytest, pluggy, iniconfig, packaging, colorama, pygments and py.py were side-loaded from dell2's Roaming site-packages through a second .pth file, offline.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-69 step 1: DB-b-43's test is run on the kit (the venv built from the kit's wheels plus the boto3 and psutil side-load of row W44-S1).",
+  "world_is": "MEASURED: the test file imports pytest at its line 15 and the kit venv has none (`No module named 'pytest'`). Copied, with no network, from C:/Users/Test/AppData/Roaming/Python/Python312/site-packages into .scratch/testpkgs and added by a .pth file: pytest 9.0.2, _pytest, pluggy, iniconfig, packaging, colorama, pygments, py.py. They are the test runner only; pandas, numpy and pyarrow under test are the kit's (the failing run prints them from its own traceback paths: .scratch/kitvenv/Lib/site-packages/pandas, pyarrow). The next kit order should list pytest and its dependencies, or say the venv takes them from the box.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_daily_none.py:15",
+      "org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md IRPT_DASHBD-W44-S1 (the same gap for boto3 and psutil)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
