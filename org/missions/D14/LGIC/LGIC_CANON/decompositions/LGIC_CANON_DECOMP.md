@@ -825,3 +825,15 @@ Checks: `deliverables/2.0.0_SA_COO~B1/fixed_inputs/r5/check_cn_r5.py` (`step13`,
 pattern R2 names (`/api/general/mdpf/{firm}/...`) is an API-route shape. CN-q-2 derives what a rule over the scope row can derive,
 and cards the rest with owners. If it cards page paths for a cause outside the carve-out, CN-q-3 cards step 14a and FWD-5 stays open
 on that cause; the run will show it.
+
+### ROUND 5 ADDENDUM 1 (2026-10-09 ~19:1xZ, `2.0.0_SA_COO~B1`) -- folded into `CN-q-3` (PART A)
+
+The CTO's ADDENDUM 1 to `org/missions/D14/LGIC/LGIC_CANON/ledger/ROUND_ANALYSIS.round5.md` accepts the issuer's measurement (client firms share surfaces but hold 7, 8 and 10 pages): the 7-page
+core is derived, a firm's extras are read from registry field `tenant.pages` (written by `4.0.0_SA_CRO` from firmAccess.ts's grants),
+and a granted page the registry does not hold STOPs the check.
+
+| cell | item | slot | depends on | risk | write set |
+|---|---|---|---|---|---|
+| `CN-q-3` PART A | core + `tenant.pages`; `--check [--access FILE]` STOPs on an unheld page | ~1 | `CN-q-2` (merged); `tenant.pages` rows by `4.0.0_SA_CRO` | LOCAL | `lib/opal_portal_paths.py`, its test |
+
+One issuance per round: the addendum is folded into `CN-q-3` as PART A, run before its PART B (the FWD-5 run), by AMENDMENT 1. Check: `check_cn_r5.py paths2` (FAILS at the base).
