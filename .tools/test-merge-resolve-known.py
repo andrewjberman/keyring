@@ -73,6 +73,19 @@ arms = [
          m.union_fences(blk([(None, A)]), blk([(None, A), (None, B)]), blk([(None, A), (None, dict(B, v=7))])))),
     ("BLOCKS: one row changed differently on both sides -> UNRESOLVED",
      lambda: m.union_fences(blk([(None, A)]), blk([(None, dict(A, v=8))]), blk([(None, dict(A, v=9))]))[0] is None),
+    # APPEND-ONLY logs (0.0.0_AB_MSTR msg 107817): base + CLOUD tail + box tail, only when both sides extend the base.
+    ("APPEND: both sides append, CLOUD is theirs -> base + CLOUD tail + box tail",
+     lambda: m.union_append("a\nb\n", "a\nb\nBOX\n", "a\nb\nCLD\n", cloud="theirs")[0] == "a\nb\nCLD\nBOX\n"),
+    ("APPEND: both sides append, CLOUD is ours (integrate) -> base + CLOUD tail + box tail",
+     lambda: m.union_append("a\n", "a\nCLD\n", "a\nBOX1\nBOX2\n", cloud="ours")[0] == "a\nCLD\nBOX1\nBOX2\n"),
+    ("APPEND: a CLOUD tail with no final newline does not fuse with the box's first line",
+     lambda: m.union_append("a\n", "a\nBOX\n", "a\nCLD", cloud="theirs")[0] == "a\nCLD\nBOX\n"),
+    ("APPEND: a side edited an earlier line -> UNRESOLVED",
+     lambda: m.union_append("a\nb\n", "a\nB!\nBOX\n", "a\nb\nCLD\n", cloud="theirs")[0] is None),
+    ("APPEND: a side removed a line -> UNRESOLVED",
+     lambda: m.union_append("a\nb\n", "a\n", "a\nb\nCLD\n", cloud="theirs")[0] is None),
+    ("APPEND: no merge base -> UNRESOLVED",
+     lambda: m.union_append(None, "x\n", "y\n")[0] is None),
 ]
 for name, fn in arms:
     try:

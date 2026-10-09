@@ -21,10 +21,18 @@ per file class"; 0.0.0_AB_MSTR msg 107365: "the integrator should regenerate gen
      from the merged tree with `.tools/missions-tree-index.py derive --write`, over a narrow extract of the merged
      tree (that project's home, the two registers, the contract): about 2 s, against 85 s for a full extract.
 
+  3. An APPEND-ONLY multi-writer log (APPEND_ONLY below: every manager spawn, /govern reaper run and law edit appends a
+     line; 0.0.0_AB_MSTR msg 107817): resolved as BASE + CLOUD's tail + the box's tail, and only when BOTH sides extend
+     the base byte for byte. A side that edited or removed an earlier line is UNRESOLVED.
+
 Anything else is UNRESOLVED and the caller falls back to its normal conflict path.
 
-USAGE:  python .tools/merge-resolve-known.py --base B --ours P1 --theirs P2 --tree T <path> [<path> ...]
-        (T = the tree `git merge-tree --write-tree P1 P2` wrote, conflict markers and all)
+USAGE:  python .tools/merge-resolve-known.py --base B --ours P1 --theirs P2 --tree T [--cloud ours|theirs] <path> [...]
+        (T = the tree `git merge-tree --write-tree P1 P2` wrote, conflict markers and all; --cloud names the side that is
+        CLOUD, so an append-only log takes CLOUD's tail first; without it, ours' tail goes first)
+        python .tools/merge-resolve-known.py --extends <rev> <path>
+        (exit 0 when the working copy of an APPEND_ONLY <path>, cleaned as git would store it, extends <rev>:<path>
+        byte for byte and is longer; 1 otherwise)
 OUTPUT: per path, "RESOLVED <path> <blob> <how>" (the blob is written to the object store) or "UNRESOLVED <path> <why>".
 EXIT:   0 when every path is RESOLVED; 1 otherwise; 2 on bad usage. Owner 4.0.0_SA_CRO~A.
 """
@@ -39,6 +47,7 @@ import tempfile
 CHANNEL_RE = re.compile(r'(^|/)surprise-channel/(investigations|remediations|adjudications)/[A-Z]+_v\d+\.md$'
                         r'|^org/surprise_channel/(.+/)?[A-Z]+_v\d+\.md$')
 GENERATED_RE = re.compile(r'^org/projects/[^/]+\.json$')
+APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log')
 ROOT = subprocess.run(['git', 'rev-parse', '--show-toplevel'], capture_output=True, text=True).stdout.strip() or '.'
 
 
@@ -299,6 +308,31 @@ def union_fences(base, ours, theirs):
     return text, 'block-union' + (' dual-mint=%s' % ','.join(dual) if dual else '')
 
 
+def union_append(base, ours, theirs, cloud='ours'):
+    """BASE + CLOUD's tail + the box's tail for an append-only log, when both sides extend the base byte for byte. A tail
+    that does not end in a newline gets one before the next tail, so two last lines never fuse."""
+    if base is None:
+        return None, 'no merge base for an append-only log'
+    if not (ours.startswith(base) and theirs.startswith(base)):
+        return None, 'a side does not extend the base byte for byte (an earlier line was edited or removed)'
+    first, second = (ours, theirs) if cloud == 'ours' else (theirs, ours)
+    t1, t2 = first[len(base):], second[len(base):]
+    if t1 and t2 and not t1.endswith('\n'):
+        t1 += '\n'
+    return base + t1 + t2, 'append-only base+cloud+box'
+
+
+def extends(rev, path):
+    """True when the working copy of `path`, cleaned as git would store it, extends rev:path byte for byte and is longer."""
+    head = show(rev, path)
+    rc, out = git('hash-object', '-w', '--', path)       # applies the clean filters (eol) the commit will apply
+    if head is None or rc != 0:
+        return False
+    rc, raw = git('cat-file', '-p', out.decode().strip())
+    work = raw.decode('utf-8', errors='surrogateescape') if rc == 0 else None
+    return work is not None and len(work) > len(head) and work.startswith(head)
+
+
 def regenerate(path, tree, ours, theirs):
     try:
         o, t = json.loads(show(ours, path) or 'null'), json.loads(show(theirs, path) or 'null')
@@ -340,9 +374,14 @@ def regenerate(path, tree, ours, theirs):
 
 
 def main(argv):
+    if argv[:1] == ['--extends']:
+        if len(argv) != 3 or argv[2] not in APPEND_ONLY:
+            print(__doc__)
+            return 2
+        return 0 if extends(argv[1], argv[2]) else 1
     opts, paths, i = {}, [], 0
     while i < len(argv):
-        if argv[i] in ('--base', '--ours', '--theirs', '--tree') and i + 1 < len(argv):
+        if argv[i] in ('--base', '--ours', '--theirs', '--tree', '--cloud') and i + 1 < len(argv):
             opts[argv[i][2:]] = argv[i + 1]
             i += 2
         else:
@@ -364,6 +403,12 @@ def main(argv):
                     text, how = (text2, how2) if text2 is not None else (None, how + '; ' + how2)
         elif GENERATED_RE.match(p):
             text, how = regenerate(p, opts['tree'], opts['ours'], opts['theirs'])
+        elif p in APPEND_ONLY:
+            sides = [show(opts[k], p) for k in ('base', 'ours', 'theirs')]
+            if sides[1] is None or sides[2] is None:
+                text, how = None, 'an append-only log is absent on one side'
+            else:
+                text, how = union_append(*sides, cloud=opts.get('cloud', 'ours'))
         else:
             text, how = None, 'not a known multi-writer class'
         blob = put_blob(text) if text is not None else None

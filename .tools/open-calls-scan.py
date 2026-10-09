@@ -20,7 +20,7 @@ ONE PASS on box B:
   2. CLOSE-OUT = OPEN rows escalated to `xadj` whose cross-adjudication file now reads RULED (.tools/xadj.py).
   3. TO RULE = OPEN cross-adjudication files from every box, but only when B is the adjudicator of record (xadj.py
      adjudicator(): the laptop, or site Z when the laptop's heartbeat is stale or reads no live CTO).
-  4. The TARGET is B's CTO (CTO_OF[B] if its MCP process is alive, else any live 1.0.0_SA_CTO lane on B); with no CTO
+  4. The TARGET is B's CTO (the register's CTO serial for B if its MCP process is alive, else any live 1.0.0_SA_CTO lane on B); with no CTO
      live, B's MSTR (it spawns and unsticks seats) is told the CTO is absent; with neither, nothing is written and the
      heartbeat says so.
   5. One inbox file goes to the target when the three sets, together, differ from the last file sent, or RENUDGE_SEC
@@ -59,8 +59,6 @@ ROOT = os.path.dirname(TOOLS)
 SCHEMA = "open-calls-scan/1"
 RENUDGE_SEC = 1800
 LIVE_MAX_AGE_SEC = 6 * 3600   # a liveness entry older than this is not trusted even if its PID resolves (PID reuse)
-CTO_OF = {"laptop": "1.0.0_SA_CTO", "sitez": "1.0.0_SA_CTO~Z", "dell1": "1.0.0_SA_CTO~DELL1", "dell2": "1.0.0_SA_CTO~DELL2"}
-MSTR_OF = {"laptop": "0.0.0_AB_MSTR", "sitez": "0.0.0_AB_MSTR~Z", "dell1": "0.0.0_AB_MSTR~DELL1", "dell2": "0.0.0_AB_MSTR~DELL2"}
 LIST_CAP = 12
 TIERS = ("tier0_exec", "tier0_utility", "tier1_exec", "tier2_senior", "tier3_junior")
 
@@ -70,6 +68,15 @@ def load_mod(name: str, rel: str):
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+def seat_of(base: str, device: str) -> str:
+    """The serial of `base` on `device`, from the device register (lib/devices.py seat_serial); "" when the register does
+    not hold the box or cannot be read (the caller then falls back to any live lane of `base`)."""
+    try:
+        return load_mod("opal_devices", "lib/devices.py").seat_serial(base, device)
+    except Exception:  # noqa: BLE001
+        return ""
 
 
 def now_dt() -> datetime.datetime:
@@ -483,7 +490,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
             closeout.append((r, x))
     live = liveness()
     ep = now.timestamp()
-    cto = pick(live, CTO_OF.get(device, ""), "1.0.0_SA_CTO", ep, probe)
+    cto = pick(live, seat_of("1.0.0_SA_CTO", device), "1.0.0_SA_CTO", ep, probe)
     if device == xa.PRIMARY:   # the laptop's own pass IS the measurement its heartbeat carries
         adj, why = (xa.PRIMARY, "this pass reads the laptop CTO live") if cto else (xa.BACKUP, "this pass reads no live laptop CTO")
     else:
@@ -492,7 +499,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
         except Exception as exc:  # noqa: BLE001
             adj, why = None, "adjudicator unmeasurable (%s)" % type(exc).__name__
     to_rule = [x for x in xdocs if x["state"] == "OPEN"] if adj == device else []
-    target = cto or pick(live, MSTR_OF.get(device, ""), "0.0.0_AB_MSTR", ep, probe)
+    target = cto or pick(live, seat_of("0.0.0_AB_MSTR", device), "0.0.0_AB_MSTR", ep, probe)
     fp = json.dumps([sorted(r["id"] for r in due), sorted(x["id"] for _, x in closeout), sorted(x["id"] for x in to_rule),
                      target], sort_keys=True)
     st = read_state()
@@ -522,7 +529,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
                 sent = "yes"
             except OSError as exc:
                 sent = "no:deliver-failed(%s)" % exc
-    mstr = pick(live, MSTR_OF.get(device, ""), "0.0.0_AB_MSTR", ep, probe)
+    mstr = pick(live, seat_of("0.0.0_AB_MSTR", device), "0.0.0_AB_MSTR", ep, probe)
     if mode == "off":
         ub_mem, ub_sent, ub_n = ub_prev, 0, 0
     else:

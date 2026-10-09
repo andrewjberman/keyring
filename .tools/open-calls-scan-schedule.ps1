@@ -15,7 +15,8 @@
 #   powershell -NoProfile -File .tools\open-calls-scan-schedule.ps1 -Uninstall
 #
 # THE SLOTS (first minute of each 10-minute cycle; staggered so the boxes do not read S3 in the same second):
-#   laptop :01  sitez :04  dell1 :07  dell2 :09
+#   the n-th box of org/devices/DEVICES.json (register order) at :01, :04, :07, :09 (1 + 3n, capped at 9); today laptop :01
+#   sitez :04 dell1 :07 dell2 :09. The table is computed from the register below, not listed here.
 # The task runs only while the user is logged on, never starts a second copy while one runs, and stops a run past
 # 5 minutes. Output is appended to <git common dir>\open-calls-scan-task.log.
 
@@ -23,7 +24,6 @@ param([switch]$Install, [switch]$Uninstall, [switch]$Status, [switch]$RunNow)
 
 $ErrorActionPreference = 'Stop'
 $TaskName = 'Opal open-calls scan'
-$Slots = @{ 'laptop' = 1; 'sitez' = 4; 'dell1' = 7; 'dell2' = 9 }
 
 function Fail($m) { Write-Output "ERROR: $m"; exit 1 }
 
@@ -39,7 +39,16 @@ $box = $env:AGENTBUS_DEVICE
 if (-not $box) { $box = [Environment]::GetEnvironmentVariable('AGENTBUS_DEVICE', 'User') }
 if (-not $box) { Fail "AGENTBUS_DEVICE is not set (process or user environment); refusing to guess the box" }
 $box = $box.Trim().ToLower()
-if (-not $Slots.ContainsKey($box)) { Fail "box '$box' has no slot in the table (known: $($Slots.Keys -join ', '))" }
+# THE SLOTS come from the device register (org/devices/DEVICES.json, NFRA_CTLPLN FWD-2), never from a list here: the n-th box in
+# register order runs at minute 1 + 3n of the 10-minute cycle, capped at :09 (a box past the fourth shares :09). OPAL_DEVICE_REGISTER
+# points at another register file (fixtures and proofs only), as lib/devices.py reads it.
+$regFile = $env:OPAL_DEVICE_REGISTER
+if (-not $regFile) { $regFile = Join-Path $root 'org\devices\DEVICES.json' }
+try { $devs = @((Get-Content -Raw -Encoding UTF8 $regFile | ConvertFrom-Json).devices) } catch { Fail "device register unreadable at ${regFile}: $($_.Exception.Message)" }
+if ($devs.Count -eq 0) { Fail "device register at $regFile lists no devices" }
+$Slots = [ordered]@{}
+for ($n = 0; $n -lt $devs.Count; $n++) { $Slots[[string]$devs[$n].name] = [Math]::Min(1 + 3 * $n, 9) }
+if (-not $Slots.Contains($box)) { Fail "box '$box' has no slot in the table (known: $($Slots.Keys -join ', '))" }
 $minute = $Slots[$box]
 $log = Join-Path ($common -replace '/', '\') 'open-calls-scan-task.log'
 
