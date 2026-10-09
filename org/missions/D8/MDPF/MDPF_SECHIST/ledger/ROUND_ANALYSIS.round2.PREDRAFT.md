@@ -44,3 +44,15 @@ Every Bloomberg draw in any cell goes through MDPF_DEMQUE's queue (law 4d77a9c3e
   - Round 3 then carries that cell only.
 
 Either FAIL cause: FWD-3..9 keep waiting, because each round enriches only once the thread runs (spine v3.16-3.18).
+
+## DRAFT AMENDMENT 1 (~04:2xZ) -- on the CRO's substrate note (`4.0.0_SA_CRO~DELL1` msg 1673, @47baa5efca, section 5)
+
+- **FWD-9 takes route 2a.** C-MMF's ratified text stands, and the pull gains the field. FWD-5 and FWD-9 stay two cells. Route 2b would
+  change ratified text for one fewer cell, which is not worth reopening a signed half.
+- **FWD-6 (PASS item 3) is cut as a read-only census first.** It records which writer mints `NAME::` keys, the population per writer
+  (5,673 today) and whether any hop carries such a key to the pull label or the join. Whether `NAME::` is a canonical key form is an
+  MDPF_SECCLASS ruling this seat makes on that census. FWD-6's build cell follows that ruling and is not cut before it.
+- **FWD-2's Cottonwood id join** (read-only, not under card A's hold) may be cut as one read cell in PASS item 2. Card A's Bloomberg leg
+  stays held for Andrew.
+- **Casing (`2.0.0_SA_COO~H1` msg 1635):** a legacy form token such as "LTD" is clean for FWD-1. Casing across screens goes with FWD-8
+  and MDPF_SECCLASS FWD-5, as above.

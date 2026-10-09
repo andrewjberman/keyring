@@ -1879,3 +1879,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "MEASURED this session at the trunk: the arm A commit (one root, placement, then HEAD run for the ratchet) takes 12.8 s with the switch present and 15.0 s with it absent, against about 2 s without the step; one root run is 3.5 to 4.5 s. Many roots are not measured: the gate places at most PLACE_ROOT_CAP = 8 roots per commit, prints a NAMING PLACE-NOTICE naming the rest, and does not refuse for them. The cap is the builder's choice (the design states none). A new .tf file that is in a diff but not on disk is not seen by the scope, so a hand-built diff cannot add one; in a real commit the file is on disk and in the index. The design's 'hole=0 over 13 mapped roots' no longer holds (ALL-ROOTS at this trunk: mapped=63, hole=287), so the exercise prints each arm's own head and post HOLE counts instead."
 }
 ```
+
+## LGIC_BLANKFIX-D1-S1 -- round-close-check grades 0 of 5 round-8 orders because their status carries a suffix; MAY-CLOSE is vacuous
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T04:18:02Z",
+  "one_line": "round-close-check grades 0 of 5 round-8 orders because their status carries a suffix; MAY-CLOSE is vacuous",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project LGIC_BLANKFIX --round 8 at origin/CLOUD 2b788e3b6b: 'ORDERS ... 5 order(s), 0 complete, 5 not complete and outside the verdict' ... 'graded=0 ... verdict=MAY-CLOSE'",
+      "all five TO-BF-w-* order files read '<status>complete -- proof-of-spec VALID (rc=0)</status>'; .tools/round-close-check.py:275 tests o['status'] == 'complete' exactly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "canonical-drive obligation 3: verdict=REFUSED means the round is not finished, so the check grades the round's complete orders and their proofs.",
+  "world_is": "An order whose status is 'complete -- <note>' counts as neither complete nor terminal, so its proof is never read and the verdict passes on zero graded orders. Round 8 is genuinely complete (handoff 85ba7c79b2, each proof re-run by the issuer); the defect is in the instrument, whose owner is not this seat."
+}
+```
