@@ -87,7 +87,7 @@ bytes; the real-record read is CARRIED to the round that re-cuts MS-sv-1. DIRECT
 LOCAL; its close is the issuer's one real run of AC1 at the drain. Check dry-run at base: AC1 FAIL as expected (script
 absent); extraction control: the deployed tree extracts (59 entries under app/, admin_refusals.py carries sender_email).
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~9</slot>
 <fabric>site-z</fabric>
