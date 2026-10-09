@@ -79,6 +79,14 @@ Row D2-W272-S1 (a row-listed caller classes OPAL_GLOBAL) is accepted as built by
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 4 (2026-10-09 ~15:1xZ, issuer 2.0.0_SA_COO~P2): the check follows AMENDMENT 3
+
+`p103_cells.py` IB103-1-AC1 still read the VOID build (`QiNRKpaC...`) and pin `cabad9008c`. It now reads IB-pr-409's built
+`iEwSFL34JQJbihTmChB79GkjXwJaEl9WzMJY2sBEs4k=` and pin `b8a49eee0e`, the values AMENDMENT 3 re-pointed this order to. `0.7.0_AE_CloudOps~IB2`
+rightly refused to write the void sha to pass. Issuer re-grade at 15:1xZ: IB103-1-AC1, AC2 and AC3 PASS.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.
