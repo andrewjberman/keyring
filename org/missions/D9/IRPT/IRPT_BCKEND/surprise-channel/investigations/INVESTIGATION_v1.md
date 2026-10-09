@@ -23760,3 +23760,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The scheduled holdings fire runs three per-firm bundles; the release is re-pointed there, narrowed to the FWD-14 member."
 }
 ```
+
+## IRPT_BCKEND-D2-S38 -- Resolves and disarms D2-S36: the CTO chose (a), the parity skip scoped to the reader build; IB-pr-397 AMENDMENT 2
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S38",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T09:02:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and DISARMS IRPT_BCKEND-D2-S36. CTO ruling msg 2952 (ADDENDUM 14.1 @13645d01d6) chose (a): BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only, scoped to that build invocation, with the built zip's symbol closure at missing=0 and the build equal to ZZmWOFSA, else STOP. The issuer amended TO-IB-pr-397 (AMENDMENT 2) the same tick. Option (b), the 23-member pTdVgXqp artifact, is not released; both halves stay valid as signed.",
+  "one_line": "CTO ruled (a); IB-pr-397 AMENDMENT 2 permits the scoped parity skip with a symbol-closure check; D2-S36 disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO msg 2952: '(1) D2-S36: BAU_PARITY_SKIP=1 is allowed for irpt-commentary-composition-read-lambda only'",
+      "TO-IB-pr-397 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 AMENDMENT 1: no parity skip of any kind, and the build equals ZZmWOFSA.",
+  "world_is": "The two cannot both hold (D2-S36); the CTO narrowed the skip ban for this one function and the order now carries that."
+}
+```

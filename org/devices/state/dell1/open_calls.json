@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T08:56:03Z",
+ "written_at": "2026-10-09T09:20:27Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -1011,6 +1011,37 @@
       "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
       "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
      ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261009T092027Z-2caa",
+   "project": "DSGN_AMGTV1",
+   "subject": "Walk the redesigned Security Analysis page on PROD (portal fa5ba2af, tag portal-v2.1.206), signed in -- FWD-1",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round60.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T09:20:27Z",
+   "kind": "act",
+   "context": "Rounds 53-60 are live on PROD (CI 37905490625 success; Andrew's 23 walk findings of ~05:0xZ addressed in rounds 58-60). FWD-1's DONE WHEN is his own walk on PROD; no seat can sign in as him.",
+   "rec": "Walk AMD and one more name; any finding becomes a round-61/62 cell",
+   "scope": {
+    "measured_at": "2026-10-09T09:20:27Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
     }
    },
    "closed": null
