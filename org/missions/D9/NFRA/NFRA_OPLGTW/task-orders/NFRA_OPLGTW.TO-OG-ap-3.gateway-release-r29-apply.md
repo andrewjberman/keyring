@@ -122,7 +122,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-3.gateway-release-r29-apply.
   as signed. The release md5 list carries no `org/` path, so the shipped bytes cannot change; the worktree stays 0
   porcelain at `91811b648a`. No `HALT_OVERRIDE`. Graded by no gate limb as a modification.
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>APPLY-R29</workstream>
 <slot>~AE</slot>

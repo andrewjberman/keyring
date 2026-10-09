@@ -33,6 +33,8 @@ USAGE:  python .tools/merge-resolve-known.py --base B --ours P1 --theirs P2 --tr
         python .tools/merge-resolve-known.py --extends <rev> <path>
         (exit 0 when the working copy of an APPEND_ONLY <path>, cleaned as git would store it, extends <rev>:<path>
         byte for byte and is longer; 1 otherwise)
+        python .tools/merge-resolve-known.py --append-missing <blob> <path>
+        (append to the working copy of an APPEND_ONLY <path> every line of <blob> it lacks; box-sync's land)
 OUTPUT: per path, "RESOLVED <path> <blob> <how>" (the blob is written to the object store) or "UNRESOLVED <path> <why>".
 EXIT:   0 when every path is RESOLVED; 1 otherwise; 2 on bad usage. Owner 4.0.0_SA_CRO~A.
 """
@@ -47,7 +49,8 @@ import tempfile
 CHANNEL_RE = re.compile(r'(^|/)surprise-channel/(investigations|remediations|adjudications)/[A-Z]+_v\d+\.md$'
                         r'|^org/surprise_channel/(.+/)?[A-Z]+_v\d+\.md$')
 GENERATED_RE = re.compile(r'^org/projects/[^/]+\.json$')
-APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log', 'org/safe-deploy-bypass-audit.log')
+APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log', 'org/safe-deploy-bypass-audit.log',
+               'org/git-author-override-audit.log')
 ROOT = subprocess.run(['git', 'rev-parse', '--show-toplevel'], capture_output=True, text=True).stdout.strip() or '.'
 
 
@@ -341,6 +344,39 @@ def extends(rev, path):
     return work is not None and len(work) > len(head) and work.startswith(head)
 
 
+def append_missing(blob, path):
+    """Append to the WORKING COPY of an append-only log every line of `blob` it does not hold (counted, line endings
+    stripped for comparison, written in the file's own line ending). Used by box-sync's land when a seat's uncommitted
+    appends sit on a log the merge changed (0.0.0_AB_MSTR msg 107952): the land leaves the file's bytes alone and this
+    adds CLOUD's lines. It only ever APPENDS, so a line another process appends meanwhile is never overwritten.
+    Returns the number of lines appended, or None when the blob or the file cannot be read."""
+    rc, raw = git('cat-file', '-p', blob)
+    if rc != 0:
+        return None
+    try:
+        with open(os.path.join(ROOT, path), 'rb') as fh:
+            disk = fh.read().decode('utf-8', errors='surrogateescape')
+    except OSError:
+        return None
+    norm = lambda ln: ln.rstrip('\r\n')  # noqa: E731
+    have = {}
+    for ln in disk.splitlines():
+        have[norm(ln)] = have.get(norm(ln), 0) + 1
+    add = []
+    for ln in raw.decode('utf-8', errors='surrogateescape').splitlines():
+        k = norm(ln)
+        if have.get(k, 0) > 0:
+            have[k] -= 1
+        elif k:
+            add.append(k)
+    if add:
+        eol = '\r\n' if '\r\n' in disk else '\n'
+        lead = eol if disk and not disk.endswith('\n') else ''
+        with open(os.path.join(ROOT, path), 'ab') as fh:
+            fh.write((lead + eol.join(add) + eol).encode('utf-8', errors='surrogateescape'))
+    return len(add)
+
+
 def regenerate(path, tree, ours, theirs):
     try:
         o, t = json.loads(show(ours, path) or 'null'), json.loads(show(theirs, path) or 'null')
@@ -382,6 +418,13 @@ def regenerate(path, tree, ours, theirs):
 
 
 def main(argv):
+    if argv[:1] == ['--append-missing']:
+        if len(argv) != 3 or argv[2] not in APPEND_ONLY:
+            print(__doc__)
+            return 2
+        n = append_missing(argv[1], argv[2])
+        print('APPENDED %s %s line(s)' % (argv[2], n) if n is not None else 'UNREAD %s' % argv[2])
+        return 0 if n is not None else 1
     if argv[:1] == ['--extends']:
         if len(argv) != 3 or argv[2] not in APPEND_ONLY:
             print(__doc__)
