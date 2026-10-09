@@ -1116,3 +1116,60 @@ project's channel. Denominator at this write: **3 rows**, all `~2`'s (`S1`, `S2`
   }
 ]
 ```
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-S25",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-10-09T05:30:00Z",
+    "one_line": "DISARMS NFRA_REPORT-Z-S24 (its ARMED stands in the history; this row is the disarm): the content-less edition is no longer served. On Andrew's word of 2026-09-17 ('id have CRO~N just finish the project end to end') 4.0.0_SA_CRO~N restored format_report as the served body; the issuer read the live function at this row and it matches the CRO~N close record. RP-s-23 and RP-s-24 flipped superseded with pointers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ (disarm of Z-S24 executed by this row)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function-configuration --function-name opal-infrastructure-monitor, read 2026-10-09 ~05:2xZ: CodeSha256 iU6tKUas0Q0SjxzoxlP6IYzRWAIRyPsdP8ee38HzpKg=, LastModified 2026-09-17T14:54:07.000+0000, CodeSize 43125 -- equal to org/critical_paths/change_management/20260917T1420Z_infra-monitor-revert-format-report-plus-resource-glossary.md (CLOSED).",
+        "Commits 67168eba8c and 013f755c74 (4.0.0_SA_CRO~N): format_report restored as primary renderer; edition.py/edition_rows.py unwired.",
+        "Scheduled fires archived after the revert: s3://opal-data-portal-v2/infrastructure/reports/2026-10-05..2026-10-08/13-00-0*.json, one per day (s3api list-objects-v2, 4 of 4 days listed). This shows the function RUNS; it does not show an email reached Andrew's inbox (Z-S24's separate undiagnosed item stays unanswered here)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The hazard Z-S24 named (a content-less edition reaching Andrew) no longer exists in the world: format_report is the served body since 2026-09-17T14:54:07Z on Andrew's word, read live 2026-10-09. Nothing remains to remediate in this lane.",
+    "spec_asserts": "Z-S24 asserts the served report carries (state, delta) rows and loses the old report's content.",
+    "world_is": "The served report is format_report plus a RESOURCE REFERENCE table; the edition is not served.",
+    "notes": "Whether FWD-13's structure bar was ever compatible with the old content stays with 1.0.0_SA_CTO~Z at L2/L4; it is a spec question, not an armed hazard."
+  }
+]
+```
+
+```json
+[
+  {
+    "id": "NFRA_REPORT-Z-S26",
+    "project": "NFRA_REPORT",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~ZZ",
+    "surfaced_at": "2026-10-09T05:30:00Z",
+    "one_line": "round-close-check.py (fallback landed 10afe6b697 today) takes a TO's id as the FILE STEM when the order carries no <to_id> tag, while proof instances carry the HEADING id (e.g. NFRA_REPORT.TO-RP-s-21). Every legacy order without <to_id> reads PROOF-BAD against a proof that proof-of-spec-check accepted VALID.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~ZZ for this project (done: <to_id> tags added to RP-s-12/21/22); the checker's fallback rule belongs to the NFRA_CTLPLN issuer",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/round-close-check.py --project NFRA_REPORT --round 4 before the tags: proof_ok=0 proof_bad=3, verdict=REFUSED, each reason 'names to_id NFRA_REPORT.TO-RP-s-N, not NFRA_REPORT.TO-RP-s-N.<slug>'.",
+        "Same command after adding <to_id> to the three completed orders' record faces: proof_ok=3 proof_bad=0, verdict=MAY-CLOSE.",
+        ".tools/round-close-check.py:159 id = tag(text,'to_id') or the file stem."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "round-close-check.py asserts a proof instance's to_id equals the order's id.",
+    "world_is": "Orders cut before the checker existed carry their id only in the H1 heading, which matches the proof; the stem fallback does not.",
+    "notes": "Other projects' legacy orders likely read the same REFUSED; not censused here."
+  }
+]
+```
