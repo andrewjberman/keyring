@@ -1033,6 +1033,25 @@ def _changelog_name_position(post_lines, line_no, value):
     return False
 
 
+_SOURCE_MAP_FUNCS = []
+
+
+def _source_map_functions():
+    """The `functions` keys of lambda-source-map.json at HEAD (the deployed functions it already records); empty when unreadable,
+    so nothing extra passes. 1.0.0_SA_CTO ruling on 0.0.0_AB_MSTR msg 107746 (4.0.0_SA_CRO's proposal,
+    AMGT_RESAPP_D1S6_ANSWER_20261009.md): a changelog that names such a function cites it and mints nothing."""
+    if not _SOURCE_MAP_FUNCS:
+        names = set()
+        try:
+            p = subprocess.run(["git", "show", "HEAD:" + SOURCE_MAP_PATH], cwd=REPO, capture_output=True)
+            if p.returncode == 0:
+                names = set((json.loads(p.stdout.decode("utf-8")).get("functions") or {}).keys())
+        except Exception:  # noqa: BLE001 -- unreadable = no extra citations
+            names = set()
+        _SOURCE_MAP_FUNCS.append(names)
+    return _SOURCE_MAP_FUNCS[0]
+
+
 def _changelog_name_citations(mod, path, lits, post_text):
     """3.0.0_SA_CVO ruling (msg 104898, appended to CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P
     104894 / row W115-S1): in infra/aws/terraform/*/CHANGELOG.json (record-terraform-deploy.sh's generated record), a literal in
@@ -1041,10 +1060,16 @@ def _changelog_name_citations(mod, path, lits, post_text):
     if not _CHANGELOG_RE.match(path or ""):
         return
     post_lines = (post_text or "").split("\n")
+    root_folder = path.split("/")[3]
     for lit in lits:
-        if not lit.permitted and _changelog_name_position(post_lines, lit.line, lit.value) \
-                and _builder_reproduces(mod, lit.value):
-            lit.permitted = True
+        if lit.permitted:
+            continue
+        if _changelog_name_position(post_lines, lit.line, lit.value) \
+                and (_builder_reproduces(mod, lit.value) or lit.value in _source_map_functions()):
+            lit.permitted = True  # the builder's name, or (1.0.0_SA_CTO, msg 107746) a function the source map already holds
+        elif lit.value == root_folder and 1 <= lit.line <= len(post_lines) and re.match(
+                r'^\s*"_pipeline"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(lit.value)), post_lines[lit.line - 1]):
+            lit.permitted = True  # (1.0.0_SA_CTO, msg 107746) `_pipeline` naming the changelog's own root folder cites it
 
 
 def _source_map_name_citations(mod, path, added, lits, post_text=""):
