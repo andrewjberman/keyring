@@ -11491,3 +11491,55 @@ name the one known failure instead of silently inheriting it.
   "notes": "Resolves NFRA_OPLGTW-Z-W49-S5. S1 and S4 go to the E2 release cell."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W50-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~50",
+  "surfaced_at": "2026-10-09T16:58:06Z",
+  "one_line": "The six held 08403355 RPS files carry no D1 positions section: their only table is the D2 balance table (equal to the RPS section-2 pin), mis-numbered section 1 by file order, so extending the section-1 pin cannot convert them; OG-pn-1 routes by data tag instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~50/pn1_measure.json -- 6 of 6 held files: sections [(1,'D2',34 cols)], extra set vs RPS s1 pin = 28 identical columns, columns == RPS s2 pin in order, D1 present False; 46 core s1 columns missing from the header even if the 28 were added.",
+      "RUN: S3 get_object of schwab/08403355/bronze/rps/{20251212,20251215..20251219}/ then crs_reader.scan_crs and schwab_schemas.SPECS, 2026-10-09 ~16:0xZ; old converter on the same bytes raises SchemaDriftError (28 columns, feed=RPS s1), new converter converts all six offline.",
+      "CODE: data/assets/scripts/silver/crs_reader.py scan_crs numbers sections by file order (index=si+1); schwab_conversion.py graded smeta.index against SPECS."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-pn-1 step 2 and the decomposition addendum R3-T.38: the six held files carry 28 section-1 columns the pin does not know, and extending the RPS section-1 pin explicitly with them lets the files convert.",
+  "world_is": "The 28 columns are the section-2 pin's own columns; the files hold a D2-only table. A literal section-1 extension would still raise on 46 missing core columns, and loosening that would write balances into fact_rps/dim_position. The worker built a table-tag routing (pin_section) plus a pinned 0-row section-1 landing instead, kept the guard, and put both choices to the never-widen halves in NEVER_WIDEN_ASK_OG-pn-1.md section 7.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Both halves decide section 7 before any deploy. Alternative without the 0-row landing is a one-line change."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W50-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~50",
+  "surfaced_at": "2026-10-09T16:58:06Z",
+  "one_line": "AC1's <expect> regex cannot match pn1.AC1.sh's literal output: the script lists the four regression suites with ls (alphabetical, test_conversion_manifest first) while the regex requires test_conversion_manifest last.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/pn1.AC1.sh at worktree HEAD+changes: 'pin tests: pytest rc=0; named tests passed 3 of 3' / 'test_conversion_manifest.py: pytest rc=0; 37 passed' / 'test_schwab_conversion.py: ... 36 passed' / 'test_schwab_projections.py: ... 10 passed' / 'test_schwab_schemas.py: ... 20 passed' / 'regression suites run: 4' / 'RESULT: PASS' / 'exit=0'.",
+      "REGEX: python re.search of the order's <expect> over that output returns False (the order required test_schwab_conversion, projections, schemas, then test_conversion_manifest in that sequence).",
+      "SCRIPT: pn1.AC1.sh line 'files=$(cd \"$T\" && ls test_schwab_conversion.py ... test_conversion_manifest.py ...)' -- ls sorts its arguments."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The criterion's invocation produces output matching its <expect> when every suite passes (issuer note: base suites 36/10/20/37).",
+  "world_is": "Every line the criterion asks for is present and passing (rc=0 x5, 3 of 3, 4 suites, RESULT: PASS, exit=0) but in a different order, so the mechanical regex grades FAIL. The script is outside this worker's paths and was not edited.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Fix is the issuer's: reorder the expect to the alphabetical order, or have the script iterate in the stated order. Worker output recorded verbatim in the report."
+}
+```
