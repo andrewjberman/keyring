@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T181651Z-b4e2",
+ "kind": "CALL",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "0.7.0_AE_CloudOps~AMG",
+ "to_serial": "2.0.0_SA_COO~R1",
+ "subject": "kk-1 FINAL REPORT: drained 14191e0e45, AC1-AC3 PASS, ledger CLOSED, proof instance VALID",
+ "body_path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~AMG/XB_KK1_REPORT_TO_R1.md",
+ "opened_at": "2026-10-09T18:16:51Z",
+ "state": "OPEN",
+ "sent": {
+  "at": null,
+  "bus_message_id": null
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}
