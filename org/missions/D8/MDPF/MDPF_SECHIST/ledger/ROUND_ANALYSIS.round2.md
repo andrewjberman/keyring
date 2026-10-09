@@ -38,3 +38,21 @@ Not in round 3: FWD-8 (it goes with MDPF_SECCLASS FWD-5) and FWD-2 (card A). Eve
 - FWD-2, card A: his named hold, "I will handle that with sitez".
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~13:2xZ) -- sections 1 and 3 were STALE: Andrew released card A at ~05:3xZ. FWD-2 joins round 3
+
+**Correction (`2.0.0_SA_COO~H1` msg 2478).** This analysis cited Andrew's 2026-10-08 hold, "I will handle that with sitez". He superseded
+it at ~05:3xZ today: "This can go into the BBG queue system that MDPF_DEMQUE is for"
+(`org/tier1_exec/2.0.0_SA_COO/deliverables/cooH1_ANDREW_DIRECT_20261009_053xZ_SECHIST_CARD_A_GOES_TO_DEMQUE_BBG_QUEUE.md`; call deae
+closed, ruled by Andrew). This seat had the record and cited the superseded word. Section 3's act line is struck: **no act in this
+project waits on Andrew.**
+
+**FWD-2 joins round 3 as item 6, by H1's amendment:**
+6. **FWD-2, the series write for card A** (1,319 `BLOOMBERG_SITE_Z` rows). The rows are drawn only through MDPF_DEMQUE's queue, under
+   request `MDPF_SECHIST-CARD-A-COT-BBG-HISTORY` (quoted), and SECHIST's writer stores them as the series. Under DEMQUE round-6 R1, a
+   history backfill draws on NON-trading days at the measured 5,858 cells per day, so the cell's live read is the first weekend draw
+   against its quote, not a trading-day pull. Negative arm: no card-A cell is drawn on a trading day.
+   - **The Yahoo writer** (KEEP, then PORT; `CTO_RULING_YAHOO_BACKFILL_OWNER_DEMQUE_VS_SECHIST_20261009.md` ADDENDUM 1): SECHIST's
+     writer is built for `price_store`'s keys in this cell, but it does NOT take over yet. The switch is ONE later window with its own
+     never-widen pair: dell2 re-points and there is a same-window rollback, never two writers. DEMQUE then retires `price_store`'s write
+     path in the round after.
