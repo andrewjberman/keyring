@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md</decomp_doc>
 <owned_cells>HVST-bs-3</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~ZW</issued_to>
+<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~W1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -45,14 +45,14 @@ Both halves of this act's pair are signed. Start once your tree carries c1be67f5
    unless the plan printed another. Record per publisher the cycle id, `started_at`, `ended_at`, `asked`, `new`,
    `already_held` and `failed`, or the record's `stopped` reason (a refused sign-in is a recorded result, not a failure of
    this order).
-5. Write the records in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/`.
+5. Write the records in `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/round75/`.
 6. Before you close: run `powershell -NoProfile -ExecutionPolicy Bypass -File .tools/kill-maint.ps1` (DRY-RUN by
    default; never pass `-Execute`). It must list the runner's python process as `EXEMPT`. Save it as `bs3_gc_dryrun.out`.
 7. Anything odd: append one row to the surprise channel and keep working. Your next row id is `AMGT_HARVST-Z-S<next free Z
    number>`, minted over every channel document of the project.
 
 <paths>
-org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/
+org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/round75/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -61,14 +61,14 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.Arguments"</invocation><expect>--publishers bbg wsj barrons</expect></criterion>
   <criterion id="AC2" cell_refs="HVST-bs-3"><invocation>powershell -NoProfile -Command "(Get-ScheduledTask -TaskName 'Opal Data Harvest - Continuous Cycle').Actions.WorkingDirectory"</invocation><expect>wk-harvest-runner-pin-c1be67f53c</expect></criterion>
-  <criterion id="AC4" cell_refs="HVST-bs-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/bs3_gc_dryrun.out</invocation><expect>EXEMPT PID</expect></criterion>
+  <criterion id="AC4" cell_refs="HVST-bs-3"><invocation>cat org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/round75/bs3_gc_dryrun.out</invocation><expect>EXEMPT PID</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-bs-3" judgment="true"/>
 </proof_of_spec>
 
 - AC3 is the per-publisher acceptance in step 4. It is graded by the CVO from your records, never self-graded.
 - The checker reads `<expect>` as a regular expression.
 - INSTANCE NAMED EXACTLY
-  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/AMGT_HARVST.TO-HVST-bs-3.the-runner-activated-on-bbg-wsj-barrons.proof_of_spec.json`
+  `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~Z/round75/AMGT_HARVST.TO-HVST-bs-3.the-runner-activated-on-bbg-wsj-barrons.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-bs-3.the-runner-activated-on-bbg-wsj-barrons`.
 - Do not edit this order file: the issuer flips its status.
 
@@ -86,13 +86,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   ordered to site Z's producer seat.
 - **Held** until HVST-bs-2's merge (its own never-widen pair) and the issuer's pin message. Issued now because the L6 gate
   admits one issuance per round, as HVST-bk-3 was.
-- `- **AMENDMENT (2026-10-09 ~03:5xZ, issuer): re-addressed from `0.7.0_AE_CloudOps~Z` to site Z's AMGT_HARVST lane
-  `0.7.0_AE_CloudOps~ZW`** (Codex seat), on Andrew-direct ~03:5xZ via `0.0.0_AB_MSTR~DELL1` msg 1590 ("dell1 runs its own deploys; only
-  site-bound acts go to site Z, on the new per-project lanes"). The act is site-bound (that box's Windows user's sessions and
-  tasks), so it stays at site Z. The deliverables path moves with the lane. This also clears row AMGT_HARVST-D1-S2's seating
-  conflict: the lane holds AMGT_HARVST only.
-
-<risk>` WORLD: the runner asks publisher hosts from the site Z box.
+- `<risk>` WORLD: the runner asks publisher hosts from the site Z box.
 - **AMENDMENT 1 (2026-10-09 ~03:0xZ, issuer):** the pin is c1be67f53c (bs-2 merged, ledger closed @b19aa746cc). Pair:
   COO half `deliverables/2.0.0_SA_COO_W1/round75/NEVER_WIDEN_HALF_COO_BS3_RUNNER_ACTIVATION.md` @d0493b37a5; CTO half
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_HARVST_BS3_RUNNER_ACTIVATION_20261009.md` @37aefc2855
