@@ -23102,3 +23102,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict. SAP is served now (AC1 YES). The decision to keep it or roll it back, and whether T3 should count numeric sentences, is the issuer's. SAP's pre-act VersionIds (analysis rmP1ek8s2AVOO.IMhvmk_3Snqx6vI3zF, drafting qb9GzRTF0E9_nend.L7Sc_W0d_4b5BTR) are in PRE_ACT_RECORD.md for a rollback by re-write."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W338-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~338",
+  "surfaced_at": "2026-10-09T12:45:06Z",
+  "one_line": "AMGT-jj-1 AC1 S3 (NU keeps at least its stored 38 sentences) cannot be met by the join repair: 11 fresh NU pass-1 replies carried 0 paraphrase-then-echo pairs, so the offline draft serves 22 of 40 (best run) and 11 of 40 (paraphrase-only replies), not 38.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The cut (GROUP_SENTENCE_NOTES.md) says NU's glue is a model reply shape (uncited paraphrase block then cited verbatim echo) and the offline re-run on the current stored source 'keeps at least as many sentences as its current stored draft' (38), S1-S3 PASS.",
+  "world_is": "Eleven pass-1 runs on NU's current silver source (accession 000129281426002166, excerpt_sha256 898afb6e...) returned 0 pairs: ten replies are cited-paraphrase blocks ('N. ' uncited, then the model's own sentence cited) and one (cache4, 195 blocks) splits each item mid-sentence around a cited quote. The stored 38 were all served on a verbatim span because each item carried the filing's sentence (the echo); a paraphrase-only item has no span under C-VERBATIM-GATE and is held. Full run on the mid-sentence reply: drafted 40, served 22, held_no_span 17, refused 1; on a paraphrase-only reply: served 11, held_no_span 27. With both repairs in place S1 0 of 22 restated and S2 0 of 22 glued PASS, S3 FAIL (22 < 38), R85 SENTENCES AC1: NO, exit 1. The repaired joiner and dedupe reproduce the old join byte-for-byte on all 11 real replies (no glue present), and the pair case is proved by planted blocks in tests/test_machine_sentences_served_once.py. Whether the S3 floor is reachable depends on the model re-emitting the echo, which analyze.py's joiner cannot cause; a lever would be the pass-1 prompt (out of this order's edit surface) or a lower S3 floor.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=worktree python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round85_prep/checks/r85_sentences.py --crit AC1 --where file --keys NU_US_Equity --draft org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~338/offline/draft.json (S1 PASS, S2 PASS, S3 FAIL 22 vs 38, exit=1)",
+      "lib/research/filings/drafting_build.py held_no_span / C-VERBATIM-GATE (denominators in the offline draft: served 22, held_no_span 17, refused 1 of 40)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict. AC1 is reported FAIL by output, not waived. The offline draft written is the 22-served run (pass 1 cache4 shape)."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W338-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~338",
+  "surfaced_at": "2026-10-09T12:45:06Z",
+  "one_line": "The order says join the model's text blocks with one space (never ''); the joiner adds the space only where a block ends a sentence, because real NU replies split items mid-sentence around a cited quote and a blanket space would corrupt them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "Order s.1 item 1: 'Join the model's text blocks with one space (never \"\")'; test 3 'a block that genuinely ends mid-sentence'.",
+  "world_is": "In the 195-block NU reply the blocks are 'The company expects ' | '2026 \"to be an inflection year ...\"' | '.\n2. Management says it ' ... : a space inserted between a quote block and the closing '.' would read 'platform .' (and between 'US$' and '5' would split a figure). _join_blocks adds ONE space only when the left side ends a sentence (terminator, optional closing quote/bracket, optional [Pnnnn] markers) and the right side starts with neither whitespace nor continuing punctuation; elsewhere it joins with nothing. Pass-2's JSON text join (analyze.py pass_2) is unchanged. Items 1-3 of the order (planted tests, offline run) are served by this rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/filings/analyze.py _join_blocks and lib/research/filings/tests/test_machine_sentences_served_once.py TheBlockThatEndsMidSentence",
+      "NU pass-1 cache4 blocks 0-13 (.scratch, local)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Form only; the issuer may widen to a blanket space if mid-sentence blocks are judged out of scope."
+}
+```
