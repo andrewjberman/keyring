@@ -74,3 +74,49 @@ ask on the TO-29 report rather than written out of lane.
 
 Event-driven hold. Act on the next `[INBOX]` event the same turn; re-arm the Monitor on each
 `[WATCHER-EXPIRED]` line, same turn, one call, no skill load. Zero crons armed.
+
+---
+
+## NFRA_CTLPLN.TO-APPLY-30 -- the served-read window, both pairs
+
+**archetype:** DEPLOY
+
+Four legs on one secret's resource policy, two NEVER-2 entries, both CLOSED.
+
+| pair | ADD put | REMOVE put | open | closed by |
+|---|---|---|---|---|
+| 1 (original) | 13:37:36Z | 13:45:41Z | 8 min 5 s | G2's REMOVE NOW |
+| 2 (AMENDMENT 1 retry, REQ-5e4149d2) | 14:19:50Z | 14:35:09Z | 15 min 19 s | G2's R DONE 14:26:19Z |
+
+Pair 1 produced no read -- G2's own window had run 13:05:57Z-13:35:57Z and closed before the ADD landed.
+The issuer dispositioned that by reopening the order for one retry, which is pair 2, where G2's in-memory
+read landed at ~14:26:12Z inside the window. No surprise row was filed for a condition the issuer had
+already dispositioned in writing.
+
+Evidence: `.../deliverables/NFRA_CTLPLN_TO-APPLY-30_REPORT.md`, commits `d7e3566b1d` (pair 1) and
+`045091bab0` (pair 2), both on origin. One proof instance covers both pairs, VALID rc=0.
+
+**Two method notes worth keeping.**
+
+1. **Every start read and read-back was graded in BOTH directions** -- set-equal to the document it should
+   match, NOT set-equal to the other signed document. Eight such controls across the four legs. A
+   comparator that agreed with everything would print SET-EQUAL on both sides of a pair, so the
+   opposite-direction read is what makes each agreement mean something. The same shape applies to the
+   simulations: the walker `allowed` arm is the isolated positive control beside the two denies, and
+   `explicitDeny` rather than `implicitDeny` distinguishes the Deny statement firing from a merely absent
+   grant.
+2. **The clock was carried independently of the message.** An ADD+27m background alarm was armed at the
+   moment of each ADD, so each hard close (14:07:36Z, 14:49:50Z) would have been met with no GO and no
+   inbox event. Both were stopped unused because G2 called first -- which is the outcome you want from a
+   backstop, not evidence it was unnecessary. Pair 2's start read doubles as the live confirmation that
+   pair 1's REMOVE had landed.
+
+**Delivery note:** pair 2's REMOVE-NOW message did not appear in either broker probe -- `check_inbox` read
+empty right after the `[INBOX]` event fired, because the watcher had already moved the file. Read it from
+the lane's own `read/` dir at the exact filename the event named, per `org/XXX.md` step B. An agent that
+treated the empty probe as "no mail" would have sat on an open window.
+
+## Session total
+
+Three orders held, three terminal, four ledger entries opened and closed, zero sentinels left. Zero
+`GetSecretValue` calls by this seat across every leg. Scratch deleted at each close.

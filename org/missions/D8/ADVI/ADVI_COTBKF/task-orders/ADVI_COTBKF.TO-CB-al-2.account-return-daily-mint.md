@@ -63,6 +63,16 @@ That cell is `2.0.0_SA_COO~D2`'s. This order waits until it drains. Then the iss
 `return_basis=TWR` on measured rows, and the Cottonwood sources entry carries the method fields. A rebuild and a fresh manifest
 follow before any pair is asked.
 
+**AMENDMENT 3 (issuer, 2026-10-09 ~14:5xZ) -- still HELD, on a second IRPT_DASHBD producer cell.** CTO msg 3500 / IRPT_DASHBD
+ADDENDUM 13.2 @304cb81ef6: CB-al-2 is NOT minted as built.
+- The producer's `build_manifest()` writes `method_version: 2` (the custodian-equity row) into every manifest. That is row W70-S1.
+- `2.0.0_SA_COO~D2` cuts one LOCAL producer cell in which `build_manifest()` takes `method_version` from the firm's sources entry:
+  - a positions-based entry gets its own method row, with its rule-24 record;
+  - a firm with nothing declared writes `absent`, never 2;
+  - the custodian firms keep 2 explicitly.
+- When that cell drains, the issuer rebuilds through it from round 43's entry (adding the entry's method row reference if the cell
+  requires one) and writes the pair on the rebuilt manifests. Then this order runs under that pair.
+
 ### ACCEPTANCE
 
 <criterion id="CB38al2-AC1" cell_refs="CB-al-2"><invocation>python data/assets/scripts/silver/commonwealth_account_return_daily.py --verify-served --out .scratch/advi_cotbkf/ard_cottonwood_verify</invocation><expect>ARD-COTTONWOOD-VERIFY days=</expect></criterion>
