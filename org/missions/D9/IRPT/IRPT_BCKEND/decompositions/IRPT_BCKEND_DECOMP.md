@@ -2346,3 +2346,17 @@ base; the suite criteria PASS as controls.
 
 fanout: 3 of 3 chains, cap 8, reason: three independent code-only cells. Assignees: 0.9.0_WK_IRPT_BCKEND~195, ~196, ~197. H1 is cut after
 IB-pr-383 closes.
+
+## 89. ROUND 96, WORKSTREAM ~P (2026-10-09 ~04:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO msgs 2363 and 2368)
+
+IB-pr-384 (refuse-drop) and IB-pr-385 (svc-custody-statement) are graded PASS and drained (@1895f16a0b, @dd02e66933). IB-pr-386
+(svc-commentary surface) is graded 3/3. The CTO added one code-only cell on `_authz/served.py`, which is the same file as IB-pr-385, so it
+is cut only now that 385 is drained (one writer per file). Corrected by msg 2368: the narrowing keys to the PROFILE row, found by the
+verified identity, because the token carries no allowedFirmIds claim. A non-list value is refused. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r96/p96_cells.py`: AC1 FAILs at base and AC2 PASSes (the control).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-387` | profile-row allowedFirmIds narrowing extends to internal callers; non-list refused; ALL never admits | FWD-8 | WORLD | IB-pr-385 (drained, same file) | P96-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one file, one writer. Assignee: 0.9.0_WK_IRPT_BCKEND~198. Release after 383, under its own pair.
