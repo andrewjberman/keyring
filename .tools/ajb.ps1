@@ -342,8 +342,30 @@ function ajb {
             Write-Host "[ajb] F8: BG identity bound at launch -- session $bgSid -> 0.0.3_BG_BBGTerminal (launch-path marker + serial file written)" -ForegroundColor Cyan
             # opal-gateway-bbg is this seat's only (Andrew-direct 2026-10-08 ~17:4xZ at 0.0.0_AB_MSTR~Z, row
             # NFRA_OPLGTW-Z-S67): no longer user-level, so no other session loads the Bloomberg account's sign-in.
+            # STRICT set (1.0.0_SA_CTO~Z ruling @e46928ecc8, msg 32189, on Andrew's ~00:4xZ "adjudicated by the CTO
+            # internally", record @6938d82aad): the seat loads EXACTLY opal-gateway-bbg, bloomberg, opal-agent-comms,
+            # so it never holds Andrew's opalgateway identity. Assembled at launch into a temp file: bbg from
+            # .tools/bg-gateway.mcp.json, opal-agent-comms from the repo .mcp.json, bloomberg from ~/.claude.json
+            # (never typed into the repo). A missing piece falls back to the additive launch and says so.
             $bgMcp = Join-Path $ws '.tools\bg-gateway.mcp.json'
-            if (Test-Path -LiteralPath $bgMcp) { $claudeArgs += @('--mcp-config', $bgMcp) }
+            $bgSet = [ordered]@{}
+            try {
+                $bbg = (Get-Content -LiteralPath $bgMcp -Raw | ConvertFrom-Json).mcpServers.'opal-gateway-bbg'
+                $comms = (Get-Content -LiteralPath (Join-Path $ws '.mcp.json') -Raw | ConvertFrom-Json).mcpServers.'opal-agent-comms'
+                $blp = (Get-Content -LiteralPath (Join-Path $env:USERPROFILE '.claude.json') -Raw | ConvertFrom-Json).mcpServers.bloomberg
+                if ($bbg) { $bgSet['opal-gateway-bbg'] = $bbg }
+                if ($comms) { $bgSet['opal-agent-comms'] = $comms }
+                if ($blp) { $bgSet['bloomberg'] = $blp }
+            } catch { Write-Host "[ajb] WARN: BG strict MCP set could not be read: $($_.Exception.Message)" -ForegroundColor Yellow }
+            if ($bgSet.Count -eq 3) {
+                $bgStrict = Join-Path $env:TEMP "opal-bg-mcp-$bgSid.json"
+                [System.IO.File]::WriteAllText($bgStrict, (@{ mcpServers = $bgSet } | ConvertTo-Json -Depth 10))
+                $claudeArgs += @('--strict-mcp-config', '--mcp-config', $bgStrict)
+                Write-Host "[ajb] BG MCP: STRICT, exactly $($bgSet.Keys -join ', ') ($bgStrict)" -ForegroundColor Cyan
+            } elseif (Test-Path -LiteralPath $bgMcp) {
+                $claudeArgs += @('--mcp-config', $bgMcp)
+                Write-Host "[ajb] WARN: BG strict set has $($bgSet.Count) of 3 ($($bgSet.Keys -join ', ')) -- launching ADDITIVE (opalgateway also loads)" -ForegroundColor Yellow
+            }
             else { Write-Host "[ajb] WARN: $bgMcp is missing -- the BG seat launches WITHOUT opal-gateway-bbg" -ForegroundColor Yellow }
         }
         # Headless = no user present to answer a fork -> hard-remove the
