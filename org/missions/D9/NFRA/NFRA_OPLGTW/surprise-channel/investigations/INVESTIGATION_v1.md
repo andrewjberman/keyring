@@ -10547,3 +10547,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "If the CTO half is still unsigned, its text can name the builder name; if signed, the issuer may state in the apply order that the name in the half is superseded by A3."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S71",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T04:40:00Z",
+  "one_line": "OG-ap-2 AC2 cannot pass as written: it filters filter-log-events by the RequestId, and in Lambda only START, END and REPORT carry the RequestId -- the function's own print() lines never do -- so the 'SKIP:' line it requires is excluded by its own filter. The deployed behaviour is correct and proven two other ways.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN ap2.sh AC2 -> \"request 8f47201f-0cb4-4bed-892e-891404ddee22: log events 3; SKIP with 'is not the production T-1' False; 'dispatched: doc=' False / RESULT: FAIL\".",
+      "FILE r32/checks/ap2_check.py:64-72 builds the query as logs filter-log-events --log-group-name /aws/lambda/advi-49f-gold-dispatch --filter-pattern '\"<request_id>\"' --start-time <invoked_epoch_ms-60000>, then requires both 'SKIP:' and 'is not the production T-1' in the concatenated messages.",
+      "RUN that EXACT query, reproduced by hand: 3 events, and they are precisely 'START RequestId: ...', 'END RequestId: ...' and 'REPORT RequestId: ...'. None of the three can contain SKIP:.",
+      "RUN POSITIVE CONTROL, same log group and same --start-time with the RequestId filter REMOVED: 7 events, including 'SKIP: accelerator marker date=2026-09-15 is not the production T-1 2026-10-08; historical record, not dispatched'; 'SKIP:' present True, 'is not the production T-1' present True, 'dispatched: doc=' present False.",
+      "RUN the invocation's own --log-type Tail LogResult, decoded at invoke time, carried the same SKIP line for the same RequestId -- an instrument independent of CloudWatch Logs entirely.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/ap2_arm1.json records request_id, invoked_epoch_ms 1791519347767 and the response, whose skip_reason is that same sentence."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ap-2 section 4 AC2 expects \"SKIP with 'is not the production T-1' True; 'dispatched: doc=' False ... RESULT: PASS ... exit=0\", and AC2's prose reads 'a historical record SKIPs on the deployed function, by its own log'.",
+  "world_is": "The world meets AC2's INTENT: the historical record SKIPped on the deployed function, its own log says so, and no dispatch line exists. What fails is the check's retrieval, not the deploy: a RequestId filter-pattern over a Lambda log group returns only the three runtime-emitted lines, so the application's print() output is invisible to it by construction. The criterion is therefore REFUSED AS WRITTEN with its measurement, per the order's BOUNDS, rather than marked PASS on evidence the check did not produce. Note also that ap2.sh AC2 prints exit=0 even on RESULT: FAIL, so the RESULT token is the verdict and the exit code does not discriminate.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Two one-line repairs, either of which makes AC2 gradeable, both the issuer's to choose since r32/checks/ is not in this order's <paths>: (a) drop the --filter-pattern and keep the time window, which is what the positive control did, optionally bounding it with --end-time; or (b) resolve the invocation's log STREAM first (the RequestId appears in the stream's START line) and pass --log-stream-names, which keeps the per-invocation precision the filter was reaching for. ID FORM: continuing the Z-S series per the ratified note in OG-ap-1 amendment A1; the order's Z-AE-S<k> cannot match SURPRISE_ID_RE."
+}
+```
