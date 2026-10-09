@@ -58,6 +58,29 @@ message, not where the DRAFT lives).**
 - **`AR-g-12` (~G2) reads `commentary_ref` from the record and the bytes through the repository.** Its I5 call carries the same id.
 - Gate limb that graded this amendment: none (a decomposition document, not a task order).
 
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ, on row `IRPT_ANLREQ-D2-W1-S1`): the repair goes INTO `AR-y-11`
+(TO AMENDMENT 1). A re-cut modifies the round's issuance and adds no order (`to-pipeline-gate`, one issuer per round).
+- **The defect:** `AR-y-11` stores `ticket_id` in the accepted browser body. `OwnedAnalysisRequest` embeds that frozen body as
+  `composition`, and `docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json` has `additionalProperties: false`
+  without `ticket_id` (`ops/tests/test_owned_requests.py:252-260`). So a ticketed request's composition read is off-contract.
+- **The repair:** the schema gains ONE optional `ticket_id` with the same pattern as `submission.py`. The schema stays at v1,
+  because the change is additive and optional.
+- **The re-graded criteria** (still three):
+  - AC1 runs `test_ticket_binding.py` and the new `ops/tests/test_ticket_contract.py` (base: no contract file);
+  - AC2 adds `ops/tests/test_owned_requests.py` (24 passed) beside the generate suites;
+  - AC3 is unchanged.
+
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ): read on PRD v0.3 @1251f44685 (both halves signed; CTO msg
+Re v0.3).**
+- **FWD-1 is unchanged in v0.3.** No round-1 cell moves.
+- **FWD-7 (zero YCharts end to end), C-SWAP and C-PRICES** join the enrichment list beside FWD-2: one round-2 cell family
+  (resolution, swap, prices), ~Y2's backend.
+- **Hop-2 contingency.** The thread's hop 2 (the filed Excel reaching NORMALIZED) resolves today through the resident's YCharts
+  `securities_info`. It is re-proven by release 5b's read 4 (`TO-APPLY-Y75`).
+  - If read 4 shows the session unusable, hop 2 becomes thread-breaking. The issuer then cuts C-SWAP step (1), KNOWN resolution
+    from `etf-classifications` and MDPF_SECHIST, as a round-1 cell the same tick.
+  - The designated-proxy table is a dell1 SECCLASS pre-arranged input. Until it lands, the class defaults apply (v0.3).
+
 ## Cells (round 1, FWD-1)
 
 | hop | state | cell | lane | what EXISTS at the end |
