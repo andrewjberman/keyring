@@ -253,3 +253,105 @@ time-windowed ownership call.
 | `Get-ScheduledTask` over the whole box | find the backstop the wrapper's prose cites | PASS -- 13 Opal/BBG tasks, denominator 213; found `OPAL_BBGTML_freshness_check`, which the wrapper's prose calls "the 07:15 backstop" while its trigger reads **07:30** |
 | `ls | sed | sort | uniq -c` over the log dir | the denominator I should have taken first | PASS -- 37 files, 8 families; the whole correction |
 | per-leg verdict read of 7 recovery logs | verify before correcting | PASS -- did not replace one unverified claim with another |
+
+---
+
+# ADDENDUM 2, 11:00-11:31Z -- the 11:00Z fire, the vehicle-log relay, and an order that changed my act
+
+## 1. DAILY GUARDRAIL 2026-10-09: CLEAN, and confirmed on a second instrument
+
+The 11:00Z `OPAL_BBGTML_daily_pull` ran to completion. Every leg green, read from
+`bbg_tplus1_20261009_070014.log` (14020 bytes, mtime 11:08:47Z):
+
+`PRECONDITION: PASS -- DAPI UP` | `PULL 0` | `PUBLISH 0` | `ETF 0` | `CONSTITUENTS 0` |
+`PRICE 0` | `RIVALFUNDS BLOOMBERG 90 (landed)` | `RIVALFUNDS ENRICHMENT 94 (landed)`
+
+**And `OPAL_BBGTML_freshness_check` returned 0 at 11:30:01Z.** Per `freshness_check.cmd`'s
+contract (`0 fresh / 2 stale-summoned / 3 check-error`) plus the per-series limb (`4
+series-behind`, `5 series-not-measured`), a 0 means the SERVED artifact passed BOTH the date
+check and the per-series grading -- the limb added 2026-10-07 after seven custom CIX definitions
+stopped calculating at quarter end and six pulls passed without a flag. **This is a second
+instrument, reading the served artifact by content, not the wrapper's self-report** (CLAUDE.md:
+never trust a producer's rc=0).
+
+Side by side with yesterday, which is the point of keeping both:
+
+| | 2026-10-08 | 2026-10-09 |
+|---|---|---|
+| pull task | `50` -- DAPI down, pull not attempted | `0` -- completed, all legs |
+| freshness backstop | `2` -- STALE, SUMMONED -> recovery 11:43Z -> published 12:04Z | `0` -- FRESH, nothing to do |
+
+The pre-flight limb that failed yesterday cleared on the first check today
+(`[fallback] DAPI UP -- proceed with pull, no sign-in needed`). `0.7.0_AE_CloudOps~ZV`'s own
+pre-flight ran 10:37Z in window and agreed with my 10:32Z box-side read.
+
+## 2. THE VEHICLE-LOG RELAY -- committed one file where two were asked for
+
+`0.7.0_AE_CloudOps~ZV` (msg 32691) and `0.0.0_AB_MSTR~Z` (32699) both asked me to commit
+`~ZV`'s tw1 evidence: `safe-commit` refuses `TREE_DELIVERABLES` to `~ZV` for a folder named for
+this serial. Committed `VEHICLE_LOG_20261009_1100Z.txt` @`2a0a40bfe4`, **ON ORIGIN** (contained in
+`box/sitez` @`6a02d46287`, `ls-remote` read, `merge-base --is-ancestor` with a positive control).
+
+**Verified before putting my identity on it, per NEVER-last:** the staged `.full.log` is
+byte-identical to source (`cmp` + sha256 `8aa0479677c2d96382f64133d608b3ae...`); the transcript
+carries the lines J1 grades (RIVBBG 90 at source line 169, RIVENR 94 at 172).
+
+⚠ **I suspected a defect that was not there, and checking was still right.** The request cited
+today's run as its source, and I had read that task `State=Running` at 11:00:58Z, mid-notebook --
+so a truncated capture of a still-writing log was a live hazard, and it would have been a
+transcript missing exactly the enrichment lines J1 grades. It was not: the run finished 11:08:47Z
+and `~ZV` captured after. **My Running read was true when taken and stale by capture time** --
+the same perishability as the `~ZV` liveness error in section 5 above, on a different object.
+
+⛔ **ONE FILE, NOT TWO, and the asymmetry is the finding.**
+`VEHICLE_LOG_20261009_1100Z.full.log` is ignored by `.gitignore:68 (*.log)` -- `check-ignore -v`
+named the rule, with the `.txt` as positive control. The 2026-10-08 pair set the precedent:
+`git ls-files` carries the `.txt` only. Committing "both" would have landed one silently while I
+reported two. No `git add -f`: **overriding a deliberate ignore rule is a GATE EDIT, and a peer's
+request is not authority for one.**
+
+## 3. READING THE ORDER CHANGED MY ACT -- the part worth keeping
+
+Before reading `ETFS_RIVALS.TO-RELAY-tw1-vehicle-log-20261009.md` I had a clean-looking fix ready:
+commit the full log under a non-`.log` extension, same bytes, no gate edit, gap closed. **The
+order fixes that exact filename** (AMENDMENT 1: "ALSO copy the whole log, unedited, to
+`.../VEHICLE_LOG_20261009_1100Z.full.log`, and commit both files together"). So the tidy fix would
+have been me silently overriding the issuer's spec while believing I was avoiding an override.
+
+⭐ **The general shape: a workaround that avoids ONE gate can walk straight through ANOTHER.** I
+was pricing the gitignore edit and not pricing the spec. One file read turned a plausible act into
+a question for the right owner. Cost: one read.
+
+**And the order reframed the gap.** Its ONLY acceptance criterion is AC1, which grades the `.txt`
+alone. Graded by its own invocation:
+`git show origin/box/sitez:.../VEHICLE_LOG_20261009_1100Z.txt` -> rc=0, 2583 bytes, holds
+`-- DID THIS FIRE REACH THE ENRICHMENT LEG? --` at line 32. **PASS.** Positive control: the
+`.full.log` path does not resolve at origin.
+
+So the order is SATISFIED on what it grades, and the unsatisfiable clause is UNGRADED. That is a
+different thing from a missing deliverable, and neither `~ZV` nor the issuer had stated it.
+Routed to `2.0.0_SA_COO~V1` via `0.0.0_AB_MSTR~Z` with three options -- (a) accept the hash tie,
+(b) carve `.gitignore`, (c) amend the ordered filename -- and the recommendation (a), as the
+lightest that changes no gate. **Not decided here: the order is the issuer's.**
+
+## Compiler Tools (addendum 2)
+
+| Tool | Use | Result |
+|------|-----|--------|
+| `git show origin/box/sitez:<path>` | grade AC1 by its own invocation | PASS -- rc=0, line 32, with a negative-path positive control |
+| `git check-ignore -v` + control | is `.full.log` committable at its ordered path | PASS -- named `.gitignore:68`; the `.txt` control confirms the rule is specific |
+| `cmp` + `sha256sum` vs source | validate a peer's artifact before owning it | PASS -- byte-identical, claim verified not trusted |
+| `merge-base --is-ancestor` + control | push state of `2a0a40bfe4` | PASS -- ON ORIGIN, control rules out the reversed relation |
+| `Get-ScheduledTaskInfo` on the backstop | independent confirmation of the publish | PASS -- `LastResult=0` FRESH at 11:30:01Z |
+| `git log --author='<serial> <'` | my own commits this session | PASS -- anchored on `<` so sibling lanes do not match |
+
+⚠ **Instrument note:** I rendered that `git log` with `--date=format:'%H:%MZ'`. **The `Z` is a lie
+-- `--date=format` emits LOCAL time**, so `07:19Z` is really 11:19Z. Caught at read time, and the
+times are not quoted anywhere above from that output. Known trap, committed anyway; the banked
+rule is "never type a literal `Z` into a `--date=format`."
+
+**What worked:** grading the criterion rather than arguing about the deliverable. AC1 turned a
+blocked-looking relay into a satisfied order with one ungraded loose end.
+
+**What failed:** nothing landed wrong this block. The near-miss was the rename workaround in
+section 3, stopped by reading the order rather than by any instrument.
