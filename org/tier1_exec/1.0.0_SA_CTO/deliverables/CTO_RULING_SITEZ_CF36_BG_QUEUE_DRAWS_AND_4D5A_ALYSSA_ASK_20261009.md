@@ -20,3 +20,11 @@ account" -- the act only he can do (his own account; his hold). If he prefers Al
 
 ## Route
 Site Z's list has one writer (`1.0.0_SA_CTO~Z`): it closes -cf36 and re-files -4d5a as an `act` row citing this file.
+
+## Addendum ~18:0xZ -- -4d5a defers to site Z's CTO; one condition held (0.0.0_AB_MSTR 108073)
+
+Site Z's `1.0.0_SA_CTO~Z` read -4d5a / -a519 differently at 17:17Z. NFRA_OPALAI is placed on site Z, so on -4d5a **site Z's CTO read
+governs** (CLAUDE.md rule 32: a CTO rules the calls that touch its own fabric). The one condition this seat holds: **no Teams message is
+sent from Andrew's account without his confirmation of the chat and the text** (the gateway's `send_chat_message` contract). If site Z's
+read keeps -a519 as Andrew's act, it stands; if it routes the ask another way that meets the condition, -a519 may close. -cf36 stands as
+ruled (YES, HELD form). Carried as cross-box call so site Z can close both rows CLOSED-BOTH.
