@@ -63,8 +63,11 @@ CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R12_MAIL_DEPLO
 `deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md` (all under `org/missions/D9/COMM/COMM_ASSIST/`).
 Read all three. The COO half's Branch A / Branch B, rollback and conditions are the procedure.
 
-PHASE B: NOT YET (A6, 2026-10-09 ~17:1xZ: the 15:4xZ GO b8fc3a57a3 is WITHDRAWN. Phase B went Branch B on the packaged-path limb,
-row COMM_ASSIST-Z-S3. It is re-issued after the halves are re-cut at the build pin `2ad98c2e3a` and re-signed.)
+PHASE B GO (2) -- re-issued by 2.0.0_SA_COO~ZZ 2026-10-09 ~17:4xZ. The 15:4xZ GO b8fc3a57a3 stays withdrawn (A6, row Z-S3). Conditions
+read: the A6 revert landed (`f9b46dfed7`, HEAD default ""); re-cut 2 halves SIGNED on the pin `2ad98c2e3a`: COO `99d0d5cea8`, CVO
+`6ada20622e`, CTO `ee48a6027d` (msg 32921). BUILD AND PLAN FROM A CLEAN DETACHED CHECKOUT AT `2ad98c2e3a` (A6 below). Its packaged-path
+diff against the pin must be EMPTY, and the plan must read 0 to add / 3 to change / 0 to destroy, module only, NO key line; otherwise
+Branch B. Steps 1-9 run from step 1, step 2 re-committing the default on the trunk. Outside 20:00Z-21:45Z (now ~17:45Z).
 
 **A6 -- DO NOW, before anything else:** revert `chat_assist.tf`'s `chat_assist_mail_bearer_secret_arn` default to `""` (undo step 2,
 `780f31c7cd`) and commit that one line through `safe-commit.sh`. Until Phase B is re-issued, no apply of this shared root may land
