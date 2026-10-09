@@ -272,3 +272,28 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The mnemonic is a one-constant edit. Its first real confirmation is the first live history_topup carrying a non-null column of that name (the site-Z take is a separate WORLD act). If the terminal rejects the name, gold's C-MMF rule (TO-SH-t7) finds no level and blanks the day, which is its stated behaviour for a day with neither input."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W14-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~14",
+  "surfaced_at": "2026-10-09T16:10:00Z",
+  "one_line": "TO-SH-t15 makes the scheduled gold Lambda write s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=<date>/gap_record.json; the write sits outside gold's _assert_write_boundary and needs an S3 PutObject grant on that prefix that no cell in this round adds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "FILE data/etfs/scripts/gold/etf_positioning_gold.py produce_gap_record() calls etf_history_gap_record.write_record, whose key is lib.opal_naming address('bloomberg','etfs','silver','history_gaps','as_of=<d>','gap_record.json') = bloomberg/etfs/silver/history_gaps/as_of=<d>/gap_record.json in bucket opal-data-etfs (printed by the builder for 2026-10-08).",
+      "FILE etf_positioning_gold.py _assert_write_boundary admits only opal-data-etfs/gold/; the gap write does not pass through it (write_record is the silver module's own writer), so the boundary is not a gate on this key.",
+      "NOT RUN: the Lambda role's policy was not read (comp-iam is declared not applicable to this cell); whether it already holds s3:PutObject on that prefix is unmeasured."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the Lambda write grant is checked at the deploy pair, not in this cell (preflight comp-iam).",
+  "world_is": "Without s3:PutObject on bloomberg/etfs/silver/history_gaps/* for the gold Lambda role, every scheduled run logs 'gap record: WRITE FAILED' and continues: gold still blanks over the gap that day (in-memory record) but no record persists, so the next pull cannot re-request from it (FWD-4 degrades silently, FWD-5 holds). Read grant on bbg/ already exists (load_history lists and reads it)."
+}
+```

@@ -534,6 +534,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
       "spec_asserts": "RIV-wk-1 task order section 2: tests in rivalfunds/tests must keep passing.",
       "world_is": "One test, outside RIV-wk-1's paths, already fails at the base because RIV-wj-1 changed the generated policy without updating its assertion; the suite's final line is therefore 1 failed, 999 passed, 6 skipped with or without RIV-wk-1.",
       "notes": "Not fixed here: the test file belongs to no path of this order and the assertion change is RIV-wj-1's follow-through (the issuer decides)."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S13",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T15:50Z",
+      "one_line": "round-close-check reads round 28 MAY-CLOSE with 8 of 8 judgment criteria GRADED, each 'by adjudication row ETFS_RIVALS-D1-C-S1' -- one 07:30Z row that grades none of wg-1/wh-1/wi-1 and HOLDS wa-1 and wd-1; the round is NOT closeable: wa-1 and wd-1 J1 HELD, wi-1 J1 needs the 2026-10-10 13:00Z sweep, tc-1 is unmerged, both deploy ledgers' L2 are open",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "python .tools/round-close-check.py --project ETFS_RIVALS --round 28 at 15:4xZ: 'ROUND-CLOSE ... orders=15 judgment=8 graded=8 ungraded=0 ... verdict=MAY-CLOSE'; every JUDGMENT line cites ETFS_RIVALS-D1-C-S1",
+              "ADJUDICATION_v1.dell1.md: D1-C-S1 (07:30Z) grades wc-1/wc-2 MET, wd-1 repeat NOT MET, wa-1 HELD; D1-C-S2 moves wd-1 to HELD; ADDENDUM 4 (wg-1 MET), ADDENDUM 5 (wh-1 MET) carry their own rows; wi-1 has no grade",
+              "open ledgers: etfs-rivalfunds-ws23-dell1-20261009, etfs-rivalfunds-wi1-dell1-20261009 (L2 each); TO-MERGE-tc1 pending, b0b65368fb not in origin/box/sitez"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "round-close-check's MAY-CLOSE means every judgment criterion of the round is graded.",
+      "world_is": "It matches a judgment criterion to any adjudication row of the project, so one early row reads as grading all eight.",
+      "notes": "This seat closes round 28 on the artifacts, not on MAY-CLOSE. Owner of the instrument: .tools/round-close-check.py's lane (route via 0.0.0_AB_MSTR~DELL1 at the round-28 slug)."
   }
 ]
 ```

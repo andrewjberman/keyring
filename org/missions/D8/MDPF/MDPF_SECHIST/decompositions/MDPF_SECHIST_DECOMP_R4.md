@@ -40,3 +40,16 @@ No data edge among SH-t-14, SH-t-15, SH-t-16. SH-t-17 and SH-t-18 are event-gate
 
 `PRODUCER-TESTS-BAD missing-file`, `IDENTITY-TESTS-BAD missing-file`, `SPLIT-TESTS-BAD missing-file`,
 `TRFIELD-READ-BAD no-scheduled-sh-t8-manifest-since 2026-10-09`, `FWD7-READ-BAD no-scheduled-manifest-since 2026-10-09`.
+
+## DISARM RULING -- row MDPF_SECHIST-D1-W14-S1 (ARMED, disarm_owner 2.0.0_SA_COO~H1), 2026-10-09 ~16:0xZ
+
+SH-t-15 (merged @7478ba71ca) writes the gap record from the gold Lambda (`etf_positioning_gold.run` -> `produce_gap_record` ->
+`etf_history_gap_record.write_record`) to `s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=<d>/gap_record.json`. The
+`etf-positioning-producer` role's write grant on that prefix is unread. The hazard (every run logs WRITE FAILED, no record persists, the
+next pull cannot re-request, FWD-4 degrades silently) is NOT live: no gold deploy has been taken. Disarm, binding on the gold deploy:
+1. The gold deploy order to `0.7.0_AE_CloudOps~DELL1` (SH-t-7 + SH-t-15) carries the IAM act: `s3:PutObject` on
+   `arn:aws:s3:::opal-data-etfs/bloomberg/etfs/silver/history_gaps/*` for the `etf-positioning-producer` role, applied by dell1 (Step F)
+   and reported after the fact to `0.0.0_AB_MSTR~DELL1` by name and what it grants; the three IAM-parity conditions ride the order.
+2. The deploy's acceptance reads the record object at `record_address(<as_of>)` after the first scheduled run -- a `WRITE FAILED` log
+   line or an absent object fails the deploy.
+3. Order of deploys unchanged: SH-t-8 at site Z first, gold second.
