@@ -40,8 +40,24 @@ refused and recorded; he phones the custodian himself and completes the ticket.
 Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED. FWD-1's organic arm is the operations lead's first real
 request; it is recorded, never waited on.
 
+## WORKSTREAM K -- FWD-7, the operations lead's starter kit (PRD v0.3 @1698a6a69d, C-OPS-KIT, S8; parallel to the thread)
+
+A disjoint surface: one new folder `tools/ops_kit/`, which touches no ticket, engine or portal file. Runtime is the Python
+standard library (build ladder rung 3): `python serve.py` serves one static page and one JSON route on localhost. There is
+no install step and no AWS SDK.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-k-1` | `tools/ops_kit/`: `serve.py` (stdlib HTTP server, localhost only); `adapter.py` (THE one data entry, `get_panel(name)`; mode `fixture` today, a stub `mcpindex` mode reading `OPAL_MCP_URL`/token from env, never AWS); `fixtures/trade_rec.json`, `fixtures/billing.json`; `static/index.html` + `app.js` + `theme.css` with the trade-rec and billing panels and a visible "source: fixture" stamp per panel; `README.md` (one command; "ask your Claude to change anything"; "more data = ask Opal"); a `CLAUDE.md` for his Claude (where layout lives, never touch `adapter.py`'s contract). Criteria: `python tools/ops_kit/serve.py --selftest` exits 0 and prints both panels' row counts with `source=fixture`; a scan of the folder for `boto3|aws_access_key|aws_secret` prints 0 hits; `theme.css`'s canvas/panel/ink tokens equal the portal colour-law values the worker cites by path | FWD-7 | NOT-EVALUATED | dell2 worker | LOCAL | worker | -- |
+| `OW-k-r-1` | The real run: the kit unzipped into an empty folder starts with one command and shows both panels; a fresh Claude session given only the kit changes one panel's layout, and `git diff` on Opal's tree shows nothing outside the copy; the zip lands in his SharePoint (location read at the run) | FWD-7 | NOT-EVALUATED | ISSUER | LOCAL (+ one SharePoint upload) | -- | OW-k-1 drained |
+
+Live data in the kit (FWD-7's "live data" clause) waits on X2; the fixture stamp says so on every panel until then.
+
 ## External requests (not cells)
 
+- **X2, trade-rec and billing readers in NFRA_MCPINDEX** (site Z, `2.0.0_SA_COO~MI`), in the shape `OW-k-1`'s fixtures
+  publish. This is a cross-fabric ask, routed by `1.0.0_SA_CTO~DELL2` (MSTR to MSTR). The kit switches `adapter.py` to
+  `mcpindex` mode when the readers are served; nothing else changes.
 - **X1, the form's mount** in `portal/src/pages/TicketCenter/TicketCenter.tsx`: GRANTED by `2.0.0_SA_COO~V2` (msg 2522,
   the C-SHARED-SURFACE owner) -- ONE `trade_request` branch beside `:219-229`, nothing else; folded into OW-p-1. Owed back
   to `~V2`: the portal DEV hash once OW-p-1 lands (its AR-v-11 cuts from DEV after it).
@@ -55,10 +71,11 @@ request; it is recorded, never waited on.
 - `OW-e-3`: `infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/workflow_handler.py`;
   `.../trade-workflow-handler/tests/test_ticket_writeback_and_fence.py` (new).
 - `OW-i-1`: `infra/aws/terraform/trade-pipeline/iam.tf`, `infra/aws/terraform/trade-pipeline/lambdas.tf`.
+- `OW-k-1`: `tools/ops_kit/**` (new folder, nothing outside it).
 - `OW-p-1`: `portal/src/pages/TicketCenter/TradeRequestParts.tsx` (new); `portal/src/pages/TicketCenter/TicketCenter.tsx` (the one X1 branch).
 
 **Chains.** A = OW-l-1; B = OW-e-1 -> OW-e-2; C = OW-e-3; D = OW-i-1; E = OW-p-1; all join at OW-d-1 -> OW-r-1.
-Fan-out 5 of 5 chains, cap 8.
+K = OW-k-1 -> OW-k-r-1. Fan-out 6 of 6 chains, cap 8.
 
 ## Rule 24 record
 
