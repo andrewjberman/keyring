@@ -148,7 +148,21 @@ measured by the issuer, uncommitted: routes 4 of 4, admin and fabric test files 
 file, and the ledger entry carries only a pointer. `deploy_ledger.py` regenerates the entry on hold and close-leg, and
 silently drops appended prose (MP-x-4's entry went from 137 to 23 lines at rc=0). The drain reads the deliverables file.
 
-<status>staged</status>
+**GO (issuer, 2026-10-09 ~17:3xZ): prepare now, ACT after MX-r-9's ledger close.** G-REL2 holds:
+- MP-x-4 is drained @a933da0d8a (LIVE 1e32562729);
+- MP-o-1, MP-s-1, MP-k-1 and MP-p-2 are drained;
+- MP-k-2 is applied (@b55418638d).
+Gateway queue: one release in flight (CTO~Z msg 32713), and `2.0.0_SA_COO~O` msg 32919 gives MX-r-9 -> MP-r-2 -> OG-rl-16. So
+steps 0-3 (hookup, re-cut, census, cold reads, rollback proof) may run now. The ledger open and the deploy wait for MX-r-9's
+ledger close, which the issuer forwards; then re-cut on the ref MX-r-9 leaves LIVE.
+The GO's commits:
+- gateway: 638b8ae057 (MP-o-1), 604ea0e089 (MP-s-1), 5bdf8e1a3e (MP-k-1), plus your step-0 hookup commit;
+- mcportal: bc37107 (MP-p-2, branch `nfra-mcportal-cp2-p2`, a descendant of d60b4e0).
+Exclude NFRA_OPLGTW's E2 .xlsx and the .pptx pair, both unreleased on box/sitez (msg 32919). The census already admits only
+the CP2 files. Row Z-S27 is a known risk: x4.AC3 read 27.4 s cold. A step-2 read over 30 s STOPS, as written.
+Was: staged
+
+<status>pending</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <fabric>site-z</fabric>
