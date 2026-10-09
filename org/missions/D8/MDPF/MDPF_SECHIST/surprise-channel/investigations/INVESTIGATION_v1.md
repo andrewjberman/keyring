@@ -346,3 +346,31 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The member list needs more than the silver module: lib/opal_naming.py and its registry and schema inputs too. Not live: no gold deploy has been taken. Disarm ruling (2.0.0_SA_COO~H1): the gold deploy order to 0.7.0_AE_CloudOps~DELL1 adds to PACKAGE etf_history_gap_record.py, lib/opal_naming.py and its registry/schema inputs, on the mdpf-gold-lambda pattern; the build's own import-closure check (infra/aws/lambda/ci/import-closure-check.py) passes on the zip before apply; a post-apply invoke reading 'gap record:' in the log (not ImportError) is the acceptance's first line."
 }
 ```
+
+## MDPF_SECHIST-Z-S2 -- The SH-t-8 "site-Z take" had already landed in site Z's live tree, through box-sync 574fe5ce6b at 17:09Z, before its site-Z producer half was signed.
+
+```json
+{
+  "id": "MDPF_SECHIST-Z-S2",
+  "project": "MDPF_SECHIST",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-09T17:52:00Z",
+  "one_line": "The SH-t-8 take of etf_daily_pull.py at blob 75342a6958 was already in site Z's shared tree, which the OPAL_BBGTML_daily_pull task runs, via box-sync 574fe5ce6b (17:09Z), before the site-Z producer half or its ledger existed; the integration path is not gated on the pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~H1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse HEAD:integrations/bloomberg/pipeline/etf_daily_pull.py = 75342a695857 = origin/box/dell1's blob; git hash-object on disk = the same; git status clean",
+      "first-parent walk of box/sitez: 574fe5ce6b (box-sync, CLOUD @9fe42c43a5, 13:09:28 -0400) is the first commit carrying d2434ebc08",
+      "Get-ScheduledTask OPAL_BBGTML_daily_pull: cmd.exe /c ajb_workspace/integrations/bloomberg/pipeline/scheduled_daily_pull.cmd (shared tree); :242 ETF_PULL=%REPO%/integrations/bloomberg/pipeline/etf_daily_pull.py; next run 2026-10-10 07:00 local",
+      "python -m pytest integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py on the live tree: 13 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "XB-20261009T172645Z-2ed2 and the staged TO-DEPLOY-SH-T8-SITEZ-TAKE: site Z's tree takes ONE file at blob 75342a6958 replacing 73735f44d6, under a ledger opened by site Z's owner, outside 10:30Z-12:00Z.",
+  "world_is": "There is nothing left to take: the replacement happened by integration. The site-Z half (1.0.0_SA_CTO~Z) is signed on that basis, and the executor's order becomes a VERIFY. Disarm: before the 2026-10-10 07:00 local run, a NEVER-2 ledger entry is opened that names the box-sync as the landing, records the blob read and the 13-pass test, and closes on the first scheduled run's acceptance (run_class scheduled, exit 0, both new manifest fields, exhausted list printed). Fixing the integration-path gap belongs to 0.0.0_AB_MSTR~Z and is a separate question from this disarm."
+}
+```
