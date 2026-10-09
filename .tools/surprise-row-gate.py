@@ -1276,6 +1276,15 @@ def _open_tos_for_project(root, code, merging=False, round_n=None):
     return _OPEN_TOS_CACHE[key]
 
 
+POINTER_OVERRIDE_RE = re.compile(r"^#\s*pipeline-override:\s*this file is a POINTER\b", re.M)
+
+
+def _is_pointer_text(text):
+    """True for a seat-home POINTER file (CTO ruling R2): not an order, never counted by the open-order census."""
+    first = next((ln for ln in text.splitlines() if ln.strip()), "")
+    return bool(POINTER_OVERRIDE_RE.search(text)) or first.startswith("# POINTER (not an order)")
+
+
 TO_ROUND_RE = re.compile(r"^\s*<round>\s*v?([0-9]+)", re.I | re.M)
 
 
@@ -1296,7 +1305,7 @@ def _open_tos_census(root, code, merging=False, round_n=None):
     if ls.returncode != 0:
         return None, 0, "git ls-files rc=%d: %s" % (ls.returncode, ls.stderr.strip()[:120])
     paths = [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()]
-    open_ids, proven = [], []
+    open_ids, proven, pointers = [], [], []
     for p in paths:
         # (c) THE READ (3.0.0_SA_CVO 94299): at a merge the record is the MERGED INDEX, not HEAD. A
         # task order arriving IN this commit is present at stage 0 and ABSENT at HEAD, so the HEAD read
@@ -1307,6 +1316,9 @@ def _open_tos_census(root, code, merging=False, round_n=None):
         if st != "OK":
             return None, len(paths), "%s unreadable at %s (%s)" % (
                 p, "the merged index" if merging else "HEAD", st)
+        if _is_pointer_text(text):
+            pointers.append(os.path.basename(p))
+            continue
         if round_n is not None:
             # spine v3.19 (report 3 item 1.3, LD-0521's deadlock): the slug's round counts ITS orders only. An order
             # carrying no <round> tag still counts -- an unreadable round fails toward refusing, never toward admission.
@@ -1324,6 +1336,8 @@ def _open_tos_census(root, code, merging=False, round_n=None):
         note = ("%d order(s) terminal by a VALID proof-of-spec instance at %s although the status word is not "
                 "terminal (spine :436, :487-488): %s" % (len(proven), "the merged index" if merging else "HEAD",
                                                          ", ".join(proven)))
+    if pointers:
+        note += ("; " if note else "") + "%d seat-home POINTER file(s) not counted: %s" % (len(pointers), ", ".join(pointers))
     return open_ids, len(paths), note
 
 
@@ -3896,6 +3910,13 @@ def _self_test(root):
          lambda: (lambda src: "_acceptance_sweep(" in src and "ACCEPTANCE (round" in src
                   and not any(("v.append" in ln or "v.extend" in ln) and "_acc" in ln
                              for ln in src.splitlines()))(inspect.getsource(check_file))),
+    ]
+    arms += [
+        ("census POINTER: a seat-home POINTER is skipped (both markers), a real open order is not",
+         lambda: _is_pointer_text("# POINTER (not an order) -- x\n") and _is_pointer_text("\n# POINTER (not an order) -- x")
+         and _is_pointer_text("# t\n# pipeline-override: this file is a POINTER in the lane\n")
+         and not _is_pointer_text("# TO X\n<status>pending</status>\n")
+         and "_is_pointer_text(text)" in inspect.getsource(_open_tos_census)),
     ]
     failed = 0
     for name, fn in arms:

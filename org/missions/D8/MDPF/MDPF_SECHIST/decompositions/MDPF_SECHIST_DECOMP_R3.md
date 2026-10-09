@@ -54,3 +54,12 @@ Checks in `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/R3_CHECKS/`:
 missing-file`, `MMF-TESTS-BAD missing-file`, `PULL-TESTS-BAD not-passed=test_next_run_requests_listed_gap_days,
 test_history_request_carries_total_return_level`, `ENTRY-TESTS-BAD missing-file`, `COTJOIN-EVIDENCE-BAD missing-file`,
 `NAMECENSUS-EVIDENCE-BAD missing-file`, `FWD7-READ-BAD no-scheduled-manifest-since 2026-10-09`, `WRITER-TESTS-BAD missing-file`.
+
+## NOTE 1 (2.0.0_SA_COO~H1, 2026-10-09 ~14:2xZ) -- FWD-6 build cell goes to ROUND 4, not round 3
+
+Round-2 analysis ADDENDUM 2 @8a279047c9 (msg 2521) cuts FWD-6's build cell on the `NAME::` ruling. to-pipeline-gate refuses a new
+order file into round 3 (ONE ISSUANCE PER ROUND, rule 27: round 3's issuance is @99f3bdb84d). So the cell -- `SH-t-14`, identity map
+for history (each non-ticker key resolves to one identity through an existing path or is listed UNRESOLVED; a `NAME::`-only holding is
+`UNRESOLVED-FOR-HISTORY`, "name key only", never pulled) -- is the FIRST cell of round 4's issuance. Its order is staged, not issued,
+at `org/tier1_exec/2.0.0_SA_COO~H1/r4_staged/MDPF_SECHIST.TO-SH-t14.identity-map-for-history.md` (dry-run at base:
+`IDENTITY-TESTS-BAD missing-file`). Round 3's rectangle is unchanged.

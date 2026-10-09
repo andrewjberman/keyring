@@ -2896,3 +2896,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Remedy: the irpt-status and irpt-ycharts-generate releases must stage reporting_policies.json at >= 23e39f11d7 (the research row with 3 firms). 2.0.0_SA_COO~Y2's IRPT_ANLREQ round-2 release 1 re-pins both functions (DECOMP_R2). The produced report persists after st29's X1; a served read can be re-tried once irpt-status carries the row, by a principal allowed on 49financial."
 }
 ```
+
+## IRPT_YCDGEN-D2-S21 -- the served read still refused after rev3: 'invalid retention reference' is a ref-shape check, not the firms check
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S21",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T14:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "FWD-1 served read of REQ-5e4149d2 still refused after irpt-status rev3 staged the 3-firm research row: RetentionRefused 'invalid retention reference' is raised at retention.py _key (a ref SHAPE check), not at the firms check",
+  "spec_asserts": "With the research row at 3 firms in irpt-status (IRPT_ANLREQ.TO-APPLY-Y1 rev3, read 6 fix half PASS), the owner read of the Opal-produced 49financial report is served.",
+  "world_is": "MEASURED. sr1 window 2: W1 14:26:06Z; the owner read 14:26:15Z; status-job and analysis-report both UNAVAILABLE/UNEXPECTED. CloudWatch /aws/lambda/irpt-status at 14:26:1xZ: corr-a80db731f80e (status-job) and corr-93ba3a8a08da (analysis-report), exception RetentionRefused 'invalid retention reference'. In reports/retention.py that text is raised at :56 (_registered: revision not a str of 1..REVISION_MAX), :114 (reference: bad policy_revision) and :126 (_key: the ref must be exactly {retention_id, policy_revision}, policy_revision a str within REVISION_MAX, retention_id matching RETENTION_ID). The firms check raises a different text ('registered enforced policy required'), so the 3-firm row is no longer the blocker. The report was written by the st29 resident package (base pin 3d705e700f + named list), whose writer of the retention ref may predate irpt-status rev3's reader: a writer/reader skew on the ref's shape or revision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch irpt-status corr-a80db731f80e, corr-93ba3a8a08da",
+      "reports/retention.py :56, :114, :126 at box/dell2",
+      "served read record SERVED_READ_REQ_5e4149d2_20261009.json (scrubbed)"
+    ]
+  },
+  "notes": "Outside ~G2's lane (reports/retention.py and the report writers are the backend's). Routed to 2.0.0_SA_COO~Y2 and 1.0.0_SA_CTO~DELL2 with the correlation ids. To discriminate: read the stored ref of REQ-5e41's report (its keys and policy_revision length) against _key, using a principal that can decrypt irpt-requests/irpt-jobs."
+}
+```

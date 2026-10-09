@@ -24609,3 +24609,60 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "They did: both seeding sends ran from 0.7.0_AE_CloudOps~DELL2's identity with rc=0."
 }
 ```
+
+## IRPT_BCKEND-D2-W275-S1 -- No standalone document schema for the custody report; response contracts carry the data type in $defs
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W275-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~275",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "No standalone document schema exists for the custody report reference or read answer; the two new response contracts carry the data type in their own $defs, self-referenced by $id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "test_seam_paired.py _documents_of asserts a data $ref and _data_for reads fixtures/<document>.valid.json; the v1 registry (_response_validator) lists only top-level v1/*.schema.json; the grant admits no new v1/*.schema.json",
+      "published: docs/contracts/investor-reporting/v1/responses/custody-report-{read,persist}.response.schema.json with fixtures custody-report-{read,persist}.response.{valid,invalid}.json"
+    ]
+  },
+  "spec_asserts": "The order says every data $ref resolves to a published document schema; the grant lists only the two responses files and _contracts/.",
+  "world_is": "No custody document schema is published in v1/ (PerformanceReport.retained_ref is kind PERFORMANCE only). Adding one is outside this order's paths, so data refs the response file's own $defs (opal://.../responses/<op>.response.schema.json#/$defs/<Type>), which resolves to a published file and keeps the test unweakened. A later cell may promote them to v1/CustodyReport*.schema.json; the read's `report` member is typed only as an object (its members are not described, none invented)."
+}
+```
+
+## IRPT_BCKEND-D2-S56 -- IB-pr-404's first fire: cottonwood and inflection PUBLISHED, but 49financial was SIGKILLed (rc=137) before any verdict line and did NOT publish. Its three prior fires all succeeded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S56",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T14:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Two of three firms published on the narrow bundle; 49financial was killed after 5m09s on a 4 GiB box, printed neither OK nor REFUSED, and still serves a publication one business day behind the other two -- and its three previous fires all succeeded.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the fire ran on schedule: irpt-holdings-snapshot (an EventBridge SCHEDULER schedule, not an events rule -- a describe-rule probe returns ResourceNotFoundException), ENABLED, cron(15 10 ? * MON-FRI *) America/New_York, target irpt-holdings-refresh-lambda. It dispatched three SSM commands at 14:15:24-28Z, one per firm, the family the ledger names",
+      "ALL THREE pulled THIS release: each output carries '[irpt-holdings] package members 44 verified', the 44-member count of the uploaded bundles",
+      "49financial 436e2522-eee1-48db-a087-0ef157b8a8a5: ResponseCode 137 (128+9 = SIGKILL), ExecutionElapsedTime PT5M9.91S, stderr 'line 15: 3603 Killed python3 $R/holdings_snapshot.py --firms 49financial --upload'. Its StandardOutputContent is 13778 chars with NO truncation marker, i.e. COMPLETE, and contains neither an 'OK: ' nor a 'REFUSED: ' line: it ends at '[irpt-holdings] rc=137 firm=49financial'",
+      "49financial did NOT publish and did NOT refuse: current/manifest.json is still the object written 2026-10-08T14:20:48Z with latest_date 2026-10-07, and publish_refusal.json returns 404. Its prior publication keeps serving, so nothing is corrupt -- but it is now one business day behind the other two",
+      "cottonwood 080e6652 rc=0 PT3M21.989S and inflection 1d6a5113 rc=0 PT2M56.361S both PUBLISHED by the packet's other signature: current/manifest.json moved to a new version at 14:18:11Z and 14:18:24Z with latest_date 2026-10-08 (T-1 of the fire), and no publish_refusal.json (404)",
+      "ATTRIBUTION, association not proof: 49financial's three previous fires all succeeded -- 2026-10-06, 10-07 and 10-08 all Status Success -- and today's is the FIRST fire after this bundle landed. The bundle changed exactly ONE member, holdings_snapshot.py, by applying IB-pr-393 and IB-pr-396 to the live bytes",
+      "WHAT WEAKENS pure concurrency as the cause: the three runs overlapped on one shared instance i-02448edb624a7a7cf, a t3.medium (4 GiB), launched fresh at 13:30:35Z. But cottonwood ended about 14:18:48Z and inflection about 14:18:25Z, while 49financial was killed about 14:20:34Z -- it was running largely ALONE for its last two minutes. 49financial is also the largest firm in the replay (154,473 nodes / 7,620 accounts against cottonwood 17,840 and inflection 36,232)",
+      "SECOND FINDING, an instrument gap: the commands have NO durable output sink -- OutputS3BucketName and OutputS3KeyPrefix are empty and CloudWatchOutputEnabled is false -- so StandardOutputContent is capped at about 24,000 chars. cottonwood (24,479 chars) and inflection (24,510) BOTH carry the truncation marker, so their 'OK: <firm> business_date=...' lines are PERMANENTLY unrecoverable. Only 49financial's output is complete, and only because it died early"
+    ]
+  },
+  "spec_asserts": "Packet after-read: per firm, PUBLISHED prints 'OK: <firm> business_date=<d>' with a new manifest version whose latest_date is the fire's business date and no newer publish_refusal.json; REFUSED prints 'REFUSED: <firm> keeps its last good publication; ...' with a publish_refusal.json. Either line proves the gate ran. CTO condition 3: all three firms land before the next scheduled fire or the landed ones roll back; no mixed behaviour past one fire.",
+  "world_is": "A THIRD outcome the packet does not enumerate: the producer was killed before it could print either line, so for 49financial the gate's verdict is not UNKNOWN-because-unread but UNREACHED. The keys all landed before the fire, which is what CTO condition 3 binds, and the gate itself behaved for the two firms that completed; but the OUTCOME across the three is now mixed past one fire, which is the state that condition exists to prevent. Nothing is corrupt and nothing is half-written: 49financial still serves its prior publication, and the fail-safe held. THE DECISION IS NOT THIS SEAT'S, and two of the available moves are expressly not its to take -- Branch B rollback of a landed firm is a WORLD act the issuer and CTO signed the shape of, and re-running the producer ad hoc would be a production publish off its own clock, which CLAUDE.md forbids. So the three keys are left exactly as landed and verified, the ledger's L6 is left OPEN rather than closed on a partial read, and the issuer is asked to rule: (a) accept two-of-three and let 49financial catch up at the next scheduled fire, (b) roll all three back per Branch B so no firm runs the new bundle, or (c) authorise a scheduled re-run for 49financial. Whichever way it goes, the memory question needs the producer's owner, not an applier: whether the two folded commits raised 49financial's footprint past 4 GiB, or whether a t3.medium was already marginal for the largest firm and the data simply grew. The output-sink gap should be closed either way, because today the only reason any verdict line survived is that one run died early.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
