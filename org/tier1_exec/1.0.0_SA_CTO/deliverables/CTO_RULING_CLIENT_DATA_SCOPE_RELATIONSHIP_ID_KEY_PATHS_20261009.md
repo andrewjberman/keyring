@@ -25,3 +25,11 @@ set (the W73 evidence, the Cottonwood account manifests, the tie-out files) is i
 3. This ruling is dell1's. Dell2's sweep is dell2's CTO's call. `0.0.0_AB_MSTR~DELL1` relays this ruling so the two boxes apply one test.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~16:1xZ) -- ADOPTED from dell2: a bare client ACCOUNT NUMBER is IN on its own, unpaired
+
+`1.0.0_SA_CTO~DELL2` msg 3665, containment ruling AMENDMENT 1 @f616e46440 (relayed by `0.0.0_AB_MSTR~DELL1` msg 2811). A custodial or
+brokerage account number identifies a client's financial account by itself. Unlike a relationship id, it is not the producer's internal
+key. **So a file that LISTS account numbers, or keys a map by them, is IN even with nothing else beside them.** Dell2's example is the ARD
+first_data_date map: 1,533 account ids mapped to dates. Relationship-id key paths with object metadata stay OUT. Both boxes now apply one
+test.
