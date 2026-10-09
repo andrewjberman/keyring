@@ -26,7 +26,7 @@ L1 brief `docs/briefs/irpt-holdings-basis-silver-inventory-brief-20260928.md` | 
 
 ### THE CELL
 
-`IB-er-201` -- the first hop of the FWD-3 thread: one invested 49 Financial Schwab account (account_id `0010498003`),
+`IB-er-201` -- the first hop of the FWD-3 thread: one invested 49 Financial Schwab account (account_id `acct#24ccad9d`),
 year to date, computed from end-of-day holdings into the consolidated gold. The adapter switch that reads this gold is
 ~P's own later cell; this order builds the gold only.
 
