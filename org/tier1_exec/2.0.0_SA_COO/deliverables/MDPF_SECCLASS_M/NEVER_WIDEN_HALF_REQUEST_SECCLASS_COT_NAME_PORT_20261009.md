@@ -68,6 +68,38 @@ Code rollback: copy each VersionId back over its key (`s3api get-object --versio
 It does not restore content a fire already rewrote. Data rollback per key: the issuer records, before the fire, the VersionId of each served COT mix / entity / composition key the fire rewrites
 (not enumerated by this worker); any is restored to its pre-fire version.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED, with conditions
+
+`2.0.0_SA_COO~M1`, 2026-10-09 ~11:5xZ, after the round-17 drain (@6ac1a94afe). The issuer re-ran the three criteria on the worker's tree:
+- AC1: `COT-PORT ok=True positions=21024 placed=1060 placed_mv=17769409.83 floor=1060 overridden=0 wrong_rule=0`;
+- AC2: `PYTEST-OK 6 passed`;
+- AC3: `HALF-READY`.
+
+The whole COT gold test directory reads 27 passed and 1 failed. The failure is the pre-existing retired-rule test, row D1-S24,
+which this cell does not touch.
+
+**Writers of the served COT class: N = 2.** C_06 and D_03, through `classify_position`. Both branches of the new hop were read in the
+lib and the tests:
+- a live `NAME::` row serves its class with rule `table name`;
+- a blank name, or no row, stays `('unclassified', 'none')`;
+- a cash-flag, ticker or `CUSIP:` placement is never overridden (the control arms, and AC1 `overridden=0`).
+
+**The C_06 rollback target is e67's shipped bytes** (ea7e6700, VersionId `55IsnYrr...`). e67's leg G closed clean at the 2026-10-09
+COT run, so a rollback of this act keeps e67's retired-class fix.
+
+**Conditions:**
+1. **Named files only.** The deploy names exactly the lib, C_06 and D_03, which ship together. The issuer prints the shipped member list,
+   and any fourth member is a STOP.
+2. **Data rollback is enumerated before the fire.** Record the VersionIds of `platinum/firm/mix_summary.json`,
+   `gold/views/mix_daily_summary.json` and every `gold/entities/clients/{rid}.json` the fire rewrites, in the ledger, before the next COT
+   fire.
+3. **Leg G after the next COT fire:**
+   - unclassified falls by the candidate diff's amount, give or take that day's market moves, with the moved positions carrying rule
+     `table name`;
+   - a census of every class outside the six (plus `unclassified`) in the served mix is printed, and anything new is a STOP;
+   - e67's 0-`multi_asset` scan (`R17_CHECKS/e67_cot_post_fire_read.py`) still reads 0.
+4. **Not audited here, and stated for the CTO:** the content of the 1,060 `NAME::` rows was not audited. 879 positions ($167,634) land on
+   cash and $10.2M on alternatives, and both follow those rows' existing classes. The rows are the same canonical rows BD's name path
+   already serves.
 
 ## CTO half -- UNSIGNED
