@@ -117,19 +117,18 @@ ASK. `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260804_1827Z_NO_I
 
 ## 3. FINDING THINGS FAST
 
-21. **`comp-which "<plain-English question>"` is the reflex; a comp-tool is the DEFAULT for search + inspection, raw
-    grep the exception.** Every standalone repo search in Bash (`grep/rg/egrep/fgrep/findstr/ack/ag` recursive or
-    directory-scoped, `find` with anything) is DENIED per SEGMENT (`&&`/`;`/newline split) and routed to `comp-find`;
-    raw-`aws` INSPECTION is classified on its own segment. Mechanism: `.tools/hooks/comp-tool-hud.sh` (kill switch
-    `org/mcp/comprail-gate1.enforce`; falsifier `.tools/comprail-gate1-fptest.sh`).
-    - A RAIL DENIAL ABORTS THE WHOLE BASH CALL, so every later segment is a silent no-op. Put a gated read in its own
-      call, or verify the later segment's EFFECT rather than its exit.
-    - NOT gated: a pipe-RECEIVER grep (`cmd | grep`), `# rail-checked: <why>`, `/freeform`, native `Grep`/`Glob`/`Read`,
-      operational `aws`. `comp-grep` forwards to `comp-find`.
-    - A SINGLE-FILE GREP ROUTES TO `comp-read` (`--for "<question>"` for shape, qualifiers and contradictions;
-      `--enumerate '<regex>'` for a denominator with bands). Non-application: `grep -q` as a pure predicate; any pipe
-      receiver; files outside the repo corpus; wrong-object errors. This clause binds by reading until
-      `comp-tool-hud.sh` routes single-file greps to `comp-read`.
+21. **Search the repo with `comp-find`, never blind recursive grep; read AWS through the served graph before you list
+    it; a known path needs no router.** The rail DENIES four things: a recursive or directory-scoped repo search, a
+    `find` over the repo, an AWS enumeration the graph holds, and a census output cut before its denominator. Every
+    denial prints WHY and RUN NEXT, the command that answers: run it next. Mechanism: `.tools/hooks/comp-tool-hud.sh`
+    + `comp_rail_direct.py` (kill switch `org/mcp/comprail-gate1.enforce`; falsifier `.tools/comprail-gate1-fptest.sh`).
+    - A DENIAL RUNS NOTHING IN ITS CALL. Its REMAINDER line is the rest of your call, ready to run as is.
+    - FREE, never denied: one named file (infra and `.tf` included), a named folder, a pipe receiver, any path outside
+      a checkout, a live AWS `get`/`simulate`/`describe` of one resource, `comp-* --help`, native `Grep`/`Glob`/`Read`,
+      `# rail-checked: <why>` (audited), `/freeform`.
+    - `comp-which "<question>"` is for when you do not know which tool answers; a question naming an existing file
+      returns `comp-read <path>`. Ask a file a question with `comp-read <path> --for "<question>"`; a denominator with
+      `--enumerate '<regex>'`. COST: one denial round-trip. NON-APPLICATION: the FREE list.
     - Traps before quoting any comp-find number: `docs/architecture/NFRA_COMPRAIL_PRD.md`. Never `head` any census;
       use `--band HEAD/DEF`, `--files`, `--limit/--page`, `--all`, and `-i` for a token census. A page is not an answer.
       Do not stop at the first plausible hit: an early stop and a true absence read identically.
