@@ -1,0 +1,2 @@
+key	name	action	asset_class	sub_asset_class	current_class	rule	evidence
+NAME::AMERICAN CENTURY ULTRA INV	AMERICAN CENTURY ULTRA INV	REMAP	equity	US Large Cap	fixed_income	agree with CUSIP:025083882	TWCUX is a US large-cap growth equity fund; CUSIP row reads equity/US Large Cap, consistent get_item 2026-10-09

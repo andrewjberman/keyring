@@ -184,3 +184,30 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "notes": "No override used."
 }
 ```
+
+
+## NFRA_GATSCP-D1-S4 -- the L10 limb counts a seat-home POINTER file as an open order
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S4",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T09:10Z",
+  "one_line": "to-pipeline-gate.py's L10 limb counts a seat-home POINTER file (one carrying the '# pipeline-override: this file is a POINTER' line) as an open task order; MDPF_DEMQUE's CVO committed past it with an audited override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/MDPF/MDPF_DEMQUE/ledger/ROUND_ANALYSIS.round4.md @91f3ee9da6 :26-28, R3: 'the L10 limb counts the seat-home POINTER file as an open order, and the CVO committed past it with an audited override. This goes to the to-pipeline-gate owner through 0.0.0_AB_MSTR~DELL1'",
+      "msg 2159 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T09:06:14Z: 'one row for the to-pipeline-gate owner, R3'",
+      ".owned-paths.yaml: .tools/to-pipeline-gate.py is lane LOOP_MECHANISM (1.0.0_SA_CTO, 3.0.0_SA_CVO)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A file carrying the '# pipeline-override: this file is a POINTER' line is not an order (ROUND_ANALYSIS.round4 R3).",
+  "world_is": "The L10 limb counts it as one, so a round close with a live seat-home pointer needs an audited override. Carried here by the box manager, who rules nothing on it; per R3 it falls away once this project's round-2 lane fix makes pointers unnecessary."
+}
+```

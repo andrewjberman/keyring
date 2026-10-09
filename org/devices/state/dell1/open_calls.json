@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T08:46:28Z",
+ "written_at": "2026-10-09T09:20:27Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -858,7 +858,7 @@
    "source": "org/critical_paths/.open_deploys/secclass-bd-thread-r3-m-20261001.json",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T07:40:07Z",
    "kind": "fork",
    "context": "SC-e-59 in PROD bf780f94 (B4 gate opened). Walk on PROD tree: 49F firm Mix tiles = served mix_summary to the dollar; z08327149 served composition VXX structured/Hedge etf-classifications; GLD/PHYS not held there (table: commodities/Metals); run class_source 0 bd-securities. Gates the B4 and S closes.",
@@ -894,7 +894,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-09T08:56:02Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T074836Z-96fb"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261009T074836Z-96fb",
@@ -911,7 +918,7 @@
    "source": "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round9.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-09T07:46:02Z",
    "kind": "fork",
    "context": "Round 9 graded MET (SWITCH-ON 11/11); round-9 analysis R1. Cross-box because the switch file is tracked and reaches every box via CLOUD; on top of XA-20261009T005240Z-625e.",
@@ -942,7 +949,14 @@
      ]
     }
    },
-   "closed": null,
+   "closed": {
+    "at": "2026-10-09T08:56:03Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round9.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": "XA-20261009T074741Z-3003"
+   },
    "escalation": {
     "to": "xadj",
     "ref": "XA-20261009T074741Z-3003",
@@ -997,6 +1011,37 @@
       "lib/research/api/monthly_chatter.py is on the shared branch (lib)",
       "lib/research/api/tests/test_monthly_chatter.py is on the shared branch (lib)"
      ]
+    }
+   },
+   "closed": null
+  },
+  {
+   "id": "dell1-20261009T092027Z-2caa",
+   "project": "DSGN_AMGTV1",
+   "subject": "Walk the redesigned Security Analysis page on PROD (portal fa5ba2af, tag portal-v2.1.206), signed in -- FWD-1",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round60.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-09T09:20:27Z",
+   "kind": "act",
+   "context": "Rounds 53-60 are live on PROD (CI 37905490625 success; Andrew's 23 walk findings of ~05:0xZ addressed in rounds 58-60). FWD-1's DONE WHEN is his own walk on PROD; no seat can sign in as him.",
+   "rec": "Walk AMD and one more name; any finding becomes a round-61/62 cell",
+   "scope": {
+    "measured_at": "2026-10-09T09:20:27Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
     }
    },
    "closed": null

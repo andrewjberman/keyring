@@ -240,7 +240,7 @@ LOCK_DIR="${GITDIR}/commit-queue.lock"   # the lock safe-commit lands under (leg
 # run and law edit appends a line to one of these files in the shared tree, so the land below (`read-tree -m -u`) HELD on
 # them whenever CLOUD changed the same file. When the working copy extends the box tip's blob byte for byte, commit it
 # first through safe-commit under this serial (LD-0639 grants the spawn audit to box managers); the merge then resolves the
-# file as base + CLOUD tail + box tail (merge-resolve-known.py). Anything else -- staged by a seat, an earlier line edited,
+# file as a LINE UNION, CLOUD's file then the box-only lines (merge-resolve-known.py, 0.0.0_AB_MSTR msg 107847). Anything else -- staged by a seat, an earlier line edited,
 # a lane refusal -- is left alone, and the land HOLDS as before.
 for _p in $(python -c 'import importlib.util as u,sys;s=u.spec_from_file_location("m",sys.argv[1]);m=u.module_from_spec(s);s.loader.exec_module(m);print(" ".join(m.APPEND_ONLY))' "$ROOT/.tools/merge-resolve-known.py"); do
   _mb="$(git merge-base "refs/heads/$B" "$CLOUD_TIP" 2>/dev/null)" || break

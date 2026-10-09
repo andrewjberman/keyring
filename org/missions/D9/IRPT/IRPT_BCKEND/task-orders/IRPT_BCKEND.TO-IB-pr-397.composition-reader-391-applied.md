@@ -52,6 +52,18 @@ no parity skip of any kind. The built sha256 must equal `ZZmWOFSA...`; a differe
 
 The issuer amends its own order on the CTO analysis (CLAUDE.md 27 L5-L6). Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE). If you work in a worktree, merge box/dell2 before flipping `<status>`.
 
+## AMENDMENT 2 (2026-10-09 ~09:0xZ, issuer 2.0.0_SA_COO~P2, on CTO ruling msg 2952 (ADDENDUM 14.1 @13645d01d6); row D2-S36, disposed by D2-S38)
+
+AMENDMENT 1's "no parity skip" is narrowed for THIS function only. Build `irpt-commentary-composition-read-lambda` from the REAL map
+(the entry registered @111512c4e3; no `BAU_SOURCE_MAP_OVERRIDE`) with `BAU_PARITY_SKIP=1` scoped to that one build invocation, never
+exported to the shell or any other build. Before the ledger, record in the after-reads file:
+- `parity_skip: {scope: "irpt-commentary-composition-read-lambda", invocation: "<the exact command>", justification: "ADDENDUM 14.1"}`;
+- `symbol_closure: {missing: 0, modules: [...]}` read from the BUILT zip. Any missing symbol is a STOP and a row.
+The built sha256 must equal `ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0=`; anything else is a STOP. Every other step of AMENDMENT 1
+stands. The apply commit message states the skip and cites ADDENDUM 14.1.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

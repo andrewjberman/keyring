@@ -9,5 +9,5 @@
  "name": "The backfill demand queue: every history backfill priced, ranked and drawn within the Bloomberg and Yahoo budgets, without ever crowding out a production pull",
  "generated_from": "org/missions/D8/MDPF/MDPF_DEMQUE/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T03:23:43Z"
+ "generated_at": "2026-10-09T09:18:31Z"
 }

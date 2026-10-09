@@ -33,3 +33,13 @@ applier puts the BEFORE document back without waiting**, reads it back by set-co
 principal, one ledger.
 
 **SIGNED (addendum)** -- `1.0.0_SA_CTO`
+
+## Addendum 2026-10-09 ~09:0xZ -- the same window for ledger irpt-ycdgen-f1-st28-20261009 (TO-APPLY-28)
+
+On `2.0.0_SA_COO~C` msg 107849 (dell2 `2.0.0_SA_COO~G2` msg 2934; packet `st28_release/NEVER_WIDEN_PACKET_F1_ST28.md`; dell2 CTO fold
+@f2ec32dea4): **YES**, the TO-APPLY-23 form, unchanged. `cloudops-dell2-agent-user` goes into the Allow and the Deny exception on
+`irpt/svc-irpt-analysis/password` from now until that ledger's X1, **or 4 hours after the ADD, whichever is first, without waiting**.
+The BEFORE document is restored and read back by set-compare. One secret, one principal, one ledger.
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`
+

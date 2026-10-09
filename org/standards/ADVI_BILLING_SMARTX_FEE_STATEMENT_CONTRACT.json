@@ -1,0 +1,156 @@
+{
+  "contract_version": "0.1.0",
+  "contract": "ADVI_BILLING SMArtX fee statement (silver smartx_fee_statement)",
+  "owner": "ADVI_BILLING (AB-e-4 writes the parser; AB-e-6 reads the silver partition)",
+  "writer": "data/assets/scripts/silver/advi_billing/smartx_fee_statement.py",
+  "silver_builder_address": "lib/opal_naming.address('advi','49financial','silver','smartx_fee_statement','quarter=<YYYYQn>','data.parquet')",
+  "silver_address_example": "s3://opal-data-assets/advi/49financial/silver/smartx_fee_statement/quarter=2026Q3/data.parquet",
+  "bronze_builder_address": "lib/opal_naming.address('smartx','49financial','bronze','fee_statement','quarter=<YYYYQn>','<file>.xlsx')",
+  "grain": "one row per account allocation (AllocationID); billed in advance",
+  "header_rule": "the header row is the first row (within 60) carrying AllocationID, Brokerage Account Number and Fee Debit, compared case- and whitespace-insensitively; extra columns are kept under their snake_case names as strings; the Deficit Report variant is the same layout on a sheet named like '49F Q3-26 Deficit Details'",
+  "measured_columns_in_export": 33,
+  "source_columns_listed": 23,
+  "source_columns_note": "the export carries 33 columns (issuer measurement); the 23 below are the ones this contract names and types; the other 10 pass through untyped",
+  "rates_rule": "every *_fee_rate is an ANNUAL FRACTION (0.0100 = 100 basis points a year); a source cell written with a percent sign is divided by 100",
+  "fee_rule": "fee = Current Period Estimate Valuation x rate x Days in Period / Days in Year (251 trading days); Fee Debit = Net SmartX Fee + Net Advisor Fee and carries the prior-quarter true-up",
+  "source_columns": [
+    {
+      "name": "AllocationID",
+      "silver_name": "allocation_id",
+      "type": "string",
+      "meaning": "SMArtX's id of the account allocation (sleeve); the statement has one row per allocation"
+    },
+    {
+      "name": "Brokerage Account Number",
+      "silver_name": "brokerage_account_number",
+      "type": "string(10)",
+      "meaning": "custodian (Schwab) account number, zero padded to 10 digits"
+    },
+    {
+      "name": "Sleeve Type",
+      "silver_name": "sleeve_type",
+      "type": "string",
+      "meaning": "the allocation's sleeve type"
+    },
+    {
+      "name": "Model Name",
+      "silver_name": "model_name",
+      "type": "string",
+      "meaning": "the model the allocation follows"
+    },
+    {
+      "name": "Fee Period Start",
+      "silver_name": "fee_period_start",
+      "type": "date",
+      "meaning": "first day of the fee period"
+    },
+    {
+      "name": "Fee Period End",
+      "silver_name": "fee_period_end",
+      "type": "date",
+      "meaning": "last day of the fee period"
+    },
+    {
+      "name": "SmartX Prior Quarter Estimate",
+      "silver_name": "smartx_prior_quarter_estimate",
+      "type": "number(USD)",
+      "meaning": "USD, SMArtX platform fee estimated for the prior quarter"
+    },
+    {
+      "name": "SmartX Prior Quarter Actual",
+      "silver_name": "smartx_prior_quarter_actual",
+      "type": "number(USD)",
+      "meaning": "USD, SMArtX platform fee actual for the prior quarter"
+    },
+    {
+      "name": "SmartX True-Up",
+      "silver_name": "smartx_true_up",
+      "type": "number(USD)",
+      "meaning": "USD, prior-quarter SMArtX platform true-up (actual less estimate) carried into this quarter's fee"
+    },
+    {
+      "name": "Advisor Prior Quarter Estimate",
+      "silver_name": "advisor_prior_quarter_estimate",
+      "type": "number(USD)",
+      "meaning": "USD, advisor fee estimated for the prior quarter"
+    },
+    {
+      "name": "Advisor Prior Quarter Actual",
+      "silver_name": "advisor_prior_quarter_actual",
+      "type": "number(USD)",
+      "meaning": "USD, advisor fee actual for the prior quarter"
+    },
+    {
+      "name": "Advisor True-Up",
+      "silver_name": "advisor_true_up",
+      "type": "number(USD)",
+      "meaning": "USD, prior-quarter advisor true-up carried into this quarter's fee"
+    },
+    {
+      "name": "UMA Fee Rate",
+      "silver_name": "uma_fee_rate",
+      "type": "number(annual fraction)",
+      "meaning": "annual fraction, SMArtX UMA platform rate"
+    },
+    {
+      "name": "APM Fee Rate",
+      "silver_name": "apm_fee_rate",
+      "type": "number(annual fraction)",
+      "meaning": "annual fraction, APM rate"
+    },
+    {
+      "name": "Model Fee Rate",
+      "silver_name": "model_fee_rate",
+      "type": "number(annual fraction)",
+      "meaning": "annual fraction, model manager rate"
+    },
+    {
+      "name": "Advisor Fee Rate",
+      "silver_name": "advisor_fee_rate",
+      "type": "number(annual fraction)",
+      "meaning": "annual fraction, the advisor's rate"
+    },
+    {
+      "name": "Client Fee Rate",
+      "silver_name": "client_fee_rate",
+      "type": "number(annual fraction)",
+      "meaning": "annual fraction, total rate charged to the client"
+    },
+    {
+      "name": "Current Period Estimate Valuation",
+      "silver_name": "current_period_estimate_valuation",
+      "type": "number(USD)",
+      "meaning": "USD, the valuation the current period's fee is estimated on"
+    },
+    {
+      "name": "Days in Period",
+      "silver_name": "days_in_period",
+      "type": "integer",
+      "meaning": "trading days in the fee period"
+    },
+    {
+      "name": "Days in Year",
+      "silver_name": "days_in_year",
+      "type": "integer",
+      "meaning": "year basis in trading days (251)"
+    },
+    {
+      "name": "Net SmartX Fee",
+      "silver_name": "net_smartx_fee",
+      "type": "number(USD)",
+      "meaning": "USD, the SMArtX platform fee for the period, true-up included"
+    },
+    {
+      "name": "Net Advisor Fee",
+      "silver_name": "net_advisor_fee",
+      "type": "number(USD)",
+      "meaning": "USD, the advisor fee for the period, true-up included"
+    },
+    {
+      "name": "Fee Debit",
+      "silver_name": "fee_debit",
+      "type": "number(USD)",
+      "meaning": "USD, Net SmartX Fee + Net Advisor Fee: the amount debited, carrying the prior-quarter true-up"
+    }
+  ]
+}

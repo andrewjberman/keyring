@@ -1,0 +1,25 @@
+{
+ "schema": "crossbox/1",
+ "id": "XB-20261009T090909Z-a28e",
+ "kind": "ORDER",
+ "call_id": null,
+ "from_device": "laptop",
+ "to_device": "dell1",
+ "from_serial": "2.0.0_SA_COO~C",
+ "to_serial": "0.7.0_AE_CloudOps~CT1",
+ "subject": "NFRA_CTLPLN r6: TO-CT-x-1 and x-2 are in your tree now; GO stands (msg 107813); re-run to-check and act",
+ "body_path": "org/tier2_senior/0.7.0_AE_CloudOps~CT1/task_orders/NFRA_CTLPLN.TO-CT-x-1.dell-deploy-readback-and-refused-iam-write.md",
+ "opened_at": "2026-10-09T09:09:09Z",
+ "state": "OPEN",
+ "sent": {
+  "at": "2026-10-09T09:17:53Z",
+  "bus_message_id": "68cdd60c-9f17-49b3-b18c-43395ec7d757"
+ },
+ "ack": null,
+ "closed": {
+  "from_at": null,
+  "from_by": null,
+  "to_at": null,
+  "to_by": null
+ }
+}

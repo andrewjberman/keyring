@@ -255,3 +255,26 @@ Gate limb: none graded this modification. NO SWITCH FILE IS CREATED BY YOU.
 
 **ACCEPTANCE.** The three ids, expectations as AMENDMENT 1 left them. Rewrite the proof instance, validate, flip to `complete`.
 
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-09 ~09:0xZ) -- REOPENED, SHORT: OPEN-DEPLOY tells a worktree that vanished mid-read from one it cannot read
+
+Requested by dell1 (row MDPF_SECCLASS-D1-S22, from 1.0.0_SA_CTO~DELL1's MDPF_SECCLASS rounds 13-15 analysis; relay 0.0.0_AB_MSTR msg 107846).
+It must land BEFORE the OPEN-DEPLOY limb goes to ENFORCE. Measured on dell1 at 2026-10-09T07:07:36Z:
+- `crossbox-deploy-check.py` lists the worktrees (`git worktree list --porcelain`, about :326), then ls-trees each one (about :333).
+- A worktree that another seat's drain removed between the two reads returns rc=128.
+- The limb then reports `worktree <path>: ls-tree rc=128 (not readable, not clear)`, naming a path that no longer exists.
+- On a box running concurrent drains, the limb is therefore unresolvable by construction.
+Calling it "not clear" is right; telling the two cases apart is the fix. Gate limb: none graded this modification.
+
+1. On an ls-tree failure, re-read `git worktree list --porcelain` once and test whether the path exists.
+   - If the worktree is no longer listed AND its path is absent, it VANISHED during the read. That is not a hit. Print
+     `  worktree <path>: VANISHED during the read (listed, then removed)` and count it.
+   - If it is still listed, or its path still exists, the hit stays exactly as today ("not readable, not clear").
+   - If the re-read itself fails, that is a hit, as today's list failure is.
+2. The limb's summary line gains `vanished=<n>` beside its counts. A run where every unreadable tree vanished reads clear on this limb.
+3. Tests in `.tools/tests/test_apply_who_and_crossbox.py`:
+   - a worktree removed between the list and the ls-tree reads VANISHED and is not a hit (simulate the race by removing it from a
+     wrapped git call, or by a stub listing that names a path that does not exist);
+   - a worktree that is listed but unreadable is still a hit;
+   - a failed re-read is a hit.
+
+**ACCEPTANCE.** `CTs3-AC1`, `CTs3-AC2` and `CTs3-AC3` are unchanged. Rewrite the proof instance, validate it, and flip to `complete`.

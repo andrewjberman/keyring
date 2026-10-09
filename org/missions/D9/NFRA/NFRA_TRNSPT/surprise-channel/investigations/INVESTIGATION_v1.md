@@ -1241,6 +1241,73 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "The backfill makes gold precedent available to the drafter (CTO half condition 4; PRD C-KIMI).",
     "world_is": "The residual check holds out every analysis-commentary message from these dates; the wipe is doing its job conservatively, and the cost is zero precedent.",
     "notes": "No rollback needed (the run is within its signed write set: 24 new bronze keys, 6 silver rebuilt, 6 gold new and empty, 1 run record). Any widening of the residual allowlist is a privacy decision; this row asks, it does not propose."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T08:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "PRD C-TIERS says silver is PII-wiped and C-READERS lets a scoped role read the wiped silver, but the Teams silver writer states it applies no wipe, so no Teams silver partition is a wiped copy a narrower reader could be given.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md:106 (C-TIERS: SILVER is typed, de-duplicated, PARQUET, with PII wiped) and :121 (C-READERS: a separate scoped role may read the wiped silver and gold prefixes only)",
+        "data/transcripts/scripts/teams/parse_silver.py:5-6@80a22d9a89 (docstring: No PII wipe on transcripts this round: staff names are the data; the wipe is the mail source's rule); 0 references to wipe in the file's code",
+        "data/transcripts/scripts/teams/research_fold.py (the Research fold DOES apply outlook.wipe.wipe_blocks, per its docstring) and infra/aws/terraform/transcripts/main.tf (no aws_iam_role: no scoped reader exists)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-TIERS: silver holds PII-wiped parquet; C-READERS and FWD-8 ACCEPT: a narrower reader may see only the copy with names and numbers removed.",
+    "world_is": "Silver for the four Teams series (monday_meeting, ocio_ic, asset_management_ic) is written by parse_silver.py with speaker names and text as received; only the Research fold and the mail silver apply the wipe. Inert today because no scoped reader role exists and the only readers are the named ones.",
+    "notes": "Found while writing the FWD-5 and FWD-8 coverage rows (R18_COVERAGE.md). Round 2 ruled staff names are the data for transcripts; whether C-TIERS' wording still binds the Teams silver, or a wiped Teams copy is owed before any scoped reader, is the CTO's call. This row asks, it does not propose."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T08:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "teams/read_meeting.py reads every row of a silver partition and has no held_out handling, so run on a research_meeting date it prints rows that research_read.py withholds as held out.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/read_meeting.py:58-85@fcc3633c7c (read_meeting lists the partition's parquets, builds turns from every row, filters only by speaker and grep); 0 occurrences of held_out in the file",
+        "data/transcripts/scripts/teams/research_read.py:62-70@42ebf001bf (a row with held_out is counted and skipped, never examined or returned); research_fold.STORE_COLUMNS = COLUMNS + held_out, so the Research silver rows carry the flag",
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R11_READBACK_STORED.json@420e376702 (3,644 held-out rows over the 29 stored Research objects)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-q-10 / R10_CLOSE: a held-out row is never returned by the analyst read over Research silver.",
+    "world_is": "That holds for research_read.py only. The meeting reader (TR-t-4) predates the held_out column and reads the same address, so a reader using it on a Research Meeting date sees the held-out rows. Inert today: only the named readers can run either tool.",
+    "notes": "Not run: found by reading the code while writing the FWD-5 coverage row. Becomes live if an analyst-facing reader is ever given the meeting reader."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T09:08:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The Teams pull cannot land a meeting even if applied: its gateway transport is a STUB that raises GatewayToolsAbsent on every call, and pull.tf names a bearer secret (teams/global/gateway-token) that does not exist; TO-APPLY-p18 stopped at step 1 on the secret.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the cell: a real Teams gateway transport + the owner-named bearer in pull.tf), then 2.0.0_SA_COO~T2 cuts it",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/gateway_client.py:5 and :81 -- 'a GatewayTransport STUB that raises'; 'each method raises GatewayToolsAbsent naming the route it would call; no network call'",
+        "infra/aws/terraform/transcripts/pull.tf local pull_secret_name = teams/global/gateway-token; applier msg 2964 @7d2c8c8c53: describe-secret ResourceNotFoundException (list-secrets visible: 115; nearest gateway/teams/bearer, gateway/transcripts/bearer)",
+        "the live mail pull reads its owner-named bearer gateway/mail/bearer (mail_pull.tf:28-30, gateway_mail.py:39) through a real transport (outlook/gateway_mail.py)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ADDENDUM 7: the Teams pull apply proves FWD-2 on its first scheduled research_meeting landing.",
+    "world_is": "Applied as written, the function would run hourly and land nothing (stub transport), and its bearer secret is absent. The apply is the wrong next act; the transport and the secret name come first.",
+    "notes": "The applier did not read a neighbouring secret (a valid expiry from the wrong secret is a false pass). KMS CreateGrant limb PASSED."
   }
 ]
 ```

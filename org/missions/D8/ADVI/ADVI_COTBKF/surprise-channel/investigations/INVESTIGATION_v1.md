@@ -3343,3 +3343,133 @@ round.** Never edit an existing row.
   "world_is": "It is not. SURPRISE_ID_RE admits a lane segment only as a single letter plus digits ([A-Z][0-9]*) or as W<digits> / C, so WCB2 falls outside both arms and the checker reports 'surprises[0] carries NO row id'. The gate is the mechanical authority named in the order's own <proof_of_spec> block, so these two rows were filed in the project's existing non-worker namespace (D2-S42, D2-S43) rather than under the order's prose form, and this row records the departure instead of silently renaming. The order's intent -- a NEW row from this seat, fabric dell2 -- is met. A future ~<lane> seat told to mint W<non-numeric> ids hits the same wall; the fix is the issuer's to make, either in the clause or in the regex."
 }
 ```
+
+## ADVI_COTBKF-D2-S44 -- L9 CB29ac2-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S44",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T08:35:55Z",
+  "one_line": "L9 CB29ac2-AC2 MET: each of the 4 months is classed by the pre-committed rule from the printed rows -- ex-date sources searched (39-row EXDATES csv, 32-CUSIP store listing), candidates within the 26-day lag, bound_pp from the candidates' amounts against the r28 value, compared with regression_pp = r28 - r26 computed; the reported return is printed for context and enters no decision. All 4 untraced, each naming what was checked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~55/div_dating_trace.md (four month sections)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_29_DRAIN_END_20261009.md @48715ba8d8",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_29_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB29ac2-AC2: the class of each month is decided by the script's rule from the printed rows, not from the reported return.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S45 -- the re-count tests a different series; a constant r28/r26 value ratio on two accounts
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S45",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T08:35:55Z",
+  "one_line": "Two findings from this seat's L9 read. (1) The split re-count's 'continuous' (W56-S1) is measured on the store's close_served, which is split-ADJUSTED by construction and so always continuous across a split; round 28's rule tests the CHAIN's stored close, the series the repair scales. The two tests measure different series, so the re-count does not contradict round 28 on 464287614 or 00162Q866. (2) On B3S728504 and B3S728506, method_r28's day values are 2.43-2.47x method_r26's on EVERY valued day, not only in the 4 regressed months. A constant ratio barely moves a month's return, so month grades can still MATCH while the served account_day_value carries a level that differs from r26 by that factor; which level is right is unmeasured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~56/split_recount.md:4 ('Continuity is tested on the store's close_served (split-adjusted)')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~55/div_dating_trace.md (r28/r26 ratio min/max per month: 2.4365-2.4641)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_29_DRAIN_END_20261009.md @48715ba8d8"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3's served account_day_value carries each account's true daily value; the round-29 packet reads the re-count as contradicting round 28's continuity test.",
+  "world_is": "(1) No contradiction: different series. (2) Open: the level of two accounts' served day values differs between methods by a constant ~2.45; the packet's lead (a split applied to closes already as traded) fits it. To be traced before the served values are relied on for these accounts."
+}
+```
+
+## ADVI_COTBKF-D2-W57-S1 -- the delivery holds no outside price for the two scaled CUSIPs; both accounts class untraced
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W57-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~57",
+  "surfaced_at": "2026-10-09T09:10:00Z",
+  "one_line": "CB-ad-1: the factor on B3S728504 and B3S728506 is wholly the two equity CUSIPs 808524102 (close28/close26 = 3.0000) and 808524839 (2.0000), each equal to the product of the APPLIED plan splits dated 2024-10-11 (rows source) on all 5 scaled sample days per account; implied cash is identical under r26 and r28 (not the cash leg). The pre-written rule needs an outside price to choose a level, and the delivery has none: the two CUSIPs enter only as li/trfi/QA/dv/lo rows (Amount 0 on the position rows), no by/sl, so 0 of 10 carrier-days per account have a trade price within 5 days. Both accounts class untraced:0 carrier-days with an outside price. Not a class: the plan applied the split because the chain close was continuous across 2024-10-11, and S45 (1) records the store close as split-adjusted by construction, which would put r26 short by the factor (r28 right) -- an inference from the series' construction, not an outside value. The first run raised a pandas TypeError in outside_price (date vs Timestamp); fixed in the same file, rule untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~57/scale_trace.md (per-CUSIP rows, both Class lines)",
+      "data/assets/scripts/silver/commonwealth_scale_trace.py @3d3ddbceb5 (rule committed before the run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-ad-1: where the delivery holds an outside level (reported market value or position value) it is printed beside both and says which level is right.",
+  "world_is": "The delivery holds no market or position value (silver positions: quantity only) and no trade price for 808524102 or 808524839 (no by/sl rows in 2020-08-21..2026-05-27); the level question needs a source outside the delivery (a vendor close as traded on a pre-split day)."
+}
+```
+
+## ADVI_COTBKF-D2-S46 -- L9 CB30ad1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S46",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:04:24Z",
+  "one_line": "L9 CB30ad1-AC2 MET: each account's class (untraced) follows from the printed per-CUSIP rows by the rule committed @3d3ddbceb5 before the first run (the only later change, @816400901c, is a one-line date-type conversion, no rule); the rows show the factor carried by 808524102 (close ratio 3.0000, x3 2024-10-11) and 808524839 (2.0000, x2 2024-10-11), cash identical, and no outside trade price within 5 days. No 'which level is right' claim is made as measured: the r28-is-right reading is labelled an INFERENCE (W57-S1), and the settling outside value (an as-traded close) is proposed for round 31.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~57/scale_trace.md",
+      "git diff 3d3ddbceb5 816400901c -- data/assets/scripts/silver/commonwealth_scale_trace.py (one line)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_30_DRAIN_END_20261009.md @6a163e8b24",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_30_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB30ad1-AC2: each account's class follows from the printed per-CUSIP rows by the script's pre-written rule, and the 'which level is right' statement rests on an outside value where one exists.",
+  "world_is": "Met. An outside value exists outside the delivery (an as-traded close from MDPF_DEMQUE or Yahoo) and was not read in this read-only cell; D2-S45 stays OPEN until it is."
+}
+```
+
+## ADVI_COTBKF-D2-W58-S1 -- Yahoo as-traded closes on 2022-10-12 match neither r28 nor r26 for 808524102 (SCHB) and 808524839 (SCHZ); branch OTHER
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W58-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~58",
+  "surfaced_at": "2026-10-09T09:20:00Z",
+  "one_line": "CB-ae-1: Yahoo (yfinance 1.2.0, auto_adjust=False) Close on 2022-10-12 x Yahoo's own later splits (both x3/x2 on 2024-10-11, same ratios as the rows) gives as_traded SCHB 13.98 x3 = 41.94 vs r28 39.9906 (+4.9%) and r26 13.3302; SCHZ 22.465 x2 = 44.93 vs r28 39.4362 (+13.9%) and r26 19.7181. Neither CUSIP is within 2% of r28 or r26, so the pre-written rule prints branch OTHER. Direction: the store close is below the outside level on both (r28 -4.7% / -12.2% of as_traded), and the shortfall differs per CUSIP, so it is not a split-factor error alone. Evidence stored at the price_evidence key (2 rows, read back).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~58/split_level_probe.md",
+      "data/assets/scripts/silver/commonwealth_split_level_probe.py (rule in header, written before the first run, unchanged)",
+      "s3://opal-data-assets/commonwealth/cottonwood/silver/price_evidence/date=2022-10-12/part-00000.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-ae-1: one outside as-traded close per CUSIP settles whether r28 or r26 is the right level (both within 2% of one).",
+  "world_is": "Neither level matches the outside as-traded close; r28 is closer than r26 on both CUSIPs but off by 4.9% and 13.9%. The store's 2022-10-12 closes for these CUSIPs carry a further difference (source, date alignment or price basis) that a split-level test cannot settle. Symbols: SCHB from the delivery transactions Symbol column (66 rows, one distinct value), SCHZ likewise and per PRICE_NEED csv."
+}
+```

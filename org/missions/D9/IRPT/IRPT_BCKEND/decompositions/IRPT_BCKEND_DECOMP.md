@@ -2469,3 +2469,36 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r102/p102_cells.py`: every criterion 
 
 fanout: 3 of 3 chains, cap 8, reason: lane ~IB2 runs 397 then 398 in order; two independent worker cells. Assignees:
 0.7.0_AE_CloudOps~IB2 (397, 398), 0.9.0_WK_IRPT_BCKEND~264 (399), ~265 (400).
+
+## 96. ROUND 103, WORKSTREAM ~P (2026-10-09 ~08:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO half @1428af7198 and row D2-W265-S1)
+
+The CTO's half on IB-pr-399 (irpt-narrative) is GIVEN under conditions 1-4 (@1428af7198); the COO half is @08070100ee. IB-pr-395 is
+COMPLETE (~IB2, drained @770f25558f; issuer re-grade 2/2 PASS on live). IB-pr-400 is graded PASS and drained @dda85dc8f4. Its row
+W265-S1 shows the ordered runner key is not what the scheduled holdings fire runs: three per-firm bundles are. A fresh build of them
+moves 17 non-FWD-14 members. Ruling (row D2-S37): the FWD-14 release is the three per-firm keys, NARROW (live bytes plus the FWD-14
+commits on holdings_snapshot.py only); the ordered key is out of the release.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r103/p103_cells.py`: every criterion FAILs at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-401` | apply irpt-narrative (399) on ~IB2 under CTO conditions 1-4 | FWD-2 | WORLD | IB-pr-397, IB-pr-398 closed | P103-a |
+| `IB-pr-402` | FWD-14 narrow per-firm holdings bundles + release packet | FWD-14 | WORLD | IB-pr-400 drained | P103-b |
+
+fanout: 2 of 2 chains, cap 8, reason: ~IB2 takes 401 after its queue; one independent worker cell. Assignees:
+0.7.0_AE_CloudOps~IB2 (401), 0.9.0_WK_IRPT_BCKEND~266 (402).
+
+## 97. ROUND 104, WORKSTREAM ~P (2026-10-09 ~09:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling @03521b4de0)
+
+The CTO placed dell1's row MDPF_SECCLASS-D1-S8 with ~P (msg 2962). SC-e-56's CUSIP fallback in holdings_snapshot.py (dell1's) can fire
+only on a node that carries a CUSIP security_id, and 49F's SmartX-path SECURITY nodes carry TICKER or VENDOR only. One cell: they carry
+the source's CUSIP where it holds one and are listed where it holds none. Its release rides IRPT_BCKEND's pair AFTER dell1's SC-e-56 is
+live.
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r104/p104_cells.py`: AC1 and AC3 FAIL at base; AC2 is the suite control (PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-403` | 49F SmartX-path nodes carry CUSIP security_id; none -> listed, never invented | FWD-2 (SECCLASS e56 acceptance 1) | SERVED | none (release after SC-e-56 live) | P104-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~267.

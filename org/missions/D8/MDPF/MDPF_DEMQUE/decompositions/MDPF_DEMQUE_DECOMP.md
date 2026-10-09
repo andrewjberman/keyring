@@ -276,3 +276,25 @@ what is already ruled: PRD ADDENDUM v0.4 (standing request + readable state, @02
 | one intake | the Yahoo draw reads `requests/` like Bloomberg (today a box-local dir on dell1) | issuer (gap list) | none |
 | price_store retirement | retire the write path at the SECHIST port, same keys, same-window switch | msg 1716 | SECHIST's writer cell |
 | reserve enforcement | a Bloomberg backfill stops at CEILING - RESERVE - drawn; where it is enforced (site Z producer vs a queue gate) is the CTO's call | C-RESERVE | DQ-t-14 (measured draws) |
+
+
+---
+
+# ROUND 5 -- CUT (issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~09:2xZ; supersedes the ROUND 5 DRAFT above)
+
+**Rectangle:** the CTO's round-4 analysis `ledger/ROUND_ANALYSIS.round4.md` @91f3ee9da6 section 3 (msg 2158), items 1-4, with rulings
+R1 (price_store keeps the write path until SECHIST's writer exists; its retirement is cut the round after) and R2 (meter OPAL_BBGTML;
+until it lands the ledger carries one named "unmetered" line). Round 4 CLOSED @a32c0cb89f. The draft's "one intake" and "reserve
+enforcement" rows are NOT in this rectangle and stay candidates.
+
+| cell | serves | what | write set | assignee | risk |
+|---|---|---|---|---|---|
+| DQ-t-15 | FWD-4 | per-kind ceilings: reference / history ceilings seeded from the served demand ledger (largest day per channel, held, never lowered; C-RESERVE "re-measured from the ledger"); a held history reserve from producer code; model_block priced on its component channels (finish = the later of its reference and history finish days) | `bbg_quote.py`, `bbg_allowance.json`, `reserve_estimate.py`, NEW `ceiling_from_ledger.py`, NEW `test_demque_ceiling.py` | `0.9.0_WK_MDPF_DEMQUE~13` | LOCAL |
+| DQ-t-16 | FWD-4 (ADDENDUM v0.4) | the standing shape and its state writer: `standing.py` quotes a standing request PER RUN (its cap) and is the ONE writer of `request_state/.../state.json` at the builder address; the request file gains `"shape": "standing"` | NEW `standing.py`, NEW `test_demque_standing.py`, `requests/ETFS_RIVALS-HISTORY-OWED-DAILY.json` | `0.9.0_WK_MDPF_DEMQUE~14` | LOCAL (the real state write is the issuer's run at close: a one-object write the actor names) |
+| DQ-t-17 | C-PRICES (ADDENDUM v0.5) | the total-return comparison, BEFORE any TR column: Bloomberg's stored DAY_TO_DAY_TOT_RETURN_GROSS_DVDS (opal-data-etfs `bbg/<date>/history_topup.parquet`, ~1 year for ED, BX, CSCO, BBY, DG) against Yahoo's as-traded close + ex-date cash; per-event table; a written finding on how Yahoo handles splits, dividends, special distributions and interest | NEW `tr_compare.py`, NEW `test_demque_tr_compare.py`, its deliverables folder | `0.9.0_WK_MDPF_DEMQUE~15` | LOCAL (Yahoo read, S3 read-only; nothing served) |
+| DQ-t-18 | FWD-2 (R2) | the OPAL_BBGTML meter at site Z: each notebook run of the 07:00 ET runner writes one `bbg_budget.record()` line (no notebook rewritten); the uploader turns it into a ledger row, and a day with no meter line carries one `bbgtml-unmetered` row | NEW `bbgtml_meter.py`, NEW `test_demque_bbgtml_meter.py`, `bbg_ledger_upload.py`, `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd` | `0.7.0_AE_CloudOps~ZQ` (site Z) | WORLD (the 07:00 production runner, under `1.0.0_SA_CTO~Z`'s half) |
+
+**Chains:** four, disjoint write sets, no data edge between them. DQ-t-17's 6-name extension (KO, JNJ, T, VZ, MO, XOM) re-runs the same
+script when the queued Bloomberg draw `requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json` lands; that draw is a queue item, not a cell.
+**Next round (named, not cut):** the TR column (price, cash, TR per ticker per day) by the method DQ-t-17 fixes; one quote front door that
+routes the standing shape to `standing.py`; price_store write-path retirement after SECHIST's writer (R1).
