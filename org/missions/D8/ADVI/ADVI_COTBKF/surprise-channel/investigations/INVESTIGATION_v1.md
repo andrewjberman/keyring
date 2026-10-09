@@ -107,7 +107,7 @@ round.** Never edit an existing row.
       "boto3+pyarrow over s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/date=2026-06-23/ (14 partitions, 1,415,137 rows): 1,533 accounts; first trade in 2013: 311; last trade in 2026: 769; both: 0",
       "the 311 accounts whose first trade is in 2013: latest last trade 2017-12-29; 0 of them trade after 2020-12-31",
       "distinct accounts per trade year: 2013 311, 2014 348, 2015 381, 2016 768, 2017 465, 2018 489 ... 2025 810, 2026 769 (2016 roughly doubles: an overlap year)",
-      "longest spans: acct#0e4ff3a3 2016-01-25 to 2026-06-22 (3,532 rows), acct#4d8fe4a0, acct#16e4c123, E1202062, acct#1114066b (all from 2016-01-2x); span quantiles p50 2.82y, p90 10.32y, max 10.41y",
+      "longest spans: acct#0e4ff3a3 2016-01-25 to 2026-06-22 (3,532 rows), acct#4d8fe4a0, acct#16e4c123, acct#44cb1df9, acct#1114066b (all from 2016-01-2x); span quantiles p50 2.82y, p90 10.32y, max 10.41y",
       "the account-number form differs across the break: 2013 rows carry 11-digit numbers (acct#c9405219, acct#21a12aa6); the 2016+ long histories carry alphanumeric ones (acct#0e4ff3a3, acct#4d8fe4a0)"
     ]
   },
@@ -1358,7 +1358,7 @@ round.** Never edit an existing row.
   },
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "FWD-6: the delivery's performance file covers every transacting account.",
-  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, acct#1db6cb1a, acct#2f400a83, VUL1019560 and ten cv-prefixed accounts).",
+  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, acct#1db6cb1a, acct#2f400a83, acct#536d0c1e and ten cv-prefixed accounts).",
   "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
 }
 ```
@@ -4953,10 +4953,10 @@ round.** Never edit an existing row.
     "status": "GROUNDED",
     "evidence": [
       "data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py:20-23 -- PATTERNS = [ [A-Z0-9]{2}[A-Z]\\d{6} , \\d[A-Z]{2}\\d{6} , [A-Z]{3}\\d{6} ]; every one requires a letter at a fixed offset",
-      "measured, 3 patterns x 6 tokens with the denominator printed: B3S728504, 0QF878956, RGY004256 and B3S793726 each match at least one pattern and were duly redacted; D49151054 (letter + 8 digits) and 00074413503 (11 digits) match NONE",
-      "cleartext D49151054 survives in a file the sweep REDACTED: deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md still carries it (1 hit) alongside 2 lines of acct# tokens it did substitute",
-      "D49151054 is an ACCOUNT, not a security: it appears as an account-month in that half's own 5-row ABSENT list (D49151054 2021-07 and 2021-10) and in the FWD3-ABSENT lines account=D49151054",
-      "00074413503 is an ACCOUNT: read live out of the served month_grades 'account' column during this seat's CB-ac-1 and CB-ah-3 mutants, and it survives in this seat's two proof_of_spec instances and two session logs",
+      "measured, 3 patterns x 6 tokens with the denominator printed: acct#79d02c2c, acct#aaeb760c, acct#cf292cea and acct#f78e8ecd each match at least one pattern and were duly redacted; acct#df101fce (letter + 8 digits) and acct#21a12aa6 (11 digits) match NONE",
+      "cleartext acct#df101fce survives in a file the sweep REDACTED: deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md still carries it (1 hit) alongside 2 lines of acct# tokens it did substitute",
+      "acct#df101fce is an ACCOUNT, not a security: it appears as an account-month in that half's own 5-row ABSENT list (acct#df101fce 2021-07 and 2021-10) and in the FWD3-ABSENT lines account=acct#df101fce",
+      "acct#21a12aa6 is an ACCOUNT: read live out of the served month_grades 'account' column during this seat's CB-ac-1 and CB-ah-3 mutants, and it survives in this seat's two proof_of_spec instances and two session logs",
       "the sweep's own test run now reads FAILED, 28 account-shaped hits in 7 files -- those 7 are the task orders the commit documents as held back by the TO gate, so the test is honestly red on THAT remainder and silent on this one"
     ]
   },

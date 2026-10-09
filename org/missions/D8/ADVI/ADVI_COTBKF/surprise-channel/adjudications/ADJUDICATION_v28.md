@@ -9,7 +9,7 @@ D2-S50, W59-S1 and W53-S3 closed in place; 6 graduate OPEN in `remediations/REME
 **For the analysis:**
 1. **The re-grade line reads control_same=False, uninvestigated.** The control accounts moved because the price basis changed for every
    account, which is expected, but no row says so; a reader gate opened on this round should know the control is not a no-change arm.
-2. **5 new regressions are ABSENT** (D2-S53..S57), two on D49151054 near 0.6 pp; causes untraced.
+2. **5 new regressions are ABSENT** (D2-S53..S57), two on acct#df101fce near 0.6 pp; causes untraced.
 3. **3,962 interpolated days dropped** (W62-S2); 36 priced holding-days lost.
 
 ```json
