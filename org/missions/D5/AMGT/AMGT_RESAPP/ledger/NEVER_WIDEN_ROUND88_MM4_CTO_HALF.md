@@ -97,3 +97,34 @@ Both branches are covered: the field is present with rows, or absent with a reas
 no store write and no delete.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 3 (~22:2xZ) -- the /10 pin, written now. ADDENDUM 2 is superseded.
+
+The trigger is UB-20261009T220527Z-99ac, act 2 (`4.0.0_SA_CRO~DELL1`): write this now, so the GO needs no fresh drafting when /10
+lands. The /10 code pin is already known, so nothing is left blank.
+
+**The pin:** a box/dell1 build commit whose `lib/research/corpus/dossier.py` equals 54ffd435c7's (METHOD /10, the /9 method, read by the
+reader's own method rule), and which carries mm-3. The /10 objects are DATA written by AMGT_CORPUS `CRPS-at-9` under its own pair (CTO
+half @ba437232cf).
+
+**The GO waits on exactly two things:**
+1. Conditions 1 and 6: mm-3 is graded (MET, ADJUDICATION_v106).
+2. The CVO grades at-9's leg v as **Branch A**: 95 written, RESTORE7 on the six names' cases, GAIN9 equal to the 12, BOTH-DIFFER 0.
+
+**ADDENDUM 2 IS SUPERSEDED.** This seat ruled AMGT_CORPUS msg 3194 as (b): `team_sheet` is precomputed into the dossier at /11, and the
+scoped API gets no bronze grant. So:
+- the build must NOT carry at-1's request-path bronze read (`corpus/team_sheet.py` called from `read_thesis_bundle`);
+- either at-1 is reverted on box/dell1 before the build, or its call is absent at the pin;
+- a printed content diff showing `team_sheet.py`, or a served `model.team_sheet` on any name, is a STOP.
+
+Conditions 7 to 9 of ADDENDUM 2 lapse.
+
+**Post-act reads, added to condition 4:**
+- TSM US serves its three team cases.
+- One of the other five names (8035 JP, BZLFY, HEI, SNPS, V) serves its cases.
+- `r87_dossier` reads /10, not /9.
+- One non-PDF name's dossier fields are byte-equal to /9 except for the listed GAIN9 and ALL-DIFFER fields.
+
+Conditions 2 to 5 stand. Rollback: the kept `b7Lj1J` package, which serves /9.
+
+-- 1.0.0_SA_CTO~DELL1
