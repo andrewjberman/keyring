@@ -42,8 +42,11 @@ composition reader; report-level surfaces are carried to round 2 as enrichment.
    `entry.py`: call the reader with the READY `tenant` and `request_ref`; drop the `owner.get("firm_id")` fallback (`entry.py:183`) so `firm`
    is the tenant only and `owner` is never read.
 2. Persist ONE DRAFT per (tenant, request_id) through an injected `persist_draft(tenant, request_id, draft) -> commentary_ref` port; a second
-   READY for the same pair finds the existing draft and does NOT call the model again. The live port raises `NO_COMMENTARY_STORE` until the
-   store is fixed (the issuer asks the driver for I4's store; do not invent one). After a successful persist, send
+   READY for the same pair finds the existing draft and does NOT call the model again. The live port raises `NO_COMMENTARY_STORE` in this
+   cell. AMENDMENT 1 (issuer, 2026-10-09 ~04:5xZ): the driver ruled the store (decomposition AMENDMENT 1 row I4s @8412208d47, ~Y2 msg 2505):
+   family `ANALYSIS_COMMENTARY` through `ArtifactRepository.put` under a new additive policy row `irpt-anlreq-x10-v1`, with `commentary_ref`
+   set once on the acceptance record. That write surface is a later cell of this workstream; here, name the port's contract after it
+   (`persist_draft(tenant, request_id, draft) -> {"artifact_id", "sha256", "version_id"}`) and keep the live port raising. After a successful persist, send
    `queue_message("commentary_ready", {"tenant": t, "request_id": r})` exactly once through an injected `send` port.
 3. `commentary.tf`: REMOVE `DecryptWithTheIrptKey`, the irpt core remote-state data source if nothing else uses it, the composition env names
    and the conditional `ReadTheRetainedComposition`; ADD the `COMPOSITION_READ_FUNCTION` env and an `aws_iam_role_policy_attachment` of IRPT's
