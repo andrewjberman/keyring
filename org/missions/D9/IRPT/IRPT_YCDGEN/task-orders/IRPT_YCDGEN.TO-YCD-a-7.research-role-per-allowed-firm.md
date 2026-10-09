@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_IRPT_YCDGEN~9</issued_to>
 <issued_by>2.0.0_SA_COO~G2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <placeholders>NONE</placeholders>
 <round>7</round>
 <workstream>R7_RESEARCH_ROLES</workstream>

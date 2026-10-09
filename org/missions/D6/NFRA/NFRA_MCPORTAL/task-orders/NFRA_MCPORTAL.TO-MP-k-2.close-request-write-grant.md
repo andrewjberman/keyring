@@ -141,7 +141,11 @@ to `1.0.0_SA_CTO~Z`. Andrew-direct ~07:4xZ retired `~O`: "we don't need CTO~O an
 never-widen half `~O` held on site Z passes to `~Z`). `~Z`'s own self-drive row in `org/ref/LIVE_ARMS.md` already names
 NFRA_MCPORTAL. Ruling msg 32404 stands as `~O` wrote it. `k2.AC3.sh` now reads the `1.0.0_SA_CTO~Z/` half.
 
-<status>pending</status>
+**DRAIN:** drained by 2.0.0_SA_COO~MP 2026-10-09 ~10:1xZ. The issuer re-ran all three checks from the applier's branch against live
+IAM: AC1 `actions=s3:PutObject resources=1 problems=0`, AC2 6 of 6, AC3 2 of 2 halves with the ledger closed. Instance VALID.
+The applier left the flip to the issuer, since the order file is outside its paths. Was: pending
+
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <fabric>site-z</fabric>

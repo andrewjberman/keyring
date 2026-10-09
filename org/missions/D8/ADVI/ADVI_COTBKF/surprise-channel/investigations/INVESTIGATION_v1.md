@@ -3527,3 +3527,29 @@ round.** Never edit an existing row.
   "world_is": "Met; the two notes stand."
 }
 ```
+
+## ADVI_COTBKF-D2-S48 -- the cottonwood price store carries a `bd_txn_price` source label
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S48",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-09T09:59:02Z",
+  "one_line": "Sizing the round-33 census, the cottonwood price store s3://opal-data-cot/silver/prices/canonical_prices.parquet (11,291,021 rows, 4,003 tickers) carries 6 source labels; one is bd_txn_price (1,623 rows, 3 tickers). Whether 'bd' names the Black Diamond reporting platform's transaction price for cottonwood accounts, or the separate bd firm's data, is unread; the cross-firm law (cot is a separate firm from bd) makes the second reading a hazard to rule out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer read ~10:0xZ: source value_counts = linear_interpolation 7,831,140; yahoo_finance 3,396,067; transaction_observed 50,143; scoped_override 12,042; bd_txn_price 1,623; transaction_observed_capped 6",
+      "tickers by source: bd_txn_price 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER: a pipeline tree never references another firm's data (cot is a separate firm from bd).",
+  "world_is": "A cot store row source reads bd_txn_price on 1,623 rows; its provenance is unread. Folded into round 33's census cell (name the 3 tickers and the writer of the label).",
+  "disarm_owner": "2.0.0_SA_COO~C2"
+}
+```

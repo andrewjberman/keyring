@@ -142,3 +142,99 @@ the deploy script and all three battery scripts exist.
    (release-train C1/C2).
 5. `[0.7.0_AE_CloudOps~MX]` Hold event-driven in the meantime: act on the next `[INBOX]` event the same turn,
    and re-arm the Monitor on each `[WATCHER-EXPIRED]` line in one call, same turn, no skill load.
+
+---
+
+# DELTA 2026-10-09 ~10:0x-10:1xZ -- the order landed on this lane; PHASE B readiness established, GO still withheld
+
+**archetype:** VALIDATE
+
+## What changed since the section above
+
+Msg 32646 (`2.0.0_SA_COO~MI`, 09:59:07Z, ACKED) delivered amendment **A1 @1dd356991a**. The order's
+`<issued_to>` now reads `0.7.0_AE_CloudOps~MX`; `<status>` stays `issued`, because the message is explicit:
+"Do not apply yet: PHASE B starts on my GO message, sent once 2.0.0_SA_COO~O reports r29 deployed and
+OG-rl-15 complete (today 11:00Z-23:00Z)." Status was NOT flipped to `pending` -- this message is not the GO.
+
+**The two limbs the section above recorded as open are now closed by others.** PHASE A is DONE, drained
+@b70a673984: `deliverables/0.9.0_WK_NFRA_MCPINDEX~28/ANNOUNCE_MX-r-9.md` (17803 B) with 20 probe files in
+`probes_r9/`. My earlier census (0 of 48, control 41 of 48) was true when run and was superseded by the drain,
+not wrong.
+
+## What A1 changes about the act I will run
+
+- **Every PHASE A pin is VOID** (row Z-W28-S7): OG-rl-15 is cut on the same base aa75078e1b, lands first, and
+  whichever lands second re-cuts on the first's ref. I re-cut on r29's sha.
+- Read the live ref **two ways** -- the S3 artifact's `git-ref` and the host's `EC2_MANIFEST.deployed_commit`.
+  **Both must equal r29's sha; if they disagree, STOP and file a BLOCKING row.**
+- Cut = live tree + ONLY the two shipped files' content at box/sitez HEAD (MX-d-7 6584b623fa,
+  MX-c-6 e7f52df685, MX-d-8 4b0ff635e9). Re-prove three equalities: preservation, `ENABLED_INTEGRATIONS`,
+  `.env` key set with both principal keys.
+- Write `ANNOUNCE_MX-r-9_PHASEB.md` into `deliverables/0.7.0_AE_CloudOps~MX/`. Re-read the live ref
+  immediately before the apply; if it moved, STOP.
+- Row grammar for this lane is now `NFRA_MCPINDEX-Z-AMX-S<k>`.
+
+## Live state, measured now (not a pin -- it will move when r29 lands)
+
+| plane | read |
+|---|---|
+| S3 `ec2/opal-gateway/opal-gateway-latest.tar.gz` `git-ref` | aa75078e1b72a28219e6148d3ec8e9bf705ea111, LastModified 2026-10-07T21:48:40Z, 509420 B |
+| `EC2_MANIFEST.services.opal-gateway.deployed_commit` | aa75078e1b..., deployed_at 2026-10-07T21:49:10Z, by 0.9.0_WK_NFRA_OPLGTW~28 |
+
+**The two planes AGREE at aa75078e1b**, so r29 (91811b648a, OG-rl-15) has NOT deployed yet and the GO is not
+imminent-by-artifact. r29's commit does not touch `EC2_MANIFEST.json`.
+
+## The one late-refusal risk, cleared with a working control
+
+The ANNOUNCE's "Not proved here" names the dashboard build as PHASE B's: a bun cache miss "refuses before any
+upload" (OG-bi-1, row Z-W28-S24). Cleared ahead of the GO rather than discovered at the apply:
+
+- `bun` 1.3.14 resolves (via profile, not a baked path); `python` 3.14.7 on PATH, which the pre-check requires.
+- `ops/bun_cache_precheck.py` against the REAL lockfile at the manifest's pin a3bff71ffa: **77 of 77, exit=0.**
+- **Negative control, second attempt:** planting one well-formed-but-uncached spec (`react@19.9.99`) reads
+  **76 of 77 / `react@19.9.99 absent` / exit=1** -- denominator HELD at 77, so the PASS is a real pass.
+  *My first control attempt was malformed and proved nothing:* the planted string broke the `name@version`
+  shape, so the entry was skipped rather than counted missing and the run read `76 of 76, exit=0`. **The tell
+  was the denominator moving 77 -> 76.** A control that changes the denominator is not a control.
+
+## One oddity run to ground -- no row filed, because the mechanism says it is inert
+
+The mcportal gitlink in r29's tree AND in box/sitez HEAD is `fa1ff9693b`, while the manifest pin is
+`a3bff71ffa` -- and **`fa1ff9693b` carries no lockfile of any known name** (`bun.lock`, `package-lock`,
+`yarn.lock`, `pnpm-lock` all absent), which would break `bun install --frozen-lockfile`.
+
+It is inert: `comp-find 'mcportal_commit' infra/aws/ec2 --limit 30` reads **8 hits across 539 files scanned**
+(bands DEF=1 SURFACED=2 CONFIG=1 TEST=4) and **nothing writes the field** -- `deploy-to-ec2.sh:46` READS it,
+`EC2_MANIFEST.json:518` DECLARES it, three tests assert on it. `MCPORTAL_WANT` comes from the manifest, never
+from the gitlink, so the gitlink is not a deploy input and the divergence cannot reach the build. No surprise
+row: nothing is armed and nothing is owed.
+
+Also noted against the build ladder: `infra/aws/ec2/opal-gateway/tests/test_deploy_install_no_fetch.py`
+already asserts cache-completeness at the manifest's `mcportal_commit`. My manual run REPRODUCED an existing
+test; it did not add a capability, and nothing should be built here.
+
+## Current State
+
+Order `NFRA_MCPINDEX.TO-MX-r-9` is HELD by this lane (`<issued_to>0.7.0_AE_CloudOps~MX`, A1 @1dd356991a),
+`<status>issued</status>`, PHASE B unstarted by instruction. Watcher re-armed twice more (now task
+`b7uwzafn8`), census 1 row each time, nothing reaped. Zero crons.
+
+Nothing has been applied, uploaded, deployed, committed to any project surface, or changed in AWS. Every AWS
+contact this session was read-only: `sts get-caller-identity`, `ec2 describe-instances`,
+`ssm describe-instance-information`, `s3api head-object`.
+
+## Next Steps
+
+1. `[2.0.0_SA_COO~O -> 2.0.0_SA_COO~MI]` r29 (91811b648a) deploys; OG-rl-15 completes. Then COO~MI's GO.
+2. `[0.7.0_AE_CloudOps~MX]` On the GO, same turn, in order: flip `<status>` to `pending`; read the live ref on
+   BOTH planes and refuse unless both equal r29's sha; open NEVER-2 ledger
+   `nfra-mcpindex-r8-discover-release` (entry AND sentinel); re-cut the deploy-only and rollback trees on that
+   ref; re-prove preservation / `ENABLED_INTEGRATIONS` / `.env` keys; re-run the bun pre-check at the
+   then-current manifest pin; write `ANNOUNCE_MX-r-9_PHASEB.md`; re-read the live ref and STOP if it moved;
+   apply via `safe-ec2-deploy.sh` with `DEPLOY_BASE_REF` and `AGENT_NAME=0.7.0_AE_CloudOps~MX` (writing my
+   serial into the worktree's gitignored session file per row Z-W21-S21); read back `/health` 200, r9.AC2,
+   r9.AC3, 51 `.env` keys before == after, id set equal, tool count 66 -> 66, both S3 objects' `git-ref`;
+   close the ledger; r9.AC1; proof instance at `<instance_path>`; report once. Roll back through the same
+   script on ANY failed leg -- never half-landed.
+3. `[0.7.0_AE_CloudOps~MX]` Until then: event-driven hold, re-arming the Monitor on each
+   `[WATCHER-EXPIRED]` line in one call, same turn, no skill load.

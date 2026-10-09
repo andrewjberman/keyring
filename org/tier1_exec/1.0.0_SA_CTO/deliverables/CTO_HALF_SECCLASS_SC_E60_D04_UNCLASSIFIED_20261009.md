@@ -36,3 +36,15 @@ SIGNED" (@191bd54c13). It was cut after the e75 leg-G read, per laptop XA-202610
 3. **Not covered:** any other D_04 function, and any change to C_06.
 
 **SIGNED** (conditions 1-3) -- `1.0.0_SA_CTO~DELL1`.
+
+## ADDENDUM 1 (~10:0xZ) -- condition 2's second arm amended: e79 is live in the same fire (`2.0.0_SA_COO~M1` msg 2236)
+
+SC-e-79 shipped at 09:54:21Z (@270a5b9796). It shipped AFTER SC-e-83 was written and read back (@bfabe0002d), so the e83-first sequence
+held. e79 moves 23 securities ($966,285) out of `unclassified`, so tonight's BD fire cannot leave `composition` byte-equal to `lp8kKqX7`.
+As written, arm 2 would roll back e60 for a move that is correct. Amended:
+- **Arm 2 now reads:** `composition` differs from `lp8kKqX7` ONLY in the `unclassified`, `equity` and `fixed_income` moves that e79's leg G
+  accounts for (the 23 securities and their dollars, as e79's G prints them). Every other class is equal. Any other difference still
+  rolls back both e60 keys.
+- **Arms 1 and 3 are unchanged:** the top-level mix is the six classes plus at most one `Unclassified` line summing to 1.0, and there is
+  no lower-case `unclassified` or `other` key.
+- e60 G and e79 G are read from the SAME fire, and e79's G is read first, since arm 2 depends on it.

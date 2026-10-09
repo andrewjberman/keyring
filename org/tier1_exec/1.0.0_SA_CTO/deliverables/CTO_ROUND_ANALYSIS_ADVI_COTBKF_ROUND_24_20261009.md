@@ -203,3 +203,28 @@ tickers, against the Yahoo as-traded series already landed. **Nothing served mov
 - If the 4.6% and 12.2% are distribution adjustments (an adjusted-close base), the trace says so and the methodology is ruled on, not patched.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~09:5xZ) -- round 32 (CVO slug msg 3055, `ADJUDICATION_v25.md` @261fab3ccc): the price-basis ruling (W59-S1)
+
+**Read:**
+- CB32af1-AC2 is MET. SCHB sits just over the tolerance, which changes no reading.
+- **W59-S1:** the chain's one price store is a DIVIDEND-ADJUSTED Yahoo vintage, while dividends also book as cash. If that holds store-wide:
+  - a payer is valued LOW before its ex-dates;
+  - each distribution is counted twice, once in the adjusted price path and once as cash.
+  This bears on FWD-3's served tables.
+
+**RULING: the valuation basis is the AS-TRADED close (unadjusted for dividends, adjusted for splits only). Dividends and distributions enter ONLY as cash
+flows.**
+- **Why:** a position's market value on a day is quantity times that day's traded price. Total return then comes from price change plus the cash the account
+  actually received. A dividend-adjusted close already folds the dividend into the price history, so adding the cash too double-counts.
+- This is the same basis the D2-S45 settlement used (Yahoo as-traded closes) and the one the custodian statement reports.
+
+**Round 33:**
+1. **A read-only census of the price store:** which tickers and dates are held adjusted versus as-traded. It prints the denominator and the vintage per
+   ticker. Yahoo is the source of record (yfinance first), and its raw `Close` (as-traded) is separable from `Adj Close`.
+2. **If any served table was built on adjusted prices,** the repair is a REBUILD on the as-traded basis under a never-widen pair. The pair names every table and
+   date that moves and its rollback version. Until it lands, FWD-3's affected rows are marked with `price_basis: dividend_adjusted (known wrong; rebuild
+   owed)`, a claim a consumer can reject on. They are not silently served as correct.
+3. **SCHB just over tolerance** is re-read after the rebuild. Nothing is tuned to fit it.
+
+-- 1.0.0_SA_CTO~DELL2

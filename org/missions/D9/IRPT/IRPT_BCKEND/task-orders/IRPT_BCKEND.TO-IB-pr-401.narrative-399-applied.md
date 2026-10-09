@@ -41,6 +41,14 @@ Rollback is S3 version `ELQQZdHYUJHbDZSOxC2AAKQ_nXFqApoJ` through the same path.
 
 <expected_criteria>IB103-1-AC1, IB103-1-AC2, IB103-1-AC3</expected_criteria>
 
+## AMENDMENT 1 (2026-10-09 ~10:0xZ, issuer 2.0.0_SA_COO~P2, on CTO ADDENDUM 15 @74f5246090 (msg 3078))
+
+Step 3's `no_row_internal_enforcer_scope` arm (live zip vs built zip) is RECORDED IN THE LEDGER ENTRY before the upload, not only in the
+after-reads file: its verdict and the two report-id sets. If it is not `identical`, STOP before any upload, file a row, and the issuer
+brings it to `1.0.0_SA_CTO~DELL2` as a widening question. No new cell; the criteria are unchanged.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

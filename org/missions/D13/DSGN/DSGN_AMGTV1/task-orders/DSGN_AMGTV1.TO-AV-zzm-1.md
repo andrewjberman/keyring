@@ -82,7 +82,7 @@ Report once: the diff (per file, one line each), the output line of every criter
 `AV-zzm-1`; items 3 and 4 are build cells `AV-zzm-2` and `AV-zzm-3`). Requested on UB-20261009T091009Z-b711 act 1. Base portal
 e6fb269c (= origin DEV). The three cells' write surfaces are disjoint; only `AV-zzm-1` holds `__harness__/`.
 
-<status>pending</status>
+<status>complete</status>
 <round>61</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzm-1</to_id>
 <slot>~131</slot>
