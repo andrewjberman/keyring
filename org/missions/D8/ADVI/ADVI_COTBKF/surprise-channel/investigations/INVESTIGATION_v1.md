@@ -4155,3 +4155,54 @@ round.** Never edit an existing row.
   "world_is": "It cannot today by label: 'bd' names both. Excluding by token over-excludes Cottonwood's own platform rows; including by token would admit 49F's."
 }
 ```
+
+## ADVI_COTBKF-D2-W68-S1 -- build_canonical_prices_v2.py Step 5b (share-class denomination check) filters on a source label the writer never emits
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W68-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~68",
+  "surfaced_at": "2026-10-09T14:05:00Z",
+  "one_line": "CB-an-1: Step 5b of data/cot/scripts/gold/build_canonical_prices_v2.py selects T1 rows with source == 't1_transaction_observed', but resolve_prices_for_asset emits 'transaction_observed' and 'transaction_observed_capped' only; 't1_transaction_observed' appears once in the file, in that filter. The denomination check (a FATAL raise on a ratio over 10x or under 0.1x) therefore always sees an empty frame and prints nothing. Not changed (outside the order).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py Step 5b filter vs resolve_prices_for_asset source labels, at the CB-an-1 change commit on wk-ADVI_COTBKF-68",
+      "Grep of the file for t1_transaction_observed: one hit (the filter); the labels written are in resolve_prices_for_asset"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5b's own comment: it detects ticker_lookup misassignments by comparing the latest canonical price to the T1 (transaction-observed) median, and raises on a fatal ratio.",
+  "world_is": "The T1 filter matches no row, so the check is a no-op in every run; a denomination mismatch would pass silently. Whether any such mismatch exists today was not measured."
+}
+```
+
+## ADVI_COTBKF-D2-W68-S2 -- source_firm resolution needs lib/opal_naming and the registry at run time; the gold writer runs from a synced script folder
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W68-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~68",
+  "surfaced_at": "2026-10-09T14:05:00Z",
+  "one_line": "CB-an-1: build_canonical_prices_v2.py now resolves every input's firm through lib/opal_naming (the repo-root lib/ and infra/logic/registry/). gold_dispatch.sh syncs only s3://<bucket>/code/gold/ into the script folder, so on that path the module or the registry may be absent. The writer then prints a WARN and stamps every row 'absent' (never the own firm); the repo-file input lib/ticker_overrides.py, resolved by its repo-relative path, also reads absent there. Three further facts for L9: (1) the naming gate REFUSED the first commit because moving the two existing silver key literals (transactions, historical_prices) into the INPUT_ADDRESSES dict touched them under the live remediation ADVI_FIRMBKTS, so the dict joins the tier folder from parts (_SILVER, the sibling-script pattern) rather than typing the literals; (2) the stamp is the firm of the input that supplied the row's price (transactions for T1, silver/historical_prices for T2); (3) the config inputs (ticker_lookup, ticker_overrides) are resolved and printed with a WARN when they differ, not folded into the stamp.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/gold_dispatch.sh:497-498 (aws s3 sync of code/gold/ into $SCRIPTS)",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py _load_registry / resolve_input_firms at the CB-an-1 change commit",
+      "data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py test_d (an unresolvable input reads absent)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order resolves each input's firm from its bucket and key prefix through lib/opal_naming, and each repo file it loads gets a firm; the field lands with the next manual silver-prep.",
+  "world_is": "Whether the run host carries lib/opal_naming.py and infra/logic/registry/ beside the synced scripts was not read (no deploy in this order); if it does not, the first deployed run stamps all rows 'absent' (graded NOT-CLEAN) until the registry ships with the code mirror. Inert until a deploy."
+}
+```
