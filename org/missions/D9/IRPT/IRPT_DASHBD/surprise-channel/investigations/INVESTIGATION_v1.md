@@ -3539,3 +3539,107 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W47-S1 -- The step-7 dry_run read 304 MB and 29.4 s because it computed one day with no source partition (SOURCE_LAG), so it does not size the class or lots sta
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "The step-7 dry_run read 304 MB and 29.4 s because it computed one day with no source partition (SOURCE_LAG), so it does not size the class or lots stage; row W23-S2 is not discharged by it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-70 step 7 and CTO condition 1: a {\"dry_run\": true} invoke reads the Lambda's own Duration and Max Memory Used against 900 s and 2048 MB before the organic fire, as the lots-stage sizing (packet Unmeasured, W23-S2).",
+  "world_is": "MEASURED 2026-10-09 04:03Z, RequestId ef733674-6c4d-4f9f-b6e4-045778c0a185: Duration 29367.78 ms, Max Memory Used 304 MB. The log shows 'computing 1 day(s) 2026-10-08..2026-10-08', '2026-10-08 SOURCE_LAG: no balance partition', 0 rows, and 'lots newest landed: account_activity_daily=None ...' with empty class_rows, lots_rows and lots_catch_up. The newest dim_balance partition is date=2026-10-07 and balance partitions land about 09:46Z the following day (date=2026-10-06 LastModified 2026-10-07T09:46:56Z; date=2026-10-07 2026-10-08T09:46:43Z). The function ran no class or lots compute, so AC2 reads PASS on numbers that carry no information about the 7,604-account lots stage (kit reference 1672.3 MB, 374.93 s). The first fire is the first at-scale run on the Lambda.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~47/R35_APPLY_RECORD.json dry_run.report_line",
+      "aws s3api list-objects-v2 opal-data-assets schwab/08335338/silver/dim_balance/ date=2026-10-06 and date=2026-10-07 LastModified",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R35.md Unmeasured"
+    ]
+  },
+  "notes": "Not a STOP: the dry_run was under 85% and wrote 0 objects, as the order's criterion reads. The first fire is held until the 2026-10-08 silver partitions land (about 09:46Z), because an ad hoc fire before then is a SOURCE_LAG no-op; its REPORT line is the real sizing read.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S2 -- record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, outside this order's grant, so the source ma
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, outside this order's grant, so the source map was stamped by its scoping half record-deploy-scope.py directly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-70 step 6: run infra/aws/lambda/ci/record-terraform-deploy.sh so the source map's deployed_code_sha256 records the live hash; the order's grant names the source map and not infra/aws/terraform/**.",
+  "world_is": "MEASURED by reading the script (lines 448, 800-827, 886-888): after the stamp it runs a CHANGELOG writer on infra/aws/terraform/<pipeline>/CHANGELOG.json, git-adds it and commits it with the source map. That path is not in <paths>. Ran instead: python infra/aws/lambda/ci/record-deploy-scope.py investor-reporting --function irpt-49f-reporting-gold-lambda --code-sha256 <live CodeSha256>, which is the wrapper's own stamping step (1 of 15 rows stamped, 14 untouched), committed @443bd67448. No CHANGELOG entry exists for this deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/record-terraform-deploy.sh:448,800-827,886-888",
+      "infra/aws/lambda/ci/record-deploy-scope.py",
+      "infra/aws/lambda/ci/lambda-source-map.json @443bd67448"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S3 -- The worktree has no terraform binary and no .terraform, so init and the plan used the main checkout's terraform.exe and a local-directory provider mir
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "The worktree has no terraform binary and no .terraform, so init and the plan used the main checkout's terraform.exe and a local-directory provider mirror of aws 5.100.0, with no download.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-70 step 4 runs the targeted terraform plan in infra/aws/terraform/investor-reporting/reporting-gold/ from the worktree, and the order forbids downloading any package or program.",
+  "world_is": "MEASURED: .tools/terraform.exe is absent in the worktree and the root has no .terraform. Used C:/dev/ajb_workspace/.tools/terraform.exe (v1.15.8, SAFE_APPLY_TERRAFORM for the apply) and ran terraform init -plugin-dir=<the ycharts root's .terraform/providers>, which holds aws 5.100.0 windows_amd64; init completed with no network fetch of the provider. The lock file and .terraform are git-ignored (git status clean after init).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform init output 'successfully initialized' 2026-10-09 ~03:57Z",
+      "git status --porcelain infra/aws/terraform/investor-reporting/reporting-gold (empty after init)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W47-S4 -- Pins 0-4 leave four CHANGED bundle members (opal_naming.py, systems.json, exemptions.json, reporting_policies.json) packaged at their older source-map
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W47-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~47",
+  "surfaced_at": "2026-10-09T04:06:43Z",
+  "one_line": "Pins 0-4 leave four CHANGED bundle members (opal_naming.py, systems.json, exemptions.json, reporting_policies.json) packaged at their older source-map pins, not the HEAD bytes the packet's file list prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-70 step 3 sets pins 0 to 4 exactly as the packet's Preconditions table lists; the packet's file list prints sha256 at HEAD for all 19 members and marks opal_naming.py, systems.json, exemptions.json and reporting_policies.json CHANGED.",
+  "world_is": "MEASURED: the built bundle stages those four from the pins already in the source map (b5dc2e63d1, 224058ea3f, 8b4c15c6ba, 11bf813387), whose sha256 values (for example opal_naming.py 4eb46f70...) differ from the packet's list (9d301e1c...). The packet itself says the four are outside this function's data path (a census switch, a vendor row, a bucket-policy exemption row, an unrelated policy row), and the order lists pins 0 to 4 only, so they were left. The deployed bundle is the signed behaviour; its bytes for those four members are the older ones.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json @d5c11dc683 staged_from",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~46/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE_R35.md 'The build's file list'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
