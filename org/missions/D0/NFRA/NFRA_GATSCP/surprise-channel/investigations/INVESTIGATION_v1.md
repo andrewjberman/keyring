@@ -30,3 +30,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The ruling arrived after the cut. The fix is FWD-7 (delivery to a Codex seat that then executes), not a FWD-1 hop; the CTO's same ruling makes the audited seat-home POINTER today's carrier, so nothing waits on the fix. The issuer carries it as the first FWD-7 item for the round-1 analysis's enrichment list rather than a second issuance into a frozen round; the CTO may rule otherwise at the analysis."
 }
 ```
+
+## NFRA_GATSCP-D1-S2 -- site Z's Codex AGENTS.md now admits a mission-tree order with no seat-home copy (bears on D1-S1)
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S2",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T08:00Z",
+  "one_line": "1.0.0_SA_CTO~Z amended AGENTS.md @a55888e3a2: a Codex GO admits a 2.0.0_SA_COO-issued order in the mission tree whose issued_to is the full suffixed serial, with no seat-home copy or pointer -- the lane-contract half of D1-S1 may already be done.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -1 a55888e3a2 (fetched from origin box/sitez, 08:00Z): 'fix(AGENTS.md, 1.0.0_SA_CTO~Z): a Codex Go admits a mission-tree task order whose issued_to names the full se...'",
+      "msg 2057 0.0.0_AB_MSTR~DELL1 -> 2.0.0_SA_COO~N1, 07:58Z: six wake ORDERs received in site-Z lane inboxes 07:53-07:56Z; EXECUTING to be confirmed per lane",
+      "msg 2043 1.0.0_SA_CTO~DELL1, 07:55Z: D1-S1 rides round 2 as FWD-7's first item"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row NFRA_GATSCP-D1-S1: the permanent fix (a Codex lane accepts a crossbox body with no copy) is an NFRA_GATSCP round-2 FWD-7 item.",
+  "world_is": "Site Z changed the lane contract itself at a55888e3a2, ahead of this project. What round 2 still owes under FWD-7 is the delivery half the PRD names (C-DELIVER: the issuance act opens the crossbox file and the sending manager's automated path sends it, only once the order's commit is on origin, in UTC) and an exercised Codex receipt; the lane-contract half is to be graded at the round-1 analysis against a55888e3a2, not rebuilt. Not yet measured: whether any site-Z lane EXECUTED an order under the amended contract."
+}
+```
