@@ -3115,6 +3115,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-W36-S1 -- The fee-base correction (mean daily value) moves 762 segments to WITHIN but 133 round-30 WITHIN segments to OUTSIDE; the average of begin and end value is not the only fee-base reading.
+
+```json
+{
+  "id": "IRPT_DASHBD-W36-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~36",
+  "surfaced_at": "2026-10-09T01:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Re-forming the fee add-back on the mean daily served value moves 762 round-30 OUTSIDE segments to WITHIN and 133 round-30 WITHIN segments to OUTSIDE (net +629, 7,459 -> 8,088 of 9,078).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~36/UNEXPLAINED_CLASSES_E2.json fix.regrade_all_segments"
+    ]
+  },
+  "spec_asserts": "TO-DB-b-58: a class disposed 'fixed' carries its re-graded effect; round 30's formation (fees / ((bmv + emv) / 2)) is the stated fee base of the tie-out.",
+  "world_is": "MEASURED on the 9,078 graded segments, baseline re-derived here and equal to round 30's record (7,459 within): the fee base 'mean daily served value over the linked days' gives 8,088 within; 762 OUTSIDE->WITHIN, 133 WITHIN->OUTSIDE. Of the 1,203 UNEXPLAINED, 618 move to within. The 133 reversals are segments the (bmv + emv) / 2 base tied and the mean-value base does not; their cause was not measured. The fix is a function in a new module (fee_base_gross); the served tie-out and round 30's reader are unchanged and nothing is adopted by assumption."
+}
+```
+
 ## IRPT_DASHBD-W37-S1 -- The 370 FLOW_TIMING misses are the served END convention by construction, so within_flow_end is 0 of 370; two segments read 98 and 172 pp at START.
 
 ```json
