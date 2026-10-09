@@ -7,6 +7,7 @@ Fail-closed: an unreadable or empty register raises (CLI: rc 3); it never falls 
     python lib/devices.py resolve <label>   # canonical name for a name or alias (case-insensitive); rc 2 if unknown
     python lib/devices.py queue <label>     # the box's inbound queue name; rc 2 if unknown
     python lib/devices.py this              # this box, from its own AGENTBUS_DEVICE setting; rc 2 if unset/unknown
+    python lib/devices.py placement         # one placement value per line (the project-row `fabric` values)
 
 OPAL_DEVICE_REGISTER=<path> points every reader at another register file (fixtures and proofs only).
 """
@@ -66,6 +67,37 @@ def inbound_queue(label: str, reg: dict | None = None) -> str | None:
     return None
 
 
+def placement_values(reg: dict | None = None) -> tuple:
+    """The values a project row's `fabric` may hold, one per box, in register order (NFRA_CTLPLN C-PLACEMENT).
+    A box's value is its register name, except that a box holding a hyphenated alias which is its own name with hyphens
+    (name `sitez`, alias `site-z`) is placed under that alias. Add a box to the register and it appears here."""
+    out = []
+    for d in devices(reg):
+        spelled = [a for a in d.get("aliases", []) if "-" in a and a.replace("-", "").lower() == d["name"].lower()]
+        out.append(spelled[0].lower() if spelled else d["name"])
+    return tuple(out)
+
+
+def lane_suffix(label: str, reg: dict | None = None) -> str | None:
+    """The `~lane` suffix the box's seats carry, derived from its register row: "" for the box that runs every lane no
+    other box claims (lane_letters_default), `~<first lane letter>` for a box with lane letters, else `~<NAME>` upper-case.
+    None when the register does not hold the box."""
+    name = resolve(label, reg)
+    for d in devices(reg):
+        if d["name"] == name:
+            if d.get("lane_letters_default"):
+                return ""
+            letters = d.get("lane_letters") or []
+            return "~" + (letters[0] if letters else name.upper())
+    return None
+
+
+def seat_serial(base: str, label: str, reg: dict | None = None) -> str:
+    """`base` (e.g. a Tier-1 serial without a lane) carried to the box: base + lane_suffix. "" when the box is unknown."""
+    suffix = lane_suffix(label, reg)
+    return "" if suffix is None else base + suffix
+
+
 def setting() -> tuple:
     """(claim, basis): the box's own AGENTBUS_DEVICE setting -- the process environment, else the persisted user setting
     (HKCU\\Environment; AGENTBUS_REG_KEY overrides the key for proofs) for a process started before it was made.
@@ -105,6 +137,9 @@ def main(argv: list) -> int:
                 return 2
             print(name)
             return 0
+        if argv == ["placement"]:
+            print("\n".join(placement_values()))
+            return 0
         if argv[:1] in (["resolve"], ["queue"]) and len(argv) == 2:
             out = resolve(argv[1]) if argv[0] == "resolve" else inbound_queue(argv[1])
             if out is None:
@@ -116,7 +151,7 @@ def main(argv: list) -> int:
     except RegisterError as exc:
         print(str(exc), file=sys.stderr)
         return 3
-    print("usage: python lib/devices.py names | resolve <label> | queue <label> | this", file=sys.stderr)
+    print("usage: python lib/devices.py names | placement | resolve <label> | queue <label> | this", file=sys.stderr)
     return 64
 
 
