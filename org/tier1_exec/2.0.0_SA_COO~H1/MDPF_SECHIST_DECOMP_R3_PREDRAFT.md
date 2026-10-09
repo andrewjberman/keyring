@@ -59,3 +59,12 @@ Andrew: "This can go into the BBG queue system that MDPF_DEMQUE is for" (record
 Bloomberg rows for the 1,319 Cottonwood CUSIPs (C-SERIES, C-GAP), keyed by the same CUSIP namespace as chain E's Yahoo writer, and
 joined to table keys through chain C's id map. Depends on C (the join) and on the queue's first paced draw; it draws nothing itself.
 Fan-out (draft): 7 chains, cap 8.
+
+## Update 05:5xZ -- prices are total return (PRD ADDENDUM v0.3, CTO rulings batch C @6c538a0bfd)
+
+C-SERIES now stores per security per day the as-traded price, the dividend/interest cash and the total-return value, from either source;
+C-GAP binds all three. Effect on this pre-draft: chains E (Yahoo writer) and G (card-A series write) write all three values, and the
+total-return column waits on MDPF_DEMQUE's round-5 Bloomberg-vs-Yahoo comparison cell (the method is fixed on its evidence), so E and G
+gain that dependency; their price and dividend columns do not wait. Card A's request asks PX_LAST only, so the dividend/interest leg of
+the Bloomberg share is a request amendment for Q1 once the comparison fixes the field set. Sign-off unchanged: `prd-signoff.py status
+MDPF_SECHIST` reads ADMITTED at v0.2 @6c538a0bfd (ratified-text SIGNED current; brief admitted).
