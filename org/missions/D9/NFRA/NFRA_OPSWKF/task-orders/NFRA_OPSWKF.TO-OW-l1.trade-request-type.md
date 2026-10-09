@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPSWKF~1</issued_to>
 <issued_by>2.0.0_SA_COO~O2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>in_progress</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -57,6 +57,14 @@ Build the test the way `infra/aws/lambda/ticket_center/tests/test_analysis_reque
 the `EmptyUsersDdb` stand-in in `test_authz_matrix.py`). **No test may reach AWS**: the existing suite once called the live users
 table when a box held credentials, so install the same stand-ins.
 
+**AMENDMENT 2 (issuer, 2026-10-09 ~06:4xZ, REOPENS this order at the drain):** typing `trade_request` broke two loops in TCKT_VNEXT's
+`infra/aws/lambda/ticket_center/tests/test_analysis_request.py`. Both still treat `VALID_TYPES[:4]` as untyped: one at `:113-115`, which
+asserts `questions == []`, and one at `:240-245`, which creates each type with no answers. The owner `2.0.0_SA_COO~V2` granted exactly
+this change (msg Re 2694): each loop iterates `("service_request", "meeting_request", "other")` instead, with a short comment
+naming OW-l-1. Change nothing else in that file. Prove it by running the whole `infra/aws/lambda/ticket_center/tests` directory
+with invalid AWS keys (`AWS_ACCESS_KEY_ID=x AWS_SECRET_ACCESS_KEY=x AWS_SHARED_CREDENTIALS_FILE=/nonexistent`): 141 passed, 0
+failed. Record that in the proof as a declared drain check. AC1 is unchanged.
+
 ### ACCEPTANCE
 
 <criterion id="OW-l1-AC1" cell_refs="OW-l-1"><invocation>python org/missions/D9/NFRA/NFRA_OPSWKF/deliverables/2.0.0_SA_COO~O2/R1_CHECKS/ow_checks.py l1-type</invocation><expect>OW-L1-TYPE-OK</expect></criterion>
@@ -74,6 +82,7 @@ table when a box held credentials, so install the same stand-ins.
 <paths>
 infra/aws/lambda/ticket_center/lambda_function.py
 infra/aws/lambda/ticket_center/tests/test_trade_request_type.py
+infra/aws/lambda/ticket_center/tests/test_analysis_request.py
 org/missions/D9/NFRA/NFRA_OPSWKF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

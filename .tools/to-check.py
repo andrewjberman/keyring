@@ -108,6 +108,7 @@ def _extract_tag(text: str, tag: str) -> str | None:
 # SCOPED TO STATUS ONLY: `_extract_tag` itself is unchanged and every other tag reads as before.
 # ---------------------------------------------------------------------------------------------
 _CODE_SPAN_RE = re.compile(r"`[^`\n]*`")
+_CRITERION_BLOCK_RE = re.compile(r"<(criterion|prereq)\b.*?</\1>", re.DOTALL | re.IGNORECASE)  # per-item <status> lives inside these
 
 
 def _extract_status_tag(text: str) -> str | None:
@@ -117,7 +118,13 @@ def _extract_status_tag(text: str) -> str | None:
     status whose value legitimately contains backticks is returned intact.
     """
     masked = _CODE_SPAN_RE.sub(lambda m: " " * len(m.group(0)), text)
-    m = re.search(r"<status>(.*?)</status>", masked, re.DOTALL | re.IGNORECASE)
+    # THE LAST TAG GOVERNS (1.0.0_SA_CTO ruling msg 107528; ace2b3fa52 for the gates; dell1 row AMGT_RESAPP-D1-S9 via msg 107804):
+    # an order whose stale earlier <status> was left above the current one reads its LAST status. ONLY a LINE-ANCHORED tag
+    # outside every <criterion> block counts (to-pipeline-gate's STATUS_LINE_RE): a naive last-tag read picked up a tag quoted
+    # in prose, inside an invocation, or a criterion's own <status>MET</status> (17 orders falsely re-opened when measured).
+    unc = _CRITERION_BLOCK_RE.sub(lambda m: " " * len(m.group(0)), masked)
+    found = list(re.finditer(r"^[ \t]*<status>(.*?)</status>", unc, re.DOTALL | re.IGNORECASE | re.MULTILINE))
+    m = found[-1] if found else re.search(r"<status>(.*?)</status>", masked, re.DOTALL | re.IGNORECASE)
     if not m:
         return _extract_tag(text, "status")
     return _strip_xml_comments(text[m.start(1):m.end(1)]).strip()

@@ -17,3 +17,11 @@
 2026-10-09T02:32:31Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/cot/scripts/gold/tests/test_d04_no_multi_asset.py  reason=no-open-ledger-names-it
 2026-10-09T06:59:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/D_04.client_portal_summary.py  reason=no-open-ledger-names-it
 2026-10-09T06:59:07Z HELD-DEPLOY  0.0.0_AB_MSTR~DELL1  ref=refs/heads/box/dell1  path=data/black_diamond/scripts/gold/tests/test_d04_unclassified_line.py  reason=no-open-ledger-names-it
+2026-10-09T02:02:17Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/conversion_manifest.py  reason=no-open-ledger-names-it
+2026-10-09T02:02:17Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/silver_registry.py  reason=no-open-ledger-names-it
+2026-10-09T02:02:17Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_conversion_manifest.py  reason=no-open-ledger-names-it
+2026-10-09T02:02:17Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_schwab_runtime.py  reason=no-open-ledger-names-it
+2026-10-09T02:06:36Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/conversion_manifest.py  reason=no-open-ledger-names-it
+2026-10-09T02:06:36Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/silver_registry.py  reason=no-open-ledger-names-it
+2026-10-09T02:06:36Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_conversion_manifest.py  reason=no-open-ledger-names-it
+2026-10-09T02:06:36Z HELD-DEPLOY  0.0.0_AB_MSTR~Z  ref=refs/heads/box/sitez  path=data/assets/scripts/silver/tests/test_schwab_runtime.py  reason=no-open-ledger-names-it
