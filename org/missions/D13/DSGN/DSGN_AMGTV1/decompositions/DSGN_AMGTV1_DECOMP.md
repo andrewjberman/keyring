@@ -2239,3 +2239,7 @@ Andrew's word.
 reference edit it reads 4 of 4, and `round53/checks/r53a.cjs` still reads 3 of 3 there.
 **Chains:** 1. **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL.
 **Then:** the drain, battery29 and the Freshness bun test on the stacked candidate, a /freshness real run, and CTO review.
+**CANCELLED before spawn (issuer, ~23:1xZ):** Andrew-direct ~22:5xZ/~23:0xZ moves DSGN_AMGTV1 to DELL1 after the CURRENT round closes.
+The record is `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_225xZ_AMGT_DSGN_RIVALS_TO_DELL1_AFTER_ROUND_CLOSE_AND_BBG_CENSUS.md`
+@b7361ceb2a. The relay is 1.0.0_SA_CTO~Z msg 32100: "start no new round". AV-zzf-1 is `cancelled` with that pointer, and no worker
+took it. This round's list and `round54/checks/r54.cjs` are the next DSGN_AMGTV1 round's list on DELL1.

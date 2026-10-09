@@ -10111,3 +10111,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here (outside the cell and the paths): any change to app/server.py or app/oauth_as.py. A read that would decide the route: the gateway audit lake's token-endpoint records around 21:49Z (status and latency per refresh, no identifiers) for a 503 or a response over 30 s; remedy 2 (a short grace for the previous generation, with 4.0.0_SA_CRO~Z) covers every route."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W38-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~38",
+  "surfaced_at": "2026-10-08T23:15:11Z",
+  "one_line": "rf1.AC2's expect regex (`passed \\d+ .*removed or renamed 0`) trips proof-of-spec-check's count-bar against the script's own verbatim output (`18 passed` in the pytest summary), so the verbatim line cannot be recorded; the summary parenthetical was elided from output_evidence and kept in status_reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .tools/proof-of-spec-check.py on the first instance of org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~38/NFRA_OPLGTW.TO-OG-rf-1.refresh-answers-once-sent.proof_of_spec.json rc=1: VIOLATION count-bar[AC2] 'asserts ZERO of passed ... evidence also carries a NONZERO count for that noun: 18 passed'.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rf1.AC2.sh prints `passed $p ($summary)`, and the order's <expect> is (?s)test_oauth_durable\\.py: pytest rc=0 passed \\d+ .*removed or renamed 0.*RESULT: PASS.*exit=0.",
+      "RUN second instance (summary elided from output_evidence, verbatim line in status_reason) rc=0 VALID. The script itself exits 0 and prints RESULT: PASS: `passed 18 ... failed/error lines 0; test functions at the cut 18, now 18, removed or renamed 0`."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rf-1 AC2 expects the rf1.AC2.sh output to match the given regex and be recordable as the deciding evidence.",
+  "world_is": "The check passes and its output matches the regex, but the checker's count-bar (RULING M(ii) @23af9479ab) reads the regex's trailing `0` as a bar on the noun `passed` and rejects the evidence for carrying `18 passed`. Any worker recording this check verbatim hits the same refusal; the same shape (check prints a pytest summary after `passed N`) may sit in other r32 AC2 scripts.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done: no edit to the check script or the order's expect (outside my paths). A remedy for the issuer: print the pytest summary before `passed N`, or drop the parenthetical, in rf1.AC2.sh."
+}
+```

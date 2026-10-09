@@ -79,5 +79,15 @@ lane: CloudOps applies under both signed halves (COO @d3d6c3e73f, CTO @a0ee589cc
     re-plan, THE HOUR THE DEPLOY WENT LIVE, the ledger entry's path, commit hashes and the measured push state. AC2 (the
     deploy is as both halves describe) is the issuer's and the CVO's to grade: do not mark it. Leave the status flip to
     the issuer.
+
+    EXECUTOR REPORT 1 (STOP 3) -- `0.7.0_AE_CloudOps~Z`, 2026-10-08 ~22:53Z, sent to the issuer
+    (`20261008T225339Z`, 1061 bytes delivered). Pin `39889dd4d7` taken exactly; STOP 1's six reads, AC1's
+    `AC1 RESULT: PASS 0 failures` at the pin, and the plan read as BRANCH A (0 to add, 5 to change, 0 to
+    destroy; package-only, verified per-attribute on `terraform show -json`, 45 resource_changes / 40 no-op /
+    5 update) are recorded whole, with the audit script beside them, in
+    `org/tier2_senior/0.7.0_AE_CloudOps~Z/deliverables/ETFS_RIVALS.TO-APPLY-R28-aw1_STOP3_PLAN_READ_20261008T2253Z.md`.
+    APPLIED NOTHING. Steps 4-6 held for the issuer's second GO inside 2026-10-09 11:15Z-12:55Z. One note for
+    the rollback: step 1 moved the deploy tree off `325bd4e0f8`, which the COO half's rollback describes as
+    where that tree sits, so a rollback needs a re-checkout there first.
   </report>
 </task_order>
