@@ -3384,3 +3384,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S36 -- round 33 near-zero classes ran on a shim that substitutes a different mean under the old name
+
+```json
+{
+  "id": "IRPT_DASHBD-S36",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T01:46:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Round 33's near-zero classes (DB-b-65: 79 of 153 'fixed') ran through a shim that rebinds uc.mean_daily_value := uc.daily_mean_value, but W38-S1 MEASURED those as different functions (mean_daily_value averages every non-zero daily value, daily_mean_value only the positive ones). So DB-b-65's E3 counts rest on a substituted fee base, not the one round 31's classifier defined.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~42/near_zero_e3.py:189-193 (the shim) and NEAR_ZERO_E3.json:1572 (records it as applied)",
+      "investigation row IRPT_DASHBD-W38-S1 (INVESTIGATION_v1.md ~:3224-3228: 'the two means are not the same function')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~39/large_flow_e3.py:117 and :279 still call uc.mean_daily_value (this seat's comp-find, 22 hits over the project)"
+    ]
+  },
+  "spec_asserts": "A record module's numbers are produced by the function it names; a missing name is repaired at its import, not substituted by a different function under the old name.",
+  "world_is": "Nothing served moves (the tie-out is project-owned). The effect on DB-b-65's 79 is unmeasured: the shim only changes accounts with negative daily values in the window, and near-zero-balance accounts are exactly where those occur. Re-run E3 with round 31's own mean (or the reader's, under its own name) inside the same repair cell as W40-S1/W42-S1."
+}
+```
