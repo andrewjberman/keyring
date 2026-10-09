@@ -18693,3 +18693,32 @@
 2026-10-09T06:52:26Z  SPAWN  0.7.0_AE_CloudOps~IB2  by 0.0.0_AB_MSTR~DELL2  pid=9452  host_pid=22672
 2026-10-09T06:53:30.531555+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~IB2 pid=19472
 2026-10-09T07:22:19.737260+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL2 pid=24080 reason='to=2.0.0_SA_COO~T2' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 156 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T06:39:41.632706+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZQ pid=22212 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZQ cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T06:40:48.558898+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=10324 reason='to=0.0.0_AB_MSTR~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 161 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T06:53:40.794733+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=35524 reason='to=2.0.0_SA_COO~O' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 185 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T06:53:53.490751+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=35524 reason='to=2.0.0_SA_COO~O' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 156 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-09T07:00:26.251803+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=16136
+2026-10-09T07:00:59.302862+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~O pid=5572
+2026-10-09T07:01:44.509491+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~Z pid=19016
+2026-10-09T07:01:46.684543+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~AI pid=19908
+2026-10-09T07:01:57.368626+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MS pid=29612
+2026-10-09T07:01:58.967347+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=18492
+2026-10-09T07:02:03.784995+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MI pid=22348
+2026-10-09T07:02:20.189265+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~O pid=25132
+2026-10-09T07:02:32.518822+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MP pid=21940
+2026-10-09T07:02:34.273375+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~ZI pid=20744
+2026-10-09T07:02:52.251905+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~MP pid=16168
+2026-10-09T07:02:58.943725+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~ZZ pid=31532
+2026-10-09T07:02:59.118184+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~Z pid=21212
+2026-10-09T07:03:10.112976+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=23376
+2026-10-09T07:03:44.777670+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~Z pid=12360
+2026-10-09T07:21:41.951730+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZW pid=3520
+2026-10-09T07:21:44.416322+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZC pid=37076
+2026-10-09T07:21:47.760330+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZQ pid=34216
+2026-10-09T07:21:58.542024+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=32440
+2026-10-09T07:24:07.559010+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=36360 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T07:25:50.369011+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZC pid=33372 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZC cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T07:26:01.705931+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZW pid=38116 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZW cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T07:26:05.446085+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=33312 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T07:26:07.080242+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=36244 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
+2026-10-09T07:26:20.949483+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZQ pid=21316 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZQ cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
