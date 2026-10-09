@@ -5104,3 +5104,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W80-S1 -- DB-b-105: four staged pins of the gold function differ from HEAD (R44 had one), and the live read was get-function-configuration
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W80-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~80",
+  "surfaced_at": "2026-10-09T15:58:00Z",
+  "one_line": "Over live oNgy4rnr, 4 of the 18 staged pins differ from their HEAD bytes (account_return_daily.py, sources.json, lib/opal_naming.py, reporting_policies.json); the release is built from the pins, so none is a member of R45.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order DB-b-105 step 1: exactly one member may differ and it is handler.py; any other member differing from the LIVE bundle is a row and a STOP.",
+  "world_is": "Comparing the source map's pinned bytes with HEAD, 14 of 18 staged pins equal HEAD and 4 differ (account_return_daily.py, sources.json, lib/opal_naming.py, infra/logic/registry/reporting_policies.json), moved by other seats' commits (R44 found only reporting_policies.json). The live bundle holds the PIN bytes: the builder takes staged members from the pins, and the R44 apply verified every member against the live zip (R44_APPLY_RECORD.json member_census_vs_live), the gold function's pins unchanged since upload commit f0d129281f. So no member other than handler.py differs from the live bundle, and the census lists handler.py only; the apply cell must keep the pins. The local kit of the PINNED bytes plus the new handler returns the status key byte-equal to the old one. Separately, the live read used get-function-configuration (CodeSha256, State, size and timeout) rather than get-function, which also returns a pre-signed code download URL the order's no-download bound does not want fetched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~80/R45_RELEASE_CENSUS.json members_compared",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_APPLY_RECORD.json member_census_vs_live",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from@HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
