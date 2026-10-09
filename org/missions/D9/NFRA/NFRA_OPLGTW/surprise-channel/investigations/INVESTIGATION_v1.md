@@ -10185,3 +10185,77 @@ name the one known failure instead of silently inheriting it.
   "notes": "This is the one pre-search retry the order allows; the retried commands (22e138b8, 5ca67e2b) succeeded."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-09T00:48:36Z",
+  "one_line": "The silver-schwab package dir is a byte-for-byte vendored copy of data/assets/scripts/silver/, which is outside this order's paths; the converter change exists only in the package until the source is changed too, and the next re-vendor would silently drop the third master.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/data_assets_mirror.patch (4 files, applies cleanly to HEAD), org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/probes/tm1_tests_with_patch.txt (46 passed).",
+      "FILE infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json ('vendoring' line) and infra/aws/terraform/opal-assets/silver.tf silver_build_commit comment.",
+      "RUN cmp of 9 shared modules, package vs data/assets/scripts/silver at cb9358a9e0~1: IDENTICAL x9."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-tm-1 step 4 and the ruling relay: the producer change is made in infra/aws/lambda/opal-assets/opal-assets-silver-schwab/, whose path is in <paths>.",
+  "world_is": "All nine shared modules in the package equal data/assets/scripts/silver/ today (cmp: IDENTICAL x9); BUILD_MANIFEST.json says 'repo files are the source of truth; fix there and rebuild'; silver.tf says silver_build_commit.schwab names the commit whose data/assets/scripts/silver/ tree the package is byte-equal to (now 1f03a3f209). Three things follow: (1) the source files silver_registry.py and conversion_manifest.py (and the tests test_schwab_runtime.py:184-185, which hard-codes the two masters, and test_conversion_manifest.py) must carry the same change; the patch is saved as data_assets_mirror.patch, applies cleanly (git apply --check), and the tests pass 46 of 46 with it in a scratch copy; (2) until then the package is not byte-equal to the pinned tree, so a rebuild from source would ship a converter that REFUSES 08403355 (ManifestError 'no basis label'); (3) the pin moves to the commit where source and package are equal, or the closure's declared_source reads a confident wrong commit. data/assets/scripts/silver is the DS lane (CLAUDE.md rule 13).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit under data/assets/scripts/silver/ (outside <paths>) and any edit of silver_build_commit (the commit it must name does not exist yet). The issuer widens <paths> or cuts a DS cell for the patch; the CTO half's blast radius treats the package + source as one leg."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-09T00:48:36Z",
+  "one_line": "The opal-assets and opal-gateway Terraform roots each carry one unrelated unapplied change that a whole-root apply would also make (cot-rebalancer-runner-daily cron, mcportal-grant-writer code hash).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/plans/opal-assets.txt and org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/plans/opal-gateway.txt (the resource lists)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-tm-1 step 7: each root's plan shows the new master's resources (the Phase A premise is that the plan is the new master's keys and the three IAM/rule surfaces only).",
+  "world_is": "opal-assets plan: aws_cloudwatch_event_rule.cot_rebalancer_runner_daily schedule_expression cron(0 6 * * ? *) -> cron(45 12 * * ? *) (WSE_COTMDL, unrelated). opal-gateway plan: aws_lambda_function.mcportal_grant_writer source_code_hash ZyYCPPyP... -> xapNPkgm... (unrelated, last_modified 2026-10-03). canonical-schwab-ec2 is clean (2 to add, 1 to change, only the new master). An untargeted apply of either root would make those changes too.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The never-widen ask names the targeted resources per root so the apply order can carry -target; disarm: the apply order for 0.7.0_AE_CloudOps~Z must target, never apply whole-root. Not touched here."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-09T00:48:36Z",
+  "one_line": "safe-apply.sh has no plan mode (it refuses any call without the word 'apply' and tells the caller to run terraform directly for plan), so the three Phase A plans were run as terraform plan with -lock=false.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE .tools/safe-apply.sh:60-67."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Relay: 'Planning with safe-apply's plan mode is permitted' and order step 7: plan each root with bash .tools/safe-apply.sh in its PLAN mode.",
+  "world_is": "safe-apply.sh lines 60-67 print 'this wrapper gates terraform apply only. For plan or any other subcommand call the terraform binary directly' and exit 2; there is no --plan flag. The plans were run as `terraform -chdir=<root> plan -input=false -lock=false -no-color` after `terraform init -input=false` (providers into a scratch cache); no apply, no state write, no lock taken.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Plan files saved under plans/. -lock=false avoids writing a state lock for a read-only plan."
+}
+```
