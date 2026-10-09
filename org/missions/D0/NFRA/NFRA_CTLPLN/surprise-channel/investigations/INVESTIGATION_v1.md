@@ -6447,3 +6447,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The files this order changes (transcripts/tests/*.py and the nfra-ctlpln-identity census, tests and plan note) are fmt-clean; the one unformatted file is another cell's undeployed commentary.tf. Not edited. INERT: formatting does not change a plan."
 }
 ```
+
+## NFRA_CTLPLN-S9107 -- two integrate passes in a row took 10-14 minutes and skipped the slots behind them
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-09T13:36:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-S9107",
+  "one_line": "Two integrate passes in a row ran 10-14 minutes (606.73s at 13:10:14Z, 852.88s at 13:34:21Z) against 5-50s earlier today, and each blocked the scheduled retries behind it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/git-author-override-audit.log: BOX-SYNC mode=integrate rc=0 secs=606.73 at 13:10:14Z (4 verify-merges 21-60s inside it, ~3 min before the first); secs=852.88 at 13:34:21Z merged box/dell1 graded=41/49, box/dell2 0/71.",
+      "Same log, 13:03:04Z, 13:04:00Z, 13:07:27Z and 13:25:32Z: integrate rc=3 skipped=overlap behind the long holder.",
+      "Earlier integrates today: 10:50:31Z 28.26s, 11:20:51Z 48.73s, 11:50:08Z 5.74s, 12:20:15Z 10.86s."
+    ]
+  },
+  "spec_asserts": "Per-box branches move through CLOUD on each integrate slot, so a repair on one box reaches the others within a slot or two.",
+  "world_is": "Integrate now holds the slot for 10-14 minutes, so the next slots are skipped and a fix waits longer: the PROOF_OF_SPEC.schema.json repair 59a9442734 sat local while every proof check read rc=2. Where the time goes is not measured; the verify-merges explain about 150s of the 607s."
+}
+```

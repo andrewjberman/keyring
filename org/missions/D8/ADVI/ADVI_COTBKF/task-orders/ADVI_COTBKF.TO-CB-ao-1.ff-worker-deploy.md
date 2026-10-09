@@ -52,6 +52,21 @@ The file to deploy is the repo file at HEAD, sha256 `45fbbd921f026f9d4e30785e632
    against those same bytes and reads the stamp.
 6. **Close the ledger** with the prior and new VersionIds and the sha256 match.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~14:1xZ) -- RELEASED. Both halves exist; start now.**
+
+- **COO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R41_FF_WORKER_DEPLOY_COO_HALF.md` @3089cde892.
+- **CTO half:** `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_R41_FF_WORKER_DEPLOY_CTO_HALF.md` @9dd6703dd1
+  (msg 3431). Its conditions are folded in:
+  1. `safe-deploy.sh` prints its key list FIRST, and the list holds exactly one key (`code/gold/B_00.canonical_holdings.py`).
+     Anything else means STOP.
+  2. **The proof test imports the FETCHED SERVED file,** not the repo file.
+     - Fetch the new served object to a scratch path, and confirm its sha256 equals `45fbbd92...d74c08d`.
+     - In a detached scratch worktree at HEAD (`git worktree add --detach <scratch> HEAD`), place the fetched bytes at
+       `data/cot/scripts/gold/B_00.canonical_holdings.py`.
+     - Run `python -m pytest data/cot/scripts/gold/tests/test_b00_ff_carry_claim.py -q` THERE, and record the line in the ledger.
+     - Remove the scratch worktree after. The shared tree is not edited.
+  3. The next gold run's output fingerprint is read unchanged. That is the issuer's post-deploy watch item, not this order's act.
+
 ### ACCEPTANCE
 
 <criterion id="CB41ao1-AC1" cell_refs="CB-ao-1"><invocation>python -m pytest data/cot/scripts/gold/tests/test_b00_ff_carry_claim.py -q</invocation><expect>passed</expect></criterion>
