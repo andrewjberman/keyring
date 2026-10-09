@@ -18846,6 +18846,7 @@
 2026-10-09T10:57:01.456003+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=5124
 2026-10-09T10:57:01.803302+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZC pid=29840
 2026-10-09T10:57:01.906707+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZW pid=12768
+2026-10-09T10:49:18Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL2  host=DESKTOP-N8RJV0A  sessions=40  session_pids=644  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=74  msys_joined=32  ms=1230
 2026-10-09T11:02:07.230295+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~ZG pid=35220
 2026-10-09T11:09:57.444715+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZV pid=22780 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZV cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'
 2026-10-09T11:10:10.653496+00:00 IDENTITY_SEND_UNVERIFIED guard=GA-3 serial=0.7.0_AE_CloudOps~ZQ pid=35920 reason='-' conflict='SENDER UNVERIFIED (advisory) -- this session never called register_agent, so from_agent=0.7.0_AE_CloudOps~ZQ cannot be checked against a registration. The message was delivered carrying a sender-unverified stamp, and the send was audited. Register at session start to send verified.'

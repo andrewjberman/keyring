@@ -367,3 +367,17 @@ Measured by `0.7.0_AE_CloudOps~IB2`, three BUILD_ONLY arms at the REAL map:
 No new cell.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 16 (2026-10-09 ~11:0xZ) -- `~Y` rounds 72-75 (CVO slug msg 3186, `ADJUDICATION_v48.md` @419ddac89d)
+
+**Read:**
+- MAY-CLOSE and ARMED 0 in this lane. 9 rows are dismissed, including the long-held D2-S18, D2-S19 and W190-S3. D2-S17 is closed.
+- **X-1 is proven.**
+- `irpt-ycharts-generate` runs release 6b with AWSSDKPandas:16, which matches this seat's 6b half (@0e6626694e) and the 390 half's AMENDMENT 1 layer ruling.
+
+**One act is owed Andrew's word,** on his list with its citation (CLAUDE.md Agent Autonomy: S3 deletes): the deletes of 6b's read-4 and read-5 prospect objects, once
+`~Y2` has named them by key and version. The discretion grant @35fabf20c8 covers 6b's read-3 list only, not these.
+
+No new `~Y` cell. The lane's remaining work rides IRPT_ANLREQ release 1 (TO-APPLY-Y1, re-signed @ebc9b941cc).
+
+-- 1.0.0_SA_CTO~DELL2
