@@ -109,25 +109,76 @@ grade_merge() {
             | LC_ALL=C sort -u | sed '/^$/d' )"
   n="$(printf '%s\n' "$paths" | sed '/^$/d' | wc -l | tr -d ' ')"
   GRADED_NOTE="graded=${n}/$(git diff --name-only "$p1" "$t" | wc -l | tr -d ' ')"
-  [ "$n" -eq 0 ] && { echo "box-sync: grade SKIP -- the merge introduces nothing and no path changed on both sides"; return 0; }
+  local nst=0 so
+  if [ "$n" -eq 0 ]; then
+    echo "box-sync: grade SKIP -- the merge introduces nothing and no path changed on both sides"
+    _standing_priv "$p1" "$p2" "$t" || return 1
+    so="$(_standing_run tree; _standing_run corpus)"; _standing_cleanup
+    [ -n "$so" ] && printf '%s
+' "$so"
+    nst="$(printf '%s
+' "$so" | grep -c '^STANDING ')"
+    echo "box-sync: ${nst} standing"; return 0
+  fi
   [ -f "$GATE" ] || { echo "box-sync: REFUSED -- $n path(s) to grade but $GATE is missing" >&2; return 1; }
-  PRIV="${GITDIR}/box-sync-${EPOCHSECONDS:-0}-$$"
-  mkdir -p "$PRIV" && printf '%s\n' "$p1" > "$PRIV/HEAD" && printf '%s\n' "$p2" > "$PRIV/MERGE_HEAD" && printf '%s\n' "$COMMON" > "$PRIV/commondir" || return 1
-  GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" git read-tree "$t" || { rm -rf "$PRIV"; PRIV=""; return 1; }
-  local rc=0
+  _standing_priv "$p1" "$p2" "$t" || return 1
+  local rc=0 gout tout cout=""
   # shellcheck disable=SC2086
-  STAGED="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$GATE" || rc=$?
+  gout="$(STAGED="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$GATE" 2>&1)" || rc=$?
+  [ -n "$gout" ] && printf '%s
+' "$gout"
   if [ "$rc" -ne 0 ]; then
-    rm -rf "$PRIV"; PRIV=""
+    _standing_cleanup
     echo "box-sync: REFUSED BY THE ROW GATE on the merge's own paths (rc=$rc)" >&2
     return "$rc"
   fi
   # the project-tree check (GS-t-3), on the same merged bytes in the same private git dir, scoped to the merge's graded
   # path set: it refuses only a violation in a project those paths touch and prints every other one as STANDING.
-  GRADE_ACT="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act-from-env GRADE_ACT || rc=$?
-  rm -rf "$PRIV"; PRIV=""
-  [ "$rc" -eq 0 ] || echo "box-sync: REFUSED BY THE TREE CHECK on the merge's own paths (rc=$rc)" >&2
-  return "$rc"
+  tout="$(GRADE_ACT="$paths" GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act-from-env GRADE_ACT 2>&1)" || rc=$?
+  [ -n "$tout" ] && printf '%s
+' "$tout"
+  # the corpus pass runs inside the row gate only when a channel path is in the set; otherwise show its standing view.
+  if [ "$rc" -eq 0 ] && ! printf '%s
+' "$paths" | grep -q 'surprise-channel/'; then
+    cout="$(_standing_run corpus)"
+    [ -n "$cout" ] && printf '%s
+' "$cout"
+  fi
+  _standing_cleanup
+  [ "$rc" -eq 0 ] || { echo "box-sync: REFUSED BY THE TREE CHECK on the merge's own paths (rc=$rc)" >&2; return "$rc"; }
+  nst="$(printf '%s
+%s
+%s
+' "$gout" "$tout" "$cout" | grep -c '^STANDING ')"
+  echo "box-sync: ${nst} standing"
+  return 0
+}
+
+# private GIT_DIR pinned to the merge (PRIV), index read from T.
+_standing_priv() {
+  PRIV="${GITDIR}/box-sync-${EPOCHSECONDS:-0}-$$"
+  mkdir -p "$PRIV" && printf '%s
+' "$1" > "$PRIV/HEAD" && printf '%s
+' "$2" > "$PRIV/MERGE_HEAD" && printf '%s
+' "$COMMON" > "$PRIV/commondir" || return 1
+  GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" git read-tree "$3" || { rm -rf "$PRIV"; PRIV=""; return 1; }
+}
+_standing_cleanup() { [ -n "$PRIV" ] && rm -rf "$PRIV"; PRIV=""; return 0; }
+# information pass: act = this script (belongs to no project, no channel); exit codes never refuse.
+_standing_run() {
+  local tool="$1" out rc=0
+  if [ "$tool" = tree ]; then
+    out="$(GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" python "$ROOT/.tools/missions-tree-index.py" check --staged --act .tools/box-sync.sh 2>&1)" || rc=$?
+  else
+    out="$(GIT_DIR="$PRIV" GIT_WORK_TREE="$ROOT" ROOT="$ROOT" python "$ROOT/.tools/surprise-corpus-validate.py" --act .tools/box-sync.sh 2>&1)" || rc=$?
+  fi
+  printf '%s
+' "$out" | grep '^STANDING '
+  if ! printf '%s
+' "$out" | grep -q '^STANDING ' && [ "$rc" -ne 0 ]; then
+    echo "box-sync: WARN standing pass could not run (${tool} rc=${rc})"
+  fi
+  return 0
 }
 
 # resolve_known P1 P2 T0 -> prints the resolved tree when EVERY conflicted path is a known multi-writer class (a surprise-

@@ -1352,6 +1352,114 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "CTO ADDENDUM 7: the Teams pull apply proves FWD-2 on its first scheduled research_meeting landing.",
     "world_is": "Applied as written, the function would run hourly and land nothing (stub transport), and its bearer secret is absent. The apply is the wrong next act; the transport and the secret name come first.",
     "notes": "The applier did not read a neighbouring secret (a valid expiry from the wrong secret is a false pass). KMS CreateGrant limb PASSED."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:15:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Implementing GatewayTransport turns two stub-asserting tests in test_teams_pull.py red (test_gateway_stub_names_routes_and_makes_no_call, test_cli_dry_run_line_and_gateway_exit); the file is outside this order's paths.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_pull.py:120-124 asserts GatewayToolsAbsent 'S04 not landed: ...' from GatewayTransport('https://example.invalid','tok'); :143-144 asserts pull.main(['--transport','gateway']) prints 'GATEWAY-TOOLS ABSENT tool list_meeting_transcripts -> GET /me/onlineMeetings/'",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at wk-NFRA_TRNSPT-2: 410 passed, 2 failed (those two); test_teams_gateway_transport.py 3 of 3 pass",
+        "data/transcripts/scripts/teams/pull.py:233-240 main() --transport gateway constructs GatewayTransport() with no bearer, so it now prints 'GATEWAY-TOOLS ABSENT pass one, or a secrets_reader for gateway/transcripts/bearer' and exits 3 (no network, no AWS call is made)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20: 'Keep test_teams_pull.py and every other test green' while GatewayTransport stops being a stub.",
+    "world_is": "Both assertions test the stub that this order replaces, so they cannot stay green; test_teams_pull.py is not in <paths>. Also pull.py main() has no live wiring for the gateway arm (it never passes a bearer or secrets reader); only the lambda handler wires it. The base URL is the contract's literal, so a non-contract base_url (the old test's example.invalid) raises ValueError rather than opening a socket.",
+    "notes": "Not worked around: the two tests were not edited and the stub message was not kept to satisfy them. The issuer may admit test_teams_pull.py in a later order's paths (replace the two with the typed-transport assertions) and decide whether pull.py main() should read the bearer through read_bearer."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S6",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:15:00Z",
+    "one_line": "The /hx/transcripts contract returns the transcript body only; the pull's fmt 'metadata' read (pull.py:98) has no route, so GatewayTransport raises GatewayFormatUnsupported for it and a live pull cannot yet land a meeting.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the cell: derive the metadata object from the list row's createdDateTime/endDateTime, or ask the gateway owner for a metadata path)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/HX_TRANSCRIPTS_ROUTE_CONTRACT_COPY_f67fbc2390.md: two GET paths only; the single-transcript answer is {meeting_id, transcript_id, createdDateTime, endDateTime, content, byte_count, sha256}",
+        "data/transcripts/scripts/teams/pull.py:97-98 reads read_meeting_transcript(meeting_id, row['id'], 'vtt') and then (..., 'metadata') for every row; the fixture holds <stem>.<tid>.metadata.vtt files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20: read_meeting_transcript(meeting_id, transcript_id, fmt) -> the content bytes of GET .../transcripts/{tid}.",
+    "world_is": "The route has one body and no second format. fmt 'vtt' returns the verified content bytes; fmt 'metadata' raises GatewayFormatUnsupported (a ValueError) rather than return the vtt bytes under a metadata name. pull.run would raise at the metadata read on its first live row. Inert until the Teams pull is applied against the live route.",
+    "notes": "Not worked around: no metadata object was synthesised and pull.py was not edited (outside paths). The contract names no metadata surface, so the choice is the CTO's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:45:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (admit data/transcripts/scripts/teams/research_fold.py to a path grant; the fix is to stamp wallclock_basis on its rows, a decision about what basis the research fold's null clock carries)",
+    "one_line": "Adding wallclock_basis to parse_silver.COLUMNS (AMENDMENT 1 step 5) makes research_fold._fold_one raise 'row does not carry exactly the silver COLUMNS + held_out' on every file; 10 tests in test_research_fold.py, test_research_store.py and test_securities_allowlist.py go red. research_fold.py is outside <paths>.",
+    "class": "BLOCKING",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/research_fold.py:34,37,95-96 imports parse_silver.COLUMNS, sets STORE_COLUMNS = COLUMNS + ['held_out'] and raises when a built row's keys differ; its row dict (:88-93) has no wallclock_basis",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at wk-NFRA_TRNSPT-2 after the change: 405 passed, 10 failed (test_research_fold x5, test_research_store x3, test_securities_allowlist x2), every one 'row does not carry exactly the silver COLUMNS + held_out'; the 3 TR20-t20-AC2 tests and the 3 TR20-t20-AC1 tests pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 1 step 5: add wallclock_basis to COLUMNS and the schema; and 'Keep the whole tests directory green'.",
+    "world_is": "The two clauses cannot both hold inside <paths>: research_fold shares the COLUMNS list and asserts its rows equal it exactly. COLUMNS was changed as the amendment states; research_fold.py was not edited. The research fold's clock is null and operator-derived (its docstring), so which basis string it carries is the issuer's call. rewipe_silver and the existing silver objects are unaffected (a missing column reads null through from_pylist).",
+    "notes": "Armed until research_fold.py is fixed or the amendment's COLUMNS clause is narrowed: any research_fold run (build / write_all) raises. No served output moves in this order."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:45:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "land_bronze.land cannot land a transcript with no metadata object, so pull.py carries its own content-only lander (_land_content_only); thread_trace.hop_land_probe will KeyError on such a sidecar (it reads sidecar['metadata_content']['object']).",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/land_bronze.py:101,126 hashes metadata_bytes and always puts the .metadata.vtt key; land_bronze.py is outside <paths>",
+        "data/transcripts/scripts/teams/thread_trace.py:60-62 loops ('content','metadata_content') and indexes sidecar[field]['object']; the content-only sidecar records 'metadata': 'absent' and has no metadata_content"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 1 step 4: land the content VTT and its sidecar (metadata: absent) without editing land_bronze.py.",
+    "world_is": "To honour step 4 inside <paths>, pull._land_content_only repeats land_bronze.land's refusals, keys, never-overwrite and KMS puts using land_bronze's own helpers (~50 lines of duplicated policy). thread_trace is a read-only diagnostic and is not exercised by any test with a content-only sidecar.",
+    "notes": "The issuer may fold the content-only branch into land_bronze.land (metadata_bytes=None) in a later order and delete the pull.py copy; thread_trace needs the same absent-aware branch."
+  }
+  ,{
+    "id": "NFRA_TRNSPT-D2-W2-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T10:34:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of ARMED row NFRA_TRNSPT-D2-W2-S7: disarmed at d2d7a59ae2 (research_fold rows carry wallclock_basis read from the row).",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show d2d7a59ae2: research_fold._fold_one sets wallclock_basis to WALLCLOCK_OBSERVED when the row's start_utc is non-null, else WALLCLOCK_ABSENT; never derived",
+        "pytest data/transcripts/scripts/tests --ignore=test_eod_voice.py at d2d7a59ae2: 415 passed, 0 failed; test_research_fold, test_research_store and test_securities_allowlist assert through COLUMNS and needed no edit"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-t20 AMENDMENT 2 steps 7-8: research_fold stamps wallclock_basis from the row; the tests pinning the old column set are updated; the tests directory passes.",
+    "world_is": "Step 7 landed as stated. Step 8 required no edit: the three test files compare against parse_silver.COLUMNS rather than a literal column list, so they went green with the fold fix alone.",
+    "notes": "Resolves D2-W2-S7 (existing row not edited)."
   }
 ]
 ```

@@ -2538,3 +2538,66 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The prompt is on the command line but the CLI consumes it as an --add-dir value, so the Analyst idles at input exactly as in Z-S63. AC4 graded the string shape, which is the defective shape, and never ran the CLI, so it passed. Disarm: OA-f-9 AMENDMENT 3 (AC5: a -- separator before the prompt, graded with the real CLI's control and fix arms), drain, opal_ai DEV/PROD push by 0.0.0_AB_MSTR~Z, then the step-4 read re-run before r29's arms (CTO~Z ruling 32614)."
 }
 ```
+
+## NFRA_OPALAI-Z-S65 -- DISARMS Z-S63 and Z-S64 (the Analyst now runs its On launch steps unattended on PROD c9983bd) and dismisses W24-S2.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S65",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T10:09Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by their disarm_owner. Z-S63 and Z-S64: the launcher at opal_ai PROD c9983bd starts the Analyst with a first prompt that runs by itself (live run 10:0xZ, whoami gate passed unattended). W24-S2: the order carries AC1, AC2, AC3 and AC5 (AC4 replaced in place), so its 'only AC1-AC4' reading was wrong, and the status flip it asked for is done (@47484ee26a).",
+  "adjudicates": [
+    "NFRA_OPALAI-Z-S63",
+    "NFRA_OPALAI-Z-S64",
+    "NFRA_OPALAI-Z-W24-S2"
+  ],
+  "one_line": "DISARMS Z-S63 and Z-S64 (the Analyst now runs its On launch steps unattended on PROD c9983bd) and dismisses W24-S2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C opal_ai ls-remote origin DEV PROD at 10:04Z: both c9983bd2ac25",
+      "0.0.0_AB_MSTR~Z msg 32654: runtime fast-forwarded to c9983bd before launch; 'GATE: PASS'; Analyst pid 33140; command line '--add-dir ...\\refs -- \"Run your On launch steps from prompt.md, then serve Teams.\"'; 'The identity gate passed: whoami returned Opal Bloomberg (opalbloomberg@opalinvest.com)'; no sign-in; closed 10:06:51Z with 0 Opal_Agent claude.exe and 0 teams-watch processes left, no Teams message served",
+      "OA-f-9 AMENDMENT 3: f9.AC5 PASS on worker ~24 and on the issuer re-grade; drained @256d955e74; status complete @47484ee26a",
+      "the runtime checkout C:\\opal_runtime\\opal_ai read c9983bd at 10:04Z"
+    ]
+  },
+  "spec_asserts": "OA-f-9 A2/A3: the launcher starts the Analyst with a first prompt so prompt.md's On launch steps run unattended.",
+  "world_is": "Met on the live launch: step 1 (identity gate) ran without anyone typing and the Analyst moved on to step 2. Not yet exercised: the Analyst serving a Teams message, which waits on r29 and the CTO~Z close-before-Teams condition."
+}
+```
+
+## NFRA_OPALAI-Z-S66 -- Makes Z-S57's disarm (recorded in prose by Z-S60 @90db6922a4) machine-readable for the round-2 close.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S66",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T10:47Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by its disarm_owner on 2026-10-06: row Z-S60 (commit 90db6922a4) records the disarm, after OA-f-14 A1 named every non-tool get_token caller (AC1 7 of 7, 10 call sites, 0 unmapped) and gateway r25 went live with it. Z-S60 carries no adjudicates field, so the channel census still counted Z-S57 open; this row only makes the disposition machine-readable.",
+  "adjudicates": [
+    "NFRA_OPALAI-Z-S57"
+  ],
+  "one_line": "Makes Z-S57's disarm (recorded in prose by Z-S60 @90db6922a4) machine-readable for the round-2 close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-surprise --project NFRA_OPALAI --json at 10:4xZ: 129 items; open BLOCKING/ARMED rows not named by any adjudicates field = 2 (Z-S57, Z-S62)",
+      "git log 90db6922a4: row(NFRA_OPALAI Z-S60, 2.0.0_SA_COO~AI): Z-S57 DISARMED by its disarm_owner",
+      "OA-f-14 order CLOSE record: AC1 7 of 7 (get_token callers outside tools.py: 10, 0 unmapped), closed @d76ea69096; released in gateway r25 (240ac2fe5a)"
+    ]
+  },
+  "spec_asserts": "L10: every BLOCKING or ARMED row of the round is dispositioned before the slug.",
+  "world_is": "Z-S57 was disarmed on 10-06 but read open to the census; Z-S62 stays ARMED until r29 serves (its disarm)."
+}
+```

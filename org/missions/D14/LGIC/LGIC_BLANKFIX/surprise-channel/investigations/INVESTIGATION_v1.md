@@ -2240,3 +2240,57 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The root map's own rule is 'measured by the cell'; the entries carry the 13 and the 1, each cited to its line, and the check fails on an unlisted or a wrongly listed exception. None of them changes a verdict (the names already lead with their own system), so the registry owner can strike the three extra rows without effect if the ruling's counts are meant literally."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S6 -- the order says test_opal_naming_rootcheck.py reads ROOTCHECK-TEST ok=False at the base on case 5 only; on this worktree it reads ok=True cases=324 with the base-pin keyfill and with the BF-z-1 keyfill
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T10:02:49Z",
+  "one_line": "the order says test_opal_naming_rootcheck.py reads ROOTCHECK-TEST ok=False at the base on case 5 only; on this worktree it reads ok=True cases=324 with the base-pin keyfill and with the BF-z-1 keyfill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_rootcheck.py in C:/tmp/wk-blankfix-1 with lib/opal_naming_keyfill.py temporarily set to git show 32c925520c:lib/opal_naming_keyfill.py (restored after): last line ROOTCHECK-TEST ok=True cases=324",
+      "same test with the BF-z-1 keyfill: ROOTCHECK-TEST ok=True cases=324; the other nine lib/tests/test_opal_naming_*.py scripts also print ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's CONTEXT: every lib/tests/test_opal_naming_*.py prints ok=True at the base except test_opal_naming_rootcheck.py, which reads ok=False there on case 5 only (row S12; cell BF-x-2 repairs it).",
+  "world_is": "At base 32c925520c the rootcheck test already prints ok=True (324 cases, no FAIL line), so case 5 does not fail in this worktree; whether BF-x-2 already landed in the base or the failure depends on the device or the day is not read here. The BF-z-1 keyfill build does not change the result either way."
+}
+```
+
+## LGIC_BLANKFIX-D1-S3 -- retiring opal-assets-absence removes the last repo trace of an ORPHANED log group: the function it names, opal-assets-absence-check, does not exist, but /aws/lambda/opal-assets-absence-check is live with 6 streams, ~4.8 KB and NO retention policy, declared by nothing (drift=LIVE-no-DECLARED)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T10:31:19Z",
+  "one_line": "retiring opal-assets-absence removes the last repo trace of an ORPHANED log group: the function it names, opal-assets-absence-check, does not exist, but /aws/lambda/opal-assets-absence-check is live with 6 streams, ~4.8 KB and NO retention policy, declared by nothing (drift=LIVE-no-DECLARED)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'opal-assets-absence': DENOMINATOR 1 hit across 2844 aws nodes scanned, the single hit [LOG_GROUP] /aws/lambda/opal-assets-absence-check drift=LIVE-no-DECLARED src=full-derive (graph vintage 2026-10-09 06:17:57Z, stitch manifest 1089b9991c93).",
+      "lambda get-function-configuration --function-name opal-assets-absence-check: ResourceNotFoundException 'Function not found: arn:aws:lambda:us-east-1:313476888478:function:opal-assets-absence-check'. The function is gone.",
+      "logs describe-log-groups --log-group-name-prefix /aws/lambda/opal-assets-absence-check: storedBytes 4811, retentionInDays None -- no retention policy, so it never expires.",
+      "logs describe-log-streams --query length(logStreams): 6. Not a husk -- the function ran before it was removed.",
+      "The root's own state is EMPTY (terraform state list prints nothing, rc=0, against a positive control of 238 addresses on infra/aws/terraform/opal-assets), so the log group is NOT owned by this root and the order's refusal clause does not fire: that clause turns on a non-empty state or a resource OWNED by the root, and neither holds. The retirement proceeded."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-aa-1 step 2: 'Prove nothing in AWS is owned by it ... record AWS-OWNED <root> count=0'. The cell's adversary preflight names the arm this row came from: 'a resource outside state but in AWS (the AWS-OWNED read)'.",
+  "world_is": "AWS-OWNED is genuinely 0 for this root, and the orphan is reported rather than rounded away. After this commit the folder is gone from git, so nothing in the repo mentions opal-assets-absence-check at all and the log group's only trace is this row plus the evidence file. It costs ~4.8 KB and nothing operationally; it is a cleanup item with no owner, not a hazard. Owner of the choice: whoever owns the estate's LIVE-no-DECLARED set -- a log-group delete is out of this cell's grant and is listed for Andrew in the report alongside the two remote-state objects.",
+  "notes": "ID DEVIATION, REPORTED NOT ADJUDICATED: the order prescribes the scheme LGIC_BLANKFIX-D1-CO1-S<k>, and the live surprise-row gate refuses it. Only the CO1 segment is wrong -- the D1 coordinate is REQUIRED, not optional: the gate states 'A row filed on dell1 is written <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>); a bare id is the laptop's', with laptop/cloud-local = <CODE>-S<n>, sitez = <CODE>-Z-S<n>, dell1 = <CODE>-D1-S<n>, dell2 = <CODE>-D2-S<n>. This seat first over-corrected to a bare LGIC_BLANKFIX-S14 after reading the gate's abbreviated grammar string, and the fabric limb refused that too -- correctly, since a bare id would have claimed the laptop fabric for a dell1 row. The id here is the next free dell1 bare index. 2.0.0_SA_COO~B1 may re-label; the only thing the order got wrong is CO1. Distinct from the W1/W2 rows, which concern the naming keyfill and the root map rather than AWS orphans."
+}
+```

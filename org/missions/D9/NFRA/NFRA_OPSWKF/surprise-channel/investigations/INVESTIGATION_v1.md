@@ -113,3 +113,94 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "An internal Opal user's claims.firmId is 'opal-capital', which the ticket service may refuse for a partner-firm trade; the field is editable so the filer can type the firm."
 }
 ```
+
+## NFRA_OPSWKF-D2-S2 -- trade-workflow-handler's parquet export imports pyarrow, and no attached layer looks big enough to hold it
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S2",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~OW2",
+  "surfaced_at": "2026-10-09T09:34:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The OW-d-1 build of trade-workflow-handler raises an UNENFORCED import-closure advisory for openpyxl and pyarrow; the live function carries exactly ONE layer, openpyxl-layer:3 at 817,805 bytes, which is far too small to contain pyarrow, so the lazily-imported parquet export path looks like a dormant ImportError. PRE-EXISTING and untouched by this act.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash infra/aws/lambda/ci/build-and-upload.sh trade-pipeline trade-workflow-handler (BUILD_ONLY, 09:30Z): 'ADVISORY (not enforced -- no BUILD_MANIFEST.json ...) ? openpyxl (imported by: excel_generator.py) ? pyarrow (imported by: parquet_exporter.py)'",
+      "infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/parquet_exporter.py:16-17 @71a1877db0: 'import pyarrow as pa' / 'import pyarrow.parquet as pq', both TOP-LEVEL in the module",
+      "infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/workflow_handler.py:529 @71a1877db0: 'from parquet_exporter import export_single_submission' -- the import is LAZY, inside the handler path, so the module loads only when that path runs",
+      "aws lambda get-function-configuration --function-name trade-workflow-handler --query 'Layers[].Arn' (09:31Z): exactly one entry, arn:aws:lambda:us-east-1:313476888478:layer:openpyxl-layer:3",
+      "aws lambda get-layer-version --layer-name openpyxl-layer --version-number 3 (09:33Z): CodeSize 817805, Description 'openpyxl for yang-generate-cma xlsx parsing', created 2026-03-11"
+    ]
+  },
+  "spec_asserts": "The packaged trade-workflow-handler's top-level imports are satisfied at runtime by the package, the stdlib, the runtime or an attached layer -- the condition the import-closure gate grades, and which it declares UNENFORCED for this function because there is no BUILD_MANIFEST.json declaring layer_dependencies.",
+  "world_is": "parquet_exporter.py imports pyarrow at module top level. The deployed function's only layer is openpyxl-layer:3, whose description names openpyxl alone and whose CodeSize is 817,805 bytes. That pyarrow is therefore ABSENT is INFERRED from the layer's size and description, NOT measured: no layer content listing was taken, and the python3.11 runtime does not ship pyarrow. If the inference holds, workflow_handler.py:529 raises ImportError whenever the single-submission parquet export path runs, and the failure is invisible until that path is exercised because the import is lazy. What would settle it, and what this row does NOT claim to have run: download openpyxl-layer:3 and list its top-level modules, or invoke the export path once and read the result.",
+  "notes": "OFF-TASK for OW-d-1 and deliberately not investigated further. This act changes the two handlers' code, one env key and one inline policy; it changes NO layer, NO packaged file list and nothing in parquet_exporter.py, whose bytes are identical pin..HEAD. The condition predates the act: the same file set and the same single layer were deployed on 2026-09-25 (CodeSha256 ChlY4kHsBjueRP2tGawZgXRZ0Qpzx4P48vTdPyRlFYY=). So this is not a regression from OW-d-1 and is not a reason to hold it. OWNER: the trade-pipeline owner via 2.0.0_SA_COO~O2; this lane is seated for NFRA_OPSWKF only and is not chasing it. A sibling row, NFRA_OPSWKF-D2-S1, already records a separate pre-existing test-harness defect in this same function's tests."
+}
+```
+
+## NFRA_OPSWKF-D2-S3 -- the dell2 cloudops principal cannot plan the trade-pipeline tree, so safe-apply's tagauthz gate cannot evaluate and OW-d-1 cannot be applied from this device
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S3",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~OW2",
+  "surfaced_at": "2026-10-09T09:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "cloudops-dell2-agent-user holds no ses:DescribeConfigurationSet, so `terraform plan` of infra/aws/terraform/trade-pipeline exits 1 on refreshing aws_ses_configuration_set.trade_pipeline; safe-apply's comp-tagauthz limb runs its OWN untargeted plan of the tree and therefore fails closed (exit 4), and a -target or saved-planfile apply does not help because that limb accepts neither.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -chdir=infra/aws/terraform/trade-pipeline (09:40Z) rc=1: 'Error: reading SES Configuration Set (trade-pipeline-notifications): ... StatusCode: 403 ... AccessDenied: User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: ses:DescribeConfigurationSet because no identity-based policy allows the ses:DescribeConfigurationSet action', with aws_ses_configuration_set.trade_pipeline, ses.tf line 19",
+      "the SAME plan nonetheless rendered 'Plan: 0 to add, 3 to change, 0 to destroy' over exactly the three OW-d-1 resources, so the failure is a refresh-permission fault and NOT a branch-B plan shape",
+      "terraform plan with -target on the three resources (09:41Z) rc=0, no error, 'Plan: 0 to add, 3 to change, 0 to destroy' -- the targeted plan is clean",
+      ".tools/safe-apply.sh -chdir=infra/aws/terraform/trade-pipeline apply <saved targeted planfile> (09:43Z) exit 4: 'could not produce a plan JSON to run the tag-authz gate ... a gate that cannot evaluate must not pass. Refusing to apply. (Fail closed.)' with the same 403 echoed as the cause",
+      ".tools/safe-apply.sh:424-427 -- the tagauthz limb runs `\"$TERRAFORM\" -chdir=\"$CHDIR_TREE\" plan -input=false -lock=false -out=\"$TAG_TMP.bin\"` with NO -target and NO reuse of the caller's planfile; :342 records that reusing the saved planfile is DEFERRED",
+      "aws sts get-caller-identity (09:44Z): arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+      "aws iam list-attached-user-policies / list-user-policies / list-groups-for-user (09:44Z): 2 attached user policies (cloudops-dell2-agent-bus-policy, cloudops-dell2-agent-ssm-policy), 0 inline, group cloudops-dell-agents-group with 9 attached policies",
+      "aws iam get-policy-version cloudops-dell-agent-plan-reads-policy v2 (09:45Z): 2 statements, Sids ReadSsmParametersPlanReads and ReadUiWalkerPassword, actions ssm:GetParameter/ssm:GetParameters ONLY -- no ses action of any kind",
+      "Grep 'ses:|SES' over infra/aws/terraform/nfra-ctlpln-identity/iam.tf: 3 hits, all PROSE comments about secret classes; zero ses: actions granted"
+    ]
+  },
+  "spec_asserts": "NFRA_OPSWKF.TO-APPLY-D1 step 4: plan, then `.tools/safe-apply.sh`, with the dell2 applier running the apply on the device that owns the work (CLAUDE.md rule 26, and the CTO applier-substitution ruling @5ff94852a6 naming this lane).",
+  "world_is": "The apply cannot be run from dell2 at all, for any plan shape, until cloudops-dell2-agent-user gains ses:DescribeConfigurationSet. The permission set is defined in infra/aws/terraform/nfra-ctlpln-identity/ (iam.tf, main.tf), whose natural home is cloudops-dell-agent-plan-reads-policy -- the policy whose stated purpose IS the reads terraform needs at plan time, and which today carries only two ssm:GetParameter statements. INFERRED, not measured: that this ONE grant is sufficient. The failing plan surfaced exactly one error and still rendered a summary, which is evidence the rest of the refresh walked, but aws_ses_configuration_set_event_destination and anything else downstream of the failed resource may have been skipped rather than read, so a second SES read may surface once the first is granted. What would settle it: grant it, then re-plan and read the rc.",
+  "notes": "OUT-OF-LANE for this seat, which is seated for NFRA_OPSWKF only; the principal belongs to NFRA_CTLPLN's identity stack. This lane did NOT and will not grant itself the permission, and did NOT reach for TAGAUTHZ_OVERRIDE: safe-apply says in terms that the override 'is not the remedy for this error' and 'Do not bypass a gate to work around your own toolchain', and self-granting a bypass to land one's own deploy is the shape the no-manufactured-friction law exists to prevent. The gate behaved correctly. State of the world after the refusal, measured not claimed: both functions still CodeSha256 AaR7TiZ0qAGfzozoKmd+JFgvdBvQEcymjP/T+Yfzp50= and ChlY4kHsBjueRP2tGawZgXRZ0Qpzx4P48vTdPyRlFYY= at LastModified 2026-09-25T17:19:52Z, env still the 3 prior keys with NO TICKETS_TABLE, and trade-submission-policy still 5 statements with ZERO occurrences of 'opal-tickets' in the live document. The two new artifact object versions sit in S3 unreferenced; both functions still pin their prior s3_object_version, so nothing is half-landed and the rollback pins in the ledger remain valid. OWNER: 2.0.0_SA_COO~O2 to route to the NFRA_CTLPLN identity owner."
+}
+```
+
+## NFRA_OPSWKF-D2-S4 -- the dell2 cloudops principal cannot run after-read (c)'s prescribed instrument: iam:SimulatePrincipalPolicy and dynamodb:GetResourcePolicy are both denied
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S4",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~OW2",
+  "surfaced_at": "2026-10-09T10:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OW-d-1's after-read (c) names simulate-principal-policy, including the CTO half's negative arm; cloudops-dell2-agent-user holds neither iam:SimulatePrincipalPolicy nor dynamodb:GetResourcePolicy, so (c) was satisfied by evaluating the applied policy document over a complete printed denominator instead, and ONE arm (a table resource-based policy) could not be closed from this device at all.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::313476888478:role/trade-submission-lambda-role (10:05Z), NINE separate invocations -- 6 arms plus 3 controls, one --resource-arns each as the IAM trap requires -- every one returned: 'AccessDenied ... User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: iam:SimulatePrincipalPolicy on resource: arn:aws:iam::313476888478:role/trade-submission-lambda-role'",
+      "aws dynamodb get-resource-policy --resource-arn arn:aws:dynamodb:us-east-1:313476888478:table/opal-tickets (10:08Z): 'AccessDeniedException ... not authorized to perform: dynamodb:GetResourcePolicy'",
+      "aws iam list-role-policies trade-submission-lambda-role (10:07Z): exactly 2 inline policies, opal-users-v2-access and trade-submission-policy; list-attached-role-policies: 0 attached managed policies; get-role: PermissionsBoundary = null",
+      "aws iam get-role-policy for BOTH inline policies (10:07Z): the union of statements naming table/opal-tickets is exactly TicketBridgeOpalTicketsRead (dynamodb:GetItem) and TicketBridgeOpalTicketsWrite (dynamodb:UpdateItem under ForAllValues:StringEquals dynamodb:Attributes in [ticket_id, linked_submission_id, events, status]); the DynamoDBAccess statement carrying PutItem/DeleteItem/Scan names only opal-trade-submissions, trade-users and trade-security-identifiers plus indexes; opal-users-v2-access names only opal-users-v2; no wildcard resource and no Deny anywhere",
+      "aws dynamodb describe-table opal-tickets (10:04Z): ACTIVE, arn:aws:dynamodb:us-east-1:313476888478:table/opal-tickets, HASH key ticket_id -- the existence read the cloud-ops false-allow rule requires beside any simulation of a named ARN"
+    ]
+  },
+  "spec_asserts": "NFRA_OPSWKF.TO-APPLY-D1 step 5(c): run simulate-principal-policy on trade-submission-lambda-role for GetItem ALLOWED, UpdateItem with dynamodb:Attributes = [ticket_id, linked_submission_id, events] ALLOWED, UpdateItem with dynamodb:Attributes = [ticket_id, answers] DENIED (the CTO half's negative arm), and DeleteItem, PutItem and Scan DENIED.",
+  "world_is": "The instrument is unavailable to the only principal this device has, so NO simulate result exists for this deploy and none is claimed. That every one of the nine calls -- the positive arms, the negative arms AND the three controls against a table the role IS granted -- failed with the identical message is itself the evidence that this is the instrument and not the world; an instrument that denies its controls is not reporting on its subject. The substitute was an evaluation of the APPLIED document over a denominator that was enumerated and printed (2 of 2 inline, 0 of 0 managed, boundary null), which yields the same six verdicts by construction: GetItem allowed, conditioned UpdateItem allowed, UpdateItem naming `answers` denied because the only UpdateItem grant for that table is the conditioned one and `answers` is outside its set, and DeleteItem/PutItem/Scan denied because no statement anywhere names that table with those actions. It is weaker than the prescribed arm in one specific way, which is NOT papered over: a document read inspects the rule, it does not evaluate it, and because dynamodb:GetResourcePolicy is also denied a table resource-based policy that could widen the role beyond the identity-policy union cannot be ruled out from dell2.",
+  "notes": "Sibling of NFRA_OPSWKF-D2-S3, which is the same class on a different action (ses:DescribeConfigurationSet) and whose grant the issuer has already routed to the laptop fabric via 0.0.0_AB_MSTR~DELL2. The three gaps together say something the individual rows do not: the dell2 CloudOps principal was provisioned for APPLY but not for the READS that grade an apply. Recommend the grant that closes D2-S3 also carry iam:SimulatePrincipalPolicy and dynamodb:GetResourcePolicy, so the next trade-pipeline deploy from this device can run after-read (c) as written. OUT-OF-LANE for this seat (the principal is NFRA_CTLPLN's identity stack, and this lane is seated for NFRA_OPSWKF only); routed, not chased. The deploy itself is COMPLETE and its ledger CLOSED -- this row does not hold anything, and it is filed so the issuer grades OW-d1-AC2 knowing exactly which instrument produced each verdict."
+}
+```

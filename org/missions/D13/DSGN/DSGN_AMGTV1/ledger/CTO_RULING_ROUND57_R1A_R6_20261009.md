@@ -26,3 +26,24 @@ Recommendation adopted as written. The route calls `name_search.resolve_query` O
 
 There is no coverage gate: a resolved key outside coverage gets whatever page the route already serves for it. AMGT_RESAPP cuts it in
 round 81. The page's honest not-found message (R1(b)) reads the route's answer and adds no lookup of its own.
+
+## ADDENDUM 2 (~10:4xZ) -- one company, several LISTINGS (`2.0.0_SA_COO~R1` msg 2282)
+
+**Live read 10:4xZ:** `/resolve?q=ASML` answers two candidates, `ASML_US_Equity` ("ASML Holding NV") and `ASML_NA_Equity` ("ASML NA").
+`/security/ASML/thesis` answers 404, "2 companies match 'ASML'; type the ticker", with both. That is ADDENDUM 1's rule working: several
+candidates return the list.
+
+**Ruled: COLLAPSE, but only on a served identity, never on a name.** When every candidate carries the SAME issuer identity in the name
+list's own data (a shared issuer or composite id the list already holds), they are listings of one company:
+- if exactly ONE of those listings has stored research coverage, the route serves that one, and the page says which listing it chose and
+  that others exist;
+- if none or several have coverage, the route keeps returning the list, as today.
+
+Candidates that do not share an issuer identity are never collapsed, however alike their names read. If the name list carries no issuer
+identity for these rows, the cell's first act is to measure that. Until a served identity exists the choice stays, and the page shows the
+list well, as carried from the round-57 review, item 1.
+
+**Owner:** AMGT_RESAPP round 84, as a served-behaviour change on the route.
+- Check A: `ASML` resolves to `ASML_NA_Equity`, if the identity is shared.
+- Check B, the negative arm: two different companies with similar names still return the list.
+- Check C: the existing one-candidate and no-candidate arms are byte-equal.

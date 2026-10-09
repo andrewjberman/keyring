@@ -6066,6 +6066,31 @@ carries none.
     "spec_asserts": "Z-S88: the base suite is red outside this project; PHASE A prints the pass/fail denominator before and after.",
     "world_is": "The denominator depends on the tree the suite runs in (642 collected here against a larger set at 27b37e99b3 that carries CLOUD-only tests), so the figures are comparable only as a pair. This release shipped 5 gateway files; 2 are in the artifact.",
     "notes": "Artifacts built here carry the LIVE artifact's dashboard/ directory (mcportal a3bff71ffa is unchanged); the real dashboard build (bun) runs only at PHASE B and its bun-cache pre-check is the applier's device's."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S89",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-09T09:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W28-S7",
+      "NFRA_MCPINDEX-Z-W28-S8"
+    ],
+    "one_line": "RULES MX-r-9 PHASE A's rows at its drain (@b70a673984): W28-S7 (ARMED: OG-rl-15 r29 is cut on the same base, PHASE A pins void on any other live ref) is DISARMED by MX-r-9 AMENDED A1 item 2 -- PHASE B re-cuts on the live ref read at apply time (r29's sha), re-proves preservation, ENABLED_INTEGRATIONS and .env key equality, and stops if the ref moves; W28-S8 (sparse-tree suite pair, order-dependent run-1 schwab failures) CONFIRMED INERT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANNOUNCE_MX-r-9.md (drained @b70a673984): live ref aa75078e1b at three reads 08:26Z-09:42Z; 2 shipped files; 7=7 integrations; 51=51 .env keys; 38 failed both sides, 0 new.",
+        "2.0.0_SA_COO~O msg 32575: MX-r-9 PHASE B slot follows r29 (91811b648a) and OG-rl-15, and cuts on r29's live sha."
+      ]
+    },
+    "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner.",
+    "world_is": "The hazard (a release applied on stale pins over another seat's release) is removed by the amendment: no pin survives into PHASE B unread.",
+    "notes": "The PHASE A scratch trees C:/tmp/mx-rel-r9, mx-dep-r9 and mx-rb-r9 are r28-based and are superseded by the PHASE B re-cut."
   }
 ]
 ```

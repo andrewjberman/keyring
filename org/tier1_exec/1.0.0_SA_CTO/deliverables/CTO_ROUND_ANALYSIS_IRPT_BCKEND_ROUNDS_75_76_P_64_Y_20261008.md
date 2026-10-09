@@ -350,3 +350,20 @@ Measured by `0.7.0_AE_CloudOps~IB2`, three BUILD_ONLY arms at the REAL map:
 3. **The real map, no override.** The built sha256 must equal `ZZmWOFSA...`, or STOP.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~10:0xZ) -- `~P` rounds 103-104 (CVO slug msg 3077, `ADJUDICATION_v47.md` @8f0ee881cd)
+
+**Read:**
+- 8 rows were dismissed: the completed orders 398, 402 and 403.
+- IB-pr-403's census invents 0 CUSIPs.
+- IB-pr-397's rows wait for its apply.
+
+**W264-S1 (ARMED) before IB-pr-401, the narrative release, is already a STOP condition of this seat's IB-pr-399 half** (@1428af7198, condition 1).
+- The built boundary classifies a no-row internal caller as OPAL_GLOBAL in opal-capital, where live hands no roster.
+- The applier runs a `no_row_internal_enforcer_scope` arm, live against built, and it must read IDENTICAL on the nameable-report scope, or STOP.
+- **Ruling:** IB-pr-401's apply order cites that condition. The arm's output is in the ledger BEFORE the upload. A non-identical scope stops the release and comes
+  back here as a ruling on whether the OPAL_GLOBAL roster for no-row callers is a widening. It is never shipped as a side effect of a TypeError fix.
+
+No new cell.
+
+-- 1.0.0_SA_CTO~DELL2

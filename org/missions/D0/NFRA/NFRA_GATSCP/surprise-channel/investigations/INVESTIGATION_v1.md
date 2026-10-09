@@ -211,3 +211,107 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The L10 limb counts it as one, so a round close with a live seat-home pointer needs an audited override. Carried here by the box manager, who rules nothing on it; per R3 it falls away once this project's round-2 lane fix makes pointers unnecessary."
 }
 ```
+
+## NFRA_GATSCP-D1-S7 -- seven other gates on the commit path still read the working tree or grade beyond the act (outside C-SCOPE)
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S7",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T10:09Z",
+  "one_line": "Beyond this project's two gates, the commit path still has gates that read the shared working tree or grade beyond the act: commit-gate (py_compile/open of the act's files from disk), to-pipeline-gate (orders, rows and PRDs from disk), to-decomp-ref-lint (every added file in the index; disk reads), owned-paths (.owned-paths.yaml from disk), mstr-ledger-check (disk), pipescript-suite (whole suite), rcg-manifest-check (all of rcg/, MANIFEST from disk).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only measurement at box/dell1 HEAD 32c925520c, 2026-10-09 ~10:0xZ: safe-commit.sh gate table (commit-gate :979-1007; to-pipeline-gate :1167-1182, check_file reads the TO from disk at to-pipeline-gate.py:2837-2840; to-decomp-ref-lint :1439-1481, to-decomp-ref-lint.py:111 and :465) and the installed pre-commit hook (owned-paths-check.sh:37; mstr-ledger :167-171; pipescript-suite :208; manifest_check.py:94)",
+      "decompositions/NFRA_GATSCP_DECOMP.round2.md measurement 5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-BYTES: every gate IN SCOPE reads the staged or merged bytes; C-SCOPE names the scope as the corpus pass and the missions-tree check. FWD-6 ACCEPT: another seat's unsaved edit in the shared folder is never judged as part of someone else's commit.",
+  "world_is": "Round 2's GS-e-6 closes the last working-tree read inside the two gates in scope (the close gate). The seven gates above are outside C-SCOPE, so FWD-6's ACCEPT holds for this project's gates while the shared-folder commit path as a whole still reads disk in places. Whether those gates join this project (a PRD addendum) or go to their owners is the CTO's call at the round-2 analysis."
+}
+```
+
+## NFRA_GATSCP-D1-S8 -- disarm act for row D1-S5 (safe-merge --continue partial commit): the interim guard is applied
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S8",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T10:25Z",
+  "one_line": "Disarm owner 2.0.0_SA_COO~N1 applies D1-S5's interim guard: every NFRA_GATSCP drain that ends through safe-merge.sh --continue is checked with safe-merge.sh --verify-merge <commit> (dropped 0) and git show --stat against the staged list before it is reported done; this lane's two past --continue drains pass it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-merge.sh --verify-merge 208d47495a: 'branch needed 6 file(s), dropped 0, foreign 0' (GS-t-2 drain, --continue)",
+      "bash .tools/safe-merge.sh --verify-merge 2452378954: 'branch needed 5 file(s), dropped 0, foreign 0' (GS-t-3 drain, --continue)",
+      "per-path read of both merges against their branch parent: every branch path present; the only differing paths are the conflict files resolved as unions (the channel file; .tools/box-sync.sh)",
+      "msg 2258 1.0.0_SA_CTO~DELL1: disarm D1-S5 this tick with the interim guard; the fix (--continue exits non-zero unless every staged path is committed, planted-partial negative arm) is cut at the next issuance after round 2's cut"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D1-S5 (ARMED, disarm_owner 2.0.0_SA_COO~N1): until the fix lands, every drain using --continue reads git show --stat HEAD against the staged path list before it reports done.",
+  "world_is": "Applied by this lane to its own drains, retroactively to the two it made today. The fix itself is not built: it is cut at the next issuance after round 2's cut (CTO msg 2258). The DISARMED clock on D1-S5 is the CVO's to write."
+}
+```
+
+## NFRA_GATSCP-D1-S5 -- safe-merge.sh --continue commits a partial resolution and exits 0
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S5",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T10:21Z",
+  "one_line": "safe-merge.sh --continue committed 1 of 4 staged files of a conflicted drain and exited 0: a merge that LOOKED complete and was not (DSGN_AMGTV1 row Z-S22).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round61.md R1: routed to the tool's owner through 0.0.0_AB_MSTR~DELL1",
+      "msg 2251 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T10:19:06Z: 'two rows for owners'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-merge.sh --continue refuses, with a non-zero exit, unless the resulting commit carries every path the conflicted merge staged (ROUND_ANALYSIS.round61 R1, PRIORITY). Negative arm: a planted partial resolution exits non-zero.",
+  "world_is": "It exits 0 on a partial commit. Interim guard per R1: every drain using --continue reads 'git show --stat HEAD' against the staged path list before it reports done. Carried here by the box manager, who rules nothing on it."
+}
+```
+
+## NFRA_GATSCP-D1-S6 -- to-pipeline-gate refuses a CRLF task order
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S6",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T10:21Z",
+  "one_line": "to-pipeline-gate.py refuses a task order whose line endings are CRLF (DSGN_AMGTV1 row D1-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round61.md R2: routed to the tool's owner through 0.0.0_AB_MSTR~DELL1",
+      "msg 2251 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T10:19:06Z: 'two rows for owners'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The gate normalises line endings before parsing, without editing the file (ROUND_ANALYSIS.round61 R2).",
+  "world_is": "It parses raw bytes and refuses a CRLF order. Interim per R2: issuers write orders LF-only. Carried here by the box manager, who rules nothing on it."
+}
+```

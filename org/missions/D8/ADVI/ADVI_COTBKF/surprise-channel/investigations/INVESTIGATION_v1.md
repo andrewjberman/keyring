@@ -3499,3 +3499,161 @@ round.** Never edit an existing row.
   "world_is": "The chain reads a Yahoo-sourced stored price series that is a dividend-adjusted level from an earlier fetch vintage, not today's Close. The constant ratio to Adj Close says one adjustment vintage; a 0.5% test cannot call it adj_close_base because the vintages differ (SCHB 0.54%, SCHZ 2.16%). Also: 10 of 25 SCHB and 7 of 15 SCHZ candidate sample days (first calendar-quarter day, e.g. 2022-01-01) are non-trading stored days (linear_interpolation rows) with no Yahoo bar; the rule skipped them (listed in the md), so the sample is 15 and 8 days, not one per quarter."
 }
 ```
+
+## ADVI_COTBKF-D2-S47 -- L9 CB32af1-AC2 MET (two notes)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S47",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:53:30Z",
+  "one_line": "L9 CB32af1-AC2 MET, with two notes. The class (other_source, both CUSIPs) follows from the printed per-day rows by the script's rule (TOL 0.5%, SHARE 80%): chain/AdjClose is a constant 1.0054 (SCHB) and 1.0216 (SCHZ), above TOL, so not adj_close_base. The named source is the one the chain reads: commonwealth_daily_valuation imports commonwealth_price_census, whose STORES[0] is cottonwood-silver-canonical-prices read on column price (this seat's read). Notes: (1) the rule and its output landed in one commit (0af60ccd42), so 'written before the first run' is the worker's statement, not git-ordered; (2) SCHB's 1.0054 sits 0.04 points over the 0.5% TOL, so its class turns on the tolerance -- but either class gives the same reading (a dividend-adjusted vintage), so no outcome rides on it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~59/base_close_trace.md",
+      "data/assets/scripts/analysis/commonwealth_price_census.py STORES[0]; data/assets/scripts/silver/commonwealth_daily_valuation.py:48 imports it",
+      "git show --stat 0af60ccd42 (rule and output in one commit)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_32_DRAIN_END_20261009.md",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_32_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB32af1-AC2: the class follows from the printed per-day rows by the pre-written rule, and the named source is the one the chain actually reads.",
+  "world_is": "Met; the two notes stand."
+}
+```
+
+## ADVI_COTBKF-D2-S48 -- the cottonwood price store carries a `bd_txn_price` source label
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S48",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-09T09:59:02Z",
+  "one_line": "Sizing the round-33 census, the cottonwood price store s3://opal-data-cot/silver/prices/canonical_prices.parquet (11,291,021 rows, 4,003 tickers) carries 6 source labels; one is bd_txn_price (1,623 rows, 3 tickers). Whether 'bd' names the Black Diamond reporting platform's transaction price for cottonwood accounts, or the separate bd firm's data, is unread; the cross-firm law (cot is a separate firm from bd) makes the second reading a hazard to rule out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer read ~10:0xZ: source value_counts = linear_interpolation 7,831,140; yahoo_finance 3,396,067; transaction_observed 50,143; scoped_override 12,042; bd_txn_price 1,623; transaction_observed_capped 6",
+      "tickers by source: bd_txn_price 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER: a pipeline tree never references another firm's data (cot is a separate firm from bd).",
+  "world_is": "A cot store row source reads bd_txn_price on 1,623 rows; its provenance is unread. Folded into round 33's census cell (name the 3 tickers and the writer of the label).",
+  "disarm_owner": "2.0.0_SA_COO~C2"
+}
+```
+
+## ADVI_COTBKF-D2-W60-S1 -- The only repo code that writes the bd_txn_price label is in the bd firm's tree (data/black_diamond/scripts/sil
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W60-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~60",
+  "surfaced_at": "2026-10-09T10:41Z",
+  "one_line": "The only repo code that writes the bd_txn_price label is in the bd firm's tree (data/black_diamond/scripts/silver/inject_scoped_overrides.py:136 default, force_source set at scoped_price_exceptions.json:10,18,26); no writer in data/cot, yet the cottonwood price store carries its 1,623 rows on 3 CUSIP_ tickers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n -F bd_txn_price -- '*.py' '*.json' at worktree HEAD e5b8ad94ba: 8 hits; writer = data/black_diamond/scripts/silver/inject_scoped_overrides.py:136 (src = exc.get('force_source', 'bd_txn_price')); the label values come from data/black_diamond/scripts/silver/scoped_price_exceptions.json lines 10, 18, 26; data/cot/scripts/gold/B_01.holdings_lots.py:2263 mentions it in a comment only",
+      "store rows (org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.md section 5): CUSIP_05613L3H2 431 rows 2024-10-15..2026-06-09 at 1.0188; CUSIP_651639AX4 572 rows 2024-04-01..2026-06-09 at 0.9037; CUSIP_95000U2D4 620 rows 2024-01-24..2026-06-09 at 0.9804; each a constant price",
+      "data/tier2_senior 0.4.0_DS_ClientPlatform logs 2026-04-15 (wp11_and_3bond_formalization.md:74) name the same three CUSIPs (BNP, WFC, NEWMONT) and prices as the bd firm's inception-price overrides"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CB-ag-1 item 5: print the 3 bd_txn_price tickers, their dates, and which code writes the label, from repo search; row D2-S48 asks whether the label is cottonwood's own or the bd firm's data.",
+  "world_is": "The repo's only writer is the bd firm's inject_scoped_overrides.py; the 3 CUSIP_ tickers and prices equal the bd firm's scoped overrides. The route by which those rows reached the cottonwood store (a copy of the bd build, or a cot-side writer outside the repo) is unread; reading the bd bucket to find out is barred. Not a class input: the 3 tickers carry no yahoo_finance rows in the census."
+}
+```
+
+## ADVI_COTBKF-D2-W60-S2 -- The Yahoo pass was one pass of 72 network calls in the real run, plus 1 earlier call from a 12-ticker debug ru
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W60-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~60",
+  "surfaced_at": "2026-10-09T10:41Z",
+  "one_line": "The Yahoo pass was one pass of 72 network calls in the real run, plus 1 earlier call from a 12-ticker debug run whose pulls were cached and reused: 73 Yahoo calls in total, 0 rate-limited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run log: 'yahoo call 1..72' at <=50 tickers each (3,568 fetched, 12 reused from cache), pause 6 s between calls, no rate-limit text; last call 72 of 18 tickers",
+      "debug run .scratch/dbg1 (--max-tickers 12 --skip-served) made 1 call; its 12 per-ticker pulls sit in .scratch/advi_cotbkf/yahoo_census/ and the full pass reused them"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CB-ag-1: make one pass, at most 50 tickers per call, at least 5 s apart, print the call count; develop with --max-tickers before the full pass.",
+  "world_is": "The final line prints yahoo_calls=72 (the full pass counted from an already-cached 12). The debug call made 73 total. The class rule was unchanged between the debug runs and the full run (script blob identical to the rule commit e5b8ad94ba)."
+}
+```
+
+## ADVI_COTBKF-D2-S49 -- L9 CB33ag1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S49",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:50:45Z",
+  "one_line": "L9 CB33ag1-AC2 MET: the rule commit e5b8ad94ba (06:10 ET) precedes the output commit 3a063e09a6 (06:42), and git shows no .py change between them; each of the 3,580 tickers' class follows from its printed comparison by that rule (TOL 0.5%, SHARE 80%, MIN_OVERLAP 20, MIXED_FLOOR 0.20): e.g. dividend_adjusted = store/AdjClose constant on >= 80% of days and store/Close drifting beyond TOL, printed per row with share_close, share_adj, share_ra_c, rc_spread, the medians and the implied vintage.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log e5b8ad94ba / 3a063e09a6; git diff --stat e5b8ad94ba 3a063e09a6 on the scripts (empty)",
+      "git show e5b8ad94ba:data/assets/scripts/silver/commonwealth_price_basis_census.py (CLASS RULE, docstring lines 22-42)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.csv (3,580 rows, each with class, reason and its ratios)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_33_DRAIN_END_20261009.md @2fc7789480",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_33_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB33ag1-AC2: the rule commit precedes the output commit in git, and each class follows from the printed comparison by that rule.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S50 -- the served FWD-3 tables rest materially on dividend-adjusted prices, unmarked
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S50",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T10:50:45Z",
+  "one_line": "The SERVED FWD-3 tables rest materially on dividend-adjusted prices: in account_day_value, 638,948 of 1,669,040 account-days (38.3%), 688 of 1,528 accounts and 31,249 of 81,718 account-months (73 of 159 months) hold at least one position priced from a dividend_adjusted or mixed ticker, while the chain also books dividends as cash. Until CTO ADDENDUM 8 item 2's marking and rebuild land, a reader of those served rows sees values on the wrong basis with no mark.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_33_DRAIN_END_20261009.md @2fc7789480 (served-table counts, the issuer's run equal to the worker's)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~60/price_basis_census.csv (3,580 rows, each with class, reason and its ratios)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3's served tables carry each account's true daily value and return; a figure on a known-wrong basis is marked or blanked (CTO ADDENDUM 8 @bff4e48547 item 2).",
+  "world_is": "Served on the wrong basis for 38% of account-days, unmarked today; the marking and rebuild (CB-ag-2, CB-ag-3) are drafted @a9a774a7b9, not yet cut."
+}
+```

@@ -280,6 +280,19 @@ source "$SCRIPT_DIR/commit_gate_lib.sh"
 source "$SCRIPT_DIR/commit_queue_lib.sh"
 set -euo pipefail
 
+# AUTHOR NAMES A KNOWN SEAT? WARN-ONLY (1.0.0_SA_CTO msg 107910, on 4.0.0_SA_CRO~A's finding 107903: this script admitted
+# --author 9.9.9_XX_NoSuchSeat on lane-ANY paths). The base of the --author serial is checked against the seat patterns of
+# org/ref/SEAT_ROLES.json and the permitted_agents bases of .owned-paths.yaml (workers match by grammar). An unknown base
+# prints one WARN on stderr and the commit goes on; a refusal follows only after a week of WARN rows, announced first.
+# Each WARN appends one AUTHOR-SEAT-WARN row to the audit log, so the week is counted from rows, not recalled.
+if [ -f "$SCRIPT_DIR/author-seat-check.py" ]; then
+  _ASC_OUT="$(python "$SCRIPT_DIR/author-seat-check.py" "$AGENT" 2>&1)" || true
+  if [ -n "$_ASC_OUT" ]; then
+    printf '%s\n' "$_ASC_OUT" >&2
+    echo "${ISO_TS} AUTHOR-SEAT-WARN  ${AGENT:-UNKNOWN}  (names no known seat; WARN-only, 1.0.0_SA_CTO msg 107910)" >> "$AUDIT_LOG" 2>/dev/null || true
+  fi
+fi
+
 # ==========================================================================
 # QUEUE PATH -- only when explicitly enabled AND a live worker is present.
 # Dormant by default (flag off) until the TO-6 canary/cutover.
@@ -752,6 +765,35 @@ if [ -n "$_MERGE_HEAD_PATH" ] && [ -f "$_MERGE_HEAD_PATH" ]; then
   echo "${ISO_TS} MERGE-REFUSED-LATE  ${AGENT:-UNKNOWN}  ${#_undo[@]}  (merge opened during staging; unstaged; clash=${#_clash[@]})" >> "$AUDIT_LOG" 2>/dev/null || true
   exit 3
 fi
+
+# (2c) REGENERATE THE INDEX ENTRY OF EVERY TREE ROW THE ACT CHANGES (NFRA_GATSCP GS-e-5). The commit that changes a
+# generated file's source regenerates it in the same commit, so no seat has to remember `derive --write`. For each staged
+# org/missions/D<n>/<MACRO>/<CODE>/project.json: compose org/projects/<CODE>.json from the STAGED row, write it, stage it
+# and carry it in PATHSPEC (the land step carries only PATHSPEC). Cannot be composed -> REFUSED, nothing committed.
+# Runs before IN_SCOPE so every later gate sees the entry. Nothing in the act is a tree row -> does nothing.
+_TR_RE='^org/missions/D(0|[1-9][0-9]*)/[^/]+/([^/]+)/project\.json$'
+_TR_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+_TR_ADDED=()
+while IFS= read -r _tr_row; do
+  [ -z "$_tr_row" ] && continue
+  [[ "$_tr_row" =~ $_TR_RE ]] || continue
+  _tr_code="${BASH_REMATCH[2]}"; _tr_rel="org/projects/${_tr_code}.json"
+  _tr_tmp="$(mktemp "${TMPDIR:-/tmp}/tree-regen.XXXXXX")"
+  if ! _tr_err="$(python "$SCRIPT_DIR/missions-tree-index.py" derive --staged --only "$_tr_code" --stdout 2>&1 >"$_tr_tmp")" \
+     || ! mkdir -p "$_TR_ROOT/org/projects" || ! cp "$_tr_tmp" "$_TR_ROOT/$_tr_rel" || ! git add -f -- "$_TR_ROOT/$_tr_rel"; then
+    rm -f "$_tr_tmp"
+    [ "${#_TR_ADDED[@]}" -gt 0 ] && { git reset -q HEAD -- "${_TR_ADDED[@]}" 2>/dev/null || true; }
+    echo "safe-commit: REFUSED -- ${_tr_rel} could not be regenerated from the staged row: $(printf '%s' "${_tr_err:-git add or write failed}" | tr '\r\n' '  ' | cut -c1-400)" >&2
+    exit 1
+  fi
+  rm -f "$_tr_tmp"
+  _TR_ADDED+=("$_TR_ROOT/$_tr_rel")
+  _tr_have=0
+  for _tr_p in "${PATHSPEC[@]}"; do
+    [ "$_tr_p" = "$_tr_rel" ] || [ "$_tr_p" = "./$_tr_rel" ] || [ "$_tr_p" = "$_TR_ROOT/$_tr_rel" ] && _tr_have=1
+  done
+  [ "$_tr_have" -eq 1 ] || PATHSPEC+=("$_TR_ROOT/$_tr_rel")
+done <<< "$(git diff --cached --name-only --diff-filter=ACMR -- "${PATHSPEC[@]}" 2>/dev/null || true)"
 
 # (3) IN_SCOPE: git-expanded files matching our declared pathspec.
 IN_SCOPE="$(git diff --cached --name-only -- "${PATHSPEC[@]}" 2>/dev/null || true)"

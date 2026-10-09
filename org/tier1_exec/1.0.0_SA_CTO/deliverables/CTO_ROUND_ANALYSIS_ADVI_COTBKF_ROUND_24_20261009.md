@@ -203,3 +203,59 @@ tickers, against the Yahoo as-traded series already landed. **Nothing served mov
 - If the 4.6% and 12.2% are distribution adjustments (an adjusted-close base), the trace says so and the methodology is ruled on, not patched.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~09:5xZ) -- round 32 (CVO slug msg 3055, `ADJUDICATION_v25.md` @261fab3ccc): the price-basis ruling (W59-S1)
+
+**Read:**
+- CB32af1-AC2 is MET. SCHB sits just over the tolerance, which changes no reading.
+- **W59-S1:** the chain's one price store is a DIVIDEND-ADJUSTED Yahoo vintage, while dividends also book as cash. If that holds store-wide:
+  - a payer is valued LOW before its ex-dates;
+  - each distribution is counted twice, once in the adjusted price path and once as cash.
+  This bears on FWD-3's served tables.
+
+**RULING: the valuation basis is the AS-TRADED close (unadjusted for dividends, adjusted for splits only). Dividends and distributions enter ONLY as cash
+flows.**
+- **Why:** a position's market value on a day is quantity times that day's traded price. Total return then comes from price change plus the cash the account
+  actually received. A dividend-adjusted close already folds the dividend into the price history, so adding the cash too double-counts.
+- This is the same basis the D2-S45 settlement used (Yahoo as-traded closes) and the one the custodian statement reports.
+
+**Round 33:**
+1. **A read-only census of the price store:** which tickers and dates are held adjusted versus as-traded. It prints the denominator and the vintage per
+   ticker. Yahoo is the source of record (yfinance first), and its raw `Close` (as-traded) is separable from `Adj Close`.
+2. **If any served table was built on adjusted prices,** the repair is a REBUILD on the as-traded basis under a never-widen pair. The pair names every table and
+   date that moves and its rollback version. Until it lands, FWD-3's affected rows are marked with `price_basis: dividend_adjusted (known wrong; rebuild
+   owed)`, a claim a consumer can reject on. They are not silently served as correct.
+3. **SCHB just over tolerance** is re-read after the rebuild. Nothing is tuned to fit it.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~10:5xZ) -- round 33 (CVO slug msg 3179, `ADJUDICATION_v26.md` @273d6e934d)
+
+**Read:**
+- CB33ag1-AC2 is MET.
+- **D2-S50 (BLOCKING):** served `account_day_value` rests on dividend-adjusted or mixed prices for 638,948 of 1,669,040 account-days (688 accounts), and nothing marks
+  them.
+
+**FWD-3 is re-graded NOT REALIZED.** The served tables are on the wrong basis for 38% of account-days (ADDENDUM 8's ruling).
+
+**RULING on D2-S50: rebuild, with a reader gate in place of the interim marking.**
+- The FWD-3 tables have 0 readers, measured at the mint, so no consumer can be misled today.
+- Writing a `price_basis` column into 1.67M served rows only to overwrite it at the rebuild is a served move with no reader benefit.
+- So ADDENDUM 8's interim marking is REPLACED by an explicit gate: **no reader, role, route or export is granted on the four FWD-3 tables until the as-traded rebuild
+  lands and is graded.** A grant request before that is refused, citing this addendum.
+- **Round 34 cuts the rebuild on the as-traded basis** under a never-widen pair: every table and date that moves, with its prior version.
+
+**W60-S1, `bd_txn_price` in `opal-data-cot` written only under `data/black_diamond/`: MEASURE FIRST, then rule.** The cross-firm NEVER turns on the INPUT, not the folder name.
+**Round 34 cell 1 is a read-only trace** that names, by file and line:
+- the writer;
+- every input it reads (bucket and key prefix);
+- the account ids it covers.
+
+**The rule, stated before the read:**
+- **If it reads only Cottonwood's own Black Diamond account data and writes only `opal-data-cot`,** it is a shared BD platform serving each firm into its own bucket. That is
+  allowed, and the folder name is a naming matter.
+- **If it reads any other firm's data (49F's BD feed included) to write `opal-data-cot`,** it is the cross-firm NEVER. That is a BLOCKING row, and
+  `.tools/ds-precommit-check.py`'s foreign-prefix list gains the path. The served `bd_txn_price` objects are then held from FWD-3's rebuild until re-sourced.
+- Cottonwood and BD/49F are separate firms and are never mirrored (CLAUDE.md 13).
+
+-- 1.0.0_SA_CTO~DELL2

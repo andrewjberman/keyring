@@ -2383,3 +2383,39 @@ rename) are repairs, batched into one cell; items 3 and 4 consume AMGT_RESAPP ro
 (positive control: a clean `timelinePrices.ts` passes arm 1); r61c.cjs base 2 of 3. battery29 ALL PASS at the base.
 
 **Fan-out:** 3 of 3 chains (disjoint write surfaces), cap 8.
+
+## v62 -- ROUND 62 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~10:3xZ) -- THE PRICE LINE AS ONE LINE; THE NEWS TYPES ON THE CURRENT CONTRACT
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round61.md` @3e33baad5b section 3, items 1-4.
+- Items 1 and 3 (the price line, row Z-W87-S1) are repairs, batched into one cell.
+- Item 2 is the issuer's close walk, with NVDA US: absent from the 95 stored price-history tickers (`round62/PREP.md`).
+- Item 4 is scoped by the issuer:
+  - **Z-S21: no cell.** Its premise (a served model case line on the page) is retired. `ModelTab.tsx` at 9b06f6ed no longer draws
+    served case lines (FWD-12 amended); the research team's cases carry `data-model-team-case` and its state.
+  - **Z-W97-S1: re-measured at the close.** `ChatterBubbles.tsx` sets `MIN_FS = 11` at 9b06f6ed. The bubble-label sizes the row measured
+    (8-10 px, portal 35a723bf) are re-read on the round-62 build; any clause still failing is a round-63 cell.
+
+| cell | serves | owned files (`SA/`) | actor |
+|---|---|---|---|
+| `AV-zzn-1` repairs batched (LOCAL) | FWD-27, layout | `components/TimelinePanel.tsx`, `types.ts`, `constants.ts`, `components/HeaderBrief.tsx` | ~134 (worker-light) |
+
+**Base:** portal 9b06f6ed. **Check:** `deliverables/2.0.0_SA_COO~D1/round62/checks/r62.cjs`, base 2 of 6. battery29 ALL PASS at the base.
+
+**Fan-out:** 1 of 1.
+
+## v63 -- ROUND 63 (issuer 2.0.0_SA_COO~D1 on DELL1, 2026-10-09 ~11:0xZ) -- THE THESIS WINDOW, THE EVENT LABELS, THE CANDIDATE LIST
+
+**Rectangle:** `ledger/ROUND_ANALYSIS.round62.md` @4b7ce964a2 section 2, items 1-5. Items 1-3 share `ThesisCards.tsx` and go in one
+cell. Item 5 (TimelinePanel) and item 4 (notFound + SecurityAnalysis) are their own cells, so write surfaces stay disjoint. The repairs
+(1, 2, 5) are batched by file surface, a ruling of the issuer recorded here.
+
+| cell | serves | owned files (`SA/`) | actor |
+|---|---|---|---|
+| `AV-zzo-1` thesis window (LOCAL) | FWD-18 page half, layout | `components/ThesisCards.tsx`, `components/thesisSpans.ts` (new), `__harness__/` | ~135 (worker) |
+| `AV-zzo-2` event labels (LOCAL) | FWD-27 | `components/TimelinePanel.tsx`, `components/timelineLabels.ts` (new) | ~136 (worker-light) |
+| `AV-zzo-3` candidate list (LOCAL) | layout | `notFound.ts`, `SecurityAnalysis.tsx`, `__tests__/notFound.test.tsx` | ~137 (worker-light) |
+
+**Base:** portal ce3b0cc4 (= origin DEV). **Checks** (`deliverables/2.0.0_SA_COO~D1/round63/checks/`): r63a.cjs base 1 of 3 (positive
+control passes arm 1); r63b.cjs base 1 of 5; r63c.cjs base 1 of 4. battery29 ALL PASS at the base (round-62 candidates).
+
+**Fan-out:** 3 of 3 chains (disjoint write surfaces), cap 8.

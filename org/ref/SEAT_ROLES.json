@@ -81,7 +81,7 @@
     },
     {
       "kind": "TIER2",
-      "serial_pattern": "^0\\.[0-9]+\\.[0-9]+_(DS|DE|DT|RD)_|^0\\.[0-9]+\\.[0-9]+_AE_([^C]|C[^l]|Cl[^o]|Clo[^u]|Clou[^d]|Cloud[^OC]|CloudO[^p]|CloudOp[^s]|CloudOps.|CloudC[^o]|CloudCo[^m]|CloudCom[^p]|CloudComp.|C$|Cl$|Clo$|Clou$|Cloud$|CloudO$|CloudOp$|CloudC$|CloudCo$|CloudCom$|$)",
+      "serial_pattern": "^0\\.[0-9]+\\.[0-9]+_(DS|DE|DT|RD|BG)_|^0\\.[0-9]+\\.[0-9]+_AE_([^C]|C[^l]|Cl[^o]|Clo[^u]|Clou[^d]|Cloud[^OC]|CloudO[^p]|CloudOp[^s]|CloudOps.|CloudC[^o]|CloudCo[^m]|CloudCom[^p]|CloudComp.|C$|Cl$|Clo$|Clou$|Cloud$|CloudO$|CloudOp$|CloudC$|CloudCo$|CloudCom$|$)",
       "is": "A Tier-2 or Tier-3 seat (DS, AE, DE, DT or RD) that works the dispatches and task orders delivered to it.",
       "does": [
         "Acts on Monitor-delivered dispatches/TOs.",
