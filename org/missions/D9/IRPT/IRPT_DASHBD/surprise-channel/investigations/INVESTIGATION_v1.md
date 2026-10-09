@@ -4744,3 +4744,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W68-S2 -- BLOCKING: the proof-of-spec checker cannot run in this worktree (schema at base is malformed; fix 1f256cfc64 is not here)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T13:58:00Z",
+  "one_line": "BLOCKING on the proof-of-spec flip: org/standards/PROOF_OF_SPEC.schema.json at this worktree's base carries e7c10e5b4b's malformed commit_or_etag type, so .tools/proof-of-spec-check.py exits rc=2 (UnknownType); the fix 1f256cfc64 is on the shared checkout but not in this worktree and the schema is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rules: validate the proof instance with python .tools/proof-of-spec-check.py <instance> DB45-1-AC1; rc 0 permits the flip of the order's status to complete.",
+  "world_is": "MEASURED in C:/dev/wk-irpt-dashbd-68 at HEAD f9bd3c2430 (base e7316aa723): the checker prints 'TOOL-ERROR: UnknownType ... NOT-A-VERDICT: this is a tool failure (rc=2)' because org/standards/PROOF_OF_SPEC.schema.json line 157 carries a 'type' value that is the aws_resource prose (commit e7c10e5b4b). The shared checkout at C:/dev/ajb_workspace has 1f256cfc64 'restore commit_or_etag type: string' (row IRPT_BCKEND-D2-S52). The checker run from the shared checkout against this instance is INVALID for two reasons that are not findings on it: CHECKER-SCOPE (instance outside that tree) and kind 'code' not in its enum. The criterion itself ran PASS-by-output: 'OK: runner accepts the selection file; deterministic=False; 25 passed' / 'DB45-1-AC1 PASS', rc 0, and the mutant against an empty root printed 'DB45-1-AC1 FAIL' rc 1. The proof instance (committed) therefore has no rc 0 verdict and the order's status stays 'issued'. Unblock: the issuer brings 1f256cfc64 into this branch (merge) or edits the instance's grant, then re-runs the checker; the instance's artifacts kind 'code' (two rows) is not in the schema enum at 1f256cfc64's neighbour either, and is changed to 'script' / 'test' in the next commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json:157 @e7c10e5b4b",
+      "git log 1f256cfc64 on C:/dev/ajb_workspace (restore commit_or_etag type)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/IRPT_DASHBD.TO-DB-b-93.runner-selection-file.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
