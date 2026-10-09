@@ -113,3 +113,14 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
   had none, and the seam prints every gain.
 - **A3 (row ids, the issuer's defect):** the orders named the surprise-row id form `MDPF_STRATID-W2-W<n>-S<k>`, which the row gate
   refuses; the dell1 worker form `MDPF_STRATID-D1-W<n>-S<k>` is correct and stands.
+- **A4 (cell `ST-w-4`, cut 2026-10-09 ~05:2xZ under A1):** `unidentified_candidates` excludes a name that is an Opal Model figure
+  (an `opal_models` set the caller passes: Rebalancer `fact_model_roster.model_name` where `is_opal` is true) unless the name also
+  matches a sleeve rule (ticker, full name or `sma_name_rules`); the Cottonwood record is re-made with an `EXCLUDED-AS-MODEL:` line.
+  Write set = ST-w-3's (`opal_unidentified.py`, its test file, the record), continued by slot `~6` on its branch
+  `wk-MDPF_STRATID-w2-6`. Serves FWD-7. LOCAL. Checks `w2_4_tests`, `w2_4_seam`: FAIL as expected on `~6`'s branch @`bd9cb30a48`.
+- **A5 (cell `ST-w-5`, cut 2026-10-09 ~05:3xZ): disarm of row `MDPF_STRATID-D1-W5-S1` (ARMED, disarm owner this issuer).** ST-w-2
+  (`~5` @`694ae230d1`) makes `rebalancer_schemas.py` import `opal_strategy_matcher.py`; six carriers ship the first without the second
+  (`w2_5_ship` FAIL 6 of 6 on `~5`'s branch). Until ST-w-5 is terminal the hazard is held by ruling W1 (no workstream-2 merge before the
+  13:30Z read) AND by this one: **the `~5` branch never merges without ST-w-5 on it.** ST-w-5 adds the matcher beside
+  `rebalancer_schemas.py` in each carrier, continued by slot `~5` on its branch. WORLD (gate floor: infra/ and .tools/ paths); it deploys
+  nothing. The live gold lambda is unaffected: its deployed package is the pin-148f715f8c build and nothing rebuilds it before the read.
