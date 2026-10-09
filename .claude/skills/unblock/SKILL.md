@@ -1,0 +1,48 @@
+---
+name: unblock
+description: "A COO whose drive found nothing that advances its project for two ticks, and nothing opened on the third, writes its position, the endpoint and why it is blocked to the CRO; the CRO finds a new approach that is not blocked; the CTO synthesizes it into the workflow; the CVO signs it off; the COO resumes. One file per case, carried in S3 and nudged by each box's open-calls scan. `/unblock` (COO: write it), `/unblock propose|fold|sign|refuse <UB id>`, `/unblock list`. COO, CRO, CTO, CVO."
+---
+
+# /unblock -- the third empty tick goes to the CRO, then the CTO, then the CVO
+
+**Andrew-direct 2026-10-09 ~02:3xZ-02:4xZ, verbatim:** *"if there is truly nothing to do to meaningfully advance the project,
+then they need to reach out to the CRO on their channel and tell them their position, and tell them the endpoint, and explain
+that they are blocked, and the CRO job is to figure out a new approach that is not blocked. THen CRO sends that to the CTO who
+folds it in to the COO process."* -- *"if they have done /next-calls for two consecutive ticks, on the third tick they do this
+if nothing has opened up."* -- *"CRO figures out the new approach, and CTO basically figures out how to synthesize that into
+the workflow, and it needs a sign off by the CVO."* Record:
+`org/tier1_exec/4.0.0_SA_CRO~B/deliverables/ANDREW_DIRECT_20261009_023xZ_THIRD_EMPTY_TICK_UNBLOCK_VIA_CRO_THEN_CTO.md`.
+Tool: `.tools/unblock.py`. Owner 4.0.0_SA_CRO~B.
+
+## The trigger (the COO's drive tick, never a clock)
+
+After `/next-calls <CODE> --drive` has run its sequence, every tick counts itself:
+`python .tools/unblock.py tick --serial <you> --project <CODE> --result nothing|work`. The verdict:
+- `KEEP-DRIVING` -- work was found, or fewer than three empty ticks in a row.
+- `THIRD-EMPTY-TICK` -- write to the CRO now (below).
+- `WAITING <UB> <state>` -- a file is in flight; keep running `/next-calls` each tick (work found still counts as work).
+- `RESUME <UB>` -- the fold is signed: drive on it, then `unblock.py resume --id <UB> --by <you>`.
+
+Before writing to the CRO, the COO has fanned out: FREE work goes to more worker subagents, never to another COO. A deploy goes
+to a CloudOps seat as always, and needs no reminder.
+
+## The four acts
+
+| who | act | the file must carry |
+|---|---|---|
+| COO | `python .tools/unblock.py open --project <CODE> --by <you> --body <file>` | `## Position` (where the project stands, round, what has run), `## Endpoint` (the DONE WHEN / FWD lines not yet REALIZED), `## Blocked` (each block, what was tried, why `/next-calls` finds nothing) |
+| CRO | `python .tools/unblock.py propose --id <UB> --by <you> --body <file>` | `## New approach`, `## Why it is not blocked` (each named block, answered), `## What changes for the COO` (the cells or acts it opens) |
+| CTO | write the synthesis where the COO's drive reads it (a PRD addendum, a round-N analysis, or a ruling), then `python .tools/unblock.py fold --id <UB> --by <you> --ref <that file>` | the `--ref` file exists in the tree |
+| CVO | `python .tools/unblock.py sign --id <UB> --by <you> [--note ...]`, or `refuse --id <UB> --by <you> --reason "..."` (back to the CTO) | sign writes the record; commit it |
+
+`sign` writes `org/critical_paths/unblock/<UTC stamp>_<UB>.md`: the COO's position, the CRO's approach, every CVO refusal, the
+CTO's fold and the sign-off, verbatim.
+
+## Routing
+
+- The CRO is the COO's own box CRO when one is live there at `open`, else the laptop's. The CTO and the COO are on the COO's
+  box. The CVO is the CTO's box CVO when one is live at `fold`, else the laptop's.
+- Each box's 10-minute scan (`.tools/open-calls-scan.py`) drops an `[UNBLOCK]` file in the inbox of the seat that owns the next
+  step, re-sent every 30 minutes while unchanged. No owner live on that box: the box MSTR gets it, to seat or unstick one.
+- `/keep-driving off scan` pauses these nudges with the rest of the scan.
+- `python .tools/unblock.py list --state OPEN|PROPOSED|FOLDED|SIGNED|ALL` is the queue; `show --id <UB>` renders one file.

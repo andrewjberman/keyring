@@ -147,8 +147,14 @@ Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_000xZ_K
    10-minute scan makes the box CTO rule it. A call already on the queue is not re-added.
 2. **The seat proceeds with the SEQUENCE**: its `NOW` and `WHILE WAITING` lines, in order, through the drive's own limbs
    (a COO under FULL cuts and spawns, never builds; under FAST it builds). A gated option waits on its queued call only.
-3. **It repeats** after each act until an assessment returns zero FREE options. Only then is the tick a true NO-OP, and
-   the drive row reads `NOTHING-LEFT: <the blocks, each with its queued call id or event>`.
+   **Advance by fanning out:** FREE work goes to more worker subagents, never to another COO (Andrew-direct 2026-10-09
+   ~02:3xZ: "agents are better off "handing off" to more subagents, not to another COO"); a deploy goes to a CloudOps seat
+   as always.
+3. **It repeats** after each act until an assessment returns zero FREE options, then counts the tick: `python
+   .tools/unblock.py tick --serial <you> --project <CODE> --result nothing|work`. Two consecutive empty ticks, and on the
+   third nothing has opened up, read `THIRD-EMPTY-TICK`: the COO writes its position, the endpoint and why it is blocked to
+   the CRO (`/unblock`). The CRO finds a new approach, the CTO folds it into the workflow, the CVO signs it off, and the COO
+   resumes on it (`RESUME`). Idling with nothing written to the CRO is not an end state.
 
 ## Step 3 -- Aftercare
 
