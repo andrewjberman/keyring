@@ -4285,3 +4285,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-S38 -- the LGIC naming builder refuses the pair-signed svc-* secret name, and rule 30's remedy (a registry row) is outside this order's grant
+
+```json
+{
+  "id": "IRPT_DASHBD-S38",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T10:02:00Z",
+  "one_line": "The LGIC naming builder REFUSES the pair-signed secret name opal/investor-reporting/svc-custody-statement -- scope 'investor-reporting' resolves to no scopes.json row -- and rule 30 says a refusal is a registry row to add, but TO-DB-b-84's BOUNDS forbid this seat from editing infra/, so the registry gap has no owner inside this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-84 WORKER FACE step 3: 'Run the secret name through lib/opal_naming.py first; a refusal is a registry row (rule 30).' CLAUDE.md rule 30: 'a builder REFUSAL is a missing registry row to add (infra/logic/registry/), never a hand-typed workaround'.",
+  "world_is": "Run at box/dell2 in /c/dev/wk-db2-r41-mint: lib.opal_naming.name('opal','investor-reporting','custody-statement','SECRET') raises ValueError \"scope 'investor-reporting' resolves to no scopes.json row\". The builder's grammar is {system}-{scope}-{function}[-{qualifier}]-{kind} with scope classes (FIRM, GLOBAL, MASTER); it cannot express a slash-delimited svc-* Secrets Manager path at all, so no scopes.json row would make this name a builder output. The COO half anticipated exactly this: section 2 states 'The secret NAME is from the svc-* family and is not a builder output', and the family has live members predating LGIC (opal/ticketing/svc-analyst-intake read back this session at arn:...secret:opal/ticketing/svc-analyst-intake-HGzn67, plus svc-commentary). TWO THINGS COLLIDE AND NEITHER IS THIS SEAT'S TO RESOLVE: (a) rule 30's remedy is a row under infra/logic/registry/, which this order's BOUNDS put out of grant ('Served output does not move. No edit under data/, infra/ or portal/') -- writing it would be the seat adjudicating wider than its order; (b) the name itself is NOT hand-typed by this seat -- both signed halves and the order name it verbatim (the before-read's describe-secret target, and the CTO half's 'GIVEN, for exactly this one secret'), so the signed pair is the naming authority for this one secret and rule 30's R19 non-application (existing pipelines reach conformance through their own migration project, never as a rider) covers the pre-LGIC svc-* family. PROCEEDING on the pair-signed name with the refusal recorded verbatim in the ledger; the commit-time LGIC_ENFORCE gate is not reached because no name is committed into code or TF by this act. WHAT IS OWED BY SOMEONE ELSE: either a scopes.json/registry representation for the svc-* secret family, or an explicit R20-style register entry recording the family as a deliberate departure. Owner candidate: the LGIC canon owner for infra/logic/registry/, routed by 2.0.0_SA_COO~D2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py (name() signature and grammar docstring; NAME_SCOPE_CLASSES = FIRM, GLOBAL, MASTER)",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md section 2 ('is not a builder output')",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_SVC_CUSTODY_STATEMENT_MINT_CTO_HALF.md (verdict GIVEN for exactly this one secret)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-84.svc-custody-mint.md (WORKER FACE step 3; BOUNDS 'no edit under data/, infra/ or portal/')",
+      "org/critical_paths/change_management/20261009T0952Z_svc-custody-statement-mint-20261009_deploy_completion.md (leg M proof carries the refusal verbatim)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
