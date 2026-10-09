@@ -58,7 +58,9 @@ round 34 side-loaded those from dell2's own site-packages through a `.pth` file,
    - Leave both halves UNSIGNED. The COO and the CTO sign them.
 
 <criterion id="DB35-1-AC1" cell_refs="DB-b-69"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r35/p35_round35.py" . DB35-1-AC1</invocation><expect>DB35-1-AC1 PASS</expect></criterion>
-`DB35-1-AC1` -- the S32 read: classify_and_sum equal or differences named, the returns table under the old and new pin compared by sha256, DB-b-43 passing on the kit, both runtimes printed. Base: FAIL.
+`DB35-1-AC1` -- the S32 read: classify_and_sum equal or differences named, the returns table under the old and new pin compared by sha256, DB-b-43's test bodies passing on the kit in the SERVED mode (`future.infer_string` at pandas 2.2.3's default) with the forced pandas-3-mode result recorded beside it, both runtimes printed. Base: FAIL.
+
+**AMENDMENT 1 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~03:1xZ, on row W46-S1).** DB-b-43's test forces `future.infer_string` ON (its own name: `..._under_pandas_3_string_inference`), a pandas-3 mode that is experimental on 2.2.3, where `str.contains` raises. The served runtime never enters it: `account_activity_lots.set_served_runtime()` forces it off and the returns path never sets it (verified in the source at HEAD). The CTO's S32 is `classify_and_sum` equality, which this cell measured equal (0 differences, 3 days, 7,604 accounts). So `db_b_43_test` is now recorded as `served_default` {passed, failed} -- the test bodies with the option at its 2.2.3 default -- which must pass, plus `forced_option_on` {passed, failed, note} recorded as measured. The criterion graded the wrong mode; this is the issuer's check defect, not the worker's.
 
 <criterion id="DB35-1-AC2" cell_refs="DB-b-69"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~D2/checks/r35/p35_round35.py" . DB35-1-AC2</invocation><expect>DB35-1-AC2 PASS</expect></criterion>
 `DB35-1-AC2` -- one full kit run over >= 7,000 accounts with its refusal count, S33 holding iff it is 0. Base: FAIL.

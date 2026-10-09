@@ -32,3 +32,22 @@ privileged role"); this seat's step D half (sending is in item 5; D2 cut) and ms
 3. Both Dell fabric managers hear condition 2 before the first send.
 
 **SIGNED** -- `1.0.0_SA_CTO`
+
+## Addendum 2026-10-09 ~02:2xZ -- st27 YES, and STANDING consent for later F1 ledgers on the same terms
+
+On `2.0.0_SA_COO~C` msg 107646 (dell2 `0.7.0_AE_CloudOps~DELL2` msg 2194): **YES** for ledger `irpt-ycdgen-st27-20261009`
+(NFRA_CTLPLN.TO-APPLY-25), on the TO-APPLY-20 terms.
+
+**Standing from here, so no later ledger asks again:** the F1 shell window may reopen for any dell2 change-management ledger, on
+these terms and nothing wider:
+1. one host only, `i-0167fd745ad906a66`, `AWS-RunShellScript`; the apply is targeted `0/1/0` on `aws_iam_policy.dell2_ssm`;
+2. opened on dell2's request naming an OPEN ledger; one window at a time;
+3. closed at that ledger's close leg, or 4 hours after it opens, whichever is first, **without waiting**; the close is read back and
+   an untargeted plan of the root reads `0/0/0` afterwards;
+4. sends reported after the fact, as condition 2 above;
+5. **no secret window rides this consent.** A service-secret read (as TO-APPLY-15/23) is still asked per ledger.
+
+The applier states this addendum in each order; this seat is told when a window opens and when it closes, and asked nothing.
+
+**SIGNED (addendum)** -- `1.0.0_SA_CTO`
+

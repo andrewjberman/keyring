@@ -5,7 +5,7 @@
  "project": "NFRA_TRNSPT",
  "directive": "D9",
  "fabric": "dell2",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/nfra-trnspt-commentary-ingestion-expansion-brief-v3-20260930.md@bd14c47f70",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -114,7 +114,7 @@ Briefs: the header's `brief_ref` is the CRO's consolidated commentary brief (it 
 | C-WIPE-GATE: silver is not real until | this project | A planted-token leak test passes (names in a heading, in a salutation, split across an HTML tag, in a different case, in a common-word name, plus 8-digit and alphanumeric ids). Its result is "the planted classes were removed", never "no PII remains". No gold body text leaves Opal before it passes. |
 | C-GOLD-FIELDS: the commentary gold table | this project; CLAUDE_ANNEX 17c | ONE contract file `org/standards/NFRA_TRNSPT_COMMENTARY_GOLD_CONTRACT.json` (authored by a round-1 cell). Fields per v3 section 6: `record_id`, `sent_at`, `recipient_firm`, `yc_variant` (1/2/3 from models referenced 0/1/2+), `models_referenced` (an alias table mapped to IRPT `comparison_keys`), `account_type`, `themes` (list of {theme, client_figure, model_figure}), `body_text`, `paragraph_hashes[]`, `body_hash`, `pdf_sha256`, `has_pdf`, plus nullable `holdings` and `request_text`. Alyssa's PRD-001 is inspiration only. `approved` is not a field (an external send is approved); a null is not a schema violation for a field named nullable. |
 | C-SLICE: the slicer | this project | All Python, no AI. `yc_variant` equal to the request's variant, ranked by overlap of models with the request's models, then account type, then recency; near-duplicates removed by `paragraph_hashes`; about ten candidates. Across firms (Andrew: "across all firms, its not their content, its manav's response"). With no candidate the slicer falls back to the nearest variant and the draft says so in its provenance; with none at all a draft is still produced and says it has no precedent. |
-| C-KIMI: the one model call | Andrew-direct 2026-09-30 | Kimi K3, reusing the estate's existing implementation (READ v3 section 8: `infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:20`, secret `astn/kimi/api-key`). Input limited to abstract fields (variant, model names, account type, themes, holdings as category weights; no client identity, no account ids). Output is a DRAFT, visible in Opal-internal views only. Andrew's word is given for the first call, and only after C-WIPE-GATE passes; any other use of a vendor call carries his word per use. |
+| C-KIMI: the one model call | Andrew-direct 2026-09-30 | Kimi K3, reusing the estate's existing implementation (READ v3 section 8: `infra/aws/lambda/investor-reporting/intake/resolution_kimi.py:20`, secret `astn/kimi/api-key`). Input limited to abstract fields (variant, model names, account type, themes, holdings as category weights; no client identity, no account ids). Output is a DRAFT, visible in Opal-internal views only. The first call ran after C-WIPE-GATE passed (round 13). **Since Andrew-direct 2026-10-09 ~02:4xZ (CLAUDE.md law edit 4d77a9c3ea, "Egress is open on every channel, except Bloomberg"), no per-use vendor word is needed** (ADDENDUM 1). C-WIPE-GATE still gates any gold body text sent as precedent. |
 | C-TICKET: where the draft lands | consumed; D7 `OPAL_TICKET_VNEXT` (now laptop) | A new ticket type `analysis_request`; the draft text in the ticket and the report as an ATTACHMENT; requester name and firm on the ticket (Alyssa first). The Ticket Center is internal-only (READ v3 section 8). The requester may claim and complete their own ticket, for ALL tickets: D7 removes the segregation-of-duties block (`_sod_block`, `infra/aws/lambda/ticket_center/lambda_function.py:904`) after confirming nothing there was the only control on a trade ticket. The ticket's deployed security state (the 2026-08-12 finding) is read BEFORE client-derived text goes into it. |
 | C-TICKET-ATTACH: the attachment | D7 WS-1 then WS-2 | D7's storage read and ticket bucket (WS-1, with its cross-firm read fix) come before any attachment write; WS-2's own exercise is an authorised upload and retrieval and a different-firm user REFUSED. Until it lands the ticket carries text and a report link (INTERIM, this PRD's ruling 6.5). |
 | C-TRIGGER: the READY hook | consumed; IRPT_BCKEND | No hook exists after a report is READY (READ v3 section 8). The build is a task order to IRPT_BCKEND, not a TRNSPT build; a DynamoDB stream on `irpt-requests` filtered to `REPORT#` items is the proposed route. A trigger is a route, not an alert. The commentary must never block or fail the report; a failure goes to a dead-letter queue and a retry. |
@@ -270,3 +270,18 @@ headings (the ADDENDUM and sections 1-11): 13 of 13 are mapped.
   Andrew".
 - **Content rule:** the half's condition 6 (no raw content in any record) is carried into the ACCEPT line and C-READERS.
 - **Ids and half:** no id changed. The ENDPOINT changed, so the ratified-text half re-opens for `3.0.0_SA_CVO`.
+
+## ADDENDUM 1 (2026-10-09 ~03:0xZ, `1.0.0_SA_CTO~DELL2`): C-KIMI follows the open-egress law
+
+**Why:** Andrew-direct ~02:4xZ adopted his ~01:5xZ word, "infinite egress on all channels now (aside from BBG which goes through its queue
+logic)". The CLAUDE.md law edit 4d77a9c3ea (relayed by MSTR~DELL2 msg 2233) removed the per-use vendor-word rule.
+
+**C-KIMI now reads:** one Kimi K3 call per commentary draft. The input stays limited to abstract fields (no client identity, no account ids).
+The output stays a DRAFT, visible in Opal-internal views only. C-WIPE-GATE gates any gold body text sent as precedent. **No per-use word from
+Andrew is required.**
+
+The commentary Lambda's apply is held only by its own never-widen pair.
+
+**ENDPOINT is unchanged.** This is a contract wording change that follows the law. Per the proportionate sign-off rule, it re-opens no half.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -171,3 +171,18 @@ No data edge: t-6 and t-7 meet only at the merge hookup; t-8 is another pipeline
 3. t-8: DS-lane upload of `build_canonical_prices_v2.py` to `s3://opal-data-cot/code/gold/` (`.tools/safe-deploy.sh`) and `safe-apply` of
    `cot-pipeline` for the SSM document, under a change-management entry; the next 07:30 ET chain's log reads `=== S_00` and no halt.
 4. The daily draw on dell1 armed after the AMLP trace (FWD-1 "no person ran a pull").
+
+
+---
+
+# ROUND 3 -- CANDIDATES, NOT CUT (issuer 2.0.0_SA_COO~Q1; noted 2026-10-09 ~02:0xZ on an empty tick, /next-calls --drive)
+
+Round 2 is EXECUTING (frozen). Round 3 is cut only from the CTO's round-2 analysis; these are the issuer's candidates for it.
+
+| candidate | why | input |
+|---|---|---|
+| Bloomberg requests on the queue | the queue meters and quotes Yahoo only; site Z files two AMGT_RESAPP research-page requests (tier 4, run at site Z, C-SITES) and Rival Funds history is tier 3 on Bloomberg | msg 1380; Andrew ~23:0xZ record @86d85ab4a5; C-METER (BQL vs reference/history channels) |
+| the reserve | FWD-3: the ledger has no Bloomberg channel figures yet, so no CEILING / RESERVE / allowance | C-RESERVE; `bbg_budget.py` rows -> cells conversion (C-CELL) |
+| the pilot readout | R2-PILOT-50's lock outcomes by asset type, push-backs, actual vs quoted cells -> tolerance bands confirmed or retuned | FWD1_REAL_RUN_R2.md |
+| priority ranking | FWD-9: requests carry a tier, but within-tier score (held days x accounts x largest purchase) and the "gone client" exclusion are not computed | dell2 research s.6; crosswalk (MATCHED 471 of 1,533) |
+| unresolved list | FWD-5: REJECTED / no-symbol / partial-range securities are not yet listed with reason and open date ranges | dell2 research s.2, s.5 |

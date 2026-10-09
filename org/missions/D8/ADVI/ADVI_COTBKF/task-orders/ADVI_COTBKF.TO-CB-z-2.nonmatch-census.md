@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~48</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>withdrawn</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -42,7 +42,7 @@ every non-MATCH classed with counts; no class unexplained." The CTO ruled `metho
    `.scratch`, and `--out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~48/census`. Then run the census on that
    folder and that data-dir.
 
-**CLOSURE (CTO ruling msg 2213, 2026-10-09 ~02:3xZ, on row D2-W48-S2).** "Close CB-z-2, but grade E1's 'no class unexplained' NOT MET, because 512 are untraced." The order is closed `complete` on what it delivered (`method_r26` the default; the census of all 82,593 months with its denominator; AC1 18 passed). CB26z2-AC2 stays recorded FAIL (`unexplained=512`) in the proof instance and is NOT amended. Round 27 E1 traces the 512.
+**CLOSURE (CTO ruling msg 2213, 2026-10-09 ~02:3xZ, on row D2-W48-S2).** "Close CB-z-2, but grade E1's 'no class unexplained' NOT MET, because 512 are untraced." The order is closed `withdrawn` (CTO msg 2257: the terminal state the round-close gate admits for an unmet criterion, not `complete`; the same state round 23 used for a refused order) on what it delivered (`method_r26` the default; the census of all 82,593 months with its denominator; AC1 18 passed). CB26z2-AC2 stays recorded FAIL (`unexplained=512`) in the proof instance and is NOT amended. Round 27 E1 traces the 512.
 
 Tests `data/assets/scripts/silver/tests/test_commonwealth_nonmatch_census.py` (stubs): an unpriced month classes UNPRICED; a DIFF month
 classes by its largest driver; a month no rule fits is `unexplained:`; the counts sum to the total.

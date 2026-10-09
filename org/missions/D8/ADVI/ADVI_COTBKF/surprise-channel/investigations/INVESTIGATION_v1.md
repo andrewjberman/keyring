@@ -2783,3 +2783,32 @@ round.** Never edit an existing row.
   "world_is": "The issuer widened CB-z-2's grant by that one path and this worker changed that one assertion to the new default; the suite is green. S1 is not edited; its disarm is this row's subject."
 }
 ```
+
+## ADVI_COTBKF-D2-S38 -- L9 CB26z1-AC3, CB26z2-AC3, CB26z3-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S38",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T03:03:20Z",
+  "one_line": "L9 CB26z1-AC3 MET, CB26z2-AC3 MET, CB26z3-AC2 MET. ASF's rule committed @422ae4888c (22:00 ET) before its run @d7c2fbf66b (22:12); the census rules committed @cd084bc838 (22:19) before the counts @48cdd857cd (22:33), over the whole 82,593 graded months (sum_ok), with the 512 unexplained named, not forced; each FWD row's instrument was run in the task with measured output (this seat re-ran FWD-6: identical line).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~48/asf/asf_source.md (rule section before the census)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~48/census/nonmatch_census.md lines 1-60",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~49/ENDPOINT_READ_20261009.md",
+      "git log of the rule commits vs the run commits (this seat's read)",
+      "commonwealth_coverage_statement.py re-run by this seat: 'COVERAGE-STATEMENT tables=11 kinds=7 every_kind_has_own_span=True every_not_covered_has_reason_and_row=True rows_cited=15 rows_missing=0' rc=0",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_26_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB26z1-AC3, CB26z2-AC3, CB26z3-AC2 (the three judgment criteria of round 26).",
+  "world_is": "All three met as written."
+}
+```
