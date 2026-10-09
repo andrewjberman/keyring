@@ -46124,3 +46124,103 @@ REFUSED_20261008)
 2026-10-09T13:42:21Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
 2026-10-09T13:42:29Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
 2026-10-09T13:42:46Z LANDED-2P  0.0.0_AB_MSTR~Z  5f0198fc70  paths=1  validate=31.99s  wait=0.30s  hold=2.67s  build=1.64s  ref=0.71s  post-commit=7.67s  attempt=1
+2026-10-09T13:27:26Z PASS  2.0.0_SA_COO~Q1  12  (all paths in-lane)
+2026-10-09T13:27:30Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane)
+2026-10-09T13:27:38Z LANDED-2P  0.0.0_AB_MSTR~DELL1  ab4b16f844  paths=2  validate=8.08s  wait=0.08s  hold=1.21s  build=0.68s  ref=0.50s  post-commit=2.98s  attempt=1
+2026-10-09T13:27:41Z LANDED-2P  2.0.0_SA_COO~Q1  5edbbfc79c  paths=12  validate=28.41s  wait=0.09s  hold=1.43s  build=0.89s  ref=0.51s  post-commit=2.97s  attempt=1
+2026-10-09T13:28:29Z PASS  2.0.0_SA_COO~D1  1  (all paths in-lane)
+2026-10-09T13:28:38Z LANDED-2P  2.0.0_SA_COO~D1  5276db1c8f  paths=1  validate=6.89s  wait=0.12s  hold=1.29s  build=0.82s  ref=0.44s  post-commit=4.17s  attempt=1
+2026-10-09T13:28:40Z PASS  2.0.0_SA_COO~W1  2  (all paths in-lane)
+2026-10-09T13:28:49Z LANDED-2P  2.0.0_SA_COO~W1  642c914b19  paths=2  validate=10.29s  wait=0.06s  hold=0.93s  build=0.57s  ref=0.33s  post-commit=2.81s  attempt=1
+2026-10-09T13:30:18Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:30:20Z PASS  2.0.0_SA_COO~V1  2  (all paths in-lane)
+2026-10-09T13:30:25Z LANDED-2P  1.0.0_SA_CTO~DELL1  6b65ca5a52  paths=1  validate=8.10s  wait=0.07s  hold=1.12s  build=0.68s  ref=0.41s  post-commit=2.89s  attempt=1
+2026-10-09T13:30:31Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane)
+2026-10-09T13:30:44Z LANDED-2P  2.0.0_SA_COO~R1  dccd516ec8  paths=1  validate=36.16s  wait=0.11s  hold=1.13s  build=0.74s  ref=0.36s  post-commit=3.12s  attempt=1
+2026-10-09T13:30:47Z LANDED-2P  2.0.0_SA_COO~V1  597396eea6  paths=2  validate=47.75s  wait=0.08s  hold=1.24s  build=0.81s  ref=0.39s  post-commit=2.96s  attempt=1
+2026-10-09T13:31:45Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane)
+2026-10-09T13:32:01Z LANDED-2P  2.0.0_SA_COO~V1  8f8aab6157  paths=1  validate=38.78s  wait=0.12s  hold=1.48s  build=0.93s  ref=0.51s  post-commit=4.07s  attempt=1
+2026-10-09T13:32:09Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T13:32:19Z LANDED-2P  0.0.0_AB_MSTR~DELL1  531b28e4eb  paths=1  validate=10.52s  wait=0.11s  hold=1.56s  build=0.82s  ref=0.70s  post-commit=3.71s  attempt=1
+2026-10-09T13:32:44Z PASS  0.9.0_WK_MDPF_DEMQUE~20  2  (all paths in-lane)
+2026-10-09T13:32:50Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane)
+2026-10-09T13:32:58Z LANDED-2P  0.0.0_AB_MSTR~DELL1  bdcf19b571  paths=1  validate=7.79s  wait=0.08s  hold=1.34s  build=0.71s  ref=0.59s  post-commit=3.10s  attempt=1
+2026-10-09T13:33:06Z PASS  0.9.0_WK_MDPF_DEMQUE~20  2  (all paths in-lane)
+2026-10-09T13:33:46Z PASS  0.7.0_AE_CloudOps~RA1  4  (all paths in-lane)
+2026-10-09T13:33:57Z PASS  2.0.0_SA_COO~W1  4  (all paths in-lane)
+2026-10-09T13:34:06Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=3.99  took=already-current pushed=bdcf19b571
+2026-10-09T13:34:22Z LANDED-2P  2.0.0_SA_COO~W1  8ecf643c45  paths=4  validate=51.71s  wait=0.14s  hold=1.87s  build=1.13s  ref=0.65s  post-commit=4.65s  attempt=1
+2026-10-09T13:34:33Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:34:39Z LOCK-WAIT  0.7.0_AE_CloudOps~RA1  2s
+2026-10-09T13:34:43Z LANDED-2P  1.0.0_SA_CTO~DELL1  8cc1307807  paths=1  validate=9.38s  wait=0.11s  hold=1.60s  build=1.02s  ref=0.53s  post-commit=4.12s  attempt=1
+2026-10-09T13:34:48Z LANDED-2P  0.7.0_AE_CloudOps~RA1  2c2da743a1  paths=4  validate=106.52s  wait=2.40s  hold=1.77s  build=1.07s  ref=0.65s  post-commit=5.86s  attempt=1
+2026-10-09T13:35:03Z PASS  3.0.0_SA_CVO~RV1  1  (all paths in-lane)
+2026-10-09T13:35:34Z LANDED-2P  3.0.0_SA_CVO~RV1  b7a0246035  paths=1  validate=61.69s  wait=0.08s  hold=1.46s  build=0.92s  ref=0.51s  post-commit=2.94s  attempt=1
+2026-10-09T13:36:07Z PASS  0.9.0_WK_MDPF_DEMQUE~20  2  (all paths in-lane)
+2026-10-09T13:36:15Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane)
+2026-10-09T13:36:26Z LANDED-2P  2.0.0_SA_COO~R1  734476e427  paths=1  validate=11.95s  wait=0.10s  hold=1.61s  build=1.03s  ref=0.49s  post-commit=2.60s  attempt=1
+2026-10-09T13:36:32Z PASS  0.9.0_WK_MDPF_DEMQUE~19  5  (all paths in-lane)
+2026-10-09T13:37:06Z MERGE-ATTEMPT  2.0.0_SA_COO~Q1  rc=0  secs=10.14  graded=1/4 fast-lane  args=(wk-MDPF_DEMQUE-20)  first=(none)
+2026-10-09T13:37:50Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:38:01Z LANDED-2P  1.0.0_SA_CTO~DELL1  22bc71e80c  paths=1  validate=10.84s  wait=0.10s  hold=1.29s  build=0.81s  ref=0.45s  post-commit=3.47s  attempt=1
+2026-10-09T13:38:03Z PASS  2.0.0_SA_COO~H1  14  (all paths in-lane)
+2026-10-09T13:38:24Z LANDED-2P  2.0.0_SA_COO~H1  99f3bdb84d  paths=14  validate=41.23s  wait=0.28s  hold=1.78s  build=1.28s  ref=0.47s  post-commit=3.42s  attempt=1
+2026-10-09T13:38:42Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:38:49Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane)
+2026-10-09T13:38:52Z LANDED-2P  1.0.0_SA_CTO~DELL1  ceab50de56  paths=1  validate=9.45s  wait=0.10s  hold=1.62s  build=1.04s  ref=0.51s  post-commit=3.55s  attempt=1
+2026-10-09T13:39:00Z LANDED-2P  2.0.0_SA_COO~S1  c943f5e8a2  paths=1  validate=11.92s  wait=0.11s  hold=1.45s  build=0.98s  ref=0.42s  post-commit=3.02s  attempt=1
+2026-10-09T13:39:09Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane)
+2026-10-09T13:39:11Z PASS  0.9.0_WK_LGIC_BLANKFIX~2  5  (all paths in-lane)
+2026-10-09T13:39:21Z LANDED-2P  2.0.0_SA_COO~R1  87c392bc7d  paths=1  validate=11.12s  wait=0.30s  hold=1.25s  build=0.80s  ref=0.42s  post-commit=3.83s  attempt=1
+2026-10-09T13:39:34Z PASS  3.0.0_SA_CVO  1  (all paths in-lane)
+2026-10-09T13:39:43Z PASS  0.9.0_WK_MDPF_DEMQUE~19  3  (all paths in-lane)
+2026-10-09T13:39:47Z PASS  2.0.0_SA_COO~N1  15  (all paths in-lane)
+2026-10-09T13:39:49Z LANDED-2P  3.0.0_SA_CVO  28203a2257  paths=1  validate=23.12s  wait=0.09s  hold=1.20s  build=0.74s  ref=0.42s  post-commit=2.92s  attempt=1
+2026-10-09T13:40:06Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:40:13Z LANDED-2P  1.0.0_SA_CTO~DELL1  5a151aacea  paths=1  validate=7.78s  wait=0.07s  hold=1.27s  build=0.93s  ref=0.31s  post-commit=2.53s  attempt=1
+2026-10-09T13:41:00Z MERGE-ATTEMPT  2.0.0_SA_COO~Q1  rc=0  secs=6.38  graded=0/7 fast-lane  args=(wk-MDPF_DEMQUE-19)  first=(none)
+2026-10-09T13:41:55Z PASS  2.0.0_SA_COO~V1  3  (all paths in-lane)
+2026-10-09T13:42:15Z LANDED-2P  2.0.0_SA_COO~V1  de2b5ab2e9  paths=3  validate=29.70s  wait=0.09s  hold=1.18s  build=0.77s  ref=0.38s  post-commit=5.04s  attempt=1
+2026-10-09T13:42:19Z SURPRISE-ROW-OVERRIDE  2.0.0_SA_COO~W1  reason=pre-existing duplicate AMGT_HARVST-Z-S106 pair at HEAD (1.0.0_SA_CTO~DELL1 msg 1310); this commit adds only my row
+2026-10-09T13:42:49Z PASS  2.0.0_SA_COO~W1  3  (all paths in-lane)
+2026-10-09T13:43:02Z PASS  2.0.0_SA_COO~S1  6  (all paths in-lane)
+2026-10-09T13:43:15Z LOCK-WAIT  2.0.0_SA_COO~S1  1s
+2026-10-09T13:43:17Z LANDED-2P  2.0.0_SA_COO~W1  db4e94d393  paths=3  validate=54.27s  wait=0.08s  hold=0.95s  build=0.60s  ref=0.32s  post-commit=2.48s  attempt=1
+2026-10-09T13:43:23Z LANDED-2P  2.0.0_SA_COO~S1  0a281aab9a  paths=6  validate=22.74s  wait=1.22s  hold=5.07s  build=4.22s  ref=0.82s  post-commit=2.28s  attempt=1
+2026-10-09T13:44:06Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=0  secs=12.56  graded=1/3 fast-lane  args=(wk-MDPF_STRATID-w2-4 -m drain(MDPF_STRATID.TO-W2-1): merge worker 0.9.0_WK_MDPF_STRATID~4 -- ST-w-1 + A7: etf_universe.json gains cited full_names and sma_name_rules (Muni rule matches Opal_Muni_Sleeve only); W21-LIST-OK, W21-LOADERS-OK)  first=(none)
+2026-10-09T13:44:05Z PASS  2.0.0_SA_COO~W1  1  (all paths in-lane)
+2026-10-09T13:44:19Z LANDED-2P  2.0.0_SA_COO~W1  addae4d821  paths=1  validate=13.03s  wait=0.07s  hold=2.47s  build=1.69s  ref=0.74s  post-commit=2.47s  attempt=1
+2026-10-09T13:44:27Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=4  secs=8.81  graded=n/a  args=(wk-MDPF_STRATID-w2-6 -m drain(MDPF_STRATID.TO-W2-3): merge worker 0.9.0_WK_MDPF_STRATID~6 -- ST-w-3 + ST-w-4 + A6/A7: unidentified-strategy list, Opal Models excluded (roster+definition union), Cottonwood record LISTED 3)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T13:44:28Z MERGE-REFUSED  0.0.0_AB_MSTR~DELL1  7  (MERGE_HEAD 614bf6e1a859 present; nothing staged by this run)
+2026-10-09T13:44:30Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=4  secs=27.68  held=conflict cloud=e2ee75172d
+2026-10-09T13:45:09Z MERGE-REFUSED  3.0.0_SA_CVO  6  (MERGE_HEAD 614bf6e1a859 present; nothing staged by this run)
+2026-10-09T13:45:17Z PASS  2.0.0_SA_COO~S1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T13:45:38Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=0  secs=39.73  graded=2/6  args=(--continue -m drain(MDPF_STRATID.TO-W2-3): merge worker 0.9.0_WK_MDPF_STRATID~6 -- ST-w-3 + ST-w-4 + A6/A7: unidentified-strategy list, Opal Models excluded (roster+definition union), Cottonwood record LISTED 3; decomp kept at the shared-tree superset; channel resolved as append-only union)  first=(WARN -- 1 of 7 needed file(s) kept the first parent's version (fine for a PICK-ours resolution)
+2026-10-09T13:45:41Z PASS  2.0.0_SA_COO~W1  1  (all paths in-lane)
+2026-10-09T13:45:53Z PASS  0.7.0_AE_CloudOps~RA1  3  (all paths in-lane)
+2026-10-09T13:46:03Z LANDED-2P  2.0.0_SA_COO~W1  34974f353a  paths=1  validate=10.46s  wait=0.15s  hold=4.90s  build=4.20s  ref=0.65s  post-commit=7.51s  attempt=1
+2026-10-09T13:46:04Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=2  secs=0.78  graded=n/a  args=(wk-MDPF_STRATID-w2-5 -m drain(MDPF_STRATID.TO-W2-2): merge worker 0.9.0_WK_MDPF_STRATID~5 -- ST-w-2 + ST-w-5: shared strategy matcher (rebalancer_schemas delegates, same answers on 362 names) shipped beside rebalancer_schemas in all 6 carriers (disarms D1-W5-S1))  first=(REFUSED -- the index carries STAGED changes (possibly another seat's))
+2026-10-09T13:46:11Z LANDED-2P  0.7.0_AE_CloudOps~RA1  5799f2a659  paths=3  validate=27.40s  wait=0.08s  hold=4.37s  build=3.80s  ref=0.54s  post-commit=2.55s  attempt=1
+2026-10-09T13:46:28Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane)
+2026-10-09T13:47:08Z LANDED-2P  2.0.0_SA_COO~V1  0d4f7cc409  paths=1  validate=59.73s  wait=0.12s  hold=2.50s  build=1.36s  ref=1.08s  post-commit=9.32s  attempt=1
+2026-10-09T13:47:26Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=0  secs=20.31  graded=2/12 fast-lane  args=(wk-MDPF_STRATID-w2-5 -m drain(MDPF_STRATID.TO-W2-2): merge worker 0.9.0_WK_MDPF_STRATID~5 -- ST-w-2 + ST-w-5: shared strategy matcher (rebalancer_schemas delegates, same answers on 362 names) shipped beside rebalancer_schemas in all 6 carriers (disarms D1-W5-S1))  first=(none)
+2026-10-09T13:47:58Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:48:04Z PASS  0.9.0_WK_LGIC_BLANKFIX~2  2  (all paths in-lane)
+2026-10-09T13:48:09Z LANDED-2P  1.0.0_SA_CTO~DELL1  04214e638c  paths=1  validate=9.12s  wait=0.17s  hold=1.73s  build=1.05s  ref=0.59s  post-commit=4.53s  attempt=1
+2026-10-09T13:49:45Z PASS  2.0.0_SA_COO~S1  2  (all paths in-lane)
+2026-10-09T13:49:26Z SURPRISE-ROW-OVERRIDE  2.0.0_SA_COO~W1  reason=pre-existing duplicate AMGT_HARVST-Z-S106 pair at HEAD (1.0.0_SA_CTO~DELL1 msg 1310); this commit adds only my row
+2026-10-09T13:50:05Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
+2026-10-09T13:50:07Z PASS  2.0.0_SA_COO~W1  3  (all paths in-lane)
+2026-10-09T13:50:11Z LANDED-2P  2.0.0_SA_COO~S1  d32b1f8be3  paths=2  validate=64.45s  wait=0.21s  hold=1.55s  build=0.89s  ref=0.53s  post-commit=4.04s  attempt=1
+2026-10-09T13:50:15Z LANDED-2P  1.0.0_SA_CTO~DELL1  a544e646ea  paths=1  validate=9.64s  wait=0.10s  hold=1.68s  build=1.03s  ref=0.60s  post-commit=4.21s  attempt=1
+2026-10-09T13:51:08Z LANDED-2P  2.0.0_SA_COO~W1  0c126a2cf7  paths=3  validate=88.48s  wait=0.34s  hold=2.84s  build=1.93s  ref=0.81s  post-commit=8.59s  attempt=1
+2026-10-09T13:52:02Z PASS  0.9.0_WK_MDPF_SECHIST~8  1  (all paths in-lane)
+2026-10-09T13:52:33Z BLOCK  2.0.0_SA_COO~S1  1  (1 violation(s): VIOLATION: infra/aws/etfs/config/etf_universe.json -- lane=CLOUD_OPS_OR_ETL (Any AE agent — infra/aws, pipeline Terraform, hook wiring. 0.7.0_AE_CloudOps~A added 2026-05-21 by COO: the lane is literally 'any AE agent' and ~A is one — the ~A suffix simply was not enumerated (tilde-lane owned-paths gap). A correct permanent add, not an exception. 0.7.0_AE_CloudOps~C added 2026-05-22 by COO~C: same gap — ~C is the ADVI_DEMOV1 AE lane running ADVI_DEMOV1.001 (infra/aws shared-infra TF + lambda-edge) under COO~C GO. 0.8.0_AE_CloudComp added 2026-06-26 by COO (2.0.0_SA_COO): the SAME enumeration gap — 0.8.0_AE_CloudComp is an AE agent (Andrew-direct LD-0218 made it the UNIFIED AWS+MS compiler/AE owner) and the lane is 'any AE agent'; it simply was not enumerated. A correct permanent add (it owns the globgrph-MS infra going forward, NFRA_MSGRAPH S2+ extract_ms_cloud in infra/aws/globgrph/). Grantee does not commit its own grant (SoD) — landed by COO grantor; CC CTO arch-awareness.); agent=2.0.0_SA_COO~S1 not in permitted_agents;)
+2026-10-09T13:53:19Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane)
+2026-10-09T13:53:41Z LANDED-2P  2.0.0_SA_COO~S1  80b2c5c14b  paths=1  validate=22.58s  wait=0.18s  hold=2.37s  build=1.36s  ref=0.87s  post-commit=6.57s  attempt=1
+2026-10-09T13:53:56Z PASS  0.9.0_WK_MDPF_SECHIST~9  3  (all paths in-lane)
+2026-10-09T13:54:09Z PASS  3.0.0_SA_CVO  1  (all paths in-lane)
+2026-10-09T13:54:27Z PASS  0.9.0_WK_MDPF_SECHIST~5  5  (all paths in-lane)
+2026-10-09T13:54:42Z LANDED-2P  3.0.0_SA_CVO  de98c8ffbd  paths=1  validate=42.31s  wait=0.19s  hold=2.11s  build=1.31s  ref=0.70s  post-commit=8.54s  attempt=1
+2026-10-09T13:55:25Z PASS  2.0.0_SA_COO~W1  1  (all paths in-lane)
+2026-10-09T13:55:43Z LANDED-2P  2.0.0_SA_COO~W1  0d24f852de  paths=1  validate=16.71s  wait=0.26s  hold=2.19s  build=1.35s  ref=0.76s  post-commit=5.45s  attempt=1
