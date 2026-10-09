@@ -6,6 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-v-7</owned_cells>
 </decomp_ref>
+<to_id>NFRA_MCPINDEX.TO-MX-v-7</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~22</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
