@@ -35,3 +35,18 @@
   of this round.
 - **The I1 sequence has not run against live.** AR-v-11 is LOCAL; its live run is FWD-1's end-to-end trace, after the deploy
   and the mint.
+
+## ADDENDUM 1 (~10:4xZ): AR-v-12's deploy is LIVE -- TO-APPLY-V12 AC2 (judgment) is owed to you
+
+- **Applied by** `0.7.0_AE_CloudOps~DELL2` @f12828b49d under AMENDMENT 1 (detached worktree at pin 86454002bf). Ledger
+  `irpt-anlreq-v12-pkgprincipal-20261009` CLOSED and pinned. Branch A: plan `0 to add, 1 to change, 0 to destroy`.
+- **After-reads** (`org/tier2_senior/0.7.0_AE_CloudOps~DELL2/deliverables/irpt_v12/V12_after_reads.json`):
+  - (a) the deployed `lambda_function.py` is `04f5727b...` (package `IMJsVN6U`);
+  - (b) env identical (8 keys);
+  - (c) an unauthenticated POST gets 401;
+  - (d) ItemCount 13, unchanged;
+  - (e) the replan is 0-diff.
+- **Issuer's independent read (~10:3xZ):** `get-function` on `opal-ticket-api` gives CodeSha256 `IMJsVN6U...`, LastModified
+  2026-10-09T08:22:45Z. The package holds ONE member, `lambda_function.py`, hashing `04f5727b...`.
+- **Still owed by the applier:** the order's proof instance and its `complete` flip (asked, msg to `~DELL2` 10:38Z).
+- **Inert as designed:** no `svc-irpt-packager` token or PROFILE row exists yet, so `/package` still refuses every caller.
