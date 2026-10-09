@@ -1,11 +1,7 @@
 # CLAUDE.md -- Opal Capital Workspace
 
 **HOW WE WORK and HOW TO THINK: fast and accurate, in that order.** Read sections 0-3 before acting.
-This is the LAW INDEX: every rule = imperative + mechanism + pointer. RULES ONLY. Incident reports, measurements,
-dates, quotations and "found by" lines do NOT live here (Andrew-direct 2026-09-24: "Strike all incident reporting
-from claude.md ... rules/directives only"); the long-form text behind every rule is `docs/doctrine/CLAUDE_ANNEX.md`
-and the history is git. Startup mechanics: `org/XXX.md`. When you address another agent, use its FULL SERIAL; never
-her/him/them/you.
+When you address another agent, use its FULL SERIAL; never her/him/them/you.
 
 RULE NUMBERS ARE STABLE IDs, NOT READING ORDER. Rules 4-12 and 18 live in `/cloud-ops`; rules 15, 17, 17a, 17b
 (data architecture) and 19, 23, 25, 26 (portal/SES/dormancy/apply-locality) live in `docs/doctrine/CLAUDE_ANNEX.md`.
@@ -240,10 +236,6 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
 
 ## 6. LANE + COMMIT MECHANICS
 
-13. **DS owns commit->QA-deploy for `data/*/scripts/{gold,silver,bronze}/*.py`** incl. `aws s3 cp`; DT/AE =
-    infra/PROD-triggers/multi-pipeline. Enforced by `.tools/safe-deploy.sh`; shared homes deploy under the
-    S3-membership guard (404 = loud skip, first-mints explicit). **cot is a separate firm from bd -- never
-    mirror/sync.** `docs/architecture/ADHC_DSFLOW.md`.
 14. **Every `.py` edit passes `.tools/commit-gate.sh`** (py_compile + ds-precommit + ruff py39). Universal.
 14a. **Commit via `.tools/safe-commit.sh --author "{serial} <{serial}@opal.agent>" -F <msgfile> -- <paths>`; do NOT
     pre-`git add`; `-F` not `-m`; the message file is written by a NON-SHELL writer** (Write tool / python). `--force`
@@ -265,14 +257,13 @@ field -> you may NOT treat it as measured. The consuming half is the whole mecha
 
 **Do NOT ask permission** to read/write/build/test/commit/push CLOUD-DEV/run scripts/call Opal-owned APIs.
 **Egress is open on every channel, except Bloomberg.** Human confirmation ONLY for: recursive deletion, destructive git,
-dropping tables/S3 deletes, stopping EC2, anything unrecoverable.
+dropping tables/S3 deletes, stopping EC2, anything unrecoverable. Deleting a ref already contained in its trunk loses no
+commit and is not destructive git (`ANDREW_DIRECT_20261009_035xZ_GOVERN_ADJUDICATES_YES_TO_BOTH.md`, tier0_exec).
 - **Bloomberg pulls go only through their queue; other vendor APIs need no per-use word.** Per-user entitlement
   scoping waits for a second MCP user. Order: `ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_*` (tier0_exec).
 
 **NEVER self-wind-down, never default to "tonight"** -- drive every addressable task NOW; wind-down only on Andrew's
-word. "Waiting for the scheduled run" is the same failure: fire the ad-hoc QA run (it tests; the scheduled fire stays
-the acceptance) unless the ad-hoc would destroy the discriminator the scheduled run exists to produce -- name that
-evidence or the wait is the defect.
+word.
 
 29. **A REPORT IS NOT THE DELIVERABLE WHILE UNBLOCKED WORK REMAINS -- the turn ends when the WORK does.** Gate before
     ending ANY turn: "is there an act this turn said it would do that it has not done?" -- yes + unblocked -> do it,
@@ -305,7 +296,6 @@ is current-day-only; never mint `data/bloomberg/`).
 - **NEVER compose a report of a COMPLETED act in the SAME tool call as the act -- read the number, then write the
   sentence.** Does not bind the `safe-commit -F` message file. Verify a substantive send by `wc -c` on the delivered
   file.
-- **Never "you/your" about a specific seat in a multi-recipient message -- name the serial + msg-id.**
 - 31. **MESSAGE DISCIPLINE (Andrew-direct 2026-09-24): one ask per message, under 150 words, cite the file instead
   of restating it; the CTO is copied on DECISIONS only -- FYIs and corroborations go to the record, not to an inbox.
   A seat's record batches are hourly or per closed decision, never per message.**
@@ -323,7 +313,8 @@ is current-day-only; never mint `data/bloomberg/`).
   resolve bun via profile, don't bake a path.
 - **A portal candidate touching NO product file lands on DEV by its author** as a fast-forward with a one-line
   receipt (Andrew-direct 2026-09-24); the CTO reviews only candidates that touch a product file; VALGATE runs on
-  every push; `0.0.0_AB_MSTR` pushes trunks on Andrew's word as before.
+  every push; `0.0.0_AB_MSTR` pushes trunks on Andrew's word as before, except that a CTO-approved DEV fast-forward
+  is landed by the box manager under `/govern` without waiting on Andrew (`ANDREW_DIRECT_20261009_035xZ_*`, tier0_exec).
 - **Under a live FAST lease, the lease's seat lands product changes on portal DEV itself** (CI running; no CTO go-ahead,
   no integrator push; DEV only, PROD gated). Mechanism: `.tools/hooks/never-rules-gate.sh` admits a DEV push from a
   live lease's seat only (`.tools/drive-mode.py`); `/closer-drive` step 5 checks the payload. Order:
