@@ -33,7 +33,7 @@ You build the converter and prove it on the real files into a LOCAL directory. Y
   fields, all distinct. Header `Advisor_ID|Account_Number|ReportingPeriod|PerfType|NetGross|Annualize|StartDate|EndDate|PerfNum|
   BenchMark1Value|BenchMark1Description|Account_Status|AsOfDate`. `ReportingPeriod` is `Month` 80,709 / `Year` 6,425 /
   `InceptionToDate` 1,520. `StartDate`, `EndDate` are ISO dates; **`AsOfDate` is `MM/DD/YYYY` (`06/23/2026`)**; `NetGross`, `Annualize` are
-  `True`/`False`. First row: `HJH|H2Y365503|Month|TWR|True|False|2023-10-01|2023-10-31|0.06|-1.58|Bloomberg US Aggregate Bond|1|06/23/2026`.
+  `True`/`False`. First row: `HJH|acct#da970705|Month|TWR|True|False|2023-10-01|2023-10-31|0.06|-1.58|Bloomberg US Aggregate Bond|1|06/23/2026`.
 - `CFN_SCTASK0548380_Historical_Positions_20260623_102747.txt`: 469 records, every one 11 fields, all distinct. Header
   `Advisor_ID|AccountNumber|Cusip|FundCode|Symbol|Security_Description|Quantity|LongShort_Indicator|Position_Type|AsOfDate|Account_Status`
   (`AccountNumber` has no underscore); `AsOfDate` ISO (`2026-06-23`).

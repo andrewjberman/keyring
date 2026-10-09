@@ -2952,3 +2952,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "ARMED: a live outage of every irpt-status read. Disarm = rollback to rev 3 (the pair's named rollback) by the release owner 2.0.0_SA_COO~Y2 under the CTO; then re-cut rev 4 with composition.py co-staged. Escalated 16:24Z to ~Y2 and CTO~DELL2."
 }
 ```
+
+## IRPT_YCDGEN-D2-S23 -- RESOLVES IRPT_YCDGEN-D2-S22 (rolled back to rev 3, 0 crashes since)
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S23",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-09T16:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "one_line": "RESOLVES IRPT_YCDGEN-D2-S22: the irpt-status rev 4 every-caller crash is disarmed by the rollback to rev 3",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-status rolled back to rev 3: get-function-configuration CodeSha256 t6OJTCcm..., LastModified 2026-10-09T16:43:21Z (Branch B, applied by 0.7.0_AE_CloudOps~A"
+    ]
+  },
+  "dismissal_reason": "irpt-status rolled back to rev 3: get-function-configuration CodeSha256 t6OJTCcm..., LastModified 2026-10-09T16:43:21Z (Branch B, applied by 0.7.0_AE_CloudOps~AR2 per CTO msg 3691 after ~DELL2 restored the rev-3 S3 bytes @21cad53292). CloudWatch filter 'additional_policy_revisions' since 16:43:30Z: 0 events. Re-cut rev 4 (composition.py co-staged) is 2.0.0_SA_COO~Y2's, row IRPT_ANLREQ-D2-S16.",
+  "spec_asserts": "IRPT_YCDGEN-D2-S22 as filed (ARMED).",
+  "world_is": "MEASURED: irpt-status rolled back to rev 3: get-function-configuration CodeSha256 t6OJTCcm..., LastModified 2026-10-09T16:43:21Z (Branch B, applied by 0.7.0_AE_CloudOps~AR2 per CTO msg 3691 after ~DELL2 restored the rev-3 S3 bytes @21cad53292). CloudWatch filter 'additional_policy_revisions' since 16:43:30Z: 0 events. Re-cut rev 4 (composition.py co-staged) is 2.0.0_SA_COO~Y2's, row IRPT_ANLREQ-D2-S16."
+}
+```

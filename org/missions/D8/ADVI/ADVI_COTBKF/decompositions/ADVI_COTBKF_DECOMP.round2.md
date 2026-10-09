@@ -18,7 +18,7 @@ items 4 (imaging and documents) and 5 (crosswalk) and FWD-9 follow in round 3. F
 ## Measured constraints (read at the base, 2026-10-06 ~20:0xZ)
 
 1. **Transactions** (row S3, recounted by the CTO): 1,416,497 records on 1,416,500 physical lines (three records of account
-   B3S688184 each span two lines through a CRLF inside a quoted `Transaction_Note`); 1,360 record-level repeats. Silver today
+   acct#1059baa6 each span two lines through a CRLF inside a quoted `Transaction_Note`); 1,360 record-level repeats. Silver today
    (`s3://opal-data-assets/commonwealth/cottonwood/silver/transactions/date=2026-06-23/`, written @b168025b06) holds 1,415,137 rows.
 2. **Performance** `CFN_SCTASK0548380_Historical_Performance_TWR_Cumulative_NetofFees_20260623_102759.txt`: 88,654 records, every one
    13 fields, all distinct. Header `Advisor_ID|Account_Number|ReportingPeriod|PerfType|NetGross|Annualize|StartDate|EndDate|PerfNum|
