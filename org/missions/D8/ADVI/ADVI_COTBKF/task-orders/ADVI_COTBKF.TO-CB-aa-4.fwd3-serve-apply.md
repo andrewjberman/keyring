@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~CB2</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>issued</status>
+<status>withdrawn</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -36,6 +36,8 @@ served output.
 2. Open the change-management ledger entry in `org/critical_paths/change_management/` (and `.open_deploys/`), per CLAUDE.md NEVER-2.
 3. From the drained trunk: run `--build` then `--dry-run`; the dry run's three addresses must equal the pair's three keys, else stop.
 4. Run `--apply`, then `--verify`. Close the ledger with the read-back.
+
+**WITHDRAWN (issuer ruling, 2026-10-09 ~04:2xZ, never spawned).** CB-aa-1 traced 73 DIFF months to known-wrong day values (59 split months: split-adjusted closes against as-traded quantities; 13 distribution months; 1 understated in-kind flow -- rows D2-W50-S1..S3). Serving the FWD-3 tables now would publish those values as fact. The disarm (row D2-S39) conditions the COO half of this order's pair on their repair or blanking, which is a round-28 cell, so this order cannot start this round. It is withdrawn, not failed, and re-cut after the repair lands. Nothing was written to S3 (the three prefixes hold 0 objects).
 
 ### ACCEPTANCE
 
