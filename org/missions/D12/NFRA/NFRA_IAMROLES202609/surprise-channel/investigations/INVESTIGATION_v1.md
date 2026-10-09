@@ -1054,6 +1054,46 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
         "round 3 bundle ~8 population_rule: 219 at '/', 10 excluded"
       ]
     }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S3",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The reseat brief's '195 per-role files' was 65 roles x 3 files (.json/.err/.rc), so 215 of 280 roles remained, not about 85; the sweep resumed from the 65 rc0-verified roles and ran the 215 in one background pass.",
+    "spec_asserts": "The reseat brief: .scratch/r4work/roles holds 195 per-role files at the issuer's count; about 85 roles remain.",
+    "world_is": "roles/ held 195 files = 65 .json + 65 .err + 65 .rc; all 65 had rc 0 and parsed with a rows key; 215 roles were not yet attempted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls .scratch/r4work/roles | sed to strip the extension | sort | uniq -c -> 65 err, 65 json, 65 rc",
+        "final run: attempted=280 returned_rc0=280 results=280, no rc != 0 role"
+      ]
+    }
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-W11-S4",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~11",
+    "surfaced_at": "2026-10-09T07:39:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "26 permissions on opal-drift-producer-codebuild-role (iotevents:*, evidently:*) read never-used in round 3 and unobservable in round 4 ('service not present in Access Advisor response') with byte-identical instrument code and the grant unchanged.",
+    "spec_asserts": "Same instrument blobs, same rule and lookback give a comparable per-permission status for an unchanged grant.",
+    "world_is": "For that role the Access Advisor response in the 2026-10-09 run no longer lists the iotevents and evidently services, which moves 26 rows never-used -> unobservable; the cause inside AWS is not determinable from the bundles.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "compare-runs.py over ~8 round-3 bundle and the round-4 bundle: 'never-used -> unobservable : 26', all on opal-drift-producer-codebuild-role",
+        "instrument_blobs equal across the two bundles (COMPARABLE: yes)"
+      ]
+    }
   }
 ]
 ```
