@@ -4935,3 +4935,83 @@ round.** Never edit an existing row.
  "world_is": "W78-S3 is routed to the gate owner with the redacted texts held outside the repo."
 }
 ```
+
+## ADVI_COTBKF-D2-S75 -- CB-ay-1: the redaction detector's three regexes miss two real account shapes; cleartext survives inside files the sweep redacted
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S75",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~CB2",
+  "surfaced_at": "2026-10-09T15:40:00Z",
+  "one_line": "The CB-ay-1 redaction's detector is three regexes that all require letters in fixed positions, so two real Cottonwood account shapes -- letter+8digits and 11digits -- are invisible to it; cleartext of both survives INSIDE files the sweep itself redacted, and its test will keep reading 0 hits on them",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_cotbkf_no_account_ids.py:20-23 -- PATTERNS = [ [A-Z0-9]{2}[A-Z]\\d{6} , \\d[A-Z]{2}\\d{6} , [A-Z]{3}\\d{6} ]; every one requires a letter at a fixed offset",
+      "measured, 3 patterns x 6 tokens with the denominator printed: B3S728504, 0QF878956, RGY004256 and B3S793726 each match at least one pattern and were duly redacted; D49151054 (letter + 8 digits) and 00074413503 (11 digits) match NONE",
+      "cleartext D49151054 survives in a file the sweep REDACTED: deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md still carries it (1 hit) alongside 2 lines of acct# tokens it did substitute",
+      "D49151054 is an ACCOUNT, not a security: it appears as an account-month in that half's own 5-row ABSENT list (D49151054 2021-07 and 2021-10) and in the FWD3-ABSENT lines account=D49151054",
+      "00074413503 is an ACCOUNT: read live out of the served month_grades 'account' column during this seat's CB-ac-1 and CB-ah-3 mutants, and it survives in this seat's two proof_of_spec instances and two session logs",
+      "the sweep's own test run now reads FAILED, 28 account-shaped hits in 7 files -- those 7 are the task orders the commit documents as held back by the TO gate, so the test is honestly red on THAT remainder and silent on this one"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-ay-1 @b4aafe78f4: '76 documents carrying client account ids rewritten to acct#<sha8> tokens', with its test extended to scan tracked paths as well as bytes and 'Denominator: 442 files, 0 hits'.",
+  "world_is": "The 0 is clean against THREE REGEXES, never against 'client account ids' -- the classic narrower-denominator-than-the-sentence shape. Two account shapes present in the swept corpus match none of the patterns, so the sweep could not see them, did not substitute them, and its test will keep passing over them however many times it runs. At least one instance sits inside a file the sweep itself rewrote, which is what makes this a detector gap rather than a missed-file gap: re-running the same sweep will not find it. This seat did NOT hand-redact its own four affected files. The token is derivable (acct# plus the first 8 hex of sha256('cottonwood:' + account), published in the sweep's commit message), but substituting by hand while the detector stays blind would make the record LOOK clean, correlate with a key held outside the repo that this seat cannot verify against, and leave the class open -- the worse outcome. The remedy is the detector's owner's: widen PATTERNS to cover a leading-letter+digits and an all-digit account, re-run the sweep over the full corpus, and only then re-assert the 0. The affected files this seat can name are deliverables/2.0.0_SA_COO~C2/NEVER_WIDEN_R34_FWD3_ASTRADED_REMINT_COO_HALF.md plus this seat's ADVI_COTBKF.TO-CB-ac-1 and TO-CB-ah-3 proof_of_spec instances and its fwd3_serve_mint.md and fwd3_astraded_remint.md; a widened detector will find whatever else is out there, which is the point of fixing the detector rather than the four files."
+}
+```
+
+## ADVI_COTBKF-D2-W79-S1 -- data/assets/scripts/silver/commonwealth_signs.py line 71 holds one client account id inside a message string, 
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W79-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~79",
+  "surfaced_at": "2026-10-09T17:05:00Z",
+  "one_line": "data/assets/scripts/silver/commonwealth_signs.py line 71 holds one client account id inside a message string, after a lowercase 'cv' prefix; it is in none of the order's <paths>, so CB52az1-AC1 cannot reach 0 hits.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest data/assets/scripts/silver/tests/test_cotbkf_code_no_account_ids.py -q -s (committed e3c4c40707 at base: 71 files, 24 hits; after this worker's edits: 72 files, 1 hit, file commonwealth_signs.py line 71, token acct#80dbe306)",
+      "ACCOUNT_ID_CENSUS_HEAD_20261009.md lists 6 code files and not commonwealth_signs.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-az-1: the 6 code files listed carry every real account id in this project's commonwealth_*.py scripts and tests; moving them gives 0 hits.",
+  "world_is": "A seventh file carries one id (the census word-boundary read missed it: the id sits inside a 'cv<id>' token). The criterion needs commonwealth_signs.py edited (replace the id in the message with a synthetic or acct#<sha8> token); this worker's write grant excludes it. The test was not weakened; every other hit is cleared (24 -> 1). Needs a one-path grant (commonwealth_signs.py) on a new order or an amendment of this order's <paths>."
+}
+```
+
+## ADVI_COTBKF-D2-W79-S2 -- The three account-id shapes are a partial detector: of 1533 accounts in the private ard manifest, 924 match on
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W79-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~79",
+  "surfaced_at": "2026-10-09T17:06:00Z",
+  "one_line": "The three account-id shapes are a partial detector: of 1533 accounts in the private ard manifest, 924 match one of the shapes and 609 match none; and the unbounded shapes fire on 14 date-stamped document ids in test_commonwealth_document_index.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "private manifest first_data_date keys (1533) tested with anchored forms of the three shapes: 924 match, 609 do not",
+      "unbounded scan of the 69 commonwealth_* code and test files: 14 hits in test_commonwealth_document_index.py (STMT/REPR/NCSD stamps), 0 once the left boundary (?<![A-Z0-9]) and right (?!\\d) are added"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-az-1 / ruling item 6: the three shapes find a client account id; 0 hits means no id.",
+  "world_is": "0 hits proves absence of the three shapes only. The test bounds the shapes (no hit inside a longer capital/digit run) to drop the 14 document-id false positives; that is stated in its docstring. The tracked manifest was additionally checked by a different instrument: 0 of the private manifest's 1533 account keys occur in its text. Also: commonwealth_asf_source.py held no runtime literal (one docstring example), so it needed no private config; the runtime literal moved to config is a rejected-candidate security identifier in commonwealth_sweeps.py whose shape is account-like."
+}
+```

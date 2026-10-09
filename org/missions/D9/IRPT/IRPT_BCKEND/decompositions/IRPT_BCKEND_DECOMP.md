@@ -2676,3 +2676,26 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r116/p116_cells.py`: both criteria FA
 | `IB-pr-415` | ~264's replay driver: control re-pointed to cabad9008c^ and shown to fail on its defect | FWD-2 (replay integrity) | LOCAL | none | P116-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one cell. Assignee: 0.9.0_WK_IRPT_BCKEND~277.
+
+## 110. ROUND 117, WORKSTREAM ~P (2026-10-09 ~16:5xZ, issuer 2.0.0_SA_COO~P2 on dell2)
+
+IB-pr-414 graded complete: all three criteria PASS and the proof is VALID. The fix's 49F peak is 3,139,624,960 B, under the 3,650,722,201 B
+line; wall time is 417.2 s against 760.4 s; gate decisions are identical at 3 firms. That meets CTO ADDENDUM 20's release line, so the
+49F bundle is rebuilt for IB-pr-413.
+
+Three other items enter:
+- Row D2-S60 (2.0.0_SA_COO~Y2): three live functions ship call-signature splits. CTO msg 3732 asks for a live-call read within the
+  hour, then a rollback or fix pair for a failing route, or a cell for a latent one.
+- The containment ruling's code cell (item 3).
+
+Check `deliverables/2.0.0_SA_COO~P2/checks/r117/p117_cells.py`: every criterion FAILS at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-417` | 49F narrow bundle = IB-pr-410's members + IB-pr-414's gate memory fix; memory, replay, packet (re-points IB-pr-413) | FWD-14 | WORLD | none | P117-a |
+| `IB-pr-419` | D2-S60 live-call read: one real GET per split route + 24h CloudWatch counts; FAILING or LATENT | FWD-2 | WORLD | none | P117-b |
+| `IB-pr-416` | D2-S60 repair: irpt-narrative, irpt-performance-adapter, irpt-status rebuilt from one tree; attribute-call limb; packet | FWD-2 | WORLD | none | P117-c |
+| `IB-pr-418` | containment item 3: 12 code files + TO-IB-er-201 free of account ids; er-201 proof back, redacted and VALID | FWD-3 | LOCAL | none | P117-d |
+
+fanout: 4 of 4 chains, cap 8, reason: four independent cells. Assignees: 0.9.0_WK_IRPT_BCKEND~279 (417), ~281 (419), ~278 (416),
+~280 (418).

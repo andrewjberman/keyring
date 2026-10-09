@@ -2,10 +2,10 @@
 
 <to_id>IRPT_ANLREQ.TO-AR-y-21.release1-staged-rows</to_id>
 <project>IRPT_ANLREQ</project>
-<issued_to>0.9.0_WK_IRPT_ANLREQ~7</issued_to>
+<issued_to>0.9.0_WK_IRPT_ANLREQ~8</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -212,6 +212,13 @@ touched the file. Every call raised TypeError.
 
 Rows are `IRPT_ANLREQ-D2-W8-S<k>`. Your deliverables directory is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~8/`. Commit as
 `0.9.0_WK_IRPT_ANLREQ~8` (the commit line below, with ~8 in place of ~7). Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
+### AMENDMENT 9 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~17:1xZ, direct act): the narrower `repository.py` pin
+
+Worker ~8 re-pinned irpt-status `reports/repository.py` to `3fc99be70f`, which rides 6 commits from 4 lanes. Pin `2aa217ec58` closes the same signatures
+(issuer read: symbol closure PASS, signature closure 1 mismatch, the tolerated S60 one) and is the pin irpt-export-render already serves. It drops
+IB-pr-386 and AR-t-12's two commits (svc-commentary admission), which no served function carries. The row is re-pinned to `2aa217ec58` (sha256 f01fcf549e8e...)
+in this commit. The status stays complete. Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
 
 ### ACCEPTANCE (worktree root, after your last commit)
 
