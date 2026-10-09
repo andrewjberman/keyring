@@ -383,6 +383,26 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
               "pytest -q data/mdpf/scripts/demque -> 86 passed"
           ]
       }
+  },
+  {
+      "id": "MDPF_DEMQUE-D1-W19-S2",
+      "one_line": "The worktree's org/standards/PROOF_OF_SPEC.schema.json is the broken e7c10e5b4b version, so proof-of-spec-check.py returns rc=2 here; validated against the 6b65ca5a52 schema content with the worktree file restored after.",
+      "spec_asserts": "TO-DQ-t22 proof_of_spec: validate with python .tools/proof-of-spec-check.py <instance> DQ7-t22-AC1,DQ7-t22-AC2 before the flip; only the exit code is the verdict.",
+      "world_is": "This worktree (branched before 6b65ca5a52 landed on box/dell1) carries schema e7c10e5b4b whose commit_or_etag type is an invalid jsonschema type: the worktree's own checker exits rc=2 (UnknownType), and the base checker run on the worktree instance exits rc=1 CHECKER-SCOPE. The schema is outside <paths>. Worker act: wrote git show 6b65ca5a52:org/standards/PROOF_OF_SPEC.schema.json over the worktree file, ran the worktree checker (VALID rc=0), then restored the original bytes (git status clean on that path). The schema file is not in any commit of this branch.",
+      "project": "MDPF_DEMQUE",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_MDPF_DEMQUE~19",
+      "surfaced_at": "2026-10-09T13:42:00Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "org/standards/PROOF_OF_SPEC.schema.json at e7c10e5b4b vs 6b65ca5a52",
+              "proof-of-spec-check rc=2 UnknownType in the worktree before the temporary swap"
+          ]
+      }
   }
 ]
 ```
