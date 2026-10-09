@@ -47699,3 +47699,9 @@ REFUSED_20261008)
 2026-10-09T16:40:10Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
 2026-10-09T16:40:24Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
 2026-10-09T16:40:52Z LANDED-2P  0.0.0_AB_MSTR~Z  d1c68bcb32  paths=1  validate=49.08s  wait=0.50s  hold=4.01s  build=2.66s  ref=1.28s  post-commit=11.58s  attempt=1
+2026-10-09T16:43:22Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=27.52  graded=n/a  args=(--verify-merge 5b8b0c5501c0f346804f88977497b73a0065ad7f)  first=(none)
+2026-10-09T16:43:59Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=112.81  took=dbf224fbf1 hold=10.84s graded=0/41 pushed=5b8b0c5501
+2026-10-09T16:48:35Z PASS  0.9.0_WK_NFRA_OPLGTW~48  3  (all paths in-lane)
+2026-10-09T16:49:08Z PASS  0.9.0_WK_NFRA_OPLGTW~48  3  (all paths in-lane)
+2026-10-09T16:51:52Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=0  secs=34.05  graded=0/3 fast-lane  args=(wk-NFRA_OPLGTW-33-48 -m drain(NFRA_OPLGTW.TO-OG-tl-1, 2.0.0_SA_COO~O): merge worker ~48 @d95e7c45f9 -- 4-meeting transcript allowlist COMPLETE: AC1 + AC2 PASS (served on c97232408d), AC3 to CVO~Z with dell2's re-probe; status complete)  first=(none)
+2026-10-09T16:52:23Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
