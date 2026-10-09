@@ -22277,3 +22277,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Admission is proven (release 3: RESOLVING -> NORMALIZED); the actor and owner as stored are not yet read back. Disarm: release 5 (TO-APPLY-Y72) after-read 4 returns all three booleans true before any delete; this row then closes GRADUATED."
 }
 ```
+
+## IRPT_BCKEND-D2-S18 -- release 5's served upload dies on a RetentionPolicy.reference arity mismatch, which the symbol closure and the import census both structurally cannot see; branch B executed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S18",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T01:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Release 5 carries a REAL served regression that neither of its two gates can see: the analysis-input-upload operation dies with 'RetentionPolicy.reference() takes 3 positional arguments but 4 were given' and answers public UNEXPECTED, so read 4 fails and branch B fired; the symbol closure passes because every NAME resolves and the import census passes because every module IMPORTS -- an arity mismatch is a CALL-TIME property and is invisible to both.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 on dell2, release-5 bytes (4HEH1aDN) live: TWO direct-invoke on-behalf template uploads, corr-38577d44df00 at 01:48:08Z and corr-a2900f1b38cd at 01:49:52Z, each logged {\"event\":\"irpt_internal\",\"exception_text\":\"RetentionPolicy.reference() takes 3 positional arguments but 4 were given\"} followed by {\"event\":\"irpt_error\",\"operation\":\"analysis-input-upload\",\"public_reason_code\":\"UNEXPECTED\"}",
+      "POSITIVE CONTROL: after the branch-B rollback to Un0wVZqj, the IDENTICAL invoke at 01:53:10-01:53:13Z (RequestId c6c9507f-5fb8-4290-b392-e9a35cd55a5b) logged NO irpt_internal and NO irpt_error -- 15 events read over a 7-minute window with the denominator printed. The arity error appears on release 5 and does not appear on the rolled-back bytes, so release 5 is the cause",
+      "BOTH OF THIS RELEASE'S GATES PASSED ON THE SAME BYTES: symbol_closure.py on the uploaded zip read modules=62 pairs=273 missing=0 PASS, and the import census read modules 62, failed {} -- twice. Neither is wrong; they answer different questions. The closure proves every imported NAME exists; the census proves every module IMPORTS. An argument-count mismatch at a call site is neither, and only running the operation surfaced it",
+      "the release's three changed members are custody_submission.py, composition.py and repository.py, where composition.py and repository.py are the E9 modules round 71 STAGED into the package to fix row D2-S16. RetentionPolicy.reference is the signature at issue, so the fix for the import gap introduced a call-signature gap in the same area",
+      "NOTHING WAS ADMITTED: the operation answered UNEXPECTED with no upload_id, which by uploads.py's path is a refusal BEFORE uploads.create, so no retention, artifact, UPLOAD# or NORMALIZATION# row and no resolve_upload message. That is DERIVED FROM THE ERROR, not independently verified -- a direct read of irpt-requests from dell2 is AccessDenied on kms:Decrypt (the standing limit, CTO 107133 / ADDENDUM 3), so confirming the absence is the laptop's read",
+      "the synthetic test filer was put for read 3, read back active, and DELETED with a consistent get-item reading NOT FOUND, both before and after this arm",
+      "BRANCH B EXECUTED per the order's step 9: re-promoted nA7hze1zlQfF55Q05.Vxr4E3v8kCE7HW as 0JwTG2RprPYoLoRmFUXJREfiGKlERII3, targeted apply from a plan reading 0 to add 1 to change 0 to destroy, live re-read Un0wVZqj, Active, Successful"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-APPLY-Y72 step 5 read 4: the on-behalf admit's first answer is RESOLVING with an upload_id, and 'Read 4 FAILS only if the first answer is a refusal or has no upload_id'. The CTO half's conditions name the symbol closure on the uploaded zip and the import census as the gates.",
+  "world_is": "Read 4's first answer was a refusal (public UNEXPECTED) with no upload_id, twice, so read 4 FAILS by the criterion's own wording and branch B is the correct and executed outcome. The important part is not the bug but the GAP IT REVEALS IN THE GATE SET: this release was built with two new pre/post-apply gates added specifically because release 4 shipped a broken import, and both passed on bytes whose served operation cannot run. Name resolution and import success are necessary and not sufficient; the only instrument that caught this was invoking the operation. Note also that the earlier HALT (msg 2056) was RIGHT that release 5 had a served problem and WRONG about which one -- it cited svc Cottonwood NOT_AUTHORIZED, which is E5's pre-existing 'must name the firm advisor' refusal, while the actual regression is this arity error on analysis-input-upload. A correct instinct with a mis-attributed cause is still worth separating, because the rescind that followed restored bytes that were in fact broken. The fix is a code decision for the owning seat: reconcile RetentionPolicy.reference's signature with its caller across the staged composition.py/repository.py pair, and consider an arity or signature check on the packaged call graph beside the existing closure."
+}
+```
