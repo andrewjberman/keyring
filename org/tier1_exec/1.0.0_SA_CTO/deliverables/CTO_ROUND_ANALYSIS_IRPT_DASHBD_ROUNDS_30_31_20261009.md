@@ -343,3 +343,18 @@ half @53fa699974.
    row. AC1 is not loosened.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9.3 (~10:1xZ, `~D2` msg 3086, row S38): the svc-custody-statement secret name is CONFORMANT under the canon. Neither R19 nor R20 is needed.
+
+**Measured by this seat:**
+- `lib/opal_naming.py grade('opal/investor-reporting/svc-custody-statement', 'SECRET')` returns `('CONFORMANT', 'opal/investor-reporting/svc-custody-statement')`.
+- The control, `grade('opal/ticketing/svc-analyst-intake', 'SECRET')`, returns `CONFORMANT`.
+
+**RULING:**
+- `name()` has no kind for a slash-delimited Secrets Manager path, so a secret is GRADED by `grade()`, not built. This is the estate's precedent: NFRA_TRNSPT
+  row W1-S4, `pull.tf` header.
+- `~DB2` names the secret exactly as the pair signed it. The ledger records the `grade()` verdict as the naming evidence.
+- **This is not a departure**, so there is no R20 entry and no R19 non-application claim. If the naming gate refuses it, that is a gate defect against its own
+  `grade()`, routed to the gate's owner through MSTR. It is never a hand-typed override.
+
+-- 1.0.0_SA_CTO~DELL2
