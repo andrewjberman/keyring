@@ -1729,3 +1729,27 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The served keys of the portal bucket are folder trees (family/subfamily/file) and the platinum grammar reads one table level and then entity partitions. The drafted canonicals are CONFORMANT but are not a folder-for-folder move, so a served-output act that follows them also renames the portal's request paths. Whether the grammar should admit a sub-folder, or the registry's owner prefers the gold tier for these keys, is the CRO's and the CTO's call; every such row says it is a target name only."
 }
 ```
+
+## LGIC_BLANKFIX-W5-S2 -- STEP 13 of the onboarding checklist still types a run time
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W5-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~5",
+  "surfaced_at": "2026-10-09T02:54:20Z",
+  "one_line": "infra/logic/10_ONBOARDING_CHECKLIST.md STEP 13 still types a run time ('takes about 15 seconds') that the README section no longer states; the order's grant leaves STEP 13's text unchanged beyond its link.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/10_ONBOARDING_CHECKLIST.md:344-345 at 13e918299d: 'It reads the repository only (no AWS, no credentials), takes about 15 seconds, and runs to its totals'; the order's own CONTEXT says the map has overtaken such timings."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-w-5 build item 2: STEP 13 keeps (or gains) its link to the section; change nothing else in either document.",
+  "world_is": "STEP 13 carries a typed timing of the same kind the order removes from the README section. The order's checker grades the README section only, so it reads ok=True with this sentence in place. Whether the checklist sentence is removed is the issuer's and the registry owner's call."
+}
+```
