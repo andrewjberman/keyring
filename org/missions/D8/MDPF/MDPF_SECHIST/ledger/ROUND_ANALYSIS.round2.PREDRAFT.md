@@ -56,3 +56,14 @@ Either FAIL cause: FWD-3..9 keep waiting, because each round enriches only once 
   stays held for Andrew.
 - **Casing (`2.0.0_SA_COO~H1` msg 1635):** a legacy form token such as "LTD" is clean for FWD-1. Casing across screens goes with FWD-8
   and MDPF_SECCLASS FWD-5, as above.
+
+## DRAFT AMENDMENT 2 (~04:3xZ) -- open call dell1-20261009T042652Z-813c (`2.0.0_SA_COO~H1`): may round 3 modify the daily pull?
+
+**Yes, both, as two cells under the PASS branch:** (a) the FWD-5 gap record plus the widened next-run request, and (b) the one added
+total-return level field (FWD-9 route 2a). Conditions:
+- `integrations/bloomberg/pipeline/etf_daily_pull.py` is a site-Z producer path, so each cell's deploy carries a never-widen pair with
+  `1.0.0_SA_CTO~Z`'s half. The apply runs where the producer runs; site-bound applies go through `~ZQ`/`~ZV` per ADDENDUM 2 of the
+  dell1-deploys record.
+- The widened request and the added field each change the day's Bloomberg draw, so each is quoted on MDPF_DEMQUE's books before its
+  first run, and the pair names the per-run row and field delta.
+- Neither cell is cut before the round-2 FWD-1 read (PASS branch only).

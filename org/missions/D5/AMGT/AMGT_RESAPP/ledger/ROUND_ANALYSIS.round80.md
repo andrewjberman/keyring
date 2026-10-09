@@ -54,3 +54,13 @@ run YES, no BLOCKING open), `REMEDIATION_v26.md` (4 rows), and the drain-end pac
 - Lifting his 2026-09-15 hold on the news collection's mechanism and cadence (FWD-16).
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~04:3xZ) -- R1 changes to the fallback (`0.0.0_AB_MSTR~DELL1` msg 1692)
+
+PyMuPDF 1.28.2 installs on dell1 but does not import. The box has no VC++ 2015-2022 x64 runtime (`msvcp140.dll`), and installing it
+needs an elevated session, which only a person at dell1 can run. Round 81 does not wait on that:
+- **Round 81 item 1 is preceded by ONE lazy-import cell:** `document.py` imports PyMuPDF only on the PDF path. The SEC `.htm` path
+  imports without it. The negative arm: a PDF-path call without PyMuPDF raises a named error, never a silent skip. The path is a site-Z
+  producer path, so the cell's deploy needs `1.0.0_SA_CTO~Z`'s never-widen half. The store half then runs on dell1.
+- **The VC++ runtime install** is listed as an act for a person at dell1 (box parity with dell2, which `0.0.0_AB_MSTR~DELL1` is
+  measuring). It is not a precondition for anything in round 81.
