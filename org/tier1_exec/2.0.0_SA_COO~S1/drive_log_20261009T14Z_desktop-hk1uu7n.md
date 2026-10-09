@@ -1,0 +1,21 @@
+# /canonical-drive MDPF_STRATID -- 2.0.0_SA_COO~S1, hour 2026-10-09T14Z (+15Z to 15:2x)
+
+- 2026-10-09T14:02Z tick 66 | MDPF_STRATID | A2 merged @7a8a5e39ab (IDVZ current name; 4 rule rows; w2_1_list/loaders/seam OK); drain steps 0-2 done; GO sent to 0.7.0_AE_CloudOps~DELL1 for TO-APPLY-W2-a at 7a8a5e39ab
+- 2026-10-09T14:07Z tick 67 | MDPF_STRATID | CVO L9 FINAL @de98c8ffbd (C-S4); waiting: CloudOps~DELL1 on TO-APPLY-W2-a (step 3), CVO slug -> CTO round-1 analysis; step 4 wiring cut after step 3
+- 2026-10-09T14:17Z tick 68 | MDPF_STRATID | CloudOps~DELL1 opened ledger mdpf-stratid-w2a-etf-universe-s3-dell1-20261009 (step 3 in flight); CTO round-1 analysis not yet in
+- 2026-10-09T14:23Z tick 69 | MDPF_STRATID | CloudOps msg 2541: S3 write LANDED byte-identical to 7a8a5e39ab, loaders read 4 tickers, bucket unversioned (rollback = committed bytes, row D1-S3); both roles implicitDeny on the key -> laptop-first notice via MSTR~DELL1, CloudOps told to hold the grant
+- 2026-10-09T14:23Z MSTR~DELL1 msg 2544: laptop-first notice carried to the laptop CTO by bus; answer relayed to this seat; GO to CloudOps from here on it
+- 2026-10-09T14:26Z tick 70 | MDPF_STRATID | waiting: laptop ACK on the IAM before-notice (MSTR relays) -> GO grant to CloudOps; CTO round-1 analysis
+- 2026-10-09T14:27Z MSTR msg 2550: laptop HAS the condition-(4) notice -> GO L2 grant to CloudOps~DELL1 (laptop's named step wins if it arrives first)
+- 2026-10-09T14:32Z laptop CTO msg 107995 (relay 2562): condition (4) OK, exact grant terms (one stmt/role, GetObject on the one key, safe-apply, pos+neg control) passed to CloudOps~DELL1
+- 2026-10-09T14:39Z tick 71 | MDPF_STRATID | CloudOps IAM in flight (5bd12eb0b5); PARALLELIZE: A9 ST-w-6 wiring cut into TO-W2-2 @5ad75240eb, checks FAIL at base as expected, worker-light ~5 spawned; merge = deploy by push -> ledger first
+- 2026-10-09T14:45Z tick 72 | MDPF_STRATID | CloudOps ledger W2-a CLOSED (L2 grant PASS on laptop terms); ledger mdpf-stratid-w2-wiring-silver OPENED; ~5 A9 merged @ff8b8452f0; 8/8 W2 checks + 20 silver tests + ruff OK; MSTR told the next push deploys; L1/L2 read after push, L3 at the next scheduled run
+- 2026-10-09T14:49Z tick 73 | MDPF_STRATID | push a66006c2e4 carried the wiring but the gate HELD the silver files (ledger lacked repo paths; matcher not in gate list; both already on CLOUD); S3 unchanged (2026-10-05 schemas, no matcher) = runner consistent; ledger amended; TO-APPLY-W2-b (explicit safe-deploy, matcher first) @c6d574c029 + GO to CloudOps~DELL1; W2-a CLOSED by CloudOps @1624a66653
+- 2026-10-09T14:57Z INCIDENT: live silver schemas (14:51:14Z) imports 404 matcher; rollback to uKomD3Mo ordered @362882be61 + URGENT GO; row D1-S4 ARMED (owner me)
+- 2026-10-09T14:59Z CTO msg 2601: restore by MSTR, forward fix mine (first-mint matcher + re-ship schemas in ONE act, then prove both keys + import against S3 copies); withdrew my dup D1-S4 (CloudOps' stands); told CloudOps skip STEP 0; RV1 finding 2602 is the same stale schemas
+- 2026-10-09T15:02Z restore read back EQUAL (af5d894cc7a17de1, no matcher import); my explicit safe-deploy SKIP-NOT-MEMBER + APPLY-WHO refused COO -> first-mint is manual by the applier; ledger handed to CloudOps~DELL1; TO-APPLY-W2-b A2 @f150585b25 (A first-mint, B schemas, C import read) + GO
+- 2026-10-09T15:03Z tick 74 | MDPF_STRATID | forward fix GO'd 15:02Z; S3 still the restored 10-05 schemas (consistent), matcher absent; waiting on CloudOps~DELL1 A-C
+- 2026-10-09T15:07Z tick 75 | MDPF_STRATID | W2-b A done: matcher minted 15:05:53Z == ff8b8452f0; B (schemas) pending; state consistent
+- 2026-10-09T15:13Z tick 76 | MDPF_STRATID | W2-b A2 DONE (msg 2634): issuer re-read both S3 silver == ff8b8452f0 + isolated import OK; ledger L1+L2 CLOSED, L3 open (next scheduled run); D1-S6 disarm row @1368971661
+- 2026-10-09T15:19Z tick 77 | MDPF_STRATID | drain housekeeping: worktrees wk-stratid-4/5/6 removed, 3 merged branches deleted; waiting on L3 (next scheduled run) + CTO round-1 analysis
+- 2026-10-09T15:27Z tick 78 | MDPF_STRATID | EMPTY -> next-calls --drive: 0 calls, 0 FREE (L3 at next scheduled run; round 2 awaits CTO analysis; no round analysis file yet) | unblock empty=1

@@ -66,8 +66,10 @@ In order:
    command that would re-deploy it. If it cannot be shown: STOP, no deploy, a BLOCKING row.
 4. **NEVER-2 ledger, on your branch, in this order.**
    - Run `python .tools/deploy_ledger.py open ...` with slug `nfra-mcportal-cp2-release`. The legs are: bundle build,
-     release build and upload, SSM pull and restart, manifest record. Record the census, the three times, the rollback and
-     this order's path.
+     release build and upload, SSM pull and restart, manifest record. Write the census, the three times, the rollback and this order's path to
+     `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.7.0_AE_CloudOps~MP/MP-r-2_PRE_ACT_RECORD.md`, and put ONE pointer
+     line to it in the entry (AMENDMENT 4: `deploy_ledger.py hold` and `close-leg` regenerate the entry and drop appended
+     prose, rows Z-S24 and Z-S25).
    - Commit the entry AND its sentinel `org/critical_paths/.open_deploys/nfra-mcportal-cp2-release.json`.
    - ACT from the release tree with ITS scripts: `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway
      infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`. Its stale-base guard must read the live ref unchanged at both reads.
@@ -141,6 +143,10 @@ mcportal a3bff71 lacks d60b4e0), AC3 FAIL against the live r28 host (ssm 56a9ded
 `<paths>`. The issuer's own hookup commit was REFUSED by the owned-paths gate: `infra/aws/ec2/opal-gateway/app/admin_api.py`
 is lane CLOUD_OPS_OR_ETL, and 2.0.0_SA_COO~MP holds no grant there. This order's assignee does. The four lines were
 measured by the issuer, uncommitted: routes 4 of 4, admin and fabric test files 58 passed. See decomposition CP2.10.
+
+**AMENDMENT 4 (issuer, 2026-10-09 ~14:5xZ, disarming row Z-S24 by row Z-S25):** the pre-act record goes to a deliverables
+file, and the ledger entry carries only a pointer. `deploy_ledger.py` regenerates the entry on hold and close-leg, and
+silently drops appended prose (MP-x-4's entry went from 137 to 23 lines at rc=0). The drain reads the deliverables file.
 
 <status>staged</status>
 <round>1</round>

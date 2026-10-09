@@ -4522,3 +4522,31 @@ round.** Never edit an existing row.
   "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
 }
 ```
+
+## ADVI_COTBKF-D2-S69 -- L9 CB45as1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S69",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:21:38Z",
+  "one_line": "L9 CB45as1-AC2 MET: both keys now come from validated registry rows -- data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76 PFX = legacy_address(OWN + '-silver-prices-prefix') and :251 PIN_KEY = legacy_address(OWN + '-code-gold-scopes-pin'), the rows added to infra/logic/registry/legacy_addresses.json (bucket opal-data-cot, templates silver/prices/ and code/gold/scopes.json, no firm token in the code); 'python lib/opal_naming.py validate' reads OK, 0 warnings (this seat's run); the templates give the same keys as before; no split literal and no bypass (the worker's typed-token first commit was refused by the gate and fixed). Note: the rows are read through legacy_address(), the canon's legacy-shape builder, not address() -- the criterion's 'validated registry row' branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_cot_price_rewrite.py:76, :251",
+      "git diff f317f82c20 845411827e -- infra/logic/registry/legacy_addresses.json (two rows)",
+      "python lib/opal_naming.py validate: OK 54 system rows, 14 scope rows, 0 warnings",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_45_DRAIN_END_20261009.md @a6f57849df (msg 3558)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_45_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB45as1-AC2: the keys come from address() via a validated registry row, OR a named R20 departure with one plain constant and no bypass; the resulting keys are unchanged.",
+  "world_is": "Met as written."
+}
+```

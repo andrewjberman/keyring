@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~7</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -174,6 +174,30 @@ AR21-y-AC1, AR21-y-AC5, AR21-y-AC3. Rows are `IRPT_ANLREQ-D2-W7-S<k>`. Commit as
 
 Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
 
+### AMENDMENT 7 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~15:1xZ, CTO ruling AMENDMENT 3, msg 3548, on your rows `D2-W7-S1` and `D2-W7-S2`)
+
+Route (b). Importing `OPAL_RESEARCH_REVISION` from `resident_installed` FAILS symbol closure, because irpt-status stages that module at `80a79a7462`, before the
+constant existed. Re-pinning it would ride a +147/-7 backlog. So:
+1. **`reports/status_installed.py` DERIVES the revision from the PACKAGED registry.** Use the reporting policy whose `families` hold `YCHARTS_OPAL_REPORT`,
+   found through the same `reporting_policy` / registry accessors the module already uses. It FAILS CLOSED: zero or several matching policies mean NO
+   extra revision, plus ONE logged error line (ASCII, `ERROR:` prefix). Never a default. Remove the `resident_installed` import of the constant;
+   `make_authorize` stays as it was. Never type the revision string.
+2. **`reports/tests/test_status_installed_revisions.py`:**
+   - (a) keeps SET EQUALITY with the writer: the in-tree test imports `resident_installed.OPAL_RESEARCH_REVISION` at HEAD (the TEST may; the packaged code
+     may not);
+   - (b) the family maps to it;
+   - (c) the negative arm;
+   - (d) NEW: a registry with zero matching policies, and another with two, each yield NO extra revision and log the error.
+3. **Row S2: `reports/tests/test_status_installed.py` is GRANTED** (added to `<paths>`). Make its fake `active_policy` flip state only for the X10 id
+   (`REPORTING_POLICY_ID`) and pass other revisions through unchanged. Its 7 tests must pass.
+4. `resident_installed.py` stays at `80a79a7462`. Re-pin ONLY irpt-status's `reports/status_installed.py` row to your final commit.
+
+The criteria are unchanged: AC1, AC5 and AC3 (symbol closure must read missing=0). Also report
+`python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py` (7 passed). Then re-validate the proof,
+run `safe-merge.sh box/dell2` in the worktree, and flip to complete. Mark S1 and S2 disposed.
+
+Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify.
+
 ### ACCEPTANCE (worktree root, after your last commit)
 
 <criterion id="AR21-y-AC1" cell_refs="AR-y-21"><invocation>python org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/ar21_cells.py . AR21-y-AC1</invocation><expect>AR21-y-AC1 PASS</expect></criterion>
@@ -217,6 +241,7 @@ org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~5/
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~6/
 infra/aws/lambda/investor-reporting/reports/tests/test_status_installed_revisions.py
 org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/0.9.0_WK_IRPT_ANLREQ~7/
+infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py
 </paths>
 
 <decomp_ref>
