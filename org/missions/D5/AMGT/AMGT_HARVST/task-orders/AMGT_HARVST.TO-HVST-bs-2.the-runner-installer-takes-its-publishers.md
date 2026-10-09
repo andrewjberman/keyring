@@ -75,9 +75,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   is the pair, not the leg.
 - Slot ~130, worker-light (one file, under 100 product lines). Checks dry-run at the base: see decomposition section 88.
 
+**COMPLETE 2026-10-09 ~02:4xZ (issuer `2.0.0_SA_COO~W1`):**
+- **Built:** worker-light ~130 @09d86ee7bf (+10 -1 in the `.ps1`), proof @40978c53b9, VALID rc 0. Re-run by the issuer on the branch.
+- **Pair:** COO half `deliverables/2.0.0_SA_COO_W1/round75/NEVER_WIDEN_HALF_COO_BS2_INSTALLER_MERGE.md` @9e00635245; CTO half
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_HARVST_BS2_INSTALLER_MERGE_20261009.md` @8630dee4ff (`1.0.0_SA_CTO~Z`, via
+  `0.0.0_AB_MSTR~DELL1` msg 1479). Ledger `harvst-bs2-installer-merge-20261009` opened @0280991c0f and CLOSED, 2 of 2 legs.
+- **Merged @c1be67f53c** (5 paths, index check 0 of 5 differ). C-b on the merged tree: AC1 `--publishers bbg wsj barrons`; AC2
+  `REFUSED: unknown publisher ft`, rc 1; AC3 the default ACTION ends `STOP"`, then WORKDIR; `-Plan` `REGISTERED NOTHING (plan)`.
+- **The pin for `bs-3` is c1be67f53c.**
+- **Rows:** none.
+
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>75</round>
 <slot>~130</slot>
 <fabric>dell1</fabric>
