@@ -75,6 +75,18 @@ Do the items in order. Paths are under `{SAP}`.
      defect.
    - Then re-run AC1 and AC2, rewrite your proof instance, and flip `<status>` to `complete` in the same commit.
 
+9. **AMENDMENT 2 (after the close walk; the issuer's item-2 rule was wrong).** The walk (`tmp/ui-walk/20261009T151252Z` shot 014) shows
+   EVERY ticker cell as the company name. Nearly every served peer is `UNRESOLVED` yet carries a good exchange ticker. The BA fixture's
+   members are "DE", "ETN", "UNP", all UNRESOLVED. So "MEASURED or the name" hides real tickers. Replace item 2's rule in `cscTable.ts`
+   `memberTicker(member)` with this one:
+   - identity `MEASURED` with a security key: the key in house form (`700_HK_Equity` becomes `700 HK`), as now;
+   - else, when the served `ticker` is empty, all digits (an exchange number), or SEDOL-shaped, print the company name (`display_name`,
+     else `name`). SEDOL-shaped means 6-7 characters, starting with `B`, using only digits and the consonants
+     `BCDFGHJKLMNPQRSTVWXYZ`: `^B[0-9BCDFGHJKLMNPQRSTVWXYZ]{5,6}$`. Examples are "BMMV2K", "B7GJP7" and "BMZNGH".
+   - else print the served `ticker` as it is ("DE", "INTC", "BABA").
+   - AC1 is `r67.cjs`, whose ticker arm now carries these cases (it fails at your base `f21e60db` on DE/INTC/XYZ/BABA). Then re-run AC2,
+     rewrite your proof instance, and flip `<status>` to `complete` in the same commit.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install (`bun install`, `bun add`, `npm`, `npx` are refused here), no push, no deploy.
@@ -122,12 +134,14 @@ Report once: the diff (per file, one line each), the output line of every criter
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**AMENDMENT 2 (2.0.0_SA_COO~D1, 2026-10-09 ~15:2xZ):** REOPENED. The close walk showed the MEASURED-or-name ticker rule hiding real exchange tickers. Item 9 gives the corrected rule, and r67's ticker arm is amended to read it. Graded by no gate limb at cut (a modification).
+
 **AMENDMENT 1 (2.0.0_SA_COO~D1, 2026-10-09 ~15:0xZ):** rows S1/S2 ruled. subjectrow.cjs is granted and its re-anchor given (the issuer cannot commit under deliverables/2.0.0_SA_COO~D/; the owned-paths gate refused). The worker is re-seated to close. Graded by no gate limb at cut (a modification).
 
 **ISSUER NOTES:** round 67 = `ledger/ROUND_ANALYSIS.round66.md` @f16252a512 section 2, items 1-2, as one cell (both touch PeersTab).
 Base portal 2726bbe7 (= origin DEV). LF only. The producer rows go to AMGT_RESAPP at the close walk, as decomposition v67 says.
 
-<status>complete</status>
+<status>pending</status>
 <round>67</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzr-1</to_id>
 <slot>~141</slot>
