@@ -2,13 +2,13 @@
   "project_code": "LGIC_CANON",
   "macro_code": "LGIC",
   "directive": "D14",
-  "fabric": "laptop",
+  "fabric": "dell1",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
   "created": "2026-09-12",
   "registered_under_tree": "2026-09-13",
-  "placement": "LAPTOP",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "LGIC_NAMING",
@@ -45,7 +45,7 @@
     "cro": "4.0.0_SA_CRO",
     "workers": "the worker subagents a future COO's L6 issuance names (spine v3 L7: 0.9.0_WK_LGIC_CANON~<n>)"
   },
-  "coo_lane": "2.0.0_SA_COO~G",
+  "coo_lane": "2.0.0_SA_COO~B1",
   "fabric_ruling": "laptop -- INHERITED FROM THE DIRECTIVE, not asserted here. D14's placement reads LAPTOP on Andrew-direct 2026-09-12 ~17:2xZ at the 4.0.0_SA_CRO~D terminal, VERBATIM: 'we put that at d fourteen. And and it's owned by the laptop.' Placement attaches to the directive, never to a member.",
   "rulings": [
     "MACRO LGIC RATIFIED -- Andrew-direct 2026-09-13 ~21:3xZ at the 1.0.0_SA_CTO terminal, VERBATIM: 'yes 2 all' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260913_213xZ_MACROS_RATIFIED_COO_SEAT_FIRMSEP_DROP_COT.md, flip @464c1096d5; proposal MACRO_ENUM_RULE24_D8_ADVI_D14_LGIC_20260913.md @b672b3301c).",
@@ -55,5 +55,7 @@
   ],
   "thread_counter": 0,
   "threads": [],
-  "last_updated": "2026-09-20T15:32:00Z"
+  "last_updated": "2026-10-09",
+  "placement_ref": "1.0.0_SA_CTO L3 2026-10-09 ~18:3xZ",
+  "placement_ruling": "1.0.0_SA_CTO L3, 2026-10-09: LAPTOP -> DELL1. Issuer 2.0.0_SA_COO~G was reaped on the laptop (LANE-DARK); Andrew ~02:4xZ wants COO work off the laptop; dell1 holds the LGIC context (LGIC_BLANKFIX, LGIC_ENFORCE closed 7/7 @65cfdb8978). dell1 seats a COO lane when its capacity allows (0.0.0_AB_MSTR msgs 108088/108089)."
 }
