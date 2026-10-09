@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-08T21:37:30.649849+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / EventBridge Scheduler mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-lambda; first fire after D2 (22:05:33Z) is 2026-10-09 13:30Z. Measured 02:1xZ: last mdpf-gold-lambda log event 2026-10-08 13:31:29Z, before D2, so no post-D2 run exists to read (held since 2026-10-09T02:12:06.142977+00:00)
 **Deploy:** MDPF_STRATID R1: Cottonwood PFDE sleeve folded into Global (C-GLOBAL-PAIR; COO half ff5d1b8dc6/4b436db750, laptop CTO half c1484b8bb4)
 **Authored by:** 2.0.0_SA_COO~S1
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -23,3 +23,4 @@
 - 20261008T214002Z LEG L1 closed: origin box/dell1 = 9502c55004 (ls-remote 2026-10-08 ~21:40Z), descends from pin 148f715f8c; pushed 21:39:13Z by 0.0.0_AB
 - 20261008T214003Z LEG L2 closed: content read vs git show 148f715f8c, 4 of 4 MATCH over 70 keys under s3://opal-data-mdpf/code/: assets_gold/build_cotton
 - 20261008T221345Z LEG L3 closed: dell1 read 2026-10-08 ~22:14Z: get-function mdpf-gold-lambda CodeSha256 0gPc5/kUo+sE8BnvhKg5wO+IXiDCB4vRK5cvy1ac+2I= = b
+- 20261009T021206Z HELD-SOVEREIGN-GATED gate=external/EventBridge Scheduler mdpf-scheduled-floor cron(30 13 * * ? *) UTC -> mdpf-gold-
