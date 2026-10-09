@@ -11413,3 +11413,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Same release as S1: the KMS key policy and this grant are both needed before the .pptx pair can write. The code, the deploy line and the tests are done."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W49-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~49",
+  "surfaced_at": "2026-10-09T14:47:28Z",
+  "one_line": "On this branch's pin the proof-of-spec schema is corrupt (commit_or_etag type holds prose), so python .tools/proof-of-spec-check.py exits rc=2 on every instance; box/sitez already carries the fix 6b65ca5a52.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .tools/proof-of-spec-check.py <instance> AC1,AC2 (cwd the worktree) -> TOOL-ERROR: UnknownType: Unknown type 'string aws_resource ADDED 2026-10-09 (1.0.0_SA_CTO, row IRPT_DASHBD-S41)...' ; NOT-A-VERDICT rc=2",
+      "RUN git log --oneline -3 -- org/standards/PROOF_OF_SPEC.schema.json (this branch) -> e7c10e5b4b is the newest; it put the note into the type value",
+      "RUN git show box/sitez:org/standards/PROOF_OF_SPEC.schema.json -> type is 'string'; git log box/sitez -1 -- that file -> 6b65ca5a52 fix(proof-of-spec schema, 1.0.0_SA_CTO~DELL1): commit_or_etag type back to string",
+      "RUN the same checker in-process with SCHEMA_PATH pointed at the box/sitez copy (.scratch only, tool read at its own path) -> instance structurally valid; its only findings were two artifact-coverage violations, then fixed in the instance"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 5 step 2 and the worker rule: validate with python .tools/proof-of-spec-check.py <instance>; only rc 0 flips <status> to complete.",
+  "world_is": "The real command cannot return 0 on this branch, so the order's <status> is NOT flipped by the worker although AC1 and AC2 both read PASS. The worker may not merge box/sitez into its branch (row Z-W41-S5) and may not edit org/standards/ (outside the order's paths). The instance is committed beside the order; the fix reaches the branch by a cherry-pick of 6b65ca5a52 or by the drain.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Disarm: cherry-pick 6b65ca5a52 (or take it at the drain) and run python .tools/proof-of-spec-check.py on the committed instance with ids AC1,AC2; flip <status> on rc=0."
+}
+```
