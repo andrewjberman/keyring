@@ -33,3 +33,12 @@ census `org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~6/F
 - Reuse `hg_tf_fmt.py` for every edited `.tf`.
 
 Fan-out at the cut: 2 build chains (t-9, t-11) + 1 drain act (t-5 apply after t-9), cap 8.
+
+## Pre-staged 2026-10-09 ~10:1xZ
+
+- `R3_CHECKS/hg_r3_rules.py --t9 | --t11` written: static reads of the two schedule cells. Controls: base T9-BAD / T11-BAD (no second
+  rule); a correct edit T9-OK (cron(15 13 * * ? *)) / T11-OK (cron(40 22 ? * MON-FRI *)); a wrong time T9-BAD (12:00Z) / T11-BAD (22:15Z,
+  before the 22:20Z mint). The handler-side stamp test for t-9 and the guard test for t-11 are written at the cut, against the code.
+- `HG-t-11` touches a 49F leg: `bd-asset-dim-pipeline-trigger` starts the `bd-assets` EC2 box (`eventbridge.tf:146-170`). Its order carries
+  the msg-1814 CloudOps conditions verbatim: a send that writes a firm data bucket, or assumes the 49F principal outside the runner's own
+  job, is told to the laptop FIRST; every mdpf-daily-runner send is reported after; 49 Financial data never enters another firm's tree.
