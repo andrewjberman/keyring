@@ -2679,3 +2679,30 @@ round.** Never edit an existing row.
   "world_is": "Both met as written."
 }
 ```
+
+## ADVI_COTBKF-D2-W48-S1 -- the new default breaks one test outside the order's paths
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W48-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~48",
+  "surfaced_at": "2026-10-09T02:18Z",
+  "one_line": "Setting method_r26 the default cash leg (CB-z-2 step 1) turns test_commonwealth_carried_levels.py::test_method_r25b_is_selectable_and_is_method_r25 red: its line 57 asserts the old default, and that file is not in CB-z-2's paths",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/tests/test_commonwealth_carried_levels.py line 57 at fa87b0ca99: `assert sw.CASH_LEG_DEFAULT == sw.CASH_LEG_METHOD  # method stays the default, r25 and r25b are chosen`; the CB-z-2 order sets CASH_LEG_DEFAULT to method_r26 (commonwealth_sweeps.py), so the assertion cannot hold",
+      "python -m pytest -q data/assets/scripts/silver/tests -p no:cacheprovider after the default change: 1 failed, 640 passed, 11 skipped; the one failure is that test (AssertionError: assert 'method_r26' == 'method'); the three tests that asserted the old default in CB-z-2's paths (test_commonwealth_method.py, test_commonwealth_unlisted_types.py, test_commonwealth_cash_leg.py) were updated to the new default; test_commonwealth_carried_levels.py is not in the order's <paths> block, so it is left as it is",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-z-2.nonmatch-census.md <paths> (11 entries, none is test_commonwealth_carried_levels.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-z-2 step 1: method_r26 is the default cash-leg rule and every earlier rule stays selectable and unchanged; the end-of-order silver suite (python -m pytest -q data/assets/scripts/silver/tests) is the hygiene check.",
+  "world_is": "The default changes and every earlier rule stays selectable, but one test outside the order's write grant pins the old default (`== sw.CASH_LEG_METHOD`), so the silver suite is red by that one test until a seat whose paths include test_commonwealth_carried_levels.py changes its line 57 to `sw.CASH_LEG_DEFAULT == sw.CASH_LEG_METHOD_R26` (the same edit made in the three sibling tests). No code path is wrong; the assertion states a superseded default."
+}
+```
