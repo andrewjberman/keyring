@@ -18754,3 +18754,5 @@
 2026-10-09T08:50:15Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL2  host=DESKTOP-N8RJV0A  sessions=36  session_pids=695  targets=1  killed=1  failed=0  msys_ok=True  msys_rows=83  msys_joined=37  ms=2216
 2026-10-09T08:56:59.411176+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~DELL2 pid=24080 reason='to=1.0.0_SA_CTO~DELL2,2.0.0_SA_COO~P2' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 166 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
 2026-10-09T09:06:04Z  SPAWN  0.7.0_AE_CloudOps~OW2  by 0.0.0_AB_MSTR~DELL2  pid=33276  host_pid=14632
+2026-10-09T09:07:19.207071+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~OW2 pid=31552
+2026-10-09T09:07:44.343377+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~P2 pid=16880 reason='to=0.7.0_AE_CloudOps~IB2' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~P2 -> a Tier-2 seat with an ACT in the body and no task order assigned to that r'
