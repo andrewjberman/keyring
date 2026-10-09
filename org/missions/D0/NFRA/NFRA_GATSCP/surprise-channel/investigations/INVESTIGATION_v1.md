@@ -684,3 +684,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The checker cannot run on a worktree cut before 6b65ca5a52; the fix is on box/dell1 and reaches this branch at the drain. The schema file is outside this order's grant and was not committed."
 }
 ```
+
+## NFRA_GATSCP-D1-S14 -- D1-S13's cause measured: the PROOF_OF_SPEC schema defect; 0 of 247 failed on the fixed tree
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S14",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T14:23Z",
+  "one_line": "Row D1-S13's cause measured: the row gate's two red LIVE arms were the PROOF_OF_SPEC schema defect from e7c10e5b4b (a prose sentence in a `type` value; every instance rc=2); on a tree carrying the fix 6b65ca5a52 the self-test reads 0 of 247 failed, GS-f-1's new arm included.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/surprise-row-gate.py --self-test on the round-3 drain tree (box/dell1 + the six worker branches): RESULT: 0 arm(s) failed of 247 (+ live census)",
+      "worker rows D1-W8-S1, W9-S1, W10-S1, W11-S2, W12-S1, W13-S2: proof-of-spec-check rc=2 (UnknownType) at base e19881df2d; fixed schema at 6b65ca5a52",
+      "GS-f-1 instance repair @02c260744e: two placeholders the worker's rc=2 hid (vintage_commit HEAD; commit_or_etag PENDING)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row D1-S13: the timing points at e7c10e5b4b, cause not proven.",
+  "world_is": "Proven by the difference: same gate code, schema fixed, 0 failed. Five round-3 orders were built and passed but could not flip at their base; the issuer flipped them after re-validation on the merged tree. D1-S13 can close."
+}
+```
