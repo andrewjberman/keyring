@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | activation | daily target input -> drop-feed induce | PutTargets + list-targets-by-rule read-back |  | OPEN |
+| L1 | activation | daily target input -> drop-feed induce | PutTargets + list-targets-by-rule read-back | PutTargets 20:15:06Z FailedEntryCount 0; read-back 20:15:19Z: 1 target cot-rebalancer-runner-daily -> cot-rebalancer-runner, Input {"mode":"pull","induce":"drop-feed:rebalancer_accounts"}; rule cron(0 6 * * ? *) ENABLED; hg_r2_act3.py --restored reads RESTORED-BAD (negative arm). Runner CodeSha256 NFG8dbEL.. Successful. MSTR~DELL1 told 20:14Z, backup check armed ~06:08Z (msg 3120). | CLOSED 20261009T201540Z |
 | L2 | verify | FWD-2 PARTIAL read 2026-10-10 | hg_r2_act3.py --partial 2026-10-10 PARTIAL-OK |  | OPEN |
 | L3 | activation | restore daily input to mode pull | PutTargets + read-back {"mode":"pull"}; hg_r2_act3.py --restored RESTORED-OK |  | OPEN |
 | L4 | verify | FWD-3 repair | repair.py manifest + --execute; hg_r2_act3.py --repaired 2026-10-10 REPAIRED-OK (healed_at non-null); --diff before/after |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20261009T201425Z OPENED by 2.0.0_SA_COO~G1 with 5 leg(s)
+- 20261009T201540Z LEG L1 closed: PutTargets 20:15:06Z FailedEntryCount 0; read-back 20:15:19Z: 1 target cot-rebalancer-runner-daily -> cot-rebalancer-run
