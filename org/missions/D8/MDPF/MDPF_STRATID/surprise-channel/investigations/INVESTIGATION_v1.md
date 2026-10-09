@@ -103,6 +103,27 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The sma_additive_aua series is counted at the frontier as its own labelled component beside taxsma, so the Global total equals the fold's opal_aggregate_aua.",
     "world_is": "The total reconciles to the cent; the component's as_of/carried labels are not vintage-exact on a carried date. A per-date source-date channel (round-2 enrichment) would let the label match the Tax component's."
+  },
+  {
+    "id": "MDPF_STRATID-D1-S1",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~S1",
+    "surfaced_at": "2026-10-09T13:50:00Z",
+    "one_line": "Each MDPF run restates the per-firm aggregate-aua timeseries on the PRIOR frontier date: Cottonwood account_count_total goes from a measured count to None (count_basis measured -> absent), Inflection account counts and 49financial model_aua are restated, and tax_coverage.business_active_accounts goes to None. For the per-firm producer's owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_STRATID/deliverables/2.0.0_SA_COO~S1/L4_READ_20261009.md: 10-07->10-08 transition (post-D2) moves on 2026-10-07 only -- cottonwood 6 (account_count_total 384 -> None), inflection 8 (account_count_total 548 -> 578), 49financial 8 (model_aua 1,477,814,415.54 -> 1,477,815,850.93)",
+        "the pre-D2 control 10-06->10-07 (portal/gold/mdpf/<firm>/aggregate-aua-timeseries/2026-10-06.json vs the pinned 2026-10-07 versions) shows the same key families on 2026-10-06: cottonwood account_count_total 382 -> None, inflection 548 -> 577; 0 moves before the prior frontier date in either transition",
+        "CTO ruling org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_STRATID_L4_PERFIRM_PRIOR_FRONTIER_RESTATEMENT_20261009.md (msg 2501) admitted it as baseline restatement and asked for this row"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A served per-date figure for a date already published does not change on the next run unless a source restatement is recorded (point-in-time; and a measured count is not replaced by None).",
+    "world_is": "The prior frontier date is rewritten on every run: Cottonwood's measured account count for that date becomes None/absent once the next date is published, and counts/model values elsewhere are restated, with no restatement record. Not caused by MDPF_STRATID's fold (present before D2)."
   }
 ]
 ```

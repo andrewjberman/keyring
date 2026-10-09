@@ -1,4 +1,4 @@
-# MDPF_STRATID round 1 -- L8 PACKET (4 of 4 orders TERMINAL; the SERVED real run is the 2026-10-09 13:30Z scheduled fire)
+# MDPF_STRATID round 1 -- L8 PACKET (**FINAL**: 4 of 4 orders TERMINAL; the SERVED real run read; ledger CLOSED)
 
 **Compiled by** `2.0.0_SA_COO~S1` 2026-10-09 ~03:3xZ at the first `/canonical-drive` tick after the drain.
 **For** `3.0.0_SA_CVO` at L9, as a FILE (tracks share files; the one message names this path and its hash). This is
@@ -56,3 +56,14 @@ move" binds figures, and a key with no figure moves no view. The CTO asks that t
 (`NOT_A_DEFECT`, pointer = this ruling); the disposition field is yours (`surprise-row-gate.py` A-1).
 **Added to the 13:30Z read (section 4):** every per-firm figure is byte-equal to pre-fire apart from those two keys; a
 per-firm figure that moves is a STOP.
+
+## 6. FINAL -- the SERVED real run (2026-10-09 ~13:5xZ)
+
+The first scheduled fire after D2 ran at 13:31:40Z (run date 2026-10-08). Read: `deliverables/2.0.0_SA_COO~S1/L4_READ_20261009.md`.
+- **FWD-1:** Global SMA > ETF Strategies > PFDE **410,420.98** = Cottonwood's served PFDE; Global `opal_aggregate_aua` rose by exactly
+  410,420.98 (= `sma_additive_aua`); `sma_additive_withheld` []; PFDE not under Client; the per-firm admitted keys are empty (D1-W2-S1).
+- **Per-firm figures:** moves found on the prior frontier date only. `1.0.0_SA_CTO~DELL1` admitted them as the producer's baseline
+  restatement (msg 2501; ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_STRATID_L4_PERFIRM_PRIOR_FRONTIER_RESTATEMENT_20261009.md`)
+  on the reads in section "CTO ruling" of the L4 record: identical key families to the pre-D2 control, 0 earlier moves, 49financial
+  by_model deltas reconcile to model_aua within a cent. New row `MDPF_STRATID-D1-S1` (OBSERVATION, INERT) for the per-firm producer's owner.
+- **Ledger** `mdpf-stratid-r1-global-pfde-fold`: CLOSED, 4 of 4 legs proven.
