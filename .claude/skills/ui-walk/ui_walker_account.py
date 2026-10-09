@@ -193,11 +193,8 @@ def disarm(holder):
             cur = get_row() or {}
             raise SystemExit("REFUSED: %s is not the holder (held by %s) -- nothing changed"
                              % (holder, (cur.get("armedBy") or {}).get("S", "nobody")))
-    try:
-        _ssm().delete_parameter(Name=PARAM)
-    except ClientError as e:
-        if e.response["Error"]["Code"] != "ParameterNotFound":
-            raise
+    # No ssm:DeleteParameter: the Dells hold GetParameter only (NFRA_CTLPLN step H), and DeleteParameter is unrecoverable.
+    # The disarm ends at row disabled + password refused; the stored password is dead once the row's hash is unusable.
     row = get_row()
     st = (row.get("status") or {}).get("S") if row else "ABSENT"
     print("DISARM: row status=%s; SSM %s" % (st, "PRESENT" if _param_present() else "ABSENT (ParameterNotFound)"))
