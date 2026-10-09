@@ -48017,3 +48017,117 @@ REFUSED_20261008)
 2026-10-09T17:29:46Z LANDED-2P  0.0.0_AB_MSTR~DELL1  f2c3235705  paths=1  validate=8.35s  wait=0.08s  hold=1.12s  build=0.67s  ref=0.41s  post-commit=2.98s  attempt=1
 2026-10-09T17:29:46Z PASS  2.0.0_SA_COO~G1  1  (all paths in-lane) act=740ee07b63e9 paths=1:org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.partner-roster-t1-into-live-readers.md
 2026-10-09T17:29:53Z LANDED-2P  2.0.0_SA_COO~G1  805269589f  paths=1  validate=7.87s  wait=0.09s  hold=1.03s  build=0.67s  ref=0.34s  post-commit=2.73s  attempt=1
+2026-10-09T17:30:13Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane) act=303c7d038eef paths=2:org/git-author-override-audit.log|org/safe-deploy-bypass-audit.log
+2026-10-09T17:30:20Z LANDED-2P  0.0.0_AB_MSTR~DELL1  814da08aec  paths=2  validate=7.39s  wait=0.06s  hold=1.04s  build=0.55s  ref=0.45s  post-commit=2.42s  attempt=1
+2026-10-09T17:30:42Z PASS  0.9.0_WK_LGIC_ENFORCE~1  1  (all paths in-lane) act=1ff677d0afe9 paths=1:org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/registries.r21.result.md
+2026-10-09T17:30:57Z PASS  0.9.0_WK_LGIC_ENFORCE~2  2  (all paths in-lane) act=3c190a77c6ac paths=2:.tools/naming-gate.py|org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/gate.r21.result.md
+2026-10-09T17:31:16Z PASS  0.9.0_WK_LGIC_ENFORCE~3  2  (all paths in-lane) act=2671e40f370f paths=2:org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-aa-3.scope-test-line.proof_of_spec.json|org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-aa-3.scope-test-line.md
+2026-10-09T17:31:30Z PASS  0.9.0_WK_MDPF_STRATID~6  2  (all paths in-lane) act=52785b73e1bf paths=2:org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/MDPF_STRATID.TO-W2-3.unidentified-strategy-list.proof_of_spec.json|org/missions/D8/MDPF/MDPF_STRATID/task-orders/MDPF_STRATID.TO-W2-3.unidentified-strategy-list.md
+2026-10-09T17:31:31Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane) act=d5449354ec82 paths=1:org/missions/D8/MDPF/MDPF_STRATID/task-orders/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.md
+2026-10-09T17:31:38Z PASS  2.0.0_SA_COO~C1  3  (all paths in-lane) act=f35057dbc09c paths=3:org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/NEVER_WIDEN_ROUND41_AQ5_SERVED_ACT.md|org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/checks/round41/aq5_changes_whole.py|org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r41_aq5_changes_whole_20261009.txt
+2026-10-09T17:31:41Z LANDED-2P  2.0.0_SA_COO~S1  f0277e4eda  paths=1  validate=15.76s  wait=0.09s  hold=1.05s  build=0.61s  ref=0.41s  post-commit=2.81s  attempt=1
+2026-10-09T17:31:46Z LANDED-2P  2.0.0_SA_COO~C1  f540a27251  paths=3  validate=9.44s  wait=0.08s  hold=1.00s  build=0.66s  ref=0.32s  post-commit=2.44s  attempt=1
+2026-10-09T17:31:49Z PASS  0.9.0_WK_LGIC_ENFORCE~1  2  (all paths in-lane) act=9d8747ba159c paths=2:org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-aa-1.registries-fail-closed.proof_of_spec.json|org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-aa-1.registries-fail-closed.md
+2026-10-09T17:32:36Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=69112f34eade paths=1:org/missions/D5/AMGT/AMGT_CORPUS/ledger/NEVER_WIDEN_ROUND41_AQ5_CTO_HALF.md
+2026-10-09T17:32:46Z LANDED-2P  1.0.0_SA_CTO~DELL1  47bdccbb95  paths=1  validate=9.37s  wait=0.07s  hold=1.55s  build=1.18s  ref=0.34s  post-commit=2.42s  attempt=1
+2026-10-09T17:33:11Z PASS  0.9.0_WK_LGIC_ENFORCE~2  2  (all paths in-lane) act=ce920737755a paths=2:org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-aa-2.gate-grades-pattern-names.proof_of_spec.json|org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-aa-2.gate-grades-pattern-names.md
+2026-10-09T17:33:54Z MERGE-ATTEMPT  2.0.0_SA_COO~B1  rc=0  secs=3.47  graded=0/4 fast-lane  args=(wk-LGIC_ENFORCE-3)  first=(none)
+2026-10-09T17:33:54Z PASS  2.0.0_SA_COO~C1  2  (all paths in-lane) act=5646111d68ff paths=2:org/critical_paths/.open_deploys/amgt-corpus-r41-aq5.json|org/critical_paths/change_management/20261009T1733Z_amgt-corpus-r41-aq5_deploy_completion.md
+2026-10-09T17:34:02Z LANDED-2P  2.0.0_SA_COO~C1  f9b7371f01  paths=2  validate=7.13s  wait=0.08s  hold=1.13s  build=0.71s  ref=0.38s  post-commit=3.16s  attempt=1
+2026-10-09T17:34:21Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=2.79  graded=n/a  args=(--verify-merge 7fb895decc1843de0d50c68f89f10b389a3ea667)  first=(none)
+2026-10-09T17:34:24Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=38ee8c8ecec9 paths=1:org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECHIST_SH_T8_SITEZ_TAKE_20261009.md
+2026-10-09T17:34:28Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=25.80  took=d1d1f17871 hold=1.77s graded=0/49 pushed=7fb895decc
+2026-10-09T17:34:33Z LANDED-2P  1.0.0_SA_CTO~DELL1  5eb16d3293  paths=1  validate=7.96s  wait=0.09s  hold=1.54s  build=1.01s  ref=0.50s  post-commit=3.50s  attempt=1
+2026-10-09T17:34:50Z MERGE-ATTEMPT  2.0.0_SA_COO~B1  rc=2  secs=0.71  graded=n/a  args=(wk-LGIC_ENFORCE-2)  first=(REFUSED -- ANOTHER safe-merge RUN HOLDS THIS WORKTREE (serial 2)
+2026-10-09T17:34:51Z MERGE-ATTEMPT  2.0.0_SA_COO~B1  rc=0  secs=4.21  graded=0/5 fast-lane  args=(wk-LGIC_ENFORCE-1)  first=(none)
+2026-10-09T17:34:53Z PASS  2.0.0_SA_COO~H1  1  (all paths in-lane) act=9e15f52ed9a1 paths=1:org/tier1_exec/2.0.0_SA_COO~H1/drive_log_20261009T17Z_desktop-hk1uu7n.md
+2026-10-09T17:34:55Z MERGE-ATTEMPT  2.0.0_SA_COO~B1  rc=0  secs=4.68  graded=0/4 fast-lane  args=(wk-LGIC_ENFORCE-2)  first=(WARN -- clearing a STALE one-merge lock (serial ?, branch ?, since ?, pid ?): its process is g)
+2026-10-09T17:35:01Z LANDED-2P  2.0.0_SA_COO~H1  89e0d9dd50  paths=1  validate=8.34s  wait=0.09s  hold=1.22s  build=0.74s  ref=0.45s  post-commit=2.98s  attempt=1
+2026-10-09T17:35:06Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=18fc2814a634 paths=1:org/tier1_exec/1.0.0_SA_CTO/logs/2026-10-09/ctoDELL1_self_drive_SECCLASS_SECHIST_HEALGAP_tick41.md
+2026-10-09T17:35:13Z LANDED-2P  1.0.0_SA_CTO~DELL1  551b7c733c  paths=1  validate=6.31s  wait=0.08s  hold=1.30s  build=0.64s  ref=0.63s  post-commit=2.58s  attempt=1
+2026-10-09T17:37:27Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane) act=d5449354ec82 paths=1:org/missions/D8/MDPF/MDPF_STRATID/task-orders/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.md
+2026-10-09T17:37:37Z LANDED-2P  2.0.0_SA_COO~S1  8759d8799c  paths=1  validate=8.84s  wait=0.13s  hold=1.45s  build=0.93s  ref=0.48s  post-commit=3.13s  attempt=1
+2026-10-09T17:38:01Z PASS  2.0.0_SA_COO~V1  2  (all paths in-lane) act=a77923db25fc paths=2:org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md|org/tier2_senior/0.7.0_AE_CloudOps/task_orders/ETFS_RIVALS.TO-MERGE-tc1-into-box-sitez-20261009.md
+2026-10-09T17:38:04Z PASS  3.0.0_SA_CVO  1  (all paths in-lane) act=2e83008068b6 paths=1:org/critical_paths/unblock/20261009T1737Z_UB-20261009T171441Z-fbb6.md
+2026-10-09T17:38:10Z LANDED-2P  2.0.0_SA_COO~V1  0dad601130  paths=2  validate=8.96s  wait=0.07s  hold=1.01s  build=0.64s  ref=0.35s  post-commit=2.63s  attempt=1
+2026-10-09T17:38:11Z LANDED-2P  3.0.0_SA_CVO  7263e6206c  paths=1  validate=6.65s  wait=0.08s  hold=1.03s  build=0.65s  ref=0.35s  post-commit=2.76s  attempt=1
+2026-10-09T17:38:20Z PASS  2.0.0_SA_COO~W1  2  (all paths in-lane) act=3681476855b2 paths=2:org/critical_paths/.open_deploys/harvst-bv1-merge-20261009.json|org/critical_paths/change_management/20261009T1738Z_harvst-bv1-merge-20261009_deploy_completion.md
+2026-10-09T17:38:27Z LANDED-2P  2.0.0_SA_COO~W1  18d8517724  paths=2  validate=7.28s  wait=0.06s  hold=0.96s  build=0.62s  ref=0.32s  post-commit=2.75s  attempt=1
+2026-10-09T17:38:47Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane) act=9a01c38fef1e paths=1:org/devices/crossbox/XB-20261009T173811Z-4315.json
+2026-10-09T17:38:54Z LANDED-2P  0.0.0_AB_MSTR~DELL1  4761e9b3fc  paths=1  validate=6.93s  wait=0.08s  hold=1.00s  build=0.63s  ref=0.34s  post-commit=2.56s  attempt=1
+2026-10-09T17:39:22Z PASS  0.7.0_AE_CloudOps~DELL1  4  (all paths in-lane) act=ada5f61bcbf0 paths=4:org/critical_paths/.open_deploys/adhoc-partner-roster-t1.json|org/critical_paths/change_management/20261009T0221Z_adhoc-partner-roster-t1_deploy_completion.md|org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ADHOC.partner-roster-t1-into-live-readers_PROOF_OF_SPEC.json|org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.partner-roster-t1-into-live-readers.md
+2026-10-09T17:39:29Z LANDED-2P  0.7.0_AE_CloudOps~DELL1  b08687be83  paths=4  validate=7.64s  wait=0.08s  hold=0.97s  build=0.57s  ref=0.36s  post-commit=2.68s  attempt=1
+2026-10-09T17:39:38Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane) act=9a01c38fef1e paths=1:org/devices/crossbox/XB-20261009T173811Z-4315.json
+2026-10-09T17:39:45Z LANDED-2P  0.0.0_AB_MSTR~DELL1  758757ebe0  paths=1  validate=6.37s  wait=0.06s  hold=0.89s  build=0.52s  ref=0.34s  post-commit=2.52s  attempt=1
+2026-10-09T17:40:14Z MERGE-ATTEMPT  2.0.0_SA_COO~W1  rc=0  secs=86.84  graded=1/5 fast-lane  args=(wk-AMGT_HARVST-133-r78 -m drain(AMGT_HARVST bv-1, 2.0.0_SA_COO~W1): merge wk-AMGT_HARVST-133-r78 @4b0475b646 into lib/opal_data_harvest under the pair COO @8ccf65f68c + CTO~Z @e3f030ba85)  first=(none)
+2026-10-09T17:41:06Z PASS  2.0.0_SA_COO~G1  1  (all paths in-lane) act=740ee07b63e9 paths=1:org/tier2_senior/0.7.0_AE_CloudOps~DELL1/task_orders/ADHOC.partner-roster-t1-into-live-readers.md
+2026-10-09T17:41:12Z LANDED-2P  2.0.0_SA_COO~G1  7a1c1ebac2  paths=1  validate=6.55s  wait=0.07s  hold=0.91s  build=0.54s  ref=0.34s  post-commit=2.34s  attempt=1
+2026-10-09T17:41:58Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane) act=d5449354ec82 paths=1:org/missions/D8/MDPF/MDPF_STRATID/task-orders/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.md
+2026-10-09T17:42:02Z PASS  2.0.0_SA_COO~G1  2  (all paths in-lane) act=cb2dd8acfd99 paths=2:org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R2_DRAIN_END_REPORT_DRAFT.md|org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R3_DRAFT_RECTANGLE.md
+2026-10-09T17:42:06Z LANDED-2P  2.0.0_SA_COO~S1  49ab9ca1fa  paths=1  validate=9.15s  wait=0.06s  hold=0.96s  build=0.56s  ref=0.37s  post-commit=2.34s  attempt=1
+2026-10-09T17:42:09Z LANDED-2P  2.0.0_SA_COO~G1  2d9513f252  paths=2  validate=6.53s  wait=0.06s  hold=0.96s  build=0.60s  ref=0.33s  post-commit=2.62s  attempt=1
+2026-10-09T17:42:10Z PASS  2.0.0_SA_COO~B1  3  (all paths in-lane) act=e52d6fde5669 paths=3:org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~B1/ROUND21_DRAIN_END.md|org/missions/D14/LGIC/LGIC_ENFORCE/project.json|org/projects/LGIC_ENFORCE.json
+2026-10-09T17:42:16Z PASS  2.0.0_SA_COO~C1  1  (all paths in-lane) act=852ba6667049 paths=1:org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~C1/evidence/r41_aq3_close_read_20261009.txt
+2026-10-09T17:42:21Z LANDED-2P  2.0.0_SA_COO~B1  f0d0c864c2  paths=3  validate=11.20s  wait=0.08s  hold=1.20s  build=0.78s  ref=0.38s  post-commit=3.61s  attempt=1
+2026-10-09T17:42:25Z LANDED-2P  2.0.0_SA_COO~C1  b0585eff04  paths=1  validate=9.84s  wait=0.07s  hold=1.02s  build=0.68s  ref=0.31s  post-commit=2.26s  attempt=1
+2026-10-09T17:43:20Z PASS  2.0.0_SA_COO~W1  2  (all paths in-lane) act=3681476855b2 paths=2:org/critical_paths/.open_deploys/harvst-bv1-merge-20261009.json|org/critical_paths/change_management/20261009T1738Z_harvst-bv1-merge-20261009_deploy_completion.md
+2026-10-09T17:43:26Z LANDED-2P  2.0.0_SA_COO~W1  fbf1b8c948  paths=2  validate=6.56s  wait=0.07s  hold=0.92s  build=0.56s  ref=0.33s  post-commit=2.60s  attempt=1
+2026-10-09T17:43:52Z PASS  0.7.0_AE_CloudOps~DELL1  2  (all paths in-lane) act=1a2c1dc25c3e paths=2:org/critical_paths/.open_deploys/mdpf-stratid-r2-global-fold.json|org/critical_paths/change_management/20261009T1743Z_mdpf-stratid-r2-global-fold_deploy_completion.md
+2026-10-09T17:43:59Z LANDED-2P  0.7.0_AE_CloudOps~DELL1  0aca05747b  paths=2  validate=6.50s  wait=0.05s  hold=1.69s  build=1.26s  ref=0.40s  post-commit=2.35s  attempt=1
+2026-10-09T17:44:14Z PASS  2.0.0_SA_COO~W1  1  (all paths in-lane) act=515c12713d9a paths=1:org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-bv-1.a-pair-error-does-not-stop-the-cycle.md
+2026-10-09T17:44:15Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.61  graded=n/a  args=(--verify-merge 0e02108f060b59dc12c80f7f0135546c48286179)  first=(none)
+2026-10-09T17:44:20Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=18.77  took=ed85bc9ce9 hold=1.42s graded=0/15 pushed=0e02108f06
+2026-10-09T17:44:24Z LANDED-2P  2.0.0_SA_COO~W1  e086d0b429  paths=1  validate=25.38s  wait=0.06s  hold=1.02s  build=0.66s  ref=0.33s  post-commit=2.69s  attempt=1
+2026-10-09T17:44:34Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=2  secs=0.37  graded=n/a  args=(--help)  first=(REFUSED -- '--help' is not a ref in this repo)
+2026-10-09T17:44:53Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=0  secs=5.26  graded=0/11 fast-lane  args=(wk-MDPF_STRATID-r2-7)  first=(none)
+2026-10-09T17:45:02Z PASS  2.0.0_SA_COO~H1  1  (all paths in-lane) act=b1cae268b835 paths=1:org/tier1_exec/2.0.0_SA_COO~H1/r6_staged/SH_EXHAUSTED_EXPIRY_CELL_STAGED.md
+2026-10-09T17:45:04Z MERGE-ATTEMPT  2.0.0_SA_COO~S1  rc=0  secs=3.50  graded=0/4 fast-lane  args=(wk-MDPF_STRATID-w2-7)  first=(none)
+2026-10-09T17:45:08Z LANDED-2P  2.0.0_SA_COO~H1  7e9357cbd9  paths=1  validate=6.33s  wait=0.07s  hold=0.89s  build=0.54s  ref=0.32s  post-commit=2.11s  attempt=1
+2026-10-09T17:46:22Z PASS  0.7.0_AE_CloudOps~DELL1  1  (all paths in-lane) act=0bb668887ec5 paths=1:org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ADHOC.partner-roster-t1-into-live-readers_PROOF_OF_SPEC.json
+2026-10-09T17:46:28Z LANDED-2P  0.7.0_AE_CloudOps~DELL1  5ce3124de8  paths=1  validate=5.86s  wait=0.07s  hold=0.82s  build=0.49s  ref=0.31s  post-commit=2.14s  attempt=1
+2026-10-09T17:47:20Z PASS  3.0.0_SA_CVO  2  (all paths in-lane) act=8453f10bb47e paths=2:org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v4.md|org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v3.md
+2026-10-09T17:47:22Z PASS  2.0.0_SA_COO~V1  1  (all paths in-lane) act=959c1f38917d paths=1:org/tier1_exec/2.0.0_SA_COO~V1/drive_log_20261009T17Z_desktop-hk1uu7n.md
+2026-10-09T17:47:29Z LANDED-2P  2.0.0_SA_COO~V1  ccab1e1d7a  paths=1  validate=8.13s  wait=0.06s  hold=0.97s  build=0.59s  ref=0.35s  post-commit=2.45s  attempt=1
+2026-10-09T17:47:40Z LANDED-2P  3.0.0_SA_CVO  76c2d20649  paths=2  validate=30.31s  wait=0.08s  hold=1.03s  build=0.66s  ref=0.34s  post-commit=3.48s  attempt=1
+2026-10-09T17:48:24Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=7ee3b10f238c paths=1:org/missions/D14/LGIC/LGIC_ENFORCE/ledger/ROUND_ANALYSIS.round21.md
+2026-10-09T17:48:33Z LANDED-2P  1.0.0_SA_CTO~DELL1  55b3104426  paths=1  validate=9.38s  wait=0.07s  hold=1.04s  build=0.64s  ref=0.36s  post-commit=2.63s  attempt=1
+2026-10-09T17:49:18Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=1.45  graded=n/a  args=(sm-cont-7f729a0a-a-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T17:49:21Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship) act=none paths=0:
+2026-10-09T17:49:26Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=0  secs=7.16  graded=2/4  args=(--continue)  first=(WARN: client-data-check: hashed account-id list ABSENT at C:\Users\Test\)
+2026-10-09T17:49:35Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane) act=d5449354ec82 paths=1:org/missions/D8/MDPF/MDPF_STRATID/task-orders/MDPF_STRATID.TO-APPLY-R2.global-fold-deploy.md
+2026-10-09T17:49:37Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=1.92  graded=n/a  args=(sm-cont-7f729a0a-b-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T17:49:41Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship) act=none paths=0:
+2026-10-09T17:49:45Z LANDED-2P  2.0.0_SA_COO~S1  683e515abc  paths=1  validate=9.64s  wait=0.07s  hold=1.11s  build=0.70s  ref=0.36s  post-commit=2.90s  attempt=1
+2026-10-09T17:49:47Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=7  secs=8.65  graded=1/2  args=(--continue)  first=(WARN: client-data-check: hashed account-id list ABSENT at C:\Users\Test\)
+2026-10-09T17:49:59Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=4  secs=1.64  graded=n/a  args=(sm-cont-7f729a0a-c-feat)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T17:50:02Z PASS  0.9.0_WK_SMCONT~1  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship) act=none paths=0:
+2026-10-09T17:50:07Z MERGE-ATTEMPT  0.9.0_WK_SMCONT~1  rc=0  secs=6.61  graded=1/3  args=(--continue)  first=(WARN: client-data-check: hashed account-id list ABSENT at C:\Users\Test\)
+2026-10-09T17:50:09Z MERGE-ATTEMPT  3.0.0_SA_CVO  rc=2  secs=0.25  graded=n/a  args=()  first=(REFUSED -- no branch given)
+2026-10-09T17:50:09Z MERGE-ATTEMPT  3.0.0_SA_CVO  rc=2  secs=0.28  graded=n/a  args=(definitely-not-a-branch-xyz)  first=(REFUSED -- 'definitely-not-a-branch-xyz' is not a ref in this repo)
+2026-10-09T17:50:11Z MERGE-ATTEMPT  3.0.0_SA_CVO  rc=2  secs=0.23  graded=n/a  args=(--verify-index 683e515abc1f75433d05b9892f52c3b1905aa077)  first=(none)
+2026-10-09T17:50:12Z MERGE-ATTEMPT  3.0.0_SA_CVO  rc=2  secs=0.22  graded=n/a  args=(--verify-merge 683e515abc1f75433d05b9892f52c3b1905aa077)  first=(none)
+2026-10-09T17:50:54Z PASS  2.0.0_SA_COO~R1  1  (all paths in-lane) act=53e203bd0807 paths=1:org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round86_prep/XB_KK1_DRAIN_TO_AMG.md
+2026-10-09T17:51:01Z LANDED-2P  2.0.0_SA_COO~R1  6a80bc906f  paths=1  validate=6.52s  wait=0.05s  hold=0.83s  build=0.51s  ref=0.30s  post-commit=2.15s  attempt=1
+2026-10-09T17:51:23Z PASS  2.0.0_SA_COO~B1  1  (all paths in-lane) act=d0ec176fa914 paths=1:org/missions/D14/LGIC/LGIC_ENFORCE/ledger/COMPLETION_REPORT.round21.json
+2026-10-09T17:51:31Z LANDED-2P  2.0.0_SA_COO~B1  e04b907bad  paths=1  validate=7.93s  wait=0.06s  hold=0.88s  build=0.55s  ref=0.30s  post-commit=2.64s  attempt=1
+2026-10-09T17:51:40Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane) act=aca1f2c28a43 paths=1:org/devices/crossbox/XB-20261009T175102Z-f170.json
+2026-10-09T17:51:46Z LANDED-2P  0.0.0_AB_MSTR~DELL1  33dd8f62a4  paths=1  validate=5.66s  wait=0.06s  hold=0.80s  build=0.50s  ref=0.27s  post-commit=2.22s  attempt=1
+2026-10-09T17:52:19Z PASS  2.0.0_SA_COO~B1  1  (all paths in-lane) act=bebed709093f paths=1:org/tier1_exec/2.0.0_SA_COO~B1/drive_log_20261009T17Z_desktop-hk1uu7n.md
+2026-10-09T17:52:22Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=a596875e8e05 paths=1:org/missions/D14/LGIC/LGIC_ENFORCE/ledger/COMPLETION_GRADES.round21.json
+2026-10-09T17:52:27Z LANDED-2P  2.0.0_SA_COO~B1  ada0f09659  paths=1  validate=7.90s  wait=0.08s  hold=0.96s  build=0.60s  ref=0.33s  post-commit=2.79s  attempt=1
+2026-10-09T17:52:31Z LANDED-2P  1.0.0_SA_CTO~DELL1  148634f202  paths=1  validate=10.18s  wait=0.08s  hold=1.19s  build=0.79s  ref=0.37s  post-commit=2.79s  attempt=1
+2026-10-09T17:52:47Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane) act=aca1f2c28a43 paths=1:org/devices/crossbox/XB-20261009T175102Z-f170.json
+2026-10-09T17:52:56Z LANDED-2P  0.0.0_AB_MSTR~DELL1  4a982a5f8e  paths=1  validate=9.14s  wait=0.08s  hold=1.09s  build=0.70s  ref=0.37s  post-commit=2.78s  attempt=1
+2026-10-09T17:53:01Z PASS  0.7.0_AE_CloudOps~DELL1  1  (all paths in-lane) act=ea69edee24ba paths=1:org/critical_paths/.open_deploys/mdpf-stratid-r2-global-fold.json
+2026-10-09T17:53:08Z LANDED-2P  0.7.0_AE_CloudOps~DELL1  f89a8c563d  paths=1  validate=7.81s  wait=0.08s  hold=1.02s  build=0.66s  ref=0.33s  post-commit=2.26s  attempt=1
+2026-10-09T17:53:18Z PASS  3.0.0_SA_CVO  2  (all paths in-lane) act=55fc9ad99459 paths=2:org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/adjudications/ADJUDICATION_v70.md|org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/remediations/REMEDIATION_v13.md
+2026-10-09T17:53:44Z LANDED-2P  3.0.0_SA_CVO  bcdfd762ab  paths=2  validate=70.99s  wait=0.07s  hold=0.89s  build=0.56s  ref=0.29s  post-commit=2.40s  attempt=1
+2026-10-09T17:54:07Z PASS  3.0.0_SA_CVO  3  (all paths in-lane) act=71f8a4e4e74c paths=3:org/missions/D0/NFRA/NFRA_GATSCP/surprise-channel/adjudications/ADJUDICATION_v5.md|org/missions/D0/NFRA/NFRA_GATSCP/surprise-channel/remediations/REMEDIATION_v2.md|org/missions/D0/NFRA/NFRA_GATSCP/surprise-channel/remediations/REMEDIATION_v3.md
+2026-10-09T17:54:15Z PASS  0.0.0_AB_MSTR~DELL1  1  (all paths in-lane) act=e3325aa1928d paths=1:org/safe-deploy-bypass-audit.log
+2026-10-09T17:54:21Z LOCK-WAIT  3.0.0_SA_CVO  2s
+2026-10-09T17:54:24Z LANDED-2P  0.0.0_AB_MSTR~DELL1  93f04e7140  paths=1  validate=9.74s  wait=0.14s  hold=1.64s  build=1.00s  ref=0.61s  post-commit=3.29s  attempt=1
+2026-10-09T17:54:26Z LANDED-2P  3.0.0_SA_CVO  30ad32d338  paths=3  validate=22.69s  wait=2.28s  hold=1.19s  build=0.77s  ref=0.38s  post-commit=2.92s  attempt=1
+2026-10-09T17:54:39Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.57  graded=n/a  args=(--verify-merge 34aa9acd0cc2991b9bb5b9eece803ce45a042121)  first=(none)
+2026-10-09T17:54:44Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=42.06  took=be144053ed hold=1.46s graded=1/74 pushed=34aa9acd0c
+2026-10-09T17:54:58Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane) act=373556dd4552 paths=1:org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round78.md
+2026-10-09T17:55:07Z LANDED-2P  1.0.0_SA_CTO~DELL1  6e893831ec  paths=1  validate=8.12s  wait=0.11s  hold=1.28s  build=0.75s  ref=0.50s  post-commit=2.83s  attempt=1
