@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_TRNSPT~2</issued_to>
 <issued_by>2.0.0_SA_COO~T2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -42,12 +42,31 @@ full, `org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/HX_TRANSCRI
    mismatches is refused); `test_refusals_raise_typed_errors` (401, 403 meeting_not_allowed, 503 needs_login, 502 graph_error each raise their own
    type with no bearer in the message); `test_pull_tf_reads_transcripts_bearer_by_data_source`. Keep `test_teams_pull.py` and every other test green.
 
+### AMENDMENT 1 (issuer, 2026-10-09 ~10:2xZ) -- RE-OPENED: the wall-clock interim (CTO ADDENDUM 11 @44f3540b16; row NFRA_TRNSPT-D2-W2-S6)
+
+The contract serves the content VTT only; `pull.py:98` reads `fmt="metadata"` and the transport raises `GatewayFormatUnsupported`. Until NFRA_OPLGTW
+serves a metadata path (asked via MSTR), the CTO ruled: fetch content VTT only; silver lands wall-clock NULL with
+`wallclock_basis = "absent (metadata path not served)"` and keeps the cue offsets; NEVER derive wall-clock from `createdDateTime`. Your first pass
+(@839ff6e3bd) stays as is.
+
+4. `data/transcripts/scripts/teams/pull.py`: when the metadata read raises `GatewayFormatUnsupported`, land the content VTT (and its sidecar, which
+   records `metadata: absent`) and continue; a FixtureTransport that HAS metadata keeps today's behavior.
+5. `data/transcripts/scripts/teams/parse_silver.py`: accept a missing metadata object; then `start_utc`/`end_utc` are NULL for every cue and a new
+   column `wallclock_basis` reads `"absent (metadata path not served)"`; when metadata is present it reads `"observed (metadata VTT)"`. Add the column to
+   `COLUMNS` and the schema; nothing is derived from `createdDateTime` or any start time.
+6. `data/transcripts/scripts/tests/test_wallclock_absent.py` (new, fakes): `test_pull_lands_content_without_metadata`;
+   `test_silver_wallclock_null_with_absent_basis`; `test_no_wallclock_derived_from_created` (a transcript whose createdDateTime is set still lands
+   NULL wall-clock). Update `test_teams_parse_silver.py` only where it pins `COLUMNS`. Keep the whole tests directory green.
+
 ### ACCEPTANCE
 
 <criterion id="TR20-t20-AC1" cell_refs="TR-t-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R20_CHECKS/r20_checks.py t20</invocation><expect>R20-T20-OK</expect></criterion>
 `TR20-t20-AC1` -- the three named tests pass and the file is green.
 
-<expected_criteria>TR20-t20-AC1</expected_criteria>
+<criterion id="TR20-t20-AC2" cell_refs="TR-t-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R20_CHECKS/r20_checks.py t20b</invocation><expect>R20-T20B-OK</expect></criterion>
+`TR20-t20-AC2` -- the three interim tests pass (dry-run at box/dell2 7e2a14edee: `R20-T20B-FAIL absent`).
+
+<expected_criteria>TR20-t20-AC1 TR20-t20-AC2</expected_criteria>
 
 Dry-run at the base (box/dell2 e18849b58c): `R20-T20-FAIL absent` -- FAIL as expected.
 
@@ -62,6 +81,10 @@ data/transcripts/scripts/teams/gateway_client.py
 infra/aws/terraform/transcripts/pull.tf
 data/transcripts/scripts/tests/test_teams_gateway_transport.py
 org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/INVESTIGATION_v1.md
+data/transcripts/scripts/teams/pull.py
+data/transcripts/scripts/teams/parse_silver.py
+data/transcripts/scripts/tests/test_wallclock_absent.py
+data/transcripts/scripts/tests/test_teams_parse_silver.py
 </paths>
 
 The block is your WRITE grant (your deliverables folder is granted by the tree convention). Everything else named here you READ.
@@ -72,7 +95,7 @@ The block is your WRITE grant (your deliverables folder is granted by the tree c
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: TR20-t20-AC1. Instance at `org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/0.9.0_WK_NFRA_TRNSPT~2/NFRA_TRNSPT.TO-TR-t20.teams-gateway-transport.proof_of_spec.json`,
+Criterion ids: TR20-t20-AC1, TR20-t20-AC2. Instance at `org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/0.9.0_WK_NFRA_TRNSPT~2/NFRA_TRNSPT.TO-TR-t20.teams-gateway-transport.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> TR20-t20-AC1` BEFORE the flip. Commit code first, then pin.
 </proof_of_spec>
 
