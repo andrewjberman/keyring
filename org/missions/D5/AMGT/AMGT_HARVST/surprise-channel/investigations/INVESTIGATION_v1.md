@@ -8040,6 +8040,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "id": "AMGT_HARVST-Z-S106",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-08T23:52:37Z",
+      "one_line": "Row Z-S102 closes on the served-route read the CTO half's C2 names: after gold rebuild #10 (act 3, ledger closed), BP's feed no longer carries 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "CTO half for gold rebuild #10 (CTO_HALF_AMGT_HARVST_GOLD_REBUILD10_20261008.md, C2): one read on the served route, BP's feed no longer carries the basis-points headline, and row Z-S102 closes on that read and not on the build's own report.",
+      "world_is": "scoped_amgt.read_feed read 2026-10-08T23:49:23Z, reading the served part amgt/harvest/gold/article_security_mention/date=2026-10-08/part-20261008T225527Z.parquet (52,282 rows): BP_US_Equity and BP/_LN_Equity each SERVED 16 items; bbg:TLG1WZKGZAIP00 and its title absent from both. Control: under rebuild #9's part, HVST-bj-1's feed walk listed the article in BP's feed dated 2026-09-16, inside today's window 2026-09-09 to 2026-10-06.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round72/gold_rebuild10.c2_bp_feed_read.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round72/gold_rebuild10.act_20261008T220825Z.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~115/BJ1_FEED_WALK.md:40",
+          "org/critical_paths/change_management/20261008T2116Z_harvst-gold-rebuild10-act2-m-20261008_deploy_completion.md"
+        ]
+      },
+      "adjudicates": [
+        "AMGT_HARVST-Z-S102"
+      ],
+      "disposition": "DISMISSED_WITH_REASON",
+      "dismissal_reason": "The capitalised-headline rule is served (gold rebuild #10, ledger closed) and the served-route read with its control shows the headline gone from both BP lines; nothing else is owed on Z-S102."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S106",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
       "surfaced_by": "2.0.0_SA_COO~W1",
       "surfaced_at": "2026-10-09T00:25:51Z",
       "one_line": "to-check reads 39 AMGT_HARVST orders ACTIVE at status issued; 36 of them carry a later terminal <status> tag, so the 39 is a first-tag parse of orders that append their flips.",

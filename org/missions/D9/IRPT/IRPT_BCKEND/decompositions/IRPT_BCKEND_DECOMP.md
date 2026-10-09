@@ -2248,3 +2248,54 @@ and the owner/other-firm reads follow IRPT_CUSTDY E2a. Check `deliverables/2.0.0
 | `IB-pr-378` | release irpt-export-render at 49bc13131d (replay first), then apply the custody-report-persist route | FWD-8 / CUSTDY S07-S08 | WORLD | IB-pr-376 (drained), IAM leg (applied) | P90-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one release then one route, ordered. Assignee: 0.7.0_AE_CloudOps~DELL2.
+
+## 84. ROUND 91, WORKSTREAM ~P (2026-10-08 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1949)
+
+IB-pr-377 (round 89) graded PASS at dc3ff4c2c9: the r61 directory release is live (refresh RbpsijC2, search IV7P2AL4). Its driven refresh
+was READY at 49financial and REFRESH_FAILED+SAFE at inflection and cottonwood, because clients the previous build carried are absent (row
+D2-S13). The CTO ordered this cell FIRST in the round, landed before those served directories go OVER_AGE (expiry.py: over 2 trading days).
+The cell measures the cause per firm (BUILD_BUG, KEY_CHANGE or SOURCE_REMOVAL), fixes a build or key fault at its root without weakening the
+disappearance rule, and packages the release for the applier. SOURCE_REMOVAL stops at the diagnosis with a row to the CTO. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-379` | diagnose and fix the dropped entries in the inflection and cottonwood builds; package the refresh release | FWD-7 | WORLD | IB-pr-377 (PASS) | P91-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one fault, one cell; the release order follows its packet. Assignee: 0.9.0_WK_IRPT_BCKEND~187.
+
+## 85. ROUND 92, WORKSTREAM ~P (2026-10-09 ~00:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1959)
+
+IB-pr-379 (round 91) stopped at its diagnosis, as its SOURCE_REMOVAL clause requires. Both dropped entries are source removals, one each:
+an inflection household the vendor merged away, and a cottonwood zero-value account no longer emitted. The build is right, and the
+disappearance rule fails them indefinitely (row D2-W187-S1, BLOCKING, ARMED). The CTO ruled the rule:
+- an entry absent from both the build and the source is carried forward as TERMINATED + source_removed_on, and the build goes READY;
+- an entry in the source but missing from the build stays REFRESH_FAILED, and that is the negative arm, run on both firms' real cases;
+- each refresh prints its TERMINATED count.
+
+The release goes under its own pair and must be live before cottonwood's OVER_AGE on 2026-10-12, so by Friday 10-09's close. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r92/p92_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-380` | carry source-removed entries forward as TERMINATED; real-case replay with the negative arm; package the refresh release | FWD-7 | WORLD | IB-pr-379 (diagnosis drained) | P92-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one rule, one cell; the release order follows its pair. Assignee: 0.9.0_WK_IRPT_BCKEND~188.
+
+## 86. ROUND 93, WORKSTREAM ~P (2026-10-09 ~00:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1988)
+
+IB-pr-380 (round 92) is graded 3/3 PASS (P 8953eccfca, built xGc9a2m7; the replay is READY with terminated 1 at both firms, and the live
+and negative arms are REFRESH_FAILED). Its rows show the release alone is fail-closed with no gain:
+- D2-W188-S1: the runner writes the served directory and emits no source_client_ids;
+- D2-W188-S2: inflection's previous READY manifest is outside the 10-trading-day window, so a 10-09 fire reads false additions.
+
+The CTO ruled: (a) count every writer of latest.json and directory.json FIRST, because a served as_of of 10-08 after a failed refresh
+means a second writer until proven otherwise, and the pair names every writer; then (b) the runner carries; (c) the previous state is
+the served directory; (d) no contract change (S3). 380 and 381 ship as ONE release under one pair, live before cottonwood's 10-12
+OVER_AGE. Check `deliverables/2.0.0_SA_COO~P2/checks/r93/p93_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-381` | writer census; runner carry + source_client_ids; previous state = served directory; one release packet for 380 + 381 | FWD-7 | WORLD | IB-pr-380 (PASS, drained) | P93-a |
+
+fanout: 1 of 1 chains, cap 8, reason: (a) gates (b)-(c), and one release covers both. Assignee: 0.9.0_WK_IRPT_BCKEND~189.

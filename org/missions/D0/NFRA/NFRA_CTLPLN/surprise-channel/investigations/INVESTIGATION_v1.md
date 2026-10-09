@@ -5450,3 +5450,264 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The kit satisfies the read-back it named (IRPT_BCKEND-D2-S11) but NOT the pinning clause: the mirror is pinned to three provider builds, while the roots lock seven distinct (source, constraint) pairs and 40 locks pin four distinct provider versions plus a non-Windows aws h1. The named read-back therefore cannot detect this class -- it passes on any ONE root whose lock the mirror happens to match, and ticket-center is such a root, so a green read-back is consistent with 6 roots being unservable. Remedy is not an apply: either the kit carries archive 2.7.1 + 2.8.0, external 2.4.2 and local 2.x for windows_amd64, or the laptop re-locks the affected roots for windows_amd64 (`terraform providers lock -platform=windows_amd64`) and ships the result, because generating either on dell2 requires the registry egress the rc deliberately forbids. Class BLOCKING because it names a concrete refusal on six identified roots that only a laptop-side act can clear; hazard_standing INERT because no apply order is in flight against any of the six at this moment, so nothing is being damaged while it stands."
 }
 ```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T23:46:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S37",
+  "one_line": "AMENDMENT 21 item 1: the census has no public-key class, so the IRPT render PUBLIC key was re-classed OTHER to PLATFORM-KEY (the granted class nearest it) and rides in the secrets part-two policy, whose description still says it holds signing keys, seeds, admin credentials and gateway bearer tokens.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_vendor_secrets.py: CLASSIFICATION row and RULINGS row for opal/auth/irpt-render-jwt-public-key now PLATFORM-KEY (msg 107457); --reclass printed 'granted before=94 / after=95: added 1; removed 0' and the last line 'granted=95 ... platform_key=29 other=18'",
+      "tests/simulate_policy.py VENDOR-ONE-TO-ONE entries=95 (part one 66, part two 29) chars=5968+2806; part one is byte-for-byte unchanged",
+      "iam.tf aws_iam_policy.dell_agent_platform_secrets description string is unchanged (a description is ForceNew, so editing it would destroy and recreate the policy)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 21 item 1: rule opal/auth/irpt-render-jwt-public-key GRANTED with class 'a PUBLIC key'; granted 94 to 95, OTHER 19 to 18, the exact ARN joins whichever part the module's split puts it in.",
+  "world_is": "The four classes are VENDOR-CREDENTIAL, CLIENT-SESSION, PLATFORM-KEY, OTHER and the module splits the grant by class, so a granted public key must sit in one of the first three; PLATFORM-KEY (where its private half already is) was chosen. The label is imprecise: the key signs nothing. Adding a fifth class would change the census line's identity sum and the module's two parts, which the order did not ask for.",
+  "notes": "If the CTO wants a public-key class, it is a census-schema change (value-enum proposal under rule 24), not a one-line ruling."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T23:46:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S38",
+  "one_line": "AMENDMENT 21 item 3: tests/render_passrole.py was NOT deleted (tests/derive_protected_functions.py imports block_text and BLOCK_SEP from it); its Deny renderer and --write mode were removed and --check now asserts the current truth, so its last line changed from PASSROLE-RENDER to PASSROLE-CHECK.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_protected_functions.py:32 'import render_passrole as rp' and rp.block_text / rp.BLOCK_SEP at lines 200 and 209; derive_protected_functions.py --from-file tests/protected_functions_listing.json --check still reads in_sync=True ok=True",
+      "org/tier2_senior/0.7.0_AE_CloudOps~E/task_orders/NFRA_CTLPLN.TO-APPLY-3 and TO-APPLY-6 name 'tests/render_passrole.py --check' in their checklists and TO-APPLY-3's session log recorded 'PASSROLE-RENDER applied=0 named=0 wildcard=0 in_sync=True ok=True'",
+      "python tests/render_passrole.py --check -> PASSROLE-CHECK retired_statements_present=none passrole_actions_in_deploy_policy=none passrole_allowed_on_any_role=True passrole_denies=none ok=True"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 21 item 3: if the script exists only to prove the removed Deny, delete it and every reference; otherwise change only the stale assertion to the current truth (PassRole allowed on any role).",
+  "world_is": "The script is not only the Deny's proof (it carries two helpers another script imports), so it stayed. Changing 'only the assertion' was not enough to make --check meaningful: the renderer required DenyEveryIamWrite to exist and wrote the retired Deny back with --write, so that code path was removed too, since leaving it would let a later --write reinstate the retired Deny. Past apply checklists that call --check still run (rc 0) but now see a different last line.",
+  "notes": "Reversible: git history holds the renderer."
+}
+```
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T23:46:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S39",
+  "one_line": "tests/derive_plan_reads.py (no flag) reads census_file_matches=False ok=False at this base: a Dell-placed project, MDPF_DEMQUE, is registered now and was not when tests/plan_reads_census.json was saved (projects 15 saved, 16 derived; roots 29 both); outside AMENDMENT 21, so the file was left as it is.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python tests/derive_plan_reads.py -> 'PLAN-READS-CENSUS roots=29 of 83 terraform roots, projects=16, files_read=359, reads=275, unmapped_blocks=0, census_file_matches=False ok=False'",
+      "build() against the saved file: projects differ by MDPF_DEMQUE only; roots and files_read keys differ in content, the read count is 275 in both",
+      "the six AMENDMENT 21 criteria do not run derive_plan_reads.py; simulate_policy.py reads the saved census file and printed planread_ok=423/423"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 20 item 3: the plan-reads grant covers every read a Dell-placed root's plan makes that the Dell is refused.",
+  "world_is": "The saved plan-reads census is one project behind the registers. Whether MDPF_DEMQUE's roots add a refused read is UNREAD: re-running 'derive_plan_reads.py --write' and '--write-policy' was not done (it would rewrite the census and could add an Allow, outside this amendment).",
+  "notes": "A cell for the file owner: re-derive, then re-run the sixth and eleventh simulation blocks."
+}
+```
+
+## NFRA_CTLPLN-S9101 -- TO-CT-k-2 AMENDMENT 9 step 4 says every one of the six roots must init from the pack; seeking-alpha cannot ini
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9101",
+  "one_line": "TO-CT-k-2 AMENDMENT 9 step 4 says every one of the six roots must init from the pack; seeking-alpha cannot init at all at HEAD, for a reason that is not a provider: 7 module calls pass source_dir, which modules/yang-lambda does not declare.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "readback --root infra/aws/terraform/seeking-alpha --from <pack> --init-only (init -backend=false, pack sole source): 7 x 'Error: Unsupported argument ... An argument named source_dir is not expected here' (module analysis_coordinator ... news_scraper in main.tf); rc=1; output kept at the worktree .scratch/rb/seeking-alpha.txt.",
+      "infra/aws/terraform/modules/yang-lambda/{main,variables,outputs}.tf: zero occurrences of source_dir, identical in the worktree (3c711c1ac9) and the base checkout working tree; market-overview uses the same module and inits.",
+      "Provider leg proven on a stand-in directory holding seeking-alpha's REAL .terraform.lock.hcl and its two providers (aws ~> 5.0, archive 2.7.1): TF-READBACK version=1.15.8 init=ok; the same stand-in with every hash replaced by zeros fails with 'doesn't match any of the checksums', so the lock is enforced."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 9 step 4: for each of the six roots, readback --root <root> --from <pack> with the direct registry excluded: every one must init.",
+  "world_is": "Five of six roots init from the pack with the registry excluded (astn-pipeline, globgrph, market-overview, opal-gateway, investor-reporting/core). seeking-alpha's init stops on a configuration defect before any provider is installed; its provider supply (aws 5.100.0 by zh, archive 2.7.1 by zh) is proven on the stand-in only.",
+  "notes": "For 2.0.0_SA_COO~C: dell2 will see the same Unsupported-argument errors on seeking-alpha whatever the mirror holds; the owner of the seeking-alpha root or of modules/yang-lambda fixes it (outside this order's paths)."
+}
+```
+
+## NFRA_CTLPLN-S9102 -- The tool's readback cannot run without a state backend and a real plan; the order's BOUNDS forbid any plan or 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9102",
+  "one_line": "The tool's readback cannot run without a state backend and a real plan; the order's BOUNDS forbid any plan or backend contact, so I added readback --init-only and ran CTk2-AC13 with it instead of the bare invocation the criterion names.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_terraform_providers.py cmd_readback before this commit: terraform init -input=false WITHOUT -backend=false (core declares backend s3, bucket opal-313476888478-terraform-state), then terraform plan -detailed-exitcode; AMENDMENT 4 item 1 says this needs a Dell's AWS identity and the state backend.",
+      "Task order message: apply nothing; no terraform plan or apply against any backend (init for readback is fine only with the pack as the sole provider source and no backend).",
+      "New flag --init-only: init -backend=false -input=false with TF_DATA_DIR in a scratch directory, TF_PLUGIN_CACHE_DIR dropped, the root's lock file restored byte for byte after init, NO plan; last line TF-READBACK version=<v> init=ok plan_exit=skipped ok=True. Default behaviour (no flag) is unchanged."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTk2-AC13: readback --root infra/aws/terraform/investor-reporting/core --from <pack> expecting ok=True.",
+  "world_is": "The bare invocation would read the S3 state of investor-reporting/core with the laptop's AWS identity and plan against it. It was NOT run. The proof row records the --init-only invocation and says so.",
+  "notes": "For 2.0.0_SA_COO~C: a Dell's own full read-back (init with backend, then plan) is the bare form; the issuer may add --init-only to AC13's invocation if the criterion is meant to be offline."
+}
+```
+
+## NFRA_CTLPLN-S9103 -- A pack that carries aws 5.100.0 as a release ZIP must REPLACE the Dell's mirror, not be merged into it: when t
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9103",
+  "one_line": "A pack that carries aws 5.100.0 as a release ZIP must REPLACE the Dell's mirror, not be merged into it: when the same version also sits there UNPACKED (the earlier kit's form), Terraform takes the unpacked directory and seeking-alpha's lock (no Windows h1) is then refused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured 2026-10-08 on this laptop: a mirror holding aws/5.100.0/windows_amd64/ (unpacked, from the plugin cache) AND terraform-provider-aws_5.100.0_windows_amd64.zip, init on the seeking-alpha stand-in with the real lock: 'Error while installing hashicorp/aws v5.100.0: the local package ... doesn't match any of the checksums previously recorded in the dependency lock file'. The same stand-in against the zip-only pack inits.",
+      "seeking-alpha's lock holds one h1 (not the Windows one) and 15 zh values; the Windows zip's zh (9f8b909d...) is one of them, so only the packed form matches. 75 of 76 lock files on disk (all but seeking-alpha) hold the Windows h1 H3mU..., so the unpacked form serves them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 9 step 3: add the fetched providers to the kit in the same form as AMENDMENT 1's pass (an unpacked filesystem mirror).",
+  "world_is": "The earlier form cannot serve seeking-alpha, or market-overview's and seeking-alpha's archive 2.7.1 (locks without the Windows h1), so the pack carries those three (aws 5.100.0, archive 2.7.1, external 2.4.2) as zips. dell2 holds aws 5.100.0 unpacked from the earlier kit.",
+  "notes": "disarm_owner 2.0.0_SA_COO~C: route the pack so dell2 REPLACES its whole mirror directory with this pack (it is a superset: 7 provider versions, the earlier aws 5.100.0/6.67.0/archive 2.8.1 included), or deletes registry.terraform.io/hashicorp/aws/5.100.0/ before copying."
+}
+```
+
+## NFRA_CTLPLN-S9104 -- required derives 17 roots / 10 locks (the Dell-placed projects), but dell2's census is every lock file in the 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:27:55Z",
+  "id": "NFRA_CTLPLN-S9104",
+  "one_line": "required derives 17 roots / 10 locks (the Dell-placed projects), but dell2's census is every lock file in the tree (40); investor-reporting/core's lock file is gitignored and untracked, so a fresh worktree has none. I added --all-roots and seeded that one lock from the base checkout; the earlier pack the order says to read is not on this box.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "required at worktree HEAD 3c711c1ac9: TF-REQUIRED roots=17 locked=10 no_lock=7 providers=1 distinct_versions=1; required --all-roots: roots=45 locked=38 no_lock=7 (40 lock files read), 5 distinct (provider, version): archive 2.7.1 (2 roots), archive 2.8.0 (3), aws 5.100.0 (40), external 2.4.2 (1), local 2.9.1 (1). The base checkout's disk holds 76 lock files (untracked ones included) with the same 5 pairs.",
+      ".gitignore:208 **/.terraform.lock.hcl ignores investor-reporting/core/.terraform.lock.hcl; the base copy was copied byte for byte into the worktree (ignored, never committed).",
+      "C:/tmp/kit-terraform-pack-20261007 (the AMENDMENT 4 record) does not exist on this box, so the pack was cut afresh to C:/tmp/kit-providers-20261008-k9/pack as a full superset (readback --from needs each root's whole set), not as a --only add-on."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 9 step 1: required over every root at HEAD, denominator 40 as dell2 counted.",
+  "world_is": "40 lock files read with --all-roots, matching dell2's denominator; the default required (AC3) still reads the 17 derived roots and its output file gains hashicorp/local 2.9.1 through the seeded core lock.",
+  "notes": "Informational."
+}
+```
+
+## NFRA_CTLPLN-S9105 -- I cannot commit the tool, test and required-json edits of AMENDMENT 9: the owned-paths gate admits a worker on
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~K9",
+  "surfaced_at": "2026-10-08T23:36:58Z",
+  "id": "NFRA_CTLPLN-S9105",
+  "one_line": "I cannot commit the tool, test and required-json edits of AMENDMENT 9: the owned-paths gate admits a worker only as 0.9.0_WK_<CODE>~<digits> with a non-terminal order issued_to that serial, and my serial 0.9.0_WK_NFRA_CTLPLN~K9 is neither numeric nor the order's issued_to (0.9.0_WK_NFRA_CTLPLN~13), so org/devices/** (lane NFRA_CTLPLN_FAST_C) refuses me.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: 'VIOLATION: org/devices/kit_terraform_providers.py -- lane=NFRA_CTLPLN_FAST_C ... agent=0.9.0_WK_NFRA_CTLPLN~K9 not in permitted_agents' (also org/devices/kit_terraform_required.json and org/devices/test_kit_terraform_providers.py).",
+      ".tools/owned-paths-validate.py:123 _WORKER_SERIAL_RE = ^0\\.9\\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$ (K9 does not match) and :243-244 (a worker's grant is the <paths> of the NON-TERMINAL order whose <issued_to> equals the serial; the order's <issued_to> is 0.9.0_WK_NFRA_CTLPLN~13).",
+      "The same slot form also made the row gate read K9 as an unregistered fabric coordinate, so these rows mint as the bare NFRA_CTLPLN-S9101..S9105 (range chosen to avoid the COO's next S36...), not NFRA_CTLPLN-K9-S<k> as the spawn message asked."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spawn message: write only the order's <paths> block, commit with safe-commit under author 0.9.0_WK_NFRA_CTLPLN~K9. Worker RULING 1: the <paths> block IS the grant.",
+  "world_is": "The edits to org/devices/kit_terraform_providers.py, org/devices/test_kit_terraform_providers.py and org/devices/kit_terraform_required.json are in the worktree C:/tmp/wk-ctlpln-k9 (branch wk-NFRA_CTLPLN-K9) UNCOMMITTED; the deliverables, the surprise rows and the proof are committed (lane ANY). No override was used.",
+  "notes": "For 2.0.0_SA_COO~C: commit those three paths from the worktree under your own author (or re-seat the order to a numeric slot and re-spawn); the lane gate will admit either."
+}
+```
+
+## NFRA_CTLPLN-S36 -- W36-S2 handed to NFRA_TRNSPT, the owner of the transcripts-pull package
+
+```json
+{
+  "id": "NFRA_CTLPLN-S36",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~R",
+  "surfaced_at": "2026-10-09T00:10:32Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-W36-S2: handed to NFRA_TRNSPT (owner of infra/aws/lambda/transcripts-pull/) as a row file from the laptop, on 1.0.0_SA_CTO msg 107481; COMM_ASSIST carries it by reference.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_TRNSPT/surprise-channel/investigations/ROWS_FROM_LAPTOP_COMM_ASSIST_TRANSCRIPTS_PULL_LINE_ENDINGS_20261008.md (merged 15afb82392)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W36-S2's disarm owner is 2.0.0_SA_COO~R; the surface is not COMM's.",
+  "world_is": "The finding now sits on NFRA_TRNSPT's channel for its owner (2.0.0_SA_COO~T2, dell2) to mint; W36-S2 stays ARMED in its own bytes (append-only).",
+  "notes": "Proposed disposition for the CVO: W36-S2 resolved by handover. COMM_ASSIST-S1's note names this row S35 in error; S35 was already minted by 2.0.0_SA_COO~C."
+}
+```
+
+```json
+{
+  "id": "NFRA_CTLPLN-S37",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T00:10:15Z",
+  "one_line": "TO-DELL-1 carries two <status> lines, 'pending' then 'complete', and the row gate reads the first, so a finished order holds the slug; separately, three APPLY ordinals (11, 19, 20) each name two different orders.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps~RV/task_orders/NFRA_CTLPLN.TO-DELL-1.dell-identity-apply-site-z.md:7-8 '<status>pending</status>' then '<status>complete</status>'",
+      "safe-commit refusal 2026-10-09 ~00:0xZ on this seat's remediation rows: '2 of 68 task order(s) under NFRA_CTLPLN are NOT terminal at HEAD: ... TO-APPLY-20.dell2-f1-shell-window-reopen-st26-ledger-laptop.md [pending], ... TO-DELL-1.dell-identity-apply-site-z.md [pending]'",
+      "org/tier2_senior/0.7.0_AE_CloudOps/task_orders/: NFRA_CTLPLN.TO-APPLY-20.teams-agent-r7-code-deploy-laptop.md :3 <id>NFRA_CTLPLN.TO-APPLY-20.teams-agent-r7-code-deploy-laptop</id> :7 complete; NFRA_CTLPLN.TO-APPLY-20.dell2-f1-shell-window-reopen-st26-ledger-laptop.md :3 <id>NFRA_CTLPLN.TO-APPLY-20.dell2-f1-shell-window-reopen-st26-ledger-laptop</id> :7 pending (issued 51ca93c7b7). Neither file has a <to_id> element.",
+      "same pattern at TO-APPLY-11 (dell-identity-plan-1 and teams-agent-inbound-deploy) and TO-APPLY-19 (dell-identity-step-f and teams-agent-r6-code-deploy)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A task order carries one <status>; an APPLY ordinal names one order, so 'TO-APPLY-20' in a message or record resolves to one file.",
+  "world_is": "TO-DELL-1 has two status lines; the gate takes the first and reads a completed order as pending. The full <id>s of the paired APPLY orders differ, so the gate and the files are unambiguous, but the short form 'TO-APPLY-<n>' used in messages and grades is ambiguous for n = 11, 19, 20: INBOUND's round-7 deploy (complete) and the dell2 shell-window reopen (pending) are both 'TO-APPLY-20'.",
+  "notes": "Fix for the first: the issuer 2.0.0_SA_COO~Z deletes the stale '<status>pending</status>' line. For the second: the APPLY issuers (2.0.0_SA_COO~C, 2.0.0_SA_COO~R) draw ordinals from one counter, or cite the full id."
+}
+```

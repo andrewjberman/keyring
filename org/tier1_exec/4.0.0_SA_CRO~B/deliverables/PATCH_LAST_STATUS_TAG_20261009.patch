@@ -1,0 +1,164 @@
+diff --git a/.tools/owned-paths-validate.py b/.tools/owned-paths-validate.py
+index 226f794d91..c5b65e060e 100644
+--- a/.tools/owned-paths-validate.py
++++ b/.tools/owned-paths-validate.py
+@@ -209,7 +209,8 @@ def _worker_orders(root: str, code: str):
+         if show.returncode != 0:
+             continue   # a task order staged but absent at HEAD grants nothing yet
+         text = show.stdout
+-        sm = _TO_STATUS_RE.search(text)
++        _sms = list(_TO_STATUS_RE.finditer(text))   # the LAST tag governs (msg 107528)
++        sm = _sms[-1] if _sms else None
+         if sm and sm.group(1).lower() in _TERMINAL_TO_WORDS:
+             continue
+         im = _TO_ISSUED_TO_RE.search(text)
+diff --git a/.tools/surprise-row-gate.py b/.tools/surprise-row-gate.py
+index 1885586396..0623352b6b 100644
+--- a/.tools/surprise-row-gate.py
++++ b/.tools/surprise-row-gate.py
+@@ -153,6 +153,16 @@ OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
+ # DUPLICATED IN .tools/owned-paths-validate.py AS _TO_STATUS_RE -- two carriers of one pattern,
+ # fixed identically in the same commit. Naming it because the next edit must move both.
+ TO_STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
++# THE LAST TAG GOVERNS (1.0.0_SA_CTO gate-owner ruling, msg 107528, 2026-10-09): an order's status is its LAST
++# line-anchored <status> tag. A stale earlier duplicate (pending above complete) must not read as the status.
++
++
++def _to_status_match(text):
++    """The LAST line-anchored <status> match in `text`, or None (ruling msg 107528)."""
++    found = list(TO_STATUS_RE.finditer(text or ""))
++    return found[-1] if found else None
++
++
+ # `parked` (1.0.0_SA_CTO 2026-09-30, on 3.0.0_SA_CVO's MDPF_SECCLASS rounds 4-5 review Q1): a PARKED order sits OUTSIDE
+ # the current round's rectangle by the CTO's ruling (the relaunch brief: nothing waits on a dead seat; the order carries its
+ # owner and the condition that un-parks it). It is therefore not an open order of the round, and it must not pin every later
+@@ -264,7 +274,7 @@ def _seats_with_open_orders(root, code):
+         st, text = _blob(root, "HEAD", p)
+         if st != "OK":
+             continue
+-        m = TO_STATUS_RE.search(text)
++        m = _to_status_match(text)
+         word = m.group(1).lower() if m else ""
+         if word in TERMINAL_TO_WORDS:
+             continue
+@@ -1303,7 +1313,7 @@ def _open_tos_census(root, code, merging=False, round_n=None):
+             rm = TO_ROUND_RE.search(text)
+             if rm and int(rm.group(1)) != round_n:
+                 continue
+-        m = TO_STATUS_RE.search(text)
++        m = _to_status_match(text)
+         word = m.group(1).lower() if m else "<no status tag>"
+         if word not in TERMINAL_TO_WORDS:
+             label = "%s [%s]" % (os.path.basename(p), word)
+@@ -3560,6 +3570,11 @@ def _self_test(root):
+         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
+          lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
+          and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),
++        # THE LAST TAG GOVERNS (1.0.0_SA_CTO ruling msg 107528): a stale earlier duplicate is not the status.
++        ("last-tag: 'pending' then 'complete' reads complete; 'complete' then 'pending' reads pending; none reads None",
++         lambda: _to_status_match("<status>pending</status>\n<status>complete</status>\n").group(1) == "complete"
++         and _to_status_match("<status>complete</status>\n<status>pending</status>\n").group(1) == "pending"
++         and _to_status_match("no tag here, only `<status>` in prose\n") is None),
+         # PROOF TERMINALITY (1.0.0_SA_CTO 2026-09-15; spine :436, :487-488). RED-FIRST: every arm below FAILS on the
+         # pre-change module, which has neither _proof_terminal nor _proof_verdict. The LIVE arms read real bytes.
+         ("proof terminality LIVE: LGIC_NAMING LN-e-3-r2 (VALID proof, its FAIL the round's measurement) reads terminal by proof",
+diff --git a/.tools/to-pipeline-gate.py b/.tools/to-pipeline-gate.py
+index 846a228b87..980013e5e7 100644
+--- a/.tools/to-pipeline-gate.py
++++ b/.tools/to-pipeline-gate.py
+@@ -1077,6 +1077,18 @@ def _self_test():
+          lambda: _risk_violations(tree, "<risk>SERVED</risk>\n" + v3) == []),
+         ("risk: a flat-root order is NOT graded",
+          lambda: _risk_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v3) == []),
++        # THE LAST TAG GOVERNS (1.0.0_SA_CTO ruling msg 107528): the complete-flip limb's read.
++        ("last-tag: deleting a stale 'pending' above 'complete' is NOT a flip",
++         lambda: _is_terminal_flip("<status>pending</status>\n<status>complete</status>\n",
++                                   "<status>complete</status>\n") is None),
++        ("last-tag: pending -> complete IS a flip",
++         lambda: _is_terminal_flip("<status>pending</status>\n", "<status>complete</status>\n") == "complete"),
++        ("last-tag: 'complete' then 'pending' reads pending (not terminal), whatever the first tag says",
++         lambda: _is_terminal_flip(None, "<status>complete</status>\n<status>pending</status>\n") is None),
++        ("last-tag: 'pending' then 'complete' on a new file reads complete (graded)",
++         lambda: _is_terminal_flip(None, "<status>pending</status>\n<status>complete</status>\n") == "complete"),
++        ("last-tag: a re-edit that keeps the same tags is still graded (only a REMOVED duplicate is exempt)",
++         lambda: _is_terminal_flip("<status>complete</status>\n", "<status>complete</status>\nmore\n") == "complete"),
+     ]
+     failed = 0
+     for name, fn in arms:
+@@ -2914,7 +2926,44 @@ def check_file(root, rel):
+ 
+ 
+ STATUS_RE = re.compile(r"<status>\s*([A-Za-z_-]+)", re.I)
++STATUS_LINE_RE = re.compile(r"^[ \t]*<status>\s*([A-Za-z_-]+)", re.I | re.M)
+ DONE_WORDS = ("complete", "completed", "closed", "done")
++# THE LAST TAG GOVERNS (1.0.0_SA_CTO gate-owner ruling, msg 107528, 2026-10-09): an order's status is its LAST
++# line-anchored <status> tag. A stale earlier duplicate (pending above complete) must not read as the status.
++# A change that only REMOVES an earlier duplicate while the last tag is unchanged is NOT a flip.
++
++
++def _last_status(text):
++    """(word or None, count of line-anchored tags). The LAST line-anchored tag; with none, the old first-match read."""
++    found = list(STATUS_LINE_RE.finditer(text or ""))
++    if found:
++        return found[-1].group(1).lower(), len(found)
++    m = STATUS_RE.search(text or "")
++    return (m.group(1).lower() if m else None), 0
++
++
++def _is_terminal_flip(head_text, staged_text):
++    """(terminal word or None). None = not a flip this limb grades. PURE.
++
++    A staged order whose last tag is terminal is graded, EXCEPT when HEAD's last tag is the same word and the change
++    removed one or more earlier tags (a stale duplicate deleted; ruling msg 107528)."""
++    word, n_staged = _last_status(staged_text)
++    if word not in DONE_WORDS:
++        return None
++    if head_text is not None:
++        head_word, n_head = _last_status(head_text)
++        if head_word == word and n_staged < n_head:
++            return None
++    return word
++
++
++def _head_blob(root, rel):
++    """The HEAD content of rel, or None (a new file, or unreadable)."""
++    try:
++        out = subprocess.run(["git", "show", "HEAD:" + rel], cwd=root, capture_output=True, timeout=30)
++    except Exception:  # noqa: BLE001
++        return None
++    return out.stdout.decode("utf-8", errors="replace") if out.returncode == 0 else None
+ 
+ 
+ def _staged_blob(root, rel):
+@@ -2995,9 +3044,9 @@ def check_complete_flip(root, rel):
+     staged = _staged_blob(root, rel)
+     if staged is None:
+         return []  # not staged (or unreadable as a blob) -- other arms own that
+-    m = STATUS_RE.search(staged)
+-    if not m or m.group(1).lower() not in DONE_WORDS:
+-        return []  # not a flip to a terminal state
++    flip_word = _is_terminal_flip(_head_blob(root, rel), staged)
++    if flip_word is None:
++        return []  # not a flip to a terminal state (or only a stale earlier duplicate removed; ruling msg 107528)
+ 
+     import json
+     code, rel_json, err = _project_row_rel(root, rel)
+@@ -3029,7 +3078,7 @@ def check_complete_flip(root, rel):
+     if inst is None:
+         return ["%s: flips to '%s' on PIPELINE-REGISTERED project %s, and NO proof-of-spec "
+                 "instance was found beside it. Layer 1: no VALID instance, no complete flip."
+-                % (rel, m.group(1), cand)]
++                % (rel, flip_word, cand)]
+     chk = os.path.join(root, ".tools", "proof-of-spec-check.py")
+     if not os.path.isfile(chk):
+         return ["%s: proof-of-spec-check.py is MISSING -- fail-closed rather than pass a flip "
+@@ -3049,7 +3098,7 @@ def check_complete_flip(root, rel):
+         head = (r.stdout or r.stderr or "").strip().splitlines()
+         why = head[-1][:160] if head else "rc=%d" % r.returncode
+         out = ["%s: flips to '%s' but its instance is NOT VALID (rc=%d) -- %s"
+-               % (rel, m.group(1), r.returncode, why)]
++               % (rel, flip_word, r.returncode, why)]
+         # NAME WHAT REFUSED, not only the verdict line: the verdict reads "INVALID (rc=1)" for every cause, so a seat
+         # reading this refusal could not tell a binding refusal from any other (FE-s-37).
+         viol = [ln.strip()[len("VIOLATION: "):] for ln in (r.stdout or "").splitlines()

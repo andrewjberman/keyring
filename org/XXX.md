@@ -60,10 +60,11 @@ CODEX SEATS: steps A and C are the Claude harness path. Follow `org/mcp/CODEX_IN
 (`codex-agent-heartbeat.py`, `codex-inbox-monitor.py`). Never run `inbox-watch.sh ... stream`, `check-inbox.sh` or
 `agent-poller.py` on the Codex path (they CONSUME inbox files). At every active turn, sweep your suffixed serial's
 unread root first; read the exact file -> ACK -> act -> move it to `read/`. Never infer READ from a nudge or a moved
-file. SHARED-BRANCH LAW (no hook carries it on Codex): `CLOUD`/`DEV`/`PROD`/`main` are pushed ONLY by `0.0.0_AB_MSTR`
-or `0.0.0_AB_MSTR~Z`, only on Andrew's word while he is at the terminal (LD-0367/0368; LD-0522); every other seat
-commits and never pushes; a report states push state LOCAL with the origin hash from `git ls-remote`; a rejected push
-is not yours to retry. `SITEZ` is retired; both devices commit to `CLOUD` (LD-0613).
+file. SHARED-BRANCH LAW (no hook carries it on Codex): `CLOUD`, every `box/<box>` and `DEV`/`PROD`/`main` are pushed
+ONLY by an MSTR (`0.0.0_AB_MSTR` or a box's MSTR lane) on Andrew's word while he is at the terminal, or by that box's
+scheduled `box-sync` task (LD-0367/0368; LD-0522; Andrew-direct 2026-10-08); every other seat commits to its box's
+`box/<box>` and never pushes; a report states push state LOCAL with the origin hash from `git ls-remote`; a rejected
+push is not yours to retry. `CLOUD` has ONE writer, the integrator `0.0.0_AB_MSTR` (`.tools/box-sync.sh integrate`); `SITEZ` is retired.
 
 ### A. Register -- your FULL serial, including any `~lane` suffix
 ```python

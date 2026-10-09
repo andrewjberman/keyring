@@ -22056,3 +22056,198 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "1 of 3 firms reads READY, and the two that do not are a BUILD condition the release SURFACED rather than caused -- the new accounting is what makes a dropped-entry build visible at all, and its fail-safe keeps the previous directory served. The criterion also cannot be met as written for a lagging firm, because the key is the manifest's own as_of: cottonwood's manifest for a 2026-10-08 fire landed under _refresh/2026-10-07/. TWO DEFECTS IN THIS SEAT'S OWN SCRIPTS were found by running them and fixed in-session before the recorded result, and are named here so the result is not read as cleaner than its instrument: (1) the arm-(a) reader compared reason_code to 'READY' when READY is the STATE and reason_code is the accounting verdict beside it, and it looked only under the event-date key, so it first scored a genuinely READY firm as not-ready and a written manifest as NoSuchKey; (2) the arm-(c) script computed no age at all and could therefore only ever answer NOT_DRIVABLE -- a verdict that would have looked like a measurement. Nothing here asks for a remedy from this seat: the build condition is the owner's call at 2.0.0_SA_COO~P2, and the criterion wording is the packet's."
 }
 ```
+
+## IRPT_BCKEND-D2-W187-S1 -- IB-pr-379 diagnosis: both dropped entries are SOURCE_REMOVAL; the disappearance rule needs a ruling before 2026-10-12
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W187-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~187",
+  "surfaced_at": "2026-10-09T00:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Both dropped directory entries (inflection 1, cottonwood 1) are SOURCE_REMOVAL: the build is right and the disappearance rule fails a legitimate vendor-side removal, so IB-pr-379 stops at the diagnosis and the rule needs a ruling before inflection and cottonwood go OVER_AGE on 2026-10-12.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule ruling on refresh.py compute_delta/refresh_firm disappearance handling, then 2.0.0_SA_COO~P2 recuts the fix cell) before 2026-10-12, when the served cottonwood directory (as_of 2026-10-07) passes MAX_AGE_TRADING_DAYS=2; inflection follows on 2026-10-13",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_BCKEND~187/IB91-1_dropped_entry_diagnosis.json (this branch): disappeared ids, per-firm evidence, over-age computation",
+      "inflection: household cli_eee3d5ecc6dda8132ba25158 is in silver/api_dims household_rep_mapping and accounts_v2 at snapshot 2026-10-05 (321 households) and absent from both at 2026-10-06 (320); its one account is still in accounts_v2, now under the pre-existing household cli_7f8b2aacad67b512d1e05a29 (2 accounts at 10-05, 3 at 10-06). The vendor merged the household away.",
+      "cottonwood: account-only entry cli_6be3d8625139a8d2613ab8af (account acc_10e3e4477b42c76fe14e437e, 2 rows, market value 0.0) is in fact_allocations at date=2026-10-05 and absent at 2026-10-06 and 2026-10-07; its account numbers appear nowhere in the 2026-10-07 partition (not re-keyed).",
+      "over-age: expiry.age_in_trading_days vs MAX_AGE_TRADING_DAYS=2, served as_of read from latest.json: cottonwood 2026-10-07 is age 3 on 2026-10-12; inflection 2026-10-08 is age 3 on 2026-10-13; calendar source read NYSE/hardcoded-fallback-2010-2027",
+      "refresh.py compute_delta (line 387) keys on ids.client_id or ids.relationship_id and refresh_firm (~line 966) turns any non-empty disappeared set into REFRESH_FAILED; the module docstring states the intent (a terminated client is a change of marking, never a deletion), which a vendor that stops emitting a client is outside of"
+    ]
+  },
+  "spec_asserts": "Task order IB-pr-379: a client the previous build carried and the new one lacks is a BUILD_BUG or KEY_CHANGE fixable in infra/aws/lambda/investor-reporting/directory/; SOURCE_REMOVAL means the build is right and the rule needs a ruling.",
+  "world_is": "Both firms measure SOURCE_REMOVAL, 1 entry each, first absent from the source on 2026-10-06. Nothing in directory/ is wrong, so no fix, test, pin, build or packet was made, and the disappearance rule is unchanged. Until the rule is ruled, every future inflection and cottonwood refresh returns REFRESH_FAILED on the same entries (they are in the previous READY build forever), so neither directory can ever advance and both go OVER_AGE. The decisions are the CTO's: whether a source-removed client leaves the next directory (a delta, recorded), is carried forward as TERMINATED/UNKNOWN (the constraint that terminated clients stay visible), or is handled by an explicit successor map for the inflection household merge. Criteria IB91-1-AC2 and AC3 cannot be met without that choice and are left FAIL; IB91-1-AC1 PASS."
+}
+```
+
+## IRPT_BCKEND-D2-S14 -- a --no-paginate route read-back answered [] for a route that was live, and the deploy recorder left deployed_code_sha256 stale for the second release running
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T00:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The IB-pr-378 route read-back run with --no-paginate returned [] on a route that had just been created successfully, because the route sits beyond page 1 of 116 -- an empty page that, read as absence, would have graded a good apply as failed and could have driven Branch B's route removal and function rollback; separately, record-terraform-deploy.sh left deployed_code_sha256 at the PRE-APPLY value for the second consecutive release, so that is its standing behaviour rather than a one-off.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~00:0xZ: terraform reported 'aws_apigatewayv2_route.irpt[\"POST /api/scoped/investor-reporting/custody-report\"]: Creation complete after 0s [id=jtwlf6l]' and 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed'; the re-plan of the same target then read 'No changes'",
+      "the SAME question asked with `aws apigatewayv2 get-routes --api-id 7k3ed8px20 --no-paginate --query \"Items[?RouteKey=='POST /api/scoped/investor-reporting/custody-report']...\"` returned [] -- an empty JSON array, no error, rc=0",
+      "the same read WITHOUT --no-paginate, counted client-side with the denominator printed: 116 routes on api 7k3ed8px20, exactly 1 exact match -- RouteId jtwlf6l, Target integrations/61aupci, AuthorizationType CUSTOM, AuthorizerId naqxlm. So the route was live the whole time and the [] was the instrument",
+      "CLAUDE.md rule 22a already names this class ('paginated list-* + --query length() returns the PAGE count and --no-paginate is the hazard'); this row records it FIRING on a route read-back where the TO's Branch B makes the wrong verdict destructive: 'If Part B fails: remove the route first, then roll the function back'",
+      "recorder repeat: after record-terraform-deploy.sh ran at 6d3e35294b, lambda-source-map.json's irpt-export-render row still carried deployed_code_sha256 rNjtTwcm.. (the PRE-APPLY value) while artifact_sha256 and the live function were 7T29wPhz..; corrected with record-deploy-scope.py --code-sha256. The identical gap was measured and corrected on IB-pr-377 for irpt-directory-refresh and irpt-directory-search hours earlier",
+      "a third instrument note, same release: planning the route needed MSYS_NO_PATHCONV=1 for the slashed -target, which made terraform save the planfile to a literal /tmp (C:\tmp) instead of the translated temp dir; safe-apply's naming-plan-gate then could not read it and FAILED CLOSED before the apply -- nothing was applied on that attempt, which is the gate behaving correctly"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-378 step 6: 'Read the route back with `get-routes` filtered to that key', with Branch B: 'If Part B fails: remove the route first, then roll the function back only if the CTO half's Branch B requires it.'",
+  "world_is": "A `get-routes` read filtered to one key is NOT a sound oracle for route existence when --no-paginate is present: on this API the answer is on page 2 of 116 routes, so the filtered read answers [] for a route that exists. ABSENT and BEYOND-PAGE-1 are byte-identical here, and the order's Branch B turns that false absence into two destructive acts. The verdict recorded for AC2 comes from the auto-paginated read with its denominator printed, and the check script the issuer wrote does not pass --no-paginate, so the graded criterion was never exposed to this. Nothing is asked of this seat beyond the record: the recorder's deployed_code_sha256 behaviour is the CI tool's owner's call, and the read-back wording is the order's."
+}
+```
+
+## IRPT_BCKEND-D2-S15 -- Resolves D2-S14: the route was read correctly; the issuer's route checks read every page
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S15",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T00:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S14: the applier did not act on the empty --no-paginate page. It re-read all 116 routes without --no-paginate, counted client-side and found exactly 1 match (jtwlf6l, CUSTOM authorizer), so no Branch B fired. It also corrected the recorder's stale deployed_code_sha256 to 7T29wPhz. The issuer re-ran the r90 checks at box/dell2 HEAD: IB90-1-AC1 PASS (live == built 7T29wPhz, census 0, replan 0, replay identical) and IB90-1-AC2 PASS (route live after the function, replan 0, ledger closed). The class is already law (CLAUDE.md 22a: --no-paginate is the hazard). From round 92 on, every route read-back in a ~P order reads all pages and prints the denominator.",
+  "one_line": "IB-pr-378 is graded on a full-page route read; the empty page drove no rollback.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p90_cells.py . IB90-1-AC1 -> IB90-1-AC1 PASS; . IB90-1-AC2 -> IB90-1-AC2 PASS (issuer, 2026-10-09 ~00:2xZ)",
+      "row D2-S14 evidence: 116 routes read, 1 exact match, RouteId jtwlf6l"
+    ]
+  },
+  "spec_asserts": "A route read-back is a sound oracle for route existence.",
+  "world_is": "It is when every page is read, with the denominator printed. That is how this one was graded."
+}
+```
+
+## IRPT_BCKEND-D2-S16 -- irpt-ycharts-generate release 4 rolled back the same session: its one changed member cannot import in the package, and the offline suites cannot see it because they resolve a same-name composition module
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S16",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-09T00:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-ycharts-generate release 4 (E11) landed correctly and was ROLLED BACK the same session because its one changed member cannot import in the deployed package: custody_submission.py does `from composition import CUSTODY_POLICY_REVISION`, and that name is defined only in investor-reporting/reports/composition.py while the function packages the GENERATE tree's composition.py -- a same-name module shadow that the E11 offline suites cannot see, because on the test sys.path `composition` resolves to the module that does carry it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-09 ~00:2xZ on dell2, release-4 bytes live: aws lambda invoke irpt-ycharts-generate {\"irpt_import_census\":true} -> {\"modules\": 62, \"failed\": {\"custody_submission\": \"ImportError: cannot import name 'CUSTODY_POLICY_REVISION' from 'composition' (/var/task/composition.py)\"}}",
+      "POSITIVE CONTROL, same invoke after the rollback: {\"modules\": 62, \"failed\": {}} -- the census reads clean on the pre-release bytes, so the failure was introduced by this release and is not an instrument artifact",
+      "the landing itself was correct and is not in question: plan 0/1/0 changing only s3_object_version and source_code_hash, applied from the committed planfile 43e2dfdb10, live CodeSha256 emzWWzrR0TUf7sHDbEeDeedc1EnTeaXAMl5kSHYLU7E= == the signed built sha, targeted re-plan 'No changes'",
+      "DEFINITION DENOMINATOR: comp-find '^CUSTODY_POLICY_REVISION\\s*=' over 68341 files scanned -> exactly 1 definition, infra/aws/lambda/investor-reporting/reports/composition.py:19 (= \"irpt-custody-x10-v1\")",
+      "USE SITES: comp-find 'CUSTODY_POLICY_REVISION' over the ycharts/generate tree -> 8 hits, all imports or uses, 0 definitions; custody_submission.py:15 'from composition import CUSTODY_POLICY_REVISION, build_retained_repositories', used at :80 and :81",
+      "the offline suites the order names DID pass against the same source: pytest test_custody_submission_revision.py -> 3 passed; the three custody suites -> 66 passed, 2 skipped. test_custody_submission_revision.py:16 itself does 'from composition import CUSTODY_POLICY_REVISION', so on the test sys.path that import RESOLVES -- to a different file of the same module name than the one the zip packages",
+      "ROLLED BACK the same session per the order's Branch B: copy-object re-promoted the step-0 version NqbpRnnx5METt43XaI_4nmk5fZDRTQpk (new current version nA7hze1zlQfF55Q05.Vxr4E3v8kCE7HW, CopySourceVersionId = the step-0 version), then a targeted apply; live now reads Un0wVZqjqpwKhpYyFeBRW3fVFddrlHR0BtHjYuP5eNY=, State Active, LastUpdateStatus Successful",
+      "Y70-1-AC1 FAIL (reads not all PASS -- the correct grade), Y70-1-AC2 PASS (test filer key NOT FOUND on a consistent get-item; admit_keys empty so the laptop limb is skipped by the check's own logic), Y70-1-AC3 PASS (branch B coherent); ledger irpt-ycg-release4-20261008 CLOSED, all 4 legs proven"
+    ]
+  },
+  "spec_asserts": "TO IRPT_BCKEND.TO-APPLY-Y70 objective: 'Release 4 of irpt-ycharts-generate on dell2: E11 (one changed member, custody_submission.py), built emzWWzrR...', with step 4 after-read 2 requiring the import census to read 'failed: {}' and step 5 requiring the offline suites to pass.",
+  "world_is": "Both halves of the order's own evidence set were satisfied EXCEPT the import census, and the two disagree by construction: the suites exercise the module against a sys.path where `composition` carries CUSTODY_POLICY_REVISION, and the package ships a composition.py that does not. A green pytest run is therefore NOT evidence that a packaged module imports, whenever the package and the test path can resolve the same module name to different files -- and this function packages 62 modules, so the shadow is cheap to create and invisible until an in-package census runs. The remedy is a code decision this seat does not own: either custody_submission.py stops importing the name from `composition` (take it from where it is defined, or stage reports/composition.py as a packaged member the way trading_calendar.py is staged elsewhere), or the generate tree's composition.py defines it. Reads 3-7 were never reached, so no test filer, no on-behalf upload, no upload records, no resolve_upload message and no YCharts securities_info resolution were made; nothing is stranded and no S3 version was deleted. ONE RESIDUE IS LEFT DELIBERATELY VISIBLE: build-and-upload moved the source map's artifact_sha256 to emzWWzrR.. at step 2 and the deploy recorder was not run, so the map now disagrees with the live Un0wVZqj.. That is true and is left standing because the next act on this function is the fix, not a re-record."
+}
+```
+
+## IRPT_BCKEND-D2-W188-S1 -- The IB-pr-380 rule is correct in the refresh Lambda but cannot operate in production from directory/ alone: the artifact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W188-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~188",
+  "surfaced_at": "2026-10-09T00:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule the runner cell) then 2.0.0_SA_COO~P2 (cut it): data/assets/scripts/gold/investor_reporting/directory_runner.py must land source_client_ids in the directory artifact and carry the previous build's source-removed entries into the landed directory.json, before cottonwood goes OVER_AGE on 2026-10-12",
+  "one_line": "The IB-pr-380 rule is correct in the refresh Lambda but cannot operate in production from directory/ alone: the artifact states no source snapshot (fail-closed REFRESH_FAILED stays) and the Lambda cannot write the carried TERMINATED entries into the served directory.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "directory_runner.py run_firm builds the payload (~line 930): top-level keys are schema, firm_id_opaque, directory_revision, as_of_business_date, source_completion_date, source_revision, census (counts), entries ... none carries the source's client keys; refresh.py SsmBuildDispatcher.__call__ can only read what the artifact holds.",
+      "infra/aws/terraform/investor-reporting/directory/schedule.tf: the refresh role has s3:GetObject on the directory prefix and s3:PutObject ONLY on _refresh/* (refresh_manifest_arns, lines ~212-233), so the Lambda cannot rewrite directory.json; the search readers read latest.json -> directory.json.",
+      "Consequence at 8953eccfca: refresh_firm carries the entry in the build dict it was handed (tests and real-case replay show READY + terminated_count 1 at both firms, deliverables/0.9.0_WK_IRPT_BCKEND~188/IB92-1_terminated_replay.json), but with the landed artifact as it is today the field source_client_ids is absent, so every disappeared entry stays REFRESH_FAILED, and a READY build would not make the entry visible to readers because the carried copy is never written to S3."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-380 and CTO ruling msg 1959: implement the rule in infra/aws/lambda/investor-reporting/directory/; the build goes READY and readers still see the entry marked TERMINATED; the after-read is a driven refresh READY at all 3 firms with terminated_count 1 at inflection and cottonwood.",
+  "world_is": "Built to the paths granted (directory/ and the source map), the rule is complete and proven offline, and it is fail-closed: an artifact that states no source_client_ids changes nothing. The directory_runner (outside this order's paths, minted into the host bundle irpt_runner_bundle_uri) must emit source_client_ids (the keys the source snapshot holds, same key space as ids.client_id/relationship_id) and must carry forward the previous build's source-removed entries as TERMINATED into the landed artifact, or no refresh after this release can go READY at inflection and cottonwood, and no reader sees a carried entry. The packet names this as the precondition of the after-read. This release alone does not change the live outcome."
+}
+```
+
+## IRPT_BCKEND-D2-W188-S2 -- From a fire dated 2026-10-09 the refresh's previous-state read (last_manifest, limit 10 trading days) no longer sees inf
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W188-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~188",
+  "surfaced_at": "2026-10-09T00:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule how the previous-state read must behave when the last accounted-completion manifest is older than the walk window), then 2.0.0_SA_COO~P2 recuts the cell, before the next inflection fire after 2026-10-08",
+  "one_line": "From a fire dated 2026-10-09 the refresh's previous-state read (last_manifest, limit 10 trading days) no longer sees inflection's last READY build (2026-09-25), so previous_entries is None and the disappearance check, and with it the TERMINATED carry-forward, goes dark.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read live with the live zip's own refresh.last_manifest (client = s3, AWS reads): inflection at 2026-10-08 -> manifest 2026-09-25 (directory_key .../2026-09-25/directory.json); at 2026-10-09 -> None. Cottonwood (last READY 2026-10-05) and 49financial are unaffected: 2026-10-09 -> found.",
+      "inflection _refresh/ holds REFRESH_FAILED manifests for every fire from 2026-09-29 to 2026-10-08 and no READY after 2026-09-25 (the manifest list printed from the live bucket this session).",
+      "refresh.py last_manifest: days[-limit:] with limit=10 trading days; 2026-09-25 is the 11th trading day back from 2026-10-09.",
+      "With previous_entries None, compute_delta reports every entry as added and 0 disappeared, so the build goes REFRESH_COMPLETED_WITH_ADDITIONS (294 added) and the dropped household leaves the served directory without being carried."
+    ]
+  },
+  "spec_asserts": "TO IB-pr-380 after-read: a driven refresh READY at all 3 firms with terminated_count 1 at inflection, read at each manifest's own as_of; the fire compares the new build to the last READY build.",
+  "world_is": "The replay was run with fire date 2026-10-08 because that is the last date on which the live code can see inflection's previous READY build. A scheduled fire on or after 2026-10-09 compares against nothing at inflection: READY with a false 294 additions and terminated_count 0, not the specified 1. A driven refresh with event business_date 2026-10-08 would still see it. The window is outside this order's rule and was not widened."
+}
+```
+
+## IRPT_BCKEND-D2-W188-S3 -- DirectoryEntry.schema.json has no home for source_removed_on (termination and the entry are additionalProperties false),
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W188-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~188",
+  "surfaced_at": "2026-10-09T00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "DirectoryEntry.schema.json has no home for source_removed_on (termination and the entry are additionalProperties false), so the marker is written to termination.effective_date plus a capability_facts string.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json: termination.properties = indicator, effective_date; termination.additionalProperties false; the entry root additionalProperties false with ten declared properties.",
+      "refresh.py SOURCE_REMOVED_FACT_PREFIX / carry_forward_terminated at 8953eccfca; test_terminated_carry_forward_carried_entry_stays_schema_valid validates a carried entry against the schema."
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 1959: the carried entry is marked TERMINATED with source_removed_on.",
+  "world_is": "A literal termination.source_removed_on key would make every served carried entry schema-invalid, and the contract is not in this order's paths. The date is therefore effective_date (when the termination took effect) and a capability_facts marker 'source_removed_on=YYYY-MM-DD ...', which the next refresh reads back to keep the first date. A named contract field is a contract change for the CTO and the contract's owner."
+}
+```
