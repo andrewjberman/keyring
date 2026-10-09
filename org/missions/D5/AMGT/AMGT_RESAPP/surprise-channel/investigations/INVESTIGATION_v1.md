@@ -22461,6 +22461,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Resolves AMGT_RESAPP-D1-W315-S1 (landed row not edited). The api folder's two failures are the box's missing pypdf, no row."
+},
+{
+  "id": "AMGT_RESAPP-D1-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~R1",
+  "surfaced_at": "2026-10-09T03:02:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "class": "OBSERVATION",
+  "one_line": "Round 80 left R1's store half uncut (ASML NA's 20-F re-fetch from SEC, its silver row, the re-analysis and the draft rebuild) because it needed Andrew's per-use egress word; that hold lifted mid-round by law edit 4d77a9c3ea (egress open on every channel except Bloomberg).",
+  "spec_asserts": "Decomposition s.88b 'Not cut': R1's store half 'Held for Andrew's per-use word (CLAUDE.md Agent Autonomy)'. Mid-round the decomposition is FROZEN (CLAUDE.md rule 27).",
+  "world_is": "Andrew-direct ~02:4xZ 2026-10-09 'yes' to 'infinite egress on all channels now (aside from BBG which goes through its queue logic)'; CLAUDE.md Agent Autonomy now reads 'Egress is open on every channel, except Bloomberg' (order org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261009_024xZ_LAW_EDIT_CLAUDE_MD_EGRESS_OPEN_EXCEPT_BBG.md, on origin box/sitez 4d77a9c3ea; MSTR~DELL1 msg 1498). The store half needs no Bloomberg call (EDGAR-by-CIK path, round80/GROUP_R1_NOTES.md section 2), so its only blocker is gone; dd-1's code (merged @6e44bfec4a) now cuts a 20-F business section.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "decompositions/AMGT_RESAPP_DECOMP.md s.88b",
+      "MSTR~DELL1 msg 1498",
+      "round80/GROUP_R1_NOTES.md sections 2 and 5"
+    ]
+  },
+  "notes": "Not cut mid-round (the decomposition is frozen). Carried to the round-80 drain-end packet for the CTO's round-80 analysis: the store half is a WORLD cell (SEC GET, silver write under a never-widen pair, model call, draft rebuild), then a FWD-18 walk on ASML NA. The RESERVED card sent to 0.0.0_AB_MSTR~DELL1 at the cut is withdrawn."
 }
 ]
 ```
