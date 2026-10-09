@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-09T11:01:43Z",
- "written_by": "0.0.0_AB_MSTR~DELL1",
+ "written_at": "2026-10-09T11:03:02Z",
+ "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
    "id": "dell1-20261008T175521Z-abbb",
@@ -1088,7 +1088,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T11:03:00Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "DUPLICATE of dell1 row bf6d (same delete); Andrew acting on bf6d settles this row too"
+   }
   },
   {
    "id": "dell1-20261009T110110Z-5f4b",
@@ -1132,7 +1139,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T11:03:01Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "DUPLICATE of dell1 row bf6d (same delete); Andrew acting on bf6d settles this row too"
+   }
   },
   {
    "id": "dell1-20261009T110111Z-69ef",
@@ -1278,7 +1292,14 @@
      ]
     }
    },
-   "closed": null
+   "closed": null,
+   "escalation": {
+    "to": "andrew",
+    "ref": null,
+    "at": "2026-10-09T11:03:02Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "reason": "DUPLICATE of dell1 row 69ef (same delete); Andrew acting on 69ef settles this row too"
+   }
   }
  ]
 }
