@@ -201,3 +201,27 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
   "world_is": "The invocation is environment-sensitive: with FORCE_COLOR set it fails on real passing tests, so a grader running in a coloured shell would read a false BAD for every R3 cell. I did not edit the check (barred by the order) and ran it with FORCE_COLOR unset for the recorded output."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECHIST-D1-W6-S1",
+  "project": "MDPF_SECHIST",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECHIST~6",
+  "surfaced_at": "2026-10-09T14:40:00Z",
+  "one_line": "Three of the five pre-existing offline gold suites in data/etfs/scripts/gold/ do not pass in a dell1 worker worktree at the base (rc=1 before any SH-t-7 edit): two cannot import the lambda-vendored etf_classifications_dynamodb, one reads portal/src files the worktree does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN at the base, from data/etfs/scripts/gold with PYTHONPATH=<worktree>;<worktree>/infra/aws/lambda/v2_portal/_shared: test_etf_positioning_per_fund_asof.py and test_etf_positioning_upgrade_forward.py -> rc=1 ModuleNotFoundError: No module named 'etf_classifications_dynamodb' (etf_positioning_publisher.py:66; the suite header itself says the module is vendored into the lambda package)",
+      "RUN at the base: test_etf_positioning_sector_order_carriers.py -> rc=1, 12 PASS 8 FAIL, each FAIL reading 0 B from portal/src/pages/Positioning/shared/bookSet.ts (the portal submodule is not populated in the worktree)",
+      "RUN after SH-t-7: the five suites' outputs are byte-identical to the base outputs (backfill_rows rc=0, industry_group rc=0 50/50, the other three rc=1 as above)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SH-t7 and its issuer: the existing gold tests in data/etfs/scripts/gold/ pass, and are run to show a security with no listed day reads as today.",
+  "world_is": "Only two of the five pass in this worktree (backfill_rows, industry_group); the other three fail identically before and after the change for environment reasons, so they show nothing about SH-t-7 either way. SH-t-7's own proof of unchanged reading is its named tests plus the byte-identical outputs of the five suites."
+}
+```
