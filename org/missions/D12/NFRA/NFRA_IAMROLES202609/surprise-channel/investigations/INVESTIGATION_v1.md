@@ -1213,3 +1213,88 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+## Z-W13-S1 -- the v-3 candidate role's consumer already raises DirtyRunError on 30 of 30 daily runs
+
+```json
+[
+{
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~13",
+  "surfaced_at": "2026-10-09T09:34:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_IAMROLES202609-Z-W13-S1",
+  "one_line": "smartx-assets-daily-pull (the consumer of the TO-IAM-v-3 candidate role) raises DirtyRunError (feed9 reconciliation, PARTIAL identity table) on every one of the last 30 daily runs, so the bronze delta never reaches its OnSuccess silver converter; the cause is data reconciliation, not IAM.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZI to route to the owner of the smartx-assets-daily-pull pipeline; this worker does not touch it.",
+  "spec_asserts": "A daily-scheduled production Lambda whose role is a v-3 candidate runs clean, so the post-narrowing run can be read as clean-versus-broken.",
+  "world_is": "30 of 30 log streams 2026/09/09..2026/10/08 of /aws/lambda/smartx-assets-daily-pull carry exactly one '[ERROR] DirtyRunError: feed9 reconciliation on <group>: resolver=N != feed5 living=M -- PARTIAL identity table' raised at lambda_function.py line 265, after the Secrets Manager auth path ran. PREDICTION.json therefore reads the outcome as 'same standing signature, zero AccessDenied', not as 'clean run'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events --log-group-name /aws/lambda/smartx-assets-daily-pull --region us-east-1, 30-day window, patterns AccessDenied/ERROR/Traceback/'Task timed out'/DirtyRunError: 30 events, one per stream per day, 0 AccessDenied",
+      "CloudTrail Username=smartx-assets-daily-pull 2026-07-14..2026-10-08: 541 GetSecretValue and 89 PutSecretValue events, so auth ran on those days"
+    ]
+  }
+}
+]
+```
+
+## Z-W13-S2 -- the etfs-canon-fanin target table was deleted 2026-08-07 and the daily Lambda fails on it
+
+```json
+[
+{
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~13",
+  "surfaced_at": "2026-10-09T09:34:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_IAMROLES202609-Z-W13-S2",
+  "one_line": "The DynamoDB table opal-etfs-ownership-daily was deleted on 2026-08-07 and its only writer, the ENABLED daily Lambda etfs-canon-fanin (cron 15:45Z), fails every run with ResourceNotFoundException on BatchWriteItem while infra/aws/terraform/etfs-canon/fanin-lambda.tf still declares the table, the role grant and the schedule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZI to route to the owner of the ETFS_CANON pipeline; this worker does not touch it.",
+  "spec_asserts": "fanin-lambda.tf line 4 states the Lambda is APPLIED + LIVE and its DynamoDB target is written daily (comment and role policy ddb-write-ownership-daily).",
+  "world_is": "aws dynamodb describe-table opal-etfs-ownership-daily returns ResourceNotFoundException; CloudTrail DeleteTable on that table by user/Andrew_Berman_Console at 2026-08-07T13:58:10-04:00; filter-log-events on /aws/lambda/etfs-canon-fanin for the last 3 days returns 7 '[ERROR] ResourceNotFoundException ... BatchWriteItem' events. Candidate etfs-canon-fanin-role / dynamodb:DescribeTable was rejected for v-3 on this ground (a consumer that already fails earlier cannot show an outcome).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb describe-table --table-name opal-etfs-ownership-daily --region us-east-1: rc=254 ResourceNotFoundException",
+      "aws cloudtrail lookup-events ResourceName=opal-etfs-ownership-daily, 89d: 345 events, DeleteTable x1 (user/Andrew_Berman_Console, 2026-08-07T13:58:10-04:00)",
+      "aws logs filter-log-events /aws/lambda/etfs-canon-fanin 3d: 7 ResourceNotFoundException BatchWriteItem events"
+    ]
+  }
+}
+]
+```
+
+## Z-W13-S3 -- the s-8 instrument's negative control reads UNKNOWN on a conditioned role and its WOULD-BREAK counts grants, not callers
+
+```json
+[
+{
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_IAMROLES202609~13",
+  "surfaced_at": "2026-10-09T09:34:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_IAMROLES202609-Z-W13-S3",
+  "one_line": "preflight-blast-radius.py section [2a] NEGATIVE control reads verdict=UNKNOWN on any role carrying a conditioned statement (eval_decision is implicitDeny but missing context s3:prefix turns it UNKNOWN), and its PREDICTION block counts every currently-allowed resource as a 'WOULD BREAK caller path' without joining the usage plane of section [3].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The s-8 instrument's controls discriminate (positive allowed, negative denied) and its PREDICTION line says what would break.",
+  "world_is": "Run for smartx-assets-pull-role: NEGATIVE control (iam:CreateUser) prints verdict=UNKNOWN; the same call by hand returns eval_decision=implicitDeny, verdict=UNKNOWN, missing_context_values=['s3:prefix'] (the role's ListBucket statement carries an s3:prefix condition). The PREDICTION block printed 'WOULD BREAK 5 live-verified caller path(s)' for an action that Access Advisor reads never-used with 0 DescribeSecret events in 1446 CloudTrail events: it counts grants revoked, not callers. PREDICTION.json carries both numbers and states which one predicted_breaks is.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python preflight-blast-radius.py --role smartx-assets-pull-role --remove secretsmanager:DescribeSecret (blob bd7620790c) output sections [2a] and PREDICTION",
+      "bash .tools/comp-iam-usage reach-check smartx-assets-pull-role iam:CreateUser arn:aws:iam::313476888478:user/preflight-negative-control-nonexistent: eval_decision implicitDeny, verdict UNKNOWN, missing_context_values s3:prefix"
+    ]
+  },
+  "notes": "The instrument is run, not edited (order BOUNDS); the reading is carried in PREDICTION.json under predicted_post_state.grants_revoked_meaning."
+}
+]
+```
