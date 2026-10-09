@@ -78,6 +78,13 @@ def read_unresolved(paths):
     return last
 
 
+def blind_log_refusal(absent_keys, reasons, logs):
+    """A problem string when logs were given, keys are absent, and no absent key has a reason line (prefixed or wrong logs)."""
+    if logs and absent_keys and not any(k in reasons for k in absent_keys):
+        return f"blind-logs: {len(absent_keys)} absent keys, 0 reason lines in {len(logs)} log(s) (prefixed or wrong logs?)"
+    return None
+
+
 def grade(planned_n, landed, refused, problems, gone, multi_asset, listing_count, model_rows):
     """The verdict, as a pure function so a test can feed it a run's numbers."""
     return (planned_n > 0 and landed + refused == planned_n and problems == 0 and gone == 0 and multi_asset == 0
@@ -129,6 +136,9 @@ def main():
     absent = [k for k in keys if k not in live]
     refused = sum(1 for k in absent if is_final_refusal(reasons.get(k)))
     transport = sum(1 for k in absent if k in reasons and not is_final_refusal(reasons.get(k)))
+    blind = blind_log_refusal(absent, reasons, logs)
+    if blind:
+        probs.append(blind)
     ok = grade(len(keys), landed, refused, len(probs), gone, ma, lcount, model_rows)
     print(f"AI-LEG-VERIFY act={act} ok={ok} planned={len(keys)} landed={landed} refused_final={refused} "
           f"refused_transport={transport} unresolved={unresolved} problems={len(probs)} "
