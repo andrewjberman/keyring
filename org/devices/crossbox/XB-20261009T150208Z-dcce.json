@@ -10,12 +10,16 @@
  "subject": "AMGT_HARVST: WSJ and Barrons sessions need a hand sign-in on the site Z box (runner sign_in_refused)",
  "body_path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_W1/round77/XB_CALL_SIGNIN_WSJ_BARRONS_SITEZ.md",
  "opened_at": "2026-10-09T15:02:08Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-09T15:07:32Z",
   "bus_message_id": "b3018f67-3564-49ed-8b43-94423115a2b5"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-09T15:42:10Z",
+  "by": "0.0.0_AB_MSTR~Z",
+  "bus_message_id": "b5da9796-78d4-40be-a3c3-d604138fd7ea"
+ },
  "closed": {
   "from_at": null,
   "from_by": null,
