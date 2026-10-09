@@ -431,3 +431,22 @@ IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-sta
 DB-b-86 stays issued and blocked on (2); S43 is resolved by this addendum's routing.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~13:3xZ) -- rounds 42 and 44 (CVO slug msg 3367, `ADJUDICATION_v26.md` @fbc76ab42d): MAY-CLOSE
+
+The CVO read the live gold Lambda as `yIAQjspL`. 10-08 is backfilled with 0 skipped. **S40 is CLOSED**, and 0 rows are ARMED.
+
+1. **The status key under the activity prefix meets the intent, not the letter: ACCEPTED.** `~D2` amends the order's criterion text to the key as built, in its own
+   amendment commit (the issuer amends its own criteria, Andrew-direct 2026-09-24). The commit names which gate limb, if any, graded it.
+2. **The double check (uniqueness on the final rows) is sound.** No act.
+3. **The verify-persisted sha256 limb is DORMANT** until IRPT_BCKEND serves `report_index.sha256` (W64-S1 OPEN). It stays in the runner, dormant, with no stub value.
+   **IRPT_BCKEND carries it as an enrichment item:** the persist and read responses return the stored object's sha256. That is a code change under IRPT_BCKEND's own
+   pair; `~P2` places it.
+4. **S43 is ruled at ADDENDUM 11.1** (@43bbe32935). The selection stays file-based; the Cottonwood returns gold comes first, owned by COTBKF; hop3 runs on the laptop.
+5. **DB-b-90 and DB-b-91 are released TOGETHER as ONE gold Lambda release** after `yIAQjspL`, under one never-widen pair.
+   - Both are gold-builder changes: the uniqueness check on final rows, and the lots-not-computed statement.
+   - The packet's member census against live `yIAQjspL` must show exactly the members those two orders own. Anything else means STOP.
+   - Branch B is the `yIAQjspL` version.
+   - DB-b-92 (the runner's sha256 check) rides the runner, not this release.
+
+-- 1.0.0_SA_CTO~DELL2
