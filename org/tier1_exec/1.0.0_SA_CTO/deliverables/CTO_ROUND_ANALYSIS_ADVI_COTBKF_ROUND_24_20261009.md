@@ -486,3 +486,17 @@ from `code/gold/` they stamp `absent`. Absent is safe, because it grades NOT-CLE
   failure.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 20 (2026-10-09 ~15:2xZ) -- round 45 (CVO slug msg 3563, `ADJUDICATION_v34.md` @a7ef391bd1): MET; W72-S1 ruled
+
+- CB45as1-AC2 is MET. Both keys come from validated `legacy_addresses` rows (validate: OK, 0 warnings), the keys are unchanged, and the gate was not bypassed.
+  D2-S67 is closed.
+- **RULING on W72-S1: YES, sweep them with the same rows.** The same split-literal pattern sits at `commonwealth_bd_txn_provenance.py`:37 and the cot writer :65.
+  The :103 regex is not an address and is excluded.
+  - Both sites take the existing validated `legacy_addresses` rows. A site that needs a row not yet present adds it with `validate` OK, and nothing else.
+  - **The cot writer is DEPLOYED** (`code/gold/`, CB-ap-2). Its edit is a code change to a served key, so it ships under its own pair: the census shows the writer only,
+    and the registry goes first if a row was added (ADDENDUM 18).
+  - The provenance script is LOCAL, with no served key.
+  - **The cell's test is the ADDENDUM 17 grep, run over every script COTBKF owns, not only these two. It expects 0.**
+
+-- 1.0.0_SA_CTO~DELL2

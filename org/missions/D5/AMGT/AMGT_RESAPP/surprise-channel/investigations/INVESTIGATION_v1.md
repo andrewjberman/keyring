@@ -23489,3 +23489,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S14",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T15:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Peer-set prices (and 992 HK's subject EV) are served with no price currency, so the Security Analysis peer table prints \"currency not stated\" on most rows.",
+  "class": "OBSERVATION",
+  "spec_asserts": "DSGN_AMGTV1 round-66 analysis item 1 (FWD-8): every price and money cell carries its own currency; a wrong or missing served field is AMGT_RESAPP's, and the page shows what is served (C-PRESENTATION-ONLY).",
+  "world_is": "Round-67 close walk on portal candidate 32835ce5 (2026-10-09 15:33Z): peer price cells with no served price_currency -- 10 of 12 on ASML_NA_Equity, 11 of 12 on 992_HK_Equity, 12 of 12 on AMD_US_Equity (the page reads price_currency, else prints \"currency not stated\"). 992 HK's subject EV reads \"60.91B currency not stated\" from the peer set while the header serves no CURR_ENTP_VAL.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round67/ROUND67_CLOSE.md (the real-run table, shots 014/042/070)"
+    ]
+  },
+  "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S15",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T15:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The peer set's subject market cap (market_cap_musd 541,932, as of 2026-09-19) is stale against the header's CUR_MKT_CAP (EUR 631B, as of 2026-10-09) for ASML_NA_Equity.",
+  "class": "OBSERVATION",
+  "spec_asserts": "DSGN_AMGTV1 round-66 analysis item 2 (FWD-27): the cap's two values must be reconciled; same measure must agree, and a disagreement is a producer row to RESAPP.",
+  "world_is": "The page now prints the header's CUR_MKT_CAP in the subject row (EUR 631B, as of October 9th, 2026, tile and table alike), so the stale figure is off the face. The peer set still serves market_cap_musd 541,932 for the subject (different currency basis and a date three weeks older).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round67/ROUND67_CLOSE.md (FWD-27 market cap row)",
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round66.md section 1"
+    ]
+  },
+  "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S16",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T15:45Z",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Most served peers are identity UNRESOLVED, and non-US listings carry a SEDOL or an exchange number in ticker where an exchange ticker exists (Tencent, SK hynix, Foxconn, Zhongji, Cambricon, Hygon, ASML as a peer).",
+  "class": "OBSERVATION",
+  "spec_asserts": "DSGN_AMGTV1 round-66 analysis item 1 (FWD-8): a ticker cell shows the listing's exchange ticker, or the company name if there is none; a wrong served ticker is AMGT_RESAPP's.",
+  "world_is": "The page (AV-zzr-1, portal 45a957a9) prints the served ticker unless it is empty, all digits or SEDOL-shaped, and the name then. On the three walked names 7 distinct peers print their name for that reason (e.g. Tencent served \"BMMV2K\" where its exchange ticker is 700 HK; SK hynix served a number where it is 000660 KS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D1/round67/ROUND67_CLOSE.md (FWD-8 tickers row)"
+    ]
+  },
+  "notes": "Filed by the DSGN_AMGTV1 issuer at the round-67 close; the page is correct for what is served."
+}
+```
