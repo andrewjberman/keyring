@@ -764,3 +764,32 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S17 -- data_refresh admits any Opal-internal caller whatever its userType (routed to the data_refresh owner, CTO msg 3619)
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S17",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T16:04:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "data_refresh's validate_user_type admits a caller as Opal-internal on firmId opal-capital OR tier internal and then admits it whatever its userType, so a synthetic or test userType (here 'test-filer') gains the same data-refresh write-path reach as Opal staff. The W6-S2 premise that a non-empty, non-Dev userType is refused there does not hold in the deployed code.",
+  "disarm_owner": "2.0.0_SA_COO~O (NFRA_OPLGTW, owner of the data_refresh admission: TO-OG-da-1)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/data_refresh/lambda_function.py:142-163 is_opal_internal: tier == 'internal' -> True; firmId == 'opal-capital' -> True",
+      "infra/aws/lambda/data_refresh/lambda_function.py validate_user_type: userType 'Dev' admits; otherwise is_opal_internal(context) admits, userType not consulted",
+      "last change: d9539cc0b7 (NFRA_OPLGTW.TO-OG-da-1 Phase A); live per lambda-source-map: opal-data-refresh-api last_deployed_at 2026-10-09T07:59:39Z",
+      "0.7.0_AE_CloudOps~TV2 msg 3607 and row TCKT_VNEXT-D2-S16 (the seat-arm STOP arm that this defeats)",
+      "CTO msg 3619 (v2.2 half AMENDMENT 1 @133952758b): the arm is dropped for the run; the admission finding goes to the data_refresh owner as a row"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 2568 (TCKT_VNEXT W6-S2): a non-empty, non-Dev userType (e.g. 'test-filer') is refused by data_refresh.",
+  "world_is": "Any principal with firmId opal-capital or tier internal is admitted to data_refresh regardless of userType. TCKT_VNEXT's seat-arm run neither probes nor calls data_refresh, and proves 0 calls from the logs (SA-r-1b AMENDMENT 2). Whether a test userType should be refused there is the owner's call.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
