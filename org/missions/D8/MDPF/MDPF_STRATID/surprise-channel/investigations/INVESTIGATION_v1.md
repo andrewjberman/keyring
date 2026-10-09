@@ -123,6 +123,46 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Anything that looks like an Opal strategy but matched nothing is listed with firm, name and dollars (FWD-7); the order's names are roster.model_name, definition.model_name/sleeve_name/component_name.",
     "world_is": "The list is correct to the order's rule but mixes ordinary Opal models (not SMA strategies) and one holdings-component name (OPAL INTERNATIONAL DIVIDEND INCOME ETF) with the true unknowns; a reader wanting only SMA candidates needs a model-vs-sleeve scope on the names. ID FORM: the order names id MDPF_STRATID-W2-W6-S<k>, which proof-of-spec-check SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) cannot parse, so the row is minted MDPF_STRATID-D1-W6-S1 (the dell1 worker form the row gate requires). Also fact_model_assignment.account_id does not join fact_holdings.AccountID (external_id does)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S2",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:17:30Z",
+    "one_line": "ST-w-4 AC2 cannot be met with opal_models = fact_model_roster is_opal names: Opal Short-Term is not in the roster at all, so it stays listed (LISTED 12, seam W24-SEAM-BAD); roster plus fact_model_definition is_opal names gives LISTED 4 and meets the seam.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fact_model_roster date=2026-10-08: 71 names, 29 is_opal true; Opal Short-Term, Opal Fixed Income, Opal Long-Term Aggressive, Opal Moderate Income, Opal_Moderate_Income_Tax_Efficient are absent from it (found_in definition only)",
+        "fact_model_definition date=2026-10-08 model_name column carries is_opal: all 37 Opal-named model names are True, including Opal Short-Term; the union of the two tables gives 37 model names",
+        "Record as the order words it (roster only): RESULT LISTED 12, EXCLUDED-AS-MODEL 26; w2_4_seam.py reports W24-SEAM-BAD Opal Model(s) still listed: ['Opal Short-Term']. Union variant (uncommitted, .scratch/union_record.md in the worker worktree): RESULT LISTED 4 (Opal_Muni_Income and Opal_Muni_Sleeve RULE_NOT_COUNTED, OPAL INTERNATIONAL DIVIDEND INCOME ETF and POLEN DIVIDEND INCOME ETF NO_MEMBER), EXCLUDED-AS-MODEL 34"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "opal_models = the model_name values of fact_model_roster (latest date=) where is_opal is true; with it the re-made record lists neither Opal Satellite 50 nor Opal Short-Term (W2-4-AC2).",
+    "world_is": "Opal Short-Term is a definition-table model name with is_opal true there, absent from the roster; the roster source alone leaves it (and four other ordinary Opal Models) listed. The function and its eight tests (W2-4-AC1) are correct under either source; only the record's opal_models source decides AC2. Worker stopped per the refusal clause: record committed as the order words it, order left pending, status not flipped; the issuer decides roster-only versus roster union definition."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:21:00Z",
+    "one_line": "The worktree copy of MDPF_STRATID_DECOMP_W2.md lacks cell ST-w-4, so proof-of-spec-check reports W2-4-AC1 and W2-4-AC2 cell_refs as citing a cell that does not exist.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "proof-of-spec-check rc=1: VIOLATION alignment: cell_ref 'ST-w-4' does NOT exist in org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md (worker worktree, branch wk-MDPF_STRATID-w2-6); the amended order came from the shared tree at issuer commit 75d44d9e82"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The amended order's cell_refs ST-w-4 resolve in decomp_doc MDPF_STRATID_DECOMP_W2.md (amendments A1, A4).",
+    "world_is": "The decomp file is outside the worker's grant (order file, deliverables folder, source and test files, investigation file), and the worker branch predates the amendment commit, so the cell is absent in the worktree; the drain merge brings the amended decomp. The instance is otherwise valid apart from the W2-4-AC2 FAIL row."
   }
 ]
 ```
