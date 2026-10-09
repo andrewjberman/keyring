@@ -22544,3 +22544,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "INERT today: no live importer reaches the custody path (generate_installed.py:172 raises CUSTODY_FACTORY_REQUIRED before any decode). Disarmed by ruling: release 6 cannot land without the layer (its census + an after-read that decodes one custody row); if the layer exceeds the 250 MB unzipped limit, release 6 passes read_rows instead and this row re-opens."
 }
 ```
+
+## IRPT_BCKEND-D2-W223-S1 -- AC3 cannot pass with the as-written staging: M's holdings_publication_port.py:11 imports HoldingsPublication from `publication`, which in this zip is the YCharts extract module; order left open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W223-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~223",
+  "surfaced_at": "2026-10-09T02:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "Y76-1-AC3 symbol_closure FAILs (missing=1) on holdings_publication_port.py:11 `from publication import HoldingsPublication` once the order's own staging is in: the zip's `publication` is ycharts/extract/publication.py, which has no HoldingsPublication; the port's try/except fallback is never run in the zip but the static check cannot know that.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/checks/r71/y71_ac2.sh at 4280c6d9da: 'MISSING holdings_publication_port.py:11 imports HoldingsPublication from publication', 'symbol_closure modules=66 pairs=298 missing=1', last line 'symbol_closure FAIL'; the build line still reads 'OK: import-closure'.",
+      "infra/aws/lambda/investor-reporting/holdings/holdings_publication_port.py:8-11 (@73075a9048): try `from holdings_publication import HoldingsPublication` except ImportError `from publication import HoldingsPublication`. The order stages holdings/publication.py as holdings_publication.py (so the try arm resolves at runtime) and keeps ycharts/extract/publication.py as publication.py (so the except arm is the flagged pair).",
+      "Before the port row was staged the same script printed missing=0 (issuer base run); the single new missing pair is exactly this line (1 of 298 pairs). cochange_closure split=0 at the same commit."
+    ]
+  },
+  "spec_asserts": "TO IB-yr-761 step 3 + AC3: stage holdings_publication_port.py and holdings/publication.py as holdings_publication.py without replacing publication.py; symbol_closure missing=0.",
+  "world_is": "Both cannot hold while ~M2's module keeps its static fallback import. I did not edit ~M2's module (bounds) and did not replace the port with an inline copy in generate_installed.py (that changes the ownership split the contract fixes: publication_for is ~M2's). Two ways out, for the issuer: (1) ~M2 changes line 11 to a form the checker does not read as a pair (e.g. `import publication as _p; HoldingsPublication = _p.HoldingsPublication`) and the pin moves; (2) the issuer rules that generate_installed.py builds `lambda firm: HoldingsPublication(s3, firm)` from holdings_publication directly and the port row is dropped. My branch is in the as-written state: AC1 6 passed, AC2 split=0, AC3 missing=1.",
+  "notes": "Everything else in the order is done at 0ee21c796f (code, test, generate.tf) and 4280c6d9da (source map)."
+}
+```
+
+## IRPT_BCKEND-D2-W223-S2 -- The silver grant is cottonwood-only (the module default admitted_firms) and the CMK for opal-data-assets reads is not named
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W223-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~223",
+  "surfaced_at": "2026-10-09T02:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The order asks for EXACTLY the two read sets; ~P2's set lists 6 silver objects, 4 of them 'only when admitted' (49financial, inflection), and a kms:Decrypt on the buckets' CMK it does not resolve. I granted the 2 cottonwood silver tables (admitted_firms stays at DEFAULT_ADMITTED_FIRMS) and no KMS statement.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~190/IB94-1_custody_ports_read_set.json: interpret_source.reads rows 3-6 say 'only when the installer admits 49financial' / 'only when admitted'; row 7 says 'ARN not resolved by this cell; the release-6 pair names it'.",
+      "infra/aws/lambda/investor-reporting/intake/custody_interpreter.py:42 DEFAULT_ADMITTED_FIRMS = ('cottonwood',); the order says keep admitted_firms at the module default.",
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf (@0ee21c796f) locals custody_silver_arns: 2 ARNs; the existing statement UseSystemKeyForTheEvidenceBucketAndTables grants only the IRPT system key."
+    ]
+  },
+  "spec_asserts": "TO IB-yr-761 step 4: IAM statements for EXACTLY the two read sets.",
+  "world_is": "A cottonwood custody read of opal-data-assets works only if the bucket is not SSE-KMS under a key the role cannot use; if it is, the after-read refuses and release 6's pair adds the key (the read-set file assigns that to the pair). Admitting another firm later is the installer's ledgered act and needs its objects added to custody_silver_arns."
+}
+```
+
+## IRPT_BCKEND-D2-W223-S3 -- reports/tests/test_generate_installed.py asserts the removed CUSTODY_FACTORY_REQUIRED refusal and now fails; the file is outside this order's paths
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W223-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~223",
+  "surfaced_at": "2026-10-09T02:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "test_both_branches_refuse_by_name_with_the_public_code_not_ready (test_generate_installed.py:99-104) expects a no-input_id body to raise CustodyFactoryRequired; with the factory installed it reaches the custody service (AttributeError on ctx None), so 1 of 13 tests in that file fails.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests/test_generate_installed.py at 0ee21c796f: '1 failed, 18 passed' with test_generate_installed_custody.py beside it; the failure is AttributeError: 'NoneType' object has no attribute 'tenant' at generate_installed.py custody_authority, from service.submit(..., None) at test line 102.",
+      "The file is not in the order's <paths>, so it is unedited."
+    ]
+  },
+  "spec_asserts": "TO IB-yr-761: replaces the CUSTODY_FACTORY_REQUIRED refusal at generate_installed.py:172; AC1 grades only the new test file.",
+  "world_is": "The stale assertion belongs to a sibling suite the cut did not name. The custody half of that test should assert the custody service is reached (as test_generate_installed_custody.py (a) does) and keep the ComparisonCatalogueRequired and prospect halves; the class CustodyFactoryRequired is kept in the module so the name still imports."
+}
+```
