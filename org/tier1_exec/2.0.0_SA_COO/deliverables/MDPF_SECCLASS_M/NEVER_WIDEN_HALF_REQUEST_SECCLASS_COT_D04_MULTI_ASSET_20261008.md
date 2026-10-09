@@ -1,6 +1,6 @@
 # Never-widen half request, MDPF_SECCLASS -- Cottonwood's served client concentration stops carrying `multi_asset` (TO-SC-e67, round 12 row S60)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~57` (worker, L7), 2026-10-08, for `2.0.0_SA_COO~M1` to issue. **Status: COO half UNSIGNED; CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~57` (worker, L7), 2026-10-08, for `2.0.0_SA_COO~M1` to issue. **Status: COO half SIGNED (2.0.0_SA_COO~M1, 2026-10-09); CTO half UNSIGNED.**
 The deploy and the gold run are the issuer's acts, never the worker's. The worker edited one shipped gold file on its branch, ran a fixture test, and wrote nothing to S3.
 Records: round-12 analysis section 3 item 1 (S60); Andrew-direct 2026-10-07 (no `multi_asset` class, six classes only); the 33-row remap `CTO_HALF_MDPF_SECCLASS_MULTI_ASSET_REMAP_B_20261007.md`.
 
@@ -55,6 +55,60 @@ No other key is touched, so no other key needs a rollback.
 3. Every other holding in the two files reads byte-equal to the pre-act snapshot except `generated_at`.
 4. `python data/cot/scripts/gold/tests/test_d04_no_multi_asset.py` via pytest: 4 passed.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
+
+`2.0.0_SA_COO~M1`, 2026-10-09 ~02:3xZ. Merged on dell1 at @6f364210c7 (worktree `coo_m1_e67`, branch `coo-m1-e67-release`, off
+box/dell1 @bf3cd30592; the only conflict was the append-only channel, 0 markers). Re-run at the merge: `tests/test_d04_no_multi_asset.py`,
+4 passed.
+
+**The hold above is void.** Andrew lifted limit item 5 (Andrew-direct 2026-10-08 ~13:2xZ, "1.) lIFT ITEM 5"; NFRA_CTLPLN step D). Live
+read ~02:0xZ: `cloudops-dell-agent-routes-host-policy` is absent, with 9 other dell-agent policies present as the control.
+`simulate-principal-policy` allows `s3:PutObject` on `opal-data-cot/code/gold/`, and the bucket policy has no Deny.
+
+**Writers, counted and read at signing: N = 1 per key class.**
+- Served `platinum/clients/{rid}/concentration.json`: D_04 `build_client_timeseries`. It reads `gold/entities/clients/{rid}.json`
+  (C_06) and copies `data.get('concentration', [])` verbatim (D_04 line ~1265, written at ~1282). It does not classify.
+- `gold/entities/clients/{rid}.json` and the legacy `gold/client_timeseries/{rid}.json`: C_06 `_merge_and_write`. That is the path
+  the fix changes.
+
+**Code delta, measured.** Served `code/gold/C_06.client_mix_timeseries.py` reads ETag 75135f33... (38,198 B, VersionId
+`M.bUto2CRQ9XPSkdUiF_3wd3nlXsQdEM`, 2026-10-07T04:16:43Z). That equals `git show box/dell1:` md5 75135f33..., so the deploy moves this
+fix and nothing else in the file. Candidate md5: ea7e6700....
+
+**What the deploy ships: ONE file, named.** `comp-pipescript deployed --firm cot` on the merged tree reads 47 MATCH and 2 STALE:
+- C_06, which this act ships;
+- E_18, which is SC-e-4 @0ea0d6bc41 (2026-09-30) and was never deployed to cot. It does not belong to this act.
+
+The deploy is `safe-deploy.sh data/cot/scripts/gold/C_06.client_mix_timeseries.py` only. Under CTO msg 107147, the deploy core ships
+only named files, so E_18 and `lib/_shared/etf_classification_scheduled.py` stay at their served bytes. The `_shared` module is
+3f1e6be8; e65b's 40ffa3fa is not released. The issuer reads both ETags after the ship. The fixture test is not shipped.
+
+**Data rollback targets, re-read ~02:3xZ** (versioning Enabled). These supersede the 10-08 VersionIds above, which are no longer current:
+- `platinum/clients/z09305621/concentration.json`: `DfXq4SeTor5mGg0gJrW9PT3Yaz7WzcpC` (2026-10-08T11:36:56Z)
+- `platinum/clients/z09305679/concentration.json`: `m1m21YA9LMlmYvL_ErUL_PwxyrwIc2fk` (11:36:56Z)
+- `gold/entities/clients/z09305621.json`: `hNsqK58x7zkQq6TG.rWEBUFGPtERTT0h` (11:35:21Z)
+- `gold/entities/clients/z09305679.json`: `RJHXuBYNWMwd.Q5QmNB9aYknftljm5.E` (11:35:25Z)
+- `gold/client_timeseries/z09305621.json`: `m83maHzEWKuJXqbD6tGLcSm63s0scw3U` (11:35:21Z)
+- `gold/client_timeseries/z09305679.json`: `2SZIBskTbVpR3cDVgo1me82kL72Zc04Z` (11:35:25Z)
+
+Served now (census 2026-10-09 00:1xZ): the two concentration keys still carry `multi_asset`, post_switch=2. Record:
+`SERVED_MULTI_ASSET_SPLIT_COT_20261009T00Z.json`.
+
+**Both branches, from C_06's own rule (read in the diff):**
+- (A) The next scheduled COT fire, `cron(30 10 * * ? *)`, carries a new date. `_merge_and_write` passes every stored `existing_conc`
+  entry through `reclass_retired_holdings`. SGIIX moves from `multi_asset` to the table class `equity`, and D_04 copies the result.
+- (B) The fire carries no new date (`new_data` empty, so it returns before the merge, the shape BD showed at its 2026-10-08 23:00Z
+  fire). Nothing moves. The word stays until a fire with a new date. No full build is run under this half: a full build rewrites
+  every file and is outside this blast radius.
+
+**Timing.** The ship lands before the 2026-10-09 10:30Z COT fire, or that fire serves the old code and the act waits a day.
+
+**Ledger.** Opened at the ship with these legs:
+- V: versioning and the VersionIds above;
+- D: the C_06 ETag equals ea7e6700, E_18 and `_shared` unchanged;
+- G: after the fire, a 0-`multi_asset` scan over `opal-data-cot` (served_multi_asset_split.py, denominator printed), plus a check that
+  every other holding in the two files is unchanged.
+
+On close, this ledger's G leg also releases the held remap ledger `secclass-multi-asset-remap-b-m-20261007` (its COT half) and row S60.
 
 ## CTO half -- UNSIGNED
