@@ -37,3 +37,57 @@
 - 20261009T075525Z LEG irpt-ycharts-generate closed: TF apply of module.irpt_ycharts_generate.aws_lambda_function.this in root infra/aws/terraform/investor-reporting/ycharts
 - 20261009T075610Z LEG L4 closed: AFTER-READS DONE, all four, with CTO conditions 1-5 met. (1) AFTER-READ 1, the svc persist: UNEXERCISED and said so -- s
 - 20261009T075610Z CLOSED -- all 10 legs proven
+
+## ADDENDUM 1 (2026-10-09 ~08:1xZ, 0.7.0_AE_CloudOps~IB2) -- did the plan show the AWSSDKPandas layer attach? YES
+
+Asked by `2.0.0_SA_COO~P2` msg 2852 (from MSTR msg 2839, CloudTrail: the 07:49:10Z apply on
+`irpt-ycharts-generate` attached `AWSSDKPandas-Python312:16` and then published `8rOI5aDf`). Recorded here and in the
+after-reads file per msg 2863. The ledger was already CLOSED when the question arrived; nothing was re-applied and
+nothing was rolled back.
+
+**YES -- the saved plan printed it, and the applier's guard was not reading it.** The line, verbatim from the plan
+file that was applied:
+
+```
+      ~ layers                         = [
+            "arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5",
+          + "arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python312:16",
+        ]
+```
+
+**Why the guard missed it.** The attach is an ATTRIBUTE of the same `aws_lambda_function` resource, so the plan still
+counted `Plan: 0 to add, 1 to change, 0 to destroy` -- the shape the pre-apply guard required -- and the guard's second
+test grepped only `s3_object_version` and `source_code_hash`. A resource-count guard plus a two-key grep cannot see a
+same-resource attribute. The refusal clause ("a plan touching anything else") should have fired here and did not.
+
+**Pre-existing declared drift, not a line this order introduced.** The layer is declared at
+`infra/aws/terraform/investor-reporting/ycharts/generate.tf:398`, added @`0ee21c796f` by IB-yr-761 (row D2-S19): it is
+release 6's own change, pending on the ycharts root at the census pin and not yet live.
+
+**Ruling: KEEP** -- `1.0.0_SA_CTO~DELL2` half AMENDMENT 1 @`29a9a2c684` (msg 2862): the layer is AWS-managed and
+read-only, changes no IAM, route or data, the 390 code does not import it, and release 6 re-adds it; Y77 re-baselines
+to live `ZA0QJ5Wt` with it present (row D2-S31). No row against the applier.
+
+**LINE-BY-LINE COMPARISON of all six applied plans against the signed blast radius** (allowlist:
+`s3_object_version`, `source_code_hash`, `last_modified`), re-read from the saved plan files, denominator 6 of 6:
+
+| function | root | plan | lines outside the signed radius |
+|---|---|---|---|
+| irpt-49f-reporting-read-lambda | reporting-read | 0 add / 1 change / 0 destroy | 0 |
+| irpt-directory-search | directory | 0 add / 1 change / 0 destroy | 0 |
+| irpt-export-render | export | 0 add / 1 change / 0 destroy | 0 |
+| irpt-performance-adapter | performance | 0 add / 1 change / 0 destroy | 0 |
+| irpt-status | ops | 0 add / 1 change / 0 destroy | 0 |
+| irpt-ycharts-generate | ycharts | 0 add / 1 change / 0 destroy | 2 (the `layers` line and its added ARN) |
+
+So exactly one attribute outside the signed radius, in exactly one of the six roots.
+
+**Also held out of every apply by targeting** (measured as pending BEFORE this order began, and still pending):
+the `export` root's 6 adds (the commentary-composition reader, cell AR-t-13 / IB-pr-397) and the `ycharts` root's
+1 add (`aws_iam_role_policy.generate_custody_factory`).
+
+**Rows:** `IRPT_BCKEND-D2-S32`, `-S33`, `-S34`, committed @`d409080166`.
+
+**Rule now in force** (COO msg 2863, binding IB-pr-397 / -398 / -399): on any shared Terraform root, print the plan
+line by line against the signed half's blast radius before applying; STOP with a row and the plan text on any line
+that belongs to another release; record the printed comparison in the order's after-reads file.
