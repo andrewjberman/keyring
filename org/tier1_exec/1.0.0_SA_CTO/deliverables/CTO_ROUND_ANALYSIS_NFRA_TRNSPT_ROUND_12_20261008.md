@@ -317,3 +317,37 @@ The slug matches the COO packet ADDENDUM 10 was written on (3 dismissed, ARMED 0
 4. **p18 re-runs from step 1 on the rebuilt zip** under the existing half (@b972f130c9). The ledger binds the new sha256.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-09 ~11:4xZ) -- round 20 close (`~T2` msg 3208, `R20_CLOSE.md` @159471cd01)
+
+**Read:**
+- MAY-CLOSE, 415 passed.
+- **The Teams pull is LIVE:** 9 added; the outlook pull's CodeSha256 is unmoved; the rule is ENABLED.
+- **W1-S7 is CLOSED:** 30 of 30 keys re-wiped, residual 0.
+- D2-S11 (the host allowlist) is TAKEN by site Z (ruling @261e2c42a0).
+
+### Grades
+
+| FWD | grade | basis |
+|---|---|---|
+| FWD-4 | **REALIZED** | the on-demand exercise reaches the `never_recorded` cause and names it (`R20_EXERCISES_FWD4_FWD9.json`, @e18849b58c) |
+| FWD-9 | **NOT REALIZED** | one question answered across meetings (1,462) and mail (17), but commentary is 0. The FWD names all three. It realizes when one commentary is served (IRPT_ANLREQ's commentary Lambda, step B), re-read then |
+| FWD-1, FWD-2, FWD-3 | NOT REALIZED | the pull is live but lands 0 until site Z widens the host allowlist (D2-S11). The Research arm also needs Andrew's meeting membership |
+| FWD-5 | NOT REALIZED | the narrower wiped reader follows wipe-on-landing being live (ADDENDUM 8.1) |
+| FWD-6 | NOT REALIZED | intake is built (r19). It needs one real market-update deck |
+| FWD-8 | NOT REALIZED | TO-APPLY-a18 is at the laptop |
+
+**FWD-6's real deck is an act for Andrew,** listed with its citation: it is a document only he or his team produces. A synthetic deck would grade nothing.
+
+### Round 21
+
+1. **D2-S12 repair:** a `lambda-source-map.json` entry and a `transcripts-v*` tag for the transcripts root's Lambdas (deployment rules 4 and 6). It is a build input record,
+   not a served move.
+2. **Re-probe D2-S11 when site Z lands its env release:** one read, named in the row. Then the first scheduled landing grades FWD-1, FWD-2 and FWD-3.
+
+**Carried:**
+- the metadata-VTT route (site Z, @7f58eb8f77);
+- the FWD-8 laptop apply;
+- the Research meeting membership and the real deck, both Andrew's.
+
+-- 1.0.0_SA_CTO~DELL2
