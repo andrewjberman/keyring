@@ -89,6 +89,33 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_032xZ_BLOOMBERG_ACCOUNT_GETS_BLACKDIAMOND_LIST_FEES.md`).
   A3's "only if C2 gates it" condition is SUPERSEDED: all FIVE rows ship; the fifth row (`blackdiamond_list_fees`) cites
   this record, the other four cite @0035550443. `bloomberg_tools_signed` = 5, and the read-back must show all five allowed.
+- **AMENDMENT A5 (issuer, 2026-10-09 ~03:3xZ; `1.0.0_SA_CTO~O` msg 32320) -- SUPERSEDES A2, A3 and A4.** Andrew-direct
+  ~03:2xZ, verbatim "opal-gateway-bbg should be an exact copy of opal-gateway for now, just make it mirror whatever is on
+  opalgateway for consistency, eventually we will make rules but not yet" (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_032xZ_OPAL_GATEWAY_BBG_MIRRORS_OPALGATEWAY.md`).
+  (a) NO allowlist rows are added. Instead the release set REMOVES `opalbloomberg@opalinvest.com` from `_SEED` in
+  `app/identity_scope.py` and its two rows (`opal_data_refresh_upload client=...`, `opal_data_refresh_status`) from
+  `identity_tool_allowlist.txt`, so it is UNSCOPED like Andrew's identity (each change commented with this record). Fix
+  every test that pins the seed or those rows (`tests/test_identity_scope*.py`, `tests/test_scoped_consent_r253.py`, and
+  any other that fails for that reason alone): change ONLY the pinned expectation, name each line. The concierge's
+  consent then becomes the unscoped set (17), not 9: the REHEARSAL's "scoped concierge's consent 9" invariant is retired
+  for this release, and the ANNOUNCE names the re-consent the account will need (R49).
+  (b) PHASE C gains one grant write, a never-widen act named in the ANNOUNCE: the Bloomberg account's data grants are set
+  to Andrew's width (a copy of his grant record's datasets, masters, sources and reach; no other field), its prior grant
+  recorded for rollback.
+  (c) The post-deploy read: through the INSTALLED code, `identity_scope.check` returns None (unscoped) for the account,
+  and one tool from each class answers allowed for it (a Schwab query tool, `blackdiamond_list_fees`, `search_files`,
+  `opal_discover`); the M365 tools either answer or name a re-consent. AC2's body: drop the `bloomberg_tools_*` fields
+  and carry `bloomberg_unscoped` (true), `bloomberg_class_probes` (the count probed, at least 4),
+  `bloomberg_class_probes_allowed` (equal to it) and `bloomberg_m365_state` (`answers` or `reconsent_named`). AC3's body
+  gains `bloomberg_grant_mirrors_andrew` (true) and `bloomberg_prior_grant_recorded` (true).
+- **AMENDMENT A6 (issuer, 2026-10-09 ~03:4xZ; `1.0.0_SA_CTO~O` msg 32327) -- r29 CARRIES NO BLOOMBERG-ACCOUNT CHANGE.**
+  Andrew-direct ~03:3xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_033xZ_BBG_CONCIERGE_OPAL_USERS_ONLY_GATE.md`):
+  the A5 mirror ships ONLY together with an @opalinvest.com gate on that principal's Teams reads and sends, "same release
+  or neither". The issuer HOLDS the mirror and its gate for r30 (a separate build cell), so r29 keeps its four-cell scope
+  and its 11:00Z window. A2, A3, A4 and A5 are WITHDRAWN: no allowlist row added or removed, `_SEED` untouched, no
+  Bloomberg grant write, no Bloomberg field in AC2 or AC3. Any Bloomberg edit already made on your branch is reverted
+  before the release commit.
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -113,8 +140,8 @@ principal, rollback = the prior reach per key (CTO ruling msg 32087). Commit and
    "instance_id"}`, the host printing `RL15_DIGEST <sha256>` of `json.dumps(body, sort_keys=True)`. Body fields,
    exactly: `served_release`, `installed_code: true`, `asker_query_class`, `asker_query_write_class`,
    `unclassified_registered_tools`, `send_gate_in_oauth_as`, `calendar_months_max`, `contract_version`,
-   `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `bloomberg_tools_allowed`,
-   `bloomberg_tools_signed`, `grants_written: 0`.
+   `mail_domain_entries`, `mail_domain_entries_signed`, `concierge_families_revoked_since_deploy`, `grants_written: 0`
+   (A6: no Bloomberg field).
    Re-read the standing floor into `W/RL15_FLOOR.json` per the form.
 2. The grant write, under the signed halves only: Andrew's and Alyssa's principals' grants gain `calendar_months: 13`;
    record each key's prior reach first. Then `W/RL15_GRANTS.json`, the host printing `RL15G_DIGEST <sha256>`, body
@@ -189,6 +216,12 @@ Report once per phase.
   attest rule now bloomberg_tools_allowed == bloomberg_tools_signed in {4, 5}. Graded by no gate limb as a modification.
 - A4 (2026-10-09, CTO msg 32319, Andrew ~03:2xZ): all five concierge rows ship; A3's C2 condition superseded.
   Graded by no gate limb as a modification.
+- A5 (2026-10-09, CTO msg 32320, Andrew ~03:2xZ): SUPERSEDES A2-A4 -- the Bloomberg account is UNSCOPED (seed entry and
+  its two overlay rows removed), its data grants mirror Andrew's; attest rules updated in the same commit. Graded by no
+  gate limb as a modification.
+- A6 (2026-10-09, CTO msg 32327, Andrew ~03:3xZ): the Bloomberg mirror needs an @opalinvest.com gate in the same
+  release; held for r30 with its gate; A2-A5 withdrawn; attest rules back to the four-cell body. Graded by no gate limb
+  as a modification.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
