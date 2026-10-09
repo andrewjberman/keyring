@@ -1018,6 +1018,10 @@ fi
 # limb's own internal error (NAMING ERROR), not on a crashed interpreter -- because it sits on every
 # seat's commit path. In ENFORCE mode it is fail-closed: any non-zero exit unstages and aborts, like the
 # commit-gate above. The live flip is gate G-F, outside LGIC_ENFORCE round 1.
+# THE PLACEMENT SWITCH (LGIC_BLANKFIX FWD-6, cell BF-x-3, row W1-S19). While org/mcp/naming-place.enforce is present, a
+# refusal from the gate's PLACEMENT step blocks the commit whatever naming-gate.enforce says. The gate tells it apart from the
+# older limb's REFUSE by the line `NAMING-PLACE: REFUSE <n>` it prints (and exits 1 on); the older limb's warn window is
+# unchanged. No environment value turns this switch on or off; the file is the only switch.
 if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
   NGATE_FILES=()
   while IFS= read -r _nf; do
@@ -1038,7 +1042,17 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
       NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
     fi
     rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" 2>/dev/null || true
-    if [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
+    NGATE_PLACE_HIT=0
+    if [ -e "$SCRIPT_DIR/../org/mcp/naming-place.enforce" ] && [ "$NGATE_RC" -ne 0 ] \
+       && printf '%s\n' "$NGATE_OUT" | grep -q '^NAMING-PLACE: REFUSE '; then
+      NGATE_PLACE_HIT=1
+    fi
+    if [ "$NGATE_PLACE_HIT" -eq 1 ] && [ "$NGATE_ENFORCE" -ne 1 ]; then
+      for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
+      echo "ERROR: BLOCKED -- the naming limb's placement step refused (LGIC_BLANKFIX FWD-6, org/mcp/naming-place.enforce present). Commit aborted; files unstaged." >&2
+      printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
+      exit 1
+    elif [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
       for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged." >&2
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2

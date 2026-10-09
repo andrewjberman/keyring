@@ -1932,3 +1932,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "An order whose status is 'complete -- <note>' counts as neither complete nor terminal, so its proof is never read and the verdict passes on zero graded orders. Round 8 is genuinely complete (handoff 85ba7c79b2, each proof re-run by the issuer); the defect is in the instrument, whose owner is not this seat."
 }
 ```
+
+
+## LGIC_BLANKFIX-D1-W2-S1 -- the apply gate's pre-plan (directory) stage can never print a placement refusal, so the pre-plan wiring has no producer today
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T06:02:00Z",
+  "one_line": "BF-x-3 asks safe-apply to act on a placement refusal in both stages, but the apply gate's pre-plan (directory) mode has no placement step and cannot refuse, so only the plan stage can produce one today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/naming-apply-gate.py _main_dir: 'refused = sum(1 for g in graded if g[6])  # always 0: DIR mode grades every literal with judge_capped()' and its exit is 1 only on NAMING ERROR in enforce; place_additions is called only from run_plan",
+      "exercise_switch_on.py arms B1 and B2 (0.9.0_WK_LGIC_BLANKFIX~2): the pre-plan wiring in .tools/safe-apply.sh blocks with exit 6 on a stand-in gate that prints 'NAMING-PLACE: REFUSE 1' while the switch is present, and passes with it absent; the real directory-mode gate prints no such line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-x-3 build 2: safe-apply acts on the placement refusal from naming-apply-gate.py 'in both its pre-plan and plan stages'.",
+  "world_is": "Both stages are wired to act on the gate's NAMING-PLACE line (pre-plan: exit 6 for an unscoped apply, warn only for a scoped or planfile apply as before; plan: exit 7). Only the plan stage has a producer: the directory mode cannot tell an addition from an existing resource and runs no placement step. The pre-plan arms therefore use a stand-in gate and prove the script's wiring, not the gate's output. No change to the gate's directory mode was made; whether it should place anything is the owner's call."
+}
+```

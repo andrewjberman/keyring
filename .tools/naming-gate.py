@@ -61,7 +61,8 @@ check's own decision for the name, on the post-image of the diff:
       now), is larger than at HEAD
     a name outside every root, RIGHT, NOT-ASKED, PATTERN, CARDED    grade() alone
 The mode is the switch file org/mcp/naming-place.enforce (beside naming-gate.enforce; this build does not create it):
-PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says); ABSENT -> it prints the same lines, marks them
+PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says, and a `NAMING-PLACE: REFUSE <n>` line is printed before the
+summary: safe-commit.sh blocks on that line while the switch is present); ABSENT -> it prints the same lines, marks them
 would-refuse and the verdict is unchanged. There is no date and no ramp, and no environment value turns the step off.
 A root's files live under infra/aws/ (its .tf folder and its Lambda folders), so a commit with no .tf file and no NEW stored
 name under infra/aws/ never loads the placement step; one that does costs about 13 s per root (at most 8 roots are placed).
@@ -2205,6 +2206,12 @@ def main(argv=None):
     if would:
         print("  (placement step: %d would-refuse verdict(s) did not block; the step refuses while org/mcp/naming-place.enforce"
               " exists, and that switch is absent)" % would)
+    if place_ref:
+        # The placement step's own refusal, told apart from the older limb's REFUSE: safe-commit.sh blocks on this line while
+        # org/mcp/naming-place.enforce is present, whatever naming-gate.enforce says (LGIC_BLANKFIX BF-x-3, row W1-S19).
+        pline = "NAMING-PLACE: REFUSE %d" % place_ref
+        print(pline)
+        verdict_lines.append(pline)
     last = "NAMING-GATE: %s %d graded" % (summary, len(rows))
     print(last)
     log_lines(verdict_lines + [last], mode)
