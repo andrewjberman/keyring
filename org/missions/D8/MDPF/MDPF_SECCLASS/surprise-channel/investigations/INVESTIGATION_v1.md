@@ -5904,3 +5904,86 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED: found while preparing the e60 release (XA-20261009T034917Z-0eb1). The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route. e60's pair will name this test as the one pre-existing failure."
 }
 ```
+
+## MDPF_SECCLASS-D1-S20 -- SUBSTRATE_CARD/proof_of_spec kind enum has no member for a DynamoDB row write, and only s3_object skips git resolution
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S20",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC1",
+  "surfaced_at": "2026-10-09T06:33Z",
+  "one_line": "proof-of-spec-check's artifacts_produced/kind enum is ['script','s3_object','terraform','config_data','schedule','iam','test','doc','frontend_component'] -- no member names rows written to a DynamoDB table, and the resolver demands every non-s3_object row name a (commit, path) pair git can resolve at the pin. A DEPLOY-genre order whose whole product IS table rows therefore cannot declare its artifact truthfully: the only kind that skips git resolution is s3_object, which would be a false declaration of substrate.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Exercised 2026-10-09 ~06:3xZ on box/dell1 while closing MDPF_SECCLASS.TO-SC-e71b (proof_genre DEPLOY, product = 15 rows of etf-classifications in us-east-1). `python .tools/proof-of-spec-check.py <instance> AC1` with kind 'ddb_rows' returned INVALID (rc=1) on two limbs: \"schema: artifacts_produced/0/kind: 'ddb_rows' is not one of ['script', 's3_object', 'terraform', 'config_data', 'schedule', 'iam', 'test', 'doc', 'frontend_component']\" and \"artifact-resolution: 'dynamodb://us-east-1/etf-classifications ...' does NOT exist at its declared pin 021a6a33f7 -- the row names a (commit, path) pair git refutes\".",
+      ".tools/proof-of-spec-check.py:417 `if a.get('kind') == 's3_object': ...` and :402 `a.get('kind') != 's3_object'` -- s3_object is the ONLY kind the git resolver skips; its own report line reads 'n s3_object (not a git ref; skipped)'.",
+      "Denominator for the precedent read: `comp-find 'dynamodb://' org/tier2_senior org/missions/D8 --limit 15` returns 1 hit across 9,352 files scanned, and that one hit is this seat's own instance -- so no prior instance in either tree records a DynamoDB write as an artifact, and there is no house convention to copy."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "artifacts_produced/kind is MECE over the artifacts an agent can produce, so every DEPLOY-genre order can name its product with the true substrate and still validate.",
+  "world_is": "The enum covers repo artifacts plus one cloud substrate (S3). A DynamoDB table write -- the whole product of a seed or remap order, of which this project has run several -- has no member, and the resolver's git check makes the nearest member unusable. The two ways out are both wrong: declare s3_object and lie about the substrate, or pin the row to a repo file this order did not produce. What this seat did instead is recorded in the instance itself: the row pins the seed source the act materialized, kind config_data, and its deploy_evidence states in full that the artifact produced is the 15 table rows and why the kind is a stand-in.",
+  "notes": "SURFACED, NOT CHASED: found at the close of TO-SC-e71b, after the act had landed and been verified (AC1 ok=True, signed-delta read-back 15 of 15 with 0 unsigned moves). It moves no data and gates no deploy -- it degrades the RECORD, not the world, which is why it is INERT rather than ARMED. The schema's owner is not this seat and the enum edit would be a value-enum proposal under CLAUDE.md rule 24, needing its four-postulate record plus a word-boundary token census; remediation is the CVO's to route. Related: [[MDPF_SECCLASS-D1-S18]] is also a seed-script record defect rather than a data defect."
+}
+```
+
+## MDPF_SECCLASS-D1-S21 -- the e75 pair censused multi_asset only; C_06's retained reclass moves every class outside the six (one relationship outside the signed set moved)
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S21",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T06:42Z",
+  "one_line": "The e75 never-widen pair (COO half by 2.0.0_SA_COO~M1, CTO half @0ca2c444c7) censused only the retired class multi_asset (141 holdings / 36 envelopes), but C_06 reclassify_retained moves ANY retained holding whose class is outside SERVED_HOLDING_CLASSES. The 2026-10-09 04:00Z fire reclassed 298 holdings: the predicted 141 plus 157 'other'->commodities (PDBC) in z08296368, a relationship outside the signed set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run log gold_incremental_2026-10-09_20261009_061917.log: 'C06-RETAINED-RECLASS entries=262 holdings=298', COMPLETE exit 0.",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py reclassify_retained (:273-307): `bad = [h for h in entry.get('holdings', []) if h.get('asset_class') not in SERVED_HOLDING_CLASSES]` -- any non-served class.",
+      "R13_CHECKS/e75_retained_reclass_diff.py over 18,176 envelopes vs previous version: changed_envelopes=37, in_signed_set=36, outside_signed_set=1; transitions multi_asset->equity 84, multi_asset->fixed_income 57, other->commodities 157 (all gold/entities/clients/z08296368.json, PDBC); record E75_RETAINED_RECLASS_DIFF_20261009.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A never-widen pair's blast radius counts every key the producer's own rule can move, read from that rule at signing (CLAUDE.md NEVER-1).",
+  "world_is": "The census was keyed on the targeted class (multi_asset) while the writer keys on the complement of the served set; one relationship outside the signed 36 moved. Ruled KEEP after the fact by 1.0.0_SA_CTO~DELL1 (CTO half ADDENDUM 1 @786720019c, msg 1918) with a matching COO addendum; the move is correct (PDBC is a commodity ETF).",
+  "notes": "Named seat, per the ruling: 2.0.0_SA_COO~M1 signed the COO half with the single-class census. Forward rule: later pairs over this writer census every class outside the six. (Id D1-S20 was already taken by another row; this is D1-S21.)"
+}
+```
+
+## MDPF_SECCLASS-W41-S5 -- SC-e-60 moves the served top-level mix keys: lower-case `unclassified`/`other` leave, `Unclassified` arrives, and no reader of the key was censused
+
+```json
+{
+  "id": "MDPF_SECCLASS-W41-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~41",
+  "surfaced_at": "2026-10-07T14:07:57Z",
+  "one_line": "TO-SC-e60 says serve the residual as an `Unclassified` line; D_04's served top-level mix already carried C_06's own lower-case `unclassified` and `other` classes as keys (CTO batch 99/117), so the same weight now moves from those keys to a new title-case key, and the manifest maps no portal endpoint or component to platinum/firm/mix_summary.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/D_04.client_portal_summary.py@35365ec33c _firm_top_level_mix and build_firm_mix_summary",
+      "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:178-183 MIX_ASSET_CLASSES carries unclassified and other",
+      "comp-pipescript io D_04: platinum/firm/mix_summary.json is a terminal write, no PORTAL CONSUMERS entry for it",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_D04_UNCLASSIFIED_20261007.md (Blast radius, readers; both branches)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e60: the residual is served as its own `Unclassified` line and the served mix sums to 1.0.",
+  "world_is": "Before the change the served mix summed to 1.0 only when C_06's classes covered its total, and carried the unknown as lower-case `unclassified`. The candidate puts the unknown, `other` and any uncarried dollars on one `Unclassified` key (the order's named key) and stops serving the two lower-case keys; the composition donut is unchanged. A reader keyed on the lower-case spelling would not find it after the next D_04 run. The served bytes and the 49F reader are not readable from dell1 (W25-S1), so the reader side is inferred, not measured.",
+  "notes": "The signers decide whether the key stays `Unclassified` or reads `unclassified` (one constant, UNCLASSIFIED_LINE, plus the test). Held off CLOUD until the half signs."
+}
+```
+

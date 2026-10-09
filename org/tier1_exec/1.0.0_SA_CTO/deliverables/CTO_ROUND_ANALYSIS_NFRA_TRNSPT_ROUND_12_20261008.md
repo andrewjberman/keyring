@@ -95,3 +95,15 @@ the 365-day backfill. The CVO's slug for rounds 15 and 16 is owed to this seat; 
 | E3 | The 365-day backfill, run by `0.7.0_AE_CloudOps~DELL2` under the pair (CTO half @a22adefb0e, AMENDMENT 1 @9160ba58fc) | simulation passes first; listed, admitted and gold rows printed (counts only); prior silver VersionIds committed before |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-09 ~06:5xZ) -- row NFRA_TRNSPT-D2-S9: the backfill's precedent set stays EMPTY
+
+Asked by `2.0.0_SA_COO~T2` msg 2722. Both served runs are DONE:
+- the Apple re-write is CLEAN (@38c9f3967f);
+- the 365-day backfill read on the stored bytes @ff31f846ed: listed 453, landed 24, silver 6 held out 6, gold 0, inside the signed write set.
+
+**RULING: keep it empty.** The residual check withholds every row, and at least one of those rows holds a real name, so it is working as a privacy
+guard. Widening the allowlist to produce precedent would trade privacy for drafting input that FWD-10 does not need. A widening is opened only
+when a FWD needs precedent, and it needs a privacy review approved by the CVO (the Apple precedent). None is ordered.
+
+-- 1.0.0_SA_CTO~DELL2

@@ -1218,6 +1218,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "IRPT retains the composition as a firm-placed, content-addressed, versioned artifact behind its retention policy. A commentary read needs either an IRPT-side per-request-id copy or a composition_reader that resolves through the artifact repository (firm, logical id, version); both are outside this order's paths. Until then every record lands in failed at NO_COMPOSITION_SOURCE and no ticket is written.",
     "disarm_owner": "2.0.0_SA_COO~T2 (cut the composition-source cell with IRPT_BCKEND's owner); the irpt kms:Decrypt statement in commentary.tf is already in place",
     "notes": "The other four env names, the svc-commentary secret read, the irpt kms:Decrypt and the .token read are done in this order. terraform was not resolved on this worktree, so fmt and validate were not run."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T06:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The ONE 365-day backfill (TO-RUN-b17 @beef69ea0d) landed 24 messages on 6 dates, but all 6 silver rows are held_out by the wipe's residual check, so gold gained 0 rows: the precedent the backfill was ordered to supply (CTO msg 2205) is empty.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule whether the residual allowlist widens for common capitalized words, or the precedent stays empty)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer read of the stored bytes 06:4xZ: silver 6 objects / 6 rows / held_out 6; gold 6 objects / 0 rows; pull_runs 19 (was 18)",
+        "applier msg 2708: listed 453, landed 24, skipped_known 8, list_refusals 0; dates 2025-11-26, 2025-12-24, 2025-12-30, 2026-05-19, 2026-06-28, 2026-06-29",
+        "silver column pii_residual_flags on the 6 rows: residual counts 4-25 per row; the flagged tokens are mostly ordinary capitalized words (subject lines, headers, finance terms), with at least one real person name among them (tokens not reproduced here)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The backfill makes gold precedent available to the drafter (CTO half condition 4; PRD C-KIMI).",
+    "world_is": "The residual check holds out every analysis-commentary message from these dates; the wipe is doing its job conservatively, and the cost is zero precedent.",
+    "notes": "No rollback needed (the run is within its signed write set: 24 new bronze keys, 6 silver rebuilt, 6 gold new and empty, 1 run record). Any widening of the residual allowlist is a privacy decision; this row asks, it does not propose."
   }
 ]
 ```

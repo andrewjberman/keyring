@@ -66,8 +66,11 @@ check's own decision for that name, against the tree on disk: FIX or HOLE in a M
 use, or what is owed and to whom; in an UNMAPPED root only a name the matrix already refuses gets place()'s text; any other kind
 leaves the row as it was. The root is the --root DIR given, else the one root whose enumerated names include the name (a name no
 root lists, or listed by two roots, is graded by grade() alone and a notice says so). The mode is the switch file
-org/mcp/naming-place.enforce, the commit limb's: PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says); ABSENT ->
+org/mcp/naming-place.enforce, the commit limb's: PRESENT -> the step refuses (rc=1, whatever naming-gate.enforce says, and a
+`NAMING-PLACE: REFUSE <n>` line is printed before the summary -- safe-apply.sh blocks on that line, BF-x-3); ABSENT ->
 the same text prints, marked would-refuse, and the verdict is unchanged. Nothing turns the step off but the file's absence.
+--root DIR is the tree safe-apply plans (its -chdir, as typed): a folder inside this checkout's infra/aws/terraform/ names
+the root; any other value (".", a tree elsewhere) leaves the step to find the root by the added name, as before.
 
 Usage:
     python .tools/naming-apply-gate.py DIR [--enforce]
@@ -365,6 +368,25 @@ def place_amend(base, res, on):
     return ("REFUSE", form, "%s [grade() said: %s]" % (text, why), "PLACE" if on else bool(refuses))
 
 
+def place_tree_key(tree):
+    """The root the plan is for, as a path under infra/aws/terraform/ (or its map key): safe-apply hands the gate its -chdir tree
+    as the caller typed it (relative to the caller's directory, absolute, or "."). A folder that exists and sits inside this
+    checkout's infra/aws/terraform/ becomes its repo-relative path; any other existing folder (".", a tree elsewhere) returns None
+    (the step then places the name by its root, as before the tree was handed over); a value that is no folder is kept as a map
+    key or prefixed path."""
+    t = str(tree).replace("\\", "/").strip()
+    if not t:
+        return None
+    if os.path.isdir(t):
+        try:
+            rel = os.path.relpath(os.path.abspath(t), REPO).replace("\\", "/")
+        except ValueError:  # another drive
+            return None
+        pre = "infra/aws/terraform/"
+        return rel if (rel.startswith(pre) and len(rel) > len(pre)) else None
+    return t
+
+
 def place_additions(graded, pending, root_arg, notes):
     """Amend the ADDED rows in `graded` (a list; pending: [(index, name, node_type)]) with place(), one pass per root."""
     if not pending:
@@ -374,8 +396,8 @@ def place_additions(graded, pending, root_arg, notes):
         rcm = _rootcheck()
         by_root = {}
         for (i, name, node_type) in pending:
-            if root_arg:
-                roots = [rcm._TF_PREFIX + rcm.map_key(root_arg)]
+            if root_arg and place_tree_key(root_arg):
+                roots = [rcm._TF_PREFIX + rcm.map_key(place_tree_key(root_arg))]
             else:
                 roots = rcm.roots_of_name(name, node_type)
             if len(roots) != 1:
@@ -453,6 +475,65 @@ def run_plan(path, root_arg=None, notes=None):
     return graded
 
 
+def place_tree_arms():
+    """The tree argument's arms (BF-x-3): the root safe-apply hands over reads as a root, and in plan mode the placement step
+    receives it. Plain data in a temporary folder; the root check itself is replaced by a recorder. Returns [(label, held)]."""
+    import contextlib
+    import io
+    import tempfile
+    saved = dict((k, globals()[k]) for k in ("REPO", "VERDICT_LOG", "ENFORCE_FILE", "PLACE_FILE", "place_additions"))
+    keys, out, rc = {}, "", None
+    try:
+        with tempfile.TemporaryDirectory(prefix="naming_apply_gate_tree_") as td:
+            tree = os.path.join(td, "infra", "aws", "terraform", "a-b", "c")
+            os.makedirs(tree)
+            globals()["REPO"] = td
+            cwd = os.getcwd()
+            try:
+                os.chdir(td)
+                keys["rel"] = place_tree_key("infra/aws/terraform/a-b/c")
+                keys["dot"] = place_tree_key(".")
+                keys["key"] = place_tree_key("a-b/c")
+                keys["empty"] = place_tree_key("")
+            finally:
+                os.chdir(cwd)
+            keys["abs"] = place_tree_key(tree)
+            # plan mode: the recorder stands in for place_additions and notes the root it was handed.
+            seen = []
+
+            def recorder(graded, pending, root_arg, notes):
+                seen.append(root_arg)
+                for (i, _n, _t) in pending:
+                    row = graded[i]
+                    graded[i] = ("REFUSE", row[1], row[2], row[3], row[4], "PLACE")
+
+            globals()["place_additions"] = recorder
+            globals()["VERDICT_LOG"] = os.path.join(td, "v.log")
+            globals()["ENFORCE_FILE"] = os.path.join(td, "older-switch-absent")
+            plan = {"resource_changes": [{"address": "aws_scheduler_schedule.x", "mode": "managed",
+                                           "type": "aws_scheduler_schedule", "change": {
+                                               "actions": ["create"], "before": None, "after": {"name": "x-y"}}}]}
+            pf = os.path.join(td, "plan.json")
+            with open(pf, "w", newline=chr(10)) as fh:
+                json.dump(plan, fh)
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = main(["--plan-json", pf, "--root", tree])
+            out = buf.getvalue()
+            keys["seen"] = seen[0] if seen else None
+    finally:
+        for k, v in saved.items():
+            globals()[k] = v
+    return [
+        ("tree: a folder inside infra/aws/terraform/ (relative or absolute) reads as its repo-relative path",
+         keys.get("rel") == "infra/aws/terraform/a-b/c" and keys.get("abs") == "infra/aws/terraform/a-b/c"),
+        ("tree: \".\" and an empty value read as no tree; a map key is kept as typed",
+         keys.get("dot") is None and keys.get("empty") is None and keys.get("key") == "a-b/c"),
+        ("plan mode: --root DIR reaches the placement step as typed, and a PLACE row prints NAMING-PLACE: REFUSE and exits 1",
+         keys.get("seen") == tree and rc == 1 and "NAMING-PLACE: REFUSE 1" in out.splitlines()),
+    ]
+
+
 def place_self_test():
     """The placement step's arms on plain data (no root check is run): what each answer of place() does to an ADDED row, the
     exit and the switch. Prints one line per arm; returns True when all hold."""
@@ -479,7 +560,8 @@ def place_self_test():
             sw_on = place_enforcing()
     finally:
         globals()["PLACE_FILE"] = saved
-    arms = [
+    tree_arms = place_tree_arms()
+    arms = tree_arms + [
         ("FIX on an added resource in a mapped root, switch present -> REFUSE with the form, refuses=PLACE",
          on_fix[0] == "REFUSE" and on_fix[3] == "PLACE" and on_fix[1] == "irpt-x-daily" and "Owed: use irpt-x-daily" in on_fix[2]),
         ("the same, switch absent -> the same text, refuses=False (verdict unchanged)",
@@ -636,6 +718,12 @@ def _main_plan(path, enforce, root_arg=None):
     if would:
         print("  (placement step: %d would-refuse verdict(s) did not block; the step refuses while org/mcp/naming-place.enforce"
               " exists, and that switch is absent)" % would)
+    if place_ref:
+        # The placement step's own refusal, told apart from the older limb's REFUSE: safe-apply.sh blocks on this line while
+        # org/mcp/naming-place.enforce is present, whatever naming-gate.enforce says (LGIC_BLANKFIX BF-x-3, row W1-S19).
+        pline = "NAMING-PLACE: REFUSE %d" % place_ref
+        print(pline)
+        verdict_lines.append(pline)
     last = "NAMING-PLAN: %s %d graded" % (summary, len(graded))
     print(last)
     log_lines(verdict_lines + [denom, last], mode)

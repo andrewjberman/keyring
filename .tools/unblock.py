@@ -22,13 +22,15 @@ to synthesize that into the workflow, and it needs a sign off by the CVO." Owner
     python .tools/unblock.py sign --id <UB> --by <CVO serial> [--note <text>]                (CVO signs the fold)
     python .tools/unblock.py refuse --id <UB> --by <CVO serial> --reason <text>              (CVO: back to the CTO)
     python .tools/unblock.py resume --id <UB> --by <COO serial>                              (COO, after reading the signed fold)
+    python .tools/unblock.py hung --minutes <m> --tokens <n|1.2k>   the 10:1 test on a peeked seat's running query (HUNG at
+        10 or more minutes per 1k tokens: relocate the owed work off that box; Andrew-direct 2026-10-09 ~06:3xZ)
     python .tools/unblock.py list [--state OPEN|PROPOSED|FOLDED|CLOSED|ALL]
     python .tools/unblock.py show --id <UB>
     python .tools/unblock.py --selftest       LAST line  UNBLOCK-SELFTEST cases=<k>/<n> ok=<True|False>
 
 STATES: OPEN (at the CRO) -> PROPOSED (at the CTO) -> FOLDED (at the CVO) -> SIGNED (back at the COO) -> CLOSED (the COO
 resumed on it). A CVO refusal returns the file to PROPOSED with the reason kept in `refusals`; the CTO folds again.
-The COO's body must carry `## Position`, `## Endpoint`, `## Blocked`; the CRO's `## New approach`, `## Why it is not blocked`,
+The COO's body must carry `## Position`, `## Endpoint`, `## Blocked`, `## Owed by others` (the chase); the CRO's `## New approach`, `## Why it is not blocked`,
 `## What changes for the COO`. Who acts is routed by box: the CRO on `cro_device` (the COO's own box when a CRO is live there
 at `open`, else the laptop), the CTO and the COO on `from_device`, the CVO on `fold.cvo_device` (the CTO's box when a CVO is
 live there at `fold`, else the laptop). Each box's `.tools/open-calls-scan.py` pass drops the
@@ -44,6 +46,7 @@ import argparse
 import datetime
 import importlib.util
 import json
+import math
 import os
 import re
 import secrets
@@ -59,7 +62,8 @@ REC_DIR = "org/critical_paths/unblock"
 KEYS = {"schema", "id", "project", "from_device", "from_serial", "cro_device", "opened_at", "body", "state", "proposal", "fold",
         "signoff", "refusals", "resumed"}
 STATES = ("OPEN", "PROPOSED", "FOLDED", "SIGNED", "CLOSED")
-COO_HEADINGS = ("## Position", "## Endpoint", "## Blocked")
+COO_HEADINGS = ("## Position", "## Endpoint", "## Blocked", "## Owed by others")   # the last: Andrew-direct 2026-10-09 ~06:3xZ
+HUNG_MIN_PER_KTOK = 10.0   # 10 minutes per 1k tokens on the running query = hung (same record)
 CRO_HEADINGS = ("## New approach", "## Why it is not blocked", "## What changes for the COO")
 ID_RE = re.compile(r"^UB-\d{8}T\d{6}Z-[0-9a-f]{4}$")
 EMPTY_TICKS_BEFORE = 2      # two consecutive empty /next-calls ticks; the third writes to the CRO
@@ -161,6 +165,32 @@ def ticks_dir() -> str:
     return os.path.join(common or os.path.join(ROOT, ".git"), "unblock-ticks")
 
 
+def parse_tokens(s) -> float:
+    """'1.2k' / '1200' / '3m' -> a token count."""
+    t = str(s).strip().lower().replace(",", "")
+    mult = {"k": 1e3, "m": 1e6}.get(t[-1:], 1.0)
+    return float(t[:-1] if t[-1:] in "km" else t) * mult
+
+
+def hung_verdict(minutes: float, tokens: float) -> tuple:
+    """PURE. (verdict, minutes per 1k tokens). Andrew-direct 2026-10-09 ~06:3xZ: 'If that number is 10:1, e.g. 10min and 1k
+    tokens, that agent is hung, and most likely their whole box is hung.' Zero tokens after any time is hung."""
+    if minutes < 0 or tokens < 0:
+        raise Refused("REFUSED: minutes and tokens are not negative")
+    ratio = math.inf if tokens == 0 else minutes / (tokens / 1000.0)
+    return ("HUNG" if minutes > 0 and ratio >= HUNG_MIN_PER_KTOK else "WORKING"), ratio
+
+
+def cmd_hung(args) -> int:
+    v, ratio = hung_verdict(float(args.minutes), parse_tokens(args.tokens))
+    if v == "HUNG":
+        print("NEXT: most likely the whole box is hung (a GitOps failure). Relocate the owed work to another box, preferably the "
+              "requesting box; if it cannot move, record that it is handled when that box clears, and the condition.")
+    print("UNBLOCK-HUNG minutes=%s tokens=%s min_per_ktok=%s verdict=%s" % (
+        args.minutes, args.tokens, "no-tokens" if math.isinf(ratio) else "%.1f" % ratio, v))
+    return 0
+
+
 MAX_WAIT_DAYS = 7          # a dated wait silences the third-empty-tick rule for at most this long
 
 
@@ -248,8 +278,9 @@ def cmd_open(args) -> int:
     body = open(args.body, encoding="utf-8").read()
     miss = headings_missing(body, COO_HEADINGS)
     if miss:
-        raise Refused("REFUSED: the position lacks %s: tell the CRO your position, the endpoint, and why you are blocked" %
-                      ", ".join(miss))
+        raise Refused("REFUSED: the position lacks %s: tell the CRO your position, the endpoint, why you are blocked, and the "
+                      "chase of every act another seat owed (`## Owed by others`: owner, liveness read, LIVE/IDLE/HUNG/ABSENT, ack "
+                      "or none, relocation/park/workaround -- or `none` and the trail that showed it)" % ", ".join(miss))
     act = active_for(args.by, args.project)
     if act is not None:
         raise Refused("REFUSED: %s already has %s %s for %s" % (args.by, act["id"], act["state"], args.project))
@@ -451,7 +482,11 @@ def selftest() -> int:
             rec("proposed-without-a-proposal-is-refused", False)
         except Refused:
             rec("proposed-without-a-proposal-is-refused", True)
-        rec("coo-headings-checked", headings_missing("## Position\n", COO_HEADINGS) == ["## Endpoint", "## Blocked"])
+        rec("coo-headings-checked", headings_missing("## Position\n", COO_HEADINGS) == ["## Endpoint", "## Blocked",
+                                                                                         "## Owed by others"])
+        rec("hung-at-ten-minutes-per-1k-tokens", hung_verdict(10, 1000)[0] == "HUNG" and hung_verdict(9, 1000)[0] == "WORKING"
+            and hung_verdict(10, parse_tokens("1.2k"))[0] == "WORKING" and hung_verdict(25, parse_tokens("2k"))[0] == "HUNG")
+        rec("zero-tokens-after-time-is-hung-zero-time-is-not", hung_verdict(3, 0)[0] == "HUNG" and hung_verdict(0, 0)[0] == "WORKING")
         rec("record-carries-all-four-voices", all(s in render(check(g, "g")) for s in
                                                   ("The COO's position", "The CRO's approach", "The CTO's fold",
                                                    "The CVO's sign-off")))
@@ -501,6 +536,9 @@ def main(argv: list) -> int:
     r.add_argument("--id", required=True)
     r.add_argument("--by", required=True)
     r.add_argument("--wait-until", help="UTC ISO time of the dated event the COO resumes to wait on (wins over the fold's)")
+    hg = sub.add_parser("hung", help="the 10:1 test on a peeked seat's running query (Andrew-direct 2026-10-09 ~06:3xZ)")
+    hg.add_argument("--minutes", required=True, type=float, help="the query's elapsed minutes, read off the peek")
+    hg.add_argument("--tokens", required=True, help="the query's tokens, read off the peek (1200, 1.2k)")
     lst = sub.add_parser("list")
     lst.add_argument("--state", default="ALL")
     s = sub.add_parser("show")
@@ -513,7 +551,7 @@ def main(argv: list) -> int:
         return 2
     try:
         return {"tick": cmd_tick, "open": cmd_open, "propose": cmd_propose, "fold": cmd_fold, "sign": cmd_sign,
-                "refuse": cmd_refuse, "resume": cmd_resume,
+                "refuse": cmd_refuse, "resume": cmd_resume, "hung": cmd_hung,
                 "list": cmd_list, "show": cmd_show}[args.cmd](args)
     except Refused as exc:
         print(str(exc), file=sys.stderr)

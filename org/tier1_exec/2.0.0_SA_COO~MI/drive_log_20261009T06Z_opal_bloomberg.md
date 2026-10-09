@@ -50,3 +50,12 @@ this lane.
 - `safe-commit.sh`: refused twice on index drift; the edit was reverted both times, and the shared tree stayed clean.
 - `wk-provision.sh` x2.
 - Worker reports read in full.
+
+## Addendum 06:4xZ -- the ~28 re-seat finished at a clean point
+
+- MX-d-7 is COMPLETE on its branch: merge 407ae3578f (box/sitez, conflict-free), then proof, flip and rows @9f51c11617.
+  - d7.AC1-AC3 re-run PASS on the merged tree. proof-of-spec-check VALID; 3 of 3 surprise entries resolve.
+  - The channel parses (254 rows). Z-W28-S3's text still reads ARMED; the merge disarmed it. Rule it at the drain.
+- NOT drained, per "start no new work". The successor's first act: drain `wk-NFRA_MCPINDEX-28` with `safe-merge.sh` in a
+  drain-* worktree (the channel union), then re-seat ~29 as above.
+- The drive cron e822f7e3 was cancelled at 06:3xZ, so no tick starts work during the wind-down.
