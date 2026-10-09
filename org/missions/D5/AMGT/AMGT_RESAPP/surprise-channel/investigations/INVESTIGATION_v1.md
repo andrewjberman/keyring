@@ -22283,6 +22283,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A citing row, not an edit of S1 or S2. The class stands: site Z has ONE walker account and ONE port 5174 for every seat's walk, and no lease sequences them; three seats (AMGT_CORPUS's worker, 1.0.0_SA_CTO~Z's smoke server, 2.0.0_SA_COO~D's DSGN_AMGTV1 walk at 22:23Z) held them within one hour. Sequenced this time by message, not by a mechanism."
+},
+{
+  "id": "AMGT_RESAPP-Z-S377",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T23:57:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Row AMGT_RESAPP-Z-S369 stays UNRESOLVED (round 79 issuer act 1, ruling R4): ICT_US_Equity can be named from stored data alone, but whether it is a key apart from ICT_PM_Equity needs one Bloomberg identity read, which is Andrew's word and was not given.",
+  "spec_asserts": "Decomposition s.87b issuer act 1: 'Z-S369's disarm (R4): the read is printed; the row is marked unresolved with its reason unless Andrew gives the word for the one Bloomberg identity read that decides one key or two.'",
+  "world_is": "The read is printed at round79/reads/Z_S369_ICT_POOL_READ.md (@e9d194ebf0). Stored data names the key: s3://opal-data-etfs/bbg/2026-10-06/characteristics.parquet, security 'ICT US Equity', NAME 'INTL CONTAINER TERM SVCS INC', CNTRY_OF_DOMICILE 'PH' (the same name on 27 of 33 daily files). No ISIN, FIGI or exchange code is stored for the US key, so one key or two is not decided. No Andrew word for the identity read (ID_ISIN, ID_SEDOL1, ID_BB_GLOBAL, EXCH_CODE on 'ICT US Equity') is on record by round 79's close.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round79/reads/Z_S369_ICT_POOL_READ.md, sections 1-3, committed @e9d194ebf0.",
+      "Decomposition AMGT_RESAPP_DECOMP.md s.87b, the issuer act 1 line.",
+      "git log since 2026-10-08T09:00Z: no commit names an Andrew word for the ICT identity read."
+    ]
+  },
+  "notes": "A citing row, not an edit of Z-S369: its standing is the CVO's to move. The sentence the row should carry until the word: 'ICT_US_Equity is named INTL CONTAINER TERM SVCS INC from the stored Bloomberg row; the IDVZ holding is the same security by its stored identifier; whether it stays a key apart from ICT_PM_Equity is not decided.' Carried to the next round's owner with the project's move to DELL1."
 }
 ]
 ```

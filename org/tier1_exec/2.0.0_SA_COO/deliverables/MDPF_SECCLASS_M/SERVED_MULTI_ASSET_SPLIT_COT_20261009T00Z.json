@@ -1,0 +1,26 @@
+{
+ "token": "multi_asset",
+ "cut_utc": "2026-10-07T07:10:00+00:00",
+ "buckets": [
+  {
+   "bucket": "opal-data-cot",
+   "listed": 1153,
+   "hit_keys": [
+    {
+     "key": "platinum/clients/z09305621/concentration.json",
+     "hits": 1,
+     "last_modified": "2026-10-08T11:36:56+00:00",
+     "data_as_of": "2026-10-07",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z09305679/concentration.json",
+     "hits": 1,
+     "last_modified": "2026-10-08T11:36:56+00:00",
+     "data_as_of": "2026-10-07",
+     "post_switch": true
+    }
+   ]
+  }
+ ]
+}

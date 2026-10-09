@@ -2490,3 +2490,111 @@ round.** Never edit an existing row.
   "world_is": "Not met on the third clause. The issuer's own diagnosis (packet): what is wrong is the cash LEVEL carried into later months, which a per-day credit or blank cannot reach; the CTO put carried-level propagation in round 24 (msg 1618). That round's re-grade is where the 25 should return; this grade does not soften the clause to fit."
 }
 ```
+
+## ADVI_COTBKF-D2-W46-S1 -- CB24x1-AC2 not met: control_same=False, 52 of 667 no-sweep control months unchanged; the method is account-wide and moves every account
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W46-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~46",
+  "surfaced_at": "2026-10-08T23:25Z",
+  "one_line": "CB24x1-AC2 cannot be met as written: the real run ends control_same=False (52 of 667 no-sweep months unchanged, 58 of 65 accounts differ) because the method's cash ledger and fee/charge rules apply to every account, sweep or not",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md, section 'The control: months with no listed position' and the last line: control_same=False; 667 control months, 52 same verdict and same computed return (1e-09); by verdict move MATCH->MATCH 465, MATCH->UNGRADABLE 101, UNGRADABLE->MATCH 25, DIFF->MATCH 18, MATCH->DIFF 6; 517 of 667 keep their verdict",
+      "465 MATCH->MATCH months: 464 have a reported 0.0 (accounts holding almost nothing) and the computed return moved a median 0.00165 and at most 0.0465 pct points; the method posts every cash movement of every account (fees, trades, dividends); the round-23 chain posted fees and dividends not at all and a trade's cash only as a funding credit on a sweep-purchase day",
+      "101 MATCH->UNGRADABLE months (13 accounts, all NON_POSITIVE_BASE): under the method the account holds nothing, value 0.0; the round-23 chain carried a constant phantom cash level in them (00085401932 2023-09: value 78,848.46 every day, return 0.0, a MATCH against a reported 0.0). The 40-account positions snapshot check (sweep_regrade.md 'The ledger against the 2026-06-23 positions snapshot') equals the ledger to the cent on 40 of 40, which the round-23 level did not",
+      "the before arm reproduces round 23's baseline exactly (months_before=2058/1525/79010, as ~45's run), so the movement is the method's, not the baseline's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB24x1-AC2: 'the method re-graded against round 23's baseline; the no-sweep months unchanged' -- expect control_same=True, where control_same compares each month of an account with no listed-sweep transaction before and after (same verdict and same computed return to 1e-9 pct points).",
+  "world_is": "Not met. The CTO's method (E1) values the whole account, cash included, so the same rule runs on accounts with no sweep: their fees are debited, their trades and dividends reach cash, their charges become flows, and their value and return change. The control as defined cannot hold for a general rule; it held in rounds 22-23 because those rules fired only on sweep days. The test is not weakened and no rule is fitted to it; the reading by verdict (517 of 667 same) is printed beside the literal one."
+}
+```
+
+## ADVI_COTBKF-D2-W46-S2 -- CB-x-1 item 4 not doable from the stores the chain reads: no dividend ex-date exists in them, so the pay-vs-ex grade of the cross-month dividend months is NOT GRADED
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W46-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~46",
+  "surfaced_at": "2026-10-08T23:25Z",
+  "one_line": "The order grades every cross-month dividend month both ways (pay date, ex-date) from the Yahoo dividend series; no store the chain reads holds an ex-date, so the ex arm and the very set of cross-month months cannot be built and are reported NOT GRADED, never inferred",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal-data-cot silver/prices/canonical_prices.parquet (the first price store, address from lib/opal_naming.legacy_address('cottonwood-silver-canonical-prices')): schema date, asset_name, ticker, price, source; 11,291,021 rows; no dividend or ex-date column. The other five stores read through pc.STORES are cached as (kind, key, day, price, source) only (.scratch price_cache, this worktree)",
+      "silver transactions: every dv / dvr / dvlt / dvst row carries ONE date (Trade_Date = Cost_Date = Settle_Date on over 99.9% of rows, per the CRO research section 2), the pay date; 410,839 dv rows, none with an ex-date",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261008_COTTONWOOD_YAHOO_PRICE_BACKFILL_STRUCTURE.md section 3 stores the dividend events apart, but the backfill is dell1's queue and nothing it writes is in a store the chain reads; the order bars any download or vendor call",
+      "comp-find over the repo for ex_date: the matches are the rivalfunds ETF event tables (data/etfs/scripts/rivalfunds), another product's data and not read by this chain",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md, section 'Cross-month dividends graded BOTH ways: NOT GRADED'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-x-1: 'Implement both as a runner option (--dividend-date pay|ex, default pay, as delivered) and grade every month containing a cross-month dividend BOTH ways, printing the swing per month and in total, BEFORE either is adopted'; the CRO: ex-dates come from the Yahoo dividend series the price backfill already pulls.",
+  "world_is": "The option is built and tested (--dividend-date pay|ex, --ex-dates <cusip, pay_date, ex_date>; commonwealth_sweeps.method_cash_rows moves a dividend's cash posting to its ex-date; stub tests for both dates) and the runner grades the cross-month months both ways, with the swing, the moment an --ex-dates source is named. None exists, so the run prints NOT GRADED with the reason, the default stays pay, and neither date is adopted. Of the 98 MATCH->DIFF months, 45 hold a dv / dvlt / dvst row (a lead, not a cause: the dating cannot be tested without ex-dates)."
+}
+```
+
+## ADVI_COTBKF-D2-W46-S3 -- CRO table is silent on nine fee/charge/tax row types and ManCheck/ci needed a reading; defaults kept and reported: 35 of the 98 MATCH->DIFF months hold an unlisted charge or tax (ftax 30)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W46-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~46",
+  "surfaced_at": "2026-10-08T23:25Z",
+  "one_line": "The CRO's table names no treatment for ASF, bcf, cbf, fco, stp, term, ftax, stax, frntax; they keep the default (internal, a drag now that the ledger debits cash) and are reported, 35 of the 98 regression months hold one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md, section 'The method, row type by row type' (rows by line class and the treatment of each of the 61 types) and '### What the 98 MATCH -> DIFF months hold': 35 months hold an unlisted charge/tax type (ftax 30, cbf 3, fco 1, stax 1, stp 1), 45 hold a dividend row, 24 neither; 25 accounts",
+      "specimen 0QF879431 2016-03 (20 of the 98 months are this account): sl 648.19 on the sweep = lo 518.56 + ftax 129.63 on CFNCASH, reported 0.00; the lo is a flow, the ftax is not named, so it stays a drag and the month computes -0.1616",
+      "the CRO table row 'other charges' lists fch, genmain, fee, misc, csltfee, pcf; its section 1 says 'every other charge is a withdrawal'; the order lists the same six and says unlisted types are reported, never silently treated",
+      "ManCheck (124 rows) is read as ManAltT (a drag on the owing account, no cash debit: fee paid outside the account): no snapshot account carries one, so it is untested, as the CRO says. ci is read as a flow code because the CRO's flows row names it: no graded month holds a ci row (0 of 119 ci months), so it moved no grade"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-x-1: the CRO's table decides each row type's treatment; 'do not change a treatment because of its effect on the grade'; types the table does not list are reported, never silently treated.",
+  "world_is": "Nine fee/charge/tax types (ASF, bcf, cbf, fco, stp, term, ftax, stax, frntax; 5,596 CFNCASH rows, ftax 4,198) have no row in the table. Under the old chain their cash was never debited, so 'internal' meant 'ignored'; under the method the ledger debits it (the snapshot needs that), so the same label now means a drag. The default was kept and no variant was graded or adopted; whether a withholding that rides a withdrawal is a flow is the CTO's call, with the 35 months named here as the evidence."
+}
+```
+
+## ADVI_COTBKF-D2-S36 -- L9 CB24x1-AC4 NOT MET as written: dividend months not graded both ways (no ex-date source)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S36",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T00:05:26Z",
+  "one_line": "L9 CB24x1-AC4 NOT MET as written, on one clause that cannot be measured yet: no cross-month dividend month is graded both ways, because no store the chain reads holds an ex-date. Clause 1 (the method follows the CRO's table row by row) and clause 2 (round 22's 25: 25 of 25 MATCH) are MET; neither date is adopted by assumption.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_20261008_COMMONWEALTH_TWR_METHOD.md (the leg table)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md lines 1239-1306 (method, type by type), 1204 (25 of 25), 685ff (98 named)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_24_L9_GRADE_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB24x1-AC4: the rule follows the CRO's table row by row; round 22's 25 are each MATCH or named with a traced cause; every cross-month dividend month is graded both ways with the swing printed and neither date adopted by assumption.",
+  "world_is": "Clause 3's 'graded both ways' is not done and could not be: every dividend row carries the pay date only (row D2-W46-S2); the pay|ex option is built and tested with no ex-date input. A MET would claim a swing nobody measured. Closes when an ex-date source lands (the dell1 data-queue project; Yahoo carries ex-dates) and the 22 dividend-dated regressions are graded both ways, or when the CTO amends the clause by name."
+}
+```
