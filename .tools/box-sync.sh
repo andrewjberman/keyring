@@ -293,7 +293,8 @@ LOCK_DIR="${GITDIR}/commit-queue.lock"   # the lock safe-commit lands under (leg
 # first through safe-commit under this serial (LD-0639 grants the spawn audit to box managers); the merge then resolves the
 # file as a LINE UNION, CLOUD's file then the box-only lines (merge-resolve-known.py, 0.0.0_AB_MSTR msg 107847). Anything else -- staged by a seat, an earlier line edited,
 # a lane refusal -- is left alone, and the land HOLDS as before.
-for _p in $(python -c 'import importlib.util as u,sys;s=u.spec_from_file_location("m",sys.argv[1]);m=u.module_from_spec(s);s.loader.exec_module(m);print(" ".join(m.APPEND_ONLY))' "$ROOT/.tools/merge-resolve-known.py"); do
+APPEND_PATHS="$(python -c 'import importlib.util as u,sys;s=u.spec_from_file_location("m",sys.argv[1]);m=u.module_from_spec(s);s.loader.exec_module(m);print(" ".join(m.APPEND_ONLY))' "$ROOT/.tools/merge-resolve-known.py")"
+for _p in $APPEND_PATHS; do
   _mb="$(git merge-base "refs/heads/$B" "$CLOUD_TIP" 2>/dev/null)" || break
   git diff --quiet "$_mb" "$CLOUD_TIP" -- "$_p" && continue        # CLOUD did not change it: the land cannot overlap
   git diff --quiet -- "$_p" && continue                            # nothing uncommitted
@@ -336,15 +337,44 @@ for attempt in 1 2 3; do
     rm -rf "$LOCK_DIR"; echo "box-sync: a seat committed to $B while the merge was graded -- rebuilding on the new tip (attempt $attempt)"; continue
   fi
   git update-index -q --refresh >/dev/null 2>&1 || true   # stale stat data must not read as a seat's edit
-  if ! git read-tree -m -u "$P1" "$M"; then
+  # APPEND-ONLY LOGS STILL DIRTY AT THE LAND (0.0.0_AB_MSTR msg 107952): org/git-author-override-audit.log is appended by
+  # every safe-commit -- including the pre-land commit above -- and by this script, so it is dirty again within seconds and
+  # `read-tree -m -u` HELD on it every run. For each APPEND_ONLY path the merge changes that is dirty and not staged: land a
+  # tree that keeps the path at P1's blob (so the land does not touch the file), point the index at the merge's blob, then
+  # APPEND to the working copy the merge's lines it lacks (merge-resolve-known.py --append-missing). Nothing is rewritten,
+  # so a line another process appends meanwhile is never lost. A staged path is left alone and the land HOLDS as before.
+  LAND_TREE="$M"; APP_FIX=""
+  for _p in $APPEND_PATHS; do
+    git diff --quiet "$P1" "$M" -- "$_p" && continue
+    git diff --quiet -- "$_p" && continue
+    git diff --cached --quiet -- "$_p" || continue
+    git cat-file -e "$P1:$_p" 2>/dev/null || continue
+    APP_FIX="$APP_FIX $_p"
+  done
+  if [ -n "$APP_FIX" ]; then
+    _lidx="$GITDIR/box-sync-land-$$.index"; rm -f "$_lidx"
+    if GIT_INDEX_FILE="$_lidx" git read-tree "$M"; then
+      for _p in $APP_FIX; do
+        GIT_INDEX_FILE="$_lidx" git update-index --cacheinfo "$(git ls-tree "$P1" -- "$_p" | awk '{print $1}'),$(git rev-parse "$P1:$_p"),$_p" || LAND_TREE=""
+      done
+      [ -n "$LAND_TREE" ] && LAND_TREE="$(GIT_INDEX_FILE="$_lidx" git write-tree)" || LAND_TREE="$M"
+    fi
+    rm -f "$_lidx"
+    [ "$LAND_TREE" = "$M" ] && APP_FIX=""
+  fi
+  if ! git read-tree -m -u "$P1" "$LAND_TREE"; then
     rm -rf "$LOCK_DIR"
     echo "box-sync: HELD -- updating the shared tree would overwrite a seat's uncommitted edit of a path CLOUD changed. Nothing landed; the next slot retries after that seat commits."
     ROWNOTE="held=dirty-overlap ${GRADED_NOTE}"; row 4; exit 4
   fi
   if ! git update-ref -m "box-sync: take CLOUD @${CLOUD_TIP:0:10}" "refs/heads/$B" "$M" "$P1"; then
-    git read-tree -m -u "$M" "$P1" 2>/dev/null; rm -rf "$LOCK_DIR"
+    git read-tree -m -u "$LAND_TREE" "$P1" 2>/dev/null; rm -rf "$LOCK_DIR"
     echo "box-sync: the branch moved under the lock -- the shared tree was put back; nothing landed" >&2; ROWNOTE="cas=failed"; row 3; exit 3
   fi
+  for _p in $APP_FIX; do
+    git update-index --cacheinfo "$(git ls-tree "$M" -- "$_p" | awk '{print $1}'),$(git rev-parse "$M:$_p"),$_p"
+    echo "box-sync: $_p was dirty at the land -- $(python "$ROOT/.tools/merge-resolve-known.py" --append-missing "$(git rev-parse "$M:$_p")" "$_p" 2>&1)"
+  done
   rm -rf "$LOCK_DIR"
   TOOK="${CLOUD_TIP:0:10} hold=$(secs "$_TL")s ${GRADED_NOTE}"
   break
