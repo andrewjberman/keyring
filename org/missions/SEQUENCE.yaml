@@ -231,7 +231,7 @@ projects:
       prd_admitted: true
     why: 'The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE''s address()/name()/grade() against LGIC_NAMING''s schema and graded against LGIC_CANON''s rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. Fourth in the Platform Logic stage by Andrew''s ~05:2xZ 2026-09-16 word naming the four LGIC projects together. Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): a CONSUMER relation, never a gate on this row.'
   ADVI_FIRMBKTS:
-    fabric: laptop
+    fabric: dell1
     stage: 6
     waits_on: []
     hold:
