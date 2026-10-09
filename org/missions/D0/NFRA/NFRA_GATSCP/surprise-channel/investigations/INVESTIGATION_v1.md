@@ -477,3 +477,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "Two live arms fail. Cause not investigated (the timing points at e7c10e5b4b; not proven). Round 3's GS-f-1 edits the row gate and is told to add no OTHER failing arm, rather than to make these two pass. Owner of the checker change: 1.0.0_SA_CTO."
 }
 ```
+
+## NFRA_GATSCP-D1-W11-S1 -- GS-f-4 fold text and GF4-AC2 arm 2 disagree on a sub-field changed on one side only
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-W11-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_NFRA_GATSCP~11",
+  "surfaced_at": "2026-10-09T14:06Z",
+  "one_line": "GS-f-4 build text says fold field by field with a field changed on one side only taking that side; GF4-AC2 arm 2 (ack.by ZQ on one side, unchanged on the other) must be REFUSED, which a sub-field three-way would resolve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_GATSCP/deliverables/2.0.0_SA_COO~N1/round3_prep/checks/r3_xbox_custody.py resolver arm 2: x2 sets ack.by=ZQ (base ZG) and ack.bus_message_id=None, x sets only ack.bus_message_id=None; expects rc != 0",
+      ".tools/crossbox-call.py merge (:597-625) folds sub-fields two-way: null ignored, two different non-null values refuse",
+      "a pure sub-field three-way resolves arm 2 (ZQ changed on one side only) and fails the check; a pure two-way refuses arm 1 (sent.bus_message_id changed on theirs only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A field changed on one side only takes that side; a field changed on both sides to different values refuses (cell text), and the fold is the one crossbox-call.py merge uses.",
+  "world_is": "The two sources disagree on a sub-field changed on one side only. Built so BOTH checks hold: a sent/ack/closed block changed on one side takes that side (three-way on the block); a block both ends wrote folds sub-field by sub-field with crossbox-call's rule (null ignored, two different non-null values refuse). Effect: a receiver that rewrites an existing non-null sub-field (ack.by) while the sender also touched the ack block is refused for a person; a block changed on one side only is never refused. Check unedited."
+}
+```
