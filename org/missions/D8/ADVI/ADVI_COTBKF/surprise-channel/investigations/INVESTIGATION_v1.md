@@ -4885,3 +4885,53 @@ round.** Never edit an existing row.
  "world_is": "Redaction of a completed order is refused by the L6 neck unless a valid instance sits beside it; moving the instance and redacting the order cannot both land. The 7 orders need a ruling: gate exemption for a containment redaction, or an issuer-side route that does not edit completed orders."
 }
 ```
+
+## ADVI_COTBKF-D2-S73 -- disarms D2-W78-S2: residual id shapes owned by a planned all-shapes cell
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S73",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T16:52:44Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W78-S2 (its disarm_owner, same turn): the cot id shapes the round-51 patterns miss (z0+9, cv+8, 11-digit zero-led; containment AMENDMENT 2) are already censused by the issuer @14c7a0e16f (79 of 637 files, 14 added-only) and placed in ONE residual all-shapes cell, cut when round 52 (~79) drains (they edit overlapping files). No new copy of any id is made; the ids already sit in history, whose purge is Andrew's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deliverables/2.0.0_SA_COO~C2/ACCOUNT_ID_CENSUS_HEAD_20261009.md re-census section @14c7a0e16f",
+   "round 51 drained @bc0bb85599"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner.",
+ "world_is": "W78-S2's hazard is owned by a planned cell with its census; nothing further is written meanwhile."
+}
+```
+
+## ADVI_COTBKF-D2-S74 -- disarms D2-W78-S3: 7 completed orders' redaction routed to the gate owner
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S74",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "2.0.0_SA_COO~C2",
+ "surfaced_at": "2026-10-09T16:52:44Z",
+ "one_line": "DISARMS ADVI_COTBKF-D2-W78-S3 (its disarm_owner, same turn): 7 completed task orders could not be redacted because the TO issuance gate refuses an edit to a completed order whose proof instance was MOVED out (the proof instances carried ids). The redacted texts are kept OUTSIDE the repo (C:/dev/_cotbkf_private_evidence_20261009/redacted_TOs/, 7 files) and the gate question is routed to 1.0.0_SA_CTO~DELL2 (the gate's owner) for a containment route; nothing is bypassed meanwhile.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round 51 drained @bc0bb85599 (80 moved, 76 docs redacted, 3 paths renamed)",
+   "test_cotbkf_no_account_ids.py: 443 files, 7 with hits (the 7 orders)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner.",
+ "world_is": "W78-S3 is routed to the gate owner with the redacted texts held outside the repo."
+}
+```
