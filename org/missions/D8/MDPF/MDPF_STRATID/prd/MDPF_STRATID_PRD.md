@@ -5,7 +5,7 @@
  "project": "MDPF_STRATID",
  "directive": "D8",
  "fabric": "dell1",
- "prd_version": "v0.3",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md@68aa9dbe9e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -47,7 +47,8 @@ FWD-2  Every Cottonwood strategy outside its Models is added to Global
        SOURCE     brief O1; Andrew "additive because those are outside of the Models"
 
 FWD-3  Muni shows as an ALT strategy, at Cottonwood and at Global
-       DONE WHEN  EXERCISED -- one scheduled run read
+       DONE WHEN  EXERCISED -- a planted Muni SMA sleeve routed on the served bytes (the mechanism), and one
+                  scheduled run read (the organic case, today "no Muni SMA dollars")
        ACCEPT     Muni dollars sit under ALT Strategies, not under custom models; the large single Muni Income account was checked
                   by a person and either confirmed as Opal Muni or kept out with the reason written down, before any of it counted
        SOURCE     brief O2, F7
@@ -101,6 +102,8 @@ basis applied, dollars sent to Global, bucket shown).
   hard-coded copies in MDPF/ETFS code (brief F5).
 - **Muni:** no Muni rule in `OPAL_SMA_NAME_RULES`. `Opal_Muni_Sleeve` ($550,823.07) is a Custom model; `Opal_Muni_Income`
   ($64,119,753.85, 1 account) sits in Cottonwood's Custom catch-all (served 2026-10-07).
+
+**v0.6 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~18:5xZ), FWD-3's DONE WHEN only (UB-20261009T183753Z-5e37):** rule 27 L2 asks for "a mechanism driven deliberately, the organic case kept as the negative arm". The CRO census found zero Muni SMA dollars at any firm, so the mechanism is proved on a planted sleeve, in the existing seam harness, in memory, with no served write. The organic read stays on the scheduled run. **FWD-3's ACCEPT is UNCHANGED.** `Opal_Muni_Sleeve` ($550,823.07) is KEPT OUT with its reason written down: it is pending Andrew's call 203a, and its dollars already sit inside Cottonwood's Models. His answer moves that sleeve's membership, not this outcome. The ratified-text half re-signs.
 
 ## CONTRACTS
 

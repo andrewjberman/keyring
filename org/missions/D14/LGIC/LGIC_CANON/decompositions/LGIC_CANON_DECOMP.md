@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v6",
+ "decomp_version": "v7",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md@5b2336a5e4",
  "prd_half_hashes": {"brief": "SIGNED 4.0.0_SA_CRO, current at v1.3 (prd-signoff.py status, read at the L6 cut 2026-09-15)", "ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.3 (ENDPOINT and CONTRACTS unchanged)"},
@@ -804,3 +804,24 @@ Each is this seat's call at L5, revertible at the round-N analysis.
    pins the base the judges share.
 4. **Worker admission is not exercised** (G-C).
 5. **No cell has been exercised.** No effort or duration estimate appears here, deliberately.
+
+---
+
+## ROUND 5 (v7, 2026-10-09, `2.0.0_SA_COO~B1`) -- on `1.0.0_SA_CTO~DELL1`'s round-5 analysis
+
+**Source:** `org/missions/D14/LGIC/LGIC_CANON/ledger/ROUND_ANALYSIS.round5.md` (msg 3013). FWD-5 NOT REALIZED on two causes outside the firm-bucket carve-out: step 13 (a naming RAISE) and
+step 14a (portal paths). R1 and R2 rule both. One issuance, three cells:
+
+| cell | item | slot | depends on | risk | write set |
+|---|---|---|---|---|---|
+| `CN-q-1` | R1: step 13 re-run on today's tools; every remaining RAISE gets a registry row (rule 30) | ~2 | -- | LOCAL | `infra/logic/registry/name_rulings.json`, `key_rulings.json` (added rows only) |
+| `CN-q-2` | R2: `lib/opal_portal_paths.py` derives the firm's portal paths from its scope; uncreatable paths CARDED; checklist step 14a and its INPUTS row | ~3 | -- | LOCAL | `lib/opal_portal_paths.py`, its test, `infra/logic/10_ONBOARDING_CHECKLIST.md` |
+| `CN-q-3` | the FWD-5 run on the 49financial practice wave: reached + carded == 16, carded only firm-bucket steps, the dashboard routes hash unchanged | ~1 | `CN-q-1`, `CN-q-2` | LOCAL | its run record |
+
+Edges: `CN-q-1 -> CN-q-3`, `CN-q-2 -> CN-q-3` (the run reads both). M = 2 independent starts; CN-q-3 is spawned after both merge.
+Checks: `deliverables/2.0.0_SA_COO~B1/fixed_inputs/r5/check_cn_r5.py` (`step13`, `paths`, `run`), each FAILING at the base.
+
+**Measured at the cut, for the CTO:** `FIRM_ALLOWED_PATHS['49financial']` holds 8 PAGE paths with no firm slot. The scoped-route
+pattern R2 names (`/api/general/mdpf/{firm}/...`) is an API-route shape. CN-q-2 derives what a rule over the scope row can derive,
+and cards the rest with owners. If it cards page paths for a cause outside the carve-out, CN-q-3 cards step 14a and FWD-5 stays open
+on that cause; the run will show it.
