@@ -12,7 +12,7 @@ Graduated at round 34's L9 (ADJUDICATION_v28.md), round label v37: 6 rows, OPEN.
   "fabric": "dell2",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): 0QF878956 2022-03 was MATCH on the store basis (computed 4.7777%, diff -0.0423 pp) and is DIFF on the as-traded basis (computed 4.6451%, diff -0.1749 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#aaeb760c 2022-03 was MATCH on the store basis (computed 4.7777%, diff -0.0423 pp) and is DIFF on the as-traded basis (computed 4.6451%, diff -0.1749 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
   "evidence": [
    "investigation row ADVI_COTBKF-D2-S53",
    ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)"
@@ -33,7 +33,7 @@ Graduated at round 34's L9 (ADJUDICATION_v28.md), round label v37: 6 rows, OPEN.
   "fabric": "dell2",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): 0QF878956 2022-08 was MATCH on the store basis (computed -1.0270%, diff 0.0330 pp) and is DIFF on the as-traded basis (computed -1.1561%, diff -0.0961 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#aaeb760c 2022-08 was MATCH on the store basis (computed -1.0270%, diff 0.0330 pp) and is DIFF on the as-traded basis (computed -1.1561%, diff -0.0961 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
   "evidence": [
    "investigation row ADVI_COTBKF-D2-S54",
    ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)"
@@ -54,7 +54,7 @@ Graduated at round 34's L9 (ADJUDICATION_v28.md), round label v37: 6 rows, OPEN.
   "fabric": "dell2",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): B3S793726 2026-03 was MATCH on the store basis (computed -5.3477%, diff -0.0477 pp) and is DIFF on the as-traded basis (computed -5.4343%, diff -0.1343 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#f78e8ecd 2026-03 was MATCH on the store basis (computed -5.3477%, diff -0.0477 pp) and is DIFF on the as-traded basis (computed -5.4343%, diff -0.1343 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
   "evidence": [
    "investigation row ADVI_COTBKF-D2-S55",
    ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)"
@@ -75,7 +75,7 @@ Graduated at round 34's L9 (ADJUDICATION_v28.md), round label v37: 6 rows, OPEN.
   "fabric": "dell2",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): D49151054 2021-07 was MATCH on the store basis (computed -1.8551%, diff -0.0151 pp) and is DIFF on the as-traded basis (computed -2.4174%, diff -0.5774 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#df101fce 2021-07 was MATCH on the store basis (computed -1.8551%, diff -0.0151 pp) and is DIFF on the as-traded basis (computed -2.4174%, diff -0.5774 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
   "evidence": [
    "investigation row ADVI_COTBKF-D2-S56",
    ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)"
@@ -96,7 +96,7 @@ Graduated at round 34's L9 (ADJUDICATION_v28.md), round label v37: 6 rows, OPEN.
   "fabric": "dell2",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
-  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): D49151054 2021-10 was MATCH on the store basis (computed 4.4117%, diff 0.0117 pp) and is DIFF on the as-traded basis (computed 3.7866%, diff -0.6134 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
+  "mechanism": "ABSENT under the as-traded re-mint (CTO half condition, msg 3271): acct#df101fce 2021-10 was MATCH on the store basis (computed 4.4117%, diff 0.0117 pp) and is DIFF on the as-traded basis (computed 3.7866%, diff -0.6134 pp); the re-mint reads it ABSENT with reason REGRESSED_UNDER_AS_TRADED. Cause unmeasured.",
   "evidence": [
    "investigation row ADVI_COTBKF-D2-S57",
    ".scratch/advi_cotbkf/r34_out/month_grades_before.parquet and month_grades_after.parquet (issuer re-grade ~12:0xZ, SWEEP-REGRADE ... regressions=5)"
