@@ -1,0 +1,274 @@
+[
+ [
+  "REM",
+  0,
+  0.0,
+  "equity",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::COHEN STEERS GLOBAL REALTY I",
+  0,
+  0.0,
+  "equity",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::FLEXSHARES GLOBAL QUALITY REAL ESTATE INDEX FUND",
+  0,
+  0.0,
+  "equity",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::T ROWE PRICE REAL ESTATE",
+  1,
+  54288.55,
+  "equity",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::PACER DATA INFRASTRUCTURE REAL ESTATE ETF",
+  0,
+  0.0,
+  "equity",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::FIRST TRUST S P REIT INDEX FUND",
+  1,
+  6085.9,
+  "equity",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::PENDER REAL ESTATE CREDIT I1",
+  0,
+  0.0,
+  "fixed_income",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::SHAW PARK MULTI STRATEGF OFFSHORE FUND LP",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::BLACKSTONE PRIVATE CREDIT FUND SHS CL I",
+  3,
+  85410.26,
+  "fixed_income",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CARLYLE TACTICAL PRIVATE CREDIT N",
+  0,
+  0.0,
+  "fixed_income",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::AB SELECT US LONG SHORT ADVISOR",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::AQR LONG-SHORT EQUITY I",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CROMWELL LONG SHORT INVESTOR",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CALAMOS HEDGED EQUITY I",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::JPMORGAN HEDGED EQUITY 2 R6",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::JPMORGAN HEDGED EQUITY A",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::JPMORGAN HEDGED EQUITY I",
+  1,
+  19963.89,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::JPMORGAN HEDGED EQUITY R6",
+  1,
+  17940.62,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::TOEWS HEDGED U S FD",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CALAMOS MARKET NEUTRAL INCOME I",
+  1,
+  3761.07,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CALAMOS MARKET NEUTRAL INCOME R6",
+  1,
+  17568.13,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::VICTORY MARKET NEUTRAL INCOME I",
+  1,
+  4046.04,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::EATON VANCE GLBL MACR ABSOLUTE RETURN I",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::EATON VANCE GLBL MACRO ABS RET ADVTG A",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::ABSOLUTE CONVERTIBLE ARBITRAGE INSTL",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "ARBIX",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::FIRST TRUST MERGER ARBITRAGE CL I",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::NEXPOINT MERGER ARBITRAGE Z",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::BLACKROCK EVENT DRIVEN EQUITY INSTL",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::BLACKROCK SYSTEMATIC MULTI-STRAT INSTL",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "NAME::CATALYST MILLBURN HEDGE STRATEGY I",
+  0,
+  0.0,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ],
+ [
+  "JHEQX",
+  1,
+  19963.89,
+  "structured",
+  "alternatives",
+  "alternatives"
+ ]
+]
