@@ -57,6 +57,17 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   of the five parties Andrew named and no other row's, LOOKED UP in `infra/logic/registry/scopes.json`
   (`tenant.email_domain`) and `infra/logic/registry/mail_parties.json`, each entry beside its party; the demo tenant's
   domain is not admitted. The halves sign the entries; Phase B ships exactly those (the table is a deploy-side file).
+- **AMENDMENT A1 (issuer, 2026-10-09 ~01:3xZ; `1.0.0_SA_CTO~O` msg 32212, relaying the laptop's COMM_ASSIST ask).**
+  (a) The domain table: fill it per PRD v1.9 (PRD lines 685-691), the five parties of Andrew's 2026-10-07 ~18:3xZ
+  record item 6; a party with no domain in `scopes.json` / `mail_parties.json` is LEFT OUT and named as left out (the
+  laptop reads 4 of 5). (b) ONE new `MAIL_BEARER` value for the laptop Teams agent, issued into the gateway's secret
+  store. In Phase A, read how the mail route's bearer(s) reach the host (the secret `gateway/mail/bearer`, the deploy
+  script's host-side read, and whether more than one labelled value is supported, as `TEAMS_BEARER_LABELS` is) and
+  design the issuance as its OWN LEG of the ask: the secret's name (by the builder's grammar), the label, how the host
+  reads it at deploy, the rollback (the prior secret version), and the hand-over BY SECRET REFERENCE ONLY (the name
+  and version id; never the value, in no file, message, log or commit). The secret write and the deploy that reads it
+  are the applier's, never yours. If the route admits only one bearer value, say so: then the leg is a rotation, and the
+  ask names every current holder that must receive the new reference.
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -147,6 +158,9 @@ Report once per phase.
 - Rows carried: Z-W42-S1 (grant writer, ARMED), Z-W42-S2 (13-month I/O cost, ARMED: the AC3 read is its first live
   measurement), Z-S67 (disarms on AC2's revoked-families read), NFRA_OPALAI-Z-S62 (disarms on AC2's asker class),
   Z-W35-S1 (disarms with R50 live).
+- A1 (2026-10-09, CTO msg 32212): the domain table per v1.9 (a party with no domain left out) and one MAIL_BEARER
+  value for the laptop Teams agent as its own leg (applier writes the secret; hand-over by reference). Graded by no gate
+  limb as a modification (placeholders NONE).
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
