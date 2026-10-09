@@ -1,0 +1,227 @@
+[
+  {
+    "id": "NFRA_CTLPLN-W31-S3",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "The remote-job seam added fields (bid reviewer and unavailable_reason, accepted brief_sha256, complete coo and grade) that the tool, the skill and the tests carry, but the shared protocol file does not record them: 0 occurrences of brief_sha256 or unavailable_reason at HEAD.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W31-S3",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P2. The issuer hands the field text to 4.0.0_SA_CRO, who holds the protocol file. Done when the file names every field the tool sends.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-W32-S5",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "The box half of the same seam: the protocol file still shows the old payloads.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W32-S5",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P2. Closed by the same edit as W31-S3.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-W31-S4",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "mechanism": "Alongside has no recorded mail domain in the firm records, so its mail is never considered by mail_requests.py.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W31-S4",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P1, at the cut of item 5. The issuer rules whether a firm record is added and by whom. Done when the domain is recorded, or Alongside is named out of scope.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-W31-S5",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "mechanism": "Opal (internal) has no recorded mail domain in the firm records, so its mail is never considered.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W31-S5",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P1, at the cut of item 5. The issuer rules whether an Opal record is added. Done when the domain is recorded, or Opal mail is named out of scope.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-W31-S6",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "The gateway's mail route admits only an exact sender address from a three-address table, so it cannot serve a mail read under clause 9; the read needs NFRA_OPLGTW's mail-domain admission (site Z).",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W31-S6",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P1. The CTO routes the gateway change to NFRA_OPLGTW. Done when one real domain-admitted read is served.",
+    "owner": "1.0.0_SA_CTO",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "1.0.0_SA_CTO",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-W31-S12",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "assist.INTENT_SYSTEM (assist.py:844) says 'dev' only for a chat (C...), so a plain-English text cannot open a job on a mail item.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W31-S12",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P2, at the cut of item 5. Done when a plain-English text opens a job on an M tag in a test.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-W36-S2",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "transcripts-pull/build.sh zips registry JSON as read with no line-ending step; the shared tree's remediations.json and scopes.json read w/crlf.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W36-S2",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P2. Give transcripts-pull/build.sh the LF step teams-chat-assist/build.sh has, or measure the deployed hash equals an LF build. Done when two builds from trees with different line endings give one hash.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false,
+    "disarm": {
+      "state": "ARMED",
+      "owner": "2.0.0_SA_COO~R",
+      "at": null
+    }
+  },
+  {
+    "id": "NFRA_CTLPLN-W39-S1",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "mechanism": "CALLER_GRAPH_SCOPES['teams_route'] (graph_scope_map.py:98-99, unchanged at HEAD) omits Team.ReadBasic.All and Channel.ReadBasic.All; a host-overlay scoping of MS_INGEST_IDENTITY would cut them at token_broker.py:223.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row W39-S1",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P1, before the gateway release carrying the channel routes: add the two scopes, or read the host overlay and record MS_INGEST_IDENTITY unscoped. Done when one live call to each list route returns 200.",
+    "owner": "1.0.0_SA_CTO",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "1.0.0_SA_CTO",
+      "round": "v8"
+    },
+    "closed": false
+  },
+  {
+    "id": "NFRA_CTLPLN-S33",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "A refused End of Day redraft failed silently; CT-i-13 (live 22:32Z) restores the link line or texts the reason.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row S33",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P1. Done when the 2026-10-09 full-day read shows no End of Day event failed without a text.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false,
+    "disarm": {
+      "state": "ARMED",
+      "owner": "2.0.0_SA_COO~R",
+      "at": null
+    }
+  },
+  {
+    "id": "NFRA_CTLPLN-S34",
+    "project": "NFRA_CTLPLN",
+    "fabric": "laptop",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "mechanism": "A later first draft reused the run-once key and was not texted; CT-i-13 (live 22:32Z) keys every draft uniquely.",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md at HEAD 9cc0e521d0 row S34",
+      "adjudication row NFRA_CTLPLN-C-S4 (held)"
+    ],
+    "remedy": "P1. Done when the 2026-10-09 count shows sms_sent reconciling with texted plus updated, and no draft texted twice.",
+    "owner": "2.0.0_SA_COO~R",
+    "round": "v8",
+    "remediation": {
+      "state": "OPEN",
+      "owner": "2.0.0_SA_COO~R",
+      "round": "v8"
+    },
+    "closed": false,
+    "disarm": {
+      "state": "ARMED",
+      "owner": "2.0.0_SA_COO~R",
+      "at": null
+    }
+  }
+]

@@ -71,7 +71,6 @@ counts:
   - comp-imgread
   - comp-tagauthz
   - comp-to
-  - comp-v5-composite-test.sh
   profile_rows: 93
   excluded_not_in_authority: 4
   excluded_not_in_authority_tools:
@@ -857,25 +856,6 @@ tools:
     - head slice
     - json out
     declares_denominator_in_output: false
-  comp-honesty:
-    primitives:
-    - AWS-API
-    - AST
-    state: LIVE
-    derived: false
-    denominator_construction: ENUMERATED
-    denominator_knowable_up_front: true
-    universe: the live AWS control plane for the queried service
-    excludes:
-    - other regions
-    - other accounts
-    - resource types not queried
-    - non-Python lanes
-    - runtime/dynamic construction
-    control_established: POSITIVE
-    bounding:
-    - NONE -- unbounded output
-    declares_denominator_in_output: false
   comp-iam:
     primitives:
     - AWS-API
@@ -1528,28 +1508,6 @@ tools:
     - head slice
     - json out
     declares_denominator_in_output: true
-  comp-stitch-refresh:
-    primitives:
-    - GIT
-    - GRAPH-DB
-    state: PERSISTED
-    derived: true
-    denominator_construction: TRAVERSED
-    denominator_knowable_up_front: false
-    universe: the derived globgrph (kuzu) nodes and edges
-    excludes:
-    - gitignored paths
-    - submodule contents (gitlink only)
-    - anything not in the repo
-    - anything not yet ingested into the graph
-    - anything the SERVED projection has not picked up yet -- read the VINTAGE line
-    control_established: POSITIVE
-    refresh_mechanism: served projection; refreshed by the marker-driven cloud worker (NFRA_CLDGRPH CG-s-2/3),
-      never by a call; provenance header (VINTAGE) printed per call
-    refresh_is_incremental: true
-    bounding:
-    - json out
-    declares_denominator_in_output: false
   comp-symbols:
     primitives:
     - GIT

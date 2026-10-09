@@ -128,12 +128,6 @@ tools:
     concern: estate-OBJECT write-freshness + uncommitted-write drift (repo files; hot/warm/cold + archive
       candidates)
     canonical_call: comp-heat freshness [path] [--half-life N] [--top N] [--json]
-  comp-honesty:
-    concern: honesty/completion GATE over the GOV-A invariants (I1 honest-missing / I2 measure-per-case
-      / I3 control-fires-when-exercised); claim+evidence (or --file src.py) -> per-invariant PASS/FAIL/N-A,
-      makes NFRA_SEMCTL_HONESTY_INVARIANTS.md runnable (N-A is LOUD, never a silent pass)
-    canonical_call: comp-honesty <case.json> | comp-honesty --file <src.py> [--evidence <ev.json>] | comp-honesty
-      --self-test
   comp-iam:
     concern: grant-analysis -- boto3 calls vs IAM grants (permission gaps; who-can-do-what; the DESIRED/source
       half + `reconcile` overlay)
