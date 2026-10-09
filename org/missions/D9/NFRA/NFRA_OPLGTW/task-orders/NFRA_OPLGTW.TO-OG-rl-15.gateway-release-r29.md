@@ -202,7 +202,7 @@ Rows: id `NFRA_OPLGTW-Z-W43-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 ## 4. PROOF OF SPEC (literal; run from your worktree root, ONE AFTER THE OTHER, after the drain-back and the applier's ledger close are committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC1.sh; echo "exit=$?"</invocation><expect>(?s)descends from aa75078e1b=yes; host shipped files equal the release bytes: (\d+) of \1.*sentinel at HEAD=no; gateway files differing live\.\.CLOUD after drain-back \(listed CLOUD-only paths excluded\) 0.*floor: rl4\.AC1 yes; ht\.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC1.sh; echo "exit=$?"</invocation><expect>(?s)descends from aa75078e1b=yes; host shipped files equal the release bytes: (\d+) of \1.*sentinel at HEAD=no; drain-back: deployed release is an ancestor of HEAD=yes.*floor: rl4\.AC1 yes; ht\.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC2.sh; echo "exit=$?"</invocation><expect>(?s)r29 served content: fields=yes ssm=Success digest=yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-rl-15"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r32/checks/rl15.AC3.sh; echo "exit=$?"</invocation><expect>(?s)13-month grants: fields=yes ssm=Success digest=yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
@@ -248,6 +248,14 @@ Report once per phase.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
+
+- A8 (issuer, 2026-10-09 ~12:5xZ, r29 LIVE @5f1400c4a2): AC1's drain-back limb compared box/sitez's gateway tree to live;
+  that cannot hold now that box/sitez legitimately carries later unreleased cells (OG-tg-1 and OG-pf-1 for r30,
+  NFRA_MCPORTAL, NFRA_MCPINDEX, ADVI_BILLING E2). The limb is now: the deployed release (EC2_MANIFEST deployed_commit)
+  is an ancestor of HEAD -- Phase D merges `rel-nfra-oplgtw-r29` (tip `ee6bafe2c6`, carries `91811b648a`) into your
+  branch, and the issuer's drain lands it. The host-bytes limb (shipped files equal the release) is unchanged and
+  still proves what is LIVE. rl15.AC1.sh and this <expect> changed in the same commit. Graded by no gate limb as a
+  modification (placeholders NONE).
 
 <status>pending</status>
 <round>32</round>
