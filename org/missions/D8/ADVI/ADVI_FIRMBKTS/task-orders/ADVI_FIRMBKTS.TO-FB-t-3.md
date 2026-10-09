@@ -84,7 +84,7 @@ filing. Report once: the file, how many answers carry `unknown` in each field, t
 FB-t-4 (~3) when FB-t-2 is merged, so neither reader shares the placer's context. The agreement is r1_agree.py at close.
 
 # pipeline-override: the one refusal is LIMB PRD_HEADER.fabric='laptop' vs the register's 'dell1'. The register row is the authority since 1.0.0_SA_CTO's L3 re-placement @8afcb0f851; the PRD header repair is the CTO's (msg 3113: a PRD commit is refused until it gains a KEY SURFACES section). Every other limb passed in the issuer's dry run.
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <to_id>ADVI_FIRMBKTS.TO-FB-t-3</to_id>
 <slot>~2</slot>
