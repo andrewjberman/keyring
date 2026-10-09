@@ -18957,3 +18957,5 @@
 2026-10-09T15:24:38Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-3  branch=wk-healgap-2-3  reason=merged into CLOUD; --force discards 4 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.32 h
 2026-10-09T15:24:56Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-4  branch=wk-healgap-2-4  reason=merged into CLOUD; --force discards 9 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.34 h
 2026-10-09T15:25:15Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-5  branch=wk-healgap-2-5  reason=merged into CLOUD; --force discards 3 uncommitted/untracked and 5 ignored non-cache path(s); idle 24.33 h
+2026-10-09T15:27:27Z  KILL-MAINT-RUN  by 0.0.0_AB_MSTR~DELL1  host=DESKTOP-HK1UU7N  sessions=44  session_pids=691  targets=0  killed=0  failed=0  msys_ok=True  msys_rows=77  msys_joined=37  ms=1078
+2026-10-09T15:28:02Z  WORKTREE-GC  REMOVED-FORCE  path=C:/tmp/wk-healgap-6  branch=wk-healgap-2-6  reason=merged into CLOUD; --force discards 10 uncommitted/untracked and 8 ignored non-cache path(s); idle 24.03 h

@@ -47013,3 +47013,15 @@ REFUSED_20261008)
 2026-10-09T15:23:48Z MERGE-ATTEMPT  2.0.0_SA_COO~R1  rc=0  secs=103.14  graded=1/11 fast-lane  args=(wk-AMGT_RESAPP-345)  first=(none)
 2026-10-09T15:24:18Z MERGE-ATTEMPT  0.0.0_AB_MSTR~DELL1  rc=0  secs=1.95  graded=n/a  args=(--verify-merge 5fad5afd7f56170117dfd1e7d2acfb99dc79b2fa)  first=(none)
 2026-10-09T15:24:26Z BOX-SYNC  0.0.0_AB_MSTR~DELL1  mode=box  rc=0  secs=24.72  took=d74dcb9709 hold=2.48s graded=0/27 pushed=5fad5afd7f
+2026-10-09T15:25:20Z OVERRIDE  2.0.0_SA_COO~R1  1  (--author-override TREE_DELIVERABLES applied)
+2026-10-09T15:25:21Z PASS  0.0.0_AB_MSTR~DELL1  2  (all paths in-lane)
+2026-10-09T15:25:26Z LOCK-WAIT  2.0.0_SA_COO~R1  1s
+2026-10-09T15:25:28Z LANDED-2P  0.0.0_AB_MSTR~DELL1  2dabdec888  paths=2  validate=7.56s  wait=0.07s  hold=1.09s  build=0.61s  ref=0.46s  post-commit=2.43s  attempt=1
+2026-10-09T15:25:29Z LANDED-2P  2.0.0_SA_COO~R1  771f66d840  paths=1  validate=8.42s  wait=1.19s  hold=1.08s  build=0.71s  ref=0.34s  post-commit=2.21s  attempt=1
+2026-10-09T15:25:59Z PASS  0.9.0_WK_DSGN_AMGTV1~141  2  (all paths in-lane)
+2026-10-09T15:26:42Z MERGE-ATTEMPT  2.0.0_SA_COO~D1  rc=0  secs=4.07  graded=0/2 fast-lane  args=(wk-DSGN_AMGTV1-141)  first=(none)
+2026-10-09T15:27:17Z PASS  0.7.0_AE_CloudOps~RV1  3  (all paths in-lane)
+2026-10-09T15:27:29Z LANDED-2P  0.7.0_AE_CloudOps~RV1  909e43668c  paths=3  validate=13.72s  wait=0.09s  hold=1.17s  build=0.74s  ref=0.40s  post-commit=3.31s  attempt=1
+2026-10-09T15:27:35Z PASS  2.0.0_SA_COO~S1  1  (all paths in-lane)
+2026-10-09T15:27:44Z LANDED-2P  2.0.0_SA_COO~S1  74bd330c37  paths=1  validate=8.06s  wait=0.08s  hold=1.71s  build=1.33s  ref=0.36s  post-commit=2.97s  attempt=1
+2026-10-09T15:28:00Z PASS  1.0.0_SA_CTO~DELL1  1  (all paths in-lane)
