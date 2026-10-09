@@ -27,7 +27,9 @@ ONE PASS on box B:
      after the last file while unchanged. Empty sets reset the memory and send nothing.
   6. The scan heartbeat goes to s3://opal-313476888478-globgrph/fabric/open-calls/v1/box=<B>/scan.json -- the
      measurement xadj.py reads to decide whether the laptop is up.
-LAST line: OPEN-CALLS-SCAN device=<B> due=<n> closeout=<n> to_rule=<n> target=<serial|none> sent=<yes|no:<why>>
+  0. THE SWITCH first: `open-calls.py mode` (s3 .../open-calls/v1/mode.json, skill /keep-driving). `scan` off for B ->
+     the pass sends nothing (sent=no:mode-off) and the heartbeat carries mode=off, so paused never reads as dead.
+LAST line: OPEN-CALLS-SCAN device=<B> due=<n> closeout=<n> to_rule=<n> target=<serial|none> sent=<yes|no:<why>> ... mode=<on|off>
 
 Environment (tests only): OPAL_STATE_ROOT (open-calls lists), OPAL_XADJ_LOCAL (store + heartbeats), OPAL_LIVENESS_FILE,
 OPAL_INBOX_ROOT, OPAL_SCAN_STATE, OPAL_SCAN_DEVICE. Exit 0 = a pass ran (either verdict), 2 = this box unresolved,
@@ -257,7 +259,13 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
                      target], sort_keys=True)
     st = read_state()
     n = len(due) + len(closeout) + len(to_rule)
-    if n == 0:
+    mdoc, msrc = oc.mode_read()
+    mode = oc.mode_state(mdoc, device, "scan")
+    if msrc.startswith("unreadable"):
+        notes.append("keep-driving switch unreadable (%s); reads ON" % msrc)
+    if mode == "off":
+        sent = "no:mode-off"   # the switch (/keep-driving) holds the scan; the memory is kept for when it turns back on
+    elif n == 0:
         sent, st = "no:nothing-due", {}
     elif target is None:
         sent = "no:no-cto-or-mstr-live"
@@ -277,7 +285,7 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
                 sent = "no:deliver-failed(%s)" % exc
     hb = {"schema": SCHEMA, "device": device, "scanned_at": stamp(now), "cto_serial": cto, "cto_live": cto is not None,
           "target": target, "due": len(due), "closeout": len(closeout), "to_rule": len(to_rule), "adjudicator": adj,
-          "adjudicator_why": why, "sent": sent}
+          "adjudicator_why": why, "sent": sent, "mode": mode}
     if not dry:
         write_state(st)
         try:
@@ -286,8 +294,8 @@ def run_pass(device: str, dry: bool, now=None, probe=pid_alive) -> tuple:
             notes.append("heartbeat not written (%s)" % type(exc).__name__)
     for note in notes:
         print("WARN: " + note)
-    line = "OPEN-CALLS-SCAN device=%s due=%d closeout=%d to_rule=%d target=%s sent=%s adjudicator=%s" % (
-        device, len(due), len(closeout), len(to_rule), target or "none", sent, adj or "?")
+    line = "OPEN-CALLS-SCAN device=%s due=%d closeout=%d to_rule=%d target=%s sent=%s adjudicator=%s mode=%s" % (
+        device, len(due), len(closeout), len(to_rule), target or "none", sent, adj or "?", mode)
     return line, hb
 
 
@@ -301,7 +309,8 @@ def selftest() -> int:
         print("%s %s%s" % ("PASS" if ok else "FAIL", name, (" -- " + str(detail)) if detail and not ok else ""))
 
     base = tempfile.mkdtemp(prefix="ocscan_selftest_")
-    env_keys = ("OPAL_STATE_ROOT", "OPAL_XADJ_LOCAL", "OPAL_LIVENESS_FILE", "OPAL_INBOX_ROOT", "OPAL_SCAN_STATE")
+    env_keys = ("OPAL_STATE_ROOT", "OPAL_XADJ_LOCAL", "OPAL_LIVENESS_FILE", "OPAL_INBOX_ROOT", "OPAL_SCAN_STATE",
+                "OPAL_MODE_LOCAL")
     keep = {k: os.environ.get(k) for k in env_keys}
     try:
         os.environ["OPAL_STATE_ROOT"] = os.path.join(base, "state")
@@ -309,6 +318,7 @@ def selftest() -> int:
         os.environ["OPAL_LIVENESS_FILE"] = os.path.join(base, "liveness.json")
         os.environ["OPAL_INBOX_ROOT"] = os.path.join(base, "inbox")
         os.environ["OPAL_SCAN_STATE"] = os.path.join(base, "scan_state.json")
+        os.environ["OPAL_MODE_LOCAL"] = os.path.join(base, "mode.json")
         dev = "dell1"
         now = now_dt()
         alive = {101, 202}
@@ -368,6 +378,13 @@ def selftest() -> int:
         os.remove(os.environ["OPAL_SCAN_STATE"])
         line, _ = run_pass("laptop", False, now, probe)
         rec("the-laptop-gets-open-xadj-files-to-rule", "to_rule=1" in line and "sent=yes" in line, line)
+        oc.mode_write({"schema": oc.MODE_SCHEMA, "scan": "on", "empty_tick": "on", "boxes": {"laptop": {"scan": "off"}},
+                       "set_by": "t", "set_at": stamp(now), "reason": "r"})
+        os.remove(os.environ["OPAL_SCAN_STATE"])
+        line, hb = run_pass("laptop", False, now, probe)
+        rec("the-switch-off-for-this-box-sends-nothing-and-says-so", "sent=no:mode-off" in line and hb["mode"] == "off", line)
+        line, _ = run_pass(dev, False, now, probe)
+        rec("another-box-still-reads-on", "mode=on" in line, line)
     finally:
         for k, v in keep.items():
             if v is None:

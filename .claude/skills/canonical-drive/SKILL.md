@@ -30,7 +30,8 @@ TOs t/T | cells c/F | thread | act fired`.
 the measured limb; fire it. (2) PARALLELIZE -- an uncovered cell with no unmet dependency; cut and spawn it. (3) NUDGE --
 only after `/canonical-flow`'s LIVE-PRODUCTION PROBE (run from its file at HEAD) reports nothing moving, and after a
 look at the screen (`/unstick <serial> --peek`) that names which surface has the keyboard. Nothing moving is not proof of
-stalled and never licenses a kill. **None applies -> EMPTY TICK: run `/next-calls <CODE> --drive` and execute its SEQUENCE
+stalled and never licenses a kill. **None applies -> EMPTY TICK: if `python .tools/open-calls.py mode get --part empty_tick` reads `state=on` (the
+`/keep-driving` switch), run `/next-calls <CODE> --drive` and execute its SEQUENCE
 (NOW + WHILE WAITING), queueing each call with `open-calls.py add`; repeat until it returns no FREE option, then the row
 reads `NOTHING-LEFT: <blocks + queued call ids>`** (Andrew-direct 2026-10-09 ~00:0xZ, CTO deliverables `ANDREW_DIRECT_20261009_000xZ_*`).
 
