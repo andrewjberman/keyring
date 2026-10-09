@@ -1,0 +1,10 @@
+# drive log 2.0.0_SA_COO~T2 2026-10-09T11Z (desktop-n8rjv0a)
+
+- 2026-10-09T11:05Z NFRA_TRNSPT r20 EXECUTING | p18: TR2 READ the release 10:51:30Z (ack), cut C:/dev/wk-trnspt-p18 @634da92d06 (carries a9039b8d62) ~10:52Z; no ledger yet -> moving, no nudge | d20 Andrew, a18 laptop | DRIVE FORWARD (none owed; waiting on applier)
+- 2026-10-09T11:07Z next-calls --drive: FREE = removed 2 clean merged r20 worker worktrees (r20-1, r20-2; branches kept); r19-3..5 left (portal submodule drift + untracked .scratch); NOTHING-LEFT: p18 at TR2 (in progress), d20 deck at Andrew (queued), a18 at laptop, t1 on IB-pr-391
+- 2026-10-09T11:15Z NFRA_TRNSPT r20 EXECUTING | p18 ledger OPEN 99e0647333 (5 legs), apply in progress | row D2-S11 BLOCKING (host allowlist 403 on 4/4 meetings; 401 control) -> relay ask to MSTR~DELL2 + CTO~DELL2 (ids 3189/3190) for NFRA_OPLGTW at site Z | DRIVE FORWARD
+- 2026-10-09T11:26Z NFRA_TRNSPT r20 | p18 APPLIED 8d87f6a93f (9 added, outlook sha unmoved, invoke listed 0 refused 4), ledger closed; independent read: Lambda Active/Successful, rule ENABLED cron(0 13-22 MON-FRI); flipped complete 2257f25213 | D2-S11 BLOCKING relayed (3189); D2-S12 OBSERVATION -> next round repair cell | remaining: d20 deck (Andrew), a18 laptop | DRIVE FORWARD
+- 2026-10-09T11:36Z NFRA_TRNSPT r20 CLOSED 159471cd01 (MAY-CLOSE 2/2); site Z CTO TAKES D2-S11 (msg 3207, @261e2c42a0; expect 3 of 4); L10 to CTO~DELL2, compile ask to CVO | DRIVE FORWARD
+- 2026-10-09T11:5xZ NFRA_TRNSPT r21 ISSUED da995dba71 (TR-m21) + AMEND 1 f613876eed (TR-r21, ADDENDUM 12.1); 2 workers spawned (~1 m21 source map, ~2 r21 silver reader); holder call queued for Andrew | PARALLELIZE
+- 2026-10-09T11:48Z NFRA_TRNSPT r21 EXECUTING | 2 workers spawned ~11:46Z, no edits yet (reading); D2-S11 re-probe waits on site Z; holder call routed CROSS-BOX | DRIVE FORWARD (none owed; workers running)
+- 2026-10-09T11:53Z NFRA_TRNSPT r21 | ~1 committed 98b38066f9 (map) + proof/row staged; ~2 committed 3c68dab9c9 (role build); awaiting reports | DRIVE FORWARD (workers running)

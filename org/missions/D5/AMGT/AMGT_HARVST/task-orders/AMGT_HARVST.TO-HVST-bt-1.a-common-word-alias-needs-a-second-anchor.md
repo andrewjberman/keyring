@@ -104,6 +104,24 @@ Continue on the same branch; its commits stay, and you change them forward.
 5. The eight existing test files that set the switch False: keep that only where the fixture alias is flagged under the
    NEW definition. Otherwise remove it. List which you kept.
 
+## AMENDMENT 2 -- flag at LOWER / CAP_MID >= 0.2 (ADDENDUM 5, `1.0.0_SA_CTO~DELL1` msg 2380)
+
+AMENDMENT 1's strict test (LOWER > CAP_MID) flagged 0 of 413 aliases over 20,908 articles, so CVO ROWS read 0 of 14. That
+test is replaced. Everything else in AMENDMENT 1 stands: the counts, the file, the loader, the tests and the census lines.
+
+1. **An alias is a COMMON WORD when LOWER / CAP_MID >= 0.2**, with CAP_MID = 0 counting as flagged when LOWER > 0. Put the
+   threshold in one module constant, `_COMMON_WORD_RATIO = 0.2`. The silver measure says this flags Booking, Cadence,
+   Orange (both listings) and Visa: the break sits before Waste Management at 0.17. Print the flagged list with counts and
+   ratio, plus the 10 nearest misses, exactly as before.
+2. **The census** adds, for EACH flagged alias, `REMOVED SAMPLE <alias>: 10`: ten removed mentions chosen by (article
+   key ascending, every k-th), each with article key, title and the 160 characters around the discarded match. This
+   replaces the 20-row mixed sample. The CTO STOPs an alias whose removals are mostly true company mentions; look hardest
+   at Booking and Cadence. No verdict from you.
+3. **`CVO ROWS: <x> of 14 removed`** must read 14 of 14. If it does not, report it and do not tune the rule.
+4. **Tests:** add (vii): an alias at ratio exactly 0.2 is flagged, and one at 0.19 is not, with the constant patched.
+   Re-check the eight switch-False files under this definition (keep the switch-False fixture only where the fixture alias
+   is now flagged), and list which you kept.
+
 <paths>
 lib/research/harvest/
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~132/

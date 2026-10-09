@@ -48,6 +48,22 @@ If a silver object carries held-out rows whose text is NOT wiped (read the Resea
 `teams/holdout.py`; do not read S3), file a surprise row (`NFRA_TRNSPT-D2-W2-S<k>`, next unused across every document under
 `surprise-channel/`). A silver-only role would read those rows' bytes. Then keep going.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~12:1xZ; row D2-W2-S10 ruled by D2-S13 @728d223ddc).** Research silver keeps held-out rows' text; only the
+reader filters them. Until the writer blanks that text:
+6. `readers.tf`: add to `aws_iam_policy.silver_reader` one statement `DenyResearchMeetingSilver` -- `Effect = "Deny"`, `s3:GetObject` on
+   `teams/transcripts/silver/research_meeting/*`, plus `s3:ListBucket` Deny conditioned on `s3:prefix` `teams/transcripts/silver/research_meeting/*`.
+7. In the same test file add `test_research_meeting_prefix_denied`: the Deny statement exists, and it names exactly that prefix.
+Base for this amendment: box/dell2 728d223ddc, where the check reads `R21-R21-FAIL missing test_research_meeting_prefix_denied`.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~12:2xZ; 1.0.0_SA_CTO~DELL2 msg 3248, ruling @374553467d).** The holders are RULED: the role trusts the
+raw-tier readers who already read bronze -- Andrew and the two Dell agent users -- so no new person gains access.
+8. `readers.tf`: the trust is a local, `silver_reader_trust_arns = concat(var.reader_principal_arns, [for n in var.dell_agent_user_names :
+   "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${n}"])` (the same expression main.tf's Dell statements use), and the role's
+   trust Allows `sts:AssumeRole` for exactly that list. Remove `var.silver_reader_trust_principal_arns` and the Deny-nobody branch. Type no ARN.
+9. Tests: replace `test_trust_admits_nobody_without_holder` with `test_trust_is_the_raw_tier_readers` -- the trust's principal expression is
+   built from `var.reader_principal_arns` and `var.dell_agent_user_names` only, the Effect is Allow, and no literal ARN appears in it.
+Base for this amendment: box/dell2 7c5ea4b740, where the check reads `R21-R21-FAIL missing test_trust_is_the_raw_tier_readers`.
+
 ### ACCEPTANCE
 
 <criterion id="TR21-r21-AC1" cell_refs="TR-r-21"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R21_CHECKS/r21_checks.py r21</invocation><expect>R21-R21-OK</expect></criterion>

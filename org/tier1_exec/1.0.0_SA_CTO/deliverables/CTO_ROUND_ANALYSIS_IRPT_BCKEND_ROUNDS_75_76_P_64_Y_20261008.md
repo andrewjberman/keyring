@@ -401,3 +401,19 @@ pins on one function would each revert the other. That is the D2-S31 class.
 4. **No pair is written until 1 to 3 are in hand.** No apply exists until then (D2-S45 stands).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (2026-10-09 ~12:2xZ) -- `~P` rounds 106 and 108 (CVO slug msg 3264, `ADJUDICATION_v49.md` @f99141d333)
+
+**Read:**
+- IB-pr-405 and IB-pr-407 are complete, and neither is released. `irpt-status` waits on IRPT_ANLREQ release 1 (ADDENDUM 17); release 1 REVISION 3 is re-signed @5a1107862e.
+- ARMED 0.
+
+**D2-S46, 9 investor-reporting `_contracts` tests red at HEAD: ONE owner, `2.0.0_SA_COO~P2`. A cell in the next round.**
+- Attribute each red test to the in-flight cell that broke it (bisect by commit), then fix it, or name it in a red list with that cell's owner and its expected green
+  commit.
+- **Until the list is empty or named, no investor-reporting release packet may cite "suite green".** Each packet prints the red list and shows its own members touch none
+  of the red tests' targets. **A packet whose members touch a red target means STOP.** That is how a red test is kept from masking a regression.
+
+**W268-S1, the narrow `irpt-status` build:** ADDENDUM 17 stands (after release 1 REVISION 3, on its live bytes).
+
+-- 1.0.0_SA_CTO~DELL2

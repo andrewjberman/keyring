@@ -4475,3 +4475,56 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S41 -- PROOF_OF_SPEC artifacts_produced has no git-exempt kind for a live AWS resource, so an order whose deliverable IS a secret cannot register it
+
+```json
+{
+  "id": "IRPT_DASHBD-S41",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T12:30:00Z",
+  "one_line": "PROOF_OF_SPEC.schema.json artifacts_produced cannot register a live AWS resource that is not S3 or DynamoDB: kind has no Secrets Manager (or Lambda/IAM-resource) member whose rows are exempt from git resolution, so an AE order whose deliverable IS an AWS resource must omit it from artifacts_produced.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json artifacts_produced[].kind enumerates script, s3_object, terraform, config_data, schedule, iam, test, doc, frontend_component, and every row must carry commit_or_etag resolvable as PENDING-THIS-COMMIT or a 7-40 hex commit-ish, except rows whose kind the checker skips as 'not a git ref'.",
+  "world_is": "Measured while closing TO-DB-b-84, whose single produced deliverable is the Secrets Manager secret arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/investor-reporting/svc-custody-statement-9CmPmS. Registering it was attempted twice and refused twice by proof-of-spec-check (checker-vintage 09f449396d): (a) kind 'iam' with commit_or_etag 'secret version 733fd650-...' -> VIOLATION 'neither PENDING-THIS-COMMIT nor a 7-40 hex commit-ish for a repo artifact'; (b) kind 'iam' with commit_or_etag PENDING-THIS-COMMIT -> VIOLATION 'is PENDING-THIS-COMMIT but does NOT exist in the working tree -- a dead path cannot ride the commit that carries this proof'. The checker's skip list is exactly 's3_object/ddb_rows (not a git ref; skipped)', so those two kinds are the schema's only escape hatch for live state, and 'iam' is graded as a REPO artifact (a policy .tf file) rather than as an IAM resource. THE GAP IS A TAXONOMY GAP, not a checker bug: rule 24(i) MECE over the declared domain 'artifacts an order produces' -- the domain holds live AWS resources beyond S3 and DynamoDB (a secret, a Lambda alias, an EventBridge rule, an IAM user), and the enum covers none of them in the git-exempt partition. The tell is grammatical, rule 24(i)'s inherited-claim form: the enum reads as if it enumerates every artifact kind while its git-exemption partition names two. CONSEQUENCE AS BUILT: this instance omits the secret from artifacts_produced and carries it in MINT_RECORD.secret, in the DB41-1-AC2 denominator and in the deploy ledger instead -- so the proof is complete but artifacts_produced UNDERSTATES what the order produced, and a reader counting artifacts_produced rows to learn what an AE order created will undercount by exactly the live resources. WHAT WOULD CLOSE IT: a git-exempt kind (e.g. aws_resource) added to the enum and to the checker's skip list, by the schema's owner. NOT this seat's to write: org/standards/ is outside TO-DB-b-84's grant, and this is a fabric-wide contract.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json (artifacts_produced[].kind enum; required commit_or_etag)",
+      ".tools/proof-of-spec-check.py artifact-resolution limb (its frame line names the skip set 's3_object/ddb_rows (not a git ref; skipped)')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.7.0_AE_CloudOps~DB2/IRPT_DASHBD.TO-DB-b-84.svc-custody-mint.proof_of_spec.json (declared_exclusions records the omission and why)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.7.0_AE_CloudOps~DB2/MINT_RECORD.json (secret.arn, secret.version_id -- where the artifact is actually recorded)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W64-S1 -- verify-persisted can no longer re-read the report blob: the owned read IB-pr-405 serves the report INDEX ({report_id, revision, retention_ref}) and no blob location, so the check narrows from content to index agreement
+
+```json
+{
+  "id": "IRPT_DASHBD-W64-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~64",
+  "surfaced_at": "2026-10-09T12:40:00Z",
+  "one_line": "DB-b-85's verify-persisted re-read the persisted object from S3 (version-pinned from the index row) and checked its sha256 against the revision, its report_kind, its as_of_date and its composition_sha256 binding. IB-pr-405 returns the index only, so DB-b-89's verify-persisted checks that the route's report_index names the same report_id and revision as the refs, bound to the same artifact_id and composition_sha256; the blob is not re-read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-89: verify-persisted still prints `PERSISTED kind=CUSTODY_REPORT revision=<n> ref=<ref>`, taking its values through the owned route and never irpt-requests.",
+  "world_is": "persist_inputs has exactly four members and report_index has exactly {report_id, revision, retention_ref} (OwnedAnalysisRequest.schema.json, additionalProperties false); no bucket, key or version id is served. The S3 blob read therefore has no input without a direct index-row read, which the CTO ruled out (ADDENDUM 9.2). The index row is written only by the persist, so index agreement is evidence the persist landed; it is not a re-read of the report's content. DB-b-86's read-back criteria that expect a content-level check of the persisted object would need a further owned read. Separately: the contract fixture types revision as an integer (1) where owned_report.py serves a string; the runner compares str() of both and records the revision under the refs key `revision`, which the no-figure guard already allows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json:88-106",
+      "infra/aws/lambda/investor-reporting/ops/owned_report.py:196-226",
+      "infra/aws/lambda/investor-reporting/_contracts/fixtures/OwnedAnalysisRequest.persist_inputs.valid.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
