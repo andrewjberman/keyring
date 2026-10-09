@@ -211,3 +211,28 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The L10 limb counts it as one, so a round close with a live seat-home pointer needs an audited override. Carried here by the box manager, who rules nothing on it; per R3 it falls away once this project's round-2 lane fix makes pointers unnecessary."
 }
 ```
+
+## NFRA_GATSCP-D1-S5 -- seven other gates on the commit path still read the working tree or grade beyond the act (outside C-SCOPE)
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S5",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~N1",
+  "surfaced_at": "2026-10-09T10:09Z",
+  "one_line": "Beyond this project's two gates, the commit path still has gates that read the shared working tree or grade beyond the act: commit-gate (py_compile/open of the act's files from disk), to-pipeline-gate (orders, rows and PRDs from disk), to-decomp-ref-lint (every added file in the index; disk reads), owned-paths (.owned-paths.yaml from disk), mstr-ledger-check (disk), pipescript-suite (whole suite), rcg-manifest-check (all of rcg/, MANIFEST from disk).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only measurement at box/dell1 HEAD 32c925520c, 2026-10-09 ~10:0xZ: safe-commit.sh gate table (commit-gate :979-1007; to-pipeline-gate :1167-1182, check_file reads the TO from disk at to-pipeline-gate.py:2837-2840; to-decomp-ref-lint :1439-1481, to-decomp-ref-lint.py:111 and :465) and the installed pre-commit hook (owned-paths-check.sh:37; mstr-ledger :167-171; pipescript-suite :208; manifest_check.py:94)",
+      "decompositions/NFRA_GATSCP_DECOMP.round2.md measurement 5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-BYTES: every gate IN SCOPE reads the staged or merged bytes; C-SCOPE names the scope as the corpus pass and the missions-tree check. FWD-6 ACCEPT: another seat's unsaved edit in the shared folder is never judged as part of someone else's commit.",
+  "world_is": "Round 2's GS-e-6 closes the last working-tree read inside the two gates in scope (the close gate). The seven gates above are outside C-SCOPE, so FWD-6's ACCEPT holds for this project's gates while the shared-folder commit path as a whole still reads disk in places. Whether those gates join this project (a PRD addendum) or go to their owners is the CTO's call at the round-2 analysis."
+}
+```
