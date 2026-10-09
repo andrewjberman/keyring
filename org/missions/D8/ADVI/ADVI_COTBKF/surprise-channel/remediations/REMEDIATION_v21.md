@@ -22,11 +22,11 @@ Graduated at round 29's L9 (ADJUDICATION_v23.md), round label v30: D2-S45, OPEN.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v30",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v30"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

@@ -1307,6 +1307,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-e-19 build step 1: each pull stores its listing as one snapshot behind the existing apply flag, with no other change named.",
     "world_is": "The write adds an eighth put and a second /state/ key on an applied pull, so two older assertions in test_teams_pull.py that count puts and state keys are now stale; a drain-time run of that file goes red until they are updated.",
     "notes": "Not worked around: the snapshot write was not made opt-in and the older test file was not edited."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T09:08:00Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The Teams pull cannot land a meeting even if applied: its gateway transport is a STUB that raises GatewayToolsAbsent on every call, and pull.tf names a bearer secret (teams/global/gateway-token) that does not exist; TO-APPLY-p18 stopped at step 1 on the secret.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the cell: a real Teams gateway transport + the owner-named bearer in pull.tf), then 2.0.0_SA_COO~T2 cuts it",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/gateway_client.py:5 and :81 -- 'a GatewayTransport STUB that raises'; 'each method raises GatewayToolsAbsent naming the route it would call; no network call'",
+        "infra/aws/terraform/transcripts/pull.tf local pull_secret_name = teams/global/gateway-token; applier msg 2964 @7d2c8c8c53: describe-secret ResourceNotFoundException (list-secrets visible: 115; nearest gateway/teams/bearer, gateway/transcripts/bearer)",
+        "the live mail pull reads its owner-named bearer gateway/mail/bearer (mail_pull.tf:28-30, gateway_mail.py:39) through a real transport (outlook/gateway_mail.py)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ADDENDUM 7: the Teams pull apply proves FWD-2 on its first scheduled research_meeting landing.",
+    "world_is": "Applied as written, the function would run hourly and land nothing (stub transport), and its bearer secret is absent. The apply is the wrong next act; the transport and the secret name come first.",
+    "notes": "The applier did not read a neighbouring secret (a valid expiry from the wrong secret is a false pass). KMS CreateGrant limb PASSED."
   }
 ]
 ```

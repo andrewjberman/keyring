@@ -21,11 +21,11 @@ Graduated at round 1's L9 (ADJUDICATION_v1.md), round label v2: W1-S6, OPEN.
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

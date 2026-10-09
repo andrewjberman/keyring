@@ -1024,6 +1024,24 @@ fi
 # unchanged. No environment value turns this switch on or off; the file is the only switch.
 if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
   NGATE_FILES=()
+  # _np_unwind: remove THIS call's placement-override audit row (matched by its id) from the file and the index, so a refused
+  # attempt leaves no row behind. Never touches another row; a file left empty that HEAD does not hold is removed.
+  NP_ROW_WRITTEN=0; NP_ID=""
+  _np_unwind() {
+    [ -n "${NP_ID:-}" ] && [ -n "${NP_LOG:-}" ] || return 0
+    if [ -f "$NP_LOG" ]; then
+      grep -vF "\"id\":\"${NP_ID}\"" "$NP_LOG" > "$NP_LOG.unwind" || true
+      if [ -s "$NP_LOG.unwind" ]; then cat -- "$NP_LOG.unwind" > "$NP_LOG"; else rm -f -- "$NP_LOG"; fi
+      rm -f -- "$NP_LOG.unwind"
+    fi
+    if git cat-file -e "HEAD:${NP_REL:-org/audit/naming-place-override-audit.jsonl}" 2>/dev/null; then
+      git reset -q HEAD -- "$NP_LOG" 2>/dev/null || true
+    else
+      git rm -q --cached --ignore-unmatch -- "$NP_LOG" 2>/dev/null || true
+    fi
+    NP_ROW_WRITTEN=0
+    return 0
+  }
   while IFS= read -r _nf; do
     case "$_nf" in
       *.py|*.js|*.mjs|*.ts|*.tf|*.json|*.yaml|*.yml) NGATE_FILES+=("$_nf") ;;
@@ -1050,16 +1068,24 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
     # THE PLACEMENT OVERRIDE (LGIC_BLANKFIX FWD-6, cell BF-x-4, row W1-S21). The shape of `# surprise-row-override:` below: a
     # commit-message line `# naming-place-override: <reason>` (reason required, non-empty), read from -m and -F, honoured ONLY when
     # the placement step refused (NGATE_PLACE_HIT) and ONLY here -- safe-merge.sh and every other path read no such line. This
-    # block is the ONLY setter of NAMING_PLACE_OVERRIDE: it appends one audit line to org/naming-place-override-audit.log
-    # (UTC time, author, id, reason, the refused names), exports the audit line's id, and runs the gate once more; the gate
-    # passes the placement refusal only when that audit line exists (naming-gate.py, override_valid), so a variable set by hand
-    # passes nothing. A message line with an empty reason is no override. The variable is unset again after that one run.
+    # block is the ONLY setter of NAMING_PLACE_OVERRIDE: it appends one JSON audit line to the TRACKED file
+    # org/audit/naming-place-override-audit.jsonl (utc, author, id, reason, names, msg_sha256), STAGES that file and adds it to
+    # THIS commit's pathspec (round 10 BF-y-1: the landed commit carries its own audit row), exports the line's id, and runs the
+    # gate once more; the gate reads the row from the INDEX copy and passes the placement refusal only when that staged row
+    # exists AND its msg_sha256 is the sha256 of the message this call commits (round 10 BF-y-2: the override is bound to the
+    # commit message, not to a row's age), so a variable set by hand, or a row written for another commit, passes nothing. THE
+    # MESSAGE: the exact text this call commits -- the -F file's bytes, or the -m texts joined by a blank line -- is written to
+    # the temporary file NP_MSGFILE; its sha256 is the row's msg_sha256, and the gate is handed the same file by
+    # `--message-file`. A message line with an empty reason is no override. The variable is unset again after that one run and
+    # the file is removed. A refusal that follows removes the row again (_np_unwind), so a blocked attempt leaves no row behind.
     if [ "$NGATE_PLACE_HIT" -eq 1 ]; then
-      NP_MSG=""; _npk=0
+      NP_MSGFILE="$(mktemp "${TMPDIR:-/tmp}/naming-place-msg.XXXXXX" 2>/dev/null || echo "${TMPDIR:-/tmp}/naming-place-msg.$$")"
+      : > "$NP_MSGFILE"; _npk=0; _npn=0
       while [ $_npk -lt ${#COMMIT_ARGS[@]} ]; do
         _npa="${COMMIT_ARGS[$_npk]}"; _npf=""
         if [ "$_npa" = "-m" ] && [ $((_npk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
-          NP_MSG="${NP_MSG}"$'\n'"${COMMIT_ARGS[$((_npk + 1))]}"; _npk=$((_npk + 2)); continue
+          [ "$_npn" -gt 0 ] && printf '\n\n' >> "$NP_MSGFILE"
+          printf '%s' "${COMMIT_ARGS[$((_npk + 1))]}" >> "$NP_MSGFILE"; _npn=$((_npn + 1)); _npk=$((_npk + 2)); continue
         elif { [ "$_npa" = "-F" ] || [ "$_npa" = "--file" ]; } && [ $((_npk + 1)) -lt ${#COMMIT_ARGS[@]} ]; then
           _npf="${COMMIT_ARGS[$((_npk + 1))]}"; _npk=$((_npk + 2))
         elif [ "${_npa#--file=}" != "$_npa" ]; then
@@ -1068,20 +1094,31 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
           _npk=$((_npk + 1)); continue
         fi
         if [ -n "$_npf" ] && [ "$_npf" != "-" ] && [ -f "$_npf" ]; then
-          NP_MSG="${NP_MSG}"$'\n'"$(cat -- "$_npf" 2>/dev/null || true)"
+          [ "$_npn" -gt 0 ] && printf '\n\n' >> "$NP_MSGFILE"
+          cat -- "$_npf" >> "$NP_MSGFILE" 2>/dev/null || true; _npn=$((_npn + 1))
         fi
       done
-      NP_OVR="$(printf '%s' "$NP_MSG" | sed -n 's/^[[:space:]]*#\{0,1\}[[:space:]]*naming-place-override:[[:space:]]*//p' | head -1 | sed 's/[[:space:]]*$//' || true)"
+      NP_OVR="$(cat -- "$NP_MSGFILE" | sed -n 's/^[[:space:]]*#\{0,1\}[[:space:]]*naming-place-override:[[:space:]]*//p' | head -1 | sed 's/[[:space:]]*$//' || true)"
       if [ -n "$NP_OVR" ]; then
         NP_NAMES="$(printf '%s\n' "$NGATE_OUT" | sed -n 's/^NAMING REFUSE [^ ]* \([^ ]*\) -> .*/\1/p' | sort -u | tr '\n' ',' | sed 's/,$//' || true)"
         NP_ID="${ISO_TS}-$$-${RANDOM:-0}"
-        NP_LOG="$SCRIPT_DIR/../org/naming-place-override-audit.log"
-        mkdir -p "$(dirname "$NP_LOG")" 2>/dev/null || true
-        echo "${ISO_TS} NAMING-PLACE-OVERRIDE  ${AGENT}  id=${NP_ID}  reason=${NP_OVR}  names=${NP_NAMES}" >> "$NP_LOG" 2>/dev/null || true
-        export NAMING_PLACE_OVERRIDE="${NP_ID}"
+        NP_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+        NP_REL="org/audit/naming-place-override-audit.jsonl"
+        NP_LOG="$NP_ROOT/$NP_REL"
+        NP_ROW="$(python -c 'import hashlib,json,sys; print(json.dumps({"utc": sys.argv[1], "author": sys.argv[2], "id": sys.argv[3], "reason": sys.argv[4], "names": [n for n in sys.argv[5].split(",") if n], "msg_sha256": hashlib.sha256(open(sys.argv[6], "rb").read()).hexdigest()}, separators=(",", ":")))' "${ISO_TS}" "${AGENT}" "${NP_ID}" "${NP_OVR}" "${NP_NAMES}" "${NP_MSGFILE}" 2>/dev/null || true)"
+        if [ -z "$NP_ROW" ] || ! mkdir -p "$(dirname "$NP_LOG")" || ! printf '%s\n' "$NP_ROW" >> "$NP_LOG" \
+           || ! git add -f -- "$NP_LOG"; then
+          # the row is the audit record of the override: if it cannot be written and staged, the override is not honoured
+          echo "WARN: naming-place-override: the audit row could not be written and staged; the override is NOT honoured." >&2
+          _np_unwind
+        else
+          NP_ROW_WRITTEN=1
+          PATHSPEC+=("$NP_LOG")
+          export NAMING_PLACE_OVERRIDE="${NP_ID}"
+        fi
         NGATE_OUT=""; NGATE_RC=0
         if git diff --cached --no-color --no-ext-diff -- "${NGATE_FILES[@]}" > "$NGATE_DIFF" 2> "$NGATE_DIFF.err"; then
-          NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index 2>&1)" || NGATE_RC=$?
+          NGATE_OUT="$(python "$SCRIPT_DIR/naming-gate.py" --diff "$NGATE_DIFF" --post-from-index --message-file "$NP_MSGFILE" 2>&1)" || NGATE_RC=$?
         else
           NGATE_OUT="NAMING ERROR git diff --cached failed: $(head -c 300 "$NGATE_DIFF.err" 2>/dev/null || true)"; NGATE_RC=2
         fi
@@ -1093,16 +1130,19 @@ if [ -n "$IN_SCOPE" ] && [ -f "$SCRIPT_DIR/naming-gate.py" ]; then
           echo "WARN: naming placement step OVERRIDDEN (audited, id ${NP_ID}): ${NP_OVR}" >&2
         fi
       fi
+      rm -f -- "${NP_MSGFILE:-}" 2>/dev/null || true
     fi
     rm -f "$NGATE_DIFF" "$NGATE_DIFF.err" 2>/dev/null || true
     if [ "$NGATE_PLACE_HIT" -eq 1 ] && [ "$NGATE_ENFORCE" -ne 1 ]; then
       for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb's placement step refused (LGIC_BLANKFIX FWD-6, org/mcp/naming-place.enforce present). Commit aborted; files unstaged." >&2
+      _np_unwind
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
       exit 1
     elif [ "$NGATE_ENFORCE" -eq 1 ] && [ "$NGATE_RC" -ne 0 ]; then
       for _nf in "${NGATE_FILES[@]}"; do git reset -q HEAD -- "$_nf" 2>/dev/null || true; done
       echo "ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged." >&2
+      _np_unwind
       printf '%s\n' "$NGATE_OUT" | sed 's/^/  [naming-gate] /' >&2
       exit 1
     elif [ -n "$NGATE_OUT" ]; then
@@ -1478,6 +1518,7 @@ _commit_out="$(GIT_EDITOR=false git commit --only "${COMMIT_ARGS[@]}" -- "${PATH
 fi
 printf '%s
 ' "$_commit_out"
+[ "$_commit_rc" -ne 0 ] && [ "${NP_ROW_WRITTEN:-0}" -eq 1 ] && _np_unwind
 
 # ============================================================================
 # REFUSAL RESIDUE (measured 2026-08-25 by 2.0.0_SA_COO, 3.0.0_SA_CVO, 0.5.0_AE_OpalETL~B).

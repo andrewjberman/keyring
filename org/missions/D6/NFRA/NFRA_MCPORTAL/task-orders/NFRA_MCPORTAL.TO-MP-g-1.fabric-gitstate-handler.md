@@ -147,7 +147,7 @@ pass modes: box 53, integrate 17, manual 1). No gate. Lives through MP-r-2.
 **AMENDMENT 1 (issuer, before any spawn):** the cell id is `MP-s-1`. `MP-g-1` was round 2's claims-capture cell.
 The path keeps the issuance stem, because a renamed order is a newly-added one and GATE (x) refuses it. See decomposition CP2.9.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <workstream>CP2</workstream>
 <slot>~9</slot>

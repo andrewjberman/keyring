@@ -516,3 +516,82 @@
   "world_is": "When the first real statement lands, a PLATFORM component built from UMA + APM + Model may not equal Net SmartX Fee / (valuation x days / year) and would show as DIFFERS with a reason that blames the valuation or the true-up. Nothing serves a v2 object today (no --write ran), so this is INERT; before any write that serves a v2 object that used a statement, compare each allocation's Net SmartX Fee less its true-up with valuation x (UMA + APM + Model) x days / year on the real file and amend smartx_by_account if they differ."
 }
 ```
+
+## ADVI_BILLING-D2-S2 -- TO-AB-e-1 item 2 names opal_auth SECRET_ID as the human-token SIGNING secret, but that constant is the PUBLIC verification key and cannot sign
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S2",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AB2",
+  "surfaced_at": "2026-10-09T09:11:38Z",
+  "one_line": "The order says mint with 'the shared human-token signing secret (infra/aws/lambda/shared/opal_auth/__init__.py SECRET_ID)'; that constant is SECRET_ID = 'opal/auth/jwt-public-key', the VERIFIER's secret, which cannot produce a signature. The five tokens were minted with 'opal/auth/jwt-private-key' (auth-handler jwt.ts:8), the only secret whose RS256 signature the edge's verifyWithSlots accepts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/shared/opal_auth/__init__.py:33 SECRET_ID = 'opal/auth/jwt-public-key'; its only consumer is get_public_key() at :131-144 on the VALIDATE path",
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:8 JWT_PRIVATE_KEY_SECRET_ID = 'opal/auth/jwt-private-key'; generateAccessToken (:165-192) signs with getJwtPrivateKey()",
+      "the five probes returned 200/403/200/403/403, so the minted signatures verified at the edge -- the private id is the one that works (AB_E1_PROBES.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AB-e-1 item 2: mint the five tokens with the shared human-token signing secret, infra/aws/lambda/shared/opal_auth/__init__.py SECRET_ID.",
+  "world_is": "That SECRET_ID is the public key id. Minting read opal/auth/jwt-private-key once (one GetSecretValue, 2026-10-09T09:00:50Z, actor 0.7.0_AE_CloudOps~AB2); no key byte was stored, logged or committed. Both ids are named in AB_E1_PROBES.json (signing_secret_id, verifier_secret_id) so the order's text and the act that satisfied it are both readable. A future order that cites SECRET_ID for a MINT is unexecutable as written."
+}
+```
+
+## ADVI_BILLING-D2-S3 -- The other_firm probe was refused at the missing-identity-claims arm, which fires before any firm or bucket resolution -- the CROSS-FIRM arm is ABSENT, not EXERCISED-AGAINST
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S3",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~AB2",
+  "surfaced_at": "2026-10-09T09:11:38Z",
+  "one_line": "other_firm (firmId mockadv, role user, firmRole user, and no advisorId, exactly as the order specifies the class) returned 403 'Advisor scoping: missing identity claims' -- index.mjs:478-492, failure mode 1, which runs BEFORE getOwnershipMap resolves a firm to a bucket. The status met the stated expectation (401 or 403) while exercising the identity-gap arm, not cross-firm containment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AB_E1_PROBES.json probes[3]: status 403, error_head {\"error\":\"Advisor scoping: missing identity claims\"}",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs:478-492 -- the !payload.advisorId || !payload.firmId branch returns forbidden() before the getOwnershipMap call at :490",
+      "index.mjs:45-46 and :173-174: FIRM_BUCKET_MAP maps mockadv to opal-data-bd and the key is platinum/<firmId>/ownership_map.json, so a mockadv token WITH an advisorId would read platinum/mockadv/ownership_map.json -- a path this probe never reached"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AB-e-1 item 2: other_firm = firmId mockadv, role user, firmRole user; expectation 401 or 403, read in the cell as the live edge refusing a caller from another firm.",
+  "world_is": "The refusal is the identity-gap arm. Nothing in this round establishes what the edge does with a mockadv token that CARRIES an advisorId -- advisor_not_in_ownership_map (403), ownership_map_fetch_failed (503, if platinum/mockadv/ownership_map.json does not exist) and a map hit are all still open. Reaching it needs a sixth probe, which this order's refusal clause forbids, so it belongs to a later cell: one GET with firmId mockadv plus an advisorId, and a head-object on platinum/mockadv/ownership_map.json to predict which of the three arms should fire."
+}
+```
+
+## ADVI_BILLING-D2-S4 -- FWD-3 NOT REALIZED on real data (flows and exclusions unexercised)
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S4",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:29:06Z",
+  "one_line": "FWD-3 graded NOT REALIZED on the real render (E4): of its ACCEPT, the value charged on, the schedule (flat, so no tiers), days, per-account and household steps, and the 'why' are shown on real data; but 'any adjustment for money moved in or out during the quarter' and 'anything left out' are shown only on the invented-data render. For household z08219260 the panel neither shows a flow or exclusion nor states there was none, and the one flow-like mechanism -- SMArtX's prior-quarter true-up under advance billing -- is printed as 'method not known to this round'. ABSENT is not EXERCISED-AGAINST.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/r1_close/REAL_RUN_FWD1_R1.md @b44766f7ef",
+      "C:/dev/advi_billing_private/r1_close/realrun_fee_panel.png (dell2, private; re-read by this seat, the fee panel section)",
+      "org/missions/D8/ADVI/ADVI_BILLING/prd/ADVI_BILLING_PRD.md:45-50 (FWD-3)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_BILLING_ROUND_2_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 ACCEPT: the value charged on, the schedule and tiers, any adjustment for money moved in or out during the quarter, and anything left out; they can answer 'why is my fee this number?'.",
+  "world_is": "Four of the six clauses shown on real data; the flow-adjustment and left-out clauses unexercised on real data. FWD-3 realizes when one real household's panel shows a flow adjustment (or states 'no money moved in or out this quarter') and an exclusion (or 'nothing left out'), with the true-up read from a SMArtX statement (E2)."
+}
+```
