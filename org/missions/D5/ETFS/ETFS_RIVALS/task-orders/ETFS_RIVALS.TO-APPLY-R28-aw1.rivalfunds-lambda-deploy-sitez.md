@@ -196,5 +196,35 @@ lane: CloudOps applies under both signed halves (COO @d3d6c3e73f, CTO @a0ee589cc
     AC1 re-run in the re-cut tree: `AC1 RESULT: PASS 0 failures`, exit 0. AC2 not marked.
     APPLIED NOTHING. Tree and saved plan left in place; AMENDMENT 1 (d)'s window re-plan uses this same tree.
     Full read: `org/tier2_senior/0.7.0_AE_CloudOps~DELL1/deliverables/ETFS_RIVALS.TO-APPLY-R28-aw1_STOP3_PLAN_READ_DELL1_20261009T0415Z.md`.
+
+    EXECUTOR REPORT 3a (CORRECTION to report 3, and the pre-window readiness read) --
+    `0.7.0_AE_CloudOps~DELL1`, 2026-10-09 ~08:5xZ. APPLIED NOTHING; this is a read and a correction.
+    CORRECTION: report 3 states "THE COUNT AMENDMENT 3 ASKS FOR READS 1 OF 239" and names
+    `lib/research/identity/crosswalk.schema.json` as "the one file". That count is WRONG. `git ls-files --eol`
+    over the packager's seven STAGED paths reads 239 files with w/crlf=1 AND w/mixed=1 -- TWO not-pure-LF
+    files, not one, and both carry their non-LF endings in the COMMITTED INDEX BLOB as well (i/crlf=1,
+    i/mixed=1): `lib/research/identity/crosswalk.schema.json` and
+    `data/etfs/scripts/rivalfunds/guardrails_config.json`. My count had caught only the w/crlf class and
+    silently dropped w/mixed. The CONCLUSION report 3 drew is unchanged and in fact stronger: 0-of-239 is
+    unattainable at this pin by any checkout, because the authority itself carries non-LF endings in two
+    files rather than one. A third file, `org/standards/NAMING_SCHEMA.json`, holds a single CR BYTE that git
+    classifies pure-lf -- a content CR, not a line ending; naming it so the two populations are not
+    conflated (CR-byte-bearing blobs = 3, not-pure-LF-by-line-ending = 2).
+    TWO DENOMINATORS, named so neither reads as the other: 239 files are tracked under the seven STAGED
+    paths, but only 81 enter the zip, because the packager's `_IGNORE` drops `tests`, `__pycache__` and
+    `*.pyc`. Report 3's 239 is the tracked population; the SHIPPED population is 81.
+    PRE-WINDOW READINESS, measured 08:5xZ: tree `C:/tmp/rv-r28-dell1` present, detached exactly at
+    39889dd4d71a67bc108fe15ae746ed7ab6cbe6f6, still a registered worktree; saved plan
+    `C:/tmp/rv_apply28_dell1.tfplan` 30,393 bytes, unchanged. THE INVARIANT AMENDMENT 3 RESTS ON HOLDS:
+    81 of 81 shipped files byte-identical to their committed blobs, compared RAW against `git cat-file blob`
+    rather than through `git diff`, which normalizes and would hide a CRLF-only difference.
+    ONE HOLE CLOSED: that tree's `core.autocrlf` still read `true`, because `-c` applies to one command and
+    does not persist -- so any future re-checkout there could have rewritten files CRLF and moved all five
+    package hashes. Set to `false` via `git -C <tree> config core.autocrlf false`, the form AMENDMENT 3 itself
+    offers. CONFIG ONLY: no checkout was run, and the invariant was re-measured afterwards (81 of 81 again) to
+    prove nothing on disk moved.
+    Steps 4-6 still wait on AMENDMENT 1 (a)-(d) inside 11:15Z-12:50Z. Noted from `2.0.0_SA_COO~V1` msg 2089:
+    naming-place enforcement is live on dell1 @4d2bfc6dfd; this apply mints no new name, and if the gate fires
+    at apply time I STOP and report as at any STOP.
   </report>
 </task_order>

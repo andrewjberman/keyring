@@ -64,6 +64,7 @@ procedure, in its order. Tooling is in `T` = `org/missions/D9/NFRA/NFRA_OPLGTW/d
 
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-r29-commassist-secret-grant.json
 org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-r29.json
@@ -97,6 +98,12 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-3.gateway-release-r29-apply.
 - CVO carried item (not a condition): PRD C7 `:694` "the bearer's one holder" -- the CTO's to addend.
 - Pre-cut: ap3.AC1 base FAIL as expected (secret absent, rc 254; policy 4 resources); ap3.AC2 base FAIL as expected
   (0 entries per slug); AC2's ledger reader positive control on `nfra-oplgtw-og-bf-1-y-dispatcher-gate`: CLOSED=yes, PASS.
+
+- A1 (issuer, 2026-10-09 ~08:5xZ, on the applier's ask in its OG-da-1 COMPLETE report): `lambda-source-map.json`
+  joins <paths> (the COO lane cannot write `infra/aws/lambda/ci/`). One record edit, its own commit, before the r29
+  work: `functions["opal-data-refresh-api"]` -> `artifact_sha256` `qHMjXkK1/1NhmBmkK/6Q+q+WdXMRoTOprNfTixBIxaM=`,
+  `last_deployed_commit` `d9539cc0b76dd07758ba0d8e4f4d1fcc759b472d`, `last_deployed_at` `2026-10-09T07:59:39Z`; no
+  other key. Graded by no gate limb as a modification (placeholders NONE).
 
 <status>pending</status>
 <round>32</round>
