@@ -11306,3 +11306,110 @@ name the one known failure instead of silently inheriting it.
   "notes": "Resolves NFRA_OPLGTW-Z-W48-S1. Row S2 (json absent from base) stands."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~49",
+  "surfaced_at": "2026-10-09T14:26:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W49-S1",
+  "one_line": "The transcripts bucket's KMS key policy gives the gateway role no use of the key, so no IAM s3:PutObject grant alone can make the .pptx pair write once released.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "READ infra/aws/terraform/transcripts/main.tf lines 13-22: privacy is held by the KEY; the key policy gives root ADMINISTRATION only, not use; use (Encrypt/GenerateDataKey) goes to local.named_reader_arns and, with conditions, the two Dell agent users",
+      "READ infra/aws/terraform/transcripts/main.tf lines 161-166 and 202-209: default SSE is aws:kms under that key, and the bucket policy denies a write under any other key",
+      "READ infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf @HEAD: the gateway role holds s3:PutObject on the fee_statement prefix only; the transcripts key policy is outside this order's paths",
+      "NOT RUN: no plan, apply or live write (order section 2); the AccessDenied at first use is inferred from the policy text, not observed"
+    ]
+  },
+  "spec_asserts": "Order step 3: if the gateway role has no PutObject on the market_update prefix, add ONE statement; the E2 release pair plans and applies it. The order does not mention the destination bucket's key policy.",
+  "world_is": "The market_update address resolves to opal-data-transcripts, whose objects are SSE-KMS under a key whose policy names only readers/Dell users. An IAM allow on s3:PutObject cannot supply kms:GenerateDataKey on that key. Whatever IAM statement is added, the pair will fail closed (AccessDenied, nothing written) at first use after the release unless the key policy (transcripts Terraform module, a privacy boundary Andrew set to two named readers) is widened to the gateway role by its owner.",
+  "notes": "Build is complete and offline-green; this and S4 are release-time dependencies. Blocking for the release pair, not for this build. Candidate owner of the key-policy edit: the transcripts module's lane (NFRA_TRNSPT), on the CTO/Andrew word that governs that bucket's principals."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~49",
+  "surfaced_at": "2026-10-09T14:26:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W49-S2",
+  "one_line": "The registry carries no table row for market_update (nor fee_statement); address() accepts any snake_case table for a registered source and scope, so the destination came from sibling TR-i-19's choice of sharepoint/transcripts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN comp-find market_update infra/logic/registry -> 0 hit(s) across 13 file(s); comp-find fee_statement infra/logic -> 0 hit(s) across 29 file(s)",
+      "RUN python lib.opal_naming address('sharepoint','transcripts','bronze','market_update','date=X') -> s3://opal-data-transcripts/sharepoint/transcripts/bronze/market_update/date=X; address('smartx','opal',...) REFUSED (scope opal resolves to no scopes.json row)",
+      "READ data/transcripts/scripts/updates/intake.py line 57: address(sharepoint, transcripts, bronze, market_update, date=<placed_date>, deck_<sha16>.pptx) (TR-i-19)",
+      "READ infra/logic/registry/systems.json line 457: source sharepoint is registered"
+    ]
+  },
+  "spec_asserts": "The order says to find the REGISTERED market_update table in infra/logic/registry/ (its source, firm/tenancy, partition) and BLOCK if no registry row names market_update.",
+  "world_is": "No registry file names any table, for market_update or for E2's fee_statement; the registry registers sources and scopes and address() takes the table as a free segment. The builder did not refuse market_update, so the order's own condition for a BLOCKING row (address() REFUSES) is not met; the pair was built on the only registered source and scope the project already uses for it (sharepoint / transcripts, GENERAL tenancy, partition date=YYYY-MM-DD).",
+  "notes": "Root: s3://opal-data-transcripts/sharepoint/transcripts/bronze/market_update/. If the issuer meant a different source, scope or partition, the change is the one address() call in deploy-to-ec2.sh and the one local block in the IAM file."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~49",
+  "surfaced_at": "2026-10-09T14:26:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W49-S3",
+  "one_line": "Two writers will share the market_update prefix with different object-name rules: TR-i-19 intake names deck_<sha16>.pptx, this tool keeps the sanitized original name, so one deck can land twice under two keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ data/transcripts/scripts/updates/intake.py line 57: object name deck_<sha256[:16]> plus suffix under date=<placed_date>",
+      "READ infra/aws/ec2/opal-gateway/app/integrations/advi_billing/site_to_s3.py sanitize_name: the sanitized original item name, e.g. Opal_Market_Update_7-27-2026__from_Manav_.pptx",
+      "READ org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md line 224: S17 FWD-6 lands SharePoint market updates into bronze market_update"
+    ]
+  },
+  "spec_asserts": "Order step 1: .pptx lands in the market_update root, partition as the registry defines it, with the E2 conditional put and the sha256 returned; it does not say how the object is named relative to other writers of that table.",
+  "world_is": "The gateway's conditional put protects a key from overwrite but cannot see that an intake-named copy of the same bytes exists under another key, so FWD-6's 'a re-saved copy is recognisable as the same deck' is carried by intake's sha256-in-the-name only for intake's own writes. The tool was built as ordered (E2's naming rule per pair).",
+  "notes": "Whoever reconciles the two writers decides one object-name rule; the change on this side would be dest key naming in site_to_s3.py for the .pptx pair only."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~49",
+  "surfaced_at": "2026-10-09T14:26:56Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W49-S4",
+  "one_line": "Step 3's grant was NOT added: the only registry-read form the order names puts the hand-kept scope token transcripts in advi_billing_gateway_iam.tf, and the naming gate REFUSES that carrier, so the E2 release has no market_update PutObject statement yet.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash .tools/safe-commit.sh ... (first attempt) -> BLOCKED, naming-gate: NAMING REFUSE infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf:41 transcripts -> lookup('transcripts'); why: NEW hand-kept carrier (context rule); the join sharepoint/{x}/bronze/market_update/ on the next line was CONFORMANT",
+      "READ infra/aws/terraform/opal-gateway/advi_billing_gateway_iam.tf @HEAD lines 26-39: E2's firm token is typed only as the opal_name module's scope argument, a permitted context; module opal_name accepts FIRM, GLOBAL or MASTER scopes only (modules/opal_name/main.tf line 51), and transcripts is class PRODUCT",
+      "READ infra/aws/terraform/transcripts/main.tf lines 70-77: that root avoids the literal by selecting the scope row from its own directory name, which a gateway root cannot do",
+      "RUN python -c scopes.json rows: etfs, harvest and transcripts are all PRODUCT/GENERAL, so no registry property selects the transcripts row without naming it"
+    ]
+  },
+  "spec_asserts": "Order step 3: add ONE PutObject statement to advi_billing_gateway_iam.tf, the prefix read from the same registry join E2 uses.",
+  "world_is": "E2's join types its scope once, as a module argument; there is no such permitted context for a PRODUCT scope, so the same join is refused by the commit-time naming gate (LGIC_ENFORCE ENFORCE mode, rule 30). I did not rename, split or otherwise disguise the literal, and did not override the gate. The tf file is unchanged from HEAD. Two compliant routes exist and both are outside this order: (a) a required terraform variable fed at plan time from the same address() one-liner the deploy uses, validated to end in /bronze/market_update/ (the release plan then needs -var); (b) a declared tf_local read context for the scope in the registry (the naming-gate's R20-style exception, LGIC lane).",
+  "notes": "Same release as S1: the KMS key policy and this grant are both needed before the .pptx pair can write. The code, the deploy line and the tests are done."
+}
+```
