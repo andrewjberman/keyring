@@ -4794,3 +4794,108 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W68-S1 -- sel_<64 hex> is not derivable from the selection file; the id resolves to a stored record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T13:45:00Z",
+  "one_line": "sel_<64 hex> is not derivable from the seat-authored file (it hashes the firm directory revision) and the POST /analysis owner-resolution loads a stored selection record: a file-only submission will be refused by the route unless a stored record exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-93: if the id is not deterministic, the statement path takes the file without an id; if the route refuses a submission without a valid stored id, file a row naming the route and the check.",
+  "world_is": "READ, not run. _scope/selection.py::_reference hashes (schema_version, firm_id, account_ids, directory_revision), and directory_revision (selection.py::directory_revision) is the sha256 of the whole firm directory the Enforcer held, which is no field of the selection file. The owner-resolution check that consumes the id is _scope/selection.py::resolve_selection (lines 110-123), reached through performance/entry.py::_resolve_selected and _scope/custody.py:78 with configured_store().load (selection_store.py:29-35, DynamoDB SELECTION#<id>): an absent record raises 'selection reference unavailable', a changed one 'selection binding changed; select again'. I did not find in the files read the exact code that POST /analysis calls to admit account_set_id; the runner change (accepts a file without the id, omits the query parameter, records selection_source=file + sha256) is kept. Whether the live route admits a submission without account_set_id is not established by this read; DB-b-86 will show it, and a refusal there needs either a stored selection record written by an owning seat or a route change in IRPT_BCKEND's lane.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/selection.py:40-44,19-22,110-123",
+      "infra/aws/lambda/investor-reporting/_scope/selection_store.py:29-35",
+      "infra/aws/lambda/investor-reporting/performance/entry.py:92-105",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/SELECTION_FILE.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W68-S2 -- BLOCKING: the proof-of-spec checker cannot run in this worktree (schema at base is malformed; fix 1f256cfc64 is not here)
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T13:58:00Z",
+  "one_line": "BLOCKING on the proof-of-spec flip: org/standards/PROOF_OF_SPEC.schema.json at this worktree's base carries e7c10e5b4b's malformed commit_or_etag type, so .tools/proof-of-spec-check.py exits rc=2 (UnknownType); the fix 1f256cfc64 is on the shared checkout but not in this worktree and the schema is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Worker rules: validate the proof instance with python .tools/proof-of-spec-check.py <instance> DB45-1-AC1; rc 0 permits the flip of the order's status to complete.",
+  "world_is": "MEASURED in C:/dev/wk-irpt-dashbd-68 at HEAD f9bd3c2430 (base e7316aa723): the checker prints 'TOOL-ERROR: UnknownType ... NOT-A-VERDICT: this is a tool failure (rc=2)' because org/standards/PROOF_OF_SPEC.schema.json line 157 carries a 'type' value that is the aws_resource prose (commit e7c10e5b4b). The shared checkout at C:/dev/ajb_workspace has 1f256cfc64 'restore commit_or_etag type: string' (row IRPT_BCKEND-D2-S52). The checker run from the shared checkout against this instance is INVALID for two reasons that are not findings on it: CHECKER-SCOPE (instance outside that tree) and kind 'code' not in its enum. The criterion itself ran PASS-by-output: 'OK: runner accepts the selection file; deterministic=False; 25 passed' / 'DB45-1-AC1 PASS', rc 0, and the mutant against an empty root printed 'DB45-1-AC1 FAIL' rc 1. The proof instance (committed) therefore has no rc 0 verdict and the order's status stays 'issued'. Unblock: the issuer brings 1f256cfc64 into this branch (merge) or edits the instance's grant, then re-runs the checker; the instance's artifacts kind 'code' (two rows) is not in the schema enum at 1f256cfc64's neighbour either, and is changed to 'script' / 'test' in the next commit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/PROOF_OF_SPEC.schema.json:157 @e7c10e5b4b",
+      "git log 1f256cfc64 on C:/dev/ajb_workspace (restore commit_or_etag type)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/IRPT_DASHBD.TO-DB-b-93.runner-selection-file.proof_of_spec.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S4 -- Resolves and disarms D2-S3: 1.0.0_SA_CTO~DELL2 restored commit_or_etag "type": "string" @1f256cfc64
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_DASHBD-D2-S3. 1.0.0_SA_CTO~DELL2 restored \"type\": \"string\" on artifacts_produced[].commit_or_etag @1f256cfc64 (its row IRPT_BCKEND-D2-S52), an ancestor of box/dell2 HEAD (is-ancestor read). The proof-of-spec-check on IRPT_DASHBD.TO-DB-b-91's proof reads VALID again at HEAD, and the DB-b-91 AMENDMENT 1 commit that was refused now lands. origin/CLOUD carries the fix once the laptop integrator takes box/dell2 (MSTR msg 3384).",
+  "one_line": "D2-S3 disarmed: schema type restored @1f256cfc64; proof checks VALID again on dell2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1f256cfc64 HEAD (box/dell2)",
+      "MSTR~DELL2 msg 3384"
+    ]
+  },
+  "spec_asserts": "A proof check returns a verdict, never a tool error.",
+  "world_is": "The schema reads type string again at HEAD."
+}
+```
+
+## IRPT_DASHBD-D2-W68-S3 -- Resolves IRPT_DASHBD-D2-W68-S2: schema fix 1f256cfc64 is an ancestor of the worker branch via merge beaa8bc8a6
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T14:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-D2-W68-S2. Schema fix 1f256cfc64 reached branch wk-irpt-dashbd-45-68 via merge commit beaa8bc8a6 (is-ancestor read, rc 0); proof-of-spec-check on the TO-DB-b-93 proof now prints VALID (rc=0).",
+  "one_line": "W68-S2 resolved: schema fix 1f256cfc64 merged into the worker branch @beaa8bc8a6.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 1f256cfc64 HEAD -> rc 0 at beaa8bc8a6",
+      "proof-of-spec-check TO-DB-b-93 proof -> VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "A proof check returns a verdict, never a schema-caused INVALID.",
+  "world_is": "With the fix merged, the proof check returns VALID."
+}
+```

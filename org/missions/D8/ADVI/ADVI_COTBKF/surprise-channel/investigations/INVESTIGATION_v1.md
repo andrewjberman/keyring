@@ -4103,3 +4103,158 @@ round.** Never edit an existing row.
   "world_is": "The mirror IS the deployment of the repo's gold scripts, so it necessarily contains the one cot writer the half's own census counts and admits. On the literal reading condition 2 therefore STOPS the act the half signs GIVEN; on the reading its own closing sentence implies -- close the BLIND, i.e. find a writer BEYOND the census, or a scheduled one -- the gate PASSES, because the mirror agrees with the census exactly (1 cot writer, the named one, manual-only, scheduled=0, 0 foreign price readers). The applier did not pick between those readings: this is a SERVED overwrite of 38 keys and CLAUDE.md bars the receiving seat from adjudicating scope, so NOTHING WAS WRITTEN (0 of 38 keys) and the question went to the gate's author with the measurement and a recommendation. Conditions 1, 3 and the preflight are already proven in the ledger and do not depend on the answer. The deploy entry is deliberately left OPEN rather than HELD, because deploy_ledger.py has no state for 'pre-apply gates partly proven, act not started, awaiting a ruling': hold refuses while an apply leg is open, and hold --pre-apply refuses once any leg is proven."
 }
 ```
+
+## ADVI_COTBKF-D2-S61 -- L9 CB37ak1-AC2 MET
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S61",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "L9 CB37ak1-AC2 MET: the class rule was committed alone, unimplemented ('rule-only commit'), at b4764d4fa0 (09:22 ET) before the output 3c00ecf3c3 (09:30); each class follows from the printed rows by its precedence (95000U2D4 trade_only on one 2022-06-08 buy, 05613L3H2 and 651639AX4 none); the one post-run change widened the vendor buy-code list to include 'by', which the rule's own 'buy/sell transaction rows' already covers, disclosed in W65-S1; no other firm's source is counted (the bd_snapshot gold rows were excluded, and they post-date the held window, so no class rides on them).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show b4764d4fa0:data/assets/scripts/silver/commonwealth_bond_custodian_price.py (CLASS RULE, main raises 'not yet implemented')",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_37_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB37ak1-AC2: each class follows from the printed rows by the rule committed first, and no other firm's source is counted.",
+  "world_is": "Met as written."
+}
+```
+
+## ADVI_COTBKF-D2-S62 -- the bd token names both the Black Diamond platform and the bd firm
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S62",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T13:36:55Z",
+  "one_line": "The 'bd' token is ambiguous inside Cottonwood's own data: cot GOLD holdings carry 86 rows for 95000U2D4 labelled bd_snapshot (2026-06-08 .. 2026-10-08), and Cottonwood's own pipeline is a Black Diamond session (cot-bd-session-daily-et, BD_FIRM_ID=cottonwood in ssm.tf). A 'bd' label can therefore name the Black Diamond PLATFORM serving Cottonwood's own accounts or the separate bd firm (49 Financial), and a token-based exclusion cannot tell them apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_37_DRAIN_END_20261009.md @7bc7b1fc1e (msg 3373)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cross-firm guard (CLAUDE.md NEVER, another firm's data) can tell another firm's data from a shared platform serving the firm's own accounts.",
+  "world_is": "It cannot today by label: 'bd' names both. Excluding by token over-excludes Cottonwood's own platform rows; including by token would admit 49F's."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S1 -- CB-al-1: BLOCKING -- no admitted return_basis / history_scope value says 'value rebuilt from positions at the as-traded close, net of fees'; the producer's emit_day manifest text and method_version 2 state the custodian method
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T13:55:00Z",
+  "one_line": "CB-al-1: the producer's closed vocabularies (return_basis TWR / HOLDINGS_INCOME_FALLBACK / NOT_MEASURABLE; history_scope FULL / PARTIAL_HISTORY) hold no value that truthfully states FWD-3's method (positions x as-traded close, after fees), so the 107,316 measured Cottonwood rows carry return_basis NULL and method_version NULL (claim absent, rejectable) and nothing claims the custodian method in the table; but emit_day(upload=True) writes manifest.json with method_version 2 and the text 'V from the custodian's whole-account value', which would state the custodian method for Cottonwood at the mint. A new return_basis value (and a method row), or a Cottonwood entry in sources.json plus a manifest-text parameter, is IRPT_DASHBD's change.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:141-148 (vocabularies), :1688 (_check_enums), :1714-1745 (emit_day manifest method + method_version), :1768-1774 (dim row: HOLDINGS_INCOME_FALLBACK never emitted) @ HEAD of wk-ADVI_COTBKF-66",
+      "commit b01e4fb611 (rule: CLAIM_REVIEW, one verdict per admitted value) and org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~66/account_return_daily_build.md (ARD-METHOD-CLAIM line: value=None status=BLOCKING_GAP_NOT_STATED)",
+      "FWD-3 method: data/assets/scripts/silver/commonwealth_daily_returns.py docstring (value = positions x close + cash leg, return after fees)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-al-1 item 4: if the enum check refuses every value that would say the method truthfully, STOP that branch and file a BLOCKING row; never write a value that claims the custodian method.",
+  "world_is": "No admitted value says it truthfully, so the claim is withheld (null) on measured rows. CB-al-2 must not mint through emit_day(upload=True) unchanged: the manifest it writes states the custodian method. Disarm: hold the mint until IRPT_DASHBD lands a value / manifest-text parameter, or the issuer rules a different claim."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S2 -- CB-al-1: the producer's schema has no column for the reason a day is blank, so the two exceptions' reasons (REGRESSED_UNDER_AS_TRADED, HELD_SOURCE_UNDER_REVIEW) travel in a local sidecar, not in the served table
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T13:55:00Z",
+  "one_line": "CB-al-1: day_quality NOT_MEASURABLE + guard_state GUARD_NOT_REACHED + return_basis NOT_MEASURABLE mark the 110 absent-month days and 988 held bond days (and 1,583,315 other FWD-3 blank days) as blanks, but ARROW_SCHEMA has no reason column for them (only holdings_price_return_reason and fee_amount_reason); the reasons are in ard_cottonwood_blank_reasons.parquet and the manifest, which a mint of data.parquet alone would not carry. Also null with no reason column: income_received, income_return (inside the FWD-3 value via the cash leg), method_version, return_basis on measured rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:247-275 (ARROW_SCHEMA, 19 columns)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~66/account_return_daily_build.md (blank-day reasons: UNPRICED 1558187, NON_POSITIVE_BASE 22521, FIRST_DAY 1533, DVR_CLOSE_STEP 1069, HELD_SOURCE_UNDER_REVIEW 988, REGRESSED_UNDER_AS_TRADED 110, FLOW_UNVALUED 5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-al-1 item 3: the exceptions are blanks with reasons, using the producer's own enums where one fits.",
+  "world_is": "The enums fit the blank state (NOT_MEASURABLE, GUARD_NOT_REACHED) but not the reason; a reason column is IRPT_DASHBD's schema change."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S3 -- CB-al-1: the producer's neighbour holdings_performance_daily holds 75 Cottonwood partitions but none of its account ids (z-prefixed, 11 chars) equals a FWD-3 account id, so holdings_price_return is null with NO_HOLDINGS_ROW on all 1,691,729 rows; and no plausibility band is applied (207 measured rows have |return| > 1)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T13:55:00Z",
+  "one_line": "CB-al-1: on 2026-06-15 the neighbour has 707 rows (ids like z0925724581) and FWD-3 has 121 (ids like 0QF878955, 04003450617): 0 in common, and 0 matched rows over all 75 neighbour days, so NO_HOLDINGS_ROW means 'no row under this id string', not 'the holdings table is empty' for those days (an account crosswalk, if one exists, was not applied). Separately, thresholds=None (no measured Cottonwood band or tolerance exists), so the producer's plausibility band did not run: 207 of 107,316 MEASURED rows have |total_return_daily| > 1 (max 3960, FWD-3's own value) and stay MEASURED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~66/account_return_daily_build.md (neighbour partition days 75, rows matched 0)",
+      "probe on s3://opal-data-cottonwood/irpt/cottonwood/gold/holdings_performance_daily/date=2026-06-15/data.parquet (707 rows) vs FWD-3 daily_returns date 2026-06-15 (121 rows): intersection 0",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py:1019-1060 (eligible: band applies only with thresholds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-al-1 item 2: a column FWD-3 cannot fill is null with its _reason column set where the producer has one.",
+  "world_is": "holdings_price_return_reason is NO_HOLDINGS_ROW by id-string non-match; a Cottonwood account-id crosswalk to the neighbour and measured thresholds are IRPT_DASHBD / IRPT_BCKEND's."
+}
+```
+
+## ADVI_COTBKF-D2-W66-S4 -- proof-of-spec-check rc=2 on a worktree whose schema predates the commit_or_etag type fix
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W66-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~66",
+  "surfaced_at": "2026-10-09T14:20:00Z",
+  "one_line": "proof-of-spec-check.py exits rc=2 (UnknownType) on this worktree because org/standards/PROOF_OF_SPEC.schema.json at the branch base carries e7c10e5b4b's prose in commit_or_etag's \"type\" keyword; the fix 1f256cfc64 is on box/dell2 but not on wk-ADVI_COTBKF-66. The validation verdict was taken by loading the checker at its own path with SCHEMA_PATH pointed at `git show 1f256cfc64:org/standards/PROOF_OF_SPEC.schema.json` (kept in .scratch/), nothing in the repo edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log -- org/standards/PROOF_OF_SPEC.schema.json: e7c10e5b4b (defect) then 1f256cfc64 (restore) on box/dell2; the worktree branch base predates 1f256cfc64",
+      "python .tools/proof-of-spec-check.py <instance> CB38al1-AC1,CB38al1-AC2 -> TOOL-ERROR UnknownType, rc=2 (NOT-A-VERDICT); with the fixed schema: VALID (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: validate with python .tools/proof-of-spec-check.py <instance> <ids>; only the exit code is the verdict.",
+  "world_is": "The stock invocation cannot reach a verdict on a worktree cut before 1f256cfc64; every worker order cut from the same base meets the same rc=2 until the base carries the fix."
+}
+```
