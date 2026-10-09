@@ -1,0 +1,9 @@
+# drive log 2.0.0_SA_COO~G1, 2026-10-08 22Z-23Z (desktop-hk1uu7n) -- MDPF_HEALGAP
+
+Session respawned on Andrew-direct ~22:3xZ to reload the Sonnet 5.5 worker agent types (fix 4496479dc3). This file holds only the substantive events.
+
+## event 2026-10-08T22:34Z respawn. KILL 22:33:52Z / SPAWN 22:34:19Z by 0.0.0_AB_MSTR~DELL1 (agent-spawn-audit.log). Registered PID 2144; the broker's held PID 4636 is the killed session. Inbox 16/16 READ since 16:00Z. Watcher armed from the derived root /c/Dev/ajb_workspace
+## event 2026-10-08T22:4xZ re-armed /canonical-drive MDPF_HEALGAP 60m, cron 380fc5d8 at :07, off the LIVE_ARMS G1 row (DIRECTED, "Ok lets slow that down to 60 min")
+## event 2026-10-08T23:08Z msg 1231 (MSTR~DELL1, laptop fabric-check: ledger healgap-r2-act1-runner-code-20261008 PAST-WINDOW 6.8h). Artifact measured first: CodeSha256 NFG8dbEL.. equals the L1/L3 build, LastModified 16:19:41Z; rule cot-rebalancer-runner-daily cron(0 6 * * ? *) ENABLED. Ruled: L4 is event-gated, not stranded. deploy_ledger.py hold --gate-type external --reread-date 2026-10-09; check reads HELD-SOVEREIGN-GATED. Commit 0f6f94bafd; replied to 1231
+## tick 2026-10-08T23:13Z MDPF_HEALGAP | L7-drain r2 | TOs 5/5 | lease FULL | NO-OP: no tree commit since 21:27Z; next read 10-09 06:00Z (act 1 L4). Open: R2-1 awaits Andrew
+## event 2026-10-08T23:2xZ /open-calls sweep: R2-1 (runner role s3:GetObject on meta/*-result.json) is NOT a call and was mislabelled "awaits Andrew". Ruled by the issuer (obligation 7): no early route; it stays at the drain-end read (15Z ruling, 77efc683e5) and rides the L10 slug into the round-3 enrichment list, since the 06:00Z L4 read does not need healed_at and the round-2 decomposition is frozen. Route when cut: 0.7.0_AE_CloudOps~DELL1 (Andrew-direct ~22:0xZ, msg 1204). Zero open sovereign calls at this lane
