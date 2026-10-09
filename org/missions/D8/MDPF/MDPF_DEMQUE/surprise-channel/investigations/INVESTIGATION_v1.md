@@ -127,6 +127,27 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Issuer ruling: restore both loaders byte-identical to base and handle the absent key at a _load_tier2() call site, commit passes the naming gate.",
     "world_is": "Edits are complete in the worktree (uncommitted): both checks pass (S00-OK, SCHED-OK), proof VALID rc=0. The commit is refused by the naming gate for the original literal (a line not changed) and the test's literal. Not re-split. Needs an issuer decision (gate exemption for the existing literal, or an ADVI_FIRMBKTS-conformant key for the test)."
+  },
+  {
+    "id": "MDPF_DEMQUE-D1-S1",
+    "project": "MDPF_DEMQUE",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~Q1",
+    "surfaced_at": "2026-10-09T02:45:00Z",
+    "one_line": "The lock rule locks a mapping as `measured` on any min(3, available) agreeing trade dates with no agreement-rate floor: PONPX (72201M719) locks at 51 of 83 dates agreeing (61%).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/mdpf/scripts/demque/lock.py check() @8abd95ad3b (DQ-t-1, per dell2 research s.1): LOCKED when >= min(3, available) dates pass and one falls in the earliest third",
+        "QA re-lock 2026-10-09T02:4xZ with the per-security lock range: 131649774 CVMIX 255/255 LOCKED, 316066752 FSSZX 85/85 LOCKED, 72201M719 PONPX 51/83 LOCKED measured",
+        "scheduled draw 2026-10-09T02:30:01Z (.git/demque-daily-draw.log): 32 LOCKED, 17 REJECTED, of which 15 had passed >= 98% of their dates and were rejected only by the request-wide lock range (fixed in daily_draw.py)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-IDENTITY: a client security's mapping is LOCKED, per date range, only when its prices agree with the client's own trade prices.",
+    "world_is": "The rule as built accepts a 61% agreement as measured. A pass-rate floor (e.g. >= 90% of checked dates, by asset type) is a round-3 pilot-readout candidate; the rule is DQ-t-1's spec (dell2 research s.1) and is not changed mid-round."
   }
 ]
 ```
