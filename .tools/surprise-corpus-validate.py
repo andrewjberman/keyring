@@ -421,7 +421,10 @@ def main(argv: list) -> int:
     known = sorted(current & baseline)
     acts = set(_act_paths(argv))
     malformed_docs = dict(getattr(sweep, "malformed_docs", {}))
-    if acts:
+    if BASELINE_REL in acts:
+        # GATSCP GS-e-4: an act that stages the baseline itself is a reset; every finding is in-act.
+        new_scoped, new_standing, mal_act, mal_standing = new, [], stats["malformed_blocks"], {}
+    elif acts:
         # SCOPED TO THE ACT: a NEW failure or malformed block in a document the act does not carry is a
         # bystander's, printed STANDING and not refused. A RESOLVED tuple always refuses (re-baselining is a
         # deliberate CVO act).
