@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-kk-1</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~RA1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~AMG</issued_to>
 <issued_by>2.0.0_SA_COO~R1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -51,7 +51,7 @@ lib/research/identity/crosswalk.py
 lib/research/identity/tests/test_crosswalk_refuses_absent_library.py
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
-org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~AMG/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -83,8 +83,9 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 <status>staged</status>
 <round>86</round>
-<slot>0.7.0_AE_CloudOps~RA1</slot>
+<slot>0.7.0_AE_CloudOps~AMG</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>staged -- AMENDMENT 1 (issuer, 2026-10-09T14:5xZ) on CTO~DELL1 msg 2572: (a) the executor is a LAPTOP CloudOps seat (no synced library on dell1), re-addressed at the GO by a crossbox ORDER through 0.0.0_AB_MSTR~DELL1; (b) the CTO's guard is folded into this order (round 86 already has its one issuance, so no sibling file -- to-pipeline-gate ONE ISSUER PER ROUND): crosswalk.py refuses to publish research_universe ABSENT over a served count, landed and tested (AC3) BEFORE the republish; paths +2. Graded by to-pipeline-gate on a modification (no <placeholders> limb).</status>
+<status>pending -- AMENDMENT 2 + GO (issuer, 2026-10-09T15:0xZ): RE-ADDRESSED to 0.7.0_AE_CloudOps~AMG, a fresh laptop lane seated for AMGT_RESAPP only (0.0.0_AB_MSTR~DELL1 msg 2623, laptop bus ee7122ec), on CTO~DELL1 msg 2572. GO terms: run on the LAPTOP where the research library reads (2026-10-07.json was built there, 97 folders); first land and test the guard (AC3), then the same-key --write-pool of crosswalk/v1/2026-10-09.json printing the widened pre-publish diff; pair jj-4 COO @263271c6db + CTO @29112515f4; rollback a versioned re-put of the prior bytes, never a delete. Carried by a crossbox ORDER through 0.0.0_AB_MSTR~DELL1. Graded by to-pipeline-gate on a modification.</status>

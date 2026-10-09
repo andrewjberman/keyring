@@ -2577,3 +2577,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Merge 48ca3c6a7b carries the decide() change; the re-run reads ok=True agree=148 partial=32 mismatch=0 carried_over=0, so S9 (carried_over=6) no longer holds."
 }
 ```
+
+## LGIC_BLANKFIX-D1-S4 -- the completion schema refuses every dell1 lane serial (digits in the lane), so a dell1 close writes the role serial
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T15:01:07Z",
+  "one_line": "the completion schema refuses every dell1 lane serial (digits in the lane), so a dell1 close writes the role serial",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/COMPLETION_REPORT.schema.json: written_by pattern ^2.0.0_SA_COO(~[A-Z]+)?$ and graded_by pattern ^1.0.0_SA_CTO(~[A-Z]+)?$ (letters-only lanes); jsonschema on the round-14 report: '2.0.0_SA_COO~B1' does not match",
+      ".tools/missions-tree-index.py close_violations compares only the base serial (split on ~), so the role serial satisfies R6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The close documents name the seat that wrote and graded them (written_by / graded_by).",
+  "world_is": "Lanes on dell1 carry digits (2.0.0_SA_COO~B1, 1.0.0_SA_CTO~DELL1), which the schema's letters-only lane pattern refuses. The round-14 report writes the role serial 2.0.0_SA_COO; the commit author carries the lane. Owner of the schema: 1.0.0_SA_CTO (widen the lane pattern to [A-Z0-9]+)."
+}
+```
