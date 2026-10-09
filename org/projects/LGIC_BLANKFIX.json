@@ -3,11 +3,11 @@
  "home": "org/missions/D14/LGIC/LGIC_BLANKFIX",
  "directive": "D14",
  "macro_code": "LGIC",
- "fabric": "laptop",
+ "fabric": "dell1",
  "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Every broken name gets a complete fix: closing the blanks in the naming check's list",
  "generated_from": "org/missions/D14/LGIC/LGIC_BLANKFIX/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-07T11:55:33Z"
+ "generated_at": "2026-10-09T04:03:43Z"
 }
