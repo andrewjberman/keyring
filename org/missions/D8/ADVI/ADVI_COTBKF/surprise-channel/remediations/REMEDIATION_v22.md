@@ -26,11 +26,11 @@ Compile record:
   "owner": "2.0.0_SA_COO~C2",
   "round": "v32",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v32"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
