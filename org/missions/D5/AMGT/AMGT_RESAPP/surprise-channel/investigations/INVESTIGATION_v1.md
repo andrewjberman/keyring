@@ -23051,3 +23051,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "T2 of the store check still passes on the 3 Item 4.B locations; the count of 4 is only a regex overcount. Recorded, no verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W335-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~335",
+  "surfaced_at": "2026-10-09T10:51:07Z",
+  "one_line": "AMGT-ii-2 AC3 (r83_pbr.py --crit AC1) cannot pass while AC1 passes: its P4 holds the other four names' 12 cells to the base chars and sha256, and stripping header lines changes both on every cell by design (all 12 starts and all PBR P1-P3 held).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ii-2 face AC3 expects 'PBR's three sections still start at the sections its cross-reference table names and the other four names' starts hold; R83 PBR AC1: YES; exit=0'. The check's P4 (round83_prep/checks/r83_pbr.py, BASELINE) requires the 12 cells of ASML, BABA, NU and SAP to equal the base (start, chars, sha256[:16]).",
+  "world_is": "With the strip in document.py, r83_pbr.py --crit AC1 prints PASS P1, PASS P2, PASS P3 (PBR business start 319061, risk 209708, mdna 549928 unchanged) and FAIL P4 'the other four names' cells unchanged: 0 of 12', verdict R83 PBR AC1: NO, exit 1. Every MOVED line has the same start offset as BASELINE; chars and sha differ (e.g. ASML business 60000 -> 58257, BABA mdna 80000 -> 79494, SAP risk 33745 -> 33640). Removing running-header lines from a cut section must change its chars and hash, so P4 as written contradicts AC1 of this order (r84_header.py AC1 prints R84 HEADER AC1: YES, exit 0). The worker did not edit the check (outside its paths).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=worktree python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_pbr.py --crit AC1 (exit=1, 12 MOVED lines, start offsets equal BASELINE on all 12)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round83_prep/checks/r83_pbr.py BASELINE table and the P4 line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A P4 that compares only the start offset (and PBR P1-P3) would grade the order's stated expectation. The 'strip before the cap slice' variant would keep the capped sections at their cap length but their sha would still differ, so no cutter variant passes P4 as written. AC3 is reported FAIL by output, not waived."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W336-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~336",
+  "surfaced_at": "2026-10-09T11:44:38Z",
+  "one_line": "r84_store.py AC2 T3 (English-marked share of served sentences) reads SAP 76% against its 80% floor on an English draft: 8 of 34 served sentences are numeric (EUR figures, growth percentages) with no ' the ', ' and ' or ' of ', so AC2 reads NO for SAP and ALL 2 of 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ii-3 face AC2 expects 'each name's live /thesis serves English sentences; R84 STORE AC2 ALL: YES 3 of 3'; r84_store.py ENGLISH_RE (whitespace, the|and|of, whitespace) with an 80% floor (T3).",
+  "world_is": "SAP_GY_Equity landed English (fetch language en, items business/risk/mdna, 9 of 20 served locations cite the business item). The live /thesis serves 34 sentences; 26 carry ' the/and/of' (76%). The 8 unmarked sentences, read in full, are English, e.g. 'ATS total segment revenue increased 9% (12% at constant currencies) to EUR 32,847 million in 2025 from EUR 30,248 million in 2024.' and 'Core Services segment profit increased 53% (56% at constant currencies) to EUR 432 million in 2025 from EUR 283 million in 2024.' (four of them are repeated across sections). BABA read 80% (32 of 40, exactly the floor) and PBR 90%. The marker misses short English sentences built from figures and verbs. I did not edit the check and did not roll SAP back: the pair's rollback trigger is a name that is not stamped en, a missing section, an UNRESOLVED fetch or a draft in another language, none of which occurred.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PYTHONPATH=worktree py -3.12 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round84_prep/checks/r84_store.py --key SAP_GY_Equity --crit AC2 --where deployed (exit=1, 'English-marked 26 (76%)')",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~R1/round84_prep/checks/r84_store.py:27 ENGLISH_RE and the T3 floor",
+      "org/critical_paths/change_management/20261009T1131Z_amgt-resapp-r84-ii3-store-half-dell1_deploy_completion.md leg L2"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded as filed, no verdict. SAP is served now (AC1 YES). The decision to keep it or roll it back, and whether T3 should count numeric sentences, is the issuer's. SAP's pre-act VersionIds (analysis rmP1ek8s2AVOO.IMhvmk_3Snqx6vI3zF, drafting qb9GzRTF0E9_nend.L7Sc_W0d_4b5BTR) are in PRE_ACT_RECORD.md for a rollback by re-write."
+}
+```

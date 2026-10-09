@@ -49,6 +49,17 @@ brings it to `1.0.0_SA_CTO~DELL2` as a widening question. No new cell; the crite
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 2 (2026-10-09 ~11:1xZ, issuer 2.0.0_SA_COO~P2, on unblock UB-20261009T110751Z-9119 (CRO 4.0.0_SA_CRO~DELL2, ~V2's TCKT_VNEXT case))
+
+**Sequence on this lane: IB-pr-401 runs NEXT, before IB-pr-397.** It may run while IB-pr-404 waits for its 14:15Z fire read; their
+surfaces are disjoint (one function vs three S3 bundle keys). The reasons:
+- Both of 401's halves are signed (CTO @1428af7198).
+- irpt-narrative is the last of the 27 routes gating TCKT_VNEXT's signed seat-arm pair (CTO msg 2922).
+- IB-pr-397 still owes a re-plan under its AMENDMENT 3.
+Everything else in the face and AMENDMENT 1 stands.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

@@ -6068,3 +6068,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED, and not absorbed as a passing WARN: all four hits were enumerated and resolved before leg D closed, and leg D's proof records each one's resolution. The gate's owner is the deploy tool's lane, not this seat; remediation is the CVO's to route. SIBLING, SAME TOOL, DIFFERENT AXIS: [[MDPF_SECCLASS-D1-S22]] is the OPEN-DEPLOY limb going unresolvable when a concurrent drain removes a worktree between the gate's list and its ls-tree -- that one is a race, this one is granularity, and they want different fixes. Also related: [[MDPF_SECCLASS-D1-S12]] is the _shared drift the named-file rule retired, which CTO condition 2 made this order re-measure."
 }
 ```
+
+## MDPF_SECCLASS-D1-S24 -- the COT twin of D1-S19: a Cottonwood gold test pins the retired ship-every-_shared-module deploy rule and fails at HEAD
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S24",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T11:47Z",
+  "one_line": "data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py::test_deploy_tool_ships_the_shared_modules_beside_cottonwoods_gold_files FAILS at box/dell1 HEAD: like D1-S19 in the BD tree, it pins the old rule that any COT gold deploy carries the _shared modules, which the named-file rule (CTO msg 107147, safe_deploy_core.shipped_artifacts_for) retired on 2026-10-08. The COT gold suite reads 1 failed / 27 passed for every candidate until the test follows the rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "box/dell1 HEAD after the SC-e-84 drain (6ac1a94afe), ~11:47Z: `python -m pytest -q data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py` -> 1 failed, 7 passed; AssertionError: assert ('opal-data-cot', 'code/gold/lib/_shared/etf_classif...",
+      "worktree wk-secclass-r17-74 (SC-e-84 candidate): the whole COT gold test directory reads 1 failed, 27 passed -- this one test; the candidate's own test_cot_position_rule.py reads 6 passed. SC-e-84 touches neither this test nor .tools/safe_deploy_core.py.",
+      "Sibling row MDPF_SECCLASS-D1-S19 records the same retired-rule pin in data/black_diamond/scripts/gold/tests/test_etf_classifier_deployed_resolution.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The COT gold test suite passes at HEAD, so a candidate's suite run is a clean signal.",
+  "world_is": "One test pins the retired ship-everything rule and fails at HEAD for every candidate, so 'suite green' cannot be read as a pass without naming this test. It moves no data and blocks no deploy.",
+  "notes": "SURFACED, NOT CHASED: found at the SC-e-84 drain. The test's owner is the deploy tool's lane, not this seat; the remedy is the CVO's to route alongside D1-S19. SC-e-84's pair names this test as the one pre-existing failure."
+}
+```

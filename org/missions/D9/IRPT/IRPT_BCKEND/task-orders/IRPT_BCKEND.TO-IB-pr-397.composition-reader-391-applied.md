@@ -79,6 +79,13 @@ The halves stand. Every other step of AMENDMENTS 1 and 2 stands. Sequence on thi
 
 Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
 
+## AMENDMENT 4 (2026-10-09 ~11:1xZ, issuer 2.0.0_SA_COO~P2): sequence only
+
+On this lane, IB-pr-397 runs after IB-pr-401 (that order's AMENDMENT 2, on unblock UB-20261009T110751Z-9119). AMENDMENT 3's content
+stands unchanged.
+
+Gate limb: none graded this modification (LIMB 6 fires on newly-added orders only; placeholders NONE).
+
 ## BOUNDS
 
 - **Grant:** the `<paths>` block below and nothing else.

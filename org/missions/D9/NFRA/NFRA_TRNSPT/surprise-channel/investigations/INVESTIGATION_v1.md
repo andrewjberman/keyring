@@ -1485,5 +1485,72 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "S04 as the order words it is MET on the gateway's tool surface (one call by name, status 200, count 20). The surface the pull Lambda actually calls is the headless /hx/transcripts route, and it admits none of the 4 allowlisted meetings for the stored bearer. The bearer itself is live (403, not the control's 401). So the p18 apply lands its 9 resources and the Lambda runs, but the FIRST-LANDING branch -- FWD-2's acceptance -- is unreachable until the gateway host's allowlist is widened. Nothing served moves either way; the fire logs and lands nothing, which the COO half's second branch already admits.",
     "notes": "Owner: the gateway host's allowlist is NFRA_OPLGTW's surface, not this project's and not this seat's -- routed to 2.0.0_SA_COO~T2 in the p18 report, which carries it to the CTO. This seat did NOT widen anything and did not work around the refusal. The apply proceeded: the order's STOP conditions are S04, S05 and KMS, and all three read MET. Re-probe is one read: the 4-meeting probe above."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S12",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.7.0_AE_CloudOps~TR2",
+    "surfaced_at": "2026-10-09T11:20:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "NONE of the transcripts root's Lambdas carries a lambda-source-map.json entry (0 of 232 entries name one), and the root has never been tagged (0 transcripts-v* tags), so deployment rules 4 and 6 are unmet for the function TO-APPLY-p18 just created and for the three that predate it.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json: functions enumerated, DENOMINATOR 232 entries, transcripts-bearing entries = 0 -- teams-global-transcripts-pull-lambda (created at this apply), outlook-global-transcripts-pull-lambda, the commentary Lambda and the chat-assist Lambda are all absent",
+        "git tag -l 'transcripts-v*' and git tag -l '*transcripts*' both return empty, against a 0-diff targeted apply of infra/aws/terraform/transcripts completed at 2026-10-09T11:12Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cloud-ops DEPLOYMENT RULES 4 ('Every Lambda has an entry in infra/aws/lambda/ci/lambda-source-map.json') and 6 ('git tag -a {pipeline}-v{X.Y.Z} + git push --follow-tags after every 0-diff apply').",
+    "world_is": "Both are unmet for this root, and three of the four functions predate TO-APPLY-p18. Neither file is inside the order's <paths> (deliverables, logs, change_management), so the applier cannot land either fix: the owned-paths hook refuses the source-map edit, and rule 6 would need a version number minted for a pipeline whose version space nobody has established -- the root has been applied before, untagged, so v1.0.0 is a judgment the issuer owns, not a mechanical next step. Rule 4's own text warns that the map PAIRS a function with a dir and never compares deployed bytes, so its absence hid nothing here: this apply resolved the deployed bytes by CONTENT instead (live CodeSha256 taFbGTCU... equals the built zip's base64 sha256).",
+    "notes": "Owner: 2.0.0_SA_COO~T2 to cut a cell that adds the four source-map entries and decides the tag, or the CTO to rule the root exempt. Routed in the p18 report. One entry per function is the whole fix; the tag is one decision."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S9",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T12:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-m21: the commit-time naming gate refuses the 'pipeline' field the sibling entries carry when its value is 'transcripts' (3 REFUSE, lambda-source-map.json), so the three new entries omit that optional field.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at the first attempt of TO-TR-m21: [naming-gate] NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json:6727, :6741, :6755 transcripts -> lookup('transcripts') -- hand-kept carrier of 'transcripts' outside every permitted context; NAMING-GATE: REFUSE 3 graded",
+        "r21_checks.py m21 keys only on tf_file, tf_resource, artifact_sha256, last_deployed_commit and _artifact_note; it does not read 'pipeline'; after removing the field it prints R21-M21-OK 3 of 3 resources mapped"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-m21 step 1: copy the shape of an existing entry (mdpf-gold-lambda), whose optional 'pipeline' field names the owning pipeline.",
+    "world_is": "The gate treats the literal 'transcripts' in a new source-map value as a hand-kept carrier and refuses the commit, so the shape cannot be copied whole for this system. Nothing in the three entries is lost for CI: source_dir, files, tf_file, tf_resource and iam_role are present. Pin note: outlook-global-transcripts-pull-lambda's last_deployed_commit is 8f82af62816ee2280ac820cb78168a07fc743fe7, the apply-1 code pin in ledger nfra-trnspt-c3-driven-positive-arm-20261007 (apply 2 at 2026-10-07T23:59:05Z changed WINDOW_DAYS only; live CodeSha256 VGIq85Xx... unchanged and equals the ledger's); the earlier mail-pull-schedule ledger names e3707e911f, which is the superseded code.",
+    "notes": "Owner: the issuer or the naming-gate owner, to say whether a registry row should let 'pipeline' carry this system. This seat added nothing typed to get past the gate; it dropped the field."
+  }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S10",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T11:55:00Z",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T2 (before the never-widen pair that applies aws_iam_role.silver_reader names a holder: decide whether the role's grant may include silver/research_meeting, or whether held-out text is wiped/blanked at the writer)",
+    "one_line": "A Research silver object carries held-out rows (>=1 residual wipe flag) with their text unwiped-to-clean; the only filter is reader-side (holdout.visible_rows), so a silver-only role reading S3 directly reads those rows' bytes.",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/research_fold.py:_fold_one builds every row with 'text': b['text'] (the wipe_blocks output) and 'held_out': per_block[i] > 0; a held-out row's text is stored as-is, not blanked",
+        "data/transcripts/scripts/teams/holdout.py:visible_rows is the one filter: it drops held_out rows at read time and returns only a count; nothing at the writer or in the bucket enforces it",
+        "research_fold.write_all puts parquet under teams/transcripts/silver/research_meeting/..., a prefix the new silver_reader policy (readers.tf) grants s3:GetObject on (read of source files only; no S3 read made)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-r21: the silver-only role is the narrower reader; privacy for held-out rows is assumed to be held by silver content being wiped.",
+    "world_is": "The silver tier's wipe is not complete for held-out rows by design (TR-w-9: held out is the residual-flag case, filtered at the reader). The role built here, with its trust admitting nobody, is inert; once a holder is named it can read those rows' stored text through plain S3 GetObject, bypassing visible_rows.",
+    "notes": "Armed only in the sense that applying the role with a named holder widens who can read held-out text. This order applies nothing and the default trust admits nobody. The apply order's COO/CTO halves should read this row; the fix options are the issuer's (blank text where held_out at write, or exclude the research_meeting prefix from the grant)."
+  }
 ]
 ```

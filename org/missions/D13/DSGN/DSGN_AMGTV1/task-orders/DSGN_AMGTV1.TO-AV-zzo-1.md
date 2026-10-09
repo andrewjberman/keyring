@@ -45,6 +45,21 @@ passages it rests on under it (`SentenceBlock`).
    - Pressing it scrolls that passage into view and focuses it (`tabIndex={-1}` on the blockquote).
    - A sentence with no evidence draws its spans as plain text.
    - Any change to `__harness__/` must keep each harness's claim (re-anchor only; record each re-anchor in the instance).
+5. **AMENDMENT 1 (after the close walk) -- the whole sentence is the press, laid out inline.** This replaces item 4's per-span button.
+   The walk on ASML at 11:24Z showed two problems:
+   - the served `quoted_spans` are phrases, not figures, so "EUR 2.9 billion" stayed unpressable;
+   - each span `<button>` rendered inline-block, so a long quoted phrase broke its sentence onto a new line.
+
+   Change `SentenceBlock` so that:
+   - The sentence's text sits inside ONE `<button type="button" data-sentence-press="">`, styled to read as running text: class
+     `inline` (never `inline-block`, `block` or a flex layout), `text-left`, the sentence's own font, no border or background. A hover
+     underline and a focus ring are allowed.
+   - That button names the sentence's first passage with `aria-controls`. Pressing it scrolls that passage into view and focuses it,
+     exactly as item 4's button does today.
+   - Inside it, each served span piece from `splitOnSpans` is a `<span data-figure-span="">` (underlined), never a button. Plain pieces
+     stay plain text. The machine chip and the check badge stay outside the button.
+   - A sentence with no evidence draws its text and spans with no button.
+   - AC1 is r63b.cjs, whose arm 4 now reads this.
 
 ## 2. BOUNDS
 
@@ -91,10 +106,12 @@ Report once: the diff (per file, one line each), the output line of every criter
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**REOPENED (AMENDMENT 1, 2.0.0_SA_COO~D1, 2026-10-09 ~11:3xZ):** AC3 missed in part on the close walk (`tmp/ui-walk/20261009T112329Z` shot 008, ASML_NA_Equity Investment-thesis window). Items 1-2 read as ordered (the 'COMPANY DESCRIPTION' heading, no false absence). Item 4's per-span buttons left the figures unpressable (the served spans are phrases) and broke sentences onto new lines (inline-block). Item 5 replaces item 4; r63b arm 4 is amended to read it. The first build @e469fa1021 stays merged; the fix lands as a second commit on candidate f8eee17d. Graded by no gate limb at cut (a modification; GATE viii does not apply, `<placeholders>` NONE).
+
 **ISSUER NOTES:** round 63 = `ledger/ROUND_ANALYSIS.round62.md` @4b7ce964a2 section 2, five items in three cells by file surface
 (decomposition v63). Prep: `round63/PREP.md`. Base portal ce3b0cc4 (= origin DEV). LF only (ruling R2, row D1-S1).
 
-<status>pending</status>
+<status>complete</status>
 <round>63</round>
 <to_id>DSGN_AMGTV1.TO-AV-zzo-1</to_id>
 <slot>~135</slot>
