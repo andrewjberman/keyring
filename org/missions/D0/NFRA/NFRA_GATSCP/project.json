@@ -36,5 +36,10 @@
   "workstreams": [],
   "phase": "2026-10-09 ~06:5xZ (1.0.0_SA_CTO): L2 endpoint, L3 register and L4 PRD v0.1 written together; L4-R owed (ratified-text half 3.0.0_SA_CVO; brief half accepted as written by the CRO lane, proportionate sign-off). Next: a dell1 COO lane cuts round 1.",
   "blocking": "L4-R: 3.0.0_SA_CVO's ratified-text half.",
-  "last_updated": "2026-10-09"
+  "last_updated": "2026-10-09",
+  "leads_dell1": {
+    "cto": "1.0.0_SA_CTO~DELL1",
+    "coo": "2.0.0_SA_COO~N1",
+    "cvo": "3.0.0_SA_CVO"
+  }
 }
