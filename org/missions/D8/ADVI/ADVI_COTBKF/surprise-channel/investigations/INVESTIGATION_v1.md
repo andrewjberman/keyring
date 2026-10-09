@@ -4048,3 +4048,28 @@ round.** Never edit an existing row.
   "world_is": "No enabled schedule leads to a script that writes silver/prices in the live gold-run document; a manual run of the cot builder (gold_dispatch silver-prep) is the one repo path that would rebuild canonical_prices."
 }
 ```
+
+## ADVI_COTBKF-D2-W65-S1 -- The 988 held account-days are all one bond (95000U2D4); the other two have no Commonwealth rows and no CUSIP-keyed cot rows
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W65-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~65",
+  "surfaced_at": "2026-10-09T13:40:00Z",
+  "one_line": "CB-ak-1: commonwealth_daily_holdings over the silver transactions gives 988 account-days for 95000U2D4 and 0 for 05613L3H2 and 651639AX4; the silver transactions hold 10 rows of 95000U2D4 (1 by, 8 int, 1 lo) and none of the other two; positions hold none of the three; the cot gold holdings hold 86 CUSIP-keyed rows of 95000U2D4 (label bd_snapshot, a foreign label) and none of the other two. Disclosed: run 1 classed 95000U2D4 as none because my trade-type regex missed the vendor code 'by' (Buy, commonwealth_signs.py); the class rule text was not changed, the code list was corrected, run 2 is the recorded run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~65/bond_custodian_price.md (held-day counts per CUSIP, transaction types, cot store rows)",
+      "rule commit b4764d4fa0 precedes the first run; the corrected trade-type code list is in the script commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order states the three bonds are held for 988 account-days in total across the three, and that the cot tree may carry their prices.",
+  "world_is": "In the Commonwealth chain's held-day rebuild all 988 account-days belong to 95000U2D4; the other two bonds are not in the Commonwealth transactions or positions, so their holders (if any) are outside this chain's rebuild or are keyed by something other than the CUSIP in the cot gold holdings (not searched: the rule counts CUSIP-keyed rows only)."
+}
+```
