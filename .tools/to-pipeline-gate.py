@@ -1112,6 +1112,21 @@ def _self_test():
                                     "<status>complete</status>\nbalance ok\n")),
         ("redaction: an id -> [redacted] is a pure redaction",
          lambda: _is_pure_redaction("<status>complete</status>\nid 55554444\n", "<status>complete</status>\nid [redacted]\n")),
+        ("redaction: an id swap beside an untouched date and ratio is a pure redaction (dell2 msg 3813)",
+         lambda: _is_pure_redaction("<status>complete</status>\nacct 12345678 ratio 2.43x on 2026-04-07 row W10-S4\n",
+                                    "<status>complete</status>\nacct acct#0a1b2c3d ratio 2.43x on 2026-04-07 row W10-S4\n")),
+        ("redaction: an id inside markdown bold with a possessive is a pure redaction (dell2 msg 3813)",
+         lambda: _is_pure_redaction("<status>complete</status>\n**12345678**'s value 2.47x\n",
+                                    "<status>complete</status>\n**acct#0a1b2c3d**'s value 2.47x\n")),
+        ("redaction: a backtick-wrapped id -> backtick-wrapped token is a pure redaction (dell2 msg 3820)",
+         lambda: _is_pure_redaction("<status>complete</status>\nsee `12345678` here\n",
+                                    "<status>complete</status>\nsee `acct#0a1b2c3d` here\n")),
+        ("redaction: an id inside a path (FLOW_RESIDUAL_<id>_R2.json) -> token is a pure redaction (dell2 msg 3820)",
+         lambda: _is_pure_redaction("<status>complete</status>\nfile FLOW_RESIDUAL_12345678_R2.json on 2026-10-09\n",
+                                    "<status>complete</status>\nfile FLOW_RESIDUAL_acct#0a1b2c3d_R2.json on 2026-10-09\n")),
+        ("redaction: a marker standing where a NON-digit word stood is NOT a redaction",
+         lambda: not _is_pure_redaction("<status>complete</status>\nresult PASS\n",
+                                        "<status>complete</status>\nresult acct#0a1b2c3d\n")),
         ("redaction: an ADDED line is NOT a redaction (graded as a flip)",
          lambda: not _is_pure_redaction("<status>complete</status>\nacct 12345678\n",
                                         "<status>complete</status>\nacct acct#0a1b2c3d\nnew claim\n")),
@@ -2995,19 +3010,28 @@ _REDACT_MARK_RE = re.compile(r"\[redacted\]", re.IGNORECASE)
 _REDACT_PH = "<<ID>>"
 
 
+_REDACT_STRIP = ",;:.()[]'\"*`"
+_REDACT_ANY_MARK_RE = re.compile(r"acct#[0-9a-f]{8}|\[redacted\]", re.IGNORECASE)
+_REDACT_ID_PAT = r"[A-Za-z0-9-]*\d[A-Za-z0-9-]*"
+
+
 def _redact_marker(tok):
-    """True when a staged token (punctuation stripped) is a redaction marker."""
-    t = tok.strip(",;:.()[]'\"")
-    return bool(_REDACT_TOKEN_RE.fullmatch(t)) or t.lower() == "redacted" or bool(_REDACT_MARK_RE.fullmatch(tok.strip(",;:.()'\"")))
+    """True when a staged token (punctuation, markdown and a trailing 's stripped) is a redaction marker."""
+    t = tok[:-2] if tok.endswith("'s") else tok
+    t = t.strip(_REDACT_STRIP)
+    return bool(_REDACT_TOKEN_RE.fullmatch(t)) or t.lower() == "redacted"
 
 
 def _redaction_line_ok(head_line, staged_line):
-    """True when staged_line is head_line with digit-bearing tokens replaced by acct#<8hex> or [redacted], or removed. PURE."""
+    """True when staged_line is head_line with digit-bearing tokens replaced by acct#<8hex> or [redacted], or removed. PURE.
+
+    Marker-anchored (dell2 2.0.0_SA_COO~C2 msg 3813 via 0.0.0_AB_MSTR 108061): each marker in the staged line stands where ONE
+    digit-bearing token stood in HEAD, and every other character must match exactly -- so a date or a ratio left untouched beside a
+    swapped id still compares equal, and markdown or a possessive around the marker is literal text on both sides."""
     if head_line == staged_line:
         return True
-    h = _REDACT_ID_RE.sub(_REDACT_PH, head_line)
-    st = _REDACT_MARK_RE.sub(_REDACT_PH, _REDACT_TOKEN_RE.sub(_REDACT_PH, staged_line))
-    if h == st:
+    parts = _REDACT_ANY_MARK_RE.split(staged_line)
+    if len(parts) > 1 and re.fullmatch(_REDACT_ID_PAT.join(re.escape(p) for p in parts), head_line):
         return True
     # Figures removed outright: every head token is kept, replaced by a marker, or (only if it carries a digit) dropped.
     ht, sti = head_line.split(), staged_line.split()

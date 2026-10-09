@@ -26,7 +26,7 @@ W6-S5 (REMEDIATION_v1) REMEDIATED and closed. ARMED: 0. Still OPEN from earlier 
    "ADVI_COTBKF-D2-W32-S1"
   ],
   "spec_asserts": "Spine L9/L10 (CLAUDE.md rule 27): every item is dispositioned on grounded evidence, and every BLOCKING or ARMED item before the slug.",
-  "world_is": "D2-S22: both 2026-10-06 traces reproduce on dell2 after rounds 4-11's applies (0 rows missing or changed; D49141617's 5 extra rows are C-SILVER-restored repeats), every trace resolving to its delivered line. D2-S23: commonwealth_price_census.py reads every legacy store through lib/opal_naming.legacy_address() (7 references) and no longer reads a --stores record file (this seat read it), so W6-S5 (REMEDIATION_v1) is REMEDIATED and closed. D2-W33-S1: the round's Amount census settles the sign (unsigned on in/out types, negative on ftax/stax), so direction x |Amount| is right. D2-W33-S2 and D2-W32-S1 are notes on loaders that each script now works around in memory.",
+  "world_is": "D2-S22: both 2026-10-06 traces reproduce on dell2 after rounds 4-11's applies (0 rows missing or changed; acct#0e4ff3a3's 5 extra rows are C-SILVER-restored repeats), every trace resolving to its delivered line. D2-S23: commonwealth_price_census.py reads every legacy store through lib/opal_naming.legacy_address() (7 references) and no longer reads a --stores record file (this seat read it), so W6-S5 (REMEDIATION_v1) is REMEDIATED and closed. D2-W33-S1: the round's Amount census settles the sign (unsigned on in/out types, negative on ftax/stax), so direction x |Amount| is right. D2-W33-S2 and D2-W32-S1 are notes on loaders that each script now works around in memory.",
   "grounding": {
    "status": "GROUNDED",
    "evidence": [

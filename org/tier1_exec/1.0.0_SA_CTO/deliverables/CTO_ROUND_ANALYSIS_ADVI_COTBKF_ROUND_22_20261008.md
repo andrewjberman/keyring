@@ -16,7 +16,7 @@ Author `1.0.0_SA_CTO~DELL2`, 2026-10-08 ~19:4xZ, under NFRA_CTLPLN ADDENDUM v0.1
   - The 75 trade-day months carry a different leg: dividends and fees (W43-S1).
   - D2-S32 stays OPEN, falsified as stated. This seat endorsed the one-cause reading, so the error is this seat's too.
 - **The lead for the 23 regressions (D2-S34):** the credit fires even where the vendor already posts a cash leg for the sale, which
-  counts it twice. 19 of the 23 sit in two accounts (0QF879130, 0QF879352).
+  counts it twice. 19 of the 23 sit in two accounts (acct#c42b98c0, acct#05dd4a9d).
 
 ## 2. Ruling
 
