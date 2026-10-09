@@ -5806,3 +5806,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Later commits to .claude/skills/govern/SKILL.md added the slot table and the Step 7 text. Minimal repair inside the grant, meaning unchanged: the cadence bullet became a blockquote (a quoted example), Step 7 line 'On this box's own minutes' and (b) now point at that quote and say 'the box the integrate task runs on'; the test ignores a backticked record file name (a citation). Whoever owns the Step 7 text should confirm the (b) wording."
 }
 ```
+
+## NFRA_CTLPLN-W14-S43 -- CTa1-AC3's expectation in the order reads names_from_builder=9/9, but the root declares 15 builder-named policies and tests/check_identity.py has printed 15/15 since AMENDMENT 20; no run can match the literal 9/9.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S43",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T03:28:15Z",
+  "one_line": "CTa1-AC3's expectation in the order reads names_from_builder=9/9, but the root declares 15 builder-named policies and tests/check_identity.py has printed 15/15 since AMENDMENT 20; no run can match the literal 9/9.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py -> 'IDENTITY-STATIC validate=ok no_access_key=True allow_default_true=True shell_window_retired=True names_from_builder=15/15 policy_size_ok=True ok=True' (EXPECTED has 15 entries; 9 was the count at the original cut)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md line 113: <expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect>; AMENDMENT 20 item 5 says the builder-name and attachment counts move"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTa1-AC3 expects 'names_from_builder=9/9 policy_size_ok=True ok=True' (the control: nine names are the builder's).",
+  "world_is": "The root now holds 15 builder-named policies, all 15 MATCH, so the literal 9/9 cannot match. The proof row keeps the earlier instances' pattern 'policy_size_ok=True ok=True' (a suffix of the order's text) and records 15/15 in its evidence; the test and the expected value were not weakened in the tool. Proposed repair for the issuer: set the expectation to names_from_builder=15/15."
+}
+```
+
+## NFRA_CTLPLN-W14-S44 -- dell2's s3:PutObject on all six transcripts-bucket prefixes the NFRA_TRNSPT jobs write reads allowed (so nothing was granted), but the transcripts KMS key grants the Dells Decrypt and DescribeKey only: a Dell PutObject with SSE-KMS still fails at kms:GenerateDataKey.
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S44",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T03:28:15Z",
+  "one_line": "dell2's s3:PutObject on all six transcripts-bucket prefixes the NFRA_TRNSPT jobs write reads allowed (so nothing was granted), but the transcripts KMS key grants the Dells Decrypt and DescribeKey only: a Dell PutObject with SSE-KMS still fails at kms:GenerateDataKey.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam:SimulateCustomPolicy, dell2 effective set (group policies + bus + ssm as built), s3:PutObject on 6 sample keys under teams/transcripts/silver/research_meeting/, bronze/chat_messages/, silver/chat_threads/, state/chat_assist/, bronze/transcripts/ and outlook/transcripts/ -> allowed 6 of 6 (matched S3ObjectsOnOpalBuckets); positive control opal-data-assets allowed; negative controls: DeleteObject on the bucket explicitDeny (DenyS3DeletesOnProductionData), a non-opal bucket implicitDeny; iam:SimulatePrincipalPolicy on the live user allowed by cloudops-dell-agent-deploy-policy",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> dell2 kms:Encrypt, kms:GenerateDataKey, kms:ReEncryptFrom implicitDeny; 'dell_write_refused=8/10' (unchanged by this pass); infra/aws/terraform/transcripts/main.tf lines 96-109: NamedReadersUseTheKey = Andrew_Berman only; DellAgentUsersDecryptOnly = kms:Decrypt, kms:DescribeKey; bucket default encryption is aws:kms under that key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 24 item 4: dell2 runs NFRA_TRNSPT's jobs on s3://opal-data-transcripts through its own seat; if s3:PutObject on a written prefix is refused, grant exactly those prefixes.",
+  "world_is": "No prefix is refused at the S3 identity layer, so the order's rule changes nothing in the transcripts root. The write path also needs the key: the bucket encrypts every object under the transcripts key and the key policy lets the Dell users decrypt only (Andrew-direct 2026-10-07). The two earlier TO-RUN orders ran under the laptop identity for that reason. Nothing was widened; whether dell2's own seat should hold kms:GenerateDataKey and kms:Encrypt on that key is the CTO's call and a never-widen act."
+}
+```

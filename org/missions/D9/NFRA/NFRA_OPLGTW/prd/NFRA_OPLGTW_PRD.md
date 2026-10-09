@@ -892,6 +892,14 @@ consistency, eventually we will make rules but not yet".
    overlay rows in `identity_tool_allowlist.txt` are removed, so it is UNSCOPED, as Andrew's identity is. Its tool set is
    whatever Andrew's is.
 3. **"for now".** This is today's state, not a design. Per-identity rules for this account are deferred until he names them.
+4. **The Opal-users-only gate. It ships with item 1 or neither ships.** Andrew-direct ~03:3xZ
+   (`ANDREW_DIRECT_20261009_033xZ_BBG_CONCIERGE_OPAL_USERS_ONLY_GATE.md`): "it should only accept inquiries from opal capital
+   users however, no external users, should not even respond at all". For the `opalbloomberg` principal:
+   - Teams reads return no message whose sender's Entra UPN is not `@opalinvest.com`.
+   - The sends refuse any chat or channel holding a member outside `@opalinvest.com`.
+   - Identity comes from Graph records, never display names. Unreadable counts as external.
+   - Acceptance A32 covers three arms: an external sender's message is absent from the poll; a send into a mixed chat is
+     refused; an all-Opal chat is served.
 
 **Unchanged.** Every rule of v2.2 that his words do not reach:
 - Alyssa's grant and her no-download;

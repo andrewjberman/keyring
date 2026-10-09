@@ -1,0 +1,13 @@
+key	classified_by	current_name	source_name	clean_name	action	source
+AAETX	seed	AMERICAN FUNDS 2030 TRGT DATE RETIRE A		American Funds 2030 TRGT Date Retire A	WRITE	table
+AMECX	seed	AMERICAN FUNDS INCOME FUND OF AMER A		American Funds Income Fund of Amer A	WRITE	table
+CAIBX	seed	AMERICAN FUNDS CAPITAL INCOME BLDR A		American Funds Capital Income BLDR A	WRITE	table
+CFIHX	seed	AMERICAN FUNDS CAPITAL INCOME BLDR F3		American Funds Capital Income BLDR F3	WRITE	table
+CLBAX	seed	AMERICAN FUNDS AMERICAN BALANCED 529A		American Funds American Balanced 529A	WRITE	table
+FBALX	seed	FIDELITY BALANCED		Fidelity Balanced	WRITE	table
+FKIQX	seed	FRANKLIN INCOME A		Franklin Income A	WRITE	table
+FTYPX	seed	FIDELITY FREEDOM INDEX 2055 PREMIER		Fidelity Freedom Index 2055 Premier	WRITE	table
+KAGIX	seed	KENSINGTON DYNAMIC ALLOCATION INST		Kensington Dynamic Allocation Inst	WRITE	table
+MDLOX	seed	BLACKROCK GLOBAL ALLOCATION INV A		Blackrock Global Allocation Inv A	WRITE	table
+SGIIX	seed	FIRST EAGLE GLOBAL I		First Eagle Global I	WRITE	table
+VTTHX	seed	VANGUARD TARGET RETIREMENT 2030 FUND		Vanguard Target Retirement 2030 Fund	WRITE	table

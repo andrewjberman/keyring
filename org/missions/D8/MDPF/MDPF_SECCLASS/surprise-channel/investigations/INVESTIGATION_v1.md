@@ -5850,3 +5850,30 @@ by dell1 or by this seat.
   "notes": "SURFACED, NOT CHASED, per CLAUDE.md section 2: found while building leg G's method for MDPF_SECCLASS.TO-SC-e65b by reading how the predecessor leg did the same read. It is NOT a finding against TO-SC-e65b's own act, which moved exactly its two signed keys with 10 of 10 watch keys unmoved and AC1 ok=True. REMEDIATION is the CVO's, not proposed here. WHAT I DO NOT CLAIM: that e65 placed a bad row, that any row is misclassified, or that e65's conclusion is wrong. Its primary evidence stands on its own and I did not re-run it. THE SOUND SUBSTITUTE, used for e65b's leg G instead of the void filter, in case it is useful to the gate's owner: the table CAN be asked the condition-3 question directly, keyed on what it does persist -- rows whose `ticker` begins NAME:: and whose asset_class is cash. That census reads 331 of 11,361, of which 330 have names that are not whole cash phrases, written by scheduled (313) and model (18). Those are pre-existing rows and the module is put-on-absence (it 'never replaces or edits an existing row'), so they are NOT condition-3 violations -- condition 3 governs what the next run PLANS. I state that explicitly because the naive reading of that same census says '330 violations' and would be wrong. A STRONGER CONTROL THAN THE DIFF, also run and also offered: both module versions were loaded as pure functions -- the OLD bytes from git at 03f7f8fb5c, md5 verified 3f1e6be8, equal to the measured pre-act ETag, and the NEW bytes pulled back out of opal-data-bd, md5 40ffa3fa -- and cash_token_match() was evaluated with each over all 331 real keys. OLD-yes/NEW-no = 8; OLD-no/NEW-yes = 0. So the change is narrowing-only ON LIVE DATA, not merely by reading the diff, which is what both halves assert; and the 8 rows it would now decline are the historical footprint the CTO half's 'does not land' branch already names, left in place by put-on-absence."
 }
 ```
+
+## MDPF_SECCLASS-D1-S18 -- seed-etf-classifications.py --dry-run reports 'Items written: N' while writing nothing
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S18",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-09T03:39Z",
+  "one_line": "seed-etf-classifications.py --dry-run prints 'Writing 15 item(s) to DynamoDB...', 'OK: Seeding complete!' and 'Items written : 15' while it puts nothing: the dry-run guard sits only around batch.put_item, and every summary line after it is unconditional. A reader of the output is told rows were written when none were.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Code at box/dell1 HEAD, infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py seed_table(): `with table.batch_writer() as batch: for i, item in enumerate(items_to_write): if not dry_run: batch.put_item(Item=item)` followed by unconditional `print('OK: Seeding complete!')` and `print('  Items written   : %d' % len(items_to_write))`; the '[DRY RUN]' status only prints every 50th item, so at 15 items it never prints.",
+      "Exercised 2026-10-09 ~03:3xZ by 2.0.0_SA_COO~M1: `--region us-east-1 --dry-run` at box/dell1 printed 'Writing 15 item(s)... OK: Seeding complete! Items written : 15'.",
+      "Negative read, same minutes: consistent get_item of AAETX, AMECX, CAIBX, CFIHX, CLBAX, FBALX read updated_by mdpf-secclass-remap-b and updated_at 2026-10-07T07:09:27Z (unchanged); VNQ seed-script 2026-09-30. Nothing was written."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A --dry-run reports what WOULD be written and says so; its verdict text never claims a write.",
+  "world_is": "Under --dry-run the script's final verdict reads 'Seeding complete! Items written: N'. Only the per-50 progress line carries [DRY RUN], and it does not print below 50 items, so a dry run of fewer than 50 rows carries no dry-run marker after the header. The table is untouched, as measured.",
+  "notes": "SURFACED, NOT CHASED: found while measuring the SC-e-71 release (half request NEVER_WIDEN_HALF_REQUEST_SECCLASS_SEED_NAMES_E71_20261009.md). Inert: it moves no data, but it is a self-report that cannot be trusted as a verdict -- an applier who reads 'Items written: 15' after a dry run could skip the real run or report it done. Remediation is the CVO's; the seed script's owner is not this seat."
+}
+```
