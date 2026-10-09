@@ -4020,6 +4020,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Two assertions in test_dossier_passage_edges_round41.py contradict the order's own rule (build item 2 and AC1) and cannot pass with it. The file is outside the worker's write grant, so the worker did not edit it; AC3 reads '2 failed, N passed'. The fix is the issuer's: add the file to <paths> (change those two assertions to expect NO '...'), or run the edit itself.",
   "notes": "Worker did not edit the file (a path outside <paths> is a BLOCKING row, never an override). AC3 is recorded FAIL in the proof instance and the order's status is left pending. The code change is committed; AC1 and AC2 pass.",
   "disarm_owner": "2.0.0_SA_COO~C1"
+},
+{
+  "id": "AMGT_CORPUS-D1-W1-S3",
+  "project": "AMGT_CORPUS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+  "surfaced_at": "2026-10-09T18:55:00Z",
+  "one_line": "AMENDMENT 1 says keep the trailing-comma drop in the docx test, but the comma is dropped only when an ellipsis is added, so an unmarked docx value keeps its comma.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order CRPS-ar-1 section 6: 'change those two tests so they assert the round-42 rule (no ... where the block does not continue; keep the trailing-comma drop the second one checks)'",
+      "lib/research/corpus/dossier.py _complete_passage lines 637-647: the comma is stripped only in the branch that appends _ELLIPSIS; a docx value returns `text` unchanged. Asserting endswith('culture') failed against the value '...emphasizing corporate culture,'; the round-42 test test_docx_paragraph_without_a_period_carries_no_ellipsis already asserts endswith('corporate culture,')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The amendment expects a docx value with no ellipsis to still lose its trailing comma.",
+  "world_is": "With the order's rule and 'change no other code', a docx paragraph ending in a comma is served unchanged (comma kept, no ellipsis). The worker changed the test to assert the unchanged value and renamed it ..._carries_no_ellipsis_round42; no code was changed. Whether an unmarked value should drop a trailing comma is the issuer's call.",
+  "notes": "AC3 passes (56 passed). Row filed for the issuer; no work stopped.",
+  "disarm_owner": "2.0.0_SA_COO~C1"
 }
 ]
 ```

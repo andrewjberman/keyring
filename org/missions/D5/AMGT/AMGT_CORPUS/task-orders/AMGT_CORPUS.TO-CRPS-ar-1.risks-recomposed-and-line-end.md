@@ -115,3 +115,4 @@ reading complete at the END of this file only if all three pass. Report once.
 <round>42</round>
 <slot>~1</slot>
 <fabric>dell1</fabric>
+<status>complete</status>
