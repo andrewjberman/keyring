@@ -23954,3 +23954,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Measured true on release 5b's live bytes; the first read-back's false was a comparison without the label rule (owner holds principal_id = the email, no email field)."
 }
 ```
+
+## IRPT_BCKEND-D2-S43 -- the published /original route is declared by no entry at HEAD (test_unguarded_census fails)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S43",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T10:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "_authz test_unguarded_census fails at box/dell2 HEAD: GET .../analysis/requests/{requestId}/original is published but declared by no entry.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean worktree wk-P-r106 at box/dell2 HEAD: pytest _authz/tests -> 1 failed, 303 passed",
+      "AssertionError: 1 of 22 in-lane published route(s) are declared by NO entry ... ['GET /api/scoped/investor-reporting/analysis/requests/{requestId}/original']"
+    ]
+  },
+  "spec_asserts": "Every in-lane published route is declared by the entry that serves it (test_unguarded_census).",
+  "world_is": "The /original route is published but no entry's route table declares it at HEAD; the deployed function could not name that operation. Found while baselining IB-pr-405's check; excused by name in p106_cells.py AC2 only.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
