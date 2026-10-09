@@ -11721,3 +11721,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Cites S3 as resolved by ruling, not by repair: the 28 columns are still unknown to the pin."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S77",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-09T19:40:15Z",
+  "one_line": "The six OG-bh-1 held-date RPS messages left the shared converter DLQ opal-assets-silver-dlq between 15:39Z and 16:17Z 2026-10-09 by an unknown actor -- not OG-bh-1 (its driver only reads depth) and not the 12:15Z sweep (outside that window); the held records were unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE deliverables/0.9.0_WK_NFRA_OPLGTW~46/bh1_backfill_record.json: batch 4 dlq_baseline 6 (15:3xZ), batch 5 dlq_baseline 0 (16:1xZ)",
+      "WORKER REPORT 0.9.0_WK_NFRA_OPLGTW~46 (OG-bh-1 Phase B close): 'The 6 DLQ messages left the queue between 15:39Z and 16:17Z ... not this order, and the 12:15Z sweep had not run in that window'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-bh-1 AMENDMENT 1 (both halves): the held RPS files' DLQ messages are the expected residue until OG-pn-1 re-runs the six dates.",
+  "world_is": "The queue was emptied by someone else in a 38-minute window. No record changed. Who receives or purges opal-assets-silver-dlq outside the 12:15Z sweep is unknown; a second DLQ consumer would also eat other masters' failures silently.",
+  "notes": "Next read: CloudTrail sqs:ReceiveMessage/DeleteMessage/PurgeQueue on opal-assets-silver-dlq 15:39Z-16:17Z. INERT because nothing incomplete was served and OG-pn-1 re-runs the six dates by its own path."
+}
+```
