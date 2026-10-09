@@ -4522,3 +4522,78 @@ round.** Never edit an existing row.
   "world_is": "Two files carry it (3 sites; the ast scan reports the nested PFX expression twice per site); the :103 one is a regex fragment, not a key. None changed."
 }
 ```
+
+## ADVI_COTBKF-D2-W73-S1 -- the old repo-root was parents[3] of the file = data/, not the repo root; lib.ticker_overrides lives under data/cot/scripts/gold/lib
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "build_canonical_prices_v2.py at base used Path(__file__).resolve().parents[3] as the repo root; for data/cot/scripts/gold/<file> that is data/ (parents[0]=gold,[3]=data), so resolve_repo_file_firm's rel path began 'cot/...' and could never match the tree dir 'data/cot/'. The ticker_overrides module is data/cot/scripts/gold/lib/ticker_overrides.py (no top-level lib/ticker_overrides.py exists); the base import 'from lib.ticker_overrides' raised ModuleNotFoundError from a dir without the gold lib/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py at 14a6fd3343:189",
+      "data/cot/scripts/gold/lib/ticker_overrides.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 premise: the repo root is parents[3] and the import's behaviour from code/gold/ is unmeasured.",
+  "world_is": "Measured: a bare dir holding only the writer: ModuleNotFoundError: No module named 'lib.ticker_overrides' at import (before main's FATAL handler). The base repo-file firm could not have resolved even in the repo. Fixed in d7e292e4b6 (_HERE.parents[3] from the directory)."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S2 -- registry stays beside-only: test h forbids a repo-root path for scopes.json
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "ADDENDUM 19 says every input resolves beside the module then at the repo root, but the round-42 test (test_canonical_prices_source_firm.py::test_h) asserts the writer source holds no 'infra/logic/registry' path, and test g requires an absent registry to read absent. scopes.json therefore resolves beside_module or unresolved only; in the repo (nothing beside) the registry is unresolved and every firm reads absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py::test_h_writer_has_no_second_path_to_lib_or_repo_registry",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py REPO_FILE_INPUTS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 item 1: one resolver, beside then repo root, for EVERY repo-file input.",
+  "world_is": "scopes.json has repo=None in REPO_FILE_INPUTS; test (b) asserts it unresolved in the repo. A repo-root fallback for it needs the CTO to lift test h; not done (outside the paths grant, and I did not build the path from split parts to dodge the test)."
+}
+```
+
+## ADVI_COTBKF-D2-W73-S3 -- unresolved ticker_overrides degrades to empty dicts + WARN rather than failing
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W73-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~73",
+  "surfaced_at": "2026-10-09T15:45:00Z",
+  "one_line": "The 7 pre-existing source_firm tests copy only the writer (+ scopes.json) into a temp dir with no ticker_overrides beside it, so a hard failure on an unresolved ticker_overrides would break them; the writer instead applies no YF overrides/corrections, prints WARN, and stamps the input absent (census NOT-CLEAN). In production this would silently drop 757 overrides + 1 correction from the ticker mapping if the file is not shipped beside code/gold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/build_canonical_prices_v2.py _load_ticker_overrides",
+      "757 YF overrides measured in the gold lib file"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-at-1 item 1: unresolved reads absent with a WARN; (e) existing tests stay green.",
+  "world_is": "Chosen: empty + WARN + absent in the resolution table. The deploy cell must ship ticker_overrides.py beside the writer (pair) or the gold run loses the overrides; a refuse-on-unresolved variant needs the old fixtures edited."
+}
+```
