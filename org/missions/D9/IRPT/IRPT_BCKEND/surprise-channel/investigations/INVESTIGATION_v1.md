@@ -24192,3 +24192,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check reads only the response schema file; the declaration was added there as a $ref to the one definition (no duplicate constraint)."
 }
 ```
+
+## IRPT_BCKEND-D2-S48 -- W264-S1 MEASURED: the enforcer-scope arm is NOT identical. A no-row Opal internal caller classifies UNKNOWN through the live zip and OPAL_GLOBAL through the built one. IB-pr-401 STOPPED before upload
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S48",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T12:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "The roster the built boundary hands enforcer_for promotes the caller from UNKNOWN (nothing granted) to OPAL_GLOBAL (a firm-authorized viewer), so the arm the CTO made a condition reads NOT identical and the act stops before any upload.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the arm, per tree, driving THAT TREE's own _scope.resolve with the roster THAT TREE's boundary hands enforcer_for (live None, built {subject}), one tree per process because both define a module named resolve: LIVE principal_class UNKNOWN, reason 'no advisorId claim and no admin role -- the validator itself refuses these callers on advisor-scoped paths (index.mjs:188)'; BUILT principal_class OPAL_GLOBAL, reason 'subject is on the caller-supplied Opal principal roster (server-side; never inferred from a header)'",
+      "the header set is the resolver's OWN TRUSTED_HEADERS table, not invented: x-origin-verify='cloudfront' (the constant edge marker), x-user-email=subject (payload.sub), x-firm-id='opal-capital'; x-advisor-id, x-user-role and x-user-type deliberately ABSENT, which is what makes the caller the no-row internal one",
+      "the roster values are the ones the signed replay records and this seat's own re-run reproduced: built=['ops@opalinvest.com'], live=None",
+      "WHY IT MATTERS DOWNSTREAM: the narrative entry authorizes a report by permitted_account_set (entry.py: 'permitted = set(scope.get(\"permitted_account_set\") or [])', then every named account must be inside it and the firm must be the bound firm), and _authz/enforce.py:790 returns True for principal_class in (FIRM_OPERATIONS, OPAL_GLOBAL) with the reason 'a firm-authorized viewer may address any advisor in its own firm'. UNKNOWN grants nothing; OPAL_GLOBAL is firm-wide inside the bound firm",
+      "SCOPE OF THE CLAIM, stated rather than overstated: both sides returned permitted_account_set size 0 because this arm passed directory={} and ownership={} on purpose, to isolate what the ROSTER changes from what the firm's data contains. The measured difference is therefore the CLASS, not an enumerated report-id set; the live-data enumeration (one real opal-capital report, one other firm's report) is the next measurement and is named below",
+      "FALSE IDENTICAL CAUGHT, and it is the trap the packet itself names: the FIRST run of this harness read UNKNOWN on BOTH sides and would have been reported identical. It was wrong -- it set only x-firm-id, so trusted_only kept one header and both sides classified UNKNOWN on 'X-Origin-Verify is not the validator's cloudfront marker', a reason with nothing to do with the roster. The harness was not reaching the cell it measures. The tell was the reason string, not the verdict",
+      "the two trees' resolve.py differ by 148 diff lines, which does NOT confound this: the difference is the RENDER_DELEGATE branch (IB-rtq-2 / PRD item 8), whose own header says it is placed before branches 2-6, never falls through to OPAL_GLOBAL, and leaves the branches below byte-identical; a caller with no renderer role and no render marker does not enter it, and the roster check is at live:181 and built:281 in the same form. So the packet's framing -- the roster is the variable -- is confirmed by measurement rather than assumed"
+    ]
+  },
+  "spec_asserts": "CTO half @1428af7198 condition 1 (adopting ~P2's W264-S1): before the ledger opens the applier runs a no_row_internal_enforcer_scope arm, live against built, and it must read IDENTICAL on the nameable-report scope or the act STOPS. AMENDMENT 1: its verdict and both report-id sets are recorded in the ledger entry before the upload; if not identical, STOP before any upload, file a row, and the issuer brings it to the CTO as a widening question.",
+  "world_is": "It is not identical, so IB-pr-401 STOPPED at step 3, before step 4's ledger and before any upload: irpt-narrative still reads es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc= at LastModified 2026-09-21T15:05:28Z, the artifact key still carries version ELQQZdHYUJHbDZSOxC2AAKQ_nXFqApoJ, and no ledger was opened for this order. Everything upstream of the arm passed and is held ready: the build reproduces the signed QiNRKpaCoX5gIGmt8ypj34l3noLeroXqwWLprr68Pmw= on two independent builds at the pin, and the 13 replay arms match the packet 13 of 13 on name and verdict with 7 negative controls, no UNEXPECTED verdict and no HARNESS_ code on the built error path. What the signer now decides is a WIDENING QUESTION the packet already predicted and left open ('its effect on what a narrative request may name was not measured. The signer decides it'): the restaged shared served.py hands enforcer_for the caller's own email, and that promotion is a property of the shared boundary the worker was not allowed to edit, not of this cell's narrative entry.py. It is narrower than it could be -- the firm is bound BEFORE the enforce.py:790 predicate runs, so the reach is confined to the caller's verified firm opal-capital and crosses no firm boundary -- but it is still UNKNOWN to OPAL_GLOBAL inside that firm. TO FINISH THE MEASUREMENT the signer will want the live-data half: resolve both sides again against the real opal-capital directory and ownership maps and enumerate the nameable report ids for one real opal-capital report and one other firm's report. This seat can run that on request; it is AWS reads only, and it was not run unasked because the class difference already satisfies the STOP and the enumeration touches client data.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
