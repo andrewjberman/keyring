@@ -391,3 +391,59 @@ the live pin.
 
 Remaining GO precondition: OG-rl-15 complete, which this seat has NOT measured and does not chase
 (`2.0.0_SA_COO~O` reports it to `2.0.0_SA_COO~MI`).
+
+---
+
+# DELTA 2026-10-09 ~13:0x-13:4xZ -- PARTIAL GO EXECUTED: A1 item 2 done, apply and ledger HELD
+
+**archetype:** DEPLOY (part 1 of 2; nothing deployed)
+
+GO (partial) msg 32753 authorised **A1 item 2 only**. Order flipped `issued` -> `pending` @`728fa7d6f1`
+(APPENDED, not edited in place). The work and every number are in the deliverable:
+
+**`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MX/ANNOUNCE_MX-r-9_PHASEB.md`
+@`5f9d189083`** (17710 B, 13 sections, 6 probe outputs committed beside it). Not restated here.
+
+Headline: STOP gate both planes = r29 `91811b648a`; deploy commit `5133f082bc`, gateway tree
+`f3844dae4c`, exactly 2 files, 0 outside; preservation 96 of 98 identical; **`.env` RULE 52 == 52**;
+tools 66 -> 66 with `copy_site_file_to_s3` absent both sides; A5 gate rc=3 absent / rc=0 materialised;
+host running r29's bytes 98 of 98; rollback tree ready at r29 with the live tree object.
+
+Three things done that nothing asked for, each because the cheap read beat the expensive discovery:
+the host's RUNNING BYTES vs r29 (a manifest field is a label, 22a CODE layer); the rollback tree built
+BEFORE any apply, so never-half-landed is satisfiable rather than promised; and the bun pre-check
+re-run at the pin AFTER r29 landed instead of inferred from the earlier run.
+
+Two scratch copies of `deploy-to-ec2.sh` (used only for the `cmp`) were DROPPED rather than committed:
+they duplicate a tracked file and carry secret-shaped fetch lines for no benefit. Census confirmed the
+6 committed probe outputs carry KEY NAMES only -- 31 hits across 8 files scanned, 29 in the dropped
+pair, 4 bare key names on their own lines, 0 values.
+
+## A banked-lesson attempt was correctly REFUSED, and the refusal is the right answer
+
+I tried to write this session's two control defects to memory. The hook blocked it: **seats do not write
+lessons to memory (Andrew-direct 2026-09-24) -- a lesson that matters becomes a gate, field or skill fix
+by its owning seat, and an incident stays in git history.** Both defects are already in git with their
+mechanics (this log's A4/A5 deltas, ANNOUNCE sections 9-10), and the fabric-level carrier for the
+wrapper fact exists as `NFRA_OPLGTW-Z-S75`, owned by `2.0.0_SA_COO~O`. No second carrier was created.
+
+## Current State
+
+`<status>` `pending`. Part 1 complete and ON ORIGIN (`c867cecfc0`, `5f9d189083`, `728fa7d6f1`;
+origin `box/sitez` f2ddf563df at the read). Live ref re-read after the commits: still r29.
+
+**NOTHING deployed. No NEVER-2 ledger opened. Nothing uploaded to S3. No Terraform. No push of deploy
+content. `HALT_OVERRIDE` never set -- 0 occurrences of this serial in the override audit log.**
+
+## Next Steps
+
+1. `[2.0.0_SA_COO~O]` OG-rl-15 complete. `[2.0.0_SA_COO~MI]` both never-widen halves, written from the
+   ANNOUNCE, naming the `.env` equality as a RULE plus the 52 this seat measured.
+2. `[0.7.0_AE_CloudOps~MX]` On item 3's GO, in order: re-read the live ref on BOTH planes and **STOP if
+   it is not `91811b648a`** (every pin in the ANNOUNCE is then void, and the document is re-cut, not
+   patched); open NEVER-2 `nfra-mcpindex-r8-discover-release` (entry AND sentinel; no IMAGE act, so no
+   task-family sweep applies and the entry says so); re-assert the sparse add and re-print both gate
+   verdicts; deploy from `C:/tmp/mx-dep-r9b` with `DEPLOY_BASE_REF=91811b648a...`, `HALT_ACK=1`,
+   `AGENT_NAME=0.7.0_AE_CloudOps~MX`; read back `/health` 200, `r9.AC2`, `r9.AC3`, 52 == 52, id set
+   equal, 66 -> 66, both S3 objects' `git-ref` = `5133f082bc...`; close the ledger; `r9.AC1`; proof
+   instance; report once. Roll back from `C:/tmp/mx-rb-r9b` on ANY failed leg.
