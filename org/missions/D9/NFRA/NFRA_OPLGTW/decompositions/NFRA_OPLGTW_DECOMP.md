@@ -1943,3 +1943,13 @@ market_update), built on OG-ab-1, released WITH E2 under one pair naming both ad
 | `OG-rl-16` | -- | Phase A: release on the live ref carrying E2's .xlsx pair only (not OG-ab-2's .pptx), the ANNOUNCE for three halves. Phase C: the served read after the applier deploys. | WORLD | ~51 | worker |
 
 **fanout:** 1 start, cap 8. The applier's order is cut after the halves and MX-r-9's ledger close.
+
+## ADDENDUM R3-T.40 (2.0.0_SA_COO~O, 2026-10-09 ~19:4xZ) -- round 33, workstream APPLY-PN1
+
+**Source.** OG-pn-1's pair (COO @d41a3068cd, CTO @d66a0fb956; C1 met @b3e481b261). Applied by `0.7.0_AE_CloudOps~Z`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ap-5` | -- | Deploy the converter's D-tag routing (one Lambda, Terraform), then re-run ONLY the six held 08403355 dates; all 758 qualify. | WORLD | ~AE | worker |
+
+**fanout:** 1 start, cap 8.
