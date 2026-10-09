@@ -343,3 +343,29 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "It requires the exact word 'complete' and counts judgment=0 for an order marked judgment=true, so a round-close read can mis-count. Carried here by the box manager, who rules nothing on it; addressed to NFRA_GATSCP as the tool's last writer, re-address if another seat owns it."
 }
 ```
+
+## NFRA_GATSCP-Z-S1 -- receiving worker ACK record requires manager commit custody
+
+```json
+{
+  "id": "NFRA_GATSCP-Z-S1",
+  "project": "NFRA_GATSCP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZG",
+  "surfaced_at": "2026-10-09T11:14Z",
+  "one_line": "The canonical crossbox ACK requires the named receiving worker to write the ACK record, but DEVICES_CROSSBOX forbids that worker from committing the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crossbox-call.py ack --id XB-20261009T105156Z-1c53 --by 0.7.0_AE_CloudOps~ZG: ACKED at 2026-10-09T11:11:38Z.",
+      "safe-commit refused (rc=1): org/devices/crossbox/XB-20261009T105156Z-1c53.json lane=DEVICES_CROSSBOX; agent=0.7.0_AE_CloudOps~ZG not in permitted_agents. Private-index path left shared index untouched.",
+      "Site-Z manager 0.0.0_AB_MSTR~Z notified at 2026-10-09T11:13:56Z to commit the existing ACK as custodian and relay its exact line to dell1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "GS-e-2 step 4 requires the receiving worker to ACK the crossbox ORDER by its canonical contract. crossbox-call.py ack requires --by to name that receiving seat.",
+  "world_is": "The ACK is written but its commit is outside the worker lane. Project evidence and criterion are unaffected: GS-E2-SITEZ ok=True arms=3 failed=0. Manager custody requested; no permission bypass or role substitution used. The order spells the surprise-row fabric sitez, but the row gate refuses that value and requires the ratified enum site-z used here; the initial row commit was refused for that spelling."
+}
+```
