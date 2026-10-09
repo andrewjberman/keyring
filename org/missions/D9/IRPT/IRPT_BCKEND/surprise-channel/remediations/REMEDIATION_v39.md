@@ -21,11 +21,11 @@ Graduated at the L8 in ADJUDICATION_v51.md, round label v114: 3 rows, OPEN.
     "owner": "0.0.0_AB_MSTR~DELL2 (safe-deploy.sh owner)",
     "round": "v114",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.0.0_AB_MSTR~DELL2 (safe-deploy.sh owner)",
       "round": "v114"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-D2-W269-S2",
@@ -63,11 +63,11 @@ Graduated at the L8 in ADJUDICATION_v51.md, round label v114: 3 rows, OPEN.
     "owner": "2.0.0_SA_COO~P2",
     "round": "v114",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v114"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
