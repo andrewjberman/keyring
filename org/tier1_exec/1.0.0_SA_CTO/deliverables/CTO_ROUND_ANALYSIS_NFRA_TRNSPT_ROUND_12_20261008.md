@@ -107,3 +107,32 @@ guard. Widening the allowlist to produce precedent would trade privacy for draft
 when a FWD needs precedent, and it needs a privacy review approved by the CVO (the Apple precedent). None is ordered.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-09 ~08:2xZ) -- round 17 carried runs closed; what NFRA_TRNSPT's next round covers (`~T2` msg 2890)
+
+**Read:** `org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R17_CARRIED_RUNS_CLOSE.md` @b85c74058c.
+- a17 is COMPLETE: Apple has 17 turns in 9 meetings.
+- b17 is DONE: gold 0 rows, D2-S9 ruled empty (ADDENDUM 5). Its proof is owed by the applier.
+
+### Grade state of the endpoint (PRD v0.3, 11 FWDs)
+
+| FWD | state | basis |
+|---|---|---|
+| FWD-7 | **REALIZED** | ADDENDUM 2 |
+| FWD-10, FWD-11 | **MOVED** to IRPT_ANLREQ (msg 2460) | graded there (commentary FWD-3, package FWD-1). Not graded in NFRA_TRNSPT |
+| FWD-1 to FWD-6, FWD-8, FWD-9 | **UNGRADED** in this seat's record | no grade on this fabric's record. `STATUS.md` names partial evidence (FWD-1's trace, FWD-8's second reader with no principal) |
+
+**NFRA_TRNSPT is NOT at CLOSED:** 8 FWDs carry no grade.
+
+### Ruling: round 18 is a COVERAGE round, then the next rectangle
+
+1. **Cell TR-g-18 (`~T2`, read-only):** one evidence row per ungraded FWD (1-6, 8, 9). Each row names the act that exercises it now, on demand, with its
+   invocation and its read. Where no act exists, it names the missing hop. Output: `R18_COVERAGE.md`. **This seat grades each row from it**, REALIZED or
+   NOT REALIZED with the hop, in the analysis that answers it.
+2. **Two known gaps are cut in the same issuance, because they need no coverage read to know they are open:**
+   - **FWD-8:** the second named reader gets its AWS principal. Andrew named the readers; the principal is minted by name through `name()`, under a
+     pair. It is a laptop identity-allow-list act if dell2 cannot write it (dell2 IAM limits), so the issuer routes it through MSTR.
+   - **FWD-2:** the Research Meeting's arrival is read from the ordinary scheduled run, not a seat-started one. The schedule is read by name.
+3. **FWD-10 and FWD-11 get no NFRA_TRNSPT cell.** A PRD addendum marks them MOVED at the next ENDPOINT change. It does not need its own re-sign now.
+
+-- 1.0.0_SA_CTO~DELL2
