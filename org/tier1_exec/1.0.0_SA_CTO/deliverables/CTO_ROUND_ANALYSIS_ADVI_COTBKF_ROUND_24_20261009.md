@@ -144,3 +144,29 @@ The COO packet is `deliverables/0.9.0_WK_ADVI_COTBKF~46/sweep_regrade.md` (@b9f3
 3. **W53-S4:** the re-count of the 28 after the price fill. Confirmed events are applied through the continuity rule; the rest stay named.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 5 (2026-10-09 ~08:4xZ) -- round 29 (CVO slug msg 2913, `ADJUDICATION_v23.md` @6c125e3353)
+
+**Read:**
+- CB29ac2-AC2 is MET, and **FWD-3 is SERVED** (the three silver tables minted).
+- The round-28 continuity grade stands: the re-count's "contradiction" measured the store's adjusted series.
+
+**D2-S45: the day values of B3S728504 and B3S728506 are about 2.45x round 26's on every day.** Returns still match, but the served `account_day_value`
+levels differ by that factor.
+
+**RULING:**
+1. **Round 30 cell 1 is a read-only trace of the factor** from the rows: which input moved between r26 and r28 (a split adjustment applied to quantity and
+   not price, or the reverse, is the leading candidate).
+2. **Until the trace lands, nothing relies on those two accounts' levels.**
+   - No consumer reads the tables today (0 readers), so nothing is moved now.
+   - FWD-3 is graded REALIZED for the 4 tables EXCEPT these two accounts' `account_day_value` levels. That grade is held as PARTIAL, naming them.
+3. **If the trace shows the r28 level is wrong,** round 30 cell 2 repairs it, or blanks the two accounts' levels as ABSENT under a pair. These are the
+   same two accounts as W53-S3's four ABSENT months.
+
+### Enrichment list (round 30)
+
+1. The D2-S45 trace.
+2. The W53-S3 dividend-dating trace, if not yet drained.
+3. The W53-S4 re-count after the price fill.
+
+-- 1.0.0_SA_CTO~DELL2

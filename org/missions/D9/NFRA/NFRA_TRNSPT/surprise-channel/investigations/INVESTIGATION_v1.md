@@ -1241,6 +1241,50 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "The backfill makes gold precedent available to the drafter (CTO half condition 4; PRD C-KIMI).",
     "world_is": "The residual check holds out every analysis-commentary message from these dates; the wipe is doing its job conservatively, and the cost is zero precedent.",
     "notes": "No rollback needed (the run is within its signed write set: 24 new bronze keys, 6 silver rebuilt, 6 gold new and empty, 1 run record). Any widening of the residual allowlist is a privacy decision; this row asks, it does not propose."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T08:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "PRD C-TIERS says silver is PII-wiped and C-READERS lets a scoped role read the wiped silver, but the Teams silver writer states it applies no wipe, so no Teams silver partition is a wiped copy a narrower reader could be given.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md:106 (C-TIERS: SILVER is typed, de-duplicated, PARQUET, with PII wiped) and :121 (C-READERS: a separate scoped role may read the wiped silver and gold prefixes only)",
+        "data/transcripts/scripts/teams/parse_silver.py:5-6@80a22d9a89 (docstring: No PII wipe on transcripts this round: staff names are the data; the wipe is the mail source's rule); 0 references to wipe in the file's code",
+        "data/transcripts/scripts/teams/research_fold.py (the Research fold DOES apply outlook.wipe.wipe_blocks, per its docstring) and infra/aws/terraform/transcripts/main.tf (no aws_iam_role: no scoped reader exists)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-TIERS: silver holds PII-wiped parquet; C-READERS and FWD-8 ACCEPT: a narrower reader may see only the copy with names and numbers removed.",
+    "world_is": "Silver for the four Teams series (monday_meeting, ocio_ic, asset_management_ic) is written by parse_silver.py with speaker names and text as received; only the Research fold and the mail silver apply the wipe. Inert today because no scoped reader role exists and the only readers are the named ones.",
+    "notes": "Found while writing the FWD-5 and FWD-8 coverage rows (R18_COVERAGE.md). Round 2 ruled staff names are the data for transcripts; whether C-TIERS' wording still binds the Teams silver, or a wiped Teams copy is owed before any scoped reader, is the CTO's call. This row asks, it does not propose."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S8",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-09T08:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "teams/read_meeting.py reads every row of a silver partition and has no held_out handling, so run on a research_meeting date it prints rows that research_read.py withholds as held out.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/read_meeting.py:58-85@fcc3633c7c (read_meeting lists the partition's parquets, builds turns from every row, filters only by speaker and grep); 0 occurrences of held_out in the file",
+        "data/transcripts/scripts/teams/research_read.py:62-70@42ebf001bf (a row with held_out is counted and skipped, never examined or returned); research_fold.STORE_COLUMNS = COLUMNS + held_out, so the Research silver rows carry the flag",
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R11_READBACK_STORED.json@420e376702 (3,644 held-out rows over the 29 stored Research objects)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-q-10 / R10_CLOSE: a held-out row is never returned by the analyst read over Research silver.",
+    "world_is": "That holds for research_read.py only. The meeting reader (TR-t-4) predates the held_out column and reads the same address, so a reader using it on a Research Meeting date sees the held-out rows. Inert today: only the named readers can run either tool.",
+    "notes": "Not run: found by reading the code while writing the FWD-5 coverage row. Becomes live if an analyst-facing reader is ever given the meeting reader."
   }
 ]
 ```

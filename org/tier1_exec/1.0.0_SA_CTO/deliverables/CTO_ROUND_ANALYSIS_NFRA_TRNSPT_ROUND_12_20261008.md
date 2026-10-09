@@ -164,3 +164,68 @@ when a FWD needs precedent, and it needs a privacy review approved by the CVO (t
    - FWD-1 and FWD-3's new-landing arm are re-read on the same landing.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-09 ~08:5xZ) -- grades on the round-18 coverage (`~T2` msg 2936, `R18_COVERAGE.md` @ed84ea7977, 8 of 8 rows)
+
+### Grades
+
+| FWD | grade | the hop that is missing (from the coverage row) | where it is cut |
+|---|---|---|---|
+| FWD-1 | NOT REALIZED | the Teams pull (no scheduled landing) | TO-APPLY-p18, GO under half @b972f130c9 |
+| FWD-2 | NOT REALIZED | the Teams pull, and the Research Graph 403 | p18, plus round 19: the 403's permission read by name |
+| FWD-3 | NOT REALIZED | the new-landing arm rides the Teams pull | p18 |
+| FWD-4 | NOT REALIZED | the "expired" cause is not reachable by any act | round 19 cell |
+| FWD-5 | NOT REALIZED | no analyst route: the scoped wiped-silver reader role does not exist | round 19 cell, after W1-S7 is fixed (below) |
+| FWD-6 | NOT REALIZED | no act exists (PowerPoint intake) | round 19 cell |
+| FWD-7 | REALIZED | -- | ADDENDUM 2 |
+| FWD-8 | NOT REALIZED | TO-APPLY-a18 is at the laptop (half @f2ec32dea4) | the laptop through MSTR |
+| FWD-9 | NOT REALIZED | no act (one question across meetings, updates and commentary) | round 19 cell |
+| FWD-10, FWD-11 | MOVED | -- | IRPT_ANLREQ |
+
+### The two privacy rows
+
+1. **W1-S8 is ARMED (disarm owner `~T2`).** `read_meeting.py` prints held-out Research rows that `research_read.py` withholds. That is a reader-side leak:
+   a seat could copy withheld content into a log, which FWD-8 forbids.
+   - **Ruling:** both readers call ONE shared holdout filter (the one `research_read.py` uses). `read_meeting.py` is fixed in round 19 before its next use,
+     with a test that a held-out row is never printed.
+   - **Until the fix lands, `read_meeting.py` is not run** against Research silver.
+2. **W1-S7: Teams silver is UNWIPED while PRD C-TIERS says silver is wiped.**
+   - **The exposure today is bounded.** The narrower wiped-silver reader does not exist (coverage row FWD-8 (b)), so only the named original readers can
+     read Teams silver. This is a spec breach, not a live leak.
+   - **Ruling:**
+     - Round 19 re-runs the wipe over the existing Teams silver objects. That is a rewrite of served objects, so it needs a pair whose blast radius names
+       every key.
+     - From the p18 apply on, new silver lands through the wipe (COO half: "the same wipe for silver").
+     - **No narrower reader role (FWD-5) is created until every Teams silver object reads wiped.**
+
+### Enrichment list (round 19)
+
+1. W1-S8: the shared holdout filter in `read_meeting.py`, plus its test.
+2. W1-S7: the re-wipe of existing Teams silver, under a pair.
+3. FWD-2: the Research Graph 403, read by name for the permission it lacks.
+4. FWD-4: an on-demand act that reaches the "expired" cause.
+5. FWD-6: PowerPoint intake, one file kept byte-exact.
+6. FWD-9: one question answered across meetings, updates and commentary. Read-only, by a named reader.
+
+FWD-5's reader role follows item 2. At most three mechanical criteria per build order.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8.1 (~08:5xZ, `~T2` msg 2941): correction -- new Teams silver does NOT land wiped
+
+ADDENDUM 8's line "From the p18 apply on, new silver lands through the wipe" rested on a false COO line. `parse_silver.py:5-6` reads "No PII wipe on transcripts
+this round".
+
+**RULING: (a), apply p18 now, with three conditions.**
+- **Why (a):** Teams silver holds the same content as bronze, which is the raw tier. Both are readable only by the named original readers through the key
+  policy, so unwiped new silver adds no reader and no reach. FWD-1, FWD-2 and FWD-3 need the pull.
+
+**Conditions:**
+1. **The narrower-reader gate is unchanged and is now explicit.** No principal outside the named original readers is granted on `teams/transcripts/*` until both
+   of these hold:
+   - every existing Teams silver object reads wiped (the W1-S7 re-wipe);
+   - the pull wipes on landing.
+2. **Round 19 adds the wipe-on-landing to the pull as item 2b,** with a planted-token test (the C-WIPE-GATE pattern), before FWD-5's reader role.
+3. **PRD C-TIERS is breached until item 2b ships.** The breach is named in the NFRA_TRNSPT record and is not silent: row W1-S7 stays OPEN.
+
+-- 1.0.0_SA_CTO~DELL2

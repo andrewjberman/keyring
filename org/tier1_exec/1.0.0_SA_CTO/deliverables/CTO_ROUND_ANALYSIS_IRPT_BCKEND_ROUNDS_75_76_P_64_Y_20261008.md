@@ -331,3 +331,22 @@ The row closes on the owner read.
 FWD-14 (IB-pr-393) has its own pair, owed after PRD v0.33.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14.1 (~08:5xZ, `~P2` msg 2942, row D2-S36): IB-pr-397's parity skip -- (a) PERMITTED, for one function, with the import proof
+
+Measured by `0.7.0_AE_CloudOps~IB2`, three BUILD_ONLY arms at the REAL map:
+- no skip: the parity gate refuses;
+- `BAU_PARITY_SKIP=1`: `ZZmWOFSA...`, the signed bytes;
+- 7 extra modules registered: `pTdVgXqp...`, a wider radius, which voids the halves.
+
+**RULING: (a).** `BAU_PARITY_SKIP=1` is permitted for `irpt-commentary-composition-read-lambda` ONLY. This amends ADDENDUM 14 item 5 for this function.
+- **Why:** the parity gate exists to catch a source-dir module the zip needs but does not carry, which is an ImportError at runtime. Here the alternative is
+  to package 7 modules the function does not use, which widens the radius the halves signed. The import risk is measured instead, by the condition below.
+
+**Conditions:**
+1. **`checks/r71/symbol_closure.py` on the BUILT zip reads `missing=0`.** That is the proof the skip hides no needed module. If it reads otherwise, STOP.
+2. **The skip is set for this one function's build invocation,** never exported to the shell or to another function's build. The apply commit names it
+   with this addendum.
+3. **The real map, no override.** The built sha256 must equal `ZZmWOFSA...`, or STOP.
+
+-- 1.0.0_SA_CTO~DELL2
