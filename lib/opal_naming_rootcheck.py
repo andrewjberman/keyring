@@ -382,7 +382,95 @@ def policy_system(ans):
 NOT_GRADED_LINE = "this type is outside the canon, no name is owed"
 
 
+def firm_schedule_parts(form):
+    """(system, firm LONG scope, function, kind) of a schedule's new name that carries a FIRM scope token in the scope slot
+    ({system}-{scope}-{function}-{kind}), else None. The kind is the trailing cadence word (a values entry or an {N}min or
+    {N}h token) or the on-{event} tail; the function is what lies between. Plain data; nothing is composed here."""
+    segs = str(form).split("-")
+    if len(segs) < 4:
+        return None
+    try:
+        row = opal_naming.lookup(segs[1])
+    except KeyError:
+        return None
+    if row.get("class") != "FIRM" or segs[1] != row.get("short"):
+        return None
+    cad = opal_naming._schema()["cadence"]
+    tail = segs[2:]
+    if tail[-1] in cad["values"] or re.match(cad["interval_form"]["token_regex"], tail[-1]):
+        kind, fn = tail[-1], tail[:-1]
+    else:
+        at = [i for i, t in enumerate(tail) if t == "on" and i >= 1]
+        if not at:
+            return None
+        kind, fn = "-".join(tail[at[0]:]), tail[:at[0]]
+    if not fn:
+        return None
+    return segs[0], row["long"], "-".join(fn), kind
+
+
+BUILDER_REFUSED = "the name builder refused this firm schedule's name"
+
+
+def firm_schedule_detail(typ, detail):
+    """For a FIX line's detail on a schedule or an event rule whose new name carries a firm scope: ("FIX", name() output with
+    the firm passed as its scope) or ("HOLE", the refusal's text and what is owed). Any other line: (None, detail)."""
+    if typ not in _CADENCE_TYPES or "{" in str(detail):
+        return None, detail
+    parts = firm_schedule_parts(detail)
+    if parts is None:
+        return None, detail
+    try:
+        built = opal_naming.name(parts[0], parts[1], parts[2], parts[3])
+    except ValueError as exc:
+        return "HOLE", BUILDER_REFUSED + " (%s): %s" % (detail, exc)
+    return "FIX", built
+
+
+def per_firm_pattern_detail(row):
+    """The PATTERN line of a per-firm stored-file ruling (R5): the {scope} place is a variable filled per firm at run time, and
+    the line names the fill."""
+    return ("a code pattern, not a name; variable '{scope}' is filled per firm: %s (the code reads its bucket from %s, one "
+            "bucket per firm; each firm's own scope word fills {scope})" % (row["canonical"], row["bucket_from"]))
+
+
+def _no_word_partial(item, ans, kind, detail):
+    """(HOLE, partial form with the reason) for a schedule whose expression is stated, whose cadence reader gives NO word
+    (uneven or non-interval fires), and whose current name carries a cadence word (not an on-{event} form): the name is rebuilt
+    on {cadence} so the H14 hole prints the partial form with the reader's reason, never the word carried over. None when
+    the case does not apply (the old path decides)."""
+    cad = ans.get("cadence") if item["type"] in _CADENCE_TYPES else None
+    if cad is None or cad.get("word") is not None or not cad.get("expression"):
+        return None
+    carried = cad.get("carried")
+    if not carried or str(carried).startswith("on-") or cad.get("canonical"):
+        return None
+    base = item["current"] if kind == "RIGHT" else str(detail).split(" (", 1)[0]
+    form = _rebuild_on_word(base, carried, "{cadence}")
+    if form is None:
+        return None
+    return "HOLE", "partial form %s; could not fill {cadence}: %s" % (form, cad.get("basis"))
+
+
 def decide(item, ans, fourth=None):
+    """_decide_raw(), then a firm-bearing schedule's new name is rewritten as name() output with the firm as scope (BF-ac-2):
+    the firm token is never carried over from a string; a builder refusal is a HOLE that says what is owed."""
+    kind, detail = _decide_raw(item, ans, fourth)
+    if kind == "FIX":
+        k2, d2 = firm_schedule_detail(item["type"], detail)
+        if k2 is not None:
+            return k2, d2
+        row = ans.get("key_ruling")
+        if item["type"] == "S3Key" and _is_per_firm(row):
+            return "PATTERN", per_firm_pattern_detail(row)
+    if kind in ("RIGHT", "FIX"):
+        partial = _no_word_partial(item, ans, kind, detail)
+        if partial is not None:
+            return partial
+    return kind, detail
+
+
+def _decide_raw(item, ans, fourth=None):
     """(kind, detail) for one item. `ans` is plain data from the five modules:
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
     resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, plus verdict_for()'s carried,
@@ -616,39 +704,99 @@ def stored_origin(ans):
     return graded[1] if graded else None
 
 
-def stored_source_owner(ans):
-    """(source, owner) of a stored file's new location, each a word or UNDECIDED. The registry's key grammar
-    ({source}/{scope}/{tier}/...) puts the source first and the owner (the firm, or the system's own scope) second in the
-    address the ruling or key class decided; a word counts only when it is in the vocabulary of its slot (a source word, a
-    firm or product scope word). A blank still open ({scope} of a per-firm ruling), an address too short, or a word in
-    neither vocabulary is UNDECIDED -- never a guess."""
+def _plain(text):
+    """One line of plain words: whitespace collapsed, no semicolon (a semicolon ends a stored-file field in the printed line)."""
+    return " ".join(str(text).replace(";", ",").split())
+
+
+def _undecided(reason):
+    return "%s (%s)" % (UNDECIDED, _plain(reason))
+
+
+def _open_place(seg, place):
+    return seg == "{%s}" % (place,)
+
+
+def _vocab_word(seg, place, ans):
+    """(word or None, reason) for one segment of a stored file's address: a word when it is in the vocabulary of its slot."""
+    row = ans.get("key_ruling")
+    v = opal_naming._vocab()
+    if place == "source":
+        ok = seg in v.v1
+    else:
+        ok = seg in v.long_scope or seg in v.products
+    if ok:
+        return seg, None
+    if _open_place(seg, place):
+        if _is_per_firm(row) and place == "scope":
+            return "{scope}", None
+        fills = (row or {}).get("fills") or {}
+        if fills.get(place):
+            return None, "{%s} is open and is filled where the code holds it: %s" % (place, str(fills[place]).strip().rstrip("."))
+        return None, "{%s} is open and no row fills it" % (place,)
+    return None, "%r is in no %s vocabulary" % (seg, place)
+
+
+def stored_source_scope(ans):
+    """(source, scope) of a stored file's new location, each a word or UNDECIDED with its reason. The registry's key grammar
+    ({source}/{scope}/{tier}/...) puts the source first and the SCOPE (whose file it is: the firm, or the system's own scope)
+    second in the address the ruling or key class decided; a word counts only when it is in the vocabulary of its slot. An
+    open place the ruling's `fills` explains prints UNDECIDED with that explanation; a per-firm ruling's {scope} prints as
+    the pattern it is. Never a guess."""
     addr = stored_origin(ans)
     if not isinstance(addr, str):
-        return UNDECIDED, UNDECIDED
+        why = _undecided("no address was decided for this stored file")
+        return why, why
     segs = addr.split(" ", 1)[0].split("/")
-    v = opal_naming._vocab()
-    src = segs[0] if segs and segs[0] in v.v1 else UNDECIDED
-    own = segs[1] if len(segs) > 1 and (segs[1] in v.long_scope or segs[1] in v.products) else UNDECIDED
-    return src, own
+    out = []
+    for i, place in enumerate(("source", "scope")):
+        word, why = _vocab_word(segs[i], place, ans) if len(segs) > i else (None, "the address has no %s segment" % (place,))
+        out.append(word if word is not None else _undecided(why))
+    return out[0], out[1]
 
 
+def stored_owner(ans, kind):
+    """Who moves a stored file, read from the key ruling row's `owner` (the row decides it, never the address). A file already
+    at its address (RIGHT) with no ruling row has no mover. Any other file no row names a mover for says UNDECIDED and why."""
+    row = ans.get("key_ruling")
+    if row:
+        text = _plain(row.get("owner") or "").rstrip(".")
+        return text if text else _undecided("the key ruling row names no owner")
+    if kind == "RIGHT":
+        return "none (the file is already at its address, nothing moves)"
+    return _undecided("no key ruling row names who moves this store")
+
+
+_STORED_RE = re.compile(r" source=(?P<s>.*?) owner=(?P<o>.*?) scope=(?P<z>.*?)(?=;|$)")
 _SO_RE = re.compile(r" source=(\S+) owner=(\S+)")
+
+
+def split_stored_fields(detail):
+    """(detail without its stored-file fields, source, owner, scope) of a printed line's detail, or (detail, None, None, None).
+    Reads the three-field form; a line of the earlier two-field form gives scope None."""
+    m = _STORED_RE.search(detail)
+    if m is not None:
+        return detail[:m.start()] + detail[m.end():], m.group("s"), m.group("o"), m.group("z")
+    m = _SO_RE.search(detail)
+    if m is None:
+        return detail, None, None, None
+    return detail[:m.start()] + detail[m.end():], m.group(1), m.group(2), None
 
 
 def split_source_owner(detail):
     """(detail without its stored-file fields, source or None, owner or None) of a printed line's detail."""
-    m = _SO_RE.search(detail)
-    if m is None:
-        return detail, None, None
-    return detail[:m.start()] + detail[m.end():], m.group(1), m.group(2)
+    d, s, o, _z = split_stored_fields(detail)
+    return d, s, o
 
 
 def item_line(it, ans, kind, detail):
     """The printed line of one item. A stored file (S3Key) the check FIXes or finds RIGHT states, after the new location,
-    `source=<system> owner=<firm or system>`; every other line is unchanged."""
+    `source=<system> owner=<who moves the store> scope=<whose file it is>`; so does a per-firm stored file shown as a PATTERN.
+    Every other line is unchanged."""
     extra = ""
-    if it["type"] == "S3Key" and kind in ("FIX", "RIGHT"):
-        extra = " source=%s owner=%s" % stored_source_owner(ans)
+    if it["type"] == "S3Key" and (kind in ("FIX", "RIGHT") or (kind == "PATTERN" and _is_per_firm(ans.get("key_ruling")))):
+        src, scope = stored_source_scope(ans)
+        extra = " source=%s owner=%s scope=%s" % (src, stored_owner(ans, kind), scope)
     return "%s %s %s -> %s%s%s  [%s]" % (kind, it["type"], it["current"], detail, extra,
                                          _stale_note(it, ans.get("key_ruling")), it["where"])
 
@@ -971,6 +1119,8 @@ HOLE_OWED = (
      "declare the inline policy under a role the policy reader finds in the root, so the role's system answers"),
     ("{system}: this root serves more than one firm; its map entry", CRO,
      "the map entry's fills for the system, for the root %s (infra/logic/registry/root_map.json)"),
+    (BUILDER_REFUSED, CRO,
+     "the registry row the refusal names, drafted in the deliverables folder of the task order that found it (infra/logic/registry/)"),
     ("{cadence}: no cadence row for this name", CREATOR,
      "declare the name as a literal schedule or event-rule resource the cadence reader can see"),
     ("{cadence}", CREATOR,
