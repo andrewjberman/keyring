@@ -1213,3 +1213,30 @@ project reading the same PRD cell inherits `208` with nothing to stop it. The di
   }
 ]
 ```
+
+```json
+{
+  "id": "NFRA_IAMROLES202609-Z-S19",
+  "project": "NFRA_IAMROLES202609",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T09:17:15Z",
+  "one_line": "IAM-v-1 cannot be completed as written: its AC2 requires GOVERNANCE_DISPOSITION.md's last author to be 0.7.0_AE_CloudOps~Z, but that file sits under deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/ and the owned-paths lane TREE_DELIVERABLES permits exactly the serial named by the sub-folder, so safe-commit REFUSES this seat's commit. The order's <paths> grants the file and the convention reserves it; both are in force. The row edit is written and verified in the working tree (AC1 reads 2) and uncommitted.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~ZI",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN .tools/safe-commit.sh ... -- <GOVERNANCE_DISPOSITION.md> <ACCEPTANCE_ROWS_8_10.md> -> 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md -- lane=TREE_DELIVERABLES ... clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it); agent=0.7.0_AE_CloudOps~Z not in permitted_agents' / 'ERROR: safe-commit did NOT commit (rc=1)'.",
+      "FILE the order's <paths> block lists org/missions/D12/NFRA/NFRA_IAMROLES202609/deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md as the first entry of this seat's write surface.",
+      "FILE the order's AC2: invocation `git log -1 --format=%an -- <that file>`, expect 'exactly 0.7.0_AE_CloudOps~Z -- the acceptance is in a commit the lane authored, not one written for it'. So the audited GIT_COMMIT_AUTHOR_OVERRIDE escape would make AC2 FAIL BY CONSTRUCTION, as well as producing the forged acceptance the cell text forbids ('a forged acceptance is not' a valid outcome).",
+      "RUN the prepared edit is correct and complete: AC1 (grep -c 'owner=0.7.0_AE_CloudOps~Z reason=' over rows 8 and 10) reads 2; AC3 (git hash-object zz_adoption_candidate.tf.proposed) reads b3a1298d6b2b8d99284b4211bfc0c18eaa707f19 unchanged; the editor asserted that exactly two row first-lines changed (['10','8']) and NO-ACCEPTING-SEAT still appears 20 times. Diff: 25 insertions, 2 deletions, one file. So the blocker is the CARRIER, not the work.",
+      "NEGATIVE CONTROL on the lane reading: the sibling deliverable deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_8_10.md -- the same commit, the same gate -- is PERMITTED, because its path names this seat. The gate is discriminating by the serial in the path exactly as its message says, not refusing the commit wholesale."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IAM-v-1: this seat writes its own acceptance onto rows 8 and 10 of deliverables/0.9.0_WK_NFRA_IAMROLES202609~3/GOVERNANCE_DISPOSITION.md, in a commit under its own author line, with that file in its <paths>; AC2 grades the file's last author as this seat.",
+  "world_is": "The order's write surface and the owned-paths convention disagree about one path, and the convention is the one with a gate behind it. TWO CHEAP DISPOSITIONS, both the issuer's call: (a) a seat the lane permits lands the prepared row edit while deliverables/0.7.0_AE_CloudOps~Z/ACCEPTANCE_ROWS_8_10.md stands as the acceptance of record -- but note this FAILS AC2 as written, so AC2 would need amending to grade the acceptance document's author instead of the disposition file's; or (b) the acceptance token moves to a path this seat owns and the disposition file carries a pointer, which keeps AC2's intent ('the lane authored it') satisfiable by this seat. I did NOT take the audited author override: it would fail AC2 by construction and forge the very acceptance the cell forbids forging. The prepared edit is left UNCOMMITTED in the shared working tree so no work is lost -- flagged here because a shared-tree dirty file is visible to every seat and should not be swept by anyone's `git checkout --` or clean. SECOND, SMALLER FINDING IN THE SAME ORDER, recorded so the next row in this project does not trip on it: the order declares the row-id form NFRA_IAMROLES202609-Z-AEC-S<k>, and that form is REFUSED by surprise-row-gate.py's own ID_RE, whose optional segment is a single letter plus digits and admits only one such segment. Tested: '-Z-AEC-S1' REFUSED, '-AEC-S1' REFUSED, '-Z-S1' MATCH. This row therefore uses the admitted Tier-2 form -Z-S19, which is the same class the MX-s-19 A3 amendment ruled when it retired the 'Z-AEMI-' form in NFRA_MCPINDEX."
+}
+```

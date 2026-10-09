@@ -6208,6 +6208,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-09T09:30:00Z",
+  "one_line": "Test cases 92 and 93 (safe-apply.sh diff against the pre-block pin) failed at HEAD 61ffb11846 before AMENDMENT 3's edit, because other cells (LGIC_BLANKFIX 95d53e2068, MCPMSP 35941fb592, EN-t-2-r2 0af3c52597, CT-d-3 bd60f13148) legitimately edited safe-apply.sh outside the seat-gates block.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/test_apply_who_and_crossbox.py at HEAD 61ffb11846 plus the AMENDMENT 3 edit: cases=93/95; FAIL case 92 'hunks=5 removed=2', FAIL case 93 'hunks=17 removed=23'",
+      "git log -- .tools/safe-apply.sh shows 95d53e2068, 35941fb592, 0af3c52597, bd60f13148 after the block"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1/2 item 4: the wrappers' edits stay inside the seat-gates block; the pinned-diff cases pass as 'one hunk, no removed line'.",
+  "world_is": "A pinned whole-file diff cannot tell this cell's edits from another cell's later edits to the same wrapper. Done in-order: the two cases now count only hunks outside the block whose lines blame to this cell's commits (5f6eaecb34, b5e448d54a); a foreign hunk is not counted. Result 95/95. The wrappers themselves are untouched by this amendment.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## NFRA_CTLPLN-D1-S1 -- dell1 is NOT stopped from downloading from the public internet: pip download of six==1.16.0 from pypi.org succeeded (rc=0, wheel saved), so FWD-18's 'a box that tries an internet download is stopped and told the route' is not met on dell1.
 
 ```json

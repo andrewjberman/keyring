@@ -68,7 +68,7 @@ org/missions/D12/NFRA/NFRA_IAMROLES202609/surprise-channel/investigations/INVEST
 org/missions/D12/NFRA/NFRA_IAMROLES202609/task-orders/NFRA_IAMROLES202609.TO-IAM-v-4.narrow-and-read-the-outcome-against-the-prediction.md
 </paths>
 
-Surprise rows: id `NFRA_IAMROLES202609-Z-AEC-S<k>`, `"fabric": "site-z"`.
+Surprise rows: id `NFRA_IAMROLES202609-Z-S<k>` (next free k), `"fabric": "site-z"`.
 
 ## PROOF OF SPEC
 

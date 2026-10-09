@@ -238,6 +238,29 @@ Append-only. Worker rows `MDPF_DEMQUE-W<n>-S<k>`; seat rows `MDPF_DEMQUE-S<k>`.
     }
   },
   {
+    "id": "MDPF_DEMQUE-Z-W1-S3",
+    "project": "MDPF_DEMQUE",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~ZQ",
+    "surfaced_at": "2026-10-09T09:39:47Z",
+    "one_line": "DQ-t-18 requires an unmetered sentinel row while preserving uneditable tests that assert exact row counts without it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-DQ-t18 @73cae9cfe6 Build 2: day without bbgtml lines gets one bbgtml-unmetered row; Build 3: keep t14 tests passing; paths omit t14 tests",
+        "data/mdpf/scripts/demque/test_demque_bbg_ledger_upload.py:47 exact cells list; :63 exact four rows; :99 exact two lines",
+        "Memory-only sentinel probe with original five tests: 3 failed, 2 passed, exit 1; deciding failures extra None, 5 != 4, 3 != 2; S3 stubbed",
+        "Unmodified baseline afterward: five passed, UPL-OK, exit 0",
+        "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T18_REFUSAL.md"
+      ]
+    },
+    "spec_asserts": "TO-DQ-t18 requires both the added sentinel row and unchanged t14 tests passing; existing test file is outside write grant.",
+    "world_is": "The fixtures have no bbgtml lines, so the mandatory row contradicts three exact cardinality assertions. No production file changed. Issuer must amend the test grant/expectations or the sentinel interface before implementation; order remains pending under its refusal clause."
+  },
+  {
     "id": "MDPF_DEMQUE-D1-W13-S1",
     "one_line": "The history reserve (40 cells) is the static producer names only; the ledger's one day draws 5858 history cells, so the quoted allowance per day is the ceiling less a reserve well under the real production draw.",
     "spec_asserts": "TO-DQ-t15 step 2: history.reserve = the tier-1 producers' daily history legs read as text (names x fields x rows per name), margin stated, gaps named.",

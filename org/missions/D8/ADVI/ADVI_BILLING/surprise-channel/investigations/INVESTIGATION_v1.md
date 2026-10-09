@@ -568,3 +568,30 @@
   "world_is": "The refusal is the identity-gap arm. Nothing in this round establishes what the edge does with a mockadv token that CARRIES an advisorId -- advisor_not_in_ownership_map (403), ownership_map_fetch_failed (503, if platinum/mockadv/ownership_map.json does not exist) and a map hit are all still open. Reaching it needs a sixth probe, which this order's refusal clause forbids, so it belongs to a later cell: one GET with firmId mockadv plus an advisorId, and a head-object on platinum/mockadv/ownership_map.json to predict which of the three arms should fire."
 }
 ```
+
+## ADVI_BILLING-D2-S4 -- FWD-3 NOT REALIZED on real data (flows and exclusions unexercised)
+
+```json
+{
+  "id": "ADVI_BILLING-D2-S4",
+  "project": "ADVI_BILLING",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T09:29:06Z",
+  "one_line": "FWD-3 graded NOT REALIZED on the real render (E4): of its ACCEPT, the value charged on, the schedule (flat, so no tiers), days, per-account and household steps, and the 'why' are shown on real data; but 'any adjustment for money moved in or out during the quarter' and 'anything left out' are shown only on the invented-data render. For household z08219260 the panel neither shows a flow or exclusion nor states there was none, and the one flow-like mechanism -- SMArtX's prior-quarter true-up under advance billing -- is printed as 'method not known to this round'. ABSENT is not EXERCISED-AGAINST.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_BILLING/deliverables/2.0.0_SA_COO~B2/r1_close/REAL_RUN_FWD1_R1.md @b44766f7ef",
+      "C:/dev/advi_billing_private/r1_close/realrun_fee_panel.png (dell2, private; re-read by this seat, the fee panel section)",
+      "org/missions/D8/ADVI/ADVI_BILLING/prd/ADVI_BILLING_PRD.md:45-50 (FWD-3)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_BILLING_ROUND_2_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 ACCEPT: the value charged on, the schedule and tiers, any adjustment for money moved in or out during the quarter, and anything left out; they can answer 'why is my fee this number?'.",
+  "world_is": "Four of the six clauses shown on real data; the flow-adjustment and left-out clauses unexercised on real data. FWD-3 realizes when one real household's panel shows a flow adjustment (or states 'no money moved in or out this quarter') and an exclusion (or 'nothing left out'), with the true-up read from a SMArtX statement (E2)."
+}
+```
