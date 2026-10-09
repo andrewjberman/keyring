@@ -44097,3 +44097,24 @@ REFUSED_20261008)
 2026-10-09T12:34:24Z LANDED-2P  1.0.0_SA_CTO  fbc0e4d0a8  paths=1  validate=25.21s  wait=0.19s  hold=2.30s  build=1.05s  ref=0.99s  post-commit=12.94s  attempt=1
 2026-10-09T12:34:33Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=3.47  graded=n/a  args=(--verify-merge 1d747bc29344049ab54f996cb08b389d4f3ff8af)  first=(none)
 2026-10-09T12:34:34Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=29.25  held=dirty-overlap graded=0/205
+2026-10-09T12:36:06Z PASS  0.0.0_AB_MSTR  1  (all paths in-lane)
+2026-10-09T12:36:29Z LANDED-2P  0.0.0_AB_MSTR  ca2f939ad2  paths=1  validate=23.17s  wait=0.17s  hold=2.15s  build=1.13s  ref=0.96s  post-commit=8.71s  attempt=1
+2026-10-09T12:36:52Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=4.49  graded=n/a  args=(--verify-merge 8794e3476e8f15ec716d1c85ff679da2fe2f6417)  first=(none)
+2026-10-09T12:36:53Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=22.98  held=dirty-overlap graded=1/205
+2026-10-09T12:41:27Z PASS  0.7.0_AE_CloudOps~CTL  4  (all paths in-lane)
+2026-10-09T12:42:02Z LANDED-2P  0.7.0_AE_CloudOps~CTL  a9bbbd20ea  paths=4  validate=37.63s  wait=0.51s  hold=2.50s  build=1.40s  ref=0.94s  post-commit=21.57s  attempt=1
+2026-10-09T12:43:01Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=18.81  graded=n/a  args=(--verify-merge eeb953dfce3ca54c8580e01f6d8cadbe4eac7050)  first=(none)
+2026-10-09T12:44:00Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=3  secs=2.78  skipped=overlap holder=4144044
+2026-10-09T12:44:32Z PASS  1.0.0_SA_CTO  1  (all paths in-lane)
+2026-10-09T12:44:38Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=6.05  graded=n/a  args=(--verify-merge 0fdb68e9c6747ac8c4219e1738d4e26ddd94c912)  first=(none)
+2026-10-09T12:44:40Z BOX-SYNC  0.0.0_AB_MSTR  mode=box  rc=4  secs=37.92  held=dirty-overlap graded=1/205
+2026-10-09T12:45:06Z LANDED-2P  1.0.0_SA_CTO  0e6d6254bf  paths=1  validate=27.92s  wait=0.37s  hold=3.69s  build=2.37s  ref=1.11s  post-commit=17.94s  attempt=1
+2026-10-09T12:45:45Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=50.53  graded=n/a  args=(--verify-merge e87bd6cb4d718c7abe569012bd275ffd3871aad6)  first=(none)
+2026-10-09T12:46:18Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=370.45  pushed=e87bd6cb4d merged=(box/dell1(graded=0/38),box/dell2(graded=2/55)) held=(none)
+2026-10-09T12:47:29Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=5.48  graded=n/a  args=(--verify-merge b1272fb858d501ada651ae1cc319ce156912d91f)  first=(none)
+2026-10-09T12:47:42Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=42.33  pushed=b1272fb858 merged=(box/dell1(graded=0/18)) held=(none)
+2026-10-09T12:48:15Z PASS  0.0.0_AB_MSTR  1  (all paths in-lane)
+2026-10-09T12:49:55Z LANDED-2P  0.0.0_AB_MSTR  0fb26001c3  paths=1  validate=88.75s  wait=1.45s  hold=13.76s  build=5.54s  ref=7.46s  post-commit=46.96s  attempt=1
+2026-10-09T12:50:07Z MERGE-ATTEMPT  0.0.0_AB_MSTR  rc=0  secs=6.58  graded=n/a  args=(--verify-merge 5a0409b40c4043cf93e90730fbb22e756017fceb)  first=(none)
+2026-10-09T12:50:18Z PASS  4.0.0_SA_CRO~A  2  (all paths in-lane)
+2026-10-09T12:50:20Z BOX-SYNC  0.0.0_AB_MSTR  mode=integrate  rc=0  secs=42.22  pushed=5a0409b40c merged=(box/sitez(graded=2/18)) held=(none)
