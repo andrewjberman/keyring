@@ -24,3 +24,4 @@
 - 20261008T162017Z LEG L2 closed: targeted plan: 0/1/0, aws_lambda_function.this only: source_code_hash QxLvPL..->NFG8db.., s3_object_version uNNJ..->8wJO
 - 20261008T162018Z LEG L3 closed: get-function-configuration 16:20Z: CodeSha256 NFG8dbELEHHI34OSdq49kTBNHdtKyeRrUNZ9K0uzMZY= equals build input; LastModif
 - 20261008T230818Z HELD-SOVEREIGN-GATED gate=external/EventBridge rule cot-rebalancer-runner-daily cron(0 6 * * ? *) scheduled fire 20
+- 20261009T001401Z HELD-SOVEREIGN-GATED gate=external/EventBridge rule cot-rebalancer-runner-daily cron(0 6 * * ? *) scheduled fire 20
