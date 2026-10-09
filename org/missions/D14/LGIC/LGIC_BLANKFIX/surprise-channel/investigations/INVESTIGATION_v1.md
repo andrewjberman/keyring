@@ -2240,3 +2240,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The root map's own rule is 'measured by the cell'; the entries carry the 13 and the 1, each cited to its line, and the check fails on an unlisted or a wrongly listed exception. None of them changes a verdict (the names already lead with their own system), so the registry owner can strike the three extra rows without effect if the ruling's counts are meant literally."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W1-S6 -- the order says test_opal_naming_rootcheck.py reads ROOTCHECK-TEST ok=False at the base on case 5 only; on this worktree it reads ok=True cases=324 with the base-pin keyfill and with the BF-z-1 keyfill
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W1-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-09T10:02:49Z",
+  "one_line": "the order says test_opal_naming_rootcheck.py reads ROOTCHECK-TEST ok=False at the base on case 5 only; on this worktree it reads ok=True cases=324 with the base-pin keyfill and with the BF-z-1 keyfill",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_rootcheck.py in C:/tmp/wk-blankfix-1 with lib/opal_naming_keyfill.py temporarily set to git show 32c925520c:lib/opal_naming_keyfill.py (restored after): last line ROOTCHECK-TEST ok=True cases=324",
+      "same test with the BF-z-1 keyfill: ROOTCHECK-TEST ok=True cases=324; the other nine lib/tests/test_opal_naming_*.py scripts also print ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's CONTEXT: every lib/tests/test_opal_naming_*.py prints ok=True at the base except test_opal_naming_rootcheck.py, which reads ok=False there on case 5 only (row S12; cell BF-x-2 repairs it).",
+  "world_is": "At base 32c925520c the rootcheck test already prints ok=True (324 cases, no FAIL line), so case 5 does not fail in this worktree; whether BF-x-2 already landed in the base or the failure depends on the device or the day is not read here. The BF-z-1 keyfill build does not change the result either way."
+}
+```

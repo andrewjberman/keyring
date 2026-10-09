@@ -280,6 +280,19 @@ source "$SCRIPT_DIR/commit_gate_lib.sh"
 source "$SCRIPT_DIR/commit_queue_lib.sh"
 set -euo pipefail
 
+# AUTHOR NAMES A KNOWN SEAT? WARN-ONLY (1.0.0_SA_CTO msg 107910, on 4.0.0_SA_CRO~A's finding 107903: this script admitted
+# --author 9.9.9_XX_NoSuchSeat on lane-ANY paths). The base of the --author serial is checked against the seat patterns of
+# org/ref/SEAT_ROLES.json and the permitted_agents bases of .owned-paths.yaml (workers match by grammar). An unknown base
+# prints one WARN on stderr and the commit goes on; a refusal follows only after a week of WARN rows, announced first.
+# Each WARN appends one AUTHOR-SEAT-WARN row to the audit log, so the week is counted from rows, not recalled.
+if [ -f "$SCRIPT_DIR/author-seat-check.py" ]; then
+  _ASC_OUT="$(python "$SCRIPT_DIR/author-seat-check.py" "$AGENT" 2>&1)" || true
+  if [ -n "$_ASC_OUT" ]; then
+    printf '%s\n' "$_ASC_OUT" >&2
+    echo "${ISO_TS} AUTHOR-SEAT-WARN  ${AGENT:-UNKNOWN}  (names no known seat; WARN-only, 1.0.0_SA_CTO msg 107910)" >> "$AUDIT_LOG" 2>/dev/null || true
+  fi
+fi
+
 # ==========================================================================
 # QUEUE PATH -- only when explicitly enabled AND a live worker is present.
 # Dormant by default (flag off) until the TO-6 canary/cutover.

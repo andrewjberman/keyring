@@ -22975,3 +22975,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Disarms AMGT_RESAPP-D1-W332-S1 by a new item, as the row gate requires for an investigation row."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W333-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~333",
+  "surfaced_at": "2026-10-09T09:59:07Z",
+  "one_line": "AMGT-hh-5 cannot start: the walker account is armed by another holder (DESKTOP-HK1UU7N:22288:c2a1066b) and a live walk.mjs plus a dev server already hold port 5174; the order says stop.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ee-5 face (cited by hh-5): if `ui_walker_account.py status` reads armed by anyone else when you start, file a BLOCKING row and stop. The hh-5 face expects the account dormant and port 5174 free for this worker's own dev server.",
+  "world_is": "Read twice, 20 s apart, at 2026-10-09T09:57Z-09:58Z: status=active armed=yes (2.2 then 2.8 min ago) armedBy=DESKTOP-HK1UU7N:22288:c2a1066b. Process list: node walk.mjs --base http://localhost:5174 --security AMD --security Lenovo --max-minutes 15 (pid 28480) is running, and node scripts/dev-live.mjs --port 5174 (pid 32648) listens on 5174; both belong to another seat's walk (tmp/ui-walk/20261009T095512Z is the newest walk dir). Holder pid 22288 is not in tasklist, so the holder id is the walk's launcher, not necessarily this process. This worker did not arm, did not disarm the other holder's lease, did not start a dev server, ran no walk, and wrote no WALK_ROUND83.md. The stored-text read was not run either, since the order is to stop. Sibling worktrees /c/tmp/r83-329..332 exist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status (twice) at 2026-10-09T09:57-09:58Z",
+      "Get-CimInstance Win32_Process: pids 28480 (walk.mjs) and 32648 (dev-live.mjs --port 5174)",
+      "netstat -ano: [::1]:5174 LISTENING pid 32648"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Re-issue hh-5 once that walk has disarmed (status armed=no armedBy=none) and port 5174 is free, or tell this worker which seat owns the lease. If the lease is orphaned, a dead holder is disarmed only by the issuer's word: this worker did not touch it."
+}
+```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W333-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~333",
+  "surfaced_at": "2026-10-09T10:09:37Z",
+  "one_line": "The contention in AMGT_RESAPP-D1-W333-S1 cleared by itself within minutes, so this worker ran the hh-5 walk after all; the order said stop, and the issuer may regrade that choice.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ee-5 face (cited by hh-5): if the walker reads armed by anyone else when you start, file a BLOCKING row and stop.",
+  "world_is": "After row W333-S1 was committed (f931b9fe75), a re-read at about 10:01Z showed status=disabled armed=no armedBy=none and 0 listeners on port 5174 (the other seat's walk had disarmed and stopped its server). This worker then armed its own lease (holder DESKTOP-HK1UU7N:30376:05c91aec, 10:05:20Z-10:06:10Z), walked once and disarmed with the login-refused proof printed. It did not touch the other holder's lease. The walk record is WALK_ROUND83.md beside this order's proof.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status read at about 10:01Z and 10:04Z",
+      "tmp/ui-walk/20261009T100516Z/ (gitignored) walk_stdout.log copied to deliverables/0.9.0_WK_AMGT_RESAPP~333/data/walk_stdout.log"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Row W333-S1 stays as filed (rows are never edited); this row is its sequel."
+}
+```
