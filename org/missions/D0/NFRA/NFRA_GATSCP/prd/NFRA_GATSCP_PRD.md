@@ -5,7 +5,7 @@
  "project": "NFRA_GATSCP",
  "directive": "D0",
  "fabric": "dell1",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/gitops-gates-scoped-to-the-act-brief-20261009.md@4c795d29a4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -18,11 +18,14 @@
 `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ANDREW_DIRECT_20261009_063xZ_GITOPS_STRATEGY_RECS_APPROVED.md`): rule P1 (a gate refuses only
 a defect the act introduces; a standing defect elsewhere is printed and routed to its owner), rule P2 (the commit that changes a generated
 file's source regenerates it in the same commit), and one project through the canonical flow. P1 and P2 bind this project; they are not
-CLAUDE.md law until Andrew orders it.
+CLAUDE.md law until Andrew orders it. Each outcome's ACCEPT below carries its negative arm: narrowing who a gate refuses never loosens
+what it refuses in the act's own files.
+
+**v0.2 (1.0.0_SA_CTO, 2026-10-09 ~06:5xZ), on `3.0.0_SA_CVO`'s refusal @fc4e314af0, option (a):** FWD-7 reads "no one passing it along
+by hand", and C-DELIVER sends the bus line by the sending box's manager's automated path, as NFRA_CTLPLN FWD-3 requires; the note on
+negative arms moved here from the ENDPOINT section.
 
 ## ENDPOINT (step 2, /endpoint --forward)
-
-Each outcome's ACCEPT carries its negative arm: narrowing who a gate refuses never loosens what it refuses in the act's own files.
 
 ```
   FWD-1  On one box, a worker's finished work and that box's sync both land while another project
@@ -74,12 +77,14 @@ Each outcome's ACCEPT carries its negative arm: narrowing who a gate refuses nev
          SOURCE     brief O5
 
   FWD-7  An order sent to a seat on another box, or to a Codex seat, arrives without anyone passing it
-         along
+         along by hand
          DONE WHEN  EXERCISED -- one order to a seat on another box and one to a Codex seat, each found in
                     the receiver's inbox
          ACCEPT     when an order is issued to a seat on another box or a Codex seat, that seat finds it in
-                    its inbox with no manager relaying it; the notice cannot go out before the order itself
-                    can be fetched by the receiving box; every time it shows is in UTC
+                    its inbox with no one passing it along by hand; the notice still travels only between
+                    the two boxes' managers, sent by the sending box's manager automatically; it cannot go
+                    out before the order itself can be fetched by the receiving box; every time it shows is
+                    in UTC
          SOURCE     brief O6
 ```
 
@@ -95,8 +100,10 @@ Each outcome's ACCEPT carries its negative arm: narrowing who a gate refuses nev
 - **C-OWNER.** "Owner" resolves from data already present: the channel document's project folder, the tree row's project folder. The
   carrier is one the owner already reads: its surprise channel, the box open-calls list, or its inbox. No new alert, monitor or
   notifier (CLAUDE.md section 5).
-- **C-DELIVER.** The task-order issuance act opens the cross-box delivery (`crossbox-call.py`, owned by NFRA_CTLPLN's SEATS workstream,
-  extended here, not redesigned) for an addressee on another box or a Codex seat. It refuses to send while the order's commit is not on
+- **C-DELIVER.** The task-order issuance act opens the cross-box file (`crossbox-call.py`, owned by NFRA_CTLPLN's SEATS workstream,
+  extended here, not redesigned) for an addressee on another box or a Codex seat, and hands the line to the sending box's manager's
+  automated path, which puts it on the bus: only the managers talk across boxes (NFRA_CTLPLN FWD-3; Andrew-direct 2026-10-06 ~14:0xZ,
+  "only the MSTR agents are the ones that communicate between boxes"). That path refuses to send while the order's commit is not on
   origin, and every time it reads or writes is UTC.
 - **C-NO-FRICTION.** No new gate, switch, approval step or override is added; these are refusal-scope changes to existing gates.
 - **Out of scope:** a worktree per seat by default (Andrew: "later"); the agent-bus consumer's 30-minute expiry; any CLAUDE.md law edit.
