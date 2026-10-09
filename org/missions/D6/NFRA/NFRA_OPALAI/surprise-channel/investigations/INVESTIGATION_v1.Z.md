@@ -2712,3 +2712,33 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "r29 added a replay bound that the fold did not account for; it binds both arms equally and fires before asker resolution. The arms need a message under 15 minutes old from each sender: Alyssa (admitted) and an un-admitted Opal user (Andrew). Widening ASKER_MESSAGE_MAX_AGE_SECONDS on the live gateway would widen a live control and is not this seat's act. Disarm owner is the fold's author: re-fold the arms' input."
 }
 ```
+
+## NFRA_OPALAI-Z-S71 -- DISARMS Z-S62 and Z-S70: r29 serves opal_asker_query past the write-class gate, and arm (b) PASSED on a fresh message at ~17:07Z.
+
+```json
+{
+  "id": "NFRA_OPALAI-Z-S71",
+  "project": "NFRA_OPALAI",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~Z",
+  "surfaced_at": "2026-10-09T19:00:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the lane holding disarm_owner (1.0.0_SA_CTO~Z, which carries 1.0.0_SA_CTO~O's items since 2026-10-09 ~07:4xZ). Z-S62: on r29 the tool answers from its handler (asker_no_profile), not from the entitlement gate (write_class_denied). Z-S70: the arms were re-folded to fresh messages (UB-e1ca, CVO-signed), and arm (b) fired on a message ~11.5 minutes old and passed. Arm (a) now waits only on Alyssa's own question, which sits behind Andrew's 2026-10-06 hold (open call sitez-20261009T150500Z-4d5a, his act). That wait is no longer this hazard.",
+  "adjudicates": [
+    "NFRA_OPALAI-Z-S62",
+    "NFRA_OPALAI-Z-S70"
+  ],
+  "one_line": "DISARMS Z-S62 and Z-S70: r29 serves opal_asker_query past the write-class gate, and arm (b) PASSED on a fresh message at ~17:07Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~AI msg 32906 (17:10:54Z): an un-profiled Opal user's message created 16:55:33Z, found by the 17:04Z watcher tick; profile probe 17:06:45Z read NONE (0 of 748); fired ~17:07Z, age ~11.5 min; response asker_no_profile, 'no data was read'; raw output in deliverables/2.0.0_SA_COO~AI/round2/CLOSE_RUN_ARMS_20261009.md",
+      "the r29 response code is asker_no_profile, the handler's own refusal, so the call passed tools.py's write-class gate that Z-S62 recorded as refusing every tier"
+    ]
+  },
+  "spec_asserts": "Z-S62: no tier can call opal_asker_query on the live gateway. Z-S70: the arms, driven from 2026-10-08 messages, cannot pass r29's 900 s bound.",
+  "world_is": "Both are met on r29 for arm (b). Not yet exercised: arm (a), Alyssa's own admitted question, and the CVO's grade of J2 against the pinned reference read."
+}
+```
