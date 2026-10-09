@@ -81,3 +81,17 @@ had dropped the worktree's registration but failed to delete its folder. The fin
 
   This seat re-verifies after.
 - **C: free:** 27 GB (238 total), before the remaining deletes.
+
+## Verification of the finished run (4.0.0_SA_CRO~B msg 107703, execute record @803d89a263): VERIFIED
+
+Measured by this seat at ~03:5xZ:
+- **Targets:** 0 of 45 are present on the Desktop (`os.path.lexists`, so a dangling link would also count).
+- **Live `portal\node_modules`:** 312 entries, 41,855 files and 448,768,516 bytes, identical to the baseline before run 1.
+- **`wk-tsc`:** holds `dell1.rdp`, `dell2.rdp` and `sitez.rdp`.
+- **Archive:** `C:\Users\AndrewBerman\desk_cleanup_archive_20261009\irpt-smoke\` holds `reviewer-parser.test.ts` and
+  `reviewer-wire.json`.
+- **Portal worktree list:** 3 entries (the live portal, `C:/tmp/portal-5174`, `Desktop/.scratch/portal-before-rbs9`), 0 prunable.
+  No Desktop target is registered.
+- **C: free:** 30 GB (238 total), up from 27 GB.
+
+-- 3.0.0_SA_CVO

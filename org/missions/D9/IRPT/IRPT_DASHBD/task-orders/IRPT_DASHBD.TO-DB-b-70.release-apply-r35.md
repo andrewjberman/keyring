@@ -79,6 +79,37 @@ Report the IAM write in your final message. The issuer relays it to `0.0.0_AB_MS
 
 <expected_criteria>DB36-1-AC1,DB36-1-AC2,DB36-1-AC3</expected_criteria>
 
+## AMENDMENT 2 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~04:2xZ): ROLL BACK, on 1.0.0_SA_CTO~DELL2's ruling (msg 2393)
+
+**The ruling, verbatim:** "roll back this session. (1) My half's condition 1 required the dry_run sizing before any organic fire; it is
+unmet. (2) Row W47-S4: four packaged members sit at older pins than the signed file list, so the deployed bytes are not the signed
+bytes; that alone voids the act. ... Restore the role policy and description by targeted revert, close the ledger."
+
+**The roll-back act.** It must finish before the 11:41Z scheduled fire. Run it under the same ledger entry, adding leg R1.
+
+1. **Artifact.** Make the artifact's latest S3 version the anchor bytes. Run `s3api copy-object` of version
+   `FzE_mt1vdAU3Jy3VQuWIDbGVuf5Rrjjn` onto the same key, keeping its `content-sha256` metadata. Then read the latest version's
+   metadata: it must equal `Mex71Y5gk9RYE9q885knj3Ph12xV2Y9eVqMl3uJ1Z44=`. This S3 write is granted for this one key only.
+2. **Terraform root.** Restore `iam.tf`, `locals.tf` and `lambda.tf` under `infra/aws/terraform/investor-reporting/reporting-gold/`
+   to their bytes at `4c34d86104`, the applied state before this release (`git show 4c34d86104:<path>`). Commit them.
+3. **Source map.** Restore the `irpt-49f-reporting-gold-lambda` entry's `staged_from` and `files` to their pre-release content at
+   `01661cf0da`. Commit it.
+4. **Plan.** Run the same three `-target=` flags. The expected plan is 0 to add, 3 to change, 0 to destroy: the description, the
+   policy, and the function back to the anchor version. Anything else is a STOP and a row.
+5. **Apply and read back.** Run one `safe-apply` of the saved plan.
+   - Read live CodeSha256 back. It must be `Mex71Y5g...Z44=`.
+   - Read the role policy back. It must be the returns-only write set.
+   - Record the deploy in the source map with `record-deploy-scope.py`.
+6. **Close out.** Close leg R1 with the proof, close leg A1 as SUPERSEDED (rolled back, no first fire), and close the entry.
+   - Record `rollback` {plan, apply_line, code_sha256, policy_write_prefixes, ledger_closed} in `R35_APPLY_RECORD.json`.
+   - Disarm rows D2-W47-S1 and S5 in the channel, citing this amendment.
+
+**Grading.** DB36-1-AC1 to AC3 are NOT re-graded this round. The order closes `superseded` (status `superseded`) on the roll-back's
+proof. Round 37 re-cuts the release: the lot key, a re-pin of the four members, a re-size, and a re-apply under a fresh pair.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded. The grant is widened by
+the three root files and the one artifact key.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.
@@ -101,6 +132,9 @@ org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-70.release-apply-r35.md
+infra/aws/terraform/investor-reporting/reporting-gold/iam.tf
+infra/aws/terraform/investor-reporting/reporting-gold/locals.tf
+infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf
 </paths>
 
 <decomp_ref>
