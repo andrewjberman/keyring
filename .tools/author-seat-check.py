@@ -9,6 +9,7 @@ A serial is KNOWN when its BASE (the serial without its ~lane) is:
   (1) matched by a seat kind's serial_pattern in org/ref/SEAT_ROLES.json (MSTR, CTO, COO, CVO, CRO, CLOUDOPS, TIER2,
       WORKER -- the WORKER pattern is the 0.9.0_WK_<CODE> grammar, so every worker matches by grammar); or
   (2) the base of a serial some lane in .owned-paths.yaml names in permitted_agents.
+The human operator (HUMAN_OPERATOR, exact name) is never a seat and is always silent (1.0.0_SA_CTO msg 107928).
 Anything else prints one line on stderr, "WARN: author <serial> names no known seat", and the commit goes on.
 
 USAGE:  python .tools/author-seat-check.py <serial>      rc 0 always (WARN-only); prints nothing for a known seat
@@ -24,6 +25,9 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# The human operator is never a seat and is never warned or refused (1.0.0_SA_CTO msg 107928). Exact name, one constant:
+# org/devices/DEVICES.json carries no operator field, and git config is the committing box's own claim, not a register.
+HUMAN_OPERATOR = "Andrew Berman"
 SERIAL_RE = re.compile(r"^\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z0-9_]+(~[A-Za-z0-9_-]+)?$")
 
 
@@ -58,6 +62,8 @@ def known_patterns(root: str = ROOT) -> tuple:
 def check(serial: str, root: str = ROOT) -> str | None:
     """None when the serial names a known seat; else the WARN line."""
     serial = (serial or "").strip()
+    if serial == HUMAN_OPERATOR:
+        return None
     pats, bases, problems = known_patterns(root)
     b = base(serial)
     if serial and (b in bases or any(p.search(b) for p in pats)):
@@ -74,6 +80,10 @@ def self_test() -> int:
         ("the manager base is silent", "0.0.0_AB_MSTR", True),
         ("a worker matches by grammar", "0.9.0_WK_NFRA_GATSCP~2", True),
         ("a CloudOps lane is silent", "0.7.0_AE_CloudOps~DELL2", True),
+        ("a Bloomberg seat (BG, TIER2 @515c47d3c2) is silent", "0.0.3_BG_BBGTerminal", True),
+        ("the human operator, by exact name, is silent", HUMAN_OPERATOR, True),
+        ("a near-miss of the operator name still warns", "andrew berman", False),
+        ("a bare box name warns", "dell2", False),
         ("a made-up serial warns", "9.9.9_XX_NoSuchSeat", False),
         ("an empty author warns", "", False),
     ]
