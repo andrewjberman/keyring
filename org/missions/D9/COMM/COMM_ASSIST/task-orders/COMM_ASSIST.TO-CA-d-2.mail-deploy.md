@@ -2,7 +2,7 @@
 
 <to_id>COMM_ASSIST.TO-CA-d-2</to_id>
 <project>COMM_ASSIST</project>
-<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
+<issued_to>0.7.0_AE_CloudOps~CA</issued_to>
 <issued_by>2.0.0_SA_COO~ZZ</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>staged</status>
@@ -34,7 +34,7 @@ half and (3) a CVO half are committed beside the COO half
 `chat_assist_mail_bearer_secret_arn` (default `""`; when set, `MAIL_BEARER_SECRET` joins both functions' environment and the value
 joins the exec policy's secrets read). This cell sets the variable to the real secret and deploys.
 
-### DO, IN THIS ORDER (site Z, `0.7.0_AE_CloudOps~Z`, from the shared trunk at or after this order's issuance commit)
+### DO, IN THIS ORDER (site Z, `0.7.0_AE_CloudOps~CA`, from the shared trunk at or after this order's issuance commit)
 
 1. `aws secretsmanager describe-secret --secret-id gateway/mail/commassist-bearer`: record `ARN` and nothing else. NEVER read the value.
    Absent = STOP, report.
@@ -82,7 +82,7 @@ the base.
 <expected_criteria>CAd2-AC1,CAd2-AC2</expected_criteria>
 
 Each invocation runs under `timeout 120`. Write the proof instance to
-`org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~Z/COMM_ASSIST.TO-CA-d-2.mail-deploy.proof_of_spec.json`. Validate
+`org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~CA/COMM_ASSIST.TO-CA-d-2.mail-deploy.proof_of_spec.json`. Validate
 it with `python .tools/proof-of-spec-check.py <instance> CAd2-AC1,CAd2-AC2`. Flip `<status>` to `complete` only when both PASS and
 the instance is VALID. Surprise rows are `COMM_ASSIST-Z-AE-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~ZZ`, `surfaced_at` =
 `date -u +%FT%TZ` at filing. Append lines only to the investigation file.
@@ -96,7 +96,7 @@ the instance is VALID. Surprise rows are `COMM_ASSIST-Z-AE-S<k>`, fabric `site-z
 infra/aws/terraform/transcripts/chat_assist.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/comm-assist-r12-mail-deploy.json
-org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~Z/
+org/missions/D9/COMM/COMM_ASSIST/deliverables/0.7.0_AE_CloudOps~CA/
 org/missions/D9/COMM/COMM_ASSIST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -115,6 +115,10 @@ lane: the <paths> block IS the grant (worker RULING 1).
 - Pre-cut (base `b1b8f5b4fe`): `CAd2-AC1` base FAIL as expected (secret absent, both functions at `xWURpe/n...`, no env var, no
   grant). `CAd2-AC2` base FAIL as expected (0 entries). The ledger reader's positive control on `teams-r7-code-laptop-20261008`
   reads CLOSED=yes, PASS.
+- A1 (issuer, 2026-10-09 ~09:5xZ): re-addressed `0.7.0_AE_CloudOps~Z` -> `0.7.0_AE_CloudOps~CA` (fresh lane assigned by
+  `0.0.0_AB_MSTR~Z` msg 32641; rule 27 seating: `~Z` holds open orders on 4 other projects, gate2 ANNOUNCE at `f8b46c5aa5`). Same
+  class, same box. The three signed halves bind the act, not the lane letter, and are unchanged. Graded by no gate limb as a
+  modification (placeholders NONE; a re-address never trips the seating lint).
 - The analysis's done-when also names the real mail run. That run is the issuer's at close, not this order's (an applier sends no
   test mail).
 
