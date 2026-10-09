@@ -40,7 +40,7 @@ S237. The analysis this round answered: `ROUND_ANALYSIS.round25P_sweep3_4.md` @d
    and is listed for him with that citation; if not, the gap is permanent and says so on the page.
 4. **S237 / S239, the retiring engine's skipped-day flow error (a $1.125M deposit served as +56.10% on 2025-01-10, 44 accounts):
    measure the blast radius before any remedy.** The row's own open question decides it: does the error reach a served PERIOD return?
-   Round 27 cell (read-only): read the served 49F since-inception and 3Y answers for account 0093614544 and two other affected
+   Round 27 cell (read-only): read the served 49F since-inception and 3Y answers for account acct#c8072993 and two other affected
    accounts through the live adapter, and name which reader shape the served path uses (partition listing, which refuses the non-OK
    window, or calendar enumeration, which hides it).
    - **If it propagates:** the remedy is the 49F holdings-basis re-switch (the planned port that retires the engine for serving), moved

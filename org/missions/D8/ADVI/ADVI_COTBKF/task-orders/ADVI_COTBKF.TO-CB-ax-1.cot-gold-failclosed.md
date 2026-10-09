@@ -62,6 +62,32 @@ Separately, round 46 turned the writer's `ticker_overrides` loading fail-OPEN: e
    - (d) with the file present, 757 overrides and 1 correction load (the repo file's own counts; print them).
    Commit the test ALONE first; it must fail at the base. The existing gold and silver suites stay green.
 
+**AMENDMENT 1 (issuer, 2026-10-09 ~16:4xZ; rows W77-S1, W77-S3).**
+
+- **Grant widened (S1).** The three older gold tests that encode the fail-OPEN behaviour are added to `<paths>`:
+  - `test_b00_ff_carry_claim.py` (3 tests);
+  - `test_canonical_prices_input_resolution.py::test_c`;
+  - `test_canonical_prices_source_firm.py` (7 tests, including `test_g`, which asserts the writer runs with no `scopes.json`).
+  Update them to the fail-CLOSED rule (CTO ADDENDA 21 and 22): their fixtures place `scopes.json` and `ticker_overrides.py` beside
+  the writer, and an absent file is asserted as a STOP. Weaken nothing else.
+- **Writer keys (S3): HELD.** The naming gate refuses the plain legacy keys, so that branch is with the CTO (asked ~16:4xZ). The issuer
+  recommends a pinned `legacy_addresses.json` beside the writer, read by a minimal reader. Do NOT commit the saved writer patch until
+  AMENDMENT 2 names the ruling.
+- **Counts (S2):** the measured counts (757 overrides, 104 corrections) are right. The order's "1 correction" was wrong.
+
+**AMENDMENT 2 (issuer, 2026-10-09 ~16:4xZ) -- writer keys RULED (CTO ADDENDUM 22.1, msg 3707).**
+
+The writer reads its S3 key values from `legacy_addresses.json` pinned BESIDE it (`Path(__file__).parent / 'legacy_addresses.json'`):
+- a minimal JSON reader;
+- no `opal_naming`, and no typed or split key;
+- the existing validated rows only, read and never edited (the historical_prices row belongs to ADVI_FIRMBKTS);
+- FAIL-CLOSED: a missing file or a missing row raises before any write.
+The saved plain-key patch is superseded and is not committed.
+
+Tests add:
+- (e) `legacy_addresses.json` absent means the writer STOPS, 0 rows;
+- (f) the keys read equal the pre-change writer's keys, a CENSUS of the written key class. A new key class means STOP.
+
 ### ACCEPTANCE
 
 <criterion id="CB50ax1-AC1" cell_refs="CB-ax-1"><invocation>python -m pytest data/cot/scripts/gold/tests/test_cot_gold_failclosed.py -q</invocation><expect>passed</expect></criterion>
@@ -86,6 +112,9 @@ Separately, round 46 turned the writer's `ticker_overrides` loading fail-OPEN: e
 
 <paths>
 data/cot/scripts/gold/build_canonical_prices_v2.py
+data/cot/scripts/gold/tests/test_b00_ff_carry_claim.py
+data/cot/scripts/gold/tests/test_canonical_prices_input_resolution.py
+data/cot/scripts/gold/tests/test_canonical_prices_source_firm.py
 data/cot/scripts/gold/B_00.canonical_holdings.py
 data/cot/scripts/gold/tests/test_cot_gold_failclosed.py
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
