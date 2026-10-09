@@ -24802,3 +24802,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S60 -- BLOCKING: three LIVE irpt functions ship call-signature splits; served.py calls keywords its packaged callees do not accept
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S60",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T16:40:00Z",
+  "one_line": "A signature-closure sweep of the 13 fetchable live irpt-* zips (17 functions; 4 fetch failures) finds keyword splits symbol_closure cannot see: served.py:1006 InteractiveAccess(profile_reader=) in irpt-status and irpt-performance-adapter (packaged interactive_access.py: __init__(read_headers, data_firm, *, ordinary_authorizer)); served.py:1021 guard_prospect(authorize_owner=, resolve_owner=) in irpt-narrative. CloudWatch also shows irpt-performance-adapter raising Enforcer.__init__() unexpected keyword load_report_owner (2 events in 24h), which this check did not catch.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "spec_asserts": "A release pair's census, symbol closure and co-change closure establish that the built zip runs on its paths (IB-pr-366 made the served CREATE path pass profile_reader).",
+  "world_is": "Each named call raises TypeError when its path is taken. irpt-status rev 4 took one on every call (IRPT_ANLREQ row D2-S16, now being rolled back to rev 3, which still carries the profile_reader split on the CREATE_INPUT path). The 24h irpt-* log sweep (18 groups) shows TypeError 'unexpected keyword argument' only in irpt-status (52) and irpt-performance-adapter (2, Enforcer). Instrument: org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~Y2/checks/r2/signature_closure.py <zip>. It covers direct calls to names bound by from-imports of packaged modules; it does not cover attribute calls (module.Cls(...)), which is why the Enforcer split is absent. Unfetched: irpt-49f-reporting-read-lambda, irpt-export-render, irpt-holdings-refresh-lambda, irpt-ycharts-generate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function Code.Location for each irpt-* function at ~16:38Z, then signature_closure.py on the downloaded zip (13 fetched)",
+      "aws logs filter-log-events '\"unexpected keyword argument\"' over the 18 /aws/lambda/irpt-* groups, last 24h",
+      "rev 3 artifact s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-status.zip version mkD1gV_C... (sha t6OJTCcm): 1 mismatch (profile_reader)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
