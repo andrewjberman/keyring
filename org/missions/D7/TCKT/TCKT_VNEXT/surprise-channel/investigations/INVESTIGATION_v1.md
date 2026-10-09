@@ -379,3 +379,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "world_is": "Step 2 is done and step 3 is not executable by the seat the order names. The claim set WAS built to section 2 exactly in the minting process (sub, userType service, tier service, name, iss opal-portal-auth, aud opal-portal-api, iat, exp = iat + 90 days, with firmId/role/advisorId/allowedPages/allowedTabs/firmRole absent), and exp reads 2027-01-07T01:13:37Z which is iat + 90 days -- but THAT IS THE PRODUCER'S OWN ACCOUNT OF WHAT IT SIGNED, not the independent read of stored bytes the step asks for, and this row does not dress it up as one. The remedy is a laptop act either way, because the Dells cannot write IAM: add one secretsmanager:GetSecretValue statement for cloudops-dell2-agent-user on this exact ARN so this seat can finish steps 3-7, or have a laptop seat run step 3 and the four arms and return the result as a file (the standing rule of msg 215 shape). Re-running the mint is NOT the remedy: the secret exists, and a second create would mint a second token. Current risk is low and stated rather than assumed: no reader is granted to anyone yet, so nothing can consume the token, and the pair's own position is that the real control is leg D's code clamp plus the CREATE-only matrix, both of which are deployed and verified."
 }
 ```
+
+## TCKT_VNEXT-D2-S9 -- the svc-commentary read grant reaches dell1 as well as dell2 (shared Dell platform-key policy); the pair names dell2 only
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T02:13:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S9",
+  "one_line": "The svc-commentary read grant reaches dell1 as well as dell2: the laptop put the one ARN in the SHARED Dell platform-key policy, while the signed pair (COO AMENDMENT 1 @b70dd6fbad, CTO 1.2) names dell2's allow-list only.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule: accept the parity with svc-analyst-intake on both Dells, or narrow to dell2; carried in the F10 slug)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 2170 relaying laptop 2.0.0_SA_COO~C msg 107630: cloudops-dell2-agent-user AND cloudops-dell1-agent-user each allowed GetSecretValue on opal/ticketing/svc-commentary-pXsmuU (policy default v3)",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/F10_DEPLOY/NEVER_WIDEN_PAIR_SVC_COMMENTARY_MINT.md COO-half AMENDMENT 1: 'add the ONE ARN ... to dell2's existing secretsmanager:GetSecretValue allow-list'"
+    ]
+  },
+  "spec_asserts": "One reader is added: cloudops-dell2-agent-user.",
+  "world_is": "Two readers were added, dell2 and dell1, through the shared Dell platform-key policy. That matches how svc-analyst-intake is held, but it is one identity wider than the pair says.",
+  "notes": "No dell1 seat holds TCKT_VNEXT work. A read by dell1 would be a credential first-read, which the standing rule requires it to report."
+}
+```
