@@ -53,6 +53,16 @@ close, after fees, so landing them through `emit_day` unchanged would publish a 
 
 The gap is routed to `1.0.0_SA_CTO~DELL2`. A hand-written manifest or a second writer is never the workaround.
 
+**AMENDMENT 2 (issuer, 2026-10-09 ~14:0xZ) -- the gap is ruled; this order is still HELD.** CTO msg 3414 / IRPT_DASHBD ADDENDUM 13.1
+@49293e07e9 rules:
+- IRPT_DASHBD's per-firm sources entry gains the structured fields `valuation_source`, `fee_treatment` and `price_basis`.
+- The manifest never defaults; a firm with no entry writes `absent`.
+- `return_basis` stays `TWR` or `NOT_MEASURABLE`, with no enum edit.
+
+That cell is `2.0.0_SA_COO~D2`'s. This order waits until it drains. Then the issuer re-points the build: the adapter sets
+`return_basis=TWR` on measured rows, and the Cottonwood sources entry carries the method fields. A rebuild and a fresh manifest
+follow before any pair is asked.
+
 ### ACCEPTANCE
 
 <criterion id="CB38al2-AC1" cell_refs="CB-al-2"><invocation>python data/assets/scripts/silver/commonwealth_account_return_daily.py --verify-served --out .scratch/advi_cotbkf/ard_cottonwood_verify</invocation><expect>ARD-COTTONWOOD-VERIFY days=</expect></criterion>
