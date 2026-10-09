@@ -5905,6 +5905,74 @@ carries none.
     "spec_asserts": "Every ARMED row disarms same-turn via its disarm_owner; the issuer rules every row inside its own decomposition at the drain.",
     "world_is": "Both round-8 build cells MX-d-7 and MX-c-6 are on box/sitez with their proofs; no round-8 row remains ARMED. MX-d-8 and MX-r-9 are next on the chain.",
     "notes": "W29-S1 face amendment applies to the next catalog-writing cell (the emitter's --census-dir points at the worktree's own tracked census, never the main tree). No silver-row reversal of W28-S2 is wanted: a silver row has no served artifact, so absent is the true answer."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S4",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T07:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The order's own-text rule (the silver rule, >= 2 content words and 60%) cannot reach two of Alyssa's six phrasings: 'statement' is ONE content word and 'S&P YTD' loses 'S&P' (single letters are dropped) and 'ytd' is in no need text; I added two need-local folds and a one-word title-headword fallback the order does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python at HEAD: od._content_words('statement') = {'statement'} (1 word; the rule needs >= 2) and od._content_words('S&P YTD') = {'ytd'}; 'ytd' appears in no part of E-19's need or example_questions (printed False).",
+        "The fix is in infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py: _need_words folds 'S&P' to 'sp' and 'ytd' to 'this year' (both sides, need matching only), and a bare one-word ask that nothing else answers names the one need whose TITLE opens with that word (_need_head); a word found only in an example question ('going') or later in a title ('fees' in E-6) names nothing.",
+        "Measured with the rule: 'How's it going?' and 'fees' stay uncatalogued (existing tests test_own_text_rule_does_not_catalogue_chatter passes); routing harness Q30 'statement' -> E-9, Q33 'S&P YTD' -> E-19."
+      ]
+    },
+    "spec_asserts": "Order act 1: a need entry is reached by its own text, by the same own-text rule silver_datasets rows use (MX-d-6, _own_text_hit).",
+    "world_is": "The same rule, unchanged, cannot name a need for 'statement' (one content word) or for 'S&P YTD' (content words {'ytd'}); at base 'S&P YTD' lands on the market-returns datasets and 'statement' on nothing.",
+    "notes": "Design choices, inside integration.py, tested; the issuer may prefer the catalog to carry 'statement' and 'YTD' in E-9 / E-19 example text instead (a catalog change, MX-c-6's, which this order forbids me)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S5",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T07:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A need entry is shown to opal-internal principals only: the existing cross-firm silver test requires firm principals to see nothing for the Black Diamond ask, and E-8 (a GAP need naming blackdiamond_list_fees, its owner and a live error) would otherwise answer it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest tests/test_opal_discover.py at the first draft (needs shown to every principal): test_silver_row_fails_closed_on_cross_firm_visibility FAILED, 'what fees did Black Diamond charge' catalogued True for 49financial (E-8).",
+        "After the gate (principal_class == OPAL_INTERNAL): 26 passed in tests/test_opal_discover.py; a new assertion pins od.discover('cost basis', 'firm', '49financial')['matches'] == []."
+      ]
+    },
+    "spec_asserts": "Order act 1 names no principal gate for a need match; bound 2 forbids changing data_entitlement.",
+    "world_is": "Needs carry internal owners, project codes and live errors; a firm principal asking gets no need match (NOT_CATALOGUED), exactly as a firm gets no silver row.",
+    "notes": "Fail-closed choice by this worker, easy to widen later; Alyssa Keith is staff (opal-internal), so d8.AC1 is unaffected."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W28-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~28",
+    "surfaced_at": "2026-10-09T07:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Ranking: 'a need comes first, before a channel artifact' collides with two existing tests that keep a dataset named by its OWN text first (silver blackdiamond_fees; the portal benchmarks row), so a need ranks by how many of the ask's words its own text carries against the same count for a dataset, ties keep the dataset first.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "With need-first unconditionally, 4 existing tests failed: test_silver_row_is_read_and_answers_as_itself (E-8 first), test_silver_row_fails_closed_on_cross_firm_visibility, test_own_text_rule_does_not_catalogue_chatter ('fees' -> E-6), test_model_performance_ask_routes_to_the_benchmarks_tool (E-13 first).",
+        "Own-text counts measured: 'account counts by partner' E-16 = 3 vs the aum-metrics portal row's own text = 2 (need first); 'how did the Short Term model do against its benchmark year to date' E-13 = 5 vs the benchmarks portal row's own text = 7 (dataset first, existing test holds).",
+        "Effect on the original 27 asks: 24 of 27 before, 24 of 27 after, the same misses Q05, Q07, Q22 (run_routing.py before/after). Q05 now routes first to NEED:E-13 (SERVED, tool mdpf_get_model_benchmarks) but stays a harness MISS because it compares to a dataset key as at base."
+      ]
+    },
+    "spec_asserts": "Order act 1: rank so that a need entry whose own text the ask names comes first, before a channel artifact selected by a looser keyword.",
+    "world_is": "The ranking is by own-text overlap rather than need-always-first; a need that the ask names more weakly than a silver or portal row does not lead.",
+    "notes": "Q05, Q07 and Q22 were misses at base 24 of 27 (a tool-name versus key comparison in run_routing.py); not changed here."
   }
 ]
 ```
