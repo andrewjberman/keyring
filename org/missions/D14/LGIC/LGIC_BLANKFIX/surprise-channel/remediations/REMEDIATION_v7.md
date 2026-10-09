@@ -67,11 +67,11 @@ reason, not 'no cadence row'). Still OPEN: S10 (9 entries held), S11, W2-S2.
     "owner": "1.0.0_SA_CTO",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W4-S7",
@@ -130,11 +130,11 @@ reason, not 'no cadence row'). Still OPEN: S10 (9 entries held), S11, W2-S2.
     "owner": "1.0.0_SA_CTO",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W5-S2",
@@ -172,11 +172,11 @@ reason, not 'no cadence row'). Still OPEN: S10 (9 entries held), S11, W2-S2.
     "owner": "1.0.0_SA_CTO",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
