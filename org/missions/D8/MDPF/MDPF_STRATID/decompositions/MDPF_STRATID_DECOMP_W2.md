@@ -124,3 +124,9 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
   13:30Z read) AND by this one: **the `~5` branch never merges without ST-w-5 on it.** ST-w-5 adds the matcher beside
   `rebalancer_schemas.py` in each carrier, continued by slot `~5` on its branch. WORLD (gate floor: infra/ and .tools/ paths); it deploys
   nothing. The live gold lambda is unaffected: its deployed package is the pin-148f715f8c build and nothing rebuilds it before the read.
+- **A6 (ruling on row `MDPF_STRATID-D1-W6-S2`, BLOCKING, the issuer's defect): `opal_models` = the union of `is_opal` model names in
+  `fact_model_roster` AND `fact_model_definition`.** Five Opal models (`Opal Short-Term`, `Opal Fixed Income`, `Opal Long-Term Aggressive`,
+  `Opal Moderate Income`, `Opal_Moderate_Income_Tax_Efficient`) appear only in the definition table, so the roster-only source left them
+  listed (`~6` @`a53204441c`: LISTED 12, W24-SEAM-BAD on `Opal Short-Term`). TO-W2-3's amendment text is changed to the union; the
+  function and tests do not change. The order's grant gains this decomposition file so the worker's branch carries cell `ST-w-4`
+  (row D1-W6-S3). Graded by: to-pipeline-gate on the modified order.
