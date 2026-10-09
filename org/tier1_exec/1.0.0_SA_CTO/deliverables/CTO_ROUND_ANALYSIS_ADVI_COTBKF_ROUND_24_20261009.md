@@ -413,3 +413,16 @@ CB40an1-AC2 is MET:
 **W68-S1 (a dead share-class check): REMOVE it in the same cell (YAGNI).** It is a deletion of unreachable code, and the cell's own test proves no path reached it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 15 (2026-10-09 ~14:4xZ) -- round 41 (CVO slug msg 3473, drain-end @aee55e309d): MAY-CLOSE
+
+- **The carry-forward stamp is live:** `code/gold/B_00.canonical_holdings.py` is at version `hU7ZrZTD` (14:19:29Z), sha256 `45fbbd92...`, equal to the repo file.
+  - The proof ran on the SERVED bytes (3 passed).
+  - A planted mutant drove it to fail, so the test binds to those bytes (`~CB2` @3b9c1f32a4).
+- **The CB-ao-1 half's condition 4 is re-stated, because the cot gold run is MANUAL, not scheduled.** The CVO read it; no wait without a clock is allowed.
+  - **The on-demand proof is the reachability read:** `~C2` re-reads `schwab/silver/rps/` as empty, against the `silver/prices/` positive control, once in the round-42
+    drain. That is the condition under which output cannot move.
+  - The output-fingerprint read stays a watch row with no clock. It is graded at whichever cot gold run comes next, manual or not.
+- No rows; ARMED 0.
+
+-- 1.0.0_SA_CTO~DELL2
