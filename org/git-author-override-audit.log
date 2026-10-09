@@ -45660,3 +45660,28 @@ REFUSED_20261008)
 2026-10-09T13:27:13Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
 2026-10-09T13:27:16Z PASS  0.7.0_AE_CloudOps~CA  3  (all paths in-lane)
 2026-10-09T13:27:32Z LANDED-2P  0.7.0_AE_CloudOps~CA  55f73abff5  paths=3  validate=40.82s  wait=0.21s  hold=3.33s  build=2.13s  ref=1.13s  post-commit=5.56s  attempt=1
+2026-10-09T13:29:42Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.59  graded=n/a  args=(--verify-merge HEAD)  first=(none)
+2026-10-09T13:30:02Z PASS  0.9.0_WK_NFRA_OPLGTW~46  1  (all paths in-lane)
+2026-10-09T13:30:12Z PASS  0.9.0_WK_NFRA_OPLGTW~46  1  (all paths in-lane)
+2026-10-09T13:32:25Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=3  secs=0.51  skipped=overlap holder=1946902
+2026-10-09T13:32:28Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=0  secs=23.40  took=already-current pushed=1126ec2376
+2026-10-09T13:34:19Z BLOCK  0.7.0_AE_CloudOps~ZC  1  (1 violation(s): VIOLATION: org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r40_ap10b_leg_v_fire_20261009.txt -- lane=TREE_DELIVERABLES (Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.); agent=0.7.0_AE_CloudOps~ZC not in permitted_agents;)
+2026-10-09T13:34:37Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T13:34:50Z PASS  2.0.0_SA_COO~ZZ  1  (all paths in-lane)
+2026-10-09T13:35:13Z LANDED-2P  2.0.0_SA_COO~ZZ  92f38eb8ad  paths=1  validate=52.41s  wait=0.36s  hold=3.98s  build=2.12s  ref=1.78s  post-commit=9.52s  attempt=1
+2026-10-09T13:35:46Z PASS  2.0.0_SA_COO~O  3  (all paths in-lane)
+2026-10-09T13:36:32Z PASS  2.0.0_SA_COO~O  3  (all paths in-lane)
+2026-10-09T13:36:53Z LANDED-2P  2.0.0_SA_COO~O  f62c338e7e  paths=3  validate=117.80s  wait=0.36s  hold=3.69s  build=2.39s  ref=1.10s  post-commit=7.11s  attempt=1
+2026-10-09T13:38:09Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane)
+2026-10-09T13:38:17Z PASS  1.0.0_SA_CTO~Z  1  (all paths in-lane)
+2026-10-09T13:38:36Z LANDED-2P  1.0.0_SA_CTO~Z  f63a27c7fa  paths=1  validate=27.43s  wait=0.45s  hold=3.39s  build=2.52s  ref=0.62s  post-commit=9.07s  attempt=1
+2026-10-09T13:39:33Z PASS  0.7.0_AE_CloudOps~Z  3  (all paths in-lane)
+2026-10-09T13:39:46Z PASS  0.7.0_AE_CloudOps~Z  3  (all paths in-lane)
+2026-10-09T13:40:08Z LANDED-2P  0.7.0_AE_CloudOps~Z  2cbd044a43  paths=3  validate=42.32s  wait=0.31s  hold=3.31s  build=1.81s  ref=1.31s  post-commit=11.15s  attempt=1
+2026-10-09T13:40:39Z PASS  0.7.0_AE_CloudOps~MX  7  (all paths in-lane)
+2026-10-09T13:40:54Z PASS  0.7.0_AE_CloudOps~MX  7  (all paths in-lane)
+2026-10-09T13:41:13Z LANDED-2P  0.7.0_AE_CloudOps~MX  5f9d189083  paths=7  validate=47.09s  wait=0.46s  hold=2.23s  build=1.49s  ref=0.56s  post-commit=8.71s  attempt=1
+2026-10-09T13:42:07Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=3  secs=0.42  skipped=overlap holder=1978431
+2026-10-09T13:42:21Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T13:42:29Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T13:42:46Z LANDED-2P  0.0.0_AB_MSTR~Z  5f0198fc70  paths=1  validate=31.99s  wait=0.30s  hold=2.67s  build=1.64s  ref=0.71s  post-commit=7.67s  attempt=1
