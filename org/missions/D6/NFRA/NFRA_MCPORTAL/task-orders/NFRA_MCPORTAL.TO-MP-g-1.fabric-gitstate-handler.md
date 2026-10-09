@@ -1,12 +1,12 @@
-# NFRA_MCPORTAL task order -- `MP-g-1` -- WORKSTREAM CP2 ROUND 1: the owner-gated git-state handler (FWD-16)
+# NFRA_MCPORTAL task order -- `MP-s-1` -- WORKSTREAM CP2 ROUND 1: the owner-gated git-state handler (FWD-16)
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
 <decomp_ref>
 <decomp_doc>org/missions/D6/NFRA/NFRA_MCPORTAL/decompositions/NFRA_MCPORTAL_DECOMP.md</decomp_doc>
-<owned_cells>MP-g-1</owned_cells>
+<owned_cells>MP-s-1</owned_cells>
 </decomp_ref>
-<to_id>NFRA_MCPORTAL.TO-MP-g-1</to_id>
+<to_id>NFRA_MCPORTAL.TO-MP-s-1</to_id>
 <issued_to>0.9.0_WK_NFRA_MCPORTAL~9</issued_to>
 <issued_by>2.0.0_SA_COO~MP</issued_by>
 <placeholders>NONE</placeholders>
@@ -17,7 +17,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- the named tests are the adversary arm
 EGRESS CLASS, declared: none. No AWS call is made by this cell; every S3 read in a test is a fake client.
 </preflight>
 
-## 1. THE CELL -- `MP-g-1` (workstream CP2 round 1, decomposition sections CP2.1 and CP2.3-G)
+## 1. THE CELL -- `MP-s-1` (workstream CP2 round 1, decomposition sections CP2.1 and CP2.3-G)
 
 Your worktree is `C:/tmp/mp-cp2-9` (branch `wk-NFRA_MCPORTAL-cp2-9`). Work and commit only there.
 
@@ -122,13 +122,14 @@ row is `2.0.0_SA_COO~MP`.
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="MP-g-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/g1.AC1.sh; echo "exit=$?"</invocation><expect>gitstate tests: 0 failed; named tests PASSED 5 of 5 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MP-g-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/g1.AC2.sh; echo "exit=$?"</invocation><expect>gitstate real capture: 0 failed; named tests PASSED 1 of 1 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MP-s-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/g1.AC1.sh; echo "exit=$?"</invocation><expect>gitstate tests: 0 failed; named tests PASSED 5 of 5 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MP-s-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/2.0.0_SA_COO~MP/cp2/checks/g1.AC2.sh; echo "exit=$?"</invocation><expect>gitstate real capture: 0 failed; named tests PASSED 1 of 1 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~9/NFRA_MCPORTAL.TO-MP-g-1.fabric-gitstate-handler.proof_of_spec.json`.
+Write the instance at `org/missions/D6/NFRA/NFRA_MCPORTAL/deliverables/0.9.0_WK_NFRA_MCPORTAL~9/NFRA_MCPORTAL.TO-MP-g-1.fabric-gitstate-handler.proof_of_spec.json`,
+with `to_id` `NFRA_MCPORTAL.TO-MP-s-1` (the file path keeps the issuance's stem).
 Report once, with:
 - the two check outputs;
 - the commit hash;
@@ -142,6 +143,9 @@ Report once, with:
 **ISSUER NOTES:** cut at the CP2 issuance (decomposition v6) from PRD v0.5 FWD-16, C14, A16 @cecf26d2c9. Checks dry-run at base
 2851a9190d: AC1 FAIL (test file absent), AC2 FAIL (test file absent). The capture holds 71 gitstate objects (4 latest.json;
 pass modes: box 53, integrate 17, manual 1). No gate. Lives through MP-r-2.
+
+**AMENDMENT 1 (issuer, before any spawn):** the cell id is `MP-s-1`. `MP-g-1` was round 2's claims-capture cell.
+The path keeps the issuance stem, because a renamed order is a newly-added one and GATE (x) refuses it. See decomposition CP2.9.
 
 <status>pending</status>
 <round>1</round>

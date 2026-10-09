@@ -22,7 +22,7 @@ EGRESS CLASS, declared: none beyond AWS control-plane calls in Opal's own accoun
 **Do not start before the issuer's GO message.** That GO names the gateway commits to ship and the mcportal commit. It
 comes when G-REL2 holds:
 - round 5's MP-x-4 is drained and live;
-- MP-o-1, MP-g-1, MP-k-1 and MP-p-2 are drained, with the issuer's route-hookup commit;
+- MP-o-1, MP-s-1, MP-k-1 and MP-p-2 are drained, with the issuer's route-hookup commit;
 - MP-k-2 is applied.
 
 Work in a linked worktree you cut from `box/sitez` HEAD, using a NO-CONE pattern list if sparse (row NFRA_MCPORTAL-Z-W5-S2).
@@ -32,7 +32,7 @@ The gateway on `i-07dccb1615503ac99` runs the commit recorded as `services.opal-
 it. Build the release on THAT live base, with ONLY:
 - the gateway commits named in the GO:
   - `app/admin_fabric_overlap.py`, `app/refs/overlap_rules.json` and `tests/test_admin_fabric_overlap.py` (MP-o-1);
-  - `app/admin_fabric_gitstate.py` and `tests/test_admin_fabric_gitstate.py` (MP-g-1);
+  - `app/admin_fabric_gitstate.py` and `tests/test_admin_fabric_gitstate.py` (MP-s-1);
   - `app/admin_fabric_calls.py` and `tests/test_admin_fabric_calls.py` (MP-k-1);
   - the issuer's four route lines in `app/admin_api.py`;
 - the dashboard bundle at the mcportal commit named in the GO (MP-p-2's, a descendant of `d60b4e0`).
