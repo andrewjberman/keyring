@@ -23927,3 +23927,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S42 -- disposition of D2-S17: X-1 actor proven on release 5b; cleanup complete
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S42",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-09T10:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "dismissal_reason": "Row IRPT_BCKEND-D2-S17 (X-1 actor read-back owed) is closed: the laptop read-back under keys v3 returned body_sha256_match, owner firm, owner class FIRM_ADVISOR, owner label and acting_principal_is_filer all TRUE, then deleted 7 rows and 2 S3 versions under Andrew @35fabf20c8; dell2 re-read both S3 versions absent; Y75-1-AC1/AC2/AC3 PASS (checks AMENDMENT 3).",
+  "one_line": "Disposition of IRPT_BCKEND-D2-S17: X-1 proven (the on-behalf UPLOAD owner is the named advisor, FIRM_ADVISOR at 49financial; the acting principal is the filer); cleanup complete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_laptop_cleanup_result.json (sha256 26fbc10f0f87)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~Y2/r75/Y75-1_admit_keys_v3.json @4bcebfcb09",
+      "laptop 2.0.0_SA_COO~C msg 107926 via MSTR msg 3119; laptop ledger @1299ad2367"
+    ]
+  },
+  "spec_asserts": "X-1: an on-behalf template-lane upload is owned by the advisor named in advisor_email, and acted by the filer.",
+  "world_is": "Measured true on release 5b's live bytes; the first read-back's false was a comparison without the label rule (owner holds principal_id = the email, no email field)."
+}
+```
