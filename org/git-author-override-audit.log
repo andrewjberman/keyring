@@ -44214,3 +44214,9 @@ REFUSED_20261008)
 2026-10-09T12:46:14Z PASS  0.7.0_AE_CloudOps~Z  4  (all paths in-lane)
 2026-10-09T12:46:28Z LANDED-2P  0.7.0_AE_CloudOps~Z  5f1400c4a2  paths=4  validate=29.52s  wait=0.15s  hold=1.88s  build=1.31s  ref=0.50s  post-commit=6.87s  attempt=1
 2026-10-09T12:46:40Z PASS  0.7.0_AE_CloudOps~MX  1  (all paths in-lane)
+2026-10-09T12:46:47Z PASS  0.7.0_AE_CloudOps~MX  1  (all paths in-lane)
+2026-10-09T12:46:58Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=4.55  graded=n/a  args=(--verify-merge b8989e481f2cecefb74734dd80ea1c194f6ebda2)  first=(none)
+2026-10-09T12:46:59Z LOCK-WAIT  0.7.0_AE_CloudOps~MX  5s
+2026-10-09T12:47:11Z LANDED-2P  0.7.0_AE_CloudOps~MX  c867cecfc0  paths=1  validate=25.81s  wait=7.09s  hold=3.12s  build=1.92s  ref=0.96s  post-commit=7.18s  attempt=1
+2026-10-09T12:52:27Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.69  graded=n/a  args=(--verify-merge 23717c6ccacd8ad25c4d6afc0b99cb36423ada09)  first=(none)
+2026-10-09T12:52:29Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=25.02  held=dirty-overlap graded=0/160
