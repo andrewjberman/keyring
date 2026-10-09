@@ -5,7 +5,7 @@
  "project": "MDPF_DEMQUE",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/bbg-backfill-demand-queue-brief-20261008.md@91f5c90ec2",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -39,8 +39,12 @@ Ratified by Andrew ~22:4xZ ("1.) Yes."). Source: `org/tier1_exec/1.0.0_SA_CTO/de
 ```
 FWD-1  A new Cottonwood client security gets its price history onto the client's page without anyone running a pull
        DONE WHEN  EXERCISED -- one real security, traced from arrival to the page
-       ACCEPT     a named security a living Cottonwood client holds, with no history before, shows its daily prices on that client's
-                  pages; those prices agree with the prices the client actually traded at; and no person ran a pull by hand
+       ACCEPT     a named security a living Cottonwood client holds, with no history before, has its daily prices value that client's
+                  holdings on the client's pages for the dates the backfill fills; those prices agree with the prices the client
+                  actually traded at; and no person ran a pull by hand
+       AMENDED    v0.3 (L10 round 1, CTO adjudication record CTO_ADJUDICATION_MDPF_DEMQUE_20261009T0108Z.md): no page shows
+                  per-security daily prices, so the consumer is the client's backfilled holding values and performance, built by
+                  ADVI_COTBKF (dell2) from these prices. Id unchanged; the outcome is narrowed to its real consumer, not retired.
        SOURCE     site Z brief I.0 (the candidate thread); dell2 research s.1 (lock against trade prices), s.6 (living client first)
 
 FWD-2  Anyone can see, in cells, what every daily job pulls, from which vendor, for which page

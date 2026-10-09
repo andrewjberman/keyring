@@ -1,7 +1,7 @@
 {
  "schema": "open-calls/1",
  "device": "dell1",
- "written_at": "2026-10-08T20:51:49Z",
+ "written_at": "2026-10-09T01:08:07Z",
  "written_by": "1.0.0_SA_CTO~DELL1",
  "rows": [
   {
@@ -171,7 +171,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T20:51:47Z",
    "kind": "fork",
    "scope": {
@@ -185,7 +185,13 @@
     "evidence": {},
     "measured_at": "2026-10-08T20:51:47Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T22:39:25Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_224xZ_BACKFILL_QUEUE_ENDPOINT_CONFIRMED_PRIORITY_BBG_YAHOO_ONLY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "dell1-20261008T205148Z-7328",
@@ -195,7 +201,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T20:51:48Z",
    "kind": "fork",
    "scope": {
@@ -209,7 +215,13 @@
     "evidence": {},
     "measured_at": "2026-10-08T20:51:48Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T22:39:25Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_224xZ_BACKFILL_QUEUE_ENDPOINT_CONFIRMED_PRIORITY_BBG_YAHOO_ONLY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   },
   {
    "id": "dell1-20261008T205149Z-89a9",
@@ -219,7 +231,7 @@
    "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_BACKFILL_DEMAND_QUEUE_20261008.md",
    "orders": [],
    "roots": [],
-   "state": "OPEN",
+   "state": "CLOSED",
    "opened_at": "2026-10-08T20:51:49Z",
    "kind": "fork",
    "scope": {
@@ -233,7 +245,49 @@
     "evidence": {},
     "measured_at": "2026-10-08T20:51:49Z"
    },
-   "closed": null
+   "closed": {
+    "at": "2026-10-08T22:39:26Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_224xZ_BACKFILL_QUEUE_ENDPOINT_CONFIRMED_PRIORITY_BBG_YAHOO_ONLY.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "dell1-20261009T010722Z-e8d1",
+   "project": "MDPF_DEMQUE",
+   "subject": "MDPF_DEMQUE FWD-1 consumer: backfilled prices feed (a) the client's backfilled holding values and performance via ADVI_COTBKF (REC) or (b) a new per-security price page",
+   "asked_by": "3.0.0_SA_CVO",
+   "source": "org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/remediations/REMEDIATION_v1.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-09T01:07:22Z",
+   "kind": "fork",
+   "scope": {
+    "measured_at": "2026-10-09T01:07:22Z",
+    "paths": "clear",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "clear",
+    "risk": "LOCAL",
+    "verdict": "OWN-BOX",
+    "roots": [],
+    "evidence": {
+     "paths": [],
+     "placement": [],
+     "resources": [],
+     "shared": []
+    }
+   },
+   "closed": {
+    "at": "2026-10-09T01:08:07Z",
+    "by": "1.0.0_SA_CTO~DELL1",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_MDPF_DEMQUE_20261009T0108Z.md",
+    "crossbox": null,
+    "ruled_by": "cto",
+    "xadj": null
+   }
   }
  ]
 }
