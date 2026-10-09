@@ -4,10 +4,10 @@
  "directive": "D9",
  "macro_code": "NFRA",
  "fabric": "dell2",
- "dep_stage": "EXECUTING",
+ "dep_stage": "ROUND_CLOSE",
  "status": "active",
  "name": "The Opal communications database: Teams transcripts, market updates, and investment feedback, with a draft commentary service",
  "generated_from": "org/missions/D9/NFRA/NFRA_TRNSPT/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-09T08:21:35Z"
+ "generated_at": "2026-10-09T08:56:22Z"
 }

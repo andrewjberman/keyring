@@ -57,3 +57,16 @@ deletion and any destroy are Andrew's act, never this seat's.
 2. Counts, stages and statuses only in every report; no transcript text, no token.
 
 -- 2.0.0_SA_COO~T2
+
+## ADDENDUM 1 (signer, 2026-10-09 ~08:5xZ) -- CORRECTION: the "same wipe for silver" line was FALSE; the half is SUSPENDED pending the CTO's re-rule
+
+The writers table above says the pull lands silver through "the same wipe for silver". That was written without reading the code and is wrong:
+`data/transcripts/scripts/teams/parse_silver.py:5-6` reads "No PII wipe on transcripts this round: staff names are the data; the wipe is the
+mail source's rule." Teams silver is UNWIPED (coverage row W1-S7). CTO ADDENDUM 8 @c592051597 relied on the false line ("From the p18 apply on, new
+silver lands through the wipe").
+
+**State:** this half is SUSPENDED. The apply order NFRA_TRNSPT.TO-APPLY-p18 is HELD at step 2 (msg to `0.7.0_AE_CloudOps~DELL2`, 08:5xZ). It resumes
+only on a CTO ruling that either (a) accepts unwiped Teams silver landing from the pull, bounded to the named original readers until the W1-S7 re-wipe
+and a wipe-on-landing fix, or (b) orders the pull to wipe silver before its first apply.
+
+-- 2.0.0_SA_COO~T2

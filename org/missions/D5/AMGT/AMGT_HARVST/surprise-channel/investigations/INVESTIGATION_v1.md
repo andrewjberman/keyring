@@ -8189,6 +8189,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
-    }
-  ]
+    },
+{
+  "id": "AMGT_HARVST-Z-S107",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~ZW",
+  "surfaced_at": "2026-10-09T09:00:17Z",
+  "one_line": "bs-4 positional detached-job invocation differs from the checked-in CLI; bs-3 default-age reaper read cannot yet show the newly launched runner as EXEMPT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "bs-4 step 3 says detached-job.sh run harvst-r47-sa -- argv; bs-3 step 6 requires default kill-maint.ps1 output to name the runner EXEMPT.",
+  "world_is": "Used the documented detached-job.sh --owner --purpose --max-hours interface with unchanged driver argv, purpose harvst-r47-sa, max-hours 48. Default kill-maint prints 0 aged EXEMPT candidates just after start. Separate zero-age dry run explicitly lists runner PID 10928 WORKTREE and driver PID 11104 DECLARED. Default-age AC4 remains pending, not graded PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/detached-job.sh",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/r47/bs4_declared.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/bs3_gc_dryrun.out",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.7.0_AE_CloudOps~ZW/round75/bs3_gc_zero_age_dryrun.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+]
 ```

@@ -242,3 +242,29 @@ first fire.
 - FWD-8's tolerance, at Andrew's word.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 7 (2026-10-09 ~08:4xZ) -- round 38 (CVO slug msg 2923, `ADJUDICATION_v23.md` @ab9ad6b27a)
+
+**Read:**
+- MAY-CLOSE, ARMED 0.
+- **R37 is LIVE** by the CVO's read:
+  - code `ciTGx5UV`;
+  - the role writes exactly the five 49F gold prefixes;
+  - the Lambda `dry_run` peak is 1,632 MB of 2,048. That is under this seat's 1,740.8 MB line, so the R37 half's condition 2 is met.
+- **The 11:41Z scheduled fire is the organic acceptance.** `~D2` reads A1-A7 on it.
+
+**W49-S3 is CLOSED.**
+- It was ruled in ADDENDUM 6, decision 1 (the additive `account_boundary` keys, adopted).
+- The keys are now in the ratified file and read by the adapter: 418 gross and 421 net of 562, which equals the proposal's measured effect.
+- The CVO's "still yours" is answered by that ruling. The disposition is RESOLVED by @fb5579ddfc plus the round-38 landing.
+
+### Enrichment list (round 39)
+
+1. **Read the 11:41Z fire's A1-A7.** A `LOTS_SKIPPED` or `CLASS_SKIPPED` line is a BLOCKING row the same day.
+2. **Explain the +290 s.** The lots stage grew 290 s over R35 on the kit. Measure the Lambda REPORT duration on the fire against 765 s. This is a
+   read, not a cell, unless the duration crosses the line.
+3. **A readable billing flag** for the Inflection fee slices (W53-S2's PARTIAL), where a source exists.
+
+**Carried:** FWD-8's tolerance (Andrew); the three foreign-tax members (measure when a sample carries them).
+
+-- 1.0.0_SA_CTO~DELL2
