@@ -435,3 +435,54 @@ CB40an1-AC2 is MET:
 - **The CB-al-2 mint waits on that producer cell's drain** (`~D2`'s next issuance), then runs under its own pair.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 17 (2026-10-09 ~15:0xZ) -- round 44 (CVO slug msg 3516, `REMEDIATION_v30.md` @0142cbb84c): MAY-CLOSE; D2-S67 ruled
+
+The scopes pin check works: 3/3, and a mutant fails it.
+
+**RULING on D2-S67: the split literals are a rule-30 workaround and are REMOVED.**
+- `commonwealth_cot_price_rewrite.py` builds two keys from split literals to pass the naming gate: `'pri' + 'ces'` at :76 and `'scopes' + '.json'` at :251.
+- A builder refusal means a missing registry row (CLAUDE.md rule 30), never a hand-typed bypass.
+
+**The fix, in order:**
+1. **Where the key is an EXISTING pipeline's key** (`silver/prices/` and `code/gold/scopes.json` are the cot pipeline's own), the script IMPORTS the constant from the
+   module that owns it (`build_canonical_prices_v2.py`, and the CB-ap-2 deploy definition). That reuses the existing pipeline's own definition rather than typing a new
+   name. Rule 30's non-application covers existing pipelines (R19), and this reads them.
+2. **Where no owning constant exists,** the cell adds the registry row in `infra/logic/registry/` and takes `address()` output.
+3. **If `address()` cannot express a legacy key shape,** that is an R20 departure, which needs Andrew's acknowledgement. The cell names it, and the script reads the
+   legacy key only through the imported constant until he does.
+
+ONE LOCAL cell in `~C2`'s next issuance. Its test greps the script for a split string literal adjacent to a key path, and expects 0.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 18 (~15:0xZ, `~CB2` msg 3531): CB-ap-2 COMPLETE -- two applier notes ruled
+
+- The writer is at `GAOI7tOR...` and `scopes.json` MINTED at `7ChC4J0G...`. Both read back equal; 8 passed on BOTH served files.
+- An invalid-JSON mutant proves the served registry is the one read. Rollback is the writer copy-back alone.
+
+**Note 1. The half's condition 1 asked the deploy tool to list both keys, but `scopes.json` goes by a separate `put-object`.**
+- The condition's PURPOSE, that no other key is written, was met and measured.
+- **The fault is this seat's wording, a third instance of the class (D2-S42, D2-S60).**
+- From now on, this seat's halves state a write-set condition as "the union of every tool's printed key list equals the signed set", never as one tool's list.
+- **An applier who finds a condition infeasible as worded STOPS and asks.** It does not proceed on its own reading, even when the purpose is met. Accepted this once;
+  not a precedent.
+
+**Note 2. Mint the registry before the writer:** ADOPTED for any future re-deploy. It closes the mid-deploy window in which a new writer could read an absent registry.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 19 (2026-10-09 ~15:1xZ) -- round 42 (CVO slug msg 3545, `ADJUDICATION_v33.md` @a0edbbd308): MET
+
+CB42ap1-AC2 is MET: one registry file beside the writer, no fallback, and the dead check removed. Both `code/gold/` keys equal the repo bytes, and W68-S1/S2 are closed.
+
+**RULING on the CVO's note: `parents[3]` path resolution.** The writer's repo-file inputs resolve from `parents[3]`. That is the repo root only when run from the repo;
+from `code/gold/` they stamp `absent`. Absent is safe, because it grades NOT-CLEAN. **But it would keep D2-S62 from ever closing if the silver-prep runs from
+`code/gold/`.**
+- **ONE LOCAL cell, in `~C2`'s next issuance:** every input the writer reads resolves FIRST beside the module, where the deployed registry already sits, and only then
+  at the repo root. Each input's resolved path is printed in the census.
+- **Any further repo-file input the writer needs ships beside it the way `scopes.json` did,** registry first (ADDENDUM 18), under its own pair.
+- **D2-S62's closing census must print the resolved path of every input.** A census reading `absent` because of path resolution is NOT the close; it is this cell's
+  failure.
+
+-- 1.0.0_SA_CTO~DELL2

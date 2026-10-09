@@ -24666,3 +24666,111 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-D2-S57 -- Disarms D2-S56: no fire before Monday; IB-pr-414 fixes the memory, or the 49F-only Branch B runs at Monday 13:00Z
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S57",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T14:42:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-D2-S56 by CTO ruling ADDENDUM 19.1 (msg 3478, @d09687479d). Hazard: the 49financial producer is killed again on the next fire, so the three firms stay on mixed outcomes. It cannot fire before Monday 2026-10-12 10:15 ET (the schedule is MON-FRI). Between now and then: IB-pr-413 is HELD; IB-pr-414 measures and fixes the producer's memory; if no fix is signed by Monday 13:00Z, IB-pr-404 AMENDMENT 2's Branch B restores the 49F key alone to 3Q_W49U7kMa_xO30Q6LQE7QLsFu7ARur before the fire. 49F serves its prior publication until then (nothing corrupt).",
+  "one_line": "D2-S56 disarmed: no fire before Monday; the fix cell IB-pr-414 or the 49F-only Branch B at Monday 13:00Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ADDENDUM 19.1 @d09687479d",
+      "irpt-holdings-snapshot cron(15 10 ? * MON-FRI *) America/New_York",
+      "TO-IB-pr-404 AMENDMENT 2 and TO-IB-pr-413 AMENDMENT 2 in this commit"
+    ]
+  },
+  "spec_asserts": "All three firms land and publish on the narrow bundle, with no mixed behaviour past one fire.",
+  "world_is": "Two firms publish; 49F is unreached, and the next fire is Monday, with the fix or a 49F-only rollback scheduled before it."
+}
+```
+
+### IRPT_BCKEND-D2-S53 -- ARMED: an UNRESOLVED merge conflict sits in the SHARED tree's lambda-source-map.json, so build-and-upload.sh cannot parse it and NO Lambda in the estate can be built
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it)
+- **disarm_owner:** `2.0.0_SA_COO~D2` -- the drain belongs to its worker `0.9.0_WK_IRPT_DASHBD~70`,
+  and a worker cannot be messaged, so the COO holds it. `0.0.0_AB_MSTR~DELL2` owns the shared index
+  if the COO is not live.
+- **state:** ARMED, and it is live right now rather than latent.
+- **spec_asserts:** `bash infra/aws/lambda/ci/build-and-upload.sh <pipeline> <function>` builds and
+  uploads a Lambda zip; it reads `infra/aws/lambda/ci/lambda-source-map.json` to resolve the
+  artifact key and to record the sha256.
+- **world_is:** the shared working tree is MID-MERGE and that file is CONFLICTED.
+  `git status --porcelain` marks it `UU`; `.git/MERGE_HEAD` is
+  `c95d59a97e7bbaaf07501deb894dc4c2b64e35b6`, authored by `0.9.0_WK_IRPT_DASHBD~70`
+  ("IRPT_DASHBD.TO-DB-b-95: R44 release applied"), merging branch `wk-irpt-dashbd-47-70`. The file
+  carries literal conflict markers at lines 6756-6761, so it is not valid JSON:
+  `Expecting ',' delimiter: line 6756 column 1 (char 384893)`. `build-and-upload.sh` dies on exactly
+  that parse with `SyntaxError: Expected ',' or '}' after property value in JSON at position 384893`.
+- **the conflict is ONE LINE of content:** HEAD closes the `functions` object with `}`; the worker
+  branch closes it with `},` and adds a top-level `"_last_deploy_recorded": "2026-10-09T14:36:00Z"`.
+  Nothing about any function entry is in dispute.
+- **blast radius, and why this is not an IRPT_BCKEND-only row:** the source map is the ONE registry
+  every pipeline's build reads. While it is conflicted, no seat can build or upload any Lambda zip
+  in any pipeline -- this is estate-wide, not project-scoped. A second file is conflicted in the
+  same merge (`IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md`), which is the
+  append-only shared-channel race CLAUDE.md 14b predicts.
+- **not resolved by this seat, deliberately:** it is another line's drain. `safe-merge.sh --continue`
+  exists to finish a conflicted drain inside the guards, and the seat that opened it should run it.
+  Resolving someone else's merge in a shared index would also decide, on their behalf, whether that
+  `_last_deploy_recorded` key belongs -- which is a content question about IRPT_DASHBD's release
+  record, not mine.
+- **blocked on it:** `IRPT_ANLREQ.TO-APPLY-t1` step 1. Its STEP A needs the draft-store zip built,
+  and `BUILD_ONLY=1` is the step that fails. Every precondition I could check already holds: the
+  pin carries `36b0bc0423` (verified by content -- the diff removes the root log group and moves it
+  into the module with `log_retention_days = 14`), and step 0's IB-pr-391 read passes
+  (`irpt-commentary-composition-read-lambda` live at `ZZmWOFSA`, the invoke policy EXISTS). Nothing
+  of t1 has been applied and no ledger was opened.
+
+- **RESOLVED 2026-10-09 ~14:5xZ.** `2.0.0_SA_COO~D2` aborted the shared-tree merge attempt and
+  redrained in the worker worktree @a34bc58ff2. Measured now: `.git/MERGE_HEAD` ABSENT, 0 conflicted
+  paths, the map parses with 235 functions, and `_last_deploy_recorded` is PRESENT (1 occurrence).
+  Builds are unblocked estate-wide.
+- **One thing this row changed rather than merely reported:** the shared-tree resolution had taken
+  HEAD's side and DROPPED the worker's `_last_deploy_recorded` key. Flagging that before the merge
+  commit landed is why the redrain kept it; had the row only reported the conflict, the key would
+  have been lost silently along with the release record it carried.
+- **A correction to my own instrument, twice over.** I reported MERGE_HEAD as still present when it
+  was already gone. The command piped `git rev-parse MERGE_HEAD` through `head`, so the trailing
+  `|| echo` never fired on failure, and what I read as the value was my own `printf` LABEL. The
+  sound test is `test -f .git/MERGE_HEAD`.
+- **And this row itself was corrupted on first write, by me.** I put markdown containing BACKTICKS
+  inside a `python -c "..."` bash string; bash executed every backtick span as command substitution
+  and deleted exactly the technical terms that carried the meaning. That is the same hazard as the
+  `1 client(s)` parenthesis break earlier in this session, and it is what CLAUDE.md 14a's NON-SHELL
+  WRITER requirement prevents. Repaired from a script file, which no shell parses.
+
+## IRPT_BCKEND-D2-S58 -- Resolves D2-S24: safe-deploy's summary now counts minted bundles (@dd78f5dd5e)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S58",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T15:18:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S24. Fixed on the laptop by the tooling owner 1.0.0_SA_CTO @dd78f5dd5e (CTO~DELL2 msg 3553): safe-deploy's summary now counts minted bundles, so a bundle-only push reads 'N bundle(s) minted and uploaded' instead of reporting nothing deployed. The fix reaches dell2 at the next integrate.",
+  "one_line": "D2-S24 resolved: safe-deploy's summary counts minted bundles (@dd78f5dd5e, laptop tooling owner).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 3553",
+      "laptop commit dd78f5dd5e (tooling owner 1.0.0_SA_CTO)"
+    ]
+  },
+  "spec_asserts": "safe-deploy's summary states what a push deployed.",
+  "world_is": "It does, for bundle-only pushes, from @dd78f5dd5e."
+}
+```

@@ -1720,6 +1720,49 @@
  "spec_asserts": "CLAUDE.md rule 27, L4-R: GATE (viii) grades a MODIFIED order that declares <placeholders> at HEAD; nothing names a line-ending form for task orders.",
  "world_is": "A CRLF order passes as newly added but its CRLF modification is refused, so the issuer's CRLF form cannot survive the worker's status flip. Remedy at the issuer: cut later orders LF. The gate's CRLF reading is not measured here beyond the two reports.",
  "notes": "Issuer cuts round 62 and later orders with LF line endings."
+},
+{
+ "id": "DSGN_AMGTV1-D1-W141-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~141",
+ "surfaced_at": "2026-10-09T14:55:00Z",
+ "one_line": "battery29 stays red on round22/checks/subjectrow.cjs (outside the order's paths): it expects the subject Price cell \"204.80\" and EV cell \"193,511\", the old formatValue form that AV-zzr-1 items 4-5 retire.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/subjectrow.cjs on wk-DSGN_AMGTV1-141 with the round-67 edit: ARM FAIL the checkout :: VALUE: Price reads \"204.80 currency not stated\" (want \"204.80\") | VALUE: EV reads \"194B currency not stated\" (want \"193,511\"); the other two arms pass; battery29 prints THE PEERS SUBJECT ROW CARRIES THE HEADER'S PRICE AND EV: 2 of 3 arms [rc=1] and BATTERY29: FAIL (0 skipped).",
+   "Every other battery29 line is green with the edit: ALL BOUND 14 of 14 harnesses, tsc -b rc=0, eslint rc=0; r67.cjs prints 6 of 6 arms exit=0.",
+   "The BA fixture header figures (portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json) serve PX_LAST 204.8 and CURR_ENTP_VAL 193510.78 with no currency, so item 4 (no served code prints through formatStatValue: currency not stated) and item 5 (EV through 'currency-millions': 194B) make the old strings unreachable by any edit inside the order's paths."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zzr-1 item 5: price cells print through formatStatValue(value, 'price', code) and EV cells through 'currency-millions'; bound 5: if battery29 goes red on a harness file outside the paths, file a row naming the harness and the assertion, and stop (issuer rules it).",
+ "world_is": "round22/checks/subjectrow.cjs comparator `faults()` (lines 50-60, WANT built at lines 29-33 from the page's old formatValue) requires the subject Price and EV cells to read exactly formatValue(PX_LAST) and formatValue(CURR_ENTP_VAL). The order's own item 5 changes both cells' text, so AC2 cannot read ALL PASS until the issuer re-anchors that check (it is the issuer's file, not in the order's paths). Worker stopped on AC2 and left the order status open.",
+ "notes": "Candidate re-anchor for the issuer: WANT.Price = formatStatValue(PX_LAST,'price',figure.currency) and WANT.EV = formatStatValue(CURR_ENTP_VAL,'currency-millions',figure.currency), or compare after stripping the currency prefix/suffix. Worker did not edit the check."
+},
+{
+ "id": "DSGN_AMGTV1-D1-W141-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "dell1",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~141",
+ "surfaced_at": "2026-10-09T14:55:30Z",
+ "one_line": "The order's bound 3 says `cscTable.ts` is not the worker's, while its section 3 paths and items 2-4 require editing it; worker followed the paths and items.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Order AV-zzr-1 section 2 bound 3 (\"`reasonWords.ts` and `cscTable.ts` are not yours\") against section 3 <paths> (portal/src/pages/SecurityAnalysis/cscTable.ts listed) and items 2 and 3 (\"cscTable.ts: export memberTicker / columnHeading\").",
+   "r67.cjs loads memberTicker and columnHeading from cscTable.ts through the real module, so the arms cannot pass without editing it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The write grant is exactly the order's <paths>; cscTable.ts is listed there.",
+ "world_is": "Bound 3 reads as a typo for another file (likely types.ts, which the PeersTab comment says no cell owns this round). The worker edited cscTable.ts only in the three places items 2-4 name (memberTicker export, columnHeading export, price_currency read in currencyOf) and left reasonWords.ts untouched. The harness files peersCarry, peersPattern and peersReadFailed also gained one inert DataTooltip stub line each, because PeersTab now imports StatTile (which imports @/components/DataTooltip); no assertion was changed.",
+ "notes": "No action needed unless the issuer meant a different file."
 }
 ]
 ```

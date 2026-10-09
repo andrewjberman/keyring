@@ -10,6 +10,7 @@
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>7</round>
+**AMENDED by the issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~14:5xZ (row MDPF_DEMQUE-Z-W1-S4, refusal `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MDPF_DEMQUE_ZQ_T24_REVIEW.md`; issuer defect):** the order required stopping on a vendor limit warning and recording the stop, but the client hides `fieldExceptions` and the recorder always writes DRAWN. GRANTED, both OPT-IN with defaults that leave every existing caller byte-for-byte unchanged: (1) `integrations/bloomberg/mcp/blp_client.py`: `historical_data(..., diagnostics=None)` -- when a list is passed, each `securityData.fieldExceptions` entry and any response warning is appended to it (security, field, category, message); nothing else changes. (2) `data/mdpf/scripts/demque/bbg_quote.py`: `record_actual(..., outcome="DRAWN", stop_reason=None)` and CLI `--outcome` / `--stop-reason`; a stop line carries `outcome: "STOPPED"` and its reason. `bbg_backfill.py` passes a diagnostics list, stops at the first entry, and records the stop. The client change runs under `1.0.0_SA_CTO~Z`'s half with the draw. No criterion changes.
 **Directive:** D8 | **Fabric:** dell1 (placement site Z) | **Decomp cell:** `DQ-t-24` (`decompositions/MDPF_DEMQUE_DECOMP.md`, ROUND 7 -- CUT) |
 **outcome_ref:** FWD-3 | **depends_on:** DQ-t-22
 
@@ -68,6 +69,8 @@ Run each invocation from the worktree root at site Z. At the base: `BKF-BAD no f
 data/mdpf/scripts/demque/bbg_backfill.py
 data/mdpf/scripts/demque/test_demque_bbg_backfill.py
 data/mdpf/scripts/demque/bbg_ledger_upload.py
+data/mdpf/scripts/demque/bbg_quote.py
+integrations/bloomberg/mcp/blp_client.py
 org/missions/D8/MDPF/MDPF_DEMQUE/ledger/BBG_ACTUALS.jsonl
 org/critical_paths/change_management/
 org/missions/D8/MDPF/MDPF_DEMQUE/surprise-channel/investigations/INVESTIGATION_v1.md

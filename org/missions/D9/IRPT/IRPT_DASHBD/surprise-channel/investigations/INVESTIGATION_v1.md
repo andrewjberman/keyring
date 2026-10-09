@@ -4974,3 +4974,56 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-W70-S1 -- BLOCKING DB47-1-AC1: the order's <paths> omits the source map file it orders re-pinned (infra/aws/lambda/ci/lambda-source-map.json); nothing uploaded or applied
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W70-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~70",
+  "surfaced_at": "2026-10-09T14:35:00Z",
+  "one_line": "BLOCKING DB47-1-AC1: the order's <paths> grants infra/aws/lambda/investor-reporting/reporting-gold/ but the source map it tells the worker to re-pin is infra/aws/lambda/ci/lambda-source-map.json, which no <paths> entry names; safe-commit refused the re-pin commit (lane IRPT_COMPLETION_SOURCE_MAP, no non-terminal order grants the path), so no upload, apply or stamp was made.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-95 BOUNDS: 'you edit the source map in infra/aws/lambda/investor-reporting/reporting-gold/' and step 3 'Re-pin account_activity_lots.py in the source map to d18ddf000d'; the <paths> block is the grant.",
+  "world_is": "The source map is ONLY at infra/aws/lambda/ci/lambda-source-map.json (ls of reporting-gold/ shows handler.py and tests/ only). The re-pin edit was made, then bash .tools/safe-commit.sh refused it: 'lane=IRPT_COMPLETION_SOURCE_MAP ... agent=0.9.0_WK_IRPT_DASHBD~70 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005)'. The step-3 build, upload (which rewrites artifact_sha256 in the same file) and record-deploy-scope.py stamp (same file) all need that file committed, so the worker STOPPED before any upload; the edit was reverted in the worktree. NOTHING was uploaded, applied or invoked: live CodeSha256 is still yIAQjspL0nPX6tJOHxD+Dv0REVoZyBNRkhmHQxUVuEE=. Measured before the stop, all read-only: (a) live CodeSha256 read yIAQjspL...; rollback anchor a.YllA9SmwwfY34NlajqOaNsex2bBZAy head-object read, IsLatest, 217498 bytes; (b) status prefix irpt/49financial/gold/account_activity_daily/_status/ under opal-data-49financial lists 0 objects (control: the date=2026-10-08 prefix of the same table lists 2); (c) BUILD_ONLY build at this worktree base (handler.py blob 7c9bb9dcdc5b) with the re-pin applied: 18 of 18 staged pins sha256-verified, built CodeSha256 oNgy4rnrduvN9N2axhsHBfe9izZKd8dZGeFGXAIh+cM=; (d) member diff of the built zip against the live zip (downloaded by S3 version a.YllA9SmwwfY34NlajqOaNsex2bBZAy, sha256 read back as yIAQjspL...): 19 members vs 19, exactly TWO differ, data/assets/scripts/gold/irpt_reporting/account_activity_lots.py and handler.py (repo path infra/aws/lambda/investor-reporting/reporting-gold/handler.py), and reporting_policies.json is byte-equal to live. The deploy ledger org/critical_paths/change_management/20261009T1414Z_irpt-dashbd-r44-release-1009_deploy_completion.md is OPEN with 4 legs, all unproven; nothing is stranded. Unblock: the issuer amends the order's <paths> to add infra/aws/lambda/ci/lambda-source-map.json (and corrects the BOUNDS sentence), or issues the re-pin as its own cell; the apply then repeats from step 3 (the ledger slug can be reused).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-95.r44-release-apply.md <paths> block @2afcd2de2e",
+      "safe-commit refusal text for infra/aws/lambda/ci/lambda-source-map.json, 2026-10-09 ~14:2xZ",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_PREUPLOAD_RECORD.json",
+      "git log of infra/aws/lambda/ci/lambda-source-map.json: d87079fd89 and ecfc4868e4 (the R37 delta's re-pin and stamp, by 0.9.0_WK_IRPT_DASHBD~63 under its own order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W70-S2 -- Resolves IRPT_DASHBD-D2-W70-S1: AMENDMENT 1 granted the source map path; R44 applied
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W70-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~70",
+  "surfaced_at": "2026-10-09T14:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-D2-W70-S1. AMENDMENT 1 of IRPT_DASHBD.TO-DB-b-95 (issuer 2.0.0_SA_COO~D2, cherry-picked as a1dac627da) grants infra/aws/lambda/ci/lambda-source-map.json in <paths>. The re-pin then committed (072d27a4a1) and the release ran from step 3: upload f0d129281f, plan 0/1/0, one safe-apply, live CodeSha256 oNgy4rnr... = built, post-apply plan No changes (65eb443109). DB47-1-AC1 prints PASS.",
+  "one_line": "W70-S1 resolved: AMENDMENT 1 granted the source map path; R44 applied and DB47-1-AC1 PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-95.r44-release-apply.md AMENDMENT 1 and <paths> @a1dac627da",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~70/R44_APPLY_RECORD.json @65eb443109"
+    ]
+  },
+  "spec_asserts": "The order's <paths> grants every file the worker must edit, including the source map.",
+  "world_is": "After AMENDMENT 1 the source map is granted; safe-commit accepted the re-pin and the stamp."
+}
+```
