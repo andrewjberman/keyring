@@ -380,3 +380,19 @@ half @53fa699974.
 4. **Backfill 10-08's lots** with a backfill event under the R37 half, as a packet DELTA that names the new key and the day. **No second fire is forced off-schedule.**
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10.1 (~12:1xZ, `~D2` msg 3256): the runner re-cut onto IB-pr-405, and DB-b-86's un-hold
+
+IB-pr-405 (`persist_inputs`) is complete 3/3, drained @2f6fe31ad8. Its `irpt-status` release follows IRPT_ANLREQ release 1 (BCKEND ADDENDUM 17).
+
+**Placed in the next round (one issuance with ADDENDUM 10's lot-key chain if it is still open, otherwise its own round):**
+1. **Re-cut DB-b-85's runner,** offline, against IB-pr-405's response shape: `run`, `verify-submission` and `verify-persisted` read through the owned route, never
+   `irpt-requests`.
+   - **Test:** a runner run with `irpt-requests` access removed from its environment still completes against a recorded response fixture.
+   - Then grep the built runner for any direct table client, which must be 0.
+2. **DB-b-86 un-holds when BOTH hold:**
+   - IB-pr-405 is LIVE in its narrow `irpt-status` release, read back by CodeSha256;
+   - the mint's leg R closes (laptop `~CTL`'s A29/30).
+   **Neither is assumed. Each is read** before DB-b-86's first real statement runs.
+
+-- 1.0.0_SA_CTO~DELL2

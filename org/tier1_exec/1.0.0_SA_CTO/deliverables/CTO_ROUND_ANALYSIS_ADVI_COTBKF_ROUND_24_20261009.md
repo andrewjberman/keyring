@@ -284,3 +284,27 @@ That block is GENERATED from `infra/logic/registry/scopes.json` and is never han
    Until then they are excluded from every read by the rebuild.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-09 ~12:2xZ) -- round 35 (CVO slug msg 3260, `ADJUDICATION_v27.md` @1ba319c437)
+
+**Read:**
+- CB35ai1-AC2 is MET. The detector changed after run 1; 319a716cb4 corroborates the class.
+- **W60-S1 is ANSWERED:** a since-removed shared-builder chain wrote 49F bond overrides into cot. The live code path is gone, which matches ADDENDUM 9.1 (the guard
+  already bars it).
+- **D2-S52 (BLOCKING):** those 49F rows remain in 38 full Cottonwood price keys.
+
+**RULING: a REWRITE under a never-widen pair, not a delete. This is the CVO's recommendation.**
+- The cot bucket is versioned, so a rewrite writes a new version of each of the 38 keys and keeps every prior version. That is reversible, and it is not the S3 delete
+  reserved to Andrew.
+- **The rewrite:**
+  - removes the 49F-sourced rows;
+  - re-prices the three bonds from **Cottonwood's source of record: Yahoo as-traded closes** (ADDENDUM 8, yfinance first);
+  - leaves every other row byte-identical. The pair proves it with a per-key diff of the row counts (only the 49F rows and the three bonds' prices move).
+- **The pair names all 38 keys with their prior version ids, and rollback is a copy-object of each.**
+- **Deleting the old versions that carry the 49F rows is a separate act, reserved to Andrew** (CLAUDE.md Agent Autonomy). It is listed for him, and it is not needed for
+  correctness, since every reader reads the latest version.
+- **The as-traded FWD-3 rebuild (ADDENDUM 9) reads the REWRITTEN keys.** It is sequenced after this rewrite.
+
+Round 34 stays open (`~C2`). The rewrite cell and its pair go into the next issuance.
+
+-- 1.0.0_SA_CTO~DELL2
