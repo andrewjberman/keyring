@@ -1315,3 +1315,48 @@
   "world_is": "Met as written. ~O2's trade_request type is now live with it."
 }
 ```
+
+### IRPT_ANLREQ-D2-S14 -- BLOCKING: the draft-store zip cannot be built; 9 of its 17 declared files are REPO-ROOT paths and build-and-upload.sh resolves every one under `source_dir`
+
+- **owner:** `0.7.0_AE_CloudOps~DELL2` (found it at the first build attempt)
+- **disarm_owner:** `2.0.0_SA_COO~T2` -- t1's issuer. The fix is either the source-map entry's
+  (shared release-pair spec) or `build-and-upload.sh`'s (shared tooling); neither is an applier's.
+- **state:** BLOCKING. `IRPT_ANLREQ.TO-APPLY-t1` STEP A cannot proceed, because the store function's
+  artifact cannot be produced.
+- **spec_asserts:** t1 step 1 applies the draft-store module, and
+  `infra/aws/terraform/investor-reporting/export/commentary_draft_store.tf:32` states the source map
+  "registers investor-reporting/irpt-commentary-draft-store-lambda.zip ... Until the zip is built and
+  uploaded a plan of this file reads no artifact object." The map's own `_staged_from_note` says the
+  dependency closure of `keys.py` "is NOT measured here: the release pair measures it when the zip is
+  built". t1 IS that release pair, so this is the measurement falling due.
+- **world_is:** `BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting
+  irpt-commentary-draft-store-lambda` fails with nine `ERROR: File not found` lines, each a
+  `source_dir`-joined path that does not exist, e.g.
+  `infra/aws/lambda/investor-reporting/reports/org/standards/NAMING_SCHEMA.json`.
+- **the classification, with its denominator printed.** The entry declares 17 files. Resolving each
+  both ways:
+  - **4 resolve under `source_dir`** -- `commentary_draft_store.py`, `repository.py`,
+    `retention.py`, `composition.py`. These are correct.
+  - **9 resolve ONLY at the repo ROOT** -- `lib/opal_naming.py`, `org/standards/NAMING_SCHEMA.json`,
+    and the seven `infra/logic/registry/*.json` (`exemptions`, `remediations`,
+    `reporting_policies`, `resources`, `scopes`, `systems`, `tiers`). These are what fail.
+  - **3 resolve nowhere, and that is EXPECTED, not a defect** -- `acceptance.py`, `submission.py`
+    and `keys.py` are the `staged_from` trio, which the script stages from committed blobs at pin
+    `283f7e770056467a3fd7a74efc1447fa4f843420`. They are listed here so the count reconciles and
+    nobody later reads three absent files as part of the same fault.
+  So the entry mixes TWO path conventions in one `files` array, and the script implements only one.
+- **why this is a real closure finding rather than a typo.** Those nine are not incidental: they are
+  `keys.py`'s dependency closure -- the naming schema and the LGIC registry the firm/key machinery
+  reads. The map predicted that this closure was unmeasured and would be measured at the build. It
+  has been, and it is not satisfiable as configured.
+- **two fixes, both above an applier:** teach `build-and-upload.sh` a repo-root-relative form and
+  mark those nine with it, or restate them in a mechanism the script already supports (the
+  `staged_from` shape resolves repo paths explicitly and would carry a sha256 per file, which is
+  stronger than a bare path).
+- **acts NOT taken:** no ledger opened, no zip uploaded, no plan, no apply, and the source map was
+  not edited. Editing another line's artifact spec to make my build pass would be the same class of
+  error as relabelling a genre to clear a gate.
+- **what IS already verified for t1, so only this blocks it:** the pin carries `36b0bc0423`,
+  confirmed by reading the diff (it removes the root log group and moves it into the module with
+  `log_retention_days = 14`) rather than by trusting the commit subject; and step 0's IB-pr-391 read
+  passes -- `irpt-commentary-composition-read-lambda` live at `ZZmWOFSA`, the invoke policy EXISTS.
