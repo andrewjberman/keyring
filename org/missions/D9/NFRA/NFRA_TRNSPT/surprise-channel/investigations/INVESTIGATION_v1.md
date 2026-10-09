@@ -1285,6 +1285,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-q-10 / R10_CLOSE: a held-out row is never returned by the analyst read over Research silver.",
     "world_is": "That holds for research_read.py only. The meeting reader (TR-t-4) predates the held_out column and reads the same address, so a reader using it on a Research Meeting date sees the held-out rows. Inert today: only the named readers can run either tool.",
     "notes": "Not run: found by reading the code while writing the FWD-5 coverage row. Becomes live if an analyst-facing reader is ever given the meeting reader."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-09T09:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TO-TR-w19 names test_parse_silver.py in its write grant but the file is test_teams_parse_silver.py, which is outside the grant and asserts the silver columns equal ps.COLUMNS; held_out is therefore added only to rows that went through wipe_rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/tests/test_teams_parse_silver.py:102@0f17922291 (assert table.column_names == ps.COLUMNS; the file named in the order, test_parse_silver.py, does not exist at that commit)",
+        "data/transcripts/scripts/teams/parse_silver.py@wk-NFRA_TRNSPT-2 (write() emits the held_out column iff the rows carry it; parse_and_write always wipes, so every landing carries it; a direct write() of unwiped rows keeps the 10-column schema)",
+        "data/transcripts/scripts/teams/read_meeting.py (no held_out handling; same finding as NFRA_TRNSPT-D2-W1-S8, now reachable on Teams series silver once rewritten with the column)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-w19: the order's <paths> block names data/transcripts/scripts/tests/test_parse_silver.py as the grant for the existing parse_silver tests.",
+    "world_is": "The existing parse_silver tests live in test_teams_parse_silver.py, not in the grant; changing COLUMNS or always adding held_out would break them (and research_fold.STORE_COLUMNS = COLUMNS + held_out), so I kept COLUMNS and made the column conditional. The full tests directory is green (393 passed, test_eod_voice.py ignored: pre-existing collection error).",
+    "notes": "Not a defect found in the product; a path-name mismatch in the order and a design choice for the issuer to ratify. If the issuer wants held_out always present in write(), test_teams_parse_silver.py needs one line changed."
   }
 ]
 ```
