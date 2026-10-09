@@ -850,3 +850,32 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## TCKT_VNEXT-D2-S20 -- the pair's 'remove the row' rollback WIDENS the token rather than narrowing it; only the 2h exp actually bounds it
+
+```json
+{
+  "id": "TCKT_VNEXT-D2-S20",
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~TV2",
+  "surfaced_at": "2026-10-09T17:44:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "The pair's stated rollback -- 'remove the row' -- does not narrow the token, it WIDENS it. The row is what narrows an internal caller; with the row gone, _internal_allowed_firms returns None, which the boundary reads as NO RESTRICTION, so for the remainder of its 2h life the still-valid token may select ANY registry tenant on the IRPT plane and CREATE a ticket for ANY firm. The run's own reach was NARROWER than its post-rollback reach.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 with 2.0.0_SA_COO~V2 -- the never-widen pair's rollback clause is theirs. INERT in fact for runs 1-4 because the token lived only in the executor's process memory, was never printed, stored or committed, and that process has exited; but the clause is wrong as written for any future run.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py (deployed member 87d9ecc4, resolved by content from pin 74a62fb46c) _internal_allowed_firms: 'Returns None = UNCHANGED (no row, no attribute, or an empty list)'",
+      "same file, Entry.handle: `listed = self._internal_allowed_firms(...)` then `if listed is not None and selected not in listed: return refuse(..., FIRM_BINDING)`. listed None therefore refuses NOTHING, and an internal caller may name any tenant bucket_for() maps",
+      "infra/aws/lambda/ticket_center/lambda_function.py _profile_scope: no PROFILE row returns (None, None); _in_profile_scope returns `scope is None or str(firm) in scope`, i.e. TRUE for every firm once the row is gone; _firm_allowed is already TRUE for every firm because a tier-internal token's authorizer allowedFirmIds is ALL. So _create_firm_allowed admits ANY firm after cleanup",
+      "the token is unaffected by the row's deletion: the authorizer verifies the JWT signature and claims, and v2.2's exp is iat+2h (run 4: iat 17:19:43Z, exp 19:19:43Z), so roughly 100 minutes of wider reach followed each run's cleanup",
+      "pair v2.1/v2.2 blast radius, 'Rollback': 'remove the row; the 2h exp bounds the token; complete the ticket' -- the first clause is presented as the narrowing act"
+    ]
+  },
+  "spec_asserts": "Pair v2.1 and v2.2 both state the rollback as: remove the row, the 2h exp bounds the token, complete the ticket. Removing the row is offered first and reads as the act that takes the reach away; the row LIST [49financial] is described as 'the only client reach'.",
+  "world_is": "The row is the NARROWING, not the grant. Deleting it deletes the narrowing and leaves the grant (the token's tier-internal claim) standing until exp, so the post-rollback token is strictly WIDER than the token the run exercised. The only real bound is exp, which the pair also names -- so the rollback is sound ONLY because of its second clause, and the first clause works against it. A rollback that widens the subject it is rolling back should be stated as such, or the row should be left in place until exp and removed after.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
