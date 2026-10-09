@@ -2294,3 +2294,54 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "notes": "ID DEVIATION, REPORTED NOT ADJUDICATED: the order prescribes the scheme LGIC_BLANKFIX-D1-CO1-S<k>, and the live surprise-row gate refuses it. Only the CO1 segment is wrong -- the D1 coordinate is REQUIRED, not optional: the gate states 'A row filed on dell1 is written <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>); a bare id is the laptop's', with laptop/cloud-local = <CODE>-S<n>, sitez = <CODE>-Z-S<n>, dell1 = <CODE>-D1-S<n>, dell2 = <CODE>-D2-S<n>. This seat first over-corrected to a bare LGIC_BLANKFIX-S14 after reading the gate's abbreviated grammar string, and the fabric limb refused that too -- correctly, since a bare id would have claimed the laptop fabric for a dell1 row. The id here is the next free dell1 bare index. 2.0.0_SA_COO~B1 may re-label; the only thing the order got wrong is CO1. Distinct from the W1/W2 rows, which concern the naming keyfill and the root map rather than AWS orphans."
 }
 ```
+
+## LGIC_BLANKFIX-D1-W2-S6 -- 20 of 254 stored-file lines (13 RIGHT, 7 FIX) have no key ruling and no key class: the grader alone produced the location, so source and owner are read from the grader's address by the key grammar's slot order
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T11:34:30Z",
+  "one_line": "20 of 254 stored-file lines (13 RIGHT, 7 FIX) have no key ruling and no key class: the grader alone produced the location, so source and owner are read from the grader's address by the key grammar's slot order",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fwd4_stored_files.py prints FWD4-STORED ok=True files=254 with_source_owner=230 undecided=24; origins counted from the same run: 218 key ruling, 16 key class ADDRESS, 20 grader only (opal_naming_keyfill._classify skips an item whose graded canonical has no {source}/{scope} blank, so no key row exists for it)",
+      "examples of the 20: RIGHT S3Key blackdiamond/49financial/bronze/ and FIX S3Key blackdiamond/49f/bronze/ -> blackdiamond/49financial/bronze/ (root opal-assets); FIX S3Key platinum/mdpf/global/aum-metrics.json -> mdpf/global/platinum/aum-metrics.json (yang-pipeline)",
+      "lib/opal_naming_rootcheck.py stored_origin()/stored_source_owner(): the address is split on '/', segment 1 is a source only if it is in the registry's source vocabulary, segment 2 an owner only if it is in the firm or product scope vocabulary; else UNDECIDED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ab-2 Build 1: 'source=<system> owner=<firm or system> read from the same ruling or key class that produced the location (never inferred from the folder name)'.",
+  "world_is": "For these 20 lines the producer is the grader (grade() with the key grammar {source}/{scope}/{tier}/...), which is neither a ruling nor a key class. They are read from the grader's own address by the grammar's slot order and the vocabulary, never from the folder the file sits in now, and UNDECIDED when a word is in no vocabulary. If the CTO reads 'ruling or key class' as excluding the grader, these 20 lines should print UNDECIDED instead; that is a one-line change in stored_origin()."
+}
+```
+
+## LGIC_BLANKFIX-D1-W2-S7 -- a key ruling's own `owner` field names who moves the store (a directive or project), not the firm that owns the file, so it is not the line's owner= value
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-W2-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-09T11:34:31Z",
+  "one_line": "a key ruling's own `owner` field names who moves the store (a directive or project), not the firm that owns the file, so it is not the line's owner= value",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/key_rulings.json _about.row_fields: 'owner (who moves the store, where one is named)'; the 161 rows hold values such as 'ADVI_FIRMBKTS moves the bucket opal-data-inf ...' and 'Directive D8 (the Yang portal pipeline ...)'",
+      "the printed owner= is the second segment of the ruling's canonical address (the key grammar's {scope}: a firm such as 49financial, or a scope such as global)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-ab-2 Build 1 and FWD-4 ACCEPT: 'a stored file's new location with where it came from and whose it is filled in'; the order's word 'owner' could be read as the ruling row's `owner` field.",
+  "world_is": "Two meanings of 'owner' live in the repository: the ruling row's mover and the address's scope (whose file it is). The line prints the second, as FWD-4 says 'whose it is'. The ruling's mover text is long prose and stays on the ruling."
+}
+```
