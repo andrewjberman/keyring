@@ -112,7 +112,7 @@ with `python .tools/proof-of-spec-check.py <instance>`, and flip the ONE `<statu
   ledger. Not ratified as a widening: that needs both halves. The clone keeps the pre-fix admission until
   `1.0.0_SA_CTO~Z` rules its teardown (its recorded call). Graded by no gate limb as a modification.
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <workstream>DATA-REFRESH-ADMIT</workstream>
 <slot>~AE</slot>

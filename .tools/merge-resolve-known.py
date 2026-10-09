@@ -21,9 +21,9 @@ per file class"; 0.0.0_AB_MSTR msg 107365: "the integrator should regenerate gen
      from the merged tree with `.tools/missions-tree-index.py derive --write`, over a narrow extract of the merged
      tree (that project's home, the two registers, the contract): about 2 s, against 85 s for a full extract.
 
-  3. An APPEND-ONLY multi-writer log (APPEND_ONLY below: every manager spawn, /govern reaper run and law edit appends a
-     line; 0.0.0_AB_MSTR msg 107817): resolved as BASE + CLOUD's tail + the box's tail, and only when BOTH sides extend
-     the base byte for byte. A side that edited or removed an earlier line is UNRESOLVED.
+  3. An APPEND-ONLY multi-writer log (APPEND_ONLY below: every manager spawn, /govern reaper run, law edit and deploy
+     bypass appends a line; 0.0.0_AB_MSTR msgs 107817, 107847): resolved as a LINE UNION -- CLOUD's file, then the
+     box-only lines in the box's order. Not a byte-prefix test: hand unions reorder lines, and a prefix test then HELD.
 
 Anything else is UNRESOLVED and the caller falls back to its normal conflict path.
 
@@ -47,7 +47,7 @@ import tempfile
 CHANNEL_RE = re.compile(r'(^|/)surprise-channel/(investigations|remediations|adjudications)/[A-Z]+_v\d+\.md$'
                         r'|^org/surprise_channel/(.+/)?[A-Z]+_v\d+\.md$')
 GENERATED_RE = re.compile(r'^org/projects/[^/]+\.json$')
-APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log')
+APPEND_ONLY = ('org/mcp/agent-spawn-audit.log', 'org/law-edit-audit.log', 'org/safe-deploy-bypass-audit.log')
 ROOT = subprocess.run(['git', 'rev-parse', '--show-toplevel'], capture_output=True, text=True).stdout.strip() or '.'
 
 
@@ -309,17 +309,25 @@ def union_fences(base, ours, theirs):
 
 
 def union_append(base, ours, theirs, cloud='ours'):
-    """BASE + CLOUD's tail + the box's tail for an append-only log, when both sides extend the base byte for byte. A tail
-    that does not end in a newline gets one before the next tail, so two last lines never fuse."""
-    if base is None:
-        return None, 'no merge base for an append-only log'
-    if not (ours.startswith(base) and theirs.startswith(base)):
-        return None, 'a side does not extend the base byte for byte (an earlier line was edited or removed)'
+    """A LINE UNION for an append-only log: CLOUD's file as it stands, then every line of the box's file that CLOUD does
+    not hold, in the box's order (counted, so a line the box carries twice and CLOUD once adds one copy). Not a byte-prefix
+    test: hand unions on other boxes reorder lines, so CLOUD's copy stops being a pure append of the base and a prefix
+    test HELD dell1 263 behind (0.0.0_AB_MSTR msg 107847). Lines compare with their line ending stripped, so a CRLF copy
+    of a line is the same line. Nothing is ever dropped: a line either side holds is in the result."""
     first, second = (ours, theirs) if cloud == 'ours' else (theirs, ours)
-    t1, t2 = first[len(base):], second[len(base):]
-    if t1 and t2 and not t1.endswith('\n'):
-        t1 += '\n'
-    return base + t1 + t2, 'append-only base+cloud+box'
+    norm = lambda ln: ln.rstrip('\r\n')  # noqa: E731
+    have = {}
+    for ln in first.splitlines(keepends=True):
+        have[norm(ln)] = have.get(norm(ln), 0) + 1
+    extra = []
+    for ln in second.splitlines(keepends=True):
+        k = norm(ln)
+        if have.get(k, 0) > 0:
+            have[k] -= 1
+        elif k:
+            extra.append(ln if ln.endswith('\n') else ln + '\n')
+    head = first if (not first or first.endswith('\n') or not extra) else first + '\n'
+    return head + ''.join(extra), 'append-only line union cloud+box-only=%d' % len(extra)
 
 
 def extends(rev, path):

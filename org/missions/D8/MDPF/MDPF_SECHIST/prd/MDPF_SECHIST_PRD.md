@@ -4,7 +4,7 @@
 {
  "project": "MDPF_SECHIST",
  "directive": "D8",
- "fabric": "laptop",
+ "fabric": "dell1",
  "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/securities-database-ingestion-maintenance-brief-20261006.md@901edd46a2",

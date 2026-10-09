@@ -71,14 +71,21 @@ If the step cannot run it prints NAMING PLACE ERROR and, with the switch present
 THE PLACEMENT OVERRIDE (LGIC_BLANKFIX FWD-6, round 9 BF-x-4, row W1-S21). While the switch is present a creator whose name the
 canon cannot yet place needs a way through. The way is `# naming-place-override: <reason>` as a line of the commit message
 (reason required, non-empty), read by .tools/safe-commit.sh ONLY. safe-commit is the ONLY setter of the variable
-NAMING_PLACE_OVERRIDE: it first appends one line to org/naming-place-override-audit.log
-(`<UTC time> NAMING-PLACE-OVERRIDE  <author>  id=<id>  reason=<reason>  names=<refused names, comma separated>`), then exports the
-line's `<id>` and runs this gate once more. THE GATE REQUIRES THE AUDIT ROW (this is the choice the cell asked to be stated): a
-PLACE-REFUSE row is printed as `NAMING OVERRIDDEN <file>:<line> <string> -> <form>` and does not block only when the variable
-names an id for which the audit log holds a row with a non-empty reason, written within the last 600 seconds, whose names list holds
-the row's string. A variable set by hand, with no such row, passes nothing (`NAMING-PLACE-OVERRIDE: IGNORED <why>` is printed and the
-refusal stands). The limit, stated: the log is the trust base -- a seat that can append to it can forge a row; the row is the audit
-record, not a signature. safe-merge.sh and every other path write no such row, so they have no override. The older limb's REFUSE is
+NAMING_PLACE_OVERRIDE: it first appends one JSON line to org/audit/naming-place-override-audit.jsonl, TRACKED, and stages it into
+the SAME commit (round 10 BF-y-1: the landed commit carries its own audit row; the ignored .log of round 9 is no longer written)
+(`{"utc","author","id","reason","names":[...],"msg_sha256":"<64 hex>"}`; round 10 BF-y-2: msg_sha256 is the sha256 of the exact
+message text safe-commit.sh commits -- the -F file's bytes, or the -m texts joined by a blank line -- written to a temporary file),
+then exports the line's `id` and runs this gate once more with `--message-file <that file>`. THE GATE REQUIRES THE AUDIT ROW AND
+READS IT FROM THE INDEX (`git show :<path>`, the copy that will land), never from a file on disk only: a PLACE-REFUSE row is printed
+as `NAMING OVERRIDDEN <file>:<line> <string> -> <form>` and does not block only when ALL of these hold: the variable names an id for
+which the staged audit file holds a row with a non-empty reason; that row's msg_sha256 equals the sha256 of the message file the gate
+is handed; that message carries a non-empty `# naming-place-override:` line; and the row's names list holds the row's string. The
+600 s age window of round 9 is retired: a row is bound to ONE message, not to a clock, so a row written for another commit (or
+pre-written) matches no later message. A variable set by hand, with no such staged row, passes nothing, and neither does a row with
+the wrong hash, an empty hash, or a message without the line (`NAMING-PLACE-OVERRIDE: IGNORED <why>` is printed and the refusal
+stands). The limit, stated: the file is the trust base -- a seat that can stage a row AND hash its own message can still forge one;
+the row is the audit record bound to its commit, not a signature. safe-merge.sh and every other path write no such row, so they
+have no override. The older limb's REFUSE is
 not affected by the override.
 
 Standard library only. ASCII only.
@@ -107,8 +114,8 @@ ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
 PLACE_FILE = os.path.join(REPO, "org", "mcp", "naming-place.enforce")  # the placement step's switch: present = refuse
 PLACE_PREVIEW = os.environ.get("NAMING_PLACE_PREVIEW") == "1"  # run the step while the switch is absent (its rows only WARN)
-OVERRIDE_AUDIT = os.path.join(REPO, "org", "naming-place-override-audit.log")  # written by safe-commit.sh only
-OVERRIDE_WINDOW_S = 600  # an audit row older than this passes nothing
+OVERRIDE_AUDIT_REL = "org/audit/naming-place-override-audit.jsonl"  # TRACKED; written and staged by safe-commit.sh only
+OVERRIDE_LINE_RE = re.compile(r"^[ \t]*#?[ \t]*naming-place-override:[ \t]*(.*?)[ \t\r]*$", re.M)  # the message line, as safe-commit.sh reads it
 PLACE_MAP = "infra/logic/registry/root_map.json"
 PLACE_PATH_PREFIX = "infra/aws/"
 PLACE_ROOT_CAP = 8  # roots placed per commit; each costs about two root-check runs (about 10 s)
@@ -1996,35 +2003,71 @@ def decide_exit(rows, enforce):
     return summary, refused, warned, place_ref, 1 if ((refused and enforce) or place_ref) else 0
 
 
-_AUDIT_ROW = re.compile(r"^(\S+) NAMING-PLACE-OVERRIDE  (.*?)  id=(\S+)  reason=(.*)  names=(\S*)$")
+def _audit_text_from_index(repo, rel):
+    """The staged (index) copy of `rel` in `repo`, or (None, why). A path absent from the index is a reason, not an error."""
+    try:
+        p = subprocess.run(["git", "-C", repo, "show", ":" + rel], capture_output=True)
+    except OSError as exc:
+        return None, "git could not run (%s)" % exc
+    if p.returncode != 0:
+        return None, "no staged copy of %s (the row must be in the commit it permits)" % os.path.basename(rel)
+    return p.stdout.decode("utf-8", "replace"), ""
 
 
-def override_valid(ident, audit_path=None, now=None):
+def message_binding(message_path):
+    """(sha256 hex, reason, why): the digest of the exact bytes of the message file the gate was handed and the reason on its first
+    `# naming-place-override:` line ('' when the line is absent or empty), or (None, '', why) when no message can be read."""
+    if not message_path:
+        return None, "", "no commit message was handed to the gate (safe-commit.sh passes --message-file)"
+    try:
+        with open(message_path, "rb") as fh:
+            raw = fh.read()
+    except OSError:
+        return None, "", "the message file %s cannot be read" % os.path.basename(message_path)
+    m = OVERRIDE_LINE_RE.search(raw.decode("utf-8", "replace"))
+    return hashlib.sha256(raw).hexdigest(), (m.group(1).strip() if m else ""), ""
+
+
+def override_valid(ident, audit_path=None, repo=None, message_path=None):
     """(names, why): names is the set of refused names the audit row for `ident` covers, or None with the reason it passes
-    nothing. The row must exist in the audit log, carry a non-empty reason and be younger than OVERRIDE_WINDOW_S."""
-    audit_path = audit_path or OVERRIDE_AUDIT
+    nothing. BF-y-2: the row must exist, carry a non-empty reason, and its msg_sha256 must equal the sha256 of the message file
+    handed in `message_path`, which must carry a non-empty `# naming-place-override:` line. There is no age window: the row is
+    bound to ONE message. With no `audit_path` the row is read from the INDEX copy of OVERRIDE_AUDIT_REL in `repo` (default:
+    this checkout), so the row honoured is the one that will land; `audit_path` (a file on disk) is for tests only."""
     if not ident or not ident.strip():
         return None, "the variable is empty"
-    try:
-        with open(audit_path, "r", encoding="utf-8") as fh:
-            lines = fh.read().splitlines()
-    except OSError:
-        return None, "no audit log %s" % os.path.basename(audit_path)
-    for ln in lines:
-        m = _AUDIT_ROW.match(ln)
-        if not m or m.group(3) != ident.strip():
-            continue
-        if not m.group(4).strip():
-            return None, "the audit row for %s carries an empty reason" % ident
+    if audit_path:
         try:
-            when = datetime.datetime.strptime(m.group(1), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+            with open(audit_path, "r", encoding="utf-8") as fh:
+                text = fh.read()
+        except OSError:
+            return None, "no audit log %s" % os.path.basename(audit_path)
+    else:
+        text, why = _audit_text_from_index(repo or REPO, OVERRIDE_AUDIT_REL)
+        if text is None:
+            return None, why
+    for ln in text.splitlines():
+        try:
+            row = json.loads(ln)
         except ValueError:
-            return None, "the audit row for %s has an unreadable time" % ident
-        now = now or datetime.datetime.now(datetime.timezone.utc)
-        age = (now - when).total_seconds()
-        if age > OVERRIDE_WINDOW_S or age < -60:
-            return None, "the audit row for %s is %d s from now (window %d s)" % (ident, int(age), OVERRIDE_WINDOW_S)
-        return set(n for n in m.group(5).split(",") if n), ""
+            continue
+        if not isinstance(row, dict) or str(row.get("id", "")) != ident.strip():
+            continue
+        if not str(row.get("reason", "")).strip():
+            return None, "the audit row for %s carries an empty reason" % ident
+        digest, msg_reason, why_msg = message_binding(message_path)
+        if digest is None:
+            return None, why_msg
+        if not msg_reason:
+            return None, "the commit message handed to the gate carries no non-empty `# naming-place-override:` line"
+        want = str(row.get("msg_sha256", "")).strip().lower()
+        if not want or want != digest:
+            return None, "the audit row for %s is bound to a different message (msg_sha256 %s, this message %s)" % (
+                ident, (want[:12] + "...") if want else "empty", digest[:12] + "...")
+        names = row.get("names", [])
+        if not isinstance(names, list):
+            return None, "the audit row for %s has a names field that is not a list" % ident
+        return set(str(n) for n in names if str(n)), ""
     return None, "no audit row has id %s (safe-commit.sh is the only setter of this variable)" % ident
 
 
@@ -2213,26 +2256,65 @@ def place_self_test():
 
 def override_self_test():
     """The override's arms on plain data in a temporary audit log: the audited id passes a placement row and is logged as
-    OVERRIDDEN; no row, an empty reason, a stale row, an uncovered name and the empty variable pass nothing. True when all hold."""
+    OVERRIDDEN; no row, an empty reason, a row bound to a different message, an empty hash, a message with no override line, an
+    uncovered name and the empty variable pass nothing (BF-y-2: no age window). True when all hold."""
     import tempfile
     now = datetime.datetime.now(datetime.timezone.utc)
     fmt = "%Y-%m-%dT%H:%M:%SZ"
-    old = (now - datetime.timedelta(seconds=OVERRIDE_WINDOW_S + 120)).strftime(fmt)
     new = now.strftime(fmt)
+    msg_a = b"build(x): a\n\n# naming-place-override: the canon has no row yet\n"
+    msg_b = b"build(x): b\n\n# naming-place-override: the canon has no row yet\n"
+    msg_nol = b"build(x): c\n\nno override line here\n"
+
+    def sha(raw):
+        return hashlib.sha256(raw).hexdigest()
+
     rows = [("REFUSE", "f.tf", 3, "irpt-x-newjob", "irpt-x-newjob-daily", "owed", "PLACE-REFUSE"),
             ("REFUSE", "g.tf", 4, "other-name", "-", "owed", "PLACE-REFUSE")]
+    def jrow(ident, reason, when, names=("irpt-x-newjob",), digest=None):
+        return json.dumps({"utc": when, "author": "a <a@x>", "id": ident, "reason": reason, "names": list(names),
+                           "msg_sha256": sha(msg_a) if digest is None else digest}, separators=(",", ":")) + "\n"
+
     with tempfile.TemporaryDirectory(prefix="naming_gate_override_selftest_") as td:
-        audit = os.path.join(td, "audit.log")
+        audit = os.path.join(td, "audit.jsonl")
         with open(audit, "w", encoding="utf-8", newline="\n") as fh:
-            fh.write("%s NAMING-PLACE-OVERRIDE  a <a@x>  id=good  reason=the canon has no row yet  names=irpt-x-newjob\n" % new)
-            fh.write("%s NAMING-PLACE-OVERRIDE  a <a@x>  id=blank  reason=  names=irpt-x-newjob\n" % new)
-            fh.write("%s NAMING-PLACE-OVERRIDE  a <a@x>  id=stale  reason=r  names=irpt-x-newjob\n" % old)
-        good, _w = override_valid("good", audit)
-        missing, why_missing = override_valid("handset", audit)
-        blank, _w2 = override_valid("blank", audit)
-        stale, _w3 = override_valid("stale", audit)
-        empty, _w4 = override_valid("", audit)
-        nolog, _w5 = override_valid("good", os.path.join(td, "absent.log"))
+            fh.write(jrow("good", "the canon has no row yet", new))
+            fh.write(jrow("blank", "", new))
+            fh.write(jrow("forged", "r", "2020-01-01T00:00:00Z", digest=sha(msg_b)))  # a valid-looking row for ANOTHER message
+            fh.write(jrow("nohash", "r", new, digest=""))
+            fh.write(jrow("nolinemsg", "r", new, digest=sha(msg_nol)))
+        mfiles = {}
+        for key, raw in (("a", msg_a), ("nol", msg_nol)):
+            mfiles[key] = os.path.join(td, "msg_%s.txt" % key)
+            with open(mfiles[key], "wb") as fh:
+                fh.write(raw)
+        good, _w = override_valid("good", audit, message_path=mfiles["a"])
+        missing, why_missing = override_valid("handset", audit, message_path=mfiles["a"])
+        blank, _w2 = override_valid("blank", audit, message_path=mfiles["a"])
+        forged, why_forged = override_valid("forged", audit, message_path=mfiles["a"])
+        nohash, _w3 = override_valid("nohash", audit, message_path=mfiles["a"])
+        nolinemsg, why_noline = override_valid("nolinemsg", audit, message_path=mfiles["nol"])
+        nomsg, _w3b = override_valid("good", audit)
+        empty, _w4 = override_valid("", audit, message_path=mfiles["a"])
+        nolog, _w5 = override_valid("good", os.path.join(td, "absent.jsonl"), message_path=mfiles["a"])
+        # the index-read arm: a temporary repository; the row on disk only, then staged, then the disk copy edited
+        repo = os.path.join(td, "repo")
+        os.makedirs(os.path.join(repo, "org", "audit"))
+        idx_ok = True
+        try:
+            subprocess.run(["git", "-C", repo, "init", "-q"], check=True, capture_output=True)
+            disk_copy = os.path.join(repo, *OVERRIDE_AUDIT_REL.split("/"))
+            with open(disk_copy, "w", encoding="utf-8", newline="\n") as fh:
+                fh.write(jrow("idx", "staged row", new))
+            disk_only, why_disk = override_valid("idx", repo=repo, message_path=mfiles["a"])
+            subprocess.run(["git", "-C", repo, "add", "-f", "--", OVERRIDE_AUDIT_REL], check=True, capture_output=True)
+            staged, _w6 = override_valid("idx", repo=repo, message_path=mfiles["a"])
+            with open(disk_copy, "w", encoding="utf-8", newline="\n") as fh:
+                fh.write(jrow("idx", "", new))  # disk now differs from the index: the index copy is the one honoured
+            from_index, _w7 = override_valid("idx", repo=repo, message_path=mfiles["a"])
+        except (OSError, subprocess.CalledProcessError):
+            idx_ok = False
+            disk_only, why_disk, staged, from_index = 0, "", None, None
     through = apply_override(rows, good or set())
     refused = apply_override(rows, set())
     arms = [
@@ -2243,8 +2325,15 @@ def override_self_test():
          refused == rows and decide_exit(refused, False)[4] == 1),
         ("a variable set by hand (no audit row for its id) passes nothing", missing is None and "no audit row" in why_missing),
         ("an audit row with an empty reason passes nothing", blank is None),
-        ("an audit row older than the window passes nothing", stale is None),
+        ("a FORGED row (valid-looking, the hash of another message, a different time) passes nothing",
+         forged is None and "bound to a different message" in why_forged),
+        ("a row with an empty hash, and a row with the right hash whose message has no override line, pass nothing",
+         nohash is None and nolinemsg is None and "no non-empty" in why_noline),
+        ("no message handed to the gate passes nothing, though the row is otherwise good", nomsg is None),
         ("an empty variable and a missing audit log pass nothing", empty is None and nolog is None),
+        ("the index-read arm: a row on disk and not staged passes nothing; once staged it passes; a later disk edit does not "
+         "change what the index holds", idx_ok and disk_only is None and "no staged copy" in why_disk
+         and staged == {"irpt-x-newjob"} and from_index == {"irpt-x-newjob"}),
     ]
     ok = True
     for label, held in arms:
@@ -2277,6 +2366,8 @@ def main(argv=None):
     ap.add_argument("--diff", help="a unified diff; its ADDED lines are graded")
     ap.add_argument("--enforce", action="store_true", help="a REFUSE exits 1 (also NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)")
     ap.add_argument("--post-from-index", action="store_true", help="read each post-image from the index (safe-commit.sh)")
+    ap.add_argument("--message-file", help="the exact commit message safe-commit.sh will commit; the placement override passes only a "
+                    "staged audit row whose msg_sha256 is this file's sha256 (BF-y-2)")
     args = ap.parse_args(argv)
     if args.self_test:
         return self_test()
@@ -2293,7 +2384,7 @@ def main(argv=None):
         return 1 if enforce else 0
     ident = os.environ.get("NAMING_PLACE_OVERRIDE", "")
     if ident and any(r[6] == "PLACE-REFUSE" for r in rows):
-        names, why = override_valid(ident)
+        names, why = override_valid(ident, message_path=args.message_file)
         if names is None:
             meta.append("NAMING-PLACE-OVERRIDE: IGNORED %s" % why)
         else:
