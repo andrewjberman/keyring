@@ -159,8 +159,8 @@ outcomes verbatim.
                     the move read as one history: one set of returns and one transaction list; at the
                     hand-over there is no missing stretch and no doubled entry, and an account that cannot
                     be joined says why
-         SOURCE     brief O3; Andrew, "an adapter ... consolidated shape between the commonwealth and the; was IRPT_CUSTDY FWD-4 (merged 2026-10-09, CTO ruling @ca5f74553d)
-                    ... black diamond data for cottonwood"
+         SOURCE     brief O3; Andrew, "an adapter ... consolidated shape between the commonwealth and the
+                    ... black diamond data for cottonwood"; was IRPT_CUSTDY FWD-4 (merged 2026-10-09, CTO ruling @ca5f74553d)
 
   FWD-16 Before the switch, every figure where Opal and Black Diamond disagree has its reason written down
          DONE WHEN  EXERCISED -- the comparison read for the 2026-09-30 and 2026-12-31 quarter-ends
@@ -194,8 +194,8 @@ outcomes verbatim.
                     source served it and where Opal reads the same figure from the custodian or Opal's own
                     store; a figure with no other source is named as such; where Commonwealth's history
                     holds more than Black Diamond's feed, that is shown
-         SOURCE     Andrew-direct ~21:0xZ, "figure out what black diamond endpoints correspond with the; was IRPT_CUSTDY FWD-9 (merged 2026-10-09, CTO ruling @ca5f74553d)
-                    various fields and we essneitally do black diamonds job for them"
+         SOURCE     Andrew-direct ~21:0xZ, "figure out what black diamond endpoints correspond with the
+                    various fields and we essneitally do black diamonds job for them"; was IRPT_CUSTDY FWD-9 (merged 2026-10-09, CTO ruling @ca5f74553d)
 ```
 
 ## ENDPOINT PROVENANCE (outside the ratified section)

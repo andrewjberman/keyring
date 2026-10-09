@@ -97,3 +97,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>staged -- pair COMPLETE: COO half @ede6ff8d46, CTO half @83812df206 (1.0.0_SA_CTO~DELL1 msg 1723) with four conditions: (1) GO only after AMGT-ee-3 merges under 1.0.0_SA_CTO~Z's half and the import check (fetch and analyze import on this box) is printed; (2) NO HALF-LANDED NAME: if a name's model call fails or the analysis refuses, that name's silver part is rolled back in the same act (a newer part re-carrying the prior row), so served text never sits beside an analysis built from different text; (3) the ASML NA gate (AC1, AC2 YES before the other four); (4) the change-management entry, with the prior silver row and both prior VersionIds per name recorded before the first write. Graded by no gate limb (a modification).</status>
