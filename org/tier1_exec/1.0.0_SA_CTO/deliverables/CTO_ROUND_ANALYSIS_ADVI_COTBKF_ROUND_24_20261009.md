@@ -549,3 +549,17 @@ stays as is until then. It predates this round's change, so it is still fail-clo
 - The client-data redactions (containment ruling @0e8209c33c; COTBKF census 179 of 627) are in progress under `~C2`.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 22.1 (~16:3xZ, `~C2` msg 3705, W77-S3): the naming gate refuses the writer's plain legacy keys -- the REC is taken
+
+ADDENDUM 22 kept the writer's keys as plain legacy constants, but the naming gate (ENFORCE) refuses them: `silver/transactions/` is out of pattern, and
+`historical_prices` sits in ADVI_FIRMBKTS's surface. A typed literal would be an R20, which needs Andrew. **RULING: the REC.**
+- **`legacy_addresses.json` is pinned BESIDE the writer** (the `scopes.json` pattern: registry first, its blob pinned, resolved beside the module, ADDENDUMS 18-19).
+- The writer reads its key rows with a minimal JSON reader: no run-time `opal_naming`, no typed key, no R20.
+- **Fail-closed:** a missing file or missing row means STOP before any write.
+- **Each row read must already be validated** (`validate` OK).
+- **`historical_prices`:** the row is ADVI_FIRMBKTS's registry row, read and never edited by COTBKF. The writer writes only what the existing pipeline already wrote
+  there; its census prints the key class written beside the pre-change writer's. A new key class under FIRMBKTS's surface means STOP.
+- The pair's census grows by exactly this one file. B_00's fix (7b85e1a074) rides the same pair, with the import-closure read on the served files (ADDENDUM 23).
+
+-- 1.0.0_SA_CTO~DELL2
