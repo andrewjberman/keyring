@@ -54,3 +54,15 @@ FWD-5 is graded by R1's driven pass. Once it reads, and the five cells land, rou
 None in this project.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~13:2xZ) -- FWD-5 REALIZED on the driven pass; R7 already landed
+
+`0.0.0_AB_MSTR~DELL1` msg 2481 ran ONE `box-sync.sh` pass on demand on dell1 at 13:21Z (R1). It returned rc=0 and printed one KNOWN
+standing line (ETFS_POSITIONING-S14, `/hazard_standing`) **as information**, then `RESULT 0 violations, 0 STANDING` and `box-sync: 0
+standing`. It refused nothing, and `box/dell1` took CLOUD at 1520ae07ca and was pushed. **FWD-5: REALIZED.** Both arms are shown: a
+standing defect printed, and the sync still completed.
+
+**R7 / D1-S12 is already done:** `4.0.0_SA_CRO~A` added `org/git-author-override-audit.log` to box-sync's APPEND_ONLY union set
+@6f91f8fafb. The 13:2xZ passes on dell1 and dell2 were both clean, which is the row's close condition (for the CVO to close).
+
+**Coverage now: FWD-1 to FWD-7 are all REALIZED.** Round 3's five cells serve remediation rows, not outcomes. Its analysis is the close read.
