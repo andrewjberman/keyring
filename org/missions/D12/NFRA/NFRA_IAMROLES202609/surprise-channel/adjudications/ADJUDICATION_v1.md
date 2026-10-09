@@ -712,3 +712,131 @@ instruments; no L8 packet had been sent when it was written, and none is require
   }
 ]
 ```
+
+## C-S17 -- L8 ROUND 4: seven rows DISMISSED, two GRADUATE (the round-close instrument), and all three AC4s PASS
+
+By `3.0.0_SA_CVO~Z`, 2026-10-09 ~08:2xZ, on `2.0.0_SA_COO~ZI` msg 32543 (packet `ledger/COMPLETION_REPORT.round4.json`
+@b756665567). Census before this compile (`comp-surprise --project NFRA_IAMROLES202609 --json`, 08:1xZ): 47 items, 16
+adjudication rows, 35 remediation rows; OPEN 9, ARMED 36. The 36 are earlier rounds' graduated items whose remediations
+are OPEN with owners; this compile does not move them. **Note for any reader of round-close-check:** it read all three
+AC4s GRADED off C-S8 (2026-09-10, round 2) before this compile; that reading is false (Z-S17). The grades are C-S19 to
+C-S21 below.
+
+```json
+[
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S17",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "one_line": "Round 4 L8: 7 rows DISMISSED -- the commit refusal is cleared, and the rest are facts the deliverables already disclose.",
+    "class": "OBSERVATION",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round.",
+    "world_is": "W10-S1, W11-S1 and W12-S1: the NFRA_OPSWKF index drift no longer fires -- missions-tree-index check reads 0 violations at HEAD (this seat, 08:2xZ), and the three cells are in HEAD (bcb0d718fc, aebcf9cb69, 6037269ded); Z-S16 is that evidence. W11-S2: the prefix exclusion was corrected before the bundle was assembled (10 of 10 service-linked excluded in both runs). W11-S3: a resume-count correction, and the run finished 280 of 280 rc0. W11-S4: the 26 codebuild rows that moved never-used -> unobservable are disclosed in RERUN_COMPARISON.md section 3 with their cause marked not determinable.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-W10-S1",
+      "NFRA_IAMROLES202609-Z-W11-S1",
+      "NFRA_IAMROLES202609-Z-W12-S1",
+      "NFRA_IAMROLES202609-Z-W11-S2",
+      "NFRA_IAMROLES202609-Z-W11-S3",
+      "NFRA_IAMROLES202609-Z-W11-S4",
+      "NFRA_IAMROLES202609-Z-S16"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/missions-tree-index.py check -> RESULT: 0 violation(s), 2026-10-09 08:2xZ",
+        "git merge-base --is-ancestor bcb0d718fc / aebcf9cb69 / 6037269ded HEAD -> all three in HEAD",
+        "deliverables/0.9.0_WK_NFRA_IAMROLES202609~11/RERUN_COMPARISON.md sections 1 and 3"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The commit-refusal hazard is cleared at HEAD; the other rows record facts the round's deliverables already disclose."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S18",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "one_line": "Round 4 L8: Z-S17 and Z-S18 GRADUATE -- round-close-check grades a judgment criterion off any CVO row naming the bare id, and its close-gate grades every round's orders through the stem fallback.",
+    "class": "BLOCKING",
+    "spec_asserts": "A round is closed only when a non-doer CVO has graded each of THAT round's judgment criteria and that round's proofs pass.",
+    "world_is": "Reproduced at this seat 08:2xZ: round-close-check --round 4 read TO-IAM-u-1/u-2/u-3 AC4 -> GRADED (adjudication row Z-C-S8), a round-2 row, before any round-4 grade existed. Z-S18's close-gate reads 18 historical VALID proofs PROOF-BAD through the same stem fallback as NFRA_REPORT-Z-S26 and NFRA_MCPMSP-Z-S4.",
+    "adjudicates": [
+      "NFRA_IAMROLES202609-Z-S17",
+      "NFRA_IAMROLES202609-Z-S18"
+    ],
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/round-close-check.py --project NFRA_IAMROLES202609 --round 4 (08:2xZ): three AC4 lines GRADED off Z-C-S8",
+        ".tools/round-close-check.py:242-265 grade_criterion: bare-id regex over json.dumps(row), first CVO hit wins",
+        "remediations/REMEDIATION_v4.Z.md"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S19",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "one_line": "L9 grade, TO-IAM-u-1 AC4 (judgment): PASS -- POSTURE_NUMBER_ESTATE.md answers 'are we following least privilege?' with a figure, its denominator and its vintage on one line, and leads with the unobservable two-thirds.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-u-1 AC4: the document answers with a number, out of what and as of when, and keeps the unobservable two-thirds in view so a reader cannot take a cleaner estate than was measured.",
+    "world_is": "The headline: 1858 of 5494 grants observable (33.8 percent), 421 of those used, 3636 (66.2 percent) unobservable, 219 roles, as of 2026-09-10, service-linked excluded. The answer section opens 'Not shown either way for two-thirds of the grants' and names the flattering ratio (never-used/granted) and why it is not the posture. Arithmetic checked: 421+1437=1858, 1858+3636=5494, and 418+695=1113, 1113+1463=2576. The Since-then section bounds the vintage. This seat re-ran posture-rollup.py on the round-4 bundle: TOTALS roles=280 granted=5994 used=479 never-used=1486 unobservable=4029.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_IAMROLES202609~10/POSTURE_NUMBER_ESTATE.md (read whole)",
+        "python deliverables/0.9.0_WK_NFRA_IAMROLES202609~10/posture-rollup.py <round-4 bundle>, run by this seat"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-u-1 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S20",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "one_line": "L9 grade, TO-IAM-u-2 AC4 (judgment): PASS -- a non-builder ran the harness and the comparison and got the same answer, and RERUN_COMPARISON.md explains each difference rather than listing it.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-u-2 AC4: a reviewer next quarter can run the harness without the builder and put the answer beside this one, and RERUN_COMPARISON.md explains the differences it finds.",
+    "world_is": "This seat (not the builder) ran rerun-population.sh --dry-run (rc=0, prints rule, lookback 90 and each step) and compare-runs.py over the two bundles: COMPARABLE: yes, INTERSECTION roles=219, ROLES ADDED 61, ROLES REMOVED 0. The comparison reconciles in every direction: +500 = +385 (61 added roles) + 115 (shared roles); shared: -19 used, +11 never-used, +123 unobservable; the 166 transitions (97+23+26+16+2+2) re-derive each column. Each transition carries a why: grants added, a 90-day calendar effect with last_used unchanged, and one Access Advisor change marked not determinable. compare-runs checks instrument blob equality, so a changed instrument next quarter reads not comparable instead of a false delta.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_IAMROLES202609~11/RERUN_COMPARISON.md (read whole)",
+        "bash .../rerun-population.sh --dry-run and python .../compare-runs.py <round-3> <round-4>, run by this seat 08:1xZ, rc=0 each"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-u-2 AC4 PASS."
+  },
+  {
+    "id": "NFRA_IAMROLES202609-Z-C-S21",
+    "project": "NFRA_IAMROLES202609",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-09T08:20Z",
+    "one_line": "L9 grade, TO-IAM-u-3 AC4 (judgment): PASS -- a reviewer sees, on live evidence, one policy scoped to one action on one instance that asks nothing of the caller, and the document keeps it to that one policy.",
+    "class": "OBSERVATION",
+    "spec_asserts": "TO-IAM-u-3 AC4: a reviewer SEES, on live evidence, a policy careful about what can be touched and asking nothing of who touches it, and the document keeps it to one policy.",
+    "world_is": "CONDITION_AXIS_EXERCISED.md quotes the live statement (ec2:StopInstances on i-0584e17d283fa7ef4, no Condition), three allowed arms (no context, MFA false, arbitrary SourceIp) and an implicitDeny control on another instance; its verdict carries a BOUND paragraph limiting it to one policy and stating what the simulator does not show. This seat re-read the live policy (Action, single Resource, Condition null) and re-ran the MFA-false arm: allowed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_IAMROLES202609~12/CONDITION_AXIS_EXERCISED.md sections (a)-(d)",
+        "aws iam get-role-policy estate-report-runner-role estate-report-runner-selfstop and simulate-principal-policy (MFA false), live 2026-10-09 08:1xZ"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade, not a defect: TO-IAM-u-3 AC4 PASS."
+  }
+]
+```

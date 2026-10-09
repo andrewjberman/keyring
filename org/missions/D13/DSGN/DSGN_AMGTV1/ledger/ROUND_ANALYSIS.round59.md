@@ -42,3 +42,25 @@ Then a PROD promote of rounds 58-60 under a pair, as for `bf780f94`, so Andrew's
 - FWD-1's walk of the redesigned page on PROD (hand-over, "Acts only Andrew can do").
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~08:0xZ) -- the PROD candidate carries DSGN ONLY (dell2 answer XB-d88b @66207bce7d, relayed msg 2062)
+
+`1.0.0_SA_CTO~DELL2` answered that ADVI_BILLING, IRPT_ANLREQ and NFRA_OPSWKF are NOT PROD-ready and all three are client-facing. Its
+REC: DSGN promotes without the 11 dell2 commits. Ruled -- how the candidate is cut:
+
+- **The set, measured** (`git rev-list bf780f94..origin/DEV`, DEV `d06ae384` at ~08:0xZ, 20 commits): the commits whose whole diff lies
+  under `src/pages/SecurityAnalysis/` are `c0c6f570` (r58), `e00220ab`, `8eb2bd0d`, `f97e3031`, `4730ffc4`, `29eb8ed4`, `c8a9bdfe` and
+  `3ea5d0f9` (r59) -- 8 commits. Round 60's commits join them when they land, if each is SecurityAnalysis-only. Every other commit
+  stays out, including the merge `ce812d1c`, which belongs to the dell2 branch's history.
+- **The cut:** branch `cand/prod-dsgn-r58-60` from PROD `bf780f94`; cherry-pick the DSGN commits oldest first, with no other commit and
+  no merge commit. `2.0.0_SA_COO~D1` builds it.
+- **Proof on the candidate, before the pair:**
+  1. `git diff --stat bf780f94 <cand>` lists only files under `src/pages/SecurityAnalysis/`;
+  2. `git diff <cand> origin/DEV -- src/pages/SecurityAnalysis/` is EMPTY, so the page on PROD is byte-equal to the page on DEV;
+  3. tsc 0, eslint 0, the SecurityAnalysis tests and battery29 pass. A tsc failure means a DSGN commit depends on a dell2 change.
+     That is a STOP: name the import, and the promote waits.
+  4. One signed-in walk of the candidate against the live backends.
+- **Pair:** a CTO half (this seat) and a COO half (`2.0.0_SA_COO~D1`), bound to the candidate's hash. Rollback is PROD back to
+  `bf780f94`. No word from Andrew is owed: every changed page is internal (`/security-analysis`, requireInternal).
+- **Later DEV-to-PROD promotes** carry these same changes again from DEV. A merge then finds identical content and resolves clean; the
+  next pair reads that.

@@ -9,6 +9,13 @@ Macro enum (DATA): org/missions/MACROS.yaml.
   check              (default) tree <-> index <-> DIRECTIVES.yaml; every denominator printed;
                      exit 0 clean / 1 violation(s) / 2 error. NEVER writes.
   check --json       the same as machine-readable JSON (violations + denominators).
+  check --staged     read EVERY input (contract, tree rows, flat index, DIRECTIVES.yaml, MACROS.yaml, close
+                     artifacts, the value-enum sources, the close schema) from the GIT INDEX git resolves
+                     (honouring GIT_INDEX_FILE and GIT_DIR), never the working tree: the index blobs are
+                     materialised into a private temp directory and the same reader runs there.
+  check --act PATH   (repeatable; also --act-from-env VAR, newline-separated) scope the refusal to the act: a
+                     violation in a project the act does not touch prints `STANDING <CODE> <rule> <path> <detail>`
+                     and does not count toward the exit code. See ACT SCOPE below. Without --act: unchanged.
   derive             print the index entries the tree implies and the DIRECTIVES.yaml additions.
   derive --write     write/refresh GENERATED index entries ONLY (an entry carrying `home`). A
                      hand-written flat row is never overwritten (refusal R3). DIRECTIVES.yaml is
@@ -33,7 +40,10 @@ import argparse
 import ast
 import datetime as _dt
 import json
+import os
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -52,6 +62,9 @@ _DEFAULTS = {
     "macros": _WS / "org" / "missions" / "MACROS.yaml",
 }
 TOOL_NAME = ".tools/missions-tree-index.py"
+CONTRACT_REL = "org/standards/PROJECT_TREE.contract.json"
+DIRECTIVES_REL = "org/missions/DIRECTIVES.yaml"
+MACROS_REL = "org/missions/MACROS.yaml"
 
 
 def _resolve_enum(path: Path, symbol: str) -> tuple:
@@ -77,9 +90,12 @@ def _resolve_enum(path: Path, symbol: str) -> tuple:
 class Estate:
     """One estate = one contract + one tree root + one flat index + one DIRECTIVES + one MACROS."""
 
-    def __init__(self, contract: Path, root: Path, projects: Path, directives: Path, macros: Path):
+    def __init__(self, contract: Path, root: Path, projects: Path, directives: Path, macros: Path,
+                 ws: Path = None, index_only_scan: bool = True):
         if yaml is None:
             raise SystemExit("ERROR: PyYAML is not importable -- refusing to read DIRECTIVES.yaml/MACROS.yaml without it")
+        self.ws = Path(ws) if ws is not None else _WS  # where the enum sources and the close schema are read from
+        self.index_only_scan = index_only_scan  # False under --staged: every row is materialised already
         self.contract = json.loads(Path(contract).read_text(encoding="utf-8"))
         self.root = Path(root)
         self.projects = Path(projects)
@@ -103,7 +119,7 @@ class Estate:
         for field, spec in (self.contract.get("value_enums") or {}).items():
             if field.startswith("_") or not isinstance(spec, dict) or spec.get("no_enum"):
                 continue
-            src = _WS / spec["source"]
+            src = self.ws / spec["source"]
             self.enums[field] = _resolve_enum(src, spec["symbol"])
             self.enum_sources[field] = f"{spec['source']}:{spec['symbol']}"
             self.enum_norm[field] = spec.get("normalize", "exact")
@@ -188,7 +204,8 @@ class Estate:
                         except Exception as e:  # noqa: BLE001
                             problems.append(("ROW-FIELD", f"row parse error: {e}"))
                     found.append({"D": Dp.name, "M": Mp.name, "code": Pp.name, "folder": Pp, "row": row, "problems": problems})
-        found.extend(self._index_only_projects({(t["D"], t["M"], t["code"]) for t in found}))
+        if self.index_only_scan:
+            found.extend(self._index_only_projects({(t["D"], t["M"], t["code"]) for t in found}))
         return found, level_viol
 
     def _index_only_projects(self, seen):
@@ -318,7 +335,7 @@ class Estate:
                 r6_not_graded.append(t["code"])
             elif str(row.get("dep_stage")) == CLOSE_STAGE:
                 home = self.root / t["D"] / t["M"] / t["code"]
-                hdr, rep, gr, errs = load_close_artifacts(home, t["code"], _WS / CLOSE_SCHEMA_REL)
+                hdr, rep, gr, errs = load_close_artifacts(home, t["code"], self.ws / CLOSE_SCHEMA_REL)
                 for rid, msg in close_violations(t["code"], hdr, rep, gr, errs):
                     viol.append((rid, path, msg))
                     ok = False
@@ -414,10 +431,175 @@ class Estate:
         return planned, written, refused, additions, viol, denom
 
 
+# ---------- --staged: the index, materialised ----------
+class StagedReadError(Exception):
+    """The git index could not be read as a whole estate -- fail closed (rc 2), never a partial read."""
+
+
+def _git(args, repo, env, data=None):
+    """Run git. With GIT_DIR or GIT_INDEX_FILE in the env the caller's cwd is kept (a relative value is relative to
+    it); otherwise git runs in `repo`. Returns the CompletedProcess (bytes)."""
+    cwd = None if (env.get("GIT_DIR") or env.get("GIT_INDEX_FILE")) else str(repo)
+    try:
+        return subprocess.run(["git"] + list(args), cwd=cwd, env=env, input=data, capture_output=True, timeout=120)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        raise StagedReadError(f"git {' '.join(args[:2])} could not run: {e}")
+
+
+def _index_listing(repo, env, pathspecs):
+    """[(mode, oid, stage, path)] for the index entries under the pathspecs."""
+    r = _git(["ls-files", "-s", "-z", "--full-name", "--"] + [":(top)" + p for p in pathspecs], repo, env)
+    if r.returncode != 0:
+        raise StagedReadError("git ls-files failed rc=%s: %s" % (r.returncode, r.stderr.decode("utf-8", "replace").strip()[:300]))
+    out = []
+    for rec in filter(None, r.stdout.decode("utf-8", "replace").split("\0")):
+        meta, _, path = rec.partition("\t")
+        parts = meta.split()
+        if len(parts) != 3:
+            raise StagedReadError(f"unparseable ls-files record {rec[:120]!r}")
+        out.append((parts[0], parts[1], parts[2], path))
+    return out
+
+
+def _blobs(repo, env, oids):
+    """The bytes of each oid, in order, via ONE git cat-file --batch."""
+    if not oids:
+        return []
+    r = _git(["cat-file", "--batch"], repo, env, data=("\n".join(oids) + "\n").encode("ascii"))
+    if r.returncode != 0:
+        raise StagedReadError("git cat-file --batch failed rc=%s: %s" % (r.returncode, r.stderr.decode("utf-8", "replace").strip()[:300]))
+    buf, pos, out = r.stdout, 0, []
+    for oid in oids:
+        nl = buf.find(b"\n", pos)
+        hdr = buf[pos:nl].split() if nl >= 0 else []
+        if len(hdr) != 3 or hdr[1] != b"blob":
+            raise StagedReadError(f"blob {oid} not readable from the object store ({buf[pos:nl][:80]!r})")
+        size = int(hdr[2])
+        out.append(buf[nl + 1:nl + 1 + size])
+        pos = nl + 1 + size + 1
+    return out
+
+
+def materialise_index(repo, dest, env=None):
+    """Write the inputs `check` reads, FROM THE INDEX, under `dest` at their repo-relative paths. The working tree is
+    never read. Returns an Estate argument dict. Files written: the contract, the value-enum sources it names, the
+    close schema, DIRECTIVES.yaml, MACROS.yaml, every tree project.json, every <CODE>_PRD.md and COMPLETION_*.json
+    under a project, and every flat org/projects/*.json. A directory is made for every tracked path down to the
+    project level so ROW-MISSING and the R1 level-name checks see the folders the index implies."""
+    env = dict(os.environ if env is None else env)
+    dest = Path(dest)
+
+    def put(rel, data):
+        f = dest / rel
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_bytes(data)
+
+    def stage0(entries, what):
+        bad = [e[3] for e in entries if e[2] != "0"]
+        if bad:
+            raise StagedReadError(f"{what}: {len(bad)} unmerged index entr{'y' if len(bad) == 1 else 'ies'} (e.g. {bad[0]}) -- resolve the merge first")
+        return [e for e in entries if e[0] != "160000"]
+
+    ent = stage0(_index_listing(repo, env, [CONTRACT_REL]), "contract")
+    if len(ent) != 1:
+        raise StagedReadError(f"{CONTRACT_REL} is not in the git index")
+    contract_bytes = _blobs(repo, env, [ent[0][1]])[0]
+    put(CONTRACT_REL, contract_bytes)
+    contract = json.loads(contract_bytes.decode("utf-8"))
+    tree_rel, idx_rel = contract["root"], contract["index"]["root"]
+    row_file = contract["project_folder"]["row"]
+    extra = [CLOSE_SCHEMA_REL] + [spec["source"] for f, spec in (contract.get("value_enums") or {}).items()
+                                  if not f.startswith("_") and isinstance(spec, dict) and not spec.get("no_enum")]
+    entries = stage0(_index_listing(repo, env, [tree_rel, idx_rel] + extra), "tree/index/enum sources")
+    (dest / tree_rel).mkdir(parents=True, exist_ok=True)
+    (dest / idx_rel).mkdir(parents=True, exist_ok=True)
+    want, seen_extra, dirs = [], set(), set()
+    for _mode, oid, _stage, path in entries:
+        if path in extra:
+            want.append((oid, path))
+            seen_extra.add(path)
+        elif path.startswith(tree_rel + "/"):
+            parts = path[len(tree_rel) + 1:].split("/")
+            if len(parts) >= 2:
+                dirs.add(tuple(parts[:-1][:3]))
+            n = len(parts)
+            if (n == 1 and parts[0] in ("DIRECTIVES.yaml", "MACROS.yaml")) \
+                    or (n == 4 and parts[3] == row_file) \
+                    or (n == 5 and parts[3] == "prd" and parts[4].endswith("_PRD.md")) \
+                    or (n == 5 and parts[3] == "ledger" and parts[4].startswith("COMPLETION_") and parts[4].endswith(".json")):
+                want.append((oid, path))
+        elif path.startswith(idx_rel + "/") and path.endswith(".json") and "/" not in path[len(idx_rel) + 1:]:
+            want.append((oid, path))
+    for d in sorted(dirs):
+        (dest / tree_rel).joinpath(*d).mkdir(parents=True, exist_ok=True)
+    missing = [x for x in extra if x not in seen_extra]
+    if missing:
+        raise StagedReadError(f"not in the git index: {missing}")
+    for (_oid, path), data in zip(want, _blobs(repo, env, [w[0] for w in want])):
+        put(path, data)
+    return {"contract": dest / CONTRACT_REL, "root": dest / tree_rel, "projects": dest / idx_rel,
+            "directives": dest / DIRECTIVES_REL, "macros": dest / MACROS_REL, "ws": dest, "files": len(want) + 1}
+
+
+# ---------- ACT SCOPE ----------
+# A violation belongs to a project: the last segment of its tree home (org/missions/<D>/<M>/<CODE>), or the stem of its
+# flat file (org/projects/<CODE>.json). The act's projects are the <CODE>s of the act paths. A register/contract path in the
+# act puts EVERY project in-act. A violation not in-act is STANDING: printed, never counted, never refused.
+_ACT_TREE_RE = re.compile(r"^org/missions/D(?:0|[1-9][0-9]?)/[^/]+/([^/]+)(?:/|$)")
+_ACT_FLAT_RE = re.compile(r"^org/projects/([^/]+)\.json$")
+_ACT_ALL = (DIRECTIVES_REL, MACROS_REL, CONTRACT_REL)
+
+
+def _norm_act(paths):
+    out = set()
+    for p in paths:
+        p = (p or "").strip().replace("\\", "/")
+        while p.startswith("./"):
+            p = p[2:]
+        if p:
+            out.add(p)
+    return sorted(out)
+
+
+def act_projects(paths):
+    """(codes, all_in_act) for the normalised act paths."""
+    codes, all_in = set(), False
+    for p in paths:
+        if p in _ACT_ALL:
+            all_in = True
+        m = _ACT_TREE_RE.match(p) or _ACT_FLAT_RE.match(p)
+        if m:
+            codes.add(m.group(1))
+    return codes, all_in
+
+
+def violation_code(path):
+    name = str(path).rstrip("/").rsplit("/", 1)[-1]
+    return name[:-5] if name.endswith(".json") else name
+
+
+def split_by_act(viol, act_paths):
+    """(in_act, standing, codes, all_in_act): violations partitioned by whether the act touches their project. A
+    violation on a folder (an R1 level-name violation) is also in-act when an act path lies under that folder."""
+    act = _norm_act(act_paths)
+    codes, all_in = act_projects(act)
+    in_act, standing = [], []
+    for v in viol:
+        vpath = str(v[1])
+        hit = all_in or violation_code(vpath) in codes or any(a == vpath or a.startswith(vpath + "/") for a in act)
+        (in_act if hit else standing).append(v)
+    return in_act, standing, sorted(codes), all_in
+
+
 # ---------- CLI ----------
-def _print_check(viol, denom, as_json=False):
+def _print_check(viol, denom, as_json=False, scope=None):
+    """scope = (standing, codes, all_in_act) under --act, else None. `viol` is then the in-act list."""
     if as_json:
-        print(json.dumps({"violations": [{"id": a, "path": b, "detail": c} for a, b, c in viol], "denominators": denom}, indent=1))
+        doc = {"violations": [{"id": a, "path": b, "detail": c} for a, b, c in viol], "denominators": denom}
+        if scope is not None:
+            doc["standing"] = [{"id": a, "path": b, "detail": c, "project": violation_code(b)} for a, b, c in scope[0]]
+            doc["act"] = {"projects": scope[1], "all_projects_in_act": scope[2], "in_act": len(viol), "standing": len(scope[0])}
+        print(json.dumps(doc, indent=1))
         return
     print("missions-tree-index check: tree={tree_projects} project(s) under {tree_directive_folders} directive folder(s), {tree_valid} valid"
           " | flat index rows={flat_rows} (generated={flat_generated}, hand-written={flat_hand_written}, parse-errors={flat_parse_errors})"
@@ -428,8 +610,17 @@ def _print_check(viol, denom, as_json=False):
     if denom.get("r6_not_graded_index_only"):
         skipped = denom["r6_not_graded_index_only"]
         print(f"  R6 NOT GRADED for {len(skipped)} CLOSED project(s) outside this sparse cone (read from the git index): {', '.join(skipped)}")
+    if scope is not None:
+        standing, codes, all_in = scope
+        print(f"  ACT SCOPE: in-act={len(viol)} STANDING={len(standing)} (act projects: "
+              f"{'ALL (a register/contract path is in the act)' if all_in else (', '.join(codes) or 'none')})")
+        for a, b, c in standing:
+            print(f"STANDING {violation_code(b)} {a} {b} {c}")
     for a, b, c in viol:
         print(f"  [{a}] {b}: {c}")
+    if scope is not None:
+        print(f"RESULT: {len(viol)} violation(s) in the act's projects, {len(scope[0])} STANDING  (denominators on the first line)")
+        return
     print(f"RESULT: {len(viol)} violation(s)  (denominators on the first line; 0 tree projects is the s.8 baseline, not a blank read)")
 
 
@@ -437,10 +628,45 @@ def _estate(args) -> Estate:
     return Estate(args.contract, args.root, args.projects, args.directives, args.macros)
 
 
+def _act_paths(args):
+    """The act's paths from --act and --act-from-env, or None when neither is given. An unset/empty env var is an
+    ERROR (rc 2): an empty act would read every violation as STANDING and pass them all."""
+    if not args.act and not args.act_from_env:
+        return None
+    paths = list(args.act or [])
+    for var in args.act_from_env or []:
+        val = os.environ.get(var, "")
+        if not val.strip():
+            raise StagedReadError(f"--act-from-env {var}: variable unset or empty -- refusing an empty act (it would pass every violation as STANDING)")
+        paths.extend(val.replace("\r", "").split("\n"))
+    paths = _norm_act(paths)
+    if not paths:
+        raise StagedReadError("--act given but no usable path -- refusing an empty act")
+    return paths
+
+
 def cmd_check(args) -> int:
-    viol, denom, _, _ = _estate(args).check()
-    _print_check(viol, denom, args.json)
-    return 1 if viol else 0
+    act = _act_paths(args)
+    tmp = None
+    try:
+        if args.staged:
+            tmp = tempfile.mkdtemp(prefix="mti-staged-")
+            m = materialise_index(_WS, tmp)
+            est = Estate(m["contract"], m["root"], m["projects"], m["directives"], m["macros"], ws=m["ws"], index_only_scan=False)
+        else:
+            est = _estate(args)
+        viol, denom, _, _ = est.check()
+    finally:
+        if tmp:
+            shutil.rmtree(tmp, ignore_errors=True)
+    if args.staged:
+        denom["read_from"] = "git index (--staged)"
+    if act is None:
+        _print_check(viol, denom, args.json)
+        return 1 if viol else 0
+    in_act, standing, codes, all_in = split_by_act(viol, act)
+    _print_check(in_act, denom, args.json, scope=(standing, codes, all_in))
+    return 1 if in_act else 0
 
 
 def cmd_derive(args) -> int:
@@ -803,6 +1029,98 @@ def self_test() -> int:
         viol, _, _, _ = est.check()
         chk("fabric 'Laptop' passes like the gate (lower-normalized) -> 0 violations", not viol, str(ids(viol)))
 
+
+        # 18. --act / STANDING: the pure partition (no git, no files)
+        v_own = ("INDEX-DRIFT", "org/projects/AAA_ONE.json", "d1")
+        v_by = ("INDEX-DRIFT", "org/projects/BBB_TWO.json", "d2")
+        v_home = ("R5", "org/missions/D8/ETFS/BBB_TWO", "d3")
+        v_fold = ("R1", "org/missions/D8/etfs", "d4")
+        inn, stn, codes, all_in = split_by_act([v_own, v_by, v_home],
+                                               ["org/missions/D8/ETFS/AAA_ONE/task-orders/x.md", "./org/projects/AAA_ONE.json"])
+        chk("--act pure: a violation in the act's project is in-act, the bystander's two are STANDING",
+            inn == [v_own] and stn == [v_by, v_home] and codes == ["AAA_ONE"] and not all_in, f"{inn} {stn} {codes}")
+        inn, stn, _c, all_in = split_by_act([v_own, v_by], ["org/missions/DIRECTIVES.yaml"])
+        chk("--act pure: a staged DIRECTIVES.yaml puts every project in-act (STANDING empty)", inn == [v_own, v_by] and stn == [] and all_in, f"{inn} {stn}")
+        inn, stn, _c, _a = split_by_act([v_fold], ["org/missions/D8/etfs/x.md"])
+        chk("--act pure: a folder-level R1 violation is in-act when an act path lies under the folder", inn == [v_fold] and stn == [], f"{inn} {stn}")
+        chk("--act pure: STANDING project code is the home's last segment or the flat file's stem",
+            violation_code(v_home[1]) == "BBB_TWO" and violation_code(v_by[1]) == "BBB_TWO", "")
+
+        # 19. --staged on a scratch GIT repo: two tree projects, one the act's, one the bystander's
+        def git_in(repo, args, env=None, data=None):
+            e = {k: v for k, v in os.environ.items() if k not in ("GIT_INDEX_FILE", "GIT_DIR", "GIT_WORK_TREE")}
+            e.update(env or {})
+            return subprocess.run(["git", "-C", str(repo)] + args, env=e, input=data, capture_output=True, text=True, timeout=60)
+
+        def scratch_repo(name):
+            e_ = fresh(name)
+            top = e_.root.parent.parent
+            (top / "org" / "missions" / "DIRECTIVES.yaml").write_text(
+                "version: 1\ndirectives:\n  D8:\n    members:\n      projects: [ETFS_GUARDRAIL, ETFS_SECOND, MDPF_FLATONE]\n  D0:\n    members:\n      projects: []\n",
+                encoding="utf-8")
+            plant(e_, "D8", "ETFS", "ETFS_GUARDRAIL")
+            plant(e_, "D8", "ETFS", "ETFS_SECOND")
+            e_.derive(write=True)
+            for rel in (CONTRACT_REL, CLOSE_SCHEMA_REL, ".tools/to-pipeline-gate.py"):
+                (top / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(_WS / rel, top / rel)
+            git_in(top, ["init", "-q"])
+            git_in(top, ["add", "-A"])
+            return e_, top
+
+        def cli(top, argv, env=None):
+            e = {k: v for k, v in os.environ.items() if k not in ("GIT_INDEX_FILE", "GIT_DIR", "GIT_WORK_TREE")}
+            e["GIT_DIR"] = str(top / ".git")
+            e.update(env or {})
+            r = subprocess.run([sys.executable, str(Path(__file__).resolve()), "check"] + argv, cwd=str(td), env=e,
+                               capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120)
+            return r.returncode, (r.stdout or "") + (r.stderr or "")
+
+        e_, top = scratch_repo("t18")
+        rc0, out0 = cli(top, ["--staged"])
+        chk("--staged: a clean index reads 0 violations on the scratch repo (GIT_DIR honoured)", rc0 == 0 and "RESULT: 0 violation(s)" in out0, out0[-200:])
+        second = top / "org" / "missions" / "D8" / "ETFS" / "ETFS_SECOND" / "project.json"
+        orig = second.read_text(encoding="utf-8")
+        drifted = json.loads(orig)
+        drifted["dep_stage"] = "EXECUTING"
+        second.write_text(json.dumps(drifted), encoding="utf-8")
+        git_in(top, ["add", "org/missions/D8/ETFS/ETFS_SECOND/project.json"])
+        second.write_text(orig, encoding="utf-8")  # the working tree is clean again; ONLY the index carries the drift
+        wt = Estate(top / CONTRACT_REL, top / "org" / "missions", top / "org" / "projects", top / DIRECTIVES_REL, top / MACROS_REL)
+        wv, _d, _v, _x = wt.check()
+        chk("--staged control: the working tree alone reads the drifted project as CLEAN (a working-tree read sees nothing)", not wv, str(ids(wv)))
+        rc1, out1 = cli(top, ["--staged"])
+        chk("--staged reads the index: the staged-only drift is seen -> exactly one INDEX-DRIFT, rc 1",
+            rc1 == 1 and "[INDEX-DRIFT] org/projects/ETFS_SECOND.json" in out1 and "RESULT: 1 violation(s)" in out1, out1[-300:])
+        own = "org/missions/D8/ETFS/ETFS_SECOND/project.json"
+        byst = "org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json"
+        rc2, out2 = cli(top, ["--staged", "--act", byst])
+        stand = [ln for ln in out2.splitlines() if ln.startswith("STANDING ")]
+        chk("--staged --act <bystander>: rc 0 and one column-0 STANDING ETFS_SECOND line naming rule, path and detail",
+            rc2 == 0 and len(stand) == 1 and stand[0].startswith("STANDING ETFS_SECOND INDEX-DRIFT org/projects/ETFS_SECOND.json dep_stage:"), f"rc={rc2} {stand}")
+        chk("--staged --act prints the denominator line with in-act and STANDING counts", "ACT SCOPE: in-act=0 STANDING=1" in out2, out2[-300:])
+        rc3, out3 = cli(top, ["--staged", "--act", own])
+        chk("--staged --act <own project> is refused (the difference control): rc 1, no STANDING line", rc3 == 1 and not any(ln.startswith("STANDING ") for ln in out3.splitlines()) and "ACT SCOPE: in-act=1 STANDING=0" in out3, out3[-300:])
+        rc4, out4 = cli(top, ["--staged", "--act-from-env", "MTI_ACT"], {"MTI_ACT": byst + "\r\n" + "README.md\n"})
+        chk("--staged --act-from-env VAR: newline-separated paths read from the variable (rc 0, STANDING)", rc4 == 0 and "STANDING ETFS_SECOND" in out4, f"rc={rc4} {out4[-200:]}")
+        rc5, out5 = cli(top, ["--staged", "--act-from-env", "MTI_ACT_UNSET"])
+        chk("--act-from-env with an unset variable is rc 2, never an empty act that passes everything", rc5 == 2 and "unset or empty" in out5, f"rc={rc5} {out5[-200:]}")
+        rc6, out6 = cli(top, ["--staged", "--act", "org/missions/DIRECTIVES.yaml"])
+        chk("--staged --act org/missions/DIRECTIVES.yaml puts every project in-act: rc 1, STANDING 0", rc6 == 1 and "ACT SCOPE: in-act=1 STANDING=0" in out6 and "ALL" in out6, out6[-300:])
+        # GIT_INDEX_FILE is honoured: an alternate index carrying a different drift
+        e2, top2 = scratch_repo("t19")
+        alt = Path(td) / "alt-index"
+        shutil.copyfile(top2 / ".git" / "index", alt)
+        g = top2 / "org" / "missions" / "D8" / "ETFS" / "ETFS_GUARDRAIL" / "project.json"
+        gd = json.loads(g.read_text(encoding="utf-8"))
+        gd["dep_stage"] = "EXECUTING"
+        blob = git_in(top2, ["hash-object", "-w", "--stdin"], data=json.dumps(gd)).stdout.strip()
+        git_in(top2, ["update-index", "--cacheinfo", f"100644,{blob},org/missions/D8/ETFS/ETFS_GUARDRAIL/project.json"], env={"GIT_INDEX_FILE": str(alt)})
+        rcA, outA = cli(top2, ["--staged"])
+        rcB, outB = cli(top2, ["--staged"], {"GIT_INDEX_FILE": str(alt)})
+        chk("--staged honours GIT_INDEX_FILE: the real index is clean (rc 0), the alternate index is drifted (rc 1)",
+            rcA == 0 and rcB == 1 and "[INDEX-DRIFT] org/projects/ETFS_GUARDRAIL.json" in outB, f"{rcA} {rcB} {outB[-200:]}")
+
     n_ok = sum(1 for _, ok, _ in results if ok)
     for name, ok, detail in results:
         print(f"  {'PASS' if ok else 'FAIL'}  {name}" + ("" if ok else f"  -- {detail}"))
@@ -816,14 +1134,20 @@ def main(argv=None) -> int:
     ap.add_argument("--write", action="store_true", help="derive: write generated index entries")
     ap.add_argument("--json", action="store_true", help="check: machine-readable output")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--staged", action="store_true", help="check: read every input from the git index, not the working tree")
+    ap.add_argument("--act", action="append", default=[], metavar="PATH", help="check: a path the act touches (repeatable); violations outside its projects print STANDING and do not refuse")
+    ap.add_argument("--act-from-env", action="append", default=[], metavar="VAR", help="check: env var holding newline-separated act paths")
     for k, v in _DEFAULTS.items():
         ap.add_argument(f"--{k}", default=str(v))
     args = ap.parse_args(argv)
     if args.self_test:
         return self_test()
+    if args.staged and args.mode != "check":
+        print("ERROR: --staged applies to `check` only", file=sys.stderr)
+        return 2
     try:
         return cmd_check(args) if args.mode == "check" else cmd_derive(args)
-    except FileNotFoundError as e:
+    except (FileNotFoundError, StagedReadError) as e:
         print(f"ERROR: {e}", file=sys.stderr)
         return 2
 

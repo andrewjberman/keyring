@@ -42,3 +42,15 @@ The CVO re-ran SWITCH-ON 11/11 and OVERRIDE-ARMS 12/12; `REMEDIATION_v8` (3 rows
    `hole` before and after.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~08:0xZ) -- round 10's list, final (`2.0.0_SA_COO~B1` msg 2070; laptop XA-3003 ruled (a), relayed msg 2046)
+
+The switch is ON (@4d2bfc6dfd). The FWD-6 live read @8bff90628c refused an unplaceable name with its owed text, passed a placeable one,
+and read census hole=0 over 78 mapped roots. Round 10, ONE issuance:
+1. The audit row is committed WITH the commit it permits (the laptop's XA-3003 term; it replaces this file's R2 item 1).
+2. The override is bound to the commit message (the laptop's term; it replaces R2 item 2). Negative arm: a forged or pre-written row is
+   refused.
+3. **YES, a third cell:** apply the nine held entries the laptop `4.0.0_SA_CRO` ruled (@acbc0d9aa6, msg 2067). Round 8 held them only
+   until those owners and tokens were ruled, and they now are. It serves FWD-2 and FWD-7, reporting `mapped` and `hole` before and after.
+
+The round-9 E3 holes item is MET (hole=0) and needs no cell.

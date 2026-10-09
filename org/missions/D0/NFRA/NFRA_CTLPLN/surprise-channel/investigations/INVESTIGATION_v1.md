@@ -6179,3 +6179,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "box-list-census.py run on the real tree 2026-10-09 lists .tools/xadj.py:56 -- PRIMARY, BACKUP = \"laptop\", \"sitez\" fixes the cross-adjudication pair as two box names. FWD-2 ('nobody edits a script that lists boxes by hand') is not met for this file until a later order grants it and replaces the list with a read of lib/devices.py (placement_values, names, resolve, seat_serial)."
 }
 ```
+
+## NFRA_CTLPLN-Z-S5 -- round-close-check.py refuses NFRA_OPALAI round 2 on two record shapes it cannot read: a bare to_id in every proof (11 of 11 PROOF-BAD) and a CVO grade committed as a CVO deliverable rather than an adjudication row (J1 UNGRADED).
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~AI",
+  "surfaced_at": "2026-10-09T08:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-Z-S5",
+  "one_line": "round-close-check.py refuses NFRA_OPALAI round 2 on two record shapes it cannot read: a bare to_id in every proof (11 of 11 PROOF-BAD) and a CVO grade committed as a CVO deliverable rather than an adjudication row (J1 UNGRADED).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/round-close-check.py --project NFRA_OPALAI --round 2 at HEAD e838bba689+, 2026-10-09 ~08:1xZ: orders=14, proof_ok=0 proof_bad=11, judgment=1 graded=0, verdict=REFUSED",
+      ".tools/round-close-check.py:159 (order id = <to_id> tag or filename stem) and :190 (strict != against the proof's to_id)",
+      ".tools/proof-of-spec-check.py:689-693 _canonical_to_id: 'The bare TO id ... the leading whitespace-delimited token'",
+      "c180d84b36 (3.0.0_SA_CVO~O, 2026-09-28): judgment(NFRA_OPALAI OA-r-1 J1): PASS, file cvoO_J1_NFRA_OPALAI_OA-r-1_20260929.md; ADJUDICATION_v4.Z.md:22 cites it",
+      ".tools/round-close-check.py:242-265 grade_criterion reads only adjudication and investigation rows"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-8: round-close-check counts a round finished when every order's proof is valid and every judgment criterion carries a non-doer CVO grade; its order-id grammar agrees with proof-of-spec-check, which the proofs were written against.",
+  "world_is": "For NFRA_OPALAI's orders (no <to_id> tag) the id falls back to the filename stem with its slug, e.g. NFRA_OPALAI.TO-OA-e-1.asker-scoping-repair, while every proof carries the bare id NFRA_OPALAI.TO-OA-e-1 that proof-of-spec-check treats as canonical: one signature, 11 of 11. OA-r-1 J1 was graded PASS by a non-doer CVO @c180d84b36 in a deliverable the checker does not read. Both refusals are instrument-shape, not round defects. Not blocking today: 3 orders of the round are still open on the item-0 close run. A fix in the checker (compare via _canonical_to_id; accept a CVO-authored judgment commit or a citing adjudication row) is the instrument owner's; the COO edits neither the checker nor the 11 terminal proofs."
+}
+```

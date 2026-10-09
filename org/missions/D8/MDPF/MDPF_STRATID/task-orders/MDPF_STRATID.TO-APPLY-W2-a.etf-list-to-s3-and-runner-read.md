@@ -47,6 +47,10 @@ are confirmed. Until GO, this order is staged and you take no act on it. The GO 
 (4) IAM: applied through this lane; every role or policy change reported after the fact to `0.0.0_AB_MSTR~DELL1` by name and grant;
     a role another box's pipeline assumes goes to the laptop BEFORE the act.
 
+(5) Naming-place enforcement is live on dell1 (`org/mcp/naming-place.enforce`, msg 2084): a NEW infra name the canon cannot place
+    blocks commit and apply. If step 4 needs a new policy or statement name, take it from `lib/opal_naming.py name()`; a refusal
+    means a missing registry row (`infra/logic/registry/`), never a hand-typed name or an override.
+
 ## ACCEPTANCE
 
 <criterion id="APPLY-W2-a-AC1" cell_refs="ST-w-1"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_1_loaders.py</invocation><expect>W21-LOADERS-OK</expect></criterion>

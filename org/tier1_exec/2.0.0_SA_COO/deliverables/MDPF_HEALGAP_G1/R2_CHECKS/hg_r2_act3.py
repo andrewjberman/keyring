@@ -11,7 +11,8 @@ R2-4, half NEVER_WIDEN_HALF_REQUEST_HEALGAP_R2_ACT3_INDUCED_PARTIAL_AND_REPAIR_2
                          Last line: DIFF-NONE or DIFF-FOUND n=<count> (ETag changes are expected when a re-land
                          rewrites the same day's state; the half asks for any difference beyond LastModified to be reported).
   --repaired DATE        FWD-3: meta/DATE-result.json verdict COMPLETE, all three feeds arrived; the stamp exists and names all
-                         three feeds; prints rebalancer_accounts healed_at (null is expected live: R2-1).
+                         three feeds; rebalancer_accounts healed_at is non-null (R2-1 live since 2026-10-09; C5b of
+                         ADHOC.healgap-r2-1).
                          Last line: REPAIRED-OK or REPAIRED-BAD <reason>.
   --restored             The daily rule's single target input reads {"mode":"pull"}.
                          Last line: RESTORED-OK or RESTORED-BAD <input>.
@@ -112,6 +113,11 @@ def repaired(date: str) -> int:
     print(f"result verdict={res.get('verdict')} feeds={json.dumps(st)} accounts.healed_at={healed}")
     if res.get("verdict") != "COMPLETE" or any(v != "arrived" for v in st.values()):
         print("REPAIRED-BAD result is not COMPLETE with every feed arrived")
+        return 1
+    if healed is None:
+        # R2-1 landed 2026-10-09 07:5xZ (ReadOwnRunResult): the repair run must now carry healed_at. This is the EXERCISED
+        # allow arm of ADHOC.healgap-r2-1 criterion C5b; a null here means the grant did not reach the runner.
+        print("REPAIRED-BAD rebalancer_accounts.healed_at is null (R2-1 GetObject not exercised)")
         return 1
     types = (stamp or {}).get("types") or {}
     if set(types) != set(FEEDS):

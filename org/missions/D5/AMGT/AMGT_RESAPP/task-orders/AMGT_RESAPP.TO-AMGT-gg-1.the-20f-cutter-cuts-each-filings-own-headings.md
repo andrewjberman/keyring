@@ -98,3 +98,4 @@ The `<status>` flip is the issuer's.
 <fabric>dell1</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- issuer close 2026-10-09T08:1xZ: merged @9f252e010a (safe-merge of wk-AMGT_RESAPP-323 @780001dc22, 4 paths) as a SITE-Z DEPLOY under COO @7b84cfc5a9 + 1.0.0_SA_CTO~Z @83b31c3fa9 (signed for that head; its writer-census correction -- section_census, translate, proxy_officers also import document, all hand-run -- leaves DELTA = 0); NEVER-2 entry amgt-resapp-r82-gg1-sitez-cutter-merge CLOSED 2 of 2. On the merged tree: filings suite 233 passed (stub fitz, py3.12); r82_cut AC1 YES 15 of 15; AC2 YES. Row D1-W323-S1 (PBR wrong scope) is disarmed by gg-2 AMENDMENT 1 and carried to round 83.</status>
