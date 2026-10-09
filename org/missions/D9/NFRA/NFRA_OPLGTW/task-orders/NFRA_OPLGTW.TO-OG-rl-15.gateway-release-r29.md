@@ -84,6 +84,11 @@ First bring your branch level with box/sitez by a plain merge of the commit the 
   if your ANNOUNCE shows, from the code, that the C2 data grant (not the identity allowlist alone) gates each fee read for a
   principal with no Black Diamond grant; if it does not, leave that row out and say so in the ANNOUNCE. AC2's body gains
   `bloomberg_tools_signed` (4 or 5, as the halves sign) beside `bloomberg_tools_allowed`, and they must be equal.
+- **AMENDMENT A4 (issuer, 2026-10-09 ~03:2xZ; `1.0.0_SA_CTO~O` msg 32319).** Andrew-direct ~03:2xZ, verbatim "yes, include
+  blackdiamond_list_fees for the bloomberg account too" (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_032xZ_BLOOMBERG_ACCOUNT_GETS_BLACKDIAMOND_LIST_FEES.md`).
+  A3's "only if C2 gates it" condition is SUPERSEDED: all FIVE rows ship; the fifth row (`blackdiamond_list_fees`) cites
+  this record, the other four cite @0035550443. `bloomberg_tools_signed` = 5, and the read-back must show all five allowed.
 - **Row Z-S67 and R49.** Name the re-authentication this release causes per R49, and read 0 revoked refresh families
   for the concierge since the deploy (AC2's body). Z-S67 disarms on that read.
 - **Timing (R55, R49).** No deploy between 23:00Z and 11:00Z. Phase A may run now.
@@ -182,6 +187,8 @@ Report once per phase.
   `bloomberg_tools_allowed == 5` (rl15_attest.py, same commit). Graded by no gate limb as a modification.
 - A3 (2026-10-09, CTO msg 32278): four concierge rows certain; blackdiamond_list_fees only if C2 gates each fee read;
   attest rule now bloomberg_tools_allowed == bloomberg_tools_signed in {4, 5}. Graded by no gate limb as a modification.
+- A4 (2026-10-09, CTO msg 32319, Andrew ~03:2xZ): all five concierge rows ship; A3's C2 condition superseded.
+  Graded by no gate limb as a modification.
 - Pre-cut: rl15.AC1 base FAIL as expected (deployed = live r28, floor at 52 keys reads no); positive control: the same
   floor scripts against live values read arms 1, 2, 4 OK and arm 3 (host contract vs HEAD) differing only because HEAD
   carries OG-cm-1's contract 1.4; ht.AC2 at 51 PASS 4 of 4. rl15.AC2, rl15.AC3 base FAIL as expected (records absent).
