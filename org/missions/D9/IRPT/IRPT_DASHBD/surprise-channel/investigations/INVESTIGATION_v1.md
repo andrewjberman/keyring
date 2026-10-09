@@ -3539,3 +3539,55 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W48-S1 -- No Commonwealth-reported window overlaps the Black Diamond source's value coverage for the same account, so Co
+
+```json
+{
+  "id": "IRPT_DASHBD-W48-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~48",
+  "surfaced_at": "2026-10-09T04:05:00Z",
+  "one_line": "No Commonwealth-reported window overlaps the Black Diamond source's value coverage for the same account, so Cottonwood's tie-out is 0 of 61 account-windows, every miss structural and none an arithmetic disagreement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-71: a sample window over at least 10 accounts is compounded from the adapter's total_return_daily and compared with the reported return for the same account and window at 0.35 pp (PRD v0.8 FWD-11, C-TIEOUT).",
+  "world_is": "MEASURED 2026-10-09 ~04:0xZ by reading S3 only. The reported source EXISTS on S3: the Commonwealth delivery dated 2026-06-23, silver performance table (Month, Year, InceptionToDate; TWR, PerfNum in percent, 1,519 accounts) and its crosswalk (471 of 1,533 accounts MATCHED to a current custody account by rule R2-in-kind-transfer; 1,062 NOT_MATCHED). The source the adapter reads (Black Diamond silver fact_holdings) holds value from partition 2026-06-09 only (89 partitions to 2026-10-07; 980 accounts); fact_unrealized reaches back to 2026-04-22 but holds lot value without cash, so it is not a whole-account value. The Commonwealth delivery's last window ends 2026-06-23 and the only windows ending on or after 2026-06-01 are month-to-date rows starting 2026-06-01 (190 rows, 61 of them for MATCHED accounts). Every one of the 61 starts before the source can supply a base value: 28 end before 2026-06-09 (no source value in the window), 33 end 2026-06-09 or later but their base day precedes the first partition (20 of the 61 windows hold source rows on some of their trading days, but a part-window figure is not the reported window). within = 0, denominator = 61, accounts = 61; the 61 misses carry the classes WINDOW_ENDS_BEFORE_SOURCE_COVERAGE (28) and WINDOW_STARTS_BEFORE_SOURCE_BASE (33). The 0-of-61 therefore says nothing for or against the adapter's arithmetic; Closing this needs either Black Diamond history before 2026-06-09 that includes cash, or a Commonwealth window that starts after 2026-06-09, and the delivery holds neither.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~48/COT_RETURNS_TIEOUT.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~48/tieout.py",
+      "infra/logic/registry/scopes.json (key z09, class MASTER)"
+    ]
+  },
+  "notes": "Ask for the issuer: whether FWD-11's tie-out is to be re-cut against a window that exists once Commonwealth is the registered reported source or a later Black Diamond-era comparison source is named. The record does not choose.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W48-S2 -- Two inputs the Cottonwood adapter needs are absent from its source: a cash balance held outside the holdings t
+
+```json
+{
+  "id": "IRPT_DASHBD-W48-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~48",
+  "surfaced_at": "2026-10-09T04:06:00Z",
+  "one_line": "Two inputs the Cottonwood adapter needs are absent from its source: a cash balance held outside the holdings table, and the net-or-gross basis of the reported figure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-71 and C-VALUE: V_t is the custodian's WHOLE-ACCOUNT value, cash included; the tie-out compares like with like.",
+  "world_is": "MEASURED by reading S3. (1) Black Diamond silver fact_holdings carries Market Value, Units, Accrual, Unaccrued Market Value and a Cash Equivalent flag per position, and NO account-level cash or equity column; the adapter sums Market Value (cash-equivalent positions included), which is the whole-account value only if the custodian keeps no cash outside positions. Unmeasured here. (2) The Commonwealth performance rows carry NetGross = True on all 80,709 Month rows, with no key in the landed table saying whether True means net of fees; the adapter is GROSS of fees (C-FEERAIL), so a fully overlapping window would still need that basis named before a difference could be classed as fee-driven. Also: the adapter's holdings_price_return guard is not reached offline (guard_state GUARD_NOT_REACHED on every row) and large_flow_share is a held 0.25, not the producer's measured p99.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~48/adapter_source.json",
+      "commonwealth silver performance schema (NetGross: bool)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
