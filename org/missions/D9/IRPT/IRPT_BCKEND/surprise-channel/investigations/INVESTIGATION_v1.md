@@ -23895,3 +23895,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both steps are environment-sensitive without an error. A bare git apply on this box rewrites the member with CRLF line endings (a different file from the one ce6e2a218e committed); the default python (3.14, zlib-ng) writes a valid but different gzip stream than the live producer, so a sha256 built there would not be the one an applier on another interpreter gets. The packet pins both: the patch is applied with autocrlf/eol overridden and checked against blob e39636c5a8, the packer is python 3.12 and its control reproduces the live bytes, and the applier's step 3 is a digest gate whose miss is a STOP. Nothing is blocked; filed so a later applier who rebuilds with another interpreter reads the cause of a digest miss here."
 }
 ```
+
+## IRPT_BCKEND-D2-S41 -- IB-pr-397's signed export-root plan declares the SAME CloudWatch log group twice, so the apply cannot succeed; STOPPED at the plan with nothing applied
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S41",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~IB2",
+  "surfaced_at": "2026-10-09T10:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "one_line": "Two of the six signed adds declare /aws/lambda/irpt-commentary-composition-read-lambda, the group does not exist yet, and no other investor-reporting root declares its own -- so the apply would create one and fail the other half-landed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "plan of infra/aws/terraform/investor-reporting/export at the release pin 9c995243f7: 'Plan: 6 to add, 0 to change, 0 to destroy' -- no change and no destroy, so nothing of another release rides along",
+      "TWO of the six adds declare the same log group: aws_cloudwatch_log_group.commentary_composition_read (export/commentary_composition.tf:87, local.ccr_log_group) and module.irpt_commentary_composition_read.aws_cloudwatch_log_group.lambda (modules/yang-lambda/main.tf:76-77, /aws/lambda/${var.function_name})",
+      "both '+ name = \"/aws/lambda/irpt-commentary-composition-read-lambda\"' lines are character-identical, at plan lines 49 and 267; a sort -u over the plan collapses them and the plan then reads as a clean six-add set -- that dedupe is how this hides",
+      "the group does NOT exist live: logs describe-log-groups --log-group-name-prefix /aws/lambda/irpt-commentary-composition-read-lambda returns nothing, so neither resource can adopt an existing group and the second create must fail ResourceAlreadyExistsException",
+      "PATTERN CONTROL, denominator printed: all 8 existing investor-reporting Lambda roots (reporting-read, directory, export, performance, ops, ycharts, holdings, narrative) declare ZERO own log-group resources and let the module own the group; commentary_composition.tf is the only file that adds a second",
+      "yang-lambda exposes no switch to suppress its own group: log_retention_days is the only related variable and there is no create_log_group",
+      "NOT the build: the artifact is sound. Built sha256 equals the signed ZZmWOFSA/GjO0d/cKHSm9G5+xDc5sNfEHOpbmfIabQ0= on two independent builds under AMENDMENT 2's scoped BAU_PARITY_SKIP=1; symbol_closure on the built zip reads modules=7 pairs=28 missing=0 PASS with a discriminating control; the 8 replay arms match the packet arm for arm with 3 negative controls",
+      "state: NOTHING APPLIED. The function reads ResourceNotFoundException live and no terraform apply was invoked. The only world change is leg L2's first-mint S3 object version WJUEl6GlBO0afWMbQ_73o85gemQfiAqs, inert while no function references it. The ledger 20261009T0959Z_irpt-commentary-composition-reader-391-20261009 has L1 and L2 closed with proof and L3/L4/tf-lambda OPEN, so it stays RED by design; `hold` was attempted and correctly REFUSED because a half-landed deploy cannot be HELD"
+    ]
+  },
+  "spec_asserts": "IB-pr-397 step 4 and CTO half condition 1: apply commentary_composition.tf through safe-apply; the plan reads ONLY the listed adds (the function, its role and read-only policy, the invoke policy); names are name() output; anything else is a STOP. Refusal clause: STOP and apply nothing more on a plan touching anything else or a failed read-back.",
+  "world_is": "The plan touches nothing outside the signed set -- the defect is INSIDE it. Two of its own adds claim one log-group name, so the set is not applicable as signed: whichever resource Terraform creates first, the other fails and the signed set lands in part. The applier therefore stopped at the plan, before anything irreversible, rather than discovering it mid-apply with resources stranded. ONE EDIT by the owner clears it and it is not the applier's to make: drop aws_cloudwatch_log_group.commentary_composition_read from commentary_composition.tf and let the yang-lambda module own the group as the other eight roots do -- the role policy already grants on ${local.ccr_log_group}:* and the module's group satisfies that string unchanged, so no IAM edit rides along -- or re-sign the export-root plan against whatever shape the CTO prefers. Until then IB-pr-397 cannot complete; IB-pr-404 is sequenced after it and carries a 14:15Z fire bound, so this ruling also gates that order's start.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
