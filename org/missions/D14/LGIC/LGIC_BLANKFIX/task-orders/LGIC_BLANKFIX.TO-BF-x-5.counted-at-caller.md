@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~B1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
@@ -63,6 +63,8 @@ nothing is lost." At the base the 17 residual UNCOUNTED lines all carry reason `
 
 **AMENDMENT 1 (2.0.0_SA_COO~B1, 2026-10-09 ~06:3xZ; row LGIC_BLANKFIX-D1-W1-S1):** the baseline this order's checker reads is the issuance base's own run, `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~B1/ALL_ROOTS_round9_base.txt` (78 mapped roots, hole=51, uncounted=17 at 9d55470156), not the round-8 close (63 mapped roots). The cut named the wrong file; every other word of the order stands.
 
+**AMENDMENT 2 (2.0.0_SA_COO~B1, 2026-10-09 ~06:5xZ; row LGIC_BLANKFIX-D1-S2):** `lib/tests/test_opal_naming_scope.py` line 370 asserts `uncounted=` is the LAST field of the ALL-ROOTS line, so the appended `counted_at_caller` field turns SCOPE-TEST red. The grant adds that test file; change only that assertion to read `uncounted` by its key (it already builds `kv`), keeping the count relation it checks. Done when `python lib/tests/test_opal_naming_scope.py` prints `SCOPE-TEST ok=True` beside BX5-AC1 and BX5-AC2 (criteria text unchanged).
+
 ### ACCEPTANCE
 
 <criterion id="BX5-AC1" cell_refs="BF-x-5"><invocation>python lib/tests/test_opal_naming_rootcheck.py</invocation><expect>ROOTCHECK-TEST ok=True</expect></criterion>
@@ -89,6 +91,7 @@ every assertion behind it held and `ok=False` otherwise.
 <paths>
 lib/opal_naming_rootcheck.py
 lib/tests/test_opal_naming_rootcheck.py
+lib/tests/test_opal_naming_scope.py
 org/missions/D14/LGIC/LGIC_BLANKFIX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
