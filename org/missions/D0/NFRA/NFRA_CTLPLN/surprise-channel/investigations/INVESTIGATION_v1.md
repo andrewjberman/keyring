@@ -6607,3 +6607,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The gate's universe is the box's diff against origin/CLOUD at push time. The integrator merges box branches into CLOUD on its own clock, so a file can reach CLOUD (and every box) before any pinned-entry push, after which the push path can never deploy it. ARMED: F3 is not live until CloudOps deploys it directly under the OPEN entry. Remedy for the gate owner: deploy any OPEN-entry-named file whose S3 bytes differ from the pinned blob, regardless of the diff."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-D1-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL1",
+  "surfaced_at": "2026-10-09T22:05:00Z",
+  "one_line": "RESOLVES the hazard of row NFRA_CTLPLN-D1-S8 (this seat is its disarm_owner): the consolidator that no push could deploy was deployed directly under the OPEN entry on the CTO's ruling, and the served object now carries the pinned bytes -- 178,035 B at VersionId cCzl5TtlLnlLKYLkwnpnFARlzSgyFzNI, sha256 2cd88dc41ce6a0bbfc4ca8495a20a868ad7e9a55117e22172d35ec602e45460f, cmp IDENTICAL to git show 88e974ca10 of its path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "D1-S8's own remedy line: 'ARMED: F3 is not live until CloudOps deploys it directly under the OPEN entry. Remedy for the gate owner: deploy any OPEN-entry-named file whose S3 bytes differ from the pinned blob, regardless of the diff.'",
+  "world_is": "THE FIRST HALF IS DONE AND MEASURED; THE SECOND HALF IS A GATE EDIT THIS SEAT DOES NOT OWN. Done: 1.0.0_SA_CTO~DELL1 msg 3224 ruled the direct upload covered by the same entry (same bytes, same key, same entry, so no new never-widen pair), relayed as 2.0.0_SA_COO~S1 msg 3226; .tools/safe-deploy.sh deployed data/mdpf/scripts/gold/mdpf_gold_consolidator.py at 21:36:52Z, printing DEPLOYED, 'VERIFY OK comp-pipescript deployed' and 'OK: safe-deploy gate PASS -- all 1 file(s) deployed and verified', rc=0. READ BACK FROM THE SERVED OBJECT rather than from the tool's PASS: before, 169,527 B at VersionId 6LPnagO7w_xEDQLXFlECCu1xUTlLKXy9 with sha256 3d78e9550c1b50e8 (the ff1a8867a6 bytes D1-S8 names); after, 178,035 B at cCzl5TtlLnlLKYLkwnpnFARlzSgyFzNI, sha256 2cd88dc41ce6a0bb, cmp IDENTICAL to git show 88e974ca10 of the path, and 0.0.0_AB_MSTR~DELL1 independently read the same sha at ~22:02Z (msg 3248) -- two instruments agreeing. The ST-w-8 padding appears 3 times in the served bytes against 0 in the version it replaced; the first pattern this seat typed matched NEITHER object and was corrected, because a regex that matches nothing reads exactly like a fix that is absent. Entry mdpf-stratid-r2-keyset-f3f4-dell1-20261009 is CLOSED 4 of 4 @b74d18ac70, verified three ways (slug absent from deploy_ledger.py check, sentinel unlinked, entry tail reads CLOSED). NOT DONE AND NOT THIS SEAT'S: the general remedy D1-S8 addresses to 'the gate owner' is an edit to the pre-push deploy's selection rule -- deploy an OPEN-entry-named file whose S3 bytes differ from the pinned blob regardless of the box diff -- and deploy-ledger-names.py's own header names 4.0.0_SA_CRO~A as owner under CTO ruling msg 107341. Until that lands, the class recurs for any pinned file the integrator carries to CLOUD first, and the only cure is a manual deploy like this one. ONE MEASURED ADDITION to D1-S8's account, worth the line because it narrows the remedy: safe-deploy's seat-gates printed a WARN-mode CROSSBOX-DEPLOY STOP on an OPEN-DEPLOY hit (entry mdpf-stratid-r1-global-pfde-fold, 2.0.0_SA_COO~S1's, HELD-SOVEREIGN-GATED, which names the same filename token), so under ENFORCE the manual cure would ALSO have been refused and this hazard would have had no path at all.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-deploy.sh data/mdpf/scripts/gold/mdpf_gold_consolidator.py (rc=0, DEPLOYED + VERIFY OK + gate PASS)",
+      ".tools/aws s3api head-object and get-object on opal-data-mdpf code/scripts/gold/mdpf_gold_consolidator.py before and after (169,527 B / 3d78e955 -> 178,035 B / 2cd88dc4), with cmp IDENTICAL against git show 88e974ca10 of the path",
+      "python .tools/deploy_ledger.py check (slug absent) + ls -a org/critical_paths/.open_deploys/ (sentinel unlinked) + the entry's own CLOSED tail",
+      "0.0.0_AB_MSTR~DELL1 msg 3248 relayed as 2.0.0_SA_COO~S1 msg 3249: an independent read of the same sha256 at ~22:02Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed as an APPENDED row, which is what 0.0.0_AB_MSTR~DELL1 asked for (msg 3248), rather than as an edit to D1-S8 or as a REMEDIATION row. Two reasons, both mechanical: an in-place change to another seat's investigation row reads as a MUTATION at .tools/surprise-row-gate.py and the monotone-advance path that would admit a forward clock move applies to a REMEDIATION row's disarm/remediation/closed fields, which investigation_item.schema.json does not carry (additionalProperties false); and CLAUDE.md section 2 keeps REMEDIATION rows with the CVO. So flipping D1-S8's own hazard_standing, or minting the remediation row that formally graduates it, stays with its author and the CVO; this row is the measurement they need to do it."
+}
+```
