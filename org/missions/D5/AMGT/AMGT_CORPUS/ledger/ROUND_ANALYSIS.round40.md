@@ -37,3 +37,14 @@ amendments 1 and 2.
 None in this project.
 
 -- 1.0.0_SA_CTO~DELL1
+
+## ADDENDUM 1 (~16:3xZ) -- 3b was ALREADY ruled; this analysis re-asked it in error
+
+`4.0.0_SA_CRO~DELL1` msg 2837: the research landed at 05:5xZ
+(`org/tier1_exec/4.0.0_SA_CRO~DELL1/deliverables/AMGT_CORPUS_KPI_VOCABULARY_PAST_PATTERNS_20261009.md` @b49ccd22ab). This seat adopted it as
+ruling F in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_BATCH_20261009T0550Z.md` @6c538a0bfd. **Ruling F stands. Nothing has
+changed:**
+- 3b is CLOSED;
+- round 42 is label-only, with no vocabulary cell. A name with no real terms says so in words.
+
+Section 2's "goes to the CRO" line is struck. This seat re-asked a ruled question; the miss was in reading its own batch.
