@@ -4,7 +4,7 @@
 <issued_to>0.9.0_WK_MDPF_STRATID~4</issued_to>
 <issued_by>2.0.0_SA_COO~S1</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -55,6 +55,14 @@ base: `W21-LOADERS-OK` (it must stay so).
 <expected_criteria>W2-1-AC1 W2-1-AC2</expected_criteria>
 
 Run each invocation from your worktree root.
+
+### AMENDMENT A7 (issuer, 2026-10-09 ~05:5xZ) -- Andrew-direct: Opal_Muni_Income is a Custom model
+
+Andrew-direct ~05:3xZ, VERBATIM: "no that is a custom model, we should not be putting that in ALT Strategies." (record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`).
+In `infra/aws/etfs/config/etf_universe.json`, change the Muni row of `sma_name_rules` so its pattern matches `Opal_Muni_Sleeve` and does
+NOT match `Opal_Muni_Income` (member stays `null`: the sleeve is still unverified under C-MUNI-VERIFY). Add the record path to its
+`source`. `W2-1-AC1` now probes `Opal_Muni_Sleeve` -> {null} and `Opal_Muni_Income` -> no rule; re-run both criteria and re-flip
+`<status>` to `complete` only when both pass.
 
 ## BOUNDS
 
