@@ -1,0 +1,958 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "LGIC_ENFORCE",
+ "round": 21,
+ "written_by": "2.0.0_SA_COO~B1",
+ "written_utc": "2026-10-09T17:50Z",
+ "decomposition_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/decompositions/LGIC_ENFORCE_DECOMP.md@516bdc05fa",
+ "denominators": {
+  "fwd_in_prd_header": 7,
+  "cells_in_decomposition": 71,
+  "task_orders": 82,
+  "task_orders_terminal_with_valid_proof": 82
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a new pipeline for a new firm has been written this way and a reviewer has checked it",
+   "cells": [
+    {
+     "cell_id": "EN-b-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-b-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-b-1.builders.proof_of_spec.json@81285c0abd"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-d-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-d-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~8/LGIC_ENFORCE.TO-EN-d-1.fwd7-demo-firm.proof_of_spec.json@d86bf5507f"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-d-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-d-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~8/LGIC_ENFORCE.TO-EN-d-2.fwd1-second-search.proof_of_spec.json@fe1e778843"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-p-4",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-p-4-r3",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/LGIC_ENFORCE.TO-EN-p-4-r3.placement.proof_of_spec.json@2cd5262381"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a real piece of infrastructure has been named this way, and the separation rule was produced from the same source and matched",
+   "cells": [
+    {
+     "cell_id": "EN-b-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-b-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-b-1.builders.proof_of_spec.json@81285c0abd"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-c-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-c-2.fence-writer-census.proof_of_spec.json@4d7ab8f1b4"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-d-26",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-d-26-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-d-26-r4.dec4-criterion-text.proof_of_spec.json@07285ba53c"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-f-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-f-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-f-1.fence-authored.proof_of_spec.json@78236378e0"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-f-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-f-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-f-2.fence-applied.proof_of_spec.json@d482e58ecf"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-37",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-37-r8",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-g-37-r8.slug-time-limb.proof_of_spec.json@0cb5d13491"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-k-38",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-k-38-r8",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-k-38-r8.staleness-limb.proof_of_spec.json@33b0103534"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-m-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-m-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-m-1.terraform-module.proof_of_spec.json@33882c8dbf"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-3-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-3-r2.one-carrier.proof_of_spec.json@3c42177812"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-41",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-41-r9",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-41-r9.percent-style-scope.proof_of_spec.json@2b45ff90e4"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-w-7",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-w-7-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-w-7-r3.writer-disposition.proof_of_spec.json@9255edf085"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-x-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-x-1-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-x-1-r2.fwd2-one-carrier.proof_of_spec.json@28c8e69721"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-x-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-x-1.fwd2-real-resource.proof_of_spec.json@4e569b4f18"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- someone has changed one firm's entry and watched every dependent place follow in a single build",
+   "cells": [
+    {
+     "cell_id": "EN-c-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-1.carrier-census.proof_of_spec.json@c7a45c08bf"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-d-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-d-1-r15",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-d-1-r15.discriminator-sweep.proof_of_spec.json@cb21effc4b"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-27",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-27-r4",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-g-27-r4.s60-disposition.proof_of_spec.json@70d84a7d6e"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-30",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-30-r5",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-g-30-r5.reason-split.proof_of_spec.json@bf7bff14c1"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-9",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-9-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-g-9-r3.target-split.proof_of_spec.json@534305ba15"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-m-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-m-2-r16",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-m-2-r16.retired-marker.proof_of_spec.json@f419aebda8"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-p-37",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-p-37-r13",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-p-37-r13.the-placeholder-population-measured.proof_of_spec.json@99eb52b5c2"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-p-38",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-p-38-r14",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-p-38-r14.the-token-grain.proof_of_spec.json@27a8cec42d"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-1.registry-and-generator.proof_of_spec.json@a925c8a642"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-6",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-6-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-6-r2.per-view-hashes.proof_of_spec.json@9a41458ee6"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-7",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-7-r14",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-7-r14.one-render-path.proof_of_spec.json@85d622daf5"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-1-r16",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-1-r16.retired-but-runnable-census.proof_of_spec.json@e6a1001244"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-32",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-32-r6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-s-32-r6.disarm-sweep.proof_of_spec.json@f0df517c9b"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-45",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-45-r12",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-45-r12.the-suite-binds-like-a-consumer.proof_of_spec.json@9d7fdb757a"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-v-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-v-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-v-1.firm-registry-json.proof_of_spec.json@4f2e38b254"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-v-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-v-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-v-2.firm-config-mjs.proof_of_spec.json@b484d8dec4"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-v-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-v-3",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-v-3.irpt-firm-bucket-map.proof_of_spec.json@45187da290"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-v-4",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-v-4",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-v-4.ir-authz-bucket-for.proof_of_spec.json@8298325909"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-v-5",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-v-5",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/LGIC_ENFORCE.TO-EN-v-5.perfrp-resolve-firm.proof_of_spec.json@ad0611a26e"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-v-6",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-v-6",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/LGIC_ENFORCE.TO-EN-v-6.precommit-cross-firm-lists.proof_of_spec.json@5525ff6129"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-x-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-x-1-r17",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-x-1-r17.complement-census.proof_of_spec.json@d8445bde10"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a deliberately wrong change has been stopped with the correct form printed, and a correct one let through",
+   "cells": [
+    {
+     "cell_id": "EN-b-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-b-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-b-1.builders.proof_of_spec.json@81285c0abd"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-b-42",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-b-42-r9",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-b-42-r9.stale-backlog-owners.proof_of_spec.json@dd6896c2f8"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-1-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-g-1-r2.commit-limb.proof_of_spec.json@4a6d6091b9"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-g-1.commit-limb.proof_of_spec.json@5888164053"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-n-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-n-1-r3",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-n-1-r3.gate-domain.proof_of_spec.json@d16e2b1eae"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-1.tf-label-census.proof_of_spec.json@1cc0d2fe73"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-2-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-2-r2.plan-limb.proof_of_spec.json@7b3ebfe3d2"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-2.safe-apply-limb.proof_of_spec.json@600c70b5a3"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-3-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-3-r2.roots-census.proof_of_spec.json@1199d620dd"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-8",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-8-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.proof_of_spec.json@0171b08f8f"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a new pipeline for a new firm has been written this way and a reviewer has checked it",
+   "cells": [
+    {
+     "cell_id": "EN-aa-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-aa-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-aa-1.registries-fail-closed.proof_of_spec.json@025ed5a612"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-aa-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-aa-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-aa-2.gate-grades-pattern-names.proof_of_spec.json@da55b71b3b"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-aa-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-aa-3",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-aa-3.scope-test-line.proof_of_spec.json@e8d6639430"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-b-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-b-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-b-1.builders.proof_of_spec.json@81285c0abd"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-c-23",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-23-r4",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-23-r4.registry-campaign.proof_of_spec.json@21486f4210"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-c-28",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-28-r5",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-28-r5.placeholder-campaign.proof_of_spec.json@59678b0062"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-c-31",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-31-r5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-31-r5.token-collision-card.proof_of_spec.json@c8a8a4a6cd"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-c-33",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-33-r6",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-33-r6.campaign-continued.proof_of_spec.json@0d00b4373f"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-c-40",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-c-40-r9",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-40-r9.hand-comparison.proof_of_spec.json@c80ddb0515"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-43",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-43-r10",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-g-43-r10.bd-is-blackdiamond.proof_of_spec.json@1cbc91d66a"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-h-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-h-1-r19",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-h-1-r19.hand-remeasure.proof_of_spec.json@4a4a5dc801"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-h-24",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-h-24-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-h-24-r4.placeholders.proof_of_spec.json@3b15c9a00d"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-h-29",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-h-29-r5",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-h-29-r5.evidence-correction.proof_of_spec.json@959e810264"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-i-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-i-3-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-i-3-r3.channel-root.proof_of_spec.json@07e21ddd1d"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-m-39",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-m-39-r8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-m-39-r8.template-vs-key.proof_of_spec.json@4436eaad9c"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-o-35",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-o-35-r7",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-o-35-r7.owner-confirmation.proof_of_spec.json@43df072567"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-p-36",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-p-36-r8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-p-36-r8.raise-population.proof_of_spec.json@bb5ea705c0"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-2-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-2-r2.registry-rows.proof_of_spec.json@b745340973"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-4",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-4-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-4-r2.resource-rows.proof_of_spec.json@3823e3296d"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-5",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-5-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/LGIC_ENFORCE.TO-EN-r-5-r2.gateway-registration.proof_of_spec.json@6eedbc3ddc"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-5-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-r-5-r3.registry-tokens.proof_of_spec.json@018006cd95"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-1-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-1-r2.census-run.proof_of_spec.json@1ded699c92"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~7/LGIC_ENFORCE.TO-EN-s-1.census-run.proof_of_spec.json@c6160ba1ad"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-2-r2.census-comparison.proof_of_spec.json@3cfaad8a05"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~7/LGIC_ENFORCE.TO-EN-s-2.census-comparison.proof_of_spec.json@cff2155fd7"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-25",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-25-r4",
+       "status": "superseded",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-25-r4.run-to-the-end.proof_of_spec.json@0e10fea7fe"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-s-6",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-s-6-r3",
+       "status": "superseded",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.proof_of_spec.json@083aa32137"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-1-r18",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-1-r18.resolve-and-card.proof_of_spec.json@1d77897d4a"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-34",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-34-r7",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-34-r7.labels-that-lie.proof_of_spec.json@e77be7d52a"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-44",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-44-r11",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-44-r11.the-test-catches-the-wrong-fix.proof_of_spec.json@4e23baf6ca"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-t-8",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-t-8-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.proof_of_spec.json@0171b08f8f"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-z-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-z-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-z-1.live-plane-census.proof_of_spec.json@3dfa7d0f7c"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-z-2",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-z-2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-z-2.hand-ranking-compare.proof_of_spec.json@df726ef74e"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-z-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-z-3",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-z-3.loud-stop.proof_of_spec.json@0b112855a8"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-z-4",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-z-4",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-z-4.gate-grades-built-names.proof_of_spec.json@9f96f3739d"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-z-5",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-z-5",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-z-5.pattern-name-commit.proof_of_spec.json@907fb53e9e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- shown deliberately on a practice copy, with a clean-up planted for the purpose",
+   "cells": [
+    {
+     "cell_id": "EN-p-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-p-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-p-1.fwd6-practice.proof_of_spec.json@3f682a9115"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a demonstration firm has been added on a practice copy and every produced file checked",
+   "cells": [
+    {
+     "cell_id": "EN-d-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-d-1-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-d-1-r2.fwd7-demo-firm.proof_of_spec.json@b9389f6500"
+      },
+      {
+       "id": "LGIC_ENFORCE.TO-EN-d-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~8/LGIC_ENFORCE.TO-EN-d-1.fwd7-demo-firm.proof_of_spec.json@d86bf5507f"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-g-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-g-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-g-1.commit-limb.proof_of_spec.json@5888164053"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-1",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-1.registry-and-generator.proof_of_spec.json@a925c8a642"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-3",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-3-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-3-r2.one-carrier.proof_of_spec.json@3c42177812"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-5",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-5-r2",
+       "status": "complete</status>",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/LGIC_ENFORCE.TO-EN-r-5-r2.gateway-registration.proof_of_spec.json@6eedbc3ddc"
+      }
+     ]
+    },
+    {
+     "cell_id": "EN-r-6",
+     "task_orders": [
+      {
+       "id": "LGIC_ENFORCE.TO-EN-r-6-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-6-r2.per-view-hashes.proof_of_spec.json@9a41458ee6"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED"
+  }
+ ]
+}
