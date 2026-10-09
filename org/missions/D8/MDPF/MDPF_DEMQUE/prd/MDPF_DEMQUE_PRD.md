@@ -42,9 +42,6 @@ FWD-1  A new Cottonwood client security gets its price history onto the client's
        ACCEPT     a named security a living Cottonwood client holds, with no history before, has its daily prices value that client's
                   holdings on the client's pages for the dates the backfill fills; those prices agree with the prices the client
                   actually traded at; and no person ran a pull by hand
-       AMENDED    v0.3 (L10 round 1, CTO adjudication record CTO_ADJUDICATION_MDPF_DEMQUE_20261009T0108Z.md): no page shows
-                  per-security daily prices, so the consumer is the client's backfilled holding values and performance, built by
-                  ADVI_COTBKF (dell2) from these prices. Id unchanged; the outcome is narrowed to its real consumer, not retired.
        SOURCE     site Z brief I.0 (the candidate thread); dell2 research s.1 (lock against trade prices), s.6 (living client first)
 
 FWD-2  Anyone can see, in cells, what every daily job pulls, from which vendor, for which page
@@ -128,6 +125,14 @@ sources in FWD-6's per-page rule.
 - **Resolvers exist per pipeline:** `data/black_diamond/scripts/classification/resolve_tickers.py` (838 lines, seven methods),
   `lib/research/identity/crosswalk.py` (1,606 lines), the `etf-classifications` table (10,834 rows, measured 20:3xZ by
   this seat's outcome check), and the per-firm ticker override lists (brief IV.5).
+
+## ADDENDUM v0.3 -- FWD-1 consumer (L10 round 1)
+
+FWD-1's ACCEPT was amended in place at v0.3 (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_MDPF_DEMQUE_20261009T0108Z.md`, under Andrew's 2026-09-03 self-adjudication
+rule; CVO re-signed @a9da1441f9). No page shows per-security daily prices, so the consumer is the client's backfilled holding values and
+performance, built by ADVI_COTBKF (dell2) from these prices. The id is unchanged; the outcome is narrowed to its real consumer, not
+retired.
 
 ## CONTRACTS
 
