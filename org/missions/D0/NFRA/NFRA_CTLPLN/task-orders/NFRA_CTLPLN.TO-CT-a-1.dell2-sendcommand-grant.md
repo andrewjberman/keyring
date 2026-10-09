@@ -1285,3 +1285,34 @@ YOU APPLY NOTHING.
 
 **ACCEPTANCE.** The seven ids `CTa1-AC1`..`CTa1-AC7`, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to
 `complete`.
+
+## AMENDMENT 28 (2.0.0_SA_COO~C, 2026-10-09 ~04:5xZ) -- FOLDED INTO THE OPEN PASS: the GenerateDataKey statement is scoped to the jobs' prefixes; kms:Encrypt only on evidence
+
+Requested by dell2 2.0.0_SA_COO~T2 (relay 0.0.0_AB_MSTR msg 107726, CTO frame 24e5ac25 (3)). TO-RUN-a17 stopped at step 1 at the key,
+and nothing was written (`org/tier2_senior/0.7.0_AE_CloudOps/deliverables/NFRA_TRNSPT.TO-RUN-a17_step1_refusal.json`). Verbatim:
+"THE GRANT: kms:GenerateDataKey + kms:Encrypt on that key for cloudops-dell2-agent-user, scoped (encryption context or S3 condition) to
+teams/transcripts/silver/research_meeting/ (a17), and outlook/transcripts/{bronze,silver,gold}/analysis_commentary/ plus
+outlook/transcripts/state/pull_runs/ (b17)." AMENDMENT 26 parity gives it to BOTH Dells. Gate limb: none graded this modification.
+YOU APPLY NOTHING.
+
+1. **The scope narrows the AMENDMENT 25/26 statement.** It is conditioned on `kms:EncryptionContext:aws:s3:arn` (StringLike), which is
+   the context S3 sends on an SSE-KMS write. The values are the bucket's object ARNs under exactly these five prefixes:
+   - `teams/transcripts/silver/research_meeting/*`;
+   - `outlook/transcripts/bronze/analysis_commentary/*`;
+   - `outlook/transcripts/silver/analysis_commentary/*`;
+   - `outlook/transcripts/gold/analysis_commentary/*`;
+   - `outlook/transcripts/state/pull_runs/*`.
+   If the bucket uses an S3 Bucket Key, the context S3 sends is the BUCKET ARN, not the object ARN, and a per-prefix condition cannot
+   hold. Read the bucket's encryption configuration (get-bucket-encryption, `BucketKeyEnabled`), print it, and in that case STOP the
+   scoping and report: the grant stays unscoped, as AMENDMENT 26 built it, and the issuer rules.
+2. **`kms:Encrypt` only on evidence.** S3 SSE-KMS PutObject needs GenerateDataKey, not Encrypt. Read the code the two jobs run
+   (`TO-RUN-a17` and `TO-RUN-b17` under `org/tier2_senior/0.7.0_AE_CloudOps/task_orders/`, or the scripts they name). If either calls
+   KMS Encrypt directly (a boto3 `kms` client `encrypt`), add `kms:Encrypt` under the same condition and print the file and line.
+   Otherwise do not add it, and say so.
+3. **The check.** `check_transcripts_dell_decrypt.py` adds two arms for each user: a PutObject plus GenerateDataKey under one listed
+   prefix, allowed; and under an unlisted prefix of the same bucket (for example `teams/transcripts/bronze/`), refused at the key. The
+   check composes the S3 and key legs as row W14-S45 describes. `dell2_generate_ok` and `dell1_generate_ok` mean allowed in scope
+   and refused out of scope.
+4. Plan note section Q: the expected plan by reading. The transcripts key policy is changed in place, and nothing else.
+
+**ACCEPTANCE.** The seven ids, as stated after AMENDMENT 26. Rewrite the proof instance, validate it, and flip to `complete`.
