@@ -46804,3 +46804,38 @@ REFUSED_20261008)
 2026-10-09T15:04:11Z PASS  2.0.0_SA_COO~AI  1  (all paths in-lane)
 2026-10-09T15:04:21Z LANDED-2P  0.0.0_AB_MSTR~Z  375e0bd1a2  paths=1  validate=70.47s  wait=1.34s  hold=8.01s  build=4.78s  ref=3.07s  post-commit=16.37s  attempt=1
 2026-10-09T15:04:55Z LANDED-2P  2.0.0_SA_COO~AI  68ab46b72e  paths=1  validate=75.15s  wait=1.86s  hold=9.65s  build=5.69s  ref=3.70s  post-commit=17.97s  attempt=1
+2026-10-09T15:05:29Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T15:05:40Z PASS  0.9.0_WK_NFRA_OPLGTW~49  2  (all paths in-lane)
+2026-10-09T15:05:50Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T15:06:26Z LANDED-2P  0.0.0_AB_MSTR~Z  e246ea447f  paths=1  validate=68.88s  wait=0.81s  hold=5.68s  build=2.85s  ref=2.69s  post-commit=17.21s  attempt=1
+2026-10-09T15:07:00Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=8.70  graded=n/a  args=(--verify-merge cb32f6d75f3d6c3d5a4def25c9b7940c4e8ef403)  first=(none)
+2026-10-09T15:07:04Z PASS  0.9.0_WK_NFRA_OPLGTW~49  2  (all paths in-lane)
+2026-10-09T15:07:09Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=293.09  held=dirty-overlap graded=2/69
+2026-10-09T15:07:52Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane)
+2026-10-09T15:08:02Z PASS  0.7.0_AE_CloudOps~Z  1  (all paths in-lane)
+2026-10-09T15:08:15Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
+2026-10-09T15:08:24Z PASS  0.7.0_AE_CloudOps~MP  1  (all paths in-lane)
+2026-10-09T15:08:36Z PASS  2.0.0_SA_COO~ZI  1  (all paths in-lane)
+2026-10-09T15:08:39Z LANDED-2P  0.7.0_AE_CloudOps~MP  40d9cf1002  paths=1  validate=34.35s  wait=0.28s  hold=2.65s  build=1.96s  ref=0.63s  post-commit=6.83s  attempt=1
+2026-10-09T15:08:42Z PASS  2.0.0_SA_COO~ZI  1  (all paths in-lane)
+2026-10-09T15:08:59Z LANDED-2P  2.0.0_SA_COO~ZI  9f4ae3a7cf  paths=1  validate=25.29s  wait=1.03s  hold=2.63s  build=1.20s  ref=0.94s  post-commit=7.25s  attempt=1
+2026-10-09T15:09:01Z BLOCK  0.0.0_AB_MSTR~Z  1  (1 violation(s): VIOLATION: org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.7.0_AE_CloudOps~Z/evidence/r40_ap10b_leg_v_fire_20261009.txt -- lane=TREE_DELIVERABLES (Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.); agent=0.0.0_AB_MSTR~Z not in permitted_agents;)
+2026-10-09T15:09:45Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=4  secs=17.60  graded=n/a  args=(wk-NFRA_OPLGTW-33-49 -m drain(NFRA_OPLGTW.TO-OG-ab-2, 2.0.0_SA_COO~O): merge worker ~49 @7d562f1742 -- .pptx -> market_update pair beside .xlsx (one PAIRS table, roots from address()); AC1 3/3 + E2 suites, AC2 43/43; NOT released (CTO~Z @14cbf27dec: waits on S1 KMS + S4 registry row); rows Z-W49-S1..S6)  first=(CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED)
+2026-10-09T15:09:51Z MERGE-REFUSED  1.0.0_SA_CTO~Z  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:12:24Z MERGE-REFUSED  0.0.0_AB_MSTR~Z  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:12:33Z MERGE-REFUSED  0.0.0_AB_MSTR~Z  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:12:52Z MERGE-REFUSED  2.0.0_SA_COO~ZZ  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:13:02Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=6.15  graded=n/a  args=(--verify-merge ea36a6483ff36f727e49339ed5fe0d7de36ac220)  first=(none)
+2026-10-09T15:13:12Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=66.27  held=dirty-overlap graded=2/139
+2026-10-09T15:13:27Z MERGE-REFUSED  0.0.0_AB_MSTR~Z  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:13:35Z MERGE-REFUSED  0.0.0_AB_MSTR~Z  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:14:02Z MERGE-ATTEMPT  0.0.0_AB_MSTR~Z  rc=0  secs=5.67  graded=n/a  args=(--verify-merge 098d61cab74693f4a33c386d0eb587012af51545)  first=(none)
+2026-10-09T15:14:09Z BOX-SYNC  0.0.0_AB_MSTR~Z  mode=box  rc=4  secs=49.50  held=dirty-overlap graded=2/139
+2026-10-09T15:16:10Z MERGE-REFUSED  0.7.0_AE_CloudOps~CA  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:20:08Z MERGE-REFUSED  0.7.0_AE_CloudOps~Z  7  (MERGE_HEAD 7d562f17425c present; nothing staged by this run)
+2026-10-09T15:21:12Z PASS  2.0.0_SA_COO~O  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T15:22:01Z PASS  2.0.0_SA_COO~O  0  (MERGE COMMIT -- per-file lane check exempt; merged files were gated at their own authorship)
+2026-10-09T15:22:19Z MERGE-ATTEMPT  2.0.0_SA_COO~O  rc=0  secs=122.27  graded=2/7  args=(--continue -m drain(NFRA_OPLGTW.TO-OG-ab-2, 2.0.0_SA_COO~O): merge worker ~49 @7d562f1742 -- .pptx -> market_update pair beside .xlsx; deploy-to-ec2.sh conflict resolved by applying the branch's one key+arg onto HEAD's printf (r29 commassist kept; 21 %s / 21 args); channel = HEAD + rows Z-W49-S1..S6; NOT released (CTO~Z @14cbf27dec))  first=(none)
+2026-10-09T15:22:43Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T15:22:51Z PASS  0.0.0_AB_MSTR~Z  1  (all paths in-lane)
+2026-10-09T15:23:17Z LANDED-2P  0.0.0_AB_MSTR~Z  e0740b85bc  paths=1  validate=42.08s  wait=0.56s  hold=4.77s  build=3.04s  ref=1.52s  post-commit=11.07s  attempt=1
