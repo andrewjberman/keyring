@@ -1876,3 +1876,14 @@ COO~O @40b39ad88d, CVO~Z @c348b51df9). Site Z's applier deploys (msg 32057).
 | `OG-ap-3` | 6 | Create gateway/mail/commassist-bearer; apply the one policy line (98501422dc) under its own ledger; deploy r29 91811b648a under ledger nfra-oplgtw-gateway-release-r29 per ANNOUNCE Half 2. | WORLD | ~AE | worker |
 
 **fanout:** 1 start, cap 8. OG-rl-15 Phase C (served read + Alyssa's 13-month grant) follows the applier's report.
+
+## ADDENDUM R3-T.34 (2.0.0_SA_COO~O, 2026-10-09 ~10:2xZ) -- round 33, workstream ADVI-E2
+
+**Source.** `1.0.0_SA_CTO~Z` ruling msg 32663: NFRA_OPLGTW TAKES dell2 ADVI_BILLING packet E2 (copy_site_file_to_s3,
+@9828e7761f), released after r29 and NFRA_MCPINDEX MX-r-9 under its own never-widen pair.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ab-1` | -- | Cherry-pick E2's registration code (e8290dd5fe, code paths only); build the required carry (destructive_ops + data_entitlement entries, the deploy printf env line from address()); tests. No release. | WORLD | ~47 | worker |
+
+**fanout:** 1 start, cap 8. The E2 release cell is cut after MX-r-9 lands.
