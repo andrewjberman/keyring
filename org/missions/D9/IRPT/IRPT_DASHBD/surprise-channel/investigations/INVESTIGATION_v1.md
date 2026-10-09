@@ -4631,3 +4631,62 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S1 -- Resolves and disarms S40: the realized key now carries realized_gain (DB-b-87), released live (DB-b-88), and 2026-10-08 lots backfilled with zero LOTS_SKIPPED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_DASHBD-S40. The hazard was the 2026-10-08 lots day refused by name on every fire because the realized key was not unique. DB-b-87 extended the key with realized_gain (drained @0a41f929a3); DB-b-88 released it to irpt-49f-reporting-gold-lambda (live CodeSha256 yIAQjspL... read by the issuer at 13:1xZ, ledger 20261009T1247Z CLOSED 4/4) and backfilled 2026-10-08 in one invoke: realized 35834, unrealized 542546, activity 6901, 0 LOTS_SKIPPED, 389.1 s / 1649 MB under the 85% line, returns byte-equal (sha256 3151345f...). DB-b-90 (round 44) moves the uniqueness check onto the final rows (W62-S1).",
+  "one_line": "S40 disarmed: realized key extended by realized_gain, released live, and 2026-10-08 lots backfilled with 0 LOTS_SKIPPED and returns byte-equal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-49f-reporting-gold-lambda live CodeSha256 yIAQjspL0nPX6tJOHxD+Dv0REVoZyBNRkhmHQxUVuEE= (issuer read, 13:1xZ)",
+      "org/critical_paths/change_management/20261009T1247Z_irpt-dashbd-r37-delta-1008_deploy_completion.md (CLOSED 4/4)",
+      "p41b_lotkey.py DB41b-2-AC1 PASS and DB41b-2-AC2 PASS at box/dell2 after the DB-b-88 drain",
+      "backfill invoke RequestId 0cbe2c8b-c78f-4e6c-940f-bab89ccb1000"
+    ]
+  },
+  "spec_asserts": "CTO ADDENDUM 9: a LOTS_SKIPPED day is a BLOCKING row until the key is fixed and the day is backfilled.",
+  "world_is": "The key is fixed live and 2026-10-08 is landed for all three lot tables."
+}
+```
+
+
+## IRPT_DASHBD-S43 -- TO-DB-b-86 BLOCKED before the run: the selection's account_set_id has no producer this seat can reach, and the served reads AMENDMENT 1 names do not carry it
+
+```json
+{
+  "id": "IRPT_DASHBD-S43",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T13:20:00Z",
+  "one_line": "TO-DB-b-86 cannot run as amended: the runner requires account_set_id as sel_<64 hex> from an Opal operator's selection-create answer, but AMENDMENT 1's two served reads cannot produce it -- the served custody directory has no selection field in any of its 269 entries, and svc-custody-statement is admitted on three operations that do not include selection-create. Filling it would be a fabricated reference.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-86 AMENDMENT 1 (Selection): 'The --selection file is seat-authored from two served reads only: the Cottonwood client's account set from the served custody directory, and the snapshot id from the served holdings current/manifest.json.' The runner's load_selection requires account_set_id matching sel_<64 hex>, plus snapshot_id, client_id and account_ids.",
+  "world_is": "THE TWO SERVED READS WERE BOTH DONE, and they yield three of the four required fields, not four. (1) The served custody directory resolved through advisor_client_list.load_directory's own default path -- the directory_runner pointer s3://opal-data-cot/investor-reporting/directory/latest.json at generated_at 2026-10-08T13:40:45Z, whose key is investor-reporting/directory/2026-10-07/directory.json (538,204 bytes, 269 entries). An EXHAUSTIVE NESTED KEY CENSUS over all 269 entries (denominator printed, every path counted, not a forward guess) gives exactly these id-bearing paths: /ids/client_id 269, /ids/account_ids 269, /ids/firm_id 269, /ids/relationship_id 220, /account_masks[]/account_id 557, /permitted_scope/scope_ids 269, /permitted_scope/scope_kind 269, plus access, cohort, display_name, masked_discriminator, permitted_capabilities, revision and termination subtrees. NO path whose name contains set, sel or snapshot exists anywhere in the structure. So client_id and account_ids are available and account_set_id is NOT. (2) The served holdings manifest s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (LastModified 2026-10-08T14:18:08Z, schema irpt-holdings-index-v1, firm_id cottonwood, 9 dates) gives latest_date 2026-10-07 with revision 8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e -- so snapshot_id IS available. WHY THE MISSING FIELD CANNOT BE SUPPLIED BY THIS SEAT. The runner's own docstring names the selection as one of the 'INPUTS the runner does not invent (they have no producer reachable by the service subject, which is admitted on three operations only)', taken 'from an Opal operator's selection-create answer'. The three admitted operations are custody-report-persist, POST /analysis and POST /export (IB-pr-385, the pair's AMENDMENT 2), and selection-create is not among them, so svc-custody-statement cannot mint one. Typing a sel_<64 hex> by hand would be a FILLED FIGURE -- this order's refusal clause names a filled figure as a defect -- and it would travel as the account_set_id query parameter of a REAL submission against REAL Cottonwood client data, which is worse than useless. REUSE WAS CHECKED AND DOES NOT SERVE: a census of 'sel_[0-9a-f]{64}' over org and data returns 4,449 hits across 57,618 files scanned, but the SURFACED band is DSGN_IRPTV1 browser netlogs against localhost:5174 and localhost:5181 -- dev-fixture selections (the same id sel_bdf98e1d... repeatedly), not Cottonwood production selections, and not valid for the cottonwood tenant on opalinvest.dev. STOPPED BEFORE THE RUN, per this order's 'A refusal on the Cottonwood path is a finding: file a row and stop. Never work around it.' Nothing was submitted, nothing persisted, no deploy ledger opened (opening one for an act that cannot proceed would create a RED half-landed entry for no act). ALSO MEASURED AND WORTH RECORDING, because it will bite the next seat: client_report_figures._returns_paths('cottonwood', ...) computes s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/, and that prefix holds ZERO objects -- the bucket's gold area holds holdings, holdings_performance_daily, holdings_performance_manifest and holdings_qa only (785 objects under irpt/, read with head-bucket rc=0 as a positive control, so this is a true empty and not a deny). Separately, hop3_real_run.py -- the required --hop3-file producer -- states it is BUILT on dell2 and RUN on the laptop because the returns gold is an explicit deny for the dell2 user, and no hop3 output file exists anywhere in the repo (only its proof_of_spec and prose). So even with a valid account_set_id, the household document input is not producible on this device as things stand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py (module docstring 'INPUTS the runner does not invent'; load_selection's sel_<64 hex> validation; --hop3-file and --selection both required)",
+      "data/assets/scripts/gold/irpt_custody/hop3_real_run.py (WHERE IT RUNS: the firm bucket is an explicit deny for the dell2 user; built on dell2, run on the laptop)",
+      "data/assets/scripts/gold/irpt_custody/advisor_client_list.py load_directory (the directory_runner PROD_PREFIX/latest.json default this read followed)",
+      "s3://opal-data-cot/investor-reporting/directory/2026-10-07/directory.json (269 entries; the exhaustive nested key census)",
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (latest_date 2026-10-07, revision 8982ba98...967e)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-86.e2a-real-statement-apply.md AMENDMENT 1 (Selection) and the refusal clause",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md AMENDMENT 2 (the three admitted operations)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
