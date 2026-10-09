@@ -3447,3 +3447,29 @@ round.** Never edit an existing row.
   "world_is": "Met. An outside value exists outside the delivery (an as-traded close from MDPF_DEMQUE or Yahoo) and was not read in this read-only cell; D2-S45 stays OPEN until it is."
 }
 ```
+
+## ADVI_COTBKF-D2-W58-S1 -- Yahoo as-traded closes on 2022-10-12 match neither r28 nor r26 for 808524102 (SCHB) and 808524839 (SCHZ); branch OTHER
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W58-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~58",
+  "surfaced_at": "2026-10-09T09:20:00Z",
+  "one_line": "CB-ae-1: Yahoo (yfinance 1.2.0, auto_adjust=False) Close on 2022-10-12 x Yahoo's own later splits (both x3/x2 on 2024-10-11, same ratios as the rows) gives as_traded SCHB 13.98 x3 = 41.94 vs r28 39.9906 (+4.9%) and r26 13.3302; SCHZ 22.465 x2 = 44.93 vs r28 39.4362 (+13.9%) and r26 19.7181. Neither CUSIP is within 2% of r28 or r26, so the pre-written rule prints branch OTHER. Direction: the store close is below the outside level on both (r28 -4.7% / -12.2% of as_traded), and the shortfall differs per CUSIP, so it is not a split-factor error alone. Evidence stored at the price_evidence key (2 rows, read back).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~58/split_level_probe.md",
+      "data/assets/scripts/silver/commonwealth_split_level_probe.py (rule in header, written before the first run, unchanged)",
+      "s3://opal-data-assets/commonwealth/cottonwood/silver/price_evidence/date=2022-10-12/part-00000.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-ae-1: one outside as-traded close per CUSIP settles whether r28 or r26 is the right level (both within 2% of one).",
+  "world_is": "Neither level matches the outside as-traded close; r28 is closer than r26 on both CUSIPs but off by 4.9% and 13.9%. The store's 2022-10-12 closes for these CUSIPs carry a further difference (source, date alignment or price basis) that a split-level test cannot settle. Symbols: SCHB from the delivery transactions Symbol column (66 rows, one distinct value), SCHZ likewise and per PRICE_NEED csv."
+}
+```
