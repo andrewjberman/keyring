@@ -10259,3 +10259,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Plan files saved under plans/. -lock=false avoids writing a state lock for a read-only plan."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W39-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~39",
+  "surfaced_at": "2026-10-09T01:19:57Z",
+  "one_line": "Row NFRA_OPLGTW-Z-W39-S4 is closed on the worker's side: the 08403355 converter change is in data/assets/scripts/silver at 47c3c75f11, the pin names it, and the vendored package equals the source byte for byte (11 of 11).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/tm1_A2_mirror.result.md (steps, totals, sha256).",
+      "RUN git show of both blobs at 47c3c75f11 for each BUILD_MANIFEST vendored module: 11 of 11 equal (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~39/probes/tm1_A2_source_equals_package.txt).",
+      "RUN pytest data/assets/scripts/silver/tests: 566 passed, 11 skipped, 0 failed; the two touched files 46 passed.",
+      "RUN BUILD_ONLY build at 7af0b6bc3d: sha256 AzrzJS+91y57ylRdqGccFPGqWaqAGLFn/jhItkAQCzE=, 12 of 12 members equal the committed blobs, 2 differ from the live artifact."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row NFRA_OPLGTW-Z-W39-S4 and amendment A2: the converter change must be in the source of truth and the pin must name the commit where source and package are equal before Leg C.",
+  "world_is": "Done as A2 states: source commit 47c3c75f11 (the 4 files of data_assets_mirror.patch), silver_build_commit.schwab repinned at 7af0b6bc3d, artifact rebuilt from that pin. S4 itself is not edited; its disposition is the issuer's or the CVO's to write. The artifact is NOT uploaded and the Lambda is NOT changed; the plan shows the OPAL_BUILD_COMMIT env change as one in-place item for the applier.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "S4 cited, not edited. A later source edit to either module, or a package edit, breaks the equality: the applier re-reads sha256 AzrzJS+91y57... from a build at the apply commit before uploading."
+}
+```
