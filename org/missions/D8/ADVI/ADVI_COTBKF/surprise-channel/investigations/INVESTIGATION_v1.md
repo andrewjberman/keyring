@@ -3657,3 +3657,30 @@ round.** Never edit an existing row.
   "world_is": "Served on the wrong basis for 38% of account-days, unmarked today; the marking and rebuild (CB-ag-2, CB-ag-3) are drafted @a9a774a7b9, not yet cut."
 }
 ```
+
+## ADVI_COTBKF-D2-W61-S1 -- the writer of the cot store's bd-txn-price rows is BD-tree code with BD inputs (class cross_firm)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W61-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~61",
+  "surfaced_at": "2026-10-09T11:05:09Z",
+  "one_line": "CB-ah-1 class=cross_firm: the only writer of the bd-txn-price label, data/black_diamond/scripts/silver/inject_scoped_overrides.py:136, takes its prices from a 49 Financial repo file (scoped_price_exceptions.json, :62) and module (bd_price_update.py _SCOPED_PRICE_OVERRIDES, :80), and its code default reads and writes s3://opal-data-bd/silver/prices/canonical_prices.parquet (:54,:179,:253); no cot-tree code calls it (data/cot/scripts/gold/build_canonical_prices_v2.py:24 says cot does NOT run it), so how 1,623 rows of those three BD-sourced CUSIP prices came to be in the opal-data-cot store is NOT shown by the repo.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~61/bd_txn_writer_trace.md (static repo trace, no S3 call; last line class=cross_firm)",
+      "data/black_diamond/scripts/silver/inject_scoped_overrides.py:54,62,80,136,179,253",
+      "data/cot/scripts/gold/build_canonical_prices_v2.py:24 (cot does not run the inject); env BD_S3_BUCKET=opal-data-cot is set by infra/aws/terraform/cot-pipeline/ssm.tf:233,331 and data/cot/scripts/gold/gold_dispatch.sh:62, but no cot-side code invokes the writer",
+      "scoped_price_exceptions.json carries no account id, only 3 CUSIPs and asset names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cottonwood and BD / 49 Financial are separate firms, never mirrored; a cot price-store row labelled with the BD override label has a cot-owned origin.",
+  "world_is": "The writer is BD-tree code with BD-derived inputs; a run with the env bucket pointed at the cot bucket (a runtime act the repo does not show) is the only way the writer reaches the cot store; the repo cannot say which run did."
+}
+```
