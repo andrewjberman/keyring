@@ -10138,3 +10138,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here: any change to the dispatcher, the notification set or any write to S3. The 08242234 prefix has no consumer, so its half of the backfill does not touch this."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W41-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~41",
+  "surfaced_at": "2026-10-09T00:57:58Z",
+  "one_line": "The dispatcher date gate ships a second module (trading_calendar.py), and the Lambda builder refuses a top-level .py that is not registered in infra/aws/lambda/ci/lambda-source-map.json files[], a file outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/lambda/ci/build-and-upload.sh:412-458 (ADHC_DRIFTD.002 parity check): a top-level *.py in source_dir not in the union of files[] fails the function's build with 'Files present in source_dir but NOT in lambda-source-map.json files[]'.",
+      "FILE infra/aws/lambda/ci/lambda-source-map.json functions['advi-49f-gold-dispatch'].files = ['lambda_function.py'] (HEAD); the A1 <paths> admit only infra/aws/lambda/opal-assets/advi-49f-gold-dispatch/ and the two test files, not the ci directory.",
+      "RUN python -m pytest on tests/test_advi_49f_gold_dispatch_dategate.py + tests/test_advi_49f_gold_dispatch_remedy.py: 11 passed, so the code is built and tested; only the packaging registration is outstanding."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1 Phase C: the calendar is 'a byte copy placed beside lambda_function.py' in the zip; the order lists no path for the source map that registers it.",
+  "world_is": "Without a files[] entry for trading_calendar.py the build is refused (or, with BAU_PARITY_SKIP=1, the member is not in the zip and the gate SKIPs every accelerator record because the calendar is not loadable). So the registration is part of the deploy leg; the Y ask section 3 and 4 name it. The built zip's CodeSha256 is therefore not computed in Phase C.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not done here: any edit to lambda-source-map.json, any build, any deploy. An unregistered gate fails SAFE (SKIP), so a deploy that forgets the registration withholds the accelerator rather than over-dispatching."
+}
+```
