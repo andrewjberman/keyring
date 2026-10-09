@@ -211,3 +211,57 @@ worker's is `NFRA_GATSCP-D1-W<n>-S<k>`. **Append-only during the round.** Never 
   "world_is": "The L10 limb counts it as one, so a round close with a live seat-home pointer needs an audited override. Carried here by the box manager, who rules nothing on it; per R3 it falls away once this project's round-2 lane fix makes pointers unnecessary."
 }
 ```
+
+
+## NFRA_GATSCP-D1-S5 -- safe-merge.sh --continue commits a partial resolution and exits 0
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S5",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T10:21Z",
+  "one_line": "safe-merge.sh --continue committed 1 of 4 staged files of a conflicted drain and exited 0: a merge that LOOKED complete and was not (DSGN_AMGTV1 row Z-S22).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round61.md R1: routed to the tool's owner through 0.0.0_AB_MSTR~DELL1",
+      "msg 2251 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T10:19:06Z: 'two rows for owners'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-merge.sh --continue refuses, with a non-zero exit, unless the resulting commit carries every path the conflicted merge staged (ROUND_ANALYSIS.round61 R1, PRIORITY). Negative arm: a planted partial resolution exits non-zero.",
+  "world_is": "It exits 0 on a partial commit. Interim guard per R1: every drain using --continue reads 'git show --stat HEAD' against the staged path list before it reports done. Carried here by the box manager, who rules nothing on it."
+}
+```
+
+
+## NFRA_GATSCP-D1-S6 -- to-pipeline-gate refuses a CRLF task order
+
+```json
+{
+  "id": "NFRA_GATSCP-D1-S6",
+  "project": "NFRA_GATSCP",
+  "fabric": "dell1",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-09T10:21Z",
+  "one_line": "to-pipeline-gate.py refuses a task order whose line endings are CRLF (DSGN_AMGTV1 row D1-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~N1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round61.md R2: routed to the tool's owner through 0.0.0_AB_MSTR~DELL1",
+      "msg 2251 1.0.0_SA_CTO~DELL1 -> 0.0.0_AB_MSTR~DELL1, 2026-10-09T10:19:06Z: 'two rows for owners'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The gate normalises line endings before parsing, without editing the file (ROUND_ANALYSIS.round61 R2).",
+  "world_is": "It parses raw bytes and refuses a CRLF order. Interim per R2: issuers write orders LF-only. Carried here by the box manager, who rules nothing on it."
+}
+```
