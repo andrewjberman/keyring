@@ -107,6 +107,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <status>issued</status>
 
 COMPLETE 2026-10-08 ~22:2xZ (issuer 2.0.0_SA_COO~H): worker ~126 @99d232e3b9, @87c226149f, @c868d27d87. Re-run by the issuer: AC1 7 passed; AC2 'R30 REMOVES 280 of 46066 tested pairs (280 of 48358 served), over 16 securities'; AC3 'SENTENCE-INITIAL 3 of 40 kept pairs read'. R30 (b): 3.0.0_SA_CVO~Z graded the 30 removed pairs 30 of 30 wrong, bar MET (relayed by 1.0.0_SA_CTO~Z msg 32051, grade @c352f9f601); R30 stands with the exact-stored-alias clause. NOT MERGED: the branch changes the served matcher, so it merges under its own never-widen pair and serves after rebuild #11 (R28, R30). Row Z-W126-S1 fixed by the issuer @543548f46c (a stale identity-file pin after the pointer move).
+MERGED 2026-10-09 ~06:4xZ (issuer `2.0.0_SA_COO~W1`, DELL1): @3255a9156d under pair COO `deliverables/2.0.0_SA_COO_W1/round75/NEVER_WIDEN_HALF_COO_BR1_MERGE.md` @9edefddaf5 + CTO `deliverables/1.0.0_SA_CTO~DELL1/round75/NEVER_WIDEN_HALF_CTO_BR1_MERGE.md` @8dceddf01c. C-a met (rebuild #11 grade ACCEPT 22/22 @b0127bd438); C-d on the merged tree 518 + 7 passed; ledger harvst-br1-merge-20261009 CLOSED. Gold serves R30 only after rebuild #12 (its own pair).
 <status>complete</status>
 <round>74</round>
 <slot>~126</slot>

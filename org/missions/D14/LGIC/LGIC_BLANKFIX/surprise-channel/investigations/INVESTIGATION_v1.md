@@ -1983,3 +1983,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The file is created at first use and is never tracked, like the older git-author-override audit log the cell modelled it on; the gate's check is local to the box and the 600-second window, so nothing needs the line to travel. I did not create the file, add a negation to .gitignore (outside the grant) or commit a placeholder. Whether the override rows should be tracked for review is the owner's call."
 }
 ```
+
+## LGIC_BLANKFIX-D1-S2 -- the scope test pins uncounted as the ALL-ROOTS line's last field, so BF-x-5's appended field reads red at the drain
+
+```json
+{
+  "id": "LGIC_BLANKFIX-D1-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~B1",
+  "surfaced_at": "2026-10-09T07:04:59Z",
+  "one_line": "the scope test pins uncounted as the ALL-ROOTS line's last field, so BF-x-5's appended field reads red at the drain",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain hygiene on wk-LGIC_BLANKFIX-1 @467d08b99b: 'FAIL: the estate run counts uncounted at the end of its last line: other_holes=2 stale_hints=0 uncounted=0 counted_at_caller=17' / 'SCOPE-TEST ok=False assertions=831'; the trunk reads SCOPE-TEST ok=True assertions=831",
+      "lib/tests/test_opal_naming_scope.py:370 asserts last.split()[-1].startswith('uncounted='); TO-BF-x-5 build item 1 told the cell to append counted_at_caller after uncounted, and its grant did not name the scope test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every lib/tests/test_opal_naming_*.py script that passes at the base passes after the build (each order's CONTEXT bar).",
+  "world_is": "The cut asked for a new trailing field and named the one reader it knew (the rootcheck test), not the scope test that reads the same line by position. Issuer's cut defect; ruled by TO-BF-x-5 AMENDMENT 2 (grant the scope test; read uncounted by key)."
+}
+```

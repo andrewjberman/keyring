@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_CTLPLN_PRD.md",
   "prd_version": "v0.22",
-  "prd_pin": "333d2b37b3287bccde6f61154f8544f904a51a3b",
+  "prd_pin": "6c5cf02601c131a3d1b15316f16e420dabb6817a",
   "half": "ratified-text",
-  "half_hash": "cc47114ab5a236adc73b92fa05d6125cc82ad678a38493b31964f37adbdb070c",
-  "endpoint_hash": "33c11e398e69ec44e0f79ac7cdf8ed68b40245a98fd8cc3f0dca8998ae619fb4",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V022_RATIFIED_TEXT_REVIEW_20261009.md@33879bb6bf",
+  "half_hash": "2b64a9c79aa191d36bf7efbdd5b5080d9d8f59529476ba3fd7bdfe5928badd71",
+  "endpoint_hash": "b6c8d5290b250ca2c44cf328578456e8e7d122e28abf3d0ab8785e03c4b4404a",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/NFRA_CTLPLN_PRD_V022_RATIFIED_TEXT_REVIEW_20261009.md@e5ea1d16ad",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-09T06:33:06Z",
-  "reason": "v0.22 re-bases FWD-1/4/5/6 only in the addendum; the ENDPOINT section keeps the old cards (FWD-6 contradicts the push law), so the half binds stale text -- replace the cards in place"
+  "signed_at": "2026-10-09T06:43:57Z"
 }
