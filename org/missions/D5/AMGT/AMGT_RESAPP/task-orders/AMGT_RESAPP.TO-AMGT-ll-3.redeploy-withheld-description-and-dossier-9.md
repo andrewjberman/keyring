@@ -80,3 +80,4 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+<status>staged -- AMENDMENT 1 (issuer, 2026-10-09T18:5xZ): the pair is complete -- CTO~DELL1 half SIGNED (ledger/NEVER_WIDEN_ROUND87_LL3_CTO_HALF.md @b6f9ac164e, msg 3020). Its conditions bind this order: (1) the build pin carries dossier /9 ONLY after AMGT_CORPUS's leg v at /9 reads cut 0, false ellipses 0 and prefix 0, measured -- never /8; (2) at the pin, BEFORE the apply, print every name and section whose own verdict is FAILED (both branches), with every PASS section byte-equal on the five 20-F names; (3) after the deploy: no FAILED section served (AC1), dossier at /9 (AC2), ASML unchanged (AC3); a miss re-applies the kept HZoC2x package the SAME hour. GO still waits on AMGT-ll-1 merged and C1's graded /9 hash. Graded by to-pipeline-gate on a modification.</status>
