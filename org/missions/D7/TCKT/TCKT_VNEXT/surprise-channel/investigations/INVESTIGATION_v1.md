@@ -628,3 +628,31 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
   "world_is": "Both met as written; notes in the grade file."
 }
 ```
+
+## TCKT_VNEXT-D2-S14 -- W6-S3 disposition: live route list (117) = census (117), diff empty
+
+```json
+{
+  "project": "TCKT_VNEXT",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~V2",
+  "surfaced_at": "2026-10-09T05:31:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "TCKT_VNEXT-D2-S14",
+  "one_line": "Disposition of TCKT_VNEXT-D2-W6-S3 per CTO msg 2568 (the census denominator is the LIVE route list): apigatewayv2 get-routes on the portal API 7k3ed8px20 (CLI auto-paginated) returns 117 routes; normalized against the census's 117 rows, live-not-in-census = 0 and census-not-live = 0, so the console $default and every manual route are already counted.",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2 (ruled the denominator); nothing left open on W6-S3's census-coverage question",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws apigatewayv2 get-routes --api-id 7k3ed8px20 at ~05:3xZ: 117 Items, 117 distinct RouteKeys after normalizing path parameters to {}",
+      "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/0.9.0_WK_TCKT_VNEXT~6/SA_ROUTE_CENSUS.json: 117 rows, 117 distinct",
+      "1.0.0_SA_CTO~DELL2 msg 2568 (W6-S3 ruling)"
+    ]
+  },
+  "spec_asserts": "The census denominator is the live route list, with the source diff named.",
+  "world_is": "Live 117 = census 117; the source diff is empty.",
+  "notes": "The IRPT routes.json _denominator mismatch (19 vs 21) inside the source remains a documentation defect in that file, not a census gap."
+}
+```
