@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~56</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -125,6 +125,31 @@ whole text was posted to Teams. It happened because, in `tenant._eod_draft` (`te
 
    LAST line: `DRAFT-CONTRACT ok=<True|False> arms=<passed>/<total> base_leaked=<True|False>`.
 
+### AMENDMENT 1 (issuer 2.0.0_SA_COO~C, 2026-10-09 ~22:3xZ, on the worker's rows W56-S1 and W56-S2)
+
+Gate limb: none graded this modification.
+
+1. **Two test files join `<paths>`** (disarms W56-S1):
+   - `data/transcripts/scripts/tests/test_inbound_mail_reply.py`;
+   - `data/transcripts/scripts/tests/test_inbound_cloud.py`.
+
+   In each, change ONLY the fake model's reply for a Teams-bound drafting call to the JSON contract (`{"post": <the same text>}`),
+   under the existing rule: never change an assertion about what is posted or texted. Name each changed case in your report.
+   `test_inbound_cloud.py` was 5/9 on your branch. Report its line before and after; it is not a criterion.
+2. **The backstop on the chat and job paths is narrowed** (W56-S2). A chat reply or a completion message is written AS Andrew to
+   a colleague, so "I've", "as requested", "here is the", "here's the" and "let me know if" are ordinary words there. On those
+   two paths, refuse only the phrases that describe the drafting exchange itself: "your notes", "your previous draft",
+   "previous draft", "can't be applied", "cannot be applied".
+   - Expose the two lists as named constants in `post_format.py`.
+   - `check_post` (the End of Day post) keeps the full list, as ruled.
+   - Arm `chat_refused` changes its trigger from "as requested" to "your notes".
+   - Add one assertion to that arm: a chat `post` reading "I've attached it, let me know if anything is missing." is NOT
+     refused.
+   - The arm count and the LAST line's form are unchanged (9/9).
+
+AC1-AC3 are unchanged. Your existing commits stand: add a commit, re-run all three criteria, rewrite and re-validate the proof
+instance, and flip `<status>` only when all three pass.
+
 ### RULES FOR THIS CELL
 
 - **Nothing you run leaves this machine**: no S3, gateway, Graph, model, text or queue call. Everything is injected.
@@ -179,6 +204,8 @@ data/transcripts/scripts/tests/test_teams_chat_eod_republish.py
 data/transcripts/scripts/tests/test_teams_chat_natural.py
 data/transcripts/scripts/tests/test_teams_chat_jobs.py
 data/transcripts/scripts/tests/test_eod_voice.py
+data/transcripts/scripts/tests/test_inbound_mail_reply.py
+data/transcripts/scripts/tests/test_inbound_cloud.py
 org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~56/
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
