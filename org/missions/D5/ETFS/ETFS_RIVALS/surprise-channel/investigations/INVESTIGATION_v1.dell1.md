@@ -465,6 +465,28 @@ dell1's coordinate `D1-` (org/devices/DEVICES.json), so they cannot collide with
     "spec_asserts": "Cell item 3: the key comes from BRIGHT_DATA_API_KEY or the secret named by RIVALFUNDS_SERP_SECRET (one GetSecretValue).",
     "world_is": "serp._bd_serp_zone() (serp.py:230-242) calls GetSecretValue on find-dualbiz/bright-data/serp when neither the cache nor BD_SERP_ZONE is set; dramatic_move.serp_search passes BD_SERP_ZONE through when present. Without it the Lambda role needs a read on that second secret too, else every search raises and counts as failed (no crash, no write).",
     "notes": "Applier contract: set RIVALFUNDS_SERP_SECRET (name or ARN of the key secret; raw string or JSON with api_key / bright_data_api_key / BRIGHT_DATA_API_KEY), grant the one-ARN secretsmanager:GetSecretValue, and set BD_SERP_ZONE (serp.py's own default zone is serp_opal) on the Lambda that runs the sweep (the daily one). Not set by this cell (out of bounds)."
+  },
+  {
+      "id": "ETFS_RIVALS-D1-S11",
+      "project": "ETFS_RIVALS",
+      "fabric": "dell1",
+      "surfaced_by": "2.0.0_SA_COO~V1",
+      "surfaced_at": "2026-10-09T14:35Z",
+      "one_line": "FOR FIND_INSURE's OWNER: the Bright Data key secret find-insure/bright-data/api-key (ARN suffix -7ojPkd) gains a SECOND consumer -- the etfs-rivalfunds daily Lambda (RIV-wi-1, its own deploy pair) reads it by exact ARN; a rotation or delete of that secret must reach ETFS_RIVALS",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "CTO ruling ADDENDUM 7 @aa290d707e (msg 2555): option (a), GetSecretValue on exactly the -7ojPkd ARN, no copy; 'File a row in this project's channel telling FIND_INSURE's owner it now has a second consumer, so a rotation reaches both'",
+              "find-dualbiz/bright-data/serp names api_key_secret = find-insure/bright-data/api-key (read 14:2xZ, key names only); data/find/dualbiz/scripts/serp.py _BD_API_KEY_SECRET defaults to the same secret",
+              "Grant lands with RIV-wj-1 (gen_policies.py) under the RIV-wi-1 deploy pair; until that apply, the rivalfunds daily Lambda holds no grant on it"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A secret's owner knows every consumer before a rotation.",
+      "world_is": "find-insure/bright-data/api-key will have a consumer outside FIND_INSURE (and already serves find-dualbiz's serp.py by default).",
+      "notes": "Owner to inform: FIND_INSURE's COO/CTO. Consumer of record: ETFS_RIVALS, 2.0.0_SA_COO~V1; env RIVALFUNDS_SERP_SECRET on etfs-rivalfunds-daily-lambda; policy statement GetSerpSecret in infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json."
   }
 ]
 ```
