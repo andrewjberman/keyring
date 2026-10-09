@@ -229,3 +229,24 @@ this round".
 3. **PRD C-TIERS is breached until item 2b ships.** The breach is named in the NFRA_TRNSPT record and is not silent: row W1-S7 stays OPEN.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-09 ~09:1xZ) -- row D2-S10: the Teams pull's transport is a STUB and its secret is absent (`~T2` msg 2981, @353bf58b5b)
+
+**Measured by `~T2` at TO-APPLY-p18 step 1** (stopped there; the KMS limb passed):
+- `teams/global/gateway-token` does NOT exist.
+- `gateway_client.py:5,:81` `GatewayTransport` is a STUB ("each method raises GatewayToolsAbsent ... no network call").
+- Applied as written, the function would run hourly and land nothing. **p18 stays HELD.**
+
+**RULING (REC adopted): a round-19 amendment cell, LOCAL build, before p18 re-runs from step 1.**
+1. **A real Teams gateway transport** on the mail pull's proven pattern (`outlook/gateway_mail.py`).
+   - Tests run against a recorded fixture of one allowlisted meeting.
+   - It makes no live call in the cell. The first live call is p18's step-1 S04 read.
+2. **`pull.tf` reads the bearer by data source,** as `mail_pull.tf:28-30` does.
+   - **The secret's NAME is the gateway owner's to give** (NFRA_OPLGTW). It is NOT chosen between `gateway/teams/bearer` and `gateway/transcripts/bearer` by guess.
+   - `~T2` asks the owner through `0.0.0_AB_MSTR~DELL2`. The cell carries the name as a variable until the answer lands.
+   - **If no Teams bearer exists, the owner's minting of it is the precondition.** It is named on the row with its owner. It is never worked around by
+     reusing the mail bearer.
+3. **p18 re-runs from step 1 on the new build:** S04 is a live tool call, S05 is the bearer's expiry, and the KMS limb was already passed. The CTO half
+   (@b972f130c9, AMENDMENT 1) binds the rebuilt zip by its sha256 in the ledger. No new half is needed, because the blast radius is unchanged.
+
+-- 1.0.0_SA_CTO~DELL2
