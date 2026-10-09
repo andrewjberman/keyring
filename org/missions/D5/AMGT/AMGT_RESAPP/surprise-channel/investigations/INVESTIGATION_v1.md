@@ -23305,3 +23305,35 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Recorded as filed, no verdict."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-S13",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~RA1",
+  "surfaced_at": "2026-10-09T13:32Z",
+  "one_line": "AMGT-jj-5 STOPPED before the apply: the build at pin 4c929a2ffe prints NINE non-identical members where the pair admits five, and the four extra are this project's own lib/research/identity modules pulled into the closure BY the admitted crosswalk.py change -- function-scope only, nothing executed at import.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Nothing was applied. The STOP is at CTO condition 1 / COO half BLAST RADIUS ('Any other member printed is a STOP'), taken BEFORE the upload and apply. Live function untouched at CodeSha256 66MDfT5iFHYD9EHhmiiDc2hyzx1tIDqF2OT9/jGIjHU=; the artifact object in S3 is NOT re-uploaded; no Terraform state written.",
+      "BUILD_RC=0 and the build's own verify arms passed. CONTENT-DIFF SUMMARY: files 399, IDENTICAL 390, CHANGED 5, ADDED 4, REMOVED 0, against 66MDfT5i.",
+      "GRADED AGAINST THE HALF, with both counts printed: 9 non-identical members printed; the COO half admits 10 distinct paths (this round's four, hh-1's passages.py, and five registry members); ON-LIST 5, OFF-LIST 4. The five on-list: infra/logic/registry/reporting_policies.json, lib/research/api/name_search.py, lib/research/api/scoped_amgt.py, lib/research/filings/passages.py, lib/research/identity/crosswalk.py. The four OFF-LIST, all ADDED: lib/research/identity/build_universe.py, one_pager_precedence.py, positioning_chain.py, resolver.py.",
+      "Named by the half but NOT printed, which is fine because the half says 'may print': crosswalk.schema.json and four of the five registry members (event_rules, key_rulings, name_rulings, root_map).",
+      "analyze.py (AMGT-jj-1), whose appearance the pair makes an explicit STOP, does NOT appear: 0 mentions anywhere in the build log. That arm passed.",
+      "WHY THE CLOSURE CARRIES THEM -- a chain, not a coincidence: jj-3's admitted +128 to crosswalk.py adds load_issuer_sources(), which imports build_universe; build_universe imports the other three. Measured on the BUILT package: build_universe is imported by exactly one packaged module (crosswalk.py), and one_pager_precedence, positioning_chain and resolver are each imported by exactly one packaged module (build_universe). So the admitted change is what reached them -- the build's closure walk follows function-scope imports by design, and its own header says an enumeration lapses silently where a closure cannot.",
+      "RISK SHAPE, measured rather than argued. (i) The import is FUNCTION-SCOPE ONLY: 0 module-scope imports of build_universe in crosswalk.py, 1 function-scope import at crosswalk.py:1155 inside load_issuer_sources(). So this is a request-time path, not a cold-start path. (ii) build_universe executes NOTHING at import: its top-level nodes are 22 FunctionDef, 8 Import, 4 ImportFrom, 22 Assign, 1 If guard and 1 docstring Expr -- no call at import. (iii) All four are reachable from a request entrypoint (155 reachable modules in the package), so they are not dead weight; they are code the serve path can now enter through load_issuer_sources().",
+      "PROVENANCE: none of the four is another project's code. All four are AMGT_RESAPP's own, added by this project's earlier cells -- build_universe.py and resolver.py @074d0d1ebe (2026-09-10, TO-AMGT-s-12), positioning_chain.py @0a5064ded5 (2026-09-16, TO-AMGT-rk-4), one_pager_precedence.py @a318c9472f (2026-10-06, AMGT-ba-1).",
+      "WHAT THIS ROW DOES NOT ESTABLISH: whether the four SHOULD ship. That is the pair's call, not the applier's. Specifically not measured here: what load_issuer_sources() does when the serve path enters it, and whether any of the four reads a store or an external surface at request time -- the questions a widening decision turns on."
+    ]
+  },
+  "spec_asserts": "COO half NEVER_WIDEN_ROUND85_JJ5_COO_HALF.md @621f07b79a BLAST RADIUS: 'Any other member printed is a STOP.' CTO half @a3440434f5: 'The code leg's closure: this round's four files, hh-1's passages.py, and the five registry members, each admitted only with its closure reason printed. Any other member is a STOP.'",
+  "world_is": "The pair's admitted list was cut from a diff over the closure ROOTS (`git diff --stat 7b84cfc5a9 acf01642a3`), which sees files that CHANGED between the pins. It cannot see a file that did not change but newly ENTERS the package because an admitted change added an import to it. That is exactly what happened: four unchanged, pre-existing AMGT_RESAPP modules became packaged members for the first time because jj-3's admitted crosswalk.py edit imports build_universe at function scope. So the list and the build are both behaving correctly and they disagree -- a diff-derived list under-counts a closure-derived package whenever the admitted change adds an import. The failure direction is safe here (the build STOPPED rather than shipping quietly), and the four carry no cold-start exposure and no import-time work, but they ARE newly reachable serve-path code that has never shipped on this function.",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "notes": "Ledger amgt-resapp-r85-jj5-scoped-api-dell1: L1-L5 closed with proof (act 1 the recorder, conditions 8 and 9, the rollback capture, the wheels); L6 is where the STOP lands and is NOT closed; L7-L11 unattempted. ACT 1 IS COMPLETE AND INDEPENDENT of this STOP -- the recorders no longer write the source map's top-level key, the key is gone, AC2 reads R85 SOURCEMAP AC1: YES, and condition 9 holds -- so the round-85 recorder work can be kept whichever way this is ruled. The built file (42,0xx,xxx B) and the kept live package are both retained, so whoever applies does not need to rebuild. For the issuer, the two routes dd-4's row D1-S4 used in the same situation: an ADDENDUM admitting the four with their closure reason printed (the cheap route, and the reason is already measured above), or a re-cut at a pin whose crosswalk.py does not reach build_universe (which would mean dropping jj-3's issuer build, i.e. the round's point). A third route exists and is worth naming because it is the only one that changes the generator rather than the list: cut the pair's admitted list from the BUILD's closure instead of from a diff over the roots, so the two instruments stop disagreeing."
+}
+```

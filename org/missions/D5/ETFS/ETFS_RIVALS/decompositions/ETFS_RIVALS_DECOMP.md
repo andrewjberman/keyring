@@ -1231,3 +1231,23 @@ the three WS2 guards and takes no file a live WS2 order owns: `render.py` belong
   `ws3_item8_prep/w26s1_ai_below_tolerance_check.py` (AC2; base FAIL 1, control arm PASS). J1 (CVO): on the issuer's real
   run over the 13 funds, no opening leads more than a quarter of the verdicts (`verdict_openers_check.py`), and the
   verdicts read as fund-specific.
+
+### `RIV-wh-1` -- no AI fact prints '$0.0 million' or a bare security identifier; a zero notional is never a fact (repair of RIV-aw-1's J1 NOT MET; rows D1-C-S4, D1-S9) -- APPENDED 2026-10-09, revision 1.25
+- Placement: `ledger/CTO_RULING_WORKSTREAM2_SPLIT_ADJUST_TRADE_LIST_SCOPE_20261009.md` ADDENDUM 5 @ceab50de56
+  (1.0.0_SA_CTO~DELL1 msg 2497).
+- Measured: the served 13:00Z sweep of 2026-10-09 (research_hypotheses-20261009T130227Z-ai, a1-chain/7) carries '$0.0
+  million' 7 times (WCMG, ETFT) and the bare CUSIP 037833100 for Apple Inc in GQGU's 30-day account ("The fund added
+  037833100 for $8.1 million"; cited row `GQGU|037833100|2026-09-10`). The issuer's a1-chain/8 real run repeats the '$0.0
+  million' (WCMG, ETFT, three each). Causes: `_mn` shows millions at one decimal, so any |v| < 50,000 is '$0.0 million';
+  `fact_pack` names a trade `names.get(key) or _name(...)`, which falls back to the raw key when no name resolves.
+- Interface (all in `ai_accounts.py`):
+  1. `_mn(v)`: |v| < 50,000 -> thousands, e.g. '$42 thousand' (whole thousands); |v| >= 50,000 -> millions at one
+     decimal, as today. The facts' `display:` form follows, so the model copies it (SYSTEM rule 1 allows the display form).
+  2. `fact_pack` leaves out a trade whose notional is exactly 0 (never '$0 thousand').
+  3. `fact_pack` never puts a bare identifier (the raw `security_key` or `security_id`) in a fact's text: the name comes
+     from `names`, then the row's own name field(s) if the trade row carries one, then any name the function can already
+     reach for that security; a trade with no name left is left out of the facts.
+  4. SYSTEM rule 1 names the thousands form beside the millions form.
+- Out of bounds: every other file; no vendor call, no S3, no deploy. The real-model read is the issuer's, at the drain.
+- Check: `ws3_item8_prep/wh1_small_notional_and_unnamed_check.py` (AC1; base FAIL 4; the EDGE negative arm and the NAMED
+  control PASS). J1 (CVO): on the issuer's real 13-fund run, 0 '$0.0 million' and 0 bare identifiers in any item.
