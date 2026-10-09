@@ -204,3 +204,31 @@ adjudication rows live in `../adjudications/` as `NFRA_OPSWKF-C-S<k>`.
   "notes": "Sibling of NFRA_OPSWKF-D2-S3, which is the same class on a different action (ses:DescribeConfigurationSet) and whose grant the issuer has already routed to the laptop fabric via 0.0.0_AB_MSTR~DELL2. The three gaps together say something the individual rows do not: the dell2 CloudOps principal was provisioned for APPLY but not for the READS that grade an apply. Recommend the grant that closes D2-S3 also carry iam:SimulatePrincipalPolicy and dynamodb:GetResourcePolicy, so the next trade-pipeline deploy from this device can run after-read (c) as written. OUT-OF-LANE for this seat (the principal is NFRA_CTLPLN's identity stack, and this lane is seated for NFRA_OPSWKF only); routed, not chased. The deploy itself is COMPLETE and its ledger CLOSED -- this row does not hold anything, and it is filed so the issuer grades OW-d1-AC2 knowing exactly which instrument produced each verdict."
 }
 ```
+
+## NFRA_OPSWKF-D2-S5 -- Row D2-S3 RESOLVED by NFRA_CTLPLN AMENDMENT 29 (live read); row D2-S2's pyarrow path does not reach any NFRA_OPSWKF flow
+
+```json
+{
+  "id": "NFRA_OPSWKF-D2-S5",
+  "project": "NFRA_OPSWKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~O2",
+  "surfaced_at": "2026-10-09T13:13:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Nothing remains to investigate: D2-S3's grant is applied and read live (NFRA_CTLPLN AMENDMENT 29), and D2-S2's path cannot be reached from any NFRA_OPSWKF flow; S2 itself stays open for its own owner.",
+  "one_line": "Resolves row NFRA_OPSWKF-D2-S3: NFRA_CTLPLN.TO-APPLY-29 applied 12:21:00Z, and COO~C's live read for cloudops-dell2-agent-user shows ses:DescribeConfigurationSet allowed and ses:DeleteConfigurationSet refused. D2-S2 (pyarrow absent from trade-workflow-handler) stays an OBSERVATION: its only import is in Execute's success path, wrapped non-critical, and the C-NO-SEND fence returns 409 for every ticket-origin Execute before it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msgs 3329 and 3333, relaying laptop 2.0.0_SA_COO~C msg 107967: TO-APPLY-29 applied 12:21:00Z, 0/2/0, ledger closed; live read 13:0xZ: DescribeConfigurationSet allowed, DeleteConfigurationSet refused",
+      "infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/workflow_handler.py:527-533 @HEAD: the lazy 'from parquet_exporter import export_single_submission' sits inside try/except 'Failed to export to Parquet (non-critical)', after the EXECUTED write and the brokerage send",
+      "the same file: handle_execute's first statement returns 409 for origin == 'ticket' (OW-e-3, live since 10:02:52Z, deployed bytes 49a9607ece5d verified by the issuer)"
+    ]
+  },
+  "spec_asserts": "A dell2 CloudOps lane can run safe-apply's untargeted tagauthz plan; NFRA_OPSWKF's flows do not depend on a module the deployed function cannot import.",
+  "world_is": "Both now hold. The first holds since 12:21Z. The second held throughout: the pyarrow gap is reachable only from a non-ticket Execute, where it degrades to a logged non-critical failure. That gap belongs to the trade pipeline (TRSB_LEDGER, inactive) and goes to the round-1 analysis as an enrichment candidate; it is not a round-1 defect.",
+  "notes": "Resolving row written by the issuer; append-only, S2 and S3 left as written."
+}
+```
