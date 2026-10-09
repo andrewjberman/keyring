@@ -203,3 +203,31 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "Not BLOCKING: the close plan's driver mail is the falsifier and is already scheduled. The issuer resolves this row on that read."
 }
 ```
+
+## COMM_ASSIST-Z-S6 -- channel_poll fails its one call on EVERY ingress invocation and never raises ingress_step_failed; 63 of 63 in the hour BEFORE this deploy
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S6",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~CA",
+  "surfaced_at": "2026-10-09T19:39:55Z",
+  "one_line": "The ingress's channel_poll step has been failing its one call on EVERY invocation, long before this deploy: 63 occurrences of {\"event\": \"channel_poll\", \"failed\": 1, \"channels\": 0, \"mentions\": 0, \"read\": 0} in the hour BEFORE the apply, and it continues after. Found while reading step 7's log window; not caused by the mail deploy and not a rollback trigger.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "POST-APPLY window (18:33:30Z onward), /aws/lambda/teams-global-chat-assist-ingress-lambda: every invocation logs {\"calls\": 1, \"channels\": 0, \"event\": \"channel_poll\", \"failed\": 1, \"mentions\": 0, \"read\": 0}.",
+      "CONTROL, the hour BEFORE the apply (17:30Z-18:33Z), same log group, filter-pattern channel_poll: 63 of 63 messages carry \"failed\": 1 and none carries \"failed\": 0. Denominator printed by a uniq -c over the extracted field. So the condition PRE-DATES the apply and this act did not cause it.",
+      "The same window shows the deploy's own steps healthy: ingress_poll continuing, 0 ingress_step_failed, 0 not-configured, and mail_poll {calls:4, domains:4, failed:0, sent:0}. So channel_poll is an isolated step, not a symptom of the mail change.",
+      "Read as log lines only, per the order's step 7; no message content was read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ingress's steps either succeed or log ingress_step_failed. FWD-3: no refusal fails silently.",
+  "world_is": "channel_poll fails its single call on every invocation and does NOT raise ingress_step_failed, so the failure is counted in a field and never escalated. 0 channels and 0 mentions are read as a result. Whether any product outcome depends on that step is NOT established here -- this seat only measured the counter, and naming the consequence needs the ingress owner.",
+  "notes": "NOT this seat's and NOT part of CA-d-2: step 8's rollback fires on an AFTER failure CAUSED by the act, and the control shows this is not one, so the deploy correctly stood. Filed because a per-invocation failure that never escalates is exactly the FWD-3 silent-refusal shape. Owner is the COMM ingress's issuer; routed by filing rather than by message, since the CTO is copied on decisions only."
+}
+```
