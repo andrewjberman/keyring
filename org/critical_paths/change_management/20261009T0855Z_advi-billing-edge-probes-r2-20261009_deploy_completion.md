@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | verify | cloudfront GET in_book -> /api/scoped/partners/books/relationship/z08219260/fee-quarter/2026Q3 | integer HTTP status recorded in AB_E1_PROBES.json |  | OPEN |
+| L1 | verify | cloudfront GET in_book -> /api/scoped/partners/books/relationship/z08219260/fee-quarter/2026Q3 | integer HTTP status recorded in AB_E1_PROBES.json | in_book: advisorId chase_bertrand, map lists z08219260 -> HTTP 200 through CloudFront; AB_E1_PROBES.json probes[0] | CLOSED 20261009T090725Z |
 | L2 | verify | cloudfront GET out_of_book -> same route, mapped advisor without z08219260 | integer HTTP status recorded in AB_E1_PROBES.json |  | OPEN |
 | L3 | verify | cloudfront GET firm_admin -> same route, firmRole=admin bypass | integer HTTP status recorded in AB_E1_PROBES.json |  | OPEN |
 | L4 | verify | cloudfront GET other_firm -> same route, firmId=mockadv | integer HTTP status recorded in AB_E1_PROBES.json |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20261009T085554Z OPENED by 0.7.0_AE_CloudOps~AB2 with 5 leg(s)
+- 20261009T090725Z LEG L1 closed: in_book: advisorId chase_bertrand, map lists z08219260 -> HTTP 200 through CloudFront; AB_E1_PROBES.json probes[0]
