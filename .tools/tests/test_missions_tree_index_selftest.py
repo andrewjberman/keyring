@@ -6,8 +6,8 @@ TOOL_BATTERIES (.tools/tests/**). The tool is 2.0.0_SA_COO's (@cb6e93e7f8); this
 none of its refusal semantics -- if an arm here ever needs one, that is a COO edit, not a test edit.
 
 THE CONTRACT THIS FILE PINS, measured 2026-09-02 22:50Z from one run by path (rc 0, 373 ms, 19 lines):
-    <two spaces>PASS<two spaces><arm name>          one line per arm, 18 of them
-    missions-tree-index --self-test: 18/18 PASS     the last line: numerator/denominator + verdict
+    <two spaces>PASS<two spaces><arm name>          one line per arm, 52 of them
+    missions-tree-index --self-test: 52/52 PASS     the last line: numerator/denominator + verdict
 The self-test builds every fixture inside tempfile.TemporaryDirectory() (:367) -- its write surface
 is OFF the estate, so running it under every sweep touches nothing shared.
 
@@ -38,7 +38,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-EXPECTED_ARMS = 18
+EXPECTED_ARMS = 52
 VERDICT_RE = re.compile(r"^missions-tree-index --self-test: (\d+)/(\d+) (PASS|FAIL)\s*$", re.M)
 ARM_RE = re.compile(r"^\s+(PASS|FAIL)\b", re.M)
 MUTANT_ANCHOR = 'ids(viol) == ["INDEX-MISSING"]'

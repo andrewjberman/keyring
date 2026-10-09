@@ -115,7 +115,8 @@ FAIL as expected.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<!-- drained 2026-10-09 by 2.0.0_SA_COO~V1: merged ba92996a72; AC1 PASS 3 of 3 (worker ~27 proof VALID); the issuer real run shows the CGIC windows move -->
 <round>28</round>
 <workstream>3b</workstream>
 <slot>~27</slot>
