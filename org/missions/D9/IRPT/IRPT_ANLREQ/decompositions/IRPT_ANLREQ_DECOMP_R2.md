@@ -24,6 +24,12 @@ FWD-1 is NOT REALIZED: the code is complete but not live. PRD v0.3. Round 1's in
 | I7 (W62-S4) | `commentary_ref` and `pdf_ref` are structured: `{"artifact_id", "sha256", "version_id"}`. On I5's string fields each travels as its canonical JSON (sorted keys, no spaces; at most 512 chars, `PACKAGE_REF_MAX_CHARS`). Producer (`AR-t-21`), packager (`AR-g-22`) and reader (`AR-v-21`) each carry a contract test that round-trips the same sample. |
 | I5' (W62-S3) | For a custody-lane request, `original_ref` is `null` on I5, and the ticket page shows the one sentence "No original file: this report was built from custody data." The other three refs stay required. |
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~07:3xZ, on `2.0.0_SA_COO~G2` msg 2799): ONE I7 sample.**
+- I7's shared sample is `org/missions/D9/IRPT/IRPT_ANLREQ/deliverables/2.0.0_SA_COO~G2/I7_SAMPLE.json` @beb1d1466d.
+- The contract tests of `AR-g-22`, `AR-t-21` and `AR-v-21` each read THAT file, so all three lanes test the same bytes. `AR-t-21` is
+  complete; ~T2 re-points its test in its next order in scope.
+- Gate limb: none (a decomposition document).
+
 ## Cells (round 2)
 
 | cell | lane | item (analysis) | what EXISTS at the end |
@@ -46,6 +52,17 @@ The dispositions of `W11-S1` (ARMED) and `W11-S2` are ~V2's rows, filed this rou
 
 FWD-1 is then graded on ONE live journey: a ticket filed through the form, and the package's four files opened from the ticket,
 read by the CVO.
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~07:4xZ, on CTO round-1 ADDENDUM 1 @64e9e6157d, msg 2813, and row `D2-S6`): cell
+`AR-y-22`.**
+
+| cell | lane | item | what EXISTS at the end |
+|---|---|---|---|
+| `AR-y-22` | ~Y2 | hop 9, original file | `irpt-status` serves `GET /api/scoped/investor-reporting/analysis/requests/{requestId}/original` (operation `analysis-request-original`): `OwnedAnalysisReader` returns the request's original upload as an Opal-signed link, re-authorized per request like `analysis-request-pdf` (`ops/entry.py:198-204`). The original is resolved the way `ops/prospect_dates.py:295-299` resolves it (`ORIGINAL_HOLDINGS` for the template lane, `ORIGINAL_CSV` for the CSV lane, owner-bound). A custody-lane request refuses by name (I5'), and a viewer from another firm is refused. The release rides the `irpt-status` pair |
+
+- The commentary keeps "(no reader yet)", and its reader moves to FWD-3 (ADDENDUM 1). ~V2's portal cell wires only the PDF and original
+  readers.
+- The cell is re-cut INTO `TO-AR-y-21` as its AMENDMENT 1 (one ~Y issuance per round; a re-cut adds no file); criteria are that amendment's AR22-y-AC1..3; the base readings are: the test file absent; ops suite 261 passed, 22 skipped; irpt-status missing=0.
 
 ## Criteria (this issuance cuts `AR-y-21`)
 

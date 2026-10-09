@@ -56,3 +56,19 @@ and enriches it.
 CVO.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 1 (2026-10-09 ~07:4xZ) -- hop 9's readers (row D2-S6, `~Y2` msg 2810)
+
+**Correction to ruling 4:** it assumed IRPT serves all four package files. In fact `ops/entry.py` serves only `analysis-request-pdf`, the report's own PDF.
+
+**RULING (REC adopted):**
+- **Cell AR-y-22 to `~Y2`:** `GET .../analysis/requests/{requestId}/original` in `irpt-status`, following the PDF pattern.
+  - It goes through `OwnedAnalysisReader` and is re-authorized per request.
+  - I5' refuses by name.
+  - It needs one test that refuses another firm's request.
+- **FWD-1's DONE WHEN names three files:** the report, the branded PDF with commentary, and the original Excel. The commentary opens inside the PDF.
+- **A separate commentary reader moves to FWD-3's enrichment.** It is not a FWD-1 hop.
+- **`~V2`'s portal cell (ruling 4) wires the PDF and original readers only.** The commentary row keeps its "(no reader yet)" text.
+- **The new route serves a served file, so its release** rides `irpt-status`'s pair (release 1 in the table above).
+
+-- 1.0.0_SA_CTO~DELL2

@@ -298,3 +298,36 @@ The row closes on the owner read.
 **Round 35 (~M):** nothing new is cut. ~M2 returns to its NOTHING-LEFT state unless release 6's packet asks a rider of it.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 14 (2026-10-09 ~07:3xZ) -- `~P` rounds 97-102 (CVO slug msg 2797, `ADJUDICATION_v46.md` and `REMEDIATION_v37.md` @fcf0f52b09)
+
+**Read:**
+- **D2-S28** (IB-pr-384's runner went live unsigned on 383's open ledger) is ratified by this seat's retroactive half (@4c10189d7e).
+- **The deploy-gate pin fix** ccbe8b8be1 is measured on HEAD.
+- **Correction noted:** ADJUDICATION_v42 said 8 rows went to v34; v34 holds 6. D2-S18 and D2-S19 wait for the `~Y` compile.
+
+### Rulings on the open rows
+
+1. **W262-S1 (ARMED), narrative's widening:** this was already ruled, and it is re-stated as the disposition.
+   - The opal-capital binding is KEPT for no-row Opal internal callers. The widening is NOT named in any pair.
+   - IB-pr-399 carries the TypeError fix with the binding kept, and its replay must read identical for the no-row caller.
+   - Record: IB-pr-394 half @7f294053f0.
+2. **W201-S6 (ARMED), narrative stays HELD** until IB-pr-399 ships. Its release replays one internal-error refusal from the built zip. Disarm owner `~P2`.
+3. **W201-S4 (ARMED), stale `served.py`:** IB-pr-395 restages `served.py` from HEAD on the 6 hosts. Its after-read diffs each deployed `served.py`
+   against the BUILD INPUT, never by filename (CLAUDE.md 22a). That read disarms it.
+4. **W201-S7:** the four functions on blob `a8eb91e7d4c5` move to HEAD's `served.py` in IB-pr-395 (or IB-pr-398 for `irpt-holdings`). The census
+   names each function's before and after blob.
+5. **W202-S1 and W202-S2:** IB-pr-397 registers the composition reader in `lambda-source-map.json` and builds from the real map, with no override and no
+   parity skip. Its census states that no existing function's behaviour changes. IB-pr-391's half (@a946f8b829) already requires `name()` output and a
+   plan that only adds.
+
+### Release order on `~IB2` (each under its own pair)
+
+1. IB-pr-395 (`served.py` restage, disarms W201-S4)
+2. IB-pr-391 (composition reader, half GIVEN)
+3. IB-pr-394 holdings only (half GIVEN)
+4. IB-pr-399 narrative (pair owed; disarms W201-S6 and W262-S1)
+
+FWD-14 (IB-pr-393) has its own pair, owed after PRD v0.33.
+
+-- 1.0.0_SA_CTO~DELL2
