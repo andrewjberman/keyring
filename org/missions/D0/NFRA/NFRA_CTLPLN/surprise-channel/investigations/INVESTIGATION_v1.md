@@ -5856,3 +5856,104 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "No prefix is refused at the S3 identity layer, so the order's rule changes nothing in the transcripts root. The write path also needs the key: the bucket encrypts every object under the transcripts key and the key policy lets the Dell users decrypt only (Andrew-direct 2026-10-07). The two earlier TO-RUN orders ran under the laptop identity for that reason. Nothing was widened; whether dell2's own seat should hold kms:GenerateDataKey and kms:Encrypt on that key is the CTO's call and a never-widen act."
 }
 ```
+
+## NFRA_CTLPLN-W14-S45 -- AMENDMENT 25 asks for dell1's PutObject arm to read refused, but dell1's S3 identity leg on the jobs prefix reads allowed (the group's S3 policy), so the arm can only be refused as the composed SSE-KMS write (S3 leg AND key leg); 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S45",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:12:19Z",
+  "one_line": "AMENDMENT 25 asks for dell1's PutObject arm to read refused, but dell1's S3 identity leg on the jobs prefix reads allowed (the group's S3 policy), so the arm can only be refused as the composed SSE-KMS write (S3 leg AND key leg); the check composes the two and prints both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py -> 'PUT cloudops-dell1-agent-user s3:PutObject (identity leg) on arn:aws:s3:::opal-data-transcripts/teams/transcripts/silver/research_meeting/date=2026-10-08/x.parquet -> allowed ; kms:GenerateDataKey (key leg) -> implicitDeny ; SSE-KMS PutObject composed (both legs) -> refused'; the same line for the dell2 user reads allowed, allowed, allowed.",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment24.transcripts_and_controls.outputs.txt: the LIVE principal s3:PutObject is allowed for dell2 by cloudops-dell-agent-deploy-policy, a group policy, so dell1 holds the same S3 allow."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 25 item 2: dell1_generate_refused=True is 'the same two arms for dell1, refused (the negative control)': kms:GenerateDataKey on the key and a PutObject on one key under teams/transcripts/silver/research_meeting/.",
+  "world_is": "The group's S3 policy lets both Dells put under the opal buckets, so dell1's PutObject is refused only at the key, not at S3. The field dell1_generate_refused reads True when dell1's GenerateDataKey is not allowed AND the composed write (S3 leg and key leg) is refused; the S3 leg stays allowed and is printed. Row NFRA_CTLPLN-W14-S44 (dell2's write failing at GenerateDataKey) is resolved by amendment 25 for dell2 once applied; dell1's real PutObject still fails at the key, by the CTO's ruling (b), 'dell1 is not asked'."
+}
+```
+
+## NFRA_CTLPLN-W14-S46 -- The transcripts root carries another cell's undeployed changes (commentary.tf: a new terraform_remote_state data source, the commentary policy and function), so an UNTARGETED plan or apply of the root
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:44:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S46",
+  "one_line": "The transcripts root carries another cell's undeployed changes (commentary.tf: a new terraform_remote_state data source, the commentary policy and function), so an UNTARGETED plan or apply of the root moves more than the one key policy this order builds; the apply of the key policy should be targeted at aws_kms_key.transcripts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resource-address diff of infra/aws/terraform/transcripts between 5c1d0af92c (the state whose key policy is live) and this branch: added data.terraform_remote_state.irpt_core; body-changed aws_iam_policy.commentary, aws_lambda_function.commentary and aws_kms_key.transcripts; the first three arrive with box/laptop commit 424998b161 (NFRA_TRNSPT TO-TR-c17, 'DESIRED, not applied').",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment26.plan_by_reading.txt"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 26 item 6: plan note section O gives the expected plan by reading for each root (identity, transcripts), and 'nothing else may move'.",
+  "world_is": "For the identity root the diff against the last applied state is exactly one added resource. For the transcripts root the tree also holds NFRA_TRNSPT's pending commentary changes, so 'nothing else moves' holds for this order's edit (only aws_kms_key.transcripts changed by it) but not for the root as a whole; section O says so and names the target. INERT: every apply of the root carries those changes whether or not this order's edit is applied."
+}
+```
+
+## NFRA_CTLPLN-W14-S47 -- KMS returns the principal list of a key-policy statement in no fixed order, so check_transcripts_dell_decrypt.py's 'live key policy equals the render' guard read False on one run and True on the next 
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T04:44:44Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S47",
+  "one_line": "KMS returns the principal list of a key-policy statement in no fixed order, so check_transcripts_dell_decrypt.py's 'live key policy equals the render' guard read False on one run and True on the next with the live key unchanged; the comparison now treats a principal list as a set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "same command, same live key policy, two consecutive runs on 2026-10-09: live_same False then True before the fix; the saved normalised statement showed principals [dell2, dell1] in one read and [dell1, dell2] in another.",
+      "after the fix (norm_statement sorts list values): three consecutive runs read live_same True."
+    ]
+  },
+  "spec_asserts": "Row NFRA_CTLPLN-W14-S40 and AMENDMENT 6 item 2 treat the guard's False as the apply having happened ('false after the apply by construction').",
+  "world_is": "A False from this guard has a second cause that needs no apply: principal-list order. A False read before the fix was therefore not by itself evidence that the key policy had been applied. Fixed in tests/check_transcripts_dell_decrypt.py (norm_statement); the guard is unchanged otherwise."
+}
+```
+
+## NFRA_CTLPLN-W14-S48 -- A shell on mdpf-daily-runner runs as mdpf-daily-runner-ec2-role, whose census verdict is NO (own policies only) but which the directory runner uses to assume the 49 Financial source principal role; and IAM lets both Dells send the
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-09T05:21:18Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S48",
+  "one_line": "A shell on mdpf-daily-runner runs as mdpf-daily-runner-ec2-role, whose census verdict is NO (own policies only) but which the directory runner uses to assume the 49 Financial source principal role; and IAM lets both Dells send the two resident documents to the same host beside the shell (cross-pair).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json:1679-1694 (host i-02448edb624a7a7cf, role mdpf-daily-runner-ec2-role, NO-ROUTE-FOUND) and :6046-6060 (the role's row: status READ, no iam/trail/delete reach).",
+      "infra/aws/terraform/investor-reporting/directory/principal_49f.tf:1-12: the 49 Financial source set 'reads through THIS role, assumed by the host for that firm only', because the host role itself must never hold those reads (cross-firm fence).",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/NFRA_CTLPLN.TO-CT-a-1.amendment28.a27_cross_pairs.outputs.txt: both Dells, irpt-ycharts-run and irpt-ycharts-deploy sent to i-02448edb624a7a7cf -> allowed (per-resource allowed, allowed); a group-Allow document to the same host -> implicitDeny."
+    ]
+  },
+  "spec_asserts": "AMENDMENT 27 item 2: 'AWS-RunShellScript on that host joins the standing shell Allow'; item 1: STOP only if an explicit Deny names the host on purpose. The census verdict NO for the host's role is the grant's precondition as ruled for the resident host (resident_host_role=NO).",
+  "world_is": "No Deny names the host (read at nfra-ctlpln-identity: no instance ARN in any Deny of any policy file or in routes.tf/modules/routes_policy), so the grant was written as ruled. Two facts a signer may want beside it: (1) the census verdict reads the role's own attached policies, and a shell on the host also holds whatever the host can assume (principal_49f.tf), which the census does not follow; (2) the new statement names the instance and the shell document, and IAM authorises instance and document separately, so irpt-ycharts-run and irpt-ycharts-deploy (fixed-text resident documents) can now be sent to this host as well; a shell makes that moot in power, not in record. Nothing is applied: INERT until the apply."
+}
+```

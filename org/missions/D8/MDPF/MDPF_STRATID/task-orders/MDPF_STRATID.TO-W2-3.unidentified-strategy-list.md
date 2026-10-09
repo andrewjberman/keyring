@@ -83,8 +83,10 @@ case-insensitive on stripped names. Every other behaviour stays as you built it.
 `test_opal_model_is_not_listed` and `test_opal_model_matching_a_sleeve_rule_is_listed`.
 
 **Re-make the record** `org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md`,
-same sources and method as before, with `opal_models` = the `model_name` values of
-`s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_model_roster/` (latest `date=` partition) where `is_opal` is true. Add a line
+same sources and method as before, with `opal_models` = the UNION of the `model_name` values where `is_opal` is true in
+`s3://opal-data-assets/blackdiamond/cottonwood/silver/fact_model_roster/` AND in `.../fact_model_definition/` (latest `date=` partition
+of each). RULING A6 (issuer, ~05:3xZ, row D1-W6-S2): the roster alone misses five Opal models (`Opal Short-Term`, `Opal Fixed Income`,
+...) that appear only in the definition table. Add a line
 starting `EXCLUDED-AS-MODEL:` with the count and the names excluded. Keep `SOURCE:`, `DENOMINATOR:`, `RESULT:`. `Opal_Muni_Income`
 must still be listed with reason `RULE_NOT_COUNTED` (whatever `is_opal` says for it, it matches the Muni rule).
 
@@ -113,6 +115,7 @@ data/assets/scripts/silver/opal_unidentified.py
 data/assets/scripts/silver/tests/test_opal_unidentified.py
 org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md
 org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md
 </paths>
 
 The block is your WRITE grant (paths relative to your worktree root are the same files). Everything else named here you READ.

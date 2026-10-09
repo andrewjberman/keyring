@@ -773,3 +773,31 @@ never-widen pair.
 
 **fanout:** 3 of 3 chains, cap 8. Reason: three independent cells (one release, two firm adapters) with disjoint write surfaces.
 Workers 0.9.0_WK_IRPT_DASHBD~47, ~48 and ~49, each cut from box/dell2.
+
+
+## 39. ROUND 37, WORKSTREAM B (2026-10-09 ~05:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-36 ADDENDUM 5, on ADJUDICATION_v21 @37daf4f637, PRD v0.9 @e8f96f579c)
+
+**Where round 36 left things.**
+- Round 36 is closed. The R35 release was applied, then rolled back (CTO msg 2393: the sizing refused on a lot-key repeat, and four members
+  sat at older pins). The rollback is read live; the ledger is CLOSED.
+- Cottonwood's tie-out is NOT MEASURABLE, carried by ADVI_COTBKF (ADDENDUM 5).
+- The ratified Orion taxonomy governs, and a proposal cell follows.
+- Consolidation (ruling @ca5f74553d, PRD v0.9): IRPT_CUSTDY (@185805a565) and ~P's performance scope (@4bfb22b033) were handed to this issuer.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-73` | E1, FWD-4: the realized-lot key extended to separate the 2026-10-07 repeats; the population re-size on the 2.2.3 kit (10-06, 10-07), 0 refusals | WORLD | none | B37-1 |
+| `DB-b-74` | E2, FWD-4: the R37 release packet with EVERY member pinned at HEAD bytes, sizing from DB-b-73; halves UNSIGNED | WORLD | DB-b-73 | B37-1 |
+| `DB-b-75` | E3, FWD-11: Inflection's Orion custody-master registry row (W49-S1) | WORLD (registry path floor) | none | B37-2 |
+| `DB-b-76` | E4, FWD-11: Inflection gross vs Orion gross, like for like, with fees sliced supervised/unsupervised and billed/unbilled (Andrew @669ab7d677) | LOCAL | none | B37-3 |
+| `DB-b-77` | E5, FWD-11: the rule-24 amendment proposal for the two departing Orion flow classes (W49-S3) | LOCAL | none | B37-4 |
+
+**Not cut this round, with the condition that un-parks each:**
+
+| item | waits on |
+|---|---|
+| the svc-custody-statement mint landing, and CU-g-2a (the first real retained Performance client statement, which carries E-P9's persist reads) | a 0.7.0_AE_CloudOps seat free for this project. ~DELL2 holds orders on other projects, so the seating check refuses it (one project per Tier-2 seat instance). Asked of 0.0.0_AB_MSTR~DELL2 |
+| CU-g-6 (the PROD render) | Andrew's word (open-calls row dell2-20261008T192510Z-0347): it is a client-facing PROD page |
+
+**fanout:** 4 of 4 chains, cap 8. Reason: one release chain (E1 then E2) and three independent Inflection cells with disjoint write
+surfaces. Workers 0.9.0_WK_IRPT_DASHBD~50 to ~54, cut from box/dell2. ~51 is spawned when DB-b-73 drains.
