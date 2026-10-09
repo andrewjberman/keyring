@@ -92,3 +92,30 @@ the rows stay there): `NFRA_CTLPLN-S33`, `NFRA_CTLPLN-S34` (ARMED, disarmed in c
   "notes": "ID GRAMMAR: the order prescribes COMM_ASSIST-Z-AE-S<k>, which .tools/surprise-row-gate.py REFUSES (grammar <CODE>-(Z-)?(W<n>-|C-)?S<k>, annex v3.2 section 4 -- there is no AE- segment). Filed as the nearest grammatical seat-row id on the site-z fabric, COMM_ASSIST-Z-S1; COMM_ASSIST-Z-C-S1 (the CVO's, in surprise-channel/adjudications/ADJUDICATION_v1.Z.md) was the only Z- id already taken. No override was taken. The order's row-id line is the issuer's to correct. Not this seat's to widen: naming who may assume the second reader's role is NFRA_TRNSPT's never-widen pair with Andrew's routing, and passing it as -var here would be the exact unwiring CA-d-2 forbids. Three dispositions exist and all are the issuer's with the CTO: (a) NFRA_TRNSPT commits a default for the trust list, restoring a plannable shared root for every project; (b) CA-d-2 is amended to permit a -var for that one variable only, with the unwire risk re-signed; (c) the two roots are split. This seat STOPS here per PHASE A and holds, applying nothing."
 }
 ```
+
+```json
+{
+  "id": "COMM_ASSIST-Z-S2",
+  "project": "COMM_ASSIST",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~ZZ",
+  "surfaced_at": "2026-10-09T12:50:17Z",
+  "one_line": "Issuer ruling on COMM_ASSIST-Z-S1: CA-d-2 may pass -var for the ONE foreign variable second_reader_trust_principal_arns, with the value READ from the live role's trust policy at the act; its own mail-key variable stays a committed default; Branch A is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~ZZ (disarm of COMM_ASSIST-Z-S1 executed by this row; amendment A3 to TO-CA-d-2)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_TRNSPT a18 is APPLIED: iam get-role teams-global-transcripts-second-reader-role -> CreateDate 2026-10-09T09:55:13Z, trust Principal AWS arn:aws:iam::313476888478:user/Opal_Terminal (read 12:4xZ); record b39a2d9dd1 'apply complete'.",
+      "THE DEPENDENCY THE -var TOUCHES: module.ldo_001 takes aws_kms_key.transcripts (chat_assist.tf:81-82); that key's NamedReadersUseTheKey principal is local.named_reader_arns (main.tf:101-103), which includes aws_iam_role.second_reader.arn (readers.tf:25). So -target=module.ldo_001 plans the key and the second-reader role as dependencies. With the live trust value both read 'no changes'; with any other value they would change and Branch A's 'nothing outside the module' STOPs the act.",
+      "The COO half's no--var reason binds OUR variable only (chat_assist_mail_bearer_secret_arn: a -var would be unwired by the next apply of the shared root). The foreign variable passed at its LIVE value is what NFRA_TRNSPT's own apply passes (TO-APPLY-a18:34), so no later apply moves it."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled inside the issuer's decomposition (amendment A3 to TO-CA-d-2): option (b), narrowed to the live value and to the one variable. Options (a) and (c) are NFRA_TRNSPT's or the CTO's and are not needed for this act. The three halves' blast radius is unchanged: Branch A still admits only module.ldo_001's two functions plus one policy ARN.",
+  "spec_asserts": "CA-d-2 plans module.ldo_001 with no -var at all.",
+  "world_is": "The shared root has a required variable with no default (by NFRA_TRNSPT's design), so every plan of it needs that one -var; the value that changes nothing is the live trust principal.",
+  "notes": "The order's row-id line also moves to the gate grammar COMM_ASSIST-Z-S<k> in A3 (Z-S1's note)."
+}
+```
