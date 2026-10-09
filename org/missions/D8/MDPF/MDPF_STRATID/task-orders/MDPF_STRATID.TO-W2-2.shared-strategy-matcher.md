@@ -6,7 +6,7 @@
 <issued_date>2026-10-09</issued_date>
 <status>pending</status>
 <direct_act>false</direct_act>
-<risk>LOCAL</risk>
+<risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <placeholders>NONE</placeholders>
 <round>1</round>
@@ -77,9 +77,37 @@ builds the matcher from `infra/aws/etfs/config/etf_universe.json` in your worktr
 <criterion id="W2-2-AC3" cell_refs="ST-w-2"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_2_census.py</invocation><expect>W22-CENSUS-OK</expect></criterion>
 `W2-2-AC3` -- the census exists, its DENOMINATOR equals its REPLACED/KEPT rows. At the base: `W22-CENSUS-BAD no file ...`.
 
-<expected_criteria>W2-2-AC1 W2-2-AC2 W2-2-AC3</expected_criteria>
+<expected_criteria>W2-2-AC1 W2-2-AC2 W2-2-AC3 W2-5-AC1</expected_criteria>
 
 Run each invocation from your worktree root.
+
+### AMENDMENT A5 (issuer, 2026-10-09 ~05:3xZ) -- cell `ST-w-5`, continued by this slot on its branch
+
+Your first pass is complete and stands. This amendment adds cell `ST-w-5` (decomposition amendment A5). Re-flip `<status>` to
+`complete` only when every criterion in `<expected_criteria>` passes.
+
+`ST-w-5`. Your row `MDPF_STRATID-D1-W5-S1` is right: `rebalancer_schemas.py` now imports `opal_strategy_matcher.py`, and six carriers
+ship the first without the second. Make each carrier ship the matcher too, beside `rebalancer_schemas.py`, in that carrier's own
+form (a tuple row in a build script, a manifest entry with the same fields its neighbour carries, a list entry). Deploy nothing,
+build nothing, upload nothing.
+
+The six carriers:
+1. `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py` (line ~169, the `("rebalancer_schemas.py", ...)` row)
+2. `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/mdpf-gold-lambda.BUILD_MANIFEST.json` (line ~178; if the manifest carries a content
+   hash for each file, compute the matcher's the same way the neighbour's was computed and say how in your report)
+3. `infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/BUILD_MANIFEST.json` (line ~10)
+4. `infra/aws/lambda/investor-reporting/performance/build_tools/build_candidate.py` (line ~57)
+5. `infra/aws/lambda/investor-reporting/PATH_MANIFEST.json` (line ~148)
+6. `.tools/safe_deploy_core.py` (line ~500, the silver script list)
+
+Read each file around the line first; match its exact pattern. If a carrier turns out not to ship `rebalancer_schemas.py` as code
+(only documents it), leave it, and say so in the report. Then, as the disarm proof, run the gold lambda's build in a DRY form if
+`build_package.py` has one (`--help` first); if it has none, skip that and say so.
+
+The check lives in the shared tree: run it with this absolute path from your worktree root (it reads your worktree's files).
+
+<criterion id="W2-5-AC1" cell_refs="ST-w-5"><invocation>python C:/Dev/ajb_workspace/org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_STRATID_S1/W2_CHECKS/w2_5_ship.py</invocation><expect>W25-SHIP-OK</expect></criterion>
+`W2-5-AC1` -- every carrier that ships `rebalancer_schemas.py` ships the matcher. On your branch now: `W25-SHIP-BAD 6 of 6 ...`.
 
 ## BOUNDS
 
@@ -97,13 +125,19 @@ data/assets/scripts/silver/rebalancer_schemas.py
 data/assets/scripts/silver/tests/test_opal_strategy_matcher.py
 org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~5/IDENTITY_COPY_CENSUS.md
 org/missions/D8/MDPF/MDPF_STRATID/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py
+infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/mdpf-gold-lambda.BUILD_MANIFEST.json
+infra/aws/lambda/opal-assets/opal-assets-silver-blackdiamond/BUILD_MANIFEST.json
+infra/aws/lambda/investor-reporting/performance/build_tools/build_candidate.py
+infra/aws/lambda/investor-reporting/PATH_MANIFEST.json
+.tools/safe_deploy_core.py
 </paths>
 
 The block is your WRITE grant (paths relative to your worktree root are the same files). Everything else named here you READ.
 
 <decomp_ref>
 <decomp_doc>org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md</decomp_doc> (workstream 2), cell `ST-w-2`.
-<owned_cells>ST-w-2</owned_cells>
+<owned_cells>ST-w-2 ST-w-5</owned_cells>
 </decomp_ref>
 
 <proof_of_spec>
@@ -122,7 +156,7 @@ counts, commits.
 comp-schedule: DECLARED-NOT-APPLICABLE nothing wired into a running path in this cell (ruling W5).
 comp-iam: DECLARED-NOT-APPLICABLE read-only S3 under the worker's credentials; the runner role's config read is a drain act.
 comp-adversary: DECLARED-NOT-APPLICABLE hazard recorded in the decomposition battery (fail closed on an unreadable config).
-risk: LOCAL -- code and tests on a branch; nothing merges before the 13:30Z read (ruling W1).
+risk: WORLD (gate floor once amendment A5 added infra/ and .tools/ ship lists) -- code, tests and ship lists on a branch; nothing merges before the 13:30Z read (ruling W1).
 direct_act: false -- workstream issuance with shared contracts.
 </preflight>
 

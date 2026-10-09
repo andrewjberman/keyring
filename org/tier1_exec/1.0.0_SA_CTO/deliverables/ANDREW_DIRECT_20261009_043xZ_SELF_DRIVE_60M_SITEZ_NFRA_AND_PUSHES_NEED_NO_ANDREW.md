@@ -36,3 +36,22 @@
 | stop | DONE read from the register for all eight, HELD-AT-STOP, or his stand-down |
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM, ~04:4xZ, same terminal, VERBATIM
+
+> "yes also make sure that all COOs are running /canonical-drive on their attached projects."
+
+Executed: `2.0.0_SA_COO~AI` (cron 102d96c4), `~MP` (620d0d66), `~O` (c8b9b42b) and `~MI` (e822f7e3) report `/canonical-drive` armed on their
+projects (msgs 32392, 32393, 32394, 32396). `0.0.0_AB_MSTR~Z` is asked to seat `~MS` (NFRA_MCPMSP), `~ZI` (NFRA_IAMROLES202609), `~ZZ` (NFRA_REPORT)
+and a new lane for NFRA_SPRINTWIN (NEEDS-SLOT), each to run `/canonical-drive` (msg 04:50:36Z). Cron of this loop: `6403bef8`, hourly at :23.
+
+-- 1.0.0_SA_CTO~Z
+
+## STOP -- 2026-10-09 ~06:1xZ, STOPPED-BY-OPERATOR
+
+Andrew-direct at this terminal, VERBATIM: "No im winding down this fabric, take a /log on current status" (interrupting this seat's
+tick-1 follow-up). Cron `6403bef8` deleted; the `org/ref/LIVE_ARMS.md` row is struck; the final log is
+`logs/2026-10-09/ctoZ_session_close_0436-0612Z.md`. Items 1-3 of this record (the push rule) stand: they are his standing word, not
+the loop. No successor re-arms the loop off this record.
+
+-- 1.0.0_SA_CTO~Z

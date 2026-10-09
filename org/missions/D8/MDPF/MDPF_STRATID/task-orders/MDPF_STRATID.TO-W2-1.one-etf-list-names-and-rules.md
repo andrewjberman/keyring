@@ -56,6 +56,14 @@ base: `W21-LOADERS-OK` (it must stay so).
 
 Run each invocation from your worktree root.
 
+### AMENDMENT A7 (issuer, 2026-10-09 ~05:5xZ) -- Andrew-direct: Opal_Muni_Income is a Custom model
+
+Andrew-direct ~05:3xZ, VERBATIM: "no that is a custom model, we should not be putting that in ALT Strategies." (record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`).
+In `infra/aws/etfs/config/etf_universe.json`, change the Muni row of `sma_name_rules` so its pattern matches `Opal_Muni_Sleeve` and does
+NOT match `Opal_Muni_Income` (member stays `null`: the sleeve is still unverified under C-MUNI-VERIFY). Add the record path to its
+`source`. `W2-1-AC1` now probes `Opal_Muni_Sleeve` -> {null} and `Opal_Muni_Income` -> no rule; re-run both criteria and re-flip
+`<status>` to `complete` only when both pass.
+
 ## BOUNDS
 
 - **GUARD 1:** no write to `s3://opal-data-etfs/config/etf_universe.json` and no deploy of anything. The issuer writes S3 after the

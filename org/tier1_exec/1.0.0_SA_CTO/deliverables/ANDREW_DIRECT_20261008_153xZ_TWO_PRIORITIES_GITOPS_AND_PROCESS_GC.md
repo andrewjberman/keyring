@@ -192,3 +192,10 @@ their owners first. Verbatim answer:
 Placement: (1) this seat re-arms `/self-drive` at `17 * * * *` off the arming record
 `ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`, the three priorities first. (2) B8 of
 `PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md` is authorized on those terms; 0.0.0_AB_MSTR deletes when the condition reads true.
+
+## Addendum 2026-10-09 ~06:0xZ -- /self-drive cadence 30 minutes
+
+Asked "Are you running self-drive?" and told it runs hourly at :17, Andrew said, VERBATIM: "that should be much faster clip, like 30m".
+**Act:** cron `1a0c2133` (`17 * * * *`) cancelled; cron `a5054ca6` armed at `17,47 * * * *`, same scope and terms. Session-only; a recurring job
+auto-expires after 7 days.
+

@@ -31,8 +31,8 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
   FWD-1  One trade request goes from an advisor to the operations lead and back with nothing typed twice
          DONE WHEN  EXERCISED -- on DEV, a seat files one trade_request ticket in the Ticket Center with its custom shape (fund, securities
                     or an upload, weights date, attestations); the ticket is bridged to the trade engine as one submission carrying the
-                    filer's identity from the token; each engine status change appears on the same ticket; the operations lead's own
-                    first real request grades it again (the organic arm)
+                    filer's identity from the token; each engine status change appears on the same ticket; an advisor's first real
+                    request, worked by the operations lead, grades it again (the organic arm)
          ACCEPT     an advisor files a trade request in the Ticket Center; the operations lead works it from the ticket; its status
                     moves on the ticket as the trade moves; nobody re-types any part of it; no ticket-originated trade can reach the
                     engine's brokerage email (C-NO-SEND)

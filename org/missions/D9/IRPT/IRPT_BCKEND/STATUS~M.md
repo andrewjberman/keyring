@@ -56,26 +56,27 @@ Each order was cut on a delivered FILE, pinned by commit and sha256, because del
 - **No bun install, no downloads.** Research browsing is allowed only when necessary (Andrew-direct ~14:0xZ; rules
   106215 and 106221). No `~M2` order runs bun or reaches the internet.
 
-## Next-list, in order
+## Next-list, in order (rewritten 2026-10-09 ~05:0xZ by `~M2`; the 10-07 list above it is history)
 
-1. **The SC-e-62/56 release** (dell1 r3 @a87e215afc). The IRPT_BCKEND COO half is
-   `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_IRPT_BCKEND_COO_HALF_SECCLASS_E62_E56_RELEASE_20261007.md`,
-   signed @a8276122e5 and re-pointed to r3 @ef800c1bd0; the CTO half is @f67ab9002b with AMENDMENT 1 @6c57a70f2f. This seat owes:
-   - after `0.0.0_AB_MSTR` merges r3, the `tar -tzf` read-back of the bundle: 12 members, exactly 2 changed;
-   - after the first weekday `irpt-holdings-snapshot` fire (10:15 ET), the per-firm read: new revision, reconcile, class moves
-     against expected, 0 `multi_asset`; or Branch B's rollback to the recorded pins before the next fire.
-   The 238 pre-check passed on r2 (producer bytes equal at r3). No manual Holdings run is covered.
-2. **No new M item** this sweep (CTO msg 890). The next M round comes from the CTO's next analysis.
-3. **The unclassified Cottonwood tickers** belong to dell1 `~M1` under Andrew's word @fa8d7d1cf7 (relayed, msg 667).
+**FWD-5 share: REALIZED** (CTO msg 890). No FWD this project owns or contributes to has an open ~M cell.
 
-## Dependencies
+Done since 10-07 (all drained on box/dell2):
+- SC-e-62/56 release: bundle read back; first fire graded @9869c53cfa (1 of 5 tabled class moves landed); CTO AMENDMENT 2 + 2.1
+  HOLD, counter-signed @9cf13be89a / @0210ff5d27.
+- R33 E3: HoldingsSnapshot wire type regenerated (S388 ~M share), portal 669cdf828b on DEV.
+- E8: `irpt-custody-x10-v1` policy row, PENDING then ACTIVE @b4d98a4fe3 (Performance client statement retention).
+- R34 + R35: the production `publication_for` port, now `holdings/holdings_publication_port.py` @49cecd310d (release-6 port 2).
 
-| Needs | From (owner) | State |
-|---|---|---|
-| round-32 sweep and slug | `3.0.0_SA_CVO` | packet READ 13:15Z (id 605) |
-| FWD-5 share grade | `1.0.0_SA_CTO~DELL2` | REALIZED (msg 890) |
-| r3 merge into CLOUD | `0.0.0_AB_MSTR~DELL2` | both halves on r3; not merged at 17:02Z |
-| Cottonwood read access for dell2 | NFRA_CTLPLN fence apply (TO-APPLY-4) | MET: reads at 15:02Z |
+Still owed by `~M2`:
+1. **S392, every weekday Holdings fire (10:15 ET)** until the e56 fix ships: pin at 10:03 ET, NO-WORSE read at 10:43 ET
+   (`e62e56_post_fire_read.py pin|read`), one line per fire in the COO half; a firm failing a test is re-pointed to its pin
+   before the next fire, two consecutive fails also revert the bundle. EVENT-GATED; next fire 2026-10-09 10:15 ET.
+2. **When dell1 `~M1` ships the e56 fix** (MDPF_SECCLASS-D1-S8, acceptance 1 NOT MET): the IRPT_BCKEND COO never-widen half on
+   that release, then its post-fire grade. Waiting on `~M1`.
+
+Not ~M's: release 6 apply (`~Y2`, queued at `0.7.0_AE_CloudOps~DELL2`); custody ports 1/3/4 (`~P2`); the first real Performance
+client statement (IRPT_CUSTDY `~K2` E2a); FWD-5's view grade (IRPT_FNTEND); the 22% unattributed-membership residual (that view and
+the overlay sources).
 
 ## Retired from the 10-02 list
 

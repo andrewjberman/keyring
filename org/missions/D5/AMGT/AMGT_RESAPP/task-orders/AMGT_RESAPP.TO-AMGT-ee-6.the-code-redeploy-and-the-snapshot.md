@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-ee-6</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~DELL1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~RA1</issued_to>
 <issued_by>2.0.0_SA_COO~R1</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -38,6 +38,10 @@ A failing criterion is the ROLLBACK trigger: the kept live package through the m
 
 1. The act and nothing else. No memory change, no IAM change, no route added, no schedule change, no S3 delete, no vendor or SEC
    call, no push of shared branches, no portal promote.
+2. (dell1 IAM parity, CTO~DELL1 ADDENDUM 3 @947dd446e5) A send that writes a firm data bucket, or assumes the 49F principal outside the
+   runner's own job, is told to the laptop FIRST.
+3. Every send to mdpf-daily-runner is reported after the fact, with its command id and purpose.
+4. 49 Financial data never goes into another firm's tree.
 
 ## 3. SURFACES
 
@@ -46,7 +50,7 @@ infra/aws/terraform/harvest/
 infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
-org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~DELL1/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -60,7 +64,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 5. WHEN YOU ARE DONE
 
 The instance is genre DEPLOY, with a NAMED rollback and base-vs-new CodeSha256 as the discriminating control, at
-`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~DELL1/AMGT_RESAPP.TO-AMGT-ee-6.the-code-redeploy-and-the-snapshot.proof_of_spec.json`.
+`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~RA1/AMGT_RESAPP.TO-AMGT-ee-6.the-code-redeploy-and-the-snapshot.proof_of_spec.json`.
 `proof-of-spec-check` must read VALID on the committed bytes. Close the change-management entry. Report once:
 - the prior and new CodeSha256, and the kept paths;
 - the CONTENT-DIFF and the pip log's index-request count;
@@ -75,8 +79,11 @@ Flip `<status>` to `complete` only if every criterion PASSES.
 
 <status>staged</status>
 <round>81</round>
-<slot>0.7.0_AE_CloudOps~DELL1</slot>
+<slot>0.7.0_AE_CloudOps~RA1</slot>
 <fabric>dell1</fabric>
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+<status>pending -- AMENDMENT 1 + GO 2026-10-09T05:0xZ by the issuer: RE-ADDRESSED to 0.7.0_AE_CloudOps~RA1, a fresh lane seated for AMGT_RESAPP only (MSTR~DELL1 msg 1745), on to-decomp-ref-lint's seating finding (0.7.0_AE_CloudOps~DELL1 holds ETFS_RIVALS; rule 27). GO terms: build pin 881540dcfd exactly; wheels C:/tmp/r80-wheels re-hashed against the round-78 record; pair COO @f4288f543a + CTO @1e8dff07a6 (five conditions: the content-diff list or STOP; load_registry + address() from the built files before apply, /thesis 200 after; rollback package hash-checked OUOsYXa and the snapshot's pre-event VersionId recorded; code leg verified before the snapshot event; ledger opened before apply, closed after the snapshot leg, record-terraform-deploy.sh run). r81_deployed_cells.txt holds 2 lines (@1ff7bcb7f9), both NO on the live base; run AC1 after the snapshot leg. terraform init of harvest/ was done on this box by dd-4. Graded by no gate limb (a modification).</status>
+<status>pending -- AMENDMENT 2 (issuer, 2026-10-09T05:4xZ) on 1.0.0_SA_CTO~DELL1 msg 1812 (ADDENDUM 3 @947dd446e5): the three dell1 IAM parity conditions are carried in BOUNDS 2-4. They are bounds, not mechanical criteria: none has an invocation, and this act touches none of them (no firm data bucket, no 49F principal, no mdpf-daily-runner send). Graded by no gate limb (a modification).</status>
+<status>complete -- landed by 0.7.0_AE_CloudOps~RA1: live CodeSha256 OUOsYXaJSklKJ65vpIe2jWfcXm9jvP0bCyia15F8Bxs= -> aAkcp2l1TkaeMnZKjpeg/U6og+p0WR12O1YKp53Pvyc=, applied 2026-10-09T05:23:48Z from build pin 881540dcfd, memory 1769 / python3.11 / timeout 29 unchanged, untargeted re-plan 0-diff. CONTENT-DIFF 394 files, 4 changed + 1 added, OFF-LIST 0 (exactly the COO half's five files); the eight packaged registry members and opal_naming.py all byte-equal; pip index requests 0. Snapshot leg after the code leg: ONE invoke of the existing event wrote s3://opal-data-harvest/amgt/harvest/state/freshness_snapshot/current/snapshot.json, generated_at 2026-10-09T05:33Z, 302 rows, VersionId ar7KPWgPpUdMxUmrhTScvJdcnr9leBAB -> UpyeccblpdtqtmfQDXcTHOMhqriXrMt5 confirmed by an independent head-object. AC1 R81 DEPLOYED YES 2 of 2 (route 4 of 4 arms; /freshness ISO days 29 of 96 -> 0 of 96, house long form 0 -> 34, denominator held at 96); AC2 R80 YES 1 of 1 and R79 YES 1 of 1, no regression. Five CTO conditions all MET. Ledger amgt-resapp-r81-ee6-scoped-api-dell1 CLOSED 9 of 9. BOUNDS 2-4 (dell1 IAM parity) touched by nothing in this act. Rows D1-S7 (record-terraform-deploy.sh cannot move last_deployed_commit for this function -- source_dir excludes the vendored delegate; the sha fields DID land) and D1-S8 (/cloud-ops names the recorder at a path that does not exist).</status>

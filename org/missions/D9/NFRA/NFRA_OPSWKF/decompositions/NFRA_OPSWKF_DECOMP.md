@@ -1,8 +1,8 @@
 # NFRA_OPSWKF decomposition -- ROUND 1 (the FWD-1 thread), 2026-10-09, issuer 2.0.0_SA_COO~O2, dell2
 
-PRD `org/missions/D9/NFRA/NFRA_OPSWKF/prd/NFRA_OPSWKF_PRD.md` v0.2 @d66acfc2d8 (`1.0.0_SA_CTO~DELL2`, msg 2517). Status at
-drafting: the ratified-text half is STALE (CVO re-sign owed), so nothing is issued until `prd-signoff.py status` reads
-ADMITTED. This file is DRAFT until then.
+PRD `org/missions/D9/NFRA/NFRA_OPSWKF/prd/NFRA_OPSWKF_PRD.md` v0.3 @1698a6a69d (`1.0.0_SA_CTO~DELL2`, msgs 2517, 2524);
+`prd-signoff.py status` read ADMITTED at 05:2xZ (both halves SIGNED at the current bytes). **RATIFIED** by the issuer at the L6
+cut.
 
 **Rectangle = the SURFACE MANIFEST's FWD-1 rows S1-S6.** S7 (the SharePoint workbook leg) is enrichment, not round 1.
 
@@ -33,17 +33,34 @@ refused and recorded; he phones the custodian himself and completes the ticket.
 | `OW-e-2` | S3 (the bridge): `submission_handler.py` accepts optional `ticket_id`; reads the ticket (`opal-tickets`); refuses unless type `trade_request`, `created_by` == the token email, no `linked_submission_id`, `answers.fund` == body `fund`; stores `origin`/`ticket_id`; then a CONDITIONAL update writes `linked_submission_id` + a `trade_linked` event (condition: attribute absent); tests with a stubbed table | FWD-1 | NOT-EVALUATED | dell2 worker | WORLD (path floor) | worker | OW-e-1 drained (same file) |
 | `OW-e-3` | S5 + S6: `workflow_handler.py` -- (a) after an APPROVE/REJECT on a submission carrying `ticket_id`, append the event and move the ticket status per the field contract; (b) `handle_execute` on `origin == "ticket"` returns 409 BEFORE any status write, S3 put or `send_brokerage_email`, and appends `trade_execute_refused`; tests prove the email function is never called | FWD-1 | NOT-EVALUATED | dell2 worker | WORLD (path floor) | worker | -- |
 | `OW-i-1` | `infra/aws/terraform/trade-pipeline/iam.tf`: `dynamodb:GetItem` + `dynamodb:UpdateItem` on `table/opal-tickets` for the role the submission and workflow Lambdas run as; `lambdas.tf`: `TICKETS_TABLE = "opal-tickets"` on those two functions; `terraform validate` | FWD-1 | NOT-EVALUATED | dell2 worker | WORLD (path floor: Terraform; the worker applies nothing) | worker-light | -- |
-| `OW-p-1` | S2: `portal/src/pages/TicketCenter/TradeRequestParts.tsx` (new): fund, weights date, securities grid, attestations, comments; ONE submit = ticket create with answers, then `POST /api/general/trades/submit` with `ticket_id` + securities; reuses the TradeSubmission page's types and API client read-only; plus ONE `trade_request` branch in `TicketCenter.tsx` beside `:219-229` mounting it, nothing else in that file (X1, granted by `~V2` msg 2522); typecheck + lint clean | FWD-1 | NOT-EVALUATED | dell2 worker (portal worktree) | LOCAL (DEV; CTO review route: product file) | worker | -- |
+| `OW-p-1` | S2: `portal/src/pages/TicketCenter/TradeRequestParts.tsx` (new): fund, weights date, securities grid, attestations, comments; ONE submit = ticket create with answers, then `POST /api/general/trades/submit` with `ticket_id` + securities; reuses the TradeSubmission page's types and API client read-only; exports the component; its report names the mount it needs (X1 is the ISSUER's hookup at the merge, C10) | FWD-1 | NOT-EVALUATED | dell2 worker (portal worktree) | LOCAL (DEV; CTO review route: product file) | worker | -- |
 | `OW-d-1` | Deploy: an apply order to `0.7.0_AE_CloudOps~DELL2` -- the ticket Lambda artifact built from the merged HEAD (it carries TCKT_VNEXT's code too), the two trade Lambdas, and the `trade-pipeline` Terraform. Ledger opened and closed. After-reads: deployed bytes against the build; a legacy submit body (no `ticket_id`) still accepted with the token identity | FWD-1 | NOT-EVALUATED | ISSUER cuts the apply order; the applier applies | WORLD | -- | OW-l-1, OW-e-2, OW-e-3, OW-i-1 drained |
 | `OW-r-1` | The real run on DEV: a seat files one trade request through the form; the ticket shows `linked_submission_id`; an approve shows on the ticket; Execute is refused and the refusal is on the ticket; no email left SES for it | FWD-1 | NOT-EVALUATED | ISSUER | WORLD | -- | OW-d-1 closed; OW-p-1 on DEV |
 
 Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED. FWD-1's organic arm is the operations lead's first real
 request; it is recorded, never waited on.
 
+## WORKSTREAM K -- FWD-7, the operations lead's starter kit (PRD v0.3 @1698a6a69d, C-OPS-KIT, S8; parallel to the thread)
+
+A disjoint surface: one new folder `tools/ops_kit/`, which touches no ticket, engine or portal file. Runtime is the Python
+standard library (build ladder rung 3): `python serve.py` serves one static page and one JSON route on localhost. There is
+no install step and no AWS SDK.
+
+| cell | builds | outcome | status | placement | risk | worker_class | depends on |
+|---|---|---|---|---|---|---|---|
+| `OW-k-1` | `tools/ops_kit/`: `serve.py` (stdlib HTTP server, localhost only); `adapter.py` (THE one data entry, `get_panel(name)`; mode `fixture` today, a stub `mcpindex` mode reading `OPAL_MCP_URL`/token from env, never AWS); `fixtures/trade_rec.json`, `fixtures/billing.json`; `static/index.html` + `app.js` + `theme.css` with the trade-rec and billing panels and a visible "source: fixture" stamp per panel; `README.md` (one command; "ask your Claude to change anything"; "more data = ask Opal"); a `CLAUDE.md` for his Claude (where layout lives, never touch `adapter.py`'s contract). Criteria: `python tools/ops_kit/serve.py --selftest` exits 0 and prints both panels' row counts with `source=fixture`; a scan of the folder for `boto3|aws_access_key|aws_secret` prints 0 hits; `theme.css`'s canvas/panel/ink tokens equal the portal colour-law values the worker cites by path | FWD-7 | NOT-EVALUATED | dell2 worker | LOCAL | worker | -- |
+| `OW-k-r-1` | The real run: the kit unzipped into an empty folder starts with one command and shows both panels; a fresh Claude session given only the kit changes one panel's layout, and `git diff` on Opal's tree shows nothing outside the copy; the zip lands in his SharePoint (location read at the run) | FWD-7 | NOT-EVALUATED | ISSUER | LOCAL (+ one SharePoint upload) | -- | OW-k-1 drained |
+
+Live data in the kit (FWD-7's "live data" clause) waits on X2; the fixture stamp says so on every panel until then.
+
 ## External requests (not cells)
 
+- **X2, trade-rec and billing readers in NFRA_MCPINDEX** (site Z, `2.0.0_SA_COO~MI`), in the shape `OW-k-1`'s fixtures
+  publish. This is a cross-fabric ask, routed by `1.0.0_SA_CTO~DELL2` (MSTR to MSTR). The kit switches `adapter.py` to
+  `mcpindex` mode when the readers are served; nothing else changes.
 - **X1, the form's mount** in `portal/src/pages/TicketCenter/TicketCenter.tsx`: GRANTED by `2.0.0_SA_COO~V2` (msg 2522,
-  the C-SHARED-SURFACE owner) -- ONE `trade_request` branch beside `:219-229`, nothing else; folded into OW-p-1. Owed back
+  the C-SHARED-SURFACE owner) -- ONE `trade_request` branch beside `:219-229`, nothing else. Under /dispatch C10 a shared-file
+  hookup belongs to no cell: the ISSUER adds it at OW-p-1's merge, in one commit. Owed back
   to `~V2`: the portal DEV hash once OW-p-1 lands (its AR-v-11 cuts from DEV after it).
 
 ## Write set
@@ -55,10 +72,11 @@ request; it is recorded, never waited on.
 - `OW-e-3`: `infra/aws/lambda/trade-pipeline/trade-workflow-handler/src/workflow_handler.py`;
   `.../trade-workflow-handler/tests/test_ticket_writeback_and_fence.py` (new).
 - `OW-i-1`: `infra/aws/terraform/trade-pipeline/iam.tf`, `infra/aws/terraform/trade-pipeline/lambdas.tf`.
-- `OW-p-1`: `portal/src/pages/TicketCenter/TradeRequestParts.tsx` (new); `portal/src/pages/TicketCenter/TicketCenter.tsx` (the one X1 branch).
+- `OW-k-1`: `tools/ops_kit/**` (new folder, nothing outside it).
+- `OW-p-1`: `portal/src/pages/TicketCenter/TradeRequestParts.tsx` (new); `portal/src/pages/TicketCenter/__tests__/trade-request.test.tsx` (new).
 
 **Chains.** A = OW-l-1; B = OW-e-1 -> OW-e-2; C = OW-e-3; D = OW-i-1; E = OW-p-1; all join at OW-d-1 -> OW-r-1.
-Fan-out 5 of 5 chains, cap 8.
+K = OW-k-1 -> OW-k-r-1. Fan-out 6 of 6 chains, cap 8.
 
 ## Rule 24 record
 

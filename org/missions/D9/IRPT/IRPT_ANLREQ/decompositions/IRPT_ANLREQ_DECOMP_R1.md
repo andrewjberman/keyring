@@ -58,6 +58,66 @@ message, not where the DRAFT lives).**
 - **`AR-g-12` (~G2) reads `commentary_ref` from the record and the bytes through the repository.** Its I5 call carries the same id.
 - Gate limb that graded this amendment: none (a decomposition document, not a task order).
 
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ, on row `IRPT_ANLREQ-D2-W1-S1`): the repair goes INTO `AR-y-11`
+(TO AMENDMENT 1). A re-cut modifies the round's issuance and adds no order (`to-pipeline-gate`, one issuer per round).
+- **The defect:** `AR-y-11` stores `ticket_id` in the accepted browser body. `OwnedAnalysisRequest` embeds that frozen body as
+  `composition`, and `docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json` has `additionalProperties: false`
+  without `ticket_id` (`ops/tests/test_owned_requests.py:252-260`). So a ticketed request's composition read is off-contract.
+- **The repair:** the schema gains ONE optional `ticket_id` with the same pattern as `submission.py`. The schema stays at v1,
+  because the change is additive and optional.
+- **The re-graded criteria** (still three):
+  - AC1 runs `test_ticket_binding.py` and the new `ops/tests/test_ticket_contract.py` (base: no contract file);
+  - AC2 adds `ops/tests/test_owned_requests.py` (24 passed) beside the generate suites;
+  - AC3 is unchanged.
+
+**AMENDMENT 3 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ): read on PRD v0.3 @1251f44685 (both halves signed; CTO msg
+Re v0.3).**
+- **FWD-1 is unchanged in v0.3.** No round-1 cell moves.
+- **FWD-7 (zero YCharts end to end), C-SWAP and C-PRICES** join the enrichment list beside FWD-2: one round-2 cell family
+  (resolution, swap, prices), ~Y2's backend.
+- **Hop-2 contingency.** The thread's hop 2 (the filed Excel reaching NORMALIZED) resolves today through the resident's YCharts
+  `securities_info`. It is re-proven by release 5b's read 4 (`TO-APPLY-Y75`).
+  - If read 4 shows the session unusable, hop 2 becomes thread-breaking. The issuer then cuts C-SWAP step (1), KNOWN resolution
+    from `etf-classifications` and MDPF_SECHIST, as a round-1 cell the same tick.
+  - The designated-proxy table is a dell1 SECCLASS pre-arranged input. Until it lands, the class defaults apply (v0.3).
+
+**AMENDMENT 4 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:1xZ, on `2.0.0_SA_COO~G2`'s ask @129b265414): who owns I4's queue and
+its poll. I3 and I4 fixed the messages, but no cell made I4's transport.**
+- **The queue:** `2.0.0_SA_COO~T2` adds the `commentary_ready` queue beside the `analysis_ready` queue in `commentary.tf`, inside
+  `AR-t-11`'s scope (a modification of ~T2's own issuance). Its name and ARN are `lib/opal_naming.py` `name()` output (rule 30).
+  ~T2 grants send to the commentary Lambda's role, and receive and delete to the resident's role.
+- **The poll:** `2.0.0_SA_COO~G2` wires the resident host's poll of that queue into `AR-g-12`'s handler
+  (`opal_packager.handle_commentary_ready`). ~G2 releases it in its own release cell.
+- One Terraform home for both pipeline queues; each lane writes only its own surface.
+
+**AMENDMENT 5 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:3xZ): two rulings.**
+1. **Hop 4b is served by I3 ONLY** (on `2.0.0_SA_COO~T2` msg 2567 and row `IRPT_ANLREQ-D2-S2`). `AR-t-11` (the `analysis_ready` queue
+   to the commentary Lambda, merged @30bed477ad) is the one trigger.
+   - ~P2's H1 (IB-pr-388 `ready_trigger.tf`: the `irpt-requests` stream mapped to the same Lambda, plus a `kms:Decrypt` grant to the
+     commentary role) would run the drafter twice per READY and re-open the grant CTO msg 2341 forbids.
+   - H1 is directed by CTO msg 2507 in IRPT_BCKEND, so its withdrawal (the mapping and the policy) before any apply is asked of
+     `1.0.0_SA_CTO~DELL2`. Until ruled, no apply pairs H1 with the commentary Lambda.
+2. **I1's client half goes to `2.0.0_SA_COO~V2`** (on ~V2 msg 2573 and row `D2-W11-S1`).
+   - `portal/src/pages/InvestorReporting/contracts/submission-request.ts` joins ~V2's write surface for `AR-v-11` (a modification
+     of ~V2's own issuance).
+   - `readSubmissionRequest` admits `ticket_id` (`^TCK-\d{8}-[0-9a-f]{8}$`) only beside `input_id`. The wire type follows the
+     contract `AnalysisSubmissionRequest.schema.json` as drained @3ad7526e06.
+   - The schema stays ~Y2's; the TypeScript reader follows it.
+3. **The packager's read grant on `ANALYSIS_COMMENTARY` goes to `2.0.0_SA_COO~T2`, in `AR-t-12`** (on `2.0.0_SA_COO~G2` msg 2575
+   and row `D2-W62-S1`, at ~G2's REC).
+   - ~T2 owns the family, so ~T2 adds ONE `SERVICE_READERS` entry in `reports/repository.py`. It admits exactly the
+     `package_principal` subject that `AR-v-12` names, for `ANALYSIS_COMMENTARY` only, so no other family widens.
+   - `reports/repository.py` joins `AR-t-12`'s write surface for that one entry.
+   - The subject id is the single constant `AR-v-12` writes into the type definition. ~T2 reads it there, never types its own.
+
+**AMENDMENT 6 (issuer `2.0.0_SA_COO~Y2`, 2026-10-09 ~05:5xZ, on `2.0.0_SA_COO~T2` msg 2620 and row `D2-W41-S3`): no separate commentary
+ticket in this journey.**
+- The DRAFT reaches the request's OWN ticket ONLY as `commentary_ref`, through I4s (the store) and I5 (the packager).
+- The drafter's `ticket_client` post of a separate `svc-commentary` ticket is NOT called for an `analysis_ready` run. It is also
+  refused by TCKT_VNEXT contract v0.2 (`answers.advisor`), since `advisor` is None here.
+- NFRA_TRNSPT's other uses of that client (the mail commentary, FWD-1..9) do not move.
+- **H1 (CTO ruling @19c5067e12, msg 2622):** withdrawn. Hop 4b is I3 alone; row `D2-S2` item 1 is disposed against it.
+
 ## Cells (round 1, FWD-1)
 
 | hop | state | cell | lane | what EXISTS at the end |

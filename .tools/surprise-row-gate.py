@@ -2724,9 +2724,24 @@ def check_file(root, rel):
                          % (rel, _r.get("id"), _r.get("surfaced_at"), int((_sa - _now_utc).total_seconds() // 60),
                             _now_utc.strftime("%Y-%m-%dT%H:%MZ")))
     # UNIQUENESS ACROSS DOCUMENTS (94007): every NEW id is unused in every OTHER document of its plane at the index.
-    if folder_project and added:
+    # GRADE WHAT THE CHANGE INTRODUCES, cross-document limb (1.0.0_SA_CTO ruling on 0.0.0_AB_MSTR msg 107744, 2026-10-09):
+    # on a MERGE, a row this file already carries on a published ref (origin/CLOUD or an origin/box/*) was landed by
+    # another box's push. The merging box did not introduce it and cannot re-mint it, so it is NOTED, not graded here.
+    # A row on no published ref (a worker's drain row, a row minted in the merge) is graded exactly as before.
+    _uadd = added
+    if folder_project and added and _merge_in_progress(root):
+        _upub = _published_row_ids(root, rel)
+        if _upub:
+            _ukeep = [r for r in added if str(r.get("id") or "").strip() not in _upub]
+            if len(_ukeep) != len(added):
+                notes.append("%s: MERGE -- id-uniqueness across documents not re-graded for %d row(s) this file already "
+                             "carries on a published ref: %s (1.0.0_SA_CTO ruling on msg 107744)"
+                             % (rel, len(added) - len(_ukeep),
+                                ", ".join(sorted(str(r.get("id")) for r in added if r not in _ukeep))))
+            _uadd = _ukeep
+    if folder_project and _uadd:
         _pd, _pn = _plane_docs(root, folder_project, kind, rel)
-        _dv, _dn = _duplicate_id_violations(rel, kind, added, folder_project, _pd, _pn)
+        _dv, _dn = _duplicate_id_violations(rel, kind, _uadd, folder_project, _pd, _pn)
         v.extend(_dv)
         notes.extend(_dn)
     # THE ALLOCATOR DISCIPLINE (RULING 2 @9ef9a40aae): W<n> from its own worker only; no W from a seat; C- the CVO's, in

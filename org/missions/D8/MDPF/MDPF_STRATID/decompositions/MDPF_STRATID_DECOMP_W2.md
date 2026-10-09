@@ -96,3 +96,49 @@ No edge: each cell builds against the contracts above; ST-w-2's seam reads ST-w-
    object version) and read it back; `comp-iam` the runner role; wire the slice path; the next scheduled run reads the same answers.
 4. FWD-4 and FWD-5 are EXERCISED "on purpose": a test ticker/rule row added to a copy of the list is found with no code edit (the
    ST-w-2 tests), then once on the real path at the drain.
+
+## Amendments (issuer rulings at the drain read, 2026-10-09 ~05:1xZ)
+
+- **A1 (ST-w-3 contract, the issuer's defect): an Opal MODEL is not an unidentified strategy.** Worker `~6` @`bd9cb30a48` built the
+  contract as written and listed 38 of 45 Opal-looking names, most of them ordinary Opal Models (`Opal Satellite 40..80`,
+  `Opal Short-Term`, `Opal Fixed Income`) as `NO_MEMBER` (row `MDPF_STRATID-D1-W6-S1`). C-SLEEVE and the PRD BOUNDARY ("reclassifying
+  an Opal Model as an SMA" is out of scope) say those are not candidates. Ruling: the list excludes a name that is an Opal Model figure
+  (Rebalancer `fact_model_roster.is_opal` true, or a registry Model member), and lists it only if it ALSO matches a sleeve rule. This
+  is a narrow re-cut of the function's predicate, carried to the next workstream-2 issuance with the drain; the order stands complete.
+- **A2 (ST-w-1 names): the cited fund names may be stale.** ST-w-1 sourced the four names from the net-assets producer's FUNDS table
+  (`etfs-netassets-daily/lambda_function.py:104-113`: "Polen Dividend Income ETF", "Polen International Dividend Income ETF", ...),
+  while Cottonwood's model definitions carry a component named `OPAL INTERNATIONAL DIVIDEND INCOME ETF` (2026-10-08). Ruling: before
+  the S3 write at the drain, the names are re-read against the fund's current legal name, and `full_names` carries the current name
+  (a former name may ride as a second rule row). No figure moves on this: a full-name match only ADDS a member where today's rules
+  had none, and the seam prints every gain.
+- **A3 (row ids, the issuer's defect):** the orders named the surprise-row id form `MDPF_STRATID-W2-W<n>-S<k>`, which the row gate
+  refuses; the dell1 worker form `MDPF_STRATID-D1-W<n>-S<k>` is correct and stands.
+- **A4 (cell `ST-w-4`, cut 2026-10-09 ~05:2xZ under A1):** `unidentified_candidates` excludes a name that is an Opal Model figure
+  (an `opal_models` set the caller passes: Rebalancer `fact_model_roster.model_name` where `is_opal` is true) unless the name also
+  matches a sleeve rule (ticker, full name or `sma_name_rules`); the Cottonwood record is re-made with an `EXCLUDED-AS-MODEL:` line.
+  Write set = ST-w-3's (`opal_unidentified.py`, its test file, the record), continued by slot `~6` on its branch
+  `wk-MDPF_STRATID-w2-6`. Serves FWD-7. LOCAL. Checks `w2_4_tests`, `w2_4_seam`: FAIL as expected on `~6`'s branch @`bd9cb30a48`.
+- **A5 (cell `ST-w-5`, cut 2026-10-09 ~05:3xZ): disarm of row `MDPF_STRATID-D1-W5-S1` (ARMED, disarm owner this issuer).** ST-w-2
+  (`~5` @`694ae230d1`) makes `rebalancer_schemas.py` import `opal_strategy_matcher.py`; six carriers ship the first without the second
+  (`w2_5_ship` FAIL 6 of 6 on `~5`'s branch). Until ST-w-5 is terminal the hazard is held by ruling W1 (no workstream-2 merge before the
+  13:30Z read) AND by this one: **the `~5` branch never merges without ST-w-5 on it.** ST-w-5 adds the matcher beside
+  `rebalancer_schemas.py` in each carrier, continued by slot `~5` on its branch. WORLD (gate floor: infra/ and .tools/ paths); it deploys
+  nothing. The live gold lambda is unaffected: its deployed package is the pin-148f715f8c build and nothing rebuilds it before the read.
+- **A6 (ruling on row `MDPF_STRATID-D1-W6-S2`, BLOCKING, the issuer's defect): `opal_models` = the union of `is_opal` model names in
+  `fact_model_roster` AND `fact_model_definition`.** Five Opal models (`Opal Short-Term`, `Opal Fixed Income`, `Opal Long-Term Aggressive`,
+  `Opal Moderate Income`, `Opal_Moderate_Income_Tax_Efficient`) appear only in the definition table, so the roster-only source left them
+  listed (`~6` @`a53204441c`: LISTED 12, W24-SEAM-BAD on `Opal Short-Term`). TO-W2-3's amendment text is changed to the union; the
+  function and tests do not change. The order's grant gains this decomposition file so the worker's branch carries cell `ST-w-4`
+  (row D1-W6-S3). Graded by: to-pipeline-gate on the modified order.
+- **A7 (Andrew-direct ~05:3xZ, record `org/tier1_exec/2.0.0_SA_COO~S1/deliverables/ANDREW_DIRECT_20261009_053xZ_OPAL_MUNI_INCOME_IS_A_CUSTOM_MODEL_NOT_ALT.md`):**
+  VERBATIM "no that is a custom model, we should not be putting that in ALT Strategies." `Opal_Muni_Income` stays a Custom model and is
+  not a strategy candidate. At the drain, before anything ships: ST-w-1's Muni rule row narrows so it no longer matches
+  `Opal_Muni_Income` (it may still match `Opal_Muni_Sleeve`, which his word did not name and which stays open under C-MUNI-VERIFY), with
+  the record cited as its source; ST-w-4's record is re-made so `Opal_Muni_Income` is excluded as an Opal Model; the W2-1/W2-3/W2-4
+  checks' Muni probes are updated to match. The issuer applies these at the drain merge and re-runs the checks; no new cell.
+- **A8 (carried conditions for every CloudOps order this workstream issues; `0.0.0_AB_MSTR~DELL1` msg 1806, relaying the laptop CTO
+  with TO-APPLY-27):** (1) a send that writes a firm data bucket, or assumes the 49F principal outside the runner's own documented job,
+  tells the laptop FIRST; (2) every send to `mdpf-daily-runner` is reported after the fact with command id and purpose; (3) 49 Financial
+  data is never written into another firm's tree. Also carried: Step F (msgs 1246, 1256) -- IAM applies via `0.7.0_AE_CloudOps~DELL1`,
+  reported after the fact by name and grant; a role another box's pipeline assumes goes to the laptop BEFORE the act. The drain's S3
+  write of `etf_universe.json` and the runner wiring (W5) are issued with these lines on the order face.
