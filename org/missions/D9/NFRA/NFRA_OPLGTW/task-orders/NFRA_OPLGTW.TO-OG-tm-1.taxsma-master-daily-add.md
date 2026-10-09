@@ -77,6 +77,19 @@ in `<paths>`), run that package's tests (state totals; 46 of 46 expected), commi
 the vendored package equals the source byte for byte. Disposition row S4 in the channel (a new citing row, never an edit
 of S4). Then report and STOP: the applier acts only after both halves are at HEAD.
 
+### AMENDMENT A3 (issuer, 2026-10-09 ~03:4xZ) -- row Z-S68: the new rule takes the BUILDER's name
+
+The site applier's Leg A was refused by the LGIC naming gate (ENFORCE for an ADDITION; CLAUDE.md rule 30): the sibling-shaped
+name `canonical-schwab-si2-08403355-daily-pull` is not `lib/opal_naming.py` output. RULING (issuer, option (c) of the
+row): the NEW rule takes the builder's name (the gate printed `schwab-canonical-si2-08403355-pull-daily`); the two
+EXISTING rules keep theirs (rule 30's non-application). In `infra/aws/terraform/canonical-schwab-ec2/monolith-daily-schedule.tf`
+make the rule's `name` the builder output for `08403355` ONLY (a per-key name in the `si2_daily` map, or a lookup), the
+siblings' names and every other attribute unchanged; derive it by calling `name()` (find the arguments that print the
+gate's string; a refusal is a missing registry row, which you add under `infra/logic/registry/` only if the gate's own
+output names it), never by typing it. Re-plan canonical-schwab-ec2: targets 1-2 still `create`, the siblings `no
+change`. `tm1.AC1` now resolves the new rule by that name (r32/checks/tm1.AC1.py, same issuer commit). Commit, report,
+STOP: the applier then applies Leg A from your commit.
+
 ### PHASE B -- after both halves are signed AND site Z's applier has applied (the issuer's continuation names both)
 
 The applies are NOT yours. On Andrew's word of 2026-10-08 ~22:0xZ (relayed by `0.0.0_AB_MSTR~Z`, msg 32057), site Z's
@@ -105,6 +118,7 @@ Phase A commit, the three roots' targeted resources, the code-object upload and 
 ## 3. SURFACES
 
 <paths>
+infra/logic/registry/
 data/assets/scripts/silver/conversion_manifest.py
 data/assets/scripts/silver/silver_registry.py
 data/assets/scripts/silver/tests/test_schwab_runtime.py
@@ -161,6 +175,8 @@ Rows: id `NFRA_OPLGTW-Z-W39-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   declares NONE, so viii applies and reads NONE).
 - A2 (2026-10-09): row S4's source mirror added to <paths> (data/assets/scripts/silver, four files) and required before
   Leg C, per the COO half. Graded by no gate limb as a modification (placeholders NONE).
+- A3 (2026-10-09): row Z-S68 ruled (c) -- the new rule takes the builder's name; tm1.AC1 resolves it by that name.
+  Graded by no gate limb as a modification.
 - Pre-cut: see the issuance commit.
 
 <status>pending</status>
