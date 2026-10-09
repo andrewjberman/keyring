@@ -19,12 +19,26 @@
 
 ## WORKER FACE
 
-### GO -- this order is `staged`; act only when the issuer flips it `pending`
+### GO -- TWO PHASES (amendment A2, CTO fold of UB-20261009T111212Z-f17d @02c84f1029)
 
-The issuer flips it once all three hold: (1) NFRA_OPLGTW `TO-OG-ap-3` is complete with AC1 PASS, so the secret exists; (2) a CTO
-half and (3) a CVO half are committed beside the COO half
-`org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`.
-**The halves BIND**: read all three first. The COO half's Branch A / Branch B, rollback and conditions are the procedure.
+**PHASE A runs when the issuer flips `<status>` to `pending`.** It applies nothing, opens no ledger, reads no secret and calls no
+route. Do, in order: step 4 (BEFORE reads) and step 5 (both builds plus the import test) below. Then a SCRATCH preview: `TF_DATA_DIR`
+set to a NEW scratch directory outside every git tree; `init -input=false` (a migrate or reconfigure prompt = STOP);
+`terraform -chdir=infra/aws/terraform/transcripts plan -input=false -no-color -lock=false -target=module.ldo_001` with the variable
+at its committed default `""` and no `-var`. Save it as `PHASE_A_PLAN.txt` in your deliverables folder. **Expected: `0 to add, 2 to
+change, 0 to destroy`, and both changes are the two functions' `source_code_hash`/`last_modified` only.** Any other reading (an
+add, destroy, policy change, env change, address outside the module, failed import test, or a live hash other than `xWURpe/n...`)
+-> file a BLOCKING row with the measurement and STOP. Then write `PHASE_A_READ.md` (one line per reading) and STOP. Do not
+continue to step 1.
+
+**PHASE B runs only when the issuer writes `PHASE B GO` on the line below.** It is written once NFRA_OPLGTW `TO-OG-ap-3` is
+complete with AC1 PASS (the secret exists and the gateway serves r29). Phase B is steps 1-9 below, re-reading step 4 at the act.
+The three halves are committed and BIND: COO `org/missions/D9/COMM/COMM_ASSIST/deliverables/2.0.0_SA_COO~ZZ/NEVER_WIDEN_HALF_COO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`,
+CTO `deliverables/1.0.0_SA_CTO~Z/NEVER_WIDEN_HALF_CTO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md`, CVO
+`deliverables/3.0.0_SA_CVO~Z/NEVER_WIDEN_HALF_CVO_COMM_ASSIST_R12_MAIL_DEPLOY_20261009.md` (all under `org/missions/D9/COMM/COMM_ASSIST/`).
+Read all three. The COO half's Branch A / Branch B, rollback and conditions are the procedure.
+
+PHASE B: NOT YET
 
 ### THE CELL
 
@@ -119,6 +133,10 @@ lane: the <paths> block IS the grant (worker RULING 1).
   `0.0.0_AB_MSTR~Z` msg 32641; rule 27 seating: `~Z` holds open orders on 4 other projects, gate2 ANNOUNCE at `f8b46c5aa5`). Same
   class, same box. The three signed halves bind the act, not the lane letter, and are unchanged. Graded by no gate limb as a
   modification (placeholders NONE; a re-address never trips the seating lint).
+- A2 (issuer, 2026-10-09 ~11:3xZ, on `1.0.0_SA_CTO~Z`'s fold of UB-20261009T111212Z-f17d @02c84f1029, msg 32712): the order splits
+  into PHASE A (BEFORE reads, builds, import test and a scratch `""`-variable preview plan, expecting 0/2/0 with the code hash
+  only; it applies nothing) and PHASE B (the act, behind the `PHASE B GO` line, unchanged in substance). Phase A runs once the
+  fold is signed by `3.0.0_SA_CVO~Z`. No criterion changed. Graded by no gate limb as a modification (placeholders NONE).
 - The analysis's done-when also names the real mail run. That run is the issuer's at close, not this order's (an applier sends no
   test mail).
 
