@@ -29,8 +29,10 @@ TOs t/T | cells c/F | thread | act fired`.
 **Name the `/canonical-flow` stage and exactly ONE outcome in the tick row:** (1) DRIVE FORWARD -- an unblocked act at
 the measured limb; fire it. (2) PARALLELIZE -- an uncovered cell with no unmet dependency; cut and spawn it. (3) NUDGE --
 only after `/canonical-flow`'s LIVE-PRODUCTION PROBE (run from its file at HEAD) reports nothing moving, and after a
-look at the screen (`/unstick <serial> --peek`) that names which surface has the keyboard. None applies -> NO-OP, say
-which. Nothing moving is not proof of stalled and never licenses a kill.
+look at the screen (`/unstick <serial> --peek`) that names which surface has the keyboard. Nothing moving is not proof of
+stalled and never licenses a kill. **None applies -> EMPTY TICK: run `/next-calls <CODE> --drive` and execute its SEQUENCE
+(NOW + WHILE WAITING), queueing each call with `open-calls.py add`; repeat until it returns no FREE option, then the row
+reads `NOTHING-LEFT: <blocks + queued call ids>`** (Andrew-direct 2026-10-09 ~00:0xZ, CTO deliverables `ANDREW_DIRECT_20261009_000xZ_*`).
 
 ## 2. The obligations, in this order, every tick
 
@@ -64,7 +66,7 @@ or `[STUCK]` to MSTR; a dead assignee with an open order is respawned or reseate
 ## 3. Gate and log
 
 - **Hard gate:** a tick that read a graduated round, an uncompiled terminal order, an unacked packet past one tick, an
-  idle lane beside an uncovered cell, an unruled call or an unpitched closer candidate, and fired nothing on it, FAILS.
+  idle lane beside an uncovered cell, an unruled call, an unpitched closer candidate or an empty tick with no `/next-calls --drive`, and fired nothing on it, FAILS.
 - **Log:** append each tick to `org/mcp/drive_ticks/<RUNNING_SERIAL>.md` (gitignored runtime file). Commit one log,
   `org/tier1_exec/<RUNNING_SERIAL>/drive_log_<YYYYMMDDTHH>Z_<host>.md` (`<host>` = `hostname | tr A-Z a-z`, derived,
   never typed: one serial on two devices otherwise collides at the merge) holding that hour's substantive ticks, once per

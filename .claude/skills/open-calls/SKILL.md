@@ -163,6 +163,31 @@ named Terraform roots declare; a shared bucket or a trunk register file touches 
 (this box's CTO may settle the call) or `verdict=CROSS-BOX` (it may not alone). It prints, and decides nothing about, an act
 only Andrew can do: such an act still goes to him, named as that act.
 
+## The 10-minute scan -- an open call on a box makes that box's CTO adjudicate
+
+**Andrew-direct 2026-10-09 ~00:0xZ, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_000xZ_KEEP_WORK_DRIVING_OPEN_CALL_QUEUE_CROSS_ADJUDICATION_AND_NEXT_CALLS_ON_EMPTY_TICK.md`;
+design `org/tier1_exec/4.0.0_SA_CRO~B/deliverables/DESIGN_KEEP_WORK_DRIVING_20261009.md`.** Each box's scheduled task
+`Opal open-calls scan` (`.tools/open-calls-scan-schedule.ps1 -Install`) runs `.tools/open-calls-scan.py` every 10 minutes. An
+OPEN `fork` row with no `escalation` drops one `[OPEN-CALLS SCAN]` file in the box CTO's inbox (no CTO live: the box MSTR's),
+re-sent every 30 minutes while unchanged. **Every call in that file gets ONE of three outcomes, the same turn:**
+
+- **RULE** (own-box, in pattern, one clear answer): `/open-calls --adjudicate <CODE>`, then `open-calls.py close --id <id> --by
+  <serial> --ruling <record>`.
+- **ESCALATE** (open-ended, deeply architectural, out of pattern, or `verdict=CROSS-BOX`): write the submission with the
+  headings `## Context`, `## Position`, `## Why it gave pause`, `### Ambiguity` (how), `### Out of pattern` (the normal
+  pattern and why it does not fit), `### Other solutions` (each, and why better or worse), then `python .tools/xadj.py open
+  --call-id <id> --body <file> --by <serial>`. It goes to the laptop CTO, or the site Z CTO when the laptop measures down
+  (`xadj.py adjudicator`).
+- **HOLD for Andrew** (money, a vendor, a directive-level change, a hold he set by name): `open-calls.py hold --id <id> --by
+  <serial> --reason "<one line>"`. The row stays in this queue for him.
+
+**The adjudicator of record** (the laptop CTO; site Z's when the laptop measures down) gets the OPEN cross-adjudication files
+in the same scan file: `xadj.py show --id <XA>`, then `xadj.py rule --id <XA> --by <serial> --ruling "(a) ... because ..."`,
+then commit the record it writes at `org/critical_paths/cross_adjudication/<stamp>_<XA>.md` (the cross-adjudication file:
+submission verbatim + ruling). The originating box's next scan tells its CTO to close the row: `open-calls.py close --id <id>
+--by <serial> --ruling <record> --xadj <XA>`. `xadj.py list --state OPEN` is the queue.
+
 ## The whole cluster, from any box -- `/open-calls --all`
 
 **Andrew-direct 2026-10-08 ~18:4xZ (point 5), record
@@ -208,9 +233,9 @@ a new directive, money, vendors or a standing hold.
 
 **What it does, in order:**
 0. **Runs `python .tools/open-calls.py scope --project <PROJECT_CODE>` FIRST and proceeds only on `verdict=OWN-BOX`.** On
-   `verdict=CROSS-BOX` it does not adjudicate: the call goes the cross-box route (`.tools/crossbox-call.py`: CTO, manager, the
-   other box's manager, that CTO), is written to the box's list with `open-calls.py add`, and cannot be closed there until a
-   cross-box file for it reads CLOSED-BOTH. Where the project's order files are known, pass `--orders` so the measurement reads them.
+   `verdict=CROSS-BOX` it does not adjudicate: the call is written to the box's list with `open-calls.py add` and ESCALATED to
+   cross-adjudication (`xadj.py open`, the section above); it closes on the RULED file (`close --xadj`) or on a CLOSED-BOTH
+   cross-box file. Where the project's order files are known, pass `--orders` so the measurement reads them.
 1. Builds the cards in the EXACT format above -- one card per decision, the call on top, the internal divider, the
    REC beneath -- as if for Andrew. The format is the discipline: a call that cannot be reduced to one line is not
    ready to be ruled on.

@@ -1,6 +1,6 @@
 ---
 name: next-calls
-description: "/open-calls and /next-steps in one pass: the decisions waiting on Andrew, the steps this seat could take, which calls gate which steps, and the recommended interleaved sequence. Every item carries a recommendation. Bare `/next-calls`; `/next-calls {CODE or topic}`. Zero writes. Any agent."
+description: "/open-calls and /next-steps in one pass: the decisions waiting on Andrew, the steps this seat could take, which calls gate which steps, and the recommended interleaved sequence. Every item carries a recommendation, and every blocked track carries the work around it (WHILE BLOCKED). Bare `/next-calls`; `/next-calls {CODE or topic}`; `/next-calls {CODE} --drive` on a COO's empty drive tick (calls queued, options executed). Zero writes by itself. Any agent."
 ---
 
 # /next-calls -- calls and steps together, with the sequence between them
@@ -54,6 +54,16 @@ Then the step neither sibling takes:
    seat does NOW without any word; which answer comes first and what it releases; what follows each
    release. Every entry is one line and names the card it points at.
 
+6. **Find the work around every block (WHILE BLOCKED).** Andrew-direct 2026-10-09 ~00:0xZ, verbatim: *"if you are blocked
+   or waiting on one thing, what else can you be doing to proceed this project outside of that? just so we dont have a
+   single sequence that gets blocked on one track and all the other work needed for a project is now gated/bottlenecked on
+   a trigger or something stupid."* For EVERY option tagged `WAITS ON CALL`, `NEEDS-{seat}` or `EVENT-GATED` (a scheduled
+   pull tomorrow, a fire, a grant), name the work that advances the SAME project outside that track, now: the other cells
+   or surfaces of the project, the ad-hoc QA run that tests ahead of the scheduled fire (CLAUDE.md: the scheduled fire
+   stays the acceptance), the parts the answer will need either way (both branches built to the fork), the record or
+   test the blocked act will need. Each becomes an option card tagged `FREE` with `AROUND: OPTION {k}`. A block with no
+   work around it says so in one line and why; "nothing else" is a claim to ground, never a default.
+
 **Scoped form** (`/next-calls <CODE or topic>`): both sweeps bounded to that program or topic; FRAME
 names the boundary; calls and options outside it are excluded, not summarized.
 
@@ -84,9 +94,14 @@ OPTIONS AT THIS SEAT
   **WHY RANK {r} --** {value now + what it unblocks + why it beats the next one. One breath.}
 +-----------------------------------------------------------------------------+
 
+WHILE BLOCKED (one line per blocked track; mandatory when any option is gated or event-gated)
+
+  OPTION {k} waits on {CALL i | seat | event}  ->  meanwhile OPTION {j}, OPTION {m}   (or: nothing around it, because {why})
+
 SEQUENCE (the recommendation across both)
 
   NOW, on no word:        OPTION {k} {handle}  ->  OPTION {m} {handle}
+  WHILE WAITING:          OPTION {j} {handle}  (around OPTION {k}'s block)
   FIRST ANSWER: CALL {i}  -> releases OPTION {j}; REC {rec in <=6 words}
   THEN: CALL {i2}         -> releases OPTION {j2}; REC {...}
   AFTER THAT:             OPTION {...}  (event-gated on {event})
@@ -116,6 +131,21 @@ ONE-WORD FORM: "{i}{a|b}, {i2}{yes|no}, go" answers every BLOCKING call and auth
   FIRST ANSWER only.
 - **Ground each card** (program/phase/item, record or hash); an edge with no grounding is cut.
 
+## The `--drive` form -- a COO's empty drive tick (Andrew-direct 2026-10-09 ~00:0xZ)
+
+*"If a COO has canonical-drive or closer-drive running on a given project, and they have an empty tick, they are to run
+/next-calls and proceed with the chosen sequence. This should continue until there is truly nothing left for them to do."*
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261009_000xZ_KEEP_WORK_DRIVING_OPEN_CALL_QUEUE_CROSS_ADJUDICATION_AND_NEXT_CALLS_ON_EMPTY_TICK.md`.
+
+`/next-calls <CODE> --drive` is the same assessment, scoped to the project, with three differences:
+1. **Nobody answers in the session.** Every genuinely open call is written to the box's queue the same tick (`python
+   .tools/open-calls.py add --project <CODE> --subject "<the card's top line> REC <rec>" --asked-by <serial> --source
+   <file holding the call>`); the 10-minute scan makes the box CTO rule it. A call already on the queue is not re-added.
+2. **The seat proceeds with the SEQUENCE**: its `NOW` and `WHILE WAITING` lines, in order, through the drive's own limbs
+   (a COO under FULL cuts and spawns, never builds; under FAST it builds). A gated option waits on its queued call only.
+3. **It repeats** after each act until an assessment returns zero FREE options. Only then is the tick a true NO-OP, and
+   the drive row reads `NOTHING-LEFT: <the blocks, each with its queued call id or event>`.
+
 ## Step 3 -- Aftercare
 
 - **His reply is read per card:** a one-word answer to CALL {i} is a ruling (record verbatim +
@@ -131,7 +161,8 @@ ONE-WORD FORM: "{i}{a|b}, {i2}{yes|no}, go" answers every BLOCKING call and auth
 
 - Any agent, any tier; the invoking human's vantage governs.
 - **ZERO writes by itself** -- no commits, no dispatches, no records, no messages. Every effect flows
-  from his reply through the normal laws.
+  from his reply through the normal laws; in the `--drive` form, from the driving seat's own acts (the queue add and the
+  sequence it executes).
 - Authority + provenance: Andrew-direct 2026-09-03 (verbatim above), recorded at creation in
   `org/tier0/ledger/LD-0523.md`; authored by `0.0.0_AB_MSTR`; acceptance run exercised at the
   authoring seat in the same session (a skill is accepted on an observed run, never on its
