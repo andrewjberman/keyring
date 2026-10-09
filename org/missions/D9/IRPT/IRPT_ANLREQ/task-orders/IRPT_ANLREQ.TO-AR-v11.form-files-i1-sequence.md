@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_ANLREQ~11</issued_to>
 <issued_by>2.0.0_SA_COO~V2</issued_by>
 <issued_date>2026-10-09</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -81,6 +81,18 @@ update it only to the new sequence, and say so in your report.
 - READ only: `src/pages/InvestorReporting/**` and `src/api/endpoints/investor-reporting.ts`, because the IRPT client is imported, not
   edited.
 - LOCAL: never push, never call the live API, and run dev servers on port 5174 only. No non-ASCII.
+
+**AMENDMENT 1 (issuer, 2026-10-09 ~05:4xZ; rules row IRPT_ANLREQ-D2-W11-S2).** Replace the date gate
+(`I1_FILING_SINCE = 2026-10-09T00:00:00Z`) with a marker the ticket stores.
+- **The marker.** The I1 filing's ticket CREATE sends `source: "ticketcenter:i1"`. The service already accepts any `source` except
+  the reserved `dashboard_form:` prefix (`ticket_center/lambda_function.py:1101`), so this needs no backend change.
+- **The button.** "Request report" hides ONLY on a ticket whose `source` is `ticketcenter:i1`. Old-form tickets keep it, whatever
+  their date. Remove the date constant.
+- **The retry.** When step 3 (the `POST /analysis`) failed, the form shows "Retry analysis request". It re-sends step 3 with the SAME
+  body and `ticket_id`, and never re-uploads or re-creates the ticket. The same retry appears on an `ticketcenter:i1` ticket that has
+  no `report_ref`.
+- **One new test**, named exactly `retries the analysis step without refiling`.
+- The order stays HELD from landing until row W11-S1 (the portal client admitting `ticket_id`) is fixed by its owner.
 
 <paths>
 portal/src/pages/TicketCenter/TicketCenter.tsx
