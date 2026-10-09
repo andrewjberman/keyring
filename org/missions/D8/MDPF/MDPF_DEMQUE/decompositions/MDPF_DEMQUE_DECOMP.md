@@ -298,3 +298,21 @@ enforcement" rows are NOT in this rectangle and stay candidates.
 script when the queued Bloomberg draw `requests/DEMQUE-TR-COMPARISON-DIVIDEND-PAYERS.json` lands; that draw is a queue item, not a cell.
 **Next round (named, not cut):** the TR column (price, cash, TR per ticker per day) by the method DQ-t-17 fixes; one quote front door that
 routes the standing shape to `standing.py`; price_store write-path retirement after SECHIST's writer (R1).
+
+
+---
+
+# ROUND 6 -- CUT (issuer 2.0.0_SA_COO~Q1, 2026-10-09 ~12:4xZ)
+
+**Rectangle:** the CTO's round-5 analysis `ledger/ROUND_ANALYSIS.round5.md` @7732d73c04 section 3 (msg 2426), items 1-3, with rulings R1
+(history reserve from the measurement) and R2 (both total-return guards inside the build). Round 5 CLOSED @1e39ebdfb0. Carried, not cut:
+the lock floor (graded on the 2026-10-10 02:30Z draw) and the `price_store` write-path retirement (waits for SECHIST's writer). The three
+round-5 quotes are frozen beside their requests @70379bb41d.
+
+| cell | serves | what | write set | assignee | risk |
+|---|---|---|---|---|---|
+| DQ-t-19 | FWD-4 | read a quoted request against its frozen finish day: ON_TIME / LATE / OPEN from `requests/<id>.quote.json` and `ledger/BBG_ACTUALS.jsonl`; today's reference request is read this round (the 2026-10-13 quotes are the second arm, read on their day) | NEW `quote_vs_actual.py`, NEW `test_demque_quote_vs_actual.py` | `0.9.0_WK_MDPF_DEMQUE~16` (worker-light) | LOCAL |
+| DQ-t-20 | FWD-3 (R1) | the history reserve = the served ledger's measured largest-day history draw x (1 + margin), held, from the ledger, never typed; a quote whose allowance is not positive says so | `ceiling_from_ledger.py`, `reserve_estimate.py`, `bbg_allowance.json`, NEW `test_demque_reserve_ledger.py` | `0.9.0_WK_MDPF_DEMQUE~17` (worker-light) | LOCAL |
+| DQ-t-21 | C-PRICES (ADDENDUM v0.5, R2) | the total-return column in the price store: `cash` and `total_return` (+ `tr_source`, `flags`) beside the unchanged `close_served` / `as_traded_close`; guard (a) a non-ex-date gap against Bloomberg's stored TR is flagged `missing_cash`; guard (b) a money-market fund's TR comes from Bloomberg or an accrual, never Yahoo's 0 | NEW `tr_column.py`, NEW `test_demque_tr_column.py`, NEW `money_market.csv`, `price_store.py`, `PRICE_STORE_CONTRACT.md` | `0.9.0_WK_MDPF_DEMQUE~18` | SERVED (prices.parquet gains columns at the next scheduled draw; existing columns byte-identical) |
+
+**Chains:** three, disjoint write sets, no data edge.
