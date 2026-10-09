@@ -320,10 +320,15 @@ _verify_merge_tree() {
 # resolution that was staged away from the commit. Read-only: it never resets or rewrites the commit. rc 7 when LACKS is
 # non-empty; the recovery is printed for the seat to run.
 _verify_staged_carried() {
-  local m="$1" expect="$2" lacks="" p nl
+  local m="$1" expect="$2" conflicted="${3:-}" lacks="" p nl
   while IFS= read -r p; do
     [ -n "$p" ] || continue
-    git diff --quiet HEAD -- "$p" 2>/dev/null && continue
+    # GS-h-3: keep-ours is admitted only for a path that was CONFLICTED in this merge; a clean path the merge brought in
+    # and the drain reset (index and working copy) is a lost change, not a resolution.
+    if printf '%s
+' "$conflicted" | grep -Fxq -- "$p"; then
+      git diff --quiet HEAD -- "$p" 2>/dev/null && continue
+    fi
     lacks="${lacks}${p}"$'\n'
   done < <(LC_ALL=C comm -23 <(printf '%s\n' "$expect" | sed '/^$/d' | LC_ALL=C sort -u) <(git diff --name-only "$m^1" "$m" | LC_ALL=C sort -u))
   nl="$(printf '%s' "$lacks" | sed '/^$/d' | wc -l | tr -d ' ')"
@@ -385,7 +390,7 @@ if [ "${1:-}" = "--abort" ]; then
     # there was no way to disarm one: --abort exited 2 and left it armed. Clearing it IS the
     # abort in that case.
     if [ -f "$STATE" ]; then
-      rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
+      rm -f "$STATE" "$STATE.branch" "$STATE.conflicted" 2>/dev/null || true
       echo "safe-merge: no merge in progress, but a STALE conflict state file was present -- cleared."
       echo "            --continue is now disarmed in this worktree. Nothing else was touched."
       exit 0
@@ -399,7 +404,7 @@ if [ "${1:-}" = "--abort" ]; then
     exit 2
   fi
   git merge --abort || { echo "safe-merge: git merge --abort FAILED; the tree is NOT restored" >&2; exit 1; }
-  rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
+  rm -f "$STATE" "$STATE.branch" "$STATE.conflicted" 2>/dev/null || true
   rm -rf "$_LOCK" 2>/dev/null || true
   echo "safe-merge: merge aborted; tree restored and conflict state cleared"
   exit 0
@@ -696,6 +701,8 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   fi
   rm -f "$STATE.mine" "$STATE.cached" 2>/dev/null || true
   git diff --name-only --diff-filter=U >> "$STATE" 2>/dev/null || true
+  # GS-h-3: the CONFLICT set alone, so the keep-ours exemption in _verify_staged_carried reaches only these paths.
+  git diff --name-only --diff-filter=U 2>/dev/null | LC_ALL=C sort -u > "$STATE.conflicted" || true
   echo "$BRANCH" > "$STATE.branch" 2>/dev/null || true
   echo "safe-merge: *** CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED. ***" >&2
   echo "            ${_CONF_N} conflicted path(s):" >&2
@@ -861,6 +868,7 @@ export SAFE_MERGE_GRADED_TREE="$(GIT_INDEX_FILE="$_PRIV_IDX" git write-tree 2>/d
 export SAFE_MERGE_GRADED_GATE="$(git hash-object "$GATE" 2>/dev/null || echo '')"
 # GS-f-6: what the commit must carry, captured before the state file is removed (see _verify_staged_carried).
 _EXPECT="$( { [ "$_CONTINUING" -eq 1 ] && cat "$STATE" 2>/dev/null; printf '%s\n' "${STAGED_ARR[@]}"; } | sed '/^$/d' | LC_ALL=C sort -u )"
+_CONFLICTED="$( [ "$_CONTINUING" -eq 1 ] && cat "$STATE.conflicted" 2>/dev/null || true )"
 _try=0
 while :; do
   _try=$((_try + 1))
@@ -889,7 +897,7 @@ while :; do
   git merge --abort 2>/dev/null || true
   exit 1
 done
-rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" 2>/dev/null || true
+rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" "$STATE.conflicted" 2>/dev/null || true
 # The commit's hooks are the longest window a peer has to reset the shared index under this merge.
 # Read the TREE now, before reporting anything (see _verify_merge_tree).
 _vrc=0; _verify_merge_tree HEAD || _vrc=$?
@@ -897,7 +905,7 @@ if [ "$_vrc" -eq 5 ]; then
   echo "safe-merge: NOT MERGED -- commit $(git rev-parse --short HEAD) landed WITHOUT the branch's content, in whole or in part (exit 5)." >&2
   exit 5
 fi
-_src=0; _verify_staged_carried HEAD "$_EXPECT" || _src=$?
+_src=0; _verify_staged_carried HEAD "$_EXPECT" "$_CONFLICTED" || _src=$?
 if [ "$_src" -eq 7 ]; then
   echo "safe-merge: COMMITTED $(git rev-parse --short HEAD) BUT IT LACKS PATH(S) THE MERGE STAGED (exit 7)." >&2
   exit 7
