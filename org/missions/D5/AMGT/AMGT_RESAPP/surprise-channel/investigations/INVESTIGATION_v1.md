@@ -22898,3 +22898,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "notes": "Also seen: a short complete sentence that starts a paragraph (under 60 chars, ends in final punctuation) is still read as a heading and dropped, as it was before; and Item 4.B coverage reads 102.4% on r83_passages.py because that check divides joined-text chars (which carry the added single spaces) by stripped line chars."
 }
 ```
+
+```json
+{
+  "id": "AMGT_RESAPP-D1-W333-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~333",
+  "surfaced_at": "2026-10-09T09:59:07Z",
+  "one_line": "AMGT-hh-5 cannot start: the walker account is armed by another holder (DESKTOP-HK1UU7N:22288:c2a1066b) and a live walk.mjs plus a dev server already hold port 5174; the order says stop.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~R1",
+  "spec_asserts": "The ee-5 face (cited by hh-5): if `ui_walker_account.py status` reads armed by anyone else when you start, file a BLOCKING row and stop. The hh-5 face expects the account dormant and port 5174 free for this worker's own dev server.",
+  "world_is": "Read twice, 20 s apart, at 2026-10-09T09:57Z-09:58Z: status=active armed=yes (2.2 then 2.8 min ago) armedBy=DESKTOP-HK1UU7N:22288:c2a1066b. Process list: node walk.mjs --base http://localhost:5174 --security AMD --security Lenovo --max-minutes 15 (pid 28480) is running, and node scripts/dev-live.mjs --port 5174 (pid 32648) listens on 5174; both belong to another seat's walk (tmp/ui-walk/20261009T095512Z is the newest walk dir). Holder pid 22288 is not in tasklist, so the holder id is the walk's launcher, not necessarily this process. This worker did not arm, did not disarm the other holder's lease, did not start a dev server, ran no walk, and wrote no WALK_ROUND83.md. The stored-text read was not run either, since the order is to stop. Sibling worktrees /c/tmp/r83-329..332 exist.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 .claude/skills/ui-walk/ui_walker_account.py status (twice) at 2026-10-09T09:57-09:58Z",
+      "Get-CimInstance Win32_Process: pids 28480 (walk.mjs) and 32648 (dev-live.mjs --port 5174)",
+      "netstat -ano: [::1]:5174 LISTENING pid 32648"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Re-issue hh-5 once that walk has disarmed (status armed=no armedBy=none) and port 5174 is free, or tell this worker which seat owns the lease. If the lease is orphaned, a dead holder is disarmed only by the issuer's word: this worker did not touch it."
+}
+```
