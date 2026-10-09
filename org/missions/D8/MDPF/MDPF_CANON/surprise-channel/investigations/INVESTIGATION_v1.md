@@ -275,3 +275,28 @@
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+  "id": "MDPF_CANON-D1-S8",
+  "project": "MDPF_CANON",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~D1",
+  "surfaced_at": "2026-10-09T23:05:00Z",
+  "one_line": "The front-end readers row W4-S1 could not see are seen from the main tree's portal pin: portal's readers of json/portfolios/aum-timeseries.json exist only in api/ and no page calls them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "CN-b-1's census names every reader of the stale served key, the portal front-end included (row MDPF_CANON-D1-W4-S1 left it unseen).",
+  "world_is": "At portal pin c96efe17 (main tree), 3 files under portal/src name getAUMTimeSeries or getModelTimeSeries: api/portal-proxy.ts:338-346 (fetches /api/general/portfolios/aum-timeseries.json), api/endpoints/aum.ts:322-328 and :447-449 (wrap it), and pages/ModelPortfolios.tsx:418 (a comment only; :569 records the page's legacy fetch DELETED). No file outside src/api calls either reader. The key has defined readers but no live page caller at this pin; retiring it removes dead code in portal/src/api as a portal-repo act.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/portal-proxy.ts:338-346 @c96efe17",
+      "portal/src/api/endpoints/aum.ts:328,449 @c96efe17",
+      "grep -rln getModelTimeSeries|getAUMTimeSeries portal/src -> 3 files; outside src/api only ModelPortfolios.tsx:418 (comment)"
+    ]
+  },
+  "notes": "Answers row MDPF_CANON-D1-W4-S1 (the unseen front-end limb): seen, no live page caller. The retirement act lands with the publisher switch (PRD M5), not in round 2.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
