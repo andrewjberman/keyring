@@ -83,7 +83,13 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-ap-4.transcript-allowlist-apply
   names it).
 - Pre-cut: ap4.AC1 base FAIL as expected (0 entries; ap4_release.json absent; manifest reads r29 91811b648a).
 
-<status>staged</status>
+- A1 (issuer, 2026-10-09 ~14:1xZ, CTO~Z ruling msg 32788 on dell2's ask): this order runs NEXT, AHEAD of MP-x-4 --
+  step 0 no longer waits for MP-x-4 (it reads pending with no open ledger at 14:1xZ). The live ref is r29
+  `91811b648a`. Still one release in flight: confirm before the act that no other gateway ledger is open in any
+  worktree. CTO C1 holds: ENV_KEYS_BEFORE == ENV_KEYS_AFTER. GO given by this amendment (staged -> pending).
+  Graded by no gate limb as a modification (placeholders NONE).
+
+<status>pending</status>
 <round>33</round>
 <workstream>APPLY-TL1</workstream>
 <slot>~AE</slot>

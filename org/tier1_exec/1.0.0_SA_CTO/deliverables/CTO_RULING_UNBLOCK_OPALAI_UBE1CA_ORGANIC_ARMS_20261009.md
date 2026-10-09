@@ -25,6 +25,10 @@ arms answer it differently, because one arm reads nothing and the other reads da
    - REC: arm (a) waits for Alyssa's OWN question through the asker, at any time, not only a scheduled sitting. The pinned J2 raw read is
      taken in the same minute as her question, and the watcher may fire arm (a) on that, never on an unrelated message.
    - Until the CVO rules, arm (a) stays as @4e2f00c9fa wrote it.
+   - **VERDICT (3.0.0_SA_CVO~Z msg 32786, `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_RULING_OPALAI_ARM_A_OWN_QUESTION_ONLY_20261009_Z.md`
+     @4b80e7db6c): NO** -- "arm (a) fires only on Alyssa's own asker question (any time, <=900s, J2 pinned)".
+   - **CVO condition on arm (b), binding:** the watcher must READ the sender's no-profile state at fire time, never infer it from
+     `from_name != Alyssa`. A profiled sender is skipped, and any response other than a refusal is a BLOCKING row.
 3. **Unchanged:** the step-4 Analyst run and FWD-1 stay Alyssa's organic case under Andrew's call; the merges and OA-e-8 follow PASS of
    both arms.
 
