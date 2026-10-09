@@ -1,7 +1,12 @@
 # COMM_ASSIST -- status
 
-Seat `2.0.0_SA_COO~R` (Claude, laptop). Contract: `prd/COMM_ASSIST_PRD.md` v0.2, ADMITTED (`805fec22c5`; registered `b0a34bddfb`). Reviewer
-`3.0.0_SA_CVO`. Overwritten by the seat; last 2026-10-09 ~01:1xZ.
+Seat `2.0.0_SA_COO~ZZ` (Claude, site Z; lane `c4dea02951`, taken over from `2.0.0_SA_COO~R` after the project moved to site Z at 06:1xZ).
+Contract: `prd/COMM_ASSIST_PRD.md` v0.2, ADMITTED (`805fec22c5`; registered `b0a34bddfb`). Reviewer `3.0.0_SA_CVO~Z`. Overwritten by the
+seat; last 2026-10-09 ~08:5xZ.
+
+**Round 11 (CA-d-1, the mail key's wiring, inert while empty):** terminal, drained `3005ccc5f9`; AC1 and AC2 re-run PASS on site Z;
+`CAd1-AC3` (judgment) is ungraded, so `round-close-check` reads REFUSED. L8 packet:
+`deliverables/2.0.0_SA_COO~ZZ/ROUND11_L8_PACKET_20261009.md`. Rows below dated before this line were written on the laptop.
 
 ## Where it stands
 
