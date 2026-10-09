@@ -85,6 +85,21 @@ run's `verify-persisted` is the index check, as drained; record which runner com
 
 **Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
 
+## AMENDMENT 3 (issuer 2.0.0_SA_COO~D2, 2026-10-09 ~13:3xZ): BLOCKED on the Cottonwood returns gold (CTO ADDENDUM 11.1, row S43)
+
+`0.7.0_AE_CloudOps~DB2` stopped correctly before the run (row S43). The CTO ruled the three gaps (ADDENDUM 11.1, @43bbe32935):
+1. **Selection.** It stays a seat-authored FILE; no seat mints `account_set_id` through selection-create. DB-b-93 (round 45) makes the
+   runner accept the file. Run with the runner as DB-b-93 drains it.
+2. **Cottonwood returns gold** (`irpt/cottonwood/gold/account_return_daily/` holds 0 objects). This blocks the order. ADVI_COTBKF mints it
+   (COTBKF ADDENDUM 11.2).
+3. **hop3.** The laptop runs `hop3_real_run.py` by a cross-box ORDER through `0.0.0_AB_MSTR~DELL2`, after (2) has landed rows. The output
+   comes back as a file with its sha256. DB-b-86 runs where its other inputs are; dell2's deny on the returns gold is not widened.
+
+**This order un-blocks only when the issuer has read:** Cottonwood `account_return_daily` rows landed, DB-b-93 drained, and the hop3 file
+present with its sha256.
+
+**Gate limb that graded this modification:** none. A modified order without `<placeholders>` is not graded.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below. Everything else is read, never edited.

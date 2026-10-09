@@ -950,3 +950,15 @@ once they drain. DB-b-88 (in flight) releases DB-b-87's key and backfills 2026-1
 meanwhile.
 
 **fanout:** 3 of 3 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~65`, ~66 and ~67, cut from box/dell2.
+
+
+## 47. ROUND 45, WORKSTREAM B (2026-10-09 ~13:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 11.1, msg 3362, @43bbe32935)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-93` | E1, FWD-12: the runner accepts the seat-authored selection file (derived id, or `selection_source: file`) | LOCAL | none | B45-1 |
+
+**DB-b-86 (round 41)** is BLOCKED by its AMENDMENT 3 on the Cottonwood returns gold (ADVI_COTBKF, COTBKF ADDENDUM 11.2), DB-b-93, and the
+laptop's hop3 file.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~68`, cut from box/dell2.

@@ -4690,3 +4690,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-D2-S2 -- Resolves S43 by routing: CTO ADDENDUM 11.1 rules the selection file-based (DB-b-93), places the Cottonwood returns gold on ADVI_COTBKF, and sends hop3 to the laptop
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_DASHBD-S43 by routing, per 1.0.0_SA_CTO~DELL2 ADDENDUM 11.1 (@43bbe32935): (1) the selection stays a seat-authored file and no seat mints account_set_id -- the runner-accepts-file cell is DB-b-93 (round 45); (2) the Cottonwood account_return_daily gold (0 objects) is ADVI_COTBKF's, placed by COTBKF ADDENDUM 11.2; (3) hop3 runs on the laptop by cross-box order after (2) lands. DB-b-86 carries AMENDMENT 3 and stays blocked until all three are read.",
+  "one_line": "S43 routed: selection file-based (DB-b-93), Cottonwood returns gold to ADVI_COTBKF, hop3 to the laptop; DB-b-86 blocked by AMENDMENT 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_30_31_20261009.md ADDENDUM 11.1 @43bbe32935",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-93.runner-selection-file.md",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-86.e2a-real-statement-apply.md AMENDMENT 3"
+    ]
+  },
+  "spec_asserts": "A BLOCKING row is dispositioned before the round's slug.",
+  "world_is": "Every gap S43 named has an owner and a cell or an order; nothing was minted by hand."
+}
+```
