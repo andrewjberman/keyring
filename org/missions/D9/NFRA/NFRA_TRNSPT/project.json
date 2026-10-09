@@ -5,7 +5,7 @@
   "fabric": "dell2",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "ROUND_CLOSE",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-30",
   "registered_under_tree": "2026-09-30",
   "placement": "DELL2",
@@ -41,7 +41,7 @@
   },
   "blocking": "2026-10-01T11:15Z (1.0.0_SA_CTO, rulings batch 82): UN-PARKED. Site Z reports the gateway mail route live since 10:43:56Z (relay 0.0.0_AB_MSTR 103704; not exercised on the laptop). The ONE round of the round-2 analysis is owed, taken by 2.0.0_SA_COO~D in FAST mode while its Investor Reporting items wait on other lanes; 2.0.0_SA_COO~T is dark. First read of the round: whether site Z's 582,728-byte PDF is the admitted message this row names at 585,757 bytes. || EARLIER: Round 2 EXECUTING. FWD-7's real row needs a byte-exact recording of one admitted message (identified: Manav 2026-08-11, PDF 585,757 bytes); FWD-1 hops 1-2 wait on site Z (transcript tools + headless route, accepted 103276); the slicer's real replay waits on IRPT_BCKEND's READY hook (S18).",
   "fabric_ruling": "laptop: Andrew-direct 2026-09-30 (\"This fabric will own TRNSPT\"); D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml), so no per-project exception exists or is needed. The gateway project NFRA_OPLGTW stays on site Z as a dependency.",
-  "phase": "Round 15 CLOSED-AT-DRAIN 2026-10-09 by 2.0.0_SA_COO~T2 (dell2, box/dell2): TR-j15 merged 4ecf1633cb -- holdings categories from the canonical etf-classifications join on original.identifier (TICKER), coverage + unclassified named, never into the model; row D2-W2-S3 resolved. Open: the Lambda apply waits on Andrew's standing Kimi word; Apple exception at the CVO; D2-S7 with the CTO and ~V2. Close record deliverables/2.0.0_SA_COO~T2/R15_CLOSE.md.",
+  "phase": "Round 16 ISSUED 2026-10-09 by 2.0.0_SA_COO~T2 (dell2, box/dell2) on CTO msg 2205: TR-h16 (worker: H6 household optional, row D2-S7), TR-a-16 (issuer, SERVED via laptop: the Apple re-write, CVO-approved), TR-b-16 (issuer, SERVED via laptop: ONE 365-day backfill under a never-widen pair; COO half @0e839e0e49, CTO half owed). Decomposition decompositions/NFRA_TRNSPT_DECOMP_R16.md. The Lambda apply waits on Andrew's standing Kimi word.",
   "last_updated": "2026-10-08",
   "placement_ruling": "DELL2 on Andrew-direct 2026-10-07 ~13:4xZ at the 4.0.0_SA_CRO terminal: 'I would like for whatever device is handling the YCDGEN workstreams to also take on NFRA_TRNSPT' (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_134xZ_NFRA_TRNSPT_TO_THE_BOX_HOLDING_IRPT_YCDGEN_DELL2.md); IRPT_YCDGEN's placement reads DELL2. Was SITEZ under the four-box layout of ~01:0xZ, and LAPTOP before. The project is between rounds (17 of 17 orders complete), so the move is at a round boundary. Placed by 1.0.0_SA_CTO on 4.0.0_SA_CRO's analysis @9887bfc595."
 }
