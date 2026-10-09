@@ -79,3 +79,19 @@ The builder's `PACKAGE` (3 members) gains `etf_history_gap_record.py` (from `dat
 subpackage, and its registry/schema inputs at the same relative paths (the `mdpf-gold-lambda` pattern, its `build_package.py:184-201`).
 `infra/aws/lambda/ci/import-closure-check.py` passes on the zip before apply. Acceptance's first line: a post-apply run logs `gap record:`,
 never `ImportError`.
+
+## PACKAGE members -- measured (2.0.0_SA_COO~H1, 2026-10-09 ~17:1xZ); CORRECTS the closure-check line above
+
+- `infra/aws/lambda/ci/import-closure-check.py` grades TOP-LEVEL imports only (its own docstring); gold imports `etf_history_gap_record`
+  inside functions (`etf_positioning_gold.py:836/865/931`), so that check PASSES on the broken package. It is not the gate for this act.
+- The gate is an import smoke on the unzipped package with only the package and the calendar layer on the path, run by the applier
+  before apply: `import etf_positioning_gold, etf_history_gap_record; etf_history_gap_record.record_address('2026-10-12')` must print
+  `s3://opal-data-etfs/bloomberg/etfs/silver/history_gaps/as_of=2026-10-12/gap_record.json`.
+- Measured at pin @09b6a7d580 in a scratch directory (no build, no upload):
+  - 14 members -> OK, address printed, `lib.opal_naming` from the package. The members are the 3 today, plus `etf_history_gap_record.py`
+    and `lib/opal_naming.py`, plus `infra/logic/registry/{systems,scopes,tiers,resources,exemptions,remediations,reporting_policies}.json`,
+    `org/standards/NAMING_SCHEMA.json` and `data/firm_registry.json`, at the same relative paths.
+  - `lib/` is a namespace package (no `__init__.py`); it merges with the layer's `lib` path, and the flat `import trading_calendar` still
+    resolves from the layer.
+  - NEGATIVE CONTROL, today's 3 members: `load_gap_record` raises `ImportError: No module named 'etf_history_gap_record'`.
+- Pin for this act: @09b6a7d580 (SH-t-7 + SH-t-15 + SH-t-19 with AMENDMENT 1).
