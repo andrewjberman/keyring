@@ -57,3 +57,40 @@ OWNER AND UN-PARKING CONDITION, because an open entry with neither is the defect
   WHAT THIS SEAT WILL NOT DO seed on the strength of an open ledger alone. An open entry is not an
                              authorization, and the seed being all-three-or-none makes a
                              well-intentioned partial run the worst available outcome.
+
+## UN-PARKED, THEN IMMEDIATELY RE-HELD ON A DIFFERENT CONDITION -- 2026-10-09T13:20:05Z
+
+The park note above is superseded on its OWNER question and stands on its measurement.
+
+CORRECTION TO MY OWN PARK NOTE: I wrote that there was no seeding order in this lane. The order
+EXISTS and is mine -- IRPT_BCKEND.TO-IB-pr-383, issued_to 0.7.0_AE_CloudOps~DELL2, status pending,
+AMENDMENT 1 @e460b9b55e. My glob missed it because it lives in the MISSION tree
+(org/missions/D9/IRPT/IRPT_BCKEND/task-orders/) and I only searched my own lane's task_orders/
+directory. The un-parking condition had ALSO already been met before I wrote the note: the CTO bound
+the seeding to bundle f6d48603 (S3 version W2Wragr) in the 380/381 half AMENDMENT 1 @25f78da818 at
+09:00Z, on this lane's own re-grade @0b1087120f. So the hold I recorded was real but its stated cause
+was stale by four hours.
+
+WHAT STILL HOLDS IT, measured at 13:20:05Z: the order's step 5 carries a CTO condition that the
+seeding run is NEVER CONCURRENT WITH A SCHEDULED FIRE, stated as a hard exclusion -- outside
+13:20-14:00Z, which brackets the 09:30 and 09:40 ET fires. The clock read 2026-10-09T13:20:05Z when
+I reached this step: FIVE SECONDS inside the exclusion. So the seeding does not run now. It runs
+after 14:00:00Z, and a timer is armed for 14:00:05Z.
+
+This is not a judgement call I am entitled to shade. A seeding run concurrent with a scheduled
+runner fire is exactly the two-writer race the condition exists to prevent, and "five seconds in"
+is inside.
+
+AMENDMENT 1's conditions, to be honoured in this order when the window clears:
+  1. re-verify BY CONTENT that the live runner bundle is still f6d48603, immediately before the
+     FIRST firm -- a different bundle is a STOP;
+  2. re-read each firm's held state immediately before THAT firm's run;
+  3. a refusal stops the remaining firms and is a BLOCKING row;
+  4. ALL THREE FIRMS OR NONE -- never leave the seed partial past one firm's run;
+  5. TO-APPLY-27 stands: tell the laptop BEFORE any firm-bucket write, report each send, and write
+     no 49financial data into another tree;
+  6. commit each leg as it closes, then close this entry.
+
+Unrelated and unaffected: sr1's W2 at 13:35:57Z falls inside the exclusion window but is a
+DynamoDB profile write under a different order, not a seeding run, so this condition does not reach
+it. It fires on time.

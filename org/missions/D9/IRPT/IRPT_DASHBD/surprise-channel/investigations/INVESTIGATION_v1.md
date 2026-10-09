@@ -4529,6 +4529,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-D2-W63-S1 -- The worktree had no .terraform and no .tools/terraform.exe, so init and the plan used the main checkout's terraform.exe and a local-directory provider
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W63-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~63",
+  "surfaced_at": "2026-10-09T13:10:00Z",
+  "one_line": "The worktree had no .terraform and no .tools/terraform.exe, so init and the plan used the main checkout's terraform.exe and a local-directory provider mirror of aws, with no download.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-88 step 4 runs the targeted plan and one safe-apply from the worktree and forbids downloading any package or program; the order names no init step.",
+  "world_is": "MEASURED: .tools/terraform.exe is absent in the worktree and the root had no .terraform ('Backend initialization required'). Ran C:/dev/ajb_workspace/.tools/terraform.exe init -reconfigure -plugin-dir=<the ycharts root's .terraform/providers> (the precedent of row IRPT_DASHBD-D2-W47-S3); init completed with no provider fetch; the backend is the declared S3 state, no state moved. .terraform and the lock file are git-ignored; r41.tfplan was deleted after the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform init output 'Terraform has been successfully initialized!' 2026-10-09 ~12:50Z",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R41_PLAN_OUTPUT.txt"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W63-S2 -- The delta's one-changed-member premise holds for the built artifact (the 17 other members are built from their pins), but infra/logic/registry/reporti
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W63-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~63",
+  "surfaced_at": "2026-10-09T13:10:00Z",
+  "one_line": "The delta's one-changed-member premise holds for the built artifact (the 17 other members are built from their pins), but infra/logic/registry/reporting_policies.json at HEAD differs from its pin, and the new account_activity_lots.py pin is the DB-b-87 drain commit, not on origin/CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-88 names account_activity_lots.py as the ONE changed member and says to pin it to the commit carrying DB-b-87's bytes on origin/CLOUD, or the drain commit with a line saying so.",
+  "world_is": "MEASURED: 17 of 18 pins have blobs at HEAD equal to the pinned sha256; the exceptions are account_activity_lots.py (the intended change) and infra/logic/registry/reporting_policies.json (HEAD sha256 1479826b57..., pin 0c35aeeaa8 sha256 dc0eccfde8...; changed by eab13e88d3 and 589aee38f0, other seats' commits already on origin/CLOUD). The artifact stages from the pin, so that member is unchanged in the zip (builder 'sha256 verified' on 18 of 18). The new pin 0a41f929a3 (blob db068fe88b = 9c980c6c15's) is not an ancestor of origin/CLOUD at the local ref 6be2fbae1c; origin/CLOUD still carries the R37 bytes 63f9e20f. A later rebuild needs that commit to resolve; git show fails closed if it does not.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git merge-base --is-ancestor 0a41f929a3 origin/CLOUD -> not an ancestor",
+      "infra/aws/lambda/ci/lambda-source-map.json @d87079fd89",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~63/R37_DELTA_PACKET_1008.md section 1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-W63-S3 -- The 'Apply complete! Resources: ...' line of the one safe-apply was above the 15-line tail window and was not captured; completion is evidenced by rc 
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W63-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~63",
+  "surfaced_at": "2026-10-09T13:10:00Z",
+  "one_line": "The 'Apply complete! Resources: ...' line of the one safe-apply was above the 15-line tail window and was not captured; completion is evidenced by rc 0, the live CodeSha256 readback and a post-apply plan reading No changes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-88 step 4 says run ONE safe-apply, then read back CodeSha256 and stamp it; the REPORT names the apply line.",
+  "world_is": "MEASURED: the apply was run with output piped through tail -15, which showed only the Terraform outputs block; the saved plan (r41.tfplan, Plan: 0 to add, 1 to change, 0 to destroy) was applied once and not re-run. Effects read afterwards: get-function-configuration CodeSha256 yIAQjspL0nPX6tJOHxD+Dv0REVoZyBNRkhmHQxUVuEE= (was ciTGx5UV...), LastModified 2026-10-09T12:55:44.000+0000, State Active; a post-apply targeted plan: 'No changes. Your infrastructure matches the configuration.'; the role policy's 7 statement sids are unchanged. The Terraform outputs block printed in the tail lists read/write ARNs of the pre-release set; INFERRED (not measured): they are state outputs a targeted apply did not refresh; the role policy itself, read by get-role-policy, carries the six-gold-prefix statements.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function-configuration after the apply",
+      "terraform plan -target (post-apply) 'No changes'",
+      "aws iam get-role-policy sids: ListExactlyTheSixGoldPrefixes, ReadTheSixGoldPrefixesOnly, WriteTheFiveGoldPrefixesOnly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-W67-S1 -- the owned read IB-pr-405 serves no sha256 for the persisted object (report_index is {report_id, revision, retention_ref}, additionalProperties false), so verify-persisted's sha256 check has nothing to compare today
 
 ```json
@@ -4549,6 +4626,65 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
       "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json:88-106 @2f6fe31ad8",
       "data/assets/scripts/gold/irpt_custody/tests/fixtures/persist_inputs_route_fixture.json",
       "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py persisted_sha256_agrees()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-D2-S1 -- Resolves and disarms S40: the realized key now carries realized_gain (DB-b-87), released live (DB-b-88), and 2026-10-08 lots backfilled with zero LOTS_SKIPPED
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-09T13:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves and disarms IRPT_DASHBD-S40. The hazard was the 2026-10-08 lots day refused by name on every fire because the realized key was not unique. DB-b-87 extended the key with realized_gain (drained @0a41f929a3); DB-b-88 released it to irpt-49f-reporting-gold-lambda (live CodeSha256 yIAQjspL... read by the issuer at 13:1xZ, ledger 20261009T1247Z CLOSED 4/4) and backfilled 2026-10-08 in one invoke: realized 35834, unrealized 542546, activity 6901, 0 LOTS_SKIPPED, 389.1 s / 1649 MB under the 85% line, returns byte-equal (sha256 3151345f...). DB-b-90 (round 44) moves the uniqueness check onto the final rows (W62-S1).",
+  "one_line": "S40 disarmed: realized key extended by realized_gain, released live, and 2026-10-08 lots backfilled with 0 LOTS_SKIPPED and returns byte-equal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-49f-reporting-gold-lambda live CodeSha256 yIAQjspL0nPX6tJOHxD+Dv0REVoZyBNRkhmHQxUVuEE= (issuer read, 13:1xZ)",
+      "org/critical_paths/change_management/20261009T1247Z_irpt-dashbd-r37-delta-1008_deploy_completion.md (CLOSED 4/4)",
+      "p41b_lotkey.py DB41b-2-AC1 PASS and DB41b-2-AC2 PASS at box/dell2 after the DB-b-88 drain",
+      "backfill invoke RequestId 0cbe2c8b-c78f-4e6c-940f-bab89ccb1000"
+    ]
+  },
+  "spec_asserts": "CTO ADDENDUM 9: a LOTS_SKIPPED day is a BLOCKING row until the key is fixed and the day is backfilled.",
+  "world_is": "The key is fixed live and 2026-10-08 is landed for all three lot tables."
+}
+```
+
+
+## IRPT_DASHBD-S43 -- TO-DB-b-86 BLOCKED before the run: the selection's account_set_id has no producer this seat can reach, and the served reads AMENDMENT 1 names do not carry it
+
+```json
+{
+  "id": "IRPT_DASHBD-S43",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~DB2",
+  "surfaced_at": "2026-10-09T13:20:00Z",
+  "one_line": "TO-DB-b-86 cannot run as amended: the runner requires account_set_id as sel_<64 hex> from an Opal operator's selection-create answer, but AMENDMENT 1's two served reads cannot produce it -- the served custody directory has no selection field in any of its 269 entries, and svc-custody-statement is admitted on three operations that do not include selection-create. Filling it would be a fabricated reference.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-86 AMENDMENT 1 (Selection): 'The --selection file is seat-authored from two served reads only: the Cottonwood client's account set from the served custody directory, and the snapshot id from the served holdings current/manifest.json.' The runner's load_selection requires account_set_id matching sel_<64 hex>, plus snapshot_id, client_id and account_ids.",
+  "world_is": "THE TWO SERVED READS WERE BOTH DONE, and they yield three of the four required fields, not four. (1) The served custody directory resolved through advisor_client_list.load_directory's own default path -- the directory_runner pointer s3://opal-data-cot/investor-reporting/directory/latest.json at generated_at 2026-10-08T13:40:45Z, whose key is investor-reporting/directory/2026-10-07/directory.json (538,204 bytes, 269 entries). An EXHAUSTIVE NESTED KEY CENSUS over all 269 entries (denominator printed, every path counted, not a forward guess) gives exactly these id-bearing paths: /ids/client_id 269, /ids/account_ids 269, /ids/firm_id 269, /ids/relationship_id 220, /account_masks[]/account_id 557, /permitted_scope/scope_ids 269, /permitted_scope/scope_kind 269, plus access, cohort, display_name, masked_discriminator, permitted_capabilities, revision and termination subtrees. NO path whose name contains set, sel or snapshot exists anywhere in the structure. So client_id and account_ids are available and account_set_id is NOT. (2) The served holdings manifest s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (LastModified 2026-10-08T14:18:08Z, schema irpt-holdings-index-v1, firm_id cottonwood, 9 dates) gives latest_date 2026-10-07 with revision 8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e -- so snapshot_id IS available. WHY THE MISSING FIELD CANNOT BE SUPPLIED BY THIS SEAT. The runner's own docstring names the selection as one of the 'INPUTS the runner does not invent (they have no producer reachable by the service subject, which is admitted on three operations only)', taken 'from an Opal operator's selection-create answer'. The three admitted operations are custody-report-persist, POST /analysis and POST /export (IB-pr-385, the pair's AMENDMENT 2), and selection-create is not among them, so svc-custody-statement cannot mint one. Typing a sel_<64 hex> by hand would be a FILLED FIGURE -- this order's refusal clause names a filled figure as a defect -- and it would travel as the account_set_id query parameter of a REAL submission against REAL Cottonwood client data, which is worse than useless. REUSE WAS CHECKED AND DOES NOT SERVE: a census of 'sel_[0-9a-f]{64}' over org and data returns 4,449 hits across 57,618 files scanned, but the SURFACED band is DSGN_IRPTV1 browser netlogs against localhost:5174 and localhost:5181 -- dev-fixture selections (the same id sel_bdf98e1d... repeatedly), not Cottonwood production selections, and not valid for the cottonwood tenant on opalinvest.dev. STOPPED BEFORE THE RUN, per this order's 'A refusal on the Cottonwood path is a finding: file a row and stop. Never work around it.' Nothing was submitted, nothing persisted, no deploy ledger opened (opening one for an act that cannot proceed would create a RED half-landed entry for no act). ALSO MEASURED AND WORTH RECORDING, because it will bite the next seat: client_report_figures._returns_paths('cottonwood', ...) computes s3://opal-data-cottonwood/irpt/cottonwood/gold/account_return_daily/, and that prefix holds ZERO objects -- the bucket's gold area holds holdings, holdings_performance_daily, holdings_performance_manifest and holdings_qa only (785 objects under irpt/, read with head-bucket rc=0 as a positive control, so this is a true empty and not a deny). Separately, hop3_real_run.py -- the required --hop3-file producer -- states it is BUILT on dell2 and RUN on the laptop because the returns gold is an explicit deny for the dell2 user, and no hop3 output file exists anywhere in the repo (only its proof_of_spec and prose). So even with a valid account_set_id, the household document input is not producible on this device as things stand.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/e2a_real_statement.py (module docstring 'INPUTS the runner does not invent'; load_selection's sel_<64 hex> validation; --hop3-file and --selection both required)",
+      "data/assets/scripts/gold/irpt_custody/hop3_real_run.py (WHERE IT RUNS: the firm bucket is an explicit deny for the dell2 user; built on dell2, run on the laptop)",
+      "data/assets/scripts/gold/irpt_custody/advisor_client_list.py load_directory (the directory_runner PROD_PREFIX/latest.json default this read followed)",
+      "s3://opal-data-cot/investor-reporting/directory/2026-10-07/directory.json (269 entries; the exhaustive nested key census)",
+      "s3://opal-data-cottonwood/irpt/cottonwood/platinum/holdings/current/manifest.json (latest_date 2026-10-07, revision 8982ba98...967e)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-86.e2a-real-statement-apply.md AMENDMENT 1 (Selection) and the refusal clause",
+      "org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/NEVER_WIDEN_PAIR_SVC_CUSTODY_STATEMENT_MINT.md AMENDMENT 2 (the three admitted operations)"
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
