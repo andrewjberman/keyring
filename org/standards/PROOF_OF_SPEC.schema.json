@@ -147,9 +147,10 @@
               "iam",
               "test",
               "doc",
-              "frontend_component"
+              "frontend_component",
+              "ddb_rows"
             ],
-            "description": "artifact KIND, one grain (Rule-24 collectively-exhaustive). frontend_component ADDED 2026-08-11 (COO 215014Z, routed): a portal/frontend code artifact -- WITHOUT it a portal component mis-declares as 'script' and gets scanned by the backend DS-id-grammar coverage heuristic it cannot satisfy. The artifact-coverage heuristic is backend-script-specific and scopes to (script, s3_object) BY DESIGN; frontend_component is outside it (a frontend-appropriate coverage rule is a follow-on gate candidate, not the enum's defect)."
+            "description": "artifact KIND, one grain (Rule-24 collectively-exhaustive). frontend_component ADDED 2026-08-11 (COO 215014Z, routed): a portal/frontend code artifact -- WITHOUT it a portal component mis-declares as 'script' and gets scanned by the backend DS-id-grammar coverage heuristic it cannot satisfy. The artifact-coverage heuristic is backend-script-specific and scopes to (script, s3_object) BY DESIGN; frontend_component is outside it (a frontend-appropriate coverage rule is a follow-on gate candidate, not the enum's defect). ddb_rows ADDED 2026-10-09 (1.0.0_SA_CTO rule-24 ruling, row MDPF_SECCLASS-D1-S20): rows a deploy-genre act wrote to a DynamoDB table; path_or_key = dynamodb://<region>/<table> plus the key list or key-set file; commit_or_etag = the snapshot or read-back record, never a git pin; resolution skips it like s3_object."
           },
           "commit_or_etag": {
             "type": "string",
