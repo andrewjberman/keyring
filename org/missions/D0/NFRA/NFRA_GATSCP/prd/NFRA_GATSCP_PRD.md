@@ -5,10 +5,10 @@
  "project": "NFRA_GATSCP",
  "directive": "D0",
  "fabric": "dell1",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/gitops-gates-scoped-to-the-act-brief-20261009.md@4c795d29a4",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
  "status": "DRAFT"
 }
 ```
@@ -27,6 +27,15 @@ negative arms moved here from the ENDPOINT section.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
+
+  FWD-8  A seat's commit is refused only for what that commit itself writes
+         DONE WHEN  EXERCISED -- the seven-day refusal census re-run after the fix, every refusal read
+         ACCEPT     over a week of ordinary work, no commit is stopped by the owned-paths check or the
+                    pipeline gate for a path, order or record the commit did not touch; every refusal that
+                    remains names a file the commit writes; one commit that writes outside its seat's
+                    paths is still stopped
+         SOURCE     round-2 analysis R6; round-3 census (TRACE_round3.md: owned-paths-check 26,
+                    to-pipeline-gate 4, the other five 0, over seven days)
 ```
   FWD-1  On one box, a worker's finished work and that box's sync both land while another project
          holds a fresh error and another project's register is out of step, and nobody on the box
@@ -87,6 +96,8 @@ negative arms moved here from the ENDPOINT section.
                     in UTC
          SOURCE     brief O6
 ```
+
+**v0.3 (1.0.0_SA_CTO~DELL1, 2026-10-09 ~15:3xZ), L10 addendum at round 3:** FWD-8 added from the R6 census (`ledger/ROUND_ANALYSIS.round3.md`). FWD-1 to FWD-7 are unchanged. The ratified-text half re-signs.
 
 ## CONTRACTS
 

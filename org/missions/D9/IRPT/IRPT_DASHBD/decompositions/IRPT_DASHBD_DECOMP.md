@@ -1048,3 +1048,15 @@ Rule 30 conformance of DB-b-91's status key. It is inside the issuer's own decom
 It rides the next gold release with DB-b-97 (CTO ADDENDUM 16 item 1).
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~79`, cut from box/dell2.
+
+
+## 54. ROUND 52, WORKSTREAM B (2026-10-09 ~15:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 16 item 1 and ADDENDUM 17, msg 3583)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-105` | E1, FWD-4: the R45 release packet -- DB-b-97 + DB-b-104 over live oNgy4rnr, census = handler.py only, memory headroom stated, halves UNSIGNED | WORLD | DB-b-97, DB-b-104 | B52-1 |
+| `DB-b-106` | E2, FWD-8: Black Diamond's own transaction / posting dates read against Opal's for the 475 FLOW_TIMING + INCOME_DATE segments | LOCAL | DB-b-99 | B52-2 |
+
+FWD-8 stays NOT REALIZED until DB-b-106 drains and the DEFECT classes (DB-b-100, DB-b-101) are dispositioned.
+
+**fanout:** 2 of 2 chains, cap 8. Workers `0.9.0_WK_IRPT_DASHBD~80` and ~81, cut from box/dell2.

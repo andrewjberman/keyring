@@ -4625,3 +4625,55 @@ round.** Never edit an existing row.
   "world_is": "Chosen: empty + WARN + absent in the resolution table. The deploy cell must ship ticker_overrides.py beside the writer (pair) or the gold run loses the overrides; a refuse-on-unresolved variant needs the old fixtures edited."
 }
 ```
+
+## ADVI_COTBKF-D2-S70 -- L9 CB46at1-AC2 MET as written
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S70",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:44:00Z",
+  "one_line": "L9 CB46at1-AC2 MET as written: one resolver, resolve_repo_file, takes every repo-file input (scopes.json beside-only by round 42's test h; ticker_overrides, the import included, beside then repo path); an unresolved input reads absent, never the own firm; the census prints each resolved path from the served file's opal_input_resolution metadata, and a key without it prints INPUT-RESOLUTION absent (NOT-CLEAN). But see D2-S71: the same change turned the ticker_overrides import from fail-closed into fail-open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 14a6fd3343 8bd569d91e -- data/cot/scripts/gold/build_canonical_prices_v2.py (resolve_repo_file, _load_ticker_overrides, the census INPUT lines)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_46_DRAIN_END_20261009.md @f723ea78df (msg 3587)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_46_L9_GRADE_20261009.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB46at1-AC2: beside-module first, then repo root, for EVERY repo-file input, the import included; unresolved is never the own firm; the census prints each resolved path from the served file's own metadata.",
+  "world_is": "Met as written; the fail-open change is a separate BLOCKING row."
+}
+```
+
+## ADVI_COTBKF-D2-S71 -- ticker_overrides went from fail-closed to fail-open
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S71",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-09T15:44:00Z",
+  "one_line": "The cot price writer's ticker_overrides went from FAIL-CLOSED to FAIL-OPEN: the base did 'from lib.ticker_overrides import YF_OVERRIDES, TICKER_CORRECTIONS' (an import error stops the run); _load_ticker_overrides() now returns empty dicts plus a WARN when the file is unresolved. A redeploy that misses ticker_overrides.py beside the writer (the deployed mirror holds it at code/gold/lib/, not code/gold/) would silently drop 757 overrides and 1 correction and price those tickers wrong.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff 14a6fd3343 8bd569d91e -- data/cot/scripts/gold/build_canonical_prices_v2.py: the removed 'from lib.ticker_overrides import' and the new _load_ticker_overrides() 'Unresolved -> empty dicts + WARN'",
+      "the issuer's measurement in the packet: code/gold/lib/ticker_overrides.py present, the resolver looks beside the writer",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/2.0.0_SA_COO~C2/ADVI_COTBKF_ROUND_46_DRAIN_END_20261009.md @f723ea78df (msg 3587)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A production writer that cannot load the inputs it prices with stops loudly; a degraded run is never served as a normal one (fail closed).",
+  "world_is": "Not live (the writer is not redeployed), so INERT today; it becomes a live mispricing on the first redeploy that misses the file."
+}
+```
