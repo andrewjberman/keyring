@@ -124,6 +124,85 @@ Append-only. Worker rows `MDPF_STRATID-W<n>-S<k>`; seat rows `MDPF_STRATID-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "A served per-date figure for a date already published does not change on the next run unless a source restatement is recorded (point-in-time; and a measured count is not replaced by None).",
     "world_is": "The prior frontier date is rewritten on every run: Cottonwood's measured account count for that date becomes None/absent once the next date is published, and counts/model values elsewhere are restated, with no restatement record. Not caused by MDPF_STRATID's fold (present before D2)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S1",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:00:18Z",
+    "one_line": "On Cottonwood's 2026-10-08 Rebalancer names the unidentified list holds 38 of 362 names, because opal_sma_member_of knows only the four ETF SMAs, so every Opal-named model and sleeve (Opal Satellite 50, Opal Short-Term, ...) lists NO_MEMBER beside the real unknowns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_STRATID/deliverables/0.9.0_WK_MDPF_STRATID~6/UNIDENTIFIED_STRATEGY_CANDIDATES.md: RESULT LISTED 38; Opal_Muni_Income 64,119,753.85 RULE_NOT_COUNTED (HOLDINGS join fact_model_assignment.external_id = fact_holdings.AccountID, 1 of 1 accounts)",
+        "data/assets/scripts/silver/rebalancer_schemas.py:226 opal_sma_member_of returns a member only for DIVZ/IDVZ/PFDE/PFOE name rules"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Anything that looks like an Opal strategy but matched nothing is listed with firm, name and dollars (FWD-7); the order's names are roster.model_name, definition.model_name/sleeve_name/component_name.",
+    "world_is": "The list is correct to the order's rule but mixes ordinary Opal models (not SMA strategies) and one holdings-component name (OPAL INTERNATIONAL DIVIDEND INCOME ETF) with the true unknowns; a reader wanting only SMA candidates needs a model-vs-sleeve scope on the names. ID FORM: the order names id MDPF_STRATID-W2-W6-S<k>, which proof-of-spec-check SURPRISE_ID_RE (.tools/proof-of-spec-check.py:1206) cannot parse, so the row is minted MDPF_STRATID-D1-W6-S1 (the dell1 worker form the row gate requires). Also fact_model_assignment.account_id does not join fact_holdings.AccountID (external_id does)."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S2",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:17:30Z",
+    "one_line": "ST-w-4 AC2 cannot be met with opal_models = fact_model_roster is_opal names: Opal Short-Term is not in the roster at all, so it stays listed (LISTED 12, seam W24-SEAM-BAD); roster plus fact_model_definition is_opal names gives LISTED 4 and meets the seam.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fact_model_roster date=2026-10-08: 71 names, 29 is_opal true; Opal Short-Term, Opal Fixed Income, Opal Long-Term Aggressive, Opal Moderate Income, Opal_Moderate_Income_Tax_Efficient are absent from it (found_in definition only)",
+        "fact_model_definition date=2026-10-08 model_name column carries is_opal: all 37 Opal-named model names are True, including Opal Short-Term; the union of the two tables gives 37 model names",
+        "Record as the order words it (roster only): RESULT LISTED 12, EXCLUDED-AS-MODEL 26; w2_4_seam.py reports W24-SEAM-BAD Opal Model(s) still listed: ['Opal Short-Term']. Union variant (uncommitted, .scratch/union_record.md in the worker worktree): RESULT LISTED 4 (Opal_Muni_Income and Opal_Muni_Sleeve RULE_NOT_COUNTED, OPAL INTERNATIONAL DIVIDEND INCOME ETF and POLEN DIVIDEND INCOME ETF NO_MEMBER), EXCLUDED-AS-MODEL 34"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "opal_models = the model_name values of fact_model_roster (latest date=) where is_opal is true; with it the re-made record lists neither Opal Satellite 50 nor Opal Short-Term (W2-4-AC2).",
+    "world_is": "Opal Short-Term is a definition-table model name with is_opal true there, absent from the roster; the roster source alone leaves it (and four other ordinary Opal Models) listed. The function and its eight tests (W2-4-AC1) are correct under either source; only the record's opal_models source decides AC2. Worker stopped per the refusal clause: record committed as the order words it, order left pending, status not flipped; the issuer decides roster-only versus roster union definition."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S3",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:21:00Z",
+    "one_line": "The worktree copy of MDPF_STRATID_DECOMP_W2.md lacks cell ST-w-4, so proof-of-spec-check reports W2-4-AC1 and W2-4-AC2 cell_refs as citing a cell that does not exist.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "proof-of-spec-check rc=1: VIOLATION alignment: cell_ref 'ST-w-4' does NOT exist in org/missions/D8/MDPF/MDPF_STRATID/decompositions/MDPF_STRATID_DECOMP_W2.md (worker worktree, branch wk-MDPF_STRATID-w2-6); the amended order came from the shared tree at issuer commit 75d44d9e82"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The amended order's cell_refs ST-w-4 resolve in decomp_doc MDPF_STRATID_DECOMP_W2.md (amendments A1, A4).",
+    "world_is": "The decomp file is outside the worker's grant (order file, deliverables folder, source and test files, investigation file), and the worker branch predates the amendment commit, so the cell is absent in the worktree; the drain merge brings the amended decomp. The instance is otherwise valid apart from the W2-4-AC2 FAIL row."
+  },
+  {
+    "id": "MDPF_STRATID-D1-W6-S4",
+    "project": "MDPF_STRATID",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_STRATID~6",
+    "surfaced_at": "2026-10-09T05:40:00Z",
+    "one_line": "D1-W6-S2 resolved: under ruling A6 the opal_models union gives RESULT LISTED 4 and EXCLUDED-AS-MODEL 34, and W2-4-AC2 passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ruling A6 @d6d6bed0f0; record RESULT: LISTED 4; w2_4_seam.py prints W24-SEAM-OK rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling A6: opal_models = union of is_opal model_name values in fact_model_roster and fact_model_definition (latest date=).",
+    "world_is": "With the union, Opal Short-Term and the other four definition-only Opal Models are excluded as models; Opal_Muni_Income stays RULE_NOT_COUNTED. Row S3 is also cured: the amended decomp is copied onto the branch."
   }
 ]
 ```
