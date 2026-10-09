@@ -43,3 +43,10 @@
 7. **Out of this box:** the MDPF_DEMQUE vs MDPF_SECHIST Yahoo-backfill collision (dell1/laptop) goes to MSTR~DELL2 for the owning CTOs.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## CONFIRMED BY ANDREW (2026-10-09 ~04:4xZ)
+
+VERBATIM, via `4.0.0_SA_CRO~DELL2` msg 2451 (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261009_044xZ_CONSOLIDATION_CALLS_GO_WITH_RECS.md` @c41f11fb70): "Go with your recs on both consolidation calls".
+- Ruling 1 (one performance-reporting project, IRPT_BCKEND keeps the platform) is confirmed.
+- Ruling 3 (Inflection and Cottonwood serve the flow-adjusted daily TWR, superseding IRPT_BCKEND FWD-3's holdings-basis figure for them) is confirmed.
+- IRPT_CUSTDY was closed as superseded_by IRPT_DASHBD @d016a98794 after the `~K2` handover @185805a565.
