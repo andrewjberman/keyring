@@ -2,7 +2,7 @@
 
 <to_id>ADVI_BILLING.TO-AB-e-1</to_id>
 <project>ADVI_BILLING</project>
-<issued_to>0.7.0_AE_CloudOps~DELL2</issued_to>
+<issued_to>0.7.0_AE_CloudOps~AB2</issued_to>
 <issued_by>2.0.0_SA_COO~B2</issued_by>
 <issued_date>2026-10-09</issued_date>
 <status>pending</status>
@@ -26,7 +26,8 @@ The API authorizer `opal-portal-authorizer` (`infra/aws/users/lambda/portal-auth
 through CloudFront. Prove both live, for household `z08219260`, with five GET probes.
 
 1. **Open the ledger FIRST:** `python .tools/deploy_ledger.py open --slug advi-billing-edge-probes-r2-20261009 ...` with one `verify` leg
-   per probe. Commit the sentinel and entry.
+   per probe. `deploy_ledger.py` STAGES without committing: commit the sentinel and entry right after `open` and again after each
+   `close-leg` and `close`, or the shared tree's drains are held.
 2. **Mint five synthetic tokens** with the shared human-token signing secret (`infra/aws/lambda/shared/opal_auth/__init__.py` `SECRET_ID`),
    in the claim shape the auth handler mints (`infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:168-185`; issuer `opal-portal-auth`,
    audience `opal-portal-api`, RS256), each expiring in 10 minutes, each `sub`/`email` synthetic `advi-billing-probe-<n>@example.invalid`:
@@ -41,7 +42,7 @@ through CloudFront. Prove both live, for household `z08219260`, with five GET pr
    straight at `https://7k3ed8px20.execute-api.us-east-1.amazonaws.com/api/scoped/partners/books/relationship/z08219260/fee-quarter/2026Q3`.
    Record the status code only (no body beyond its first 80 characters of an error; never a 200 body).
 4. **Never store or log a token or key byte** (not in a file, not in a commit, not in shell history you leave behind); discard them after use.
-5. **Record** `AB_E1_PROBES.json` in `org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.7.0_AE_CloudOps~DELL2/`: `ledger_slug`,
+5. **Record** `AB_E1_PROBES.json` in `org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.7.0_AE_CloudOps~AB2/`: `ledger_slug`,
    `minted_at`, `minted_by`, `key_read_at`, `probes` = five objects `{class, method: "GET", route, via (cloudfront | execute_api), advisor_id
    (or null), status, error_head}`. Close each ledger leg with its status and the ledger itself.
    Expectations (stated, not graded here; the issuer reads the outcome): in_book 200, out_of_book 403, firm_admin 200, other_firm 401 or 403,
@@ -61,7 +62,7 @@ through CloudFront. Prove both live, for household `z08219260`, with five GET pr
   file a row.
 
 <paths>
-org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.7.0_AE_CloudOps~DELL2/
+org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.7.0_AE_CloudOps~AB2/
 org/critical_paths/change_management/advi-billing-edge-probes-r2-20261009.md
 org/critical_paths/.open_deploys/advi-billing-edge-probes-r2-20261009.json
 org/missions/D8/ADVI/ADVI_BILLING/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -75,7 +76,7 @@ org/missions/D8/ADVI/ADVI_BILLING/task-orders/ADVI_BILLING.TO-AB-e-1.edge-book-p
 
 <proof_of_spec>
 Criterion ids: AB2-1-AC1. The instance goes at
-`org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.7.0_AE_CloudOps~DELL2/ADVI_BILLING.TO-AB-e-1.edge-book-probes.proof_of_spec.json`.
+`org/missions/D8/ADVI/ADVI_BILLING/deliverables/0.7.0_AE_CloudOps~AB2/ADVI_BILLING.TO-AB-e-1.edge-book-probes.proof_of_spec.json`.
 Validate it with `python .tools/proof-of-spec-check.py <instance> AB2-1-AC1` BEFORE the flip.
 </proof_of_spec>
 
@@ -93,6 +94,6 @@ comp-schedule: DECLARED-NOT-APPLICABLE -- reason: no schedule.
 comp-cache: DECLARED-NOT-APPLICABLE -- reason: GET probes through the existing behaviour; no cache surface changes.
 comp-adversary: DECLARED-NOT-APPLICABLE -- reason: the probe IS the measured read of the gate.
 checks dry-run at base: AB2-1-AC1 FAIL as expected.
-lane: the <paths> block IS the grant. Reassigned from the issuer's own act to 0.7.0_AE_CloudOps~DELL2 per ADDENDUM 2 (the minter runs the probes so
+lane: the <paths> block IS the grant. Reassigned from the issuer's own act to 0.7.0_AE_CloudOps~AB2 (a fresh lane, seated by 0.0.0_AB_MSTR~DELL2 msg 2931) per ADDENDUM 2 (the minter runs the probes so
 no token leaves its session).
 </preflight>
