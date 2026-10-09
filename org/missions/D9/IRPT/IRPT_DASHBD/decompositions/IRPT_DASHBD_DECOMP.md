@@ -962,3 +962,17 @@ meanwhile.
 laptop's hop3 file.
 
 **fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~68`, cut from box/dell2.
+
+
+## 48. ROUND 46, WORKSTREAM B (2026-10-09 ~13:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ADDENDUM 12, msg 3371, @77e60c3d2b)
+
+Rounds 42 and 44 are MAY-CLOSE (CVO ADJUDICATION_v26 @fbc76ab42d). The CTO ruled DB-b-90 and DB-b-91 release TOGETHER as ONE gold Lambda release
+after `yIAQjspL`, under one pair (item 5).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-94` | E1, FWD-4: the release packet -- the member census over live yIAQjspL (exactly DB-b-90's and DB-b-91's members), both branches, rollback, two UNSIGNED halves | WORLD | DB-b-90, DB-b-91 (drained) | B46-1 |
+
+The apply is a later cell, after both halves are signed. DB-b-92 rides the runner (item 3); its sha256 limb stays dormant.
+
+**fanout:** 1 of 1 chains, cap 8. Worker `0.9.0_WK_IRPT_DASHBD~69`, cut from box/dell2.
