@@ -4717,3 +4717,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "world_is": "Every gap S43 named has an owner and a cell or an order; nothing was minted by hand."
 }
 ```
+
+## IRPT_DASHBD-D2-W68-S1 -- sel_<64 hex> is not derivable from the selection file; the id resolves to a stored record
+
+```json
+{
+  "id": "IRPT_DASHBD-D2-W68-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~68",
+  "surfaced_at": "2026-10-09T13:45:00Z",
+  "one_line": "sel_<64 hex> is not derivable from the seat-authored file (it hashes the firm directory revision) and the POST /analysis owner-resolution loads a stored selection record: a file-only submission will be refused by the route unless a stored record exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-93: if the id is not deterministic, the statement path takes the file without an id; if the route refuses a submission without a valid stored id, file a row naming the route and the check.",
+  "world_is": "READ, not run. _scope/selection.py::_reference hashes (schema_version, firm_id, account_ids, directory_revision), and directory_revision (selection.py::directory_revision) is the sha256 of the whole firm directory the Enforcer held, which is no field of the selection file. The owner-resolution check that consumes the id is _scope/selection.py::resolve_selection (lines 110-123), reached through performance/entry.py::_resolve_selected and _scope/custody.py:78 with configured_store().load (selection_store.py:29-35, DynamoDB SELECTION#<id>): an absent record raises 'selection reference unavailable', a changed one 'selection binding changed; select again'. I did not find in the files read the exact code that POST /analysis calls to admit account_set_id; the runner change (accepts a file without the id, omits the query parameter, records selection_source=file + sha256) is kept. Whether the live route admits a submission without account_set_id is not established by this read; DB-b-86 will show it, and a refusal there needs either a stored selection record written by an owning seat or a route change in IRPT_BCKEND's lane.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/selection.py:40-44,19-22,110-123",
+      "infra/aws/lambda/investor-reporting/_scope/selection_store.py:29-35",
+      "infra/aws/lambda/investor-reporting/performance/entry.py:92-105",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~68/SELECTION_FILE.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
