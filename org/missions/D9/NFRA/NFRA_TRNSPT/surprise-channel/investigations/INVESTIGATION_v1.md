@@ -1575,5 +1575,27 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "world_is": "The role as built would grant silver/research_meeting/*, whose held-out rows keep their text. Ruled: TR-a-21's build adds a Deny on silver/research_meeting/* to aws_iam_policy.silver_reader with a test, and its plan is refused without it; blanking held-out text at research_fold is a separate later cell that would let the Deny be lifted.",
     "notes": "Resolves D2-W2-S10 (existing row not edited). Issuer ruling inside the round-21 decomposition (2.0.0_SA_COO~T2)."
   }
+  ,
+  {
+    "id": "NFRA_TRNSPT-D2-S14",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-09T15:16:00Z",
+    "hazard_standing": "INERT",
+    "one_line": "Disposition of BLOCKING row NFRA_TRNSPT-D2-S11: the re-probe after site Z's allowlist release (OG-tl-1, ledger opened @38b5e4b432) reads 3 of 4 meetings ADMITTED; research_meeting still refused (502 graph_error, the organizer-membership arm).",
+    "class": "OBSERVATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GatewayTransport(secrets_reader=gateway_client.read_bearer).list_meeting_transcripts over all 4 rows of meeting_allowlist.load() (denominator 4), 15:16Z: monday_meeting 200 rows=20, ocio_ic 200 rows=8, asset_management_ic 200 rows=7, research_meeting GatewayGraphError 502 graph_error",
+        "the same probe at 11:05Z (row D2-S11): 403 meeting_not_allowed on 4 of 4; the change is site Z's OG-tl-1 env release (ruling @261e2c42a0, msg 3527)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-APPLY-p18 COO half first branch: a scheduled fire finds a new allowlisted meeting and lands it; the first research_meeting landing is FWD-2's acceptance.",
+    "world_is": "The headless route now admits the three Teams series. research_meeting is refused upstream (Graph 3003-class membership, Andrew's open call), so FWD-2's research arm still waits on that grant. The next scheduled fire (16:00Z) is the landing evidence; no ad-hoc invoke is fired because it would land the meetings first and spend the scheduled fire's discriminator.",
+    "notes": "Resolves D2-S11's host-allowlist half (existing row not edited). Counts and statuses only."
+  }
 ]
 ```

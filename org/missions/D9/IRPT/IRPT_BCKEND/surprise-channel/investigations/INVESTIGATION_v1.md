@@ -24748,3 +24748,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   and deleted exactly the technical terms that carried the meaning. That is the same hazard as the
   `1 client(s)` parenthesis break earlier in this session, and it is what CLAUDE.md 14a's NON-SHELL
   WRITER requirement prevents. Repaired from a script file, which no shell parses.
+
+## IRPT_BCKEND-D2-S58 -- Resolves D2-S24: safe-deploy's summary now counts minted bundles (@dd78f5dd5e)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S58",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-09T15:18:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S24. Fixed on the laptop by the tooling owner 1.0.0_SA_CTO @dd78f5dd5e (CTO~DELL2 msg 3553): safe-deploy's summary now counts minted bundles, so a bundle-only push reads 'N bundle(s) minted and uploaded' instead of reporting nothing deployed. The fix reaches dell2 at the next integrate.",
+  "one_line": "D2-S24 resolved: safe-deploy's summary counts minted bundles (@dd78f5dd5e, laptop tooling owner).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 3553",
+      "laptop commit dd78f5dd5e (tooling owner 1.0.0_SA_CTO)"
+    ]
+  },
+  "spec_asserts": "safe-deploy's summary states what a push deployed.",
+  "world_is": "It does, for bundle-only pushes, from @dd78f5dd5e."
+}
+```
