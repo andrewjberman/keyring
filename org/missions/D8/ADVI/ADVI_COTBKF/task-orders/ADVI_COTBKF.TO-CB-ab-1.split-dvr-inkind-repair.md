@@ -32,7 +32,7 @@ same-day close from Opal's price stores; cash), `commonwealth_daily_returns.py` 
 Round 27's trace (`commonwealth_diff_trace.py`; `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~50/diff_trace.md` and
 rows D2-W50-S1..S3 in the surprise channel) found three valuation defects that put KNOWN-WRONG values on specific days:
 - **S1, splits (59 months, 6 securities):** the stores' closes are split-adjusted over their whole history while the rebuilt quantity is
-  as traded. E.g. B3S605610 2025-11, NFLX 64110L106, 10-for-1 on 2025-11-17: day +274.90% before repair, -0.78% after. 14 splits are
+  as traded. E.g. acct#f0b52456 2025-11, NFLX 64110L106, 10-for-1 on 2025-11-17: day +274.90% before repair, -0.78% after. 14 splits are
   confirmed from the accounts' own rows (a row whose quantity ratio is within 0.5% of an integer k in 2..50, or 1/k, on the split day).
 - **S3, distributions (13 months):** on a `dvr` day the close steps up by about the distribution per share while the shares also step up.
 - **S2, in-kind (1 month):** an `li` row's Amount (5,302) is far below the shares' value (14,453), so the flow is understated.
@@ -50,7 +50,7 @@ named repair per defect, each stated (and committed) before the real run:
 Re-grade `--before-cash-leg method_r26 --after-cash-leg method_r28`; print the 73 round-27 traced months with their new verdict and the
 whole grade; regressions must be 0.
 
-**AMENDMENT 1 (CTO ruling msg 2671, 2026-10-09 ~06:1xZ; CTO half AMENDMENT 1 @478334e021).** "CB-ab-1 closes on 4 named regressions, BLANKED in the mint." AC2 expects `regressions=4`, the four being exactly B3S728504 and B3S728506, 2023-05 and 2023-06 (a fifth, or a different four, voids this amendment: refuse). Add to `commonwealth_fwd3_serve.py` an ABSENT list, built from the persisted grades as the months MATCH under `method_r26` and DIFF under `method_r28`: in the three tables those account-months read ABSENT (no value, no return, no verdict, reason `REGRESSED_UNDER_R28`), never valued; `--dry-run` prints them and its LAST line gains `absent_months=<n>`. Add a stub test for it in `test_commonwealth_fwd3_serve.py`. Rows W53-S2..S4 stay BLOCKING until explained (the CTO). No repair rule changes.
+**AMENDMENT 1 (CTO ruling msg 2671, 2026-10-09 ~06:1xZ; CTO half AMENDMENT 1 @478334e021).** "CB-ab-1 closes on 4 named regressions, BLANKED in the mint." AC2 expects `regressions=4`, the four being exactly acct#79d02c2c and acct#4a890dd1, 2023-05 and 2023-06 (a fifth, or a different four, voids this amendment: refuse). Add to `commonwealth_fwd3_serve.py` an ABSENT list, built from the persisted grades as the months MATCH under `method_r26` and DIFF under `method_r28`: in the three tables those account-months read ABSENT (no value, no return, no verdict, reason `REGRESSED_UNDER_R28`), never valued; `--dry-run` prints them and its LAST line gains `absent_months=<n>`. Add a stub test for it in `test_commonwealth_fwd3_serve.py`. Rows W53-S2..S4 stay BLOCKING until explained (the CTO). No repair rule changes.
 
 Tests `data/assets/scripts/silver/tests/test_commonwealth_split_repair.py` (stubs): a 10-for-1 split day returns the true move, not
 +900%; a day before the split is valued as-traded; a `dvr` day counts the distribution once; an understated `li` is valued from the shares
