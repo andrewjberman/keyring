@@ -18,7 +18,8 @@ change. Round 43's decomposition kept as `AMGT_CORPUS_DECOMP.round43.md`.
 | 6 | regressions: FWD-13 cited-or-absent census on the /9 dossiers (DONE at the cut: neither 0 over 861 objects, `evidence/r44_fwd13_census_20261009.txt`); FWD-1 rides item 4 | `CRPS-at-7` | the issuer's read | -- |
 | 7 | re-pin: the four proofs pinning the absent `4051cbb215` re-pinned to `19df1e26f8` (round 7's decomposition, which carries CRPS-i-1..i-4) | -- | issuer amendment IN THIS ISSUANCE COMMIT (audited author override: the files are the workers' lane) | -- |
 
-**Chains:** `at-1 -> (RESAPP deploy) -> at-3`; `at-2 -> (portal DEV) -> at-3`; `at-4`; `at-5`; `at-6`; `at-7` (done).
+| 8 | AMENDMENT (21:3xZ, CTO ruling msg 3213, row D1-S2 ARMED): the served /9 lost team cases on 6 PDF names (fitz stubbed at the /8 and /9 writes). Fix forward: /9's method re-written at /10 with real fitz, NO team_sheet (which moves to /11) | `CRPS-at-8` (METHOD /10 literal) -> `CRPS-at-9` (the /10 write: fitz asserted real pre-write; leg v diffs EVERY section of all 95 names against /7 and /9: cases, pillars, management restored, the 12 /9 gains kept, nothing else moved) | worker `~3` (at-8, worker-light); at-9 the issuer's paired act; RESAPP mm-4 carries /10 | SERVED (at-9) |
+**Chains:** `at-1 -> (RESAPP deploy) -> at-3`; `at-2 -> (portal DEV) -> at-3`; `at-4`; `at-5`; `at-6`; `at-7` (done); `at-8 -> at-9 (/10) -> at-1 at /11`.
 `fanout: 2 of 2 worker chains (at-1, at-2), cap 8`; the rest are issuer acts or the site-Z lane.
 
 **The served field (fixed here so at-1 and at-2 build in parallel):** `read_thesis_bundle(key)["model"]["team_sheet"]` =
