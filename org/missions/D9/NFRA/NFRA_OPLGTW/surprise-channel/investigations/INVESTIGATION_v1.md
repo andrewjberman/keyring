@@ -10984,3 +10984,31 @@ name the one known failure instead of silently inheriting it.
   "world_is": "With the Log function's '[2026-10-09T07:39:27Z] ' prefix a DATE line is 40 characters; about 530 dates fill the cap. Phase B's SSM wrappers must print compactly (batch summaries, not per-file lines) for the same reason."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S72",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~Z",
+  "surfaced_at": "2026-10-09T08:09:53Z",
+  "one_line": "The OG-da-1 ask's blast radius undercounts the READERS of the artifact key by one: a SECOND Lambda in the same Terraform root, opal-data-refresh-api-qa-scratch, reads the identical artifact_key, so the signed 'One Lambda's code ... Nothing else' is false as written. The targeted apply did NOT touch it and its live bytes are unchanged, but the root's full plan now carries a pending code update to it that any full apply of this root would land.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN terraform show -json of the POST-APPLY full root plan: 11 resource_changes, 10 no-op, exactly 1 update = module.data_refresh_api_qa_scratch.aws_lambda_function.this, changing source_code_hash E4944Imr7Y4S4//rTR6HN5sbwczbwLw5DcaH4IZ0D0E= -> qHMjXkK1/1NhmBmkK/6Q+q+WdXMRoTOprNfTixBIxaM=, s3_object_version WJQGGIAlTSMp0Vny8avvQ7LxflVuvLf6 -> f0pfQmR1BByh9jcBQHwYymYRSfZ2IKih, and last_modified.",
+      "RUN targeted re-plan of module.data_refresh_api -> 'No changes. Your infrastructure matches the configuration.' So the one pending row is NOT the resource this order deployed.",
+      "FILE infra/aws/terraform/data-refresh/qa-scratch-instance.tf module \"data_refresh_api_qa_scratch\" sets artifact_key = \"data-refresh/opal-data-refresh-api.zip\" -- byte-identical to main.tf:37's artifact_key for module.data_refresh_api. One key, two yang-lambda consumers.",
+      "LIVE aws lambda get-function-configuration opal-data-refresh-api-qa-scratch -> CodeSha256 E4944Imr7Y4S4//rTR6HN5sbwczbwLw5DcaH4IZ0D0E=, LastModified 2026-08-03T17:40:42.820+0000: UNCHANGED by this apply. NEGATIVE CONTROL, same call against the deployed function: CodeSha256 qHMjXkK1/1NhmBmkK/6Q+q+WdXMRoTOprNfTixBIxaM=, LastModified 2026-10-09T07:59:39.000+0000 -- so the read does discriminate a moved function from a still one.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.7.0_AE_CloudOps~Z/NEVER_WIDEN_ASK_OG-da-1.md section 5 asserts 'One Lambda's code: opal-data-refresh-api, via module.data_refresh_api ... Nothing else' and names portal-time-machine as the other function in the root. It never mentions the qa-scratch module. BOTH halves (CTO~Z @93ddbb1288, COO~O @014c45557d) were signed against that text.",
+      "FILE qa-scratch-instance.tf header: the clone exists for MDLP_MONPUB.W8 (CVO ruling 172718Z) as 'a scratch-scoped clone of opal-data-refresh-api at the SAME artifact'. It shares the REAL role opal-data-refresh-lambda-role and the REAL table opal-data-refresh-executions; only BUCKET differs (opal-313476888478-yang-qa-scratch). Its teardown is recorded as the CTO's call, so it is not mine to destroy either."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ask's section 5, which both never-widen halves signed: the act touches 'One Lambda's code: opal-data-refresh-api ... Nothing else'. CLAUDE.md NEVER-1 also requires counting the writers of the named property before the act, with N printed -- here the dual is the READERS of the artifact key, and I printed N=1.",
+  "world_is": "N=2. The artifact key has two yang-lambda readers in one root, and uploading a new version of the key is therefore a change to BOTH resources' desired state, not one. Nothing outside the signed radius has been deployed: the apply was -target'd at module.data_refresh_api from a saved plan, the qa-scratch function's live CodeSha256 is still the pre-deploy value, and the deployed function read back exact. What exists is a LATENT state -- the root no longer plans clean, and a full apply by any seat would ship these bytes to the qa-scratch clone with no sign-off covering it. I did not apply it (outside the signed radius) and did not revert the signed change (its read-back is exact and the halves' rollback trigger is a caller reading REFUSED, which has not happened). Ledger nfra-oplgtw-og-da-1-data-refresh-admit is left OPEN on leg RB so the entry stays RED until the half-holders disposition the second reader. The cheap dispositions are: (a) ratify the widening and let the qa-scratch clone take the same bytes, since the change is a fail-closed tightening and that clone shares the real role and table; (b) pin the clone to the prior artifact version by giving it its own artifact_key or an explicit s3_object_version, which re-plans clean and leaves it on E4944Imr; or (c) tear it down if the W8 exercise is closed, which is the CTO's recorded call, not this seat's."
+}
+```
